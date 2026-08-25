@@ -31,7 +31,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/style.css?v=2026.08.25.2440">
+  <link rel="stylesheet" href="css/style.css?v=2026.08.25.2445">
 
   <!-- SCHEMA.ORG JSON-LD ENTERPRISE METRICS -->
   <script type="application/ld+json">
@@ -964,7 +964,7 @@
         <form onsubmit="event.preventDefault(); App.processOrder();">
           
           <!-- Müşteri Bilgileri -->
-          <h4 style="font-size:14px; font-weight:700; color:var(--color-teal); margin-bottom:12px; text-transform:uppercase; letter-spacing:0.5px;">1. İletişim & Fatura Bilgileri</h4>
+          <h4 style="font-size:14px; font-weight:700; color:var(--color-teal); margin-bottom:12px; text-transform:uppercase; letter-spacing:0.5px;">1. İletişim Bilgileri</h4>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
             <div>
               <label style="font-size:12px; font-weight:600; display:block; margin-bottom:4px;">Adınız *</label>
@@ -975,20 +975,14 @@
               <input type="text" required placeholder="Soyadınız" style="width:100%; padding:10px 14px; border:1px solid var(--color-border); border-radius:4px;">
             </div>
           </div>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
-            <div>
-              <label style="font-size:12px; font-weight:600; display:block; margin-bottom:4px;">Telefon (WhatsApp Bildirimi) *</label>
-              <input type="tel" required placeholder="05XX XXX XX XX" style="width:100%; padding:10px 14px; border:1px solid var(--color-border); border-radius:4px;">
-            </div>
-            <div>
-              <label style="font-size:12px; font-weight:600; display:block; margin-bottom:4px;">E-posta (E-Fatura & Onay) (İsteğe Bağlı)</label>
-              <input type="email" placeholder="ornek@alanadi.com" style="width:100%; padding:10px 14px; border:1px solid var(--color-border); border-radius:4px;">
-            </div>
+          <div style="margin-bottom:16px;">
+            <label style="font-size:12px; font-weight:600; display:block; margin-bottom:4px;">Telefon (WhatsApp Bildirimi & Sipariş Doğrulama) *</label>
+            <input type="tel" required placeholder="05XX XXX XX XX" style="width:100%; padding:10px 14px; border:1px solid var(--color-border); border-radius:4px;">
           </div>
 
           <!-- Teslimat Yöntemi -->
           <h4 style="font-size:14px; font-weight:700; color:var(--color-teal); margin:24px 0 12px; text-transform:uppercase; letter-spacing:0.5px;">2. Teslimat Yöntemi</h4>
-          <div style="margin-bottom:16px;">
+          <div style="margin-bottom:20px;">
             <div style="border:1px solid var(--color-teal); background:var(--color-teal-soft); padding:16px; border-radius:8px; display:flex; gap:12px; align-items:flex-start;">
               <input type="radio" name="shippingMethod" value="showroom" checked style="margin-top:3px;">
               <div>
@@ -999,11 +993,6 @@
                 </div>
               </div>
             </div>
-          </div>
-
-          <div style="margin-bottom:20px;">
-            <label style="font-size:12px; font-weight:600; display:block; margin-bottom:4px;">Fatura Adresi / Sipariş Notu (İsteğe Bağlı)</label>
-            <textarea rows="2" placeholder="Fatura adresi veya belirtmek istediğiniz ek notlar..." style="width:100%; padding:10px 14px; border:1px solid var(--color-border); border-radius:4px; font-family:inherit; resize:vertical;"></textarea>
           </div>
 
           <!-- Ödeme Yöntemi -->
@@ -1231,16 +1220,16 @@
 <div class="toast" id="toast"></div>
 
 <!-- SCRIPTS -->
-<script src="js/data.js?v=2026.08.25.2440"></script>
-<script src="js/utils.js?v=2026.08.25.2440"></script>
-<script src="js/seo.js?v=2026.08.25.2440"></script>
-<script src="js/valuation.js?v=2026.08.25.2440"></script>
-<script src="js/cart.js?v=2026.08.25.2440"></script>
-<script src="js/wishlist.js?v=2026.08.25.2440"></script>
-<script src="js/router.js?v=2026.08.25.2440"></script>
-<script src="js/paytr.js?v=2026.08.25.2440"></script>
-<script src="js/app.js?v=2026.08.25.2440"></script>
-<script src="js/legal-overrides.js?v=2026.08.25.2440"></script>
+<script src="js/data.js?v=2026.08.25.2445"></script>
+<script src="js/utils.js?v=2026.08.25.2445"></script>
+<script src="js/seo.js?v=2026.08.25.2445"></script>
+<script src="js/valuation.js?v=2026.08.25.2445"></script>
+<script src="js/cart.js?v=2026.08.25.2445"></script>
+<script src="js/wishlist.js?v=2026.08.25.2445"></script>
+<script src="js/router.js?v=2026.08.25.2445"></script>
+<script src="js/paytr.js?v=2026.08.25.2445"></script>
+<script src="js/app.js?v=2026.08.25.2445"></script>
+<script src="js/legal-overrides.js?v=2026.08.25.2445"></script>
 
 </body>
 </html>
