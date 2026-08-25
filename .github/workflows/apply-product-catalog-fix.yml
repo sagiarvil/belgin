@@ -1,0 +1,49 @@
+name: apply-product-catalog-fix
+
+on:
+  push:
+    branches:
+      - fix/product-catalog-integrity
+    paths:
+      - scripts/migrate-product-catalog.js
+      - .github/workflows/apply-product-catalog-fix.yml
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: fix/product-catalog-integrity
+          fetch-depth: 0
+
+      - name: Apply catalog corrections
+        run: node scripts/migrate-product-catalog.js
+
+      - name: Verify migration result
+        run: |
+          grep -q 'WDA2114.BA0043_Soldier.png' js/data.js
+          grep -q 'B6067417 · 17' js/data.js
+          grep -q 'B6067517 · 18' js/data.js
+          grep -q 'B6067617 · 16' js/data.js
+          grep -q 'B6048217 · 16' js/data.js
+          grep -q 'Captain Cook Otomatik Kırmızı-Siyah' js/data.js
+          if grep -q 'artjewellerywatches.com/api/photo/watch-definition/' js/data.js; then exit 1; fi
+          if grep -q 'artjewellerywatches.com/api/photo/jewelry-definition/' js/data.js; then exit 1; fi
+
+      - name: Commit corrected catalog
+        run: |
+          if git diff --quiet; then
+            echo 'No generated changes to commit.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add js/data.js
+          git commit -m 'fix: align product names references and images'
+          git push origin HEAD:fix/product-catalog-integrity
