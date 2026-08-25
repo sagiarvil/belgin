@@ -1,0 +1,96 @@
+name: deploy-production
+
+on:
+  workflow_run:
+    workflows: ["quality-gates"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: belgin-production-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main')
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      FIREBASE_PROJECT_ID: carbon-web-1265b
+      FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CARBON_WEB_1265B }}
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+    steps:
+      - name: Checkout audited main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: functions/package-lock.json
+
+      - name: Install functions dependencies
+        run: npm ci --prefix functions
+
+      - name: Re-run production gates
+        run: npm run ci
+
+      - name: Verify Firebase target contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          node - <<'NODE'
+          const cfg=require('./firebase.json');
+          if(cfg.hosting?.site!=='belgin') throw new Error('Unexpected Firebase hosting target');
+          const required=['createPayTRToken','paytrCallback','getOrderStatus'];
+          const rewrites=cfg.hosting?.rewrites||[];
+          for(const fn of required) if(!rewrites.some(r=>r.function===fn)) throw new Error(`Missing rewrite: ${fn}`);
+          NODE
+
+      - name: Authenticate with Google service account
+        if: env.FIREBASE_SERVICE_ACCOUNT != ''
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CARBON_WEB_1265B }}
+
+      - name: Require deployment credential
+        if: env.FIREBASE_SERVICE_ACCOUNT == '' && env.FIREBASE_TOKEN == ''
+        run: |
+          echo 'FIREBASE_DEPLOY_BLOCKED: GitHub secret FIREBASE_SERVICE_ACCOUNT_CARBON_WEB_1265B or FIREBASE_TOKEN is required.' >&2
+          exit 1
+
+      - name: Deploy Cloud Functions with service account
+        if: env.FIREBASE_SERVICE_ACCOUNT != ''
+        run: npx -y firebase-tools@latest deploy --project "$FIREBASE_PROJECT_ID" --only functions --non-interactive
+
+      - name: Deploy Hosting with service account
+        if: env.FIREBASE_SERVICE_ACCOUNT != ''
+        run: npx -y firebase-tools@latest deploy --project "$FIREBASE_PROJECT_ID" --only hosting --non-interactive
+
+      - name: Deploy Cloud Functions with legacy token
+        if: env.FIREBASE_SERVICE_ACCOUNT == '' && env.FIREBASE_TOKEN != ''
+        run: npx -y firebase-tools@latest deploy --project "$FIREBASE_PROJECT_ID" --only functions --non-interactive --token "$FIREBASE_TOKEN"
+
+      - name: Deploy Hosting with legacy token
+        if: env.FIREBASE_SERVICE_ACCOUNT == '' && env.FIREBASE_TOKEN != ''
+        run: npx -y firebase-tools@latest deploy --project "$FIREBASE_PROJECT_ID" --only hosting --non-interactive --token "$FIREBASE_TOKEN"
+
+      - name: Live smoke check
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location --max-time 30 https://belginkuyumculuk.com/ -o /tmp/index.html
+          grep -q 'belgin' /tmp/index.html || grep -qi 'Belgin Kuyumculuk' /tmp/index.html
+          curl --fail --silent --show-error --head --max-time 30 https://belginkuyumculuk.com/ | grep -i 'strict-transport-security:'
+          echo 'LIVE_SMOKE=PASS'

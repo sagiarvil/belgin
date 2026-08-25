@@ -42,6 +42,8 @@ jobs:
           node --check functions/delivery.js
           node --check functions/bootstrap.js
           node --check scripts/harden-public-claims.js
+          node --check scripts/bank-pos-hardening.js
+          node --check scripts/bank-pos-guard.js
           node --check scripts/harden-legal-pages.js
           node --check scripts/generate-legal-manifest.js
           node --check scripts/generate-payment-catalog.js
@@ -66,7 +68,19 @@ jobs:
           retention-days: 3
 
       - name: Production guard
-        run: npm run guard
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run guard 2>&1 | tee guard-output.log
+
+      - name: Upload guard diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quality-gates-guard-output
+          path: guard-output.log
+          if-no-files-found: ignore
+          retention-days: 3
 
       - name: Dependency audit
         run: npm audit --prefix functions --omit=dev --audit-level=high

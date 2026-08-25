@@ -3,7 +3,8 @@ const path = require('path');
 const crypto = require('crypto');
 
 const root = path.join(__dirname, '..');
-const version = '2026-08-25-v3';
+const MANIFEST_SCHEMA = 'belgin-legal-evidence-manifest-v3';
+const MANIFEST_VERSION = '2026-08-25-v3.1';
 
 const DOCUMENT_META = {
   'mesafeli-satis-sozlesmesi.html': { code: '01', version: '01_v2.1 (25.08.2026)', title: 'Mesafeli Satış Sözleşmesi' },
@@ -23,20 +24,22 @@ const DOCUMENT_META = {
   'magaza-teslim-tesellum-formu.html': { code: '13', version: '13_v2.1 (25.08.2026)', title: 'Mağaza Teslim-Tesellüm ve Ürün Kimliklendirme Formu' },
   'iade-degisim-cayma.html': { code: '14', version: '14_v2.1 (25.08.2026)', title: 'İade, Değişim ve Cayma Hakkı Rehberi' },
   'iade-degisim.html': { code: '14', version: '14_v2.1 (25.08.2026)', title: 'İade ve Değişim Koşulları' },
-  'guvenli-odeme-ve-3d-secure.html': { code: '15', version: '15_v2.1 (25.08.2026)', title: 'Güvenli Ödeme ve 3D Secure 2.0' },
+  'guvenli-odeme-ve-3d-secure.html': { code: '15', version: '15_v2.1 (25.08.2026)', title: 'Güvenli Ödeme ve 3D Secure' },
   'hukuki-delil-ve-kayit-politikasi.html': { code: '16', version: '16_v2.1 (25.08.2026)', title: 'Hukuki Delil ve Kayıt Politikası' }
 };
 
-const documents = Object.keys(DOCUMENT_META).filter((file) => fs.existsSync(path.join(root, file)));
+const documents = Object.keys(DOCUMENT_META)
+  .filter((file) => fs.existsSync(path.join(root, file)))
+  .sort();
 
 function sha256(content) {
   return crypto.createHash('sha256').update(content, 'utf8').digest('hex');
 }
 
 const documentRecords = {};
-for (const file of documents.sort()) {
+for (const file of documents) {
   const raw = fs.readFileSync(path.join(root, file), 'utf8');
-  const meta = DOCUMENT_META[file] || { code: '00', version: '2026-08-25-v3', title: file };
+  const meta = DOCUMENT_META[file];
   documentRecords[file] = {
     code: meta.code,
     version: meta.version,
@@ -46,27 +49,27 @@ for (const file of documents.sort()) {
   };
 }
 
-// Deterministic evidence root
+// generatedAt hariç deterministik kök: içerik/sürüm değişmedikçe aynı kalır.
 const canonicalEvidence = JSON.stringify({
-  schema: 'belgin-legal-evidence-manifest-v3',
-  version,
+  schema: MANIFEST_SCHEMA,
+  version: MANIFEST_VERSION,
   algorithm: 'SHA-256',
   documents: documentRecords
 });
 const manifestRootSha256 = sha256(canonicalEvidence);
 
 const manifest = {
-  schema: 'belgin-legal-evidence-manifest-v3',
-  version,
+  schema: MANIFEST_SCHEMA,
+  version: MANIFEST_VERSION,
   generatedAt: new Date().toISOString(),
   algorithm: 'SHA-256',
   manifestRootSha256,
   externalTimestampModel: 'OpenTimestamps/Bitcoin auxiliary proof',
-  legalNotice: 'SHA-256 ve OpenTimestamps kayitlari teknik butunluk/zaman ispati katmanidir; nitelikli elektronik imza veya 5070 sayili Kanun kapsaminda ESHS zaman damgasi degildir.',
+  legalNotice: 'SHA-256 ve OpenTimestamps kayıtları teknik belge bütünlüğü ve zaman ispatı katmanıdır; tek başına 5070 sayılı Kanun kapsamında nitelikli elektronik imza veya ESHS zaman damgası olarak sunulmaz.',
   documents: documentRecords
 };
 
 const serialized = JSON.stringify(manifest, null, 2) + '\n';
 fs.writeFileSync(path.join(root, 'legal-manifest.json'), serialized, 'utf8');
 fs.writeFileSync(path.join(root, 'functions', 'legal-manifest.json'), serialized, 'utf8');
-console.log(`[legal-manifest] ${documents.length} hukuk belgesi kaydedildi. root=${manifestRootSha256}`);
+console.log(`[legal-manifest] ${documents.length} hukuk belgesi; resmi kod/sürüm + SHA-256; root=${manifestRootSha256}`);

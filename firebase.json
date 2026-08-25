@@ -18,12 +18,18 @@
     "ignore": [
       "firebase.json",
       ".firebaserc",
+      ".firebaserc.example",
       ".github/**",
       "**/.*",
       "**/node_modules/**",
       "functions/**",
       "tests/**",
       "scripts/**",
+      "belgin_kuyumculuk_hukuki_sozlesme_paketi/**",
+      "**/*.docx",
+      "**/*.xlsx",
+      "**/*.pdf",
+      "**/*.md",
       "package.json",
       "package-lock.json",
       "*kopyası.txt",
@@ -61,6 +67,10 @@
             "value": "max-age=31536000; includeSubDomains"
           },
           {
+            "key": "Content-Security-Policy",
+            "value": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://www.paytr.com; frame-src https://www.paytr.com; media-src 'self'; manifest-src 'self'; upgrade-insecure-requests"
+          },
+          {
             "key": "X-Content-Type-Options",
             "value": "nosniff"
           },
@@ -74,7 +84,19 @@
           },
           {
             "key": "Permissions-Policy",
-            "value": "camera=(), microphone=(), geolocation=()"
+            "value": "camera=(), microphone=(), geolocation=(), usb=(), browsing-topics=()"
+          },
+          {
+            "key": "Cross-Origin-Opener-Policy",
+            "value": "same-origin-allow-popups"
+          },
+          {
+            "key": "Cross-Origin-Resource-Policy",
+            "value": "same-site"
+          },
+          {
+            "key": "X-Permitted-Cross-Domain-Policies",
+            "value": "none"
           }
         ]
       },
