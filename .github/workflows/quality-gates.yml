@@ -38,8 +38,10 @@ jobs:
           node --check js/legal-compliance.js
           node --check js/legal-overrides.js
           node --check js/legal-stamp.js
+          node --check js/order-evidence.js
           node --check functions/index.js
           node --check functions/delivery.js
+          node --check functions/evidence.js
           node --check functions/bootstrap.js
           node --check scripts/harden-public-claims.js
           node --check scripts/bank-pos-hardening.js
