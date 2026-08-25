@@ -42,6 +42,10 @@
       {
         "source": "/api/getOrderStatus",
         "function": "getOrderStatus"
+      },
+      {
+        "source": "/api/completeHighValueDelivery",
+        "function": "completeHighValueDelivery"
       }
     ],
     "headers": [
