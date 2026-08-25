@@ -22,11 +22,33 @@ const App = {
       setInterval(fetchLiveMarketRates, 45000);
     }
 
+    // Header Dropdown Otomatik Kapanma Dinleyicisi
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('.nav-dropdown-menu a') || e.target.closest('.nav-sub-brand-item') || e.target.closest('.nav-dropdown-single-item')) {
+        this.closeNavDropdowns();
+      }
+    });
+
     const hash = location.hash.replace('#', '');
     if (hash && document.getElementById('page-' + hash)) {
       Router.navigate(hash, false);
     } else {
       Router.navigate('ana-sayfa', false);
+    }
+  },
+
+  // HEADER DROPDOWN PENCERESİNİ ANINDA KAPAT
+  closeNavDropdowns() {
+    document.querySelectorAll('.nav-has-dropdown').forEach(li => {
+      li.classList.add('dropdown-force-closed');
+      setTimeout(() => li.classList.remove('dropdown-force-closed'), 600);
+    });
+    document.querySelectorAll('.nav-dropdown-menu').forEach(menu => {
+      menu.classList.add('dropdown-menu-hidden');
+      setTimeout(() => menu.classList.remove('dropdown-menu-hidden'), 600);
+    });
+    if (document.activeElement && typeof document.activeElement.blur === 'function') {
+      document.activeElement.blur();
     }
   },
 
@@ -241,6 +263,7 @@ const App = {
   },
 
   filterWatchesByBrand(brand = 'all', btn = null) {
+    this.closeNavDropdowns();
     this.currentWatchBrand = brand;
     this.allWatchPage = 1;
     if (Router.currentPage !== 'saatler') {

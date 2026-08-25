@@ -49,6 +49,10 @@ const Router = {
   navigate(page, pushState = true, options = {}) {
     if (!page) page = 'ana-sayfa';
 
+    if (typeof App !== 'undefined' && App.closeNavDropdowns) {
+      App.closeNavDropdowns();
+    }
+
     if (page.startsWith('urun-') || page.startsWith('product-')) {
       const id = parseInt(page.replace('urun-', '').replace('product-', ''));
       if (typeof App !== 'undefined' && App.openProduct) {

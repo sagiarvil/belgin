@@ -462,6 +462,13 @@ p, span, li, td, th, label, input, button, select, textarea {
   pointer-events: auto;
   transform: translateX(-50%) translateY(0);
 }
+.nav-has-dropdown.dropdown-force-closed .nav-dropdown-menu,
+.nav-dropdown-menu.dropdown-menu-hidden {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transform: translateX(-50%) translateY(8px) !important;
+}
 .nav-dropdown-header {
   display: flex;
   justify-content: space-between;
