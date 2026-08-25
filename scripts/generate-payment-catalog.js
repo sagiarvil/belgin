@@ -19,6 +19,9 @@ const catalog = Object.fromEntries(
       name: String(product.name || 'Ürün'),
       brand: String(product.brand || ''),
       price,
+      category: String(product.category || ''),
+      isGold: product.isGold === true,
+      metal: String(product.metal || ''),
       inStock: product.inStock !== false,
     }];
   })
