@@ -647,7 +647,7 @@ const App = {
                 <span class="pdp-trust-item-icon">⚖️</span>
                 <div class="pdp-trust-item-text">
                   <strong>Ekspertiz & Takas Güvencesi</strong>
-                  <span>İzmir Kuyumcular Odası (İZKO) 4892 tescilli güvence.</span>
+                  <span>Sertifikalı & 12 Nokta Ekspertiz Güvencesi</span>
                 </div>
               </div>
             </div>
@@ -759,7 +759,7 @@ const App = {
                 <div class="pdp-spec-rows">
                   <div class="pdp-spec-row"><span class="pdp-spec-key">Garanti Süresi</span><span class="pdp-spec-value">2 Yıl Distribütör Garantili</span></div>
                   <div class="pdp-spec-row"><span class="pdp-spec-key">Teslimat Kuralı</span><span class="pdp-spec-value">12.000 TL+ Mağazadan Teslim</span></div>
-                  <div class="pdp-spec-row"><span class="pdp-spec-key">Ekspertiz Kaydı</span><span class="pdp-spec-value">İZKO No: 4892 Onaylı</span></div>
+                  <div class="pdp-spec-row"><span class="pdp-spec-key">Ekspertiz Kaydı</span><span class="pdp-spec-value">Sertifikalı & Ekspertiz Onaylı</span></div>
                 </div>
               </div>
 

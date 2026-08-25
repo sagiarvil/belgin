@@ -1953,7 +1953,8 @@ p, span, li, td, th, label, input, button, select, textarea {
 }
 .footer-art-col a:hover { color: var(--color-gold-bright); }
 
-.footer-etbis-box {
+.footer-etbis-box,
+.footer-legal-badge-box {
   background: rgba(255, 255, 255, 0.025);
   border: 1px solid rgba(194, 167, 104, 0.18);
   border-radius: var(--radius-md);
@@ -1967,7 +1968,8 @@ p, span, li, td, th, label, input, button, select, textarea {
   font-size: 12px;
   color: #A0A0AC;
 }
-.etbis-badge-pill {
+.etbis-badge-pill,
+.legal-badge-pill {
   display: inline-flex;
   align-items: center;
   gap: 8px;

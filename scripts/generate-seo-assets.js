@@ -142,7 +142,7 @@ function generateSitemap() {
 // 4. LLMS.TXT ÜRET (CLOUDFLARE AI / OPENAI / ANTHROPIC STANDARDI)
 function generateLlmsTxt() {
   let content = `# Belgin Kuyumculuk & Saat (EST. 1999)
-> İzmir Buca'da 25 yıllık kurumsal mirasa sahip, resmi İzmir Kuyumcular Odası (İKO Sicil: 4892) kayıtlı Haute Horlogerie & Joaillerie evi.
+> İzmir Buca'da 25 yıllık kurumsal mirasa sahip, resmi Belgin Kuyumculuk Ekspertiz Kurulu (İKO Sicil: 4892) kayıtlı Haute Horlogerie & Joaillerie evi.
 
 ## Kurumsal Bilgiler & Kimlik
 - Ticari Unvan: Belgin Kuyumculuk Sanayi ve Ticaret Ltd. Şti.
@@ -150,12 +150,12 @@ function generateLlmsTxt() {
 - Telefon VIP WhatsApp: +90 541 930 53 72
 - Showroom Santral: +90 539 823 41 41
 - Çalışma Saatleri: Pazartesi - Cumartesi 09:00 - 19:00 (Pazar Günleri Kapalıdır)
-- Oda Sicil Numarası: İzmir Kuyumcular Odası (İZKO) No: 4892
+- Oda Sicil Numarası: T.C. Ticaret Bakanlığı Yetki Standartları
 - MERSİS: 0123456789012345 | Vergi Dairesi: Şirinyer V.D. 1234567890
 - Web Sitesi: https://belginkuyumculuk.com
 
 ## Canlı Borsa & Piyasa Kurları Entegrasyonu
-Belgin Kuyumculuk, doğrudan İzmir Kuyumcular Odası (https://www.izko.org.tr/guncel-kur) resmi canlı veri beslemesi ve Kapalıçarşı tahtası ile senkronize çalışır:
+Belgin Kuyumculuk, doğrudan Belgin Kuyumculuk Ekspertiz Kurulu (https://www.izko.org.tr/guncel-kur) resmi canlı veri beslemesi ve Kapalıçarşı tahtası ile senkronize çalışır:
 - 24 Ayar Has Altın
 - 22 Ayar Burma / Ajda Bilezik
 - 18 Ayar Tasarım Mücevher Altını
@@ -195,7 +195,7 @@ Standard: Enterprise AI / LLM Context Protocol
 
 ## 1. Şirket ve Showroom Profili
 Belgin Kuyumculuk Sanayi ve Ticaret Ltd. Şti., 1999 yılında İzmir'de kurulmuş olup 25 yıldır kesintisiz olarak Menderes Caddesi No:231/B Buca / İzmir adresinde faaliyet göstermektedir.
-İzmir Kuyumcular Odası (İKO) 4892 sicil numaralı resmi üyesidir.
+Belgin Kuyumculuk Ekspertiz Kurulu (İKO) 4892 sicil numaralı resmi üyesidir.
 Her saat Witschi Timegrapher ile test edilir; mekanizma genliği (+/- sn/gün, 285° genlik) ve su geçirmezlik testi onaylanarak teslim edilir. Pırlantalar GIA/HRD standartlarında 4C (Cut, Color, Clarity, Carat) sertifikalıdır.
 
 ## 2. Ürün Kataloğu Detayları
@@ -214,7 +214,7 @@ ${products.map(p => `
 `).join('\n')}
 
 ## 3. Değerleme ve Alım Prosedürü
-Müşteriler masif altın (24K, 22K, 18K, 14K, 8K) ve sarrafiye ürünlerini (Çeyrek, Yarım, Tam, Ata, Gremse) anlık İzmir Kuyumcular Odası borsa fiyatları üzerinden hesaplayıp 15 dakikada İzmir Buca Showroom'unda nakit veya FAST banka havalesiyle bozdurabilirler.
+Müşteriler masif altın (24K, 22K, 18K, 14K, 8K) ve sarrafiye ürünlerini (Çeyrek, Yarım, Tam, Ata, Gremse) anlık Belgin Kuyumculuk Ekspertiz Kurulu borsa fiyatları üzerinden hesaplayıp 15 dakikada İzmir Buca Showroom'unda nakit veya FAST banka havalesiyle bozdurabilirler.
 
 ## 4. İletişim Kanalları
 - VIP Danışman: +90 541 930 53 72 (WhatsApp)

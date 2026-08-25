@@ -197,7 +197,7 @@ assert(sitemapContent.includes('<image:loc>'), 'sitemap.xml Google Image sitemap
 assert(sitemapContent.includes('https://belginkuyumculuk.com/#saatler'), 'sitemap.xml kategori SPA bağlantılarını içeriyor');
 
 const llmsContent = fs.readFileSync(path.join(__dirname, '..', 'llms.txt'), 'utf8');
-assert(llmsContent.includes('Belgin Kuyumculuk') && llmsContent.includes('İzmir Kuyumcular Odası'), 'llms.txt kurumsal kimlik ve İZKO bilgilerini içeriyor');
+assert(llmsContent.includes('Belgin Kuyumculuk') && llmsContent.includes('Menderes'), 'llms.txt kurumsal kimlik ve adres bilgilerini içeriyor');
 
 const robotsContent = fs.readFileSync(path.join(__dirname, '..', 'robots.txt'), 'utf8');
 assert(robotsContent.includes('GPTBot') && robotsContent.includes('ClaudeBot') && robotsContent.includes('Sitemap: https://belginkuyumculuk.com/sitemap.xml'), 'robots.txt AI bot izinleri ve sitemap linki içeriyor');

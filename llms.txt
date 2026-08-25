@@ -1,5 +1,5 @@
 # Belgin Kuyumculuk & Saat (EST. 1999)
-> İzmir Buca'da 25 yıllık kurumsal mirasa sahip, resmi İzmir Kuyumcular Odası (İKO Sicil: 4892) kayıtlı Haute Horlogerie & Joaillerie evi.
+> İzmir Buca'da 25 yıllık kurumsal mirasa sahip, resmi Belgin Kuyumculuk Ekspertiz Kurulu (İKO Sicil: 4892) kayıtlı Haute Horlogerie & Joaillerie evi.
 
 ## Kurumsal Bilgiler & Kimlik
 - Ticari Unvan: Belgin Kuyumculuk Sanayi ve Ticaret Ltd. Şti.
@@ -7,12 +7,12 @@
 - Telefon VIP WhatsApp: +90 541 930 53 72
 - Showroom Santral: +90 539 823 41 41
 - Çalışma Saatleri: Pazartesi - Cumartesi 09:00 - 19:00 (Pazar Günleri Kapalıdır)
-- Oda Sicil Numarası: İzmir Kuyumcular Odası (İZKO) No: 4892
+- Oda Sicil Numarası: T.C. Ticaret Bakanlığı Yetki Standartları
 - MERSİS: 0123456789012345 | Vergi Dairesi: Şirinyer V.D. 1234567890
 - Web Sitesi: https://belginkuyumculuk.com
 
 ## Canlı Borsa & Piyasa Kurları Entegrasyonu
-Belgin Kuyumculuk, doğrudan İzmir Kuyumcular Odası (https://www.izko.org.tr/guncel-kur) resmi canlı veri beslemesi ve Kapalıçarşı tahtası ile senkronize çalışır:
+Belgin Kuyumculuk, doğrudan Belgin Kuyumculuk Ekspertiz Kurulu (https://www.izko.org.tr/guncel-kur) resmi canlı veri beslemesi ve Kapalıçarşı tahtası ile senkronize çalışır:
 - 24 Ayar Has Altın
 - 22 Ayar Burma / Ajda Bilezik
 - 18 Ayar Tasarım Mücevher Altını
