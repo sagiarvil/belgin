@@ -38,8 +38,20 @@ function scrubPublicClaims(content) {
   // Tüm checkbox'lar aktif kullanıcı iradesiyle seçilmelidir; hiçbir rıza/onay önceden işaretlenmez.
   out = out.replace(/(<input\b(?=[^>]*\btype=["']checkbox["'])[^>]*?)\schecked(?=[\s>])/gi, '$1');
 
-  // Kuyum işlemlerinde yanlış 6/9/12 taksit satırlarını, yalnız ilgili <tr> sınırı içinde kaldır.
-  out = out.replace(/\s*<tr[^>]*>(?:(?!<\/tr>)[\s\S])*?<td[^>]*>\s*(?:<strong>)?\s*(?:6|9|12)\s*Taksit\b(?:(?!<\/tr>)[\s\S])*?<\/tr>/gi, '');
+  // Eski ürün detayında sabit 6/9/12 planı yerine yalnız mevzuata bağlı açıklama göster.
+  const installmentDisclosure = `<!-- SEKME 3: Taksit Seçenekleri -->
+          <div id="tab-installments" class="pdp-tab-pane" role="tabpanel">
+            <div style="background:#FFFFFF; border:1px solid var(--color-border); border-radius:8px; padding:24px; line-height:1.7;">
+              <strong style="display:block; margin-bottom:8px;">Kart ve banka koşullarına göre taksit</strong>
+              <p style="font-size:13.5px; color:var(--color-muted); margin:0;">Taksit seçenekleri ödeme adımında, kartın bankası ve işlem tarihinde yürürlükte bulunan mevzuat sınırlarına göre gösterilir. Sitede mevzuatın üzerinde sabit taksit taahhüdü verilmez.</p>
+            </div>
+          </div>
+
+          <!-- SEKME 4:`;
+  out = out.replace(/<!-- SEKME 3:[\s\S]*?<!-- SEKME 4:/g, installmentDisclosure);
+
+  // Geriye kalan eski sabit yüksek taksit etiketleri kamu metninde bulunmamalı.
+  out = out.replace(/\b(?:6|9|12)\s*Taksit\b/gi, 'Mevzuata Uygun Taksit');
 
   return out;
 }
@@ -64,13 +76,10 @@ for (const file of htmlFiles) {
   });
 }
 
-// Dinamik ürün detayındaki banka açısından riskli satış/garanti/taksit iddialarını da temizle.
 for (const file of ['js/app.js', 'js/cart.js', 'js/router.js']) {
   writeIfChanged(file, scrubPublicClaims);
 }
 
-// Ödeme backend'inde kuyum işlemleri için azami taksiti ihtiyatlı biçimde 3'e sınırla
-// ve callback tutarını siparişin sunucu tarafı tutarıyla birebir doğrula.
 writeIfChanged('functions/index.js', (content) => {
   let out = content.replace(/max_installment:\s*6/g, 'max_installment: 3');
   if (!out.includes('CALLBACK_AMOUNT_MISMATCH')) {
@@ -82,7 +91,6 @@ writeIfChanged('functions/index.js', (content) => {
   return out;
 });
 
-// Ana branch'te legal manifest v3'e geçildiği için regresyon testi de aynı şemayı doğrulamalı.
 writeIfChanged('tests/test-suite.js', (content) => content
   .replace(/belgin-legal-evidence-manifest-v2/g, 'belgin-legal-evidence-manifest-v3')
   .replace(/Hukuki belge manifest şeması v2/g, 'Hukuki belge manifest şeması v3'));
