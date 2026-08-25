@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [main]
   push:
-    branches: [main, "chore/**", "feat/**", "fix/**"]
+    branches: [main, "chore/**", "feat/**", "fix/**", "legal/**", "legal-compliance-**"]
 
 concurrency:
   group: belgin-${{ github.ref }}
@@ -35,6 +35,8 @@ jobs:
       - name: Syntax checks
         run: |
           node --check js/paytr.js
+          node --check js/legal-compliance.js
+          node --check js/legal-overrides.js
           node --check functions/index.js
           node --check scripts/generate-payment-catalog.js
           node --check scripts/generate-seo-assets.js
