@@ -38,8 +38,8 @@ function scrubPublicClaims(content) {
   // Tüm checkbox'lar aktif kullanıcı iradesiyle seçilmelidir; hiçbir rıza/onay önceden işaretlenmez.
   out = out.replace(/(<input\b(?=[^>]*\btype=["']checkbox["'])[^>]*?)\schecked(?=[\s>])/gi, '$1');
 
-  // Kuyum işlemlerinde yanlış 6/9/12 taksit tablolarını kamu arayüzünden kaldır.
-  out = out.replace(/\s*<tr[^>]*>[\s\S]*?<td[^>]*>\s*<strong>?\s*(?:6|9|12)\s*Taksit[\s\S]*?<\/tr>/gi, '');
+  // Kuyum işlemlerinde yanlış 6/9/12 taksit satırlarını, yalnız ilgili <tr> sınırı içinde kaldır.
+  out = out.replace(/\s*<tr[^>]*>(?:(?!<\/tr>)[\s\S])*?<td[^>]*>\s*(?:<strong>)?\s*(?:6|9|12)\s*Taksit\b(?:(?!<\/tr>)[\s\S])*?<\/tr>/gi, '');
 
   return out;
 }
