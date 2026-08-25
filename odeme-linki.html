@@ -280,10 +280,7 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label class="form-label">Özel Not / Açıklama (İsteğe Bağlı)</label>
-          <input type="text" id="orderNote" class="form-input" placeholder="Örn: Orijinal Kutu, Sertifika ve Özel VIP Paketleme">
-        </div>
+
 
         <button type="submit" class="btn-submit">
           <span>🔗</span> VIP Ödeme Linkini Oluştur
@@ -343,13 +340,11 @@
 
       const title = document.getElementById('productTitle').value.trim();
       const amount = parseFloat(amountInput.value);
-      const note = document.getElementById('orderNote').value.trim();
 
       const payload = {
         orderId: 'VIP-' + Math.floor(100000 + Math.random() * 900000),
         title,
         amount,
-        orderNote: note,
         createdAt: new Date().toISOString()
       };
 

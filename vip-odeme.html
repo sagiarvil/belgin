@@ -107,7 +107,6 @@
       <div class="product-summary">
         <div>
           <div id="productTitleDisplay" class="product-name">Lüks Saat / Mücevherat Ürünü</div>
-          <div id="orderNoteDisplay" style="font-size:13px; color:var(--muted); margin-top:4px;">Özel Showroom Siparişi</div>
         </div>
         <div id="productAmountDisplay" class="product-price">₺0</div>
       </div>
@@ -188,10 +187,6 @@
       document.getElementById('productTitleDisplay').textContent = currentPayload.title || 'Lüks Koleksiyon Ürünü';
       document.getElementById('productAmountDisplay').textContent = '₺' + Number(currentPayload.amount || 0).toLocaleString('tr-TR');
       
-      if (currentPayload.orderNote) {
-        document.getElementById('orderNoteDisplay').textContent = currentPayload.orderNote;
-      }
-
       syncDraft();
     }
 
