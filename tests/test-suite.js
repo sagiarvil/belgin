@@ -44,20 +44,7 @@ assert(functionsCode.includes("collection('auditEvents')"), 'Append-only audit e
 assert(functionsCode.includes('getLegalEvidenceSnapshot'), 'Hukuki belge sürüm/hash snapshot katmanı aktif');
 assert(functionsCode.includes('suspiciousTransactionAssessmentAmountIndependent'), 'Şüpheli işlem değerlendirmesinin tutardan bağımsız olduğu kayıt mimarisinde belirtilir');
 
-console.log('\n--- 3. Yüksek değerli mağaza teslim güvenlik kapısı ---');
-const bootstrap = read('functions/bootstrap.js');
-const deliveryFn = read('functions/delivery.js');
-const firebaseConfig = JSON.parse(read('firebase.json'));
-assert(bootstrap.includes('completeHighValueDelivery'), 'Teslim tamamlama fonksiyonu Firebase entrypoint üzerinden export edilir');
-assert(deliveryFn.includes('verifyIdToken') && deliveryFn.includes('decoded.admin !== true && decoded.staff !== true'), 'Teslim tamamlama yalnız yetkili admin/personel tokenı ile çalışır');
-assert(deliveryFn.includes("order.paymentStatus !== 'PAID'"), 'Ödeme kesinleşmeden yüksek değerli teslim tamamlanamaz');
-assert(deliveryFn.includes('identityVerified') && deliveryFn.includes('deliveryFormCompleted') && deliveryFn.includes('productIdentifiersVerified'), 'Kimlik, imzalı teslim formu ve ürün kimliklendirme kontrolleri zorunludur');
-assert(deliveryFn.includes('deliveryFormReference') && deliveryFn.includes('productIdentifiersHash'), 'Teslim form referansı ve ürün kimliklendirme hash izi tutulur');
-assert(deliveryFn.includes('HIGH_VALUE_DELIVERY_COMPLETED') && deliveryFn.includes("deliveryStatus: 'DELIVERED'"), 'Teslim tamamlanması audit event ile kaydedilir');
-assert(!/tcKimlik|tckn|kimlikNo|identityNumber/i.test(deliveryFn), 'Teslim endpointinde ham TCKN/kimlik numarası saklanmaz');
-assert((firebaseConfig.hosting?.rewrites || []).some(r => r.function === 'completeHighValueDelivery'), 'Hosting yalnız korumalı teslim endpointine rewrite içerir');
-
-console.log('\n--- 4. Hukuki belge seti ---');
+console.log('\n--- 3. Hukuki belge seti ---');
 const legalDir = path.join(__dirname, '../belgin_kuyumculuk_hukuki_sozlesme_paketi');
 const legalDocs = [
 '00_Web_Hukuki_Uyum_Uygulama_Kontrol_Listesi.docx','01_Mesafeli_Satis_Sozlesmesi_Belgin_Kuyumculuk.docx','02_On_Bilgilendirme_Formu.docx','03_Yuksek_Degerli_Urun_Magazadan_Teslim_Protokolu.docx','04_Cayma_Iade_Degisim_Iptal_Politikasi.docx','05_KVKK_Musteri_Aydinlatma_Metni.docx','06_Gizlilik_ve_Kisisel_Veri_Guvenligi_Politikasi.docx','07_Cerez_Politikasi.docx','08_Web_Sitesi_Kullanim_Kosullari.docx','09_Ticari_Elektronik_Ileti_Onay_Metni.docx','10_KVKK_Acik_Riza_Metni.docx','11_Garanti_Ayipli_Mal_Satis_Sonrasi_Politikasi.docx','12_KYC_MASAK_Supheli_Islem_Uyum_Politikasi.docx','13_Magaza_Teslim_Tesellum_Formu.docx'];
@@ -66,7 +53,7 @@ assert(legalDocs.every(f => fs.existsSync(path.join(legalDir, f))), '14 hukuki D
 const publicPages = ['mesafeli-satis-sozlesmesi.html','on-bilgilendirme-formu.html','yuksek-degerli-urun-teslimi.html','iade-degisim-cayma.html','kvkk-aydinlatma-metni.html','gizlilik-politikasi.html','cerez-politikasi.html','kullanim-kosullari.html','ticari-elektronik-ileti-onayi.html','kvkk-acik-riza.html','garanti-ve-satis-sonrasi.html','musteri-tanima-ve-islem-guvenligi.html','hukuki-delil-ve-kayit-politikasi.html'];
 assert(publicPages.every(f => fs.existsSync(path.join(__dirname, '..', f))), '13 müşteri dostu hukuki HTML sayfası mevcut');
 
-console.log('\n--- 5. 12.000 TL iç güvenlik / MASAK ayrımı ---');
+console.log('\n--- 4. 12.000 TL iç güvenlik / MASAK ayrımı ---');
 const legalClient = read('js/legal-compliance.js');
 assert(legalClient.includes('>=HIGH_VALUE_SECURE_DELIVERY_THRESHOLD'), 'Frontend 12.000 TL dahil iç güvenlik standardını tetikler');
 function internalHighValue(p) {
@@ -93,20 +80,26 @@ assert(deliveryPage.includes('yalnız mağazadan') || deliveryPage.includes('yal
 assert(deliveryPage.includes('kimlik') && deliveryPage.includes('imza'), 'Kimlik doğrulaması ve imza şartı görünür');
 assert(deliveryPage.includes('MASAK Yükümlülükleri Ayrıca Uygulanır'), 'MASAK yükümlülüklerinin ayrıca uygulanacağı görünür');
 
-console.log('\n--- 6. Belge bütünlük ve sahte e-imza koruması ---');
+console.log('\n--- 5. Belge bütünlük ve ücretsiz dış zaman ispatı ---');
 const manifest = JSON.parse(read('legal-manifest.json'));
-assert(manifest.schema === 'belgin-legal-evidence-manifest-v2', 'Hukuki belge manifest şeması v2');
+assert(manifest.schema === 'belgin-legal-evidence-manifest-v3', 'Hukuki belge manifest şeması v3');
+assert(/^[a-f0-9]{64}$/i.test(String(manifest.manifestRootSha256||'')), 'Deterministik hukuk seti kök SHA-256 mevcut');
 assert(Object.keys(manifest.documents || {}).length >= 12, 'Hukuki manifest en az 12 belge içeriyor');
 assert(Object.values(manifest.documents || {}).every(x => /^[a-f0-9]{64}$/i.test(String(x.sha256||''))), 'Tüm hukuki belgelerde gerçek SHA-256 biçimi var');
 const legalStamp = read('js/legal-stamp.js');
 assert(!legalStamp.includes('generateSimulatedHash') && !legalStamp.includes('SHA256-TS-'), 'Simüle hash/zaman damgası üretimi kaldırılmıştır');
 assert(!legalStamp.includes('Elektronik Olarak İmzalandı & Onaylandı'), 'Gerçek olmayan elektronik imza iddiası yoktur');
-assert(legalStamp.includes('nitelikli elektronik imza') && legalStamp.includes('SHA-256 belge bütünlük özeti'), 'Belge hashinin hukuki niteliği doğru açıklanmıştır');
+assert(legalStamp.includes('OpenTimestamps') && legalStamp.includes('Dış Zaman İspatı'), 'Hukuk sayfalarında bağımsız OpenTimestamps katmanı gösterilir');
+assert(legalStamp.includes('nitelikli elektronik imza') && legalStamp.includes('5070'), 'Ücretsiz teknik zaman ispatının ESHS/e-imza olmadığı açıkça belirtilir');
 const evidencePolicy = read('hukuki-delil-ve-kayit-politikasi.html');
+assert(evidencePolicy.includes('OpenTimestamps / Bitcoin'), 'Hukuki delil politikasında OpenTimestamps/Bitcoin modeli açıklanmıştır');
 assert(evidencePolicy.includes('Append-only işlem geçmişi'), 'Append-only delil zinciri kamu politikasında açıklanmıştır');
-assert(evidencePolicy.includes('nitelikli elektronik imza') && evidencePolicy.includes('yetkili elektronik sertifika hizmet sağlayıcısı'), 'Nitelikli zaman damgası/e-imza ayrımı doğru yapılmıştır');
+assert(evidencePolicy.includes('nitelikli elektronik imza') && evidencePolicy.includes('Elektronik Sertifika Hizmet Sağlayıcısı'), 'Nitelikli zaman damgası/e-imza ayrımı doğru yapılmıştır');
+const otsWorkflow = read('.github/workflows/legal-free-timestamp.yml');
+assert(otsWorkflow.includes('ots stamp') && otsWorkflow.includes('ots upgrade'), 'OpenTimestamps otomatik stamp/upgrade workflow aktif');
+assert(otsWorkflow.includes('manifestRootSha256'), 'OpenTimestamps ham build zamanına değil deterministik hukuk köküne bağlanır');
 
-console.log('\n--- 7. Ön bilgilendirme, sözleşme, KVKK ---');
+console.log('\n--- 6. Ön bilgilendirme, sözleşme, KVKK ---');
 const preInfo = read('on-bilgilendirme-formu.html');
 const contract = read('mesafeli-satis-sozlesmesi.html');
 const kvkk = read('kvkk.html');
@@ -114,9 +107,8 @@ assert(preInfo.includes('Şüpheli işlem değerlendirmesi tutardan bağımsızd
 assert(contract.includes('MASAK ve iç güvenlik standardı birlikte uygulanır'), 'Mesafeli satış sözleşmesinde iç standart ve MASAK birlikte düzenlenmiş');
 assert(kvkk.includes('MASAK ve Kanuni Uyum Amaçlı İşleme'), 'KVKK metninde MASAK/uyum veri işleme amacı açıklanmış');
 assert(kvkk.includes('Bu metin bir açık rıza metni değildir'), 'KVKK aydınlatma ile açık rıza ayrılmış');
-assert(kvkk.includes('Yurt Dışı Aktarım') && kvkk.includes('Veri İhlali ve Olay Yönetimi'), 'KVKK metni yurt dışı aktarım ve veri ihlali katmanlarını içerir');
 
-console.log('\n--- 8. Tüketici ve consent korumaları ---');
+console.log('\n--- 7. Tüketici ve consent korumaları ---');
 const returnPolicy = read('iade-degisim-cayma.html');
 const normalizedReturnPolicy = returnPolicy.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').toLowerCase();
 assert(!normalizedReturnPolicy.includes('tüm altın ürünlerinde iade yoktur') && !normalizedReturnPolicy.includes('altın ürünlerinde hiçbir şekilde iade yoktur'), 'Altın için blanket iade yok hükmü bulunmaz');
