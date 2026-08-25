@@ -94,20 +94,34 @@ if (!manifestPaths.every(fs.existsSync)) {
   const publicManifest = JSON.parse(fs.readFileSync(manifestPaths[0], 'utf8'));
   const fnManifest = JSON.parse(fs.readFileSync(manifestPaths[1], 'utf8'));
   const docs = publicManifest.documents || {};
+  if (publicManifest.schema !== 'belgin-legal-evidence-manifest-v3') fail('Hukuki manifest v3 şemasında değil.');
+  if (!/^[a-f0-9]{64}$/i.test(String(publicManifest.manifestRootSha256 || ''))) fail('Deterministik hukuk seti kök SHA-256 eksik/geçersiz.');
   if (Object.keys(docs).length < 12) fail('Hukuki manifest yeterli sayıda belge içermiyor.');
   if (Object.values(docs).some((r) => !/^[a-f0-9]{64}$/i.test(String(r.sha256 || '')))) fail('Hukuki manifestte geçersiz SHA-256 bulundu.');
   const a = JSON.parse(JSON.stringify(publicManifest));
   const b = JSON.parse(JSON.stringify(fnManifest));
   delete a.generatedAt; delete b.generatedAt;
   if (JSON.stringify(a) !== JSON.stringify(b)) fail('Public ve Functions hukuki manifestleri uyuşmuyor.');
-  else pass(`Hukuki belge bütünlük manifesti doğrulandı: ${Object.keys(docs).length} belge.`);
+  else pass(`Hukuki belge bütünlük manifesti v3 doğrulandı: ${Object.keys(docs).length} belge.`);
 }
 
 const legalStamp = read('js/legal-stamp.js');
 const prohibitedClaims = ['generateSimulatedHash', 'SHA256-TS-', 'Elektronik Olarak İmzalandı', 'T.C. HUKUKİ DELİL & KALICI VERİ SAKLAYICISI ONAYI'];
 for (const claim of prohibitedClaims) if (legalStamp.includes(claim)) fail(`Simüle e-imza/zaman damgası iddiası kaldı: ${claim}`);
 if (!legalStamp.includes('nitelikli elektronik imza') || !legalStamp.includes('SHA-256 belge bütünlük özeti')) fail('Belge bütünlük kutusunun hukuki nitelik açıklaması eksik.');
-else pass('Simüle e-imza kaldırıldı; belge bütünlük kaydı doğru nitelendiriliyor.');
+if (!legalStamp.includes('OpenTimestamps') || !legalStamp.includes('EXTERNAL_STATUS_URL')) fail('Ücretsiz bağımsız dış zaman ispatı UI katmanı eksik.');
+else pass('Simüle e-imza kaldırıldı; SHA-256 + OpenTimestamps dış zaman ispatı doğru nitelendiriliyor.');
+
+const otsWorkflowPath = path.join(root, '.github', 'workflows', 'legal-free-timestamp.yml');
+if (!fs.existsSync(otsWorkflowPath)) {
+  fail('OpenTimestamps otomatik dış zaman ispatı workflowu eksik.');
+} else {
+  const otsWorkflow = read('.github/workflows/legal-free-timestamp.yml');
+  if (!otsWorkflow.includes('ots stamp') || !otsWorkflow.includes('ots upgrade')) fail('OpenTimestamps stamp/upgrade adımları eksik.');
+  if (!otsWorkflow.includes('manifestRootSha256')) fail('Dış zaman ispatı deterministik hukuk köküne bağlı değil.');
+  if (!otsWorkflow.includes('legal-proofs/status.json')) fail('Dış zaman ispatı public durum kaydı üretilmiyor.');
+  else pass('Ücretsiz OpenTimestamps/Bitcoin dış zaman ispatı otomasyonu hazır.');
+}
 
 if (!fs.existsSync(path.join(root, 'hukuki-delil-ve-kayit-politikasi.html'))) fail('Hukuki Delil ve Kayıt Politikası eksik.');
 
