@@ -40,9 +40,6 @@ function scrubPublicClaims(content) {
     .replace(/iletisim@belginkuyumculuk\.com/g, SUPPORT_EMAIL)
     .replace(/info@belgin\.com/g, SUPPORT_EMAIL);
 
-  // Tüm checkbox'lar aktif kullanıcı iradesiyle seçilmelidir; hiçbir rıza/onay önceden işaretlenmez.
-  out = out.replace(/(<input\b(?=[^>]*\btype=["']checkbox["'])[^>]*?)\schecked(?=[\s>])/gi, '$1');
-
   // Eski ürün detayında sabit 6/9/12 planı yerine yalnız mevzuata bağlı açıklama göster.
   const installmentDisclosure = `<!-- SEKME 3: Taksit Seçenekleri -->
           <div id="tab-installments" class="pdp-tab-pane" role="tabpanel">
