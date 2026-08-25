@@ -25,8 +25,6 @@ const LEGAL_VERSIONS = Object.freeze({
 const DEFAULT_ALLOWED_ORIGINS = [
   'https://belginkuyumculuk.com',
   'https://www.belginkuyumculuk.com',
-  'https://belgin.web.app',
-  'https://belgin.firebaseapp.com',
 ];
 
 function allowedOrigins() {
