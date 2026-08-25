@@ -6,7 +6,6 @@ const dataPath = path.join(root, 'js', 'data.js');
 const guardPath = path.join(root, 'scripts', 'verify-product-catalog.js');
 const testPath = path.join(root, 'tests', 'test-suite.js');
 
-// These records depend on third-party/hotlink image hosts and are not safe to publish.
 const removeIds = [1, 2, 4, 7, 8];
 
 let data = fs.readFileSync(dataPath, 'utf8');
@@ -20,12 +19,17 @@ data = data.replace(/\n\n\n+/g, '\n\n');
 fs.writeFileSync(dataPath, data, 'utf8');
 
 let guard = fs.readFileSync(guardPath, 'utf8');
-for (const id of removeIds) {
-  const re = new RegExp(`\\n  \\[${id}, \\[.*?\\]\\],`, 'm');
-  guard = guard.replace(re, '');
-}
+const guardLinesToRemove = [
+  "  [1, ['Cartier', 'B6048617']],\n",
+  "  [2, ['Tiffany & Co.', '70524805']],\n",
+  "  [4, ['Cartier', 'B6067517']],\n",
+  "  [7, ['Cartier', 'B6067617']],\n",
+  "  [8, ['Cartier', 'B4092600']]\n"
+];
+for (const line of guardLinesToRemove) guard = guard.replace(line, '');
+guard = guard.replace("  [6, ['Cartier', 'B6048217']],\n]);", "  [6, ['Cartier', 'B6048217']]\n]);");
 guard = guard.replace(
-  /if \(!Array\.isArray\(PRODUCTS\) \|\| PRODUCTS\.length !== 16\) \{\n  fail\(`Expected 16 products, got \$\{PRODUCTS\?\.length \?\? 'invalid'\}`\);\n\}/,
+  "if (!Array.isArray(PRODUCTS) || PRODUCTS.length !== 16) {\n  fail(`Expected 16 products, got ${PRODUCTS?.length ?? 'invalid'}`);\n}",
   "if (!Array.isArray(PRODUCTS) || PRODUCTS.length !== expected.size) {\n  fail(`Expected ${expected.size} published products, got ${PRODUCTS?.length ?? 'invalid'}`);\n}"
 );
 guard = guard.replace(
