@@ -4,14 +4,33 @@
     "public": ".",
     "ignore": [
       "firebase.json",
+      ".firebaserc",
+      ".github/**",
       "**/.*",
       "**/node_modules/**",
       "functions/**",
       "tests/**",
+      "scripts/**",
+      "package.json",
+      "package-lock.json",
       "*kopyası.txt",
       "README.md"
     ],
     "cleanUrls": false,
+    "rewrites": [
+      {
+        "source": "/api/createPayTRToken",
+        "function": "createPayTRToken"
+      },
+      {
+        "source": "/api/paytrCallback",
+        "function": "paytrCallback"
+      },
+      {
+        "source": "/api/getOrderStatus",
+        "function": "getOrderStatus"
+      }
+    ],
     "headers": [
       {
         "source": "**",
@@ -33,10 +52,6 @@
             "value": "SAMEORIGIN"
           },
           {
-            "key": "X-XSS-Protection",
-            "value": "1; mode=block"
-          },
-          {
             "key": "Referrer-Policy",
             "value": "strict-origin-when-cross-origin"
           },
@@ -51,12 +66,12 @@
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "max-age=31536000, immutable"
+            "value": "public, max-age=31536000, immutable"
           }
         ]
       },
       {
-        "source": "**/*.@(xml|txt)",
+        "source": "**/*.txt",
         "headers": [
           {
             "key": "Cache-Control",
@@ -65,6 +80,19 @@
           {
             "key": "Content-Type",
             "value": "text/plain; charset=utf-8"
+          }
+        ]
+      },
+      {
+        "source": "**/*.xml",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=3600"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/xml; charset=utf-8"
           }
         ]
       }
