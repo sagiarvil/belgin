@@ -1,8 +1,36 @@
+# Belgin Kuyumculuk & Saat — Robots Configuration (v5.0 Omni-Enterprise)
 User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /admin/
+Disallow: /node_modules/
 
+# AI Crawlers & LLM Agents
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Sitemap & Machine-Readable LLM Endpoints
 Sitemap: https://belginkuyumculuk.com/sitemap.xml
-# LLM context: https://belginkuyumculuk.com/llms.txt
-# Full LLM context: https://belginkuyumculuk.com/llms-full.txt
+# LLM Knowledge Graph: https://belginkuyumculuk.com/llms.txt
+# Full LLM Knowledge Graph: https://belginkuyumculuk.com/llms-full.txt
