@@ -1,0 +1,57 @@
+name: quality-gates
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, "chore/**", "feat/**", "fix/**"]
+
+concurrency:
+  group: belgin-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: functions/package-lock.json
+
+      - name: Install functions dependencies
+        run: npm ci --prefix functions
+
+      - name: Syntax checks
+        run: |
+          node --check js/paytr.js
+          node --check functions/index.js
+          node --check scripts/generate-payment-catalog.js
+          node --check scripts/generate-seo-assets.js
+          node --check scripts/production-guard.js
+          node --check scripts/safe-deploy.js
+
+      - name: Build and tests
+        run: npm test
+
+      - name: Production guard
+        run: npm run guard
+
+      - name: Dependency audit
+        run: npm audit --prefix functions --omit=dev --audit-level=high
+
+      - name: Ensure generated payment catalog is deterministic
+        run: |
+          cp functions/product-catalog.json /tmp/product-catalog.json
+          npm run payments:catalog
+          cmp --silent /tmp/product-catalog.json functions/product-catalog.json
