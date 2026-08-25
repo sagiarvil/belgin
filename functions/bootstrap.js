@@ -1,6 +1,7 @@
 const base = require('./index');
 const { completeHighValueDelivery } = require('./delivery');
 const { onOrderEvidenceFinalize, issueEvidenceAccessToken, getOrderEvidence } = require('./evidence');
+const { dispatchOrderEvidenceEmails } = require('./mailer');
 
 module.exports = {
   ...base,
@@ -8,4 +9,5 @@ module.exports = {
   onOrderEvidenceFinalize,
   issueEvidenceAccessToken,
   getOrderEvidence,
+  dispatchOrderEvidenceEmails,
 };

@@ -267,6 +267,19 @@ const onOrderEvidenceFinalize = functions.firestore.document('orders/{orderId}')
     evidenceBundleHash: bundleHash,
     serverAt: admin.firestore.FieldValue.serverTimestamp(),
   });
+
+  try {
+    const { dispatchOrderEvidenceEmails } = require('./mailer');
+    await dispatchOrderEvidenceEmails({
+      orderId: context.params.orderId,
+      ...order,
+      manifestRootSha256: root,
+      evidenceBundleHash: bundleHash,
+    });
+  } catch (mailErr) {
+    console.error('[Order Evidence Finalize] E-posta gönderim hatası:', mailErr.message);
+  }
+
   return null;
 });
 
