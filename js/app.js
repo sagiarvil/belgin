@@ -1408,6 +1408,8 @@ const App = {
       termsAccepted: true,
       termsVersion: "2026.08.25.v1",
       termsAcceptedAt: new Date().toISOString(),
+      kycProtocolAccepted: Boolean(document.getElementById('chkKyc')?.checked),
+      handoverFormAccepted: Boolean(document.getElementById('chkHandover')?.checked),
       marketingConsent: Boolean(document.getElementById('chkMarketing')?.checked),
       marketingConsentChannels: document.getElementById('chkMarketing')?.checked ? ['SMS', 'EMAIL'] : [],
       privacyNoticeAcknowledged: true,

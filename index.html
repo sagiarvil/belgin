@@ -31,7 +31,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/style.css?v=2026.08.25.2430">
+  <link rel="stylesheet" href="css/style.css?v=2026.08.25.2440">
 
   <!-- SCHEMA.ORG JSON-LD ENTERPRISE METRICS -->
   <script type="application/ld+json">
@@ -1025,7 +1025,7 @@
             </label>
           </div>
 
-          <!-- HUKUKİ ONAYLAR VE BİLGİLENDİRMELER (01, 02, 03, 05, 09, 10) -->
+          <!-- HUKUKİ ONAYLAR VE BİLGİLENDİRMELER (01, 02, 03, 05, 09, 10, 12, 13) -->
           <div style="margin-bottom:24px; font-size:12px; color:#555; display:flex; flex-direction:column; gap:10px;">
             <!-- 05: KVKK Aydınlatma Bilgilendirmesi (Checkbox Değildir) -->
             <div style="background:#FAF9F6; border:1px solid #EAE6DF; padding:10px 12px; border-radius:6px; font-size:11.5px; color:#666; line-height:1.5;">
@@ -1038,10 +1038,22 @@
               <span><a href="on-bilgilendirme-formu.html" target="_blank" style="color:var(--color-teal); text-decoration:underline; font-weight:600;">Ön Bilgilendirme Formunu (02)</a> ve <a href="mesafeli-satis-sozlesmesi.html" target="_blank" style="color:var(--color-teal); text-decoration:underline; font-weight:600;">Mesafeli Satış Sözleşmesini (01)</a> okudum ve siparişime ilişkin koşullar hakkında bilgilendirildim. *</span>
             </label>
 
-            <!-- 03: Yüksek Değerli Ürün Mağazadan Teslim Onayı (Zorunlu) -->
+            <!-- 12: Müşteri Tanıma ve İşlem Güvenliği (Zorunlu - Default Checked) -->
+            <label style="display:flex; gap:8px; align-items:flex-start; cursor:pointer;">
+              <input type="checkbox" id="chkKyc" required checked style="margin-top:3px;">
+              <span><a href="musteri-tanima-ve-islem-guvenligi.html" target="_blank" style="color:var(--color-teal); text-decoration:underline; font-weight:600;">Müşteri Tanıma ve İşlem Güvenliği (12)</a> esaslarını, kimlik ve güvenlik doğrulama standartlarını okudum ve kabul ediyorum. *</span>
+            </label>
+
+            <!-- 03: Yüksek Değerli Teslim Protokolü (Zorunlu - Default Checked) -->
             <label style="display:flex; gap:8px; align-items:flex-start; cursor:pointer;">
               <input type="checkbox" id="chkHighValue" required checked style="margin-top:3px;">
-              <span>Bu ürünün yalnızca Belgin Kuyumculuk mağazasından, sipariş sahibine resmî kimlik doğrulaması ve imza karşılığında teslim edileceğini ve kargo/kurye ile gönderilmeyeceğini okudum ve kabul ediyorum. (<a href="yuksek-degerli-urun-teslimi.html" target="_blank" style="color:var(--color-teal); text-decoration:underline;">Yüksek Değerli Teslim Protokolü 03</a>) *</span>
+              <span>12.000 TL ve üzerindeki siparişlerin yalnızca Buca Showroom mağazasından kimlik ibrazı ve imza ile teslim edileceğini okudum ve kabul ediyorum. (<a href="yuksek-degerli-urun-teslimi.html" target="_blank" style="color:var(--color-teal); text-decoration:underline; font-weight:600;">Yüksek Değerli Teslim Protokolü (03)</a>) *</span>
+            </label>
+
+            <!-- 13: Mağaza Teslim-Tesellüm Formu (Zorunlu - Default Checked) -->
+            <label style="display:flex; gap:8px; align-items:flex-start; cursor:pointer;">
+              <input type="checkbox" id="chkHandover" required checked style="margin-top:3px;">
+              <span>Fiziki teslimat sırasında düzenlenecek olan <a href="magaza-teslim-tesellum-formu.html" target="_blank" style="color:var(--color-teal); text-decoration:underline; font-weight:600;">Mağaza Teslim-Tesellüm Formu (13)</a> şartlarını ve teslim-tesellüm yükümlülüklerini okudum ve kabul ediyorum. *</span>
             </label>
 
             <!-- 09: Ticari Elektronik İleti Onayı (Opsiyonel - Default Unchecked) -->
@@ -1219,16 +1231,16 @@
 <div class="toast" id="toast"></div>
 
 <!-- SCRIPTS -->
-<script src="js/data.js?v=2026.08.25.2430"></script>
-<script src="js/utils.js?v=2026.08.25.2430"></script>
-<script src="js/seo.js?v=2026.08.25.2430"></script>
-<script src="js/valuation.js?v=2026.08.25.2430"></script>
-<script src="js/cart.js?v=2026.08.25.2430"></script>
-<script src="js/wishlist.js?v=2026.08.25.2430"></script>
-<script src="js/router.js?v=2026.08.25.2430"></script>
-<script src="js/paytr.js?v=2026.08.25.2430"></script>
-<script src="js/app.js?v=2026.08.25.2430"></script>
-<script src="js/legal-overrides.js?v=2026.08.25.2430"></script>
+<script src="js/data.js?v=2026.08.25.2440"></script>
+<script src="js/utils.js?v=2026.08.25.2440"></script>
+<script src="js/seo.js?v=2026.08.25.2440"></script>
+<script src="js/valuation.js?v=2026.08.25.2440"></script>
+<script src="js/cart.js?v=2026.08.25.2440"></script>
+<script src="js/wishlist.js?v=2026.08.25.2440"></script>
+<script src="js/router.js?v=2026.08.25.2440"></script>
+<script src="js/paytr.js?v=2026.08.25.2440"></script>
+<script src="js/app.js?v=2026.08.25.2440"></script>
+<script src="js/legal-overrides.js?v=2026.08.25.2440"></script>
 
 </body>
 </html>

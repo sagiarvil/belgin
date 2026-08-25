@@ -75,6 +75,30 @@ const STATIC_PAGES = [
     title: '3D Secure 2.0 & BDDK Güvenli Ödeme | BELGIN Kuyumculuk',
     description: 'Tüm banka kartlarına 12 taksit ve PayTR 3D Secure 2.0 ödeme sistemi detayları.',
     type: 'legal'
+  },
+  {
+    url: '/musteri-tanima-ve-islem-guvenligi.html',
+    priority: '0.6',
+    changefreq: 'monthly',
+    title: 'Müşteri Tanıma ve İşlem Güvenliği Politikası (12) | BELGIN Kuyumculuk',
+    description: 'Müşteri tanıma, kimlik doğrulama, MASAK uyum ve işlem güvenliği standartları.',
+    type: 'legal'
+  },
+  {
+    url: '/yuksek-degerli-urun-teslimi.html',
+    priority: '0.6',
+    changefreq: 'monthly',
+    title: 'Yüksek Değerli Ürün Mağazadan Teslim ve Uyum Protokolü (03) | BELGIN Kuyumculuk',
+    description: '12.000 TL ve üzerindeki altın ve saat ürünlerinde mağazadan teslim ve kimlik doğrulama esasları.',
+    type: 'legal'
+  },
+  {
+    url: '/magaza-teslim-tesellum-formu.html',
+    priority: '0.6',
+    changefreq: 'monthly',
+    title: 'Mağaza Teslim-Tesellüm ve Ürün Kimliklendirme Formu (13) | BELGIN Kuyumculuk',
+    description: 'Mağaza teslim-tesellüm, ürün kimliklendirme ve resmi imza teslimat protokolü.',
+    type: 'legal'
   }
 ];
 
