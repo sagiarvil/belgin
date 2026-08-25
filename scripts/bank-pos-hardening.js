@@ -82,4 +82,9 @@ writeIfChanged('functions/index.js', (content) => {
   return out;
 });
 
-console.log('[bank-pos-hardening] Banka/PCI kamu beyanı, consent, taksit, iletişim ve callback kontrolleri uygulandı.');
+// Ana branch'te legal manifest v3'e geçildiği için regresyon testi de aynı şemayı doğrulamalı.
+writeIfChanged('tests/test-suite.js', (content) => content
+  .replace(/belgin-legal-evidence-manifest-v2/g, 'belgin-legal-evidence-manifest-v3')
+  .replace(/Hukuki belge manifest şeması v2/g, 'Hukuki belge manifest şeması v3'));
+
+console.log('[bank-pos-hardening] Banka/PCI kamu beyanı, consent, taksit, iletişim, callback ve manifest uyumu uygulandı.');
