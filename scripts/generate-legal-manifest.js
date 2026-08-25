@@ -3,6 +3,7 @@ const path = require('path');
 const crypto = require('crypto');
 
 const root = path.join(__dirname, '..');
+const version = '2026-08-25-v3';
 
 const DOCUMENT_META = {
   'mesafeli-satis-sozlesmesi.html': { code: '01', version: '01_v2.1 (25.08.2026)', title: 'Mesafeli Satış Sözleşmesi' },
@@ -32,19 +33,11 @@ function sha256(content) {
   return crypto.createHash('sha256').update(content, 'utf8').digest('hex');
 }
 
-const manifest = {
-  schema: 'belgin-legal-evidence-manifest-v2',
-  version: '2026-08-25-v2.1',
-  generatedAt: new Date().toISOString(),
-  algorithm: 'SHA-256',
-  legalNotice: 'Bu hash değeri belge bütünlük kontrolüdür; 6502 ve 6698 sayılı kanunlar uyarınca kalıcı veri saklayıcısı niteliğindedir.',
-  documents: {}
-};
-
-for (const file of documents) {
+const documentRecords = {};
+for (const file of documents.sort()) {
   const raw = fs.readFileSync(path.join(root, file), 'utf8');
-  const meta = DOCUMENT_META[file] || { code: '00', version: '2026-08-25-v2.1', title: file };
-  manifest.documents[file] = {
+  const meta = DOCUMENT_META[file] || { code: '00', version: '2026-08-25-v3', title: file };
+  documentRecords[file] = {
     code: meta.code,
     version: meta.version,
     title: meta.title,
@@ -53,7 +46,27 @@ for (const file of documents) {
   };
 }
 
+// Deterministic evidence root
+const canonicalEvidence = JSON.stringify({
+  schema: 'belgin-legal-evidence-manifest-v3',
+  version,
+  algorithm: 'SHA-256',
+  documents: documentRecords
+});
+const manifestRootSha256 = sha256(canonicalEvidence);
+
+const manifest = {
+  schema: 'belgin-legal-evidence-manifest-v3',
+  version,
+  generatedAt: new Date().toISOString(),
+  algorithm: 'SHA-256',
+  manifestRootSha256,
+  externalTimestampModel: 'OpenTimestamps/Bitcoin auxiliary proof',
+  legalNotice: 'SHA-256 ve OpenTimestamps kayitlari teknik butunluk/zaman ispati katmanidir; nitelikli elektronik imza veya 5070 sayili Kanun kapsaminda ESHS zaman damgasi degildir.',
+  documents: documentRecords
+};
+
 const serialized = JSON.stringify(manifest, null, 2) + '\n';
 fs.writeFileSync(path.join(root, 'legal-manifest.json'), serialized, 'utf8');
 fs.writeFileSync(path.join(root, 'functions', 'legal-manifest.json'), serialized, 'utf8');
-console.log(`[legal-manifest] ${documents.length} hukuk belgesi SHA-256 ve resmi sürüm numaralarıyla kaydedildi.`);
+console.log(`[legal-manifest] ${documents.length} hukuk belgesi kaydedildi. root=${manifestRootSha256}`);
