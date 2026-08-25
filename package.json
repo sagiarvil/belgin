@@ -4,7 +4,8 @@
   "description": "Belgin Kuyumculuk — Enterprise & Exclusive Luxury Jewellery & Watches Platform",
   "main": "index.html",
   "scripts": {
-    "build": "node scripts/generate-legal-manifest.js && node scripts/generate-payment-catalog.js && node scripts/generate-seo-assets.js",
+    "build": "node scripts/harden-legal-pages.js && node scripts/generate-legal-manifest.js && node scripts/generate-payment-catalog.js && node scripts/generate-seo-assets.js",
+    "legal:harden": "node scripts/harden-legal-pages.js",
     "legal:manifest": "node scripts/generate-legal-manifest.js",
     "seo:generate": "node scripts/generate-seo-assets.js",
     "payments:catalog": "node scripts/generate-payment-catalog.js",
