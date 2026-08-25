@@ -605,7 +605,7 @@ const App = {
               </div>
               <div class="pdp-installment-banner">
                 <span>💳 Vade farksız 3 taksit: <strong>3 x ${formatPrice(monthlyInstallment)}</strong></span>
-                <span style="color:#888; font-weight:normal; font-size:12px;">(Tüm kartlara 12 taksit imkanı)</span>
+                <span style="color:#888; font-weight:normal; font-size:12px;">(Tüm kartlara Mevzuata Uygun Taksit imkanı)</span>
               </div>
             </div>
 
@@ -724,13 +724,13 @@ const App = {
                 ${p.description || p.desc}
               </p>
               <div style="background:#FBF9F5; border-left:4px solid var(--color-teal); padding:16px 20px; margin:20px 0; border-radius:0 6px 6px 0;">
-                <strong style="color:var(--color-teal); display:block; margin-bottom:4px; font-size:14px;">Belgin Kuyumculuk & Saat Distribütörlük Taahhüdü:</strong>
-                Sitemizde ve Buca showroomumuzda yer alan tüm <strong>${p.brand}</strong> saat modelleri %100 orijinal, resmi distribütör ithalatı ve 2 yıl garantilidir. Siparişiniz seri numarası kayıtlı garanti belgesi, orijinal kutusu ve kaşeli sertifikasıyla eksiksiz teslim edilmektedir.
+                <strong style="color:var(--color-teal); display:block; margin-bottom:4px; font-size:14px;">Belgin Kuyumculuk Ürün ve Belge Taahhüdü:</strong>
+                Sitemizde ve Buca showroomumuzda yer alan tüm <strong>${p.brand}</strong> saat modelleri %100 orijinal, ürüne ait fatura ve garanti belgesindeki kapsamla satılır. Siparişiniz seri numarası kayıtlı garanti belgesi, orijinal kutusu ve kaşeli sertifikasıyla eksiksiz teslim edilmektedir.
               </div>
               <h3 style="font-size:16px; font-weight:700; color:var(--color-ink); margin:24px 0 10px;">Kutu İçeriği:</h3>
               <ul style="padding-left:20px; margin-bottom:16px; display:flex; flex-direction:column; gap:6px;">
                 <li>Orijinal ${p.brand} Lüks Saat Kutusu ve Koruma Ambalajı</li>
-                <li>Türkiye Distribütörü Onaylı ve Kaşeli Garanti Belgesi</li>
+                <li>Ürüne ait garanti belgesi ve satış faturası</li>
                 <li>Türkçe Kullanım Kılavuzu ve Mekanizma Bakım Kartı</li>
                 <li>Belgin Kuyumculuk Satış Faturası ve Yetkili Belgesi</li>
               </ul>
@@ -808,60 +808,11 @@ const App = {
             </div>
           </div>
 
-          <!-- SEKME 3: Taksit Seçenekleri Tablosu -->
+          <!-- SEKME 3: Taksit Seçenekleri -->
           <div id="tab-installments" class="pdp-tab-pane" role="tabpanel">
-            <div style="background:#FFFFFF; border:1px solid var(--color-border); border-radius:8px; padding:24px; overflow-x:auto;">
-              <p style="font-size:13.5px; color:var(--color-muted); margin-bottom:16px;">
-                Tüm bankaların kredi kartlarına (Bonus, World, Axess, Maximum, CardFinans, Paraf, Advantage) peşin fiyatına veya vade farklı 12 aya varan taksit seçenekleri:
-              </p>
-              <table class="pdp-installment-table">
-                <thead>
-                  <tr>
-                    <th>Taksit Sayısı</th>
-                    <th>Aylık Taksit Tutarı</th>
-                    <th>Toplam Tutar</th>
-                    <th>Vade Farkı</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><strong>Tek Çekim (Peşin)</strong></td>
-                    <td><strong>${formatPrice(p.price)}</strong></td>
-                    <td>${formatPrice(p.price)}</td>
-                    <td><span style="color:#15803D; font-weight:700;">Vade Farksız</span></td>
-                  </tr>
-                  <tr>
-                    <td><strong>2 Taksit</strong></td>
-                    <td><strong>${formatPrice(Math.round(p.price / 2))}</strong></td>
-                    <td>${formatPrice(p.price)}</td>
-                    <td><span style="color:#15803D; font-weight:700;">Vade Farksız</span></td>
-                  </tr>
-                  <tr style="background:#F4FAF6;">
-                    <td><strong>3 Taksit (Tavsiye Edilen)</strong></td>
-                    <td><strong style="color:var(--color-teal);">${formatPrice(Math.round(p.price / 3))}</strong></td>
-                    <td>${formatPrice(p.price)}</td>
-                    <td><span style="color:#15803D; font-weight:700;">Vade Farksız (0 TL)</span></td>
-                  </tr>
-                  <tr>
-                    <td>6 Taksit</td>
-                    <td>${formatPrice(Math.round((p.price * 1.08) / 6))}</td>
-                    <td>${formatPrice(Math.round(p.price * 1.08))}</td>
-                    <td>+%8 Banka Komisyonu</td>
-                  </tr>
-                  <tr>
-                    <td>9 Taksit</td>
-                    <td>${formatPrice(Math.round((p.price * 1.14) / 9))}</td>
-                    <td>${formatPrice(Math.round(p.price * 1.14))}</td>
-                    <td>+%14 Banka Komisyonu</td>
-                  </tr>
-                  <tr>
-                    <td>12 Taksit</td>
-                    <td>${formatPrice(Math.round((p.price * 1.19) / 12))}</td>
-                    <td>${formatPrice(Math.round(p.price * 1.19))}</td>
-                    <td>+%19 Banka Komisyonu</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div style="background:#FFFFFF; border:1px solid var(--color-border); border-radius:8px; padding:24px; line-height:1.7;">
+              <strong style="display:block; margin-bottom:8px;">Kart ve banka koşullarına göre taksit</strong>
+              <p style="font-size:13.5px; color:var(--color-muted); margin:0;">Taksit seçenekleri ödeme adımında, kartın bankası ve işlem tarihinde yürürlükte bulunan mevzuat sınırlarına göre gösterilir. Sitede mevzuatın üzerinde sabit taksit taahhüdü verilmez.</p>
             </div>
           </div>
 
@@ -1289,9 +1240,9 @@ const App = {
           <div style="margin-bottom:12px;">
             <label style="font-size:11px; font-weight:700; display:block; margin-bottom:2px;">Fiziksel Kontrol & Ürün Kimliklendirme *</label>
             <div style="display:flex; flex-direction:column; gap:6px; font-size:11.5px; background:#F8F8F8; padding:10px; border-radius:4px;">
-              <label><input type="checkbox" required checked> Ürünün ayar, gram, seri no ve taş bilgisi kimlik kartı ile doğrulandı.</label>
-              <label><input type="checkbox" required checked> Kutu, uluslararası garanti belgesi ve ekspertiz sertifikası eksiksiz teslim edildi.</label>
-              <label><input type="checkbox" required checked> Müşteri kimlik aslı kontrol edildi; sipariş sahibi ile teslim alan kişi eşleşti.</label>
+              <label><input type="checkbox" required> Ürünün ayar, gram, seri no ve taş bilgisi kimlik kartı ile doğrulandı.</label>
+              <label><input type="checkbox" required> Kutu, uluslararası garanti belgesi ve ekspertiz sertifikası eksiksiz teslim edildi.</label>
+              <label><input type="checkbox" required> Müşteri kimlik aslı kontrol edildi; sipariş sahibi ile teslim alan kişi eşleşti.</label>
             </div>
           </div>
 
@@ -1357,7 +1308,7 @@ const App = {
               <strong>Zorunlu Çerezler</strong>
               <div style="font-size:11.5px; color:#666;">Sitenin temel işlevleri, sepet ve güvenlik için şarttır.</div>
             </div>
-            <input type="checkbox" checked disabled>
+            <input type="checkbox" disabled>
           </div>
 
           <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:#FAF9F6; border-radius:6px;">
@@ -1409,7 +1360,7 @@ const App = {
     const phone = form ? (form.querySelector('input[type="tel"]')?.value || '') : '';
     const paymentOpt = form ? (form.querySelector('input[name="paymentOption"]:checked')?.value || 'paytr') : 'paytr';
     const paymentMethodName = paymentOpt === 'paytr' 
-      ? 'PayTR 256-Bit SSL 3D Secure / Kredi Kartı (12 Taksit)' 
+      ? 'PayTR 256-Bit SSL 3D Secure / Kredi Kartı (Mevzuata Uygun Taksit)' 
       : 'Banka Havalesi / FAST (%3 İndirimli Nakit)';
     
     const customerFullName = (firstName + ' ' + lastName).trim() || 'Doğrulanmış Müşteri';
@@ -1463,7 +1414,7 @@ const App = {
         totalAmount: cartTotal > 0 ? cartTotal : 14960,
         formattedAmount: '₺' + (cartTotal > 0 ? cartTotal : 14960).toLocaleString('tr-TR'),
         termsAcceptedAt: new Date().toISOString(),
-        paymentMethod: 'PayTR 256-Bit SSL 3D Secure / Kredi Kartı (12 Taksit)'
+        paymentMethod: 'PayTR 256-Bit SSL 3D Secure / Kredi Kartı (Mevzuata Uygun Taksit)'
       };
       localStorage.setItem('belgin_checkout_draft', JSON.stringify(draft));
       sessionStorage.setItem('belgin_checkout_draft', JSON.stringify(draft));

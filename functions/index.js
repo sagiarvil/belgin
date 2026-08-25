@@ -336,7 +336,7 @@ exports.createPayTRToken = functions
         debug_on: testMode,
         test_mode: testMode,
         no_installment: 0,
-        max_installment: 6,
+        max_installment: 3,
         user_name: String(body.user_name || 'Müşteri').slice(0, 150),
         user_address: customerAddress,
         user_phone: String(body.user_phone || '').slice(0, 50),
@@ -409,6 +409,11 @@ exports.paytrCallback = functions
       if (!orderDoc.exists) return res.status(404).send('Siparis bulunamadi');
 
       const order = orderDoc.data();
+      if (String(total_amount) !== String(order.amountInKurus)) {
+        console.error('[PayTR Security] Callback amount mismatch:', merchant_oid, total_amount, order.amountInKurus);
+        await appendAuditEvent(orderRef, 'CALLBACK_AMOUNT_MISMATCH', { received: String(total_amount), expected: String(order.amountInKurus) });
+        return res.status(400).send('PAYTR notification failed: amount mismatch');
+      }
       if (['paid_awaiting_store_pickup', 'completed'].includes(order.status) && order.paymentStatus === 'PAID') return res.status(200).send('OK');
 
       if (status === 'success') {
