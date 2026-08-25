@@ -126,7 +126,7 @@
       </div>
 
       <div class="form-group" style="margin-top:14px; margin-bottom:20px;">
-        <label class="form-label">T.C. Kimlik No / Pasaport No * (Teslimat ve Fatura Kimlik Teyidi)</label>
+        <label class="form-label">T.C. Kimlik No / Pasaport No *</label>
         <input type="text" id="custIdentity" class="form-input" required placeholder="T.C. Kimlik Numaranız">
       </div>
 
@@ -223,8 +223,8 @@
         return;
       }
 
-      if (Number(currentPayload.amount || 0) >= 12000 && !identity) {
-        alert('12.000 TL ve üzeri siparişlerde fatura ve kimlik doğrulaması için T.C. Kimlik / Pasaport no girilmesi zorunludur.');
+      if (!identity) {
+        alert('Lütfen fatura ve güvenlik doğrulaması için T.C. Kimlik / Pasaport numaranızı giriniz.');
         return;
       }
 

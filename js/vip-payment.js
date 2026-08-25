@@ -46,7 +46,6 @@
     buildWhatsAppShareUrl(payload, checkoutUrl) {
       const title = payload.title || 'Lüks Koleksiyon Ürünü';
       const amount = Number(payload.amount || 0).toLocaleString('tr-TR');
-      const isHighValue = Number(payload.amount || 0) >= 12000;
 
       const message = 
 `Sayın Değerli Müşterimiz,
@@ -57,7 +56,7 @@ Belgin Kuyumculuk & Saat (İzmir Buca Showroom) olarak belirlediğiniz *${title}
 🔒 *256-Bit SSL 3D Secure VIP Ödeme Linki:*
 ${checkoutUrl}
 
-${isHighValue ? '🏛️ *Teslimat:* 12.000 TL üzeri siparişlerde iç güvenlik protokolümüz gereği Buca Showroom mağazamızdan kimlik ibrazı ve teslim tutanağı ile teslim edilmektedir.\n' : ''}⚖️ *Yasal Güvence:* 6502 sayılı TKHK, 6698 sayılı KVKK ve HMK m.193 delil güvencesi altındadır. Lütfen bağlantı üzerinden alıcı bilgilerinizi girerek ödemenizi güvenle tamamlayınız.`;
+Lütfen bağlantı üzerinden alıcı bilgilerinizi girerek ödemenizi 3D Secure güvencesiyle tamamlayınız.`;
 
       return `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
     }

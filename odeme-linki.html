@@ -275,9 +275,6 @@
             <span class="currency-symbol">₺</span>
             <input type="number" id="productAmount" class="form-input amount-input" required min="100" step="1" placeholder="45.000">
           </div>
-          <div id="highValueBadge" class="badge-high-value">
-            🏛️ <strong>12.000 TL+ Güvenlik Protokolü:</strong> Bu tutardaki siparişler Showroom teslim tutanağı ve kimlik ibrazı ile mağazadan teslim edilir.
-          </div>
         </div>
 
 
@@ -320,20 +317,13 @@
   <script>
     const form = document.getElementById('linkForm');
     const amountInput = document.getElementById('productAmount');
-    const highValueBadge = document.getElementById('highValueBadge');
     const resultSection = document.getElementById('resultSection');
     const generatedUrlText = document.getElementById('generatedUrlText');
     const btnWhatsApp = document.getElementById('btnWhatsApp');
     const btnCopy = document.getElementById('btnCopy');
     const btnTestLink = document.getElementById('btnTestLink');
     const toast = document.getElementById('toast');
-
     let currentUrl = '';
-
-    amountInput.addEventListener('input', () => {
-      const val = parseFloat(amountInput.value) || 0;
-      highValueBadge.style.display = val >= 12000 ? 'block' : 'none';
-    });
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
