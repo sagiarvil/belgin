@@ -1,8 +1,8 @@
 {
   "name": "belgin-payment-functions",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "description": "Belgin Kuyumculuk - PayTR Payment and Legal Evidence Functions",
-  "main": "index.js",
+  "main": "bootstrap.js",
   "engines": {
     "node": "22"
   },
