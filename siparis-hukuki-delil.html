@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>Sipariş Hukuki Delil Belgesi | Belgin Kuyumculuk</title>
+<meta name="description" content="Belgin Kuyumculuk sipariş, ödeme, hukuki kabul ve teslim delil belgesi güvenli erişim ekranı.">
+<link rel="stylesheet" href="css/style.css">
+<style>
+body{background:#f7f5f1;color:#222;font-family:system-ui,-apple-system,sans-serif}.wrap{max-width:1080px;margin:34px auto;padding:36px;background:#fff;border:1px solid #e5ded3;border-radius:14px}.head{border-bottom:2px solid #0b554f;padding-bottom:18px;margin-bottom:24px}.head h1{margin:0;color:#0b554f;font-size:30px}.sub{color:#666}.gate{background:#f7faf9;border:1px solid #cfe2de;padding:22px;border-radius:12px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.field label{display:block;font-size:12px;font-weight:700;color:#555;margin-bottom:6px}.field input{width:100%;box-sizing:border-box;padding:12px;border:1px solid #cfc8be;border-radius:8px;font-size:15px}.btn{border:0;border-radius:8px;padding:12px 18px;font-weight:700;cursor:pointer;background:#0b554f;color:#fff}.btn.secondary{background:#fff;color:#0b554f;border:1px solid #0b554f}.msg{margin-top:12px;font-size:14px}.receipt{display:none;margin-top:28px}.receipt.show{display:block}.section{border-top:1px solid #e7e0d6;padding-top:18px;margin-top:18px}.section h2{font-size:19px;color:#0b554f}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.card{background:#fbf9f6;border:1px solid #ece5db;padding:14px;border-radius:9px;overflow-wrap:anywhere}.card b{display:block;font-size:11px;text-transform:uppercase;color:#666;margin-bottom:5px}.hash{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;word-break:break-all}.table{width:100%;border-collapse:collapse;font-size:13px}.table th,.table td{padding:10px;border-bottom:1px solid #eee;text-align:left;vertical-align:top}.note{background:#fff8ea;border-left:4px solid #b68a32;padding:14px 16px;margin-top:18px}.actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}.seller-buyer{display:grid;grid-template-columns:1fr 1fr;gap:16px}.party{border:1px solid #e7e0d6;border-radius:10px;padding:16px}.party h3{margin:0 0 10px;color:#0b554f}.small{font-size:12px;color:#666}.proof-link{display:inline-block;margin-top:8px}.audit{font-size:12px}.loading{opacity:.6;pointer-events:none}@media(max-width:760px){.wrap{margin:0;padding:20px;border-radius:0}.grid,.cards,.seller-buyer{grid-template-columns:1fr}.actions{justify-content:stretch;flex-direction:column}.btn{width:100%}}@media print{body{background:#fff}.gate,.actions,.back{display:none!important}.wrap{max-width:none;margin:0;padding:0;border:0}.receipt{display:block!important}.head{margin-top:0}.section{break-inside:avoid}.table{font-size:11px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<div class="head"><h1>BELGİN KUYUMCULUK — Sipariş, Ödeme, Kabul ve Teslim Hukuki Delil Belgesi</h1><div class="sub">Siparişe özgü kayıtlar yalnız sipariş sahibinin doğrulaması sonrasında gösterilir.</div></div>
+<section class="gate" id="gate">
+<form id="evidenceAccessForm">
+<div class="grid">
+<div class="field"><label for="orderId">Sipariş numarası</label><input id="orderId" name="orderId" autocomplete="off" required placeholder="BLG-..."></div>
+<div class="field"><label for="email">Siparişte kullanılan e-posta</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+<div class="field"><label for="phone">Siparişte kullanılan telefon</label><input id="phone" name="phone" type="tel" autocomplete="tel" required></div>
+</div>
+<div style="margin-top:14px"><button class="btn" type="submit">Delil Belgesini Güvenli Aç</button></div>
+<div id="message" class="msg" aria-live="polite"></div>
+</form>
+</section>
+<section id="receipt" class="receipt" aria-live="polite"></section>
+<div class="back" style="margin-top:22px"><a href="index.html">← Ana sayfaya dön</a></div>
+</main>
+<script src="js/order-evidence.js"></script>
+</body>
+</html>
