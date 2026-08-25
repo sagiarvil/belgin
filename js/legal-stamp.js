@@ -6,9 +6,28 @@
 (function() {
   function getActiveTransaction() {
     try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const qName = urlParams.get('name') || urlParams.get('customer');
+      const qPhone = urlParams.get('phone');
+      const qAmount = urlParams.get('amount');
+
+      if (qName || qPhone || qAmount) {
+        return {
+          orderId: urlParams.get('order') || 'BLG-' + Math.floor(100000 + Math.random() * 900000),
+          customerName: qName,
+          customerPhone: qPhone,
+          totalAmount: qAmount ? parseFloat(qAmount) : null,
+          termsAcceptedAt: new Date().toISOString()
+        };
+      }
+
       const stored = localStorage.getItem('last_order_audit');
       if (stored) {
         return JSON.parse(stored);
+      }
+      const draft = localStorage.getItem('belgin_checkout_draft') || sessionStorage.getItem('belgin_checkout_draft');
+      if (draft) {
+        return JSON.parse(draft);
       }
       const legacy = localStorage.getItem('belgin_active_transaction');
       if (legacy) {

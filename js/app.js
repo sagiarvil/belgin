@@ -22,6 +22,9 @@ const App = {
       setInterval(fetchLiveMarketRates, 45000);
     }
 
+    // Ödeme Sayfası Gerçek Zamanlı Müşteri & Tutar Senkronizasyonu
+    this.initCheckoutAutoSync();
+
     // Header Dropdown Otomatik Kapanma Dinleyicisi
     document.addEventListener('click', (e) => {
       if (e.target.closest('.nav-dropdown-menu a') || e.target.closest('.nav-sub-brand-item') || e.target.closest('.nav-dropdown-single-item')) {
@@ -1442,6 +1445,34 @@ const App = {
     Cart.clear();
     this.updateHeaderCartCount();
     Router.navigate('ana-sayfa');
+  },
+
+  // ÖDEME FORMU GERÇEK ZAMANLI OTOMATİK SENKRONİZASYON
+  initCheckoutAutoSync() {
+    const form = document.querySelector('#page-odeme form');
+    if (!form) return;
+    const updateDraft = () => {
+      const fn = form.querySelector('input[placeholder="Adınız"]')?.value || '';
+      const ln = form.querySelector('input[placeholder="Soyadınız"]')?.value || '';
+      const phone = form.querySelector('input[type="tel"]')?.value || '';
+      const fullName = (fn + ' ' + ln).trim();
+      const cartTotal = typeof Cart !== 'undefined' ? Cart.getTotal() : 0;
+      const draft = {
+        customerName: fullName || 'Müşteri (Sipariş Sahibi)',
+        customerPhone: phone || '05XX *** ** XX (Sipariş Doğrulama Telefonu)',
+        totalAmount: cartTotal > 0 ? cartTotal : 14960,
+        formattedAmount: '₺' + (cartTotal > 0 ? cartTotal : 14960).toLocaleString('tr-TR'),
+        termsAcceptedAt: new Date().toISOString(),
+        paymentMethod: 'PayTR 256-Bit SSL 3D Secure / Kredi Kartı (12 Taksit)'
+      };
+      localStorage.setItem('belgin_checkout_draft', JSON.stringify(draft));
+      sessionStorage.setItem('belgin_checkout_draft', JSON.stringify(draft));
+    };
+
+    form.querySelectorAll('input').forEach(inp => {
+      inp.addEventListener('input', updateDraft);
+      inp.addEventListener('change', updateDraft);
+    });
   }
 };
 
