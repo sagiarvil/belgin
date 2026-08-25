@@ -1,5 +1,5 @@
 // BELGIN KUYUMCULUK — VIP ÖDEME LİNKİ & CHECKOUT MOTORU
-// Güvenli Token Üretimi, WhatsApp Entegrasyonu ve VIP Ödeme Akışı
+// Güvenli Token Üretimi, WhatsApp Entegrasyonu ve Müşteri Öz-Giriş Akışı
 (function (global) {
   'use strict';
 
@@ -42,30 +42,24 @@
       }
     },
 
-    // WhatsApp Mesajı Oluşturma
-    buildWhatsAppUrl(phone, payload, checkoutUrl) {
-      const cleanPhone = String(phone || '').replace(/\D/g, '');
-      const formattedPhone = cleanPhone.startsWith('90') ? cleanPhone : ('90' + cleanPhone.replace(/^0/, ''));
-      
+    // WhatsApp Mesajı Oluşturma (Genel Paylaşım Şablonu)
+    buildWhatsAppShareUrl(payload, checkoutUrl) {
       const title = payload.title || 'Lüks Koleksiyon Ürünü';
       const amount = Number(payload.amount || 0).toLocaleString('tr-TR');
-      const customer = payload.customerName || 'Değerli Müşterimiz';
       const isHighValue = Number(payload.amount || 0) >= 12000;
 
       const message = 
-`Sayın *${customer}*,
+`Sayın Değerli Müşterimiz,
 
-Belgin Kuyumculuk & Saat (İzmir Buca Showroom) olarak seçtiğiniz *${title}* için güvenli ödeme bağlantınız hazırlanmıştır.
+Belgin Kuyumculuk & Saat (İzmir Buca Showroom) olarak belirlediğiniz *${title}* için güvenli ödeme bağlantınız hazırlanmıştır.
 
 💳 *Ödeme Tutarı:* ₺${amount}
-🔒 *256-Bit SSL 3D Secure Ödeme:*
+🔒 *256-Bit SSL 3D Secure VIP Ödeme Linki:*
 ${checkoutUrl}
 
-${isHighValue ? '🏛️ *Teslimat:* 12.000 TL üzeri siparişlerde iç güvenlik protokolümüz gereği Buca Showroom mağazamızdan kimlik ibrazı ve teslim tutanağı ile teslim edilmektedir.\n' : ''}⚖️ *Yasal Güvence:* 6502 sayılı TKHK, 6698 sayılı KVKK ve HMK m.193 delil güvencesi altındadır.
+${isHighValue ? '🏛️ *Teslimat:* 12.000 TL üzeri siparişlerde iç güvenlik protokolümüz gereği Buca Showroom mağazamızdan kimlik ibrazı ve teslim tutanağı ile teslim edilmektedir.\n' : ''}⚖️ *Yasal Güvence:* 6502 sayılı TKHK, 6698 sayılı KVKK ve HMK m.193 delil güvencesi altındadır. Lütfen bağlantı üzerinden alıcı bilgilerinizi girerek ödemenizi güvenle tamamlayınız.`;
 
-Sorularınız ve VIP randevunuz için bize 7/24 WhatsApp'tan yazabilirsiniz.`;
-
-      return `https://wa.me/${formattedPhone}?text=${encodeURIComponent(message)}`;
+      return `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
     }
   };
 

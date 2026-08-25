@@ -90,21 +90,25 @@
       </div>
     </div>
 
-    <!-- 2. MÜŞTERİ BİLGİLERİ -->
+    <!-- 2. MÜŞTERİ BİLGİLERİ (MÜŞTERİ TARAFINDAN DOLDURULUR) -->
     <div class="order-card">
       <div class="section-title">
         <span>👤 Alıcı / Müşteri Bilgileri</span>
-        <span style="font-size:11px; font-weight:600; color:var(--muted);">Fatura & Bildirim</span>
+        <span style="font-size:11px; font-weight:600; color:var(--muted);">Fatura & Teslimat Kimlik Teyidi</span>
       </div>
       <div class="form-row">
         <div class="form-group">
           <label class="form-label">Adınız Soyadınız *</label>
-          <input type="text" id="custName" class="form-input" required placeholder="Adınız Soyadınız">
+          <input type="text" id="custName" class="form-input" required placeholder="Adınız ve Soyadınız">
         </div>
         <div class="form-group">
-          <label class="form-label">Telefon Numaranız *</label>
+          <label class="form-label">Telefon Numaranız (WhatsApp) *</label>
           <input type="tel" id="custPhone" class="form-input" required placeholder="05XX XXX XX XX">
         </div>
+      </div>
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label">T.C. Kimlik No / Pasaport No * (12.000 TL+ Mağaza Teslim & MASAK/KYC Eşleşmesi)</label>
+        <input type="text" id="custIdentity" class="form-input" required placeholder="T.C. Kimlik Numaranız (Teslimatta Kimlik Doğrulaması İçin)">
       </div>
     </div>
 
@@ -208,8 +212,6 @@
           orderId: 'BLG-' + Math.floor(100000 + Math.random() * 900000),
           title: 'Lüks Showroom Siparişi',
           amount: 14960,
-          customerName: '',
-          customerPhone: '',
           orderNote: 'Showroom Özel Siparişi'
         };
       }
@@ -223,26 +225,23 @@
         document.getElementById('orderNoteDisplay').textContent = currentPayload.orderNote;
       }
 
-      if (currentPayload.customerName) {
-        document.getElementById('custName').value = currentPayload.customerName;
-      }
-      if (currentPayload.customerPhone) {
-        document.getElementById('custPhone').value = currentPayload.customerPhone;
-      }
-
       if (Number(currentPayload.amount || 0) >= 12000) {
         document.getElementById('protocolNotice').style.display = 'block';
       }
 
-      // Draft kaydı oluştur
       syncDraft();
     }
 
     function syncDraft() {
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const identity = document.getElementById('custIdentity').value.trim();
+
       const draft = {
         orderId: currentPayload?.orderId,
-        customerName: document.getElementById('custName').value.trim() || currentPayload?.customerName || 'Müşteri (Sipariş Sahibi)',
-        customerPhone: document.getElementById('custPhone').value.trim() || currentPayload?.customerPhone || '05XX *** ** XX',
+        customerName: name || 'Müşteri (Sipariş Sahibi)',
+        customerPhone: phone || '05XX *** ** XX',
+        customerIdentity: identity || '',
         totalAmount: currentPayload?.amount || 14960,
         formattedAmount: '₺' + Number(currentPayload?.amount || 14960).toLocaleString('tr-TR'),
         termsAcceptedAt: new Date().toISOString(),
@@ -254,6 +253,7 @@
 
     document.getElementById('custName').addEventListener('input', syncDraft);
     document.getElementById('custPhone').addEventListener('input', syncDraft);
+    document.getElementById('custIdentity').addEventListener('input', syncDraft);
 
     function selectPayment(type) {
       selectedMethod = type;
@@ -267,9 +267,15 @@
     function processVipPayment() {
       const name = document.getElementById('custName').value.trim();
       const phone = document.getElementById('custPhone').value.trim();
+      const identity = document.getElementById('custIdentity').value.trim();
 
       if (!name || !phone) {
         alert('Lütfen adınızı, soyadınızı ve telefon numaranızı eksiksiz doldurunuz.');
+        return;
+      }
+
+      if (Number(currentPayload.amount || 0) >= 12000 && !identity) {
+        alert('12.000 TL ve üzeri siparişlerde showroom teslimatı ve kimlik doğrulaması için T.C. Kimlik / Pasaport no girilmesi zorunludur.');
         return;
       }
 
@@ -289,6 +295,7 @@
         orderId: currentPayload.orderId,
         customerName: name,
         customerPhone: phone,
+        customerIdentity: identity,
         totalAmount: currentPayload.amount,
         paymentMethod: selectedMethod === 'card' ? '3D Secure Kart Ödemesi' : 'Banka Havalesi / FAST',
         termsAcceptedAt: new Date().toISOString()
@@ -297,10 +304,10 @@
 
       if (selectedMethod === 'transfer') {
         alert(`Siparişiniz (Referans: ${currentPayload.orderId}) oluşturulmuştur. Havale işleminiz banka mutabakatından sonra onaylanarak mağazamızdan teslim edilecektir.`);
-        window.location.href = `magaza-teslim-tesellum-formu.html?source=checkout&order=${currentPayload.orderId}&name=${encodeURIComponent(name)}&amount=${currentPayload.amount}`;
+        window.location.href = `magaza-teslim-tesellum-formu.html?source=checkout&order=${currentPayload.orderId}&name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&amount=${currentPayload.amount}`;
       } else {
         alert(`PayTR 256-Bit SSL 3D Secure ödeme ekranına yönlendiriliyorsunuz. Tutar: ₺${Number(currentPayload.amount).toLocaleString('tr-TR')}`);
-        window.location.href = `magaza-teslim-tesellum-formu.html?source=checkout&order=${currentPayload.orderId}&name=${encodeURIComponent(name)}&amount=${currentPayload.amount}`;
+        window.location.href = `magaza-teslim-tesellum-formu.html?source=checkout&order=${currentPayload.orderId}&name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&amount=${currentPayload.amount}`;
       }
     }
 

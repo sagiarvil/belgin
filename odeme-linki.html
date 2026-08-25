@@ -51,7 +51,7 @@
       margin-top: 4px;
     }
     .container {
-      max-width: 540px;
+      max-width: 500px;
       width: 100%;
       margin: 0 auto;
       flex: 1;
@@ -75,7 +75,7 @@
       padding-bottom: 12px;
     }
     .form-group {
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
     .form-label {
       display: block;
@@ -111,11 +111,11 @@
       transform: translateY(-50%);
       color: var(--gold);
       font-weight: 700;
-      font-size: 18px;
+      font-size: 20px;
     }
     .amount-input {
-      padding-left: 36px;
-      font-size: 20px;
+      padding-left: 40px;
+      font-size: 22px;
       font-weight: 700;
       color: var(--gold-light);
     }
@@ -125,9 +125,9 @@
       background: rgba(212, 175, 55, 0.15);
       border: 1px solid var(--gold);
       color: var(--gold-light);
-      padding: 8px 12px;
+      padding: 10px 14px;
       border-radius: 8px;
-      font-size: 12px;
+      font-size: 12.5px;
       line-height: 1.4;
     }
     .btn-submit {
@@ -146,7 +146,7 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      margin-top: 20px;
+      margin-top: 24px;
       box-shadow: 0 6px 20px rgba(212,175,55,0.3);
       transition: transform 0.1s;
     }
@@ -251,7 +251,7 @@
   <div class="container">
     <div class="card">
       <div class="card-title">
-        <span>✨</span> Özel WhatsApp Sipariş & Ödeme Linki
+        <span>✨</span> Ürün ve Fiyat Belirleme Paneli
       </div>
 
       <form id="linkForm">
@@ -272,18 +272,8 @@
         </div>
 
         <div class="form-group">
-          <label class="form-label">Müşteri Adı Soyadı *</label>
-          <input type="text" id="customerName" class="form-input" required placeholder="Örn: Ahmet Yılmaz">
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Müşteri WhatsApp Telefon Numarası *</label>
-          <input type="tel" id="customerPhone" class="form-input" required placeholder="05XX XXX XX XX">
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Özel Sipariş Notu / Referans (İsteğe Bağlı)</label>
-          <input type="text" id="orderNote" class="form-input" placeholder="Örn: Kutu, Sertifika ve Özel Hediye Paketi">
+          <label class="form-label">Özel Not / Açıklama (İsteğe Bağlı)</label>
+          <input type="text" id="orderNote" class="form-input" placeholder="Örn: Orijinal Kutu, Sertifika ve Özel VIP Paketleme">
         </div>
 
         <button type="submit" class="btn-submit">
@@ -293,19 +283,19 @@
 
       <!-- ÇIKTI VE AKSİYONLAR -->
       <div id="resultSection" class="result-section">
-        <div class="form-label">Oluşturulan Güvenli Ödeme Linki:</div>
+        <div class="form-label">Müşteriye Gönderilecek Güvenli Link:</div>
         <div id="generatedUrlText" class="result-box"></div>
 
         <div class="action-btn-group">
           <a id="btnWhatsApp" href="#" target="_blank" class="btn-whatsapp">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
-            📲 WhatsApp'tan Müşteriye Gönder
+            📲 WhatsApp'ta Müşteriyle Paylaş
           </a>
           <button type="button" id="btnCopy" class="btn-copy">
             📋 Linki Kopyala
           </button>
           <a id="btnTestLink" href="#" target="_blank" class="btn-test">
-            👁️ Ödeme Sayfasını Önizle
+            👁️ Müşteri Ekranını Önizle
           </a>
         </div>
       </div>
@@ -344,16 +334,12 @@
 
       const title = document.getElementById('productTitle').value.trim();
       const amount = parseFloat(amountInput.value);
-      const customer = document.getElementById('customerName').value.trim();
-      const phone = document.getElementById('customerPhone').value.trim();
       const note = document.getElementById('orderNote').value.trim();
 
       const payload = {
         orderId: 'VIP-' + Math.floor(100000 + Math.random() * 900000),
         title,
         amount,
-        customerName: customer,
-        customerPhone: phone,
         orderNote: note,
         createdAt: new Date().toISOString()
       };
@@ -363,7 +349,7 @@
       currentUrl = `${baseUrl}?token=${token}`;
 
       generatedUrlText.textContent = currentUrl;
-      btnWhatsApp.href = VipEngine.buildWhatsAppUrl(phone, payload, currentUrl);
+      btnWhatsApp.href = VipEngine.buildWhatsAppShareUrl(payload, currentUrl);
       btnTestLink.href = currentUrl;
 
       resultSection.style.display = 'block';
