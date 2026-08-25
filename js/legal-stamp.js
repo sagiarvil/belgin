@@ -250,8 +250,8 @@
 
         ${externalHtml}
 
-        <p style="font-size:12.5px;line-height:1.7;color:#555;margin:0 0 10px;">Bu kayıt, yayımlanan hukuki metnin resmi sürümünü ve içeriğinin değiştirilmediğini doğrulayan SHA-256 özetini gösterir. Sipariş bazlı irade beyanı, kimlik doğrulaması, ödeme ve teslim delilleri sipariş esnasında ayrıca kayıt altına alınır.</p>
-        <p style="font-size:12.5px;line-height:1.7;color:#555;margin:0;"><strong>Hukuki nitelik açıklaması:</strong> OpenTimestamps / Bitcoin kanıtı bağımsız teknik varlık ve bütünlük ispatını güçlendiren yardımcı bir dış zaman ispatı katmanıdır. Bu sistem nitelikli elektronik imza, güvenli elektronik imza veya 5070 sayılı Kanun kapsamında BTK'ya bildirimde bulunmuş bir ESHS tarafından üretilmiş zaman damgası değildir ve öyle sunulmaz.</p>
+        <p style="font-size:12.5px;line-height:1.7;color:#555;margin:0 0 10px;">Bu kayıt, yayımlanan hukuki metnin resmi sürümünü ve içeriğinin değiştirilmediğini doğrulayan SHA-256 belge bütünlük özetini gösterir. Sipariş bazlı irade beyanı, kimlik doğrulaması, ödeme ve teslim delilleri sipariş esnasında ayrıca kayıt altına alınır.</p>
+        <p style="font-size:12.5px;line-height:1.7;color:#555;margin:0;"><strong>Hukuki nitelik açıklaması:</strong> OpenTimestamps / Bitcoin kanıtı ve SHA-256 belge bütünlük özeti bağımsız teknik varlık ve bütünlük ispatını güçlendiren yardımcı bir dış zaman ispatı katmanıdır. Bu sistem nitelikli elektronik imza, güvenli elektronik imza veya 5070 sayılı Kanun kapsamında BTK'ya bildirimde bulunmuş bir ESHS tarafından üretilmiş zaman damgası değildir ve öyle sunulmaz.</p>
       </section>`;
 
     mainEl.insertAdjacentHTML('beforeend', generalHtml);

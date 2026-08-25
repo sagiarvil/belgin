@@ -422,10 +422,28 @@ const App = {
   // ÜRÜN KARTI ŞABLONU (PREMIUM BOUTIQUE TASARIMI)
   renderProductCard(p) {
     const hoverImg = p.hoverImage || p.image;
+    const isPreOwned = p.isPreOwned === true;
+    const buyPrice = p.buyPrice || (p.price - 5000);
+
+    const priceHtml = isPreOwned ? `
+      <div class="prod-dual-pricing">
+        <div class="prod-dual-price-row prod-sale-price-row">
+          <span class="prod-price-label">Satış Fiyatı:</span>
+          <span class="prod-price-value">${formatPrice(p.price)} <small class="vat-text">(KDV Dahil)</small></span>
+        </div>
+        <div class="prod-dual-price-row prod-buy-price-row">
+          <span class="prod-price-label">Alış Fiyatı:</span>
+          <span class="prod-price-value">${formatPrice(buyPrice)}</span>
+        </div>
+      </div>
+    ` : `
+      <div class="prod-price-tag">${formatPrice(p.price)}</div>
+    `;
 
     return `
-      <div class="product-art-card" onclick="App.openProduct(${p.id})">
+      <div class="product-art-card ${isPreOwned ? 'product-art-card-preowned' : ''}" onclick="App.openProduct(${p.id})">
         <div class="product-art-thumb">
+          ${isPreOwned ? '<span class="badge-cond-gold">İkinci El</span>' : ''}
           <img class="img-primary" src="${p.image}" alt="${p.brand} ${p.name}" loading="lazy">
           <img class="img-hover" src="${hoverImg}" alt="${p.brand} ${p.name}" loading="lazy">
         </div>
@@ -433,7 +451,7 @@ const App = {
           <h3 class="prod-brand-name">${p.brand}</h3>
           <p class="prod-model-name">${p.name}</p>
           <p class="prod-ref-size">${p.reference}</p>
-          <div class="prod-price-tag">${formatPrice(p.price)}</div>
+          ${priceHtml}
         </div>
       </div>
     `;
@@ -449,6 +467,7 @@ const App = {
     if (!panel || !backdrop) return;
 
     const isHighVal = (typeof isHighValueSecureDelivery === 'function' ? isHighValueSecureDelivery(p) : p.price > 12000);
+    const buyPrice = p.buyPrice || (p.price - 5000);
 
     panel.innerHTML = `
       <button class="drawer-close-btn" onclick="App.closeQuickDrawer()">×</button>
@@ -461,9 +480,26 @@ const App = {
       <h3 style="font-family:var(--font-sans); font-size:24px; font-weight:700; color:var(--color-ink); margin:4px 0 6px;">${p.name}</h3>
       <p style="font-size:13px; color:var(--color-muted); margin-bottom:16px;">${p.reference}</p>
       
-      <div style="font-family:var(--font-sans); font-size:26px; font-weight:800; color:var(--color-teal); font-variant-numeric:tabular-nums; margin-bottom:20px; padding-bottom:12px; border-bottom:1px solid var(--color-border);">
-        ${formatPrice(p.price)}
-      </div>
+      ${p.isPreOwned ? `
+        <div class="drawer-dual-pricing-box" style="margin-bottom:20px; padding:14px 16px; background:#FBF9F5; border:1px solid rgba(194,167,104,0.35); border-radius:8px;">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px;">
+            <span style="font-size:13px; font-weight:700; color:var(--color-ink);">Satış Fiyatı:</span>
+            <span style="font-family:var(--font-sans); font-size:24px; font-weight:800; color:var(--color-teal); font-variant-numeric:tabular-nums;">
+              ${formatPrice(p.price)} <small style="font-size:11px; font-weight:600; color:var(--color-muted);">(KDV Dahil)</small>
+            </span>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:baseline; padding-top:8px; border-top:1px dashed rgba(194,167,104,0.3);">
+            <span style="font-size:12px; font-weight:600; color:#5D4411;">Alış Fiyatı:</span>
+            <span style="font-family:var(--font-sans); font-size:17px; font-weight:700; color:var(--badge-gold-text); font-variant-numeric:tabular-nums;">
+              ${formatPrice(buyPrice)}
+            </span>
+          </div>
+        </div>
+      ` : `
+        <div style="font-family:var(--font-sans); font-size:26px; font-weight:800; color:var(--color-teal); font-variant-numeric:tabular-nums; margin-bottom:20px; padding-bottom:12px; border-bottom:1px solid var(--color-border);">
+          ${formatPrice(p.price)}
+        </div>
+      `}
 
       <p style="font-size:13.5px; color:#444; line-height:1.7; margin-bottom:20px;">
         ${p.desc}
@@ -597,13 +633,31 @@ const App = {
             </div>
 
             <!-- Fiyat Kutusu -->
-            <div class="pdp-price-wrap">
-              <div class="pdp-price-header">
-                ${hasDiscount ? `<span class="pdp-old-price">${formatPrice(p.oldPrice)}</span>` : ''}
-                <span class="pdp-current-price">${formatPrice(p.price)}</span>
-                ${hasDiscount ? `<span class="pdp-discount-badge">-%${discountPercent} İNDİRİM</span>` : ''}
-              </div>
-              <div class="pdp-installment-banner">
+            <div class="pdp-price-wrap ${p.isPreOwned ? 'pdp-dual-price-wrap' : ''}">
+              ${p.isPreOwned ? `
+                <div class="pdp-dual-pricing-panel">
+                  <div class="pdp-dual-row pdp-sale-highlight">
+                    <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:6px;">
+                      <span class="pdp-price-badge-pill">SATIŞ FİYATI</span>
+                      <span class="pdp-current-price">${formatPrice(p.price)}</span>
+                      <span class="pdp-vat-badge">KDV Dahil</span>
+                    </div>
+                  </div>
+                  <div class="pdp-dual-row pdp-buy-highlight">
+                    <div class="pdp-buyback-box">
+                      <span class="pdp-buyback-title">Alış Fiyatı:</span>
+                      <span class="pdp-buyback-price">${formatPrice(p.buyPrice || (p.price - 5000))}</span>
+                    </div>
+                  </div>
+                </div>
+              ` : `
+                <div class="pdp-price-header">
+                  ${hasDiscount ? `<span class="pdp-old-price">${formatPrice(p.oldPrice)}</span>` : ''}
+                  <span class="pdp-current-price">${formatPrice(p.price)}</span>
+                  ${hasDiscount ? `<span class="pdp-discount-badge">-%${discountPercent} İNDİRİM</span>` : ''}
+                </div>
+              `}
+              <div class="pdp-installment-banner" style="${p.isPreOwned ? 'margin-top:14px;' : ''}">
                 <span>💳 Vade farksız 3 taksit: <strong>3 x ${formatPrice(monthlyInstallment)}</strong></span>
                 <span style="color:#888; font-weight:normal; font-size:12px;">(Tüm kartlara Mevzuata Uygun Taksit imkanı)</span>
               </div>

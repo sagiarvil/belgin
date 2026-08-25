@@ -1216,6 +1216,116 @@ p, span, li, td, th, label, input, button, select, textarea {
   letter-spacing: -0.02em;
 }
 
+/* İkinci El Çift Fiyatlandırma (Satış & Alış Fiyatı) */
+.prod-dual-pricing {
+  margin-top: auto;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.prod-dual-price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.prod-sale-price-row .prod-price-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--color-ink);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.prod-sale-price-row .prod-price-value {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--color-teal);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+.prod-sale-price-row .vat-text {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-transform: none;
+}
+.prod-buy-price-row {
+  background: #F6F4EE;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(194, 167, 104, 0.25);
+}
+.prod-buy-price-row .prod-price-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #7A5F23;
+}
+.prod-buy-price-row .prod-price-value {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #8C6D23;
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+}
+
+/* PDP Çift Fiyatlandırma Stilleri */
+.pdp-dual-price-wrap {
+  border-color: rgba(194, 167, 104, 0.45);
+  background: linear-gradient(180deg, #FAF8F5 0%, #F5F2EA 100%);
+}
+.pdp-dual-pricing-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.pdp-price-badge-pill {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  background: var(--color-teal);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+.pdp-vat-badge {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-muted);
+  background: #ECEAE4;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+.pdp-buyback-box {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  background: #FFFFFF;
+  border: 1px solid rgba(194, 167, 104, 0.4);
+  padding: 10px 14px;
+  border-radius: 6px;
+}
+.pdp-buyback-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #614815;
+}
+.pdp-buyback-price {
+  font-size: 22px;
+  font-weight: 800;
+  color: #8C6D23;
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+}
+.pdp-buyback-sub {
+  font-size: 12px;
+  color: var(--color-muted);
+  font-weight: 500;
+}
+
+
 /* ==========================================================
    6. HIZLI ÖNİZLEME & DETAY & MAKRO LOUPE
    ========================================================== */

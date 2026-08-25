@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const root = path.join(__dirname, '..');
-const PRIMARY_DOMAIN = 'https://belginkuyumculuk.com';
+const PRIMARY_DOMAIN = 'https://www.belginkuyumculuk.com';
 const LEGACY_PRIMARY = 'https://belgin.web.app';
 const VERIFIED_HOSTING_SITE = 'belgin';
 let failed = false;
@@ -30,7 +30,7 @@ if (!index.includes(`"url": "${PRIMARY_DOMAIN}/"`)) fail('Organization/WebSite s
 if (index.includes(LEGACY_PRIMARY)) fail('index.html içinde eski belgin.web.app primary-domain referansı kaldı.');
 else pass('Ana sayfa özel domain canonical/schema kontrolü geçti.');
 
-const generator = read('scripts/generate-seo-assets.js');
+const generator = read('scripts/seo-registry.js');
 if (!generator.includes(`const BASE_URL = '${PRIMARY_DOMAIN}'`)) fail('SEO registry BASE_URL özel domaine bağlı değil.');
 if (generator.includes(LEGACY_PRIMARY)) fail('SEO üreticisinde eski primary-domain referansı kaldı.');
 else pass('SEO registry özel domaine bağlı.');

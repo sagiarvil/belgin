@@ -1,7 +1,7 @@
 // BELGIN KUYUMCULUK — SEO REGISTRY SINGLE SOURCE OF TRUTH (SSOT)
 // Universal SEO & AI Discoverability v5.0 Omni-Enterprise Standard
 
-const BASE_URL = 'https://belginkuyumculuk.com';
+const BASE_URL = 'https://www.belginkuyumculuk.com';
 
 const PRIMARY_ORGANIZATION = {
   id: `${BASE_URL}/#organization`,
