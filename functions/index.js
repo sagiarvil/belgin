@@ -1,6 +1,7 @@
 /**
  * BELGIN KUYUMCULUK — FIREBASE CLOUD FUNCTIONS
  * PayTR iFrame API / fail-closed payment processing
+ * Legal compliance enforcement: 25.08.2026
  */
 
 const functions = require('firebase-functions');
@@ -13,6 +14,13 @@ const PRODUCT_CATALOG = require('./product-catalog.json');
 
 if (!admin.apps.length) admin.initializeApp();
 const db = admin.firestore();
+
+const HIGH_VALUE_SECURE_DELIVERY_THRESHOLD = 12000;
+const LEGAL_VERSIONS = Object.freeze({
+  terms: '2026-08-25',
+  preInformation: '2026-08-25',
+  highValueDelivery: '2026-08-25',
+});
 
 const DEFAULT_ALLOWED_ORIGINS = [
   'https://belginkuyumculuk.com',
@@ -75,6 +83,15 @@ function generateOrderId() {
   return `BLG-${Date.now()}-${crypto.randomBytes(8).toString('hex')}`;
 }
 
+function isHighValueCatalogProduct(product) {
+  if (!product || Number(product.price) <= HIGH_VALUE_SECURE_DELIVERY_THRESHOLD) return false;
+  const category = String(product.category || '').toLowerCase();
+  const metal = String(product.metal || '').toLowerCase();
+  const isWatch = category === 'watch' || category === 'saat';
+  const isGold = product.isGold === true || category === 'gold' || category === 'altin' || category === 'altın' || metal.includes('altın') || /au\s?\d{3}/i.test(metal);
+  return isWatch || isGold;
+}
+
 function normalizeCart(clientItems) {
   if (!Array.isArray(clientItems) || clientItems.length === 0) {
     throw new Error('Sepet boş olamaz.');
@@ -95,6 +112,9 @@ function normalizeCart(clientItems) {
       name: `${product.brand} ${product.name}`.trim(),
       price: Number(product.price),
       qty,
+      category: String(product.category || ''),
+      isGold: product.isGold === true,
+      highValueSecureDelivery: isHighValueCatalogProduct(product),
     };
   });
 }
@@ -108,6 +128,46 @@ function calculateTotal(items) {
 function encodeUserBasket(items) {
   const basket = items.map((item) => [item.name, item.price.toFixed(2), String(item.qty)]);
   return Buffer.from(JSON.stringify(basket)).toString('base64');
+}
+
+function validateLegalAndDelivery(body, items) {
+  const hasHighValue = items.some((item) => item.highValueSecureDelivery === true);
+  const termsAccepted = body.termsAccepted === true;
+  const preInformationAccepted = body.preInformationAccepted === true;
+  const highValueDeliveryAccepted = body.highValueDeliveryAccepted === true;
+  const deliveryMethod = String(body.deliveryMethod || '').trim().toLowerCase();
+
+  if (!termsAccepted || !preInformationAccepted) {
+    const error = new Error('Mesafeli Satış Sözleşmesi ve Ön Bilgilendirme Formu onayı zorunludur.');
+    error.code = 'LEGAL_CONSENT_REQUIRED';
+    throw error;
+  }
+
+  if (hasHighValue) {
+    if (!highValueDeliveryAccepted) {
+      const error = new Error('Yüksek değerli ürün mağaza teslim koşulu onayı zorunludur.');
+      error.code = 'HIGH_VALUE_CONSENT_REQUIRED';
+      throw error;
+    }
+    if (deliveryMethod !== 'showroom') {
+      const error = new Error('12.000 TL üzerindeki altın ve saat ürünleri yalnız mağazadan teslim edilir.');
+      error.code = 'HIGH_VALUE_DELIVERY_REQUIRED';
+      throw error;
+    }
+  } else if (!['showroom', 'carrier'].includes(deliveryMethod)) {
+    const error = new Error('Geçerli teslim yöntemi seçilmelidir.');
+    error.code = 'DELIVERY_METHOD_INVALID';
+    throw error;
+  }
+
+  return {
+    hasHighValue,
+    deliveryMethod: hasHighValue ? 'showroom' : deliveryMethod,
+    termsAccepted,
+    preInformationAccepted,
+    highValueDeliveryAccepted: hasHighValue ? highValueDeliveryAccepted : false,
+    marketingConsent: body.marketingConsent === true,
+  };
 }
 
 exports.createPayTRToken = functions
@@ -125,6 +185,7 @@ exports.createPayTRToken = functions
       }
 
       const items = normalizeCart(body.items);
+      const compliance = validateLegalAndDelivery(body, items);
       const serverTotal = calculateTotal(items);
       const merchant_oid = generateOrderId();
       const clientIp = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.socket.remoteAddress || '127.0.0.1';
@@ -132,10 +193,19 @@ exports.createPayTRToken = functions
       const basketBase64 = encodeUserBasket(items);
       const testMode = Number(process.env.PAYTR_TEST_MODE || 0) === 1 ? 1 : 0;
 
+      const customerAddress = compliance.deliveryMethod === 'showroom'
+        ? 'Belgin Kuyumculuk — Menderes Caddesi No:231/B Buca / İzmir — Mağazadan Teslim'
+        : String(body.user_address || '').slice(0, 1000);
+
       const orderRef = db.collection('orders').doc(merchant_oid);
       await orderRef.set({
         orderId: merchant_oid,
         status: 'pending',
+        paymentStatus: 'PENDING',
+        deliveryStatus: compliance.hasHighValue ? 'STORE_PICKUP_REQUIRED' : 'PENDING',
+        deliveryMethod: compliance.deliveryMethod,
+        highValueSecureDelivery: compliance.hasHighValue,
+        highValueThreshold: HIGH_VALUE_SECURE_DELIVERY_THRESHOLD,
         items,
         total: serverTotal,
         amountInKurus,
@@ -143,7 +213,17 @@ exports.createPayTRToken = functions
           name: String(body.user_name || '').slice(0, 150),
           email,
           phone: String(body.user_phone || '').slice(0, 50),
-          address: String(body.user_address || '').slice(0, 1000),
+          address: customerAddress,
+        },
+        legal: {
+          termsAccepted: compliance.termsAccepted,
+          termsVersion: LEGAL_VERSIONS.terms,
+          preInformationAccepted: compliance.preInformationAccepted,
+          preInformationVersion: LEGAL_VERSIONS.preInformation,
+          highValueDeliveryAccepted: compliance.highValueDeliveryAccepted,
+          highValueDeliveryVersion: compliance.hasHighValue ? LEGAL_VERSIONS.highValueDelivery : null,
+          marketingConsent: compliance.marketingConsent,
+          acceptedAt: admin.firestore.FieldValue.serverTimestamp(),
         },
         createdAt: admin.firestore.FieldValue.serverTimestamp(),
         ipAddress: clientIp,
@@ -163,7 +243,7 @@ exports.createPayTRToken = functions
         no_installment: 0,
         max_installment: 6,
         user_name: String(body.user_name || 'Müşteri').slice(0, 150),
-        user_address: String(body.user_address || '').slice(0, 1000),
+        user_address: customerAddress,
         user_phone: String(body.user_phone || '').slice(0, 50),
         merchant_ok_url: 'https://belginkuyumculuk.com/#payment-success',
         merchant_fail_url: 'https://belginkuyumculuk.com/#payment-failed',
@@ -199,6 +279,8 @@ exports.createPayTRToken = functions
         token: result.token,
         iframeUrl: `https://www.paytr.com/odeme/guvenli/${result.token}`,
         merchant_oid,
+        deliveryMethod: compliance.deliveryMethod,
+        highValueSecureDelivery: compliance.hasHighValue,
       });
     } catch (error) {
       console.error('createPayTRToken Error:', error.code || error.message);
@@ -232,11 +314,13 @@ exports.paytrCallback = functions
       if (!orderDoc.exists) return res.status(404).send('Siparis bulunamadi');
 
       const order = orderDoc.data();
-      if (order.status === 'completed' && order.paymentStatus === 'PAID') return res.status(200).send('OK');
+      if (['paid_awaiting_store_pickup', 'completed'].includes(order.status) && order.paymentStatus === 'PAID') return res.status(200).send('OK');
 
       if (status === 'success') {
+        const highValue = order.highValueSecureDelivery === true;
         await orderRef.update({
-          status: 'completed',
+          status: highValue ? 'paid_awaiting_store_pickup' : 'completed',
+          deliveryStatus: highValue ? 'STORE_PICKUP_REQUIRED' : (order.deliveryStatus || 'PENDING'),
           totalAmountReceived: String(total_amount),
           completedAt: admin.firestore.FieldValue.serverTimestamp(),
           paymentStatus: 'PAID',
@@ -277,6 +361,10 @@ exports.getOrderStatus = functions
         success: true,
         orderId,
         status: data.status,
+        paymentStatus: data.paymentStatus || null,
+        deliveryStatus: data.deliveryStatus || null,
+        deliveryMethod: data.deliveryMethod || null,
+        highValueSecureDelivery: data.highValueSecureDelivery === true,
         total: data.total,
         createdAt: data.createdAt ? data.createdAt.toDate().toISOString() : null,
         completedAt: data.completedAt ? data.completedAt.toDate().toISOString() : null,
