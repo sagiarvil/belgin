@@ -19,7 +19,7 @@ if (!fs.existsSync(firebasePath)) {
   else pass(`Firebase Hosting site hedefi doğrulandı: ${VERIFIED_HOSTING_SITE}.`);
 
   const rewrites = cfg.hosting?.rewrites || [];
-  const required = ['createPayTRToken', 'paytrCallback', 'getOrderStatus'];
+  const required = ['createPayTRToken', 'paytrCallback', 'getOrderStatus', 'completeHighValueDelivery'];
   for (const fn of required) if (!rewrites.some((r) => r.function === fn)) fail(`Firebase rewrite eksik: ${fn}`);
   if (required.every((fn) => rewrites.some((r) => r.function === fn))) pass('Firebase API rewrite sözleşmesi tam.');
 }
@@ -53,6 +53,31 @@ if (functionsCode.includes(LEGACY_PRIMARY)) fail('Cloud Functions içinde eski b
 if (!functionsCode.includes('productSnapshotHash') || !functionsCode.includes('evidenceId') || !functionsCode.includes("collection('auditEvents')")) fail('Sunucu hukuki delil/audit zinciri eksik.');
 if (!functionsCode.includes('getLegalEvidenceSnapshot')) fail('Sunucu hukuk belge hash snapshot katmanı eksik.');
 else pass('Cloud Functions ödeme, CORS ve hukuki delil zinciri kontrolü geçti.');
+
+const bootstrapPath = path.join(root, 'functions', 'bootstrap.js');
+const deliveryPath = path.join(root, 'functions', 'delivery.js');
+if (!fs.existsSync(bootstrapPath) || !fs.existsSync(deliveryPath)) {
+  fail('Yüksek değerli teslim tamamlama fonksiyon katmanı eksik.');
+} else {
+  const bootstrap = read('functions/bootstrap.js');
+  const delivery = read('functions/delivery.js');
+  if (!bootstrap.includes('completeHighValueDelivery')) fail('completeHighValueDelivery bootstrap exportu eksik.');
+  const deliveryRequired = [
+    'verifyIdToken',
+    'decoded.admin !== true && decoded.staff !== true',
+    "order.paymentStatus !== 'PAID'",
+    'identityVerified',
+    'deliveryFormCompleted',
+    'productIdentifiersVerified',
+    'deliveryFormReference',
+    'productIdentifiersHash',
+    'HIGH_VALUE_DELIVERY_COMPLETED',
+    "deliveryStatus: 'DELIVERED'",
+  ];
+  for (const marker of deliveryRequired) if (!delivery.includes(marker)) fail(`Yüksek değerli teslim güvenlik kapısı eksik: ${marker}`);
+  if (/tcKimlik|tckn|kimlikNo|identityNumber/i.test(delivery)) fail('Teslim endpointinde ham TCKN/kimlik numarası saklama izi bulundu.');
+  else pass('Yüksek değerli teslim; personel yetkisi, ödeme kesinliği, kimlik, imzalı form ve ürün kimliklendirme kapılarıyla korunuyor.');
+}
 
 const catalogPath = path.join(root, 'functions', 'product-catalog.json');
 if (!fs.existsSync(catalogPath)) fail('Sunucu ödeme kataloğu üretilmemiş. npm run build çalıştırılmalı.');
@@ -91,7 +116,7 @@ const secretPatterns = [
   /PAYTR_MERCHANT_SALT\s*=\s*["'][^"']{8,}["']/i,
   /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/
 ];
-const scanFiles = ['functions/index.js', 'js/paytr.js', 'package.json', 'firebase.json'];
+const scanFiles = ['functions/index.js', 'functions/delivery.js', 'js/paytr.js', 'package.json', 'firebase.json'];
 for (const file of scanFiles) {
   const txt = read(file);
   if (secretPatterns.some((re) => re.test(txt))) fail(`Olası secret bulundu: ${file}`);
