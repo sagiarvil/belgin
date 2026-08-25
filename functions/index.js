@@ -1,7 +1,7 @@
 /**
  * BELGIN KUYUMCULUK — FIREBASE CLOUD FUNCTIONS
  * PayTR iFrame API / fail-closed payment processing
- * Legal compliance enforcement: 25.08.2026
+ * Legal evidence chain / KYC delivery enforcement: 25.08.2026-v2
  */
 
 const functions = require('firebase-functions');
@@ -12,14 +12,34 @@ const cors = require('cors');
 const qs = require('qs');
 const PRODUCT_CATALOG = require('./product-catalog.json');
 
+let LEGAL_MANIFEST = { schema: 'missing', documents: {} };
+try {
+  LEGAL_MANIFEST = require('./legal-manifest.json');
+} catch (error) {
+  console.error('[Legal Evidence] legal-manifest.json yüklenemedi:', error.message);
+}
+
 if (!admin.apps.length) admin.initializeApp();
 const db = admin.firestore();
 
 const HIGH_VALUE_SECURE_DELIVERY_THRESHOLD = 12000;
+const LEGAL_EVIDENCE_SCHEMA = 'belgin-order-evidence-v2';
 const LEGAL_VERSIONS = Object.freeze({
-  terms: '2026-08-25',
-  preInformation: '2026-08-25',
-  highValueDelivery: '2026-08-25',
+  terms: '2026-08-25-v2',
+  preInformation: '2026-08-25-v2',
+  highValueDelivery: '2026-08-25-v2',
+  kycMasak: '2026-08-25-v2',
+  kvkkNotice: '2026-08-25-v2',
+  evidencePolicy: '2026-08-25-v2',
+});
+
+const LEGAL_FILES = Object.freeze({
+  terms: 'mesafeli-satis-sozlesmesi.html',
+  preInformation: 'on-bilgilendirme-formu.html',
+  highValueDelivery: 'yuksek-degerli-urun-teslimi.html',
+  kycMasak: 'musteri-tanima-ve-islem-guvenligi.html',
+  kvkkNotice: 'kvkk.html',
+  evidencePolicy: 'hukuki-delil-ve-kayit-politikasi.html',
 });
 
 const DEFAULT_ALLOWED_ORIGINS = [
@@ -44,6 +64,40 @@ const corsMiddleware = cors({
   allowedHeaders: ['Content-Type'],
   maxAge: 3600,
 });
+
+function sha256(value) {
+  return crypto.createHash('sha256').update(String(value), 'utf8').digest('hex');
+}
+
+function getLegalRecord(key) {
+  const file = LEGAL_FILES[key];
+  const record = LEGAL_MANIFEST?.documents?.[file];
+  if (!record || !/^[a-f0-9]{64}$/i.test(String(record.sha256 || ''))) {
+    const error = new Error(`Hukuki belge bütünlük kaydı hazır değil: ${file}`);
+    error.code = 'LEGAL_MANIFEST_INVALID';
+    throw error;
+  }
+  return {
+    file,
+    version: String(record.version || LEGAL_VERSIONS[key] || ''),
+    sha256: String(record.sha256),
+    bytes: Number(record.bytes || 0),
+  };
+}
+
+function getLegalEvidenceSnapshot(hasHighValue) {
+  const snapshot = {
+    schema: LEGAL_EVIDENCE_SCHEMA,
+    manifestSchema: String(LEGAL_MANIFEST?.schema || ''),
+    terms: getLegalRecord('terms'),
+    preInformation: getLegalRecord('preInformation'),
+    kycMasak: getLegalRecord('kycMasak'),
+    kvkkNotice: getLegalRecord('kvkkNotice'),
+    evidencePolicy: getLegalRecord('evidencePolicy'),
+  };
+  snapshot.highValueDelivery = hasHighValue ? getLegalRecord('highValueDelivery') : null;
+  return snapshot;
+}
 
 function getPayTRConfig() {
   const legacy = functions.config().paytr || {};
@@ -83,6 +137,10 @@ function generateOrderId() {
   return `BLG-${Date.now()}-${crypto.randomBytes(8).toString('hex')}`;
 }
 
+function generateRequestId() {
+  return `REQ-${Date.now()}-${crypto.randomBytes(6).toString('hex')}`;
+}
+
 function isHighValueCatalogProduct(product) {
   if (!product || Number(product.price) < HIGH_VALUE_SECURE_DELIVERY_THRESHOLD) return false;
   const category = String(product.category || '').toLowerCase();
@@ -93,9 +151,7 @@ function isHighValueCatalogProduct(product) {
 }
 
 function normalizeCart(clientItems) {
-  if (!Array.isArray(clientItems) || clientItems.length === 0) {
-    throw new Error('Sepet boş olamaz.');
-  }
+  if (!Array.isArray(clientItems) || clientItems.length === 0) throw new Error('Sepet boş olamaz.');
   if (clientItems.length > 20) throw new Error('Sepet ürün sınırı aşıldı.');
 
   return clientItems.map((item) => {
@@ -110,6 +166,9 @@ function normalizeCart(clientItems) {
     return {
       id,
       name: `${product.brand} ${product.name}`.trim(),
+      brand: String(product.brand || ''),
+      reference: String(product.reference || ''),
+      metal: String(product.metal || ''),
       price: Number(product.price),
       qty,
       category: String(product.category || ''),
@@ -170,6 +229,16 @@ function validateLegalAndDelivery(body, items) {
   };
 }
 
+async function appendAuditEvent(orderRef, eventType, data = {}) {
+  const safeData = JSON.parse(JSON.stringify(data));
+  await orderRef.collection('auditEvents').add({
+    schema: LEGAL_EVIDENCE_SCHEMA,
+    eventType,
+    ...safeData,
+    serverAt: admin.firestore.FieldValue.serverTimestamp(),
+  });
+}
+
 exports.createPayTRToken = functions
   .runWith({ timeoutSeconds: 30, memory: '256MB' })
   .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
@@ -180,18 +249,21 @@ exports.createPayTRToken = functions
       const config = getPayTRConfig();
       const body = req.body || {};
       const email = String(body.email || '').trim().toLowerCase();
-      if (!/^\S+@\S+\.\S+$/.test(email)) {
-        return res.status(400).json({ success: false, message: 'Geçerli e-posta zorunludur.' });
-      }
+      if (!/^\S+@\S+\.\S+$/.test(email)) return res.status(400).json({ success: false, message: 'Geçerli e-posta zorunludur.' });
 
       const items = normalizeCart(body.items);
       const compliance = validateLegalAndDelivery(body, items);
+      const legalEvidence = getLegalEvidenceSnapshot(compliance.hasHighValue);
       const serverTotal = calculateTotal(items);
       const merchant_oid = generateOrderId();
+      const requestId = generateRequestId();
       const clientIp = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.socket.remoteAddress || '127.0.0.1';
+      const userAgent = String(req.headers['user-agent'] || '').slice(0, 500);
       const amountInKurus = String(Math.round(serverTotal * 100));
       const basketBase64 = encodeUserBasket(items);
       const testMode = Number(process.env.PAYTR_TEST_MODE || 0) === 1 ? 1 : 0;
+      const productSnapshotHash = sha256(JSON.stringify(items));
+      const evidenceId = sha256(JSON.stringify({ merchant_oid, requestId, productSnapshotHash, legalEvidence, total: serverTotal, deliveryMethod: compliance.deliveryMethod }));
 
       const customerAddress = compliance.deliveryMethod === 'showroom'
         ? 'Belgin Kuyumculuk — Menderes Caddesi No:231/B Buca / İzmir — Mağazadan Teslim'
@@ -200,6 +272,9 @@ exports.createPayTRToken = functions
       const orderRef = db.collection('orders').doc(merchant_oid);
       await orderRef.set({
         orderId: merchant_oid,
+        requestId,
+        evidenceId,
+        evidenceSchema: LEGAL_EVIDENCE_SCHEMA,
         status: 'pending',
         paymentStatus: 'PENDING',
         deliveryStatus: compliance.hasHighValue ? 'STORE_PICKUP_REQUIRED' : 'PENDING',
@@ -210,6 +285,7 @@ exports.createPayTRToken = functions
         internalKycThreshold: HIGH_VALUE_SECURE_DELIVERY_THRESHOLD,
         masakLegalOverlayRequired: true,
         items,
+        productSnapshotHash,
         total: serverTotal,
         amountInKurus,
         customer: {
@@ -220,21 +296,33 @@ exports.createPayTRToken = functions
         },
         legal: {
           termsAccepted: compliance.termsAccepted,
-          termsVersion: LEGAL_VERSIONS.terms,
           preInformationAccepted: compliance.preInformationAccepted,
-          preInformationVersion: LEGAL_VERSIONS.preInformation,
           highValueDeliveryAccepted: compliance.highValueDeliveryAccepted,
-          highValueDeliveryVersion: compliance.hasHighValue ? LEGAL_VERSIONS.highValueDelivery : null,
           marketingConsent: compliance.marketingConsent,
           internalKycPolicyApplied: compliance.hasHighValue,
           internalKycThreshold: HIGH_VALUE_SECURE_DELIVERY_THRESHOLD,
           masakObligationsApplyWhenLegalConditionsMet: true,
           suspiciousTransactionAssessmentAmountIndependent: true,
+          evidence: legalEvidence,
+          clientReportedPresentedAt: String(body?.legalPresentation?.presentedAt || '').slice(0, 50) || null,
+          clientReportedAcceptedAt: String(body?.legalPresentation?.acceptedAt || '').slice(0, 50) || null,
           acceptedAt: admin.firestore.FieldValue.serverTimestamp(),
         },
         createdAt: admin.firestore.FieldValue.serverTimestamp(),
         ipAddress: clientIp,
+        userAgent,
         testMode: testMode === 1,
+      });
+
+      await appendAuditEvent(orderRef, 'ORDER_CREATED', {
+        requestId,
+        evidenceId,
+        paymentStatus: 'PENDING',
+        deliveryMethod: compliance.deliveryMethod,
+        highValueSecureDelivery: compliance.hasHighValue,
+        highValueThreshold: HIGH_VALUE_SECURE_DELIVERY_THRESHOLD,
+        productSnapshotHash,
+        legalEvidence,
       });
 
       const params = {
@@ -273,26 +361,26 @@ exports.createPayTRToken = functions
           errorMessage: String(result.reason || 'PayTR token reddedildi').slice(0, 500),
           updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         });
+        await appendAuditEvent(orderRef, 'PAYMENT_TOKEN_FAILED', { reason: String(result.reason || '').slice(0, 500) });
         return res.status(502).json({ success: false, message: 'Ödeme sağlayıcısı işlemi başlatamadı.' });
       }
 
-      await orderRef.update({
-        status: 'token_created',
-        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-      });
+      await orderRef.update({ status: 'token_created', updatedAt: admin.firestore.FieldValue.serverTimestamp() });
+      await appendAuditEvent(orderRef, 'PAYMENT_TOKEN_CREATED', { provider: 'PayTR' });
 
       return res.status(200).json({
         success: true,
         token: result.token,
         iframeUrl: `https://www.paytr.com/odeme/guvenli/${result.token}`,
         merchant_oid,
+        evidenceId,
         deliveryMethod: compliance.deliveryMethod,
         highValueSecureDelivery: compliance.hasHighValue,
       });
     } catch (error) {
       console.error('createPayTRToken Error:', error.code || error.message);
-      const status = error.code === 'PAYTR_CONFIG_MISSING' ? 503 : 400;
-      return res.status(status).json({ success: false, message: status === 503 ? 'Ödeme servisi henüz aktif değil.' : error.message });
+      const status = ['PAYTR_CONFIG_MISSING', 'LEGAL_MANIFEST_INVALID'].includes(error.code) ? 503 : 400;
+      return res.status(status).json({ success: false, message: status === 503 ? 'Ödeme/uyum servisi henüz aktif değil.' : error.message });
     }
   }));
 
@@ -329,8 +417,15 @@ exports.paytrCallback = functions
           status: highValue ? 'paid_awaiting_store_pickup' : 'completed',
           deliveryStatus: highValue ? 'STORE_PICKUP_REQUIRED' : (order.deliveryStatus || 'PENDING'),
           totalAmountReceived: String(total_amount),
+          paymentConfirmedAt: admin.firestore.FieldValue.serverTimestamp(),
           completedAt: admin.firestore.FieldValue.serverTimestamp(),
           paymentStatus: 'PAID',
+        });
+        await appendAuditEvent(orderRef, 'PAYMENT_CONFIRMED', {
+          provider: 'PayTR',
+          paymentStatus: 'PAID',
+          totalAmountReceived: String(total_amount),
+          nextDeliveryStatus: highValue ? 'STORE_PICKUP_REQUIRED' : (order.deliveryStatus || 'PENDING'),
         });
       } else {
         await orderRef.update({
@@ -339,6 +434,11 @@ exports.paytrCallback = functions
           failMessage: String(failed_reason_msg || '').slice(0, 500),
           updatedAt: admin.firestore.FieldValue.serverTimestamp(),
           paymentStatus: 'FAILED',
+        });
+        await appendAuditEvent(orderRef, 'PAYMENT_FAILED', {
+          provider: 'PayTR',
+          paymentStatus: 'FAILED',
+          failReason: String(failed_reason_code || '').slice(0, 100),
         });
       }
 
@@ -356,9 +456,7 @@ exports.getOrderStatus = functions
     if (req.method === 'OPTIONS') return res.status(204).send('');
 
     const orderId = String(req.query.orderId || req.body?.orderId || '');
-    if (!/^BLG-\d{10,}-[a-f0-9]{16}$/.test(orderId)) {
-      return res.status(400).json({ success: false, message: 'Geçersiz sipariş numarası.' });
-    }
+    if (!/^BLG-\d{10,}-[a-f0-9]{16}$/.test(orderId)) return res.status(400).json({ success: false, message: 'Geçersiz sipariş numarası.' });
 
     try {
       const orderDoc = await db.collection('orders').doc(orderId).get();
@@ -367,12 +465,15 @@ exports.getOrderStatus = functions
       return res.status(200).json({
         success: true,
         orderId,
+        evidenceId: data.evidenceId || null,
+        evidenceSchema: data.evidenceSchema || null,
         status: data.status,
         paymentStatus: data.paymentStatus || null,
         deliveryStatus: data.deliveryStatus || null,
         deliveryMethod: data.deliveryMethod || null,
         highValueSecureDelivery: data.highValueSecureDelivery === true,
         total: data.total,
+        legalEvidence: data.legal?.evidence || null,
         createdAt: data.createdAt ? data.createdAt.toDate().toISOString() : null,
         completedAt: data.completedAt ? data.completedAt.toDate().toISOString() : null,
       });
@@ -386,7 +487,16 @@ exports.onOrderStatusChange = functions.firestore
   .onUpdate(async (change, context) => {
     const before = change.before.data();
     const after = change.after.data();
-    if (before.status === after.status) return null;
+    if (before.status === after.status && before.deliveryStatus === after.deliveryStatus && before.paymentStatus === after.paymentStatus) return null;
     console.log(`[Order Lifecycle] ${context.params.orderId}: ${before.status} -> ${after.status}`);
+    const orderRef = change.after.ref;
+    await appendAuditEvent(orderRef, 'ORDER_LIFECYCLE_CHANGED', {
+      beforeStatus: before.status || null,
+      afterStatus: after.status || null,
+      beforePaymentStatus: before.paymentStatus || null,
+      afterPaymentStatus: after.paymentStatus || null,
+      beforeDeliveryStatus: before.deliveryStatus || null,
+      afterDeliveryStatus: after.deliveryStatus || null,
+    });
     return null;
   });
