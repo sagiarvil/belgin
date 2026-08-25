@@ -90,6 +90,10 @@ const App = {
     }
   },
 
+  homeWatchPage: 1,
+  allWatchPage: 1,
+  PAGE_SIZE: 30,
+
   // 1. ANA SAYFA RENDER
   renderHome() {
     // Saat Markaları (5'li)
@@ -105,11 +109,8 @@ const App = {
       `).join('');
     }
 
-    // Yeni Eklenen Saatler (8'li)
-    const homeWatchesEl = document.getElementById('homeWatchesGrid');
-    if (homeWatchesEl) {
-      homeWatchesEl.innerHTML = WATCHES.map(p => this.renderProductCard(p)).join('');
-    }
+    // Yeni Eklenen Saatler (Sayfa Başına 30 Ürün)
+    this.renderHomeWatches(1);
 
     // İkinci El Altın & Saat Bölümü (8'li)
     const homePreOwnedEl = document.getElementById('homePreOwnedGrid');
@@ -131,7 +132,7 @@ const App = {
       `).join('');
     }
 
-    // Yeni Eklenen Mücevherler (8'li)
+    // Yeni Eklenen Mücevherler
     const homeJewelryEl = document.getElementById('homeJewelryGrid');
     if (homeJewelryEl) {
       homeJewelryEl.innerHTML = JEWELLERY.map(p => this.renderProductCard(p)).join('');
@@ -143,16 +144,58 @@ const App = {
     }
   },
 
-  // 2. TÜM SAATLER SAYFASI (12.000 TL ve Üzeri Saat Modelleri)
-  renderWatches(brandFilter = 'all') {
-    this.currentWatchBrand = brandFilter;
-    const el = document.getElementById('allWatchesGrid');
+  // ANA SAYFA SAAT SAYFALAMA (EN FAZLA 30 ÜRÜN)
+  renderHomeWatches(page = 1) {
+    this.homeWatchPage = page;
+    const el = document.getElementById('homeWatchesGrid');
+    const pagEl = document.getElementById('homeWatchesPagination');
     if (!el) return;
+
+    const total = WATCHES.length;
+    const start = (page - 1) * this.PAGE_SIZE;
+    const end = start + this.PAGE_SIZE;
+    const pageItems = WATCHES.slice(start, end);
+
+    el.innerHTML = pageItems.map(p => this.renderProductCard(p)).join('');
+
+    if (pagEl) {
+      pagEl.innerHTML = this.buildPaginationHtml(page, total, this.PAGE_SIZE, 'App.changeHomeWatchPage');
+    }
+  },
+
+  changeHomeWatchPage(newPage) {
+    this.renderHomeWatches(newPage);
+    setTimeout(() => {
+      const target = document.getElementById('secHomeWatches') || document.getElementById('homeWatchesGrid');
+      if (target && typeof Router !== 'undefined' && Router.scrollToTarget) {
+        Router.scrollToTarget(target);
+      }
+    }, 40);
+  },
+
+  // 2. TÜM SAATLER SAYFASI (12.000 TL ve Üzeri Saat Modelleri - 30 Ürün Sayfalama)
+  renderWatches(brandFilter = 'all', page = 1) {
+    this.currentWatchBrand = brandFilter;
+    this.allWatchPage = page;
+    const el = document.getElementById('allWatchesGrid');
+    const pagEl = document.getElementById('allWatchesPagination');
+    if (!el) return;
+
     let list = WATCHES;
     if (brandFilter && brandFilter !== 'all') {
       list = WATCHES.filter(p => p.brand.trim().toLowerCase() === brandFilter.trim().toLowerCase());
     }
-    el.innerHTML = list.map(p => this.renderProductCard(p)).join('');
+
+    const total = list.length;
+    const start = (page - 1) * this.PAGE_SIZE;
+    const end = start + this.PAGE_SIZE;
+    const pageItems = list.slice(start, end);
+
+    el.innerHTML = pageItems.map(p => this.renderProductCard(p)).join('');
+
+    if (pagEl) {
+      pagEl.innerHTML = this.buildPaginationHtml(page, total, this.PAGE_SIZE, 'App.changeAllWatchPage');
+    }
 
     // Update filter pill UI
     document.querySelectorAll('.watch-brand-filter-btn').forEach(b => {
@@ -166,12 +209,23 @@ const App = {
     });
   },
 
+  changeAllWatchPage(newPage) {
+    this.renderWatches(this.currentWatchBrand || 'all', newPage);
+    setTimeout(() => {
+      const target = document.querySelector('#page-saatler .section-header-flex') || document.getElementById('allWatchesGrid');
+      if (target && typeof Router !== 'undefined' && Router.scrollToTarget) {
+        Router.scrollToTarget(target);
+      }
+    }, 40);
+  },
+
   filterWatchesByBrand(brand = 'all', btn = null) {
     this.currentWatchBrand = brand;
+    this.allWatchPage = 1;
     if (Router.currentPage !== 'saatler') {
       Router.navigate('saatler', true, { filter: brand });
     } else {
-      this.renderWatches(brand);
+      this.renderWatches(brand, 1);
     }
     if (btn) {
       document.querySelectorAll('.watch-brand-filter-btn').forEach(b => b.classList.remove('active'));
@@ -183,6 +237,60 @@ const App = {
         Router.scrollToTarget(target);
       }
     }, 60);
+  },
+
+  // GENEL SAYFALAMA OLUŞTURUCU (PAGINATION GENERATOR)
+  buildPaginationHtml(currentPage, totalItems, pageSize, callbackFnName) {
+    const totalPages = Math.ceil(totalItems / pageSize);
+    if (totalPages <= 1) return '';
+
+    let html = '';
+
+    // Önceki Sayfa Butonu
+    if (currentPage > 1) {
+      html += `<button class="pagination-btn" onclick="${callbackFnName}(${currentPage - 1})">← Önceki Sayfa</button>`;
+    } else {
+      html += `<button class="pagination-btn" disabled>← Önceki</button>`;
+    }
+
+    // Sayfa Butonları
+    let startPage = Math.max(1, currentPage - 2);
+    let endPage = Math.min(totalPages, currentPage + 2);
+
+    if (startPage > 1) {
+      html += `<button class="pagination-btn" onclick="${callbackFnName}(1)">1</button>`;
+      if (startPage > 2) html += `<span style="padding:0 4px; color:#888;">...</span>`;
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      if (i === currentPage) {
+        html += `<button class="pagination-btn active">${i}</button>`;
+      } else {
+        html += `<button class="pagination-btn" onclick="${callbackFnName}(${i})">${i}</button>`;
+      }
+    }
+
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) html += `<span style="padding:0 4px; color:#888;">...</span>`;
+      html += `<button class="pagination-btn" onclick="${callbackFnName}(${totalPages})">${totalPages}</button>`;
+    }
+
+    // Sonraki Sayfa Butonu
+    if (currentPage < totalPages) {
+      html += `<button class="pagination-btn" onclick="${callbackFnName}(${currentPage + 1})" style="background:var(--color-teal); color:#FFF; border-color:var(--color-teal);">Sonraki Sayfa →</button>`;
+    } else {
+      html += `<button class="pagination-btn" disabled>Son Sayfa</button>`;
+    }
+
+    const startIdx = (currentPage - 1) * pageSize + 1;
+    const endIdx = Math.min(currentPage * pageSize, totalItems);
+    html += `
+      <div class="pagination-info">
+        Sayfa <strong>${currentPage} / ${totalPages}</strong> • (Toplam ${totalItems.toLocaleString('tr-TR')} modelden <strong>${startIdx} - ${endIdx}</strong> arası gösteriliyor)
+      </div>
+    `;
+
+    return html;
   },
 
   // 3. İKİNCİ EL ALTIN & SAAT SAYFASI

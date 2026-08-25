@@ -1614,6 +1614,56 @@ p, span, li, td, th, label, input, button, select, textarea {
 }
 
 /* ==========================================================
+   PAGINATION CONTROLS (SAYFALAMA 30 ÜRÜN)
+   ========================================================== */
+.pdp-pagination-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin: 36px 0 20px;
+  flex-wrap: wrap;
+}
+.pagination-btn {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  color: var(--color-ink);
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 9px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.pagination-btn:hover:not(:disabled) {
+  border-color: var(--color-teal);
+  color: var(--color-teal);
+  background: var(--color-teal-soft);
+}
+.pagination-btn.active {
+  background: var(--color-teal);
+  color: #FFFFFF;
+  border-color: var(--color-teal);
+}
+.pagination-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  border-color: var(--color-border);
+  background: #F5F5F5;
+  color: #999;
+}
+.pagination-info {
+  font-size: 12.5px;
+  color: var(--color-muted);
+  width: 100%;
+  text-align: center;
+  margin-top: 6px;
+}
+
+/* ==========================================================
    7. GÜVEN & HİZMET SÜTUNLARI & 25 YILLIK MİRAS
    ========================================================== */
 .trust-grid-art {
