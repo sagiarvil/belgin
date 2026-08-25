@@ -916,10 +916,14 @@ const App = {
       </div>
     `;
 
-    Router.navigate('urun');
+    Router.navigate('urun', false);
+    if (history.pushState) {
+      history.pushState(null, '', '#urun-' + p.id);
+    }
+    window.scrollTo({ top: 0, behavior: 'instant' });
     setTimeout(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 50);
+    }, 30);
   },
 
   changePdpMainImage(src, thumbEl) {
