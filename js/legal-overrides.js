@@ -1,12 +1,6 @@
 // BELGIN KUYUMCULUK — runtime legal integration layer
 (function(){
   if(typeof App==='undefined'||typeof LegalCompliance==='undefined') return;
-  const originalRenderProductCard=App.renderProductCard.bind(App);
-  App.renderProductCard=function(p){
-    const html=originalRenderProductCard(p);
-    if(!LegalCompliance.isHighValueProduct(p)) return html;
-    return html.replace('<div class="product-art-info">','<div class="product-art-info"><span class="compliance-badge" style="margin-bottom:8px">Yalnız mağazadan teslim</span>');
-  };
   const originalQuick=App.openQuickDrawer.bind(App);
   App.openQuickDrawer=function(id){
     originalQuick(id); const p=typeof findProduct==='function'?findProduct(id):null; const panel=document.getElementById('quickDrawerPanel');

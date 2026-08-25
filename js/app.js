@@ -395,14 +395,13 @@ const App = {
 
   // ÜRÜN KARTI ŞABLONU (PREMIUM BOUTIQUE TASARIMI)
   renderProductCard(p) {
-    const isHighVal = (typeof isHighValueSecureDelivery === 'function' ? isHighValueSecureDelivery(p) : p.price > 12000);
     const condBadgeHtml = p.isPreOwned
       ? `<span class="badge-cond-gold">İkinci El</span>`
-      : (p.conditionBadge ? `<span class="badge-cond-sage">${p.conditionBadge}</span>` : (isHighVal ? `<span class="badge-cond-gold" style="font-size:10px;">Mağazadan Teslim</span>` : ''));
+      : (p.conditionBadge ? `<span class="badge-cond-sage">${p.conditionBadge}</span>` : '');
     const hoverImg = p.hoverImage || p.image;
 
     return `
-      <div class="product-art-card" onclick="App.openQuickDrawer(${p.id})">
+      <div class="product-art-card" onclick="App.openProduct(${p.id})">
         <div class="product-art-thumb">
           <img class="img-primary" src="${p.image}" alt="${p.brand} ${p.name}" loading="lazy">
           <img class="img-hover" src="${hoverImg}" alt="${p.brand} ${p.name}" loading="lazy">
