@@ -31,11 +31,11 @@ const dataContent = fs.readFileSync(path.join(__dirname, '../js/data.js'), 'utf8
 // Run in global context
 vm.runInThisContext(dataContent);
 
-assert(Array.isArray(PRODUCTS) && PRODUCTS.length === 16, 'Mücevher ve saat arşivinde tam 16 adet gerçek model mevcut');
+assert(Array.isArray(PRODUCTS) && PRODUCTS.length === WATCHES.length + JEWELLERY.length, 'Yayın kataloğunda yalnız görselli ve sınıflandırılmış ürünler mevcut');
 assert(Array.isArray(WATCHES) && WATCHES.length === 8, 'Saat koleksiyonunda 8 adet gerçek model mevcut (TAG Heuer Carrera, Formula 1, Longines HydroConquest, Master, Rado Captain Cook, True Square)');
-assert(Array.isArray(JEWELLERY) && JEWELLERY.length === 8, 'Mücevher koleksiyonunda 8 adet gerçek model mevcut (Cartier Juste un Clou, Love, Tiffany Setting)');
-assert(Array.isArray(PRE_OWNED_ITEMS) && PRE_OWNED_ITEMS.length >= 12, 'İkinci el altın ve saat koleksiyonunda en az 12 adet ekspertizli parça mevcut');
-assert(Array.isArray(PRE_OWNED_GOLD) && PRE_OWNED_GOLD.length >= 6, 'İkinci el altın koleksiyonunda en az 6 adet masif altın parça mevcut');
+assert(Array.isArray(JEWELLERY) && JEWELLERY.length === 3, 'Mücevher koleksiyonunda yalnız güvenilir görsel kaynağı olan 3 ürün yayında');
+assert(Array.isArray(PRE_OWNED_ITEMS) && PRE_OWNED_ITEMS.length >= 10, 'Yayın kataloğunda ikinci el ürün alt kümesi tutarlı');
+assert(Array.isArray(PRE_OWNED_GOLD) && PRE_OWNED_GOLD.length >= 2, 'Yayın kataloğunda görselli ikinci el altın ürünleri mevcut');
 assert(Array.isArray(WATCH_BRANDS) && WATCH_BRANDS.length === 5, 'Saat markaları 5 adet marka içeriyor (TAG Heuer, Longines, Rado, Cartier, Rolex)');
 assert(Array.isArray(JEWELRY_BRANDS) && JEWELRY_BRANDS.length === 5, 'Mücevher markaları 5 adet marka içeriyor (Cartier, Tiffany, Bulgari, VCA, Chopard)');
 
@@ -44,7 +44,7 @@ const invalidPrice = allProds.some(p => typeof p.price !== 'number' || p.price <
 assert(!invalidPrice, 'Tüm parçaların fiyatları pozitif ve geçerli rakamlar içeriyor');
 
 const missingAttributes = PRODUCTS.some(p => !p.brand || !p.reference || !p.metal || !p.statusBadge || !p.conditionBadge || !p.image);
-assert(!missingAttributes, 'Her parçada marka, referans, maden, stok, kondisyon rozetleri ve orijinal API görsel URLsi eksiksiz tanımlı');
+assert(!missingAttributes, 'Her yayındaki üründe marka, referans, maden, stok, kondisyon ve görsel eksiksiz tanımlı');
 
 // 2. UTILS TESTS
 console.log('\n--- 2. Yardımcı Fonksiyonlar & Fiyat Formatlayıcı ---');

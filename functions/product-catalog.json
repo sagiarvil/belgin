@@ -1,30 +1,9 @@
 {
-  "1": {
-    "id": "1",
-    "name": "Juste un Clou Pırlantalı Bilezik",
-    "brand": "Cartier",
-    "price": 490000,
-    "inStock": true
-  },
-  "2": {
-    "id": "2",
-    "name": "Setting Tektaş Pırlanta Yüzük",
-    "brand": "Tiffany & Co.",
-    "price": 780000,
-    "inStock": true
-  },
   "3": {
     "id": "3",
     "name": "Love Bilezik Klasik Rose Altın",
     "brand": "Cartier",
     "price": 375000,
-    "inStock": true
-  },
-  "4": {
-    "id": "4",
-    "name": "Love Bilezik Klasik Sarı Altın",
-    "brand": "Cartier",
-    "price": 365000,
     "inStock": true
   },
   "5": {
@@ -39,20 +18,6 @@
     "name": "Juste un Clou Klasik Sarı Altın",
     "brand": "Cartier",
     "price": 430000,
-    "inStock": true
-  },
-  "7": {
-    "id": "7",
-    "name": "Love Bilezik Klasik Beyaz Altın",
-    "brand": "Cartier",
-    "price": 390000,
-    "inStock": true
-  },
-  "8": {
-    "id": "8",
-    "name": "Juste un Clou Yüzük Sarı Altın",
-    "brand": "Cartier",
-    "price": 110000,
     "inStock": true
   },
   "101": {

@@ -9,14 +9,9 @@ const expected = new Map([
   [106, ['Longines', 'L2.909.4.78.3']],
   [107, ['Rado', 'R32105353']],
   [108, ['Rado', 'R27086162']],
-  [1, ['Cartier', 'B6048617']],
-  [2, ['Tiffany & Co.', '70524805']],
   [3, ['Cartier', 'B6067417']],
-  [4, ['Cartier', 'B6067517']],
   [5, ['Cartier', 'B4085000']],
-  [6, ['Cartier', 'B6048217']],
-  [7, ['Cartier', 'B6067617']],
-  [8, ['Cartier', 'B4092600']]
+  [6, ['Cartier', 'B6048217']]
 ]);
 
 function fail(message) {
@@ -24,8 +19,8 @@ function fail(message) {
   process.exitCode = 1;
 }
 
-if (!Array.isArray(PRODUCTS) || PRODUCTS.length !== 16) {
-  fail(`Expected 16 products, got ${PRODUCTS?.length ?? 'invalid'}`);
+if (!Array.isArray(PRODUCTS) || PRODUCTS.length !== expected.size) {
+  fail(`Expected ${expected.size} published products, got ${PRODUCTS?.length ?? 'invalid'}`);
 }
 
 const refs = new Set();
@@ -49,4 +44,4 @@ for (const product of PRODUCTS) {
   refs.add(normalizedRef);
 }
 
-if (!process.exitCode) console.log('CATALOG GUARD PASS: 16/16 product identities and images are mapped and traceable.');
+if (!process.exitCode) console.log(`CATALOG GUARD PASS: ${PRODUCTS.length}/${expected.size} published product identities and images are mapped and traceable.`);

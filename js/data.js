@@ -220,50 +220,6 @@ const PRODUCTS = [
   // 2. MÜCEVHERLER & İKİNCİ EL MASİF ALTIN
   // ==========================================
   {
-    id: 1,
-    brand: "Cartier",
-    name: "Juste un Clou Pırlantalı Bilezik",
-    reference: "B6048617 · 17",
-    category: "jewelry",
-    statusBadge: "Stokta",
-    conditionBadge: "İkinci El",
-    isPreOwned: true,
-    isGold: true,
-    price: 490000,
-    metal: "18K Sarı Altın (Au750)",
-    dial: "0.58 ct Pavé Pırlantalar",
-    year: "2024",
-    boxPapers: "Cartier Kırmızı Kutu & Sertifika",
-    desc: "Cartier Juste un Clou B6048617 klasik pırlantalı bilezik; 18 ayar sarı altın, 32 parlak kesim pırlanta toplam 0,58 ct ve 3,5mm genişlik.",
-    image: "https://www.chronoland.ru/images/thumbs-720x900-products/EDF1uz3nGt7qa4aV5z2QY2zHEWa9rA1WdFiSWfXo.png",
-    hoverImage: "https://www.chronoland.ru/images/thumbs-720x900-products/EDF1uz3nGt7qa4aV5z2QY2zHEWa9rA1WdFiSWfXo.png",
-    sourceUrl: "https://www.cartier.com/en-tr/jewellery/bracelets/juste-un-clou/juste-un-clou-bracelet-classic-model-diamonds-CRB6048617.html",
-    hallmark: "Au750 • Cartier 18 • Seri No Lazerli",
-    inStock: true
-  },
-  {
-    id: 2,
-    brand: "Tiffany & Co.",
-    name: "Setting Tektaş Pırlanta Yüzük",
-    reference: "70524805 · 11",
-    category: "jewelry",
-    statusBadge: "Stokta",
-    conditionBadge: "İkinci El",
-    isPreOwned: true,
-    isGold: false,
-    price: 780000,
-    metal: "950 Masif Platin (Pt950)",
-    dial: "1.50 ct D-VVS1 Doğal Pırlanta",
-    year: "2023",
-    boxPapers: "Tiffany Mavi Kutu & GIA Sertifikası",
-    desc: "Tiffany & Co. Setting 6 tırnaklı platin pırlanta yüzük; 1.50 karat D renk VVS1 berraklığında doğal elmas, GIA lazer yazılı sertifikalı tescil.",
-    image: "https://d17anp2eo56k6j.cloudfront.net/media/catalog/product/t/i/tiffany-co-1-51-carat-solitaire-diamond-ring-gia-d-vvs1_3_10-1-14464.jpg",
-    hoverImage: "https://d17anp2eo56k6j.cloudfront.net/media/catalog/product/t/i/tiffany-co-1-51-carat-solitaire-diamond-ring-gia-d-vvs1_3_10-1-14464.jpg",
-    sourceUrl: "https://www.tiffany.com/engagement/the-tiffany-setting/",
-    hallmark: "PT950 • Tiffany&Co. • GIA-55421099",
-    inStock: true
-  },
-  {
     id: 3,
     brand: "Cartier",
     name: "Love Bilezik Klasik Rose Altın",
@@ -283,28 +239,6 @@ const PRODUCTS = [
     hoverImage: "https://www.cartier.com/dw/image/v2/BFHP_PRD/on/demandware.static/-/Sites-cartier-master/default/dwd3992778/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
     sourceUrl: "https://www.cartier.com/en-ie/jewellery/bracelets/love/-love-bracelet-classic-model-CRB6067417",
     hallmark: "Au750 • 17 • CRD99218",
-    inStock: true
-  },
-  {
-    id: 4,
-    brand: "Cartier",
-    name: "Love Bilezik Klasik Sarı Altın",
-    reference: "B6067517 · 18",
-    category: "jewelry",
-    statusBadge: "Stokta",
-    conditionBadge: "İkinci El",
-    isPreOwned: true,
-    isGold: true,
-    price: 365000,
-    metal: "18K Sarı Altın (Au750)",
-    dial: "Klasik Vida Motifleri",
-    year: "2023",
-    boxPapers: "Kutu ve Orijinal Tornavida",
-    desc: "Cartier LOVE B6067517 klasik model; 18 ayar sarı altın, 6,1mm genişlik, iki işlevsel vidalı orijinal kapama sistemi ve tornavida.",
-    image: "https://jewelsaficionado.com/cdn/shop/files/cartier-love-bracelet-in-yellow-gold-cartier-1146590431_2048x.jpg?v=1741848007",
-    hoverImage: "https://jewelsaficionado.com/cdn/shop/files/cartier-love-bracelet-in-yellow-gold-cartier-1146590431_2048x.jpg?v=1741848007",
-    sourceUrl: "https://www.cartier.com/en-tr/be-inspired/engrave-your-creation/love-bracelet-classic-model-CRB6067517.html",
-    hallmark: "Au750 • 18 • CKR44120",
     inStock: true
   },
   {
@@ -351,50 +285,6 @@ const PRODUCTS = [
     hallmark: "Au750 • 16 • Sıfır Mühür",
     inStock: true
   },
-  {
-    id: 7,
-    brand: "Cartier",
-    name: "Love Bilezik Klasik Beyaz Altın",
-    reference: "B6067617 · 16",
-    category: "jewelry",
-    statusBadge: "Stokta",
-    conditionBadge: "İkinci El",
-    isPreOwned: true,
-    isGold: true,
-    price: 390000,
-    metal: "18K Beyaz Altın (Au750)",
-    dial: "Rodyum Kaplama Beyaz Altın",
-    year: "2024",
-    boxPapers: "Orijinal Kutu ve Tornavida",
-    desc: "Cartier LOVE B6067617 klasik model; 18 ayar beyaz altın, 6,1mm genişlik, iki işlevsel vidalı orijinal kapama sistemi ve tornavida.",
-    image: "https://cashing-diamonds.com/cdn/shop/files/64607.jpg?v=1686017866",
-    hoverImage: "https://cashing-diamonds.com/cdn/shop/files/64607.jpg?v=1686017866",
-    sourceUrl: "https://www.cartier.com/en-tr/jewellery/bracelets/love/love-bracelet-classic-model-B6067617.html",
-    hallmark: "Au750 • 16 • Cartier Beyaz",
-    inStock: true
-  },
-  {
-    id: 8,
-    brand: "Cartier",
-    name: "Juste un Clou Yüzük Sarı Altın",
-    reference: "B4092600 · 54",
-    category: "jewelry",
-    statusBadge: "Stokta",
-    conditionBadge: "İkinci El",
-    isPreOwned: true,
-    isGold: true,
-    price: 110000,
-    metal: "18K Sarı Altın (Au750)",
-    dial: "Çivi Motifli Klasik Boy",
-    year: "2023",
-    boxPapers: "Cartier Kutu & Sertifika",
-    desc: "Cartier Juste un Clou B4092600 klasik model yüzük; 18 ayar sarı altın ve 2,6mm genişlik.",
-    image: "https://backend.lombard-perspectiva.ru/storage/images/jewelry/assets/04b3ad661504e0ddfa75f7c994b41ee6_xxl.webp",
-    hoverImage: "https://backend.lombard-perspectiva.ru/storage/images/jewelry/assets/04b3ad661504e0ddfa75f7c994b41ee6_xxl.webp",
-    sourceUrl: "https://www.cartier.com/en-tr/jewellery/rings/juste-un-clou/juste-un-clou-ring-classic-model-CRB4092600.html",
-    hallmark: "Au750 • 54 • JUC901",
-    inStock: true
-  }
 ];
 
 const WATCHES = PRODUCTS.filter(p => p.category === "watch");
@@ -412,7 +302,6 @@ const CERTIFICATE_DB = {
   "R32105353": { brand: "Rado", model: "Captain Cook Yeşil Seramik", authStatus: "%100 Orijinal Tescilli", certNo: "RDO-3210-5353", expert: "İzmir Kuyumcular Odası Tescilli Ekspertiz" },
   "R27086162": { brand: "Rado", model: "True Square İskelet", authStatus: "%100 Orijinal Tescilli", certNo: "RDO-2708-6162", expert: "İzmir Kuyumcular Odası Tescilli Ekspertiz" },
   "B6065818": { brand: "Cartier", model: "Juste un Clou Pırlantalı", authStatus: "%100 Orijinal Tescilli", certNo: "CRT-JUC-3301", expert: "GIA Sertifikalı Gemolog İncelemesi" },
-  "70524805": { brand: "Tiffany & Co.", model: "Setting 1.50ct Tektaş", authStatus: "%100 Orijinal Tescilli", certNo: "GIA-55421099", expert: "GIA Uluslararası Elmas Raporu" }
 };
 
 if (typeof module !== 'undefined' && module.exports) {
