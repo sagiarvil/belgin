@@ -58,7 +58,8 @@ function scrubPublicClaims(content) {
   return out;
 }
 
-const htmlFiles = fs.readdirSync(root).filter((name) => /\.html$/i.test(name));
+const EXCLUDED_HTML = ['vip-odeme.html', 'odeme-linki.html'];
+const htmlFiles = fs.readdirSync(root).filter((name) => /\.html$/i.test(name) && !EXCLUDED_HTML.includes(name));
 for (const file of htmlFiles) {
   writeIfChanged(file, (content) => {
     let out = scrubPublicClaims(content);
