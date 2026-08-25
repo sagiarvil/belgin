@@ -2,7 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
-const { PRODUCTS, WATCHES, JEWELLERY, PRE_OWNED_ITEMS, PRE_OWNED_GOLD, WATCH_BRANDS, JEWELRY_BRANDS } = require('../js/data.js');
+const vm = require('vm');
 
 let passed = 0;
 let failed = 0;
@@ -11,6 +11,9 @@ function assert(condition, message) {
   else { console.error(`  ❌ FAIL: ${message}`); failed++; }
 }
 function read(file) { return fs.readFileSync(path.join(__dirname, '..', file), 'utf8'); }
+
+const dataContent = read('js/data.js');
+vm.runInThisContext(dataContent);
 
 console.log('\n========================================');
 console.log('BELGIN KUYUMCULUK TEST RUNNER');
