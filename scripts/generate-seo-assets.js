@@ -99,16 +99,33 @@ function generateSitemap() {
     xml += `  </url>\n\n`;
   });
 
+  // Kategori SPA Sayfaları
+  const categoryPages = [
+    { url: '/#saatler', priority: '0.9', changefreq: 'daily' },
+    { url: '/#mucevherat', priority: '0.9', changefreq: 'daily' },
+    { url: '/#ikinci-el', priority: '0.85', changefreq: 'daily' },
+    { url: '/#hikayemiz', priority: '0.7', changefreq: 'weekly' }
+  ];
+  categoryPages.forEach(page => {
+    xml += `  <url>\n`;
+    xml += `    <loc>${BASE_URL}${page.url}</loc>\n`;
+    xml += `    <lastmod>${LAST_MOD}</lastmod>\n`;
+    xml += `    <changefreq>${page.changefreq}</changefreq>\n`;
+    xml += `    <priority>${page.priority}</priority>\n`;
+    xml += `  </url>\n\n`;
+  });
+
   // Ürün Sanal Sayfaları & Görselleri
   products.forEach(prod => {
     xml += `  <url>\n`;
-    xml += `    <loc>${BASE_URL}/#product-${prod.id}</loc>\n`;
+    xml += `    <loc>${BASE_URL}/#urun-${prod.id}</loc>\n`;
     xml += `    <lastmod>${LAST_MOD}</lastmod>\n`;
     xml += `    <changefreq>daily</changefreq>\n`;
     xml += `    <priority>0.85</priority>\n`;
     if (prod.image) {
+      const imgLoc = prod.image.startsWith('http') ? prod.image : `${BASE_URL}/${prod.image}`;
       xml += `    <image:image>\n`;
-      xml += `      <image:loc>${prod.image}</image:loc>\n`;
+      xml += `      <image:loc>${imgLoc}</image:loc>\n`;
       xml += `      <image:title><![CDATA[${prod.brand} ${prod.name} - BELGIN Kuyumculuk]]></image:title>\n`;
       xml += `      <image:caption><![CDATA[${prod.desc || prod.name}]]></image:caption>\n`;
       xml += `    </image:image>\n`;
@@ -119,7 +136,7 @@ function generateSitemap() {
   xml += `</urlset>\n`;
 
   fs.writeFileSync(path.join(__dirname, '..', 'sitemap.xml'), xml, 'utf8');
-  console.log(`✅ sitemap.xml başarıyla üretildi (${STATIC_PAGES.length + products.length} URL).`);
+  console.log(`✅ sitemap.xml başarıyla üretildi (${STATIC_PAGES.length + categoryPages.length + products.length} URL).`);
 }
 
 // 4. LLMS.TXT ÜRET (CLOUDFLARE AI / OPENAI / ANTHROPIC STANDARDI)

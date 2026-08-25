@@ -26,7 +26,7 @@ const App = {
     if (hash && document.getElementById('page-' + hash)) {
       Router.navigate(hash, false);
     } else {
-      Router.navigate('home', false);
+      Router.navigate('ana-sayfa', false);
     }
   },
 
@@ -44,24 +44,27 @@ const App = {
     showToast('Çerez tercihleriniz kaydedildi.', 'info');
   },
 
+  currentWatchBrand: 'all',
+  currentPreOwnedCategory: 'all',
+
   onPageChange(page, options = {}) {
     switch (page) {
-      case 'home':
+      case 'ana-sayfa':
         this.renderHome();
         break;
-      case 'watches':
-        this.renderWatches();
+      case 'saatler':
+        this.renderWatches(options.filter || this.currentWatchBrand || 'all');
         break;
-      case 'jewellery':
-        this.renderJewellery();
+      case 'mucevherat':
+        this.renderJewellery(options.filter || 'all');
         break;
-      case 'preowned':
-        this.renderPreOwned();
+      case 'ikinci-el':
+        this.renderPreOwned(options.filter || this.currentPreOwnedCategory || 'all');
         break;
-      case 'cart':
+      case 'sepet':
         this.renderCart();
         break;
-      case 'checkout':
+      case 'odeme':
         this.renderCart();
         break;
     }
@@ -72,7 +75,7 @@ const App = {
     this.renderWatches();
     this.renderJewellery();
     this.renderPreOwned();
-    if (Router.currentPage === 'cart') this.renderCart();
+    if (Router.currentPage === 'sepet') this.renderCart();
   },
 
   updateHeaderCartCount() {
@@ -93,7 +96,7 @@ const App = {
     const watchBrandsEl = document.getElementById('watchBrandsGrid');
     if (watchBrandsEl) {
       watchBrandsEl.innerHTML = WATCH_BRANDS.map(b => `
-        <a class="brand-tile-card" href="#" data-page="watches">
+        <a class="brand-tile-card" href="#" onclick="App.filterWatchesByBrand('${b.name}', null)">
           <div class="brand-tile-thumb">
             <img src="${b.image}" alt="${b.name}" loading="lazy">
           </div>
@@ -119,7 +122,7 @@ const App = {
     const jBrandsEl = document.getElementById('jewelryBrandsGrid');
     if (jBrandsEl) {
       jBrandsEl.innerHTML = JEWELRY_BRANDS.map(b => `
-        <a class="brand-tile-card" href="#" data-page="jewellery">
+        <a class="brand-tile-card" href="#" data-page="mucevherat">
           <div class="brand-tile-thumb">
             <img src="${b.image}" alt="${b.name}" loading="lazy">
           </div>
@@ -140,27 +143,102 @@ const App = {
     }
   },
 
-  // 2. TÜM SAATLER SAYFASI
-  renderWatches() {
+  // 2. TÜM SAATLER SAYFASI (12.000 TL ve Üzeri Saat Modelleri)
+  renderWatches(brandFilter = 'all') {
+    this.currentWatchBrand = brandFilter;
     const el = document.getElementById('allWatchesGrid');
-    if (el) {
-      el.innerHTML = WATCHES.map(p => this.renderProductCard(p)).join('');
+    if (!el) return;
+    let list = WATCHES;
+    if (brandFilter && brandFilter !== 'all') {
+      list = WATCHES.filter(p => p.brand.trim().toLowerCase() === brandFilter.trim().toLowerCase());
     }
+    el.innerHTML = list.map(p => this.renderProductCard(p)).join('');
+
+    // Update filter pill UI
+    document.querySelectorAll('.watch-brand-filter-btn').forEach(b => {
+      b.classList.remove('active');
+      const txt = b.textContent.trim().toLowerCase();
+      if ((brandFilter === 'all' || !brandFilter) && txt.includes('tümü')) {
+        b.classList.add('active');
+      } else if (brandFilter && (txt === brandFilter.toLowerCase() || txt.startsWith(brandFilter.toLowerCase()))) {
+        b.classList.add('active');
+      }
+    });
+  },
+
+  filterWatchesByBrand(brand = 'all', btn = null) {
+    this.currentWatchBrand = brand;
+    if (Router.currentPage !== 'saatler') {
+      Router.navigate('saatler', true, { filter: brand });
+    } else {
+      this.renderWatches(brand);
+    }
+    if (btn) {
+      document.querySelectorAll('.watch-brand-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+    setTimeout(() => {
+      const target = document.querySelector('#page-saatler .section-header-flex') || document.getElementById('allWatchesGrid');
+      if (target && typeof Router !== 'undefined' && Router.scrollToTarget) {
+        Router.scrollToTarget(target);
+      }
+    }, 60);
   },
 
   // 3. İKİNCİ EL ALTIN & SAAT SAYFASI
-  renderPreOwned() {
+  renderPreOwned(filter = 'all') {
+    this.currentPreOwnedCategory = filter;
     const el = document.getElementById('allPreOwnedGrid');
-    if (el) {
-      el.innerHTML = PRE_OWNED_ITEMS.map(p => this.renderProductCard(p)).join('');
+    if (!el) return;
+    let items = PRE_OWNED_ITEMS;
+    if (filter === 'jewelry') items = PRE_OWNED_ITEMS.filter(p => p.category === 'jewelry');
+    else if (filter === 'watch') items = PRE_OWNED_ITEMS.filter(p => p.category === 'watch');
+    else if (filter && filter !== 'all') {
+      items = PRE_OWNED_ITEMS.filter(p => p.brand.toLowerCase().includes(filter.toLowerCase()) || p.category === filter);
     }
+    el.innerHTML = items.map(p => this.renderProductCard(p)).join('');
+
+    // Update filter pill UI
+    document.querySelectorAll('.preowned-filter-btn').forEach(b => {
+      b.classList.remove('active');
+      const txt = b.textContent.trim().toLowerCase();
+      if ((filter === 'all' || !filter) && txt.includes('tümü')) b.classList.add('active');
+      else if (filter === 'jewelry' && txt.includes('mücevher')) b.classList.add('active');
+      else if (filter === 'watch' && txt.includes('saat')) b.classList.add('active');
+    });
   },
 
-  // 4. TÜM MÜCEVHERLER SAYFASI
+  filterPreOwnedCategory(cat = 'all', btn = null) {
+    this.currentPreOwnedCategory = cat;
+    if (Router.currentPage !== 'ikinci-el') {
+      Router.navigate('ikinci-el', true, { filter: cat });
+    } else {
+      this.renderPreOwned(cat);
+    }
+    if (btn) {
+      document.querySelectorAll('.preowned-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+    setTimeout(() => {
+      const target = document.querySelector('#page-ikinci-el .section-header-flex') || document.getElementById('allPreOwnedGrid');
+      if (target && typeof Router !== 'undefined' && Router.scrollToTarget) {
+        Router.scrollToTarget(target);
+      }
+    }, 60);
+  },
+
+  // 4. TÜM MÜCEVHERLER SAYFASI (Tüm ürünler İkinci El sayfasına taşındı)
   renderJewellery() {
     const el = document.getElementById('allJewelleryGrid');
     if (el) {
-      el.innerHTML = JEWELLERY.map(p => this.renderProductCard(p)).join('');
+      el.innerHTML = `
+        <div class="empty-category-notice" style="grid-column: 1 / -1; text-align: center; padding: 60px 24px; background: #fafafa; border: 1px solid #e5e5e5; border-radius: 12px; margin: 20px 0;">
+          <div style="font-size: 36px; margin-bottom: 12px;">💎</div>
+          <h3 style="font-family: 'Playfair Display', serif; font-size: 22px; color: var(--color-ink); margin-bottom: 8px;">Tüm Mücevherlerimiz İkinci El Koleksiyonumuzda</h3>
+          <p style="color: var(--color-muted); max-width: 480px; margin: 0 auto 20px; font-size: 14px; line-height: 1.6;">24 parçalık Cartier Juste un Clou altın ve pırlantalı mücevher koleksiyonumuzun tamamı İkinci El vitrinimize taşınmıştır.</p>
+          <a href="#" data-page="ikinci-el" onclick="setTimeout(() => { const btn = document.querySelectorAll('.preowned-filter-btn')[1]; if (btn) App.filterPreOwnedCategory('jewelry', btn); }, 100)" class="btn-action-vip" style="display: inline-flex; padding: 12px 28px;">İkinci El Mücevherleri İncele (24 Parça) →</a>
+        </div>
+      `;
     }
   },
 
@@ -169,26 +247,29 @@ const App = {
     document.querySelectorAll('.hero-tab-btn').forEach(b => b.classList.remove('active'));
     if (btn) btn.classList.add('active');
 
-    if (tab === 'watches') {
-      Router.navigate('watches');
-    } else if (tab === 'preowned') {
+    if (tab === 'saatler') {
+      Router.navigate('saatler');
+    } else if (tab === 'ikinci-el') {
       const sec = document.getElementById('secPreOwned');
-      if (sec && Router.currentPage === 'home') {
+      if (sec && Router.currentPage === 'ana-sayfa') {
         sec.scrollIntoView({ behavior: 'smooth' });
       } else {
-        Router.navigate('preowned');
+        Router.navigate('ikinci-el');
       }
-    } else if (tab === 'jewellery') {
-      Router.navigate('jewellery');
+    } else if (tab === 'mucevherat') {
+      Router.navigate('mucevherat');
     } else if (tab === 'all') {
-      Router.navigate('home');
+      Router.navigate('ana-sayfa');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   },
 
-  // ÜRÜN KARTI ŞABLONU
+  // ÜRÜN KARTI ŞABLONU (PREMIUM BOUTIQUE TASARIMI)
   renderProductCard(p) {
-    const condClass = p.conditionBadge === 'Sıfır' ? 'badge-cond-sage' : 'badge-cond-gold';
+    const isHighVal = (typeof isHighValueSecureDelivery === 'function' ? isHighValueSecureDelivery(p) : p.price > 12000);
+    const condBadgeHtml = p.isPreOwned
+      ? `<span class="badge-cond-gold">İkinci El</span>`
+      : (p.conditionBadge ? `<span class="badge-cond-sage">${p.conditionBadge}</span>` : (isHighVal ? `<span class="badge-cond-gold" style="font-size:10px;">Mağazadan Teslim</span>` : ''));
     const hoverImg = p.hoverImage || p.image;
 
     return `
@@ -197,7 +278,7 @@ const App = {
           <img class="img-primary" src="${p.image}" alt="${p.brand} ${p.name}" loading="lazy">
           <img class="img-hover" src="${hoverImg}" alt="${p.brand} ${p.name}" loading="lazy">
           <span class="badge-stock-teal">${p.statusBadge || 'Stokta'}</span>
-          <span class="${condClass}">${p.conditionBadge || 'İkinci El'}</span>
+          ${condBadgeHtml}
         </div>
         <div class="product-art-info">
           <h3 class="prod-brand-name">${p.brand}</h3>
@@ -218,6 +299,8 @@ const App = {
     const backdrop = document.getElementById('quickDrawerBackdrop');
     if (!panel || !backdrop) return;
 
+    const isHighVal = (typeof isHighValueSecureDelivery === 'function' ? isHighValueSecureDelivery(p) : p.price > 12000);
+
     panel.innerHTML = `
       <button class="drawer-close-btn" onclick="App.closeQuickDrawer()">×</button>
       
@@ -237,7 +320,7 @@ const App = {
         ${p.desc}
       </p>
 
-      <table class="pd-art-specs-table" style="font-size:12.5px; margin-bottom:24px;">
+      <table class="pd-art-specs-table" style="font-size:12.5px; margin-bottom:16px;">
         <tr><td>Maden / Kasa</td><td>${p.metal || 'Masif Altın / Çelik'}</td></tr>
         <tr><td>Kadran / Taş</td><td>${p.dial || 'Orijinal Kadran'}</td></tr>
         <tr><td>Model Yılı</td><td>${p.year || '2024'}</td></tr>
@@ -246,12 +329,18 @@ const App = {
         ${p.hallmark ? `<tr><td>Darphane Damgası</td><td><strong>${p.hallmark}</strong></td></tr>` : ''}
       </table>
 
+      ${isHighVal ? `
+        <div style="font-size:11.5px; color:#5D4411; background:#FFF9EE; border:1px solid #E6D2A8; padding:10px 12px; border-radius:6px; margin-bottom:16px; line-height:1.5;">
+          <strong>🏛️ Yalnız Mağazadan Teslim (03):</strong> 12.000 TL üzerindeki ürünler güvenlik gereği kimlik ibrazı ve imza ile yalnızca Buca mağazamızdan teslim edilir. Kargo/kurye ile gönderilmez.
+        </div>
+      ` : ''}
+
       <div style="display:flex; flex-direction:column; gap:10px; margin-top:auto;">
         <button class="btn-art-buy" onclick="Cart.add(${p.id}); App.updateHeaderCartCount(); App.closeQuickDrawer(); Router.navigate('cart');">
           Sepete Ekle & Satın Al
         </button>
         <button class="btn-hero-outline" style="text-align:center; padding:12px;" onclick="App.closeQuickDrawer(); App.openProduct(${p.id});">
-          Detaylı Ekspertiz Sayfası (10x Loupe)
+          Detaylı Ekspertiz Sayfası & Şartlar (10x Loupe)
         </button>
       </div>
     `;
@@ -266,7 +355,7 @@ const App = {
     document.body.style.overflow = '';
   },
 
-  // ÜRÜN DETAY SAYFASI (10X MAKRO BÜYÜTEÇ & EKSPERTİZ)
+  // ÜRÜN DETAY SAYFASI (10X MAKRO BÜYÜTEÇ & EKSPERTİZ & HUKUKİ PROTOKOLLER)
   openProduct(id) {
     const p = findProduct(id);
     if (!p) return;
@@ -274,7 +363,11 @@ const App = {
     const container = document.getElementById('productDetailView');
     if (!container) return;
 
-    const condClass = p.conditionBadge === 'Sıfır' ? 'badge-cond-sage' : 'badge-cond-gold';
+    const isHighVal = (typeof isHighValueSecureDelivery === 'function' ? isHighValueSecureDelivery(p) : p.price > 12000);
+
+    const condBadgeHtml = p.isPreOwned
+      ? `<span class="badge-cond-gold" style="right:16px; top:16px; font-size:11px; padding:4px 10px;">İkinci El</span>`
+      : (p.conditionBadge ? `<span class="badge-cond-sage" style="right:16px; top:16px; font-size:11px; padding:4px 10px;">${p.conditionBadge}</span>` : '');
 
     container.innerHTML = `
       <div class="pd-art-wrapper">
@@ -284,7 +377,7 @@ const App = {
           <div class="pd-art-image-container" onmousemove="App.handleZoom(event, this)" onmouseleave="App.resetZoom(this)">
             <img src="${p.image}" alt="${p.brand} ${p.name}" id="zoomTargetImg">
             <span class="badge-stock-teal" style="left:16px; top:16px; font-size:11px; padding:4px 10px;">${p.statusBadge || 'Stokta'}</span>
-            <span class="${condClass}" style="right:16px; top:16px; font-size:11px; padding:4px 10px;">${p.conditionBadge || 'İkinci El'}</span>
+            ${condBadgeHtml}
             <div class="loupe-hint">🔍 10x Optik İnceleme İçin Görselin Üzerine Gelin</div>
           </div>
         </div>
@@ -335,13 +428,53 @@ const App = {
             ${p.hallmark ? `<tr><td>Darphane Damgası</td><td>${p.hallmark}</td></tr>` : ''}
           </table>
 
+          ${isHighVal ? `
+            <!-- 03: Yüksek Değerli Güvenli Teslimat Uyarısı -->
+            <div class="high-value-delivery-alert" style="background:#FFF9EE; border:1px solid #E6D2A8; padding:14px 18px; border-radius:8px; margin:16px 0; font-size:12.5px; color:#6B531C; line-height:1.6;">
+              <strong style="display:block; margin-bottom:4px; font-size:13px; color:#875A00;">🏛️ Yalnız Mağazadan Güvenli Teslimat (03 Protokolü)</strong>
+              12.000 TL üzerindeki altın ve saat ürünleri yalnızca mağazamızdan teslim edilir. Kargo veya kurye ile gönderim yapılmaz.<br>
+              Teslim sırasında sipariş sahibinin bizzat mağazada bulunması, geçerli resmî kimlik belgesini ibraz etmesi ve teslim-tesellüm belgesini imzalaması gerekir.
+            </div>
+          ` : ''}
+
+          <!-- Yasal & Politika Hızlı Bağlantıları (03, 04, 11) -->
+          <div style="display:flex; flex-wrap:wrap; gap:12px; font-size:12px; margin-bottom:20px;">
+            <a href="iade-degisim-cayma.html" target="_blank" style="color:var(--color-teal); text-decoration:underline;">İade ve Cayma Koşullarını İncele (04)</a>
+            <span style="color:#CCC;">•</span>
+            <a href="garanti-ve-satis-sonrasi.html" target="_blank" style="color:var(--color-teal); text-decoration:underline;">Garanti ve Satış Sonrası Koşullarını İncele (11)</a>
+            ${isHighVal ? `
+              <span style="color:#CCC;">•</span>
+              <a href="yuksek-degerli-urun-teslimi.html" target="_blank" style="color:var(--color-teal); text-decoration:underline;">Yüksek Değerli Teslim Protokolü (03)</a>
+            ` : ''}
+          </div>
+
           <div class="pd-art-actions">
             <button class="btn-art-buy" onclick="Cart.add(${p.id}); App.updateHeaderCartCount(); Router.navigate('cart');">
               Hemen Satın Al (${formatPrice(p.price)})
             </button>
-            <a class="btn-art-whatsapp" href="https://wa.me/905523536484?text=Merhaba,%20${encodeURIComponent(p.brand + ' ' + p.name)}%20(${p.reference})%20hakkinda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener">
+            <a class="btn-art-whatsapp" href="https://wa.me/905419305372?text=Merhaba,%20${encodeURIComponent(p.brand + ' ' + p.name)}%20(${p.reference})%20hakkinda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener">
               <span>WhatsApp Danışmanı</span>
             </a>
+          </div>
+
+          <!-- Yasal Bilgilendirme, Teslimat & Mağaza Güvenlik Şartları -->
+          <div class="pd-legal-notice-box" style="margin-top:24px; padding:18px 20px; background:#FAFAFA; border:1px solid #E5E5E5; border-radius:8px; font-size:12px; color:#555; line-height:1.7;">
+            <div style="font-weight:700; color:var(--color-ink); font-size:13px; margin-bottom:10px; display:flex; align-items:center; gap:8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C2A768" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span>Önemli Bilgilendirme, Teslimat & Güvenlik Şartları (01, 02, 03, 04, 11)</span>
+            </div>
+            <ul style="margin:0; padding-left:16px; display:flex; flex-direction:column; gap:8px;">
+              <li><strong>12.000 TL üzerindeki altın ve saat ürünleri yalnızca mağazamızdan teslim edilmektedir. Kargo veya kurye ile gönderim yapılmaz.</strong></li>
+              <li>Teslim sırasında sipariş sahibinin bizzat mağazada bulunması, geçerli resmî kimlik belgesini ibraz etmesi ve teslim-tesellüm belgesini imzalaması gerekmektedir.</li>
+              <li>Sipariş sahibi ile ödeme aracının sahibinin farklı olması halinde güvenlik amacıyla ek doğrulama talep edilebilir.</li>
+              <li>Ürün; sipariş sahibi dışında üçüncü kişiye, telefon veya mesaj talimatıyla teslim edilmez.</li>
+              <li>Ürün teslimi, ödemenin ödeme sistemi tarafından kesinleşmiş olarak doğrulanmasından sonra gerçekleştirilir.</li>
+              <li>Altın ve kıymetli maden fiyatları piyasa koşullarına bağlı olarak değişebilir. Siparişin onaylandığı anda gösterilen satış fiyatı esas alınır.</li>
+              <li>Kişiye özel hazırlanan, ölçüsü değiştirilen, gravür veya benzeri kişiselleştirme işlemi yapılan ürünlerde mevzuatta öngörülen şartların oluşması halinde cayma hakkı istisnası uygulanabilir.</li>
+              <li>Fiyatı finansal piyasalardaki dalgalanmalara bağlı olarak değişen ürünlerde, ilgili mevzuatta öngörülen şartların oluşması halinde cayma hakkı istisnası uygulanabilir.</li>
+              <li>Tüketicinin ayıplı mala ilişkin kanuni hakları saklıdır.</li>
+              <li>Ürünün renk ve görünümünde ekran, ışık ve çekim koşullarından kaynaklanan sınırlı farklılıklar oluşabilir. Ürün sayfasında belirtilen ayar, gram, model, ölçü ve teknik özellikler esas alınır.</li>
+            </ul>
           </div>
         </div>
 
@@ -374,11 +507,13 @@ const App = {
       container.innerHTML = `
         <div style="text-align:center; padding:40px 0;">
           <p style="color:var(--color-muted); margin-bottom:16px;">Sepetinizde ürün bulunmamaktadır.</p>
-          <a class="btn-hero-filled" href="#" data-page="watches">Saatleri İncele</a>
+          <a class="btn-hero-filled" href="#" data-page="saatler">Saatleri İncele</a>
         </div>
       `;
       return;
     }
+
+    const hasHighValue = Cart.items.some(item => (typeof isHighValueSecureDelivery === 'function' ? isHighValueSecureDelivery(item) : item.price > 12000));
 
     container.innerHTML = `
       <div>
@@ -391,6 +526,13 @@ const App = {
             <div style="font-size:16px; font-weight:700; color:var(--color-teal);">${formatPrice(item.price * item.qty)}</div>
           </div>
         `).join('')}
+
+        ${hasHighValue ? `
+          <div style="background:#FFF9EE; border:1px solid #E6D2A8; padding:14px 16px; border-radius:8px; margin:18px 0; font-size:12.5px; color:#6B531C; line-height:1.5;">
+            <strong>🏛️ Teslim Yöntemi:</strong> Belgin Kuyumculuk Mağazasından Teslim (Menderes Cad. No:231/B Buca / İzmir)<br>
+            <span style="font-size:11.5px; color:#875A00;">⚠️ Sepetinizde 12.000 TL üzeri yüksek değerli ürün bulunmaktadır. Güvenlik protokolü (03) gereği kargo/kurye adrese teslimat seçeneği teknik olarak kapatılmıştır.</span>
+          </div>
+        ` : ''}
 
         <div style="display:flex; justify-content:space-between; align-items:center; padding:20px 0;">
           <span style="font-size:16px; font-weight:600;">Genel Toplam:</span>
@@ -651,8 +793,8 @@ const App = {
   },
 
   scrollToValuation() {
-    if (Router.currentPage !== 'home') {
-      Router.navigate('home');
+    if (Router.currentPage !== 'ana-sayfa') {
+      Router.navigate('ana-sayfa');
     }
     setTimeout(() => {
       const el = document.getElementById('valuationSimulatorBox');
@@ -662,14 +804,176 @@ const App = {
     }, 150);
   },
 
+  // 13: DİJİTAL MAĞAZA TESLİM-TESSELLÜM & KİMLİK DOĞRULAMA FORMU
+  openStoreDeliveryReceiptModal(orderId = 'BLG-SAMPLE') {
+    this.openModal(`
+      <div class="modal-dialog-header">
+        <h3>🏛️ 13 — Mağaza Teslim-Tesellüm & Kimliklendirme Formu</h3>
+        <button class="modal-dialog-close" onclick="App.closeModal()">×</button>
+      </div>
+      <div style="font-size:12.5px; color:#333; line-height:1.6;">
+        <div style="background:#FAF9F6; border:1px solid #EAE6DF; border-radius:6px; padding:12px; margin-bottom:14px;">
+          <div><strong>Sipariş No:</strong> ${orderId} | <strong>Tarih:</strong> ${new Date().toLocaleDateString('tr-TR')}</div>
+          <div><strong>Ödeme Referansı:</strong> PAYTR-AUTH-OK | <strong>Durum:</strong> Kesinleşti</div>
+          <div><strong>Teslim Noktası:</strong> Belgin Kuyumculuk Buca Merkez Showroom</div>
+        </div>
+
+        <form onsubmit="event.preventDefault(); showToast('Teslim-Tesellüm Formu dijital olarak imzalandı ve arşivlendi.', 'success'); App.closeModal();">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+            <div>
+              <label style="font-size:11px; font-weight:700; display:block; margin-bottom:2px;">Teslim Alan Ad Soyad *</label>
+              <input type="text" required placeholder="Kimlikteki Tam Ad Soyad" style="width:100%; padding:8px 10px; border:1px solid #CCC; border-radius:4px; font-size:12px;">
+            </div>
+            <div>
+              <label style="font-size:11px; font-weight:700; display:block; margin-bottom:2px;">Kimlik Türü & Maskeli No *</label>
+              <input type="text" required placeholder="T.C. Kimlik: 123*****89" style="width:100%; padding:8px 10px; border:1px solid #CCC; border-radius:4px; font-size:12px;">
+            </div>
+          </div>
+
+          <div style="margin-bottom:12px;">
+            <label style="font-size:11px; font-weight:700; display:block; margin-bottom:2px;">Fiziksel Kontrol & Ürün Kimliklendirme *</label>
+            <div style="display:flex; flex-direction:column; gap:6px; font-size:11.5px; background:#F8F8F8; padding:10px; border-radius:4px;">
+              <label><input type="checkbox" required checked> Ürünün ayar, gram, seri no ve taş bilgisi kimlik kartı ile doğrulandı.</label>
+              <label><input type="checkbox" required checked> Kutu, uluslararası garanti belgesi ve ekspertiz sertifikası eksiksiz teslim edildi.</label>
+              <label><input type="checkbox" required checked> Müşteri kimlik aslı kontrol edildi; sipariş sahibi ile teslim alan kişi eşleşti.</label>
+            </div>
+          </div>
+
+          <div style="background:#FFF9EE; border:1px solid #E6D2A8; padding:10px; border-radius:4px; margin-bottom:14px; font-size:11px; color:#6B531C;">
+            "Söz konusu altın / saat ürününü eksiksiz, ayıpsız ve orijinal belgeleriyle bizzat teslim aldım."
+          </div>
+
+          <button type="submit" class="btn-art-buy" style="width:100%; padding:12px; font-size:13px;">✓ Teslimatı Onayla ve Arşivle (13 Formu)</button>
+        </form>
+      </div>
+    `);
+  },
+
+  // 07: ÇEREZ RIZA YÖNETİMİ & BANNER
+  initCookieConsent() {
+    const consent = localStorage.getItem('belgin_cookie_consent');
+    if (!consent) {
+      setTimeout(() => {
+        const banner = document.getElementById('cookieConsentBanner');
+        if (banner) banner.style.display = 'flex';
+      }, 1000);
+    }
+  },
+
+  acceptAllCookies() {
+    localStorage.setItem('belgin_cookie_consent', JSON.stringify({
+      necessary: true,
+      functional: true,
+      analytics: true,
+      marketing: true,
+      date: new Date().toISOString()
+    }));
+    const banner = document.getElementById('cookieConsentBanner');
+    if (banner) banner.style.display = 'none';
+    showToast('Çerez tercihleriniz kaydedildi.', 'success');
+  },
+
+  rejectAllCookies() {
+    localStorage.setItem('belgin_cookie_consent', JSON.stringify({
+      necessary: true,
+      functional: false,
+      analytics: false,
+      marketing: false,
+      date: new Date().toISOString()
+    }));
+    const banner = document.getElementById('cookieConsentBanner');
+    if (banner) banner.style.display = 'none';
+    showToast('Yalnızca zorunlu çerezler etkinleştirildi.', 'info');
+  },
+
+  openCookiePreferencesModal() {
+    this.openModal(`
+      <div class="modal-dialog-header">
+        <h3>🍪 07 — Çerez Tercihleri Yönetimi</h3>
+        <button class="modal-dialog-close" onclick="App.closeModal()">×</button>
+      </div>
+      <div style="font-size:13px; color:#444; line-height:1.6;">
+        <p style="margin-bottom:14px;">Web sitemizde deneyiminizi geliştirmek ve yasal mevzuata uyum sağlamak için çerezler kullanıyoruz. <a href="cerez-politikasi.html" target="_blank" style="color:var(--color-teal); text-decoration:underline;">Çerez Politikamızı inceleyin.</a></p>
+        
+        <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:20px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:#FAF9F6; border-radius:6px;">
+            <div>
+              <strong>Zorunlu Çerezler</strong>
+              <div style="font-size:11.5px; color:#666;">Sitenin temel işlevleri, sepet ve güvenlik için şarttır.</div>
+            </div>
+            <input type="checkbox" checked disabled>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:#FAF9F6; border-radius:6px;">
+            <div>
+              <strong>Analitik & İstatistik Çerezleri</strong>
+              <div style="font-size:11.5px; color:#666;">Ziyaretçi trafiği ve performans ölçümü.</div>
+            </div>
+            <input type="checkbox" id="cookiePrefAnalytics">
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:#FAF9F6; border-radius:6px;">
+            <div>
+              <strong>Pazarlama & Kişiselleştirme</strong>
+              <div style="font-size:11.5px; color:#666;">İlgi alanlarınıza göre ürün önerileri.</div>
+            </div>
+            <input type="checkbox" id="cookiePrefMarketing">
+          </div>
+        </div>
+
+        <button class="btn-art-buy" style="width:100%;" onclick="App.saveCookiePreferences()">Tercihleri Kaydet</button>
+      </div>
+    `);
+  },
+
+  saveCookiePreferences() {
+    const analytics = document.getElementById('cookiePrefAnalytics')?.checked || false;
+    const marketing = document.getElementById('cookiePrefMarketing')?.checked || false;
+
+    localStorage.setItem('belgin_cookie_consent', JSON.stringify({
+      necessary: true,
+      functional: true,
+      analytics,
+      marketing,
+      date: new Date().toISOString()
+    }));
+
+    this.closeModal();
+    const banner = document.getElementById('cookieConsentBanner');
+    if (banner) banner.style.display = 'none';
+    showToast('Çerez tercihleriniz güncellendi.', 'success');
+  },
+
   processOrder() {
-    alert("Siparişiniz başarıyla alındı! E-Arşiv faturanız ve sigortalı Loomis zırhlı kurye takip numaranız SMS olarak telefonunuza iletilecektir.");
+    const isHighVal = Cart.items.some(i => (typeof isHighValueSecureDelivery === 'function' ? isHighValueSecureDelivery(i) : i.price > 12000));
+    
+    const orderAudit = {
+      orderId: 'BLG-' + Math.floor(100000 + Math.random() * 900000),
+      items: [...Cart.items],
+      totalAmount: Cart.getTotal(),
+      isHighValueSecureDelivery: isHighVal,
+      termsAccepted: true,
+      termsVersion: "2026.08.25.v1",
+      termsAcceptedAt: new Date().toISOString(),
+      marketingConsent: Boolean(document.getElementById('chkMarketing')?.checked),
+      marketingConsentChannels: document.getElementById('chkMarketing')?.checked ? ['SMS', 'EMAIL'] : [],
+      privacyNoticeAcknowledged: true,
+      optionalConsent: Boolean(document.getElementById('chkConsent')?.checked),
+      deliveryProtocolVersion: "03_v1",
+      kycStatus: "pendingVerification",
+      deliveryFormStatus: "pendingStoreSignature"
+    };
+
+    localStorage.setItem('last_order_audit', JSON.stringify(orderAudit));
+
+    alert(`Siparişiniz (#${orderAudit.orderId}) başarıyla alındı!\n\nE-Arşiv faturanız ve mağaza teslimat onay kodunuz SMS olarak telefonunuza iletilmiştir.\n12.000 TL üzeri ürününüzü Buca Showroom mağazamızdan kimlik ibrazı ve imza ile teslim alabilirsiniz.`);
     Cart.clear();
     this.updateHeaderCartCount();
-    Router.navigate('home');
+    Router.navigate('ana-sayfa');
   }
 };
 
 document.addEventListener('DOMContentLoaded', () => {
   App.init();
+  App.initCookieConsent();
 });

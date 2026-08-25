@@ -324,6 +324,32 @@ function initMarqueeTouchSupport() {
   }, { passive: true });
 }
 
+// ==========================================================
+// MASTER TEKNİK HUKUKİ KURAL: 12.000 TL ÜZERİ YÜKSEK DEĞERLİ GÜVENLİ MAĞAZA TESLİMİ (03)
+// ==========================================================
+const HIGH_VALUE_SECURE_DELIVERY_THRESHOLD = 12000;
+
+function isHighValueSecureDelivery(product) {
+  if (!product) return false;
+  const price = typeof product.price === 'number' ? product.price : parseFloat(product.price);
+  if (isNaN(price) || price <= HIGH_VALUE_SECURE_DELIVERY_THRESHOLD) return false;
+  const cat = String(product.category || '').toLowerCase();
+  return ['altin', 'saat', 'watch', 'jewelry', 'jewellery', 'gold'].includes(cat) || Boolean(product.isGold) || Boolean(product.isPreOwned);
+}
+
 if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', initMarqueeTouchSupport);
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    CURRENT_CURRENCY,
+    EXCHANGE_RATES,
+    CURRENCY_SYMBOLS,
+    LIVE_MARKET_DATA,
+    formatPrice,
+    getInstallmentBreakdown,
+    HIGH_VALUE_SECURE_DELIVERY_THRESHOLD,
+    isHighValueSecureDelivery
+  };
 }
