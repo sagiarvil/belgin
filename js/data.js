@@ -209,6 +209,7 @@ const PRODUCTS = [
     desc: "Rado True Square Automatic Open Heart R27086162; 38mm monoblok siyah yüksek teknoloji seramik kasa ve bilezik, açık kalp kadran ve otomatik R734 mekanizma.",
     image: "https://www.rado.com/media/sgecom_contentsystem/PDP_Images/true-square-black-carousel-a.jpg?im=Resize%3D%281024%2C682%29%2Caspect%3Dfill%3BCrop%3D%280%2C0%2C1024%2C682%29%2Cgravity%3DCenter",
     hoverImage: "https://www.rado.com/media/sgecom_contentsystem/PDP_Images/true-square-black-carousel-a.jpg?im=Resize%3D%281024%2C682%29%2Caspect%3Dfill%3BCrop%3D%280%2C0%2C1024%2C682%29%2Cgravity%3DCenter",
+    sourceUrl: "https://www.rado.com/true-square-automatic-open-heart-r27086162.html",
     amplitude: "289° (Rado Kalibre R734)",
     rateAccuracy: "+1.4 sn/gün",
     waterTest: "5 Bar (50 Metre) Geçti",
@@ -236,7 +237,7 @@ const PRODUCTS = [
     desc: "Cartier Juste un Clou B6048617 klasik pırlantalı bilezik; 18 ayar sarı altın, 32 parlak kesim pırlanta toplam 0,58 ct ve 3,5mm genişlik.",
     image: "https://www.chronoland.ru/images/thumbs-720x900-products/EDF1uz3nGt7qa4aV5z2QY2zHEWa9rA1WdFiSWfXo.png",
     hoverImage: "https://www.chronoland.ru/images/thumbs-720x900-products/EDF1uz3nGt7qa4aV5z2QY2zHEWa9rA1WdFiSWfXo.png",
-    sourceUrl: "https://www.rado.com/true-square-automatic-open-heart-r27086162.html",
+    sourceUrl: "https://www.cartier.com/en-tr/jewellery/bracelets/juste-un-clou/juste-un-clou-bracelet-classic-model-diamonds-CRB6048617.html",
     hallmark: "Au750 • Cartier 18 • Seri No Lazerli",
     inStock: true
   },
