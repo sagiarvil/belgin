@@ -42,9 +42,22 @@ jobs:
           node --check scripts/generate-seo-assets.js
           node --check scripts/production-guard.js
           node --check scripts/safe-deploy.js
+          node --check tests/test-suite.js
 
       - name: Build and tests
-        run: npm test
+        shell: bash
+        run: |
+          set -o pipefail
+          npm test 2>&1 | tee test-output.log
+
+      - name: Upload test diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quality-gates-test-output
+          path: test-output.log
+          if-no-files-found: ignore
+          retention-days: 3
 
       - name: Production guard
         run: npm run guard
