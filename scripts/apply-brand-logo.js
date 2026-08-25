@@ -1,4 +1,5 @@
 const fs = require('fs');
+// Deterministic one-shot brand integration for the feature branch.
 
 const indexPath = 'index.html';
 const cssPath = 'css/style.css';
