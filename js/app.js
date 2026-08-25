@@ -543,7 +543,8 @@ const App = {
     ];
 
     // İlgili Ürünler (Aynı markadan veya kategoriden 4 model)
-    const relatedProducts = ALL_PRODUCTS.filter(x => x.id !== p.id && (x.brand === p.brand || x.category === p.category)).slice(0, 4);
+    const allProds = typeof getAllProducts === 'function' ? getAllProducts() : (typeof PRODUCTS !== 'undefined' ? PRODUCTS : []);
+    const relatedProducts = allProds.filter(x => x.id !== p.id && (x.brand === p.brand || x.category === p.category)).slice(0, 4);
 
     container.innerHTML = `
       <div class="pdp-page-container">
