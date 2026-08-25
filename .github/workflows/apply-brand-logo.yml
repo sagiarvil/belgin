@@ -1,0 +1,44 @@
+name: apply-brand-logo
+
+on:
+  push:
+    branches:
+      - feat/brand-logo-integration
+    paths:
+      - scripts/apply-brand-logo.js
+      - .github/workflows/apply-brand-logo.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: feat/brand-logo-integration
+          fetch-depth: 0
+
+      - name: Apply logo integration
+        run: node scripts/apply-brand-logo.js
+
+      - name: Verify files changed as expected
+        run: |
+          grep -q 'images/belgin-logo.png' index.html
+          grep -q 'BELGIN BRAND LOGO INTEGRATION v1' css/style.css
+          grep -q 'brand-logo-header' css/style.css
+
+      - name: Commit generated integration
+        run: |
+          if git diff --quiet; then
+            echo 'No generated changes to commit.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html css/style.css
+          git commit -m 'feat: integrate Belgin logo across site'
+          git push origin HEAD:feat/brand-logo-integration
