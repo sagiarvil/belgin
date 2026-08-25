@@ -32,7 +32,7 @@ const PayTR = {
       this.loadIframe(data.iframeUrl);
       if (btn) btn.style.display = 'none';
       window._activeOrderId = data.merchant_oid;
-      return { success: true, token: data.token, merchant_oid: data.merchant_oid };
+      return { success: true, token: data.token, merchant_oid: data.merchant_oid, deliveryMethod: data.deliveryMethod, highValueSecureDelivery: data.highValueSecureDelivery === true };
     } catch (error) {
       console.error('PayTR Entegrasyon Hatası:', error);
       showToast('Ödeme başlatılamadı. Kartınızdan tahsilat yapılmadı. ' + error.message, 'error');
@@ -74,12 +74,16 @@ const PayTR = {
   }
 };
 
-// Legal/compliance layer is intentionally loaded from an already-included storefront script
-// so legal controls remain active without duplicating checkout logic in index.html.
 document.addEventListener('DOMContentLoaded', () => {
   if (!document.querySelector('link[href*="legal-compliance.css"]')) {
     const link = document.createElement('link'); link.rel = 'stylesheet'; link.href = 'css/legal-compliance.css?v=2026.8.25'; document.head.appendChild(link);
   }
   const load = (src, done) => { const s=document.createElement('script'); s.src=src; s.onload=done||null; s.onerror=()=>console.error('Compliance script yüklenemedi:',src); document.body.appendChild(s); };
-  load('js/legal-compliance.js?v=2026.8.25', () => load('js/legal-overrides.js?v=2026.8.25', () => { if(window.App?.refreshViews) App.refreshViews(); }));
+  load('js/legal-compliance.js?v=2026.8.25', () => {
+    if (window.LegalCompliance?.init) LegalCompliance.init();
+    load('js/legal-overrides.js?v=2026.8.25', () => {
+      if(window.App?.refreshViews) App.refreshViews();
+      if(window.Router?.currentPage==='checkout') { Cart.renderCheckout(); LegalCompliance.syncCheckout(); }
+    });
+  });
 });
