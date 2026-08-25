@@ -1,0 +1,73 @@
+{
+  "hosting": {
+    "site": "belgin",
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "functions/**",
+      "tests/**",
+      "*kopyası.txt",
+      "README.md"
+    ],
+    "cleanUrls": false,
+    "headers": [
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache, no-store, must-revalidate"
+          },
+          {
+            "key": "Strict-Transport-Security",
+            "value": "max-age=31536000; includeSubDomains"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          },
+          {
+            "key": "X-Frame-Options",
+            "value": "SAMEORIGIN"
+          },
+          {
+            "key": "X-XSS-Protection",
+            "value": "1; mode=block"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "strict-origin-when-cross-origin"
+          },
+          {
+            "key": "Permissions-Policy",
+            "value": "camera=(), microphone=(), geolocation=()"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(jpg|jpeg|gif|png|webp|svg|woff|woff2|ttf)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=31536000, immutable"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(xml|txt)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=3600"
+          },
+          {
+            "key": "Content-Type",
+            "value": "text/plain; charset=utf-8"
+          }
+        ]
+      }
+    ]
+  }
+}

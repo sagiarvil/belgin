@@ -1,0 +1,227 @@
+# Belgin Kuyumculuk & Saat — Tam Kapsamlı LLM Bilgi Tabanı
+Version: 2026.8.0
+Standard: Enterprise AI / LLM Context Protocol
+
+## 1. Şirket ve Showroom Profili
+Belgin Kuyumculuk Sanayi ve Ticaret Ltd. Şti., 1999 yılında İzmir'de kurulmuş olup 25 yıldır kesintisiz olarak Menderes Caddesi No:231/B Buca / İzmir adresinde faaliyet göstermektedir.
+İzmir Kuyumcular Odası (İKO) 4892 sicil numaralı resmi üyesidir.
+Her saat Witschi Timegrapher ile test edilir; mekanizma genliği (+/- sn/gün, 285° genlik) ve su geçirmezlik testi onaylanarak teslim edilir. Pırlantalar GIA/HRD standartlarında 4C (Cut, Color, Clarity, Carat) sertifikalıdır.
+
+## 2. Ürün Kataloğu Detayları
+
+### ID 101: TAG Heuer - Carrera Date Twin-Time GMT
+- Kategori: watch
+- Satış Fiyatı: ₺292.500
+- Referans / Model: WDA2114.BA0043 · 41mm
+- Kondisyon: İkinci El
+- Stok Durumu: Stokta
+- Metal / Materyal: Paslanmaz Çelik 316L
+- Kadran / Detay: Güneş Işını Teal Yeşili Kadran & Çift Zaman GMT
+- Kutu & Evrak: Orijinal Kutu & Uluslararası Garanti Kartı
+- Görsel URL: https://artjewellerywatches.com/api/photo/watch-definition/685
+- Açıklama: TAG Heuer Carrera Date Twin-Time ref. WDA2114; 41mm paslanmaz çelik kasa, otomatik Calibre 7 Twin-Time mekanizma, 80 saat güç rezervi, safir kristal cam ve 100m su geçirmezlik.
+
+
+### ID 102: TAG Heuer - Carrera Chronograph Otomatik
+- Kategori: watch
+- Satış Fiyatı: ₺255.000
+- Referans / Model: CBN2A1AA.FT6228 · 44mm
+- Kondisyon: İkinci El
+- Stok Durumu: Stokta
+- Metal / Materyal: Paslanmaz Çelik & Seramik Takimetre Bezel
+- Kadran / Detay: Siyah Kadran & Kırmızı Kronograf İbreleri
+- Kutu & Evrak: Orijinal Kutu & Garanti Belgesi
+- Görsel URL: https://artjewellerywatches.com/api/photo/watch-definition/672
+- Açıklama: TAG Heuer Carrera Chronograph 44mm; Calibre Heuer 02 / Calibre 16 otomatik kronograf mekanizma, siyah seramik takimetre bezel, perfore kauçuk yarış kordonu ve 100m su geçirmezlik.
+
+
+### ID 103: TAG Heuer - Formula 1 Chronograph Gulf Edition
+- Kategori: watch
+- Satış Fiyatı: ₺135.000
+- Referans / Model: CAZ101N.FC8243 · 43mm
+- Kondisyon: İkinci El
+- Stok Durumu: Stokta
+- Metal / Materyal: Paslanmaz Çelik & Mavi Alüminyum Takimetre Bezel
+- Kadran / Detay: Gulf Yarış Şeritli Güneş Işını Mavi Kadran
+- Kutu & Evrak: Gulf Özel Seri Kutu & Garanti Kartı
+- Görsel URL: https://artjewellerywatches.com/api/photo/watch-definition/486
+- Açıklama: TAG Heuer Formula 1 Gulf Special Edition; efsanevi açık mavi ve turuncu Gulf yarış çizgili kadran, 1/10 saniye hassasiyetli İsviçre kronograf kalibre, mavi deri yarış kayışı ve 200m su geçirmezlik.
+
+
+### ID 104: TAG Heuer - Formula 1 Date Siyah 41mm
+- Kategori: watch
+- Satış Fiyatı: ₺105.000
+- Referans / Model: WAZ1110.FT8023 · 41mm
+- Kondisyon: İkinci El
+- Stok Durumu: Stokta
+- Metal / Materyal: İnce Fırçalanmış Çelik & Titanyum Karbür Bezel
+- Kadran / Detay: Opalin Siyah Kadran & Luminesan İndeksler
+- Kutu & Evrak: Orijinal Kutu ve Evrakları Eksiksiz
+- Görsel URL: https://artjewellerywatches.com/api/photo/watch-definition/637
+- Açıklama: TAG Heuer Formula 1 ref. WAZ1110; 41mm çelik kasa, tek yönlü döner titanyum karbür kaplama siyah bezel, dayanıklı kauçuk kayış ve 200m dalgıç sınıfı su geçirmezlik.
+
+
+### ID 105: Longines - HydroConquest Otomatik Seramik
+- Kategori: watch
+- Satış Fiyatı: ₺78.500
+- Referans / Model: L3.781.4.56.6 · 41mm
+- Kondisyon: İkinci El
+- Stok Durumu: Stokta
+- Metal / Materyal: Paslanmaz Çelik & Çizilmez Siyah Seramik Bezel
+- Kadran / Detay: Güneş Işını Siyah Kadran
+- Kutu & Evrak: Longines Ahşap Kutu & Uluslararası Garanti Kartı
+- Görsel URL: https://artjewellerywatches.com/api/photo/watch-definition/660
+- Açıklama: Longines HydroConquest L3.781.4.56.6; 41mm çelik kasa, tek yönlü döner siyah seramik bezel, otomatik kalibre L888 (72 saat güç rezervi, silikon denge yayı) ve 300m profesyonel dalgıç dayanıklılığı.
+
+
+### ID 106: Longines - Master Collection Moonphase Ay Fazı
+- Kategori: watch
+- Satış Fiyatı: ₺152.000
+- Referans / Model: L2.909.4.78.3 · 40mm
+- Kondisyon: İkinci El
+- Stok Durumu: Stokta
+- Metal / Materyal: Paslanmaz Çelik & Kahverengi Timsah Deri Kayış
+- Kadran / Detay: Gümüş Arpa Tanesi Kadran & Mavileştirilmiş Çelik Kollar
+- Kutu & Evrak: Longines Özel Kutu & Ay Fazı Garanti Belgesi
+- Görsel URL: https://artjewellerywatches.com/api/photo/watch-definition/549
+- Açıklama: The Longines Master Collection L2.909; klasik gümüş arpa deseni kadran, saat 6 konumunda ay fazı ve tarih göstergesi, safir arka kapak ve 72 saat rezervli otomatik kalibre L899.
+
+
+### ID 107: Rado - Captain Cook Otomatik Yeşil Seramik
+- Kategori: watch
+- Satış Fiyatı: ₺143.500
+- Referans / Model: R32105353 · 42mm
+- Kondisyon: İkinci El
+- Stok Durumu: Stokta
+- Metal / Materyal: Paslanmaz Çelik & Yüksek Teknoloji Yeşil Seramik Bezel
+- Kadran / Detay: Güneş Işını Zümrüt Yeşili Kadran & Hareketli Çapa
+- Kutu & Evrak: Rado Deri Seyahat Çantası & Kutu / Evrak
+- Görsel URL: https://artjewellerywatches.com/api/photo/watch-definition/298
+- Açıklama: Rado Captain Cook ref. R32105353; 42mm çelik kasa, çizilmez yeşil seramik döner bezel, EasyClip pirinç tanesi çelik bilezik, 80 saat güç rezervli Rado kalibre R763 ve 300m su geçirmezlik.
+
+
+### ID 108: Rado - True Square İskelet Otomatik
+- Kategori: watch
+- Satış Fiyatı: ₺138.000
+- Referans / Model: R27086162 · 38mm
+- Kondisyon: İkinci El
+- Stok Durumu: Stokta
+- Metal / Materyal: Monoblok Yüksek Teknoloji Parlak Siyah Seramik
+- Kadran / Detay: Açık Mekanizma İskelet Kadran & Altın Detaylar
+- Kutu & Evrak: Rado Orijinal Kutu & Garanti Kartı
+- Görsel URL: https://artjewellerywatches.com/api/photo/watch-definition/575
+- Açıklama: Rado True Square ref. R27086162; monoblok enjeksiyon kalıplı hafif ve ultra dayanıklı yüksek teknoloji parlak siyah seramik kare kasa, 80 saat güç rezervli iskeletleştirilmiş otomatik mekanizma.
+
+
+### ID 1: Cartier - Juste un Clou Pırlantalı Bilezik
+- Kategori: jewelry
+- Satış Fiyatı: ₺490.000
+- Referans / Model: B6065818 · 18
+- Kondisyon: İkinci El
+- Stok Durumu: Stokta
+- Metal / Materyal: 18K Sarı Altın (Au750)
+- Kadran / Detay: 0.58 ct Pavé Pırlantalar
+- Kutu & Evrak: Cartier Kırmızı Kutu & Sertifika
+- Görsel URL: https://artjewellerywatches.com/api/photo/jewelry-definition/100
+- Açıklama: Cartier Juste un Clou B6065818; 18 ayar sarı altın gövde üzerinde 32 adet parlak kesim pırlanta bezeli çivi formlu lüks kelepçe.
+
+
+### ID 2: Tiffany & Co. - Setting Tektaş Pırlanta Yüzük
+- Kategori: jewelry
+- Satış Fiyatı: ₺780.000
+- Referans / Model: 70524805 · 11
+- Kondisyon: İkinci El
+- Stok Durumu: Stokta
+- Metal / Materyal: 950 Masif Platin (Pt950)
+- Kadran / Detay: 1.50 ct D-VVS1 Doğal Pırlanta
+- Kutu & Evrak: Tiffany Mavi Kutu & GIA Sertifikası
+- Görsel URL: https://artjewellerywatches.com/api/photo/jewelry-definition/20
+- Açıklama: Tiffany & Co. Setting 6 tırnaklı platin pırlanta yüzük; 1.50 karat D renk VVS1 berraklığında doğal elmas, GIA lazer yazılı sertifikalı tescil.
+
+
+### ID 3: Cartier - Love Bilezik Klasik Rose Altın
+- Kategori: jewelry
+- Satış Fiyatı: ₺375.000
+- Referans / Model: B6070117 · 17
+- Kondisyon: İkinci El
+- Stok Durumu: Stokta
+- Metal / Materyal: 18K Rose Altın (Au750)
+- Kadran / Detay: Klasik Vida Motifleri
+- Kutu & Evrak: Orijinal Tornavida & Cartier Kutu
+- Görsel URL: https://artjewellerywatches.com/api/photo/jewelry-definition/95
+- Açıklama: Cartier Love B6070117 klasik model; 18 ayar rose pembe altın gövde, vidalı açma-kapama sistemi ve ergonomik oval bilek formu.
+
+
+### ID 4: Cartier - Love Bilezik Klasik Sarı Altın
+- Kategori: jewelry
+- Satış Fiyatı: ₺365.000
+- Referans / Model: B6067417 · 18
+- Kondisyon: İkinci El
+- Stok Durumu: Stokta
+- Metal / Materyal: 18K Sarı Altın (Au750)
+- Kadran / Detay: Klasik Vida Motifleri
+- Kutu & Evrak: Kutu ve Orijinal Tornavida
+- Görsel URL: https://artjewellerywatches.com/api/photo/jewelry-definition/36
+- Açıklama: Cartier Love B6067417; 18 ayar sarı altın klasik kelepçe bilezik.
+
+
+### ID 5: Cartier - Love Yüzük Küçük Sarı Altın
+- Kategori: jewelry
+- Satış Fiyatı: ₺95.000
+- Referans / Model: B4085000 · 56
+- Kondisyon: İkinci El
+- Stok Durumu: Stokta
+- Metal / Materyal: 18K Sarı Altın (Au750)
+- Kadran / Detay: Vida Motifli Küçük Boy
+- Kutu & Evrak: Cartier Kutu & Garanti Belgesi
+- Görsel URL: https://artjewellerywatches.com/api/photo/jewelry-definition/85
+- Açıklama: Cartier Love küçük model yüzük; 18 ayar sarı altın, 3.6mm genişlik.
+
+
+### ID 6: Cartier - Juste un Clou Klasik Sarı Altın
+- Kategori: jewelry
+- Satış Fiyatı: ₺430.000
+- Referans / Model: B6048617 · 16
+- Kondisyon: Sıfır
+- Stok Durumu: Stokta
+- Metal / Materyal: 18K Sarı Altın (Au750)
+- Kadran / Detay: Pırlantasız Klasik Model
+- Kutu & Evrak: Sıfır Kutusunda & Sertifikalı
+- Görsel URL: https://artjewellerywatches.com/api/photo/jewelry-definition/29
+- Açıklama: Cartier Juste un Clou klasik sarı altın bilezik.
+
+
+### ID 7: Cartier - Love Bilezik Klasik Beyaz Altın
+- Kategori: jewelry
+- Satış Fiyatı: ₺390.000
+- Referans / Model: B6070017 · 16
+- Kondisyon: İkinci El
+- Stok Durumu: Stokta
+- Metal / Materyal: 18K Beyaz Altın (Au750)
+- Kadran / Detay: Rodyum Kaplama Beyaz Altın
+- Kutu & Evrak: Orijinal Kutu ve Tornavida
+- Görsel URL: https://artjewellerywatches.com/api/photo/jewelry-definition/87
+- Açıklama: Cartier Love B6070017 beyaz altın kelepçe bilezik; 18 ayar beyaz altın, rodyum kaplama parıltısı.
+
+
+### ID 8: Cartier - Juste un Clou Yüzük Sarı Altın
+- Kategori: jewelry
+- Satış Fiyatı: ₺110.000
+- Referans / Model: B4092600 · 54
+- Kondisyon: İkinci El
+- Stok Durumu: Stokta
+- Metal / Materyal: 18K Sarı Altın (Au750)
+- Kadran / Detay: Çivi Motifli Klasik Boy
+- Kutu & Evrak: Cartier Kutu & Sertifika
+- Görsel URL: https://artjewellerywatches.com/api/photo/jewelry-definition/33
+- Açıklama: Cartier Juste un Clou sarı altın çivi yüzük; 18 ayar sarı altın, ikonik tasarım.
+
+
+## 3. Değerleme ve Alım Prosedürü
+Müşteriler masif altın (24K, 22K, 18K, 14K, 8K) ve sarrafiye ürünlerini (Çeyrek, Yarım, Tam, Ata, Gremse) anlık İzmir Kuyumcular Odası borsa fiyatları üzerinden hesaplayıp 15 dakikada İzmir Buca Showroom'unda nakit veya FAST banka havalesiyle bozdurabilirler.
+
+## 4. İletişim Kanalları
+- VIP Danışman: +90 541 930 53 72 (WhatsApp)
+- Mağaza Tel: +90 539 823 41 41
+- E-Posta: info@belgin.com
+- Lokasyon: Menderes Cad. No 231/B Buca / İzmir

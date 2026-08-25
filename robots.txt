@@ -1,0 +1,48 @@
+# ==========================================================
+# BELGIN KUYUMCULUK — ROBOTS.TXT (ENTERPRISE AI & SEO MANDATE)
+# ==========================================================
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+# Search Engine Crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Yandex
+Allow: /
+
+# Generative AI & LLM Crawlers (Cloudflare AI / OpenAI / Anthropic / Perplexity)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+# Sitemaps & Machine-Readable LLM Knowledge
+Sitemap: https://belgin.web.app/sitemap.xml
+# LLMs Context: https://belgin.web.app/llms.txt
+# LLMs Full Context: https://belgin.web.app/llms-full.txt

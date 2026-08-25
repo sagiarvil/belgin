@@ -1,0 +1,1868 @@
+/* ==========================================================
+   BELGIN KUYUMCULUK — HAUTE JOAILLERIE & HORLOGERIE (EST. 1999)
+   ULTRA-LUXURY BESPOKE DESIGN SYSTEM • BUCA / İZMİR
+   ========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  /* Renk Paleti (Haute Horlogerie & Joaillerie) */
+  --color-teal: #05332f;
+  --color-teal-rich: #084c47;
+  --color-teal-hover: #03201e;
+  --color-teal-soft: #EEF5F4;
+  --color-teal-glow: rgba(8, 76, 71, 0.35);
+  
+  --color-gold: #C2A768;
+  --color-gold-bright: #D8BD7E;
+  --color-gold-dark: #8A6D2B;
+  --color-gold-light: #F9F3E5;
+  --color-gold-glow: rgba(194, 167, 104, 0.28);
+  
+  --color-caviar: #070A09;
+  --color-paper: #FFFFFF;
+  --color-bg-page: #FAF9F5;
+  --color-pedestal: #F3F1EC;
+  --color-accent: #F4F2EC;
+  --color-ink: #111215;
+  --color-muted: #686872;
+  --color-border: #E5E2D9;
+  --color-border-gold: rgba(194, 167, 104, 0.35);
+  --color-border-subtle: rgba(0, 0, 0, 0.05);
+
+  /* Rozet Renkleri */
+  --badge-teal-bg: #05332f;
+  --badge-teal-text: #FFFFFF;
+  --badge-gold-bg: #F9F3E5;
+  --badge-gold-text: #8A6D2B;
+  --badge-sage-bg: #EAF4EE;
+  --badge-sage-text: #1F6B38;
+
+  /* Modern & Ultra-Lüks Tipografi Sistemi */
+  --font-display: 'Plus Jakarta Sans', 'Playfair Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Hiyerarşik & Fluid Tipografi Ölçeği */
+  --font-size-hero: clamp(2.2rem, 4.2vw + 0.5rem, 3.8rem);
+  --font-size-h1: clamp(1.8rem, 3.2vw + 0.4rem, 3rem);
+  --font-size-h2: clamp(1.5rem, 2.2vw + 0.3rem, 2.2rem);
+  --font-size-h3: clamp(1.2rem, 1.6vw + 0.2rem, 1.6rem);
+  --font-size-body: clamp(0.925rem, 0.3vw + 0.85rem, 1.05rem);
+  --font-size-small: 0.85rem;
+  --font-size-micro: 0.75rem;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --radius-full: 9999px;
+  
+  --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.03);
+  --shadow-hover: 0 20px 45px rgba(0, 0, 0, 0.09);
+  --shadow-gold: 0 8px 32px rgba(194, 167, 104, 0.18);
+
+  --ease-silk: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 15px;
+  background-color: var(--color-bg-page);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  line-height: 1.65;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--color-bg-page);
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: #1A1A1E;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--color-ink);
+  letter-spacing: -0.01em;
+}
+p, span, li, td, th, label, input, button, select, textarea {
+  font-family: var(--font-body);
+}
+
+/* SPA Sayfa İzolasyonu */
+.page { display: none !important; }
+.page.active { display: block !important; animation: pageFade 0.3s var(--ease-silk); }
+@keyframes pageFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+.container-art {
+  max-width: 1420px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* ==========================================================
+   1. ULTRA-PREMIUM TOPBAR & İZMİR TELEFONLARI & ÇOKLU PARA BİRİMİ
+   ========================================================== */
+.topbar-teal {
+  background: #03201e;
+  color: #E2DDD5;
+  font-size: 11.5px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(194, 167, 104, 0.2);
+  letter-spacing: 0.3px;
+}
+.topbar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.topbar-socials {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.topbar-socials a {
+  color: #D8BD7E;
+  opacity: 0.85;
+  transition: opacity 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+}
+.topbar-socials a:hover { opacity: 1; transform: translateY(-1px); }
+
+.topbar-contacts {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.topbar-contacts a {
+  color: #FFFFFF;
+  text-decoration: none;
+  opacity: 0.92;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.topbar-contacts a:hover { color: var(--color-gold); }
+.topbar-divider { opacity: 0.25; color: var(--color-gold); }
+
+.topbar-right-tools {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.currency-selector {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(194, 167, 104, 0.35);
+  color: #FFFFFF;
+  border-radius: var(--radius-full);
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+}
+.currency-selector option {
+  background: #0A0D0C;
+  color: #FFFFFF;
+}
+
+.topbar-user {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.topbar-user a {
+  color: #E2DDD5;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.topbar-user a:hover { color: var(--color-gold); }
+
+/* ==========================================================
+   2. TÜRKİYE KAPALIÇARŞI & İZKO CANLI ALTIN TICKER'I (CROSS-BROWSER)
+   ========================================================== */
+.gold-ticker-strip {
+  background: #060908;
+  color: #E5DFC8;
+  font-size: 11.5px;
+  border-bottom: 1px solid rgba(194, 167, 104, 0.28);
+  padding: 7px 0;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.gold-ticker-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+.gold-marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+  flex: 1;
+  width: 100%;
+  display: flex;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 2%, #000 98%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 2%, #000 98%, transparent 100%);
+}
+@-webkit-keyframes tickerSlide {
+  0% { -webkit-transform: translate3d(0, 0, 0); transform: translate3d(0, 0, 0); }
+  100% { -webkit-transform: translate3d(-50%, 0, 0); transform: translate3d(-50%, 0, 0); }
+}
+@keyframes tickerSlide {
+  0% { -webkit-transform: translate3d(0, 0, 0); transform: translate3d(0, 0, 0); }
+  100% { -webkit-transform: translate3d(-50%, 0, 0); transform: translate3d(-50%, 0, 0); }
+}
+.gold-marquee-track {
+  display: flex !important;
+  gap: 32px;
+  width: max-content;
+  -webkit-animation: tickerSlide 30s linear infinite;
+  animation: tickerSlide 30s linear infinite;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+.gold-marquee-track:hover {
+  -webkit-animation-play-state: paused;
+  animation-play-state: paused;
+}
+
+.gold-rates-list {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 24px;
+  flex-shrink: 0;
+}
+.gold-rate-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.gold-rate-label { color: #8E8E98; font-size: 11px; }
+.gold-rate-val {
+  color: #FFFFFF;
+  font-weight: 700;
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  font-size: 14.5px;
+  letter-spacing: -0.01em;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+.gold-rate-val.price-flash {
+  color: #25D366 !important;
+  transform: scale(1.08);
+}
+.gold-rate-change { color: #25D366; font-size: 10.5px; font-weight: 600; }
+
+.showroom-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(194, 167, 104, 0.3);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.status-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+/* ==========================================================
+   3. HAUTE MAISON ANA HEADER & LOGO & MENÜ (TEK SIRA • LÜKS)
+   ========================================================== */
+.header {
+  position: sticky;
+  top: 0;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(194, 167, 104, 0.28);
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.04);
+  z-index: 1000;
+  transition: all 0.3s var(--ease-silk);
+}
+.header-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  gap: 24px;
+  width: 100%;
+}
+
+.logo-area-main, .logo-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.logo-area-main .brand-crest, .logo-area .brand-crest {
+  color: var(--color-teal);
+  transition: transform 0.4s ease;
+}
+.logo-area-main:hover .brand-crest, .logo-area:hover .brand-crest {
+  transform: rotate(45deg);
+}
+.logo-area-main .logo-text-col, .logo-area .logo-text-col {
+  display: flex;
+  flex-direction: column;
+}
+.logo-area-main .logo-main, .logo-area .logo-main {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 5px;
+  color: var(--color-ink);
+  line-height: 1;
+}
+.logo-area-main .logo-sub, .logo-area .logo-sub {
+  font-family: var(--font-sans);
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--color-teal);
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-top: 3px;
+}
+
+.nav-desktop {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+.nav-desktop ul {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  list-style: none;
+  gap: 28px;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  white-space: nowrap !important;
+}
+.nav-desktop li {
+  display: inline-flex !important;
+  white-space: nowrap !important;
+  flex-shrink: 0;
+}
+.nav-desktop a {
+  text-decoration: none;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  transition: color 0.25s;
+  padding: 6px 2px;
+  position: relative;
+  letter-spacing: 0.3px;
+  text-transform: none;
+  white-space: nowrap !important;
+  display: inline-block !important;
+  word-break: keep-all !important;
+  hyphens: none !important;
+  line-height: 1.2;
+}
+.nav-desktop a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: var(--color-gold);
+  transition: width 0.35s var(--ease-silk);
+}
+.nav-desktop a:hover::after, .nav-desktop a.active::after { width: 100%; }
+.nav-desktop a:hover, .nav-desktop a.active { color: var(--color-teal); }
+
+.header-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.btn-action-vip {
+  background: linear-gradient(135deg, #05332f 0%, #084c47 100%);
+  border: 1px solid rgba(194, 167, 104, 0.6);
+  color: #FFFFFF;
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s var(--ease-silk);
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(8, 76, 71, 0.22);
+  white-space: nowrap;
+}
+.btn-action-vip:hover {
+  background: #03201e;
+  border-color: var(--color-gold-bright);
+  box-shadow: 0 6px 22px rgba(8, 76, 71, 0.4);
+  transform: translateY(-1px);
+}
+
+.header-icon-btn {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-ink);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.header-icon-btn:hover {
+  color: var(--color-teal);
+  border-color: var(--color-gold);
+  background: var(--color-accent);
+}
+
+/* ==========================================================
+   4. SİNEMATİK MAISON HERO & KEŞİF KONSOLU
+   ========================================================== */
+.hero-cinematic {
+  position: relative;
+  min-height: 640px;
+  background: #070A09 url('https://artjewellerywatches.com/api/photo/site/banner.primary') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 100px 28px 76px;
+  overflow: hidden;
+}
+.hero-cinematic::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(7, 10, 9, 0.6) 0%, rgba(3, 14, 12, 0.95) 100%);
+  z-index: 1;
+}
+.hero-cinematic-content {
+  position: relative;
+  z-index: 2;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.hero-prestige-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(194, 167, 104, 0.35);
+  color: #E2D7BE;
+  font-size: 11.5px;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 7px 22px;
+  border-radius: var(--radius-full);
+  margin-bottom: 24px;
+}
+.hero-badge-dot {
+  width: 6px;
+  height: 6px;
+  background: #C2A768;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #C2A768;
+  animation: pulseDot 2s infinite ease-in-out;
+}
+@keyframes pulseDot { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; transform: scale(1.3); } }
+
+.hero-cinematic-title {
+  font-family: var(--font-display);
+  font-size: clamp(38px, 5.2vw, 68px);
+  color: #FFFFFF;
+  line-height: 1.12;
+  margin-bottom: 22px;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  text-shadow: 0 4px 28px rgba(0, 0, 0, 0.6);
+}
+.hero-cinematic-sub {
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.8;
+  max-width: 740px;
+  margin: 0 auto 34px;
+  font-weight: 300;
+  letter-spacing: 0.3px;
+}
+
+.hero-quick-tabs {
+  display: inline-flex;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(194, 167, 104, 0.3);
+  border-radius: var(--radius-full);
+  padding: 6px;
+  gap: 6px;
+  margin-bottom: 38px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.hero-tab-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.88);
+  padding: 10px 24px;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.3s var(--ease-silk);
+  text-decoration: none;
+}
+.hero-tab-btn:hover, .hero-tab-btn.active {
+  background: #FFFFFF;
+  color: var(--color-ink);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+}
+
+.hero-trust-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  max-width: 940px;
+  margin: 0 auto;
+}
+.hero-trust-pill {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(194, 167, 104, 0.25);
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  color: #FFFFFF;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  letter-spacing: 0.6px;
+}
+
+/* ==========================================================
+   5. MARKA KAROLARI & ÜRÜN GRİDLERİ
+   ========================================================== */
+.section-art {
+  padding: 68px 0;
+}
+.section-art-title {
+  font-family: var(--font-sans);
+  font-size: clamp(24px, 2.8vw, 34px);
+  text-align: center;
+  margin-bottom: 36px;
+  color: var(--color-ink);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+
+.brands-grid-5 {
+  display: grid !important;
+  grid-template-columns: repeat(5, 1fr) !important;
+  gap: 20px !important;
+}
+.brand-tile-card {
+  display: block;
+  text-decoration: none;
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: all 0.4s var(--ease-silk);
+}
+.brand-tile-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-4px);
+  border-color: var(--color-gold);
+}
+.brand-tile-thumb {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  background: var(--color-pedestal);
+  overflow: hidden;
+}
+.brand-tile-thumb img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--ease-silk);
+}
+.brand-tile-card:hover .brand-tile-thumb img { transform: scale(1.08); }
+.brand-tile-name {
+  padding: 15px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-ink);
+  letter-spacing: 0.5px;
+}
+
+.btn-quick-gram {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--color-ink);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-quick-gram:hover {
+  background: var(--color-teal);
+  color: #FFFFFF;
+  border-color: var(--color-teal);
+}
+
+.section-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 30px;
+}
+.section-header-flex h2 {
+  font-family: var(--font-sans);
+  font-size: clamp(24px, 2.8vw, 32px);
+  color: var(--color-ink);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+.link-see-all {
+  color: var(--color-teal);
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap 0.2s;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+.link-see-all:hover { gap: 8px; color: var(--color-gold-dark); }
+
+.products-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 26px;
+}
+
+.product-art-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: all 0.4s var(--ease-silk);
+  box-shadow: var(--shadow-subtle);
+  cursor: pointer;
+}
+.product-art-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-4px);
+  border-color: rgba(194, 167, 104, 0.6);
+}
+
+.product-art-thumb {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  background: #FAF8F5;
+  overflow: hidden;
+}
+.img-primary, .img-hover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain !important;
+  padding: 14px;
+  transition: opacity 0.5s var(--ease-silk), transform 0.6s var(--ease-silk);
+}
+.img-hover { opacity: 0; }
+.product-art-card:hover .img-primary { opacity: 0; transform: scale(1.06); }
+.product-art-card:hover .img-hover { opacity: 1; transform: scale(1.06); }
+
+.badge-stock-teal {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  background: var(--badge-teal-bg);
+  color: var(--badge-teal-text);
+  font-family: var(--font-sans);
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  z-index: 3;
+}
+.badge-cond-gold {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  background: var(--badge-gold-bg);
+  color: var(--badge-gold-text);
+  font-family: var(--font-sans);
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  z-index: 3;
+}
+
+.product-art-info {
+  padding: 20px 18px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.prod-brand-name {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: var(--color-gold-dark);
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.prod-model-name {
+  font-family: var(--font-sans);
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--color-ink);
+  letter-spacing: -0.01em;
+  margin-top: 2px;
+  line-height: 1.35;
+  text-transform: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.prod-ref-size {
+  font-family: var(--font-body);
+  font-size: 12px;
+  letter-spacing: 0.2px;
+  color: var(--color-muted);
+  margin-top: 4px;
+  font-weight: 400;
+}
+.prod-price-tag {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--color-teal);
+  margin-top: auto;
+  padding-top: 12px;
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* ==========================================================
+   6. HIZLI ÖNİZLEME & DETAY & MAKRO LOUPE
+   ========================================================== */
+.quick-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 10, 9, 0.6);
+  backdrop-filter: blur(6px);
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s var(--ease-silk), visibility 0.3s;
+}
+.quick-drawer-backdrop.open { opacity: 1; visibility: visible; }
+.quick-drawer-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 540px;
+  background: #FFFFFF;
+  box-shadow: -12px 0 45px rgba(0, 0, 0, 0.18);
+  transform: translateX(100%);
+  transition: transform 0.4s var(--ease-silk);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 38px;
+}
+.quick-drawer-backdrop.open .quick-drawer-panel { transform: translateX(0); }
+.drawer-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: var(--color-pedestal);
+  border: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--color-ink);
+}
+
+.pd-art-wrapper {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 56px;
+  padding: 40px 0 80px;
+}
+.pd-art-image-container {
+  position: relative;
+  background: var(--color-pedestal);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  width: 100%;
+  padding-top: 100%;
+  overflow: hidden;
+  cursor: crosshair;
+}
+.pd-art-image-container img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease-out;
+}
+.pd-art-image-container:hover img { transform: scale(2.2); }
+.loupe-hint {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  background: rgba(7, 10, 9, 0.88);
+  color: #FFFFFF;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  pointer-events: none;
+}
+
+.pd-art-info { display: flex; flex-direction: column; }
+.pd-art-brand {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  letter-spacing: 2.5px;
+  color: var(--color-teal);
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.pd-art-title {
+  font-family: var(--font-sans);
+  font-size: clamp(26px, 3.4vw, 36px);
+  color: var(--color-ink);
+  line-height: 1.2;
+  margin-bottom: 8px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.pd-art-ref {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--color-muted);
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+.pd-art-price {
+  font-size: clamp(26px, 3vw, 34px);
+  font-weight: 800;
+  color: var(--color-teal);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.expert-health-card {
+  background: #FAFAF8;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  margin-bottom: 24px;
+}
+.expert-health-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--color-teal);
+}
+.health-metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  font-size: 12px;
+}
+.health-metric-item {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+.health-metric-item span { color: var(--color-muted); display: block; font-size: 11px; }
+.health-metric-item strong { color: var(--color-ink); font-size: 12.5px; }
+
+.pd-art-specs-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+  font-size: 13.5px;
+}
+.pd-art-specs-table tr { border-bottom: 1px solid var(--color-border); }
+.pd-art-specs-table td { padding: 8px 0; }
+.pd-art-specs-table td:first-child { color: var(--color-muted); width: 40%; }
+.pd-art-specs-table td:last-child { font-weight: 600; color: var(--color-ink); }
+
+.pd-art-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: auto;
+}
+.btn-art-buy {
+  flex: 1;
+  background: var(--color-teal);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 15px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s var(--ease-silk);
+  letter-spacing: 0.5px;
+}
+.btn-art-buy:hover { background: var(--color-teal-hover); box-shadow: 0 4px 16px var(--color-teal-glow); }
+
+/* ==========================================================
+   7. GÜVEN & HİZMET SÜTUNLARI & 25 YILLIK MİRAS
+   ========================================================== */
+.trust-grid-art {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 42px 32px;
+  margin-top: 40px;
+}
+.trust-item-art {
+  text-align: center;
+  padding: 0 12px;
+}
+.trust-icon-box {
+  width: 50px;
+  height: 50px;
+  border-radius: var(--radius-full);
+  background: var(--color-teal-soft);
+  color: var(--color-teal);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+.trust-item-art h4 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-ink);
+  margin-bottom: 4px;
+}
+.trust-item-art p {
+  font-size: 12.5px;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.heritage-badge-card {
+  background: linear-gradient(135deg, #FAF8F4 0%, #F3EFE6 100%);
+  border: 1px solid rgba(194, 167, 104, 0.4);
+  border-radius: var(--radius-lg);
+  padding: 42px;
+  margin: 36px 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 34px;
+  align-items: center;
+  box-shadow: 0 12px 32px rgba(194, 167, 104, 0.12);
+}
+.heritage-seal {
+  width: 116px;
+  height: 116px;
+  border-radius: 50%;
+  background: var(--color-teal);
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 3px solid var(--color-gold);
+  box-shadow: 0 8px 26px rgba(8, 76, 71, 0.38);
+}
+.heritage-seal .seal-year {
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1;
+  color: #E2D7BE;
+}
+.heritage-seal .seal-label {
+  font-size: 9.5px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-top: 3px;
+}
+.heritage-content h3 {
+  font-family: var(--font-sans);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-ink);
+  margin-bottom: 8px;
+}
+.heritage-content p {
+  font-size: 14.5px;
+  color: #44444C;
+  line-height: 1.8;
+}
+
+/* ==========================================================
+   8. İLETİŞİM SAYFASI TASARIMI
+   ========================================================== */
+.contact-grid-wrapper {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 40px;
+  margin: 40px 0 80px;
+}
+.contact-info-card {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 38px;
+  box-shadow: var(--shadow-subtle);
+}
+.contact-channel-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--color-border);
+}
+.contact-channel-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-full);
+  background: var(--color-teal-soft);
+  color: var(--color-teal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.contact-channel-details h4 {
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--color-ink);
+  margin-bottom: 4px;
+}
+.contact-channel-details p {
+  font-size: 13.5px;
+  color: #555;
+  line-height: 1.6;
+}
+.contact-channel-details a {
+  color: var(--color-teal);
+  text-decoration: none;
+  font-weight: 600;
+}
+.contact-channel-details a:hover { text-decoration: underline; color: var(--color-gold-dark); }
+
+.contact-form-card {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 38px;
+  box-shadow: var(--shadow-subtle);
+}
+
+/* ==========================================================
+   9. MODALLAR (TAKAS & VIP & SERTİFİKA & KARGO TAKİP)
+   ========================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 10, 9, 0.65);
+  backdrop-filter: blur(8px);
+  z-index: 3000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.open { display: flex; animation: pageFade 0.25s var(--ease-silk); }
+.modal-dialog-box {
+  background: #FFFFFF;
+  border-radius: var(--radius-md);
+  max-width: 600px;
+  width: 100%;
+  padding: 38px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+  position: relative;
+  border: 1px solid rgba(194, 167, 104, 0.3);
+}
+.modal-dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 16px;
+}
+.modal-dialog-header h3 {
+  font-family: var(--font-sans);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-ink);
+  letter-spacing: -0.01em;
+}
+.modal-dialog-close {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--color-muted);
+}
+
+/* ==========================================================
+   10. HAUTE MAISON FOOTER (PAHALI & PRESTİJLİ GÖRÜNÜM)
+   ========================================================== */
+.footer-art {
+  background: #070A09;
+  color: #FFFFFF;
+  padding: 80px 0 40px;
+  margin-top: auto;
+  border-top: 1px solid rgba(194, 167, 104, 0.3);
+  position: relative;
+}
+.footer-art::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(194, 167, 104, 0.6) 50%, transparent 100%);
+}
+
+.footer-vip-strip {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(194, 167, 104, 0.2);
+  border-radius: var(--radius-md);
+  padding: 24px 32px;
+  margin-bottom: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.footer-vip-left h4 {
+  font-family: var(--font-sans);
+  font-size: 20px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+.footer-vip-left p {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: #9C9CA8;
+  font-weight: 400;
+}
+
+.footer-art-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 50px;
+  margin-bottom: 50px;
+}
+.footer-art-brand, .footer-brand-title {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 5px;
+  margin-bottom: 16px;
+  color: #FFFFFF;
+}
+.footer-art-text, .footer-brand-desc {
+  font-size: 13.5px;
+  color: #9C9CA8;
+  line-height: 1.8;
+  max-width: 380px;
+}
+.footer-art-col h5 {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: var(--font-sans);
+}
+.footer-art-col ul { list-style: none; }
+.footer-art-col li { margin-bottom: 11px; }
+.footer-art-col a {
+  text-decoration: none;
+  color: #8E8E9A;
+  font-size: 13px;
+  transition: color 0.25s;
+}
+.footer-art-col a:hover { color: var(--color-gold-bright); }
+
+.footer-etbis-box {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(194, 167, 104, 0.18);
+  border-radius: var(--radius-md);
+  padding: 18px 24px;
+  margin-bottom: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 12px;
+  color: #A0A0AC;
+}
+.etbis-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFFFFF;
+  color: #070A09;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+
+.footer-art-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 12px;
+  color: #72727C;
+}
+.footer-legal-links {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.footer-legal-links a {
+  color: #8E8E9A;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-legal-links a:hover { color: var(--color-gold); }
+
+/* ==========================================================
+   11. KVKK ÇEREZ BANNER'I
+   ========================================================== */
+.cookie-banner {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  right: 24px;
+  max-width: 620px;
+  background: #FFFFFF;
+  border: 1px solid rgba(194, 167, 104, 0.4);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+  border-radius: var(--radius-md);
+  padding: 22px 26px;
+  z-index: 4000;
+  display: none;
+  animation: pageFade 0.3s var(--ease-silk);
+}
+.cookie-banner.show { display: block; }
+.cookie-banner p { font-size: 13px; color: #444; line-height: 1.6; margin-bottom: 16px; }
+.cookie-banner-actions { display: flex; gap: 10px; justify-content: flex-end; }
+.btn-cookie-accept {
+  background: var(--color-teal);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 9px 20px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-cookie-settings {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-ink);
+  border-radius: var(--radius-full);
+  padding: 9px 20px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ==========================================================
+   12. VIP PREMIUM HAUTE CONCIERGE WHATSAPP BUTONU (NUMARASIZ)
+   ========================================================== */
+.vip-whatsapp-float {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 2500;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #03201e 0%, #084c47 50%, #05332f 100%);
+  color: #FFFFFF;
+  padding: 10px 22px 10px 12px;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  box-shadow: 0 10px 30px rgba(5, 51, 47, 0.45), 0 0 0 1px rgba(194, 167, 104, 0.35);
+  border: 1px solid rgba(194, 167, 104, 0.6);
+  transition: all 0.35s var(--ease-silk);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.vip-whatsapp-float:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 16px 40px rgba(5, 51, 47, 0.65), 0 0 24px rgba(194, 167, 104, 0.4);
+  border-color: var(--color-gold-bright);
+}
+
+.vip-wp-icon-wrapper {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #2ae06d 0%, #1da851 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.4);
+  flex-shrink: 0;
+}
+
+.vip-wp-pulse {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1.5px solid #25D366;
+  animation: radarPulse 2.2s infinite ease-out;
+}
+@keyframes radarPulse {
+  0% { transform: scale(0.95); opacity: 0.9; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+.vip-wp-content {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  line-height: 1.25;
+}
+.vip-wp-tag {
+  font-size: 8.5px;
+  letter-spacing: 1.8px;
+  color: var(--color-gold-bright);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.vip-wp-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #FFFFFF;
+  letter-spacing: 0.3px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .hero-trust-strip { grid-template-columns: repeat(2, 1fr); }
+  .brands-grid-5 { grid-template-columns: repeat(3, 1fr); }
+  .products-grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .trust-grid-art { grid-template-columns: repeat(2, 1fr); }
+  .footer-art-grid { grid-template-columns: 1fr 1fr; }
+  .pd-art-wrapper { grid-template-columns: 1fr; }
+  .contact-grid-wrapper { grid-template-columns: 1fr; }
+  .heritage-badge-card { grid-template-columns: 1fr; text-align: center; }
+  .heritage-seal { margin: 0 auto; }
+  .nav-desktop { display: none; }
+}
+
+/* ==========================================================
+   PRESTIGE LEGAL DOCUMENT LAYOUT (HAUTE JURIDIQUE)
+   ========================================================== */
+.legal-page-header {
+  background: #070A09;
+  color: #FFFFFF;
+  padding: 60px 20px 45px;
+  text-align: center;
+  border-bottom: 1px solid rgba(194, 167, 104, 0.3);
+  position: relative;
+}
+.legal-page-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(194, 167, 104, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.legal-header-tag {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 8px;
+}
+.legal-page-header h1 {
+  font-family: var(--font-sans);
+  font-size: clamp(26px, 3.4vw, 38px);
+  color: #FFFFFF;
+  margin-bottom: 12px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.legal-page-header p {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: #A0A0A8;
+  max-width: 680px;
+  margin: 0 auto;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.legal-layout-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 36px;
+  margin: 40px auto 80px;
+  align-items: flex-start;
+}
+
+.legal-sidebar {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 24px 20px;
+  position: sticky;
+  top: 90px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+}
+.legal-sidebar-title {
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-teal);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-border);
+}
+.legal-nav-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0;
+  margin: 0;
+}
+.legal-nav-list a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  color: #444;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+.legal-nav-list a:hover,
+.legal-nav-list a.active {
+  background: var(--color-teal-soft);
+  color: var(--color-teal);
+  font-weight: 700;
+}
+
+.legal-document-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(194, 167, 104, 0.4);
+  border-radius: var(--radius-md);
+  padding: 48px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.04);
+}
+.legal-meta-strip {
+  background: #FAF8F5;
+  border: 1px solid rgba(194, 167, 104, 0.25);
+  border-radius: 8px;
+  padding: 18px 24px;
+  margin-bottom: 32px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+}
+.legal-meta-strip strong { color: var(--color-ink); font-weight: 700; }
+.legal-meta-strip span { color: #555; display: block; margin-top: 2px; }
+
+.legal-article-section {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #EFEFEF;
+}
+.legal-article-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.legal-article-title {
+  font-family: var(--font-sans);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--color-ink);
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.legal-document-card p, .legal-document-card li {
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  font-weight: 400;
+  line-height: 1.8;
+  color: #2A2B2F;
+}
+.legal-num-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-teal-soft);
+  color: var(--color-teal);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid rgba(8, 76, 71, 0.3);
+  flex-shrink: 0;
+}
+.legal-document-card p,
+.legal-document-card li {
+  font-size: 14px;
+  color: #3C3C44;
+  line-height: 1.85;
+  margin-bottom: 12px;
+}
+.legal-document-card ul {
+  padding-left: 24px;
+  margin-bottom: 16px;
+}
+
+/* ==========================================================
+   MOBILE LUXURY EXPERIENCE (IPHONE & MAC OPTIMIZED)
+   ========================================================== */
+.btn-hamburger {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-ink);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Mobil Kayar Menü (Drawer) */
+.mobile-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+.mobile-drawer-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 82%;
+  max-width: 340px;
+  background: #070A09;
+  color: #FFFFFF;
+  z-index: 2001;
+  transform: translate3d(-100%, 0, 0);
+  -webkit-transform: translate3d(-100%, 0, 0);
+  transition: transform 0.35s var(--ease-silk);
+  -webkit-transition: -webkit-transform 0.35s var(--ease-silk);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 10px 0 40px rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.mobile-drawer-overlay.open .mobile-drawer {
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+}
+.mobile-drawer-header {
+  padding: 24px 20px;
+  border-bottom: 1px solid rgba(194, 167, 104, 0.25);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.mobile-drawer-nav {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+.mobile-drawer-nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  color: #E2DDD5;
+  text-decoration: none;
+  font-size: 14.5px;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background 0.2s;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.mobile-drawer-nav a:hover,
+.mobile-drawer-nav a.active {
+  background: rgba(194, 167, 104, 0.15);
+  color: var(--color-gold);
+}
+.mobile-drawer-footer {
+  padding: 20px;
+  border-top: 1px solid rgba(194, 167, 104, 0.2);
+  background: #03201e;
+}
+
+/* Mobil Alt Sabit Lüks Dock */
+.mobile-bottom-dock {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: rgba(7, 10, 9, 0.94);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-top: 1px solid rgba(194, 167, 104, 0.3);
+  z-index: 999;
+  justify-content: space-around;
+  align-items: center;
+  padding: 4px 10px;
+  box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.2);
+}
+.mobile-dock-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  color: #A0A0A8;
+  text-decoration: none;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  flex: 1;
+  height: 100%;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+}
+.mobile-dock-btn svg {
+  stroke: #A0A0A8;
+  transition: stroke 0.2s;
+}
+.mobile-dock-btn.active,
+.mobile-dock-btn:hover {
+  color: var(--color-gold);
+}
+.mobile-dock-btn.active svg,
+.mobile-dock-btn:hover svg {
+  stroke: var(--color-gold);
+}
+
+@media (max-width: 1024px) {
+  .hero-trust-strip { grid-template-columns: repeat(2, 1fr); }
+  .brands-grid-5 { grid-template-columns: repeat(3, 1fr); }
+  .products-grid-4 { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .trust-grid-art { grid-template-columns: repeat(2, 1fr); }
+  .footer-art-grid { grid-template-columns: 1fr 1fr; }
+  .pd-art-wrapper { grid-template-columns: 1fr; }
+  .contact-grid-wrapper { grid-template-columns: 1fr; }
+  .nav-desktop { display: none; }
+  .btn-hamburger { display: inline-flex; }
+  .header-grid { padding: 10px 0; }
+  .mobile-bottom-dock { display: flex; }
+  body { padding-bottom: 64px; }
+}
+
+@media (max-width: 900px) {
+  .legal-layout-grid { grid-template-columns: 1fr; }
+  .legal-sidebar { position: static; }
+  .legal-document-card { padding: 28px 18px; }
+  .legal-meta-strip { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .container-art { padding: 0 16px; }
+  .hero-cinematic { padding: 60px 16px 40px; min-height: 480px; }
+  .hero-cinematic-title { font-size: 32px; letter-spacing: 2px; }
+  .hero-cinematic-sub { font-size: 13.5px; }
+  .hero-quick-tabs {
+    display: flex;
+    overflow-x: auto;
+    width: 100%;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    justify-content: flex-start;
+  }
+  .hero-tab-btn { flex-shrink: 0; padding: 7px 14px; font-size: 11.5px; }
+  .hero-trust-strip { grid-template-columns: 1fr; gap: 8px; }
+  .hero-trust-pill { font-size: 11px; padding: 6px 12px; }
+  
+  .products-grid-4 { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .product-art-card { border-radius: 8px; }
+  .product-art-info { padding: 10px 10px 14px; }
+  .prod-model-name { font-size: 12.5px; }
+  .prod-price-tag { font-size: 14.5px; }
+
+  .brands-grid-5 { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .trust-grid-art { grid-template-columns: 1fr; gap: 12px; }
+  .footer-art-grid { grid-template-columns: 1fr; gap: 24px; }
+  
+  .topbar-teal { font-size: 10.5px; }
+  .topbar-contacts { display: none; }
+  
+  /* Marquee mobil uyum: Asla gizlenmez, kesintisiz tam genişlik */
+  .gold-ticker-inner { padding: 0; }
+  .showroom-status-pill { display: none; }
+  .gold-rates-list { gap: 18px; }
+  .gold-rate-val { font-size: 13.5px; }
+  .gold-rate-item { gap: 4px; }
+
+  .footer-vip-strip { flex-direction: column; text-align: center; }
+  .footer-art-bottom { flex-direction: column; gap: 10px; text-align: center; }
+  .vip-whatsapp-float { bottom: 74px; right: 14px; padding: 8px 14px 8px 10px; }
+}

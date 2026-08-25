@@ -1,0 +1,640 @@
+1. Foundation Layer (Temel Katman)
+A. Design Token Architecture
+	•	Renk, tipografi, boşluk ve animasyon token'ları: Her değer değişkenle tanımlanmalı, sabit değer kullanılmamalı. Bu, marka tutarlılığını ve gelecekteki güncellemeleri garanti eder. 
+	•	8px bazlı grid sistemi: Tüm padding, margin, boyutlandırma 8'in katları olmalı.
+B. Tipografi Sistemi
+	•	Maksimum 2 font ailesi (birincil ve ikincil). 
+	•	Hiyerarşik ölçeklendirme: H1'den caption'a kadar kesin boyut, ağırlık ve satır aralığı değerleri.
+	•	Responsive tipografi: Breakpoint'lere göre otomatik ölçeklenen clamp() değerleri.
+
+2. Semantic & AI/LLM-Ready HTML Structure
+A. Semantik HTML5 Zorunluluğu
+	•	<header>, <nav>, <main>, <article>, <section>, <aside>, <footer> gibi anlamsal etiketler zorunlu. <div> sadece gerçekten gerekli olduğunda kullanılmalı. 
+	•	Tek bir <h1> sayfa başına; <h2> → <h3> → <h4> sıralaması atlanmadan devam etmeli. 
+B. LLM/AI Crawler Optimizasyonu
+	•	JSON-LD Structured Data: Her sayfada @context: "https://schema.org" ile makine tarafından okunabilir veri. Article, Product, FAQPage, Organization, BreadcrumbList gibi tipler zorunlu. 
+	•	Server-Side Rendering (SSR): LLM crawler'ları JavaScript çalıştırmaz. İçerik HTML'de doğrudan sunulmalı, client-side hydration sonrası değil. 
+	•	<time datetime="YYYY-MM-DD">: Makine tarafından okunabilir tarih formatı. 
+
+3. Component Library & States
+A. Bileşen Spesifikasyonu
+Her bileşen için şunlar tanımlanmalı:
+	•	Tüm durumlar (states): default, hover, active, focus, disabled, loading, error
+	•	Responsive davranış: Breakpoint'lerde nasıl değiştiği
+	•	Erişilebilirlik (ARIA): aria-label, aria-labelledby, role tanımları, keyboard navigasyonu 
+B. Form & Input Standartları
+	•	<label for="..."> zorunlu, placeholder asla label yerine geçemez.
+	•	<fieldset> + <legend> ile gruplama.
+	•	Hata mesajları: inline, renk + ikon + metin (sadece renk değil).
+
+4. Accessibility & Compliance (Erişilebilirlik)
+A. WCAG 2.1 AA (Minimum) / AAA (Tercih)
+	•	Renk kontrastı: 4.5:1 minimum (metin), 3:1 (büyük metin/UI).
+	•	Klavye navigasyonu: Tüm interaktif elemanlar Tab ile erişilebilir.
+	•	Screen reader uyumluluğu: ARIA landmark'ları, atlama linkleri (skip to content), anlamlı alt metinler. 
+B. European Accessibility Act (EAA) Uyumu
+2025 itibarıyla AB pazarı için yasal zorunluluk. 
+
+5. Performance & Technical Architecture
+A. Core Web Vitals (CWV) Hedefleri
+	•	LCP (Largest Contentful Paint): < 2.5s
+	•	FID/INP (Interaction): < 200ms
+	•	CLS (Cumulative Layout Shift): < 0.1
+B. Güvenlik & Governance
+	•	Role-Based Access Control (RBAC): CMS'de kim neyi düzenleyebilir?
+	•	SSO + MFA: Enterprise standart.
+	•	SOC 2 / GDPR / CCPA: Veri işleme ve gizlilik politikaları. 
+
+6. Documentation & Governance (Dokümantasyon)
+A. Machine-Readable Documentation
+	•	Model Context Protocol (MCP): AI ajanlarının design system'i anlayabilmesi için yapılandırılmış dokümantasyon. 
+B. Living Document
+	•	Versiyonlama: Semantic versioning (v1.0.0, v1.1.0).
+	•	Contribution model: Kim nasıl bileşen önerebilir, review süreci nedir?
+	•	Do / Don't örnekleri: Her bileşen için görsel yanlış/ doğru kullanım örnekleri. 
+
+7. Multi-Platform & Scalability
+A. Responsive & Adaptive
+	•	Breakpoint sistemi: Mobile-first, minimum 3 breakpoint (tablet, desktop, wide).
+	•	Fluid typography & spacing: Piksel değil, rem, em, vw/vh, clamp().
+B. CMS & Integration Ready
+	•	Headless / API-first CMS: Content model'ı frontend'den bağımsız.
+	•	CRM/ERP/SSO entegrasyonları: Önceden tanımlı API endpoint'leri ve veri modelleri. 
+
+Özet: 500K USD'lik Sitede "Olmazsa Olmaz" Kontrol Listesi
+Tablolar
+
+
+
+Kategori
+Olmazsa Olmaz
+Tasarım
+Design token'lar, 8px grid, max 2 font, tutarlı renk paleti
+HTML
+Semantik etiketler, tek H1, logical heading flow, <time datetime>
+AI/LLM
+JSON-LD Schema.org, SSR, /robots.txt (AI bot allow), makine okunabilir URL yapısı
+Bileşenler
+7 state tanımı (default→error), ARIA rolleri, responsive davranış
+Erişilebilirlik
+WCAG 2.1 AA, keyboard nav, screen reader testleri, EAA uyumu
+Performans
+Core Web Vitals hedefleri, SSR/SSG, image optimizasyonu
+Dokümantasyon
+MCP uyumlu, versiyonlu, Do/Don't örnekleri, code snippet'leri
+Güvenlik
+RBAC, SSO, MFA, SOC 2, encryption, penetration test
+
+Bu şartname, eleştirideki "profesyonellikten uzak, göze batıyor" sorununu tamamen ortadan kaldırır. Script güzeldir, ama bu detaylar onu "elit" seviyeye taşır.
+
+
+
+
+
+
+
+
+
+Referanslar
+TAMAM BANA BUNU COK ILERI SEVIYEDE BENZERIZ VE RAKIPLERIN COK USTUNDE 500000 USD DEGERINDE BIR MANDATE OLARAK YAZ
+
+Düzenle
+
+Kopyala
+
+Paylaş
+
+
+Dokümant Kılavuz
+
+
+
+
+	•	
+	•	
+	•	
+
+
+	1	
+	2	
+	3	
+	4	
+	5	
+	6	
+	7	
+
+
+	•	
+	•	
+	•	
+	•	
+	1	
+	2	
+	3	
+	4	
+	5	
+	6	
+	7	
+	8	
+	9	
+	10	
+	11	
+	12	
+	13	
+
+
+
+
+
+
+
+	•	
+	•	
+	•	
+	•	
+	•	
+	•	
+	•	
+
+	•	
+	•	
+	•	
+	•	
+	•	
+	•	
+
+
+
+
+
+	1	
+	•	
+	•	
+	•	
+	2	
+	•	
+	•	
+	•	
+	3	
+	•	
+	•	
+	•	
+	•	
+	•	
+	4	
+	•	
+	•	
+	•	
+	5	
+	•	
+	•	
+	•	
+	6	
+	•	
+	•	
+	•	
+	•	
+	7	
+	•	
+	•	
+	•	
+	•	
+	8	
+	•	
+	•	
+	•	
+	9	
+	•	
+	•	
+	•	
+	10	
+	•	
+	•	
+	•	
+	•	
+	•	
+	11	
+	•	
+	•	
+	•	
+	•	
+	12	
+	•	
+	•	
+	•	
+	13	
+	•	
+	•	
+	•	
+	•	
+
+
+
+
+
+
+
+Çalışma Bağlamı: Principal Architect | Design Systems Engineering — Mandate Document Generation
+Ortam: Chat Session / Standalone Document Output
+Tarih: 2026-08-15
+
+ENTERPRISE WEB DESIGN MANDATE — ELITE TIER
+Classification: PROPRIETARY & CONFIDENTIAL
+Value Standard: $500,000 USD Engineering Baseline
+Mandate Version: v1.0.0-ELITE
+Enforcement: ZERO-DEFECT PROTOCOL — No Approximations Permitted
+Authority: Principal Architect, Design Engineering
+
+PREAMBLE
+Bu doküman, 500.000 USD ve üzeri değer sınıflandırmasına sahip dijital varlıklar için feragat edilemez, maksimum endüstriyel seviyede tasarım ve mühendislik standartlarını tanımlar.
+Bu şartnamede geçen "yaklaşık", "genelde", "tercihen", "standart olarak" ifadeleri geçersizdir. Her parametre deterministiktir, her tolerans ölçülebilirdir, her bileşen audit edilebilirdir.
+Core Principle: "Script güzeldir; ama detaylar profesyonelliği belirler. Bu mandat, detayların kanunudur."
+
+1. DETERMINISTIC DESIGN ENGINE (DDE)
+Tablolar
+
+
+
+Parametre
+Şartname
+Tolerans
+Render Consistency
+Aynı viewport × cihaz × tarayıcı sürümünde tüm piksel değerleri hash'lenebilir olmalıdır
+±0px
+Token Authority
+Tüm görsel değerler tek kaynaklı (Single Source of Truth) Design Token üzerinden beslenir
+Inline sabit değer yasaktır
+Engine Version
+Her bileşen ve sayfa data-engine-version="x.y.z" attribute'u taşımalıdır
+Eksik attribute = Blocking Error
+Hash Verification
+Her production build, görsel hash (perceptual hash) ile doğrulanmalıdır
+Hash mismatch = Deploy Rejection
+
+2. DESIGN TOKEN ARCHITECTURE
+2.1 Token Taxonomy
+Tüm görsel değerler aşağıdaki kategorilerde tokenize edilmiş olmalıdır:
+plain
+
+
+├── color/
+│   ├── brand/primary, brand/secondary, brand/accent
+│   ├── semantic/success, semantic/warning, semantic/error, semantic/info
+│   ├── neutral/100...900
+│   └── alpha/overlay, alpha/backdrop
+├── typography/
+│   ├── font/family-primary, font/family-secondary
+│   ├── scale/hero...caption (8 adım)
+│   ├── weight/regular...black
+│   └── line-height/tight...loose
+├── spacing/
+│   ├── base/4px (unit)
+│   ├── scale/0...12 (4px multiplier)
+│   └── logical/block, inline, padding, margin, gap
+├── elevation/
+│   ├── shadow/100...500
+│   └── z-index/background...modal
+└── motion/
+    ├── duration/instant...slow
+    ├── easing/standard, easing/decelerate, easing/accelerate
+    └── transition/property-default
+
+2.2 Universal Reference Values
+Her token'ın referans değeri, kullanım kısıtlaması ve değişim etkisi dokümantasyonda tanımlı olmalıdır.
+
+3. SEMANTIC & AI-NATIVE HTML CONTRACT
+3.1 Structural Non-Negotiables
+	•	<main> — Sayfa başına tek adet.
+	•	<h1> — Sayfa başına tek adet; içerik başlığı olmalı, logo/marka değil.
+	•	Heading Flow: h1 → h2 → h3 → h4 sıralaması atlanmadan devam etmeli. h2 sonrası doğrudan h4 yasaktır.
+	•	Landmarks: <header>, <nav>, <main>, <article>, <section>, <aside>, <footer> zorunlu kullanım.
+	•	<div> — Sadece gerçekten anlamsal bir etiket bulunmadığında kullanılabilir. Kullanımı her seferinde yorum satırı ile gerekçelendirilmelidir.
+3.2 AI/LLM Crawler Contract
+Tablolar
+
+
+
+Gereksinim
+Şartname
+Seviye
+SSR/SSG
+Tüm kritik içerik server-side rendered olmalıdır. Client-side hydration sonrası yüklenen içerik LLM crawler'ları için yasaktır.
+Blocking
+JSON-LD
+Her sayfa @context: "https://schema.org" ile yapılandırılmış veri içermelidir. Article, Product, FAQPage, BreadcrumbList, Organization zorunlu.
+Blocking
+<time datetime>
+Tüm tarih/saat verileri makine tarafından parse edilebilir formatta olmalıdır.
+Blocking
+llms.txt
+Site kök dizininde llms.txt dosyası bulunmalıdır (Cloudflare AI standard).
+Warning
+AI Bot Allow
+/robots.txt içinde Google-Extended, GPTBot, ChatGPT-User için explicit allow kuralları tanımlı olmalıdır.
+Warning
+
+4. COMPONENT ENGINEERING STANDARD
+4.1 Atomic Design Compliance
+Bileşenler Atomic Design metodolojisine kesin uygun olmalıdır:
+	•	Atoms: Buton, input, label, ikon, tipografi stili
+	•	Molecules: Search bar, form field, kart header
+	•	Organisms: Navigation, hero section, footer, form
+	•	Templates: Sayfa düzeni (grid, sidebar, container)
+	•	Pages: Gerçek içerik ile doldurulmuş template
+4.2 Seven-State Matrix
+Her interaktif bileşen aşağıdaki 7 durumu tanımlamak zorundadır:
+Tablolar
+
+
+
+State
+Görsel Tanım
+ARIA/Keyboard
+Acceptance Criteria
+Default
+Normal görünüm
+Tab ile erişilebilir
+—
+Hover
+Mouse üzerinde
+Focus outline yok
+150ms transition, cubic-bezier(0.4, 0, 0.2, 1)
+Active
+Tıklama anı
+Enter/Space trigger
+Scale 0.98 veya opacity 0.9
+Focus
+Klavye odak
+focus-visible outline
+2px offset, brand rengi, 3:1 kontrast
+Disabled
+Devre dışı
+aria-disabled="true", Tab skip
+Opacity 0.5, cursor not-allowed, asla sadece renk değişimi
+Loading
+İşlem devam ediyor
+aria-busy="true"
+Skeleton screen tercih edilir; spinner son çare
+Error
+Hata durumu
+aria-invalid="true"
+Kırmızı + ikon + metin; kullanıcıya actionable yönlendirme
+4.3 ARIA & Keyboard Mandate
+	•	Tüm interaktif elemanlar keyboard navigable olmalıdır.
+	•	aria-label, aria-labelledby, aria-describedby zorunlu tanımlama.
+	•	Focus Trap: Modal, drawer, dialog içinde focus döngüsü zorunlu.
+	•	Skip Link: <a href="#main" class="skip-link"> sayfa başında zorunlu.
+
+5. ACCESSIBILITY & COMPLIANCE PROTOCOL
+5.1 WCAG 2.1 — AAA Target, AA Minimum
+Tablolar
+
+
+
+Kriter
+Şartname
+Audit Metodu
+Kontrast
+Normal metin 4.5:1, Büyük metin/UI 3:1
+Automated (axe-core) + Manual
+Metin Boyutu
+Minimum 16px (12pt) body; zoom 200% bozulmaz
+Browser zoom test
+Renk Bağımsızlığı
+Hiçbir bilgi sadece renk ile iletilemez
+Grayscale test
+Hareket
+prefers-reduced-motion desteği zorunlu
+Sistem ayarı testi
+5.2 Regulatory Compliance
+	•	European Accessibility Act (EAA): 2025 yürürlüğüne tam uyum.
+	•	Section 508: ABD federal standardı (eğer ABD pazarı hedefleniyorsa).
+	•	Screen Reader Testing: NVDA (Windows), JAWS (Enterprise), VoiceOver (macOS/iOS) ile manuel test edilmelidir.
+
+6. PERFORMANCE SLA (Service Level Agreement)
+Bu değerler kanundur. Deploy öncesi karşılanmazsa build reddedilir.
+Tablolar
+
+
+
+Metric
+Target
+Maximum
+Audit Tool
+LCP (Largest Contentful Paint)
+< 1.5s
+< 2.0s
+Lighthouse, WebPageTest
+INP (Interaction to Next Paint)
+< 100ms
+< 150ms
+Chrome UX Report
+CLS (Cumulative Layout Shift)
+< 0.05
+< 0.1
+Lighthouse
+TTFB (Time to First Byte)
+< 200ms
+< 400ms
+WebPageTest
+6.1 Performance Budget
+Tablolar
+
+
+
+Asset
+Limit
+Enforcement
+JavaScript (gzipped)
+< 200 KB
+Bundle analyzer, CI gate
+CSS (gzipped)
+< 50 KB
+PurgeCSS, critical CSS inline
+Images
+WebP/AVIF zorunlu; JPEG/PNG yasak (fallback hariç)
+Build-time conversion
+Fonts
+< 2 font ailesi; Subset zorunlu; font-display: swap
+Lighthouse audit
+
+7. TYPOGRAPHIC LAW
+7.1 Font Governance
+	•	Maksimum 2 font ailesi: Birincil (body) ve İkincil (display/headings).
+	•	Font yükleme: font-display: swap zorunlu; FOIT (Flash of Invisible Text) yasaktır.
+	•	Subset: Kullanılan karakter setine göre alt küme (Latin Extended vb.) yüklenmeli.
+7.2 Fluid Typography Scale
+css
+
+
+/* Zorunlu pattern */
+--font-size-hero: clamp(2.5rem, 5vw + 1rem, 4.5rem);
+--font-size-h1: clamp(2rem, 4vw + 0.5rem, 3.5rem);
+--font-size-body: clamp(1rem, 0.5vw + 0.875rem, 1.125rem);
+
+	•	Piksel (px) birimi tipografi için yasaktır; rem veya em zorunlu.
+	•	Satır aralığı (line-height): Body 1.5, Headings 1.2–1.3.
+7.3 8px Grid System
+	•	Tüm padding, margin, gap, width, height değerleri 8px'in katları olmalıdır.
+	•	Tek istisna: 4px (yarım adım) mikro-düzenlemeler için kullanılabilir.
+	•	Baseline grid: Tipografi, 4px baseline grid'e hizalanmalıdır.
+
+8. MULTI-STATE INTERACTION PROTOCOL
+8.1 Motion Physics
+Tablolar
+
+
+
+Etkileşim
+Süre
+Easing
+Kullanım
+Mikro (hover, focus)
+150ms
+cubic-bezier(0.4, 0, 0.2, 1)
+Buton, link, input
+Makro (sayfa geçişi, modal)
+300ms
+cubic-bezier(0.4, 0, 0.2, 1)
+Navigation, drawer
+Uzun (toast, banner)
+500ms
+cubic-bezier(0.4, 0, 0.2, 1)
+Notification, alert
+8.2 Loading & Feedback
+	•	Skeleton Screen: Veri yüklenirken içerik yer tutucu (shimmer) kullanılmalıdır.
+	•	Spinner: Sadece 1 saniyeden uzun süren işlemlerde; skeleton tercih edilir.
+	•	Progress: Multi-step işlemlerde adım göstergesi zorunlu.
+8.3 Error Recovery
+	•	Hata mesajları ne olduğunu ve ne yapılacağını açıkça belirtmelidir.
+	•	Örnek: ❌ "Hata oluştu" → ✅ "Bağlantı zaman aşımına uğradı. İnternet bağlantınızı kontrol edin veya [tekrar deneyin]."
+
+9. VISUAL REGRESSION & VERIFICATION PROTOCOL
+9.1 Snapshot Testing
+	•	Her bileşen için Chromatic / Storybook / Loki ile görsel snapshot testi zorunlu.
+	•	Viewport matrisi: 320px, 768px, 1024px, 1440px, 1920px.
+	•	Tarayıcı matrisi: Chrome (latest), Safari (latest), Firefox (latest), Edge (latest).
+9.2 Sensitivity Analysis
+Her bileşen için "Sensitivity Chart" dokümante edilmelidir:
+	•	Breakpoint geçişlerindeki davranış değişimleri
+	•	Font scaling (200%) etkisi
+	•	Renk kontrast değişimleri (dark mode dahil)
+9.3 Cross-Browser Determinism
+	•	CSS özellikleri için autoprefixer zorunlu.
+	•	CSS Reset: Normalize.css veya modern equivalent zorunlu.
+	•	Form elemanları: Tarayıcı default stil override'ı zorunlu (tutarlılık için).
+
+10. AUDIT & VERIFICATION MODULE (FS-008 Adaptasyonu)
+Bu bölüm, her sayfa ve bileşen için üretilmesi zorunlu olan Audit Trail'i tanımlar.
+10.1 Audit Output Format
+Her bileşen/sayfa için aşağıdaki rapor üretilmelidir:
+yaml
+
+
+audit:
+  id: "cmp-button-primary-v1.2.0"
+  engine_version: "1.2.0"
+  hash: "sha256:a1b2c3..."
+  timestamp: "2026-08-15T18:46:00+03:00"
+  
+  inputs:
+    - design_token_source: "tokens.json"
+    - viewport_range: "320px - 1920px"
+    - browser_matrix: "Chrome 126, Safari 17, Firefox 128"
+    
+  formulas:
+    - contrast_ratio: "4.6:1 (AAA compliant)"
+    - render_time: "12ms (INP compliant)"
+    
+  assumptions:
+    - "Font family 'Inter' kullanıcı cihazında yüklü veya swap ile fallback"
+    - "Dark mode tercihi OS-level tanımlı"
+    
+  warnings:
+    - level: "note"
+      message: "Disabled state'te opacity 0.5, WCAG 2.1 non-text contrast exception uygulanmıştır"
+      
+  verdict:
+    status: "PASS"
+    banner: "GREEN"
+    signed_by: "Principal Architect"
+
+10.2 Verdict Banner
+	•	GREEN: Tüm kriterler karşılandı. Deploy onaylı.
+	•	YELLOW: Warning mevcut. Deploy, Architect onayı ile yapılabilir.
+	•	RED: Blocking error mevcut. Deploy kesinlikle yasaktır.
+
+11. AI/LLM READINESS SPECIFICATION
+11.1 Content Model for Machine Inference
+	•	Başlık hiyerarşisi: Makine tarafından outline olarak okunabilir olmalı.
+	•	Listeler: <ul>/<ol> ile yapılandırılmış veri; virgülle ayrılmış metin değil.
+	•	Tablolar: <table> ile semantic tablo; görsel düzen aracı olarak <table> kullanımı yasaktır.
+	•	Linkler: href mutlaka anlamlı olmalı; "tıklayın", "burada" anchor text yasaktır.
+11.2 URL Architecture
+	•	Kebab-case: /user-profile/settings (doğru) vs /userProfile/settings (yanlış)
+	•	Semantic slug: ID'ler UUID değil, anlamlı tanımlayıcı olmalı (örn: /blog/design-system-mandate).
+11.3 LLM.txt Standard
+Site kökünde llms.txt dosyası:
+plain
+
+
+# excelarsiv.com
+> Enterprise archive and calculation platform.
+
+## Overview
+[Site amacı, 1 paragraf]
+
+## Key Sections
+- /tools: [Açıklama]
+- /blog: [Açıklama]
+
+## Policies
+- /privacy
+- /terms
+
+
+12. SECURITY & GOVERNANCE
+12.1 Access Control
+	•	RBAC (Role-Based Access Control): CMS'de editör, yayıncı, admin rolleri tanımlı.
+	•	SSO + MFA: Enterprise login zorunlu.
+	•	Content Security Policy (CSP): script-src, style-src, img-src tanımlı ve strict.
+12.2 Asset Integrity
+	•	Subresource Integrity (SRI): Tüm external script/link için integrity attribute zorunlu.
+	•	HTTPS: Tüm asset'ler HTTPS üzerinden; mixed content yasaktır.
+
+13. DOCUMENTATION & HANDOVER PROTOCOL
+13.1 Living Documentation
+	•	Platform: Storybook (React/Vue) veya Zeroheight / Supernova.
+	•	MCP Uyumu: Model Context Protocol ile AI ajanlarının design system'i anlayabilmesi.
+	•	Versiyonlama: Semantic versioning (v1.0.0, v1.1.0).
+13.2 Do / Don't Examples
+Her bileşen için:
+	•	DO: Doğru kullanım, görsel örnek, kod snippet'i.
+	•	DON'T: Yanlış kullanım, görsel örnek, neden yanlış olduğunun açıklaması.
+13.3 Contribution Model
+	•	Yeni bileşen önerisi: RFC (Request for Comments) dokümanı zorunlu.
+	•	Review süreci: Design Lead + Engineering Lead + Accessibility Auditor onayı.
+	•	Regresyon testi: Yeni bileşen, mevcut 3 sayfa ile test edilmelidir.
+
+ENFORCEMENT & COMPLIANCE
+Tablolar
+
+
+
+Seviye
+Tanım
+Sonuç
+BLOCKING
+Şartname ihlali deploy'ı engeller
+Build reddedilir, CI pipeline durur
+WARNING
+Şartname ihlali düzeltilmelidir ama deploy'ı engellemez
+Jira/Linear ticket açılır, 48 saat içinde kapatılır
+NOTE
+Bilgilendirme, best practice önerisi
+Dokümantasyona not düşülür
+
+Mandate Owner: Principal Architect
+Review Cycle: Quarterly (her çeyrek)
+Next Review: 2026-11-15
+Distribution: Design Team, Engineering Team, QA Team, Product Team — READ ACKNOWLEDGMENT REQUIRED

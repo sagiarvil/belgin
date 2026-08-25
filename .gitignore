@@ -1,0 +1,10 @@
+.DS_Store
+.firebase/
+node_modules/
+.env
+.env.*
+!.env.example
+*.log
+dist/
+build/
+coverage/
