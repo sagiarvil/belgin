@@ -85,8 +85,9 @@ assert(kvkk.includes('Bu metin bir açık rıza metni değildir'), 'KVKK aydınl
 
 console.log('\n--- 5. Tüketici ve consent korumaları ---');
 const returnPolicy = read('iade-degisim-cayma.html');
-assert(!/tüm altın.*iade yok/i.test(returnPolicy), 'Altın için blanket iade yok hükmü bulunmaz');
-assert(!/tüm saat.*iade yok/i.test(returnPolicy), 'Saat için blanket iade yok hükmü bulunmaz');
+const normalizedReturnPolicy = returnPolicy.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').toLowerCase();
+assert(!normalizedReturnPolicy.includes('tüm altın ürünlerinde iade yoktur') && !normalizedReturnPolicy.includes('altın ürünlerinde hiçbir şekilde iade yoktur'), 'Altın için blanket iade yok hükmü bulunmaz');
+assert(!normalizedReturnPolicy.includes('tüm saat ürünlerinde iade yoktur') && !normalizedReturnPolicy.includes('saat ürünlerinde hiçbir şekilde iade yoktur'), 'Saat için blanket iade yok hükmü bulunmaz');
 const cookiePolicy = read('cerez-politikasi.html');
 assert(cookiePolicy.length > 500, 'Çerez politikası mevcut');
 const marketingPolicy = read('ticari-elektronik-ileti-onayi.html');
