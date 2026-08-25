@@ -1,0 +1,28 @@
+{
+  "name": "Belgin Ödeme Linki",
+  "short_name": "Belgin Link",
+  "description": "Belgin Kuyumculuk VIP WhatsApp Ödeme Linki Oluşturucu",
+  "start_url": "/odeme-linki.html",
+  "display": "standalone",
+  "background_color": "#0A1412",
+  "theme_color": "#0A1412",
+  "icons": [
+    {
+      "src": "/images/link-icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/link-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/link-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
