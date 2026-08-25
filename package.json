@@ -1,6 +1,6 @@
 {
   "name": "belgin-kuyumculuk",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Belgin Kuyumculuk — Enterprise & Exclusive Luxury Jewellery & Watches Platform",
   "main": "index.html",
   "scripts": {
@@ -11,7 +11,7 @@
     "seo:generate": "node scripts/generate-seo-assets.js",
     "payments:catalog": "node scripts/generate-payment-catalog.js",
     "catalog:verify": "node scripts/verify-product-catalog.js",
-    "guard": "node scripts/production-guard.js && node scripts/bank-pos-guard.js",
+    "guard": "node scripts/production-guard.js && node scripts/bank-pos-guard.js && node scripts/evidence-guard.js",
     "test": "npm run build && npm run catalog:verify && node tests/test-suite.js",
     "ci": "npm run test && npm run guard",
     "deploy": "node scripts/safe-deploy.js",
@@ -19,15 +19,7 @@
     "deploy:functions": "node scripts/safe-deploy.js functions",
     "serve": "npx serve . -l 3000"
   },
-  "keywords": [
-    "jewelry",
-    "luxury",
-    "e-commerce",
-    "paytr",
-    "firebase",
-    "istanbul",
-    "watches"
-  ],
+  "keywords": ["jewelry","luxury","e-commerce","paytr","firebase","istanbul","watches"],
   "author": "Belgin Kuyumculuk",
   "license": "UNLICENSED",
   "private": true
