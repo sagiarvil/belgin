@@ -5,15 +5,15 @@
 // ==========================================================
 
 const WATCH_BRANDS = [
-  { id: 'seiko', name: 'Seiko', count: 220, image: 'https://cdn.saatvesaat.com.tr/mnresize/600/-/media/brand/seiko.png' },
-  { id: 'versace', name: 'Versace', count: 414, image: 'https://cdn.saatvesaat.com.tr/mnresize/600/-/media/brand/versace.png' },
-  { id: 'calvin-klein', name: 'Calvin Klein', count: 157, image: 'https://cdn.saatvesaat.com.tr/mnresize/600/-/media/brand/calvin-klein.png' },
-  { id: 'michael-kors', name: 'Michael Kors', count: 263, image: 'https://cdn.saatvesaat.com.tr/mnresize/600/-/media/brand/michael-kors.png' },
-  { id: 'diesel', name: 'Diesel', count: 130, image: 'https://cdn.saatvesaat.com.tr/mnresize/600/-/media/brand/diesel.png' },
-  { id: 'gc', name: 'Gc', count: 256, image: 'https://cdn.saatvesaat.com.tr/mnresize/600/-/media/brand/gc.png' },
-  { id: 'fossil', name: 'Fossil', count: 223, image: 'https://cdn.saatvesaat.com.tr/mnresize/600/-/media/brand/fossil.png' },
-  { id: 'guess', name: 'Guess', count: 225, image: 'https://cdn.saatvesaat.com.tr/mnresize/600/-/media/brand/guess.png' },
-  { id: 'welder', name: 'Welder', count: 92, image: 'https://cdn.saatvesaat.com.tr/mnresize/600/-/media/brand/welder.png' }
+  { id: 'versace', name: 'Versace', count: 414, origin: 'İsviçre / İtalya', image: 'https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/0/c/0c7346899696783f5d47f4245a6830734a213f06a4489cf2c9d402ff3bef92a3.jpeg' },
+  { id: 'michael-kors', name: 'Michael Kors', count: 263, origin: 'ABD / İsviçre', image: 'https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/8/2/82277924108cb8437af4bcf3cca807f1a189ad77fc33df03ac9d177d242488e5.jpeg' },
+  { id: 'gc', name: 'Gc', count: 256, origin: 'İsviçre Yapımı (Swiss Made)', image: 'https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/5/a/5ac602c711ae1148f178437436f1843740526f4c75b86444b988bcb15b5421cd.jpeg' },
+  { id: 'guess', name: 'Guess', count: 225, origin: 'ABD', image: 'https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/c/7c97297275d954b945b76621aca60caef7b9d30ead9495940c118d101cf8f41c.jpeg' },
+  { id: 'fossil', name: 'Fossil', count: 223, origin: 'ABD', image: 'https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/0/3/030d0f54c558a51ccbca71739ae64f113b1ea282e05437fad7caefeb0549edce.jpeg' },
+  { id: 'seiko', name: 'Seiko', count: 220, origin: 'Japonya', image: 'https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/d/6/d664ad5521bfd64246a57251e90b41eb48e6028e3ec720d2306d1288be100422.jpeg' },
+  { id: 'calvin-klein', name: 'Calvin Klein', count: 157, origin: 'ABD / İsviçre', image: 'https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/8/0/802f1ae68029b643abfcac5f869ad7474bf111509d4ad2bc33355f47d89475f4.jpeg' },
+  { id: 'diesel', name: 'Diesel', count: 130, origin: 'İtalya', image: 'https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/5/a/5a458c3ae70d04e7c0357648418dcab559398c66a705e0d7cf3c44beb7ff3227.jpeg' },
+  { id: 'welder', name: 'Welder', count: 92, origin: 'İtalya', image: 'https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/0/b/0b303d5f13ed9df086668d444f612cfdd42a30e3c8fb122bc538aecc8a49d148.jpeg' }
 ];
 
 const JEWELRY_BRANDS = [

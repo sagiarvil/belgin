@@ -31,7 +31,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/style.css?v=2026.08.25.2350">
+  <link rel="stylesheet" href="css/style.css?v=2026.08.25.2355">
 
   <!-- SCHEMA.ORG JSON-LD ENTERPRISE METRICS -->
   <script type="application/ld+json">
@@ -533,10 +533,22 @@
 
     <div class="container-art">
       
-      <!-- BÖLÜM 1: SAAT MARKALARI (5'li Grid) -->
-      <section class="section-art">
-        <h2 class="section-art-title">Saat Markaları</h2>
-        <div class="brands-grid-5" id="watchBrandsGrid"></div>
+      <!-- BÖLÜM 1: SAAT MARKALARI (TEK SIRA VE KAYAR SLIDER) -->
+      <section class="section-art" style="padding-bottom: 24px;">
+        <div class="section-header-flex" style="margin-bottom: 18px;">
+          <div>
+            <span style="font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; color: var(--color-teal); display: block; margin-bottom: 4px;">Resmi Distribütör Koleksiyonları</span>
+            <h2 class="section-art-title" style="margin-bottom: 0;">Saat Markaları</h2>
+          </div>
+          <div class="slider-arrows-nav">
+            <button class="slider-nav-btn prev" onclick="App.scrollBrandSlider('prev')" aria-label="Önceki Markalar">‹</button>
+            <button class="slider-nav-btn next" onclick="App.scrollBrandSlider('next')" aria-label="Sonraki Markalar">›</button>
+          </div>
+        </div>
+        
+        <div class="brands-carousel-wrapper">
+          <div class="brands-carousel-track" id="watchBrandsGrid"></div>
+        </div>
       </section>
 
       <!-- BÖLÜM 2: YENİ EKLENEN SAATLER (Sayfa Başına 30 Ürün) -->
@@ -1207,15 +1219,15 @@
 <div class="toast" id="toast"></div>
 
 <!-- SCRIPTS -->
-<script src="js/data.js?v=2026.08.25.2350"></script>
-<script src="js/utils.js?v=2026.08.25.2350"></script>
-<script src="js/seo.js?v=2026.08.25.2350"></script>
-<script src="js/valuation.js?v=2026.08.25.2350"></script>
-<script src="js/cart.js?v=2026.08.25.2350"></script>
-<script src="js/wishlist.js?v=2026.08.25.2350"></script>
-<script src="js/router.js?v=2026.08.25.2350"></script>
-<script src="js/paytr.js?v=2026.08.25.2350"></script>
-<script src="js/app.js?v=2026.08.25.2350"></script>
+<script src="js/data.js?v=2026.08.25.2355"></script>
+<script src="js/utils.js?v=2026.08.25.2355"></script>
+<script src="js/seo.js?v=2026.08.25.2355"></script>
+<script src="js/valuation.js?v=2026.08.25.2355"></script>
+<script src="js/cart.js?v=2026.08.25.2355"></script>
+<script src="js/wishlist.js?v=2026.08.25.2355"></script>
+<script src="js/router.js?v=2026.08.25.2355"></script>
+<script src="js/paytr.js?v=2026.08.25.2355"></script>
+<script src="js/app.js?v=2026.08.25.2355"></script>
 
 </body>
 </html>

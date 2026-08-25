@@ -96,16 +96,18 @@ const App = {
 
   // 1. ANA SAYFA RENDER
   renderHome() {
-    // Saat Markaları (5'li)
+    // Saat Markaları (Tek Sıra Kayar Slider)
     const watchBrandsEl = document.getElementById('watchBrandsGrid');
     if (watchBrandsEl) {
       watchBrandsEl.innerHTML = WATCH_BRANDS.map(b => `
-        <a class="brand-tile-card" href="#" onclick="App.filterWatchesByBrand('${b.name}', null)">
-          <div class="brand-tile-thumb">
-            <img src="${b.image}" alt="${b.name}" loading="lazy">
+        <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('${b.name}', null)" title="${b.name} Saat Modelleri">
+          <div class="brand-card-thumb">
+            <img src="${b.image}" alt="${b.name} Saatleri" loading="lazy">
           </div>
-          <div class="brand-tile-name">${b.name}</div>
-        </a>
+          <div class="brand-card-name">${b.name}</div>
+          <div class="brand-card-origin">${b.origin || 'Orijinal Koleksiyon'}</div>
+          <div class="brand-card-count">${b.count} Model</div>
+        </div>
       `).join('');
     }
 
@@ -142,6 +144,14 @@ const App = {
     if (typeof ValuationEngine !== 'undefined' && ValuationEngine.renderSimulator) {
       ValuationEngine.renderSimulator();
     }
+  },
+
+  // MARKA KAYAR SLIDER GEZİNTİSİ
+  scrollBrandSlider(direction) {
+    const track = document.getElementById('watchBrandsGrid');
+    if (!track) return;
+    const scrollAmount = direction === 'next' ? 460 : -460;
+    track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
   },
 
   // ANA SAYFA SAAT SAYFALAMA (EN FAZLA 30 ÜRÜN)
