@@ -1,0 +1,31 @@
+name: fix-catalog-source-links
+
+on:
+  push:
+    branches:
+      - fix/product-catalog-integrity
+    paths:
+      - scripts/fix-catalog-source-links.js
+      - .github/workflows/fix-catalog-source-links.yml
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/product-catalog-integrity
+          fetch-depth: 0
+      - run: node scripts/fix-catalog-source-links.js
+      - run: npm run catalog:verify
+      - name: Commit correction
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add js/data.js
+          git commit -m 'fix: correct product source link boundaries'
+          git push origin HEAD:fix/product-catalog-integrity
