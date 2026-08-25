@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hukuki Delil, Belge Sürümü ve İşlem Kayıt Politikası | Belgin Kuyumculuk</title>
+<meta name="description" content="Belgin Kuyumculuk belge sürümü, sipariş kabul kaydı, ödeme doğrulama, teslim-tesellüm ve hukuki delil zinciri yaklaşımı.">
+<link rel="canonical" href="https://www.belginkuyumculuk.com/hukuki-delil-ve-kayit-politikasi.html">
+<link rel="stylesheet" href="css/style.css?v=2026.08.25.2240">
+<style>body{background:#f7f5f1;color:#252525}.legal{max-width:960px;margin:40px auto;padding:44px;background:#fff;border:1px solid #e6e0d6;border-radius:14px;line-height:1.75}.legal h1{font-size:30px;margin:0 0 8px}.legal h2{font-size:20px;margin:34px 0 10px;color:#084c47}.legal .note{background:#fff8ea;border-left:4px solid #b68a32;padding:16px 18px;margin:20px 0}.legal .strong{background:#eef6f4;border:1px solid #cfe2de;padding:18px;margin:20px 0}.legal ul{padding-left:22px}.legal a{color:#084c47}.meta{font-size:13px;color:#666}@media(max-width:700px){.legal{margin:0;padding:24px 18px;border-radius:0}}</style>
+</head>
+<body>
+<main class="legal">
+<div class="meta">BELGİN KUYUMCULUK - SEMİH SONBAHAR · Sürüm 25.08.2026-v2</div>
+<h1>Hukuki Delil, Belge Sürümü ve İşlem Kayıt Politikası</h1>
+<div class="strong"><strong>Amaç:</strong> Siparişin kurulmasından ödeme ve teslime kadar hangi hukuki metnin hangi sürümünün gösterildiğinin, hangi koşulların kabul edildiğinin ve işlemin hangi ürün/fiyat/teslim bilgileriyle gerçekleştirildiğinin sonradan doğrulanabilir bir delil zinciriyle kayıt altına alınmasıdır.</div>
+
+<h2>1. Belge sürümü ve değişmez sipariş kaydı</h2>
+<p>Mesafeli Satış Sözleşmesi, Ön Bilgilendirme Formu, yüksek değerli ürün teslim koşulları ve ilgili diğer hukuki metinler sürümlenir. Sipariş anında geçerli belge sürümleri sipariş kaydına bağlanır. Sonradan yayımlanan yeni bir metin, geçmiş siparişte kabul edilmiş sürümün yerine geçirilmez.</p>
+
+<h2>2. SHA-256 belge bütünlük özeti</h2>
+<p>Yayımlanan hukuk belgeleri için SHA-256 bütünlük özeti üretilebilir ve belge sürümüyle birlikte manifestte saklanabilir. Bu özet, ilgili metnin içeriğinde sonradan değişiklik olup olmadığının teknik olarak karşılaştırılmasına yarar.</p>
+<div class="note"><strong>Önemli hukuki ayrım:</strong> SHA-256 özeti tek başına nitelikli elektronik imza, güvenli elektronik imza veya 5070 sayılı Kanun kapsamında yetkili elektronik sertifika hizmet sağlayıcısı tarafından üretilmiş zaman damgası değildir. Böyle bir hizmet kullanılırsa sağlayıcı, token ve doğrulama bilgileri ayrıca kaydedilir.</div>
+
+<h2>3. Sipariş kabul audit kaydı</h2>
+<p>Sipariş oluşturulurken, hukuka uygun olduğu ölçüde; sipariş numarası, sunucu kayıt zamanı, belge sürümleri ve hash değerleri, ürün kimliği, kategori, adet ve sipariş anındaki fiyat, teslim yöntemi, yüksek değer eşiği, gerekli onayların durumu, ödeme sağlayıcısı işlem referansı, IP adresi ve tarayıcı/istemci bilgisi gibi uyuşmazlığın çözümünde gerekli olabilecek kayıtlar tutulabilir.</p>
+
+<h2>4. Ürün snapshot ve bireyselleştirme</h2>
+<p>Siparişe konu ürün; ürün ID, marka, model, referans, kategori, fiyat ve mevcutsa seri numarası, gram, ayar, sertifika, kutu/aksesuar gibi unsurlarla mümkün olduğunca bireyselleştirilir. Böylece sipariş, ödeme ve teslim kayıtlarının aynı ürüne ait olduğu doğrulanabilir.</p>
+
+<h2>5. Ödeme delil zinciri</h2>
+<p>Ödeme, ödeme sağlayıcısı sisteminde kesinleşmedikçe tamamlanmış kabul edilmez. Ekran görüntüsü veya müşteri tarafından gönderilen dekont tek başına ödeme kesinliği oluşturmaz. Sipariş kaydı ile ödeme sağlayıcısı referansı mümkün olduğu ölçüde eşleştirilir.</p>
+
+<h2>6. 12.000 TL ve üzeri altın/saat işlemlerinde ek kayıt</h2>
+<p>Belgin Kuyumculuk'un iç güvenlik standardı kapsamında 12.000 TL ve üzerindeki altın ve saat işlemlerinde mağaza teslimi, kimlik doğrulama sonucu, sipariş sahibi/ödeme yapan/teslim alan uyumu, imzalı teslim-tesellüm kaydı ve ürün bireyselleştirme unsurları ayrıca ilişkilendirilebilir. Bu eşik MASAK'ın kanuni parasal eşiği değildir; MASAK yükümlülükleri kendi kanuni şartlarında ayrıca uygulanır.</p>
+
+<h2>7. Append-only işlem geçmişi</h2>
+<p>Önemli sipariş statü değişiklikleri mümkün olduğu ölçüde eski kaydı silmek veya üzerine yazmak yerine olay kaydı olarak ayrıca tutulur. Örneğin sipariş oluşturma, ödeme tokenı oluşturma, ödeme başarı/başarısızlık, yüksek değerli mağaza teslim bekleme ve teslim tamamlanma gibi olaylar ayrı zaman kayıtlarıyla izlenebilir.</p>
+
+<h2>8. Kişisel veri minimizasyonu</h2>
+<p>Delil üretme amacı sınırsız veri toplama gerekçesi değildir. Kişisel veriler KVKK kapsamında amaçla bağlantılı, sınırlı ve ölçülü olarak işlenir. Tam kimlik fotokopisinin rutin alınması yerine mümkün olan hallerde kimlik aslının görülmesi, gerekli bilgilerin doğrulanması ve gereksiz alanların kaydedilmemesi tercih edilir.</p>
+
+<h2>9. Erişim, saklama ve ibraz</h2>
+<p>Hukuken saklanması gereken kayıtlar ilgili mevzuattaki süreler boyunca; yalnız iç güvenlik amacıyla tutulan ilave kayıtlar ise amacı gerektiren ölçülü süre boyunca saklanır. Kayıtlara erişim yetkiyle sınırlandırılır. Kanunen yetkili makam talepleri, mahkeme/hakem heyeti uyuşmazlıkları ve hakların tesisi, kullanılması veya korunması kapsamında gerekli kayıtlar hukuka uygun şekilde ibraz edilebilir.</p>
+
+<h2>10. Gerçek nitelikli zaman damgası kullanılması halinde</h2>
+<p>Yetkili elektronik sertifika hizmet sağlayıcısından nitelikli/güvenli zaman damgası hizmeti devreye alınması halinde, ilgili belge hash'i için alınan doğrulanabilir zaman damgası tokenı, sağlayıcı bilgisi ve doğrulama verisi ayrıca saklanır. Bu hizmet fiilen kurulmadan herhangi bir sayfada nitelikli elektronik imza veya 5070 kapsamındaki zaman damgası varmış gibi ifade kullanılmaz.</p>
+
+<h2>11. İlgili politikalar</h2>
+<p><a href="musteri-tanima-ve-islem-guvenligi.html">Müşteri Tanıma ve İşlem Güvenliği</a> · <a href="mesafeli-satis-sozlesmesi.html">Mesafeli Satış Sözleşmesi</a> · <a href="on-bilgilendirme-formu.html">Ön Bilgilendirme Formu</a> · <a href="kvkk.html">KVKK Aydınlatma Metni</a> · <a href="yuksek-degerli-urun-teslimi.html">Yüksek Değerli Ürün Teslimi</a></p>
+<a href="index.html">← Ana sayfaya dön</a>
+</main>
+<script src="js/legal-stamp.js?v=2026.08.25.2600"></script>
+</body>
+</html>
