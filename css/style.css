@@ -1113,143 +1113,505 @@ p, span, li, td, th, label, input, button, select, textarea {
   color: var(--color-ink);
 }
 
-.pd-art-wrapper {
+/* ==========================================================
+   6. ENTERPRISE PRODUCT DETAIL PAGE (SAAT&SAAT LUXURY PDP)
+   ========================================================== */
+.pdp-page-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 16px 20px 80px;
+}
+
+/* Breadcrumbs */
+.pdp-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--color-muted);
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.pdp-breadcrumbs a {
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  font-weight: 500;
+}
+.pdp-breadcrumbs a:hover {
+  color: var(--color-teal);
+  text-decoration: underline;
+}
+.pdp-breadcrumbs .pdp-separator {
+  color: #C0C0C0;
+  font-size: 11px;
+}
+.pdp-breadcrumbs .pdp-current {
+  color: var(--color-muted);
+  font-weight: 500;
+}
+
+/* Top 2-Column Hero */
+.pdp-hero-grid {
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 56px;
-  padding: 40px 0 80px;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 48px;
+  align-items: start;
+  margin-bottom: 60px;
 }
-.pd-art-image-container {
-  position: relative;
-  background: var(--color-pedestal);
-  border-radius: var(--radius-md);
+
+/* Left: Gallery */
+.pdp-gallery-wrap {
+  display: flex;
+  gap: 16px;
+  align-items: start;
+}
+.pdp-thumbs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 76px;
+  flex-shrink: 0;
+}
+.pdp-thumb-item {
+  width: 76px;
+  height: 76px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--color-border);
-  width: 100%;
-  padding-top: 100%;
+  background: #FFFFFF;
+  padding: 4px;
+  cursor: pointer;
   overflow: hidden;
-  cursor: crosshair;
+  transition: all 0.2s ease;
 }
-.pd-art-image-container img {
-  position: absolute;
-  inset: 0;
+.pdp-thumb-item:hover, .pdp-thumb-item.active {
+  border-color: var(--color-teal);
+  box-shadow: 0 0 0 1.5px var(--color-teal);
+}
+.pdp-thumb-item img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+}
+
+.pdp-main-photo-box {
+  position: relative;
+  flex: 1;
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: crosshair;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+}
+.pdp-main-photo-box img {
+  width: 88%;
+  height: 88%;
+  object-fit: contain;
   transition: transform 0.2s ease-out;
 }
-.pd-art-image-container:hover img { transform: scale(2.2); }
-.loupe-hint {
+.pdp-main-photo-box:hover img {
+  transform: scale(2.4);
+}
+
+.pdp-badge-top-left {
   position: absolute;
-  bottom: 16px;
+  top: 16px;
   left: 16px;
-  background: rgba(7, 10, 9, 0.88);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 2;
+}
+.pdp-badge-item {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.pdp-badge-online {
+  background: #25408F;
+  color: #FFFFFF;
+}
+.pdp-badge-distributor {
+  background: var(--color-teal);
+  color: #FFFFFF;
+}
+.pdp-badge-secure {
+  background: #8A6D3B;
+  color: #FFFFFF;
+}
+.pdp-loupe-hint {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  background: rgba(7, 10, 9, 0.82);
   color: #FFFFFF;
   font-size: 11px;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
   padding: 5px 12px;
   border-radius: var(--radius-full);
   pointer-events: none;
 }
 
-.pd-art-info { display: flex; flex-direction: column; }
-.pd-art-brand {
-  font-family: var(--font-sans);
-  font-size: 12.5px;
+/* Right: Buy Box */
+.pdp-buy-box {
+  display: flex;
+  flex-direction: column;
+}
+.pdp-brand-title {
+  font-size: 13.5px;
   letter-spacing: 2.5px;
-  color: var(--color-teal);
   text-transform: uppercase;
-  font-weight: 700;
-  margin-bottom: 6px;
-}
-.pd-art-title {
-  font-family: var(--font-sans);
-  font-size: clamp(26px, 3.4vw, 36px);
-  color: var(--color-ink);
-  line-height: 1.2;
-  margin-bottom: 8px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-.pd-art-ref {
-  font-family: var(--font-body);
-  font-size: 13px;
-  color: var(--color-muted);
-  margin-bottom: 20px;
-  font-weight: 400;
-}
-.pd-art-price {
-  font-size: clamp(26px, 3vw, 34px);
-  font-weight: 800;
   color: var(--color-teal);
+  font-weight: 800;
+  margin-bottom: 6px;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+}
+.pdp-brand-title:hover {
+  text-decoration: underline;
+}
+.pdp-product-title {
+  font-family: var(--font-sans);
+  font-size: clamp(22px, 2.6vw, 30px);
+  font-weight: 700;
+  color: var(--color-ink);
+  line-height: 1.25;
+  margin-bottom: 10px;
+}
+.pdp-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 12.5px;
+  color: var(--color-muted);
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.pdp-meta-sku {
+  color: #333;
+  font-weight: 600;
+}
+.pdp-meta-stock {
+  color: #15803D;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Price Box */
+.pdp-price-wrap {
+  background: #FAF8F5;
+  border: 1px solid rgba(194, 167, 104, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 18px 22px;
+  margin-bottom: 22px;
+}
+.pdp-price-header {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+.pdp-current-price {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--color-ink);
   font-family: var(--font-sans);
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
-  margin-bottom: 20px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid var(--color-border);
 }
-
-.expert-health-card {
-  background: #FAFAF8;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 18px;
-  margin-bottom: 24px;
+.pdp-old-price {
+  font-size: 18px;
+  color: #999;
+  text-decoration: line-through;
 }
-.expert-health-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-  font-size: 12.5px;
+.pdp-discount-badge {
+  background: #D9534F;
+  color: #FFF;
+  font-size: 11px;
   font-weight: 700;
-  color: var(--color-teal);
-}
-.health-metrics-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  font-size: 12px;
-}
-.health-metric-item {
-  background: #FFFFFF;
-  border: 1px solid var(--color-border);
-  padding: 8px 12px;
+  padding: 2px 8px;
   border-radius: 4px;
 }
-.health-metric-item span { color: var(--color-muted); display: block; font-size: 11px; }
-.health-metric-item strong { color: var(--color-ink); font-size: 12.5px; }
-
-.pd-art-specs-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 24px;
-  font-size: 13.5px;
+.pdp-installment-banner {
+  font-size: 13px;
+  color: var(--color-teal);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
-.pd-art-specs-table tr { border-bottom: 1px solid var(--color-border); }
-.pd-art-specs-table td { padding: 8px 0; }
-.pd-art-specs-table td:first-child { color: var(--color-muted); width: 40%; }
-.pd-art-specs-table td:last-child { font-weight: 600; color: var(--color-ink); }
 
-.pd-art-actions {
+/* Quick Features 5-Grid */
+.pdp-quick-specs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.pdp-spec-pill {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pdp-spec-pill-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.pdp-spec-pill-label {
+  font-size: 10.5px;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  font-weight: 600;
+  display: block;
+  line-height: 1.2;
+}
+.pdp-spec-pill-val {
+  font-size: 12.5px;
+  color: var(--color-ink);
+  font-weight: 700;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Action Buttons */
+.pdp-actions-row {
   display: flex;
   gap: 12px;
-  margin-top: auto;
+  margin-bottom: 24px;
 }
-.btn-art-buy {
-  flex: 1;
+.pdp-btn-cart {
+  flex: 1.2;
   background: var(--color-teal);
   color: #FFFFFF;
   border: none;
-  border-radius: var(--radius-full);
-  padding: 15px;
-  font-size: 14px;
-  font-weight: 600;
+  border-radius: 6px;
+  padding: 15px 20px;
+  font-size: 15px;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s var(--ease-silk);
-  letter-spacing: 0.5px;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
-.btn-art-buy:hover { background: var(--color-teal-hover); box-shadow: 0 4px 16px var(--color-teal-glow); }
+.pdp-btn-cart:hover {
+  background: var(--color-teal-hover);
+  box-shadow: 0 4px 16px var(--color-teal-glow);
+}
+.pdp-btn-fast {
+  flex: 1;
+  background: #000000;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 6px;
+  padding: 15px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.pdp-btn-fast:hover {
+  background: #222;
+}
+.pdp-btn-whatsapp {
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  background: #25D366;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+.pdp-btn-whatsapp:hover {
+  transform: scale(1.05);
+}
+
+/* Trust USPs Card */
+.pdp-trust-box {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 18px 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.pdp-trust-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.pdp-trust-item-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.pdp-trust-item-text strong {
+  font-size: 12.5px;
+  color: var(--color-ink);
+  display: block;
+  margin-bottom: 2px;
+}
+.pdp-trust-item-text span {
+  font-size: 11.5px;
+  color: var(--color-muted);
+  line-height: 1.4;
+  display: block;
+}
+
+/* PDP Tabs Section */
+.pdp-tabs-nav {
+  display: flex;
+  border-bottom: 2px solid var(--color-border);
+  margin-bottom: 30px;
+  gap: 32px;
+  overflow-x: auto;
+}
+.pdp-tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 14px 4px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #777;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  margin-bottom: -2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pdp-tab-btn:hover {
+  color: var(--color-ink);
+}
+.pdp-tab-btn.active {
+  color: var(--color-teal);
+  border-bottom-color: var(--color-teal);
+}
+
+.pdp-tab-pane {
+  display: none;
+}
+.pdp-tab-pane.active {
+  display: block;
+}
+
+/* Specifications Grid (Saat&Saat 6-category style) */
+.pdp-specs-category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.pdp-spec-cat-card {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 20px 22px;
+}
+.pdp-spec-cat-title {
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--color-teal);
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pdp-spec-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pdp-spec-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed rgba(0,0,0,0.06);
+}
+.pdp-spec-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.pdp-spec-key {
+  color: var(--color-muted);
+}
+.pdp-spec-value {
+  font-weight: 600;
+  color: var(--color-ink);
+  text-align: right;
+}
+
+/* Installment Table */
+.pdp-installment-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.pdp-installment-table th {
+  background: #F8F7F4;
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-ink);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+.pdp-installment-table td {
+  padding: 12px 16px;
+  font-size: 13px;
+  border-bottom: 1px solid var(--color-border);
+  color: #444;
+}
+.pdp-installment-table tr:last-child td {
+  border-bottom: none;
+}
+.pdp-installment-table tr:hover td {
+  background: #FAF9F6;
+}
+
+@media (max-width: 900px) {
+  .pdp-hero-grid { grid-template-columns: 1fr; gap: 32px; }
+  .pdp-gallery-wrap { flex-direction: column-reverse; }
+  .pdp-thumbs-list { flex-direction: row; width: 100%; overflow-x: auto; }
+  .pdp-trust-box { grid-template-columns: 1fr; }
+  .pdp-actions-row { flex-wrap: wrap; }
+  .pdp-btn-cart, .pdp-btn-fast { flex: 1 1 100%; }
+}
 
 /* ==========================================================
    7. GÜVEN & HİZMET SÜTUNLARI & 25 YILLIK MİRAS

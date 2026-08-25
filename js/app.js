@@ -355,7 +355,9 @@ const App = {
     document.body.style.overflow = '';
   },
 
-  // ÜRÜN DETAY SAYFASI (10X MAKRO BÜYÜTEÇ & EKSPERTİZ & HUKUKİ PROTOKOLLER)
+  // ==========================================================
+  // ÜRÜN DETAY SAYFASI (SAAT&SAAT ENTERPRISE PDP MİMARİSİ)
+  // ==========================================================
   openProduct(id) {
     const p = findProduct(id);
     if (!p) return;
@@ -363,125 +365,425 @@ const App = {
     const container = document.getElementById('productDetailView');
     if (!container) return;
 
-    const isHighVal = (typeof isHighValueSecureDelivery === 'function' ? isHighValueSecureDelivery(p) : p.price > 12000);
+    const isHighVal = (typeof isHighValueSecureDelivery === 'function' ? isHighValueSecureDelivery(p) : p.price >= 12000);
+    const specs = p.specs || {};
 
-    const condBadgeHtml = p.isPreOwned
-      ? `<span class="badge-cond-gold" style="right:16px; top:16px; font-size:11px; padding:4px 10px;">İkinci El</span>`
-      : (p.conditionBadge ? `<span class="badge-cond-sage" style="right:16px; top:16px; font-size:11px; padding:4px 10px;">${p.conditionBadge}</span>` : '');
+    // Galleri görselleri (Varsa ek açılar, yoksa ana görsel)
+    const galleryImages = (p.images && p.images.length > 0) ? p.images : [p.image];
+
+    // Thumbnails HTML
+    const thumbsHtml = galleryImages.map((img, idx) => `
+      <div class="pdp-thumb-item ${idx === 0 ? 'active' : ''}" onclick="App.changePdpMainImage('${img}', this)">
+        <img src="${img}" alt="${p.brand} ${p.name} - ${idx + 1}" loading="lazy">
+      </div>
+    `).join('');
+
+    // Fiyat & İndirim Rozeti
+    const hasDiscount = p.oldPrice && p.oldPrice > p.price;
+    const discountPercent = hasDiscount ? Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100) : 0;
+    const monthlyInstallment = Math.round(p.price / 3);
+
+    // Taksit Seçenekleri Matrisi
+    const installments = [
+      { name: 'Peşin Fiyatına', installments: [
+        { month: 2, amount: Math.round(p.price / 2), total: p.price },
+        { month: 3, amount: Math.round(p.price / 3), total: p.price }
+      ]},
+      { name: 'Vade Farklı Taksitler', installments: [
+        { month: 6, amount: Math.round((p.price * 1.08) / 6), total: Math.round(p.price * 1.08) },
+        { month: 9, amount: Math.round((p.price * 1.14) / 9), total: Math.round(p.price * 1.14) },
+        { month: 12, amount: Math.round((p.price * 1.19) / 12), total: Math.round(p.price * 1.19) }
+      ]}
+    ];
+
+    // İlgili Ürünler (Aynı markadan veya kategoriden 4 model)
+    const relatedProducts = ALL_PRODUCTS.filter(x => x.id !== p.id && (x.brand === p.brand || x.category === p.category)).slice(0, 4);
 
     container.innerHTML = `
-      <div class="pd-art-wrapper">
+      <div class="pdp-page-container">
         
-        <!-- Sol: 10x Optik Makro Büyüteç -->
-        <div>
-          <div class="pd-art-image-container" onmousemove="App.handleZoom(event, this)" onmouseleave="App.resetZoom(this)">
-            <img src="${p.image}" alt="${p.brand} ${p.name}" id="zoomTargetImg">
-            <span class="badge-stock-teal" style="left:16px; top:16px; font-size:11px; padding:4px 10px;">${p.statusBadge || 'Stokta'}</span>
-            ${condBadgeHtml}
-            <div class="loupe-hint">🔍 10x Optik İnceleme İçin Görselin Üzerine Gelin</div>
+        <!-- 1. Breadcrumbs -->
+        <nav class="pdp-breadcrumbs" aria-label="Breadcrumb">
+          <a href="#" data-page="ana-sayfa">Ana Sayfa</a>
+          <span class="pdp-separator">/</span>
+          <a href="#" data-page="saatler">Lüks Saatler</a>
+          <span class="pdp-separator">/</span>
+          <a href="#" onclick="App.filterWatchesByBrand('${p.brand}', null)">${p.brand}</a>
+          <span class="pdp-separator">/</span>
+          <span class="pdp-current">${p.name}</span>
+        </nav>
+
+        <!-- 2. Master Hero Grid (Left: Gallery, Right: Buy Box) -->
+        <div class="pdp-hero-grid">
+          
+          <!-- SOL: Gelişmiş Galeri ve 10x Optik Makro Büyüteç -->
+          <div class="pdp-gallery-wrap">
+            <div class="pdp-thumbs-list">
+              ${thumbsHtml}
+            </div>
+            
+            <div class="pdp-main-photo-box" onmousemove="App.handleZoom(event, this)" onmouseleave="App.resetZoom(this)">
+              <div class="pdp-badge-top-left">
+                <span class="pdp-badge-item pdp-badge-online">ONLINE ÖZEL</span>
+                <span class="pdp-badge-item pdp-badge-distributor">DİSTRİBÜTÖR GARANTİLİ</span>
+                ${isHighVal ? `<span class="pdp-badge-item pdp-badge-secure">🏛️ 12.000 TL+ MAĞAZA TESLİMİ</span>` : ''}
+              </div>
+              <img src="${p.image}" alt="${p.brand} ${p.name}" id="pdpMainImageTarget">
+              <div class="pdp-loupe-hint">🔍 10x Optik İnceleme İçin Üzerine Gelin</div>
+            </div>
+          </div>
+
+          <!-- SAĞ: Satın Alma & Özellikler Paneli (Buy Box) -->
+          <div class="pdp-buy-box">
+            <a href="#" onclick="App.filterWatchesByBrand('${p.brand}', null)" class="pdp-brand-title">${p.brand}</a>
+            <h1 class="pdp-product-title">${p.name}</h1>
+            
+            <div class="pdp-meta-row">
+              <span>Ürün Kodu: <strong class="pdp-meta-sku">${p.ref || p.reference}</strong></span>
+              <span>•</span>
+              <span class="pdp-meta-stock">● Stokta Var (Hemen Teslim)</span>
+              <span>•</span>
+              <span>Kategori: <strong>${p.subCategory || 'Lüks Saat'}</strong></span>
+            </div>
+
+            <!-- Fiyat Kutusu -->
+            <div class="pdp-price-wrap">
+              <div class="pdp-price-header">
+                ${hasDiscount ? `<span class="pdp-old-price">${formatPrice(p.oldPrice)}</span>` : ''}
+                <span class="pdp-current-price">${formatPrice(p.price)}</span>
+                ${hasDiscount ? `<span class="pdp-discount-badge">-%${discountPercent} İNDİRİM</span>` : ''}
+              </div>
+              <div class="pdp-installment-banner">
+                <span>💳 Vade farksız 3 taksit: <strong>3 x ${formatPrice(monthlyInstallment)}</strong></span>
+                <span style="color:#888; font-weight:normal; font-size:12px;">(Tüm kartlara 12 taksit imkanı)</span>
+              </div>
+            </div>
+
+            <!-- 5'li Hızlı Özet Teknik Çipler (Saat&Saat Standartı) -->
+            <div class="pdp-quick-specs">
+              <div class="pdp-spec-pill">
+                <span class="pdp-spec-pill-icon">⚙️</span>
+                <div>
+                  <span class="pdp-spec-pill-label">Mekanizma</span>
+                  <span class="pdp-spec-pill-val">${specs['Mekanizma'] || 'Quartz / Analog'}</span>
+                </div>
+              </div>
+              <div class="pdp-spec-pill">
+                <span class="pdp-spec-pill-icon">📐</span>
+                <div>
+                  <span class="pdp-spec-pill-label">Kasa Çapı</span>
+                  <span class="pdp-spec-pill-val">${specs['Kasa Çapı'] || '42 mm'}</span>
+                </div>
+              </div>
+              <div class="pdp-spec-pill">
+                <span class="pdp-spec-pill-icon">🛡️</span>
+                <div>
+                  <span class="pdp-spec-pill-label">Cam Tipi</span>
+                  <span class="pdp-spec-pill-val">${specs['Cam Tipi'] || 'Safir / Mineral'}</span>
+                </div>
+              </div>
+              <div class="pdp-spec-pill">
+                <span class="pdp-spec-pill-icon">💧</span>
+                <div>
+                  <span class="pdp-spec-pill-label">Su Geçirmezlik</span>
+                  <span class="pdp-spec-pill-val">${specs['Su Geçirmezlik'] || '5 ATM (50 M)'}</span>
+                </div>
+              </div>
+              <div class="pdp-spec-pill">
+                <span class="pdp-spec-pill-icon">🎨</span>
+                <div>
+                  <span class="pdp-spec-pill-label">Kordon</span>
+                  <span class="pdp-spec-pill-val">${specs['Kordon / Kayış'] || 'Paslanmaz Çelik'}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Aksiyon Butonları -->
+            <div class="pdp-actions-row">
+              <button class="pdp-btn-cart" onclick="Cart.add(${p.id}); App.updateHeaderCartCount(); Router.navigate('sepet');">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                <span>Sepete Ekle</span>
+              </button>
+              <button class="pdp-btn-fast" onclick="Cart.add(${p.id}); App.updateHeaderCartCount(); Router.navigate('odeme');">
+                <span>Hemen Satın Al</span>
+              </button>
+              <a class="pdp-btn-whatsapp" href="https://wa.me/905419305372?text=Merhaba,%20${encodeURIComponent(p.brand + ' ' + p.name)}%20(${p.ref || p.reference})%20modeli%20hakkinda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener" aria-label="WhatsApp Satış Danışmanı">
+                <span>💬</span>
+              </a>
+            </div>
+
+            <!-- 4'lü Kurumsal Güvence Kutusu -->
+            <div class="pdp-trust-box">
+              <div class="pdp-trust-item">
+                <span class="pdp-trust-item-icon">🛡️</span>
+                <div class="pdp-trust-item-text">
+                  <strong>2 Yıl Distribütör Garantisi</strong>
+                  <span>Orijinal kutusu, garanti belgesi ve faturalı teslimat.</span>
+                </div>
+              </div>
+              <div class="pdp-trust-item">
+                <span class="pdp-trust-item-icon">🏛️</span>
+                <div class="pdp-trust-item-text">
+                  <strong>Buca Showroom'dan Teslimat</strong>
+                  <span>12.000 TL üzeri yasal kimlik ve imza ile mağazadan güvenli teslim.</span>
+                </div>
+              </div>
+              <div class="pdp-trust-item">
+                <span class="pdp-trust-item-icon">💳</span>
+                <div class="pdp-trust-item-text">
+                  <strong>BDDK Lisanslı 3D Secure</strong>
+                  <span>PayTR 256-bit SSL korumalı banka altyapısı.</span>
+                </div>
+              </div>
+              <div class="pdp-trust-item">
+                <span class="pdp-trust-item-icon">⚖️</span>
+                <div class="pdp-trust-item-text">
+                  <strong>Ekspertiz & Takas Güvencesi</strong>
+                  <span>İzmir Kuyumcular Odası (İZKO) 4892 tescilli güvence.</span>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
 
-        <!-- Sağ: Detay & 12 Nokta Ekspertiz Karnesi -->
-        <div class="pd-art-info">
-          <span class="pd-art-brand">${p.brand}</span>
-          <h1 class="pd-art-title">${p.name}</h1>
-          <p class="pd-art-ref">${p.reference}</p>
-          <div class="pd-art-price">${formatPrice(p.price)}</div>
-
-          <!-- Canlı Ekspertiz Karnesi -->
-          <div class="expert-health-card">
-            <div class="expert-health-header">
-              <span>✓ 12 Nokta Ekspertiz & Orijinallik Onaylı</span>
-              <span>İstanbul Darphanesi Mühürlü</span>
-            </div>
-            <div class="health-metrics-grid">
-              <div class="health-metric-item">
-                <span>Zaman Sapması:</span>
-                <strong>${p.rateAccuracy || '+1.5 sn/gün'}</strong>
-              </div>
-              <div class="health-metric-item">
-                <span>Mekanizma Genliği:</span>
-                <strong>${p.amplitude || '290° Kusursuz'}</strong>
-              </div>
-              <div class="health-metric-item">
-                <span>Basınç & Su Testi:</span>
-                <strong>${p.waterTest || '10 Bar Geçti'}</strong>
-              </div>
-              <div class="health-metric-item">
-                <span>Kasa Kondisyonu:</span>
-                <strong>%98 Polisajsız Orijinal Hat</strong>
-              </div>
-            </div>
-          </div>
-
-          <p style="font-size:14px; color:#444; line-height:1.7; margin-bottom:20px;">
-            ${p.desc}
-          </p>
-
-          <table class="pd-art-specs-table">
-            <tr><td>Marka / Üretici</td><td>${p.brand}</td></tr>
-            <tr><td>Maden / Kasa Tipi</td><td>${p.metal || 'Masif Altın / Çelik'}</td></tr>
-            <tr><td>Kadran & İndeksler</td><td>${p.dial || 'Orijinal Kadran'}</td></tr>
-            <tr><td>Model / Üretim Yılı</td><td>${p.year || '2024'}</td></tr>
-            <tr><td>Kutu & Garanti Belgesi</td><td>${p.boxPapers || 'Orijinal Kutu & Garanti Belgesi'}</td></tr>
-            ${p.hallmark ? `<tr><td>Darphane Damgası</td><td>${p.hallmark}</td></tr>` : ''}
-          </table>
-
-          ${isHighVal ? `
-            <!-- 03: Yüksek Değerli Güvenli Teslimat Uyarısı -->
-            <div class="high-value-delivery-alert" style="background:#FFF9EE; border:1px solid #E6D2A8; padding:14px 18px; border-radius:8px; margin:16px 0; font-size:12.5px; color:#6B531C; line-height:1.6;">
-              <strong style="display:block; margin-bottom:4px; font-size:13px; color:#875A00;">🏛️ Yalnız Mağazadan Güvenli Teslimat (03 Protokolü)</strong>
-              12.000 TL üzerindeki altın ve saat ürünleri yalnızca mağazamızdan teslim edilir. Kargo veya kurye ile gönderim yapılmaz.<br>
-              Teslim sırasında sipariş sahibinin bizzat mağazada bulunması, geçerli resmî kimlik belgesini ibraz etmesi ve teslim-tesellüm belgesini imzalaması gerekir.
-            </div>
-          ` : ''}
-
-          <!-- Yasal & Politika Hızlı Bağlantıları (03, 04, 11) -->
-          <div style="display:flex; flex-wrap:wrap; gap:12px; font-size:12px; margin-bottom:20px;">
-            <a href="iade-degisim-cayma.html" target="_blank" style="color:var(--color-teal); text-decoration:underline;">İade ve Cayma Koşullarını İncele (04)</a>
-            <span style="color:#CCC;">•</span>
-            <a href="garanti-ve-satis-sonrasi.html" target="_blank" style="color:var(--color-teal); text-decoration:underline;">Garanti ve Satış Sonrası Koşullarını İncele (11)</a>
-            ${isHighVal ? `
-              <span style="color:#CCC;">•</span>
-              <a href="yuksek-degerli-urun-teslimi.html" target="_blank" style="color:var(--color-teal); text-decoration:underline;">Yüksek Değerli Teslim Protokolü (03)</a>
-            ` : ''}
-          </div>
-
-          <div class="pd-art-actions">
-            <button class="btn-art-buy" onclick="Cart.add(${p.id}); App.updateHeaderCartCount(); Router.navigate('cart');">
-              Hemen Satın Al (${formatPrice(p.price)})
+        <!-- 3. Alt Sekmeler (Detaylar, Teknik Özellikler, Taksit, Teslimat) -->
+        <div class="pdp-tabs-container">
+          <div class="pdp-tabs-nav" role="tablist">
+            <button class="pdp-tab-btn active" onclick="App.switchPdpTab('tab-details', this)" role="tab">
+              <span>📋 Ürün Detayları</span>
             </button>
-            <a class="btn-art-whatsapp" href="https://wa.me/905419305372?text=Merhaba,%20${encodeURIComponent(p.brand + ' ' + p.name)}%20(${p.reference})%20hakkinda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener">
-              <span>WhatsApp Danışmanı</span>
-            </a>
+            <button class="pdp-tab-btn" onclick="App.switchPdpTab('tab-specs', this)" role="tab">
+              <span>⚙️ Teknik Özellikler Tablosu</span>
+            </button>
+            <button class="pdp-tab-btn" onclick="App.switchPdpTab('tab-installments', this)" role="tab">
+              <span>💳 Taksit Seçenekleri</span>
+            </button>
+            <button class="pdp-tab-btn" onclick="App.switchPdpTab('tab-delivery', this)" role="tab">
+              <span>🚚 Teslimat, Güvenlik & İade Koşulları</span>
+            </button>
           </div>
 
-          <!-- Yasal Bilgilendirme, Teslimat & Mağaza Güvenlik Şartları -->
-          <div class="pd-legal-notice-box" style="margin-top:24px; padding:18px 20px; background:#FAFAFA; border:1px solid #E5E5E5; border-radius:8px; font-size:12px; color:#555; line-height:1.7;">
-            <div style="font-weight:700; color:var(--color-ink); font-size:13px; margin-bottom:10px; display:flex; align-items:center; gap:8px;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C2A768" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              <span>Önemli Bilgilendirme, Teslimat & Güvenlik Şartları (01, 02, 03, 04, 11)</span>
+          <!-- SEKME 1: Ürün Detayları -->
+          <div id="tab-details" class="pdp-tab-pane active" role="tabpanel">
+            <div style="background:#FFFFFF; border:1px solid var(--color-border); border-radius:8px; padding:28px 32px; line-height:1.8; color:#444; font-size:14.5px;">
+              <h2 style="font-size:20px; font-weight:700; color:var(--color-ink); margin-bottom:16px;">
+                ${p.brand} ${p.name} Ürün Bilgisi ve Tasarım Detayları
+              </h2>
+              <p style="margin-bottom:16px;">
+                ${p.description || p.desc}
+              </p>
+              <div style="background:#FBF9F5; border-left:4px solid var(--color-teal); padding:16px 20px; margin:20px 0; border-radius:0 6px 6px 0;">
+                <strong style="color:var(--color-teal); display:block; margin-bottom:4px; font-size:14px;">Belgin Kuyumculuk & Saat Distribütörlük Taahhüdü:</strong>
+                Sitemizde ve Buca showroomumuzda yer alan tüm <strong>${p.brand}</strong> saat modelleri %100 orijinal, resmi distribütör ithalatı ve 2 yıl garantilidir. Siparişiniz seri numarası kayıtlı garanti belgesi, orijinal kutusu ve kaşeli sertifikasıyla eksiksiz teslim edilmektedir.
+              </div>
+              <h3 style="font-size:16px; font-weight:700; color:var(--color-ink); margin:24px 0 10px;">Kutu İçeriği:</h3>
+              <ul style="padding-left:20px; margin-bottom:16px; display:flex; flex-direction:column; gap:6px;">
+                <li>Orijinal ${p.brand} Lüks Saat Kutusu ve Koruma Ambalajı</li>
+                <li>Türkiye Distribütörü Onaylı ve Kaşeli Garanti Belgesi</li>
+                <li>Türkçe Kullanım Kılavuzu ve Mekanizma Bakım Kartı</li>
+                <li>Belgin Kuyumculuk Satış Faturası ve Yetkili Belgesi</li>
+              </ul>
             </div>
-            <ul style="margin:0; padding-left:16px; display:flex; flex-direction:column; gap:8px;">
-              <li><strong>12.000 TL üzerindeki altın ve saat ürünleri yalnızca mağazamızdan teslim edilmektedir. Kargo veya kurye ile gönderim yapılmaz.</strong></li>
-              <li>Teslim sırasında sipariş sahibinin bizzat mağazada bulunması, geçerli resmî kimlik belgesini ibraz etmesi ve teslim-tesellüm belgesini imzalaması gerekmektedir.</li>
-              <li>Sipariş sahibi ile ödeme aracının sahibinin farklı olması halinde güvenlik amacıyla ek doğrulama talep edilebilir.</li>
-              <li>Ürün; sipariş sahibi dışında üçüncü kişiye, telefon veya mesaj talimatıyla teslim edilmez.</li>
-              <li>Ürün teslimi, ödemenin ödeme sistemi tarafından kesinleşmiş olarak doğrulanmasından sonra gerçekleştirilir.</li>
-              <li>Altın ve kıymetli maden fiyatları piyasa koşullarına bağlı olarak değişebilir. Siparişin onaylandığı anda gösterilen satış fiyatı esas alınır.</li>
-              <li>Kişiye özel hazırlanan, ölçüsü değiştirilen, gravür veya benzeri kişiselleştirme işlemi yapılan ürünlerde mevzuatta öngörülen şartların oluşması halinde cayma hakkı istisnası uygulanabilir.</li>
-              <li>Fiyatı finansal piyasalardaki dalgalanmalara bağlı olarak değişen ürünlerde, ilgili mevzuatta öngörülen şartların oluşması halinde cayma hakkı istisnası uygulanabilir.</li>
-              <li>Tüketicinin ayıplı mala ilişkin kanuni hakları saklıdır.</li>
-              <li>Ürünün renk ve görünümünde ekran, ışık ve çekim koşullarından kaynaklanan sınırlı farklılıklar oluşabilir. Ürün sayfasında belirtilen ayar, gram, model, ölçü ve teknik özellikler esas alınır.</li>
-            </ul>
           </div>
+
+          <!-- SEKME 2: 6 Kategorili Teknik Özellikler Tablosu (Saat&Saat Standartı) -->
+          <div id="tab-specs" class="pdp-tab-pane" role="tabpanel">
+            <div class="pdp-specs-category-grid">
+              
+              <!-- 1. Ürün Bilgisi -->
+              <div class="pdp-spec-cat-card">
+                <div class="pdp-spec-cat-title">🏷️ Ürün Bilgisi</div>
+                <div class="pdp-spec-rows">
+                  <div class="pdp-spec-row"><span class="pdp-spec-key">Marka</span><span class="pdp-spec-value">${p.brand}</span></div>
+                  <div class="pdp-spec-row"><span class="pdp-spec-key">Model / Ref</span><span class="pdp-spec-value">${p.ref || p.reference}</span></div>
+                  <div class="pdp-spec-row"><span class="pdp-spec-key">Cinsiyet</span><span class="pdp-spec-value">${specs['Cinsiyet'] || 'Erkek / Kadın'}</span></div>
+                  <div class="pdp-spec-row"><span class="pdp-spec-key">Çalışma Tipi</span><span class="pdp-spec-value">${specs['Mekanizma'] || 'Quartz Analog'}</span></div>
+                  <div class="pdp-spec-row"><span class="pdp-spec-key">Menşei</span><span class="pdp-spec-value">${p.origin || specs['Menşei'] || 'İsviçre / Japonya'}</span></div>
+                </div>
+              </div>
+
+              <!-- 2. Kasa Detayları -->
+              <div class="pdp-spec-cat-card">
+                <div class="pdp-spec-cat-title">📐 Kasa Detayları</div>
+                <div class="pdp-spec-rows">
+                  <div class="pdp-spec-row"><span class="pdp-spec-key">Kasa Çapı</span><span class="pdp-spec-value">${specs['Kasa Çapı'] || '42 mm'}</span></div>
+                  <div class="pdp-spec-row"><span class="pdp-spec-key">Kasa Materyali</span><span class="pdp-spec-value">${specs['Kasa Materyali'] || p.metal || '316L Çelik'}</span></div>
+                  <div class="pdp-spec-row"><span class="pdp-spec-key">Kasa Rengi</span><span class="pdp-spec-value">${specs['Kasa Rengi'] || 'Metalik Çelik / Altın'}</span></div>
+                  <div class="pdp-spec-row"><span class="pdp-spec-key">Kasa Şekli</span><span class="pdp-spec-value">Yuvarlak / Geometrik</span></div>
+                </div>
+              </div>
+
+              <!-- 3. Kadran & Cam -->
+              <div class="pdp-spec-cat-card">
+                <div class="pdp-spec-cat-title">🛡️ Kadran & Cam</div>
+                <div class="pdp-spec-rows">
+                  <div class="pdp-spec-row"><span class="pdp-spec-key">Cam Özelliği</span><span class="pdp-spec-value">${specs['Cam Tipi'] || 'Safir / Mineral'}</span></div>
+                  <div class="pdp-spec-row"><span class="pdp-spec-key">Kadran Rengi</span><span class="pdp-spec-value">${specs['Kadran Rengi'] || 'Antrasit / Siyah'}</span></div>
+                  <div class="pdp-spec-row"><span class="pdp-spec-key">Kadran Tipi</span><span class="pdp-spec-value">Analog / İndeksli</span></div>
+                  <div class="pdp-spec-row"><span class="pdp-spec-key">Aydınlatma</span><span class="pdp-spec-value">LumiBrite / Fosforlu Kollar</span></div>
+                </div>
+              </div>
+
+              <!-- 4. Kordon / Kayış -->
+              <div class="pdp-spec-cat-card">
+                <div class="pdp-spec-cat-title">🎨 Kordon / Kayış</div>
+                <div class="pdp-spec-rows">
+                  <div class="pdp-spec-row"><span class="pdp-spec-key">Kordon Tipi</span><span class="pdp-spec-value">${specs['Kordon / Kayış'] || 'Paslanmaz Çelik'}</span></div>
+                  <div class="pdp-spec-row"><span class="pdp-spec-key">Kordon Rengi</span><span class="pdp-spec-value">Metalik / Deri Tonu</span></div>
+                  <div class="pdp-spec-key">Klips</span><span class="pdp-spec-value">Kelebek / Emniyetli Toka</span></div>
+                </div>
+              </div>
+
+              <!-- 5. Fonksiyonlar -->
+              <div class="pdp-spec-cat-card">
+                <div class="pdp-spec-cat-title">⚡ Fonksiyonlar</div>
+                <div class="pdp-spec-rows">
+                  <div class="pdp-spec-row"><span class="pdp-spec-key">Su Geçirmezlik</span><span class="pdp-spec-value">${specs['Su Geçirmezlik'] || '5 ATM (50 Metre)'}</span></div>
+                  <div class="pdp-spec-row"><span class="pdp-spec-key">Takvim</span><span class="pdp-spec-value">Gün / Tarih Göstergesi</span></div>
+                  <div class="pdp-spec-row"><span class="pdp-spec-key">Kronometre</span><span class="pdp-spec-value">Mevcut / Hassas Sayaç</span></div>
+                </div>
+              </div>
+
+              <!-- 6. Garanti & Güvenlik -->
+              <div class="pdp-spec-cat-card">
+                <div class="pdp-spec-cat-title">📜 Garanti & Teslimat</div>
+                <div class="pdp-spec-rows">
+                  <div class="pdp-spec-row"><span class="pdp-spec-key">Garanti Süresi</span><span class="pdp-spec-value">2 Yıl Distribütör Garantili</span></div>
+                  <div class="pdp-spec-row"><span class="pdp-spec-key">Teslimat Kuralı</span><span class="pdp-spec-value">12.000 TL+ Mağazadan Teslim</span></div>
+                  <div class="pdp-spec-row"><span class="pdp-spec-key">Ekspertiz Kaydı</span><span class="pdp-spec-value">İZKO No: 4892 Onaylı</span></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- SEKME 3: Taksit Seçenekleri Tablosu -->
+          <div id="tab-installments" class="pdp-tab-pane" role="tabpanel">
+            <div style="background:#FFFFFF; border:1px solid var(--color-border); border-radius:8px; padding:24px; overflow-x:auto;">
+              <p style="font-size:13.5px; color:var(--color-muted); margin-bottom:16px;">
+                Tüm bankaların kredi kartlarına (Bonus, World, Axess, Maximum, CardFinans, Paraf, Advantage) peşin fiyatına veya vade farklı 12 aya varan taksit seçenekleri:
+              </p>
+              <table class="pdp-installment-table">
+                <thead>
+                  <tr>
+                    <th>Taksit Sayısı</th>
+                    <th>Aylık Taksit Tutarı</th>
+                    <th>Toplam Tutar</th>
+                    <th>Vade Farkı</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Tek Çekim (Peşin)</strong></td>
+                    <td><strong>${formatPrice(p.price)}</strong></td>
+                    <td>${formatPrice(p.price)}</td>
+                    <td><span style="color:#15803D; font-weight:700;">Vade Farksız</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>2 Taksit</strong></td>
+                    <td><strong>${formatPrice(Math.round(p.price / 2))}</strong></td>
+                    <td>${formatPrice(p.price)}</td>
+                    <td><span style="color:#15803D; font-weight:700;">Vade Farksız</span></td>
+                  </tr>
+                  <tr style="background:#F4FAF6;">
+                    <td><strong>3 Taksit (Tavsiye Edilen)</strong></td>
+                    <td><strong style="color:var(--color-teal);">${formatPrice(Math.round(p.price / 3))}</strong></td>
+                    <td>${formatPrice(p.price)}</td>
+                    <td><span style="color:#15803D; font-weight:700;">Vade Farksız (0 TL)</span></td>
+                  </tr>
+                  <tr>
+                    <td>6 Taksit</td>
+                    <td>${formatPrice(Math.round((p.price * 1.08) / 6))}</td>
+                    <td>${formatPrice(Math.round(p.price * 1.08))}</td>
+                    <td>+%8 Banka Komisyonu</td>
+                  </tr>
+                  <tr>
+                    <td>9 Taksit</td>
+                    <td>${formatPrice(Math.round((p.price * 1.14) / 9))}</td>
+                    <td>${formatPrice(Math.round(p.price * 1.14))}</td>
+                    <td>+%14 Banka Komisyonu</td>
+                  </tr>
+                  <tr>
+                    <td>12 Taksit</td>
+                    <td>${formatPrice(Math.round((p.price * 1.19) / 12))}</td>
+                    <td>${formatPrice(Math.round(p.price * 1.19))}</td>
+                    <td>+%19 Banka Komisyonu</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- SEKME 4: Teslimat, Güvenlik & İade Koşulları -->
+          <div id="tab-delivery" class="pdp-tab-pane" role="tabpanel">
+            <div style="background:#FFFFFF; border:1px solid var(--color-border); border-radius:8px; padding:28px 32px; line-height:1.8; color:#444; font-size:14px;">
+              <h3 style="font-size:18px; font-weight:700; color:var(--color-ink); margin-bottom:14px;">
+                🏛️ Yüksek Değerli Ürün Teslimat Protokolü (03)
+              </h3>
+              <p style="margin-bottom:12px;">
+                <strong>12.000 TL üzerindeki tüm altın ve lüks saat ürünleri</strong>, güvenlik protokolleri gereğince yalnızca İzmir Buca'daki merkez showroomumuzdan (Menderes Cad. No:231/B Buca / İzmir) bizzat teslim edilmektedir.
+              </p>
+              <ul style="padding-left:20px; margin-bottom:20px; display:flex; flex-direction:column; gap:8px;">
+                <li>Teslimat sırasında sipariş sahibinin geçerli T.C. Kimlik Kartı veya Pasaportunu ibraz etmesi zorunludur.</li>
+                <li>Ürün teslimi, ödemenin banka ve PayTR altyapısı üzerinden kesinleşmiş olarak onaylanmasının ardından gerçekleştirilir.</li>
+                <li>Ürün, sipariş sahibi dışında üçüncü kişilere veya telefon/mesaj talimatıyla teslim edilmez.</li>
+              </ul>
+
+              <h3 style="font-size:18px; font-weight:700; color:var(--color-ink); margin:24px 0 14px;">
+                ⚖️ Yasal Cayma, İade ve Değişim Koşulları (04)
+              </h3>
+              <p style="margin-bottom:12px;">
+                6502 sayılı Tüketicinin Korunması Hakkında Kanun ve Mesafeli Sözleşmeler Yönetmeliği uyarınca kanuni haklarınız tam güvence altındadır:
+              </p>
+              <ul style="padding-left:20px; margin-bottom:20px; display:flex; flex-direction:column; gap:8px;">
+                <li>Kişiselleştirme (gravür, özel kordon kısaltma) yapılmamış orijinal saat ürünlerinde yasal süreler dahilinde cayma hakkı kullanılabilir.</li>
+                <li>Fiyatı uluslararası finansal piyasalardaki anlık dalgalanmalara bağlı olan masif altın ve ziynet ürünlerinde mevzuat gereği cayma hakkı istisnası geçerlidir.</li>
+                <li>Ayıplı mala ilişkin tüketici kanunu hakları saklıdır.</li>
+              </ul>
+            </div>
+          </div>
+
         </div>
+
+        <!-- 4. İlgili Modeller & Benzer Marka Ürünleri (Related Products Slider) -->
+        ${relatedProducts.length > 0 ? `
+          <div style="margin-top:70px;">
+            <div class="section-header-flex" style="margin-bottom:24px;">
+              <div>
+                <span style="font-size:11px; letter-spacing:2px; text-transform:uppercase; font-weight:700; color:var(--color-teal); display:block; margin-bottom:4px;">İlginizi Çekebilir</span>
+                <h3 style="font-family:var(--font-sans); font-size:24px; font-weight:700; color:var(--color-ink);">Benzer ${p.brand} & Lüks Modeller</h3>
+              </div>
+              <a href="#" onclick="App.filterWatchesByBrand('${p.brand}', null)" style="font-size:13.5px; font-weight:700; color:var(--color-teal); text-decoration:none;">Tüm ${p.brand} Modellerini Gör →</a>
+            </div>
+            <div class="products-grid-4">
+              ${relatedProducts.map(rel => this.renderProductCard(rel)).join('')}
+            </div>
+          </div>
+        ` : ''}
 
       </div>
     `;
 
-    Router.navigate('product');
+    Router.navigate('urun');
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 50);
+  },
+
+  changePdpMainImage(src, thumbEl) {
+    const target = document.getElementById('pdpMainImageTarget');
+    if (target) target.src = src;
+    document.querySelectorAll('.pdp-thumb-item').forEach(el => el.classList.remove('active'));
+    if (thumbEl) thumbEl.classList.add('active');
+  },
+
+  switchPdpTab(tabId, btn) {
+    document.querySelectorAll('.pdp-tab-pane').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.pdp-tab-btn').forEach(el => el.classList.remove('active'));
+    const targetPane = document.getElementById(tabId);
+    if (targetPane) targetPane.classList.add('active');
+    if (btn) btn.classList.add('active');
   },
 
   handleZoom(e, container) {
