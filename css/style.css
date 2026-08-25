@@ -823,7 +823,7 @@ p, span, li, td, th, label, input, button, select, textarea {
 }
 
 /* ==========================================================
-   BRANDS HORIZONTAL CAROUSEL (TEK SIRA VE KAYAR)
+   BRANDS HORIZONTAL CAROUSEL (TEK SIRA VE OTOMATİK AKAN MARQUEE)
    ========================================================== */
 .slider-arrows-nav {
   display: flex;
@@ -857,19 +857,31 @@ p, span, li, td, th, label, input, button, select, textarea {
   width: 100%;
   overflow: hidden;
   padding: 6px 2px 14px;
+  mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
 }
+
+@keyframes brandAutoFlow {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
 .brands-carousel-track {
   display: flex;
   gap: 18px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  padding-bottom: 6px;
+  width: max-content;
+  animation: brandAutoFlow 32s linear infinite;
+  will-change: transform;
+  cursor: grab;
 }
-.brands-carousel-track::-webkit-scrollbar {
-  display: none;
+.brands-carousel-track:hover,
+.brands-carousel-track:active,
+.brands-carousel-wrapper:hover .brands-carousel-track {
+  animation-play-state: paused;
 }
 
 /* Tek Sıra Marka Kartı */

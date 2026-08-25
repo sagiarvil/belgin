@@ -96,10 +96,12 @@ const App = {
 
   // 1. ANA SAYFA RENDER
   renderHome() {
-    // Saat Markaları (Tek Sıra Kayar Slider)
+    // Saat Markaları (Tek Sıra Kesintisiz Otomatik Kayan Marquee)
     const watchBrandsEl = document.getElementById('watchBrandsGrid');
     if (watchBrandsEl) {
-      watchBrandsEl.innerHTML = WATCH_BRANDS.map(b => `
+      // 2 kez tekrar ederek pürüzsüz sonsuz döngü (infinite seamless loop) oluştur
+      const marqueeList = [...WATCH_BRANDS, ...WATCH_BRANDS];
+      watchBrandsEl.innerHTML = marqueeList.map(b => `
         <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('${b.name}', null)" title="${b.name} Saat Modelleri">
           <div class="brand-card-thumb">
             <img src="${b.image}" alt="${b.name} Saatleri" loading="lazy">
@@ -150,8 +152,17 @@ const App = {
   scrollBrandSlider(direction) {
     const track = document.getElementById('watchBrandsGrid');
     if (!track) return;
-    const scrollAmount = direction === 'next' ? 460 : -460;
-    track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    track.style.animationPlayState = 'paused';
+    const computed = window.getComputedStyle(track);
+    const matrix = (typeof DOMMatrixReadOnly !== 'undefined') ? new DOMMatrixReadOnly(computed.transform) : null;
+    const currentX = matrix ? matrix.m41 : 0;
+    const shift = direction === 'next' ? -460 : 460;
+    track.style.transition = 'transform 0.4s ease-out';
+    track.style.transform = `translateX(${currentX + shift}px)`;
+    setTimeout(() => {
+      track.style.transition = '';
+      track.style.animationPlayState = 'running';
+    }, 2500);
   },
 
   // ANA SAYFA SAAT SAYFALAMA (EN FAZLA 30 ÜRÜN)
