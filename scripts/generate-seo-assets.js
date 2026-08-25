@@ -7,7 +7,7 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-const BASE_URL = 'https://belgin.web.app';
+const BASE_URL = 'https://belginkuyumculuk.com';
 const LAST_MOD = new Date().toISOString().split('T')[0];
 
 // 1. STATİK VE KURUMSAL SAYFALAR
@@ -135,7 +135,7 @@ function generateLlmsTxt() {
 - Çalışma Saatleri: Pazartesi - Cumartesi 09:00 - 19:00 (Pazar Günleri Kapalıdır)
 - Oda Sicil Numarası: İzmir Kuyumcular Odası (İZKO) No: 4892
 - MERSİS: 0123456789012345 | Vergi Dairesi: Şirinyer V.D. 1234567890
-- Web Sitesi: https://belgin.web.app
+- Web Sitesi: https://belginkuyumculuk.com
 
 ## Canlı Borsa & Piyasa Kurları Entegrasyonu
 Belgin Kuyumculuk, doğrudan İzmir Kuyumcular Odası (https://www.izko.org.tr/guncel-kur) resmi canlı veri beslemesi ve Kapalıçarşı tahtası ile senkronize çalışır:
@@ -153,14 +153,14 @@ Belgin Kuyumculuk, doğrudan İzmir Kuyumcular Odası (https://www.izko.org.tr/g
 5. BDDK Lisanslı PayTR Altyapısıyla 256-Bit SSL ve 3D Secure 2.0 ile 12 Taksitli Ödeme
 
 ## Temel Sayfalar & Yasal Sözleşmeler
-- [Ana Sayfa & Canlı Simülatör](https://belgin.web.app/)
-- [Showroom & İletişim](https://belgin.web.app/iletisim.html)
-- [KVKK Aydınlatma Metni](https://belgin.web.app/kvkk.html)
-- [Mesafeli Satış Sözleşmesi](https://belgin.web.app/mesafeli-satis-sozlesmesi.html)
-- [Ön Bilgilendirme Formu](https://belgin.web.app/on-bilgilendirme-formu.html)
-- [Gizlilik Politikası](https://belgin.web.app/gizlilik-politikasi.html)
-- [İade ve Değişim Koşulları](https://belgin.web.app/iade-degisim.html)
-- [3D Secure & Güvenli Ödeme](https://belgin.web.app/guvenli-odeme-ve-3d-secure.html)
+- [Ana Sayfa & Canlı Simülatör](https://belginkuyumculuk.com/)
+- [Showroom & İletişim](https://belginkuyumculuk.com/iletisim.html)
+- [KVKK Aydınlatma Metni](https://belginkuyumculuk.com/kvkk.html)
+- [Mesafeli Satış Sözleşmesi](https://belginkuyumculuk.com/mesafeli-satis-sozlesmesi.html)
+- [Ön Bilgilendirme Formu](https://belginkuyumculuk.com/on-bilgilendirme-formu.html)
+- [Gizlilik Politikası](https://belginkuyumculuk.com/gizlilik-politikasi.html)
+- [İade ve Değişim Koşulları](https://belginkuyumculuk.com/iade-degisim.html)
+- [3D Secure & Güvenli Ödeme](https://belginkuyumculuk.com/guvenli-odeme-ve-3d-secure.html)
 
 ## Mevcut Koleksiyon Özeti (${products.length} Seçkin Model)
 ${products.map(p => `- ${p.brand} ${p.name} (${p.category}): ₺${p.price.toLocaleString('tr-TR')} [${p.conditionBadge || 'Sertifikalı'}] Ref: ${p.reference || 'N/A'}`).join('\n')}

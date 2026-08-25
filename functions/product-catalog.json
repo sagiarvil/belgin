@@ -1,0 +1,114 @@
+{
+  "1": {
+    "id": "1",
+    "name": "Juste un Clou Pırlantalı Bilezik",
+    "brand": "Cartier",
+    "price": 490000,
+    "inStock": true
+  },
+  "2": {
+    "id": "2",
+    "name": "Setting Tektaş Pırlanta Yüzük",
+    "brand": "Tiffany & Co.",
+    "price": 780000,
+    "inStock": true
+  },
+  "3": {
+    "id": "3",
+    "name": "Love Bilezik Klasik Rose Altın",
+    "brand": "Cartier",
+    "price": 375000,
+    "inStock": true
+  },
+  "4": {
+    "id": "4",
+    "name": "Love Bilezik Klasik Sarı Altın",
+    "brand": "Cartier",
+    "price": 365000,
+    "inStock": true
+  },
+  "5": {
+    "id": "5",
+    "name": "Love Yüzük Küçük Sarı Altın",
+    "brand": "Cartier",
+    "price": 95000,
+    "inStock": true
+  },
+  "6": {
+    "id": "6",
+    "name": "Juste un Clou Klasik Sarı Altın",
+    "brand": "Cartier",
+    "price": 430000,
+    "inStock": true
+  },
+  "7": {
+    "id": "7",
+    "name": "Love Bilezik Klasik Beyaz Altın",
+    "brand": "Cartier",
+    "price": 390000,
+    "inStock": true
+  },
+  "8": {
+    "id": "8",
+    "name": "Juste un Clou Yüzük Sarı Altın",
+    "brand": "Cartier",
+    "price": 110000,
+    "inStock": true
+  },
+  "101": {
+    "id": "101",
+    "name": "Carrera Date Twin-Time GMT",
+    "brand": "TAG Heuer",
+    "price": 292500,
+    "inStock": true
+  },
+  "102": {
+    "id": "102",
+    "name": "Carrera Chronograph Otomatik",
+    "brand": "TAG Heuer",
+    "price": 255000,
+    "inStock": true
+  },
+  "103": {
+    "id": "103",
+    "name": "Formula 1 Chronograph Gulf Edition",
+    "brand": "TAG Heuer",
+    "price": 135000,
+    "inStock": true
+  },
+  "104": {
+    "id": "104",
+    "name": "Formula 1 Date Siyah 41mm",
+    "brand": "TAG Heuer",
+    "price": 105000,
+    "inStock": true
+  },
+  "105": {
+    "id": "105",
+    "name": "HydroConquest Otomatik Seramik",
+    "brand": "Longines",
+    "price": 78500,
+    "inStock": true
+  },
+  "106": {
+    "id": "106",
+    "name": "Master Collection Moonphase Ay Fazı",
+    "brand": "Longines",
+    "price": 152000,
+    "inStock": true
+  },
+  "107": {
+    "id": "107",
+    "name": "Captain Cook Otomatik Kırmızı-Siyah",
+    "brand": "Rado",
+    "price": 143500,
+    "inStock": true
+  },
+  "108": {
+    "id": "108",
+    "name": "True Square Automatic Open Heart Siyah Seramik",
+    "brand": "Rado",
+    "price": 138000,
+    "inStock": true
+  }
+}

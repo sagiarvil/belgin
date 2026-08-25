@@ -125,14 +125,14 @@ assert(typeof token1 === 'string' && token1.length > 20, 'PayTR token üretildi 
 // --- 5. SEO, Sitemap & LLM Standartları Testleri ---
 console.log('\n--- 5. SEO, Sitemap & LLM Standartları Testleri ---');
 const sitemapContent = fs.readFileSync(path.join(__dirname, '..', 'sitemap.xml'), 'utf8');
-assert(sitemapContent.includes('<urlset') && sitemapContent.includes('https://belgin.web.app/'), 'sitemap.xml geçerli urlset ve ana sayfa içeriyor');
+assert(sitemapContent.includes('<urlset') && sitemapContent.includes('https://belginkuyumculuk.com/'), 'sitemap.xml geçerli urlset ve ana sayfa içeriyor');
 assert(sitemapContent.includes('<image:loc>'), 'sitemap.xml Google Image sitemap extension etiketleri içeriyor');
 
 const llmsContent = fs.readFileSync(path.join(__dirname, '..', 'llms.txt'), 'utf8');
 assert(llmsContent.includes('Belgin Kuyumculuk') && llmsContent.includes('İzmir Kuyumcular Odası'), 'llms.txt kurumsal kimlik ve İZKO bilgilerini içeriyor');
 
 const robotsContent = fs.readFileSync(path.join(__dirname, '..', 'robots.txt'), 'utf8');
-assert(robotsContent.includes('GPTBot') && robotsContent.includes('ClaudeBot') && robotsContent.includes('Sitemap: https://belgin.web.app/sitemap.xml'), 'robots.txt AI bot izinleri ve sitemap linki içeriyor');
+assert(robotsContent.includes('GPTBot') && robotsContent.includes('ClaudeBot') && robotsContent.includes('Sitemap: https://belginkuyumculuk.com/sitemap.xml'), 'robots.txt AI bot izinleri ve sitemap linki içeriyor');
 
 console.log('\n========================================');
 console.log(`SONUÇ: ${passedTests} TEST BAŞARILI, ${failedTests} TEST BAŞARISIZ`);

@@ -43,6 +43,6 @@ User-agent: Meta-ExternalAgent
 Allow: /
 
 # Sitemaps & Machine-Readable LLM Knowledge
-Sitemap: https://belgin.web.app/sitemap.xml
-# LLMs Context: https://belgin.web.app/llms.txt
-# LLMs Full Context: https://belgin.web.app/llms-full.txt
+Sitemap: https://belginkuyumculuk.com/sitemap.xml
+# LLMs Context: https://belginkuyumculuk.com/llms.txt
+# LLMs Full Context: https://belginkuyumculuk.com/llms-full.txt
