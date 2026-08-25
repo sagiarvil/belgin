@@ -4,6 +4,9 @@
     "name": "Love Bilezik Klasik Rose Altın",
     "brand": "Cartier",
     "price": 375000,
+    "category": "jewelry",
+    "isGold": true,
+    "metal": "18K Rose Altın (Au750)",
     "inStock": true
   },
   "5": {
@@ -11,6 +14,9 @@
     "name": "Love Yüzük Küçük Sarı Altın",
     "brand": "Cartier",
     "price": 95000,
+    "category": "jewelry",
+    "isGold": true,
+    "metal": "18K Sarı Altın (Au750)",
     "inStock": true
   },
   "6": {
@@ -18,6 +24,9 @@
     "name": "Juste un Clou Klasik Sarı Altın",
     "brand": "Cartier",
     "price": 430000,
+    "category": "jewelry",
+    "isGold": true,
+    "metal": "18K Sarı Altın (Au750)",
     "inStock": true
   },
   "101": {
@@ -25,6 +34,9 @@
     "name": "Carrera Date Twin-Time GMT",
     "brand": "TAG Heuer",
     "price": 292500,
+    "category": "watch",
+    "isGold": false,
+    "metal": "Paslanmaz Çelik 316L",
     "inStock": true
   },
   "102": {
@@ -32,6 +44,9 @@
     "name": "Carrera Chronograph Otomatik",
     "brand": "TAG Heuer",
     "price": 255000,
+    "category": "watch",
+    "isGold": false,
+    "metal": "Paslanmaz Çelik & Seramik Takimetre Bezel",
     "inStock": true
   },
   "103": {
@@ -39,6 +54,9 @@
     "name": "Formula 1 Chronograph Gulf Edition",
     "brand": "TAG Heuer",
     "price": 135000,
+    "category": "watch",
+    "isGold": false,
+    "metal": "Paslanmaz Çelik & Mavi Alüminyum Takimetre Bezel",
     "inStock": true
   },
   "104": {
@@ -46,6 +64,9 @@
     "name": "Formula 1 Date Siyah 41mm",
     "brand": "TAG Heuer",
     "price": 105000,
+    "category": "watch",
+    "isGold": false,
+    "metal": "İnce Fırçalanmış Çelik & Titanyum Karbür Bezel",
     "inStock": true
   },
   "105": {
@@ -53,6 +74,9 @@
     "name": "HydroConquest Otomatik Seramik",
     "brand": "Longines",
     "price": 78500,
+    "category": "watch",
+    "isGold": false,
+    "metal": "Paslanmaz Çelik & Çizilmez Siyah Seramik Bezel",
     "inStock": true
   },
   "106": {
@@ -60,6 +84,9 @@
     "name": "Master Collection Moonphase Ay Fazı",
     "brand": "Longines",
     "price": 152000,
+    "category": "watch",
+    "isGold": false,
+    "metal": "Paslanmaz Çelik & Kahverengi Timsah Deri Kayış",
     "inStock": true
   },
   "107": {
@@ -67,6 +94,9 @@
     "name": "Captain Cook Otomatik Kırmızı-Siyah",
     "brand": "Rado",
     "price": 143500,
+    "category": "watch",
+    "isGold": false,
+    "metal": "Paslanmaz Çelik & Yüksek Teknoloji Yeşil Seramik Bezel",
     "inStock": true
   },
   "108": {
@@ -74,6 +104,9 @@
     "name": "True Square Automatic Open Heart Siyah Seramik",
     "brand": "Rado",
     "price": 138000,
+    "category": "watch",
+    "isGold": false,
+    "metal": "Monoblok Yüksek Teknoloji Parlak Siyah Seramik",
     "inStock": true
   }
 }
