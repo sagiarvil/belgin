@@ -418,9 +418,6 @@ const App = {
 
   // ÜRÜN KARTI ŞABLONU (PREMIUM BOUTIQUE TASARIMI)
   renderProductCard(p) {
-    const condBadgeHtml = p.isPreOwned
-      ? `<span class="badge-cond-gold">İkinci El</span>`
-      : (p.conditionBadge ? `<span class="badge-cond-sage">${p.conditionBadge}</span>` : '');
     const hoverImg = p.hoverImage || p.image;
 
     return `
@@ -428,8 +425,6 @@ const App = {
         <div class="product-art-thumb">
           <img class="img-primary" src="${p.image}" alt="${p.brand} ${p.name}" loading="lazy">
           <img class="img-hover" src="${hoverImg}" alt="${p.brand} ${p.name}" loading="lazy">
-          <span class="badge-stock-teal">${p.statusBadge || 'Stokta'}</span>
-          ${condBadgeHtml}
         </div>
         <div class="product-art-info">
           <h3 class="prod-brand-name">${p.brand}</h3>
@@ -574,11 +569,11 @@ const App = {
             </div>
             
             <div class="pdp-main-photo-box" onmousemove="App.handleZoom(event, this)" onmouseleave="App.resetZoom(this)">
-              <div class="pdp-badge-top-left">
-                <span class="pdp-badge-item pdp-badge-online">ONLINE ÖZEL</span>
-                <span class="pdp-badge-item pdp-badge-distributor">DİSTRİBÜTÖR GARANTİLİ</span>
-                ${isHighVal ? `<span class="pdp-badge-item pdp-badge-secure">🏛️ 12.000 TL+ MAĞAZA TESLİMİ</span>` : ''}
-              </div>
+              ${isHighVal ? `
+                <div class="pdp-badge-top-left">
+                  <span class="pdp-badge-item pdp-badge-secure">🏛️ 12.000 TL+ MAĞAZA TESLİMİ</span>
+                </div>
+              ` : ''}
               <img src="${p.image}" alt="${p.brand} ${p.name}" id="pdpMainImageTarget">
               <div class="pdp-loupe-hint">🔍 10x Optik İnceleme İçin Üzerine Gelin</div>
             </div>
