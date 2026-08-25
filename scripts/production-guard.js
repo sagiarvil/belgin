@@ -20,9 +20,7 @@ if (!fs.existsSync(firebasePath)) {
 
   const rewrites = cfg.hosting?.rewrites || [];
   const required = ['createPayTRToken', 'paytrCallback', 'getOrderStatus'];
-  for (const fn of required) {
-    if (!rewrites.some((r) => r.function === fn)) fail(`Firebase rewrite eksik: ${fn}`);
-  }
+  for (const fn of required) if (!rewrites.some((r) => r.function === fn)) fail(`Firebase rewrite eksik: ${fn}`);
   if (required.every((fn) => rewrites.some((r) => r.function === fn))) pass('Firebase API rewrite sözleşmesi tam.');
 }
 
@@ -52,7 +50,9 @@ if (!functionsCode.includes(`'${PRIMARY_DOMAIN}'`)) fail('Cloud Functions CORS �
 if (!functionsCode.includes(`${PRIMARY_DOMAIN}/#payment-success`)) fail('PayTR başarı URL özel domaine bağlı değil.');
 if (!functionsCode.includes(`${PRIMARY_DOMAIN}/#payment-failed`)) fail('PayTR hata URL özel domaine bağlı değil.');
 if (functionsCode.includes(LEGACY_PRIMARY)) fail('Cloud Functions içinde eski belgin.web.app primary-domain referansı kaldı.');
-else pass('Cloud Functions özel domain ödeme/CORS sözleşmesi geçti.');
+if (!functionsCode.includes('productSnapshotHash') || !functionsCode.includes('evidenceId') || !functionsCode.includes("collection('auditEvents')")) fail('Sunucu hukuki delil/audit zinciri eksik.');
+if (!functionsCode.includes('getLegalEvidenceSnapshot')) fail('Sunucu hukuk belge hash snapshot katmanı eksik.');
+else pass('Cloud Functions ödeme, CORS ve hukuki delil zinciri kontrolü geçti.');
 
 const catalogPath = path.join(root, 'functions', 'product-catalog.json');
 if (!fs.existsSync(catalogPath)) fail('Sunucu ödeme kataloğu üretilmemiş. npm run build çalıştırılmalı.');
@@ -61,6 +61,30 @@ else {
   if (Object.keys(catalog).length < 1) fail('Sunucu ödeme kataloğu boş.');
   else pass(`Sunucu ödeme kataloğu hazır: ${Object.keys(catalog).length} ürün.`);
 }
+
+const manifestPaths = [path.join(root, 'legal-manifest.json'), path.join(root, 'functions', 'legal-manifest.json')];
+if (!manifestPaths.every(fs.existsSync)) {
+  fail('Hukuki belge bütünlük manifesti eksik. npm run build çalıştırılmalı.');
+} else {
+  const publicManifest = JSON.parse(fs.readFileSync(manifestPaths[0], 'utf8'));
+  const fnManifest = JSON.parse(fs.readFileSync(manifestPaths[1], 'utf8'));
+  const docs = publicManifest.documents || {};
+  if (Object.keys(docs).length < 12) fail('Hukuki manifest yeterli sayıda belge içermiyor.');
+  if (Object.values(docs).some((r) => !/^[a-f0-9]{64}$/i.test(String(r.sha256 || '')))) fail('Hukuki manifestte geçersiz SHA-256 bulundu.');
+  const a = JSON.parse(JSON.stringify(publicManifest));
+  const b = JSON.parse(JSON.stringify(fnManifest));
+  delete a.generatedAt; delete b.generatedAt;
+  if (JSON.stringify(a) !== JSON.stringify(b)) fail('Public ve Functions hukuki manifestleri uyuşmuyor.');
+  else pass(`Hukuki belge bütünlük manifesti doğrulandı: ${Object.keys(docs).length} belge.`);
+}
+
+const legalStamp = read('js/legal-stamp.js');
+const prohibitedClaims = ['generateSimulatedHash', 'SHA256-TS-', 'Elektronik Olarak İmzalandı', 'T.C. HUKUKİ DELİL & KALICI VERİ SAKLAYICISI ONAYI'];
+for (const claim of prohibitedClaims) if (legalStamp.includes(claim)) fail(`Simüle e-imza/zaman damgası iddiası kaldı: ${claim}`);
+if (!legalStamp.includes('nitelikli elektronik imza') || !legalStamp.includes('SHA-256 belge bütünlük özeti')) fail('Belge bütünlük kutusunun hukuki nitelik açıklaması eksik.');
+else pass('Simüle e-imza kaldırıldı; belge bütünlük kaydı doğru nitelendiriliyor.');
+
+if (!fs.existsSync(path.join(root, 'hukuki-delil-ve-kayit-politikasi.html'))) fail('Hukuki Delil ve Kayıt Politikası eksik.');
 
 const secretPatterns = [
   /PAYTR_MERCHANT_KEY\s*=\s*["'][^"']{8,}["']/i,
