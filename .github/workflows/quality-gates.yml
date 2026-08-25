@@ -46,6 +46,7 @@ jobs:
           node --check scripts/harden-public-claims.js
           node --check scripts/bank-pos-hardening.js
           node --check scripts/bank-pos-guard.js
+          node --check scripts/evidence-guard.js
           node --check scripts/harden-legal-pages.js
           node --check scripts/generate-legal-manifest.js
           node --check scripts/generate-payment-catalog.js
