@@ -12,13 +12,13 @@ const LegalCompliance = (() => {
     return p.isGold===true || category==='gold' || category==='altin' || category==='altın' || metal.includes('altın') || metal.includes('gold') || /au\s?\d{3}/i.test(metal);
   }
   function isWatchProduct(p){const c=normalizeCategory(p?.category);return c==='watch'||c==='saat';}
-  function isHighValueProduct(p){return Number(p?.price||0)>HIGH_VALUE_SECURE_DELIVERY_THRESHOLD && (isWatchProduct(p)||isGoldProduct(p));}
+  function isHighValueProduct(p){return Number(p?.price||0)>=HIGH_VALUE_SECURE_DELIVERY_THRESHOLD && (isWatchProduct(p)||isGoldProduct(p));}
   function hasHighValueItems(items){return (items||[]).some(i=>isHighValueProduct(i));}
   function productNotice(p){
     if(!isHighValueProduct(p)) return '';
-    return `<div class="high-value-notice" role="note"><strong>Yalnız mağazadan güvenli teslim</strong>12.000 TL üzerindeki altın ve saat ürünleri kargo veya kurye ile gönderilmez. Sipariş sahibi ürünü mağazada geçerli resmî kimlik doğrulaması ve imzalı teslim-tesellüm ile teslim alır. <a href="yuksek-degerli-urun-teslimi.html" target="_blank" rel="noopener">Teslim koşulları</a></div>`;
+    return `<div class="high-value-notice" role="note"><strong>Yalnız mağazadan güvenli teslim</strong>12.000 TL ve üzerindeki altın ve saat ürünleri kargo veya kurye ile gönderilmez. Sipariş sahibi ürünü mağazada geçerli resmî kimlik doğrulaması ve imzalı teslim-tesellüm ile teslim alır. Belgin Kuyumculuk bu tutardan itibaren kendi ihtiyati müşteri tanıma ve işlem güvenliği kontrollerini uygular; MASAK mevzuatından doğan yükümlülükler ise kanuni şartları oluştuğunda ayrıca ve eksiksiz uygulanır. <a href="yuksek-degerli-urun-teslimi.html" target="_blank" rel="noopener">Teslim ve uyum koşulları</a></div>`;
   }
-  function productLegalLinks(){return `<div class="legal-product-links"><a href="iade-degisim.html" target="_blank" rel="noopener">İade ve cayma koşulları</a><a href="garanti-ve-satis-sonrasi.html" target="_blank" rel="noopener">Garanti ve satış sonrası</a><a href="guvenli-odeme-ve-3d-secure.html" target="_blank" rel="noopener">Güvenli ödeme</a></div>`;}
+  function productLegalLinks(){return `<div class="legal-product-links"><a href="iade-degisim.html" target="_blank" rel="noopener">İade ve cayma koşulları</a><a href="garanti-ve-satis-sonrasi.html" target="_blank" rel="noopener">Garanti ve satış sonrası</a><a href="guvenli-odeme-ve-3d-secure.html" target="_blank" rel="noopener">Güvenli ödeme</a><a href="musteri-tanima-ve-islem-guvenligi.html" target="_blank" rel="noopener">Müşteri tanıma ve işlem güvenliği</a></div>`;}
   function syncCheckout(){
     const hv=hasHighValueItems(window.Cart?.items||[]);
     const hvBox=document.getElementById('highValueCheckoutConsent');
@@ -36,7 +36,7 @@ const LegalCompliance = (() => {
     if(shipping)shipping.dataset.highValue=hv?'true':'false';
     if(addressWrap)addressWrap.style.display=hv?'none':'block';
     if(address)address.required=!hv;
-    if(summary)summary.innerHTML=hv?'<strong>Teslim:</strong> Belgin Kuyumculuk mağazasından sipariş sahibine resmî kimlik doğrulaması ve imza karşılığı. Kargo/kurye yoktur.':'<strong>Teslim:</strong> Seçtiğiniz teslim yöntemi sipariş öncesinde gösterilecektir.';
+    if(summary)summary.innerHTML=hv?'<strong>Teslim ve uyum:</strong> 12.000 TL ve üzerindeki altın/saat siparişi yalnız Belgin Kuyumculuk mağazasından sipariş sahibine resmî kimlik doğrulaması ve imza karşılığı teslim edilir. Kargo/kurye yoktur. Belgin iç KYC/güvenlik kontrolleri uygulanır; MASAK yükümlülükleri kanuni şartları oluştuğunda ayrıca uygulanır.':'<strong>Teslim:</strong> Seçtiğiniz teslim yöntemi sipariş öncesinde gösterilecektir.';
     return hv;
   }
   function recordConsent(key,value){try{localStorage.setItem(`belgin_${key}`,JSON.stringify({value,at:new Date().toISOString(),version:TERMS_VERSION}));}catch(e){}}
@@ -44,9 +44,9 @@ const LegalCompliance = (() => {
     const terms=document.getElementById('termsConsentCheck');
     const hv=syncCheckout();const hvCheck=document.getElementById('highValueConsentCheck');
     if(!terms?.checked){alert('Siparişi tamamlamadan önce Ön Bilgilendirme Formu ve Mesafeli Satış Sözleşmesi bilgilendirmesini onaylamanız gerekir.');terms?.focus();return false;}
-    if(hv&&!hvCheck?.checked){alert('Bu sipariş yüksek değerli ürün içeriyor. Mağazadan kimlik doğrulaması ve imza karşılığı teslim koşulunu onaylamanız gerekir.');hvCheck?.focus();return false;}
+    if(hv&&!hvCheck?.checked){alert('Bu sipariş 12.000 TL ve üzeri yüksek değerli ürün içeriyor. Mağazadan kimlik doğrulaması, işlem güvenliği kontrolü ve imza karşılığı teslim koşulunu onaylamanız gerekir.');hvCheck?.focus();return false;}
     recordConsent('terms_consent',{termsVersion:TERMS_VERSION,preInfoVersion:PREINFO_VERSION});
-    if(hv)recordConsent('high_value_delivery_consent',{version:HIGH_VALUE_VERSION});
+    if(hv)recordConsent('high_value_delivery_consent',{version:HIGH_VALUE_VERSION,internalKycThreshold:HIGH_VALUE_SECURE_DELIVERY_THRESHOLD});
     recordConsent('marketing_consent',{granted:Boolean(document.getElementById('marketingConsentCheck')?.checked)});
     return true;
   }
@@ -71,12 +71,14 @@ const LegalCompliance = (() => {
       preInformationAccepted:true,
       highValueDeliveryAccepted:highValue?Boolean(document.getElementById('highValueConsentCheck')?.checked):false,
       marketingConsent:Boolean(document.getElementById('marketingConsentCheck')?.checked),
+      internalKycPolicyApplied:highValue,
+      internalKycThreshold:HIGH_VALUE_SECURE_DELIVERY_THRESHOLD,
       legalClientVersions:{terms:TERMS_VERSION,preInformation:PREINFO_VERSION,highValueDelivery:highValue?HIGH_VALUE_VERSION:null}
     };
     const result=await PayTR.initializePayment(orderData);
     if(!result?.success)return false;
     const receipt=document.getElementById('legalOrderReceipt');
-    if(receipt)receipt.innerHTML=`<div class="high-value-notice"><strong>Ödeme oturumu oluşturuldu</strong>Sipariş referansı: ${result.merchant_oid}. ${highValue?'Bu sipariş yalnız mağazadan kimlik doğrulaması ve imza karşılığı teslim edilecektir.':''}</div>`;
+    if(receipt)receipt.innerHTML=`<div class="high-value-notice"><strong>Ödeme oturumu oluşturuldu</strong>Sipariş referansı: ${result.merchant_oid}. ${highValue?'Bu sipariş 12.000 TL ve üzeri iç güvenlik/KYC standardı kapsamında olup yalnız mağazadan kimlik doğrulaması ve imza karşılığı teslim edilecektir.':''}</div>`;
     return false;
   }
   function cookieState(){try{return JSON.parse(localStorage.getItem('belgin_cookie_preferences')||'null');}catch(e){return null;}}
