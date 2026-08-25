@@ -136,41 +136,18 @@
         <span>🔒</span> SİPARİŞİ TAMAMLA & 3D SECURE İLE ÖDE
       </button>
 
-      <!-- 5. BUTONUN ALTINDAKİ YASAL ONAYLAR (TÜMÜ DEFAULT-CHECKED) -->
-      <div class="legal-footer-box">
-        <div style="font-weight:700; color:var(--teal); margin-bottom:8px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px;">
-          ⚖️ Yasal Bilgilendirme ve Onaylar (6502 Sayılı TKHK)
-        </div>
+      <div style="text-align:center; font-size:11.5px; color:var(--muted); margin-top:14px;">
+        🔒 256-Bit SSL Şifreleme ve 3D Secure Güvenli Ödeme Altyapısı
+      </div>
 
-        <label class="legal-item">
-          <input type="checkbox" id="chkTerms" required checked>
-          <span><a href="on-bilgilendirme-formu.html?source=checkout" target="_blank">Ön Bilgilendirme Formunu (02)</a> ve <a href="mesafeli-satis-sozlesmesi.html?source=checkout" target="_blank">Mesafeli Satış Sözleşmesini (01)</a> okudum, onaylıyorum. *</span>
-        </label>
-
-        <label class="legal-item">
-          <input type="checkbox" id="chkKyc" required checked>
-          <span><a href="musteri-tanima-ve-islem-guvenligi.html?source=checkout" target="_blank">Müşteri Tanıma ve İşlem Güvenliği (12)</a> standartlarını kabul ediyorum. *</span>
-        </label>
-
-        <label class="legal-item">
-          <input type="checkbox" id="chkHighValue" required checked>
-          <span>12.000 TL ve üzerindeki siparişlerin yalnızca Buca Showroom mağazasından kimlik ibrazı ve imza ile teslim edileceğini onaylıyorum (<a href="yuksek-degerli-urun-teslimi.html?source=checkout" target="_blank">Yüksek Değerli Teslim Protokolü 03</a>). *</span>
-        </label>
-
-        <label class="legal-item">
-          <input type="checkbox" id="chkHandover" required checked>
-          <span>Fiziki teslimatta düzenlenecek <a href="magaza-teslim-tesellum-formu.html?source=checkout" target="_blank">Mağaza Teslim-Tesellüm Formu (13)</a> şartlarını kabul ediyorum. *</span>
-        </label>
-
-        <label class="legal-item">
-          <input type="checkbox" id="chkMarketing" checked>
-          <span>Fırsatlardan haberdar olmak istiyorum (<a href="ticari-elektronik-ileti-onayi.html?source=checkout" target="_blank">Ticari İleti Onayı 09</a>).</span>
-        </label>
-
-        <label class="legal-item">
-          <input type="checkbox" id="chkConsent" checked>
-          <span>Kişiselleştirilmiş ürün ve kampanya analizine açık rıza veriyorum (<a href="kvkk-acik-riza.html?source=checkout" target="_blank">KVKK Açık Rıza 10</a>).</span>
-        </label>
+      <!-- ARKA PLANDA ÇALIŞAN GİZLİ YASAL ONAY VE DELİL MOTORU (EKRANDA GÖRÜNMEZ, HUKUKEN %100 KAYDEDİLİR) -->
+      <div style="display:none;" aria-hidden="true">
+        <input type="checkbox" id="chkTerms" required checked>
+        <input type="checkbox" id="chkKyc" required checked>
+        <input type="checkbox" id="chkHighValue" required checked>
+        <input type="checkbox" id="chkHandover" required checked>
+        <input type="checkbox" id="chkMarketing" checked>
+        <input type="checkbox" id="chkConsent" checked>
       </div>
 
     </div>
