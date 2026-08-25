@@ -24,6 +24,8 @@ const LEGAL_VERSIONS = Object.freeze({
 
 const DEFAULT_ALLOWED_ORIGINS = [
   'https://belginkuyumculuk.com',
+  'https://www.belginkuyumculuk.com',
+  'https://belgin.web.app',
   'https://belgin.firebaseapp.com',
 ];
 
@@ -84,7 +86,7 @@ function generateOrderId() {
 }
 
 function isHighValueCatalogProduct(product) {
-  if (!product || Number(product.price) <= HIGH_VALUE_SECURE_DELIVERY_THRESHOLD) return false;
+  if (!product || Number(product.price) < HIGH_VALUE_SECURE_DELIVERY_THRESHOLD) return false;
   const category = String(product.category || '').toLowerCase();
   const metal = String(product.metal || '').toLowerCase();
   const isWatch = category === 'watch' || category === 'saat';
@@ -145,12 +147,12 @@ function validateLegalAndDelivery(body, items) {
 
   if (hasHighValue) {
     if (!highValueDeliveryAccepted) {
-      const error = new Error('Yüksek değerli ürün mağaza teslim koşulu onayı zorunludur.');
+      const error = new Error('12.000 TL ve üzerindeki altın/saat ürünü için mağaza teslim, kimlik doğrulama ve işlem güvenliği koşulu onayı zorunludur.');
       error.code = 'HIGH_VALUE_CONSENT_REQUIRED';
       throw error;
     }
     if (deliveryMethod !== 'showroom') {
-      const error = new Error('12.000 TL üzerindeki altın ve saat ürünleri yalnız mağazadan teslim edilir.');
+      const error = new Error('12.000 TL ve üzerindeki altın ve saat ürünleri yalnız mağazadan teslim edilir.');
       error.code = 'HIGH_VALUE_DELIVERY_REQUIRED';
       throw error;
     }
@@ -206,6 +208,9 @@ exports.createPayTRToken = functions
         deliveryMethod: compliance.deliveryMethod,
         highValueSecureDelivery: compliance.hasHighValue,
         highValueThreshold: HIGH_VALUE_SECURE_DELIVERY_THRESHOLD,
+        internalKycPolicyApplied: compliance.hasHighValue,
+        internalKycThreshold: HIGH_VALUE_SECURE_DELIVERY_THRESHOLD,
+        masakLegalOverlayRequired: true,
         items,
         total: serverTotal,
         amountInKurus,
@@ -223,6 +228,10 @@ exports.createPayTRToken = functions
           highValueDeliveryAccepted: compliance.highValueDeliveryAccepted,
           highValueDeliveryVersion: compliance.hasHighValue ? LEGAL_VERSIONS.highValueDelivery : null,
           marketingConsent: compliance.marketingConsent,
+          internalKycPolicyApplied: compliance.hasHighValue,
+          internalKycThreshold: HIGH_VALUE_SECURE_DELIVERY_THRESHOLD,
+          masakObligationsApplyWhenLegalConditionsMet: true,
+          suspiciousTransactionAssessmentAmountIndependent: true,
           acceptedAt: admin.firestore.FieldValue.serverTimestamp(),
         },
         createdAt: admin.firestore.FieldValue.serverTimestamp(),
