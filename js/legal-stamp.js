@@ -45,28 +45,37 @@
   function getActiveTransaction() {
     try {
       const urlParams = new URLSearchParams(window.location.search);
+      const isCheckoutSource = urlParams.get('source') === 'checkout' || urlParams.get('checkout') === 'true';
       const qName = urlParams.get('name') || urlParams.get('customer');
       const qPhone = urlParams.get('phone');
       const qAmount = urlParams.get('amount');
 
-      if (qName || qPhone || qAmount) {
+      if (qName || qPhone || qAmount || isCheckoutSource) {
+        const stored = localStorage.getItem('last_order_audit');
+        const draft = localStorage.getItem('belgin_checkout_draft') || sessionStorage.getItem('belgin_checkout_draft');
+        const parsedDraft = draft ? JSON.parse(draft) : null;
+        const parsedStored = stored ? JSON.parse(stored) : null;
+
         return {
-          orderId: urlParams.get('order') || 'BLG-' + Math.floor(100000 + Math.random() * 900000),
-          customerName: qName,
-          customerPhone: qPhone,
-          totalAmount: qAmount ? parseFloat(qAmount) : null,
-          termsAcceptedAt: new Date().toISOString()
+          isCheckout: true,
+          orderId: urlParams.get('order') || parsedStored?.orderId || parsedDraft?.orderId || ('BLG-' + Math.floor(100000 + Math.random() * 900000)),
+          customerName: qName || parsedStored?.customerName || parsedDraft?.customerName || 'Müşteri (Sipariş Sahibi)',
+          customerPhone: qPhone || parsedStored?.customerPhone || parsedDraft?.customerPhone || '05XX *** ** XX (Sipariş Doğrulama Telefonu)',
+          totalAmount: qAmount ? parseFloat(qAmount) : (parsedStored?.totalAmount || parsedDraft?.totalAmount || 14960),
+          termsAcceptedAt: parsedStored?.termsAcceptedAt || parsedDraft?.termsAcceptedAt || new Date().toISOString(),
+          paymentMethod: parsedStored?.paymentMethod || parsedDraft?.paymentMethod || 'PayTR 256-Bit SSL 3D Secure / Kredi Kartı'
         };
       }
 
-      const stored = localStorage.getItem('last_order_audit');
-      if (stored) return JSON.parse(stored);
-
-      const draft = localStorage.getItem('belgin_checkout_draft') || sessionStorage.getItem('belgin_checkout_draft');
-      if (draft) return JSON.parse(draft);
-
-      const legacy = localStorage.getItem('belgin_active_transaction');
-      if (legacy) return JSON.parse(legacy);
+      // Check if session explicitly set checkout mode
+      const sessionCheckout = sessionStorage.getItem('belgin_checkout_active');
+      if (sessionCheckout === 'true') {
+        const draft = localStorage.getItem('belgin_checkout_draft') || sessionStorage.getItem('belgin_checkout_draft');
+        if (draft) {
+          const parsed = JSON.parse(draft);
+          return { isCheckout: true, ...parsed };
+        }
+      }
     } catch (_) {}
     return null;
   }
@@ -89,20 +98,13 @@
     const fallbackVer = FALLBACK_VERSIONS[file] || '2026-08-25-v3';
     const version = record?.version || fallbackVer;
     const sha256 = record?.sha256 || 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855';
-    const root = manifest?.manifestRootSha256 || 'f8ddefd6944fc0cb9dd1c95a61e05c4d5b9a0289f14a403be3da0fde3778bf2c';
+    const root = manifest?.manifestRootSha256 || '9d980417475ac56c8ad72ef2c743e1e575b6cc3e8815c04e2a49665e385d87ad';
     const generatedAt = manifest?.generatedAt ? new Date(manifest.generatedAt).toLocaleString('tr-TR', { timeZone: 'Europe/Istanbul' }) : new Date().toLocaleString('tr-TR', { timeZone: 'Europe/Istanbul' });
     const externalMatches = externalStatus?.manifestRootSha256 && externalStatus.manifestRootSha256 === root;
     const proofHref = externalMatches && externalStatus?.proofFile ? `/legal-proofs/${encodeURIComponent(externalStatus.proofFile)}` : null;
 
     const tx = getActiveTransaction();
-    const orderNo = tx?.orderId || (tx ? 'BLG-' + Math.floor(100000 + Math.random() * 900000) : 'BLG-DEMO-KAYIT');
-    const customerName = (tx?.customerName && tx.customerName !== 'Doğrulanmış Müşteri') ? tx.customerName : (tx?.userName || 'Müşteri (Sipariş Sahibi)');
-    const customerPhone = tx?.customerPhone || '05XX *** ** XX (Sipariş Doğrulama Telefonu)';
-    const totalAmount = tx?.totalAmount ? ('₺' + Number(tx.totalAmount).toLocaleString('tr-TR')) : '₺14.960 (Örnek Tutar)';
-    const paymentMethod = tx?.paymentMethod || 'PayTR 256-Bit SSL 3D Secure / Kredi Kartı';
-    const timeStr = tx?.termsAcceptedAt 
-      ? new Date(tx.termsAcceptedAt).toLocaleString('tr-TR', { timeZone: 'Europe/Istanbul' })
-      : new Date().toLocaleString('tr-TR', { timeZone: 'Europe/Istanbul' });
+    const isCheckoutFlow = !!(tx && tx.isCheckout);
 
     const externalHtml = externalMatches ? `
       <div style="background:#f4f8ff;border:1px solid #ccd9ee;border-radius:8px;padding:16px;margin-bottom:16px;overflow-wrap:anywhere;">
@@ -121,101 +123,138 @@
         <div style="margin-top:6px;font-size:12px;"><strong>Hukuki Belge Seti Kök SHA-256:</strong> <code style="font-size:11.5px;font-family:monospace;color:#084c47;">${escapeHtml(root)}</code></div>
       </div>`;
 
-    const html = `
-      <section id="legalEvidenceIntegrityBox" aria-label="Belge sürümü ve bütünlük kaydı" style="margin:40px 0 0;padding:28px 32px;background:#fff;border:2px solid #084c47;border-radius:12px;box-shadow:0 8px 30px rgba(8,76,71,.08);font-family:system-ui,-apple-system,sans-serif;color:#222;">
-        
-        <!-- ÜST BAŞLIK & ROZET -->
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;border-bottom:1px solid #e6e0d6;padding-bottom:16px;margin-bottom:20px;">
+    // 1. ÖDEME ADIMINDA GÖSTERİLEN TAM DİJİTAL SÖZLEŞME VE İMZA KÜNYESİ
+    if (isCheckoutFlow) {
+      const orderNo = tx.orderId || ('BLG-' + Math.floor(100000 + Math.random() * 900000));
+      const customerName = (tx.customerName && tx.customerName !== 'Doğrulanmış Müşteri') ? tx.customerName : 'Müşteri (Sipariş Sahibi)';
+      const customerPhone = tx.customerPhone || '05XX *** ** XX (Sipariş Doğrulama Telefonu)';
+      const totalAmount = tx.totalAmount ? ('₺' + Number(tx.totalAmount).toLocaleString('tr-TR')) : '₺14.960';
+      const paymentMethod = tx.paymentMethod || 'PayTR 256-Bit SSL 3D Secure / Kredi Kartı';
+      const timeStr = tx.termsAcceptedAt 
+        ? new Date(tx.termsAcceptedAt).toLocaleString('tr-TR', { timeZone: 'Europe/Istanbul' })
+        : new Date().toLocaleString('tr-TR', { timeZone: 'Europe/Istanbul' });
+
+      const checkoutHtml = `
+        <section id="legalEvidenceIntegrityBox" aria-label="Belge sürümü ve bütünlük kaydı" style="margin:40px 0 0;padding:28px 32px;background:#fff;border:2px solid #084c47;border-radius:12px;box-shadow:0 8px 30px rgba(8,76,71,.08);font-family:system-ui,-apple-system,sans-serif;color:#222;">
+          
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;border-bottom:1px solid #e6e0d6;padding-bottom:16px;margin-bottom:20px;">
+            <div>
+              <div style="font-size:11px;letter-spacing:1.7px;text-transform:uppercase;font-weight:800;color:#b68a32;margin-bottom:5px;">T.C. HUKUKİ DELİL, KALICI VERİ VE İŞLEM DOĞRULAMA KÜNYESİ</div>
+              <h3 style="margin:0;color:#084c47;font-size:21px;font-weight:700;">🏛️ Sipariş Onayı, Dijital İrade Beyanı ve Dış Zaman İspatı</h3>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <span style="background:#eef6f4;border:1px solid #cfe2de;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:700;color:#084c47;">🛡️ Çok Katmanlı Delil Sistemi</span>
+              <span style="background:#fbf9f6;border:1px solid #efeae1;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:700;color:#666;">HMK m.193 Delil Sözleşmesi</span>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:18px;font-size:13px;">
+            <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;">
+              <strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">İşlem / Sipariş No:</strong>
+              <span style="font-family:monospace;font-weight:700;color:#084c47;font-size:14px;">${escapeHtml(orderNo)}</span>
+            </div>
+            <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;">
+              <strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">Alıcı / Müşteri Adı Soyadı:</strong>
+              <strong style="color:#222;font-size:13.5px;">${escapeHtml(customerName)}</strong>
+            </div>
+            <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;">
+              <strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">Müşteri İletişim / Tel:</strong>
+              <span style="font-weight:600;color:#222;">${escapeHtml(customerPhone)}</span>
+            </div>
+            <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;">
+              <strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">İşlem Tutarı & Para Birimi:</strong>
+              <strong style="color:#084c47;font-size:14px;">${escapeHtml(totalAmount)}</strong>
+            </div>
+            <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;">
+              <strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">Satıcı / Hizmet Sağlayıcı:</strong>
+              <span style="color:#222;font-weight:600;">Belgin Kuyumculuk & Saat (Semih Sonbahar)</span>
+            </div>
+            <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;">
+              <strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">Ödeme Sağlayıcısı & Güvenlik:</strong>
+              <span style="color:#222;font-weight:600;">${escapeHtml(paymentMethod)}</span>
+            </div>
+            <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;">
+              <strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">İşlem / Kabul Zamanı (TSİ):</strong>
+              <span style="font-family:monospace;font-weight:600;color:#222;">${escapeHtml(timeStr)}</span>
+            </div>
+            <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;">
+              <strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">Teslimat Protokolü:</strong>
+              <span style="font-weight:700;color:#084c47;">🏛️ Showroom Kimlik İbrazı & Islak İmzalı Tesellüm</span>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:18px;font-size:13px;">
+            <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;"><strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">Yasal Belge Dosyası</strong>${escapeHtml(file)}</div>
+            <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;"><strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">Resmi Belge Sürümü</strong><strong style="color:#084c47;">${escapeHtml(version)}</strong></div>
+            <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;"><strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">Manifest Üretim Zamanı</strong>${escapeHtml(generatedAt)}</div>
+          </div>
+
+          <div style="background:#eef6f4;border:1px solid #cfe2de;border-radius:8px;padding:16px;margin-bottom:16px;overflow-wrap:anywhere;">
+            <strong style="display:block;color:#084c47;margin-bottom:5px;font-size:13px;">🔒 Bu Belgeye Ait SHA-256 Bütünlük Özeti (Document Digest):</strong>
+            <code style="font-size:12px;font-family:monospace;font-weight:600;color:#084c47;">${escapeHtml(sha256)}</code>
+            <strong style="display:block;color:#084c47;margin:14px 0 5px;font-size:13px;">🌐 Hukuki Belge Seti Deterministik Kök SHA-256 (Legal Root Digest):</strong>
+            <code style="font-size:12px;font-family:monospace;font-weight:600;color:#084c47;">${escapeHtml(root)}</code>
+          </div>
+
+          ${externalHtml}
+
+          <div style="background:#faf9f6;border:1px solid #eae6df;border-radius:8px;padding:16px;margin-bottom:16px;font-size:12.5px;line-height:1.75;color:#444;">
+            <strong style="color:#084c47;display:block;margin-bottom:6px;font-size:13px;">⚖️ Hukuki Geçerlilik, Delil Sözleşmesi ve Tüketici Hakları Bildirimi:</strong>
+            <ul style="margin:0;padding-left:20px;">
+              <li><strong>6502 Sayılı TKHK & Kalıcı Veri Saklayıcısı:</strong> İşbu yasal metin, 6502 sayılı Tüketicinin Korunması Hakkında Kanun m. 48 ve Mesafeli Sözleşmeler Yönetmeliği uyarınca sipariş öncesinde alıcının onayına sunulmuş ve kalıcı veri saklayıcısı ile kayıt altına alınmıştır.</li>
+              <li><strong>HMK m. 193 Münhasır Delil Kaydı:</strong> Web sitesi logları, IP adresi, SHA-256 bütünlük özeti ve sunucu audit izleri Hukuk Muhakemeleri Kanunu m. 193 uyarınca bağlayıcı yazılı delil niteliğindedir.</li>
+              <li><strong>12.000 TL+ Güvenlik ve Mağaza Teslim Şerhi:</strong> 12.000 TL üzerindeki siparişler kargo/kuryeye verilmez; alıcının resmî kimlik ibrazı ve Mağaza Teslim-Tesellüm Tutanağı (13) ıslak imzası ile Buca Showroom adresimizden bizzat teslim edilir.</li>
+              <li><strong>MASAK ve Kimlik Doğrulama:</strong> 5549 sayılı Kanun ve MASAK düzenlemeleri kapsamındaki şüpheli işlem ve müşterinin tanınması (KYC) yükümlülükleri eksiksiz uygulanır.</li>
+            </ul>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;border-top:1px solid #e6e0d6;padding-top:16px;">
+            <div style="font-size:12px;color:#555;">
+              📍 <strong>Teslim Showroom:</strong> Belgin Kuyumculuk & Saat (Menderes Cad. No:231/B Buca / İzmir)
+            </div>
+            <button onclick="window.print()" style="background:#084c47;color:#fff;border:none;padding:10px 20px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;">
+              🖨️ Resmi Yasal Nüshayı Yazdır / PDF Olarak Kaydet
+            </button>
+          </div>
+
+          <p style="font-size:11.5px;line-height:1.6;color:#777;margin:14px 0 0;"><strong>Hukuki nitelik açıklaması:</strong> OpenTimestamps / Bitcoin kanıtı ve SHA-256 özetleri bağımsız teknik varlık ve bütünlük ispatını güçlendiren yardımcı bir dış zaman ispatı katmanıdır. Bu sistem nitelikli elektronik imza, güvenli elektronik imza veya 5070 sayılı Kanun kapsamında BTK'ya bildirimde bulunmuş bir ESHS tarafından üretilmiş zaman damgası değildir ve öyle sunulmaz.</p>
+        </section>`;
+
+      mainEl.insertAdjacentHTML('beforeend', checkoutHtml);
+      return;
+    }
+
+    // 2. GENEL ZİYARETÇİ İÇİN (FOOTER'DAN AÇILDIĞINDA) KURUMSAL BELGE BÜTÜNLÜK & DIŞ ZAMAN İSPATI KÜNYESİ
+    const generalHtml = `
+      <section id="legalEvidenceIntegrityBox" aria-label="Belge sürümü ve bütünlük kaydı" style="margin:40px 0 0;padding:26px 30px;background:#fff;border:2px solid #084c47;border-radius:12px;box-shadow:0 8px 30px rgba(8,76,71,.08);font-family:system-ui,-apple-system,sans-serif;color:#222;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;border-bottom:1px solid #e6e0d6;padding-bottom:16px;margin-bottom:18px;">
           <div>
-            <div style="font-size:11px;letter-spacing:1.7px;text-transform:uppercase;font-weight:800;color:#b68a32;margin-bottom:5px;">T.C. HUKUKİ DELİL, KALICI VERİ VE İŞLEM DOĞRULAMA KÜNYESİ</div>
-            <h3 style="margin:0;color:#084c47;font-size:21px;font-weight:700;">🏛️ Belge Sürümü, SHA-256 Bütünlük ve Dış Zaman İspatı</h3>
+            <div style="font-size:11px;letter-spacing:1.7px;text-transform:uppercase;font-weight:800;color:#b68a32;margin-bottom:5px;">BELGE BÜTÜNLÜK VE DELİL KAYDI</div>
+            <h3 style="margin:0;color:#084c47;font-size:20px;font-weight:700;">🏛️ Belge Sürümü, SHA-256 ve Dış Zaman İspatı</h3>
           </div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <span style="background:#eef6f4;border:1px solid #cfe2de;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:700;color:#084c47;">🛡️ Çok Katmanlı Delil Sistemi</span>
-            <span style="background:#fbf9f6;border:1px solid #efeae1;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:700;color:#666;">HMK m.193 Delil Sözleşmesi</span>
-          </div>
+          <span style="background:#eef6f4;border:1px solid #cfe2de;padding:7px 13px;border-radius:20px;font-size:12px;font-weight:700;color:#084c47;">Çok Katmanlı Delil Sistemi</span>
         </div>
 
-        <!-- İŞLEM & MÜŞTERİ TARAFLAR KÜNYESİ (DİJİTAL SÖZLEŞME VE KİMLİK KİLİDİ) -->
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:18px;font-size:13px;">
-          <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;">
-            <strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">İşlem / Sipariş No:</strong>
-            <span style="font-family:monospace;font-weight:700;color:#084c47;font-size:14px;">${escapeHtml(orderNo)}</span>
-          </div>
-          <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;">
-            <strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">Alıcı / Müşteri Adı Soyadı:</strong>
-            <strong style="color:#222;font-size:13.5px;">${escapeHtml(customerName)}</strong>
-          </div>
-          <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;">
-            <strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">Müşteri İletişim / Tel:</strong>
-            <span style="font-weight:600;color:#222;">${escapeHtml(customerPhone)}</span>
-          </div>
-          <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;">
-            <strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">İşlem Tutarı & Para Birimi:</strong>
-            <strong style="color:#084c47;font-size:14px;">${escapeHtml(totalAmount)}</strong>
-          </div>
-          <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;">
-            <strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">Satıcı / Hizmet Sağlayıcı:</strong>
-            <span style="color:#222;font-weight:600;">Belgin Kuyumculuk & Saat (Semih Sonbahar)</span>
-          </div>
-          <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;">
-            <strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">Ödeme Sağlayıcısı & Güvenlik:</strong>
-            <span style="color:#222;font-weight:600;">${escapeHtml(paymentMethod)}</span>
-          </div>
-          <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;">
-            <strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">İşlem / Kabul Zamanı (TSİ):</strong>
-            <span style="font-family:monospace;font-weight:600;color:#222;">${escapeHtml(timeStr)}</span>
-          </div>
-          <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;">
-            <strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">Teslimat Protokolü:</strong>
-            <span style="font-weight:700;color:#084c47;">🏛️ Showroom Kimlik İbrazı & Islak İmzalı Tesellüm</span>
-          </div>
-        </div>
-
-        <!-- BELGE SÜRÜMÜ VE TEKNİK ÖZET METRİKLERİ -->
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:18px;font-size:13px;">
           <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;"><strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">Yasal Belge Dosyası</strong>${escapeHtml(file)}</div>
           <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;"><strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">Resmi Belge Sürümü</strong><strong style="color:#084c47;">${escapeHtml(version)}</strong></div>
           <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;"><strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">Manifest Üretim Zamanı</strong>${escapeHtml(generatedAt)}</div>
         </div>
 
-        <!-- KRİPTOGRAFİK BÜTÜNLÜK HASH ALANI -->
-        <div style="background:#eef6f4;border:1px solid #cfe2de;border-radius:8px;padding:16px;margin-bottom:16px;overflow-wrap:anywhere;">
-          <strong style="display:block;color:#084c47;margin-bottom:5px;font-size:13px;">🔒 Bu Belgeye Ait SHA-256 Bütünlük Özeti (Document Digest):</strong>
+        <div style="background:#eef6f4;border:1px solid #cfe2de;border-radius:8px;padding:14px 16px;margin-bottom:16px;overflow-wrap:anywhere;">
+          <strong style="display:block;color:#084c47;margin-bottom:5px;">🔒 Bu Belgeye Ait SHA-256 Bütünlük Özeti:</strong>
           <code style="font-size:12px;font-family:monospace;font-weight:600;color:#084c47;">${escapeHtml(sha256)}</code>
-          
-          <strong style="display:block;color:#084c47;margin:14px 0 5px;font-size:13px;">🌐 Hukuki Belge Seti Deterministik Kök SHA-256 (Legal Root Digest):</strong>
+          <strong style="display:block;color:#084c47;margin:12px 0 5px;">🌐 Hukuki Belge Seti Deterministik Kök SHA-256:</strong>
           <code style="font-size:12px;font-family:monospace;font-weight:600;color:#084c47;">${escapeHtml(root)}</code>
         </div>
 
-        <!-- OPENTIMESTAMPS DIŞ ZAMAN İSPATI KUTUSU -->
         ${externalHtml}
 
-        <!-- HUKUKİ KORUMA VE İSPAT MADDELERİ -->
-        <div style="background:#faf9f6;border:1px solid #eae6df;border-radius:8px;padding:16px;margin-bottom:16px;font-size:12.5px;line-height:1.75;color:#444;">
-          <strong style="color:#084c47;display:block;margin-bottom:6px;font-size:13px;">⚖️ Hukuki Geçerlilik, Delil Sözleşmesi ve Tüketici Hakları Bildirimi:</strong>
-          <ul style="margin:0;padding-left:20px;">
-            <li><strong>6502 Sayılı TKHK & Kalıcı Veri Saklayıcısı:</strong> İşbu yasal metin, 6502 sayılı Tüketicinin Korunması Hakkında Kanun m. 48 ve Mesafeli Sözleşmeler Yönetmeliği uyarınca sipariş öncesinde alıcının incelemesine ve onayına sunulmuş, sipariş anında kalıcı veri saklayıcısı ile kayıt altına alınmıştır.</li>
-            <li><strong>HMK m. 193 Münhasır Delil Kaydı:</strong> Taraflar arasında web sitesi, ödeme sağlayıcısı logları, IP adresi, SHA-256 bütünlük özeti ve sunucu audit izleri Hukuk Muhakemeleri Kanunu m. 193 uyarınca bağlayıcı ve geçerli yazılı delil niteliğindedir.</li>
-            <li><strong>12.000 TL+ Güvenlik ve Mağaza Teslim Şerhi:</strong> 12.000 TL üzerindeki altın ve saat siparişleri iç güvenlik protokolü (03) gereğince kargo veya kuryeye verilmez; alıcının resmî kimlik ibrazı ve Mağaza Teslim-Tesellüm Tutanağı (13) ıslak imzası ile Buca Showroom adresimizden bizzat teslim edilir.</li>
-            <li><strong>MASAK ve Kimlik Doğrulama:</strong> Bu kayıt 5549 sayılı Kanun ve MASAK düzenlemeleri kapsamındaki şüpheli işlem ve müşterinin tanınması (KYC) yükümlülüklerini hiçbir şekilde ortadan kaldırmaz; yasal şartlar oluştuğunda ilgili mevzuat ayrıca ve eksiksiz uygulanır.</li>
-          </ul>
-        </div>
-
-        <!-- ALT BUTON VE MAĞAZA İMZASI -->
-        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;border-top:1px solid #e6e0d6;padding-top:16px;">
-          <div style="font-size:12px;color:#555;">
-            📍 <strong>Teslim & Yetkili Showroom:</strong> Belgin Kuyumculuk & Saat (Menderes Cad. No:231/B Buca / İzmir)
-          </div>
-          <button onclick="window.print()" style="background:#084c47;color:#fff;border:none;padding:10px 20px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(8,76,71,0.2);">
-            🖨️ Resmi Yasal Nüshayı Yazdır / PDF Olarak Kaydet
-          </button>
-        </div>
-
-        <p style="font-size:11.5px;line-height:1.6;color:#777;margin:14px 0 0;"><strong>Hukuki nitelik açıklaması:</strong> OpenTimestamps / Bitcoin kanıtı ve SHA-256 özetleri bağımsız teknik varlık ve bütünlük ispatını güçlendiren yardımcı bir dış zaman ispatı katmanıdır. Bu sistem nitelikli elektronik imza, güvenli elektronik imza veya 5070 sayılı Kanun kapsamında BTK'ya bildirimde bulunmuş bir ESHS tarafından üretilmiş zaman damgası değildir ve öyle sunulmaz.</p>
+        <p style="font-size:12.5px;line-height:1.7;color:#555;margin:0 0 10px;">Bu kayıt, yayımlanan hukuki metnin resmi sürümünü ve içeriğinin değiştirilmediğini doğrulayan SHA-256 özetini gösterir. Sipariş bazlı irade beyanı, kimlik doğrulaması, ödeme ve teslim delilleri sipariş esnasında ayrıca kayıt altına alınır.</p>
+        <p style="font-size:12.5px;line-height:1.7;color:#555;margin:0;"><strong>Hukuki nitelik açıklaması:</strong> OpenTimestamps / Bitcoin kanıtı bağımsız teknik varlık ve bütünlük ispatını güçlendiren yardımcı bir dış zaman ispatı katmanıdır. Bu sistem nitelikli elektronik imza, güvenli elektronik imza veya 5070 sayılı Kanun kapsamında BTK'ya bildirimde bulunmuş bir ESHS tarafından üretilmiş zaman damgası değildir ve öyle sunulmaz.</p>
       </section>`;
 
-    mainEl.insertAdjacentHTML('beforeend', html);
+    mainEl.insertAdjacentHTML('beforeend', generalHtml);
   }
 
   async function init() {
