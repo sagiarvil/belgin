@@ -172,7 +172,11 @@ async function buildEvidenceReceipt(orderId, order) {
       address: 'Menderes Caddesi No:231/B Buca / İzmir',
       phone: '+90 541 930 53 72',
       secondaryPhone: '+90 539 823 41 41',
-      email: 'info@belgin.com',
+      email: 'destek@belginkuyumculuk.com',
+      supportEmail: 'destek@belginkuyumculuk.com',
+      posEmail: 'pos@belginkuyumculuk.com',
+      returnEmail: 'iade@belginkuyumculuk.com',
+      accountingEmail: 'muhasebe@belginkuyumculuk.com',
       note: 'VKN/MERSİS/yetki bilgileri yalnız doğrulanmış resmi işletme kayıtlarıyla ayrıca gösterilir.',
     },
     buyer: {

@@ -27,8 +27,8 @@ if (/\b(?:6|9|12)\s*Taksit\b/i.test(publicText) || /12 aya varan taksit/i.test(p
 else pass('Kamu taksit beyanları ihtiyatlı/mevzuata bağlı.');
 
 const index = read('index.html');
-if (!index.includes('mailto:iletisim@belginkuyumculuk.com')) fail('Görünür müşteri hizmetleri e-postası eksik.');
-else pass('Müşteri hizmetleri e-postası görünür.');
+if (!index.includes('mailto:destek@belginkuyumculuk.com') && !index.includes('destek@belginkuyumculuk.com')) fail('Görünür müşteri hizmetleri e-postası eksik.');
+else pass('Müşteri hizmetleri e-postası (destek@belginkuyumculuk.com) görünür.');
 if (!index.includes('data-payment-network-readiness="v1"')) fail('Kart ağı/güvenlik bilgilendirme alanı eksik.');
 else pass('Kart ağı ve kart verisi saklamama bilgilendirmesi görünür.');
 

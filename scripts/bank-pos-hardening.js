@@ -3,7 +3,10 @@ const path = require('path');
 
 const root = path.join(__dirname, '..');
 const COMPANY = 'BELGİN KUYUMCULUK - SEMİH SONBAHAR';
-const SUPPORT_EMAIL = 'iletisim@belginkuyumculuk.com';
+const SUPPORT_EMAIL = 'destek@belginkuyumculuk.com';
+const POS_EMAIL = 'pos@belginkuyumculuk.com';
+const RETURN_EMAIL = 'iade@belginkuyumculuk.com';
+const ACCOUNTING_EMAIL = 'muhasebe@belginkuyumculuk.com';
 const MARKER = 'data-bank-pos-readiness="v1"';
 
 function writeIfChanged(file, transform) {
@@ -33,7 +36,9 @@ function scrubPublicClaims(content) {
     .replace(/Tüm bankaların kredi kartlarına[^<\n]*12 aya varan taksit seçenekleri:?/gi, 'Kart ve banka koşullarına göre, yürürlükteki mevzuat sınırları içinde taksit seçenekleri:')
     .replace(/resmi distribütör ithalatı ve 2 yıl garantilidir/gi, 'ürüne ait fatura ve garanti belgesindeki kapsamla satılır')
     .replace(/Türkiye Distribütörü Onaylı ve Kaşeli Garanti Belgesi/gi, 'Ürüne ait garanti belgesi ve satış faturası')
-    .replace(/Belgin Kuyumculuk & Saat Distribütörlük Taahhüdü/gi, 'Belgin Kuyumculuk Ürün ve Belge Taahhüdü');
+    .replace(/Belgin Kuyumculuk & Saat Distribütörlük Taahhüdü/gi, 'Belgin Kuyumculuk Ürün ve Belge Taahhüdü')
+    .replace(/iletisim@belginkuyumculuk\.com/g, SUPPORT_EMAIL)
+    .replace(/info@belgin\.com/g, SUPPORT_EMAIL);
 
   // Tüm checkbox'lar aktif kullanıcı iradesiyle seçilmelidir; hiçbir rıza/onay önceden işaretlenmez.
   out = out.replace(/(<input\b(?=[^>]*\btype=["']checkbox["'])[^>]*?)\schecked(?=[\s>])/gi, '$1');
@@ -62,7 +67,7 @@ for (const file of htmlFiles) {
     let out = scrubPublicClaims(content);
 
     if (!out.includes(`mailto:${SUPPORT_EMAIL}`)) {
-      const contact = `\n<div ${MARKER} style="max-width:1200px;margin:12px auto;padding:12px 18px;border:1px solid #d8e4e1;border-radius:8px;background:#f8fbfa;font-size:12px;line-height:1.6;color:#33413e;">\n  <strong>Müşteri Hizmetleri:</strong> <a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a> · <a href="tel:+905419305372">+90 541 930 53 72</a> · Menderes Caddesi No:231/B Buca / İzmir\n</div>`;
+      const contact = `\n<div ${MARKER} style="max-width:1200px;margin:12px auto;padding:12px 18px;border:1px solid #d8e4e1;border-radius:8px;background:#f8fbfa;font-size:12px;line-height:1.6;color:#33413e;">\n  <strong>Müşteri Hizmetleri:</strong> <a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a> · <strong>POS & Ödeme:</strong> <a href="mailto:${POS_EMAIL}">${POS_EMAIL}</a> · <strong>İade & Cayma:</strong> <a href="mailto:${RETURN_EMAIL}">${RETURN_EMAIL}</a> · <strong>Muhasebe:</strong> <a href="mailto:${ACCOUNTING_EMAIL}">${ACCOUNTING_EMAIL}</a> · <a href="tel:+905419305372">+90 541 930 53 72</a> · Menderes Caddesi No:231/B Buca / İzmir\n</div>`;
       if (out.includes('</footer>')) out = out.replace('</footer>', `${contact}\n</footer>`);
       else if (out.includes('</body>')) out = out.replace('</body>', `${contact}\n</body>`);
     }
