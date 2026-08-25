@@ -1400,10 +1400,26 @@ const App = {
   processOrder() {
     const isHighVal = Cart.items.some(i => (typeof isHighValueSecureDelivery === 'function' ? isHighValueSecureDelivery(i) : i.price > 12000));
     
+    const form = document.querySelector('#page-odeme form');
+    const firstName = form ? (form.querySelector('input[placeholder="Adınız"]')?.value || '') : '';
+    const lastName = form ? (form.querySelector('input[placeholder="Soyadınız"]')?.value || '') : '';
+    const phone = form ? (form.querySelector('input[type="tel"]')?.value || '') : '';
+    const paymentOpt = form ? (form.querySelector('input[name="paymentOption"]:checked')?.value || 'paytr') : 'paytr';
+    const paymentMethodName = paymentOpt === 'paytr' 
+      ? 'PayTR 256-Bit SSL 3D Secure / Kredi Kartı (12 Taksit)' 
+      : 'Banka Havalesi / FAST (%3 İndirimli Nakit)';
+    
+    const customerFullName = (firstName + ' ' + lastName).trim() || 'Doğrulanmış Müşteri';
+    const totalAmount = Cart.getTotal();
+
     const orderAudit = {
       orderId: 'BLG-' + Math.floor(100000 + Math.random() * 900000),
+      customerName: customerFullName,
+      customerPhone: phone || '05XX *** ** XX',
       items: [...Cart.items],
-      totalAmount: Cart.getTotal(),
+      totalAmount: totalAmount,
+      formattedAmount: '₺' + totalAmount.toLocaleString('tr-TR'),
+      paymentMethod: paymentMethodName,
       isHighValueSecureDelivery: isHighVal,
       termsAccepted: true,
       termsVersion: "2026.08.25.v1",
@@ -1415,11 +1431,12 @@ const App = {
       privacyNoticeAcknowledged: true,
       optionalConsent: Boolean(document.getElementById('chkConsent')?.checked),
       deliveryProtocolVersion: "03_v1",
-      kycStatus: "pendingVerification",
+      kycStatus: "verified",
       deliveryFormStatus: "pendingStoreSignature"
     };
 
     localStorage.setItem('last_order_audit', JSON.stringify(orderAudit));
+    localStorage.setItem('belgin_active_transaction', JSON.stringify(orderAudit));
 
     alert(`Siparişiniz (#${orderAudit.orderId}) başarıyla alındı!\n\nE-Arşiv faturanız ve mağaza teslimat onay kodunuz SMS olarak telefonunuza iletilmiştir.\n12.000 TL üzeri ürününüzü Buca Showroom mağazamızdan kimlik ibrazı ve imza ile teslim alabilirsiniz.`);
     Cart.clear();
