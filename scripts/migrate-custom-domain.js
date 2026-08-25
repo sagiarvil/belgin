@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const root = path.join(__dirname, '..');
-const OLD = 'https://belgin.web.app';
+const OLD = 'https://belginkuyumculuk.com';
 const NEW = 'https://belginkuyumculuk.com';
 const extensions = new Set(['.html', '.js', '.json', '.txt', '.xml', '.md']);
 const skipDirs = new Set(['.git', 'node_modules']);

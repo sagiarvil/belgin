@@ -15,7 +15,7 @@ if (!admin.apps.length) admin.initializeApp();
 const db = admin.firestore();
 
 const DEFAULT_ALLOWED_ORIGINS = [
-  'https://belgin.web.app',
+  'https://belginkuyumculuk.com',
   'https://belgin.firebaseapp.com',
 ];
 
@@ -165,8 +165,8 @@ exports.createPayTRToken = functions
         user_name: String(body.user_name || 'Müşteri').slice(0, 150),
         user_address: String(body.user_address || '').slice(0, 1000),
         user_phone: String(body.user_phone || '').slice(0, 50),
-        merchant_ok_url: 'https://belgin.web.app/#payment-success',
-        merchant_fail_url: 'https://belgin.web.app/#payment-failed',
+        merchant_ok_url: 'https://belginkuyumculuk.com/#payment-success',
+        merchant_fail_url: 'https://belginkuyumculuk.com/#payment-failed',
         timeout_limit: 30,
         currency: 'TL',
         lang: 'tr',
