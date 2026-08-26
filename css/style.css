@@ -674,56 +674,92 @@ p, span, li, td, th, label, input, button, select, textarea {
 }
 
 /* ==========================================================
-   4. SİNEMATİK MAISON HERO & KEŞİF KONSOLU (ZÜMRÜT YEŞİLİ & HAREKETLİ IŞIK)
+   4. SİNEMATİK ASİMETRİK MAISON HERO (ZÜMRÜT IŞIK & HOLOGRAFİK VİTRİN)
    ========================================================== */
-.hero-cinematic {
+.hero-cinematic-asymmetric {
   position: relative;
-  min-height: 660px;
-  background: #03201C url('https://artjewellerywatches.com/api/photo/site/banner.primary') center/cover no-repeat;
+  min-height: 720px;
+  background: #021310 url('https://artjewellerywatches.com/api/photo/site/banner.primary') center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  padding: 100px 28px 76px;
+  padding: 100px 32px 80px;
   overflow: hidden;
 }
 
-/* Zümrüt Yeşili Zenginleştirilmiş Sinematik Işık Katmanı */
-.hero-cinematic::before {
-  content: '';
+/* Asimetrik Işık Beams & Orbs */
+.hero-emerald-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  -webkit-filter: blur(80px);
+  pointer-events: none;
+  z-index: 1;
+}
+.hero-orb-topright {
+  width: 640px;
+  height: 640px;
+  top: -140px;
+  right: -100px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.42) 0%, rgba(5, 150, 105, 0.2) 45%, transparent 70%);
+  animation: orbFloatTop 11s ease-in-out infinite alternate;
+}
+.hero-orb-bottomleft {
+  width: 560px;
+  height: 560px;
+  bottom: -160px;
+  left: -120px;
+  background: radial-gradient(circle, rgba(4, 120, 87, 0.38) 0%, rgba(6, 78, 59, 0.18) 50%, transparent 70%);
+  animation: orbFloatBottom 13s ease-in-out infinite alternate;
+}
+.hero-emerald-beam {
   position: absolute;
   inset: 0;
   background: 
-    radial-gradient(ellipse at 50% 35%, rgba(18, 142, 125, 0.48) 0%, rgba(6, 68, 60, 0.72) 45%, rgba(2, 24, 21, 0.94) 100%),
-    linear-gradient(180deg, rgba(3, 38, 33, 0.55) 0%, rgba(2, 20, 18, 0.9) 100%);
-  z-index: 1;
-}
-
-/* Hareketli Zümrüt Yeşili Işıltı Dalgası (Emerald Ambient Motion) */
-.hero-cinematic::after {
-  content: '';
-  position: absolute;
-  width: 140%;
-  height: 140%;
-  top: -20%;
-  left: -20%;
-  background: radial-gradient(circle at 50% 40%, rgba(24, 175, 154, 0.28) 0%, rgba(9, 85, 75, 0.16) 35%, transparent 70%);
+    linear-gradient(125deg, rgba(18, 142, 125, 0.38) 0%, rgba(6, 78, 59, 0.18) 35%, transparent 65%),
+    linear-gradient(180deg, rgba(2, 22, 19, 0.45) 0%, rgba(1, 15, 13, 0.92) 100%);
   z-index: 1;
   pointer-events: none;
-  animation: emeraldBreathe 7.5s ease-in-out infinite alternate;
+}
+.hero-emerald-mesh {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(194, 167, 104, 0.09) 1px, transparent 1px);
+  background-size: 32px 32px;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.75;
 }
 
-@keyframes emeraldBreathe {
-  0% { transform: scale(0.96) translate(0, 0); opacity: 0.65; }
-  50% { transform: scale(1.06) translate(1.5%, -1.5%); opacity: 1; }
-  100% { transform: scale(1.01) translate(-1.5%, 1.5%); opacity: 0.8; }
+@keyframes orbFloatTop {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.75; }
+  50% { transform: translate(-30px, 40px) scale(1.1); opacity: 1; }
+  100% { transform: translate(20px, -20px) scale(0.95); opacity: 0.85; }
+}
+@keyframes orbFloatBottom {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+  50% { transform: translate(40px, -30px) scale(1.08); opacity: 0.95; }
+  100% { transform: translate(-20px, 20px) scale(0.92); opacity: 0.8; }
 }
 
-.hero-cinematic-content {
+.hero-asymmetric-wrapper {
+  display: grid;
+  grid-template-columns: 1.18fr 0.82fr;
+  gap: 52px;
+  align-items: center;
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
   position: relative;
   z-index: 2;
-  max-width: 960px;
-  margin: 0 auto;
+  text-align: left;
+}
+
+/* Sol Blok */
+.hero-asymmetric-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 .hero-prestige-badge {
   display: inline-flex;
@@ -734,13 +770,13 @@ p, span, li, td, th, label, input, button, select, textarea {
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(194, 167, 104, 0.5);
   color: #F0E6D2;
-  font-size: 11.5px;
+  font-size: 11px;
   letter-spacing: 3.5px;
   text-transform: uppercase;
   font-weight: 600;
-  padding: 8px 24px;
+  padding: 8px 22px;
   border-radius: var(--radius-full);
-  margin-bottom: 24px;
+  margin-bottom: 22px;
   box-shadow: 0 8px 24px rgba(2, 30, 26, 0.4), 0 0 15px rgba(18, 138, 121, 0.25);
 }
 .hero-badge-dot {
@@ -755,23 +791,29 @@ p, span, li, td, th, label, input, button, select, textarea {
 
 .hero-cinematic-title {
   font-family: var(--font-display);
-  font-size: clamp(38px, 5.2vw, 68px);
+  font-size: clamp(36px, 4.2vw, 62px);
   color: #FFFFFF;
   line-height: 1.12;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
   font-weight: 400;
-  letter-spacing: 1.5px;
-  text-shadow: 0 4px 28px rgba(0, 0, 0, 0.6), 0 0 35px rgba(18, 142, 125, 0.3);
+  letter-spacing: 1px;
+  text-shadow: 0 4px 28px rgba(0, 0, 0, 0.6), 0 0 35px rgba(18, 142, 125, 0.25);
+}
+.hero-title-gradient {
+  background: linear-gradient(135deg, #FFFFFF 15%, #E2D7BE 45%, #C2A768 75%, #34D399 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-style: italic;
 }
 .hero-cinematic-sub {
   font-family: var(--font-body);
   font-size: 15.5px;
-  color: rgba(255, 255, 255, 0.92);
-  line-height: 1.8;
-  max-width: 740px;
-  margin: 0 auto 34px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.75;
+  max-width: 620px;
+  margin: 0 0 26px;
   font-weight: 300;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.2px;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
 
@@ -784,20 +826,20 @@ p, span, li, td, th, label, input, button, select, textarea {
   border-radius: var(--radius-full);
   padding: 6px;
   gap: 6px;
-  margin-bottom: 38px;
+  margin-bottom: 30px;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35), 0 0 20px rgba(18, 138, 121, 0.2);
 }
 .hero-tab-btn {
   background: transparent;
   border: none;
   color: rgba(255, 255, 255, 0.88);
-  padding: 10px 24px;
+  padding: 9px 20px;
   font-family: var(--font-sans);
   font-size: 12.5px;
   font-weight: 500;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.6px;
   border-radius: var(--radius-full);
   cursor: pointer;
   transition: all 0.3s var(--ease-silk);
@@ -809,29 +851,220 @@ p, span, li, td, th, label, input, button, select, textarea {
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
 }
 
-.hero-trust-strip {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  max-width: 940px;
-  margin: 0 auto;
+.hero-prestige-stats {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding-top: 18px;
+  border-top: 1px solid rgba(194, 167, 104, 0.22);
 }
-.hero-trust-pill {
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(194, 167, 104, 0.25);
-  padding: 14px 16px;
-  border-radius: var(--radius-md);
-  color: #FFFFFF;
+.hero-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.hero-stat-num {
   font-family: var(--font-sans);
-  font-size: 11.5px;
-  font-weight: 500;
+  font-size: 22px;
+  font-weight: 800;
+  color: #E2D7BE;
+}
+.hero-stat-lbl {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.72);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+.hero-stat-divider {
+  width: 1px;
+  height: 28px;
+  background: rgba(194, 167, 104, 0.25);
+}
+
+/* Sağ Asimetrik Kart */
+.hero-asymmetric-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.hero-gem-card {
+  background: linear-gradient(135deg, rgba(6, 68, 60, 0.78) 0%, rgba(2, 36, 31, 0.88) 100%);
+  border: 1px solid rgba(194, 167, 104, 0.45);
+  border-radius: 20px;
+  padding: 30px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), 0 0 35px rgba(16, 185, 129, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hero-gem-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6), 0 0 45px rgba(16, 185, 129, 0.35);
+}
+.hero-gem-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.hero-gem-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0D9488 0%, #064E3B 100%);
+  border: 1px solid #C2A768;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 20px;
+  position: relative;
+  box-shadow: 0 0 20px rgba(13, 148, 136, 0.5);
+  flex-shrink: 0;
+}
+.hero-gem-sparkle {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  font-size: 11px;
+  color: #C2A768;
+  animation: pulseDot 2s infinite ease-in-out;
+}
+.hero-gem-kicker {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: #C2A768;
+  display: block;
+}
+.hero-gem-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: #FFFFFF;
+  font-weight: 600;
+  margin: 0;
+}
+.hero-gem-desc {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  margin: 0;
+}
+.hero-gem-rates {
+  background: rgba(1, 24, 21, 0.75);
+  border: 1px solid rgba(194, 167, 104, 0.3);
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
   gap: 8px;
-  letter-spacing: 0.6px;
+}
+.hero-rate-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12.5px;
+}
+.hero-rate-label {
+  color: rgba(255, 255, 255, 0.75);
+}
+.hero-rate-val {
+  color: #34D399;
+  font-weight: 800;
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+}
+.hero-gem-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 4px;
+}
+.btn-hero-gem-primary {
+  background: linear-gradient(135deg, #C2A768 0%, #9E8548 100%);
+  color: #070A09;
+  font-weight: 700;
+  font-size: 12.5px;
+  padding: 11px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  box-shadow: 0 4px 14px rgba(194, 167, 104, 0.3);
+}
+.btn-hero-gem-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(194, 167, 104, 0.45);
+}
+.btn-hero-gem-secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFF;
+  font-weight: 600;
+  font-size: 12.5px;
+  padding: 11px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.btn-hero-gem-secondary:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(194, 167, 104, 0.4);
+}
+
+.hero-asymmetric-trust {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.hero-trust-badge-mini {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(4, 40, 35, 0.6);
+  border: 1px solid rgba(194, 167, 104, 0.25);
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 12px;
+  color: #E2D7BE;
+  backdrop-filter: blur(10px);
+}
+
+@media (max-width: 980px) {
+  .hero-asymmetric-wrapper {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    text-align: center;
+  }
+  .hero-asymmetric-left {
+    align-items: center;
+  }
+  .hero-cinematic-title, .hero-cinematic-sub {
+    text-align: center;
+  }
+  .hero-quick-tabs {
+    justify-content: center;
+  }
+  .hero-prestige-stats {
+    justify-content: center;
+  }
+  .hero-cinematic-asymmetric {
+    padding: 70px 18px 50px;
+    min-height: auto;
+  }
 }
 
 /* ==========================================================

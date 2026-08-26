@@ -40,7 +40,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/style.css?v=2026.08.26.2053">
+  <link rel="stylesheet" href="css/style.css?v=2026.08.26.2055">
 
   <!-- SCHEMA.ORG JSON-LD ENTERPRISE METRICS -->
   <script type="application/ld+json">
@@ -502,50 +502,118 @@
   <!-- 1. ANA SAYFA -->
   <section id="page-ana-sayfa" class="page active">
     
-    <!-- GÜÇLÜ & SİNEMATİK MAISON HERO -->
-    <div class="hero-cinematic">
-      <div class="hero-cinematic-content">
-        <div class="hero-prestige-badge">
-          <span class="hero-badge-dot"></span>
-          <span>HAUTE HORLOGERIE & MÜCEVHERAT • EST. 1999 • BUCA İZMİR</span>
-        </div>
-        
-        <h1 class="hero-cinematic-title">Zamanın ve Mirasın Ötesinde</h1>
-        
-        <p class="hero-cinematic-sub">
-          Ekspertiz onaylı ikinci el ve sıfır Rolex, Patek Philippe, Audemars Piguet ve 18K masif altın koleksiyonları. 12 nokta mekanizma testi, doğrulanmış orijinallik ve anında takas güvencesi.
-        </p>
+    <!-- GÜÇLÜ & SİNEMATİK ASİMETRİK MAISON HERO (ZÜMRÜT IŞIK & PRESTİJ VİTRİNİ) -->
+    <div class="hero-cinematic-asymmetric">
+      
+      <!-- Asimetrik Arka Plan Işık Katmanları -->
+      <div class="hero-emerald-orb hero-orb-topright"></div>
+      <div class="hero-emerald-orb hero-orb-bottomleft"></div>
+      <div class="hero-emerald-beam"></div>
+      <div class="hero-emerald-mesh"></div>
 
-        <!-- İnteraktif Hızlı Keşif Konsolu -->
-        <div class="hero-quick-tabs">
-          <button class="hero-tab-btn active" onclick="App.filterHeroTab('all', this)">Tüm Koleksiyon</button>
-          <button class="hero-tab-btn" onclick="App.filterHeroTab('saatler', this)">⌚ Lüks Saatler</button>
-          <button class="hero-tab-btn" onclick="App.filterHeroTab('ikinci-el', this)">🪙 İkinci El Altın & Saat</button>
-          <button class="hero-tab-btn" onclick="App.filterHeroTab('mucevherat', this)">💎 Mücevherat</button>
-          <button class="hero-tab-btn" onclick="App.openTradeInModal()">⚖️ Takas & Sat</button>
+      <div class="hero-asymmetric-wrapper">
+        
+        <!-- SOL BLOK: BAŞLIK, ROZET, KEŞİF SEKMELERİ & STATS (60%) -->
+        <div class="hero-asymmetric-left">
+          <div class="hero-prestige-badge">
+            <span class="hero-badge-dot"></span>
+            <span>HAUTE HORLOGERIE & MÜCEVHERAT • EST. 1999 • İZMİR BUCA</span>
+          </div>
+          
+          <h1 class="hero-cinematic-title">
+            Zamanın ve <span class="hero-title-gradient">Mirasın Ötesinde</span>
+          </h1>
+          
+          <p class="hero-cinematic-sub">
+            Ekspertiz onaylı sıfır ve ikinci el lüks saatler, 24K has altın ve sertifikalı pırlanta mücevherat. 25 yılı aşkın zanaat mirası, 12 nokta mekanizma testi ve anında takas güvencesi.
+          </p>
+
+          <!-- İnteraktif Hızlı Keşif Konsolu -->
+          <div class="hero-quick-tabs">
+            <button class="hero-tab-btn active" onclick="App.filterHeroTab('all', this)">Tüm Koleksiyon</button>
+            <button class="hero-tab-btn" onclick="App.filterHeroTab('saatler', this)">⌚ Lüks Saatler</button>
+            <button class="hero-tab-btn" onclick="App.filterHeroTab('ikinci-el', this)">🪙 İkinci El Altın & Saat</button>
+            <button class="hero-tab-btn" onclick="App.filterHeroTab('mucevherat', this)">💎 Mücevherat</button>
+            <button class="hero-tab-btn" onclick="App.openTradeInModal()">⚖️ Takas & Sat</button>
+          </div>
+
+          <!-- Asimetrik Prestij Sayaçları -->
+          <div class="hero-prestige-stats">
+            <div class="hero-stat-item">
+              <span class="hero-stat-num">25+</span>
+              <span class="hero-stat-lbl">Yıllık Güven & Miras</span>
+            </div>
+            <div class="hero-stat-divider"></div>
+            <div class="hero-stat-item">
+              <span class="hero-stat-num">1.625+</span>
+              <span class="hero-stat-lbl">Tescilli Lüks Saat</span>
+            </div>
+            <div class="hero-stat-divider"></div>
+            <div class="hero-stat-item">
+              <span class="hero-stat-num">%100</span>
+              <span class="hero-stat-lbl">Orijinal Ekspertiz</span>
+            </div>
+          </div>
         </div>
 
-        <!-- Floating Güven Bandı -->
-        <div class="hero-trust-strip">
-          <div class="hero-trust-pill">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C2A768" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>12 Nokta Ekspertiz</span>
+        <!-- SAĞ BLOK: ASİMETRİK ZÜMRÜT VİTRİN KARTI & CANLI KUR KONSOLU (40%) -->
+        <div class="hero-asymmetric-right">
+          
+          <div class="hero-gem-card">
+            <div class="hero-gem-header">
+              <div class="hero-gem-icon-wrap">
+                <span class="hero-gem-sparkle">✦</span>
+                <span class="hero-gem-emoji">💎</span>
+              </div>
+              <div>
+                <span class="hero-gem-kicker">ÖZEL SHOWROOM VİTRİNİ</span>
+                <h3 class="hero-gem-title">Belgin Haute Joaillerie</h3>
+              </div>
+            </div>
+
+            <p class="hero-gem-desc">
+              İzmir Buca Menderes Caddesi'ndeki merkez showroomumuzda randevulu VIP ağırlama, altın kurları ve saat ekspertiz hizmeti.
+            </p>
+
+            <!-- Canlı Altın & Döviz Piyasası Kutucuğu -->
+            <div class="hero-gem-rates">
+              <div class="hero-rate-row">
+                <span class="hero-rate-label">24K Has Altın (Gram)</span>
+                <strong class="hero-rate-val" id="heroGoldRate">₺3.438,00</strong>
+              </div>
+              <div class="hero-rate-row">
+                <span class="hero-rate-label">Çeyrek Altın (Yeni)</span>
+                <strong class="hero-rate-val" id="heroQuarterRate">₺5.620,00</strong>
+              </div>
+            </div>
+
+            <!-- VIP Butonlar -->
+            <div class="hero-gem-actions">
+              <button type="button" class="btn-hero-gem-primary" onclick="App.openVipModal()">
+                <span>VIP Randevu Oluştur →</span>
+              </button>
+              <a href="https://wa.me/905419305372" target="_blank" class="btn-hero-gem-secondary">
+                <span>💬 WhatsApp Danışmanı</span>
+              </a>
+            </div>
           </div>
-          <div class="hero-trust-pill">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C2A768" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
-            <span>%100 Orijinal Tescilli</span>
+
+          <!-- Alt Güven Rozetleri -->
+          <div class="hero-asymmetric-trust">
+            <div class="hero-trust-badge-mini">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C2A768" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span>12 Nokta Mekanizma & Maden Analizi</span>
+            </div>
+            <div class="hero-trust-badge-mini">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C2A768" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+              <span>Tescilli Orijinallik Sertifikası</span>
+            </div>
           </div>
-          <div class="hero-trust-pill">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C2A768" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-            <span>Anında Takas & Nakit</span>
-          </div>
-          <div class="hero-trust-pill">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C2A768" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-            <span>Sigortalı Zırhlı Kurye</span>
-          </div>
+
         </div>
 
       </div>
+
     </div>
 
     <div class="container-art">
