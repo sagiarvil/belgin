@@ -614,41 +614,34 @@ const App = {
       </div>
     `;
 
-    // 5'li Hızlı Özet Çipler (Altın vs Saat)
+    // 4'lü Dengeli Hızlı Özet Çipler (2x2 Grid - Taşmasız & Simetrik)
     const quickSpecsHtml = isGoldProduct ? `
       <div class="pdp-quick-specs">
         <div class="pdp-spec-pill">
           <span class="pdp-spec-pill-icon">🪙</span>
           <div>
-            <span class="pdp-spec-pill-label">Maden Türü</span>
-            <span class="pdp-spec-pill-val">Kıymetli Altın</span>
+            <span class="pdp-spec-pill-label">Maden & Saflık</span>
+            <span class="pdp-spec-pill-val">${p.metal || '24 Ayar (995/1000)'}</span>
           </div>
         </div>
         <div class="pdp-spec-pill">
           <span class="pdp-spec-pill-icon">⚖️</span>
           <div>
-            <span class="pdp-spec-pill-label">Ayar & Saflık</span>
-            <span class="pdp-spec-pill-val">${p.metal || '24 Ayar (995/1000)'}</span>
+            <span class="pdp-spec-pill-label">Kategori</span>
+            <span class="pdp-spec-pill-val">${p.subCategory || 'Külçe & Sarrafiye'}</span>
           </div>
         </div>
         <div class="pdp-spec-pill">
           <span class="pdp-spec-pill-icon">🏛️</span>
           <div>
             <span class="pdp-spec-pill-label">Baskı / Menşei</span>
-            <span class="pdp-spec-pill-val">T.C. Darphane / Rafineri</span>
-          </div>
-        </div>
-        <div class="pdp-spec-pill">
-          <span class="pdp-spec-pill-icon">🔒</span>
-          <div>
-            <span class="pdp-spec-pill-label">Güvenlik Mührü</span>
-            <span class="pdp-spec-pill-val">${p.hallmark || 'Hologramlı & Mühürlü'}</span>
+            <span class="pdp-spec-pill-val">T.C. Darphane</span>
           </div>
         </div>
         <div class="pdp-spec-pill">
           <span class="pdp-spec-pill-icon">📜</span>
           <div>
-            <span class="pdp-spec-pill-label">Belge & Garanti</span>
+            <span class="pdp-spec-pill-label">Sertifika & Fatura</span>
             <span class="pdp-spec-pill-val">%100 Ayar Garantili</span>
           </div>
         </div>
@@ -683,13 +676,6 @@ const App = {
             <span class="pdp-spec-pill-val">${specs['Su Geçirmezlik'] || '5 ATM (50 M)'}</span>
           </div>
         </div>
-        <div class="pdp-spec-pill">
-          <span class="pdp-spec-pill-icon">🎨</span>
-          <div>
-            <span class="pdp-spec-pill-label">Kordon</span>
-            <span class="pdp-spec-pill-val">${specs['Kordon / Kayış'] || 'Paslanmaz Çelik'}</span>
-          </div>
-        </div>
       </div>
     `;
 
@@ -700,7 +686,7 @@ const App = {
           <span class="pdp-trust-item-icon">🪙</span>
           <div class="pdp-trust-item-text">
             <strong>%100 Darphane & Saflık Garantisi</strong>
-            <span>Resmi ayar ve milyem standartlarında tescilli ve mühürlü.</span>
+            <span>Resmi ayar ve milyem standartlarında tescilli ve sertifikalı.</span>
           </div>
         </div>
         <div class="pdp-trust-item">
@@ -770,13 +756,13 @@ const App = {
           </p>
           <div style="background:#FBF9F5; border-left:4px solid var(--color-teal); padding:16px 20px; margin:20px 0; border-radius:0 6px 6px 0;">
             <strong style="color:var(--color-teal); display:block; margin-bottom:4px; font-size:14px;">Belgin Kuyumculuk Altın ve Ayar Taahhüdü:</strong>
-            Sitemizde ve Buca showroomumuzda satışa sunulan tüm altın, külçe, ziynet ve sarrafiye ürünleri T.C. Darphane ve resmi rafinerilerin standartlarında, %100 safiyet ve ayar garantisiyle faturalı ve mühürlü olarak teslim edilir.
+            Sitemizde ve Buca showroomumuzda satışa sunulan tüm altın, külçe, ziynet ve sarrafiye ürünleri T.C. Darphane ve resmi rafinerilerin standartlarında, %100 safiyet ve ayar garantisiyle faturalı ve sertifikalı olarak teslim edilir.
           </div>
           <h3 style="font-size:16px; font-weight:700; color:var(--color-ink); margin:24px 0 10px;">Teslimat & Ambalaj İçeriği:</h3>
           <ul style="padding-left:20px; margin-bottom:16px; display:flex; flex-direction:column; gap:6px;">
             <li>Orijinal Hologramlı Güvenlik Ambalajı / Külçe Blister Paketi</li>
             <li>Belgin Kuyumculuk Resmi Satış Faturası ve Ayar Sertifikası</li>
-            <li>T.C. Darphane / Rafineri Resmi Orijinallik Mührü</li>
+            <li>T.C. Darphane / Rafineri Resmi Damgası</li>
             <li>Kapalıçarşı Anlık Serbest Piyasa Geri Alım Güvencesi</li>
           </ul>
         </div>
@@ -817,7 +803,7 @@ const App = {
               <div class="pdp-spec-row"><span class="pdp-spec-key">Maden Türü</span><span class="pdp-spec-value">Kıymetli Altın</span></div>
               <div class="pdp-spec-row"><span class="pdp-spec-key">Ayar / Saflık</span><span class="pdp-spec-value">${p.metal || '24 Ayar (995/1000)'}</span></div>
               <div class="pdp-spec-row"><span class="pdp-spec-key">Kategori</span><span class="pdp-spec-value">${p.subCategory || 'Külçe & Sarrafiye'}</span></div>
-              <div class="pdp-spec-row"><span class="pdp-spec-key">Durum</span><span class="pdp-spec-value">Sıfır / Darphane & Mühürlü</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Durum</span><span class="pdp-spec-value">Sıfır / T.C. Darphane Tescilli</span></div>
             </div>
           </div>
 

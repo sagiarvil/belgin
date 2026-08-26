@@ -74035,7 +74035,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-1-gr-995-24-ayar-amr-kulce-altin-1762330910-6.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-1-gr-995-24-ayar-amr-kulce-altin-1762330910-6.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-1-gr-995-24-ayar-amr-kulce-altin-1762330910-6.jpg"
@@ -74060,7 +74060,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-iar-1-gram-995-24-ayar-kulce-altin-1747398189-4.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-iar-1-gram-995-24-ayar-kulce-altin-1747398189-4.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-iar-1-gram-995-24-ayar-kulce-altin-1747398189-4.jpg"
@@ -74085,7 +74085,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ozbag-1-gr-995-24-ayar-kulce-altin-1767777655-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ozbag-1-gr-995-24-ayar-kulce-altin-1767777655-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ozbag-1-gr-995-24-ayar-kulce-altin-1767777655-2.jpg"
@@ -74110,7 +74110,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-amr-1-gr-995-kulce-altin-2-adet-1764168104-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-amr-1-gr-995-kulce-altin-2-adet-1764168104-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-amr-1-gr-995-kulce-altin-2-adet-1764168104-2.jpg"
@@ -74135,7 +74135,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-iar-1-gram-2-adet-995-24-ayar-kulce-altin-1787143253-4.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-iar-1-gram-2-adet-995-24-ayar-kulce-altin-1787143253-4.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-iar-1-gram-2-adet-995-24-ayar-kulce-altin-1787143253-4.jpg"
@@ -74160,7 +74160,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ozbag-1-gr-995-24-ayar-kulce-altin-2-adet-1760436349-1.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ozbag-1-gr-995-24-ayar-kulce-altin-2-adet-1760436349-1.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ozbag-1-gr-995-24-ayar-kulce-altin-2-adet-1760436349-1.jpg"
@@ -74185,7 +74185,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-2-5-gr-995-24-ayar-amr-kulce-altin-1750687930-3.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-2-5-gr-995-24-ayar-amr-kulce-altin-1750687930-3.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-2-5-gr-995-24-ayar-amr-kulce-altin-1750687930-3.jpg"
@@ -74210,7 +74210,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-amr-1-gr-995-kulce-altin-3-adet-1764168140-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-amr-1-gr-995-kulce-altin-3-adet-1764168140-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-amr-1-gr-995-kulce-altin-3-adet-1764168140-2.jpg"
@@ -74235,7 +74235,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-iar-1-gram-3-adet-995-24-ayar-kulce-altin-1787143280-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-iar-1-gram-3-adet-995-24-ayar-kulce-altin-1787143280-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-iar-1-gram-3-adet-995-24-ayar-kulce-altin-1787143280-2.jpg"
@@ -74260,7 +74260,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ozbag-1-gr-995-24-ayar-kulce-altin-3-adet-1760437328-1.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ozbag-1-gr-995-24-ayar-kulce-altin-3-adet-1760437328-1.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ozbag-1-gr-995-24-ayar-kulce-altin-3-adet-1760437328-1.jpg"
@@ -74285,7 +74285,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-5-gr-995-24-ayar-amr-kulce-altin-1750687957-3.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-5-gr-995-24-ayar-amr-kulce-altin-1750687957-3.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-5-gr-995-24-ayar-amr-kulce-altin-1750687957-3.jpg"
@@ -74310,7 +74310,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-amr-1-gr-995-kulce-altin-5-adet-1764168176-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-amr-1-gr-995-kulce-altin-5-adet-1764168176-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-amr-1-gr-995-kulce-altin-5-adet-1764168176-2.jpg"
@@ -74335,7 +74335,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ozbag-5-gr-995-24-ayar-kulce-altin-1764082387-3.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ozbag-5-gr-995-24-ayar-kulce-altin-1764082387-3.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ozbag-5-gr-995-24-ayar-kulce-altin-1764082387-3.jpg"
@@ -74360,7 +74360,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-iar-5-gram-995-24-ayar-kulce-altin-4594676-63-B.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-iar-5-gram-995-24-ayar-kulce-altin-4594676-63-B.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-iar-5-gram-995-24-ayar-kulce-altin-4594676-63-B.jpg"
@@ -74385,7 +74385,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-iar-1-gram-5-adet-995-24-ayar-kulce-altin-1787143300-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-iar-1-gram-5-adet-995-24-ayar-kulce-altin-1787143300-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-iar-1-gram-5-adet-995-24-ayar-kulce-altin-1787143300-2.jpg"
@@ -74410,7 +74410,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ozbag-1-gr-995-24-ayar-kulce-altin-5-adet-1760438098-1.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ozbag-1-gr-995-24-ayar-kulce-altin-5-adet-1760438098-1.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ozbag-1-gr-995-24-ayar-kulce-altin-5-adet-1760438098-1.jpg"
@@ -74435,7 +74435,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-iar-1-gram-6-adet-995-24-ayar-kulce-altin-1787143318-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-iar-1-gram-6-adet-995-24-ayar-kulce-altin-1787143318-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-iar-1-gram-6-adet-995-24-ayar-kulce-altin-1787143318-2.jpg"
@@ -74460,7 +74460,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ozbag-1-gr-995-24-ayar-kulce-altin-6-adet-1760438206-1.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ozbag-1-gr-995-24-ayar-kulce-altin-6-adet-1760438206-1.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ozbag-1-gr-995-24-ayar-kulce-altin-6-adet-1760438206-1.jpg"
@@ -74485,7 +74485,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-10-gr-995-24-ayar-amr-kulce-altin-1750688067-3.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-10-gr-995-24-ayar-amr-kulce-altin-1750688067-3.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-10-gr-995-24-ayar-amr-kulce-altin-1750688067-3.jpg"
@@ -74510,7 +74510,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-amr-1-gr-995-kulce-altin-10-adet-1764168215-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-amr-1-gr-995-kulce-altin-10-adet-1764168215-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-amr-1-gr-995-kulce-altin-10-adet-1764168215-2.jpg"
@@ -74535,7 +74535,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ozbag-10-gr-995-24-ayar-kulce-altin-1759934796-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ozbag-10-gr-995-24-ayar-kulce-altin-1759934796-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ozbag-10-gr-995-24-ayar-kulce-altin-1759934796-2.jpg"
@@ -74560,7 +74560,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-iar-10-gram-altin-995-24-ayar-kulce-altin-4594677-81-B.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-iar-10-gram-altin-995-24-ayar-kulce-altin-4594677-81-B.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-iar-10-gram-altin-995-24-ayar-kulce-altin-4594677-81-B.jpg"
@@ -74585,7 +74585,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-iar-1-gram-10-adet-995-24-ayar-kulce-altin-1787143334-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-iar-1-gram-10-adet-995-24-ayar-kulce-altin-1787143334-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-iar-1-gram-10-adet-995-24-ayar-kulce-altin-1787143334-2.jpg"
@@ -74610,7 +74610,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ozbag-1-gr-995-24-ayar-kulce-altin-10-adet-1760438976-1.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ozbag-1-gr-995-24-ayar-kulce-altin-10-adet-1760438976-1.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ozbag-1-gr-995-24-ayar-kulce-altin-10-adet-1760438976-1.jpg"
@@ -74635,7 +74635,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/valcambi-10-gram-orange-bar-altin-9999-24-ayar-kulce-altin-1739371027-4.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/valcambi-10-gram-orange-bar-altin-9999-24-ayar-kulce-altin-1739371027-4.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/valcambi-10-gram-orange-bar-altin-9999-24-ayar-kulce-altin-1739371027-4.jpg"
@@ -74660,7 +74660,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ozbag-5-gr-995-24-ayar-kulce-altin-3-adet-1764153480-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ozbag-5-gr-995-24-ayar-kulce-altin-3-adet-1764153480-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ozbag-5-gr-995-24-ayar-kulce-altin-3-adet-1764153480-2.jpg"
@@ -74685,7 +74685,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-20-gr-995-24-ayar-amr-kulce-altin-1750688117-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-20-gr-995-24-ayar-amr-kulce-altin-1750688117-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-20-gr-995-24-ayar-amr-kulce-altin-1750688117-2.jpg"
@@ -74710,7 +74710,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ozbag-20-gr-995-24-ayar-kulce-altin-1768832009-3.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ozbag-20-gr-995-24-ayar-kulce-altin-1768832009-3.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ozbag-20-gr-995-24-ayar-kulce-altin-1768832009-3.jpg"
@@ -74735,7 +74735,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-iar-20-gram-altin-995-24-ayar-kulce-altin-4594678-66-B.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-iar-20-gram-altin-995-24-ayar-kulce-altin-4594678-66-B.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-iar-20-gram-altin-995-24-ayar-kulce-altin-4594678-66-B.jpg"
@@ -74760,7 +74760,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-20-adet-iar-1-gr-altin-1787143356-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-20-adet-iar-1-gr-altin-1787143356-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-20-adet-iar-1-gr-altin-1787143356-2.jpg"
@@ -74785,7 +74785,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-30-adet-iar-1-gr-altin-4595127-88-B.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-30-adet-iar-1-gr-altin-4595127-88-B.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-30-adet-iar-1-gr-altin-4595127-88-B.jpg"
@@ -74810,7 +74810,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-50-gr-995-24-ayar-amr-kulce-altin-1750688162-3.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-50-gr-995-24-ayar-amr-kulce-altin-1750688162-3.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-50-gr-995-24-ayar-amr-kulce-altin-1750688162-3.jpg"
@@ -74835,7 +74835,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ozbag-50-gr-995-24-ayar-kulce-altin-1759934831-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ozbag-50-gr-995-24-ayar-kulce-altin-1759934831-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ozbag-50-gr-995-24-ayar-kulce-altin-1759934831-2.jpg"
@@ -74860,7 +74860,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-iar-50-gram-995-24-ayar-kulce-altin-4594679-67-B.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-iar-50-gram-995-24-ayar-kulce-altin-4594679-67-B.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-iar-50-gram-995-24-ayar-kulce-altin-4594679-67-B.jpg"
@@ -74885,7 +74885,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-50-adet-iar-1-gr-altin-4595126-88-B.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-50-adet-iar-1-gr-altin-4595126-88-B.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-50-adet-iar-1-gr-altin-4595126-88-B.jpg"
@@ -74910,7 +74910,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-100-gr-995-24-ayar-amr-kulce-altin-1750688205-3.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-100-gr-995-24-ayar-amr-kulce-altin-1750688205-3.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-100-gr-995-24-ayar-amr-kulce-altin-1750688205-3.jpg"
@@ -74935,7 +74935,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ozbag-100-gr-995-24-ayar-kulce-altin-1759934876-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ozbag-100-gr-995-24-ayar-kulce-altin-1759934876-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ozbag-100-gr-995-24-ayar-kulce-altin-1759934876-2.jpg"
@@ -74960,7 +74960,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-iar-100-gram-995-24-ayar-kulce-altin-4594680-68-B.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-iar-100-gram-995-24-ayar-kulce-altin-4594680-68-B.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-iar-100-gram-995-24-ayar-kulce-altin-4594680-68-B.jpg"
@@ -74985,7 +74985,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-aleks-metal-rafineri-1-kilogram-24-ayar-995-kulce-altin-1760614355-4.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-aleks-metal-rafineri-1-kilogram-24-ayar-995-kulce-altin-1760614355-4.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-aleks-metal-rafineri-1-kilogram-24-ayar-995-kulce-altin-1760614355-4.jpg"
@@ -75010,7 +75010,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-valcambi-1-kg-24-ayar-995-kulce-altin-4593805-23-B.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-valcambi-1-kg-24-ayar-995-kulce-altin-4593805-23-B.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-valcambi-1-kg-24-ayar-995-kulce-altin-4593805-23-B.jpg"
@@ -75035,7 +75035,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-argor-heraeus-1-kilogram-24-ayar-995-kulce-altin-4592988-47-B.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-argor-heraeus-1-kilogram-24-ayar-995-kulce-altin-4592988-47-B.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-argor-heraeus-1-kilogram-24-ayar-995-kulce-altin-4592988-47-B.jpg"
@@ -75060,7 +75060,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/pamp-1-kilogram-24-ayar-995-kulce-altin-4594158-56-B.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/pamp-1-kilogram-24-ayar-995-kulce-altin-4594158-56-B.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/pamp-1-kilogram-24-ayar-995-kulce-altin-4594158-56-B.jpg"
@@ -75085,7 +75085,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-eski-kulplu-iko-guvence-etiketli-1769159559-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-eski-kulplu-iko-guvence-etiketli-1769159559-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-eski-kulplu-iko-guvence-etiketli-1769159559-5.jpg"
@@ -75110,7 +75110,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/ziynet-ceyrek-altin-yeni-2024-kulplu-1769159584-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/ziynet-ceyrek-altin-yeni-2024-kulplu-1769159584-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/ziynet-ceyrek-altin-yeni-2024-kulplu-1769159584-5.jpg"
@@ -75135,7 +75135,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/ata-ceyrek-eski-1769160203-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/ata-ceyrek-eski-1769160203-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/ata-ceyrek-eski-1769160203-5.jpg"
@@ -75160,7 +75160,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-yarim-altin-eski-kulplu-iko-guvence-etiketli-1769159629-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-yarim-altin-eski-kulplu-iko-guvence-etiketli-1769159629-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-yarim-altin-eski-kulplu-iko-guvence-etiketli-1769159629-5.jpg"
@@ -75185,7 +75185,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-eski-kulplu-2-adet-1769758426-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-eski-kulplu-2-adet-1769758426-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-eski-kulplu-2-adet-1769758426-2.jpg"
@@ -75210,7 +75210,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/ziynet-yarim-yeni-1769159649-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/ziynet-yarim-yeni-1769159649-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/ziynet-yarim-yeni-1769159649-5.jpg"
@@ -75235,7 +75235,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-2-adet-yeni-kulplu-1769758521-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-2-adet-yeni-kulplu-1769758521-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-2-adet-yeni-kulplu-1769758521-2.jpg"
@@ -75260,7 +75260,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-yarim-altinli-kirmizi-ipli-bileklik-1769030125-6.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-yarim-altinli-kirmizi-ipli-bileklik-1769030125-6.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-yarim-altinli-kirmizi-ipli-bileklik-1769030125-6.jpg"
@@ -75285,7 +75285,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-yarim-altinli-beyaz-ipli-bileklik-1769030179-6.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-yarim-altinli-beyaz-ipli-bileklik-1769030179-6.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-yarim-altinli-beyaz-ipli-bileklik-1769030179-6.jpg"
@@ -75310,7 +75310,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-yarim-altinli-siyah-ipli-bileklik-1769030218-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-yarim-altinli-siyah-ipli-bileklik-1769030218-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-yarim-altinli-siyah-ipli-bileklik-1769030218-5.jpg"
@@ -75335,7 +75335,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-yarim-altin-siyah-ipli-kolye-1769029596-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-yarim-altin-siyah-ipli-kolye-1769029596-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-yarim-altin-siyah-ipli-kolye-1769029596-5.jpg"
@@ -75360,7 +75360,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ata-yarim-eski-1769160238-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ata-yarim-eski-1769160238-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ata-yarim-eski-1769160238-5.jpg"
@@ -75385,7 +75385,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-eski-kulplu-3-adet-1769758565-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-eski-kulplu-3-adet-1769758565-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-eski-kulplu-3-adet-1769758565-2.jpg"
@@ -75410,7 +75410,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-3-adet-yeni-kulplu-1769758602-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-3-adet-yeni-kulplu-1769758602-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-3-adet-yeni-kulplu-1769758602-2.jpg"
@@ -75435,7 +75435,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-tam-eski-kulplu-iko-guvence-etiketli-1769159684-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-tam-eski-kulplu-iko-guvence-etiketli-1769159684-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-tam-eski-kulplu-iko-guvence-etiketli-1769159684-5.jpg"
@@ -75460,7 +75460,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/ziynet-tam-altin-yeni-tarihli-2024-1769159948-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/ziynet-tam-altin-yeni-tarihli-2024-1769159948-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/ziynet-tam-altin-yeni-tarihli-2024-1769159948-5.jpg"
@@ -75485,7 +75485,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-tam-altinli-siyah-ipli-bileklik-1769030285-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-tam-altinli-siyah-ipli-bileklik-1769030285-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-tam-altinli-siyah-ipli-bileklik-1769030285-5.jpg"
@@ -75510,7 +75510,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-tam-altin-siyah-ipli-kolye-1769029749-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-tam-altin-siyah-ipli-kolye-1769029749-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-tam-altin-siyah-ipli-kolye-1769029749-5.jpg"
@@ -75535,7 +75535,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-eski-2-adet-yarim-altin-1769758653-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-eski-2-adet-yarim-altin-1769758653-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-2-adet-yarim-altin-1769758653-2.jpg"
@@ -75560,7 +75560,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ata-tam-eski-iko-guvence-etiketli-1769160267-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ata-tam-eski-iko-guvence-etiketli-1769160267-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ata-tam-eski-iko-guvence-etiketli-1769160267-5.jpg"
@@ -75585,7 +75585,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ata-tam-yeni-1769160295-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ata-tam-yeni-1769160295-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ata-tam-yeni-1769160295-5.jpg"
@@ -75610,7 +75610,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-yeni-2-adet-yarim-altin-1769758698-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-yeni-2-adet-yarim-altin-1769758698-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-yeni-2-adet-yarim-altin-1769758698-2.jpg"
@@ -75635,7 +75635,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-resat-altin-1769029108-4.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-resat-altin-1769029108-4.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-resat-altin-1769029108-4.jpg"
@@ -75660,7 +75660,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-resat-altin-siyah-ipli-kolye-1769029844-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-resat-altin-siyah-ipli-kolye-1769029844-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-resat-altin-siyah-ipli-kolye-1769029844-5.jpg"
@@ -75685,7 +75685,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-eski-kulplu-5-adet-1769758768-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-eski-kulplu-5-adet-1769758768-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-eski-kulplu-5-adet-1769758768-2.jpg"
@@ -75710,7 +75710,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-yeni-kulplu-5-adet-1769758831-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-yeni-kulplu-5-adet-1769758831-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-yeni-kulplu-5-adet-1769758831-2.jpg"
@@ -75735,7 +75735,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-eski-kulplu-6-adet-1769758865-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-eski-kulplu-6-adet-1769758865-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-eski-kulplu-6-adet-1769758865-2.jpg"
@@ -75760,7 +75760,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-yeni-kulplu-6-adet-1769758927-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-yeni-kulplu-6-adet-1769758927-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-yeni-kulplu-6-adet-1769758927-2.jpg"
@@ -75785,7 +75785,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-eski-3-adet-yarim-altin-1769758973-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-eski-3-adet-yarim-altin-1769758973-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-3-adet-yarim-altin-1769758973-2.jpg"
@@ -75810,7 +75810,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-yeni-3-adet-yarim-altin-1769759034-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-yeni-3-adet-yarim-altin-1769759034-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-yeni-3-adet-yarim-altin-1769759034-2.jpg"
@@ -75835,7 +75835,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-eski-2-adet-tam-altin-1769759072-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-eski-2-adet-tam-altin-1769759072-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-2-adet-tam-altin-1769759072-2.jpg"
@@ -75860,7 +75860,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-yeni-2-adet-tam-altin-1769759098-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-yeni-2-adet-tam-altin-1769759098-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-yeni-2-adet-tam-altin-1769759098-2.jpg"
@@ -75885,7 +75885,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-eski-2-adet-ata-tam-altin-1769767327-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-eski-2-adet-ata-tam-altin-1769767327-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-2-adet-ata-tam-altin-1769767327-2.jpg"
@@ -75910,7 +75910,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-yeni-2-adet-ata-tam-altin-1769767353-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-yeni-2-adet-ata-tam-altin-1769767353-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-yeni-2-adet-ata-tam-altin-1769767353-2.jpg"
@@ -75935,7 +75935,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-eski-kulplu-10-adet-1769759370-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-eski-kulplu-10-adet-1769759370-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-eski-kulplu-10-adet-1769759370-2.jpg"
@@ -75960,7 +75960,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-25-luk-gremse-altin-eski-kulplu-1769159994-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-25-luk-gremse-altin-eski-kulplu-1769159994-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-25-luk-gremse-altin-eski-kulplu-1769159994-5.jpg"
@@ -75985,7 +75985,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-25-luk-gremse-altin-yeni-kulplu-1769160014-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-25-luk-gremse-altin-yeni-kulplu-1769160014-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-25-luk-gremse-altin-yeni-kulplu-1769160014-5.jpg"
@@ -76010,7 +76010,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-yeni-kulplu-10-adet-1769759402-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-yeni-kulplu-10-adet-1769759402-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-yeni-kulplu-10-adet-1769759402-2.jpg"
@@ -76035,7 +76035,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-eski-5-adet-yarim-altin-1769759489-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-eski-5-adet-yarim-altin-1769759489-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-5-adet-yarim-altin-1769759489-2.jpg"
@@ -76060,7 +76060,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ata-25-luk-gremse-altin-eski-1769160349-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ata-25-luk-gremse-altin-eski-1769160349-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ata-25-luk-gremse-altin-eski-1769160349-5.jpg"
@@ -76085,7 +76085,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-yeni-5-adet-yarim-altin-1769759544-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-yeni-5-adet-yarim-altin-1769759544-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-yeni-5-adet-yarim-altin-1769759544-2.jpg"
@@ -76110,7 +76110,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-eski-3-adet-tam-altin-1769766844-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-eski-3-adet-tam-altin-1769766844-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-3-adet-tam-altin-1769766844-2.jpg"
@@ -76135,7 +76135,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-yeni-3-adet-tam-altin-1769766863-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-yeni-3-adet-tam-altin-1769766863-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-yeni-3-adet-tam-altin-1769766863-2.jpg"
@@ -76160,7 +76160,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-3-tam-altin-siyah-ipli-kolye-1769159168-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-3-tam-altin-siyah-ipli-kolye-1769159168-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-3-tam-altin-siyah-ipli-kolye-1769159168-5.jpg"
@@ -76185,7 +76185,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-eski-3-adet-ata-tam-altin-1769767387-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-eski-3-adet-ata-tam-altin-1769767387-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-3-adet-ata-tam-altin-1769767387-2.jpg"
@@ -76210,7 +76210,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-yeni-3-adet-ata-tam-altin-1769767405-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-yeni-3-adet-ata-tam-altin-1769767405-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-yeni-3-adet-ata-tam-altin-1769767405-2.jpg"
@@ -76235,7 +76235,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-eski-5-adet-tam-altin-1769766907-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-eski-5-adet-tam-altin-1769766907-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-5-adet-tam-altin-1769766907-2.jpg"
@@ -76260,7 +76260,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-besli-altin-eski-kulplu-1769160047-5.jpeg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-besli-altin-eski-kulplu-1769160047-5.jpeg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-besli-altin-eski-kulplu-1769160047-5.jpeg"
@@ -76285,7 +76285,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-yeni-5-adet-tam-altin-1769766926-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-yeni-5-adet-tam-altin-1769766926-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-yeni-5-adet-tam-altin-1769766926-2.jpg"
@@ -76310,7 +76310,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-besli-altin-yeni-kulplu-1769160069-5.jpeg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-besli-altin-yeni-kulplu-1769160069-5.jpeg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-besli-altin-yeni-kulplu-1769160069-5.jpeg"
@@ -76335,7 +76335,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-5-tam-altin-siyah-ipli-kolye-1769159198-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-5-tam-altin-siyah-ipli-kolye-1769159198-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-5-tam-altin-siyah-ipli-kolye-1769159198-5.jpg"
@@ -76360,7 +76360,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-eski-10-adet-yarim-altin-1769766972-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-eski-10-adet-yarim-altin-1769766972-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-10-adet-yarim-altin-1769766972-2.jpg"
@@ -76385,7 +76385,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-eski-20-adet-ceyrek-altin-1769767029-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-eski-20-adet-ceyrek-altin-1769767029-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-20-adet-ceyrek-altin-1769767029-2.jpg"
@@ -76410,7 +76410,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-eski-5-adet-ata-tam-altin-1769767450-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-eski-5-adet-ata-tam-altin-1769767450-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-5-adet-ata-tam-altin-1769767450-2.jpg"
@@ -76435,7 +76435,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ata-besli-altin-eski-1769160399-5.jpeg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ata-besli-altin-eski-1769160399-5.jpeg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ata-besli-altin-eski-1769160399-5.jpeg"
@@ -76460,7 +76460,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-yeni-5-adet-ata-tam-altin-1769767466-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-yeni-5-adet-ata-tam-altin-1769767466-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-yeni-5-adet-ata-tam-altin-1769767466-2.jpg"
@@ -76485,7 +76485,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ata-besli-altin-yeni-1769160420-5.jpeg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ata-besli-altin-yeni-1769160420-5.jpeg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ata-besli-altin-yeni-1769160420-5.jpeg"
@@ -76510,7 +76510,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-yeni-10-adet-yarim-altin-1769766989-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-yeni-10-adet-yarim-altin-1769766989-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-yeni-10-adet-yarim-altin-1769766989-2.jpg"
@@ -76535,7 +76535,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-yeni-20-adet-ceyrek-altin-1769767054-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-yeni-20-adet-ceyrek-altin-1769767054-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-yeni-20-adet-ceyrek-altin-1769767054-2.jpg"
@@ -76560,7 +76560,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-eski-10-adet-tam-altin-1769767102-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-eski-10-adet-tam-altin-1769767102-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-10-adet-tam-altin-1769767102-2.jpg"
@@ -76585,7 +76585,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-yeni-10-adet-tam-altin-1769767119-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-yeni-10-adet-tam-altin-1769767119-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-yeni-10-adet-tam-altin-1769767119-2.jpg"
@@ -76610,7 +76610,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-eski-10-adet-ata-tam-altin-1769767504-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-eski-10-adet-ata-tam-altin-1769767504-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-10-adet-ata-tam-altin-1769767504-2.jpg"
@@ -76635,7 +76635,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-yeni-10-adet-ata-tam-altin-1769767519-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-yeni-10-adet-ata-tam-altin-1769767519-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-yeni-10-adet-ata-tam-altin-1769767519-2.jpg"
@@ -76660,7 +76660,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-eski-50-adet-ceyrek-altin-1769767167-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-eski-50-adet-ceyrek-altin-1769767167-2.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-50-adet-ceyrek-altin-1769767167-2.jpg"
@@ -76685,7 +76685,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-5-gram-ajda-bilezik-1768251425-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-5-gram-ajda-bilezik-1768251425-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-5-gram-ajda-bilezik-1768251425-5.jpg"
@@ -76710,7 +76710,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-5-gram-kibrit-copu-ajda-bilezik-1768250625-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-5-gram-kibrit-copu-ajda-bilezik-1768250625-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-5-gram-kibrit-copu-ajda-bilezik-1768250625-5.jpg"
@@ -76735,7 +76735,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-5-gram-kalemli-ajda-bilezik-1768251217-1.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-5-gram-kalemli-ajda-bilezik-1768251217-1.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-5-gram-kalemli-ajda-bilezik-1768251217-1.jpg"
@@ -76760,7 +76760,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-5-gram-22-ayar-ajda-bilezik-1768250224-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-5-gram-22-ayar-ajda-bilezik-1768250224-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-5-gram-22-ayar-ajda-bilezik-1768250224-5.jpg"
@@ -76785,7 +76785,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-7-gram-sarnel-altin-bilezik-1769500259-4.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-7-gram-sarnel-altin-bilezik-1769500259-4.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-7-gram-sarnel-altin-bilezik-1769500259-4.jpg"
@@ -76810,7 +76810,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-7-gram-22-ayar-ajda-bilezik-1768303391-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-7-gram-22-ayar-ajda-bilezik-1768303391-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-7-gram-22-ayar-ajda-bilezik-1768303391-5.jpg"
@@ -76835,7 +76835,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-10-gram-ajda-bilezik-1768251489-6.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-10-gram-ajda-bilezik-1768251489-6.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-10-gram-ajda-bilezik-1768251489-6.jpg"
@@ -76860,7 +76860,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-10-gram-kibrit-copu-ajda-bilezik-1768250661-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-10-gram-kibrit-copu-ajda-bilezik-1768250661-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-10-gram-kibrit-copu-ajda-bilezik-1768250661-5.jpg"
@@ -76885,7 +76885,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-10-gram-kalemli-ajda-bilezik-1768251249-1.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-10-gram-kalemli-ajda-bilezik-1768251249-1.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-10-gram-kalemli-ajda-bilezik-1768251249-1.jpg"
@@ -76910,7 +76910,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-10-gram-dalgali-sarnel-altin-bilezik-1769500278-4.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-10-gram-dalgali-sarnel-altin-bilezik-1769500278-4.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-10-gram-dalgali-sarnel-altin-bilezik-1769500278-4.jpg"
@@ -76935,7 +76935,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-10-gr-22-ayar-burma-altin-bilezik-1768476908-1.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-10-gr-22-ayar-burma-altin-bilezik-1768476908-1.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-10-gr-22-ayar-burma-altin-bilezik-1768476908-1.jpg"
@@ -76960,7 +76960,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ajda-bilezik-10-gram-22-ayar-bilezik-1768303433-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ajda-bilezik-10-gram-22-ayar-bilezik-1768303433-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ajda-bilezik-10-gram-22-ayar-bilezik-1768303433-5.jpg"
@@ -76985,7 +76985,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-mujde-kristal-10-gr-22-ayar-bilezik-1768248558-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-mujde-kristal-10-gr-22-ayar-bilezik-1768248558-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-mujde-kristal-10-gr-22-ayar-bilezik-1768248558-5.jpg"
@@ -77010,7 +77010,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ajda-zikzak-10-gr-22-ayar-bilezik-1768248174-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ajda-zikzak-10-gr-22-ayar-bilezik-1768248174-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ajda-zikzak-10-gr-22-ayar-bilezik-1768248174-5.jpg"
@@ -77035,7 +77035,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ajda-kibrit-copu-ray-10-gr-22-ayar-bilezik-1768248382-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ajda-kibrit-copu-ray-10-gr-22-ayar-bilezik-1768248382-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ajda-kibrit-copu-ray-10-gr-22-ayar-bilezik-1768248382-5.jpg"
@@ -77060,7 +77060,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-20-gram-22-ayar-ajda-bilezik-1768303541-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-20-gram-22-ayar-ajda-bilezik-1768303541-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-20-gram-22-ayar-ajda-bilezik-1768303541-5.jpg"
@@ -77085,7 +77085,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-3lu-burma-20-gr-22-ayar-bilezik-1768247816-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-3lu-burma-20-gr-22-ayar-bilezik-1768247816-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-3lu-burma-20-gr-22-ayar-bilezik-1768247816-5.jpg"
@@ -77110,7 +77110,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-burma-20-gram-22-ayar-bilezik-1768248040-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-burma-20-gram-22-ayar-bilezik-1768248040-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-burma-20-gram-22-ayar-bilezik-1768248040-5.jpg"
@@ -77135,7 +77135,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-20-gr-22-ayar-2li-ajda-kanal-altin-bilezik-1769085778-4.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-20-gr-22-ayar-2li-ajda-kanal-altin-bilezik-1769085778-4.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-20-gr-22-ayar-2li-ajda-kanal-altin-bilezik-1769085778-4.jpg"
@@ -77160,7 +77160,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-20-gr-22-ayar-2li-zikzak-altin-bilezik-1769085838-4.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-20-gr-22-ayar-2li-zikzak-altin-bilezik-1769085838-4.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-20-gr-22-ayar-2li-zikzak-altin-bilezik-1769085838-4.jpg"
@@ -77185,7 +77185,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-20-gr-22-ayar-2li-mujde-altin-bilezik-1769085876-4.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-20-gr-22-ayar-2li-mujde-altin-bilezik-1769085876-4.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-20-gr-22-ayar-2li-mujde-altin-bilezik-1769085876-4.jpg"
@@ -77210,7 +77210,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-20-gr-22-ayar-2li-ajda-kibrit-copu-altin-bilezik-1769085918-4.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-20-gr-22-ayar-2li-ajda-kibrit-copu-altin-bilezik-1769085918-4.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-20-gr-22-ayar-2li-ajda-kibrit-copu-altin-bilezik-1769085918-4.jpg"
@@ -77235,7 +77235,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-3lu-burma-25-gr-22-ayar-bilezik-1768247905-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-3lu-burma-25-gr-22-ayar-bilezik-1768247905-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-3lu-burma-25-gr-22-ayar-bilezik-1768247905-5.jpg"
@@ -77260,7 +77260,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-3lu-burma-30-gr-22-ayar-bilezik-1768247939-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-3lu-burma-30-gr-22-ayar-bilezik-1768247939-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-3lu-burma-30-gr-22-ayar-bilezik-1768247939-5.jpg"
@@ -77285,7 +77285,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-30-gr-22-ayar-3lu-ajda-kanal-altin-bilezik-1769086045-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-30-gr-22-ayar-3lu-ajda-kanal-altin-bilezik-1769086045-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-30-gr-22-ayar-3lu-ajda-kanal-altin-bilezik-1769086045-5.jpg"
@@ -77310,7 +77310,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-30-gr-22-ayar-3lu-mujde-altin-bilezik-1769085963-4.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-30-gr-22-ayar-3lu-mujde-altin-bilezik-1769085963-4.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-30-gr-22-ayar-3lu-mujde-altin-bilezik-1769085963-4.jpg"
@@ -77335,7 +77335,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-30-gr-22-ayar-3-l-zig-zak-altn-bilezik-1769086001-4.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-30-gr-22-ayar-3-l-zig-zak-altn-bilezik-1769086001-4.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-30-gr-22-ayar-3-l-zig-zak-altn-bilezik-1769086001-4.jpg"
@@ -77360,7 +77360,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-30-gr-2li-mujde-ve-1-zikzak-22-ayar-altin-bilezik-1768916143-6.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-30-gr-2li-mujde-ve-1-zikzak-22-ayar-altin-bilezik-1768916143-6.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-30-gr-2li-mujde-ve-1-zikzak-22-ayar-altin-bilezik-1768916143-6.jpg"
@@ -77385,7 +77385,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-30-gr-2li-ajda-kibrit-copu-ve-1-zikzak-22-ayar-altin-bilezik-1768916273-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-30-gr-2li-ajda-kibrit-copu-ve-1-zikzak-22-ayar-altin-bilezik-1768916273-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-30-gr-2li-ajda-kibrit-copu-ve-1-zikzak-22-ayar-altin-bilezik-1768916273-5.jpg"
@@ -77410,7 +77410,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-30-gr-2li-ajda-kanalli-ve-1-zikzak-22-ayar-altin-bilezik-1768916388-8.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-30-gr-2li-ajda-kanalli-ve-1-zikzak-22-ayar-altin-bilezik-1768916388-8.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-30-gr-2li-ajda-kanalli-ve-1-zikzak-22-ayar-altin-bilezik-1768916388-8.jpg"
@@ -77435,7 +77435,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-30-gr-22-ayar-3lu-ajda-kibrit-copu-altin-bilezik-1769086170-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-30-gr-22-ayar-3lu-ajda-kibrit-copu-altin-bilezik-1769086170-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-30-gr-22-ayar-3lu-ajda-kibrit-copu-altin-bilezik-1769086170-5.jpg"
@@ -77460,7 +77460,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-50-gr-3lu-mujde-ve-2-zikzak-22-ayar-altin-bilezik-1768916475-4.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-50-gr-3lu-mujde-ve-2-zikzak-22-ayar-altin-bilezik-1768916475-4.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-50-gr-3lu-mujde-ve-2-zikzak-22-ayar-altin-bilezik-1768916475-4.jpg"
@@ -77485,7 +77485,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-50-gr-3lu-ajda-kanalli-ve-2-zikzak-22-ayar-altin-bilezik-1768916538-4.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-50-gr-3lu-ajda-kanalli-ve-2-zikzak-22-ayar-altin-bilezik-1768916538-4.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-50-gr-3lu-ajda-kanalli-ve-2-zikzak-22-ayar-altin-bilezik-1768916538-4.jpg"
@@ -77510,7 +77510,7 @@ const PRODUCTS = [
     "image": "https://agakulche.mncdn.com/image/product/agakulche-50-gr-3lu-ajda-kibrit-copu-ve-2-zikzak-22-ayar-altin-bilezik-1768916614-4.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-50-gr-3lu-ajda-kibrit-copu-ve-2-zikzak-22-ayar-altin-bilezik-1768916614-4.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
-    "hallmark": "T.C. Darphane & Belgin Mühürlü",
+    "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-50-gr-3lu-ajda-kibrit-copu-ve-2-zikzak-22-ayar-altin-bilezik-1768916614-4.jpg"
