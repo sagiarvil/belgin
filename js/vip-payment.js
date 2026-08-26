@@ -117,15 +117,16 @@
       return null;
     },
 
-    // 7. Sade & Şık WhatsApp Mesaj Metni
+    // 7. Lüks WhatsApp Mesaj İçi VIP Maskeli Format
     buildWhatsAppMessageText(payload, shortUrl) {
+      const title = payload.title || 'Lüks Showroom Siparişi';
       const amount = Number(payload.amount || 0).toLocaleString('tr-TR');
 
-      return `Tutar: ₺${amount}
-Güvenli Ödeme Linki:
-${shortUrl}
+      return `Sayın Değerli Müşterimiz,
+Belgin Kuyumculuk Buca Showroom'umuzda adınıza ayrılan ${title} için VIP güvenli ödeme bağlantınız hazırlanmıştır:
 
-3D Secure güvencesiyle ödemenizi tamamlayabilirsiniz.`;
+💳 Tutar: ₺${amount}
+🔒 Güvenli Ödeme: [👉 3D Secure ile Ödemeyi Tamamla](${shortUrl})`;
     },
 
     // 8. WhatsApp Paylaşım URL'i
