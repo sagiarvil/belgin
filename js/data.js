@@ -73733,7 +73733,7 @@ const PRODUCTS = [
     "rateAccuracy": "+1.2 sn/gün",
     "waterTest": "10 Bar (100 Metre) Geçti",
     "inStock": true,
-    "buyPrice": 404500,
+    "buyPrice": 409000,
     "images": [
       "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dw4cc3dbd9/TAG_Heuer_Carrera/WDA2114.BA0043/WDA2114.BA0043_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600"
     ]
@@ -73761,7 +73761,7 @@ const PRODUCTS = [
     "rateAccuracy": "+1.5 sn/gün",
     "waterTest": "10 Bar (100 Metre) Geçti",
     "inStock": true,
-    "buyPrice": 352000,
+    "buyPrice": 356500,
     "images": [
       "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dw6eb05ae1/TAG_Heuer_Carrera/CBN2A1AA.FT6228/CBN2A1AA.FT6228_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600"
     ]
@@ -73789,7 +73789,7 @@ const PRODUCTS = [
     "rateAccuracy": "+0.1 sn/ay",
     "waterTest": "20 Bar (200 Metre) Geçti",
     "inStock": true,
-    "buyPrice": 184000,
+    "buyPrice": 188500,
     "images": [
       "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dwfa2a241b/TAG_Heuer_Formula_1/CAZ101N.FC8243/CAZ101N.FC8243_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600"
     ]
@@ -73817,7 +73817,7 @@ const PRODUCTS = [
     "rateAccuracy": "+0.2 sn/ay",
     "waterTest": "20 Bar (200 Metre) Geçti",
     "inStock": true,
-    "buyPrice": 142000,
+    "buyPrice": 146500,
     "images": [
       "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dw3d6718cf/TAG_Heuer_Formula_1/WAZ1110.FT8023/WAZ1110.FT8023_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600"
     ]
@@ -73845,7 +73845,7 @@ const PRODUCTS = [
     "rateAccuracy": "+1.1 sn/gün",
     "waterTest": "30 Bar (300 Metre) Geçti",
     "inStock": true,
-    "buyPrice": 104900,
+    "buyPrice": 109400,
     "images": [
       "https://api.ecom.longines.com/media/catalog/product/w/a/watch-collection-hydroconquest-l3-781-4-56-6-d65499-hero.png?w=2560"
     ]
@@ -73873,7 +73873,7 @@ const PRODUCTS = [
     "rateAccuracy": "+0.7 sn/gün",
     "waterTest": "3 Bar (30 Metre) Geçti",
     "inStock": true,
-    "buyPrice": 207800,
+    "buyPrice": 212300,
     "images": [
       "https://api.ecom.longines.com/media/catalog/product/w/a/watch-collection-longines-master-collection-moonphase-l2-909-4-78-3-8f8b4a-hero.png?w=2560"
     ]
@@ -73901,7 +73901,7 @@ const PRODUCTS = [
     "rateAccuracy": "+0.9 sn/gün",
     "waterTest": "30 Bar (300 Metre) Geçti",
     "inStock": true,
-    "buyPrice": 195900,
+    "buyPrice": 200400,
     "images": [
       "https://www.rado.com/media/sgecom_contentsystem/Campaigns/Valentines_Day/captain-cook-red.jpg?im=Resize%3D%281024%2C682%29%2Caspect%3Dfill%3BCrop%3D%280%2C0%2C1024%2C682%29%2Cgravity%3DCenter"
     ]
@@ -73929,7 +73929,7 @@ const PRODUCTS = [
     "rateAccuracy": "+1.4 sn/gün",
     "waterTest": "5 Bar (50 Metre) Geçti",
     "inStock": true,
-    "buyPrice": 188200,
+    "buyPrice": 192700,
     "images": [
       "https://www.rado.com/media/sgecom_contentsystem/PDP_Images/true-square-black-carousel-a.jpg?im=Resize%3D%281024%2C682%29%2Caspect%3Dfill%3BCrop%3D%280%2C0%2C1024%2C682%29%2Cgravity%3DCenter"
     ]
@@ -73955,7 +73955,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.cartier.com/en-ie/jewellery/bracelets/love/-love-bracelet-classic-model-CRB6067417",
     "hallmark": "Au750 • 17 • CRD99218",
     "inStock": true,
-    "buyPrice": 520000,
+    "buyPrice": 524500,
     "images": [
       "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
       "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw5412be7e/images/large/26af9aba6c6c5bee84d47741ebaadfd6.png?sfrm=png&sh=750&sm=fit&sw=750",
@@ -73983,7 +73983,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.cartier.com/en-tr/jewellery/rings/love/love-ring-small-model-CRB4085000.html",
     "hallmark": "Au750 • 56",
     "inStock": true,
-    "buyPrice": 128000,
+    "buyPrice": 132500,
     "images": [
       "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw47516a74/images/large/509efad81d12569981abebf66c433720.png?sfrm=png&sh=750&sm=fit&sw=750",
       "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dwc27b40c7/images/large/5c4da398fe195e5fa36ea2b5d4ce0071.png?sfrm=png&sh=750&sm=fit&sw=750"
@@ -74000,7 +74000,7 @@ const PRODUCTS = [
     "isPreOwned": true,
     "isGold": true,
     "price": 430000,
-    "buyPrice": 420000,
+    "buyPrice": 429500,
     "metal": "18K Sarı Altın (Au750)",
     "dial": "Pırlantasız Klasik Model",
     "year": "2024",

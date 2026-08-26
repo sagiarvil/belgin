@@ -461,7 +461,7 @@ const App = {
   renderProductCard(p) {
     const hoverImg = p.hoverImage || p.image;
     const isPreOwned = p.isPreOwned === true;
-    const buyPrice = p.buyPrice || (p.price - 5000);
+    const buyPrice = p.buyPrice || (p.price - 500);
 
     const priceHtml = isPreOwned ? `
       <div class="prod-dual-pricing">
@@ -505,7 +505,7 @@ const App = {
     if (!panel || !backdrop) return;
 
     const isHighVal = (typeof isHighValueSecureDelivery === 'function' ? isHighValueSecureDelivery(p) : p.price > 12000);
-    const buyPrice = p.buyPrice || (p.price - 5000);
+    const buyPrice = p.buyPrice || (p.price - 500);
 
     panel.innerHTML = `
       <button class="drawer-close-btn" onclick="App.closeQuickDrawer()">×</button>
@@ -995,7 +995,7 @@ const App = {
                   <div class="pdp-dual-row pdp-buy-highlight">
                     <div class="pdp-buyback-box">
                       <span class="pdp-buyback-title">Alış Fiyatı:</span>
-                      <span class="pdp-buyback-price">${formatPrice(p.buyPrice || (p.price - 5000))}</span>
+                      <span class="pdp-buyback-price">${formatPrice(p.buyPrice || (p.price - 500))}</span>
                     </div>
                   </div>
                 </div>
