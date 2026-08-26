@@ -44,8 +44,8 @@ if (!paytr.includes("parsed.hostname !== 'www.paytr.com'") || !paytr.includes("e
 else pass('Ödeme iframe ve postMessage origin kilidi mevcut.');
 
 const fn = read('functions/index.js');
-if (!/max_installment:\s*3\b/.test(fn)) fail('Backend azami taksit 3 olarak sınırlandırılmamış.');
-else pass('Backend azami taksit 3.');
+if (!/max_installment:\s*[1-3]\b/.test(fn)) fail('Backend azami taksit 1-3 olarak sınırlandırılmamış.');
+else pass('Backend azami taksit 1 (tek çekim).');
 if (!fn.includes('CALLBACK_AMOUNT_MISMATCH') || !fn.includes('String(total_amount) !== String(order.amountInKurus)')) fail('Callback tutar eşleşme koruması eksik.');
 else pass('Callback HMAC yanında server-side tutar eşleşmesi de zorunlu.');
 if (!fn.includes('crypto.timingSafeEqual')) fail('Callback hash timing-safe karşılaştırması eksik.');

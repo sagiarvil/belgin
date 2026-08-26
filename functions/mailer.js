@@ -27,7 +27,7 @@ function buildLegalEmailHtml(order) {
   const evidenceId = order.evidenceId || orderId;
   const customerName = order.customerName || order.customer?.name || 'Müşteri (Sipariş Sahibi)';
   const customerPhone = order.customerPhone || order.customer?.phone || '—';
-  const customerIdentity = order.customerIdentity || order.customer?.identity || 'Showroom Tesliminde İbraz Edilecek';
+  const customerIdentity = order.customer?.identityNumber || order.customerIdentity || order.customer?.identity || 'Showroom Tesliminde İbraz Edilecek';
   const customerEmail = order.customerEmail || order.customer?.email || null;
   const totalAmount = formatCurrency(order.totalAmount || order.total || 0);
   const items = Array.isArray(order.items) ? order.items : [{ name: order.title || 'Lüks Koleksiyon Ürünü', price: order.totalAmount || order.total || 0, qty: 1 }];

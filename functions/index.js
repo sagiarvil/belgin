@@ -316,6 +316,7 @@ exports.createPayTRToken = functions
           name: String(body.user_name || '').slice(0, 150),
           email,
           phone: String(body.user_phone || '').slice(0, 50),
+          identityNumber: String(body.customerIdentity || body.identityNumber || '').trim().slice(0, 50),
           address: customerAddress,
         },
         legal: {
@@ -345,6 +346,7 @@ exports.createPayTRToken = functions
         deliveryMethod: compliance.deliveryMethod,
         highValueSecureDelivery: compliance.hasHighValue,
         highValueThreshold: HIGH_VALUE_SECURE_DELIVERY_THRESHOLD,
+        customerIdentity: String(body.customerIdentity || body.identityNumber || '').trim().slice(0, 50),
         productSnapshotHash,
         legalEvidence,
       });
@@ -359,8 +361,8 @@ exports.createPayTRToken = functions
         user_basket: basketBase64,
         debug_on: testMode,
         test_mode: testMode,
-        no_installment: 0,
-        max_installment: 3,
+        no_installment: 1,
+        max_installment: 1,
         user_name: String(body.user_name || 'Müşteri').slice(0, 150),
         user_address: customerAddress,
         user_phone: String(body.user_phone || '').slice(0, 50),
