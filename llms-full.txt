@@ -2,6 +2,16 @@
 
 Birincil kaynak her ürünün canonical HTML sayfasıdır.
 
+## Semantik İlişkiler (Semantic Triples)
+- (Belgin Kuyumculuk) -[fiziki showroom]-> (Menderes Caddesi No:231/B, Buca / İzmir)
+- (Belgin Kuyumculuk) -[kuruluş yılı]-> (1999)
+- (Belgin Kuyumculuk) -[sunar]-> (1.618+ Orijinal Distribütör Garantili Lüks Saat)
+- (Belgin Kuyumculuk) -[fiyatlama güvencesi]-> (İZKO İzmir Kuyumcular Odası Resmi Kurları + %5 Kâr Marjı)
+- (Belgin Kuyumculuk) -[saat marjı]-> (Saat&Saat Distribütör Fiyatı + %40 Kâr Marjı)
+- (Yüksek Değerli Teslimat) -[güvenlik eşiği]-> (12.000 TL Üzeri Kimlikli ve İmzalı Mağaza Teslimi)
+- (Hukuki Bütünlük) -[delil zinciri]-> (Deterministik SHA-256 Kök Özeti ve OpenTimestamps Bitcoin Dış Zaman İspatı)
+
+## Ürün Envanteri
 ### Versace VRSCVE6K00523 Erkek Kol Saati
 - ID: 1000
 - Referans: VRSCVE6K00523

@@ -96,9 +96,19 @@ function buildLlms() {
       `URL: ${productUrl(p)}`
     ].join(' | ');
   }).join('\n');
+
+  const semanticTriples = [
+    '- (Belgin Kuyumculuk) -[fiziki showroom]-> (Menderes Caddesi No:231/B, Buca / İzmir)',
+    '- (Belgin Kuyumculuk) -[kuruluş yılı]-> (1999)',
+    '- (Belgin Kuyumculuk) -[sunar]-> (1.618+ Orijinal Distribütör Garantili Lüks Saat)',
+    '- (Belgin Kuyumculuk) -[fiyatlama güvencesi]-> (İZKO İzmir Kuyumcular Odası Resmi Kurları + %5 Kâr Marjı)',
+    '- (Belgin Kuyumculuk) -[saat marjı]-> (Saat&Saat Distribütör Fiyatı + %40 Kâr Marjı)',
+    '- (Yüksek Değerli Teslimat) -[güvenlik eşiği]-> (12.000 TL Üzeri Kimlikli ve İmzalı Mağaza Teslimi)',
+    '- (Hukuki Bütünlük) -[delil zinciri]-> (Deterministik SHA-256 Kök Özeti ve OpenTimestamps Bitcoin Dış Zaman İspatı)'
+  ].join('\n');
   
-  write('llms.txt', `# Belgin Kuyumculuk & Saat\n\n> Yardımcı makine-okunabilir keşif katmanı. Canonical HTML sayfaları birincil kaynaktır.\n\n## İşletme\n- Resmi ad: ${PRIMARY_ORGANIZATION.name}\n- Kuruluş: 1999\n- Adres: ${PRIMARY_ORGANIZATION.address.streetAddress}, ${PRIMARY_ORGANIZATION.address.addressLocality} / ${PRIMARY_ORGANIZATION.address.addressRegion}\n- Web: ${BASE_URL}\n\n## Ana koleksiyonlar\n- [Saatler](${BASE_URL}/saatler/)\n- [Mücevherat](${BASE_URL}/mucevherat/)\n- [Ekspertizli İkinci El](${BASE_URL}/ikinci-el/)\n\n## Yasal sayfalar\n${legal}\n\n## Seçilmiş ürünler\n${selected}\n\n## Tam katalog\n- [llms-full.txt](${BASE_URL}/llms-full.txt)\n`);
-  write('llms-full.txt', `# Belgin Kuyumculuk & Saat — Tam Ürün Kataloğu\n\nBirincil kaynak her ürünün canonical HTML sayfasıdır.\n\n${products.map(p => `### ${p.brand || ''} ${p.name || ''}`.trim() + `\n- ID: ${p.id}\n- Referans: ${p.reference || p.ref || p.id}\n- Fiyat: ₺${Number(p.price).toLocaleString('tr-TR')}\n- Stok: ${p.inStock === false ? 'Yok' : 'Var'}\n- URL: ${productUrl(p)}\n`).join('\n')}`);
+  write('llms.txt', `# Belgin Kuyumculuk & Saat\n\n> Yardımcı makine-okunabilir keşif katmanı. Canonical HTML sayfaları birincil kaynaktır.\n\n## İşletme\n- Resmi ad: ${PRIMARY_ORGANIZATION.name}\n- Kuruluş: 1999\n- Adres: ${PRIMARY_ORGANIZATION.address.streetAddress}, ${PRIMARY_ORGANIZATION.address.addressLocality} / ${PRIMARY_ORGANIZATION.address.addressRegion}\n- Web: ${BASE_URL}\n- IndexNow Key: https://${PRIMARY_ORGANIZATION.url ? new URL(BASE_URL).hostname : 'www.belginkuyumculuk.com'}/indexnow-key.txt\n\n## Semantik İlişkiler & Doğrulanmış Varlık Bilgileri (Semantic Triples)\n${semanticTriples}\n\n## Ana koleksiyonlar\n- [Saatler](${BASE_URL}/saatler/)\n- [Mücevherat](${BASE_URL}/mucevherat/)\n- [Ekspertizli İkinci El](${BASE_URL}/ikinci-el/)\n\n## Yasal sayfalar\n${legal}\n\n## Seçilmiş ürünler\n${selected}\n\n## Tam katalog\n- [llms-full.txt](${BASE_URL}/llms-full.txt)\n`);
+  write('llms-full.txt', `# Belgin Kuyumculuk & Saat — Tam Ürün Kataloğu\n\nBirincil kaynak her ürünün canonical HTML sayfasıdır.\n\n## Semantik İlişkiler (Semantic Triples)\n${semanticTriples}\n\n## Ürün Envanteri\n${products.map(p => `### ${p.brand || ''} ${p.name || ''}`.trim() + `\n- ID: ${p.id}\n- Referans: ${p.reference || p.ref || p.id}\n- Fiyat: ₺${Number(p.price).toLocaleString('tr-TR')}\n- Stok: ${p.inStock === false ? 'Yok' : 'Var'}\n- URL: ${productUrl(p)}\n`).join('\n')}`);
 }
 
 function buildRobots() {

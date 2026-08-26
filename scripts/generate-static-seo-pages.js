@@ -131,6 +131,26 @@ function productSchema(p) {
       availability: p.inStock === false
         ? 'https://schema.org/OutOfStock'
         : 'https://schema.org/InStock',
+      hasMerchantReturnPolicy: {
+        '@type': 'MerchantReturnPolicy',
+        applicableCountry: 'TR',
+        returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+        merchantReturnDays: 14,
+        returnMethod: 'https://schema.org/ReturnInStore',
+        returnFees: 'https://schema.org/FreeReturn'
+      },
+      shippingDetails: {
+        '@type': 'OfferShippingDetails',
+        shippingRate: {
+          '@type': 'MonetaryAmount',
+          value: '0',
+          currency: 'TRY'
+        },
+        shippingDestination: {
+          '@type': 'DefinedRegion',
+          addressCountry: 'TR'
+        }
+      },
       seller: { '@id': `${BASE_URL}/#organization` }
     }
   };
