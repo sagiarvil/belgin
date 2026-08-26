@@ -534,7 +534,7 @@
         };
 
         const origin = window.location.origin.includes('localhost') ? window.location.origin : 'https://www.belginkuyumculuk.com';
-        currentUrl = VipEngine.buildPremiumUrl(payload, origin);
+        currentUrl = VipEngine.buildVipUrl(payload, origin);
         currentMsg = VipEngine.buildWhatsAppMessageText(payload, currentUrl);
 
         generatedUrlText.textContent = currentUrl;

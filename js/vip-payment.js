@@ -1,39 +1,7 @@
 // BELGIN KUYUMCULUK — VIP ÖDEME LİNKİ & CHECKOUT MOTORU
-// Prestijli Temiz URL (Clean Slug & Amount), Kompakt Maskeleme ve WhatsApp Entegrasyonu
+// Güvenli Kompakt Maskeli Token (?p=...) ve WhatsApp Entegrasyonu
 (function (global) {
   'use strict';
-
-  function slugify(value) {
-    const tr = {
-      'ç': 'c', 'Ç': 'c', 'ğ': 'g', 'Ğ': 'g',
-      'ı': 'i', 'İ': 'i', 'ö': 'o', 'Ö': 'o',
-      'ş': 's', 'Ş': 's', 'ü': 'u', 'Ü': 'u'
-    };
-
-    return String(value ?? '')
-      .split('')
-      .map(ch => tr[ch] ?? ch)
-      .join('')
-      .normalize('NFKD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .toLowerCase()
-      .replace(/&/g, ' ve ')
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-+|-+$/g, '')
-      .replace(/-{2,}/g, '-');
-  }
-
-  function unslugify(slug) {
-    if (!slug) return 'Lüks Showroom Siparişi';
-    return slug
-      .split('-')
-      .map(word => {
-        if (!word) return '';
-        if (word.length <= 2) return word.toUpperCase();
-        return word.charAt(0).toUpperCase() + word.slice(1);
-      })
-      .join(' ');
-  }
 
   function toBase64Url(str) {
     const utf8Bytes = new TextEncoder().encode(str);
@@ -59,36 +27,7 @@
   }
 
   const VipEngine = {
-    slugify,
-    unslugify,
-
-    // 1. Prestijli Temiz URL Üretimi (/vip/rolex-submariner-41mm-date-55555)
-    buildPremiumUrl(payload, customOrigin) {
-      const origin = customOrigin || (typeof window !== 'undefined' && window.location.origin.includes('localhost') ? window.location.origin : 'https://www.belginkuyumculuk.com');
-      const slug = slugify(payload.title || 'ozel-siparis');
-      const amount = Math.round(Number(payload.amount) || 0);
-      return `${origin}/vip/${slug}-${amount}`;
-    },
-
-    // 2. Prestijli URL Path Çözümleme (Örn: /vip/rolex-submariner-55555)
-    resolveFromPath(pathname) {
-      if (!pathname) return null;
-      const cleanPath = pathname.replace(/\/+$/, '');
-      const match = cleanPath.match(/\/vip\/([a-zA-Z0-9_-]+)-(\d+)$/);
-      if (match) {
-        const slug = match[1];
-        const amount = Number(match[2]);
-        const title = unslugify(slug);
-        return {
-          orderId: 'VIP-' + Math.floor(100000 + Math.random() * 900000),
-          title,
-          amount
-        };
-      }
-      return null;
-    },
-
-    // 3. Kompakt Maskeli Token Üretimi (orderId|title|amount)
+    // 1. Kompakt Maskeli Token Üretimi (orderId|title|amount)
     encodeCompact(payload) {
       try {
         const orderId = String(payload.orderId || '').trim();
@@ -102,7 +41,7 @@
       }
     },
 
-    // 4. Kompakt Token Çözümleme
+    // 2. Kompakt Token Çözümleme
     decodeCompact(token) {
       try {
         if (!token) return null;
@@ -121,7 +60,7 @@
       }
     },
 
-    // 5. Standart JSON Base64URL Encode (Geriye dönük uyumluluk)
+    // 3. Standart JSON Base64URL Encode (Geriye dönük uyumluluk)
     encodePayload(data) {
       try {
         const jsonStr = JSON.stringify(data);
@@ -132,7 +71,7 @@
       }
     },
 
-    // 6. Standart JSON Base64URL Decode
+    // 4. Standart JSON Base64URL Decode
     decodePayload(token) {
       try {
         if (!token) return null;
@@ -143,21 +82,42 @@
       }
     },
 
-    // 7. Akıllı Çözücü (Sırasıyla: Path -> Kompakt Token -> JSON Token)
+    // 5. VIP Link Üretimi (https://www.belginkuyumculuk.com/vip?p=...)
+    buildVipUrl(payload, customOrigin) {
+      const origin = customOrigin || (typeof window !== 'undefined' && window.location.origin.includes('localhost') ? window.location.origin : 'https://www.belginkuyumculuk.com');
+      const compactToken = this.encodeCompact(payload);
+      return `${origin}/vip?p=${compactToken}`;
+    },
+
+    // 6. Akıllı Çözücü (?p=... -> ?token=... -> /vip/slug-amount)
     resolvePayload(param, pathname) {
-      if (pathname) {
-        const fromPath = this.resolveFromPath(pathname);
-        if (fromPath && fromPath.amount > 0) return fromPath;
+      if (param) {
+        const compact = this.decodeCompact(param);
+        if (compact && compact.amount > 0) return compact;
+        const json = this.decodePayload(param);
+        if (json && json.amount > 0) return json;
       }
-      if (!param) return null;
-      const compact = this.decodeCompact(param);
-      if (compact && compact.amount > 0) return compact;
-      const json = this.decodePayload(param);
-      if (json && json.amount > 0) return json;
+      if (pathname) {
+        const cleanPath = pathname.replace(/\/+$/, '');
+        const match = cleanPath.match(/\/vip\/([a-zA-Z0-9_-]+)-(\d+)$/);
+        if (match) {
+          const rawSlug = match[1];
+          const amount = Number(match[2]);
+          const title = rawSlug
+            .split('-')
+            .map(w => w ? (w.length <= 2 ? w.toUpperCase() : w.charAt(0).toUpperCase() + w.slice(1)) : '')
+            .join(' ');
+          return {
+            orderId: 'VIP-' + Math.floor(100000 + Math.random() * 900000),
+            title,
+            amount
+          };
+        }
+      }
       return null;
     },
 
-    // 8. Sade & Güvenli WhatsApp Mesaj Metni
+    // 7. Sade & Şık WhatsApp Mesaj Metni
     buildWhatsAppMessageText(payload, shortUrl) {
       const title = payload.title || 'Siparişiniz';
       const amount = Number(payload.amount || 0).toLocaleString('tr-TR');
@@ -171,7 +131,7 @@ ${shortUrl}
 3D Secure güvencesiyle ödemenizi tamamlayabilirsiniz.`;
     },
 
-    // 9. WhatsApp Paylaşım URL'i
+    // 8. WhatsApp Paylaşım URL'i
     buildWhatsAppShareUrl(payload, shortUrl) {
       const message = this.buildWhatsAppMessageText(payload, shortUrl);
       return `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
