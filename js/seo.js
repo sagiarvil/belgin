@@ -5,9 +5,9 @@
 
 const SeoManager = {
   defaultTitle: "Belgin Kuyumculuk | Lüks Saat, İkinci El & Mücevherat (Est. 1999)",
-  defaultDesc: "İzmir Buca Menderes Caddesinde 25 yıldır ekspertizli Rolex, Patek Philippe, Cartier saatler, 24K has altın ve elmas mücevherat. Alım, satım ve takas.",
+  defaultDesc: "İzmir Buca Menderes Caddesinde 1999'dan beri ekspertizli Rolex, Patek Philippe, Cartier saatler, 24K has altın ve elmas mücevherat. Alım, satım ve takas.",
   defaultKeywords: "izmir buca kuyumcu, ikinci el lüks saat, altın bilezik, rolex izmir, cartier izmir, pırlanta tektaş, güvenilir saat ekspertiz, buca kuyumcuları",
-  baseUrl: "https://belginkuyumculuk.com",
+  baseUrl: "https://www.belginkuyumculuk.com",
 
   init() {
     this.createOrUpdateCanonical();
@@ -18,7 +18,7 @@ const SeoManager = {
     const pageMeta = {
       'ana-sayfa': {
         title: "Belgin Kuyumculuk | Lüks Saat, İkinci El & Mücevherat (Est. 1999)",
-        desc: "İzmir Buca Menderes Caddesinde 25 yıldır ekspertizli Rolex, Patek Philippe, Cartier saatler, 24K has altın ve elmas mücevherat. Alım, satım ve takas.",
+        desc: "İzmir Buca Menderes Caddesinde 1999'dan beri ekspertizli Rolex, Patek Philippe, Cartier saatler, 24K has altın ve elmas mücevherat. Alım, satım ve takas.",
         keywords: "izmir buca kuyumcu, ikinci el lüks saat, altın bilezik, rolex izmir, cartier izmir, pırlanta tektaş, güvenilir saat ekspertiz, buca kuyumcuları",
         breadcrumb: "Ana Sayfa"
       },
@@ -42,7 +42,7 @@ const SeoManager = {
       },
       'hikayemiz': {
         title: "Hikayemiz & 25 Yıllık Güven Mirası | Belgin Kuyumculuk",
-        desc: "1999 yılından bu yana İzmir Buca'da değişmeyen adresimizde dürüstlük, şeffaf ekspertiz... sarsılmaz müşteri memnuniyeti ilkeleriyle hizmet veriyoruz.",
+        desc: "1999 yılından bu yana İzmir Buca'da değişmeyen adresimizde dürüstlük, şeffaf ekspertiz ve sarsılmaz müşteri memnuniyeti ilkeleriyle hizmet veriyoruz.",
         keywords: "belgin kuyumculuk hakkında, buca en eski kuyumcu, 1999 kuyumcu izmir, güvenilir sarraf izmir",
         breadcrumb: "Hikayemiz"
       },
@@ -60,8 +60,8 @@ const SeoManager = {
       },
       'odeme': {
         title: "Güvenli Ödeme & VIP Teslimat | Belgin Kuyumculuk",
-        desc: "BDDK lisanslı PayTR 256-bit SSL korumalı 3D Secure tek çekim ve banka havalesi seçeneği. Loomis VIP zırhlı kurye teslimat bilgileri.",
-        keywords: "paytr ödeme, zırhlı kurye teslimat",
+        desc: "BDDK lisanslı PayTR 256-bit SSL korumalı 3D Secure tek çekim ve banka havalesi seçeneği. Mağazadan güvenli teslimat bilgileri.",
+        keywords: "paytr ödeme, mağazadan güvenli teslimat",
         breadcrumb: "Güvenli Ödeme"
       },
       'sertifika': {
@@ -76,10 +76,11 @@ const SeoManager = {
     let desc = this.defaultDesc;
     let keywords = this.defaultKeywords;
     let breadcrumbName = "";
+    let canonicalUrl = this.baseUrl;
 
-    // Ürün Sayfası Özel Kontrolü (#urun-ID)
+    // Ürün Sayfası Özel Kontrolü
     if (page.startsWith('urun-') || page === 'urun') {
-      let prodId = options.id;
+      let prodId = options.id || options.productId;
       if (!prodId && page.startsWith('urun-')) {
         prodId = parseInt(page.replace('urun-', ''));
       }
@@ -88,12 +89,15 @@ const SeoManager = {
         const p = PRODUCTS.find(x => x.id === prodId);
         if (p) {
           title = `${p.brand} ${p.name} | Belgin Kuyumculuk`;
-          desc = `${p.brand} ${p.name} (${p.reference}) - ${p.desc} 12 nokta ekspertiz onaylı, sigortalı Loomis zırhlı kurye teslimat ve takas güvencesiyle.`;
-          keywords = `${p.brand.toLowerCase()}, ${p.name.toLowerCase()}, ${p.reference.toLowerCase()}, izmir buca kuyumcu, lüks saat alım satım, juste un clou izmir`;
+          desc = `${p.brand} ${p.name} (${p.reference || p.ref || p.id}) - ${p.desc || p.description || ''}`.slice(0, 280);
+          keywords = `${p.brand.toLowerCase()}, ${p.name.toLowerCase()}, izmir buca kuyumcu, lüks saat, külçe altın`;
           breadcrumbName = p.name;
 
+          const route = (window.SEO_ROUTE_MAP || {})[String(p.id)] || `/?urun=${encodeURIComponent(p.id)}`;
+          canonicalUrl = `${this.baseUrl}${route}`;
+
           // 2. Ürün İçin JSON-LD Şeması Enjekte Et
-          this.injectProductSchema(p);
+          this.injectProductSchema(p, canonicalUrl);
         }
       }
     } else {
@@ -103,8 +107,11 @@ const SeoManager = {
       keywords = meta.keywords;
       breadcrumbName = meta.breadcrumb;
 
+      const route = (window.SEO_CATEGORY_ROUTES || {})[page] || (page === 'ana-sayfa' ? '/' : `/${page}/`);
+      canonicalUrl = `${this.baseUrl}${route}`;
+
       // Kategori ve Statik Sayfa Şeması Enjekte Et
-      this.injectPageSchema(page, breadcrumbName);
+      this.injectPageSchema(page, breadcrumbName, canonicalUrl);
     }
 
     // 3. Meta Etiketlerini Tarayıcıya Yazdır
@@ -112,13 +119,13 @@ const SeoManager = {
     this.setMetaTag('description', desc);
     this.setMetaTag('keywords', keywords);
 
-    // Open Graph (Sosyal Medya & AI Search Uyum)
+    // Open Graph
     this.setMetaProperty('og:title', title);
     this.setMetaProperty('og:description', desc);
-    this.setMetaProperty('og:url', `${this.baseUrl}/#${page}`);
+    this.setMetaProperty('og:url', canonicalUrl);
     
     // Canonical link güncelle
-    this.createOrUpdateCanonical(`${this.baseUrl}/#${page}`);
+    this.createOrUpdateCanonical(canonicalUrl);
   },
 
   setMetaTag(name, content) {
@@ -152,48 +159,47 @@ const SeoManager = {
     el.setAttribute('href', href);
   },
 
-  injectProductSchema(p) {
+  injectProductSchema(p, canonicalUrl) {
+    const isUsed = p.isPreOwned || /ikinci.?el/i.test(p.conditionBadge || '');
     const schema = {
       "@context": "https://schema.org",
       "@type": "Product",
-      "@id": `${this.baseUrl}/#urun-${p.id}`,
-      "name": `${p.brand} ${p.name}`,
-      "image": p.image,
-      "description": p.desc,
-      "sku": p.reference,
-      "mpn": p.reference.split('·')[0].trim(),
+      "@id": `${canonicalUrl}#product`,
+      "name": `${p.brand} ${p.name}`.trim(),
+      "image": [p.image],
+      "description": p.desc || p.description || `${p.brand} ${p.name}`,
+      "sku": String(p.reference || p.ref || p.id),
+      "mpn": String(p.reference || p.ref || p.id),
       "brand": {
         "@type": "Brand",
-        "name": p.brand
+        "name": p.brand || "Belgin Kuyumculuk"
       },
       "offers": {
         "@type": "Offer",
-        "url": `${this.baseUrl}/#urun-${p.id}`,
+        "url": canonicalUrl,
         "priceCurrency": "TRY",
-        "price": p.price,
-        "priceValidUntil": new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 30 gün geçerli fiyat
-        "itemCondition": p.conditionBadge === "Sıfır" ? "https://schema.org/NewCondition" : "https://schema.org/UsedCondition",
-        "availability": p.inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+        "price": Number(p.price),
+        "itemCondition": isUsed ? "https://schema.org/UsedCondition" : "https://schema.org/NewCondition",
+        "availability": p.inStock === false ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
         "seller": {
-          "@type": "JewelryStore",
-          "name": "Belgin Kuyumculuk"
+          "@id": `${this.baseUrl}/#organization`
         }
       }
     };
     this.writeSchemaScript(schema);
   },
 
-  injectPageSchema(page, breadcrumbName) {
+  injectPageSchema(page, breadcrumbName, canonicalUrl) {
     const breadcrumbSchema = {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
-      "@id": `${this.baseUrl}/#breadcrumb`,
+      "@id": `${canonicalUrl}#breadcrumb`,
       "itemListElement": [
         {
           "@type": "ListItem",
           "position": 1,
           "name": "Ana Sayfa",
-          "item": this.baseUrl
+          "item": `${this.baseUrl}/`
         }
       ]
     };
@@ -203,7 +209,7 @@ const SeoManager = {
         "@type": "ListItem",
         "position": 2,
         "name": breadcrumbName,
-        "item": `${this.baseUrl}/#${page}`
+        "item": canonicalUrl
       });
     }
 
@@ -222,7 +228,7 @@ const SeoManager = {
   }
 };
 
-// Modül export (Testler için node.js uyumluluğu)
+// Modül export
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { SeoManager };
 }
