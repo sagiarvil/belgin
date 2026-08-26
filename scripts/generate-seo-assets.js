@@ -86,7 +86,16 @@ function buildSitemaps() {
 
 function buildLlms() {
   const legal = SEO_REGISTRY.filter(p => p.role === 'legal' && p.indexDirective === 'index').map(p => `- [${p.title}](${BASE_URL}${p.route}) — ${p.metaDescription}`).join('\n');
-  const selected = products.slice(0, 100).map(p => `- **${p.brand || ''} ${p.name || ''}`.trim() + ` | Ref: ${p.reference || p.ref || p.id} | Fiyat: ₺${Number(p.price).toLocaleString('tr-TR')} | URL: ${productUrl(p)}`).join('\n');
+  
+  const selected = products.slice(0, 100).map(p => {
+    const name = `${p.brand || ''} ${p.name || ''}`.trim();
+    return [
+      `- **${name}**`,
+      `Ref: ${p.reference || p.ref || p.id}`,
+      `Fiyat: ₺${Number(p.price).toLocaleString('tr-TR')}`,
+      `URL: ${productUrl(p)}`
+    ].join(' | ');
+  }).join('\n');
   
   write('llms.txt', `# Belgin Kuyumculuk & Saat\n\n> Yardımcı makine-okunabilir keşif katmanı. Canonical HTML sayfaları birincil kaynaktır.\n\n## İşletme\n- Resmi ad: ${PRIMARY_ORGANIZATION.name}\n- Kuruluş: 1999\n- Adres: ${PRIMARY_ORGANIZATION.address.streetAddress}, ${PRIMARY_ORGANIZATION.address.addressLocality} / ${PRIMARY_ORGANIZATION.address.addressRegion}\n- Web: ${BASE_URL}\n\n## Ana koleksiyonlar\n- [Saatler](${BASE_URL}/saatler/)\n- [Mücevherat](${BASE_URL}/mucevherat/)\n- [Ekspertizli İkinci El](${BASE_URL}/ikinci-el/)\n\n## Yasal sayfalar\n${legal}\n\n## Seçilmiş ürünler\n${selected}\n\n## Tam katalog\n- [llms-full.txt](${BASE_URL}/llms-full.txt)\n`);
   write('llms-full.txt', `# Belgin Kuyumculuk & Saat — Tam Ürün Kataloğu\n\nBirincil kaynak her ürünün canonical HTML sayfasıdır.\n\n${products.map(p => `### ${p.brand || ''} ${p.name || ''}`.trim() + `\n- ID: ${p.id}\n- Referans: ${p.reference || p.ref || p.id}\n- Fiyat: ₺${Number(p.price).toLocaleString('tr-TR')}\n- Stok: ${p.inStock === false ? 'Yok' : 'Var'}\n- URL: ${productUrl(p)}\n`).join('\n')}`);
@@ -107,4 +116,4 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { buildSitemaps, buildLlms, buildRobots, main };
+module.exports = { main };

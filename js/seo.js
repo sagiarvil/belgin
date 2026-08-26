@@ -41,7 +41,7 @@ const SeoManager = {
         breadcrumb: "İkinci El"
       },
       'hikayemiz': {
-        title: "Hikayemiz & 25 Yıllık Güven Mirası | Belgin Kuyumculuk",
+        title: "Hikayemiz & 1999'dan Beri Güven Mirası | Belgin Kuyumculuk",
         desc: "1999 yılından bu yana İzmir Buca'da değişmeyen adresimizde dürüstlük, şeffaf ekspertiz ve sarsılmaz müşteri memnuniyeti ilkeleriyle hizmet veriyoruz.",
         keywords: "belgin kuyumculuk hakkında, buca en eski kuyumcu, 1999 kuyumcu izmir, güvenilir sarraf izmir",
         breadcrumb: "Hikayemiz"

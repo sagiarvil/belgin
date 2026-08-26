@@ -39,10 +39,20 @@ jobs:
           node --check js/legal-overrides.js
           node --check js/legal-stamp.js
           node --check js/order-evidence.js
+          node --check js/router.js
+          node --check js/app.js
+          node --check js/seo.js
           node --check functions/index.js
           node --check functions/delivery.js
           node --check functions/evidence.js
           node --check functions/bootstrap.js
+          node --check scripts/seo-routes.js
+          node --check scripts/generate-static-seo-pages.js
+          node --check scripts/generate-seo-assets.js
+          node --check scripts/seo-ci-gate.js
+          node --check scripts/live-seo-smoke.js
+          node --check scripts/seo-claims-registry.js
+          node --check scripts/sync-seo-redirects.js
           node --check scripts/harden-public-claims.js
           node --check scripts/bank-pos-hardening.js
           node --check scripts/bank-pos-guard.js
@@ -50,8 +60,9 @@ jobs:
           node --check scripts/harden-legal-pages.js
           node --check scripts/generate-legal-manifest.js
           node --check scripts/generate-payment-catalog.js
-          node --check scripts/generate-seo-assets.js
           node --check scripts/production-guard.js
+          node --check scripts/price-safety-guard.js
+          node --check scripts/izko-safety-crosscheck.js
           node --check scripts/safe-deploy.js
           node --check tests/test-suite.js
 
@@ -88,7 +99,7 @@ jobs:
       - name: Dependency audit
         run: npm audit --prefix functions --omit=dev --audit-level=high
 
-      - name: Ensure generated artifacts are deterministic
+      - name: Ensure generated legal & payment artifacts are deterministic
         run: |
           cp functions/product-catalog.json /tmp/product-catalog.json
           cp legal-manifest.json /tmp/legal-manifest.json
@@ -98,3 +109,28 @@ jobs:
           npm run legal:manifest
           cmp --silent /tmp/product-catalog.json functions/product-catalog.json
           node -e "const fs=require('fs');const a=JSON.parse(fs.readFileSync('/tmp/legal-manifest.json'));const b=JSON.parse(fs.readFileSync('legal-manifest.json'));delete a.generatedAt;delete b.generatedAt;if(JSON.stringify(a)!==JSON.stringify(b))process.exit(1)"
+
+      - name: Verify generated SEO artifacts are deterministic
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p /tmp/seo-before
+
+          cp sitemap.xml /tmp/seo-before/
+          cp sitemap-pages.xml /tmp/seo-before/
+          cp sitemap-categories.xml /tmp/seo-before/
+          cp sitemap-products.xml /tmp/seo-before/
+          cp llms.txt /tmp/seo-before/
+          cp llms-full.txt /tmp/seo-before/
+          cp js/seo-route-map.js /tmp/seo-before/
+
+          npm run seo:generate
+
+          cmp --silent /tmp/seo-before/sitemap.xml sitemap.xml
+          cmp --silent /tmp/seo-before/sitemap-pages.xml sitemap-pages.xml
+          cmp --silent /tmp/seo-before/sitemap-categories.xml sitemap-categories.xml
+          cmp --silent /tmp/seo-before/sitemap-products.xml sitemap-products.xml
+          cmp --silent /tmp/seo-before/llms.txt llms.txt
+          cmp --silent /tmp/seo-before/llms-full.txt llms-full.txt
+          cmp --silent /tmp/seo-before/seo-route-map.js js/seo-route-map.js

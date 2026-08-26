@@ -1,9 +1,74 @@
+'use strict';
+
 const fs = require('fs');
 const path = require('path');
+const CLAIMS = require('./seo-claims-registry.js');
 
 const root = path.join(__dirname, '..');
-const textFiles = fs.readdirSync(root).filter((f) => /\.(html|txt|xml)$/i.test(f));
-const replacements = [
+
+function normalizeHeritageClaims(html) {
+  return html
+    .replace(/\b25\s*yıllık\b/gi, "1999'dan beri süren")
+    .replace(/\b25\s*yıldır\b/gi, "1999'dan beri")
+    .replace(/>25\s*Yıl</gi, ">1999'dan beri<")
+    .replace(/25\s*Yıllık\s+Güven/gi, "1999'dan Beri Güven")
+    .replace(/25\+\s*Yıllık\s*Miras/gi, "1999'dan Beri Miras")
+    .replace(/25\s*yıllık\s*zanaat/gi, "1999'dan beri süren zanaat")
+    .replace(/EST\.\s*1987/gi, "EST. 1999")
+    .replace(/Nişantaşı/gi, "İzmir Buca");
+}
+
+function hardenEvidenceClaims(html) {
+  const rules = [
+    {
+      enabled: CLAIMS.certifiedDeliveries14000,
+      pattern: /14\.?000\+\s*Sertifikalı Teslimat/gi,
+      replacement: 'Uzman kontrollü ürün teslimatı'
+    },
+    {
+      enabled: CLAIMS.giaHrdCoverage,
+      pattern: /GIA,\s*HRD[^<.]*/gi,
+      replacement: 'Ürüne ait mevcut sertifika ve ekspertiz bilgileri'
+    },
+    {
+      enabled: CLAIMS.twelvePointExpertiseAllProducts,
+      pattern: /12\s*Nokta Ekspertiz[^<.]*/gi,
+      replacement: 'Ürüne göre ekspertiz ve kontrol bilgileri'
+    },
+    {
+      enabled: CLAIMS.distributorWarrantyTwoYearsAllWatches,
+      pattern: /2\s*Yıl Distribütör Garantisi/gi,
+      replacement: 'Garanti kapsamı ürün belgesine göre'
+    },
+    {
+      enabled: CLAIMS.bestPriceGuarantee,
+      pattern: /en iyi fiyat garantisi/gi,
+      replacement: 'güncel fiyatlandırma'
+    },
+    {
+      enabled: CLAIMS.cashBuybackGuarantee,
+      pattern: /geri alım güvencesi/gi,
+      replacement: 'alım ve değerleme hizmeti'
+    },
+    {
+      enabled: CLAIMS.support247,
+      pattern: /7\/24\s*Kesintisiz/gi,
+      replacement: 'WhatsApp danışma'
+    }
+  ];
+
+  for (const rule of rules) {
+    if (!rule.enabled) {
+      html = html.replace(rule.pattern, rule.replacement);
+    }
+  }
+
+  return html;
+}
+
+const textFiles = fs.readdirSync(root).filter((f) => /\.(html|txt|xml|js|json)$/i.test(f) && !f.includes('package-lock'));
+
+const baseReplacements = [
   [/Belgin Kuyumculuk Sanayi ve Ticaret Ltd\. Şti\./g, 'BELGİN KUYUMCULUK - SEMİH SONBAHAR'],
   [/Belgin Kuyumculuk Ltd\. Şti\./g, 'BELGİN KUYUMCULUK - SEMİH SONBAHAR'],
   [/MERSİS:\s*0123456789012345\s*\|?\s*/g, ''],
@@ -18,10 +83,22 @@ const replacements = [
 
 for (const file of textFiles) {
   const full = path.join(root, file);
+  if (!fs.statSync(full).isFile()) continue;
   let content = fs.readFileSync(full, 'utf8');
   const before = content;
-  for (const [pattern, replacement] of replacements) content = content.replace(pattern, replacement);
-  if (content !== before) fs.writeFileSync(full, content, 'utf8');
+  
+  for (const [pattern, replacement] of baseReplacements) {
+    content = content.replace(pattern, replacement);
+  }
+  
+  content = normalizeHeritageClaims(content);
+  content = hardenEvidenceClaims(content);
+
+  if (content !== before) {
+    fs.writeFileSync(full, content, 'utf8');
+  }
 }
 
-console.log('[public-claims] Doğrulanmamış sicil/uyum/teslim iddiaları build öncesi temizlendi.');
+console.log('[public-claims] Doğrulanmamış iddialar ve miras metinleri 1999 standardına göre sertleştirildi.');
+
+module.exports = { normalizeHeritageClaims, hardenEvidenceClaims };

@@ -58,17 +58,32 @@ jobs:
           for(const fn of required) if(!rewrites.some(r=>r.function===fn)) throw new Error(`Missing rewrite: ${fn}`);
           NODE
 
+      - name: Require deployment credential
+        shell: bash
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CARBON_WEB_1265B }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${FIREBASE_SERVICE_ACCOUNT:-}" ] && [ -z "${FIREBASE_TOKEN:-}" ]; then
+            echo "::error title=Firebase deployment credential missing::"
+            echo "Neither FIREBASE_SERVICE_ACCOUNT_CARBON_WEB_1265B nor FIREBASE_TOKEN is configured."
+            echo "Production deployment is blocked intentionally."
+            exit 1
+          fi
+
+          if [ -n "${FIREBASE_SERVICE_ACCOUNT:-}" ]; then
+            echo "DEPLOY_AUTH=service-account"
+          else
+            echo "DEPLOY_AUTH=legacy-token"
+          fi
+
       - name: Authenticate with Google service account
         if: env.FIREBASE_SERVICE_ACCOUNT != ''
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CARBON_WEB_1265B }}
-
-      - name: Require deployment credential
-        if: env.FIREBASE_SERVICE_ACCOUNT == '' && env.FIREBASE_TOKEN == ''
-        run: |
-          echo 'FIREBASE_DEPLOY_BLOCKED: GitHub secret FIREBASE_SERVICE_ACCOUNT_CARBON_WEB_1265B or FIREBASE_TOKEN is required.' >&2
-          exit 1
 
       - name: Deploy Cloud Functions with service account
         if: env.FIREBASE_SERVICE_ACCOUNT != ''
@@ -86,7 +101,13 @@ jobs:
         if: env.FIREBASE_SERVICE_ACCOUNT == '' && env.FIREBASE_TOKEN != ''
         run: npx -y firebase-tools@latest deploy --project "$FIREBASE_PROJECT_ID" --only hosting --non-interactive --token "$FIREBASE_TOKEN"
 
-      - name: Live smoke check
+      - name: Live SEO smoke
+        env:
+          LIVE_BASE_URL: https://www.belginkuyumculuk.com
+          SEO_SMOKE_SAMPLE: "20"
+        run: node scripts/live-seo-smoke.js
+
+      - name: Legacy Live smoke check
         shell: bash
         run: |
           set -euo pipefail

@@ -3,49 +3,191 @@
     {
       "source": "functions",
       "codebase": "default",
-      "ignore": ["node_modules", ".git", "firebase-debug.log", "firebase-debug.*.log", "*.local"]
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ]
     }
   ],
   "hosting": {
     "site": "belgin",
     "public": ".",
-    "ignore": ["firebase.json", ".firebaserc", ".firebaserc.example", ".github/**", "**/.*", "**/node_modules/**", "functions/**", "tests/**", "scripts/**", "belgin_kuyumculuk_hukuki_sozlesme_paketi/**", "**/*.docx", "**/*.xlsx", "**/*.pdf", "**/*.md", "package.json", "package-lock.json", "*kopyası.txt", "README.md"],
+    "ignore": [
+      "firebase.json",
+      ".firebaserc",
+      ".firebaserc.example",
+      ".github/**",
+      "**/.*",
+      "**/node_modules/**",
+      "functions/**",
+      "tests/**",
+      "scripts/**",
+      "belgin_kuyumculuk_hukuki_sozlesme_paketi/**",
+      "**/*.docx",
+      "**/*.xlsx",
+      "**/*.pdf",
+      "**/*.md",
+      "package.json",
+      "package-lock.json",
+      "*kopyası.txt",
+      "README.md"
+    ],
     "cleanUrls": false,
     "rewrites": [
-      {"source":"/api/payment/create","function":"createPayment"},
-      {"source":"/api/payment/status","function":"getPaymentStatus"},
-      {"source":"/api/payment/callback/paytr","function":"paymentCallback"},
-      {"source":"/api/payment/callback/qnb","function":"paymentCallback"},
-      {"source":"/api/payment/callback/akbank","function":"paymentCallback"},
-      {"source":"/api/payment/callback/yapikredi","function":"paymentCallback"},
-      {"source":"/odeme-basarili","destination":"/odeme-basarili.html"},
-      {"source":"/odeme-basarisiz","destination":"/odeme-basarisiz.html"},
-      {"source":"/vip","destination":"/vip-odeme.html"},
-      {"source":"/vip/**","destination":"/vip-odeme.html"},
-      {"source":"/odeme-linki","destination":"/odeme-linki.html"},
-      {"source":"/api/createPayTRToken","function":"createPayTRToken"},
-      {"source":"/api/paytrCallback","function":"paytrCallback"},
-      {"source":"/api/getOrderStatus","function":"getOrderStatus"},
-      {"source":"/api/completeHighValueDelivery","function":"completeHighValueDelivery"},
-      {"source":"/api/issueEvidenceAccessToken","function":"issueEvidenceAccessToken"},
-      {"source":"/api/getOrderEvidence","function":"getOrderEvidence"}
+      {
+        "source": "/api/payment/create",
+        "function": "createPayment"
+      },
+      {
+        "source": "/api/payment/status",
+        "function": "getPaymentStatus"
+      },
+      {
+        "source": "/api/payment/callback/paytr",
+        "function": "paymentCallback"
+      },
+      {
+        "source": "/api/payment/callback/qnb",
+        "function": "paymentCallback"
+      },
+      {
+        "source": "/api/payment/callback/akbank",
+        "function": "paymentCallback"
+      },
+      {
+        "source": "/api/payment/callback/yapikredi",
+        "function": "paymentCallback"
+      },
+      {
+        "source": "/odeme-basarili",
+        "destination": "/odeme-basarili.html"
+      },
+      {
+        "source": "/odeme-basarisiz",
+        "destination": "/odeme-basarisiz.html"
+      },
+      {
+        "source": "/vip",
+        "destination": "/vip-odeme.html"
+      },
+      {
+        "source": "/vip/**",
+        "destination": "/vip-odeme.html"
+      },
+      {
+        "source": "/odeme-linki",
+        "destination": "/odeme-linki.html"
+      },
+      {
+        "source": "/api/createPayTRToken",
+        "function": "createPayTRToken"
+      },
+      {
+        "source": "/api/paytrCallback",
+        "function": "paytrCallback"
+      },
+      {
+        "source": "/api/getOrderStatus",
+        "function": "getOrderStatus"
+      },
+      {
+        "source": "/api/completeHighValueDelivery",
+        "function": "completeHighValueDelivery"
+      },
+      {
+        "source": "/api/issueEvidenceAccessToken",
+        "function": "issueEvidenceAccessToken"
+      },
+      {
+        "source": "/api/getOrderEvidence",
+        "function": "getOrderEvidence"
+      }
     ],
     "headers": [
-      {"source":"**","headers":[
-        {"key":"Cache-Control","value":"no-cache, no-store, must-revalidate"},
-        {"key":"Strict-Transport-Security","value":"max-age=31536000; includeSubDomains"},
-        {"key":"Content-Security-Policy","value":"default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://www.paytr.com; frame-src https://www.paytr.com https://www.google.com https://maps.google.com; media-src 'self'; manifest-src 'self'; upgrade-insecure-requests"},
-        {"key":"X-Content-Type-Options","value":"nosniff"},
-        {"key":"X-Frame-Options","value":"SAMEORIGIN"},
-        {"key":"Referrer-Policy","value":"strict-origin-when-cross-origin"},
-        {"key":"Permissions-Policy","value":"camera=(), microphone=(), geolocation=(), usb=(), browsing-topics=()"},
-        {"key":"Cross-Origin-Opener-Policy","value":"same-origin-allow-popups"},
-        {"key":"Cross-Origin-Resource-Policy","value":"same-site"},
-        {"key":"X-Permitted-Cross-Domain-Policies","value":"none"}
-      ]},
-      {"source":"**/*.@(jpg|jpeg|gif|png|webp|svg|woff|woff2|ttf)","headers":[{"key":"Cache-Control","value":"public, max-age=31536000, immutable"}]},
-      {"source":"**/*.txt","headers":[{"key":"Cache-Control","value":"public, max-age=3600"},{"key":"Content-Type","value":"text/plain; charset=utf-8"}]},
-      {"source":"**/*.xml","headers":[{"key":"Cache-Control","value":"public, max-age=3600"},{"key":"Content-Type","value":"application/xml; charset=utf-8"}]}
-    ]
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache, no-store, must-revalidate"
+          },
+          {
+            "key": "Strict-Transport-Security",
+            "value": "max-age=31536000; includeSubDomains"
+          },
+          {
+            "key": "Content-Security-Policy",
+            "value": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://www.paytr.com; frame-src https://www.paytr.com https://www.google.com https://maps.google.com; media-src 'self'; manifest-src 'self'; upgrade-insecure-requests"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          },
+          {
+            "key": "X-Frame-Options",
+            "value": "SAMEORIGIN"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "strict-origin-when-cross-origin"
+          },
+          {
+            "key": "Permissions-Policy",
+            "value": "camera=(), microphone=(), geolocation=(), usb=(), browsing-topics=()"
+          },
+          {
+            "key": "Cross-Origin-Opener-Policy",
+            "value": "same-origin-allow-popups"
+          },
+          {
+            "key": "Cross-Origin-Resource-Policy",
+            "value": "same-site"
+          },
+          {
+            "key": "X-Permitted-Cross-Domain-Policies",
+            "value": "none"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(jpg|jpeg|gif|png|webp|svg|woff|woff2|ttf)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
+      },
+      {
+        "source": "**/*.txt",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=3600"
+          },
+          {
+            "key": "Content-Type",
+            "value": "text/plain; charset=utf-8"
+          }
+        ]
+      },
+      {
+        "source": "**/*.xml",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=3600"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/xml; charset=utf-8"
+          }
+        ]
+      }
+    ],
+    "redirects": []
   }
 }

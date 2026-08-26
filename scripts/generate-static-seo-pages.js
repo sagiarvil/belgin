@@ -33,11 +33,22 @@ function money(value) {
   }).format(n);
 }
 
-function descriptionFor(p) {
+function truncateAtWord(text, max = 160) {
+  const clean = String(text || '').replace(/\s+/g, ' ').trim();
+  if (clean.length <= max) return clean;
+
+  const part = clean.slice(0, max + 1);
+  const cut = part.lastIndexOf(' ');
+
+  return `${part.slice(0, cut > 0 ? cut : max).trim()}…`;
+}
+
+function fullDescriptionFor(p) {
   return String(
-    p.description || p.desc ||
+    p.description ||
+    p.desc ||
     `${p.brand || ''} ${p.name || ''} ürününü Belgin Kuyumculuk İzmir Buca showroomunda inceleyin.`
-  ).replace(/\s+/g, ' ').trim().slice(0, 300);
+  ).replace(/\s+/g, ' ').trim();
 }
 
 function isUsed(p) {
@@ -105,7 +116,7 @@ function productSchema(p) {
     '@id': `${url}#product`,
     name: `${p.brand || ''} ${p.name || ''}`.trim(),
     image: [productImage(p)],
-    description: descriptionFor(p),
+    description: fullDescriptionFor(p),
     sku: String(p.reference || p.ref || p.id),
     mpn: String(p.reference || p.ref || p.id),
     brand: { '@type': 'Brand', name: String(p.brand || 'Belgin Kuyumculuk') },
@@ -125,14 +136,87 @@ function productSchema(p) {
   };
 }
 
-function renderProductPage(p) {
-  const url = productUrl(p);
-  const title = `${p.brand || ''} ${p.name || ''} | Belgin Kuyumculuk`.trim();
-  const desc = descriptionFor(p);
+function replaceFirst(html, pattern, replacement, label) {
+  if (!pattern.test(html)) {
+    throw new Error(`[seo-static] ${label} bulunamadı.`);
+  }
+  return html.replace(pattern, replacement);
+}
+
+function renderSeoProductCard(p) {
+  const href = productRoute(p);
   const image = productImage(p);
   const ref = p.reference || p.ref || p.id;
-  const storeUrl = `/?urun=${encodeURIComponent(p.id)}`;
-  const whatsapp = `https://wa.me/905419305372?text=${encodeURIComponent(`${p.brand || ''} ${p.name || ''} (${ref}) hakkında bilgi almak istiyorum.`)}`;
+
+  return `
+    <a
+      class="product-art-card seo-prerender-card"
+      href="${href}"
+      data-product-id="${esc(p.id)}"
+      style="text-decoration:none;color:inherit"
+    >
+      <div class="product-art-thumb">
+        <img
+          class="img-primary"
+          src="${esc(image)}"
+          alt="${esc(`${p.brand || ''} ${p.name || ''}`.trim())}"
+          loading="lazy"
+        >
+      </div>
+
+      <div class="product-art-info">
+        <h3 class="prod-brand-name">${esc(p.brand || '')}</h3>
+        <p class="prod-model-name">${esc(p.name || '')}</p>
+        <p class="prod-ref-size">${esc(ref)}</p>
+        <div class="prod-price-tag">${esc(money(p.price))}</div>
+      </div>
+    </a>
+  `;
+}
+
+function prerenderPdpContent(p) {
+  const ref = p.reference || p.ref || p.id;
+  const image = productImage(p);
+  const fullDesc = fullDescriptionFor(p);
+  const catKey = categoryKey(p);
+  const catLabel = categoryLabel(catKey);
+
+  return `
+    <article class="seo-prerender-pdp" data-seo-prerender="true" style="max-width:1200px;margin:30px auto;padding:24px;background:#0d1613;border:1px solid rgba(194,167,104,0.3);border-radius:18px;color:#fff;">
+      <nav class="pdp-crumbs" style="font-size:13px;color:#a3b8b0;margin-bottom:20px;">
+        <a href="/" style="color:#C2A768;text-decoration:none;">Ana Sayfa</a> / <a href="${CATEGORY_ROUTES[catKey]}" style="color:#C2A768;text-decoration:none;">${esc(catLabel)}</a> / <span style="color:#fff;">${esc(p.name || '')}</span>
+      </nav>
+      <div class="pdp-art-main" style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;">
+        <div class="pdp-art-gallery" style="background:#070d0b;padding:20px;border-radius:14px;display:flex;justify-content:center;">
+          <img
+            src="${esc(image)}"
+            alt="${esc(`${p.brand || ''} ${p.name || ''}`.trim())}"
+            fetchpriority="high"
+            style="max-width:100%;max-height:500px;object-fit:contain;"
+          >
+        </div>
+
+        <div class="pdp-art-info" style="display:flex;flex-direction:column;gap:14px;">
+          <span class="pdp-art-brand" style="font-size:14px;color:#C2A768;letter-spacing:2px;text-transform:uppercase;font-weight:700;">${esc(p.brand || '')}</span>
+          <h1 style="font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0;color:#fff;">${esc(`${p.brand || ''} ${p.name || ''}`.trim())}</h1>
+          <p class="pdp-art-ref" style="font-size:13px;color:#8fa099;margin:0;">Ref: ${esc(ref)} • Durum: ${isUsed(p) ? 'Ekspertiz Onaylı İkinci El' : 'Sıfır Distribütör Garantili'}</p>
+          <div class="pdp-art-price" style="font-size:32px;font-weight:800;color:#34D399;margin:8px 0;">${esc(money(p.price))}</div>
+          <p class="pdp-art-description" style="font-size:14px;line-height:1.7;color:#d5e2dc;">${esc(fullDesc)}</p>
+          <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;">
+            <button onclick="Cart.addItem('${esc(p.id)}')" style="background:linear-gradient(135deg,#C2A768,#9E8548);color:#070A09;font-weight:700;padding:14px 28px;border:none;border-radius:10px;cursor:pointer;">Sepete Ekle &amp; Satın Al</button>
+            <a href="https://wa.me/905419305372?text=${encodeURIComponent(`${p.brand || ''} ${p.name || ''} (${ref}) hakkında bilgi almak istiyorum.`)}" target="_blank" style="background:rgba(255,255,255,0.08);color:#fff;padding:14px 24px;border:1px solid rgba(255,255,255,0.2);border-radius:10px;text-decoration:none;display:inline-flex;align-items:center;">WhatsApp ile İletişim</a>
+          </div>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function renderProductPage(p, indexHtml) {
+  const url = productUrl(p);
+  const title = `${p.brand || ''} ${p.name || ''} | Belgin Kuyumculuk`.trim();
+  const desc = truncateAtWord(fullDescriptionFor(p), 160);
+  const image = productImage(p);
   const catKey = categoryKey(p);
   const catLabel = categoryLabel(catKey);
 
@@ -151,66 +235,217 @@ function renderProductPage(p) {
     ]
   };
 
-  return `<!doctype html>
-<html lang="tr">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${esc(title)}</title>
-<meta name="description" content="${esc(desc)}">
-<meta name="robots" content="index,follow,max-image-preview:large">
-<link rel="canonical" href="${esc(url)}">
-<meta property="og:type" content="product">
-<meta property="og:title" content="${esc(title)}">
-<meta property="og:description" content="${esc(desc)}">
-<meta property="og:url" content="${esc(url)}">
-<meta property="og:image" content="${esc(image)}">
-<script type="application/ld+json">${safeJson(schema)}</script>
-<style>
-body{font-family:Inter,Arial,sans-serif;margin:0;background:#f7f7f4;color:#14211f}.wrap{width:min(1180px,calc(100% - 32px));margin:auto}header{background:#073c36;color:#fff;padding:18px 0}header a{color:#fff;text-decoration:none;font-weight:800}.crumbs{font-size:13px;color:#65706d;padding:20px 0}.product{display:grid;grid-template-columns:1fr .85fr;gap:42px;background:#fff;border:1px solid #e6e8e5;border-radius:18px;padding:28px}.visual{background:#fafaf8;border-radius:14px;display:grid;place-items:center;min-height:520px}.visual img{max-width:100%;max-height:550px;object-fit:contain}h1{font-size:clamp(30px,4vw,52px);line-height:1.05}.price{font-size:32px;font-weight:850;color:#073c36}.facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:22px 0}.fact{background:#f7f7f4;border-radius:10px;padding:12px}.fact span{display:block;font-size:11px;color:#69716f}.actions{display:grid;gap:10px;margin-top:24px}.btn{display:block;text-align:center;padding:15px 18px;border-radius:10px;font-weight:800;text-decoration:none}.primary{background:#073c36;color:#fff}.secondary{border:1px solid #073c36;color:#073c36}@media(max-width:800px){.product{grid-template-columns:1fr;padding:16px}.visual{min-height:330px}.facts{grid-template-columns:1fr}}
-</style>
-</head>
-<body>
-<header><div class="wrap"><a href="/">BELGİN KUYUMCULUK & SAAT</a></div></header>
-<main class="wrap">
-<nav class="crumbs"><a href="/">Ana Sayfa</a> / <a href="${CATEGORY_ROUTES[catKey]}">${esc(catLabel)}</a></nav>
-<article class="product">
-<div class="visual"><img src="${esc(image)}" alt="${esc(`${p.brand || ''} ${p.name || ''}`)}" fetchpriority="high"></div>
-<div>
-<div>${esc(p.brand || '')}</div>
-<h1>${esc(`${p.brand || ''} ${p.name || ''}`.trim())}</h1>
-<div class="price">${esc(money(p.price))}</div>
-<div class="facts">
-<div class="fact"><span>Referans</span><strong>${esc(ref)}</strong></div>
-<div class="fact"><span>Stok</span><strong>${p.inStock === false ? 'Stokta Yok' : 'Stokta'}</strong></div>
-<div class="fact"><span>Kasa / Maden</span><strong>${esc(p.metal || 'Bilgi için mağazaya danışın')}</strong></div>
-<div class="fact"><span>Durum</span><strong>${isUsed(p) ? 'İkinci El / Ekspertizli' : 'Sıfır'}</strong></div>
-</div>
-<p>${esc(desc)}</p>
-<div class="actions"><a class="btn primary" href="${storeUrl}">Ürünü Mağazada Aç</a><a class="btn secondary" href="${whatsapp}" rel="nofollow">WhatsApp ile Bilgi Al</a></div>
-</div>
-</article>
-</main>
-</body>
-</html>`;
+  let pageHtml = indexHtml;
+
+  pageHtml = replaceFirst(
+    pageHtml,
+    /<title>[\s\S]*?<\/title>/i,
+    `<title>${esc(title)}</title>`,
+    'title'
+  );
+
+  pageHtml = replaceFirst(
+    pageHtml,
+    /<meta name="description" content="[^"]*">/i,
+    `<meta name="description" content="${esc(desc)}">`,
+    'description'
+  );
+
+  pageHtml = replaceFirst(
+    pageHtml,
+    /<link rel="canonical" href="[^"]*">/i,
+    `<link rel="canonical" href="${url}">`,
+    'canonical'
+  );
+
+  pageHtml = replaceFirst(
+    pageHtml,
+    /<meta property="og:url" content="[^"]*">/i,
+    `<meta property="og:url" content="${url}">`,
+    'og:url'
+  );
+
+  pageHtml = replaceFirst(
+    pageHtml,
+    /<meta property="og:title" content="[^"]*">/i,
+    `<meta property="og:title" content="${esc(title)}">`,
+    'og:title'
+  );
+
+  pageHtml = replaceFirst(
+    pageHtml,
+    /<meta property="og:description" content="[^"]*">/i,
+    `<meta property="og:description" content="${esc(desc)}">`,
+    'og:description'
+  );
+
+  pageHtml = replaceFirst(
+    pageHtml,
+    /<meta property="og:image" content="[^"]*">/i,
+    `<meta property="og:image" content="${esc(image)}">`,
+    'og:image'
+  );
+
+  pageHtml = replaceFirst(
+    pageHtml,
+    /<meta name="twitter:title" content="[^"]*">/i,
+    `<meta name="twitter:title" content="${esc(title)}">`,
+    'twitter:title'
+  );
+
+  pageHtml = replaceFirst(
+    pageHtml,
+    /<meta name="twitter:description" content="[^"]*">/i,
+    `<meta name="twitter:description" content="${esc(desc)}">`,
+    'twitter:description'
+  );
+
+  pageHtml = pageHtml
+    .replace('id="page-ana-sayfa" class="page active"', 'id="page-ana-sayfa" class="page"')
+    .replace('id="page-urun" class="page"', 'id="page-urun" class="page active"');
+
+  pageHtml = replaceFirst(
+    pageHtml,
+    /<div[^>]*id="productDetailView"[^>]*><\/div>/i,
+    `<div class="container-art" id="productDetailView">${prerenderPdpContent(p)}</div>`,
+    'productDetailView'
+  );
+
+  pageHtml = replaceFirst(
+    pageHtml,
+    /<script type="application\/ld\+json">[\s\S]*?<\/script>/i,
+    `<script type="application/ld+json">${safeJson(schema)}</script>`,
+    'JSON-LD Schema'
+  );
+
+  return pageHtml;
 }
 
-function renderCategoryPage(key, list) {
+function renderCategoryPage(key, list, indexHtml) {
   const meta = {
-    saatler: ['Lüks Saatler & Yüksek Saatçilik | Belgin Kuyumculuk İzmir Buca', 'Lüks Saatler'],
-    mucevherat: ['Mücevher Koleksiyonu & Altın | Belgin Kuyumculuk İzmir Buca', 'Mücevherat ve Altın'],
-    'ikinci-el': ['Ekspertizli İkinci El & Altın | Belgin Kuyumculuk İzmir Buca', 'Ekspertizli İkinci El']
+    saatler: {
+      title: 'Lüks Saatler & Yüksek Saatçilik | Belgin Kuyumculuk İzmir Buca',
+      description: 'Belgin Kuyumculuk İzmir Buca lüks saat koleksiyonu. Marka, referans, fiyat ve stok bilgileriyle ürünleri inceleyin.',
+      h1: 'Lüks Saatler',
+      gridId: 'allWatchesGrid'
+    },
+    mucevherat: {
+      title: 'Mücevher Koleksiyonu & Altın | Belgin Kuyumculuk İzmir Buca',
+      description: 'Belgin Kuyumculuk İzmir Buca mücevherat ve altın koleksiyonu. Gerçek ürün sayfaları üzerinden fiyat ve ürün detaylarını inceleyin.',
+      h1: 'Mücevherat ve Altın',
+      gridId: 'allJewelleryGrid'
+    },
+    'ikinci-el': {
+      title: 'Ekspertizli İkinci El & Altın | Belgin Kuyumculuk İzmir Buca',
+      description: 'Belgin Kuyumculuk ekspertizli ikinci el saat ve değerli ürün koleksiyonu. Stok, referans ve fiyat bilgileriyle inceleyin.',
+      h1: 'Ekspertizli İkinci El',
+      gridId: 'allPreOwnedGrid'
+    }
   }[key];
 
   const canonical = `${BASE_URL}${CATEGORY_ROUTES[key]}`;
-  const indexHtmlPath = path.join(ROOT, 'index.html');
-  const indexHtml = fs.readFileSync(indexHtmlPath, 'utf8');
+  const staticCards = list.map(renderSeoProductCard).join('\n');
 
-  let pageHtml = indexHtml
-    .replace(/<link rel="canonical" href="https:\/\/www\.belginkuyumculuk\.com\/">/, `<link rel="canonical" href="${canonical}">`)
-    .replace(/<title>[^<]+<\/title>/, `<title>${esc(meta[0])}</title>`)
+  let pageHtml = indexHtml;
+
+  pageHtml = replaceFirst(
+    pageHtml,
+    /<title>[\s\S]*?<\/title>/i,
+    `<title>${esc(meta.title)}</title>`,
+    'title'
+  );
+
+  pageHtml = replaceFirst(
+    pageHtml,
+    /<meta name="description" content="[^"]*">/i,
+    `<meta name="description" content="${esc(meta.description)}">`,
+    'description'
+  );
+
+  pageHtml = replaceFirst(
+    pageHtml,
+    /<link rel="canonical" href="[^"]*">/i,
+    `<link rel="canonical" href="${canonical}">`,
+    'canonical'
+  );
+
+  pageHtml = replaceFirst(
+    pageHtml,
+    /<meta property="og:url" content="[^"]*">/i,
+    `<meta property="og:url" content="${canonical}">`,
+    'og:url'
+  );
+
+  pageHtml = replaceFirst(
+    pageHtml,
+    /<meta property="og:title" content="[^"]*">/i,
+    `<meta property="og:title" content="${esc(meta.title)}">`,
+    'og:title'
+  );
+
+  pageHtml = replaceFirst(
+    pageHtml,
+    /<meta property="og:description" content="[^"]*">/i,
+    `<meta property="og:description" content="${esc(meta.description)}">`,
+    'og:description'
+  );
+
+  pageHtml = replaceFirst(
+    pageHtml,
+    /<meta name="twitter:title" content="[^"]*">/i,
+    `<meta name="twitter:title" content="${esc(meta.title)}">`,
+    'twitter:title'
+  );
+
+  pageHtml = replaceFirst(
+    pageHtml,
+    /<meta name="twitter:description" content="[^"]*">/i,
+    `<meta name="twitter:description" content="${esc(meta.description)}">`,
+    'twitter:description'
+  );
+
+  pageHtml = pageHtml
     .replace('id="page-ana-sayfa" class="page active"', 'id="page-ana-sayfa" class="page"')
     .replace(`id="page-${key}" class="page"`, `id="page-${key}" class="page active"`);
+
+  const categorySchema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        '@id': `${canonical}#webpage`,
+        url: canonical,
+        name: meta.title,
+        description: meta.description,
+        breadcrumb: {
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Ana Sayfa', item: `${BASE_URL}/` },
+            { '@type': 'ListItem', position: 2, name: meta.h1, item: canonical }
+          ]
+        }
+      }
+    ]
+  };
+
+  pageHtml = replaceFirst(
+    pageHtml,
+    /<script type="application\/ld\+json">[\s\S]*?<\/script>/i,
+    `<script type="application/ld+json">${safeJson(categorySchema)}</script>`,
+    'category JSON-LD'
+  );
+
+  const emptyGrid = new RegExp(
+    `<div class="products-grid-4" id="${meta.gridId}"></div>`,
+    'i'
+  );
+
+  pageHtml = replaceFirst(
+    pageHtml,
+    emptyGrid,
+    `<div class="products-grid-4" id="${meta.gridId}">${staticCards}</div>`,
+    `${meta.gridId} product grid`
+  );
 
   return pageHtml;
 }
@@ -225,15 +460,19 @@ function buildRouteMap() {
 function main() {
   if (!Array.isArray(products) || products.length === 0) throw new Error('[seo-static] PRODUCTS boş.');
   ['urun','saatler','mucevherat','ikinci-el'].forEach(ensureGeneratedDir);
+  
+  const indexHtmlPath = path.join(ROOT, 'index.html');
+  const indexHtml = fs.readFileSync(indexHtmlPath, 'utf8');
+
   const seen = new Set();
   for (const p of products) {
     const route = productRoute(p);
     if (seen.has(route)) throw new Error(`Duplicate product route: ${route}`);
     seen.add(route);
-    writeRoute(route, renderProductPage(p));
+    writeRoute(route, renderProductPage(p, indexHtml));
   }
   for (const key of ['saatler','mucevherat','ikinci-el']) {
-    writeRoute(CATEGORY_ROUTES[key], renderCategoryPage(key, products.filter(p => categoryKey(p) === key)));
+    writeRoute(CATEGORY_ROUTES[key], renderCategoryPage(key, products.filter(p => categoryKey(p) === key), indexHtml));
   }
   buildRouteMap();
   console.log(`[seo-static] ${products.length} ürün sayfası ve kategori sayfaları üretildi.`);
