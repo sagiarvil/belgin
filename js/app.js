@@ -129,7 +129,9 @@ const App = {
 
   homeWatchPage: 1,
   allWatchPage: 1,
+  homeJewelryPage: 1,
   PAGE_SIZE: 30,
+  JEWELRY_PAGE_SIZE: 20, // 4 sütun x 5 sıra = 20 ürün (en fazla 5 sıra)
 
   // 1. ANA SAYFA RENDER
   renderHome() {
@@ -173,11 +175,8 @@ const App = {
       `).join('');
     }
 
-    // Yeni Eklenen Mücevherler
-    const homeJewelryEl = document.getElementById('homeJewelryGrid');
-    if (homeJewelryEl) {
-      homeJewelryEl.innerHTML = JEWELLERY.map(p => this.renderProductCard(p)).join('');
-    }
+    // Yeni Eklenen Mücevherler (5 Sıra = 20 Ürün Sayfalamalı)
+    this.renderHomeJewelry(1);
 
     // Profesyonel Kapalıçarşı Değerleme Simülatörünü Render Et
     if (typeof ValuationEngine !== 'undefined' && ValuationEngine.renderSimulator) {
@@ -225,6 +224,35 @@ const App = {
     this.renderHomeWatches(newPage);
     setTimeout(() => {
       const target = document.getElementById('secHomeWatches') || document.getElementById('homeWatchesGrid');
+      if (target && typeof Router !== 'undefined' && Router.scrollToTarget) {
+        Router.scrollToTarget(target);
+      }
+    }, 40);
+  },
+
+  // ANA SAYFA MÜCEVHER SAYFALAMA (EN FAZLA 5 SIRA = 20 ÜRÜN)
+  renderHomeJewelry(page = 1) {
+    this.homeJewelryPage = page;
+    const el = document.getElementById('homeJewelryGrid');
+    const pagEl = document.getElementById('homeJewelryPagination');
+    if (!el) return;
+
+    const total = JEWELLERY.length;
+    const start = (page - 1) * this.JEWELRY_PAGE_SIZE;
+    const end = start + this.JEWELRY_PAGE_SIZE;
+    const pageItems = JEWELLERY.slice(start, end);
+
+    el.innerHTML = pageItems.map(p => this.renderProductCard(p)).join('');
+
+    if (pagEl) {
+      pagEl.innerHTML = this.buildPaginationHtml(page, total, this.JEWELRY_PAGE_SIZE, 'App.changeHomeJewelryPage');
+    }
+  },
+
+  changeHomeJewelryPage(newPage) {
+    this.renderHomeJewelry(newPage);
+    setTimeout(() => {
+      const target = document.getElementById('secHomeJewelry') || document.getElementById('homeJewelryGrid');
       if (target && typeof Router !== 'undefined' && Router.scrollToTarget) {
         Router.scrollToTarget(target);
       }
