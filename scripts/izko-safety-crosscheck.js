@@ -1,7 +1,6 @@
-// BELGIN KUYUMCULUK — İZKO RESMİ KUR ÇAPRAZ SAĞLAMA & OTOMATİK KORUMA MOTORU v1.0
+// BELGIN KUYUMCULUK — İZKO RESMİ KUR SAĞLAMA & OTOMATİK +%5 FİYAT GÜVENCE MOTORU v2.0
 // Kaynak: https://www.izko.org.tr/guncel-kur (İzmir Kuyumcular Odası Resmi Kurları)
-// Kural: Sitemizdeki hiçbir altın ürünü İZKO resmi kurunun %5 altından satılamaz (Price >= IZKO * 0.95).
-// İhlal durumunda ürün otomatik olarak yayından kaldırılır (inStock: false / delist).
+// Kural: Ürünler asla kaldırılmaz; İZKO resmi kurunun üzerine her zaman en az +%5 eklenerek güvenceli fiyattan yayında tutulur.
 
 const https = require('https');
 const fs = require('fs');
@@ -30,7 +29,7 @@ function fetchIzkoRates() {
             json.data.forEach(item => {
               rates[item.key] = item.sell_price;
             });
-            rates.has_altin_price = json.has_altin_price || rates.hasaltin || 7100;
+            rates.has_altin_price = json.has_altin_price || rates.hasaltin || 7104.88;
             resolve(rates);
           } else {
             reject(new Error('İZKO API formatı geçersiz'));
@@ -48,59 +47,56 @@ function fetchIzkoRates() {
   });
 }
 
-function getExpectedIzkoFloor(product, izkoRates) {
+function getIzkoReferenceBase(product, izkoRates) {
   const name = (product.name || '').toLowerCase();
-  const hasGram = izkoRates.has_altin_price; // 24K Has Altın Gramı
+  const hasGram = izkoRates.has_altin_price || 7104.88;
 
   // 1. Külçe Altın (Gram Bazlı)
   if (name.includes('külçe') && !name.includes('bilezik')) {
-    if (name.includes('1 kg') || name.includes('1 kilogram')) return hasGram * 1000 * 0.95;
-    if (name.includes('100 gr')) return hasGram * 100 * 0.95;
-    if (name.includes('50 gr')) return hasGram * 50 * 0.95;
-    if (name.includes('20 gr')) return hasGram * 20 * 0.95;
-    if (name.includes('10 gr')) return hasGram * 10 * 0.95;
-    if (name.includes('2,5 gr') || name.includes('2.5 gr')) return hasGram * 2.5 * 0.95;
-    if (name.includes('5 gr')) return hasGram * 5 * 0.95;
-    if (name.includes('1 gr')) return (izkoRates.paketlihas || hasGram) * 0.95;
+    if (name.includes('1 kg') || name.includes('1 kilogram')) return hasGram * 1000;
+    if (name.includes('100 gr')) return hasGram * 100;
+    if (name.includes('50 gr')) return hasGram * 50;
+    if (name.includes('20 gr')) return hasGram * 20;
+    if (name.includes('10 gr')) return hasGram * 10;
+    if (name.includes('2,5 gr') || name.includes('2.5 gr')) return hasGram * 2.5;
+    if (name.includes('5 gr')) return hasGram * 5;
+    if (name.includes('1 gr')) return izkoRates.paketlihas || hasGram;
   }
 
   // 2. Çeyrek Altın
   if (name.includes('çeyrek altın')) {
-    const izkoRef = name.includes('eski') ? izkoRates.eskiceyrek : izkoRates.yeniceyrek;
-    return (izkoRef || 11500) * 0.95;
+    return name.includes('eski') ? (izkoRates.eskiceyrek || 11560) : (izkoRates.yeniceyrek || 11730);
   }
 
   // 3. Yarım Altın
   if (name.includes('yarım altın') && !name.includes('bileklik') && !name.includes('kolye')) {
-    const izkoRef = name.includes('eski') ? izkoRates.eskiyarim : izkoRates.yeniyarim;
-    return (izkoRef || 23000) * 0.95;
+    return name.includes('eski') ? (izkoRates.eskiyarim || 23050) : (izkoRates.yeniyarim || 23490);
   }
 
-  // 4. Tam Altın / Ziynet
-  if (name.includes('tam altın') && !name.includes('bileklik') && !name.includes('kolye')) {
-    const izkoRef = name.includes('eski') ? izkoRates.eskitam : izkoRates.yenitam;
-    return (izkoRef || 46000) * 0.95;
+  // 4. Tam Altın / Ziynet / Reşat
+  if ((name.includes('tam altın') || name.includes('reşat')) && !name.includes('bileklik') && !name.includes('kolye')) {
+    return name.includes('eski') ? (izkoRates.eskitam || 45900) : (izkoRates.yenitam || 46680);
   }
 
   // 5. Ata Altın
   if (name.includes('ata') && !name.includes('bilezik')) {
-    return (izkoRates.ata || 47000) * 0.95;
+    return izkoRates.ata || 47300;
   }
 
-  // 6. 22 Ayar Bilezikler (Gramajına göre İZKO 22 Ayar Hurda/Satış katsayısı)
+  // 6. 22 Ayar Bilezikler (Gramajına göre İZKO 22 Ayar Resmi Satış Fiyatı)
   if (name.includes('22 ayar') && name.includes('bilezik')) {
     const gramMatch = name.match(/(\d+)\s*(?:gr|gram)/i);
     const gram = gramMatch ? parseFloat(gramMatch[1]) : 10;
     const izko22k = izkoRates.yirmiiki || (hasGram * 0.925);
-    return (gram * izko22k) * 0.95;
+    return gram * izko22k;
   }
 
-  // 7. 14 Ayar Bilezikler
+  // 7. 14 Ayar Bilezikler (Gramajına göre İZKO 14 Ayar Resmi Satış Fiyatı)
   if (name.includes('14 ayar') && name.includes('bilezik')) {
     const gramMatch = name.match(/(\d+)\s*(?:gr|gram)/i);
     const gram = gramMatch ? parseFloat(gramMatch[1]) : 10;
     const izko14k = izkoRates.ondort || (hasGram * 0.835);
-    return (gram * izko14k) * 0.95;
+    return gram * izko14k;
   }
 
   return null;
@@ -108,24 +104,23 @@ function getExpectedIzkoFloor(product, izkoRates) {
 
 async function verifyAndProtectWithIzko() {
   console.log('====================================================');
-  console.log('🏛️  İZKO RESMİ KUR ÇAPRAZ SAĞLAMA & GÜVENLİK MOTORU');
+  console.log('🏛️  İZKO RESMİ KUR SAĞLAMA & OTOMATİK +%5 FİYAT GÜVENCESİ');
   console.log('====================================================');
   
   let izkoRates;
   try {
     izkoRates = await fetchIzkoRates();
-    console.log(`✓ İZKO Resmi Kurlar Başarıyla Çekildi:`);
+    console.log(`✓ İZKO Resmi Kurlar Başarıyla Okundu (https://www.izko.org.tr/guncel-kur):`);
     console.log(`   • 24K Has Altın: ₺${izkoRates.has_altin_price.toLocaleString('tr-TR')}`);
     console.log(`   • 1 gr Paketli Has: ₺${(izkoRates.paketlihas || 0).toLocaleString('tr-TR')}`);
-    console.log(`   • Yeni Çeyrek Altın: ₺${(izkoRates.yeniceyrek || 0).toLocaleString('tr-TR')}`);
-    console.log(`   • Yeni Yarım Altın: ₺${(izkoRates.yeniyarim || 0).toLocaleString('tr-TR')}`);
-    console.log(`   • Yeni Tam Altın: ₺${(izkoRates.yenitam || 0).toLocaleString('tr-TR')}`);
-    console.log(`   • Ata Altın: ₺${(izkoRates.ata || 0).toLocaleString('tr-TR')}`);
-    console.log(`   • 22 Ayar Gram: ₺${(izkoRates.yirmiiki || 0).toLocaleString('tr-TR')}`);
+    console.log(`   • Yeni Çeyrek: ₺${(izkoRates.yeniceyrek || 0).toLocaleString('tr-TR')} (Sağlama +%5 Hedef: ₺${Math.round(izkoRates.yeniceyrek * 1.05).toLocaleString('tr-TR')})`);
+    console.log(`   • Yeni Yarım: ₺${(izkoRates.yeniyarim || 0).toLocaleString('tr-TR')} (Sağlama +%5 Hedef: ₺${Math.round(izkoRates.yeniyarim * 1.05).toLocaleString('tr-TR')})`);
+    console.log(`   • Yeni Tam: ₺${(izkoRates.yenitam || 0).toLocaleString('tr-TR')} (Sağlama +%5 Hedef: ₺${Math.round(izkoRates.yenitam * 1.05).toLocaleString('tr-TR')})`);
+    console.log(`   • Ata Altın: ₺${(izkoRates.ata || 0).toLocaleString('tr-TR')} (Sağlama +%5 Hedef: ₺${Math.round(izkoRates.ata * 1.05).toLocaleString('tr-TR')})`);
   } catch (err) {
     console.warn(`⚠️ İZKO API bağlantı uyarısı: ${err.message}. Yerel güvenlik eşikleri devrede.`);
     izkoRates = {
-      has_altin_price: 7100,
+      has_altin_price: 7104.88,
       paketlihas: 7219,
       yeniceyrek: 11730,
       eskiceyrek: 11560,
@@ -142,46 +137,48 @@ async function verifyAndProtectWithIzko() {
   const currentDataRaw = fs.readFileSync(dataJsPath, 'utf8');
   const { PRODUCTS } = require(dataJsPath);
 
-  let delistedCount = 0;
-  let verifiedCount = 0;
+  let adjustedCount = 0;
+  let inStockCount = 0;
 
   for (const p of PRODUCTS) {
     if (!p.isGold && p.category !== 'gold' && !p.subCategory?.includes('Ziynet') && !p.subCategory?.includes('Külçe') && !p.subCategory?.includes('Bilezik')) {
       continue;
     }
 
-    const minFloorAllowed = getExpectedIzkoFloor(p, izkoRates);
-    if (minFloorAllowed && p.price < minFloorAllowed) {
-      console.error(`🚨 [İZKO GÜVENLİK İHLALİ]: [${p.reference}] ${p.name}`);
-      console.error(`   -> Sitemizdeki Fiyat: ₺${p.price.toLocaleString('tr-TR')} | İZKO Taban (%5 Altı Eşiği): ₺${Math.round(minFloorAllowed).toLocaleString('tr-TR')}`);
-      console.error(`   -> AKSİYON: ÜRÜN ANINDA YAYINDAN KALDIRILDI (STOK DIŞI YAPILDI).`);
-      
-      p.inStock = false;
-      p.statusBadge = 'Tükendi';
-      delistedCount++;
-    } else {
-      verifiedCount++;
+    const izkoRefBase = getIzkoReferenceBase(p, izkoRates);
+    if (izkoRefBase) {
+      const minSafePrice = Math.round(izkoRefBase * 1.05); // İZKO + %5 Marjı
+
+      if (p.price < minSafePrice) {
+        console.log(`  -> 🛡️ [İZKO +%5 GÜVENCE FİYATI UYGULANDI]: [${p.reference}] ${p.name}`);
+        console.log(`     Eski Fiyat: ₺${p.price.toLocaleString('tr-TR')} => Yeni Güvenli Fiyat: ₺${minSafePrice.toLocaleString('tr-TR')}`);
+        p.price = minSafePrice;
+        adjustedCount++;
+      }
+      // Ürün asla kaldırılmaz, her zaman satışta ve yayında tutulur
+      p.inStock = true;
+      p.statusBadge = 'Stokta';
+      inStockCount++;
     }
   }
 
-  console.log(`\n--- İZKO ÇAPRAZ SAĞLAMA SONUCU ---`);
-  console.log(`  ✅ Başarıyla Doğrulanan ve Güvenli Fiyatta Olan Ürün: ${verifiedCount}`);
-  console.log(`  🛡️ İZKO Kuralı Nedeniyle Kaldırılan/Engellenen Ürün: ${delistedCount}`);
+  console.log(`\n--- İZKO SAĞLAMA & YAYINLAMA SONUCU ---`);
+  console.log(`  ✅ Güvenceli Fiyatla Satışta Olan Toplam Altın Ürün: ${inStockCount}`);
+  console.log(`  📈 İZKO +%5 Kuralı ile Fiyatı Yukarı Güncellenen Ürün: ${adjustedCount}`);
 
-  if (delistedCount > 0) {
-    const productsMatch = currentDataRaw.match(/const PRODUCTS = \[[\s\S]*?\n\];/);
-    const headerPart = currentDataRaw.substring(0, productsMatch.index);
-    const footerPart = currentDataRaw.substring(productsMatch.index + productsMatch[0].length);
-    const updatedProductsBlock = `const PRODUCTS = ${JSON.stringify(PRODUCTS, null, 2)};`;
-    fs.writeFileSync(dataJsPath, headerPart + updatedProductsBlock + footerPart, 'utf8');
-    
-    execSync('node scripts/generate-payment-catalog.js', { stdio: 'inherit' });
-    execSync('node scripts/generate-seo-assets.js', { stdio: 'inherit' });
-    console.log(`[İZKO-GUARD] Riskli ürünler katalogdan ve ödeme motorundan düşürüldü.`);
-  }
+  // js/data.js Header ve Footer'ını koruyarak serialize et
+  const productsMatch = currentDataRaw.match(/const PRODUCTS = \[[\s\S]*?\n\];/);
+  const headerPart = currentDataRaw.substring(0, productsMatch.index);
+  const footerPart = currentDataRaw.substring(productsMatch.index + productsMatch[0].length);
+  const updatedProductsBlock = `const PRODUCTS = ${JSON.stringify(PRODUCTS, null, 2)};`;
+  fs.writeFileSync(dataJsPath, headerPart + updatedProductsBlock + footerPart, 'utf8');
+  
+  execSync('node scripts/generate-payment-catalog.js', { stdio: 'inherit' });
+  execSync('node scripts/generate-seo-assets.js', { stdio: 'inherit' });
+  console.log(`[İZKO-GUARD] Tüm ürünler İZKO +%5 güvencesiyle yayına alındı.`);
 
   console.log('====================================================\n');
-  return { delistedCount, verifiedCount };
+  return { adjustedCount, inStockCount };
 }
 
 if (require.main === module) {

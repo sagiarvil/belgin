@@ -11479,7 +11479,7 @@ Birincil kaynak her ürünün canonical HTML sayfasıdır.
 - ID: 2631
 - Referans: BLG-KUL-007
 - Fiyat: ₺19.964
-- Stok: Yok
+- Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-007-2631/
 
 ### Belgin Kuyumculuk 5 gr 995 24 Ayar Külçe Altın
@@ -11814,21 +11814,21 @@ Birincil kaynak her ürünün canonical HTML sayfasıdır.
 ### Belgin Kuyumculuk 14 Ayar 5 Gram Ajda Altın Bilezik
 - ID: 2731
 - Referans: BLG-BLZ-107
-- Fiyat: ₺28.313
+- Fiyat: ₺31.185
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-107-2731/
 
 ### Belgin Kuyumculuk 14 Ayar 5 Gram Kibrit Çöpü Ajda Altın Bilezik
 - ID: 2732
 - Referans: BLG-BLZ-108
-- Fiyat: ₺28.313
+- Fiyat: ₺31.185
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-108-2732/
 
 ### Belgin Kuyumculuk 14 Ayar 5 Gram Kalemli Ajda Altın Bilezik
 - ID: 2733
 - Referans: BLG-BLZ-109
-- Fiyat: ₺28.313
+- Fiyat: ₺31.185
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-109-2733/
 
@@ -11842,7 +11842,7 @@ Birincil kaynak her ürünün canonical HTML sayfasıdır.
 ### Belgin Kuyumculuk 14 Ayar 7 Gram Şarnel Altın Bilezik
 - ID: 2735
 - Referans: BLG-BLZ-111
-- Fiyat: ₺40.051
+- Fiyat: ₺43.659
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-111-2735/
 
@@ -11856,28 +11856,28 @@ Birincil kaynak her ürünün canonical HTML sayfasıdır.
 ### Belgin Kuyumculuk 14 Ayar 10 Gram Ajda Altın Bilezik
 - ID: 2737
 - Referans: BLG-BLZ-113
-- Fiyat: ₺55.246
-- Stok: Yok
+- Fiyat: ₺62.370
+- Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-113-2737/
 
 ### Belgin Kuyumculuk 14 Ayar 10 Gram Kibrit Çöpü Ajda Altın Bilezik
 - ID: 2738
 - Referans: BLG-BLZ-114
-- Fiyat: ₺55.246
-- Stok: Yok
+- Fiyat: ₺62.370
+- Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-114-2738/
 
 ### Belgin Kuyumculuk 14 Ayar 10 Gram Kalemli Ajda Altın Bilezik
 - ID: 2739
 - Referans: BLG-BLZ-115
-- Fiyat: ₺55.243
-- Stok: Yok
+- Fiyat: ₺62.370
+- Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-115-2739/
 
 ### Belgin Kuyumculuk 14 Ayar 10 Gram Dalgalı Şarnel Altın Bilezik
 - ID: 2740
 - Referans: BLG-BLZ-116
-- Fiyat: ₺56.850
+- Fiyat: ₺62.370
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-116-2740/
 

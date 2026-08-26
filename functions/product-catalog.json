@@ -16397,7 +16397,7 @@
     "category": "jewelry",
     "isGold": true,
     "metal": "24 Ayar Saf Altın (995/1000)",
-    "inStock": false
+    "inStock": true
   },
   "2635": {
     "id": "2635",
@@ -16873,7 +16873,7 @@
     "id": "2731",
     "name": "14 Ayar 5 Gram Ajda Altın Bilezik",
     "brand": "Belgin Kuyumculuk",
-    "price": 28313,
+    "price": 31185,
     "category": "jewelry",
     "isGold": true,
     "metal": "14 Ayar Altın (585/1000)",
@@ -16883,7 +16883,7 @@
     "id": "2732",
     "name": "14 Ayar 5 Gram Kibrit Çöpü Ajda Altın Bilezik",
     "brand": "Belgin Kuyumculuk",
-    "price": 28313,
+    "price": 31185,
     "category": "jewelry",
     "isGold": true,
     "metal": "14 Ayar Altın (585/1000)",
@@ -16893,7 +16893,7 @@
     "id": "2733",
     "name": "14 Ayar 5 Gram Kalemli Ajda Altın Bilezik",
     "brand": "Belgin Kuyumculuk",
-    "price": 28313,
+    "price": 31185,
     "category": "jewelry",
     "isGold": true,
     "metal": "14 Ayar Altın (585/1000)",
@@ -16913,7 +16913,7 @@
     "id": "2735",
     "name": "14 Ayar 7 Gram Şarnel Altın Bilezik",
     "brand": "Belgin Kuyumculuk",
-    "price": 40051,
+    "price": 43659,
     "category": "jewelry",
     "isGold": true,
     "metal": "14 Ayar Altın (585/1000)",
@@ -16933,37 +16933,37 @@
     "id": "2737",
     "name": "14 Ayar 10 Gram Ajda Altın Bilezik",
     "brand": "Belgin Kuyumculuk",
-    "price": 55246,
+    "price": 62370,
     "category": "jewelry",
     "isGold": true,
     "metal": "14 Ayar Altın (585/1000)",
-    "inStock": false
+    "inStock": true
   },
   "2738": {
     "id": "2738",
     "name": "14 Ayar 10 Gram Kibrit Çöpü Ajda Altın Bilezik",
     "brand": "Belgin Kuyumculuk",
-    "price": 55246,
+    "price": 62370,
     "category": "jewelry",
     "isGold": true,
     "metal": "14 Ayar Altın (585/1000)",
-    "inStock": false
+    "inStock": true
   },
   "2739": {
     "id": "2739",
     "name": "14 Ayar 10 Gram Kalemli Ajda Altın Bilezik",
     "brand": "Belgin Kuyumculuk",
-    "price": 55243,
+    "price": 62370,
     "category": "jewelry",
     "isGold": true,
     "metal": "14 Ayar Altın (585/1000)",
-    "inStock": false
+    "inStock": true
   },
   "2740": {
     "id": "2740",
     "name": "14 Ayar 10 Gram Dalgalı Şarnel Altın Bilezik",
     "brand": "Belgin Kuyumculuk",
-    "price": 56850,
+    "price": 62370,
     "category": "jewelry",
     "isGold": true,
     "metal": "14 Ayar Altın (585/1000)",
