@@ -139,6 +139,14 @@
         🔒 256-Bit SSL Şifreleme ve 3D Secure Güvenli Ödeme Altyapısı
       </div>
 
+      <!-- PAYTR 3D SECURE IFRAME ALANI -->
+      <div id="paytr-container" style="display:none; margin-top:24px; background:#ffffff; border-radius:12px; padding:16px; box-shadow:0 8px 30px rgba(0,0,0,0.4);">
+        <div style="text-align:center; font-weight:600; color:#05332f; margin-bottom:14px; font-size:13.5px; display:flex; align-items:center; justify-content:center; gap:8px;">
+          <span>🔒</span> PayTR 256-Bit SSL & 3D Secure Güvenli Kart Ödeme Ekranı
+        </div>
+        <div id="paytr-iframe-wrapper"></div>
+      </div>
+
       <!-- ARKA PLANDA ÇALIŞAN GİZLİ YASAL ONAY VE DELİL MOTORU (EKRANDA GÖRÜNMEZ, HUKUKEN %100 KAYDEDİLİR) -->
       <div style="display:none;" aria-hidden="true">
         <input type="checkbox" id="chkTerms" required checked>
@@ -152,8 +160,6 @@
     </div>
 
   </main>
-
-
 
   <script src="js/vip-payment.js"></script>
   <script>
@@ -206,7 +212,7 @@
     document.getElementById('custPhone').addEventListener('input', syncDraft);
     document.getElementById('custIdentity').addEventListener('input', syncDraft);
 
-    function processVipPayment() {
+    async function processVipPayment() {
       const name = document.getElementById('custName').value.trim();
       const phone = document.getElementById('custPhone').value.trim();
       const identity = document.getElementById('custIdentity').value.trim();
@@ -221,31 +227,89 @@
         return;
       }
 
-      const chkTerms = document.getElementById('chkTerms').checked;
-      const chkKyc = document.getElementById('chkKyc').checked;
-      const chkHighValue = document.getElementById('chkHighValue').checked;
-      const chkHandover = document.getElementById('chkHandover').checked;
-
-      if (!chkTerms || !chkKyc || !chkHighValue || !chkHandover) {
-        alert('Lütfen zorunlu yasal sözleşme ve güvenlik onay kutularını işaretleyiniz.');
-        return;
-      }
-
       syncDraft();
 
-      const auditRecord = {
-        orderId: currentPayload.orderId,
-        customerName: name,
-        customerPhone: phone,
-        customerIdentity: identity,
-        totalAmount: currentPayload.amount,
-        paymentMethod: '3D Secure Kart Ödemesi',
-        termsAcceptedAt: new Date().toISOString()
-      };
-      localStorage.setItem('last_order_audit', JSON.stringify(auditRecord));
+      const btn = document.getElementById('btnCompletePayment');
+      const originalHtml = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<span>⏳</span> 3D Secure Bağlantısı Kuruluyor...';
 
-      alert(`PayTR 256-Bit SSL 3D Secure ödeme ekranına yönlendiriliyorsunuz. Tutar: ₺${Number(currentPayload.amount).toLocaleString('tr-TR')}`);
-      window.location.href = `magaza-teslim-tesellum-formu.html?source=checkout&order=${currentPayload.orderId}&name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&amount=${currentPayload.amount}`;
+      try {
+        const cleanPhone = phone.replace(/\D/g, '');
+        const orderPayload = {
+          isVipPayment: true,
+          user_name: name,
+          user_phone: phone,
+          email: cleanPhone ? `musteri_${cleanPhone}@belginkuyumculuk.com` : `vip_${Date.now()}@belginkuyumculuk.com`,
+          customerIdentity: identity,
+          deliveryMethod: 'showroom',
+          termsAccepted: true,
+          preInformationAccepted: true,
+          highValueDeliveryAccepted: true,
+          marketingConsent: true,
+          items: [
+            {
+              id: currentPayload.orderId || `VIP-${Date.now()}`,
+              name: currentPayload.title || 'Lüks Showroom Siparişi',
+              price: Number(currentPayload.amount),
+              qty: 1,
+              isVipCustom: true,
+              brand: 'Belgin Kuyumculuk',
+              category: 'luxury'
+            }
+          ]
+        };
+
+        const response = await fetch('/api/createPayTRToken', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(orderPayload)
+        });
+
+        const data = await response.json();
+        if (!response.ok || !data.success || !data.iframeUrl) {
+          throw new Error(data.message || 'PayTR ödeme servisi yanıt vermedi.');
+        }
+
+        // PayTR iframe alanını yükle
+        const container = document.getElementById('paytr-container');
+        const wrapper = document.getElementById('paytr-iframe-wrapper');
+        wrapper.innerHTML = '';
+
+        const iframe = document.createElement('iframe');
+        iframe.src = data.iframeUrl;
+        iframe.id = 'paytriframe';
+        iframe.setAttribute('frameborder', '0');
+        iframe.setAttribute('scrolling', 'no');
+        iframe.setAttribute('title', 'PayTR Güvenli Ödeme');
+        iframe.style.width = '100%';
+        iframe.style.minHeight = '520px';
+        iframe.style.border = 'none';
+        iframe.style.borderRadius = '8px';
+
+        wrapper.appendChild(iframe);
+        container.style.display = 'block';
+        btn.style.display = 'none';
+        container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        // PayTR Dinamik Boyutlandırma Dinleyicisi
+        window.addEventListener('message', (event) => {
+          if (event.origin !== 'https://www.paytr.com') return;
+          try {
+            const msgData = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+            const height = Number.parseInt(msgData?.height, 10);
+            if (Number.isFinite(height) && height >= 300 && height <= 2400) {
+              iframe.style.height = `${height + 20}px`;
+            }
+          } catch (_) {}
+        });
+
+      } catch (err) {
+        console.error('VIP PayTR Hatası:', err);
+        alert('Ödeme başlatılamadı: ' + err.message);
+        btn.disabled = false;
+        btn.innerHTML = originalHtml;
+      }
     }
 
     window.addEventListener('DOMContentLoaded', initPage);

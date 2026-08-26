@@ -150,18 +150,37 @@ function isHighValueCatalogProduct(product) {
   return isWatch || isGold;
 }
 
-function normalizeCart(clientItems) {
+function normalizeCart(clientItems, isVipPayment = false) {
   if (!Array.isArray(clientItems) || clientItems.length === 0) throw new Error('Sepet boş olamaz.');
   if (clientItems.length > 20) throw new Error('Sepet ürün sınırı aşıldı.');
 
   return clientItems.map((item) => {
     const id = String(item.id ?? '');
-    const product = PRODUCT_CATALOG[id];
     const qty = Number(item.qty || 1);
+    if (!Number.isInteger(qty) || qty < 1 || qty > 10) throw new Error(`Geçersiz ürün adedi: ${id}`);
 
+    if (isVipPayment || item.isVipCustom === true || id.startsWith('VIP-') || id.startsWith('BLG-')) {
+      const price = Number(item.price);
+      if (!Number.isFinite(price) || price < 10) throw new Error('Geçersiz VIP sipariş tutarı.');
+      const name = String(item.name || 'Lüks Koleksiyon Siparişi').slice(0, 200).trim();
+      const isHighValue = price >= HIGH_VALUE_SECURE_DELIVERY_THRESHOLD;
+      return {
+        id: id || `VIP-${Date.now()}`,
+        name,
+        brand: String(item.brand || 'Belgin Kuyumculuk').slice(0, 100),
+        reference: String(item.reference || 'VIP-SHOWROOM').slice(0, 100),
+        metal: String(item.metal || 'Lüks Özel Sipariş').slice(0, 100),
+        price,
+        qty,
+        category: String(item.category || 'luxury').slice(0, 50),
+        isGold: item.isGold === true,
+        highValueSecureDelivery: isHighValue,
+      };
+    }
+
+    const product = PRODUCT_CATALOG[id];
     if (!product) throw new Error(`Ürün doğrulanamadı: ${id}`);
     if (product.inStock === false) throw new Error(`${product.name} stokta değil.`);
-    if (!Number.isInteger(qty) || qty < 1 || qty > 10) throw new Error(`Geçersiz ürün adedi: ${id}`);
 
     return {
       id,
@@ -248,10 +267,15 @@ exports.createPayTRToken = functions
     try {
       const config = getPayTRConfig();
       const body = req.body || {};
-      const email = String(body.email || '').trim().toLowerCase();
+      const isVipPayment = body.isVipPayment === true || (Array.isArray(body.items) && body.items.some(i => i.isVipCustom || String(i.id).startsWith('VIP-') || String(i.id).startsWith('BLG-')));
+      let email = String(body.email || '').trim().toLowerCase();
+      if (!email && isVipPayment) {
+        const cleanPhone = String(body.user_phone || '').replace(/\D/g, '');
+        email = cleanPhone ? `musteri_${cleanPhone}@belginkuyumculuk.com` : `vip_${Date.now()}@belginkuyumculuk.com`;
+      }
       if (!/^\S+@\S+\.\S+$/.test(email)) return res.status(400).json({ success: false, message: 'Geçerli e-posta zorunludur.' });
 
-      const items = normalizeCart(body.items);
+      const items = normalizeCart(body.items, isVipPayment);
       const compliance = validateLegalAndDelivery(body, items);
       const legalEvidence = getLegalEvidenceSnapshot(compliance.hasHighValue);
       const serverTotal = calculateTotal(items);
