@@ -42,13 +42,14 @@ const paytrClient = read('js/paytr.js');
 if (/handleDemoSimulation\s*\(/.test(paytrClient)) fail('İstemci ödeme akışında demo-success fallback mevcut.');
 else pass('İstemci ödeme akışı fail-closed.');
 
-const functionsCode = read('functions/index.js');
+const functionsFiles = ['functions/index.js', 'functions/payment/payment-service.js', 'functions/payment/providers/paytr.js'].filter((f) => fs.existsSync(path.join(root, f)));
+const functionsCode = functionsFiles.map(read).join('\n');
 if (/origin:\s*true/.test(functionsCode)) fail('Cloud Functions CORS tüm originlere açık.');
 if (/YOUR_MERCHANT_ID/.test(functionsCode)) fail('Cloud Functions içinde canlıda simülasyona düşebilecek PayTR placeholder mevcut.');
 if (/merchant_salt\)\s*\+\s*String\(status\)[\s\S]{0,80}merchant_salt/.test(functionsCode)) fail('PayTR callback hash formülünde merchant_salt iki kez kullanılıyor.');
 if (!functionsCode.includes(`'${PRIMARY_DOMAIN}'`)) fail('Cloud Functions CORS özel domaini içermiyor.');
-if (!functionsCode.includes(`${PRIMARY_DOMAIN}/#payment-success`)) fail('PayTR başarı URL özel domaine bağlı değil.');
-if (!functionsCode.includes(`${PRIMARY_DOMAIN}/#payment-failed`)) fail('PayTR hata URL özel domaine bağlı değil.');
+if (!functionsCode.includes(`${PRIMARY_DOMAIN}/odeme-basarili`) && !functionsCode.includes(`${PRIMARY_DOMAIN}/#payment-success`)) fail('PayTR başarı URL özel domaine bağlı değil.');
+if (!functionsCode.includes(`${PRIMARY_DOMAIN}/odeme-basarisiz`) && !functionsCode.includes(`${PRIMARY_DOMAIN}/#payment-failed`)) fail('PayTR hata URL özel domaine bağlı değil.');
 if (functionsCode.includes(LEGACY_PRIMARY)) fail('Cloud Functions içinde eski belgin.web.app primary-domain referansı kaldı.');
 if (!functionsCode.includes('productSnapshotHash') || !functionsCode.includes('evidenceId') || !functionsCode.includes("collection('auditEvents')")) fail('Sunucu hukuki delil/audit zinciri eksik.');
 if (!functionsCode.includes('getLegalEvidenceSnapshot')) fail('Sunucu hukuk belge hash snapshot katmanı eksik.');

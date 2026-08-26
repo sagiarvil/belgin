@@ -43,7 +43,8 @@ const paytr = read('js/paytr.js');
 if (!paytr.includes("parsed.hostname !== 'www.paytr.com'") || !paytr.includes("event.origin !== 'https://www.paytr.com'")) fail('Ödeme iframe/origin allowlist kilidi eksik.');
 else pass('Ödeme iframe ve postMessage origin kilidi mevcut.');
 
-const fn = read('functions/index.js');
+const fnFiles = ['functions/index.js', 'functions/payment/payment-service.js', 'functions/payment/providers/paytr.js'].filter((f) => fs.existsSync(path.join(root, f)));
+const fn = fnFiles.map(read).join('\n');
 if (!/max_installment:\s*[1-3]\b/.test(fn)) fail('Backend azami taksit 1-3 olarak sınırlandırılmamış.');
 else pass('Backend azami taksit 1 (tek çekim).');
 if (!fn.includes('CALLBACK_AMOUNT_MISMATCH') || !fn.includes('String(total_amount) !== String(order.amountInKurus)')) fail('Callback tutar eşleşme koruması eksik.');

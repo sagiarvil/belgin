@@ -1,0 +1,33 @@
+/**
+ * BELGIN KUYUMCULUK — ÇOKLU SANAL POS SABİTLERİ
+ * Provider Tanımları, Merkezi Durum Modeli ve Standartlar
+ */
+
+const PROVIDERS = Object.freeze({
+  PAYTR: 'PAYTR',
+  QNB: 'QNB',
+  AKBANK: 'AKBANK',
+  YAPIKREDI: 'YAPIKREDI',
+});
+
+const PAYMENT_STATUS = Object.freeze({
+  PENDING: 'PAYMENT_PENDING',
+  PAID: 'PAYMENT_PAID',
+  FAILED: 'PAYMENT_FAILED',
+  CANCELLED: 'PAYMENT_CANCELLED',
+  REFUNDED: 'PAYMENT_REFUNDED',
+});
+
+const DEFAULT_PROVIDER = PROVIDERS.PAYTR;
+
+const SUPPORTED_CURRENCIES = Object.freeze({
+  TRY: 'TRY',
+  TL: 'TRY',
+});
+
+module.exports = {
+  PROVIDERS,
+  PAYMENT_STATUS,
+  DEFAULT_PROVIDER,
+  SUPPORTED_CURRENCIES,
+};

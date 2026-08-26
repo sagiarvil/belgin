@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Ödeme Tamamlanamadı | Belgin Kuyumculuk & Saat</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="images/link-icon-180.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="canonical" href="https://www.belginkuyumculuk.com/odeme-basarisiz.html">
+  <style>
+    :root {
+      --bg-dark: #042421;
+      --card-bg: #073531;
+      --gold-primary: #D4AF37;
+      --gold-light: #F3E5AB;
+      --text-main: #FFFFFF;
+      --text-muted: #9BB3AF;
+      --border-color: rgba(212, 175, 55, 0.25);
+      --error-red: #E74C3C;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+    .status-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 36px 28px;
+      width: 100%;
+      max-width: 520px;
+      text-align: center;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+      position: relative;
+    }
+    .status-icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 20px;
+      background: rgba(231, 76, 60, 0.15);
+      border: 2px solid var(--error-red);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--error-red);
+      font-size: 32px;
+    }
+    .brand-crest {
+      width: 54px;
+      height: 54px;
+      object-fit: contain;
+      margin-bottom: 12px;
+      filter: drop-shadow(0 2px 8px rgba(212,175,55,0.4));
+    }
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 22px;
+      color: var(--gold-light);
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .status-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    .info-box {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px dashed rgba(231, 76, 60, 0.4);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 24px;
+      text-align: left;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #F8D7DA;
+    }
+    .security-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #D4AF37 0%, #AA8010 100%);
+      color: #042421;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 14px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      display: block;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      transition: opacity 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.92; }
+    .btn-secondary {
+      background: transparent;
+      color: var(--gold-light);
+      border: 1px solid var(--border-color);
+      font-size: 13.5px;
+      padding: 12px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      display: block;
+      transition: background 0.2s;
+    }
+    .btn-secondary:hover { background: rgba(212,175,55,0.1); }
+  </style>
+</head>
+<body>
+
+  <div class="status-card">
+    <img src="images/belgin-crest-b.png" alt="Belgin Kuyumculuk" class="brand-crest">
+    <div class="status-icon">✕</div>
+    <h1>Ödeme Tamamlanamadı</h1>
+    <p class="status-subtitle">Kartınızdan herhangi bir tahsilat yapılmamıştır. İşlem bankanız veya ödeme sağlayıcınız tarafından onaylanmadı.</p>
+
+    <div class="info-box">
+      • Kart limitinizi, internet alışveriş yetkisini ve 3D Secure SMS kodunu kontrol ederek tekrar deneyebilirsiniz.<br>
+      • Banka kartınızla tek çekim veya FAST/Havale yöntemini tercih edebilirsiniz.
+    </div>
+
+    <div class="security-badge">
+      🔒 İşlem Güvenliği ve Kart Gizliliği Standartları Korunmaktadır
+    </div>
+
+    <div class="btn-group">
+      <a href="javascript:history.back()" class="btn-primary">Tekrar Dene</a>
+      <a href="https://wa.me/905419305372?text=Merhaba,%20%C3%B6deme%20i%C5%9Fleminde%20yard%C4%B1m%20almak%20istiyorum." target="_blank" rel="noopener" class="btn-secondary">💬 Müşteri Temsilcisine Bağlan</a>
+      <a href="/" class="btn-secondary">Ana Sayfaya Dön</a>
+    </div>
+  </div>
+
+</body>
+</html>

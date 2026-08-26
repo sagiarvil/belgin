@@ -35,7 +35,7 @@ const params = { merchant_id:'123', user_ip:'127.0.0.1', merchant_oid:'BLG-1', e
 const hashStr = String(params.merchant_id)+String(params.user_ip)+String(params.merchant_oid)+String(params.email)+String(params.payment_amount)+String(params.user_basket)+String(params.no_installment)+String(params.max_installment)+String(params.currency)+String(params.test_mode)+'salt';
 const token = crypto.createHmac('sha256','key').update(hashStr).digest('base64');
 assert(token.length > 20, 'PayTR HMAC-SHA256 token üretimi çalışıyor');
-const functionsCode = read('functions/index.js');
+const functionsCode = ['functions/index.js', 'functions/payment/payment-service.js', 'functions/payment/providers/paytr.js'].map(read).join('\n');
 assert(functionsCode.includes("Number(product.price) < HIGH_VALUE_SECURE_DELIVERY_THRESHOLD"), 'Backend 12.000 TL eşiğini dahil ederek uygular');
 assert(functionsCode.includes("deliveryMethod !== 'showroom'"), 'Backend yüksek değerli üründe mağaza teslimini zorlar');
 assert(functionsCode.includes('productSnapshotHash'), 'Sipariş ürün/fiyat snapshot hash kaydı var');
@@ -117,6 +117,47 @@ const cookiePolicy = read('cerez-politikasi.html');
 assert(cookiePolicy.length > 500, 'Çerez politikası mevcut');
 const marketingPolicy = read('ticari-elektronik-ileti-onayi.html');
 assert(marketingPolicy.length > 500, 'Ticari elektronik ileti politikası mevcut');
+
+console.log('\n--- 8. Çoklu Sanal POS Mimarisi ve Güvenlik Testleri ---');
+const { PROVIDERS, PAYMENT_STATUS, DEFAULT_PROVIDER } = require('../functions/payment/payment-constants');
+assert(PROVIDERS.PAYTR === 'PAYTR' && PROVIDERS.QNB === 'QNB' && PROVIDERS.AKBANK === 'AKBANK' && PROVIDERS.YAPIKREDI === 'YAPIKREDI', 'Merkezi 4 POS sağlayıcı sabiti tanımlı');
+assert(DEFAULT_PROVIDER === 'PAYTR', 'Varsayılan sağlayıcı PAYTR');
+assert(PAYMENT_STATUS.PAID === 'PAYMENT_PAID' && PAYMENT_STATUS.PENDING === 'PAYMENT_PENDING', 'Standart ödeme durum modelleri tanımlı');
+
+const paymentRouter = require('../functions/payment/payment-router');
+assert(paymentRouter.getProvider('PAYTR').name === 'PAYTR', 'Payment router PAYTR sağlayıcısını çözümlüyor');
+assert(paymentRouter.getProvider().name === 'PAYTR', 'Payment router boş çağrıda varsayılan PAYTR dönüyor');
+
+const qnbAdapter = paymentRouter.getProvider('QNB');
+let qnbBlocked = false;
+qnbAdapter.createPayment().catch((e) => { if (e.code === 'PROVIDER_NOT_CONFIGURED') qnbBlocked = true; });
+assert(qnbAdapter.verifyCallback().reason === 'PROVIDER_NOT_CONFIGURED', 'QNB Finansbank adapter dokümansız çağrıda FAIL-CLOSED davranıyor (PROVIDER_NOT_CONFIGURED)');
+
+const akbankAdapter = paymentRouter.getProvider('AKBANK');
+let akbankBlocked = false;
+akbankAdapter.createPayment().catch((e) => { if (e.code === 'PROVIDER_NOT_CONFIGURED') akbankBlocked = true; });
+assert(akbankAdapter.verifyCallback().reason === 'PROVIDER_NOT_CONFIGURED', 'Akbank adapter dokümansız çağrıda FAIL-CLOSED davranıyor (PROVIDER_NOT_CONFIGURED)');
+
+const yapiKrediAdapter = paymentRouter.getProvider('YAPIKREDI');
+let yapiKrediBlocked = false;
+yapiKrediAdapter.createPayment().catch((e) => { if (e.code === 'PROVIDER_NOT_CONFIGURED') yapiKrediBlocked = true; });
+assert(yapiKrediAdapter.verifyCallback().reason === 'PROVIDER_NOT_CONFIGURED', 'Yapı Kredi adapter dokümansız çağrıda FAIL-CLOSED davranıyor (PROVIDER_NOT_CONFIGURED)');
+
+let unknownBlocked = false;
+try { paymentRouter.getProvider('UNKNOWN_BANK'); } catch (e) { if (e.code === 'UNKNOWN_PROVIDER') unknownBlocked = true; }
+assert(unknownBlocked, 'Bilinmeyen sağlayıcı talebi güvenli şekilde engelleniyor (UNKNOWN_PROVIDER)');
+
+const paytrAdapter = require('../functions/payment/providers/paytr');
+const fakeCallbackRes = paytrAdapter.verifyCallback({ body: { merchant_oid: 'BLG-123', status: 'success', total_amount: '1000', hash: 'fake_hash' }, order: { total: 100, amountInKurus: '10000' } });
+assert(fakeCallbackRes.isValid === false, 'Sahte hash veya tutar uyuşmazlığı olan callback FAIL-CLOSED reddediliyor');
+
+const successPage = read('odeme-basarili.html');
+const failPage = read('odeme-basarisiz.html');
+assert(successPage.includes('Ödemeniz Başarıyla Alındı') && !successPage.includes('cvv') && !successPage.includes('cardnumber'), 'odeme-basarili.html premium ve güvenli');
+assert(failPage.includes('Ödeme Tamamlanamadı') && !failPage.includes('cvv') && !failPage.includes('cardnumber'), 'odeme-basarisiz.html kart bilgisi ifşa etmeden çalışıyor');
+
+const clientPayment = read('js/belgin-payment.js');
+assert(clientPayment.includes('/payment/create') && clientPayment.includes('BelginPayment'), 'js/belgin-payment.js çoklu POS istemci katmanı hazır');
 
 console.log('\n========================================');
 console.log(`SONUÇ: ${passed} TEST BAŞARILI, ${failed} TEST BAŞARISIZ`);

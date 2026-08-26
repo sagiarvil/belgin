@@ -58,7 +58,7 @@ function scrubPublicClaims(content) {
   return out;
 }
 
-const EXCLUDED_HTML = ['vip-odeme.html', 'odeme-linki.html'];
+const EXCLUDED_HTML = ['vip-odeme.html', 'odeme-linki.html', 'odeme-basarili.html', 'odeme-basarisiz.html'];
 const htmlFiles = fs.readdirSync(root).filter((name) => /\.html$/i.test(name) && !EXCLUDED_HTML.includes(name));
 for (const file of htmlFiles) {
   writeIfChanged(file, (content) => {
@@ -84,13 +84,7 @@ for (const file of ['js/app.js', 'js/cart.js', 'js/router.js']) {
 }
 
 writeIfChanged('functions/index.js', (content) => {
-  let out = content.replace(/max_installment:\s*6/g, 'max_installment: 3');
-  if (!out.includes('CALLBACK_AMOUNT_MISMATCH')) {
-    const needle = "      const order = orderDoc.data();\n";
-    const guard = `${needle}      if (String(total_amount) !== String(order.amountInKurus)) {\n        console.error('[PayTR Security] Callback amount mismatch:', merchant_oid, total_amount, order.amountInKurus);\n        await appendAuditEvent(orderRef, 'CALLBACK_AMOUNT_MISMATCH', { received: String(total_amount), expected: String(order.amountInKurus) });\n        return res.status(400).send('PAYTR notification failed: amount mismatch');\n      }\n`;
-    if (!out.includes(needle)) throw new Error('functions/index.js callback order anchor bulunamadı.');
-    out = out.replace(needle, guard);
-  }
+  let out = content.replace(/max_installment:\s*6/g, 'max_installment: 1');
   return out;
 });
 
