@@ -192,10 +192,12 @@ function updateMarketTickerDOM() {
     // Marquee 2. Döngü
     { id: 'liveGramGold2', val: '₺' + Number(LIVE_MARKET_DATA.gramGold24k).toLocaleString('tr-TR'), chg: 'liveGramChange2', chgVal: '▲ ' + LIVE_MARKET_DATA.changeGram },
     { id: 'live22KGold2', val: '₺' + Number(LIVE_MARKET_DATA.gramGold22k).toLocaleString('tr-TR'), chg: 'live22KChange2', chgVal: '▲ ' + LIVE_MARKET_DATA.change22k },
-    { id: 'liveQuarterGold2', val: '₺' + Number(LIVE_MARKET_DATA.quarterGold).toLocaleString('tr-TR'), chg: 'liveQuarterChange2', chgVal: '▲ ' + LIVE_MARKET_DATA.changeQuarter },
-    { id: 'liveAtaGold2', val: '₺' + Number(LIVE_MARKET_DATA.ataGold).toLocaleString('tr-TR') },
     { id: 'liveUsdTry2', val: '₺' + Number(LIVE_MARKET_DATA.usdTry).toFixed(2) },
-    { id: 'liveEurTry2', val: '₺' + Number(LIVE_MARKET_DATA.eurTry).toFixed(2) }
+    { id: 'liveEurTry2', val: '₺' + Number(LIVE_MARKET_DATA.eurTry).toFixed(2) },
+    
+    // Hero Asimetrik Vitrin Paneli
+    { id: 'heroGoldRate', val: '₺' + Number(LIVE_MARKET_DATA.gramGold24k || 8149).toLocaleString('tr-TR') },
+    { id: 'heroQuarterRate', val: '₺' + Number(LIVE_MARKET_DATA.quarterGold || 13166).toLocaleString('tr-TR') }
   ];
 
   elements.forEach(item => {
