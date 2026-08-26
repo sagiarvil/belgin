@@ -40,7 +40,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/style.css?v=2026.08.26.1620">
+  <link rel="stylesheet" href="css/style.css?v=2026.08.26.2050">
 
   <!-- SCHEMA.ORG JSON-LD ENTERPRISE METRICS -->
   <script type="application/ld+json">
@@ -1323,7 +1323,40 @@
   <div class="quick-drawer-panel" id="quickDrawerPanel"></div>
 </div>
 
-<!-- 5. MODALLAR (TAKAS & VIP RANDEVU & SERTİFİKA & KARGO TAKİP) -->
+<!-- 5. CANLI ARAMA MODAL KATMANI (PREMIUM SEARCH OVERLAY) -->
+<div class="search-overlay" id="searchOverlay" onclick="if(event.target===this) App.closeSearchModal();">
+  <div class="search-modal-container">
+    <div class="search-modal-header">
+      <div class="search-input-wrapper">
+        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="liveSearchInput" class="search-modal-input" placeholder="Model, marka, referans veya mücevher arayın (Örn: Rolex, Versace, Seiko, Gram Altın...)" autocomplete="off" oninput="App.handleLiveSearch(this.value)" onkeydown="if(event.key==='Escape') App.closeSearchModal();">
+        <button class="search-clear-btn" id="searchClearBtn" onclick="App.clearSearchInput()" style="display:none;" title="Temizle">✕</button>
+      </div>
+      <button class="search-modal-close-btn" onclick="App.closeSearchModal()" aria-label="Kapat" title="Kapat">✕</button>
+    </div>
+
+    <!-- Hızlı Arama Etiketleri -->
+    <div class="search-quick-tags">
+      <span class="search-tags-label">Popüler:</span>
+      <button type="button" class="search-tag-chip" onclick="App.quickSearchTag('Rolex')">Rolex</button>
+      <button type="button" class="search-tag-chip" onclick="App.quickSearchTag('Versace')">Versace</button>
+      <button type="button" class="search-tag-chip" onclick="App.quickSearchTag('Seiko')">Seiko</button>
+      <button type="button" class="search-tag-chip" onclick="App.quickSearchTag('Cartier')">Cartier</button>
+      <button type="button" class="search-tag-chip" onclick="App.quickSearchTag('Gram Altın')">Gram Altın</button>
+      <button type="button" class="search-tag-chip" onclick="App.quickSearchTag('Ziynet')">Ziynet</button>
+      <button type="button" class="search-tag-chip" onclick="App.quickSearchTag('Bilezik')">Bilezik</button>
+      <button type="button" class="search-tag-chip" onclick="App.quickSearchTag('Michael Kors')">Michael Kors</button>
+    </div>
+
+    <!-- Sonuç Başlığı & Sayacı -->
+    <div class="search-results-meta" id="searchResultsMeta" style="display:none;"></div>
+
+    <!-- Canlı Sonuç Listesi -->
+    <div class="search-results-list" id="searchResultsList"></div>
+  </div>
+</div>
+
+<!-- 6. MODALLAR (TAKAS & VIP RANDEVU & SERTİFİKA & KARGO TAKİP) -->
 <div class="modal-overlay" id="appModalOverlay" onclick="if(event.target===this) App.closeModal();">
   <div class="modal-dialog-box" id="appModalBox"></div>
 </div>
@@ -1506,7 +1539,7 @@
 <script src="js/router.js?v=2026.08.26.1620"></script>
 <script src="js/paytr.js?v=2026.08.26.1620"></script>
 <script src="js/belgin-payment.js?v=2026.08.26.1620"></script>
-<script src="js/app.js?v=2026.08.26.1956"></script>
+<script src="js/app.js?v=2026.08.26.2050"></script>
 <script src="js/legal-overrides.js?v=2026.08.26.1620"></script>
 
 </body>

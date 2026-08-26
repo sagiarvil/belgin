@@ -1404,22 +1404,107 @@ const App = {
   },
 
   openSearchModal() {
-    const q = prompt("Saat, Altın veya Mücevher Arayın (Örn: Rolex, Cartier, Altın, Tektaş):");
-    if (!q || !q.trim()) return;
-
-    const term = q.toLowerCase().trim();
-    const found = PRODUCTS.filter(p => 
-      p.name.toLowerCase().includes(term) || 
-      p.brand.toLowerCase().includes(term) ||
-      p.reference.toLowerCase().includes(term) ||
-      (p.metal && p.metal.toLowerCase().includes(term))
-    );
-
-    if (found.length > 0) {
-      this.openProduct(found[0].id);
-    } else {
-      alert(`"${q}" ile eşleşen model bulunamadı.`);
+    const overlay = document.getElementById('searchOverlay');
+    const input = document.getElementById('liveSearchInput');
+    if (!overlay) return;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    if (input) {
+      input.value = '';
+      setTimeout(() => input.focus(), 80);
     }
+    this.handleLiveSearch('');
+  },
+
+  closeSearchModal() {
+    const overlay = document.getElementById('searchOverlay');
+    if (overlay) overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  },
+
+  clearSearchInput() {
+    const input = document.getElementById('liveSearchInput');
+    if (input) {
+      input.value = '';
+      input.focus();
+    }
+    this.handleLiveSearch('');
+  },
+
+  quickSearchTag(term) {
+    const input = document.getElementById('liveSearchInput');
+    if (input) {
+      input.value = term;
+      input.focus();
+    }
+    this.handleLiveSearch(term);
+  },
+
+  handleLiveSearch(query = '') {
+    const clearBtn = document.getElementById('searchClearBtn');
+    const metaEl = document.getElementById('searchResultsMeta');
+    const listEl = document.getElementById('searchResultsList');
+    if (!listEl) return;
+
+    const term = (query || '').trim().toLowerCase();
+    if (clearBtn) {
+      clearBtn.style.display = term ? 'inline-flex' : 'none';
+    }
+
+    let results = [];
+    if (!term) {
+      results = PRODUCTS.slice(0, 8);
+      if (metaEl) {
+        metaEl.style.display = 'flex';
+        metaEl.innerHTML = `<span>ÖNE ÇIKAN MODELLER & KOLEKSİYON</span><span>${PRODUCTS.length.toLocaleString('tr-TR')} Ürün</span>`;
+      }
+    } else {
+      results = PRODUCTS.filter(p => {
+        const name = (p.name || '').toLowerCase();
+        const brand = (p.brand || '').toLowerCase();
+        const ref = (p.reference || p.ref || '').toLowerCase();
+        const metal = (p.metal || '').toLowerCase();
+        const cat = (p.category || '').toLowerCase();
+        const subCat = (p.subCategory || '').toLowerCase();
+        return name.includes(term) || brand.includes(term) || ref.includes(term) || metal.includes(term) || cat.includes(term) || subCat.includes(term);
+      });
+
+      if (metaEl) {
+        metaEl.style.display = 'flex';
+        metaEl.innerHTML = `<span>"${query}" İÇİN BULUNAN SONUÇLAR</span><span>${results.length} Adet</span>`;
+      }
+    }
+
+    if (results.length === 0) {
+      listEl.innerHTML = `
+        <div class="search-empty-state">
+          <div class="search-empty-icon">🔍</div>
+          <h4 class="search-empty-title">"${query}" ile eşleşen model bulunamadı</h4>
+          <p class="search-empty-desc">Farklı bir marka adı, model referansı veya "Rolex, Cartier, Altın, Saat" gibi genel bir arama terimi deneyebilirsiniz.</p>
+        </div>
+      `;
+      return;
+    }
+
+    listEl.innerHTML = results.slice(0, 30).map(p => {
+      const img = p.image || p.img || (p.images && p.images[0]) || 'images/belgin-logo.png';
+      const brand = p.brand || (p.category === 'gold' ? '24K ALTIN' : 'MÜCEVHERAT');
+      const title = `${p.brand || ''} ${p.name || ''}`.trim();
+      const ref = p.reference || p.ref || p.metal || (p.category === 'gold' ? 'Sertifikalı Külçe/Ziynet' : 'Özel Koleksiyon');
+      const priceFormatted = (typeof formatPrice === 'function') ? formatPrice(p.price) : `₺${Number(p.price).toLocaleString('tr-TR')}`;
+
+      return `
+        <div class="search-result-item" onclick="App.closeSearchModal(); App.openProduct(${p.id});">
+          <img src="${img}" alt="${title}" class="search-result-thumb" loading="lazy">
+          <div class="search-result-info">
+            <span class="search-result-brand">${brand}</span>
+            <div class="search-result-title">${title}</div>
+            <span class="search-result-ref">${ref}</span>
+          </div>
+          <div class="search-result-price">${priceFormatted}</div>
+        </div>
+      `;
+    }).join('');
   },
 
   calculateInstantValuation() {
