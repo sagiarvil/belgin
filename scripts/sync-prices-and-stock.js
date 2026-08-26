@@ -45,6 +45,15 @@ function fetchHtml(url) {
   });
 }
 
+function isMultiUnitGoldItem(name) {
+  const n = (name || '').toLowerCase();
+  const m = n.match(/(\d+)\s*adet/i);
+  if (m && parseInt(m[1], 10) > 1) return true;
+  if (/eski\s*\d+\s*adet/i.test(n) || /yeni\s*\d+\s*adet/i.test(n)) return true;
+  if (/\b\d+\s*adet\s*(çeyrek|yarım|tam|ata|külçe|gram|gr)\b/i.test(n)) return true;
+  return false;
+}
+
 function parseAgaKulchePage(html) {
   const products = [];
   
@@ -57,6 +66,11 @@ function parseAgaKulchePage(html) {
     const sourcePrice = Math.round(parseFloat(rawPriceStr));
     
     if (rawTitle && sourcePrice > 0) {
+      // 1'den fazla adetli satışta olan altınları dahil etme (Yalnızca tekil ürünler listelenir)
+      if (isMultiUnitGoldItem(rawTitle)) {
+        continue;
+      }
+
       // Temiz Başlık (Marka ve aracı isimleri arındırılmış)
       let cleanName = rawTitle
         .replace(/AgaKulche\s*/gi, '')
@@ -124,32 +138,41 @@ async function syncAll() {
       const html = await fetchHtml(url);
       const items = parseAgaKulchePage(html);
       scrapedItems.push(...items);
-      console.log(`  ✓ ${url} => ${items.length} ürün başarıyla okundu.`);
+      console.log(`  ✓ ${url} => ${items.length} tekil ürün başarıyla okundu.`);
     } catch (err) {
       console.warn(`  ⚠️ Sayfa okunamadı: ${url} (${err.message})`);
     }
   }
 
-  console.log(`[SYNC-ENGINE] Toplam taranan canlı ürün: ${scrapedItems.length}`);
+  console.log(`[SYNC-ENGINE] Toplam taranan canlı tekil ürün: ${scrapedItems.length}`);
 
   // Mevcut data.js yükle
   const dataJsPath = path.join(__dirname, '../js/data.js');
   const currentDataRaw = fs.readFileSync(dataJsPath, 'utf8');
-  const { PRODUCTS, WATCH_BRANDS, JEWELRY_BRANDS, CERTIFICATE_DB } = require(dataJsPath);
+  let { PRODUCTS } = require(dataJsPath);
+
+  // Çok adetli altınları veritabanından tamamen temizle (Asla tekrar dahil edilmez)
+  const initialCount = PRODUCTS.length;
+  PRODUCTS = PRODUCTS.filter(p => {
+    if (p.isGold || p.category === 'gold' || p.subCategory?.includes('Ziynet') || p.subCategory?.includes('Külçe')) {
+      return !isMultiUnitGoldItem(p.name);
+    }
+    return true;
+  });
+  console.log(`[SYNC-ENGINE] Çok adetli altın filtresi: ${initialCount - PRODUCTS.length} adet çoklu ürün temizlendi.`);
+
   let updatedCount = 0;
 
   // Altın ürünlerini tam eşleşme ile güncelle ve +%5 marj uygula
   for (const p of PRODUCTS) {
     if (p.isPreOwned || (p.category !== 'jewelry' && p.category !== 'jewellery' && !p.isGold)) continue;
 
-    // Tam normalize isim eşleşmesi (1 Adet, 2 Adet, 6 Adet vb. karışmasını engeller)
     const normBelgin = normalizeName(p.name);
     const match = scrapedItems.find(item => normalizeName(item.cleanName) === normBelgin);
 
     if (match && match.sourcePrice > 0) {
       const newPriceWithMargin = Math.round(match.sourcePrice * GOLD_MARGIN);
       if (p.price !== newPriceWithMargin) {
-        console.log(`  -> Fiyat Güncellendi: [${p.reference}] ${p.name} : ${p.price} TL => ${newPriceWithMargin} TL`);
         p.price = newPriceWithMargin;
         updatedCount++;
       }
@@ -171,7 +194,7 @@ async function syncAll() {
 
   const updatedProductsBlock = `const PRODUCTS = ${JSON.stringify(PRODUCTS, null, 2)};`;
   fs.writeFileSync(dataJsPath, headerPart + updatedProductsBlock + footerPart, 'utf8');
-  console.log(`[SYNC-ENGINE] js/data.js başarıyla güncellendi.`);
+  console.log(`[SYNC-ENGINE] js/data.js başarıyla güncellendi (Kalan Tekil Ürün: ${PRODUCTS.length}).`);
 
   // Ödeme kataloğunu ve SEO varlıklarını güncelle
   console.log(`[SYNC-ENGINE] Ödeme ve SEO katalogları senkronize ediliyor...`);
