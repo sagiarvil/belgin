@@ -74014,8 +74014,7 @@ const PRODUCTS = [
     "images": [
       "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dwecbecd81/images/large/0628c1ecff495255b019bdc9c03b10e4.png?sfrm=png&sh=750&sm=fit&sw=750"
     ]
-  }
-,
+  },
   {
     "id": 2625,
     "brand": "Belgin Kuyumculuk",
@@ -74027,7 +74026,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 7793,
+    "price": 8186,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74039,7 +74038,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-1-gr-995-24-ayar-amr-kulce-altin-1762330910-6.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2626,
@@ -74052,7 +74052,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 7817,
+    "price": 8186,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74064,7 +74064,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-iar-1-gram-995-24-ayar-kulce-altin-1747398189-4.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2627,
@@ -74077,7 +74078,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 7820,
+    "price": 8214,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74089,7 +74090,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ozbag-1-gr-995-24-ayar-kulce-altin-1767777655-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2628,
@@ -74102,7 +74104,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 15340,
+    "price": 16112,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74114,7 +74116,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-amr-1-gr-995-kulce-altin-2-adet-1764168104-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2629,
@@ -74127,7 +74130,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 15385,
+    "price": 16137,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74139,7 +74142,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-iar-1-gram-2-adet-995-24-ayar-kulce-altin-1787143253-4.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2630,
@@ -74152,7 +74156,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 15393,
+    "price": 16112,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74164,7 +74168,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ozbag-1-gr-995-24-ayar-kulce-altin-2-adet-1760436349-1.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2631,
@@ -74177,7 +74182,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 19093,
+    "price": 20056,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74189,7 +74194,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-2-5-gr-995-24-ayar-amr-kulce-altin-1750687930-3.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2632,
@@ -74202,7 +74208,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 22885,
+    "price": 24038,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74214,7 +74220,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-amr-1-gr-995-kulce-altin-3-adet-1764168140-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2633,
@@ -74227,7 +74234,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 22953,
+    "price": 24075,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74239,7 +74246,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-iar-1-gram-3-adet-995-24-ayar-kulce-altin-1787143280-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2634,
@@ -74252,7 +74260,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 22965,
+    "price": 24038,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74264,7 +74272,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ozbag-1-gr-995-24-ayar-kulce-altin-3-adet-1760437328-1.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2635,
@@ -74277,7 +74286,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 37900,
+    "price": 20056,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74289,7 +74298,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-5-gr-995-24-ayar-amr-kulce-altin-1750687957-3.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2636,
@@ -74302,7 +74312,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 37976,
+    "price": 39890,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74314,7 +74324,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-amr-1-gr-995-kulce-altin-5-adet-1764168176-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2637,
@@ -74327,7 +74338,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 38034,
+    "price": 39947,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74339,7 +74350,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ozbag-5-gr-995-24-ayar-kulce-altin-1764082387-3.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2638,
@@ -74352,7 +74364,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 38055,
+    "price": 20056,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74364,7 +74376,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-iar-5-gram-995-24-ayar-kulce-altin-4594676-63-B.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2639,
@@ -74377,7 +74390,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 38089,
+    "price": 39953,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74389,7 +74402,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-iar-1-gram-5-adet-995-24-ayar-kulce-altin-1787143300-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2640,
@@ -74402,7 +74416,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 38109,
+    "price": 39890,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74414,7 +74428,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ozbag-1-gr-995-24-ayar-kulce-altin-5-adet-1760438098-1.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2641,
@@ -74427,7 +74442,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 45657,
+    "price": 47888,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74439,7 +74454,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-iar-1-gram-6-adet-995-24-ayar-kulce-altin-1787143318-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2642,
@@ -74452,7 +74468,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 45682,
+    "price": 47980,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74464,7 +74480,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ozbag-1-gr-995-24-ayar-kulce-altin-6-adet-1760438206-1.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2643,
@@ -74477,7 +74494,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 75552,
+    "price": 79365,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74489,7 +74506,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-10-gr-995-24-ayar-amr-kulce-altin-1750688067-3.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2644,
@@ -74502,7 +74520,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 75705,
+    "price": 79519,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74514,7 +74532,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-amr-1-gr-995-kulce-altin-10-adet-1764168215-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2645,
@@ -74527,7 +74546,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 75820,
+    "price": 79635,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74539,7 +74558,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ozbag-10-gr-995-24-ayar-kulce-altin-1759934796-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2646,
@@ -74552,7 +74572,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 75862,
+    "price": 79365,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74564,7 +74584,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-iar-10-gram-altin-995-24-ayar-kulce-altin-4594677-81-B.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2647,
@@ -74577,7 +74598,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 75930,
+    "price": 79640,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74589,7 +74610,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-iar-1-gram-10-adet-995-24-ayar-kulce-altin-1787143334-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2648,
@@ -74602,7 +74624,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 75971,
+    "price": 79519,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74614,7 +74636,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ozbag-1-gr-995-24-ayar-kulce-altin-10-adet-1760438976-1.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2649,
@@ -74639,7 +74662,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/valcambi-10-gram-orange-bar-altin-9999-24-ayar-kulce-altin-1739371027-4.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2650,
@@ -74652,7 +74676,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 113832,
+    "price": 119559,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74664,7 +74688,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ozbag-5-gr-995-24-ayar-kulce-altin-3-adet-1764153480-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2651,
@@ -74677,7 +74702,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 150856,
+    "price": 158470,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74689,7 +74714,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-20-gr-995-24-ayar-amr-kulce-altin-1750688117-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2652,
@@ -74702,7 +74728,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 151391,
+    "price": 159009,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74714,7 +74740,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ozbag-20-gr-995-24-ayar-kulce-altin-1768832009-3.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2653,
@@ -74727,7 +74754,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 151475,
+    "price": 158470,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74739,7 +74766,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-iar-20-gram-altin-995-24-ayar-kulce-altin-4594678-66-B.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2654,
@@ -74752,7 +74780,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 151621,
+    "price": 158999,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74764,7 +74792,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-20-adet-iar-1-gr-altin-1787143356-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2655,
@@ -74777,7 +74806,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 227307,
+    "price": 238369,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74789,7 +74818,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-30-adet-iar-1-gr-altin-4595127-88-B.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2656,
@@ -74802,14 +74832,14 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 376393,
+    "price": 395389,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
     "desc": "50 gr 995 24 Ayar Külçe Altın; 24 Ayar Saf Altın (995/1000) standartlarında, resmi mühürlü, hologramlı güvenlik ambalajında ve Belgin Kuyumculuk güvencesiyle sunulmaktadır.",
     "image": "https://agakulche.mncdn.com/image/product/agakulche-50-gr-995-24-ayar-amr-kulce-altin-1750688162-3.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-50-gr-995-24-ayar-amr-kulce-altin-1750688162-3.jpg",
-    "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
+    "sourceUrl": "https://www.agakulche.com/gram-kulce-gumus",
     "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
@@ -74827,7 +74857,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 377350,
+    "price": 396337,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74839,7 +74869,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ozbag-50-gr-995-24-ayar-kulce-altin-1759934831-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2658,
@@ -74852,14 +74883,14 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 378316,
+    "price": 395389,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
     "desc": "50 gr 995 24 Ayar Külçe Altın; 24 Ayar Saf Altın (995/1000) standartlarında, resmi mühürlü, hologramlı güvenlik ambalajında ve Belgin Kuyumculuk güvencesiyle sunulmaktadır.",
     "image": "https://agakulche.mncdn.com/image/product/agakulche-iar-50-gram-995-24-ayar-kulce-altin-4594679-67-B.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-iar-50-gram-995-24-ayar-kulce-altin-4594679-67-B.jpg",
-    "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
+    "sourceUrl": "https://www.agakulche.com/gram-kulce-gumus",
     "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
@@ -74877,7 +74908,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 378680,
+    "price": 397108,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74889,7 +74920,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-24-ayar-50-adet-iar-1-gr-altin-4595126-88-B.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2660,
@@ -74902,7 +74934,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 752538,
+    "price": 790518,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74914,7 +74946,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-100-gr-995-24-ayar-amr-kulce-altin-1750688205-3.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2661,
@@ -74927,7 +74960,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 754451,
+    "price": 792414,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74939,7 +74972,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ozbag-100-gr-995-24-ayar-kulce-altin-1759934876-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2662,
@@ -74952,7 +74986,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 756384,
+    "price": 790518,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74964,7 +74998,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-iar-100-gram-995-24-ayar-kulce-altin-4594680-68-B.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2663,
@@ -74977,7 +75012,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 7505074,
+    "price": 8083400,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -74989,7 +75024,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-aleks-metal-rafineri-1-kilogram-24-ayar-995-kulce-altin-1760614355-4.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2664,
@@ -75014,7 +75050,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-valcambi-1-kg-24-ayar-995-kulce-altin-4593805-23-B.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2665,
@@ -75039,7 +75076,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-argor-heraeus-1-kilogram-24-ayar-995-kulce-altin-4592988-47-B.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2666,
@@ -75052,7 +75090,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 7747124,
+    "price": 8083400,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75064,7 +75102,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/pamp-1-kilogram-24-ayar-995-kulce-altin-4594158-56-B.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2667,
@@ -75077,7 +75116,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 12377,
+    "price": 12982,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75089,7 +75128,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-eski-kulplu-iko-guvence-etiketli-1769159559-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2668,
@@ -75102,7 +75142,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 12595,
+    "price": 13211,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75114,7 +75154,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/ziynet-ceyrek-altin-yeni-2024-kulplu-1769159584-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2669,
@@ -75127,7 +75168,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 12898,
+    "price": 13529,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75139,7 +75180,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/ata-ceyrek-eski-1769160203-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2670,
@@ -75152,7 +75194,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 24454,
+    "price": 25649,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75164,7 +75206,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-yarim-altin-eski-kulplu-iko-guvence-etiketli-1769159629-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2671,
@@ -75177,7 +75220,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 24507,
+    "price": 12982,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75189,7 +75232,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-eski-kulplu-2-adet-1769758426-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2672,
@@ -75202,7 +75246,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 24916,
+    "price": 26133,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75214,7 +75258,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/ziynet-yarim-yeni-1769159649-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2673,
@@ -75227,7 +75272,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 24942,
+    "price": 13211,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75239,7 +75284,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-2-adet-yeni-kulplu-1769758521-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2674,
@@ -75252,7 +75298,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 25268,
+    "price": 26542,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75264,7 +75310,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-yarim-altinli-kirmizi-ipli-bileklik-1769030125-6.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2675,
@@ -75277,7 +75324,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 25268,
+    "price": 26542,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75289,7 +75336,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-yarim-altinli-beyaz-ipli-bileklik-1769030179-6.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2676,
@@ -75302,7 +75350,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 25268,
+    "price": 26542,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75314,7 +75362,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-yarim-altinli-siyah-ipli-bileklik-1769030218-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2677,
@@ -75327,7 +75376,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 25271,
+    "price": 26542,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75339,7 +75388,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-yarim-altin-siyah-ipli-kolye-1769029596-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2678,
@@ -75352,7 +75402,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 25550,
+    "price": 26797,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75364,7 +75414,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ata-yarim-eski-1769160238-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2679,
@@ -75377,7 +75428,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 36636,
+    "price": 12982,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75389,7 +75440,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-eski-kulplu-3-adet-1769758565-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2680,
@@ -75402,7 +75454,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 37290,
+    "price": 13211,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75414,7 +75466,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-3-adet-yeni-kulplu-1769758602-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2681,
@@ -75427,7 +75480,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 48687,
+    "price": 51067,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75439,7 +75492,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-tam-eski-kulplu-iko-guvence-etiketli-1769159684-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2682,
@@ -75452,14 +75506,14 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 49373,
+    "price": 51786,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
     "desc": "Yeni Tarihli Ziynet Tam Altın; 22 Ayar T.C. Darphane Altını standartlarında, resmi mühürlü, hologramlı güvenlik ambalajında ve Belgin Kuyumculuk güvencesiyle sunulmaktadır.",
     "image": "https://agakulche.mncdn.com/image/product/ziynet-tam-altin-yeni-tarihli-2024-1769159948-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/ziynet-tam-altin-yeni-tarihli-2024-1769159948-5.jpg",
-    "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
+    "sourceUrl": "https://www.agakulche.com/ziynet-altin",
     "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
@@ -75477,7 +75531,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 50070,
+    "price": 52597,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75489,7 +75543,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-tam-altinli-siyah-ipli-bileklik-1769030285-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2684,
@@ -75502,7 +75557,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 50076,
+    "price": 52597,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75514,7 +75569,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-tam-altin-siyah-ipli-kolye-1769029749-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2685,
@@ -75527,7 +75583,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 50157,
+    "price": 52602,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75539,7 +75595,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-2-adet-yarim-altin-1769758653-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2686,
@@ -75552,7 +75609,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 50196,
+    "price": 52649,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75564,7 +75621,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ata-tam-eski-iko-guvence-etiketli-1769160267-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2687,
@@ -75577,7 +75635,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 50797,
+    "price": 53279,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75589,7 +75647,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ata-tam-yeni-1769160295-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2688,
@@ -75602,7 +75661,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 51110,
+    "price": 53601,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75614,7 +75673,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-yeni-2-adet-yarim-altin-1769758698-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2689,
@@ -75627,7 +75687,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 51698,
+    "price": 54224,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75639,7 +75699,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-resat-altin-1769029108-4.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2690,
@@ -75652,7 +75713,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 52216,
+    "price": 54224,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75664,7 +75725,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-resat-altin-siyah-ipli-kolye-1769029844-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2691,
@@ -75677,7 +75739,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 60896,
+    "price": 12982,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75689,7 +75751,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-eski-kulplu-5-adet-1769758768-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2692,
@@ -75702,7 +75765,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 61985,
+    "price": 13211,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75714,7 +75777,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-yeni-kulplu-5-adet-1769758831-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2693,
@@ -75727,7 +75791,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 73025,
+    "price": 12982,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75739,7 +75803,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-eski-kulplu-6-adet-1769758865-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2694,
@@ -75752,7 +75817,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 74332,
+    "price": 13211,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75764,7 +75829,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-yeni-kulplu-6-adet-1769758927-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2695,
@@ -75777,7 +75843,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 75112,
+    "price": 78773,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75789,7 +75855,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-3-adet-yarim-altin-1769758973-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2696,
@@ -75802,7 +75869,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 76541,
+    "price": 80271,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75814,7 +75881,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-yeni-3-adet-yarim-altin-1769759034-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2697,
@@ -75827,7 +75895,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 97132,
+    "price": 101866,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75839,7 +75907,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-2-adet-tam-altin-1769759072-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2698,
@@ -75852,14 +75921,14 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 98505,
+    "price": 103305,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
     "desc": "Yeni 2 Adet Tam Altın; 22 Ayar T.C. Darphane Altını standartlarında, resmi mühürlü, hologramlı güvenlik ambalajında ve Belgin Kuyumculuk güvencesiyle sunulmaktadır.",
     "image": "https://agakulche.mncdn.com/image/product/agakulche-yeni-2-adet-tam-altin-1769759098-2.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-yeni-2-adet-tam-altin-1769759098-2.jpg",
-    "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
+    "sourceUrl": "https://www.agakulche.com/ziynet-altin",
     "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
@@ -75877,7 +75946,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 100373,
+    "price": 105265,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75889,7 +75958,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-2-adet-ata-tam-altin-1769767327-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2700,
@@ -75902,7 +75972,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 101354,
+    "price": 106294,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75914,7 +75984,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-yeni-2-adet-ata-tam-altin-1769767353-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2701,
@@ -75927,7 +75998,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 121544,
+    "price": 12982,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75939,7 +76010,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-eski-kulplu-10-adet-1769759370-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2702,
@@ -75952,7 +76024,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 122057,
+    "price": 128028,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75964,7 +76036,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-25-luk-gremse-altin-eski-kulplu-1769159994-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2703,
@@ -75977,7 +76050,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 123317,
+    "price": 129348,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -75989,7 +76062,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-25-luk-gremse-altin-yeni-kulplu-1769160014-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2704,
@@ -76002,7 +76076,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 123722,
+    "price": 13211,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76014,7 +76088,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-ceyrek-altin-yeni-kulplu-10-adet-1769759402-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2705,
@@ -76027,7 +76102,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 125022,
+    "price": 131116,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76039,7 +76114,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-5-adet-yarim-altin-1769759489-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2706,
@@ -76052,7 +76128,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 125939,
+    "price": 132098,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76064,7 +76140,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ata-25-luk-gremse-altin-eski-1769160349-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2707,
@@ -76077,7 +76154,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 127403,
+    "price": 133613,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76089,7 +76166,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-yeni-5-adet-yarim-altin-1769759544-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2708,
@@ -76102,7 +76180,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 145574,
+    "price": 152669,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76114,7 +76192,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-3-adet-tam-altin-1769766844-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2709,
@@ -76127,7 +76206,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 147634,
+    "price": 154829,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76139,7 +76218,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-yeni-3-adet-tam-altin-1769766863-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2710,
@@ -76152,7 +76232,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 149727,
+    "price": 157261,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76164,7 +76244,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-3-tam-altin-siyah-ipli-kolye-1769159168-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2711,
@@ -76177,7 +76258,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 150435,
+    "price": 157767,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76189,7 +76270,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-3-adet-ata-tam-altin-1769767387-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2712,
@@ -76202,7 +76284,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 151907,
+    "price": 159310,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76214,7 +76296,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-yeni-3-adet-ata-tam-altin-1769767405-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2713,
@@ -76227,7 +76310,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 242459,
+    "price": 254275,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76239,7 +76322,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-5-adet-tam-altin-1769766907-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2714,
@@ -76252,14 +76336,14 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 243867,
+    "price": 255794,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
     "desc": "Ziynet Beşli Altın Eski Kulplu; 22 Ayar T.C. Darphane Altını standartlarında, resmi mühürlü, hologramlı güvenlik ambalajında ve Belgin Kuyumculuk güvencesiyle sunulmaktadır.",
     "image": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-besli-altin-eski-kulplu-1769160047-5.jpeg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-ziynet-besli-altin-eski-kulplu-1769160047-5.jpeg",
-    "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
+    "sourceUrl": "https://www.agakulche.com/ziynet-altin",
     "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
@@ -76277,7 +76361,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 245891,
+    "price": 257875,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76289,7 +76373,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-yeni-5-adet-tam-altin-1769766926-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2716,
@@ -76302,7 +76387,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 246385,
+    "price": 258435,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76314,7 +76399,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ziynet-besli-altin-yeni-kulplu-1769160069-5.jpeg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2717,
@@ -76327,7 +76413,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 249377,
+    "price": 261926,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76339,7 +76425,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-22-ayar-5-tam-altin-siyah-ipli-kolye-1769159198-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2718,
@@ -76352,7 +76439,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 249797,
+    "price": 261971,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76364,7 +76451,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-10-adet-yarim-altin-1769766972-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2719,
@@ -76377,7 +76465,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 250341,
+    "price": 262542,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76389,7 +76477,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-20-adet-ceyrek-altin-1769767029-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2720,
@@ -76402,7 +76491,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 250559,
+    "price": 262770,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76414,7 +76503,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-5-adet-ata-tam-altin-1769767450-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2721,
@@ -76427,7 +76517,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 251629,
+    "price": 263936,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76439,7 +76529,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ata-besli-altin-eski-1769160399-5.jpeg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2722,
@@ -76452,7 +76543,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 253013,
+    "price": 265344,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76464,7 +76555,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-yeni-5-adet-ata-tam-altin-1769767466-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2723,
@@ -76477,7 +76569,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 253265,
+    "price": 265652,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76489,7 +76581,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ata-besli-altin-yeni-1769160420-5.jpeg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2724,
@@ -76502,7 +76595,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 254559,
+    "price": 266966,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76514,7 +76607,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-yeni-10-adet-yarim-altin-1769766989-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2725,
@@ -76527,7 +76621,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 254831,
+    "price": 267250,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76539,7 +76633,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-yeni-20-adet-ceyrek-altin-1769767054-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2726,
@@ -76552,7 +76647,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 484671,
+    "price": 508290,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76564,7 +76659,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-10-adet-tam-altin-1769767102-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2727,
@@ -76577,7 +76673,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 491534,
+    "price": 515489,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76589,7 +76685,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-yeni-10-adet-tam-altin-1769767119-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2728,
@@ -76602,7 +76699,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 500871,
+    "price": 525280,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76614,7 +76711,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-10-adet-ata-tam-altin-1769767504-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2729,
@@ -76627,7 +76725,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 505779,
+    "price": 530427,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76639,7 +76737,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-yeni-10-adet-ata-tam-altin-1769767519-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2730,
@@ -76652,7 +76751,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 625482,
+    "price": 655963,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76664,7 +76763,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-eski-50-adet-ceyrek-altin-1769767167-2.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2731,
@@ -76677,7 +76777,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 27079,
+    "price": 28443,
     "metal": "14 Ayar Altın (585/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76689,7 +76789,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-5-gram-ajda-bilezik-1768251425-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2732,
@@ -76702,7 +76803,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 27079,
+    "price": 28443,
     "metal": "14 Ayar Altın (585/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76714,7 +76815,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-5-gram-kibrit-copu-ajda-bilezik-1768250625-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2733,
@@ -76727,7 +76829,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 27079,
+    "price": 28443,
     "metal": "14 Ayar Altın (585/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76739,7 +76841,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-5-gram-kalemli-ajda-bilezik-1768251217-1.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2734,
@@ -76752,7 +76855,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 36195,
+    "price": 38022,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76764,7 +76867,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-5-gram-22-ayar-ajda-bilezik-1768250224-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2735,
@@ -76777,7 +76881,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 38309,
+    "price": 40239,
     "metal": "14 Ayar Altın (585/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76789,7 +76893,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-7-gram-sarnel-altin-bilezik-1769500259-4.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2736,
@@ -76802,7 +76907,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 49593,
+    "price": 52096,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76814,7 +76919,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-7-gram-22-ayar-ajda-bilezik-1768303391-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2737,
@@ -76827,7 +76933,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 52840,
+    "price": 55502,
     "metal": "14 Ayar Altın (585/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76839,7 +76945,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-10-gram-ajda-bilezik-1768251489-6.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2738,
@@ -76852,7 +76959,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 52840,
+    "price": 55502,
     "metal": "14 Ayar Altın (585/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76864,7 +76971,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-10-gram-kibrit-copu-ajda-bilezik-1768250661-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2739,
@@ -76877,7 +76985,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 52840,
+    "price": 55502,
     "metal": "14 Ayar Altın (585/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76889,7 +76997,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-10-gram-kalemli-ajda-bilezik-1768251249-1.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2740,
@@ -76902,7 +77011,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 54378,
+    "price": 57118,
     "metal": "14 Ayar Altın (585/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76914,7 +77023,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-10-gram-dalgali-sarnel-altin-bilezik-1769500278-4.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2741,
@@ -76927,7 +77037,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 70445,
+    "price": 73992,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76939,7 +77049,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-10-gr-22-ayar-burma-altin-bilezik-1768476908-1.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2742,
@@ -76952,7 +77063,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 70480,
+    "price": 73920,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76964,7 +77075,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ajda-bilezik-10-gram-22-ayar-bilezik-1768303433-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2743,
@@ -76977,7 +77089,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 70480,
+    "price": 73920,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -76989,7 +77101,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-mujde-kristal-10-gr-22-ayar-bilezik-1768248558-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2744,
@@ -77002,7 +77115,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 70480,
+    "price": 73920,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -77014,7 +77127,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ajda-zikzak-10-gr-22-ayar-bilezik-1768248174-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2745,
@@ -77027,7 +77141,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 70709,
+    "price": 74159,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -77039,7 +77153,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-ajda-kibrit-copu-ray-10-gr-22-ayar-bilezik-1768248382-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2746,
@@ -77052,14 +77167,14 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 139943,
+    "price": 147005,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
     "desc": "20 Gram 22 Ayar Ajda Altın Bilezik; 22 Ayar Altın (916/1000) standartlarında, resmi mühürlü, hologramlı güvenlik ambalajında ve Belgin Kuyumculuk güvencesiyle sunulmaktadır.",
     "image": "https://agakulche.mncdn.com/image/product/agakulche-20-gram-22-ayar-ajda-bilezik-1768303541-5.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-20-gram-22-ayar-ajda-bilezik-1768303541-5.jpg",
-    "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
+    "sourceUrl": "https://www.agakulche.com/ajda-bilezik",
     "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
@@ -77077,7 +77192,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 140018,
+    "price": 146843,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -77089,7 +77204,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-3lu-burma-20-gr-22-ayar-bilezik-1768247816-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2748,
@@ -77102,7 +77218,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 140271,
+    "price": 147127,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -77114,7 +77230,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-burma-20-gram-22-ayar-bilezik-1768248040-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2749,
@@ -77127,7 +77244,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 140718,
+    "price": 147572,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -77139,7 +77256,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-20-gr-22-ayar-2li-ajda-kanal-altin-bilezik-1769085778-4.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2750,
@@ -77152,7 +77270,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 140718,
+    "price": 147572,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -77164,7 +77282,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-20-gr-22-ayar-2li-zikzak-altin-bilezik-1769085838-4.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2751,
@@ -77177,7 +77296,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 140718,
+    "price": 147572,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -77189,7 +77308,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-20-gr-22-ayar-2li-mujde-altin-bilezik-1769085876-4.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2752,
@@ -77202,7 +77322,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 141176,
+    "price": 148051,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -77214,7 +77334,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-20-gr-22-ayar-2li-ajda-kibrit-copu-altin-bilezik-1769085918-4.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2753,
@@ -77227,7 +77348,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 174786,
+    "price": 183306,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -77239,7 +77360,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-3lu-burma-25-gr-22-ayar-bilezik-1768247905-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2754,
@@ -77252,7 +77374,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 209905,
+    "price": 220135,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -77264,7 +77386,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-3lu-burma-30-gr-22-ayar-bilezik-1768247939-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2755,
@@ -77277,7 +77400,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 210954,
+    "price": 221229,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -77289,7 +77412,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-30-gr-22-ayar-3lu-ajda-kanal-altin-bilezik-1769086045-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2756,
@@ -77302,7 +77426,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 210954,
+    "price": 221229,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -77314,7 +77438,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-30-gr-22-ayar-3lu-mujde-altin-bilezik-1769085963-4.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2757,
@@ -77327,7 +77452,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 210954,
+    "price": 221229,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -77339,7 +77464,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-30-gr-22-ayar-3-l-zig-zak-altn-bilezik-1769086001-4.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2758,
@@ -77352,7 +77478,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 210962,
+    "price": 221234,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -77364,7 +77490,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-30-gr-2li-mujde-ve-1-zikzak-22-ayar-altin-bilezik-1768916143-6.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2759,
@@ -77377,7 +77504,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 210962,
+    "price": 221234,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -77389,7 +77516,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-30-gr-2li-ajda-kibrit-copu-ve-1-zikzak-22-ayar-altin-bilezik-1768916273-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2760,
@@ -77402,7 +77530,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 210962,
+    "price": 221234,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -77414,7 +77542,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-30-gr-2li-ajda-kanalli-ve-1-zikzak-22-ayar-altin-bilezik-1768916388-8.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2761,
@@ -77427,7 +77556,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 211640,
+    "price": 221947,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -77439,7 +77568,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-30-gr-22-ayar-3lu-ajda-kibrit-copu-altin-bilezik-1769086170-5.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2762,
@@ -77452,14 +77582,14 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 351438,
+    "price": 368550,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
     "desc": "50 gr 3&#039;lü Müjde ve 2 Zikzak 22 Ayar Altın Bilezik; 22 Ayar Altın (916/1000) standartlarında, resmi mühürlü, hologramlı güvenlik ambalajında ve Belgin Kuyumculuk güvencesiyle sunulmaktadır.",
     "image": "https://agakulche.mncdn.com/image/product/agakulche-50-gr-3lu-mujde-ve-2-zikzak-22-ayar-altin-bilezik-1768916475-4.jpg",
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-50-gr-3lu-mujde-ve-2-zikzak-22-ayar-altin-bilezik-1768916475-4.jpg",
-    "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
+    "sourceUrl": "https://www.agakulche.com/ajda-bilezik",
     "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
     "inStock": true,
     "images": [
@@ -77477,7 +77607,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 351438,
+    "price": 368550,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -77489,7 +77619,8 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-50-gr-3lu-ajda-kanalli-ve-2-zikzak-22-ayar-altin-bilezik-1768916538-4.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   },
   {
     "id": 2764,
@@ -77502,7 +77633,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 352581,
+    "price": 369748,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -77514,11 +77645,12 @@ const PRODUCTS = [
     "inStock": true,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-50-gr-3lu-ajda-kibrit-copu-ve-2-zikzak-22-ayar-altin-bilezik-1768916614-4.jpg"
-    ]
+    ],
+    "hasCustomMargin": true
   }
 ];
 
-const WATCHES = PRODUCTS.filter(p => p.category === 'saat' || (p.category === 'watch' && !p.isPreOwned));
+const WATCHES = PRODUCTS.filter(p => (p.category === 'saat' || p.category === 'watch') && !p.isPreOwned);
 const JEWELLERY = PRODUCTS.filter(p => (p.category === 'jewelry' || p.category === 'jewellery') && !p.isPreOwned);
 const PRE_OWNED_ITEMS = PRODUCTS.filter(p => p.isPreOwned === true);
 const PRE_OWNED_GOLD = PRODUCTS.filter(p => p.isPreOwned && p.isGold);
