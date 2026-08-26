@@ -415,7 +415,6 @@
             <span class="currency-symbol">₺</span>
             <input type="text" inputmode="numeric" id="productAmount" class="form-input amount-input" placeholder="45.000">
           </div>
-          <div class="amount-words" id="amountWords"></div>
           <div class="field-error" id="amountError">⚠ Lütfen geçerli bir satış tutarı giriniz (min. ₺100).</div>
         </div>
 
@@ -456,7 +455,6 @@
     const amountShell = document.getElementById('amountShell');
     const titleError = document.getElementById('titleError');
     const amountError = document.getElementById('amountError');
-    const amountWords = document.getElementById('amountWords');
     const resultSection = document.getElementById('resultSection');
     const generatedUrlText = document.getElementById('generatedUrlText');
     const btnSubmit = document.getElementById('btnSubmit');
@@ -482,12 +480,10 @@
       amountInput.dataset.raw = digitsOnly;
       if (!digitsOnly) {
         amountInput.value = '';
-        amountWords.textContent = '';
         return;
       }
       const num = parseInt(digitsOnly, 10);
       amountInput.value = num.toLocaleString('tr-TR');
-      amountWords.textContent = num >= 1000 ? `₺${num.toLocaleString('tr-TR')} — yaklaşık ${Math.round(num/1000)}.000 TL` : '';
     }
     amountInput.addEventListener('input', formatAmountInput);
 
@@ -553,7 +549,6 @@
 
     btnReset.addEventListener('click', () => {
       form.reset();
-      amountWords.textContent = '';
       resultSection.style.display = 'none';
       clearErrors();
       titleInput.focus();
