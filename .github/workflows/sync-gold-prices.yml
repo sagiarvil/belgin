@@ -1,4 +1,4 @@
-name: Gold & Jewellery Live Price & Stock Sync (Every 5 Minutes)
+name: Unified Smart Diffing Live Sync (Every 5 Minutes)
 
 on:
   schedule:
@@ -7,12 +7,12 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: sync-gold-prices
+  group: sync-unified-catalog
   cancel-in-progress: true
 
 jobs:
-  sync-gold:
-    name: Sync Live Gold Prices (+5% Margin) & Deploy
+  smart-sync:
+    name: Smart Diffing Catalog Sync (Watches +40% / Gold +5%)
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -31,28 +31,32 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Gold Live Sync Engine (+5% Margin & Stock Verification)
-        run: node scripts/sync-prices-and-stock.js
+      - name: Run Unified Smart Diffing Engine
+        run: node scripts/smart-diff-sync.js
 
       - name: Run Catalog Guard & Tests
         run: npm test && npm run guard
 
-      - name: Commit updated gold prices & assets (if changed)
+      - name: Commit updated catalog & assets (only if Smart Diff detected changes)
         run: |
-          git config --global user.name "Belgin Gold Sync Bot"
+          git config --global user.name "Belgin Smart Sync Bot"
           git config --global user.email "bot@belginkuyumculuk.com"
           git add js/data.js functions/product-catalog.json sitemap.xml llms.txt llms-full.txt robots.txt
           if ! git diff --staged --quiet; then
-            git commit -m "chore(sync): automated live gold price update (+5% margin & stock sync)"
+            git commit -m "chore(sync): automated smart-diff update (gold +5% / watches +40%)"
             git push origin HEAD:${{ github.ref }}
           else
-            echo "No gold price or stock changes detected in this cycle."
+            echo "Zero delta detected. No commit needed."
           fi
 
-      - name: Deploy to Firebase Hosting & Functions (if credentials exist)
+      - name: Deploy to Firebase Hosting & Functions (only if changes detected)
         if: env.FIREBASE_TOKEN != ''
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           FIREBASE_PROJECT_ID: carbon-web-1265b
         run: |
-          npx firebase-tools deploy --project carbon-web-1265b --only hosting,functions --token "${{ secrets.FIREBASE_TOKEN }}"
+          if ! git diff HEAD~1 --quiet; then
+            npx firebase-tools deploy --project carbon-web-1265b --only hosting,functions --token "${{ secrets.FIREBASE_TOKEN }}"
+          else
+            echo "Skipping deploy: zero changes."
+          fi

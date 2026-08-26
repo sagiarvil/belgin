@@ -44,7 +44,7 @@ BELGİN KUYUMCULUK - SEMİH SONBAHAR, 1999 yılından bu yana İzmir Buca Mender
 ### Versace VRSCVE6F00523 Kadın Kol Saati
 - **Ürün ID:** 1004
 - **Kategori:** saat
-- **Satış Fiyatı:** ₺70.762
+- **Satış Fiyatı:** ₺90.720
 - **Referans Kodu:** VRSCVE6F00523
 - **Kasa/Metal:** Çelik
 - **Durum:** Showroom Stokta / Hazır
@@ -89,7 +89,7 @@ BELGİN KUYUMCULUK - SEMİH SONBAHAR, 1999 yılından bu yana İzmir Buca Mender
 ### Versace VRSCVE1C00722 Kadın Kol Saati
 - **Ürün ID:** 1009
 - **Kategori:** saat
-- **Satış Fiyatı:** ₺44.226
+- **Satış Fiyatı:** ₺56.700
 - **Referans Kodu:** VRSCVE1C00722
 - **Kasa/Metal:** Çelik
 - **Durum:** Showroom Stokta / Hazır
@@ -98,7 +98,7 @@ BELGİN KUYUMCULUK - SEMİH SONBAHAR, 1999 yılından bu yana İzmir Buca Mender
 ### Versace VRSCVE2E00821 Erkek Kol Saati
 - **Ürün ID:** 1010
 - **Kategori:** saat
-- **Satış Fiyatı:** ₺44.881
+- **Satış Fiyatı:** ₺57.540
 - **Referans Kodu:** VRSCVE2E00821
 - **Kasa/Metal:** Çelik
 - **Durum:** Showroom Stokta / Hazır
@@ -107,7 +107,7 @@ BELGİN KUYUMCULUK - SEMİH SONBAHAR, 1999 yılından bu yana İzmir Buca Mender
 ### Versace VRSCVE2E00721 Erkek Kol Saati
 - **Ürün ID:** 1011
 - **Kategori:** saat
-- **Satış Fiyatı:** ₺44.881
+- **Satış Fiyatı:** ₺57.540
 - **Referans Kodu:** VRSCVE2E00721
 - **Kasa/Metal:** Çelik
 - **Durum:** Showroom Stokta / Hazır
@@ -260,7 +260,7 @@ BELGİN KUYUMCULUK - SEMİH SONBAHAR, 1999 yılından bu yana İzmir Buca Mender
 ### Versace VRSCVEV901323 Kol Saati
 - **Ürün ID:** 1028
 - **Kategori:** saat
-- **Satış Fiyatı:** ₺38.657
+- **Satış Fiyatı:** ₺49.560
 - **Referans Kodu:** VRSCVEV901323
 - **Kasa/Metal:** Çelik
 - **Durum:** Showroom Stokta / Hazır
@@ -377,7 +377,7 @@ BELGİN KUYUMCULUK - SEMİH SONBAHAR, 1999 yılından bu yana İzmir Buca Mender
 ### Versace VRSCVEOCA0324 Kadın Kol Saati
 - **Ürün ID:** 1041
 - **Kategori:** saat
-- **Satış Fiyatı:** ₺41.278
+- **Satış Fiyatı:** ₺52.920
 - **Referans Kodu:** VRSCVEOCA0324
 - **Kasa/Metal:** Çelik
 - **Durum:** Showroom Stokta / Hazır
@@ -3959,7 +3959,7 @@ BELGİN KUYUMCULUK - SEMİH SONBAHAR, 1999 yılından bu yana İzmir Buca Mender
 ### Gc GCY59008L1MF Kadın Kol Saati
 - **Ürün ID:** 1439
 - **Kategori:** saat
-- **Satış Fiyatı:** ₺13.477
+- **Satış Fiyatı:** ₺22.462
 - **Referans Kodu:** GCY59008L1MF
 - **Kasa/Metal:** Çelik
 - **Durum:** Showroom Stokta / Hazır
