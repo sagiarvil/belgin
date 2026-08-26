@@ -2880,3 +2880,78 @@ p, span, li, td, th, label, input, button, select, textarea {
   .footer-brand-logo-wrap { width: 172px; }
   .brand-logo-footer { width: 150px; }
 }
+
+/* ==========================================================
+   8. ULTRA-PREMIUM İLETİŞİM SAYFASI STİLLERİ
+   ========================================================== */
+.contact-feature-card {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 26px 22px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.02);
+}
+.contact-feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.06);
+  border-color: var(--color-teal);
+}
+.contact-feature-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.contact-feature-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  background: #FAF8F5;
+  color: #7A6328;
+  border: 1px solid rgba(194,167,104,0.3);
+}
+.contact-feature-title {
+  font-size: 16.5px;
+  font-weight: 700;
+  color: var(--color-ink);
+  margin-bottom: 6px;
+}
+.contact-feature-desc {
+  font-size: 13.5px;
+  color: #444;
+  margin-bottom: 4px;
+  line-height: 1.5;
+}
+.contact-feature-sub {
+  font-size: 11.5px;
+  color: #777;
+  display: block;
+  margin-bottom: 16px;
+}
+.contact-feature-link {
+  margin-top: auto;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-teal);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.contact-feature-link:hover {
+  text-decoration: underline;
+  color: var(--color-gold-dark);
+}

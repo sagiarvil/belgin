@@ -1,151 +1,11 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>İletişim & Showroom Randevusu | Belgin Kuyumculuk</title>
-  <!-- Google Fonts Preconnect (Plus Jakarta Sans, Playfair Display, Inter) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+const fs = require('fs');
 
-  <link rel="stylesheet" href="css/style.css?v=2026.08.26.1600">
+let iletisimHtml = fs.readFileSync('iletisim.html', 'utf8');
 
-  <link rel="canonical" href="https://belginkuyumculuk.com/iletisim.html">
+const mainStart = iletisimHtml.indexOf('<!-- 3. MAIN İLETİŞİM İÇERİĞİ -->');
+const mainEnd = iletisimHtml.indexOf('<!-- 4. FOOTER (KURUMSAL FOOTER MİMARİSİ) -->');
 
-  <!-- SCHEMA.ORG JSON-LD v5.0 OMNI-ENTERPRISE -->
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "JewelryStore",
-      "@id": "https://belginkuyumculuk.com/#organization",
-      "name": "BELGİN KUYUMCULUK - SEMİH SONBAHAR",
-      "alternateName": "Belgin Kuyumculuk & Saat (Est. 1999)",
-      "url": "https://belginkuyumculuk.com",
-      "logo": "https://belginkuyumculuk.com/images/belgin-logo.png",
-      "telephone": "+90-541-930-53-72",
-      "email": "destek@belginkuyumculuk.com",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Menderes Caddesi No:231/B",
-        "addressLocality": "Buca",
-        "addressRegion": "İzmir",
-        "postalCode": "35380",
-        "addressCountry": "TR"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 38.3842,
-        "longitude": 27.1685
-      },
-      "sameAs": [
-        "https://www.instagram.com/belginmucevherat/",
-        "https://maps.google.com/?cid=belginkuyumculuk"
-      ]
-    },
-    {
-      "@type": "WebSite",
-      "@id": "https://belginkuyumculuk.com/#website",
-      "url": "https://belginkuyumculuk.com",
-      "name": "Belgin Kuyumculuk & Saat",
-      "publisher": {
-        "@id": "https://belginkuyumculuk.com/#organization"
-      },
-      "inLanguage": "tr-TR"
-    },
-    {
-      "@type": "WebPage",
-      "@id": "https://belginkuyumculuk.com/iletisim.html#webpage",
-      "url": "https://belginkuyumculuk.com/iletisim.html",
-      "name": "İletişim ve Showroom | Belgin Kuyumculuk & Saat İzmir Buca",
-      "description": "Belgin Kuyumculuk & Saat İzmir Buca Menderes Caddesi mağaza adresi, telefon numaraları, showroom çalışma saatleri ve harita konumu.",
-      "isPartOf": {
-        "@id": "https://belginkuyumculuk.com/#website"
-      },
-      "inLanguage": "tr-TR",
-      "breadcrumb": {
-        "@id": "https://belginkuyumculuk.com/iletisim.html#breadcrumb"
-      }
-    },
-    {
-      "@type": "BreadcrumbList",
-      "@id": "https://belginkuyumculuk.com/iletisim.html#breadcrumb",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Ana Sayfa",
-          "item": "https://belginkuyumculuk.com"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "İletişim & Buca Showroom Mağazamız",
-          "item": "https://belginkuyumculuk.com/iletisim.html"
-        }
-      ]
-    }
-  ]
-}
-  </script>
-</head>
-<body>
-
-<!-- 1. TOPBAR -->
-<div class="topbar-teal">
-  <div class="container-art topbar-inner">
-    <div class="topbar-contacts">
-      <a href="tel:+905419305372">+90 541 930 53 72</a>
-      <span class="topbar-divider">|</span>
-      <a href="tel:+905398234141">+90 539 823 41 41</a>
-      <span class="topbar-divider">|</span>
-      <span>Menderes Caddesi No 231/B Buca / İzmir</span>
-    </div>
-    <div class="topbar-right-tools">
-      <a href="index.html" style="color:#fff; text-decoration:none; font-weight:600;">← Ana Sayfaya Dön</a>
-    </div>
-  </div>
-</div>
-
-<!-- 2. HEADER (TEK SIRA • ULTRA PRESTİJ) -->
-<header class="header">
-  <div class="container-art header-grid">
-    
-    <!-- Sol Logo -->
-    <a class="logo-area-main" href="index.html">
-      <div class="brand-crest">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-      </div>
-      <div class="logo-text-col">
-        <span class="logo-main">BELGIN</span>
-        <span class="logo-sub">EST. 1999 • BUCA İZMİR</span>
-      </div>
-    </a>
-
-    <!-- Orta Menü -->
-    <nav class="nav-desktop">
-      <ul>
-        <li><a href="index.html#saatler">Saatler</a></li>
-        <li><a href="index.html#ikinci-el">İkinci El</a></li>
-        <li><a href="index.html#mucevherat">Mücevherat</a></li>
-        <li><a href="index.html#hikayemiz">Mirasımız</a></li>
-        <li><a href="iletisim.html" class="active">İletişim</a></li>
-      </ul>
-    </nav>
-
-    <!-- Sağ Buton -->
-    <div class="header-actions">
-      <a class="btn-action-vip" href="https://wa.me/905419305372?text=Merhaba,%20Showroom%20randevusu%20almak%20istiyorum." target="_blank">
-        <span>VİP RANDEVU</span>
-      </a>
-    </div>
-
-  </div>
-</header>
-
-<!-- 3. MAIN İLETİŞİM İÇERİĞİ -->
+const premiumMain = `<!-- 3. MAIN İLETİŞİM İÇERİĞİ -->
 <main class="container-art section-art" style="max-width:1240px; margin:0 auto; padding:40px 20px 80px;">
   
   <!-- HERO HEADER -->
@@ -390,6 +250,8 @@
     </div>
   </div>
 
-</main>
+</main>\n\n`;
 
-
+iletisimHtml = iletisimHtml.slice(0, mainStart) + premiumMain + iletisimHtml.slice(mainEnd);
+fs.writeFileSync('iletisim.html', iletisimHtml, 'utf8');
+console.log('iletisim.html updated to ultra-premium design.');
