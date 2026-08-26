@@ -277,7 +277,7 @@
 
   </main>
 
-  <script src="js/vip-payment.js"></script>
+  <script src="/js/vip-payment.js"></script>
   <script>
     let currentPayload = null;
 
@@ -285,8 +285,8 @@
       const urlParams = new URLSearchParams(window.location.search);
       const param = urlParams.get('p') || urlParams.get('token');
       
-      if (param && typeof VipEngine !== 'undefined') {
-        currentPayload = VipEngine.resolvePayload(param);
+      if (typeof VipEngine !== 'undefined') {
+        currentPayload = VipEngine.resolvePayload(param, window.location.pathname);
       }
 
       if (!currentPayload) {

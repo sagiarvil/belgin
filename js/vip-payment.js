@@ -1,7 +1,39 @@
 // BELGIN KUYUMCULUK — VIP ÖDEME LİNKİ & CHECKOUT MOTORU
-// Güvenli Token Üretimi, Kompakt Maskeleme ve WhatsApp Entegrasyonu
+// Prestijli Temiz URL (Clean Slug & Amount), Kompakt Maskeleme ve WhatsApp Entegrasyonu
 (function (global) {
   'use strict';
+
+  function slugify(value) {
+    const tr = {
+      'ç': 'c', 'Ç': 'c', 'ğ': 'g', 'Ğ': 'g',
+      'ı': 'i', 'İ': 'i', 'ö': 'o', 'Ö': 'o',
+      'ş': 's', 'Ş': 's', 'ü': 'u', 'Ü': 'u'
+    };
+
+    return String(value ?? '')
+      .split('')
+      .map(ch => tr[ch] ?? ch)
+      .join('')
+      .normalize('NFKD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/&/g, ' ve ')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .replace(/-{2,}/g, '-');
+  }
+
+  function unslugify(slug) {
+    if (!slug) return 'Lüks Showroom Siparişi';
+    return slug
+      .split('-')
+      .map(word => {
+        if (!word) return '';
+        if (word.length <= 2) return word.toUpperCase();
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      })
+      .join(' ');
+  }
 
   function toBase64Url(str) {
     const utf8Bytes = new TextEncoder().encode(str);
@@ -27,7 +59,36 @@
   }
 
   const VipEngine = {
-    // 1. Kompakt Maskeli Token Üretimi (Kısa URL için: orderId|title|amount)
+    slugify,
+    unslugify,
+
+    // 1. Prestijli Temiz URL Üretimi (/vip/rolex-submariner-41mm-date-55555)
+    buildPremiumUrl(payload, customOrigin) {
+      const origin = customOrigin || (typeof window !== 'undefined' && window.location.origin.includes('localhost') ? window.location.origin : 'https://www.belginkuyumculuk.com');
+      const slug = slugify(payload.title || 'ozel-siparis');
+      const amount = Math.round(Number(payload.amount) || 0);
+      return `${origin}/vip/${slug}-${amount}`;
+    },
+
+    // 2. Prestijli URL Path Çözümleme (Örn: /vip/rolex-submariner-55555)
+    resolveFromPath(pathname) {
+      if (!pathname) return null;
+      const cleanPath = pathname.replace(/\/+$/, '');
+      const match = cleanPath.match(/\/vip\/([a-zA-Z0-9_-]+)-(\d+)$/);
+      if (match) {
+        const slug = match[1];
+        const amount = Number(match[2]);
+        const title = unslugify(slug);
+        return {
+          orderId: 'VIP-' + Math.floor(100000 + Math.random() * 900000),
+          title,
+          amount
+        };
+      }
+      return null;
+    },
+
+    // 3. Kompakt Maskeli Token Üretimi (orderId|title|amount)
     encodeCompact(payload) {
       try {
         const orderId = String(payload.orderId || '').trim();
@@ -41,7 +102,7 @@
       }
     },
 
-    // 2. Kompakt Token Çözümleme
+    // 4. Kompakt Token Çözümleme
     decodeCompact(token) {
       try {
         if (!token) return null;
@@ -60,7 +121,7 @@
       }
     },
 
-    // 3. Standart JSON Base64URL Encode (Geriye dönük uyumluluk)
+    // 5. Standart JSON Base64URL Encode (Geriye dönük uyumluluk)
     encodePayload(data) {
       try {
         const jsonStr = JSON.stringify(data);
@@ -71,7 +132,7 @@
       }
     },
 
-    // 4. Standart JSON Base64URL Decode
+    // 6. Standart JSON Base64URL Decode
     decodePayload(token) {
       try {
         if (!token) return null;
@@ -82,8 +143,12 @@
       }
     },
 
-    // 5. Akıllı Çözücü (Önce kompakt, sonra JSON dener)
-    resolvePayload(param) {
+    // 7. Akıllı Çözücü (Sırasıyla: Path -> Kompakt Token -> JSON Token)
+    resolvePayload(param, pathname) {
+      if (pathname) {
+        const fromPath = this.resolveFromPath(pathname);
+        if (fromPath && fromPath.amount > 0) return fromPath;
+      }
       if (!param) return null;
       const compact = this.decodeCompact(param);
       if (compact && compact.amount > 0) return compact;
@@ -92,7 +157,7 @@
       return null;
     },
 
-    // 6. Sade & Güvenli WhatsApp Mesaj Metni
+    // 8. Sade & Güvenli WhatsApp Mesaj Metni
     buildWhatsAppMessageText(payload, shortUrl) {
       const title = payload.title || 'Siparişiniz';
       const amount = Number(payload.amount || 0).toLocaleString('tr-TR');
@@ -106,7 +171,7 @@ ${shortUrl}
 3D Secure güvencesiyle ödemenizi tamamlayabilirsiniz.`;
     },
 
-    // 7. WhatsApp Paylaşım URL'i
+    // 9. WhatsApp Paylaşım URL'i
     buildWhatsAppShareUrl(payload, shortUrl) {
       const message = this.buildWhatsAppMessageText(payload, shortUrl);
       return `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
