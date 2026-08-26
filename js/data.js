@@ -73996,19 +73996,20 @@ const PRODUCTS = [
     "reference": "B6048217 · 16",
     "category": "jewelry",
     "statusBadge": "Stokta",
-    "conditionBadge": "Sıfır",
-    "isPreOwned": false,
+    "conditionBadge": "İkinci El",
+    "isPreOwned": true,
     "isGold": true,
     "price": 430000,
+    "buyPrice": 420000,
     "metal": "18K Sarı Altın (Au750)",
     "dial": "Pırlantasız Klasik Model",
-    "year": "2026",
-    "boxPapers": "Sıfır Kutusunda & Sertifikalı",
+    "year": "2024",
+    "boxPapers": "Cartier Kutusunda & Sertifikalı",
     "desc": "Cartier Juste un Clou B6048217 klasik model; 18 ayar sarı altın, pırlantasız ikonik çivi formu ve 3,5mm genişlik.",
     "image": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dwecbecd81/images/large/0628c1ecff495255b019bdc9c03b10e4.png?sfrm=png&sh=750&sm=fit&sw=750",
     "hoverImage": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dwecbecd81/images/large/0628c1ecff495255b019bdc9c03b10e4.png?sfrm=png&sh=750&sm=fit&sw=750",
     "sourceUrl": "https://www.cartier.com/en-tr/jewellery/bracelets/juste-un-clou/juste-un-clou-bracelet-classic-model-CRB6048217.html",
-    "hallmark": "Au750 • 16 • Sıfır Mühür",
+    "hallmark": "Au750 • 16",
     "inStock": true,
     "images": [
       "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dwecbecd81/images/large/0628c1ecff495255b019bdc9c03b10e4.png?sfrm=png&sh=750&sm=fit&sw=750"
@@ -77518,7 +77519,7 @@ const PRODUCTS = [
 ];
 
 const WATCHES = PRODUCTS.filter(p => p.category === 'saat' || (p.category === 'watch' && !p.isPreOwned));
-const JEWELLERY = PRODUCTS.filter(p => p.category === 'jewelry' || p.category === 'jewellery');
+const JEWELLERY = PRODUCTS.filter(p => (p.category === 'jewelry' || p.category === 'jewellery') && !p.isPreOwned);
 const PRE_OWNED_ITEMS = PRODUCTS.filter(p => p.isPreOwned === true);
 const PRE_OWNED_GOLD = PRODUCTS.filter(p => p.isPreOwned && p.isGold);
 
