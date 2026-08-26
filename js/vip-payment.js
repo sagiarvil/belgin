@@ -119,12 +119,9 @@
 
     // 7. Sade & Şık WhatsApp Mesaj Metni
     buildWhatsAppMessageText(payload, shortUrl) {
-      const title = payload.title || 'Siparişiniz';
       const amount = Number(payload.amount || 0).toLocaleString('tr-TR');
 
-      return `${title} için güvenli ödeme bağlantınız hazırlanmıştır:
-
-Tutar: ₺${amount}
+      return `Tutar: ₺${amount}
 Güvenli Ödeme Linki:
 ${shortUrl}
 
