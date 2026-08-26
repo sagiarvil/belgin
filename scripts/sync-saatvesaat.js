@@ -208,9 +208,94 @@ async function syncAllBrands() {
     console.log(`[sync] ${bConfig.name}: ${brandCount} adet >= 12.000 TL sıfır saat eklendi.`);
   }
 
+  // Compute comparison diff with existing watches
+  const existingWatches = existingData.PRODUCTS.filter(p => p.category === 'saat' || (p.category === 'watch' && !p.isPreOwned));
+  const oldMap = new Map();
+  existingWatches.forEach(w => {
+    const key = (w.ref || w.reference || w.name).trim();
+    oldMap.set(key, w);
+  });
+
+  const newMap = new Map();
+  newWatchList.forEach(w => {
+    const key = (w.ref || w.reference || w.name).trim();
+    newMap.set(key, w);
+  });
+
+  let newlyAdded = [];
+  let priceChanged = [];
+  let unchanged = [];
+  let removedOutOfStock = [];
+
+  newWatchList.forEach(w => {
+    const key = (w.ref || w.reference || w.name).trim();
+    if (oldMap.has(key)) {
+      const oldItem = oldMap.get(key);
+      if (oldItem.price !== w.price) {
+        priceChanged.push({ brand: w.brand, ref: key, name: w.name, oldPrice: oldItem.price, newPrice: w.price, diff: w.price - oldItem.price });
+      } else {
+        unchanged.push(w);
+      }
+    } else {
+      newlyAdded.push(w);
+    }
+  });
+
+  existingWatches.forEach(w => {
+    const key = (w.ref || w.reference || w.name).trim();
+    if (!newMap.has(key)) {
+      removedOutOfStock.push(w);
+    }
+  });
+
+  console.log('\n====================================================');
+  console.log('📊 SENKRONİZASYON DEĞİŞİM VE STOK DETAY RAPORU');
+  console.log('====================================================');
+  console.log(`• Önceki Toplam Saat Sayısı  : ${existingWatches.length}`);
+  console.log(`• Yeni Yayındaki Saat Sayısı : ${newWatchList.length}`);
+  console.log(`• 🟢 Yeni Eklenen Modeller    : ${newlyAdded.length} adet`);
+  console.log(`• 🔴 Stoktan Düşen / Bitenler : ${removedOutOfStock.length} adet`);
+  console.log(`• 🟡 Fiyatı Güncellenenler    : ${priceChanged.length} adet`);
+  console.log(`• ⚪ Fiyatı Değişmeyenler     : ${unchanged.length} adet\n`);
+
+  const brandSummaryReport = {};
+  BRAND_CONFIGS.forEach(b => {
+    const oldB = existingWatches.filter(w => w.brand === b.name);
+    const newB = newWatchList.filter(w => w.brand === b.name);
+    const addedB = newlyAdded.filter(w => w.brand === b.name);
+    const removedB = removedOutOfStock.filter(w => w.brand === b.name);
+    const changedB = priceChanged.filter(w => w.brand === b.name);
+    brandSummaryReport[b.name] = {
+      'Önceki': oldB.length,
+      'Yeni': newB.length,
+      'Yeni Eklenen': addedB.length,
+      'Stoktan Düşen': removedB.length,
+      'Fiyat Değişen': changedB.length
+    };
+  });
+  console.table(brandSummaryReport);
+
+  const reportPayload = {
+    timestamp: new Date().toISOString(),
+    summary: {
+      previousTotal: existingWatches.length,
+      currentTotal: newWatchList.length,
+      newlyAddedCount: newlyAdded.length,
+      removedOutOfStockCount: removedOutOfStock.length,
+      priceChangedCount: priceChanged.length,
+      unchangedCount: unchanged.length
+    },
+    brandBreakdown: brandSummaryReport,
+    samplePriceChanges: priceChanged.slice(0, 10),
+    sampleNewlyAdded: newlyAdded.slice(0, 10),
+    sampleRemoved: removedOutOfStock.slice(0, 10)
+  };
+
+  fs.writeFileSync(path.join(ROOT_DIR, 'scripts', 'sync-report.json'), JSON.stringify(reportPayload, null, 2), 'utf8');
+
   // Combine watches with non-watch items
   const combinedProducts = [...newWatchList, ...nonWatchProducts];
-  console.log(`[sync] Toplam Ürün Sayısı: ${combinedProducts.length} (Saatler: ${newWatchList.length}, İkinci El & Mücevherat: ${nonWatchProducts.length})`);
+  console.log(`[sync] Toplam Yayın Kataloğu: ${combinedProducts.length} (Saatler: ${newWatchList.length}, İkinci El & Mücevherat: ${nonWatchProducts.length})`);
 
   // Update js/data.js
   const dataFileContent = `// ==========================================================
