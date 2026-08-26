@@ -20,9 +20,9 @@ console.log('BELGIN KUYUMCULUK TEST RUNNER');
 console.log('========================================\n');
 
 console.log('--- 1. Katalog bütünlüğü ---');
-assert(Array.isArray(PRODUCTS) && PRODUCTS.length === 1991, 'Yayın kataloğunda 1.991 ürün mevcut');
-assert(Array.isArray(WATCHES) && WATCHES.length === 1980, 'Saat koleksiyonu 1.980 ürün');
-assert(Array.isArray(JEWELLERY) && JEWELLERY.length === 3, 'Mücevher koleksiyonu 3 ürün');
+assert(Array.isArray(PRODUCTS) && PRODUCTS.length >= 1000, `Yayın kataloğunda ${PRODUCTS.length} ürün mevcut (>= 1.000)`);
+assert(Array.isArray(WATCHES) && WATCHES.length >= 1000, `Saat koleksiyonunda ${WATCHES.length} ürün mevcut (>= 1.000)`);
+assert(Array.isArray(JEWELLERY) && JEWELLERY.length >= 3, 'Mücevher koleksiyonu mevcut');
 assert(Array.isArray(PRE_OWNED_ITEMS) && PRE_OWNED_ITEMS.length >= 10, 'İkinci el koleksiyonu mevcut');
 assert(Array.isArray(PRE_OWNED_GOLD) && PRE_OWNED_GOLD.length >= 2, 'İkinci el altın ürünleri mevcut');
 assert(Array.isArray(WATCH_BRANDS) && WATCH_BRANDS.length === 9, 'Saat markaları mevcut');

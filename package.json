@@ -18,6 +18,7 @@
     "deploy": "node scripts/safe-deploy.js",
     "deploy:hosting": "node scripts/safe-deploy.js hosting",
     "deploy:functions": "node scripts/safe-deploy.js functions",
+    "sync:saatvesaat": "node scripts/sync-saatvesaat.js",
     "serve": "npx serve . -l 3000"
   },
   "keywords": ["jewelry","luxury","e-commerce","paytr","firebase","istanbul","watches"],

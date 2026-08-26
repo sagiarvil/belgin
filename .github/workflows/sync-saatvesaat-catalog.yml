@@ -1,0 +1,58 @@
+name: Saat&Saat Live Catalog Synchronizer (Every 2 Days at 04:00 TRT)
+
+on:
+  schedule:
+    # 01:00 UTC = 04:00 Turkey Time (TRT / UTC+3) every 2 days
+    - cron: '0 1 */2 * *'
+  workflow_dispatch:
+
+concurrency:
+  group: sync-saatvesaat
+  cancel-in-progress: true
+
+jobs:
+  sync-and-deploy:
+    name: Sync Live Catalog & Deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Saat&Saat Live Sync Engine
+        run: node scripts/sync-saatvesaat.js
+
+      - name: Run Quality Gate & Compliance CI
+        run: npm run ci
+
+      - name: Commit updated catalog & SEO assets
+        run: |
+          git config --global user.name "Belgin Sync Bot"
+          git config --global user.email "bot@belginkuyumculuk.com"
+          git add js/data.js functions/product-catalog.json sitemap.xml llms.txt llms-full.txt robots.txt legal-manifest.json functions/legal-manifest.json
+          if ! git diff --staged --quiet; then
+            git commit -m "chore(sync): automated 2-day Saat&Saat catalog update (+40% pricing & in-stock sync)"
+            git push origin HEAD:${{ github.ref }}
+          else
+            echo "No catalog or price changes detected."
+          fi
+
+      - name: Deploy to Firebase Hosting & Functions (if credentials exist)
+        if: env.FIREBASE_TOKEN != ''
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_PROJECT_ID: carbon-web-1265b
+        run: |
+          npx firebase-tools deploy --project carbon-web-1265b --only hosting,functions --token "${{ secrets.FIREBASE_TOKEN }}"
