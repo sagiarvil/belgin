@@ -588,6 +588,7 @@ const App = {
     const container = document.getElementById('productDetailView');
     if (!container) return;
 
+    const isGoldProduct = (p.category === 'jewelry' || p.category === 'jewellery' || p.isGold);
     const isHighVal = (typeof isHighValueSecureDelivery === 'function' ? isHighValueSecureDelivery(p) : p.price >= 12000);
     const specs = p.specs || {};
 
@@ -606,22 +607,349 @@ const App = {
     const discountPercent = hasDiscount ? Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100) : 0;
     const monthlyInstallment = Math.round(p.price / 3);
 
-    // Taksit Seçenekleri Matrisi
-    const installments = [
-      { name: 'Peşin Fiyatına', installments: [
-        { month: 2, amount: Math.round(p.price / 2), total: p.price },
-        { month: 3, amount: Math.round(p.price / 3), total: p.price }
-      ]},
-      { name: 'Vade Farklı Taksitler', installments: [
-        { month: 6, amount: Math.round((p.price * 1.08) / 6), total: Math.round(p.price * 1.08) },
-        { month: 9, amount: Math.round((p.price * 1.14) / 9), total: Math.round(p.price * 1.14) },
-        { month: 12, amount: Math.round((p.price * 1.19) / 12), total: Math.round(p.price * 1.19) }
-      ]}
-    ];
+    // Taksit Banner (Altın için tek çekim mevzuat uyarısı, saat için 3 taksit)
+    const installmentBannerHtml = isGoldProduct ? `
+      <div class="pdp-installment-banner" style="background:#FFF9EE; border:1px solid #E6D2A8; color:#5D4411; padding:10px 14px; border-radius:6px; font-size:12.5px; margin-top:14px; line-height:1.5;">
+        <span>🔒 <strong>BDDK Mevzuat Uyarısı:</strong> Külçe altın, ziynet ve sarrafiye ürünlerinde finansal mevzuat gereğince <strong>tek çekim</strong> uygulanır.</span>
+      </div>
+    ` : `
+      <div class="pdp-installment-banner" style="${p.isPreOwned ? 'margin-top:14px;' : ''}">
+        <span>💳 Vade farksız 3 taksit: <strong>3 x ${formatPrice(monthlyInstallment)}</strong></span>
+        <span style="color:#888; font-weight:normal; font-size:12px;">(Tüm kartlara Mevzuata Uygun Taksit imkanı)</span>
+      </div>
+    `;
 
-    // İlgili Ürünler (Aynı markadan veya kategoriden 4 model)
+    // 5'li Hızlı Özet Çipler (Altın vs Saat)
+    const quickSpecsHtml = isGoldProduct ? `
+      <div class="pdp-quick-specs">
+        <div class="pdp-spec-pill">
+          <span class="pdp-spec-pill-icon">🪙</span>
+          <div>
+            <span class="pdp-spec-pill-label">Maden Türü</span>
+            <span class="pdp-spec-pill-val">Kıymetli Altın</span>
+          </div>
+        </div>
+        <div class="pdp-spec-pill">
+          <span class="pdp-spec-pill-icon">⚖️</span>
+          <div>
+            <span class="pdp-spec-pill-label">Ayar & Saflık</span>
+            <span class="pdp-spec-pill-val">${p.metal || '24 Ayar (995/1000)'}</span>
+          </div>
+        </div>
+        <div class="pdp-spec-pill">
+          <span class="pdp-spec-pill-icon">🏛️</span>
+          <div>
+            <span class="pdp-spec-pill-label">Baskı / Menşei</span>
+            <span class="pdp-spec-pill-val">T.C. Darphane / Rafineri</span>
+          </div>
+        </div>
+        <div class="pdp-spec-pill">
+          <span class="pdp-spec-pill-icon">🔒</span>
+          <div>
+            <span class="pdp-spec-pill-label">Güvenlik Mührü</span>
+            <span class="pdp-spec-pill-val">${p.hallmark || 'Hologramlı & Mühürlü'}</span>
+          </div>
+        </div>
+        <div class="pdp-spec-pill">
+          <span class="pdp-spec-pill-icon">📜</span>
+          <div>
+            <span class="pdp-spec-pill-label">Belge & Garanti</span>
+            <span class="pdp-spec-pill-val">%100 Ayar Garantili</span>
+          </div>
+        </div>
+      </div>
+    ` : `
+      <div class="pdp-quick-specs">
+        <div class="pdp-spec-pill">
+          <span class="pdp-spec-pill-icon">⚙️</span>
+          <div>
+            <span class="pdp-spec-pill-label">Mekanizma</span>
+            <span class="pdp-spec-pill-val">${specs['Mekanizma'] || 'Quartz / Analog'}</span>
+          </div>
+        </div>
+        <div class="pdp-spec-pill">
+          <span class="pdp-spec-pill-icon">📐</span>
+          <div>
+            <span class="pdp-spec-pill-label">Kasa Çapı</span>
+            <span class="pdp-spec-pill-val">${specs['Kasa Çapı'] || '42 mm'}</span>
+          </div>
+        </div>
+        <div class="pdp-spec-pill">
+          <span class="pdp-spec-pill-icon">🛡️</span>
+          <div>
+            <span class="pdp-spec-pill-label">Cam Tipi</span>
+            <span class="pdp-spec-pill-val">${specs['Cam Tipi'] || 'Safir / Mineral'}</span>
+          </div>
+        </div>
+        <div class="pdp-spec-pill">
+          <span class="pdp-spec-pill-icon">💧</span>
+          <div>
+            <span class="pdp-spec-pill-label">Su Geçirmezlik</span>
+            <span class="pdp-spec-pill-val">${specs['Su Geçirmezlik'] || '5 ATM (50 M)'}</span>
+          </div>
+        </div>
+        <div class="pdp-spec-pill">
+          <span class="pdp-spec-pill-icon">🎨</span>
+          <div>
+            <span class="pdp-spec-pill-label">Kordon</span>
+            <span class="pdp-spec-pill-val">${specs['Kordon / Kayış'] || 'Paslanmaz Çelik'}</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // 4'lü Kurumsal Güvence Kutusu (Altın vs Saat)
+    const trustBoxHtml = isGoldProduct ? `
+      <div class="pdp-trust-box">
+        <div class="pdp-trust-item">
+          <span class="pdp-trust-item-icon">🪙</span>
+          <div class="pdp-trust-item-text">
+            <strong>%100 Darphane & Saflık Garantisi</strong>
+            <span>Resmi ayar ve milyem standartlarında tescilli ve mühürlü.</span>
+          </div>
+        </div>
+        <div class="pdp-trust-item">
+          <span class="pdp-trust-item-icon">🏛️</span>
+          <div class="pdp-trust-item-text">
+            <strong>Buca Showroom'dan Teslimat</strong>
+            <span>12.000 TL üzeri yasal kimlik ve imza ile mağazadan güvenli teslim.</span>
+          </div>
+        </div>
+        <div class="pdp-trust-item">
+          <span class="pdp-trust-item-icon">💳</span>
+          <div class="pdp-trust-item-text">
+            <strong>BDDK Lisanslı 3D Secure</strong>
+            <span>PayTR 256-bit SSL korumalı banka altyapısı & tek çekim.</span>
+          </div>
+        </div>
+        <div class="pdp-trust-item">
+          <span class="pdp-trust-item-icon">⚖️</span>
+          <div class="pdp-trust-item-text">
+            <strong>Anında Nakit Alım & Değerleme</strong>
+            <span>Kapalıçarşı anlık serbest piyasa kurundan nakde çevirme güvencesi.</span>
+          </div>
+        </div>
+      </div>
+    ` : `
+      <div class="pdp-trust-box">
+        <div class="pdp-trust-item">
+          <span class="pdp-trust-item-icon">🛡️</span>
+          <div class="pdp-trust-item-text">
+            <strong>2 Yıl Distribütör Garantisi</strong>
+            <span>Orijinal kutusu, garanti belgesi ve faturalı teslimat.</span>
+          </div>
+        </div>
+        <div class="pdp-trust-item">
+          <span class="pdp-trust-item-icon">🏛️</span>
+          <div class="pdp-trust-item-text">
+            <strong>Buca Showroom'dan Teslimat</strong>
+            <span>12.000 TL üzeri yasal kimlik ve imza ile mağazadan güvenli teslim.</span>
+          </div>
+        </div>
+        <div class="pdp-trust-item">
+          <span class="pdp-trust-item-icon">💳</span>
+          <div class="pdp-trust-item-text">
+            <strong>BDDK Lisanslı 3D Secure</strong>
+            <span>PayTR 256-bit SSL korumalı banka altyapısı.</span>
+          </div>
+        </div>
+        <div class="pdp-trust-item">
+          <span class="pdp-trust-item-icon">⚖️</span>
+          <div class="pdp-trust-item-text">
+            <strong>Ekspertiz & Takas Güvencesi</strong>
+            <span>Sertifikalı & 12 Nokta Ekspertiz Güvencesi</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Sekme 1: Ürün Detayları
+    const detailsTabHtml = isGoldProduct ? `
+      <div id="tab-details" class="pdp-tab-pane active" role="tabpanel">
+        <div style="background:#FFFFFF; border:1px solid var(--color-border); border-radius:8px; padding:28px 32px; line-height:1.8; color:#444; font-size:14.5px;">
+          <h2 style="font-size:20px; font-weight:700; color:var(--color-ink); margin-bottom:16px;">
+            ${p.brand} ${p.name} Ürün Bilgisi ve Saflık Detayları
+          </h2>
+          <p style="margin-bottom:16px;">
+            ${p.description || p.desc}
+          </p>
+          <div style="background:#FBF9F5; border-left:4px solid var(--color-teal); padding:16px 20px; margin:20px 0; border-radius:0 6px 6px 0;">
+            <strong style="color:var(--color-teal); display:block; margin-bottom:4px; font-size:14px;">Belgin Kuyumculuk Altın ve Ayar Taahhüdü:</strong>
+            Sitemizde ve Buca showroomumuzda satışa sunulan tüm altın, külçe, ziynet ve sarrafiye ürünleri T.C. Darphane ve resmi rafinerilerin standartlarında, %100 safiyet ve ayar garantisiyle faturalı ve mühürlü olarak teslim edilir.
+          </div>
+          <h3 style="font-size:16px; font-weight:700; color:var(--color-ink); margin:24px 0 10px;">Teslimat & Ambalaj İçeriği:</h3>
+          <ul style="padding-left:20px; margin-bottom:16px; display:flex; flex-direction:column; gap:6px;">
+            <li>Orijinal Hologramlı Güvenlik Ambalajı / Külçe Blister Paketi</li>
+            <li>Belgin Kuyumculuk Resmi Satış Faturası ve Ayar Sertifikası</li>
+            <li>T.C. Darphane / Rafineri Resmi Orijinallik Mührü</li>
+            <li>Kapalıçarşı Anlık Serbest Piyasa Geri Alım Güvencesi</li>
+          </ul>
+        </div>
+      </div>
+    ` : `
+      <div id="tab-details" class="pdp-tab-pane active" role="tabpanel">
+        <div style="background:#FFFFFF; border:1px solid var(--color-border); border-radius:8px; padding:28px 32px; line-height:1.8; color:#444; font-size:14.5px;">
+          <h2 style="font-size:20px; font-weight:700; color:var(--color-ink); margin-bottom:16px;">
+            ${p.brand} ${p.name} Ürün Bilgisi ve Tasarım Detayları
+          </h2>
+          <p style="margin-bottom:16px;">
+            ${p.description || p.desc}
+          </p>
+          <div style="background:#FBF9F5; border-left:4px solid var(--color-teal); padding:16px 20px; margin:20px 0; border-radius:0 6px 6px 0;">
+            <strong style="color:var(--color-teal); display:block; margin-bottom:4px; font-size:14px;">Belgin Kuyumculuk Ürün ve Belge Taahhüdü:</strong>
+            Sitemizde ve Buca showroomumuzda yer alan tüm <strong>${p.brand}</strong> saat modelleri %100 orijinal, ürüne ait fatura ve garanti belgesindeki kapsamla satılır. Siparişiniz seri numarası kayıtlı garanti belgesi, orijinal kutusu ve kaşeli sertifikasıyla eksiksiz teslim edilmektedir.
+          </div>
+          <h3 style="font-size:16px; font-weight:700; color:var(--color-ink); margin:24px 0 10px;">Kutu İçeriği:</h3>
+          <ul style="padding-left:20px; margin-bottom:16px; display:flex; flex-direction:column; gap:6px;">
+            <li>Orijinal ${p.brand} Lüks Saat Kutusu ve Koruma Ambalajı</li>
+            <li>Ürüne ait garanti belgesi ve satış faturası</li>
+            <li>Türkçe Kullanım Kılavuzu ve Mekanizma Bakım Kartı</li>
+            <li>Belgin Kuyumculuk Satış Faturası ve Yetkili Belgesi</li>
+          </ul>
+        </div>
+      </div>
+    `;
+
+    // Sekme 2: Teknik Özellikler Tablosu
+    const specsTabHtml = isGoldProduct ? `
+      <div id="tab-specs" class="pdp-tab-pane" role="tabpanel">
+        <div class="pdp-specs-category-grid">
+          
+          <!-- 1. Maden & Saflık -->
+          <div class="pdp-spec-cat-card">
+            <div class="pdp-spec-cat-title">🪙 Maden & Saflık</div>
+            <div class="pdp-spec-rows">
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Maden Türü</span><span class="pdp-spec-value">Kıymetli Altın</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Ayar / Saflık</span><span class="pdp-spec-value">${p.metal || '24 Ayar (995/1000)'}</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Kategori</span><span class="pdp-spec-value">${p.subCategory || 'Külçe & Sarrafiye'}</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Durum</span><span class="pdp-spec-value">Sıfır / Darphane & Mühürlü</span></div>
+            </div>
+          </div>
+
+          <!-- 2. Sertifika & Güvenlik -->
+          <div class="pdp-spec-cat-card">
+            <div class="pdp-spec-cat-title">🔒 Sertifika & Güvenlik</div>
+            <div class="pdp-spec-rows">
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Ürün Kodu</span><span class="pdp-spec-value">${p.ref || p.reference}</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Ambalaj Tipi</span><span class="pdp-spec-value">Hologramlı Güvenlik Ambalajı</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Damga / Mühür</span><span class="pdp-spec-value">${p.hallmark || 'T.C. Darphane Mühürlü'}</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Fatura</span><span class="pdp-spec-value">Resmi E-Fatura & Ayar Kaydı</span></div>
+            </div>
+          </div>
+
+          <!-- 3. Teslimat & Alım Garantisi -->
+          <div class="pdp-spec-cat-card">
+            <div class="pdp-spec-cat-title">🏛️ Teslimat & Değerleme</div>
+            <div class="pdp-spec-rows">
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Teslimat Kuralı</span><span class="pdp-spec-value">12.000 TL+ Showroom Güvenli Teslim</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Geri Alım</span><span class="pdp-spec-value">Anlık Kapalıçarşı Kuruyla Nakit Alım</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Ödeme Şekli</span><span class="pdp-spec-value">BDDK Uyumlu Tek Çekim / 3D Secure</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Menşei</span><span class="pdp-spec-value">Türkiye (T.C. Darphane Tescilli)</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    ` : `
+      <div id="tab-specs" class="pdp-tab-pane" role="tabpanel">
+        <div class="pdp-specs-category-grid">
+          
+          <!-- 1. Ürün Bilgisi -->
+          <div class="pdp-spec-cat-card">
+            <div class="pdp-spec-cat-title">🏷️ Ürün Bilgisi</div>
+            <div class="pdp-spec-rows">
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Marka</span><span class="pdp-spec-value">${p.brand}</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Model / Ref</span><span class="pdp-spec-value">${p.ref || p.reference}</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Cinsiyet</span><span class="pdp-spec-value">${specs['Cinsiyet'] || 'Erkek / Kadın'}</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Çalışma Tipi</span><span class="pdp-spec-value">${specs['Mekanizma'] || 'Quartz Analog'}</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Menşei</span><span class="pdp-spec-value">${p.origin || specs['Menşei'] || 'İsviçre / Japonya'}</span></div>
+            </div>
+          </div>
+
+          <!-- 2. Kasa Detayları -->
+          <div class="pdp-spec-cat-card">
+            <div class="pdp-spec-cat-title">📐 Kasa Detayları</div>
+            <div class="pdp-spec-rows">
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Kasa Çapı</span><span class="pdp-spec-value">${specs['Kasa Çapı'] || '42 mm'}</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Kasa Materyali</span><span class="pdp-spec-value">${specs['Kasa Materyali'] || p.metal || '316L Çelik'}</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Kasa Rengi</span><span class="pdp-spec-value">${specs['Kasa Rengi'] || 'Metalik Çelik / Altın'}</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Kasa Şekli</span><span class="pdp-spec-value">Yuvarlak / Geometrik</span></div>
+            </div>
+          </div>
+
+          <!-- 3. Kadran & Cam -->
+          <div class="pdp-spec-cat-card">
+            <div class="pdp-spec-cat-title">🛡️ Kadran & Cam</div>
+            <div class="pdp-spec-rows">
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Cam Özelliği</span><span class="pdp-spec-value">${specs['Cam Tipi'] || 'Safir / Mineral'}</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Kadran Rengi</span><span class="pdp-spec-value">${specs['Kadran Rengi'] || 'Antrasit / Siyah'}</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Kadran Tipi</span><span class="pdp-spec-value">Analog / İndeksli</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Aydınlatma</span><span class="pdp-spec-value">LumiBrite / Fosforlu Kollar</span></div>
+            </div>
+          </div>
+
+          <!-- 4. Kordon / Kayış -->
+          <div class="pdp-spec-cat-card">
+            <div class="pdp-spec-cat-title">🎨 Kordon / Kayış</div>
+            <div class="pdp-spec-rows">
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Kordon Tipi</span><span class="pdp-spec-value">${specs['Kordon / Kayış'] || 'Paslanmaz Çelik'}</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Kordon Rengi</span><span class="pdp-spec-value">Metalik / Deri Tonu</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Klips</span><span class="pdp-spec-value">Kelebek / Emniyetli Toka</span></div>
+            </div>
+          </div>
+
+          <!-- 5. Fonksiyonlar -->
+          <div class="pdp-spec-cat-card">
+            <div class="pdp-spec-cat-title">⚡ Fonksiyonlar</div>
+            <div class="pdp-spec-rows">
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Su Geçirmezlik</span><span class="pdp-spec-value">${specs['Su Geçirmezlik'] || '5 ATM (50 Metre)'}</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Takvim</span><span class="pdp-spec-value">Gün / Tarih Göstergesi</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Kronometre</span><span class="pdp-spec-value">Mevcut / Hassas Sayaç</span></div>
+            </div>
+          </div>
+
+          <!-- 6. Garanti & Güvenlik -->
+          <div class="pdp-spec-cat-card">
+            <div class="pdp-spec-cat-title">📜 Garanti & Teslimat</div>
+            <div class="pdp-spec-rows">
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Garanti Süresi</span><span class="pdp-spec-value">2 Yıl Distribütör Garantili</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Teslimat Kuralı</span><span class="pdp-spec-value">12.000 TL+ Mağazadan Teslim</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Ekspertiz Kaydı</span><span class="pdp-spec-value">Sertifikalı & Ekspertiz Onaylı</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    `;
+
+    // Sekme 3: Taksit / Ödeme Seçenekleri
+    const installmentsTabHtml = isGoldProduct ? `
+      <div id="tab-installments" class="pdp-tab-pane" role="tabpanel">
+        <div style="background:#FFFFFF; border:1px solid var(--color-border); border-radius:8px; padding:24px; line-height:1.7;">
+          <strong style="display:block; margin-bottom:8px; font-size:16px; color:var(--color-ink);">⚖️ BDDK Finansal Mevzuatı ve Taksit Kısıtlaması</strong>
+          <p style="font-size:14px; color:#444; margin-bottom:12px;">
+            Bankacılık Düzenleme ve Denetleme Kurumu (BDDK) ile Ticaret Bakanlığı Mesafeli Sözleşmeler Yönetmeliği hükümleri uyarınca; <strong>külçe altın, gram altın, ziynet, ata altın ve sarrafiye ürünlerinde kredi kartına taksit uygulanmamaktadır</strong>.
+          </p>
+          <div style="background:#FBF9F5; border:1px solid rgba(194,167,104,0.35); padding:14px 18px; border-radius:6px; font-size:13px; color:#5D4411;">
+            💡 <strong>Geçerli Ödeme Yöntemleri:</strong> Tüm kredi kartları veya banka kartlarıyla 3D Secure Kart Ödemesi tek çekim veya güvenli banka havalesi ile siparişinizi tamamlayabilirsiniz.
+          </div>
+        </div>
+      </div>
+    ` : `
+      <div id="tab-installments" class="pdp-tab-pane" role="tabpanel">
+        <div style="background:#FFFFFF; border:1px solid var(--color-border); border-radius:8px; padding:24px; line-height:1.7;">
+          <strong style="display:block; margin-bottom:8px;">Kart ve banka koşullarına göre taksit</strong>
+          <p style="font-size:13.5px; color:var(--color-muted); margin:0;">Taksit seçenekleri ödeme adımında, kartın bankası ve işlem tarihinde yürürlükte bulunan mevzuat sınırlarına göre gösterilir. Sitede mevzuatın üzerinde sabit taksit taahhüdü verilmez.</p>
+        </div>
+      </div>
+    `;
+
+    // İlgili Ürünler
     const allProds = typeof getAllProducts === 'function' ? getAllProducts() : (typeof PRODUCTS !== 'undefined' ? PRODUCTS : []);
     const relatedProducts = allProds.filter(x => x.id !== p.id && (x.brand === p.brand || x.category === p.category)).slice(0, 4);
+
+    const breadcrumbCategory = isGoldProduct ? 'Mücevherat & Altın' : 'Lüks Saatler';
+    const breadcrumbPage = isGoldProduct ? 'mucevherat' : 'saatler';
 
     container.innerHTML = `
       <div class="pdp-page-container">
@@ -630,7 +958,7 @@ const App = {
         <nav class="pdp-breadcrumbs" aria-label="Breadcrumb">
           <a href="#" data-page="ana-sayfa">Ana Sayfa</a>
           <span class="pdp-separator">/</span>
-          <a href="#" data-page="saatler">Lüks Saatler</a>
+          <a href="#" data-page="${breadcrumbPage}">${breadcrumbCategory}</a>
           <span class="pdp-separator">/</span>
           <a href="#" onclick="App.filterWatchesByBrand('${p.brand}', null)">${p.brand}</a>
           <span class="pdp-separator">/</span>
@@ -667,7 +995,7 @@ const App = {
               <span>•</span>
               <span class="pdp-meta-stock">● Stokta Var (Hemen Teslim)</span>
               <span>•</span>
-              <span>Kategori: <strong>${p.subCategory || 'Lüks Saat'}</strong></span>
+              <span>Kategori: <strong>${p.subCategory || (isGoldProduct ? 'Altın & Mücevherat' : 'Lüks Saat')}</strong></span>
             </div>
 
             <!-- Fiyat Kutusu -->
@@ -695,50 +1023,11 @@ const App = {
                   ${hasDiscount ? `<span class="pdp-discount-badge">-%${discountPercent} İNDİRİM</span>` : ''}
                 </div>
               `}
-              <div class="pdp-installment-banner" style="${p.isPreOwned ? 'margin-top:14px;' : ''}">
-                <span>💳 Vade farksız 3 taksit: <strong>3 x ${formatPrice(monthlyInstallment)}</strong></span>
-                <span style="color:#888; font-weight:normal; font-size:12px;">(Tüm kartlara Mevzuata Uygun Taksit imkanı)</span>
-              </div>
+              ${installmentBannerHtml}
             </div>
 
-            <!-- 5'li Hızlı Özet Teknik Çipler (Saat&Saat Standartı) -->
-            <div class="pdp-quick-specs">
-              <div class="pdp-spec-pill">
-                <span class="pdp-spec-pill-icon">⚙️</span>
-                <div>
-                  <span class="pdp-spec-pill-label">Mekanizma</span>
-                  <span class="pdp-spec-pill-val">${specs['Mekanizma'] || 'Quartz / Analog'}</span>
-                </div>
-              </div>
-              <div class="pdp-spec-pill">
-                <span class="pdp-spec-pill-icon">📐</span>
-                <div>
-                  <span class="pdp-spec-pill-label">Kasa Çapı</span>
-                  <span class="pdp-spec-pill-val">${specs['Kasa Çapı'] || '42 mm'}</span>
-                </div>
-              </div>
-              <div class="pdp-spec-pill">
-                <span class="pdp-spec-pill-icon">🛡️</span>
-                <div>
-                  <span class="pdp-spec-pill-label">Cam Tipi</span>
-                  <span class="pdp-spec-pill-val">${specs['Cam Tipi'] || 'Safir / Mineral'}</span>
-                </div>
-              </div>
-              <div class="pdp-spec-pill">
-                <span class="pdp-spec-pill-icon">💧</span>
-                <div>
-                  <span class="pdp-spec-pill-label">Su Geçirmezlik</span>
-                  <span class="pdp-spec-pill-val">${specs['Su Geçirmezlik'] || '5 ATM (50 M)'}</span>
-                </div>
-              </div>
-              <div class="pdp-spec-pill">
-                <span class="pdp-spec-pill-icon">🎨</span>
-                <div>
-                  <span class="pdp-spec-pill-label">Kordon</span>
-                  <span class="pdp-spec-pill-val">${specs['Kordon / Kayış'] || 'Paslanmaz Çelik'}</span>
-                </div>
-              </div>
-            </div>
+            <!-- Hızlı Özet Teknik Çipler -->
+            ${quickSpecsHtml}
 
             <!-- Aksiyon Butonları -->
             <div class="pdp-actions-row">
@@ -755,36 +1044,7 @@ const App = {
             </div>
 
             <!-- 4'lü Kurumsal Güvence Kutusu -->
-            <div class="pdp-trust-box">
-              <div class="pdp-trust-item">
-                <span class="pdp-trust-item-icon">🛡️</span>
-                <div class="pdp-trust-item-text">
-                  <strong>2 Yıl Distribütör Garantisi</strong>
-                  <span>Orijinal kutusu, garanti belgesi ve faturalı teslimat.</span>
-                </div>
-              </div>
-              <div class="pdp-trust-item">
-                <span class="pdp-trust-item-icon">🏛️</span>
-                <div class="pdp-trust-item-text">
-                  <strong>Buca Showroom'dan Teslimat</strong>
-                  <span>12.000 TL üzeri yasal kimlik ve imza ile mağazadan güvenli teslim.</span>
-                </div>
-              </div>
-              <div class="pdp-trust-item">
-                <span class="pdp-trust-item-icon">💳</span>
-                <div class="pdp-trust-item-text">
-                  <strong>BDDK Lisanslı 3D Secure</strong>
-                  <span>PayTR 256-bit SSL korumalı banka altyapısı.</span>
-                </div>
-              </div>
-              <div class="pdp-trust-item">
-                <span class="pdp-trust-item-icon">⚖️</span>
-                <div class="pdp-trust-item-text">
-                  <strong>Ekspertiz & Takas Güvencesi</strong>
-                  <span>Sertifikalı & 12 Nokta Ekspertiz Güvencesi</span>
-                </div>
-              </div>
-            </div>
+            ${trustBoxHtml}
 
           </div>
         </div>
@@ -799,7 +1059,7 @@ const App = {
               <span>⚙️ Teknik Özellikler Tablosu</span>
             </button>
             <button class="pdp-tab-btn" onclick="App.switchPdpTab('tab-installments', this)" role="tab">
-              <span>💳 Taksit Seçenekleri</span>
+              <span>💳 Ödeme & Mevzuat</span>
             </button>
             <button class="pdp-tab-btn" onclick="App.switchPdpTab('tab-delivery', this)" role="tab">
               <span>🚚 Teslimat, Güvenlik & İade Koşulları</span>
@@ -807,98 +1067,10 @@ const App = {
           </div>
 
           <!-- SEKME 1: Ürün Detayları -->
-          <div id="tab-details" class="pdp-tab-pane active" role="tabpanel">
-            <div style="background:#FFFFFF; border:1px solid var(--color-border); border-radius:8px; padding:28px 32px; line-height:1.8; color:#444; font-size:14.5px;">
-              <h2 style="font-size:20px; font-weight:700; color:var(--color-ink); margin-bottom:16px;">
-                ${p.brand} ${p.name} Ürün Bilgisi ve Tasarım Detayları
-              </h2>
-              <p style="margin-bottom:16px;">
-                ${p.description || p.desc}
-              </p>
-              <div style="background:#FBF9F5; border-left:4px solid var(--color-teal); padding:16px 20px; margin:20px 0; border-radius:0 6px 6px 0;">
-                <strong style="color:var(--color-teal); display:block; margin-bottom:4px; font-size:14px;">Belgin Kuyumculuk Ürün ve Belge Taahhüdü:</strong>
-                Sitemizde ve Buca showroomumuzda yer alan tüm <strong>${p.brand}</strong> saat modelleri %100 orijinal, ürüne ait fatura ve garanti belgesindeki kapsamla satılır. Siparişiniz seri numarası kayıtlı garanti belgesi, orijinal kutusu ve kaşeli sertifikasıyla eksiksiz teslim edilmektedir.
-              </div>
-              <h3 style="font-size:16px; font-weight:700; color:var(--color-ink); margin:24px 0 10px;">Kutu İçeriği:</h3>
-              <ul style="padding-left:20px; margin-bottom:16px; display:flex; flex-direction:column; gap:6px;">
-                <li>Orijinal ${p.brand} Lüks Saat Kutusu ve Koruma Ambalajı</li>
-                <li>Ürüne ait garanti belgesi ve satış faturası</li>
-                <li>Türkçe Kullanım Kılavuzu ve Mekanizma Bakım Kartı</li>
-                <li>Belgin Kuyumculuk Satış Faturası ve Yetkili Belgesi</li>
-              </ul>
-            </div>
-          </div>
+          ${detailsTabHtml}
 
-          <!-- SEKME 2: 6 Kategorili Teknik Özellikler Tablosu (Saat&Saat Standartı) -->
-          <div id="tab-specs" class="pdp-tab-pane" role="tabpanel">
-            <div class="pdp-specs-category-grid">
-              
-              <!-- 1. Ürün Bilgisi -->
-              <div class="pdp-spec-cat-card">
-                <div class="pdp-spec-cat-title">🏷️ Ürün Bilgisi</div>
-                <div class="pdp-spec-rows">
-                  <div class="pdp-spec-row"><span class="pdp-spec-key">Marka</span><span class="pdp-spec-value">${p.brand}</span></div>
-                  <div class="pdp-spec-row"><span class="pdp-spec-key">Model / Ref</span><span class="pdp-spec-value">${p.ref || p.reference}</span></div>
-                  <div class="pdp-spec-row"><span class="pdp-spec-key">Cinsiyet</span><span class="pdp-spec-value">${specs['Cinsiyet'] || 'Erkek / Kadın'}</span></div>
-                  <div class="pdp-spec-row"><span class="pdp-spec-key">Çalışma Tipi</span><span class="pdp-spec-value">${specs['Mekanizma'] || 'Quartz Analog'}</span></div>
-                  <div class="pdp-spec-row"><span class="pdp-spec-key">Menşei</span><span class="pdp-spec-value">${p.origin || specs['Menşei'] || 'İsviçre / Japonya'}</span></div>
-                </div>
-              </div>
-
-              <!-- 2. Kasa Detayları -->
-              <div class="pdp-spec-cat-card">
-                <div class="pdp-spec-cat-title">📐 Kasa Detayları</div>
-                <div class="pdp-spec-rows">
-                  <div class="pdp-spec-row"><span class="pdp-spec-key">Kasa Çapı</span><span class="pdp-spec-value">${specs['Kasa Çapı'] || '42 mm'}</span></div>
-                  <div class="pdp-spec-row"><span class="pdp-spec-key">Kasa Materyali</span><span class="pdp-spec-value">${specs['Kasa Materyali'] || p.metal || '316L Çelik'}</span></div>
-                  <div class="pdp-spec-row"><span class="pdp-spec-key">Kasa Rengi</span><span class="pdp-spec-value">${specs['Kasa Rengi'] || 'Metalik Çelik / Altın'}</span></div>
-                  <div class="pdp-spec-row"><span class="pdp-spec-key">Kasa Şekli</span><span class="pdp-spec-value">Yuvarlak / Geometrik</span></div>
-                </div>
-              </div>
-
-              <!-- 3. Kadran & Cam -->
-              <div class="pdp-spec-cat-card">
-                <div class="pdp-spec-cat-title">🛡️ Kadran & Cam</div>
-                <div class="pdp-spec-rows">
-                  <div class="pdp-spec-row"><span class="pdp-spec-key">Cam Özelliği</span><span class="pdp-spec-value">${specs['Cam Tipi'] || 'Safir / Mineral'}</span></div>
-                  <div class="pdp-spec-row"><span class="pdp-spec-key">Kadran Rengi</span><span class="pdp-spec-value">${specs['Kadran Rengi'] || 'Antrasit / Siyah'}</span></div>
-                  <div class="pdp-spec-row"><span class="pdp-spec-key">Kadran Tipi</span><span class="pdp-spec-value">Analog / İndeksli</span></div>
-                  <div class="pdp-spec-row"><span class="pdp-spec-key">Aydınlatma</span><span class="pdp-spec-value">LumiBrite / Fosforlu Kollar</span></div>
-                </div>
-              </div>
-
-              <!-- 4. Kordon / Kayış -->
-              <div class="pdp-spec-cat-card">
-                <div class="pdp-spec-cat-title">🎨 Kordon / Kayış</div>
-                <div class="pdp-spec-rows">
-                  <div class="pdp-spec-row"><span class="pdp-spec-key">Kordon Tipi</span><span class="pdp-spec-value">${specs['Kordon / Kayış'] || 'Paslanmaz Çelik'}</span></div>
-                  <div class="pdp-spec-row"><span class="pdp-spec-key">Kordon Rengi</span><span class="pdp-spec-value">Metalik / Deri Tonu</span></div>
-                  <div class="pdp-spec-key">Klips</span><span class="pdp-spec-value">Kelebek / Emniyetli Toka</span></div>
-                </div>
-              </div>
-
-              <!-- 5. Fonksiyonlar -->
-              <div class="pdp-spec-cat-card">
-                <div class="pdp-spec-cat-title">⚡ Fonksiyonlar</div>
-                <div class="pdp-spec-rows">
-                  <div class="pdp-spec-row"><span class="pdp-spec-key">Su Geçirmezlik</span><span class="pdp-spec-value">${specs['Su Geçirmezlik'] || '5 ATM (50 Metre)'}</span></div>
-                  <div class="pdp-spec-row"><span class="pdp-spec-key">Takvim</span><span class="pdp-spec-value">Gün / Tarih Göstergesi</span></div>
-                  <div class="pdp-spec-row"><span class="pdp-spec-key">Kronometre</span><span class="pdp-spec-value">Mevcut / Hassas Sayaç</span></div>
-                </div>
-              </div>
-
-              <!-- 6. Garanti & Güvenlik -->
-              <div class="pdp-spec-cat-card">
-                <div class="pdp-spec-cat-title">📜 Garanti & Teslimat</div>
-                <div class="pdp-spec-rows">
-                  <div class="pdp-spec-row"><span class="pdp-spec-key">Garanti Süresi</span><span class="pdp-spec-value">2 Yıl Distribütör Garantili</span></div>
-                  <div class="pdp-spec-row"><span class="pdp-spec-key">Teslimat Kuralı</span><span class="pdp-spec-value">12.000 TL+ Mağazadan Teslim</span></div>
-                  <div class="pdp-spec-row"><span class="pdp-spec-key">Ekspertiz Kaydı</span><span class="pdp-spec-value">Sertifikalı & Ekspertiz Onaylı</span></div>
-                </div>
-              </div>
-
-            </div>
-          </div>
+          <!-- SEKME 2: Teknik Özellikler Tablosu -->
+          ${specsTabHtml}
 
           <!-- SEKME 3: Taksit Seçenekleri -->
           <div id="tab-installments" class="pdp-tab-pane" role="tabpanel">
@@ -918,42 +1090,14 @@ const App = {
                 <strong>12.000 TL üzerindeki tüm altın ve lüks saat ürünleri</strong>, güvenlik protokolleri gereğince yalnızca İzmir Buca'daki merkez showroomumuzdan (Menderes Cad. No:231/B Buca / İzmir) bizzat teslim edilmektedir.
               </p>
               <ul style="padding-left:20px; margin-bottom:20px; display:flex; flex-direction:column; gap:8px;">
-                <li>Teslimat sırasında sipariş sahibinin geçerli T.C. Kimlik Kartı veya Pasaportunu ibraz etmesi zorunludur.</li>
-                <li>Ürün teslimi, ödemenin banka ve PayTR altyapısı üzerinden kesinleşmiş olarak onaylanmasının ardından gerçekleştirilir.</li>
-                <li>Ürün, sipariş sahibi dışında üçüncü kişilere veya telefon/mesaj talimatıyla teslim edilmez.</li>
-              </ul>
-
-              <h3 style="font-size:18px; font-weight:700; color:var(--color-ink); margin:24px 0 14px;">
-                ⚖️ Yasal Cayma, İade ve Değişim Koşulları (04)
-              </h3>
-              <p style="margin-bottom:12px;">
-                6502 sayılı Tüketicinin Korunması Hakkında Kanun ve Mesafeli Sözleşmeler Yönetmeliği uyarınca kanuni haklarınız tam güvence altındadır:
-              </p>
-              <ul style="padding-left:20px; margin-bottom:20px; display:flex; flex-direction:column; gap:8px;">
-                <li>Kişiselleştirme (gravür, özel kordon kısaltma) yapılmamış orijinal saat ürünlerinde yasal süreler dahilinde cayma hakkı kullanılabilir.</li>
-                <li>Fiyatı uluslararası finansal piyasalardaki anlık dalgalanmalara bağlı olan masif altın ve ziynet ürünlerinde mevzuat gereği cayma hakkı istisnası geçerlidir.</li>
-                <li>Ayıplı mala ilişkin tüketici kanunu hakları saklıdır.</li>
+                <li>Teslimat sırasında alıcı kimlik fotokopisi ve ıslak imzalı teslim tutanağı zorunludur.</li>
+                <li>Üçüncü şahıslara ve vekaletsiz teslimat yapılmamaktadır.</li>
+                <li>Tüm ürünler mühürlü ambalajında ve resmi faturasıyla teslim edilir.</li>
               </ul>
             </div>
           </div>
 
         </div>
-
-        <!-- 4. İlgili Modeller & Benzer Marka Ürünleri (Related Products Slider) -->
-        ${relatedProducts.length > 0 ? `
-          <div style="margin-top:70px;">
-            <div class="section-header-flex" style="margin-bottom:24px;">
-              <div>
-                <span style="font-size:11px; letter-spacing:2px; text-transform:uppercase; font-weight:700; color:var(--color-teal); display:block; margin-bottom:4px;">İlginizi Çekebilir</span>
-                <h3 style="font-family:var(--font-sans); font-size:24px; font-weight:700; color:var(--color-ink);">Benzer ${p.brand} & Lüks Modeller</h3>
-              </div>
-              <a href="#" onclick="App.filterWatchesByBrand('${p.brand}', null)" style="font-size:13.5px; font-weight:700; color:var(--color-teal); text-decoration:none;">Tüm ${p.brand} Modellerini Gör →</a>
-            </div>
-            <div class="products-grid-4">
-              ${relatedProducts.map(rel => this.renderProductCard(rel)).join('')}
-            </div>
-          </div>
-        ` : ''}
 
       </div>
     `;
@@ -967,7 +1111,6 @@ const App = {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }, 30);
   },
-
   changePdpMainImage(src, thumbEl) {
     const target = document.getElementById('pdpMainImageTarget');
     if (target) target.src = src;
