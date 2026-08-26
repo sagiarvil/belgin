@@ -202,11 +202,11 @@ async function runSmartDiffSync() {
   }
 
   // ==========================================================
-  // 3. LÜKS SAAT SENKRONİZASYONU (+%40 MARJ)
+  // 3. LÜKS SAAT SENKRONİZASYONU (+%40 MARJ — 9 MARKA)
   // ==========================================================
-  console.log('\n[SMART-DIFF] ⌚ 2. Lüks Saat Canlı Verisi Taranıyor...');
+  console.log('\n[SMART-DIFF] ⌚ 2. Lüks Saat Canlı Verisi Taranıyor (Saat&Saat 9 Marka)...');
   let scrapedWatchesCount = 0;
-  for (const brandConfig of BRAND_CONFIGS.slice(0, 4)) { // High volume key brands
+  for (const brandConfig of BRAND_CONFIGS) {
     try {
       const hits = await fetchSaatvesaatBrand(brandConfig);
       scrapedWatchesCount += hits.length;
@@ -214,7 +214,7 @@ async function runSmartDiffSync() {
         const ref = hit.sku || hit.model_kodu;
         if (!ref) continue;
         const watch = PRODUCTS.find(w => !w.isPreOwned && (w.ref === ref || w.reference === ref));
-        if (watch && hit.price_special > 0 || hit.price > 0) {
+        if (watch && (hit.price_special > 0 || hit.price > 0)) {
           const rawBasePrice = Math.round(hit.price_special || hit.price);
           const targetPrice = Math.round(rawBasePrice * WATCH_MARGIN);
           const targetInStock = (hit.is_in_stock === 1 || hit.is_in_stock === true);
@@ -233,7 +233,7 @@ async function runSmartDiffSync() {
       }
     } catch (e) {}
   }
-  console.log(`  ✓ ${scrapedWatchesCount} canlı saat ürünü tarandı.`);
+  console.log(`  ✓ ${scrapedWatchesCount} canlı saat ürünü 9 markada tarandı.`);
 
   // ==========================================================
   // 4. SMART DIFFING KARAR KAPISI
@@ -259,23 +259,21 @@ async function runSmartDiffSync() {
   // 5. Dosyaları Atomik Olarak Güncelle
   console.log('\n📝 [SMART-DIFF] js/data.js ve ödeme kataloğu atomik olarak güncelleniyor...');
 
-  const headerContent = fs.existsSync(path.join(__dirname, '../scratch/clean_header.js'))
-    ? fs.readFileSync(path.join(__dirname, '../scratch/clean_header.js'), 'utf8')
-    : 'const WATCH_BRANDS = [];\nconst JEWELRY_BRANDS = [];\n';
-  
-  const footerContent = fs.existsSync(path.join(__dirname, '../scratch/clean_footer.js'))
-    ? fs.readFileSync(path.join(__dirname, '../scratch/clean_footer.js'), 'utf8')
-    : 'const PRE_OWNED_GOLD = PRODUCTS.filter(p => p.isPreOwned && p.isGold);\nif (typeof module !== "undefined" && module.exports) { module.exports = { PRODUCTS, WATCH_BRANDS, JEWELRY_BRANDS, WATCHES, JEWELLERY, PRE_OWNED_ITEMS, PRE_OWNED_GOLD, ALL_PRODUCTS: PRODUCTS }; }';
+  const currentDataRaw = fs.readFileSync(dataJsPath, 'utf8');
+  const productsMatch = currentDataRaw.match(/const PRODUCTS = \[[\s\S]*?\n\];/);
+  if (!productsMatch) {
+    throw new Error('js/data.js içinde const PRODUCTS dizisi bulunamadı.');
+  }
 
-  const exportHeader = headerContent;
-  const exportBody = `const PRODUCTS = ${JSON.stringify(PRODUCTS, null, 2)};\n\n`;
-  const exportMiddle = `const WATCHES = PRODUCTS.filter(p => (p.category === 'saat' || p.category === 'watch') && !p.isPreOwned);\nconst JEWELLERY = PRODUCTS.filter(p => (p.category === 'jewelry' || p.category === 'jewellery') && !p.isPreOwned);\nconst PRE_OWNED_ITEMS = PRODUCTS.filter(p => p.isPreOwned === true);\n`;
-  const exportFooter = footerContent;
+  const headerPart = currentDataRaw.substring(0, productsMatch.index);
+  const footerPart = currentDataRaw.substring(productsMatch.index + productsMatch[0].length);
 
-  fs.writeFileSync(dataJsPath, exportHeader + exportBody + exportMiddle + exportFooter, 'utf8');
+  const updatedProductsBlock = `const PRODUCTS = ${JSON.stringify(PRODUCTS, null, 2)};`;
+  fs.writeFileSync(dataJsPath, headerPart + updatedProductsBlock + footerPart, 'utf8');
 
-  // Ödeme ve SEO varlıklarını güncelle
-  execSync('node scripts/generate-static-seo-pages.js', { stdio: 'inherit' });
+  // İZKO ve Fiyat Güvenlik Testlerini Çalıştır
+  execSync('node scripts/izko-safety-crosscheck.js', { stdio: 'inherit' });
+  execSync('node scripts/price-safety-guard.js', { stdio: 'inherit' });
   execSync('node scripts/generate-payment-catalog.js', { stdio: 'inherit' });
   execSync('node scripts/generate-seo-assets.js', { stdio: 'inherit' });
   execSync('node scripts/verify-product-catalog.js', { stdio: 'inherit' });

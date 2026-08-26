@@ -1,21 +1,21 @@
 // ==========================================================
 // BELGİN KUYUMCULUK — MASTER ÜRÜN VE KOLEKSİYON VERİTABANI
 // Sürüm: 2026-08-26.live-sync (Saat&Saat 9 Marka Senkronizasyonu)
-// Toplam Yayın Ürünü: 1636 (Fiyat >= 12.000 TL)
+// Toplam Yayın Ürünü: 1714 (Fiyat >= 12.000 TL)
 // ==========================================================
 
 const WATCH_BRANDS = [
   {
     "id": "versace",
     "name": "Versace",
-    "count": 243,
+    "count": 241,
     "origin": "İsviçre / İtalya",
     "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/8/281835ca0f67c8b08a47e1aed9e789fbd61464adcbcb5f22c19d368c8045cb56.jpeg"
   },
   {
     "id": "michael-kors",
     "name": "Michael Kors",
-    "count": 187,
+    "count": 186,
     "origin": "ABD / İsviçre",
     "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/f/4/f49f87b275f77cc12b158bf9b8745b26f54e5e36e6a548ac1ffaf505f66ec905.jpeg"
   },
@@ -29,14 +29,14 @@ const WATCH_BRANDS = [
   {
     "id": "guess",
     "name": "Guess",
-    "count": 294,
+    "count": 292,
     "origin": "ABD",
     "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/c/2/c2bc551e7a0d64b119e30bd0bbbe8790635f5d0bb48bcef769df77ecbe199aec.jpeg"
   },
   {
     "id": "fossil",
     "name": "Fossil",
-    "count": 166,
+    "count": 165,
     "origin": "ABD",
     "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/a/5/a5d3504e5681aa6b392dd5065543693fe95527ba442c29ea0fad8d05f8653223.jpeg"
   },
@@ -64,7 +64,7 @@ const WATCH_BRANDS = [
   {
     "id": "welder",
     "name": "Welder",
-    "count": 201,
+    "count": 200,
     "origin": "İtalya",
     "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/8/0/80105b29a495e70d915a3345f300de855c452822394f2c96ac5057239cc0d731.jpeg"
   }
@@ -103,7 +103,7 @@ const JEWELRY_BRANDS = [
   }
 ];
 
-// MASTER ÜRÜN LİSTESİ (1636 Ürün: 1625 Sıfır Saat + 11 İkinci El & Mücevherat)
+// MASTER ÜRÜN LİSTESİ (1714 Ürün: 1618 Sıfır Saat + 96 İkinci El & Mücevherat)
 const PRODUCTS = [
   {
     "id": 1000,
@@ -291,7 +291,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVE6F00523",
     "reference": "VRSCVE6F00523",
-    "price": 90720,
+    "price": 70762,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -516,7 +516,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVE1C00722",
     "reference": "VRSCVE1C00722",
-    "price": 56700,
+    "price": 44226,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -558,7 +558,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVE2E00821",
     "reference": "VRSCVE2E00821",
-    "price": 57540,
+    "price": 44881,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -575,7 +575,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 68,
+    "stock": 66,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -602,7 +602,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVE2E00721",
     "reference": "VRSCVE2E00721",
-    "price": 57540,
+    "price": 44881,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -619,7 +619,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 47,
+    "stock": 45,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -932,7 +932,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 218,
+    "stock": 217,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -976,7 +976,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 184,
+    "stock": 185,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -1021,7 +1021,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 140,
+    "stock": 138,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -1371,7 +1371,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVEV901323",
     "reference": "VRSCVEV901323",
-    "price": 49560,
+    "price": 38657,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -1388,7 +1388,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 113,
+    "stock": 112,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -1523,7 +1523,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 22,
+    "stock": 21,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -1569,7 +1569,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 159,
+    "stock": 158,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -1660,7 +1660,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 295,
+    "stock": 293,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -1751,7 +1751,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 56,
+    "stock": 55,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -1959,7 +1959,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVEOCA0324",
     "reference": "VRSCVEOCA0324",
-    "price": 52920,
+    "price": 41278,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -1976,7 +1976,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 96,
+    "stock": 95,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -2022,7 +2022,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 101,
+    "stock": 98,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -2154,7 +2154,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 42,
+    "stock": 41,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -2198,7 +2198,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 85,
+    "stock": 83,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -2609,7 +2609,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 4,
+    "stock": 3,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -2653,7 +2653,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 57,
+    "stock": 56,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -2722,50 +2722,6 @@ const PRODUCTS = [
   },
   {
     "id": 1058,
-    "name": "VRSCVE0W00525 Erkek Kol Saati",
-    "brand": "Versace",
-    "ref": "VRSCVE0W00525",
-    "reference": "VRSCVE0W00525",
-    "price": 136500,
-    "category": "saat",
-    "subCategory": "Erkek Saat",
-    "metal": "Geri Dönüştürülmüş Çelik",
-    "origin": "İsviçre / İtalya",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/7/9742871b2186b10246657e82653fd9d147fa8a3955b6e8bc407d3db241d2b962.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/d/a/da4b1b86f4aadb40c456549f8c75f878f0ed2f35c525d2a8bf1b704f0e968e3e.jpeg",
-    "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/7/9742871b2186b10246657e82653fd9d147fa8a3955b6e8bc407d3db241d2b962.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/d/a/da4b1b86f4aadb40c456549f8c75f878f0ed2f35c525d2a8bf1b704f0e968e3e.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/0/a/0a5dd0b74f8fb6411341a13dbf54383f14653a3245f7aea628b450319661f1ea.jpeg"
-    ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/versace-erkek-kol-saati-p-vrscve0w00525",
-    "statusBadge": "Distribütör Garantili",
-    "conditionBadge": "Sıfır",
-    "isPreOwned": false,
-    "isGold": false,
-    "stock": 24,
-    "inStock": true,
-    "isNew": true,
-    "isHighValue": true,
-    "description": "Versace VRSCVE0W00525 Erkek Kol Saati, 44 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Geri Dönüştürülmüş Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Versace VRSCVE0W00525 Erkek Kol Saati, 44 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Geri Dönüştürülmüş Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "specs": {
-      "Kasa Çapı": "44 mm",
-      "Mekanizma": "Quartz",
-      "Cam Tipi": "Safir",
-      "Su Geçirmezlik": "5 ATM",
-      "Kordon / Kayış": "Geri Dönüştürülmüş Çelik",
-      "Kadran Rengi": "Siyah",
-      "Kasa Materyali": "Geri Dönüştürülmüş Çelik",
-      "Kasa Rengi": "Altın Rengi",
-      "Cinsiyet": "Erkek",
-      "Menşei": "İsviçre / İtalya",
-      "Garanti": "2 Yıl Distribütör Garantili",
-      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
-    }
-  },
-  {
-    "id": 1059,
     "name": "VRSCVE2C01225 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE2C01225",
@@ -2809,7 +2765,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1060,
+    "id": 1059,
     "name": "VRSCVEKJA0525 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEKJA0525",
@@ -2853,7 +2809,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1061,
+    "id": 1060,
     "name": "VRSCVEGFA0725 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEGFA0725",
@@ -2897,7 +2853,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1062,
+    "id": 1061,
     "name": "VRSCVEKMA0325 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEKMA0325",
@@ -2943,7 +2899,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1063,
+    "id": 1062,
     "name": "VRSCVEV601923 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEV601923",
@@ -2985,7 +2941,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1064,
+    "id": 1063,
     "name": "VRSCVEVK01625 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEVK01625",
@@ -3029,7 +2985,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1065,
+    "id": 1064,
     "name": "VRSCVE5L00326 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5L00326",
@@ -3073,7 +3029,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1066,
+    "id": 1065,
     "name": "VRSCVE5R00226 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5R00226",
@@ -3117,7 +3073,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1067,
+    "id": 1066,
     "name": "VRSCVE5L00426 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5L00426",
@@ -3161,7 +3117,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1068,
+    "id": 1067,
     "name": "VRSCVE5K00826 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5K00826",
@@ -3205,7 +3161,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1069,
+    "id": 1068,
     "name": "VRSCVE5K00726 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5K00726",
@@ -3249,7 +3205,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1070,
+    "id": 1069,
     "name": "VRSCVE5N00526 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5N00526",
@@ -3293,7 +3249,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1071,
+    "id": 1070,
     "name": "VRSCVE5N00326 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5N00326",
@@ -3337,7 +3293,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1072,
+    "id": 1071,
     "name": "VRSCVE5K01026 Pırlantalı Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5K01026",
@@ -3381,7 +3337,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1073,
+    "id": 1072,
     "name": "VRSCVEKWA0326 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEKWA0326",
@@ -3425,7 +3381,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1074,
+    "id": 1073,
     "name": "VRSCVE7Y00326 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE7Y00326",
@@ -3469,7 +3425,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1075,
+    "id": 1074,
     "name": "VRSCVE7Y00226 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE7Y00226",
@@ -3513,7 +3469,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1076,
+    "id": 1075,
     "name": "VRSCVEYZ00526 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEYZ00526",
@@ -3536,7 +3492,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 33,
+    "stock": 32,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -3558,7 +3514,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1077,
+    "id": 1076,
     "name": "VRSCVEYZ00426 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEYZ00426",
@@ -3581,7 +3537,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 61,
+    "stock": 57,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -3603,7 +3559,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1078,
+    "id": 1077,
     "name": "VRSCVEYX00126 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEYX00126",
@@ -3626,7 +3582,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 35,
+    "stock": 34,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -3648,7 +3604,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1079,
+    "id": 1078,
     "name": "VRSCVEYR00326 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEYR00326",
@@ -3693,7 +3649,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1080,
+    "id": 1079,
     "name": "VRSCVEY800326 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEY800326",
@@ -3716,7 +3672,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 61,
+    "stock": 60,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -3738,7 +3694,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1081,
+    "id": 1080,
     "name": "VRSCVEKSA0526 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEKSA0526",
@@ -3782,7 +3738,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1082,
+    "id": 1081,
     "name": "VRSCVE6K00323 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE6K00323",
@@ -3827,7 +3783,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1083,
+    "id": 1082,
     "name": "VRSCVE6G00423 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE6G00423",
@@ -3872,7 +3828,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1084,
+    "id": 1083,
     "name": "VRSCVE6G00323 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE6G00323",
@@ -3917,7 +3873,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1085,
+    "id": 1084,
     "name": "VRSCVE6I00423 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE6I00423",
@@ -3962,7 +3918,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1086,
+    "id": 1085,
     "name": "VRSCVE6C00323 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE6C00323",
@@ -4007,7 +3963,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1087,
+    "id": 1086,
     "name": "VRSCVE3K00522 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE3K00522",
@@ -4052,7 +4008,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1088,
+    "id": 1087,
     "name": "VRSCVE3K00422 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE3K00422",
@@ -4076,7 +4032,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 162,
+    "stock": 161,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -4098,7 +4054,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1089,
+    "id": 1088,
     "name": "VRSCVE3K00322 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE3K00322",
@@ -4121,7 +4077,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 23,
+    "stock": 22,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -4143,7 +4099,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1090,
+    "id": 1089,
     "name": "VRSCVE3K00222 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE3K00222",
@@ -4188,7 +4144,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1091,
+    "id": 1090,
     "name": "VRSCVE3L00422 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE3L00422",
@@ -4210,7 +4166,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 93,
+    "stock": 95,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -4232,7 +4188,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1092,
+    "id": 1091,
     "name": "VRSCVE2E00421 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE2E00421",
@@ -4254,7 +4210,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 121,
+    "stock": 118,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -4276,7 +4232,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1093,
+    "id": 1092,
     "name": "VRSCVE2S00622 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE2S00622",
@@ -4321,7 +4277,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1094,
+    "id": 1093,
     "name": "VRSCVEZ900521 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEZ900521",
@@ -4365,7 +4321,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1095,
+    "id": 1094,
     "name": "VRSCVEZ600321 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEZ600321",
@@ -4409,7 +4365,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1096,
+    "id": 1095,
     "name": "VRSCVEVK01221 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEVK01221",
@@ -4453,7 +4409,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1097,
+    "id": 1096,
     "name": "VRSCVEU300421 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEU300421",
@@ -4496,7 +4452,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1098,
+    "id": 1097,
     "name": "VRSCVEHU00420 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEHU00420",
@@ -4518,7 +4474,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 589,
+    "stock": 583,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -4540,7 +4496,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1099,
+    "id": 1098,
     "name": "VRSCVEVK00620 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEVK00620",
@@ -4562,7 +4518,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 374,
+    "stock": 366,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -4584,7 +4540,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1100,
+    "id": 1099,
     "name": "VRSCVEVH00720 Kadın Kol Saati ",
     "brand": "Versace",
     "ref": "VRSCVEVH00720",
@@ -4606,7 +4562,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 131,
+    "stock": 130,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -4628,7 +4584,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1101,
+    "id": 1100,
     "name": "VRSCVEVI00320 Kol Saati ",
     "brand": "Versace",
     "ref": "VRSCVEVI00320",
@@ -4672,7 +4628,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1102,
+    "id": 1101,
     "name": "VRSCVEV600619 Erkek Kol Saati ",
     "brand": "Versace",
     "ref": "VRSCVEV600619",
@@ -4694,7 +4650,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 69,
+    "stock": 67,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -4716,7 +4672,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1103,
+    "id": 1102,
     "name": "VRSCV12050016 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCV12050016",
@@ -4760,7 +4716,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1104,
+    "id": 1103,
     "name": "VRSCV11040015 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCV11040015",
@@ -4782,7 +4738,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 3,
+    "stock": 2,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -4804,53 +4760,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1105,
-    "name": "VRSCVE7B00623 Kadın Kol Saati",
-    "brand": "Versace",
-    "ref": "VRSCVE7B00623",
-    "reference": "VRSCVE7B00623",
-    "price": 144200,
-    "category": "saat",
-    "subCategory": "Kadın Saat",
-    "metal": "Çelik",
-    "origin": "İsviçre / İtalya",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/a/ba00ddbb22fbbb7839d0fd5988d6d1ee574c742e40c42cdb4fcbe30ff1c169ad.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/b/9ba54c4f390165fac685a36d3d15e333b843bb4c4b7a3f5dae78186049f428a2.jpeg",
-    "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/a/ba00ddbb22fbbb7839d0fd5988d6d1ee574c742e40c42cdb4fcbe30ff1c169ad.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/b/9ba54c4f390165fac685a36d3d15e333b843bb4c4b7a3f5dae78186049f428a2.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/f/a/fab594a8e3097983180cf94383bdc4d64e0e224626074936c87724229b1df13d.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/d/ed395bb2b597daabd87aa9721a96def34847a95682b41b26196fc5616e4e1a2a.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/b/eb209a67cceb54a6716989c3dc331ff5c66becde9fbf637f41280378bb27b8f7.jpeg"
-    ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/versace-kadin-kol-saati-p-vrscve7b00623",
-    "statusBadge": "Distribütör Garantili",
-    "conditionBadge": "Sıfır",
-    "isPreOwned": false,
-    "isGold": false,
-    "stock": 1,
-    "inStock": true,
-    "isNew": true,
-    "isHighValue": true,
-    "description": "Versace VRSCVE7B00623 Kadın Kol Saati, 38 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Versace VRSCVE7B00623 Kadın Kol Saati, 38 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "specs": {
-      "Kasa Çapı": "38 mm",
-      "Mekanizma": "Quartz",
-      "Cam Tipi": "Safir",
-      "Su Geçirmezlik": "5 ATM",
-      "Kordon / Kayış": "Çelik",
-      "Kadran Rengi": "Siyah",
-      "Kasa Materyali": "Çelik",
-      "Kasa Rengi": "Altın Rengi",
-      "Cinsiyet": "Kadın",
-      "Menşei": "İsviçre / İtalya",
-      "Garanti": "2 Yıl Distribütör Garantili",
-      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
-    }
-  },
-  {
-    "id": 1106,
+    "id": 1104,
     "name": "VRSCVE6G00723 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE6G00723",
@@ -4897,7 +4807,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1107,
+    "id": 1105,
     "name": "VRSCVE6G00823 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE6G00823",
@@ -4943,7 +4853,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1108,
+    "id": 1106,
     "name": "VRSCVE7F00623 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE7F00623",
@@ -4989,7 +4899,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1109,
+    "id": 1107,
     "name": "VRSCVE7H00423 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE7H00423",
@@ -5035,7 +4945,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1110,
+    "id": 1108,
     "name": "VRSCVE3M01123 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE3M01123",
@@ -5081,7 +4991,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1111,
+    "id": 1109,
     "name": "VRSCVEV601623 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEV601623",
@@ -5125,7 +5035,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1112,
+    "id": 1110,
     "name": "VRSCVESO01022 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVESO01022",
@@ -5169,7 +5079,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1113,
+    "id": 1111,
     "name": "VRSCVE8I00724 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE8I00724",
@@ -5214,43 +5124,45 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1114,
-    "name": "VRSCVEUCA0624 Kadın Kol Saati",
+    "id": 1112,
+    "name": "VRSCVE8B00324 Kadın Kol Saati",
     "brand": "Versace",
-    "ref": "VRSCVEUCA0624",
-    "reference": "VRSCVEUCA0624",
-    "price": 44226,
+    "ref": "VRSCVE8B00324",
+    "reference": "VRSCVE8B00324",
+    "price": 110600,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
     "origin": "İsviçre / İtalya",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/c/4/c45b9be38cc484f794d60e636fbc824b1112dab981fed4b4465fa184b9e0f207.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/1/a/1ac5491067dda0df84963c2772543ccddf64f02db3d2e338958d31edda5e5300.jpeg",
+    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/8/7/87fe4601a55f6e3bc288dcb1e862204fb7b4395392fefe754c16c1774c1dd4dd.jpeg",
+    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/d/7/d7eb71c68b88d36ff2d015733aef77393e1d4591d6860fee80f801cf9e7d9a1a.jpeg",
     "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/c/4/c45b9be38cc484f794d60e636fbc824b1112dab981fed4b4465fa184b9e0f207.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/1/a/1ac5491067dda0df84963c2772543ccddf64f02db3d2e338958d31edda5e5300.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/1/6/16e3eedd57b812e6c91f9bdb625ccb2db495c8e6b9ab87fd7ca2eef2ca1ee849.jpeg"
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/8/7/87fe4601a55f6e3bc288dcb1e862204fb7b4395392fefe754c16c1774c1dd4dd.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/d/7/d7eb71c68b88d36ff2d015733aef77393e1d4591d6860fee80f801cf9e7d9a1a.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/5/b515c7734eb671ecf9631760fcd664a3bd403b9ecdd06acecd61bbe63f285a95.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/b/ebc196cac7c89db17300d2eae24b839c8f4e6c12b06bd6b5a31ad6de453aefee.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/2/72ef311c48d32ecf9ec5dfb32aa62eacb95b0f9c7fb7a7964b4156eb209b17c8.jpeg"
     ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/versace-kadin-kol-saati-p-vrscveuca0624",
+    "sourceUrl": "https://www.saatvesaat.com.tr/versace-kadin-kol-saati-p-vrscve8b00324",
     "statusBadge": "Distribütör Garantili",
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 10,
+    "stock": 46,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
-    "description": "Versace VRSCVEUCA0624 Kadın Kol Saati, 30 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Rose Gold kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Versace VRSCVEUCA0624 Kadın Kol Saati, 30 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Rose Gold kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "description": "Versace VRSCVE8B00324 Kadın Kol Saati, 35 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "desc": "Versace VRSCVE8B00324 Kadın Kol Saati, 35 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
     "specs": {
-      "Kasa Çapı": "30 mm",
+      "Kasa Çapı": "35 mm",
       "Mekanizma": "Quartz",
       "Cam Tipi": "Safir",
-      "Su Geçirmezlik": "3 ATM",
+      "Su Geçirmezlik": "5 ATM",
       "Kordon / Kayış": "Çelik",
-      "Kadran Rengi": "Kahverengi",
+      "Kadran Rengi": "Altın Rengi",
       "Kasa Materyali": "Çelik",
-      "Kasa Rengi": "Rose Gold",
+      "Kasa Rengi": "Metalik Gri",
       "Cinsiyet": "Kadın",
       "Menşei": "İsviçre / İtalya",
       "Garanti": "2 Yıl Distribütör Garantili",
@@ -5258,7 +5170,52 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1115,
+    "id": 1113,
+    "name": "VRSCVE8G00124 Erkek Kol Saati",
+    "brand": "Versace",
+    "ref": "VRSCVE8G00124",
+    "reference": "VRSCVE8G00124",
+    "price": 77700,
+    "category": "saat",
+    "subCategory": "Erkek Saat",
+    "metal": "Çelik",
+    "origin": "İsviçre / İtalya",
+    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/5/e/5ea0d4e93167cf160908d3ad2e01799eb5acf28abfbf54b80a096def4de4c0db.jpeg",
+    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/d/d/ddb9c231b2f8466c3a2d92c1d940c1365d31d8d94c1a513d0fe75a18c7c5ab45.jpeg",
+    "images": [
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/5/e/5ea0d4e93167cf160908d3ad2e01799eb5acf28abfbf54b80a096def4de4c0db.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/d/d/ddb9c231b2f8466c3a2d92c1d940c1365d31d8d94c1a513d0fe75a18c7c5ab45.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/6/26f2b8e99ea9006b0c1d94ca569f0e7fcec0c340d19b17121046c85cfae55713.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/6/5/65efdbaf00ed9f8f892cc3f9b93533db685b762fbfca4808d6df75bb0726388b.jpeg"
+    ],
+    "sourceUrl": "https://www.saatvesaat.com.tr/versace-erkek-kol-saati-p-vrscve8g00124",
+    "statusBadge": "Distribütör Garantili",
+    "conditionBadge": "Sıfır",
+    "isPreOwned": false,
+    "isGold": false,
+    "stock": 2,
+    "inStock": true,
+    "isNew": true,
+    "isHighValue": true,
+    "description": "Versace VRSCVE8G00124 Erkek Kol Saati, 43 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 10 ATM su geçirmezlik derecesine, Silikon kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "desc": "Versace VRSCVE8G00124 Erkek Kol Saati, 43 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 10 ATM su geçirmezlik derecesine, Silikon kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "specs": {
+      "Kasa Çapı": "43 mm",
+      "Mekanizma": "Quartz",
+      "Cam Tipi": "Safir",
+      "Su Geçirmezlik": "10 ATM",
+      "Kordon / Kayış": "Silikon",
+      "Kadran Rengi": "Lacivert",
+      "Kasa Materyali": "Çelik",
+      "Kasa Rengi": "Metalik Gri",
+      "Cinsiyet": "Erkek",
+      "Menşei": "İsviçre / İtalya",
+      "Garanti": "2 Yıl Distribütör Garantili",
+      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
+    }
+  },
+  {
+    "id": 1114,
     "name": "VRSCVEBFA0124 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEBFA0124",
@@ -5304,7 +5261,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1116,
+    "id": 1115,
     "name": "VRSCVE8J00524 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE8J00524",
@@ -5350,7 +5307,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1117,
+    "id": 1116,
     "name": "VRSCVE8J00624 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE8J00624",
@@ -5396,7 +5353,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1118,
+    "id": 1117,
     "name": "VRSCVECFA0324 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVECFA0324",
@@ -5441,7 +5398,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1119,
+    "id": 1118,
     "name": "VRSCVEZCA0724 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEZCA0724",
@@ -5485,7 +5442,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1120,
+    "id": 1119,
     "name": "VRSCVEAFA0524 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEAFA0524",
@@ -5529,7 +5486,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1121,
+    "id": 1120,
     "name": "VRSCVETCA0724 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVETCA0724",
@@ -5573,7 +5530,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1122,
+    "id": 1121,
     "name": "VRSCVEYCA0624 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEYCA0624",
@@ -5617,7 +5574,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1123,
+    "id": 1122,
     "name": "VRSCVETCA0224 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVETCA0224",
@@ -5661,7 +5618,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1124,
+    "id": 1123,
     "name": "VRSCVE5B00325 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5B00325",
@@ -5684,7 +5641,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 134,
+    "stock": 133,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -5706,7 +5663,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1125,
+    "id": 1124,
     "name": "VRSCVE0K00125 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0K00125",
@@ -5751,7 +5708,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1126,
+    "id": 1125,
     "name": "VRSCVE0G00325 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0G00325",
@@ -5796,7 +5753,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1127,
+    "id": 1126,
     "name": "VRSCVE0E00225 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0E00225",
@@ -5819,7 +5776,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 4,
+    "stock": 5,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -5841,7 +5798,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1128,
+    "id": 1127,
     "name": "VRSCVE0F00525 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0F00525",
@@ -5886,7 +5843,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1129,
+    "id": 1128,
     "name": "VRSCVE0C00325 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0C00325",
@@ -5934,7 +5891,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1130,
+    "id": 1129,
     "name": "VRSCVE9L00525 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE9L00525",
@@ -5980,7 +5937,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1131,
+    "id": 1130,
     "name": "VRSCVE0R00425 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0R00425",
@@ -6024,7 +5981,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1132,
+    "id": 1131,
     "name": "VRSCVE0E00825 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0E00825",
@@ -6047,7 +6004,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 104,
+    "stock": 101,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -6069,7 +6026,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1133,
+    "id": 1132,
     "name": "VRSCVE0S00525 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0S00525",
@@ -6113,7 +6070,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1134,
+    "id": 1133,
     "name": "VRSCVE0R00525 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0R00525",
@@ -6157,7 +6114,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1135,
+    "id": 1134,
     "name": "VRSCVE0Q00325 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0Q00325",
@@ -6201,7 +6158,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1136,
+    "id": 1135,
     "name": "VRSCVE0G00825 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0G00825",
@@ -6224,7 +6181,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 69,
+    "stock": 68,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -6246,7 +6203,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1137,
+    "id": 1136,
     "name": "VRSCVE0O00225 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0O00225",
@@ -6290,7 +6247,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1138,
+    "id": 1137,
     "name": "VRSCVE0W00325 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0W00325",
@@ -6334,7 +6291,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1139,
+    "id": 1138,
     "name": "VRSCVE0V00425 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0V00425",
@@ -6356,7 +6313,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 129,
+    "stock": 128,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -6378,7 +6335,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1140,
+    "id": 1139,
     "name": "VRSCVEHFA0625 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEHFA0625",
@@ -6422,7 +6379,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1141,
+    "id": 1140,
     "name": "VRSCVE0V00225 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0V00225",
@@ -6444,7 +6401,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 132,
+    "stock": 131,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -6466,7 +6423,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1142,
+    "id": 1141,
     "name": "VRSCVE0T00325 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0T00325",
@@ -6510,7 +6467,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1143,
+    "id": 1142,
     "name": "VRSCVE0U00625 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0U00625",
@@ -6554,7 +6511,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1144,
+    "id": 1143,
     "name": "VRSCVE0U00525 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0U00525",
@@ -6598,7 +6555,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1145,
+    "id": 1144,
     "name": "VRSCVE0L00725 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0L00725",
@@ -6642,7 +6599,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1146,
+    "id": 1145,
     "name": "VRSCVE0L00625 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0L00625",
@@ -6686,7 +6643,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1147,
+    "id": 1146,
     "name": "VRSCVE0O00425 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0O00425",
@@ -6730,7 +6687,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1148,
+    "id": 1147,
     "name": "VRSCVE2S01125 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE2S01125",
@@ -6752,7 +6709,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 90,
+    "stock": 87,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -6774,7 +6731,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1149,
+    "id": 1148,
     "name": "VRSCVE9200325 Çocuk Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE9200325",
@@ -6819,7 +6776,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1150,
+    "id": 1149,
     "name": "VRSCVE9200425 Çocuk Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE9200425",
@@ -6864,7 +6821,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1151,
+    "id": 1150,
     "name": "VRSCVEKLA0325 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEKLA0325",
@@ -6910,7 +6867,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1152,
+    "id": 1151,
     "name": "VRSCVEKIA0225 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEKIA0225",
@@ -6954,7 +6911,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1153,
+    "id": 1152,
     "name": "VRSCVEKMA0525 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEKMA0525",
@@ -7000,7 +6957,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1154,
+    "id": 1153,
     "name": "VRSCVEKMA0225 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEKMA0225",
@@ -7046,49 +7003,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1155,
-    "name": "VRSCVEV602023 Erkek Kol Saati",
-    "brand": "Versace",
-    "ref": "VRSCVEV602023",
-    "reference": "VRSCVEV602023",
-    "price": 53399,
-    "category": "saat",
-    "subCategory": "Erkek Saat",
-    "metal": "Çelik",
-    "origin": "İsviçre / İtalya",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/5/a/5a7a0e4d35cd4d2902efe32552c304101feecf0178cc4c80bbe09bc7f3755ff0.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/5/a/5a7a0e4d35cd4d2902efe32552c304101feecf0178cc4c80bbe09bc7f3755ff0.jpeg",
-    "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/5/a/5a7a0e4d35cd4d2902efe32552c304101feecf0178cc4c80bbe09bc7f3755ff0.jpeg"
-    ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/versace-erkek-kol-saati-p-vrscvev602023",
-    "statusBadge": "Distribütör Garantili",
-    "conditionBadge": "Sıfır",
-    "isPreOwned": false,
-    "isGold": false,
-    "stock": 3,
-    "inStock": true,
-    "isNew": true,
-    "isHighValue": true,
-    "description": "Versace VRSCVEV602023 Erkek Kol Saati, 44 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Versace VRSCVEV602023 Erkek Kol Saati, 44 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "specs": {
-      "Kasa Çapı": "44 mm",
-      "Mekanizma": "Quartz",
-      "Cam Tipi": "Safir",
-      "Su Geçirmezlik": "5 ATM",
-      "Kordon / Kayış": "Çelik",
-      "Kadran Rengi": "Yeşil",
-      "Kasa Materyali": "Çelik",
-      "Kasa Rengi": "Metalik Gri",
-      "Cinsiyet": "Erkek",
-      "Menşei": "İsviçre / İtalya",
-      "Garanti": "2 Yıl Distribütör Garantili",
-      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
-    }
-  },
-  {
-    "id": 1156,
+    "id": 1154,
     "name": "VRSCVEVK01725 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEVK01725",
@@ -7132,7 +7047,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1157,
+    "id": 1155,
     "name": "VRSCVE5G00326 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5G00326",
@@ -7154,7 +7069,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 207,
+    "stock": 206,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -7176,7 +7091,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1158,
+    "id": 1156,
     "name": "VRSCVE5Q00526 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5Q00526",
@@ -7220,7 +7135,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1159,
+    "id": 1157,
     "name": "VRSCVE5G00726 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5G00726",
@@ -7264,7 +7179,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1160,
+    "id": 1158,
     "name": "VRSCVE5N00426 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5N00426",
@@ -7308,7 +7223,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1161,
+    "id": 1159,
     "name": "VRSCVE5Q00426 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5Q00426",
@@ -7352,7 +7267,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1162,
+    "id": 1160,
     "name": "VRSCVE5N00126 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5N00126",
@@ -7396,7 +7311,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1163,
+    "id": 1161,
     "name": "VRSCVE5M00426 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5M00426",
@@ -7440,7 +7355,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1164,
+    "id": 1162,
     "name": "VRSCVE5H00526 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5H00526",
@@ -7484,7 +7399,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1165,
+    "id": 1163,
     "name": "VRSCVE5H00426 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5H00426",
@@ -7528,7 +7443,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1166,
+    "id": 1164,
     "name": "VRSCVE5F00526 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5F00526",
@@ -7572,7 +7487,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1167,
+    "id": 1165,
     "name": "VRSCVE5F00326 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5F00326",
@@ -7616,7 +7531,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1168,
+    "id": 1166,
     "name": "VRSCVE5Q00626 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5Q00626",
@@ -7660,7 +7575,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1169,
+    "id": 1167,
     "name": "VRSCVE5N00226 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5N00226",
@@ -7704,7 +7619,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1170,
+    "id": 1168,
     "name": "VRSCVE5M00526 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5M00526",
@@ -7748,44 +7663,134 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1171,
-    "name": "VRSCVE8CA0224 Kadın Kol Saati",
+    "id": 1169,
+    "name": "VRSCVE0R00125 Kadın Kol Saati",
     "brand": "Versace",
-    "ref": "VRSCVE8CA0224",
-    "reference": "VRSCVE8CA0224",
-    "price": 110600,
+    "ref": "VRSCVE0R00125",
+    "reference": "VRSCVE0R00125",
+    "price": 130900,
     "category": "saat",
     "subCategory": "Kadın Saat",
-    "metal": "Çelik",
+    "metal": "Geri Dönüştürülmüş Çelik",
     "origin": "İsviçre / İtalya",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/1/a/1a11acae777e766bf29f7f99cffcc78cdf026641386248735e24df639ff4a3f9.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/5/3/53ba352f6adbda5857cd657c4caf761ba85d02611a094f46bb8e038ea0b4c159.jpeg",
+    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/8/98315fa9c8f0709bbaf11c484ce4555335178adfaa12981ad3321cb1a7b9fc02.jpeg",
+    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/b/bb2da8a48815521f74b1f11a2accb30fb35652c8109953ee01972ce7ac301aad.jpeg",
     "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/1/a/1a11acae777e766bf29f7f99cffcc78cdf026641386248735e24df639ff4a3f9.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/5/3/53ba352f6adbda5857cd657c4caf761ba85d02611a094f46bb8e038ea0b4c159.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/a/e/aef4a12b48274e94163a31fbdfc6b640edefc30201e526b6e6c8326aa11764a8.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/d/8/d82c92f6018ec83e72f9b7b1896eb9e1456f3f94e2f3e510ab159680fa94b0e2.jpeg"
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/8/98315fa9c8f0709bbaf11c484ce4555335178adfaa12981ad3321cb1a7b9fc02.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/b/bb2da8a48815521f74b1f11a2accb30fb35652c8109953ee01972ce7ac301aad.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/a/f/afc981b67ba6500b47f285196d2f66e46aec01bdbe7f9203b15f68c86e059c2c.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/a/ea7626eeea2579129a1ca512220fcd8cb6519ed3f1a03c7cf48c1ba2676fdba1.jpeg"
     ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/versace-kadin-kol-saati-p-vrscve8ca0224",
+    "sourceUrl": "https://www.saatvesaat.com.tr/versace-kadin-kol-saati-p-vrscve0r00125",
     "statusBadge": "Distribütör Garantili",
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 26,
+    "stock": 18,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
-    "description": "Versace VRSCVE8CA0224 Kadın Kol Saati, 28 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi, Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Versace VRSCVE8CA0224 Kadın Kol Saati, 28 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi, Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "description": "Versace VRSCVE0R00125 Kadın Kol Saati, 35 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Deri kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "desc": "Versace VRSCVE0R00125 Kadın Kol Saati, 35 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Deri kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
     "specs": {
-      "Kasa Çapı": "28 mm",
+      "Kasa Çapı": "35 mm",
       "Mekanizma": "Quartz",
       "Cam Tipi": "Safir",
       "Su Geçirmezlik": "5 ATM",
+      "Kordon / Kayış": "Deri",
+      "Kadran Rengi": "Bordo",
+      "Kasa Materyali": "Geri Dönüştürülmüş Çelik",
+      "Kasa Rengi": "Altın Rengi",
+      "Cinsiyet": "Kadın",
+      "Menşei": "İsviçre / İtalya",
+      "Garanti": "2 Yıl Distribütör Garantili",
+      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
+    }
+  },
+  {
+    "id": 1170,
+    "name": "VRSCVEYZ00126 Kadın Kol Saati",
+    "brand": "Versace",
+    "ref": "VRSCVEYZ00126",
+    "reference": "VRSCVEYZ00126",
+    "price": 92820,
+    "category": "saat",
+    "subCategory": "Kadın Saat",
+    "metal": "Geri Dönüştürülmüş Çelik",
+    "origin": "İsviçre / İtalya",
+    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/3/a/3a62f444fec4a80db310639b76d871f2b049d58d353fa0a02b82324aabe2846c.jpeg",
+    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/9/79913b7fdfd0311d77ab016884c48502f5e949248743c2e4498631a8f57a69f7.jpeg",
+    "images": [
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/3/a/3a62f444fec4a80db310639b76d871f2b049d58d353fa0a02b82324aabe2846c.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/9/79913b7fdfd0311d77ab016884c48502f5e949248743c2e4498631a8f57a69f7.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/8/e8fda8eb74ce738b000b762128b11b2fb0802670e9f1ed9d246b455d2091ebab.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/f/b/fbf7d4d493d3d534ebab6c62b7c37e2f35fc1766f2668f772334c57ddf609398.jpeg"
+    ],
+    "sourceUrl": "https://www.saatvesaat.com.tr/versace-kadin-kol-saati-p-vrscveyz00126",
+    "statusBadge": "Distribütör Garantili",
+    "conditionBadge": "Sıfır",
+    "isPreOwned": false,
+    "isGold": false,
+    "stock": 17,
+    "inStock": true,
+    "isNew": true,
+    "isHighValue": true,
+    "description": "Versace VRSCVEYZ00126 Kadın Kol Saati, 34 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "desc": "Versace VRSCVEYZ00126 Kadın Kol Saati, 34 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "specs": {
+      "Kasa Çapı": "34 mm",
+      "Mekanizma": "Quartz",
+      "Cam Tipi": "Safir",
+      "Su Geçirmezlik": "3 ATM",
       "Kordon / Kayış": "Çelik",
       "Kadran Rengi": "Metalik Gri",
-      "Kasa Materyali": "Çelik",
-      "Kasa Rengi": "Altın Rengi, Metalik Gri",
+      "Kasa Materyali": "Geri Dönüştürülmüş Çelik",
+      "Kasa Rengi": "Metalik Gri",
+      "Cinsiyet": "Kadın",
+      "Menşei": "İsviçre / İtalya",
+      "Garanti": "2 Yıl Distribütör Garantili",
+      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
+    }
+  },
+  {
+    "id": 1171,
+    "name": "VRSCVEYX00426 Kadın Kol Saati",
+    "brand": "Versace",
+    "ref": "VRSCVEYX00426",
+    "reference": "VRSCVEYX00426",
+    "price": 122038,
+    "category": "saat",
+    "subCategory": "Kadın Saat",
+    "metal": "Geri Dönüştürülmüş Çelik",
+    "origin": "İsviçre / İtalya",
+    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/a/b/ab04b5d2cd336a4adfdf3c24eeb07c35454883e2b419cb283a6c6d4e1125e284.jpeg",
+    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/8/6/86d1980f62f1735bc25d3f723e869995dd91d0fc2f153408512833b1bd40643e.jpeg",
+    "images": [
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/a/b/ab04b5d2cd336a4adfdf3c24eeb07c35454883e2b419cb283a6c6d4e1125e284.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/8/6/86d1980f62f1735bc25d3f723e869995dd91d0fc2f153408512833b1bd40643e.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/7/b74ff59e6d97959d63031df8b084942c55507090f46921eff1d61a3b57a116bc.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/c/ecc61f80c49040a96feecc1d932b6693444717e64f68544826bc3837758c1897.jpeg"
+    ],
+    "sourceUrl": "https://www.saatvesaat.com.tr/versace-kadin-kol-saati-p-vrscveyx00426",
+    "statusBadge": "Distribütör Garantili",
+    "conditionBadge": "Sıfır",
+    "isPreOwned": false,
+    "isGold": false,
+    "stock": 47,
+    "inStock": true,
+    "isNew": true,
+    "isHighValue": true,
+    "description": "Versace VRSCVEYX00426 Kadın Kol Saati, 32 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Geri Dönüştürülmüş Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "desc": "Versace VRSCVEYX00426 Kadın Kol Saati, 32 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Geri Dönüştürülmüş Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "specs": {
+      "Kasa Çapı": "32 mm",
+      "Mekanizma": "Quartz",
+      "Cam Tipi": "Safir",
+      "Su Geçirmezlik": "3 ATM",
+      "Kordon / Kayış": "Geri Dönüştürülmüş Çelik",
+      "Kadran Rengi": "Yeşil",
+      "Kasa Materyali": "Geri Dönüştürülmüş Çelik",
+      "Kasa Rengi": "Altın Rengi",
       "Cinsiyet": "Kadın",
       "Menşei": "İsviçre / İtalya",
       "Garanti": "2 Yıl Distribütör Garantili",
@@ -7794,96 +7799,6 @@ const PRODUCTS = [
   },
   {
     "id": 1172,
-    "name": "VRSCVE8CA0124 Kadın Kol Saati",
-    "brand": "Versace",
-    "ref": "VRSCVE8CA0124",
-    "reference": "VRSCVE8CA0124",
-    "price": 105700,
-    "category": "saat",
-    "subCategory": "Kadın Saat",
-    "metal": "Çelik",
-    "origin": "İsviçre / İtalya",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/6/26d465e9f2ccb4242fb2325f832b737486ba4e9d9cd06fd95e149f032e44d202.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/1/1/11b0508425545c2028e18396de05f322c7712fa945ef7e642290a25c56e9a47d.jpeg",
-    "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/6/26d465e9f2ccb4242fb2325f832b737486ba4e9d9cd06fd95e149f032e44d202.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/1/1/11b0508425545c2028e18396de05f322c7712fa945ef7e642290a25c56e9a47d.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/a/d/ad6e1ea398c9a41cbab70111cc7b868e3185d49e195cf2801102e3f897f18273.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/c/2c799ed5b7834f4a03993716239e4d8728ba49d155e75c0af13f63bd457df9c2.jpeg"
-    ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/versace-kadin-kol-saati-p-vrscve8ca0124",
-    "statusBadge": "Distribütör Garantili",
-    "conditionBadge": "Sıfır",
-    "isPreOwned": false,
-    "isGold": false,
-    "stock": 8,
-    "inStock": true,
-    "isNew": true,
-    "isHighValue": true,
-    "description": "Versace VRSCVE8CA0124 Kadın Kol Saati, 28 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Versace VRSCVE8CA0124 Kadın Kol Saati, 28 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "specs": {
-      "Kasa Çapı": "28 mm",
-      "Mekanizma": "Quartz",
-      "Cam Tipi": "Safir",
-      "Su Geçirmezlik": "5 ATM",
-      "Kordon / Kayış": "Çelik",
-      "Kadran Rengi": "Mavi",
-      "Kasa Materyali": "Çelik",
-      "Kasa Rengi": "Metalik Gri",
-      "Cinsiyet": "Kadın",
-      "Menşei": "İsviçre / İtalya",
-      "Garanti": "2 Yıl Distribütör Garantili",
-      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
-    }
-  },
-  {
-    "id": 1173,
-    "name": "VRSCVE8CA0324 Kadın Kol Saati",
-    "brand": "Versace",
-    "ref": "VRSCVE8CA0324",
-    "reference": "VRSCVE8CA0324",
-    "price": 110600,
-    "category": "saat",
-    "subCategory": "Kadın Saat",
-    "metal": "Çelik",
-    "origin": "İsviçre / İtalya",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/1/0/1088683474b9c93902b5ef11952a10a10725774ef900632bc8c22692fdc73440.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/6/5/65cd9bd1bc5d3e61e152ee4a8ed77e438d16398744b360d4783db2bae5e23dd3.jpeg",
-    "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/1/0/1088683474b9c93902b5ef11952a10a10725774ef900632bc8c22692fdc73440.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/6/5/65cd9bd1bc5d3e61e152ee4a8ed77e438d16398744b360d4783db2bae5e23dd3.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/f/b/fb70bc7816b12413cdff51e6a6a87b4586a0623c9e81b7ca1c6fcff6810b1a4c.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/6/2/6218d4aae9f6763f9180b473e0e504815135dafecaab0dad84ac8f7275e421b5.jpeg"
-    ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/versace-kadin-kol-saati-p-vrscve8ca0324",
-    "statusBadge": "Distribütör Garantili",
-    "conditionBadge": "Sıfır",
-    "isPreOwned": false,
-    "isGold": false,
-    "stock": 9,
-    "inStock": true,
-    "isNew": true,
-    "isHighValue": true,
-    "description": "Versace VRSCVE8CA0324 Kadın Kol Saati, 28 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Versace VRSCVE8CA0324 Kadın Kol Saati, 28 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "specs": {
-      "Kasa Çapı": "28 mm",
-      "Mekanizma": "Quartz",
-      "Cam Tipi": "Safir",
-      "Su Geçirmezlik": "5 ATM",
-      "Kordon / Kayış": "Çelik",
-      "Kadran Rengi": "Yeşil",
-      "Kasa Materyali": "Çelik",
-      "Kasa Rengi": "Metalik Gri",
-      "Cinsiyet": "Kadın",
-      "Menşei": "İsviçre / İtalya",
-      "Garanti": "2 Yıl Distribütör Garantili",
-      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
-    }
-  },
-  {
-    "id": 1174,
     "name": "VRSCVE7C00323 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE7C00323",
@@ -7929,7 +7844,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1175,
+    "id": 1173,
     "name": "VRSCVE3CA0223 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE3CA0223",
@@ -7971,7 +7886,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1176,
+    "id": 1174,
     "name": "VRSCVE9C00424 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE9C00424",
@@ -8017,7 +7932,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1177,
+    "id": 1175,
     "name": "VRSCVE9C00624 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE9C00624",
@@ -8041,7 +7956,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 4,
+    "stock": 3,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -8063,7 +7978,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1178,
+    "id": 1176,
     "name": "VRSCVE9B00424 Pırlantalı Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE9B00424",
@@ -8109,7 +8024,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1179,
+    "id": 1177,
     "name": "VRSCVEOCA0424 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEOCA0424",
@@ -8131,7 +8046,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 290,
+    "stock": 286,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -8153,7 +8068,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1180,
+    "id": 1178,
     "name": "VRSCVEZI00424 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEZI00424",
@@ -8197,7 +8112,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1181,
+    "id": 1179,
     "name": "VRSCVENCA0324 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVENCA0324",
@@ -8219,7 +8134,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 3,
+    "stock": 4,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -8241,7 +8156,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1182,
+    "id": 1180,
     "name": "VRSCVE2U00924 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE2U00924",
@@ -8285,7 +8200,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1183,
+    "id": 1181,
     "name": "VRSCVEPCA0224 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEPCA0224",
@@ -8329,7 +8244,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1184,
+    "id": 1182,
     "name": "VRSCVEPCA0524 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEPCA0524",
@@ -8373,7 +8288,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1185,
+    "id": 1183,
     "name": "VRSCVE9L00224 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE9L00224",
@@ -8419,7 +8334,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1186,
+    "id": 1184,
     "name": "VRSCVE9L00324 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE9L00324",
@@ -8465,7 +8380,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1187,
+    "id": 1185,
     "name": "VRSCVEVK01424 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEVK01424",
@@ -8509,7 +8424,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1188,
+    "id": 1186,
     "name": "VRSCVE2T00724 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE2T00724",
@@ -8553,7 +8468,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1189,
+    "id": 1187,
     "name": "VRSCVE9C00524 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE9C00524",
@@ -8576,7 +8491,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 176,
+    "stock": 175,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -8598,7 +8513,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1190,
+    "id": 1188,
     "name": "VRSCVE9C00724 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE9C00724",
@@ -8644,7 +8559,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1191,
+    "id": 1189,
     "name": "VRSCVE9K00924 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE9K00924",
@@ -8690,7 +8605,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1192,
+    "id": 1190,
     "name": "VRSCVEZCA0124 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEZCA0124",
@@ -8734,7 +8649,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1193,
+    "id": 1191,
     "name": "VRSCVE9K00724 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE9K00724",
@@ -8780,7 +8695,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1194,
+    "id": 1192,
     "name": "VRSCVE8P00724 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE8P00724",
@@ -8826,7 +8741,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1195,
+    "id": 1193,
     "name": "VRSCVE9H00724 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE9H00724",
@@ -8872,7 +8787,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1196,
+    "id": 1194,
     "name": "VRSCVEBFA0324 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEBFA0324",
@@ -8918,7 +8833,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1197,
+    "id": 1195,
     "name": "VRSCVEEFA0224 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEEFA0224",
@@ -8964,7 +8879,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1198,
+    "id": 1196,
     "name": "VRSCVEEFA0324 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEEFA0324",
@@ -9010,7 +8925,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1199,
+    "id": 1197,
     "name": "VRSCVEDFA0324 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEDFA0324",
@@ -9056,7 +8971,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1200,
+    "id": 1198,
     "name": "VRSCVEZCA0324 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEZCA0324",
@@ -9100,7 +9015,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1201,
+    "id": 1199,
     "name": "VRSCVEQCA0524 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEQCA0524",
@@ -9144,7 +9059,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1202,
+    "id": 1200,
     "name": "VRSCVEAFA0724 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEAFA0724",
@@ -9188,7 +9103,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1203,
+    "id": 1201,
     "name": "VRSCVE9E00324 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE9E00324",
@@ -9234,7 +9149,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1204,
+    "id": 1202,
     "name": "VRSCVECFA0724 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVECFA0724",
@@ -9279,7 +9194,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1205,
+    "id": 1203,
     "name": "VRSCVEWCA0224 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEWCA0224",
@@ -9323,7 +9238,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1206,
+    "id": 1204,
     "name": "VRSCVEYCA0124 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEYCA0124",
@@ -9367,7 +9282,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1207,
+    "id": 1205,
     "name": "VRSCVEYCA0224 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEYCA0224",
@@ -9411,7 +9326,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1208,
+    "id": 1206,
     "name": "VRSCVEYCA0724 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEYCA0724",
@@ -9455,7 +9370,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1209,
+    "id": 1207,
     "name": "VRSCVETCA0424 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVETCA0424",
@@ -9499,7 +9414,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1210,
+    "id": 1208,
     "name": "VRSCVE0C00125 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0C00125",
@@ -9523,7 +9438,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 201,
+    "stock": 200,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -9545,7 +9460,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1211,
+    "id": 1209,
     "name": "VRSCVE0H00425 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0H00425",
@@ -9568,7 +9483,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 163,
+    "stock": 162,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -9590,7 +9505,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1212,
+    "id": 1210,
     "name": "VRSCVE0A00425 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0A00425",
@@ -9635,7 +9550,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1213,
+    "id": 1211,
     "name": "VRSCVE0B00325 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0B00325",
@@ -9680,7 +9595,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1214,
+    "id": 1212,
     "name": "VRSCVE0C00225 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0C00225",
@@ -9704,7 +9619,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 217,
+    "stock": 216,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -9726,7 +9641,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1215,
+    "id": 1213,
     "name": "VRSCVE0H00625 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0H00625",
@@ -9771,7 +9686,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1216,
+    "id": 1214,
     "name": "VRSCVE0K00325 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0K00325",
@@ -9816,7 +9731,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1217,
+    "id": 1215,
     "name": "VRSCVE0H00325 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0H00325",
@@ -9861,7 +9776,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1218,
+    "id": 1216,
     "name": "VRSCVE0G00225 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0G00225",
@@ -9906,7 +9821,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1219,
+    "id": 1217,
     "name": "VRSCVE0M00425 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0M00425",
@@ -9952,7 +9867,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1220,
+    "id": 1218,
     "name": "VRSCVE0Q00125 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0Q00125",
@@ -9974,7 +9889,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 271,
+    "stock": 270,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -9996,7 +9911,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1221,
+    "id": 1219,
     "name": "VRSCVE0S00425 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0S00425",
@@ -10040,7 +9955,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1222,
+    "id": 1220,
     "name": "VRSCVE1B01225 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE1B01225",
@@ -10084,7 +9999,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1223,
+    "id": 1221,
     "name": "VRSCVE0S00325 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0S00325",
@@ -10128,7 +10043,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1224,
+    "id": 1222,
     "name": "VRSCVE0Q00425 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0Q00425",
@@ -10172,7 +10087,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1225,
+    "id": 1223,
     "name": "VRSCVE0Q00525 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0Q00525",
@@ -10216,7 +10131,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1226,
+    "id": 1224,
     "name": "VRSCVE0T00425 Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0T00425",
@@ -10260,7 +10175,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1227,
+    "id": 1225,
     "name": "VRSCVE0G00725 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0G00725",
@@ -10305,7 +10220,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1228,
+    "id": 1226,
     "name": "VRSCVE0P00325 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE0P00325",
@@ -10349,43 +10264,130 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1229,
-    "name": "VRSCVE5G00226 Kadın Kol Saati",
+    "id": 1227,
+    "name": "VRSCVEGFA0525 Kadın Kol Saati",
     "brand": "Versace",
-    "ref": "VRSCVE5G00226",
-    "reference": "VRSCVE5G00226",
-    "price": 106400,
+    "ref": "VRSCVEGFA0525",
+    "reference": "VRSCVEGFA0525",
+    "price": 90300,
     "category": "saat",
     "subCategory": "Kadın Saat",
-    "metal": "Geri Dönüştürülmüş Çelik",
+    "metal": "Çelik",
     "origin": "İsviçre / İtalya",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/4/1/412e9e7ab7c84d3027ab7750f82d2f1983f46a1851f06f15ab55a36f36e98dab.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/f/c/fcba219215294fe6b9f9b1417251c006e7bd66a8c67e4f863ff4c61db652a35f.jpeg",
+    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/1/e1efb91346890d040785532ae2e7c45efdaa4ecc3adb445606277cc0067b18dc.jpeg",
+    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/c/2c9150537273c3eef9c9794a2780a413d1694bd4d712f539e58cd7a488cf9906.jpeg",
     "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/4/1/412e9e7ab7c84d3027ab7750f82d2f1983f46a1851f06f15ab55a36f36e98dab.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/f/c/fcba219215294fe6b9f9b1417251c006e7bd66a8c67e4f863ff4c61db652a35f.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/6/c/6c42cbe427e3d4f829f74b60d1af962833aab566fe7458cfed5adee4def2ace4.jpeg"
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/1/e1efb91346890d040785532ae2e7c45efdaa4ecc3adb445606277cc0067b18dc.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/c/2c9150537273c3eef9c9794a2780a413d1694bd4d712f539e58cd7a488cf9906.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/3/b3b190c57a40785b4370789869ae969e7ffb2bac514a8d147b98ba51edf835e5.jpeg"
     ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/versace-kadin-kol-saati-p-vrscve5g00226",
+    "sourceUrl": "https://www.saatvesaat.com.tr/versace-kadin-kol-saati-p-vrscvegfa0525",
     "statusBadge": "Distribütör Garantili",
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 155,
+    "stock": 215,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
-    "description": "Versace VRSCVE5G00226 Kadın Kol Saati, 36 x 29 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Geri Dönüştürülmüş Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Versace VRSCVE5G00226 Kadın Kol Saati, 36 x 29 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Geri Dönüştürülmüş Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "description": "Versace VRSCVEGFA0525 Kadın Kol Saati, 27 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "desc": "Versace VRSCVEGFA0525 Kadın Kol Saati, 27 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
     "specs": {
-      "Kasa Çapı": "36 x 29 mm",
+      "Kasa Çapı": "27 mm",
       "Mekanizma": "Quartz",
       "Cam Tipi": "Safir",
-      "Su Geçirmezlik": "5 ATM",
-      "Kordon / Kayış": "Geri Dönüştürülmüş Çelik",
+      "Su Geçirmezlik": "3 ATM",
+      "Kordon / Kayış": "Çelik",
       "Kadran Rengi": "Metalik Gri",
-      "Kasa Materyali": "Geri Dönüştürülmüş Çelik",
+      "Kasa Materyali": "Çelik",
       "Kasa Rengi": "Metalik Gri",
+      "Cinsiyet": "Kadın",
+      "Menşei": "İsviçre / İtalya",
+      "Garanti": "2 Yıl Distribütör Garantili",
+      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
+    }
+  },
+  {
+    "id": 1228,
+    "name": "VRSCVEGFA0625 Kadın Kol Saati",
+    "brand": "Versace",
+    "ref": "VRSCVEGFA0625",
+    "reference": "VRSCVEGFA0625",
+    "price": 90300,
+    "category": "saat",
+    "subCategory": "Kadın Saat",
+    "metal": "Çelik",
+    "origin": "İsviçre / İtalya",
+    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/0/70e50b9751c98a1fc1e0e8c226cf70ab2016e7970dc4440e9ad9724fd15676e8.jpeg",
+    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/d/4/d452d329d5e0205ba3e86f31bea0f13eb0b787906702383f437ccba000a1fde0.jpeg",
+    "images": [
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/0/70e50b9751c98a1fc1e0e8c226cf70ab2016e7970dc4440e9ad9724fd15676e8.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/d/4/d452d329d5e0205ba3e86f31bea0f13eb0b787906702383f437ccba000a1fde0.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/f/9/f93ffd726eb49081684cc008572f8d2f7641e19e549016f8fb410e862df475d5.jpeg"
+    ],
+    "sourceUrl": "https://www.saatvesaat.com.tr/versace-kadin-kol-saati-p-vrscvegfa0625",
+    "statusBadge": "Distribütör Garantili",
+    "conditionBadge": "Sıfır",
+    "isPreOwned": false,
+    "isGold": false,
+    "stock": 175,
+    "inStock": true,
+    "isNew": true,
+    "isHighValue": true,
+    "description": "Versace VRSCVEGFA0625 Kadın Kol Saati, 27 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "desc": "Versace VRSCVEGFA0625 Kadın Kol Saati, 27 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "specs": {
+      "Kasa Çapı": "27 mm",
+      "Mekanizma": "Quartz",
+      "Cam Tipi": "Safir",
+      "Su Geçirmezlik": "3 ATM",
+      "Kordon / Kayış": "Çelik",
+      "Kadran Rengi": "Yeşil",
+      "Kasa Materyali": "Çelik",
+      "Kasa Rengi": "Metalik Gri",
+      "Cinsiyet": "Kadın",
+      "Menşei": "İsviçre / İtalya",
+      "Garanti": "2 Yıl Distribütör Garantili",
+      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
+    }
+  },
+  {
+    "id": 1229,
+    "name": "VRSCVE0Q00225 Kadın Kol Saati",
+    "brand": "Versace",
+    "ref": "VRSCVE0Q00225",
+    "reference": "VRSCVE0Q00225",
+    "price": 123900,
+    "category": "saat",
+    "subCategory": "Kadın Saat",
+    "metal": "Çelik",
+    "origin": "İsviçre / İtalya",
+    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/4/2/42ce1ad950a5c5158c9033c46d98771c2bc4cdc30ccc3a6ce98ac9dc8604fbf4.jpeg",
+    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/9/29b53920b951fc115ef74d4a4af47558bf961376d7d95f123fe1c7ebd121cb5e.jpeg",
+    "images": [
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/4/2/42ce1ad950a5c5158c9033c46d98771c2bc4cdc30ccc3a6ce98ac9dc8604fbf4.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/9/29b53920b951fc115ef74d4a4af47558bf961376d7d95f123fe1c7ebd121cb5e.jpeg"
+    ],
+    "sourceUrl": "https://www.saatvesaat.com.tr/versace-kadin-kol-saati-p-vrscve0q00225",
+    "statusBadge": "Distribütör Garantili",
+    "conditionBadge": "Sıfır",
+    "isPreOwned": false,
+    "isGold": false,
+    "stock": 47,
+    "inStock": true,
+    "isNew": true,
+    "isHighValue": true,
+    "description": "Versace VRSCVE0Q00225 Kadın Kol Saati, 28 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Rose Gold kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "desc": "Versace VRSCVE0Q00225 Kadın Kol Saati, 28 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Rose Gold kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "specs": {
+      "Kasa Çapı": "28 mm",
+      "Mekanizma": "Quartz",
+      "Cam Tipi": "Safir",
+      "Su Geçirmezlik": "3 ATM",
+      "Kordon / Kayış": "Çelik",
+      "Kadran Rengi": "Rose Gold",
+      "Kasa Materyali": "Çelik",
+      "Kasa Rengi": "Rose Gold",
       "Cinsiyet": "Kadın",
       "Menşei": "İsviçre / İtalya",
       "Garanti": "2 Yıl Distribütör Garantili",
@@ -10394,94 +10396,6 @@ const PRODUCTS = [
   },
   {
     "id": 1230,
-    "name": "VRSCVE5M00326 Erkek Kol Saati",
-    "brand": "Versace",
-    "ref": "VRSCVE5M00326",
-    "reference": "VRSCVE5M00326",
-    "price": 98700,
-    "category": "saat",
-    "subCategory": "Erkek Saat",
-    "metal": "Geri Dönüştürülmüş Çelik",
-    "origin": "İsviçre / İtalya",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/0/1/0188bdeb37f94d82a967f0a2b5492d57194bd94f5119576fe0469321a4616d06.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/d/7d3e49468187f5f99fed5236c504f891aec125243a8d06e74f2829d83790d88e.jpeg",
-    "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/0/1/0188bdeb37f94d82a967f0a2b5492d57194bd94f5119576fe0469321a4616d06.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/d/7d3e49468187f5f99fed5236c504f891aec125243a8d06e74f2829d83790d88e.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/0/0/009baa0381266e710fd72b946d7d44237454a47043bf05254da2ce6671c100b3.jpeg"
-    ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/versace-erkek-kol-saati-p-vrscve5m00326",
-    "statusBadge": "Distribütör Garantili",
-    "conditionBadge": "Sıfır",
-    "isPreOwned": false,
-    "isGold": false,
-    "stock": 103,
-    "inStock": true,
-    "isNew": true,
-    "isHighValue": true,
-    "description": "Versace VRSCVE5M00326 Erkek Kol Saati, 40 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Geri Dönüştürülmüş Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Versace VRSCVE5M00326 Erkek Kol Saati, 40 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Geri Dönüştürülmüş Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "specs": {
-      "Kasa Çapı": "40 mm",
-      "Mekanizma": "Quartz",
-      "Cam Tipi": "Safir",
-      "Su Geçirmezlik": "5 ATM",
-      "Kordon / Kayış": "Geri Dönüştürülmüş Çelik",
-      "Kadran Rengi": "Metalik Gri",
-      "Kasa Materyali": "Geri Dönüştürülmüş Çelik",
-      "Kasa Rengi": "Metalik Gri",
-      "Cinsiyet": "Erkek",
-      "Menşei": "İsviçre / İtalya",
-      "Garanti": "2 Yıl Distribütör Garantili",
-      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
-    }
-  },
-  {
-    "id": 1231,
-    "name": "VRSCVE5K00926 Kadın Kol Saati",
-    "brand": "Versace",
-    "ref": "VRSCVE5K00926",
-    "reference": "VRSCVE5K00926",
-    "price": 98700,
-    "category": "saat",
-    "subCategory": "Kadın Saat",
-    "metal": "Geri Dönüştürülmüş Çelik",
-    "origin": "İsviçre / İtalya",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/a/d/add7723f8c5e432107724f07243fc84dc787cf33e825e4d0dd6aec21739b9f99.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/9/99c7fa335589d7bfae737ff39fc579ab4b482ce5a047f43bb2b45ca48b207fe9.jpeg",
-    "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/a/d/add7723f8c5e432107724f07243fc84dc787cf33e825e4d0dd6aec21739b9f99.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/9/99c7fa335589d7bfae737ff39fc579ab4b482ce5a047f43bb2b45ca48b207fe9.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/7/774e09571adee85bfcb983635411cdfa5a01caba35572865c387a906d3295a52.jpeg"
-    ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/versace-kadin-kol-saati-p-vrscve5k00926",
-    "statusBadge": "Distribütör Garantili",
-    "conditionBadge": "Sıfır",
-    "isPreOwned": false,
-    "isGold": false,
-    "stock": 249,
-    "inStock": true,
-    "isNew": true,
-    "isHighValue": true,
-    "description": "Versace VRSCVE5K00926 Kadın Kol Saati, 32 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Geri Dönüştürülmüş Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Versace VRSCVE5K00926 Kadın Kol Saati, 32 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Geri Dönüştürülmüş Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "specs": {
-      "Kasa Çapı": "32 mm",
-      "Mekanizma": "Quartz",
-      "Cam Tipi": "Safir",
-      "Su Geçirmezlik": "3 ATM",
-      "Kordon / Kayış": "Geri Dönüştürülmüş Çelik",
-      "Kadran Rengi": "Metalik Gri",
-      "Kasa Materyali": "Geri Dönüştürülmüş Çelik",
-      "Kasa Rengi": "Metalik Gri",
-      "Cinsiyet": "Kadın",
-      "Menşei": "İsviçre / İtalya",
-      "Garanti": "2 Yıl Distribütör Garantili",
-      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
-    }
-  },
-  {
-    "id": 1232,
     "name": "VRSCVE5K00426 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5K00426",
@@ -10525,7 +10439,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1233,
+    "id": 1231,
     "name": "VRSCVE5K00226 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5K00226",
@@ -10569,7 +10483,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1234,
+    "id": 1232,
     "name": "VRSCVE5Q00726 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE5Q00726",
@@ -10591,7 +10505,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 88,
+    "stock": 89,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -10613,7 +10527,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1235,
+    "id": 1233,
     "name": "VRSCVEKSA0326 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEKSA0326",
@@ -10657,7 +10571,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1236,
+    "id": 1234,
     "name": "VRSCVE7Y00126 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVE7Y00126",
@@ -10701,7 +10615,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1237,
+    "id": 1235,
     "name": "VRSCVEYX00526 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEYX00526",
@@ -10724,7 +10638,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 23,
+    "stock": 22,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -10746,7 +10660,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1238,
+    "id": 1236,
     "name": "VRSCVEY900526 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEY900526",
@@ -10769,7 +10683,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 57,
+    "stock": 56,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -10791,7 +10705,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1239,
+    "id": 1237,
     "name": "VRSCVEY900426 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEY900426",
@@ -10814,7 +10728,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 43,
+    "stock": 40,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -10836,7 +10750,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1240,
+    "id": 1238,
     "name": "VRSCVEY900126 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEY900126",
@@ -10881,7 +10795,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1241,
+    "id": 1239,
     "name": "VRSCVEY800226 Kadın Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEY800226",
@@ -10904,7 +10818,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 88,
+    "stock": 85,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -10926,7 +10840,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1242,
+    "id": 1240,
     "name": "VRSCVEKUA0226 Erkek Kol Saati",
     "brand": "Versace",
     "ref": "VRSCVEKUA0226",
@@ -10970,7 +10884,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1243,
+    "id": 1241,
     "name": "MK2923 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK2923",
@@ -11015,7 +10929,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1244,
+    "id": 1242,
     "name": "MK7300 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7300",
@@ -11060,7 +10974,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1245,
+    "id": 1243,
     "name": "MK7257 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7257",
@@ -11105,7 +11019,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1246,
+    "id": 1244,
     "name": "MK7190 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7190",
@@ -11149,7 +11063,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1247,
+    "id": 1245,
     "name": "MK7243 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7243",
@@ -11193,7 +11107,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1248,
+    "id": 1246,
     "name": "MK7241 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7241",
@@ -11237,7 +11151,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1249,
+    "id": 1247,
     "name": "MK7240 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7240",
@@ -11282,7 +11196,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1250,
+    "id": 1248,
     "name": "MK4641 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4641",
@@ -11327,7 +11241,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1251,
+    "id": 1249,
     "name": "MK7218 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7218",
@@ -11372,7 +11286,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1252,
+    "id": 1250,
     "name": "MK4597 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4597",
@@ -11417,7 +11331,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1253,
+    "id": 1251,
     "name": "MK8858 Erkek Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK8858",
@@ -11461,7 +11375,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1254,
+    "id": 1252,
     "name": "MK3900 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK3900",
@@ -11505,7 +11419,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1255,
+    "id": 1253,
     "name": "MK8344 Erkek Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK8344",
@@ -11549,7 +11463,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1256,
+    "id": 1254,
     "name": "MK3898 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK3898",
@@ -11592,7 +11506,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1257,
+    "id": 1255,
     "name": "MK6428 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK6428",
@@ -11637,7 +11551,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1258,
+    "id": 1256,
     "name": "MK3221 Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK3221",
@@ -11682,7 +11596,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1259,
+    "id": 1257,
     "name": "MK5605 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK5605",
@@ -11704,7 +11618,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 58,
+    "stock": 59,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -11726,7 +11640,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1260,
+    "id": 1258,
     "name": "MK7262 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7262",
@@ -11770,7 +11684,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1261,
+    "id": 1259,
     "name": "MK7085 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7085",
@@ -11814,7 +11728,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1262,
+    "id": 1260,
     "name": "MK4634 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4634",
@@ -11858,7 +11772,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1263,
+    "id": 1261,
     "name": "MK7263 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7263",
@@ -11902,7 +11816,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1264,
+    "id": 1262,
     "name": "MK4834 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4834",
@@ -11947,7 +11861,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1265,
+    "id": 1263,
     "name": "MK4848 Kadın Yüzük Saat",
     "brand": "Michael Kors",
     "ref": "MK4848",
@@ -11992,7 +11906,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1266,
+    "id": 1264,
     "name": "MK7499 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7499",
@@ -12037,7 +11951,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1267,
+    "id": 1265,
     "name": "MK7500 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7500",
@@ -12082,7 +11996,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1268,
+    "id": 1266,
     "name": "MK4827 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4827",
@@ -12127,7 +12041,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1269,
+    "id": 1267,
     "name": "MK4863 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4863",
@@ -12172,7 +12086,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1270,
+    "id": 1268,
     "name": "MK4865 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4865",
@@ -12195,7 +12109,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 337,
+    "stock": 334,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -12217,7 +12131,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1271,
+    "id": 1269,
     "name": "MK9193 Erkek Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK9193",
@@ -12240,7 +12154,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 3,
+    "stock": 2,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -12262,7 +12176,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1272,
+    "id": 1270,
     "name": "MK9155 Erkek Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK9155",
@@ -12307,7 +12221,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1273,
+    "id": 1271,
     "name": "MK4868 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4868",
@@ -12352,7 +12266,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1274,
+    "id": 1272,
     "name": "MK4884 Kadın Yüzük Saat",
     "brand": "Michael Kors",
     "ref": "MK4884",
@@ -12396,7 +12310,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1275,
+    "id": 1273,
     "name": "MK4880 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4880",
@@ -12441,7 +12355,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1276,
+    "id": 1274,
     "name": "MK7520 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7520",
@@ -12486,7 +12400,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1277,
+    "id": 1275,
     "name": "MK7531 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7531",
@@ -12531,7 +12445,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1278,
+    "id": 1276,
     "name": "MK9196 Erkek Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK9196",
@@ -12576,7 +12490,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1279,
+    "id": 1277,
     "name": "MK4894 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4894",
@@ -12599,7 +12513,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 117,
+    "stock": 116,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -12621,7 +12535,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1280,
+    "id": 1278,
     "name": "MK4892 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4892",
@@ -12666,7 +12580,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1281,
+    "id": 1279,
     "name": "MK4909 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4909",
@@ -12711,7 +12625,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1282,
+    "id": 1280,
     "name": "MK7540 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7540",
@@ -12756,7 +12670,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1283,
+    "id": 1281,
     "name": "MK4900 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4900",
@@ -12801,7 +12715,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1284,
+    "id": 1282,
     "name": "MK4903 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4903",
@@ -12824,7 +12738,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 357,
+    "stock": 354,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -12846,7 +12760,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1285,
+    "id": 1283,
     "name": "MK7556 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7556",
@@ -12891,7 +12805,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1286,
+    "id": 1284,
     "name": "MK9221 Erkek Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK9221",
@@ -12936,7 +12850,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1287,
+    "id": 1285,
     "name": "MK4922 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4922",
@@ -12981,7 +12895,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1288,
+    "id": 1286,
     "name": "MK4934 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4934",
@@ -13004,7 +12918,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 69,
+    "stock": 68,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -13026,7 +12940,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1289,
+    "id": 1287,
     "name": "MK4938LE Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4938LE",
@@ -13072,7 +12986,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1290,
+    "id": 1288,
     "name": "MK7558 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7558",
@@ -13117,7 +13031,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1291,
+    "id": 1289,
     "name": "MK4941 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4941",
@@ -13162,7 +13076,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1292,
+    "id": 1290,
     "name": "MKO1106 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MKO1106",
@@ -13206,7 +13120,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1293,
+    "id": 1291,
     "name": "MK4957 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4957",
@@ -13229,7 +13143,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 126,
+    "stock": 123,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -13251,7 +13165,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1294,
+    "id": 1292,
     "name": "MK7337 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7337",
@@ -13295,7 +13209,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1295,
+    "id": 1293,
     "name": "MK7302 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7302",
@@ -13340,7 +13254,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1296,
+    "id": 1294,
     "name": "MK7301 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7301",
@@ -13385,7 +13299,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1297,
+    "id": 1295,
     "name": "MK7277 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7277",
@@ -13429,7 +13343,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1298,
+    "id": 1296,
     "name": "MK7258 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7258",
@@ -13473,7 +13387,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1299,
+    "id": 1297,
     "name": "MK7235 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7235",
@@ -13518,7 +13432,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1300,
+    "id": 1298,
     "name": "MK8947 Erkek Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK8947",
@@ -13563,7 +13477,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1301,
+    "id": 1299,
     "name": "MK7226 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7226",
@@ -13608,7 +13522,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1302,
+    "id": 1300,
     "name": "MK5955 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK5955",
@@ -13628,7 +13542,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 1472,
+    "stock": 1469,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -13650,7 +13564,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1303,
+    "id": 1301,
     "name": "MK8625  Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK8625",
@@ -13693,7 +13607,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1304,
+    "id": 1302,
     "name": "MK8848 Erkek Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK8848",
@@ -13737,7 +13651,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1305,
+    "id": 1303,
     "name": "MK3979 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK3979",
@@ -13781,7 +13695,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1306,
+    "id": 1304,
     "name": "MK6717 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK6717",
@@ -13825,7 +13739,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1307,
+    "id": 1305,
     "name": "MK3969 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK3969",
@@ -13868,7 +13782,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1308,
+    "id": 1306,
     "name": "MK6475 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK6475",
@@ -13889,7 +13803,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 12,
+    "stock": 11,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -13911,7 +13825,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1309,
+    "id": 1307,
     "name": "MK6474 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK6474",
@@ -13932,7 +13846,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 290,
+    "stock": 289,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -13954,7 +13868,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1310,
+    "id": 1308,
     "name": "MK3514 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK3514",
@@ -13997,7 +13911,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1311,
+    "id": 1309,
     "name": "MK3845 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK3845",
@@ -14042,7 +13956,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1312,
+    "id": 1310,
     "name": "MK3784 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK3784",
@@ -14085,7 +13999,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1313,
+    "id": 1311,
     "name": "MK2663 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK2663",
@@ -14128,7 +14042,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1314,
+    "id": 1312,
     "name": "MK6357 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK6357",
@@ -14171,7 +14085,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1315,
+    "id": 1313,
     "name": "MK6356 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK6356",
@@ -14193,7 +14107,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 187,
+    "stock": 183,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -14215,7 +14129,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1316,
+    "id": 1314,
     "name": "MK3513 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK3513",
@@ -14258,7 +14172,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1317,
+    "id": 1315,
     "name": "MK3512 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK3512",
@@ -14280,7 +14194,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 424,
+    "stock": 423,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -14302,7 +14216,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1318,
+    "id": 1316,
     "name": "MK6174 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK6174",
@@ -14346,7 +14260,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1319,
+    "id": 1317,
     "name": "MK5896 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK5896",
@@ -14391,7 +14305,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1320,
+    "id": 1318,
     "name": "MK5354 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK5354",
@@ -14435,7 +14349,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1321,
+    "id": 1319,
     "name": "MK7364 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7364",
@@ -14479,7 +14393,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1322,
+    "id": 1320,
     "name": "MK4718 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4718",
@@ -14523,7 +14437,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1323,
+    "id": 1321,
     "name": "MK4711 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4711",
@@ -14567,7 +14481,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1324,
+    "id": 1322,
     "name": "MK4804 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4804",
@@ -14612,7 +14526,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1325,
+    "id": 1323,
     "name": "MK3632 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK3632",
@@ -14655,7 +14569,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1326,
+    "id": 1324,
     "name": "MK4739 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4739",
@@ -14699,7 +14613,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1327,
+    "id": 1325,
     "name": "MK7434 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7434",
@@ -14743,7 +14657,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1328,
+    "id": 1326,
     "name": "MK9165 Erkek Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK9165",
@@ -14788,7 +14702,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1329,
+    "id": 1327,
     "name": "MK4826 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4826",
@@ -14811,7 +14725,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 90,
+    "stock": 87,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -14833,7 +14747,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1330,
+    "id": 1328,
     "name": "MK6788 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK6788",
@@ -14877,7 +14791,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1331,
+    "id": 1329,
     "name": "MK7491 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7491",
@@ -14922,7 +14836,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1332,
+    "id": 1330,
     "name": "MK4841 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4841",
@@ -14967,7 +14881,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1333,
+    "id": 1331,
     "name": "MK7495 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7495",
@@ -15012,7 +14926,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1334,
+    "id": 1332,
     "name": "MK4732 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4732",
@@ -15056,7 +14970,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1335,
+    "id": 1333,
     "name": "MK4847 Kadın Yüzük Saat",
     "brand": "Michael Kors",
     "ref": "MK4847",
@@ -15101,7 +15015,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1336,
+    "id": 1334,
     "name": "MK4862 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4862",
@@ -15124,7 +15038,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 331,
+    "stock": 328,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -15146,7 +15060,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1337,
+    "id": 1335,
     "name": "MK4864 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4864",
@@ -15169,7 +15083,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 188,
+    "stock": 186,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -15191,7 +15105,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1338,
+    "id": 1336,
     "name": "MK4873 Kadın Yüzük Saat",
     "brand": "Michael Kors",
     "ref": "MK4873",
@@ -15236,7 +15150,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1339,
+    "id": 1337,
     "name": "MK7420 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7420",
@@ -15280,7 +15194,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1340,
+    "id": 1338,
     "name": "MK4852 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4852",
@@ -15325,7 +15239,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1341,
+    "id": 1339,
     "name": "MK4854 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4854",
@@ -15370,7 +15284,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1342,
+    "id": 1340,
     "name": "MK7506 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7506",
@@ -15415,7 +15329,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1343,
+    "id": 1341,
     "name": "MK4872 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4872",
@@ -15460,7 +15374,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1344,
+    "id": 1342,
     "name": "MK9189 Erkek Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK9189",
@@ -15505,7 +15419,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1345,
+    "id": 1343,
     "name": "MK4803 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4803",
@@ -15550,7 +15464,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1346,
+    "id": 1344,
     "name": "MK7516 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7516",
@@ -15595,7 +15509,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1347,
+    "id": 1345,
     "name": "MK4869 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4869",
@@ -15619,7 +15533,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 36,
+    "stock": 35,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -15641,7 +15555,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1348,
+    "id": 1346,
     "name": "MK7530 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7530",
@@ -15664,7 +15578,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 109,
+    "stock": 108,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -15686,7 +15600,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1349,
+    "id": 1347,
     "name": "MK7527 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7527",
@@ -15709,7 +15623,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 190,
+    "stock": 189,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -15731,7 +15645,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1350,
+    "id": 1348,
     "name": "MK4808 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4808",
@@ -15776,7 +15690,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1351,
+    "id": 1349,
     "name": "MK4878 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4878",
@@ -15799,7 +15713,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 262,
+    "stock": 261,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -15821,7 +15735,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1352,
+    "id": 1350,
     "name": "MK4879 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4879",
@@ -15844,7 +15758,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 106,
+    "stock": 105,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -15866,7 +15780,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1353,
+    "id": 1351,
     "name": "MK4882 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4882",
@@ -15911,7 +15825,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1354,
+    "id": 1352,
     "name": "MK7519LE Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7519LE",
@@ -15957,7 +15871,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1355,
+    "id": 1353,
     "name": "MK7521 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7521",
@@ -16002,7 +15916,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1356,
+    "id": 1354,
     "name": "MK7522 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7522",
@@ -16047,7 +15961,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1357,
+    "id": 1355,
     "name": "MK7526 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7526",
@@ -16092,7 +16006,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1358,
+    "id": 1356,
     "name": "MK7532 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7532",
@@ -16115,7 +16029,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 219,
+    "stock": 217,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -16137,7 +16051,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1359,
+    "id": 1357,
     "name": "MK9206 Erkek Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK9206",
@@ -16182,7 +16096,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1360,
+    "id": 1358,
     "name": "MK4895 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4895",
@@ -16227,52 +16141,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1361,
-    "name": "MK4972 Kadın Kol Saati",
-    "brand": "Michael Kors",
-    "ref": "MK4972",
-    "reference": "MK4972",
-    "price": 68180,
-    "category": "saat",
-    "subCategory": "Kadın Saat",
-    "metal": "Çelik",
-    "origin": "ABD / İsviçre",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/4/948056dbcbe408671d77fc867e1636c38553c9e3800d0fc7403ebd32d428c279.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/d/d/dda33e5a2e0aa5370923148e9ce9c754475e5ef011f676a3568ec312088e0554.jpeg",
-    "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/4/948056dbcbe408671d77fc867e1636c38553c9e3800d0fc7403ebd32d428c279.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/d/d/dda33e5a2e0aa5370923148e9ce9c754475e5ef011f676a3568ec312088e0554.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/d/1/d191a4a7ba248a23a7336e6a0d00eabff5bc6fc1080a06afae376187205d1a2e.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/6/1/6185a7c0a64c48a33d9a0fb6f8692d32e3fdb6b68e1c4261bf611a13c0d54a14.jpeg"
-    ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/michael-kors-kadin-kol-saati-p-mk4972",
-    "statusBadge": "Distribütör Garantili",
-    "conditionBadge": "Sıfır",
-    "isPreOwned": false,
-    "isGold": false,
-    "stock": 20,
-    "inStock": true,
-    "isNew": true,
-    "isHighValue": true,
-    "description": "Michael Kors MK4972 Kadın Kol Saati, 42 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Michael Kors MK4972 Kadın Kol Saati, 42 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "specs": {
-      "Kasa Çapı": "42 mm",
-      "Mekanizma": "Quartz",
-      "Cam Tipi": "Mineral",
-      "Su Geçirmezlik": "5 ATM",
-      "Kordon / Kayış": "Çelik",
-      "Kadran Rengi": "Metalik Gri",
-      "Kasa Materyali": "Çelik",
-      "Kasa Rengi": "Metalik Gri",
-      "Cinsiyet": "Kadın",
-      "Menşei": "ABD / İsviçre",
-      "Garanti": "2 Yıl Distribütör Garantili",
-      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
-    }
-  },
-  {
-    "id": 1362,
+    "id": 1359,
     "name": "MK7567 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7567",
@@ -16316,7 +16185,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1363,
+    "id": 1360,
     "name": "MK7579 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7579",
@@ -16360,7 +16229,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1364,
+    "id": 1361,
     "name": "MK7590 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7590",
@@ -16404,7 +16273,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1365,
+    "id": 1362,
     "name": "MK7593 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7593",
@@ -16426,7 +16295,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 61,
+    "stock": 59,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -16448,7 +16317,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1366,
+    "id": 1363,
     "name": "MK9247 Erkek Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK9247",
@@ -16492,7 +16361,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1367,
+    "id": 1364,
     "name": "MK7581 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7581",
@@ -16515,7 +16384,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 151,
+    "stock": 150,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -16537,7 +16406,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1368,
+    "id": 1365,
     "name": "MK7578 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7578",
@@ -16560,7 +16429,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 18,
+    "stock": 19,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -16582,7 +16451,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1369,
+    "id": 1366,
     "name": "MK7565 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7565",
@@ -16627,7 +16496,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1370,
+    "id": 1367,
     "name": "MK9252 Erkek Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK9252",
@@ -16672,7 +16541,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1371,
+    "id": 1368,
     "name": "MK7629 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7629",
@@ -16695,7 +16564,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 66,
+    "stock": 65,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -16717,7 +16586,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1372,
+    "id": 1369,
     "name": "MK7329 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7329",
@@ -16762,7 +16631,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1373,
+    "id": 1370,
     "name": "MK4710 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4710",
@@ -16806,7 +16675,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1374,
+    "id": 1371,
     "name": "MK6759 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK6759",
@@ -16850,7 +16719,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1375,
+    "id": 1372,
     "name": "MK7303 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7303",
@@ -16873,7 +16742,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 74,
+    "stock": 73,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -16895,7 +16764,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1376,
+    "id": 1373,
     "name": "MK4697 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4697",
@@ -16940,7 +16809,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1377,
+    "id": 1374,
     "name": "MK7274 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7274",
@@ -16984,7 +16853,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1378,
+    "id": 1375,
     "name": "MK7242 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7242",
@@ -17028,7 +16897,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1379,
+    "id": 1376,
     "name": "MK7230 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7230",
@@ -17073,7 +16942,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1380,
+    "id": 1377,
     "name": "MK7215 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7215",
@@ -17118,7 +16987,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1381,
+    "id": 1378,
     "name": "MK4642 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4642",
@@ -17163,7 +17032,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1382,
+    "id": 1379,
     "name": "MK7229 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7229",
@@ -17208,7 +17077,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1383,
+    "id": 1380,
     "name": "MK7217 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7217",
@@ -17231,7 +17100,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 5,
+    "stock": 4,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -17253,7 +17122,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1384,
+    "id": 1381,
     "name": "MK6959 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK6959",
@@ -17298,7 +17167,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1385,
+    "id": 1382,
     "name": "MK6934 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK6934",
@@ -17342,7 +17211,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1386,
+    "id": 1383,
     "name": "MK4802 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4802",
@@ -17365,7 +17234,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 13,
+    "stock": 12,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -17387,7 +17256,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1387,
+    "id": 1384,
     "name": "MK4811 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4811",
@@ -17432,7 +17301,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1388,
+    "id": 1385,
     "name": "MK9154 Erkek Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK9154",
@@ -17455,7 +17324,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 42,
+    "stock": 41,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -17477,7 +17346,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1389,
+    "id": 1386,
     "name": "MK4829 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4829",
@@ -17522,7 +17391,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1390,
+    "id": 1387,
     "name": "MK4801 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4801",
@@ -17567,7 +17436,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1391,
+    "id": 1388,
     "name": "MK2991 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK2991",
@@ -17611,7 +17480,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1392,
+    "id": 1389,
     "name": "MK7449 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7449",
@@ -17631,7 +17500,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 96,
+    "stock": 95,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -17653,7 +17522,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1393,
+    "id": 1390,
     "name": "MK4843 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4843",
@@ -17698,7 +17567,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1394,
+    "id": 1391,
     "name": "MK4842 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4842",
@@ -17721,7 +17590,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 344,
+    "stock": 336,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -17743,7 +17612,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1395,
+    "id": 1392,
     "name": "MK4835 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4835",
@@ -17788,7 +17657,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1396,
+    "id": 1393,
     "name": "MK4836 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4836",
@@ -17833,7 +17702,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1397,
+    "id": 1394,
     "name": "MK4840 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4840",
@@ -17878,7 +17747,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1398,
+    "id": 1395,
     "name": "MK4832 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4832",
@@ -17925,7 +17794,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1399,
+    "id": 1396,
     "name": "MK7498 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7498",
@@ -17970,7 +17839,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1400,
+    "id": 1397,
     "name": "MK7419 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7419",
@@ -18014,7 +17883,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1401,
+    "id": 1398,
     "name": "MK4870 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4870",
@@ -18059,7 +17928,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1402,
+    "id": 1399,
     "name": "MK4871 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4871",
@@ -18104,7 +17973,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1403,
+    "id": 1400,
     "name": "MK7504 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7504",
@@ -18127,7 +17996,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 34,
+    "stock": 32,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -18149,7 +18018,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1404,
+    "id": 1401,
     "name": "MK4867 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4867",
@@ -18194,7 +18063,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1405,
+    "id": 1402,
     "name": "MK7492 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7492",
@@ -18239,7 +18108,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1406,
+    "id": 1403,
     "name": "MK7528 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7528",
@@ -18284,7 +18153,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1407,
+    "id": 1404,
     "name": "MK4885 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4885",
@@ -18307,7 +18176,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 42,
+    "stock": 41,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -18329,7 +18198,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1408,
+    "id": 1405,
     "name": "MK4886 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4886",
@@ -18374,7 +18243,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1409,
+    "id": 1406,
     "name": "MK7529 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7529",
@@ -18419,7 +18288,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1410,
+    "id": 1407,
     "name": "MK4881 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4881",
@@ -18464,7 +18333,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1411,
+    "id": 1408,
     "name": "MK4883 Kadın Yüzük Saat",
     "brand": "Michael Kors",
     "ref": "MK4883",
@@ -18508,7 +18377,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1412,
+    "id": 1409,
     "name": "MK7525 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7525",
@@ -18553,7 +18422,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1413,
+    "id": 1410,
     "name": "MK9207 Erkek Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK9207",
@@ -18598,7 +18467,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1414,
+    "id": 1411,
     "name": "MK4893 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4893",
@@ -18643,7 +18512,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1415,
+    "id": 1412,
     "name": "MK4907 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4907",
@@ -18688,7 +18557,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1416,
+    "id": 1413,
     "name": "MK4996 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4996",
@@ -18710,7 +18579,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 82,
+    "stock": 78,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -18732,7 +18601,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1417,
+    "id": 1414,
     "name": "MK4997 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4997",
@@ -18754,7 +18623,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 204,
+    "stock": 201,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -18776,7 +18645,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1418,
+    "id": 1415,
     "name": "MK4998 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK4998",
@@ -18820,7 +18689,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1419,
+    "id": 1416,
     "name": "MK7566 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7566",
@@ -18864,7 +18733,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1420,
+    "id": 1417,
     "name": "MK7575 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7575",
@@ -18908,7 +18777,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1421,
+    "id": 1418,
     "name": "MK7580 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7580",
@@ -18952,7 +18821,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1422,
+    "id": 1419,
     "name": "MK7589 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7589",
@@ -18974,7 +18843,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 131,
+    "stock": 130,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -18996,7 +18865,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1423,
+    "id": 1420,
     "name": "MK7595 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7595",
@@ -19018,7 +18887,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 29,
+    "stock": 28,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -19040,7 +18909,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1424,
+    "id": 1421,
     "name": "MK9259 Erkek Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK9259",
@@ -19085,7 +18954,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1425,
+    "id": 1422,
     "name": "MK7615 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7615",
@@ -19108,7 +18977,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 327,
+    "stock": 326,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -19130,7 +18999,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1426,
+    "id": 1423,
     "name": "MK7612 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7612",
@@ -19153,7 +19022,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 149,
+    "stock": 148,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -19175,7 +19044,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1427,
+    "id": 1424,
     "name": "MK7611 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7611",
@@ -19198,7 +19067,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 87,
+    "stock": 85,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -19220,7 +19089,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1428,
+    "id": 1425,
     "name": "MK9265 Erkek Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK9265",
@@ -19265,7 +19134,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1429,
+    "id": 1426,
     "name": "MK7628 Kadın Kol Saati",
     "brand": "Michael Kors",
     "ref": "MK7628",
@@ -19288,7 +19157,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 89,
+    "stock": 87,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -19310,7 +19179,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1430,
+    "id": 1427,
     "name": "GCY92005L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCY92005L1MF",
@@ -19356,7 +19225,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1431,
+    "id": 1428,
     "name": "GCZ20004L9MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ20004L9MF",
@@ -19405,7 +19274,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1432,
+    "id": 1429,
     "name": "GCZ15003L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ15003L1MF",
@@ -19454,7 +19323,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1433,
+    "id": 1430,
     "name": "GCZ14007G9MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ14007G9MF",
@@ -19500,7 +19369,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1434,
+    "id": 1431,
     "name": "GCY24017G7MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCY24017G7MF",
@@ -19544,7 +19413,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1435,
+    "id": 1432,
     "name": "GCZ23005L9MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ23005L9MF",
@@ -19588,7 +19457,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1436,
+    "id": 1433,
     "name": "GCZ23003L2MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ23003L2MF",
@@ -19632,7 +19501,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1437,
+    "id": 1434,
     "name": "GCZ23002L9MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ23002L9MF",
@@ -19676,7 +19545,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1438,
+    "id": 1435,
     "name": "GCZ24001L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ24001L1MF",
@@ -19720,12 +19589,12 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1439,
+    "id": 1436,
     "name": "GCY59008L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCY59008L1MF",
     "reference": "GCY59008L1MF",
-    "price": 22462,
+    "price": 13477,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -19764,7 +19633,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1440,
+    "id": 1437,
     "name": "GCZ13003G9MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ13003G9MF",
@@ -19813,7 +19682,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1441,
+    "id": 1438,
     "name": "GCY83008G1MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCY83008G1MF",
@@ -19862,7 +19731,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1442,
+    "id": 1439,
     "name": "GCZ02002L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ02002L1MF",
@@ -19909,7 +19778,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1443,
+    "id": 1440,
     "name": "GCZ08001G2MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ08001G2MF",
@@ -19958,7 +19827,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1444,
+    "id": 1441,
     "name": "GCZ02001L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ02001L1MF",
@@ -19985,7 +19854,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 89,
+    "stock": 88,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -20007,7 +19876,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1445,
+    "id": 1442,
     "name": "GCZ01001L3MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ01001L3MF",
@@ -20055,7 +19924,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1446,
+    "id": 1443,
     "name": "GCY93005L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCY93005L1MF",
@@ -20082,7 +19951,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 22,
+    "stock": 21,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -20104,7 +19973,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1447,
+    "id": 1444,
     "name": "GCY83001G7MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCY83001G7MF",
@@ -20148,7 +20017,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1448,
+    "id": 1445,
     "name": "GCY65001L1MF Kadın Kol Saati ",
     "brand": "Gc",
     "ref": "GCY65001L1MF",
@@ -20192,7 +20061,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1449,
+    "id": 1446,
     "name": "GCY18020L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCY18020L1MF",
@@ -20214,7 +20083,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 151,
+    "stock": 150,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -20236,7 +20105,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1450,
+    "id": 1447,
     "name": "GCY16004L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCY16004L1MF",
@@ -20282,7 +20151,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1451,
+    "id": 1448,
     "name": "GCY27004G1MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCY27004G1MF",
@@ -20326,7 +20195,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1452,
+    "id": 1449,
     "name": "GCZ17001G9MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ17001G9MF",
@@ -20374,7 +20243,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1453,
+    "id": 1450,
     "name": "GCZ17002G7MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ17002G7MF",
@@ -20422,7 +20291,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1454,
+    "id": 1451,
     "name": "GCZ20003L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ20003L1MF",
@@ -20468,7 +20337,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1455,
+    "id": 1452,
     "name": "GCZ01013L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ01013L1MF",
@@ -20514,7 +20383,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1456,
+    "id": 1453,
     "name": "GCZ01014L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ01014L1MF",
@@ -20560,7 +20429,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1457,
+    "id": 1454,
     "name": "GCZ20008L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ20008L1MF",
@@ -20606,7 +20475,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1458,
+    "id": 1455,
     "name": "GCZ35002G9MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ35002G9MF",
@@ -20652,7 +20521,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1459,
+    "id": 1456,
     "name": "GCZ26002G9MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ26002G9MF",
@@ -20698,7 +20567,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1460,
+    "id": 1457,
     "name": "GCZ25002L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ25002L1MF",
@@ -20744,7 +20613,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1461,
+    "id": 1458,
     "name": "GCZ32004G1MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ32004G1MF",
@@ -20767,7 +20636,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 60,
+    "stock": 55,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -20789,7 +20658,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1462,
+    "id": 1459,
     "name": "GCZ21007L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ21007L1MF",
@@ -20835,7 +20704,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1463,
+    "id": 1460,
     "name": "GCZ32001G2MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ32001G2MF",
@@ -20884,7 +20753,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1464,
+    "id": 1461,
     "name": "GCZ35004G7MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ35004G7MF",
@@ -20933,7 +20802,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1465,
+    "id": 1462,
     "name": "GCZ14009G9MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ14009G9MF",
@@ -20979,7 +20848,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1466,
+    "id": 1463,
     "name": "GCZ02008L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ02008L1MF",
@@ -21006,7 +20875,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 39,
+    "stock": 37,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -21028,7 +20897,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1467,
+    "id": 1464,
     "name": "GCZ41002L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ41002L1MF",
@@ -21077,7 +20946,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1468,
+    "id": 1465,
     "name": "GCZ38003L3MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ38003L3MF",
@@ -21126,7 +20995,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1469,
+    "id": 1466,
     "name": "GCY98009L3MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCY98009L3MF",
@@ -21175,7 +21044,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1470,
+    "id": 1467,
     "name": "GCZ05009L2MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ05009L2MF",
@@ -21224,7 +21093,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1471,
+    "id": 1468,
     "name": "GCY70009G5MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCY70009G5MF",
@@ -21248,7 +21117,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 22,
+    "stock": 21,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -21270,7 +21139,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1472,
+    "id": 1469,
     "name": "GCZ50004G9MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ50004G9MF",
@@ -21316,7 +21185,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1473,
+    "id": 1470,
     "name": "GCZ02007L9MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ02007L9MF",
@@ -21365,7 +21234,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1474,
+    "id": 1471,
     "name": "GCZ46005G7MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ46005G7MF",
@@ -21389,7 +21258,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 55,
+    "stock": 54,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -21411,7 +21280,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1475,
+    "id": 1472,
     "name": "GCZ46001G2MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ46001G2MF",
@@ -21460,7 +21329,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1476,
+    "id": 1473,
     "name": "GCZ50001G7MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ50001G7MF",
@@ -21506,7 +21375,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1477,
+    "id": 1474,
     "name": "GCZ50002G7MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ50002G7MF",
@@ -21555,7 +21424,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1478,
+    "id": 1475,
     "name": "GCZ48002L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ48002L1MF",
@@ -21601,7 +21470,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1479,
+    "id": 1476,
     "name": "GCZ01021L7MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ01021L7MF",
@@ -21650,7 +21519,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1480,
+    "id": 1477,
     "name": "GCZ32003G7MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ32003G7MF",
@@ -21699,7 +21568,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1481,
+    "id": 1478,
     "name": "GCY29007L9MM Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCY29007L9MM",
@@ -21743,7 +21612,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1482,
+    "id": 1479,
     "name": "GCZ61002G9 Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ61002G9",
@@ -21789,7 +21658,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1483,
+    "id": 1480,
     "name": "GCZ60002G9 Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ60002G9",
@@ -21835,7 +21704,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1484,
+    "id": 1481,
     "name": "GCZ57002L1 Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ57002L1",
@@ -21881,7 +21750,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1485,
+    "id": 1482,
     "name": "GCZ32005G9 Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ32005G9",
@@ -21909,7 +21778,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 54,
+    "stock": 53,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -21931,7 +21800,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1486,
+    "id": 1483,
     "name": "GCZ61001G2 Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ61001G2",
@@ -21977,7 +21846,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1487,
+    "id": 1484,
     "name": "GCZ55002L7 Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ55002L7",
@@ -22023,7 +21892,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1488,
+    "id": 1485,
     "name": "GCZ07008G9MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ07008G9MF",
@@ -22070,7 +21939,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1489,
+    "id": 1486,
     "name": "GCY24018G2MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCY24018G2MF",
@@ -22092,7 +21961,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 17,
+    "stock": 16,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -22114,7 +21983,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1490,
+    "id": 1487,
     "name": "GCZ23001L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ23001L1MF",
@@ -22136,7 +22005,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 27,
+    "stock": 26,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -22158,7 +22027,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1491,
+    "id": 1488,
     "name": "GCY99013G1MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCY99013G1MF",
@@ -22207,7 +22076,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1492,
+    "id": 1489,
     "name": "GCY98001L5MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCY98001L5MF",
@@ -22255,7 +22124,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1493,
+    "id": 1490,
     "name": "GCZ01003L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ01003L1MF",
@@ -22282,7 +22151,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 120,
+    "stock": 118,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -22304,7 +22173,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1494,
+    "id": 1491,
     "name": "GCZ01006L9MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ01006L9MF",
@@ -22352,7 +22221,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1495,
+    "id": 1492,
     "name": "GCY93004L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCY93004L1MF",
@@ -22379,7 +22248,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 17,
+    "stock": 16,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -22401,7 +22270,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1496,
+    "id": 1493,
     "name": "GCY92002L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCY92002L1MF",
@@ -22444,7 +22313,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1497,
+    "id": 1494,
     "name": "GCY83003G2MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCY83003G2MF",
@@ -22488,7 +22357,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1498,
+    "id": 1495,
     "name": "GCY83002G5MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCY83002G5MF",
@@ -22532,7 +22401,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1499,
+    "id": 1496,
     "name": "GCY70001G7MF Erkek Kol Saati ",
     "brand": "Gc",
     "ref": "GCY70001G7MF",
@@ -22553,7 +22422,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 29,
+    "stock": 28,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -22575,7 +22444,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1500,
+    "id": 1497,
     "name": "GCY16020L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCY16020L1MF",
@@ -22617,7 +22486,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1501,
+    "id": 1498,
     "name": "GCY18002L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCY18002L1MF",
@@ -22662,7 +22531,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1502,
+    "id": 1499,
     "name": "GCY24002G2MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCY24002G2MF",
@@ -22706,7 +22575,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1503,
+    "id": 1500,
     "name": "GCZ17006G2MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ17006G2MF",
@@ -22754,7 +22623,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1504,
+    "id": 1501,
     "name": "GCY98008L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCY98008L1MF",
@@ -22802,7 +22671,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1505,
+    "id": 1502,
     "name": "GCZ26001G7MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ26001G7MF",
@@ -22848,7 +22717,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1506,
+    "id": 1503,
     "name": "GCZ26004G2MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ26004G2MF",
@@ -22894,7 +22763,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1507,
+    "id": 1504,
     "name": "GCZ25001L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ25001L1MF",
@@ -22940,7 +22809,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1508,
+    "id": 1505,
     "name": "GCZ25006L9MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ25006L9MF",
@@ -22985,7 +22854,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1509,
+    "id": 1506,
     "name": "GCY98005L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCY98005L1MF",
@@ -23030,7 +22899,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1510,
+    "id": 1507,
     "name": "GCZ32002G9MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ32002G9MF",
@@ -23076,7 +22945,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1511,
+    "id": 1508,
     "name": "GCZ39002G2MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ39002G2MF",
@@ -23125,7 +22994,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1512,
+    "id": 1509,
     "name": "GCZ01019L9MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ01019L9MF",
@@ -23152,7 +23021,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 222,
+    "stock": 220,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -23174,7 +23043,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1513,
+    "id": 1510,
     "name": "GCY98010L9MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCY98010L9MF",
@@ -23223,7 +23092,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1514,
+    "id": 1511,
     "name": "GCZ41001L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ41001L1MF",
@@ -23272,7 +23141,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1515,
+    "id": 1512,
     "name": "GCZ37001G7MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ37001G7MF",
@@ -23321,7 +23190,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1516,
+    "id": 1513,
     "name": "GCZ14010G1MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ14010G1MF",
@@ -23370,7 +23239,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1517,
+    "id": 1514,
     "name": "GCZ40003G7MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ40003G7MF",
@@ -23419,7 +23288,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1518,
+    "id": 1515,
     "name": "GCZ18006G7MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ18006G7MF",
@@ -23468,7 +23337,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1519,
+    "id": 1516,
     "name": "GCZ12008L2MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ12008L2MF",
@@ -23514,7 +23383,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1520,
+    "id": 1517,
     "name": "GCZ46002G9MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ46002G9MF",
@@ -23560,7 +23429,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1521,
+    "id": 1518,
     "name": "GCZ48003L6MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ48003L6MF",
@@ -23606,7 +23475,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1522,
+    "id": 1519,
     "name": "GCZ29008L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ29008L1MF",
@@ -23655,7 +23524,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1523,
+    "id": 1520,
     "name": "GCZ49002L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ49002L1MF",
@@ -23703,7 +23572,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1524,
+    "id": 1521,
     "name": "GCZ45001L9MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ45001L9MF",
@@ -23749,7 +23618,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1525,
+    "id": 1522,
     "name": "GCY08014G2MM Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCY08014G2MM",
@@ -23793,7 +23662,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1526,
+    "id": 1523,
     "name": "GCY29006L9MM Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCY29006L9MM",
@@ -23815,7 +23684,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 68,
+    "stock": 66,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -23837,7 +23706,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1527,
+    "id": 1524,
     "name": "GCZ58002L9 Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ58002L9",
@@ -23864,7 +23733,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 107,
+    "stock": 106,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -23886,7 +23755,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1528,
+    "id": 1525,
     "name": "GCZ61005G7 Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ61005G7",
@@ -23932,7 +23801,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1529,
+    "id": 1526,
     "name": "GCZ56006G9 Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ56006G9",
@@ -23978,7 +23847,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1530,
+    "id": 1527,
     "name": "GCZ56005G2 Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ56005G2",
@@ -24024,7 +23893,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1531,
+    "id": 1528,
     "name": "GCZ53001L1 Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ53001L1",
@@ -24074,7 +23943,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1532,
+    "id": 1529,
     "name": "GCZ67001G7 Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ67001G7",
@@ -24120,7 +23989,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1533,
+    "id": 1530,
     "name": "GCZ46006G2 Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ46006G2",
@@ -24166,7 +24035,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1534,
+    "id": 1531,
     "name": "GCZ62002L9 Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ62002L9",
@@ -24190,7 +24059,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 58,
+    "stock": 57,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -24212,7 +24081,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1535,
+    "id": 1532,
     "name": "GCZ44004L3 Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ44004L3",
@@ -24236,7 +24105,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 55,
+    "stock": 53,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -24258,7 +24127,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1536,
+    "id": 1533,
     "name": "GCZ18007G1 Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ18007G1",
@@ -24307,7 +24176,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1537,
+    "id": 1534,
     "name": "GCZ44005L3 Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ44005L3",
@@ -24356,7 +24225,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1538,
+    "id": 1535,
     "name": "GCZ66002G7 Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ66002G7",
@@ -24407,7 +24276,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1539,
+    "id": 1536,
     "name": "GCZ18009G2 Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ18009G2",
@@ -24455,7 +24324,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1540,
+    "id": 1537,
     "name": "GCY53010G2M Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCY53010G2M",
@@ -24499,7 +24368,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1541,
+    "id": 1538,
     "name": "GCY24022G9M Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCY24022G9M",
@@ -24521,7 +24390,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 83,
+    "stock": 82,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -24543,7 +24412,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1542,
+    "id": 1539,
     "name": "GCZ79006L6M Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ79006L6M",
@@ -24565,7 +24434,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 90,
+    "stock": 91,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -24587,7 +24456,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1543,
+    "id": 1540,
     "name": "GCY59022L9M Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCY59022L9M",
@@ -24631,7 +24500,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1544,
+    "id": 1541,
     "name": "GCY59020L7M Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCY59020L7M",
@@ -24675,7 +24544,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1545,
+    "id": 1542,
     "name": "GCY70002G2MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCY70002G2MF",
@@ -24721,7 +24590,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1546,
+    "id": 1543,
     "name": "GCY27008G2MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCY27008G2MF",
@@ -24765,7 +24634,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1547,
+    "id": 1544,
     "name": "GCY65003L2MF Kadın Kol Saati ",
     "brand": "Gc",
     "ref": "GCY65003L2MF",
@@ -24809,7 +24678,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1548,
+    "id": 1545,
     "name": "GCY16002L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCY16002L1MF",
@@ -24854,7 +24723,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1549,
+    "id": 1546,
     "name": "GCY24003G2MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCY24003G2MF",
@@ -24899,7 +24768,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1550,
+    "id": 1547,
     "name": "GCY16001L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCY16001L1MF",
@@ -24943,7 +24812,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1551,
+    "id": 1548,
     "name": "GCY27005G7MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCY27005G7MF",
@@ -24987,7 +24856,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1552,
+    "id": 1549,
     "name": "GCZ12005L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ12005L1MF",
@@ -25033,7 +24902,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1553,
+    "id": 1550,
     "name": "GCZ33002G2MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ33002G2MF",
@@ -25079,7 +24948,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1554,
+    "id": 1551,
     "name": "GCZ40002G9MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ40002G9MF",
@@ -25128,7 +24997,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1555,
+    "id": 1552,
     "name": "GCZ38002L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ38002L1MF",
@@ -25177,7 +25046,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1556,
+    "id": 1553,
     "name": "GCZ37003G3MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ37003G3MF",
@@ -25226,7 +25095,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1557,
+    "id": 1554,
     "name": "GCZ36002L6MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ36002L6MF",
@@ -25253,7 +25122,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 112,
+    "stock": 110,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -25275,7 +25144,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1558,
+    "id": 1555,
     "name": "GCZ36001L3MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ36001L3MF",
@@ -25321,7 +25190,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1559,
+    "id": 1556,
     "name": "GCZ43002L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ43002L1MF",
@@ -25369,7 +25238,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1560,
+    "id": 1557,
     "name": "GCZ41003L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ41003L1MF",
@@ -25418,7 +25287,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1561,
+    "id": 1558,
     "name": "GCZ39003G7MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ39003G7MF",
@@ -25466,7 +25335,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1562,
+    "id": 1559,
     "name": "GCZ36003L9MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ36003L9MF",
@@ -25515,7 +25384,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1563,
+    "id": 1560,
     "name": "GCZ14011G7MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ14011G7MF",
@@ -25564,7 +25433,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1564,
+    "id": 1561,
     "name": "GCY99015G7MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCY99015G7MF",
@@ -25613,7 +25482,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1565,
+    "id": 1562,
     "name": "GCZ05008L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ05008L1MF",
@@ -25659,7 +25528,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1566,
+    "id": 1563,
     "name": "GCZ43001L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ43001L1MF",
@@ -25708,7 +25577,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1567,
+    "id": 1564,
     "name": "GCZ12006L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ12006L1MF",
@@ -25754,7 +25623,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1568,
+    "id": 1565,
     "name": "GCZ05007L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ05007L1MF",
@@ -25803,7 +25672,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1569,
+    "id": 1566,
     "name": "GCZ29009L9MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ29009L9MF",
@@ -25849,7 +25718,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1570,
+    "id": 1567,
     "name": "GCZ49001L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ49001L1MF",
@@ -25895,7 +25764,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1571,
+    "id": 1568,
     "name": "GCZ44002L9MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ44002L9MF",
@@ -25921,7 +25790,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 126,
+    "stock": 122,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -25943,7 +25812,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1572,
+    "id": 1569,
     "name": "GCZ44003L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ44003L1MF",
@@ -25991,7 +25860,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1573,
+    "id": 1570,
     "name": "GCY99022G5MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCY99022G5MF",
@@ -26040,7 +25909,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1574,
+    "id": 1571,
     "name": "GCY81011G5MF Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCY81011G5MF",
@@ -26086,7 +25955,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1575,
+    "id": 1572,
     "name": "GCZ52002L9MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ52002L9MF",
@@ -26135,7 +26004,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1576,
+    "id": 1573,
     "name": "GCZ52001L1MF Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ52001L1MF",
@@ -26162,7 +26031,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 44,
+    "stock": 45,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -26184,7 +26053,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1577,
+    "id": 1574,
     "name": "GCY08016G7MM Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCY08016G7MM",
@@ -26226,7 +26095,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1578,
+    "id": 1575,
     "name": "GCY08013G9MM Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCY08013G9MM",
@@ -26270,7 +26139,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1579,
+    "id": 1576,
     "name": "GCY32005L1MM Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCY32005L1MM",
@@ -26314,7 +26183,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1580,
+    "id": 1577,
     "name": "GCY32008L9MM Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCY32008L9MM",
@@ -26358,7 +26227,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1581,
+    "id": 1578,
     "name": "GCY46009L1MM Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCY46009L1MM",
@@ -26402,7 +26271,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1582,
+    "id": 1579,
     "name": "GCZ57003L9 Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ57003L9",
@@ -26451,7 +26320,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1583,
+    "id": 1580,
     "name": "GCZ53002L6 Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ53002L6",
@@ -26500,7 +26369,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1584,
+    "id": 1581,
     "name": "GCZ55003L9 Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ55003L9",
@@ -26546,7 +26415,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1585,
+    "id": 1582,
     "name": "GCZ56004G7 Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ56004G7",
@@ -26592,7 +26461,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1586,
+    "id": 1583,
     "name": "GCZ58001L1 Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ58001L1",
@@ -26643,7 +26512,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1587,
+    "id": 1584,
     "name": "GCZ53003L7 Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ53003L7",
@@ -26694,7 +26563,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1588,
+    "id": 1585,
     "name": "GCZ59002L2 Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ59002L2",
@@ -26743,7 +26612,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1589,
+    "id": 1586,
     "name": "GCZ59003L1 Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ59003L1",
@@ -26792,7 +26661,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1590,
+    "id": 1587,
     "name": "GCZ60003G2 Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ60003G2",
@@ -26838,7 +26707,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1591,
+    "id": 1588,
     "name": "GCY44009G2M Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCY44009G2M",
@@ -26882,7 +26751,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1592,
+    "id": 1589,
     "name": "GCY79005L9M Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCY79005L9M",
@@ -26926,7 +26795,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1593,
+    "id": 1590,
     "name": "GCY59017L6M Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCY59017L6M",
@@ -26970,7 +26839,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1594,
+    "id": 1591,
     "name": "GCY44010G7M Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCY44010G7M",
@@ -26992,7 +26861,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 106,
+    "stock": 105,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -27014,7 +26883,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1595,
+    "id": 1592,
     "name": "GCZ66003G9 Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ66003G9",
@@ -27060,7 +26929,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1596,
+    "id": 1593,
     "name": "GCZ66001G2 Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ66001G2",
@@ -27106,7 +26975,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1597,
+    "id": 1594,
     "name": "GCZ54005L9 Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ54005L9",
@@ -27152,7 +27021,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1598,
+    "id": 1595,
     "name": "GCZ01024L3 Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ01024L3",
@@ -27202,7 +27071,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1599,
+    "id": 1596,
     "name": "GCY99024G9 Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCY99024G9",
@@ -27251,7 +27120,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1600,
+    "id": 1597,
     "name": "GCZ12010L9 Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ12010L9",
@@ -27299,7 +27168,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1601,
+    "id": 1598,
     "name": "GCZ66004G9 Erkek Kol Saati",
     "brand": "Gc",
     "ref": "GCZ66004G9",
@@ -27348,7 +27217,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1602,
+    "id": 1599,
     "name": "GCZ54006L9 Kadın Kol Saati",
     "brand": "Gc",
     "ref": "GCZ54006L9",
@@ -27396,7 +27265,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1603,
+    "id": 1600,
     "name": "GUGW0033L9 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0033L9",
@@ -27442,7 +27311,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1604,
+    "id": 1601,
     "name": "GUGW0564G2 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0564G2",
@@ -27491,7 +27360,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1605,
+    "id": 1602,
     "name": "GUGW0558L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0558L3",
@@ -27537,7 +27406,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1606,
+    "id": 1603,
     "name": "GUGW0572G3 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0572G3",
@@ -27586,7 +27455,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1607,
+    "id": 1604,
     "name": "GUGW0546L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0546L2",
@@ -27610,7 +27479,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 47,
+    "stock": 46,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -27632,7 +27501,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1608,
+    "id": 1605,
     "name": "GUGW0544L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0544L1",
@@ -27681,7 +27550,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1609,
+    "id": 1606,
     "name": "GUGW0465L5 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0465L5",
@@ -27727,7 +27596,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1610,
+    "id": 1607,
     "name": "GUGW0308L5 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0308L5",
@@ -27751,7 +27620,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 1397,
+    "stock": 1391,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -27773,7 +27642,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1611,
+    "id": 1608,
     "name": "GUGW0033L8 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0033L8",
@@ -27797,7 +27666,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 170,
+    "stock": 168,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -27819,7 +27688,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1612,
+    "id": 1609,
     "name": "GUGW0033L7 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0033L7",
@@ -27865,7 +27734,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1613,
+    "id": 1610,
     "name": "GUGW0265G8 Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0265G8",
@@ -27893,7 +27762,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 767,
+    "stock": 761,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -27915,7 +27784,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1614,
+    "id": 1611,
     "name": "GUGW0471L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0471L2",
@@ -27964,7 +27833,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1615,
+    "id": 1612,
     "name": "GUGW0471L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0471L1",
@@ -27991,7 +27860,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 58,
+    "stock": 57,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -28013,7 +27882,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1616,
+    "id": 1613,
     "name": "GUGW0265G7 Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0265G7",
@@ -28040,7 +27909,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 1666,
+    "stock": 1659,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -28062,7 +27931,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1617,
+    "id": 1614,
     "name": "GUGW0265G4 Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0265G4",
@@ -28108,7 +27977,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1618,
+    "id": 1615,
     "name": "GUGW0401L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0401L3",
@@ -28157,7 +28026,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1619,
+    "id": 1616,
     "name": "GUGW0401L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0401L1",
@@ -28203,7 +28072,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1620,
+    "id": 1617,
     "name": "GUGW0320L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0320L1",
@@ -28252,7 +28121,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1621,
+    "id": 1618,
     "name": "GUGW0300L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0300L2",
@@ -28300,7 +28169,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1622,
+    "id": 1619,
     "name": "GUGW0308L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0308L1",
@@ -28349,7 +28218,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1623,
+    "id": 1620,
     "name": "GUGW0022L1 Kadın Kol Saati ",
     "brand": "Guess",
     "ref": "GUGW0022L1",
@@ -28375,7 +28244,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 335,
+    "stock": 332,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -28397,7 +28266,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1624,
+    "id": 1621,
     "name": "GUGW0687L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0687L2",
@@ -28424,7 +28293,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 102,
+    "stock": 100,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -28446,7 +28315,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1625,
+    "id": 1622,
     "name": "GUGW0683L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0683L2",
@@ -28495,7 +28364,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1626,
+    "id": 1623,
     "name": "GUGW0695L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0695L3",
@@ -28544,7 +28413,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1627,
+    "id": 1624,
     "name": "GUGW0707G1 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0707G1",
@@ -28593,7 +28462,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1628,
+    "id": 1625,
     "name": "GUGW0723L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0723L2",
@@ -28639,7 +28508,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1629,
+    "id": 1626,
     "name": "GUGW0308L6 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0308L6",
@@ -28663,7 +28532,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 232,
+    "stock": 230,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -28685,7 +28554,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1630,
+    "id": 1627,
     "name": "GUGW0757L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0757L2",
@@ -28709,7 +28578,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 56,
+    "stock": 55,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -28731,7 +28600,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1631,
+    "id": 1628,
     "name": "GUGW0762L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0762L1",
@@ -28755,7 +28624,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 100,
+    "stock": 96,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -28777,7 +28646,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1632,
+    "id": 1629,
     "name": "GUGW0762L4 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0762L4",
@@ -28823,7 +28692,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1633,
+    "id": 1630,
     "name": "GUGW0798G1 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0798G1",
@@ -28847,7 +28716,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 62,
+    "stock": 61,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -28869,7 +28738,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1634,
+    "id": 1631,
     "name": "GUGW0770L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0770L1",
@@ -28915,7 +28784,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1635,
+    "id": 1632,
     "name": "GUGW0800G2 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0800G2",
@@ -28939,7 +28808,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 107,
+    "stock": 106,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -28961,7 +28830,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1636,
+    "id": 1633,
     "name": "GUGW0770L5 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0770L5",
@@ -29007,7 +28876,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1637,
+    "id": 1634,
     "name": "GUGW0770L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0770L2",
@@ -29056,7 +28925,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1638,
+    "id": 1635,
     "name": "GUGW0777L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0777L2",
@@ -29102,7 +28971,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1639,
+    "id": 1636,
     "name": "GUGW0746L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0746L1",
@@ -29151,7 +29020,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1640,
+    "id": 1637,
     "name": "GUGW0789G1 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0789G1",
@@ -29178,7 +29047,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 29,
+    "stock": 28,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -29200,7 +29069,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1641,
+    "id": 1638,
     "name": "GUGW0746L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0746L2",
@@ -29249,7 +29118,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1642,
+    "id": 1639,
     "name": "GUGW0842L1 Pırlantalı Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0842L1",
@@ -29296,7 +29165,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1643,
+    "id": 1640,
     "name": "GUGW0865L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0865L2",
@@ -29320,7 +29189,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 300,
+    "stock": 297,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -29342,7 +29211,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1644,
+    "id": 1641,
     "name": "GUGW0841L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0841L2",
@@ -29367,7 +29236,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 400,
+    "stock": 399,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -29389,7 +29258,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1645,
+    "id": 1642,
     "name": "GUGW0842L3 Pırlantalı Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0842L3",
@@ -29436,7 +29305,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1646,
+    "id": 1643,
     "name": "GUGW0865L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0865L3",
@@ -29482,7 +29351,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1647,
+    "id": 1644,
     "name": "GUGW0856L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0856L1",
@@ -29530,7 +29399,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1648,
+    "id": 1645,
     "name": "GUGW0914L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0914L1",
@@ -29576,7 +29445,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1649,
+    "id": 1646,
     "name": "GUGW0849G2 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0849G2",
@@ -29623,7 +29492,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1650,
+    "id": 1647,
     "name": "GUGW0896G3 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0896G3",
@@ -29669,7 +29538,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1651,
+    "id": 1648,
     "name": "GUGW0893G5 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0893G5",
@@ -29715,7 +29584,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1652,
+    "id": 1649,
     "name": "GUGW0874L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0874L2",
@@ -29763,7 +29632,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1653,
+    "id": 1650,
     "name": "GUGW0874L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0874L1",
@@ -29814,7 +29683,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1654,
+    "id": 1651,
     "name": "GUGW0917G1 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0917G1",
@@ -29860,7 +29729,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1655,
+    "id": 1652,
     "name": "GUGW0950L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0950L1",
@@ -29906,7 +29775,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1656,
+    "id": 1653,
     "name": "GUGW0936L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0936L3",
@@ -29930,7 +29799,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 339,
+    "stock": 332,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -29952,7 +29821,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1657,
+    "id": 1654,
     "name": "GUGW0931L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0931L2",
@@ -29976,7 +29845,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 69,
+    "stock": 68,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -29998,7 +29867,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1658,
+    "id": 1655,
     "name": "GUGW0929L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0929L2",
@@ -30022,7 +29891,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 168,
+    "stock": 167,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -30044,7 +29913,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1659,
+    "id": 1656,
     "name": "GUGW0969G2 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0969G2",
@@ -30090,7 +29959,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1660,
+    "id": 1657,
     "name": "GUGW0944L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0944L1",
@@ -30136,7 +30005,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1661,
+    "id": 1658,
     "name": "GUGW0976G1 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0976G1",
@@ -30160,7 +30029,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 307,
+    "stock": 306,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -30182,7 +30051,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1662,
+    "id": 1659,
     "name": "GUGW0944L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0944L3",
@@ -30228,7 +30097,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1663,
+    "id": 1660,
     "name": "GUGW0685L5 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0685L5",
@@ -30274,7 +30143,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1664,
+    "id": 1661,
     "name": "GUGW0936L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0936L1",
@@ -30298,7 +30167,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 32,
+    "stock": 30,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -30320,7 +30189,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1665,
+    "id": 1662,
     "name": "GUGW0841L8 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0841L8",
@@ -30366,7 +30235,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1666,
+    "id": 1663,
     "name": "GUGW0933L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0933L2",
@@ -30412,7 +30281,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1667,
+    "id": 1664,
     "name": "GUGW0933L6 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0933L6",
@@ -30457,7 +30326,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1668,
+    "id": 1665,
     "name": "GUGW0970G1 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0970G1",
@@ -30503,7 +30372,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1669,
+    "id": 1666,
     "name": "GUU1457L5M Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUU1457L5M",
@@ -30525,7 +30394,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 318,
+    "stock": 317,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -30547,7 +30416,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1670,
+    "id": 1667,
     "name": "GUGW0948L8 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0948L8",
@@ -30571,7 +30440,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 387,
+    "stock": 381,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -30593,7 +30462,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1671,
+    "id": 1668,
     "name": "GUGW0978G3 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0978G3",
@@ -30645,7 +30514,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1672,
+    "id": 1669,
     "name": "GUGW0927L6 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0927L6",
@@ -30669,7 +30538,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 242,
+    "stock": 241,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -30691,7 +30560,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1673,
+    "id": 1670,
     "name": "GUGW0982L4 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0982L4",
@@ -30715,7 +30584,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 92,
+    "stock": 89,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -30737,7 +30606,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1674,
+    "id": 1671,
     "name": "GUGW0930L5 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0930L5",
@@ -30783,7 +30652,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1675,
+    "id": 1672,
     "name": "GUGW0970G7 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0970G7",
@@ -30829,7 +30698,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1676,
+    "id": 1673,
     "name": "GUGW0655L5 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0655L5",
@@ -30875,7 +30744,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1677,
+    "id": 1674,
     "name": "GUGW1006G2 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1006G2",
@@ -30921,7 +30790,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1678,
+    "id": 1675,
     "name": "GUGW0994L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0994L3",
@@ -30945,7 +30814,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 353,
+    "stock": 348,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -30967,7 +30836,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1679,
+    "id": 1676,
     "name": "GUGW0997L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0997L2",
@@ -31013,7 +30882,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1680,
+    "id": 1677,
     "name": "GUGW0994L5 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0994L5",
@@ -31063,7 +30932,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1681,
+    "id": 1678,
     "name": "GUGW0931L5 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0931L5",
@@ -31112,7 +30981,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1682,
+    "id": 1679,
     "name": "GUGW1058G6 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1058G6",
@@ -31158,7 +31027,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1683,
+    "id": 1680,
     "name": "GUGW1037L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1037L1",
@@ -31208,7 +31077,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1684,
+    "id": 1681,
     "name": "GUGW1061G1 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1061G1",
@@ -31254,7 +31123,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1685,
+    "id": 1682,
     "name": "GUGW0999L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0999L2",
@@ -31282,7 +31151,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 204,
+    "stock": 203,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -31304,7 +31173,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1686,
+    "id": 1683,
     "name": "GUGW1040L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1040L2",
@@ -31353,7 +31222,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1687,
+    "id": 1684,
     "name": "GUGW1038L4 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1038L4",
@@ -31402,7 +31271,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1688,
+    "id": 1685,
     "name": "GUGW1020L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1020L1",
@@ -31451,7 +31320,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1689,
+    "id": 1686,
     "name": "GUGW0994L4 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0994L4",
@@ -31500,7 +31369,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1690,
+    "id": 1687,
     "name": "GUGW1043L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1043L1",
@@ -31550,7 +31419,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1691,
+    "id": 1688,
     "name": "GUGW1031L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1031L1",
@@ -31596,7 +31465,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1692,
+    "id": 1689,
     "name": "GUGW0934L5 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0934L5",
@@ -31623,7 +31492,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 9,
+    "stock": 8,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -31645,7 +31514,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1693,
+    "id": 1690,
     "name": "GUGW1112L8 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1112L8",
@@ -31669,7 +31538,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 43,
+    "stock": 42,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -31691,7 +31560,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1694,
+    "id": 1691,
     "name": "GUGW0900G6 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0900G6",
@@ -31715,7 +31584,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 74,
+    "stock": 72,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -31737,7 +31606,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1695,
+    "id": 1692,
     "name": "GUGW1153G4 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1153G4",
@@ -31761,7 +31630,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 148,
+    "stock": 146,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -31783,7 +31652,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1696,
+    "id": 1693,
     "name": "GUGW1112L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1112L1",
@@ -31829,7 +31698,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1697,
+    "id": 1694,
     "name": "GUGW1102L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1102L2",
@@ -31853,7 +31722,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 77,
+    "stock": 74,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -31875,7 +31744,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1698,
+    "id": 1695,
     "name": "GUGW0550L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0550L3",
@@ -31925,7 +31794,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1699,
+    "id": 1696,
     "name": "GUGW0202G5 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0202G5",
@@ -31971,7 +31840,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1700,
+    "id": 1697,
     "name": "GUGW0307L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0307L1",
@@ -32019,7 +31888,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1701,
+    "id": 1698,
     "name": "GUGW0354L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0354L1",
@@ -32068,7 +31937,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1702,
+    "id": 1699,
     "name": "GUGW0320L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0320L2",
@@ -32092,7 +31961,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 50,
+    "stock": 48,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -32114,7 +31983,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1703,
+    "id": 1700,
     "name": "GUGW0260G2 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0260G2",
@@ -32161,7 +32030,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1704,
+    "id": 1701,
     "name": "GUGW0260G1 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0260G1",
@@ -32186,7 +32055,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 405,
+    "stock": 404,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -32208,7 +32077,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1705,
+    "id": 1702,
     "name": "GUGW0044L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0044L1",
@@ -32256,7 +32125,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1706,
+    "id": 1703,
     "name": "GUGW0022L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0022L3",
@@ -32304,7 +32173,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1707,
+    "id": 1704,
     "name": "GUW1156L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUW1156L2",
@@ -32349,7 +32218,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1708,
+    "id": 1705,
     "name": "GUW1117L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUW1117L2",
@@ -32371,7 +32240,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 54,
+    "stock": 48,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -32393,7 +32262,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1709,
+    "id": 1706,
     "name": "GUW1070L8 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUW1070L8",
@@ -32437,7 +32306,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1710,
+    "id": 1707,
     "name": "GUW1117L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUW1117L3",
@@ -32481,7 +32350,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1711,
+    "id": 1708,
     "name": "GUW0989L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUW0989L2",
@@ -32502,7 +32371,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 112,
+    "stock": 110,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -32524,7 +32393,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1712,
+    "id": 1709,
     "name": "GUGW0609L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0609L3",
@@ -32570,7 +32439,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1713,
+    "id": 1710,
     "name": "GUGW0644L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0644L2",
@@ -32616,7 +32485,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1714,
+    "id": 1711,
     "name": "GUGW0645G2 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0645G2",
@@ -32662,7 +32531,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1715,
+    "id": 1712,
     "name": "GUGW0615L2 Pırlantalı Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0615L2",
@@ -32708,7 +32577,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1716,
+    "id": 1713,
     "name": "GUGW0597L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0597L1",
@@ -32754,7 +32623,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1717,
+    "id": 1714,
     "name": "GUGW0612L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0612L2",
@@ -32800,7 +32669,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1718,
+    "id": 1715,
     "name": "GUGW0655L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0655L3",
@@ -32846,7 +32715,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1719,
+    "id": 1716,
     "name": "GUGW0657L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0657L3",
@@ -32892,7 +32761,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1720,
+    "id": 1717,
     "name": "GUGW0759L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0759L1",
@@ -32938,7 +32807,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1721,
+    "id": 1718,
     "name": "GUGW0795G1 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0795G1",
@@ -32984,7 +32853,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1722,
+    "id": 1719,
     "name": "GUGW0777L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0777L1",
@@ -33030,7 +32899,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1723,
+    "id": 1720,
     "name": "GUGW0771L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0771L3",
@@ -33076,7 +32945,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1724,
+    "id": 1721,
     "name": "GUGW0768L2 Pırlantalı Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0768L2",
@@ -33100,7 +32969,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 75,
+    "stock": 73,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -33122,7 +32991,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1725,
+    "id": 1722,
     "name": "GUGW0765L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0765L2",
@@ -33168,7 +33037,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1726,
+    "id": 1723,
     "name": "GUGW0757L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0757L1",
@@ -33214,7 +33083,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1727,
+    "id": 1724,
     "name": "GUGW0767L4 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0767L4",
@@ -33238,7 +33107,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 101,
+    "stock": 102,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -33260,7 +33129,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1728,
+    "id": 1725,
     "name": "GUGW0804G4 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0804G4",
@@ -33309,7 +33178,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1729,
+    "id": 1726,
     "name": "GUGW0769L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0769L3",
@@ -33358,7 +33227,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1730,
+    "id": 1727,
     "name": "GUGW0767L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0767L2",
@@ -33385,7 +33254,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 83,
+    "stock": 81,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -33407,7 +33276,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1731,
+    "id": 1728,
     "name": "GUGW0791G2 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0791G2",
@@ -33456,7 +33325,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1732,
+    "id": 1729,
     "name": "GUGW0740L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0740L2",
@@ -33480,7 +33349,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 331,
+    "stock": 329,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -33502,7 +33371,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1733,
+    "id": 1730,
     "name": "GUGW0838L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0838L2",
@@ -33549,7 +33418,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1734,
+    "id": 1731,
     "name": "GUGW0847G1 Pırlantalı Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0847G1",
@@ -33596,7 +33465,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1735,
+    "id": 1732,
     "name": "GUGW0850G1 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0850G1",
@@ -33643,7 +33512,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1736,
+    "id": 1733,
     "name": "GUGW0869L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0869L1",
@@ -33667,7 +33536,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 411,
+    "stock": 405,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -33689,7 +33558,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1737,
+    "id": 1734,
     "name": "GUGW0869L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0869L3",
@@ -33713,7 +33582,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 156,
+    "stock": 154,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -33735,7 +33604,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1738,
+    "id": 1735,
     "name": "GUGW0869L4 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0869L4",
@@ -33759,7 +33628,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 252,
+    "stock": 246,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -33781,7 +33650,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1739,
+    "id": 1736,
     "name": "GUGW0868L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0868L2",
@@ -33832,7 +33701,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1740,
+    "id": 1737,
     "name": "GUGW0893G1 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0893G1",
@@ -33878,7 +33747,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1741,
+    "id": 1738,
     "name": "GUGW0772L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0772L3",
@@ -33927,7 +33796,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1742,
+    "id": 1739,
     "name": "GUGW0841L4 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0841L4",
@@ -33954,7 +33823,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 222,
+    "stock": 221,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -33976,7 +33845,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1743,
+    "id": 1740,
     "name": "GUGW0874L4 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0874L4",
@@ -34022,7 +33891,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1744,
+    "id": 1741,
     "name": "GUGW0867L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0867L2",
@@ -34049,7 +33918,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 285,
+    "stock": 281,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -34071,7 +33940,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1745,
+    "id": 1742,
     "name": "GUGW0902G1 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0902G1",
@@ -34120,7 +33989,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1746,
+    "id": 1743,
     "name": "GUGW0893G2 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0893G2",
@@ -34169,7 +34038,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1747,
+    "id": 1744,
     "name": "GUGW0868L4 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0868L4",
@@ -34218,7 +34087,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1748,
+    "id": 1745,
     "name": "GUGW0859L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0859L1",
@@ -34268,7 +34137,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1749,
+    "id": 1746,
     "name": "GUGW0867L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0867L3",
@@ -34316,7 +34185,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1750,
+    "id": 1747,
     "name": "GUGW0877L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0877L2",
@@ -34364,7 +34233,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1751,
+    "id": 1748,
     "name": "GUGW0320L7 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0320L7",
@@ -34388,7 +34257,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 297,
+    "stock": 296,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -34410,7 +34279,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1752,
+    "id": 1749,
     "name": "GUGW0927L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0927L2",
@@ -34456,7 +34325,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1753,
+    "id": 1750,
     "name": "GUGW0941L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0941L2",
@@ -34480,7 +34349,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 105,
+    "stock": 106,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -34502,7 +34371,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1754,
+    "id": 1751,
     "name": "GUGW0935L1 Pırlantalı Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0935L1",
@@ -34548,7 +34417,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1755,
+    "id": 1752,
     "name": "GUGW0958G2 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0958G2",
@@ -34572,7 +34441,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 138,
+    "stock": 137,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -34594,7 +34463,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1756,
+    "id": 1753,
     "name": "GUGW0982L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0982L1",
@@ -34618,7 +34487,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 68,
+    "stock": 66,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -34640,7 +34509,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1757,
+    "id": 1754,
     "name": "GUGW0929L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0929L1",
@@ -34686,7 +34555,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1758,
+    "id": 1755,
     "name": "GUGW0938L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0938L1",
@@ -34732,7 +34601,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1759,
+    "id": 1756,
     "name": "GUGW0968G4 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0968G4",
@@ -34756,7 +34625,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 143,
+    "stock": 142,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -34778,7 +34647,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1760,
+    "id": 1757,
     "name": "GUGW0965G4 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0965G4",
@@ -34824,7 +34693,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1761,
+    "id": 1758,
     "name": "GUGW0967G2 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0967G2",
@@ -34870,7 +34739,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1762,
+    "id": 1759,
     "name": "GUGW1009L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1009L1",
@@ -34898,7 +34767,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 111,
+    "stock": 110,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -34920,7 +34789,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1763,
+    "id": 1760,
     "name": "GUGW0984G5 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0984G5",
@@ -34969,7 +34838,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1764,
+    "id": 1761,
     "name": "GUGW0984G4 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0984G4",
@@ -35018,7 +34887,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1765,
+    "id": 1762,
     "name": "GUGW0740L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0740L3",
@@ -35064,7 +34933,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1766,
+    "id": 1763,
     "name": "GUGW1006G4 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1006G4",
@@ -35110,7 +34979,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1767,
+    "id": 1764,
     "name": "GUGW0767L7 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0767L7",
@@ -35156,7 +35025,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1768,
+    "id": 1765,
     "name": "GUGW1006G1 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1006G1",
@@ -35202,7 +35071,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1769,
+    "id": 1766,
     "name": "GUGW0992L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0992L2",
@@ -35248,7 +35117,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1770,
+    "id": 1767,
     "name": "GUGW0997L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0997L1",
@@ -35294,7 +35163,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1771,
+    "id": 1768,
     "name": "GUGW0655L4 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0655L4",
@@ -35344,7 +35213,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1772,
+    "id": 1769,
     "name": "GUGW0931L7 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0931L7",
@@ -35390,7 +35259,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1773,
+    "id": 1770,
     "name": "GUGW1016L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1016L1",
@@ -35436,7 +35305,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1774,
+    "id": 1771,
     "name": "GUGW1018L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1018L3",
@@ -35482,7 +35351,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1775,
+    "id": 1772,
     "name": "GUGW1027L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1027L2",
@@ -35506,7 +35375,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 71,
+    "stock": 69,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -35528,7 +35397,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1776,
+    "id": 1773,
     "name": "GUGW1070G2 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1070G2",
@@ -35574,7 +35443,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1777,
+    "id": 1774,
     "name": "GUGW0841L9 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0841L9",
@@ -35620,7 +35489,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1778,
+    "id": 1775,
     "name": "GUGW1070G3 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1070G3",
@@ -35669,7 +35538,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1779,
+    "id": 1776,
     "name": "GUGW1058G7 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1058G7",
@@ -35715,7 +35584,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1780,
+    "id": 1777,
     "name": "GUGW1019L8 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1019L8",
@@ -35761,7 +35630,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1781,
+    "id": 1778,
     "name": "GUGW0475L5 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0475L5",
@@ -35807,7 +35676,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1782,
+    "id": 1779,
     "name": "GUGW0977G6 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0977G6",
@@ -35853,7 +35722,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1783,
+    "id": 1780,
     "name": "GUGW1096L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1096L3",
@@ -35877,7 +35746,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 102,
+    "stock": 101,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -35899,7 +35768,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1784,
+    "id": 1781,
     "name": "GUGW1083L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1083L2",
@@ -35923,7 +35792,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 55,
+    "stock": 53,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -35945,7 +35814,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1785,
+    "id": 1782,
     "name": "GUGW1153G1 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1153G1",
@@ -35969,7 +35838,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 170,
+    "stock": 167,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -35991,7 +35860,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1786,
+    "id": 1783,
     "name": "GUGW1129G2 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1129G2",
@@ -36015,7 +35884,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 43,
+    "stock": 42,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -36037,7 +35906,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1787,
+    "id": 1784,
     "name": "GUGW1088L2 Kadın Yüzük Saat",
     "brand": "Guess",
     "ref": "GUGW1088L2",
@@ -36081,7 +35950,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1788,
+    "id": 1785,
     "name": "GUGW1096L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1096L1",
@@ -36127,7 +35996,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1789,
+    "id": 1786,
     "name": "GUGW1092L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1092L1",
@@ -36173,7 +36042,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1790,
+    "id": 1787,
     "name": "GUGW1086L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1086L2",
@@ -36197,7 +36066,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 54,
+    "stock": 53,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -36219,47 +36088,45 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1791,
-    "name": "GUGW0550L1 Kadın Kol Saati",
+    "id": 1788,
+    "name": "GUGW0865L9 Kadın Kol Saati",
     "brand": "Guess",
-    "ref": "GUGW0550L1",
-    "reference": "GUGW0550L1",
-    "price": 12965,
+    "ref": "GUGW0865L9",
+    "reference": "GUGW0865L9",
+    "price": 16520,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
     "origin": "ABD",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/4/e45b6a509e929fe9a5ba81ba67ffe0291568a1bf378e6b1a7f14fecfe392684e.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/0/2030f004d17085c0d2ec1eb2f5f31f8eb767e82d72df7fad5e6db57cff6df0f4.jpeg",
+    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/7/97eba035044270e8d46560cadb86f79975352b2d932a1bc11353dcd5c080b124.jpeg",
+    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/0/d/0d425f03d62ec3d0409550bfe3d592246439114ec1f8bd175ba0da9c72adf65c.jpeg",
     "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/4/e45b6a509e929fe9a5ba81ba67ffe0291568a1bf378e6b1a7f14fecfe392684e.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/0/2030f004d17085c0d2ec1eb2f5f31f8eb767e82d72df7fad5e6db57cff6df0f4.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/e/9e030977130b1090747982b1df5b7ccaddfd02e91cc59450428d6cb5b776d67e.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/8/e/8e9ed466c35873ad26129c3a781b6094356ad6b52998a507bedff70948bbe9df.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/2/723005e2a9ccefb5a80e0436029d987958774a424c1290c3d0d228be105daf14.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/7/279cef14924d6352ccd8e2302ddab5bd86dc353f38ce373b3d1cdfa648abbb4e.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/1/f/1fde3418525b4d782c471ca0296dac2dc41e5be7f57154e275dc6c2ffc1922bb.jpeg"
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/7/97eba035044270e8d46560cadb86f79975352b2d932a1bc11353dcd5c080b124.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/0/d/0d425f03d62ec3d0409550bfe3d592246439114ec1f8bd175ba0da9c72adf65c.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/2/b2c38474513bd377bbe628d18e6ccda733ca7d43b50544fc1a0c0f71ff9d4f85.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/0/d/0d969e06808c4394608a84e0433c101d64687cd20b0690443efc0182509dff7f.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/c/e/ce161bb2063690f183046d421a7391f0828fe5c0dbde46a26cb69d1dcee3f5c9.jpeg"
     ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/guess-kadin-kol-saati-p-gugw0550l1",
+    "sourceUrl": "https://www.saatvesaat.com.tr/guess-kadin-kol-saati-p-gugw0865l9",
     "statusBadge": "Distribütör Garantili",
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 1,
+    "stock": 48,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
-    "description": "Guess GUGW0550L1 Kadın Kol Saati, 36 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Hasır kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Guess GUGW0550L1 Kadın Kol Saati, 36 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Hasır kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "description": "Guess GUGW0865L9 Kadın Kol Saati, 28 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 1 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "desc": "Guess GUGW0865L9 Kadın Kol Saati, 28 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 1 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
     "specs": {
-      "Kasa Çapı": "36 mm",
+      "Kasa Çapı": "28 mm",
       "Mekanizma": "Quartz",
       "Cam Tipi": "Mineral",
-      "Su Geçirmezlik": "3 ATM",
-      "Kordon / Kayış": "Hasır",
-      "Kadran Rengi": "Metalik Gri",
+      "Su Geçirmezlik": "1 ATM",
+      "Kordon / Kayış": "Çelik",
+      "Kadran Rengi": "Bordo",
       "Kasa Materyali": "Çelik",
-      "Kasa Rengi": "Metalik Gri",
+      "Kasa Rengi": "Altın Rengi",
       "Cinsiyet": "Kadın",
       "Menşei": "ABD",
       "Garanti": "2 Yıl Distribütör Garantili",
@@ -36267,7 +36134,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1792,
+    "id": 1789,
     "name": "GUGW0544L4 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0544L4",
@@ -36313,7 +36180,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1793,
+    "id": 1790,
     "name": "GUGW0575G3 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0575G3",
@@ -36340,7 +36207,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 7,
+    "stock": 6,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -36362,7 +36229,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1794,
+    "id": 1791,
     "name": "GUGW0572G1 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0572G1",
@@ -36411,7 +36278,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1795,
+    "id": 1792,
     "name": "GUGW0546L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0546L3",
@@ -36457,7 +36324,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1796,
+    "id": 1793,
     "name": "GUGW0575G1 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0575G1",
@@ -36503,7 +36370,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1797,
+    "id": 1794,
     "name": "GUGW0534L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0534L2",
@@ -36549,7 +36416,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1798,
+    "id": 1795,
     "name": "GUGW0508L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0508L1",
@@ -36599,7 +36466,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1799,
+    "id": 1796,
     "name": "GUGW0508L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0508L2",
@@ -36650,7 +36517,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1800,
+    "id": 1797,
     "name": "GUGW0404L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0404L3",
@@ -36698,7 +36565,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1801,
+    "id": 1798,
     "name": "GUGW0401L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0401L2",
@@ -36725,7 +36592,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 52,
+    "stock": 51,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -36747,7 +36614,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1802,
+    "id": 1799,
     "name": "GUGW0286L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0286L3",
@@ -36791,7 +36658,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1803,
+    "id": 1800,
     "name": "GUGW0354L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0354L2",
@@ -36840,7 +36707,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1804,
+    "id": 1801,
     "name": "GUGW0300L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0300L1",
@@ -36885,7 +36752,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1805,
+    "id": 1802,
     "name": "GUGW0308L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0308L2",
@@ -36931,43 +36798,41 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1806,
-    "name": "GUGW0615L1 Pırlantalı Kadın Kol Saati",
+    "id": 1803,
+    "name": "GUW1275L1 Kadın Kol Saati ",
     "brand": "Guess",
-    "ref": "GUGW0615L1",
-    "reference": "GUGW0615L1",
-    "price": 12642,
+    "ref": "GUW1275L1",
+    "reference": "GUW1275L1",
+    "price": 12946,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
     "origin": "ABD",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/7/b702ff0272c140f0cbfe2481ea32361c2e1c592a9b8b3c585e8dce06a1082327.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/a/c/ac488ac25d567bce2882c5407a0da783aa910521958aa786f085daf9a723e067.jpeg",
+    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/5/e/5e44e71189924dd7e855d764634682e282f93ae59faa6c7808236fd00ef1de87.jpeg",
+    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/5/a/5ad0550f89f2a92fb3b9bb43e65c8a4566022c9342ffd529bd80096e68a27b96.jpeg",
     "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/7/b702ff0272c140f0cbfe2481ea32361c2e1c592a9b8b3c585e8dce06a1082327.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/a/c/ac488ac25d567bce2882c5407a0da783aa910521958aa786f085daf9a723e067.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/0/5/05c2c0ea142e6c7ccc2784209af5323e346c99f396d9a19d428d23a9a656017c.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/c/c/ccf2d25a3d0d65a7384b2289c34bdace27d82e1e3692c0ba701a1618284da327.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/8/98dea53c51ae77b9449260f055462bc4cca943147a860cd238ffa1df3dbd5655.jpeg"
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/5/e/5e44e71189924dd7e855d764634682e282f93ae59faa6c7808236fd00ef1de87.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/5/a/5ad0550f89f2a92fb3b9bb43e65c8a4566022c9342ffd529bd80096e68a27b96.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/0/f/0fafad2cb50273048e2507db908857d379f8406d66fe862ccaf73dff4586ca1d.jpeg"
     ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/guess-kadin-kol-saati-p-gugw0615l1",
+    "sourceUrl": "https://www.saatvesaat.com.tr/guess-kadin-kol-saati-p-guw1275l1",
     "statusBadge": "Distribütör Garantili",
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 57,
+    "stock": 15,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
-    "description": "Guess GUGW0615L1 Pırlantalı Kadın Kol Saati, 32 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Guess GUGW0615L1 Pırlantalı Kadın Kol Saati, 32 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "description": "Guess GUW1275L1 Kadın Kol Saati , 39 x 47 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "desc": "Guess GUW1275L1 Kadın Kol Saati , 39 x 47 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
     "specs": {
-      "Kasa Çapı": "32 mm",
+      "Kasa Çapı": "39 x 47 mm",
       "Mekanizma": "Quartz",
       "Cam Tipi": "Mineral",
       "Su Geçirmezlik": "3 ATM",
       "Kordon / Kayış": "Çelik",
-      "Kadran Rengi": "Siyah",
+      "Kadran Rengi": "Metalik Gri",
       "Kasa Materyali": "Çelik",
       "Kasa Rengi": "Metalik Gri",
       "Cinsiyet": "Kadın",
@@ -36977,7 +36842,102 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1807,
+    "id": 1804,
+    "name": "GUGW0033L2 Kadın Kol Saati ",
+    "brand": "Guess",
+    "ref": "GUGW0033L2",
+    "reference": "GUGW0033L2",
+    "price": 17472,
+    "category": "saat",
+    "subCategory": "Kadın Saat",
+    "metal": "Çelik",
+    "origin": "ABD",
+    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/c/ec3e26f3707db71ba5f00d10da0119a7b9c84c33f0914f8122b83f6566881e49.jpeg",
+    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/f/9f851c5263bc34170ef15b623c44aee4c9c45d04a68bf066cb70df6e5ef069d1.jpeg",
+    "images": [
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/c/ec3e26f3707db71ba5f00d10da0119a7b9c84c33f0914f8122b83f6566881e49.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/f/9f851c5263bc34170ef15b623c44aee4c9c45d04a68bf066cb70df6e5ef069d1.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/1/b11c654ce2c1628b1323e8fe0c7b8d30f661fac01dd9488f107b701dd5e2df68.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/d/8/d87fc5fbc70c9f13865fd9b01a2d5628a98c0109939cc3a466ce211b407cd177.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/5/e50d17212a943f1fda09a94ea10164d1fdab95d8396da59c0f64ec9455de4ffd.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/f/e/fe89909928db7935dbc9e14ecb4c2741bc08e721981a6a5c3bc80e4a9416fc80.jpeg"
+    ],
+    "sourceUrl": "https://www.saatvesaat.com.tr/guess-kadin-kol-saati-p-gugw0033l2",
+    "statusBadge": "Distribütör Garantili",
+    "conditionBadge": "Sıfır",
+    "isPreOwned": false,
+    "isGold": false,
+    "stock": 93,
+    "inStock": true,
+    "isNew": true,
+    "isHighValue": true,
+    "description": "Guess GUGW0033L2 Kadın Kol Saati , 36 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "desc": "Guess GUGW0033L2 Kadın Kol Saati , 36 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "specs": {
+      "Kasa Çapı": "36 mm",
+      "Mekanizma": "Quartz",
+      "Cam Tipi": "Mineral",
+      "Su Geçirmezlik": "3 ATM",
+      "Kordon / Kayış": "Çelik",
+      "Kadran Rengi": "Altın Rengi",
+      "Kasa Materyali": "Çelik",
+      "Kasa Rengi": "Altın Rengi",
+      "Cinsiyet": "Kadın",
+      "Menşei": "ABD",
+      "Garanti": "2 Yıl Distribütör Garantili",
+      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
+    }
+  },
+  {
+    "id": 1805,
+    "name": "GUGW0033L1 Kadın Kol Saati",
+    "brand": "Guess",
+    "ref": "GUGW0033L1",
+    "reference": "GUGW0033L1",
+    "price": 14280,
+    "category": "saat",
+    "subCategory": "Kadın Saat",
+    "metal": "Çelik",
+    "origin": "ABD",
+    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/8/2854921b5ecca38bad64b671438d95991036be517455c7a8a8ca23d220d3468f.jpeg",
+    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/8/4/84b92cd396db058d808c7e1940a6a65c477afea4f7c4b13439751f0b65aca4bc.jpeg",
+    "images": [
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/8/2854921b5ecca38bad64b671438d95991036be517455c7a8a8ca23d220d3468f.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/8/4/84b92cd396db058d808c7e1940a6a65c477afea4f7c4b13439751f0b65aca4bc.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/4/7/4700d5532034f503c6a2b0ef4440dfe0aae614d9440ca33089ea62bb4e5f67f2.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/f/2f75bc4b6af99313d0d97879cf059fcd161485d956785a515082f7e8cdfff7be.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/0/e/0ef9b0795d870a9d94e028b74540b66e61a63ff076f52c857afc2268d55fa5b1.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/f/2/f2f6e29f0f10946404b39d946933cf88dffcb50479acb9379f40978c2c87a4ca.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/f/b/fb32ab108a027efd3b15a8452d182a82ec789634d42a5085a0bc43d53a0829dc.jpeg"
+    ],
+    "sourceUrl": "https://www.saatvesaat.com.tr/guess-kadin-kol-saati-p-gugw0033l1",
+    "statusBadge": "Distribütör Garantili",
+    "conditionBadge": "Sıfır",
+    "isPreOwned": false,
+    "isGold": false,
+    "stock": 3,
+    "inStock": true,
+    "isNew": true,
+    "isHighValue": true,
+    "description": "Guess GUGW0033L1 Kadın Kol Saati, 36 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "desc": "Guess GUGW0033L1 Kadın Kol Saati, 36 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "specs": {
+      "Kasa Çapı": "36 mm",
+      "Mekanizma": "Quartz",
+      "Cam Tipi": "Mineral",
+      "Su Geçirmezlik": "3 ATM",
+      "Kordon / Kayış": "Çelik",
+      "Kadran Rengi": "Metalik Gri",
+      "Kasa Materyali": "Çelik",
+      "Kasa Rengi": "Metalik Gri",
+      "Cinsiyet": "Kadın",
+      "Menşei": "ABD",
+      "Garanti": "2 Yıl Distribütör Garantili",
+      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
+    }
+  },
+  {
+    "id": 1806,
     "name": "GUGW0653L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0653L1",
@@ -37001,7 +36961,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 44,
+    "stock": 43,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -37023,7 +36983,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1808,
+    "id": 1807,
     "name": "GUGW0655L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0655L2",
@@ -37047,7 +37007,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 150,
+    "stock": 147,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -37069,7 +37029,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1809,
+    "id": 1808,
     "name": "GUGW0456G5 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0456G5",
@@ -37113,7 +37073,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1810,
+    "id": 1809,
     "name": "GUGW0657L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0657L1",
@@ -37159,7 +37119,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1811,
+    "id": 1810,
     "name": "GUGW0661G1 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0661G1",
@@ -37205,7 +37165,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1812,
+    "id": 1811,
     "name": "GUGW0668L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0668L1",
@@ -37254,7 +37214,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1813,
+    "id": 1812,
     "name": "GUGW0680L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0680L1",
@@ -37303,7 +37263,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1814,
+    "id": 1813,
     "name": "GUGW0685L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0685L1",
@@ -37352,7 +37312,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1815,
+    "id": 1814,
     "name": "GUGW0686L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0686L2",
@@ -37376,7 +37336,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 231,
+    "stock": 228,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -37398,7 +37358,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1816,
+    "id": 1815,
     "name": "GUGW0687L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0687L1",
@@ -37425,7 +37385,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 173,
+    "stock": 172,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -37447,7 +37407,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1817,
+    "id": 1816,
     "name": "GUGW0687L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0687L3",
@@ -37493,7 +37453,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1818,
+    "id": 1817,
     "name": "GUGW0725L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0725L1",
@@ -37520,7 +37480,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 95,
+    "stock": 94,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -37542,7 +37502,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1819,
+    "id": 1818,
     "name": "GUGW0680L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0680L2",
@@ -37591,7 +37551,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1820,
+    "id": 1819,
     "name": "GUGW0033L4 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0033L4",
@@ -37637,7 +37597,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1821,
+    "id": 1820,
     "name": "GUGW0686L4 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0686L4",
@@ -37686,105 +37646,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1822,
-    "name": "GUGW0799G1 Erkek Kol Saati",
-    "brand": "Guess",
-    "ref": "GUGW0799G1",
-    "reference": "GUGW0799G1",
-    "price": 13318,
-    "category": "saat",
-    "subCategory": "Erkek Saat",
-    "metal": "Çelik",
-    "origin": "ABD",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/a/7a018a6b4d72eb8bfa2ef1fd27a0e4af8fa9c1c9d32534a66cba4a22a6458424.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/c/0/c0e35e4b1b39e090edb5a3f47cfb2f6be91c5c1c4fdd230b80594bd5d9afd1ec.jpeg",
-    "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/a/7a018a6b4d72eb8bfa2ef1fd27a0e4af8fa9c1c9d32534a66cba4a22a6458424.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/c/0/c0e35e4b1b39e090edb5a3f47cfb2f6be91c5c1c4fdd230b80594bd5d9afd1ec.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/0/7/07d249a89395918f00c47d6f0939883211f350e35b7b313936f973bf3d2ed4e1.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/8/b/8b69637e99eaacd7a45de749c40bfe31c283f1d05535675bb520c1903471723b.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/f/7/f7ec7638eae940ad1d254d29793af737ee601a8ce7f164bd9fd94dbe444a2316.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/d/f/dff03b0274f19ea13326fca921a6b727e0bd5a22d86860579e10c54db9ed3d07.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/d/0/d0cf28ae8c7d4b37953b839c21d0710fd6f41c84a3b2e2f8f0cf2450c6248173.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/d/eddae8054aaeba6f8f35e1015449f36d6e58eddf5dbe56ab39385ed8a092a0fe.jpeg"
-    ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/guess-erkek-kol-saati-p-gugw0799g1",
-    "statusBadge": "Distribütör Garantili",
-    "conditionBadge": "Sıfır",
-    "isPreOwned": false,
-    "isGold": false,
-    "stock": 7,
-    "inStock": true,
-    "isNew": true,
-    "isHighValue": true,
-    "description": "Guess GUGW0799G1 Erkek Kol Saati, 46 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Silikon kordon yapısına ve Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Guess GUGW0799G1 Erkek Kol Saati, 46 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Silikon kordon yapısına ve Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "specs": {
-      "Kasa Çapı": "46 mm",
-      "Mekanizma": "Quartz",
-      "Cam Tipi": "Mineral",
-      "Su Geçirmezlik": "5 ATM",
-      "Kordon / Kayış": "Silikon",
-      "Kadran Rengi": "Siyah",
-      "Kasa Materyali": "Çelik",
-      "Kasa Rengi": "Gri",
-      "Cinsiyet": "Erkek",
-      "Menşei": "ABD",
-      "Garanti": "2 Yıl Distribütör Garantili",
-      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
-    }
-  },
-  {
-    "id": 1823,
-    "name": "GUGW0800G1 Erkek Kol Saati",
-    "brand": "Guess",
-    "ref": "GUGW0800G1",
-    "reference": "GUGW0800G1",
-    "price": 22918,
-    "category": "saat",
-    "subCategory": "Erkek Saat",
-    "metal": "Çelik",
-    "origin": "ABD",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/0/2015d2158a3ab7b9b008c56cf8e239f0d82abf6e2fce0e91464ae049878321d7.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/c/d/cd7df05aac1cb1ef96acbd39aaa8734815487bc71984ad4c01ed7706c006c21d.jpeg",
-    "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/0/2015d2158a3ab7b9b008c56cf8e239f0d82abf6e2fce0e91464ae049878321d7.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/c/d/cd7df05aac1cb1ef96acbd39aaa8734815487bc71984ad4c01ed7706c006c21d.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/c/1/c1a68c097435942ad011dd011b0e5bd22d668e4d8909d89e8238c8481d064429.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/9/991844edc948d857ee0e7153cfcb36bcaa5d2fb18c04de32c6066f6d80b7f1b9.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/c/2ce16d0caa1244aa53c3dff3e0bc8153309ea51bd14f1c85cd0a744b0ba5dd11.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/1/d/1d67f6bdf4422845fa9f8c8ce01b817ba990d13ccda98d0f0ab9a058ec0a1b42.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/f/7/f72b351e6311b99d2d05634058d484feeee5f139bb3491fda16791cf13f57eed.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/7/27b0226269ee5211f65f11d18586a55da7ae1e2a554191446360458ac3353ef7.jpeg"
-    ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/guess-erkek-kol-saati-p-gugw0800g1",
-    "statusBadge": "Distribütör Garantili",
-    "conditionBadge": "Sıfır",
-    "isPreOwned": false,
-    "isGold": false,
-    "stock": 156,
-    "inStock": true,
-    "isNew": true,
-    "isHighValue": true,
-    "description": "Guess GUGW0800G1 Erkek Kol Saati, 44 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Guess GUGW0800G1 Erkek Kol Saati, 44 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "specs": {
-      "Kasa Çapı": "44 mm",
-      "Mekanizma": "Quartz",
-      "Cam Tipi": "Mineral",
-      "Su Geçirmezlik": "5 ATM",
-      "Kordon / Kayış": "Çelik",
-      "Kadran Rengi": "Yeşil",
-      "Kasa Materyali": "Çelik",
-      "Kasa Rengi": "Metalik Gri",
-      "Cinsiyet": "Erkek",
-      "Menşei": "ABD",
-      "Garanti": "2 Yıl Distribütör Garantili",
-      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
-    }
-  },
-  {
-    "id": 1824,
+    "id": 1821,
     "name": "GUGW0497G5 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0497G5",
@@ -37833,7 +37695,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1825,
+    "id": 1822,
     "name": "GUGW0762L6 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0762L6",
@@ -37857,7 +37719,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 535,
+    "stock": 529,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -37879,7 +37741,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1826,
+    "id": 1823,
     "name": "GUGW0757L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0757L3",
@@ -37928,7 +37790,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1827,
+    "id": 1824,
     "name": "GUGW0765L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0765L1",
@@ -37977,7 +37839,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1828,
+    "id": 1825,
     "name": "GUGW0791G1 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0791G1",
@@ -38026,7 +37888,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1829,
+    "id": 1826,
     "name": "GUGW0799G2 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0799G2",
@@ -38075,7 +37937,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1830,
+    "id": 1827,
     "name": "GUGW0789G4 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0789G4",
@@ -38123,7 +37985,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1831,
+    "id": 1828,
     "name": "GUGW0849G1 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0849G1",
@@ -38148,7 +38010,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 294,
+    "stock": 293,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -38170,7 +38032,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1832,
+    "id": 1829,
     "name": "GUGW0842L2 Pırlantalı Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0842L2",
@@ -38217,7 +38079,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1833,
+    "id": 1830,
     "name": "GUGW0865L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0865L1",
@@ -38241,7 +38103,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 139,
+    "stock": 138,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -38263,7 +38125,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1834,
+    "id": 1831,
     "name": "GUGW0914L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0914L3",
@@ -38309,7 +38171,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1835,
+    "id": 1832,
     "name": "GUGW0838L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0838L1",
@@ -38356,7 +38218,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1836,
+    "id": 1833,
     "name": "GUGW0900G4 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0900G4",
@@ -38380,7 +38242,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 390,
+    "stock": 389,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -38402,7 +38264,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1837,
+    "id": 1834,
     "name": "GUGW0900G5 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0900G5",
@@ -38426,7 +38288,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 191,
+    "stock": 189,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -38448,7 +38310,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1838,
+    "id": 1835,
     "name": "GUGW0913G2 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0913G2",
@@ -38494,7 +38356,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1839,
+    "id": 1836,
     "name": "GUGW0885G1 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0885G1",
@@ -38540,7 +38402,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1840,
+    "id": 1837,
     "name": "GUGW0896G1 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0896G1",
@@ -38586,95 +38448,49 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1841,
-    "name": "GUGW0899G2 Erkek Kol Saati",
+    "id": 1838,
+    "name": "GUGW0841L5 Kadın Kol Saati",
     "brand": "Guess",
-    "ref": "GUGW0899G2",
-    "reference": "GUGW0899G2",
-    "price": 22386,
-    "category": "saat",
-    "subCategory": "Erkek Saat",
-    "metal": "Çelik",
-    "origin": "ABD",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/b/2b6566c20ba9e680c373fe955c146b5a7a8e2925456be9d1429a1ee610dadd8c.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/5/752d15089bbdd0307cb1ebfed7a491788e614f97b751264e84012b5c351ddf45.jpeg",
-    "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/b/2b6566c20ba9e680c373fe955c146b5a7a8e2925456be9d1429a1ee610dadd8c.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/5/752d15089bbdd0307cb1ebfed7a491788e614f97b751264e84012b5c351ddf45.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/3/8/38279e9498229e0981ae1632af1b527e40d4fb3e98450cf679a43669b37cee69.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/3/9/39f7684eb446a07525d12fbd8e61f9dd9205edec4eb8f6a8b283c007f0914547.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/8/b86140821845e9eb800530f8a694fae0c82989f20ac9ad5ca84a04da6da845e4.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/6/268a1395f09082d6571e245555b992fe682dc9c9ee4f57b74bb39559caad2900.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/c/3/c3367503edaa6bb1dfc775a8612b8ab6e0970e6bd8e50bd873e2462c6f15ccac.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/7/97e5dff93237db83b784b844605d3b12423366569cea808adb94c17e09a5632f.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/f/3/f3a8d5b3a4cf59d0cf9f5944846f3090efdfe67c1d2b5eb5ba2a884b460d7b73.jpeg"
-    ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/guess-erkek-kol-saati-p-gugw0899g2",
-    "statusBadge": "Distribütör Garantili",
-    "conditionBadge": "Sıfır",
-    "isPreOwned": false,
-    "isGold": false,
-    "stock": 3,
-    "inStock": true,
-    "isNew": true,
-    "isHighValue": true,
-    "description": "Guess GUGW0899G2 Erkek Kol Saati, 47 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Guess GUGW0899G2 Erkek Kol Saati, 47 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "specs": {
-      "Kasa Çapı": "47 mm",
-      "Mekanizma": "Quartz",
-      "Cam Tipi": "Mineral",
-      "Su Geçirmezlik": "5 ATM",
-      "Kordon / Kayış": "Çelik",
-      "Kadran Rengi": "Altın Rengi",
-      "Kasa Materyali": "Çelik",
-      "Kasa Rengi": "Altın Rengi",
-      "Cinsiyet": "Erkek",
-      "Menşei": "ABD",
-      "Garanti": "2 Yıl Distribütör Garantili",
-      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
-    }
-  },
-  {
-    "id": 1842,
-    "name": "GUGW0877L4 Kadın Kol Saati",
-    "brand": "Guess",
-    "ref": "GUGW0877L4",
-    "reference": "GUGW0877L4",
-    "price": 13279,
+    "ref": "GUGW0841L5",
+    "reference": "GUGW0841L5",
+    "price": 14854,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
     "origin": "ABD",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/8/e88b964157fb57302875f381e981dd1dd4aee1d30851f6e37c4812dae0a9a765.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/6/1/6111e46463db23e2abb9f0f4ecfdc76031dc13d25b73d4a7e8fe067fdd5b82df.jpeg",
+    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/d/ed20b9ba1ccb88ce4ce9a516520b7542af94ff99dc6aa03fcfefda7bff68c4ad.jpeg",
+    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/4/b/4b1f98de662dd775d95ead2887c91a31cb47dec7c679952ba6a9e1645be838ca.jpeg",
     "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/8/e88b964157fb57302875f381e981dd1dd4aee1d30851f6e37c4812dae0a9a765.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/6/1/6111e46463db23e2abb9f0f4ecfdc76031dc13d25b73d4a7e8fe067fdd5b82df.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/3/1/31c450ae3797916eb391e83dec1336a47ecfe6ab2ef67f02fbff93267ca8dec6.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/5/0/50e594a66c36c2cb4e6a23d12c2bf58aa93aef98f65e0291ff217114011362f3.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/f/d/fd7876dab55ca15549931fa5f8b33cb58fa28f707ee3f8a8a3c997281d9794a6.jpeg"
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/d/ed20b9ba1ccb88ce4ce9a516520b7542af94ff99dc6aa03fcfefda7bff68c4ad.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/4/b/4b1f98de662dd775d95ead2887c91a31cb47dec7c679952ba6a9e1645be838ca.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/6/8/68ee7ce3c21fe4a6a7fb4cbbeaece94d515c19cbfe28e8c37d1d810d24af04d5.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/5/5/55ed3cc92b5ba9ab6a3b19115c4469eafedab28f3a49b9cb741f14cfd3399806.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/1/b16a6efadb44cf63b7e4a12d2197c09b672c2072d8c91eb638808d9e46346c89.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/6/2/6219d9f7ff25a4325042a2ddd1ed659b88d140f1435c7212abe560123798965b.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/d/f/dfa9c4124f7d5d575dc6228e487f0f8c74eb9cc71f3783b61d67f73eefbd7631.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/7/77e30af6e25a326bf687c0e48183169f5a9835c79a1c74fa78321d233fc7b7be.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/a/e/ae1a327b6ad43deba55bce5eb6ae2eca6888b7490d5c3d3a8d8590a98688000d.jpeg"
     ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/guess-kadin-kol-saati-p-gugw0877l4",
+    "sourceUrl": "https://www.saatvesaat.com.tr/guess-kadin-kol-saati-p-gugw0841l5",
     "statusBadge": "Distribütör Garantili",
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 74,
+    "stock": 84,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
-    "description": "Guess GUGW0877L4 Kadın Kol Saati, 34 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Guess GUGW0877L4 Kadın Kol Saati, 34 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "description": "Guess GUGW0841L5 Kadın Kol Saati, 30 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "desc": "Guess GUGW0841L5 Kadın Kol Saati, 30 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
     "specs": {
-      "Kasa Çapı": "34 mm",
+      "Kasa Çapı": "30 mm",
       "Mekanizma": "Quartz",
       "Cam Tipi": "Mineral",
       "Su Geçirmezlik": "3 ATM",
       "Kordon / Kayış": "Çelik",
-      "Kadran Rengi": "Beyaz",
+      "Kadran Rengi": "Yeşil",
       "Kasa Materyali": "Çelik",
-      "Kasa Rengi": "Metalik Gri",
+      "Kasa Rengi": "Altın Rengi",
       "Cinsiyet": "Kadın",
       "Menşei": "ABD",
       "Garanti": "2 Yıl Distribütör Garantili",
@@ -38682,7 +38498,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1843,
+    "id": 1839,
     "name": "GUGW0864L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0864L1",
@@ -38731,7 +38547,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1844,
+    "id": 1840,
     "name": "GUGW0696L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0696L2",
@@ -38780,7 +38596,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1845,
+    "id": 1841,
     "name": "GUGW0404L5 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0404L5",
@@ -38806,7 +38622,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 153,
+    "stock": 151,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -38828,7 +38644,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1846,
+    "id": 1842,
     "name": "GUGW0948L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0948L2",
@@ -38852,7 +38668,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 150,
+    "stock": 147,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -38874,7 +38690,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1847,
+    "id": 1843,
     "name": "GUGW0935L2 Pırlantalı Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0935L2",
@@ -38898,7 +38714,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 136,
+    "stock": 132,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -38920,7 +38736,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1848,
+    "id": 1844,
     "name": "GUGW0933L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0933L3",
@@ -38966,7 +38782,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1849,
+    "id": 1845,
     "name": "GUGW0934L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0934L1",
@@ -39012,7 +38828,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1850,
+    "id": 1846,
     "name": "GUGW0931L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0931L1",
@@ -39036,7 +38852,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 51,
+    "stock": 50,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -39058,7 +38874,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1851,
+    "id": 1847,
     "name": "GUGW0930L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0930L1",
@@ -39104,7 +38920,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1852,
+    "id": 1848,
     "name": "GUGW0924L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0924L2",
@@ -39128,7 +38944,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 212,
+    "stock": 207,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -39150,7 +38966,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1853,
+    "id": 1849,
     "name": "GUGW0927L5 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0927L5",
@@ -39196,7 +39012,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1854,
+    "id": 1850,
     "name": "GUGW0944L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0944L2",
@@ -39242,7 +39058,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1855,
+    "id": 1851,
     "name": "GUGW0971G1 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0971G1",
@@ -39288,7 +39104,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1856,
+    "id": 1852,
     "name": "GUGW0976G5 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0976G5",
@@ -39334,51 +39150,45 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1857,
-    "name": "GUGW0940L2 Kadın Kol Saati",
+    "id": 1853,
+    "name": "GUGW0982L3 Kadın Kol Saati",
     "brand": "Guess",
-    "ref": "GUGW0940L2",
-    "reference": "GUGW0940L2",
-    "price": 18004,
+    "ref": "GUGW0982L3",
+    "reference": "GUGW0982L3",
+    "price": 15596,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
     "origin": "ABD",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/c/9c3eefb8cedf78169feaa8edb1c228d61b39c44df6e17bbbeb59434a2cc35872.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/e/7e0b3fa8321d2369d3a82fa78f1708ebf11002b98f0df702636187d62406c9b5.jpeg",
+    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/3/4/34b7a8a629fcf83b6ebe35b0c1cab2395bef0dc7a3d265b8c467e1c20ec2688e.jpeg",
+    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/0/0/00fdc58678130b7fb37d61745fcf3520583f65f7f3ed311c46ffbde60b9b6623.jpeg",
     "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/c/9c3eefb8cedf78169feaa8edb1c228d61b39c44df6e17bbbeb59434a2cc35872.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/e/7e0b3fa8321d2369d3a82fa78f1708ebf11002b98f0df702636187d62406c9b5.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/4/2/42f24ca33679382175d3f9f768c51f5c1a781115d3aac33bc994ba612eddc113.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/a/a/aa81867c451e3727d3dc6de19478b2f064441420579f3480f6d20f94547793f9.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/5/251ade57de42673c74903461070a35d591574b7e0868a346be45e01f4d4a0d1a.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/6/7/67dc4b7e1b9c6da4e8099763b3974f3ff5142a186f1fd6d1b2de0c5e03a24fa5.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/1/71d4d42379b785c00e6d1c6ebf8ed797e1d0f6e92b168e1ac930f42c2f12c91b.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/8/a/8a7ea51e3738b5c2b2163851f83b758ca00c3c263f12af8ef83b604dbaac6088.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/0/3/031a502e957e75f1c256ab6788f04b31fa10725dc92d9009849296e7af077d63.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/5/95ea8c8d3156ead1fa96e96ec1305002a83e321d46be2faad45245a1befa3a49.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/a/6/a6466ddd48c5732cfa16fc09974af10a64d591a790be3886996428748c4d9f3c.jpeg"
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/3/4/34b7a8a629fcf83b6ebe35b0c1cab2395bef0dc7a3d265b8c467e1c20ec2688e.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/0/0/00fdc58678130b7fb37d61745fcf3520583f65f7f3ed311c46ffbde60b9b6623.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/d/e/ded156d512c6c2b17f0cd849402717fd8c65fc1d9cde6ea9157827ce165b5bd3.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/a/7a2283bbb02051c15b2f4e3def94be945a6130b14aae9b7dbb36fb6b949ca971.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/5/b/5bf8c17cd206642984ec24a779326a14ebad698728cb1eed15a54851bcd152b6.jpeg"
     ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/guess-kadin-kol-saati-p-gugw0940l2",
+    "sourceUrl": "https://www.saatvesaat.com.tr/guess-kadin-kol-saati-p-gugw0982l3",
     "statusBadge": "Distribütör Garantili",
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 34,
+    "stock": 59,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
-    "description": "Guess GUGW0940L2 Kadın Kol Saati, 21 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 1 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Guess GUGW0940L2 Kadın Kol Saati, 21 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 1 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "description": "Guess GUGW0982L3 Kadın Kol Saati, 21 x 24 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 1 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Rose Gold kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "desc": "Guess GUGW0982L3 Kadın Kol Saati, 21 x 24 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 1 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Rose Gold kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
     "specs": {
-      "Kasa Çapı": "21 mm",
+      "Kasa Çapı": "21 x 24 mm",
       "Mekanizma": "Quartz",
       "Cam Tipi": "Mineral",
       "Su Geçirmezlik": "1 ATM",
       "Kordon / Kayış": "Çelik",
-      "Kadran Rengi": "Altın Rengi",
+      "Kadran Rengi": "Beyaz",
       "Kasa Materyali": "Çelik",
-      "Kasa Rengi": "Altın Rengi",
+      "Kasa Rengi": "Rose Gold",
       "Cinsiyet": "Kadın",
       "Menşei": "ABD",
       "Garanti": "2 Yıl Distribütör Garantili",
@@ -39386,7 +39196,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1858,
+    "id": 1854,
     "name": "GUGW0988L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0988L2",
@@ -39438,7 +39248,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1859,
+    "id": 1855,
     "name": "GUGW0935L4 Pırlantalı Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0935L4",
@@ -39465,7 +39275,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 39,
+    "stock": 40,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -39487,7 +39297,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1860,
+    "id": 1856,
     "name": "GUGW0937L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0937L1",
@@ -39537,7 +39347,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1861,
+    "id": 1857,
     "name": "GUU1457L2M Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUU1457L2M",
@@ -39559,7 +39369,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 51,
+    "stock": 50,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -39581,7 +39391,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1862,
+    "id": 1858,
     "name": "GUGW0986L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0986L1",
@@ -39609,7 +39419,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 3,
+    "stock": 2,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -39631,7 +39441,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1863,
+    "id": 1859,
     "name": "GUGW0943L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0943L2",
@@ -39680,7 +39490,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1864,
+    "id": 1860,
     "name": "GUGW0930L6 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0930L6",
@@ -39726,7 +39536,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1865,
+    "id": 1861,
     "name": "GUGW0995L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0995L1",
@@ -39772,7 +39582,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1866,
+    "id": 1862,
     "name": "GUGW0991L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0991L1",
@@ -39818,7 +39628,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1867,
+    "id": 1863,
     "name": "GUGW0995L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0995L2",
@@ -39842,7 +39652,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 466,
+    "stock": 465,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -39864,46 +39674,89 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1868,
-    "name": "GUGW1018L2 Kadın Kol Saati",
+    "id": 1864,
+    "name": "GUGW0931L3 Kadın Kol Saati",
     "brand": "Guess",
-    "ref": "GUGW1018L2",
-    "reference": "GUGW1018L2",
-    "price": 17472,
+    "ref": "GUGW0931L3",
+    "reference": "GUGW0931L3",
+    "price": 16520,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
     "origin": "ABD",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/7/e7f068420e7ebdfa822e4499dc93d76c52cd08829c67214b802edb21fde50c8a.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/4/242c51aea8705d90655dca11e6b0895c17abfe3a0343efb721ce654230004e94.jpeg",
+    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/6/4/64c47c177c8fbf2dc806dad9a1c6b7dc7d060474d4a4d4acc6f2f7dee87f30e7.jpeg",
+    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/3/4/3409bac9a54d92c53cc951e5349fb04a6d20d9a2e1a7f9eca5feb46e525f60e3.jpeg",
     "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/7/e7f068420e7ebdfa822e4499dc93d76c52cd08829c67214b802edb21fde50c8a.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/4/242c51aea8705d90655dca11e6b0895c17abfe3a0343efb721ce654230004e94.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/5/f/5f499ff0a97b7b970284e9acdb02c1b89818921a3c7301e4e610e14b654146ea.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/3/b/3bd6db6f5faf34f04d81f6aa1bb62acc17c4896f4b0fe33f900ffa6ac4d0bf47.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/3/73156056c4e3bf11542f171935c0c51a3083be882bcd35e40544f0c65f310b8f.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/3/c/3c11f31941384af677ad6c9e9b4f1e1ed87dd88b73b6ebbd6a1e6f2859b4ff51.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/4/9/49c865748869df9efafe1bc6bae59082701f56051e99b3a1fe4340a95dd59fdd.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/4/740c23b95c4ddf0c35fe07301edf926507df92bcd7451ed3e04d0234991c7a2b.jpeg"
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/6/4/64c47c177c8fbf2dc806dad9a1c6b7dc7d060474d4a4d4acc6f2f7dee87f30e7.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/3/4/3409bac9a54d92c53cc951e5349fb04a6d20d9a2e1a7f9eca5feb46e525f60e3.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/5/250d74c3ebc53383cffacc495ecd83b92ebd5fe6c0e8df91ae2fd1d87b2a2e0f.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/3/7/37823e263c82bd2ba26c283ef68eb07582dde820b5454aadfaf1e90aa76ddf3c.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/e/be195d953b66f95f2f57f6c239ee141fbae5a6566982070cad6a818b2414b6bb.jpeg"
     ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/guess-kadin-kol-saati-p-gugw1018l2",
+    "sourceUrl": "https://www.saatvesaat.com.tr/guess-kadin-kol-saati-p-gugw0931l3",
     "statusBadge": "Distribütör Garantili",
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 49,
+    "stock": 61,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
-    "description": "Guess GUGW1018L2 Kadın Kol Saati, 25 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Guess GUGW1018L2 Kadın Kol Saati, 25 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "description": "Guess GUGW0931L3 Kadın Kol Saati, 25 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "desc": "Guess GUGW0931L3 Kadın Kol Saati, 25 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
     "specs": {
       "Kasa Çapı": "25 mm",
       "Mekanizma": "Quartz",
       "Cam Tipi": "Mineral",
-      "Su Geçirmezlik": "5 ATM",
+      "Su Geçirmezlik": "3 ATM",
       "Kordon / Kayış": "Çelik",
-      "Kadran Rengi": "Altın Rengi",
+      "Kadran Rengi": "Metalik Gri",
+      "Kasa Materyali": "Çelik",
+      "Kasa Rengi": "Metalik Gri",
+      "Cinsiyet": "Kadın",
+      "Menşei": "ABD",
+      "Garanti": "2 Yıl Distribütör Garantili",
+      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
+    }
+  },
+  {
+    "id": 1865,
+    "name": "GUGW0991L2 Kadın Kol Saati",
+    "brand": "Guess",
+    "ref": "GUGW0991L2",
+    "reference": "GUGW0991L2",
+    "price": 17990,
+    "category": "saat",
+    "subCategory": "Kadın Saat",
+    "metal": "Çelik",
+    "origin": "ABD",
+    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/3/e/3e9eb55d5fd445c580085e057bb7c0fcb2741cd90f7448d6202e99434dc42b67.jpeg",
+    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/e/ee706a16d811ce3f9189ae3161e86ecd87532765f4d11dd33af5c27ec1817f05.jpeg",
+    "images": [
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/3/e/3e9eb55d5fd445c580085e057bb7c0fcb2741cd90f7448d6202e99434dc42b67.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/e/ee706a16d811ce3f9189ae3161e86ecd87532765f4d11dd33af5c27ec1817f05.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/c/7c44443d808987d9a08789961fcaa00a96195ca31690dac85a1d21f0e885cc0e.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/d/0/d0d3e0962be26dee67941960a7360f25c10667e7d67e84e83ffed364726cf38f.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/4/b4aacff7505016a797b6270900a7591b918fcb4069d7fa526d8835e9ac56d069.jpeg"
+    ],
+    "sourceUrl": "https://www.saatvesaat.com.tr/guess-kadin-kol-saati-p-gugw0991l2",
+    "statusBadge": "Distribütör Garantili",
+    "conditionBadge": "Sıfır",
+    "isPreOwned": false,
+    "isGold": false,
+    "stock": 223,
+    "inStock": true,
+    "isNew": true,
+    "isHighValue": true,
+    "description": "Guess GUGW0991L2 Kadın Kol Saati, 30 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "desc": "Guess GUGW0991L2 Kadın Kol Saati, 30 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "specs": {
+      "Kasa Çapı": "30 mm",
+      "Mekanizma": "Quartz",
+      "Cam Tipi": "Mineral",
+      "Su Geçirmezlik": "3 ATM",
+      "Kordon / Kayış": "Çelik",
+      "Kadran Rengi": "Metalik Gri",
       "Kasa Materyali": "Çelik",
       "Kasa Rengi": "Altın Rengi",
       "Cinsiyet": "Kadın",
@@ -39913,41 +39766,38 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1869,
-    "name": "GUGW1018L1 Kadın Kol Saati",
+    "id": 1866,
+    "name": "GUGW0994L1 Kadın Kol Saati",
     "brand": "Guess",
-    "ref": "GUGW1018L1",
-    "reference": "GUGW1018L1",
-    "price": 15568,
+    "ref": "GUGW0994L1",
+    "reference": "GUGW0994L1",
+    "price": 14112,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
     "origin": "ABD",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/4/940f22147e9120b365d218c471a9f10a40b705ec94861fe299816826d1e6ca4e.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/4/2/4266504c4062bd2f9711a4c051737aa09248d5f3a430fdaaf9d0da1a542eb63a.jpeg",
+    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/8/98649508028477d7a9edd74ba57e771a6bcad68506a60eadca95f9153b4c0585.jpeg",
+    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/a/2a8634f154c1e3f012d4f14a232f09730c89b4c4ded4c7b091fadd6676904253.jpeg",
     "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/4/940f22147e9120b365d218c471a9f10a40b705ec94861fe299816826d1e6ca4e.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/4/2/4266504c4062bd2f9711a4c051737aa09248d5f3a430fdaaf9d0da1a542eb63a.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/d/9d86cc894fc9aa9a63e6364812892cb359c76d95decbbd8933defda3e7108bb6.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/a/ba88b3d0c833a9f3c75f99e8436d4155661b589b15aa91da385418dbe9a67de5.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/d/bd30c90861ce76dea952afce94ebe30fa5a2d076ec3d9b0f1698885690de41bb.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/4/e/4e0edcbefcc45bc8468186756ce1503a97586ff098c09ccad689a44dd7ef9137.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/4/8/4841ce695abb91207f6abd556760f4f8d06e9e486031fd31f982e5d8b6638c8e.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/0/e0975bac2f32aac483464b27ad78a15ca5377be94bf1ed982a8639e6550edd27.jpeg"
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/8/98649508028477d7a9edd74ba57e771a6bcad68506a60eadca95f9153b4c0585.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/a/2a8634f154c1e3f012d4f14a232f09730c89b4c4ded4c7b091fadd6676904253.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/3/e35387da04d78b2e6b22d935e55fcf3fb5f95265af42e3a537cf22a2a1833944.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/f/5/f56c6e3d1fb61a5e6182b163516b5ce9c12ed36c0d090551ddec59cd8a920429.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/6/26f855201f9c0d4dde9b7f411f83c0f4ce032837cc8a87b04b4280f6ebe57072.jpeg"
     ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/guess-kadin-kol-saati-p-gugw1018l1",
+    "sourceUrl": "https://www.saatvesaat.com.tr/guess-kadin-kol-saati-p-gugw0994l1",
     "statusBadge": "Distribütör Garantili",
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 125,
+    "stock": 174,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
-    "description": "Guess GUGW1018L1 Kadın Kol Saati, 25 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Guess GUGW1018L1 Kadın Kol Saati, 25 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "description": "Guess GUGW0994L1 Kadın Kol Saati, 26 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "desc": "Guess GUGW0994L1 Kadın Kol Saati, 26 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
     "specs": {
-      "Kasa Çapı": "25 mm",
+      "Kasa Çapı": "26 mm",
       "Mekanizma": "Quartz",
       "Cam Tipi": "Mineral",
       "Su Geçirmezlik": "5 ATM",
@@ -39962,7 +39812,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1870,
+    "id": 1867,
     "name": "GUGW1035L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1035L1",
@@ -40008,7 +39858,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1871,
+    "id": 1868,
     "name": "GUGW1026L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1026L2",
@@ -40054,7 +39904,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1872,
+    "id": 1869,
     "name": "GUGW1017L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1017L2",
@@ -40103,7 +39953,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1873,
+    "id": 1870,
     "name": "GUGW1016L4 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1016L4",
@@ -40152,7 +40002,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1874,
+    "id": 1871,
     "name": "GUGW1021L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1021L2",
@@ -40179,7 +40029,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 83,
+    "stock": 82,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -40201,7 +40051,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1875,
+    "id": 1872,
     "name": "GUGW1059G1 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1059G1",
@@ -40247,7 +40097,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1876,
+    "id": 1873,
     "name": "GUGW1058G2 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1058G2",
@@ -40293,7 +40143,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1877,
+    "id": 1874,
     "name": "GUGW1027L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1027L1",
@@ -40342,7 +40192,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1878,
+    "id": 1875,
     "name": "GUGW1018L5 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1018L5",
@@ -40369,7 +40219,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 161,
+    "stock": 160,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -40391,7 +40241,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1879,
+    "id": 1876,
     "name": "GUGW1019L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1019L1",
@@ -40440,7 +40290,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1880,
+    "id": 1877,
     "name": "GUGW1019L4 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1019L4",
@@ -40489,7 +40339,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1881,
+    "id": 1878,
     "name": "GUGW1048G7 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1048G7",
@@ -40535,7 +40385,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1882,
+    "id": 1879,
     "name": "GUGW1039L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1039L1",
@@ -40584,7 +40434,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1883,
+    "id": 1880,
     "name": "GUGW1043L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1043L2",
@@ -40634,7 +40484,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1884,
+    "id": 1881,
     "name": "GUGW1038L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1038L2",
@@ -40683,53 +40533,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1885,
-    "name": "GUGW1153G2 Erkek Kol Saati",
-    "brand": "Guess",
-    "ref": "GUGW1153G2",
-    "reference": "GUGW1153G2",
-    "price": 18928,
-    "category": "saat",
-    "subCategory": "Erkek Saat",
-    "metal": "Çelik",
-    "origin": "ABD",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/1/d/1d44df3b6eeb2ea17f28ee84155bc5f1184682bd9a65aba1f1a7d42663c9765b.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/5/e/5e567d967271bfa48fe9f37b4079d1872d1e37c13a4e2bb5c94a1a875e8d7d9a.jpeg",
-    "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/1/d/1d44df3b6eeb2ea17f28ee84155bc5f1184682bd9a65aba1f1a7d42663c9765b.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/5/e/5e567d967271bfa48fe9f37b4079d1872d1e37c13a4e2bb5c94a1a875e8d7d9a.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/0/b013552762c794565a226992ea4cb6dd60858ec4b09443eb6362fe8ee7f67df4.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/c/9/c9d66d6b4719c32c9b63d5bf9e2ee0e8198bb0d1ae17ce38a2007e32e60fc5dc.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/3/d/3d9c2075133485828f15c6759f77041b6ab53a70000103aba23e28f328f75144.jpeg"
-    ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/guess-erkek-kol-saati-p-gugw1153g2",
-    "statusBadge": "Distribütör Garantili",
-    "conditionBadge": "Sıfır",
-    "isPreOwned": false,
-    "isGold": false,
-    "stock": 31,
-    "inStock": true,
-    "isNew": true,
-    "isHighValue": true,
-    "description": "Guess GUGW1153G2 Erkek Kol Saati, 39 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Guess GUGW1153G2 Erkek Kol Saati, 39 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "specs": {
-      "Kasa Çapı": "39 mm",
-      "Mekanizma": "Quartz",
-      "Cam Tipi": "Mineral",
-      "Su Geçirmezlik": "5 ATM",
-      "Kordon / Kayış": "Çelik",
-      "Kadran Rengi": "Altın Rengi",
-      "Kasa Materyali": "Çelik",
-      "Kasa Rengi": "Altın Rengi",
-      "Cinsiyet": "Erkek",
-      "Menşei": "ABD",
-      "Garanti": "2 Yıl Distribütör Garantili",
-      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
-    }
-  },
-  {
-    "id": 1886,
+    "id": 1882,
     "name": "GUGW1130G5 Erkek Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1130G5",
@@ -40753,7 +40557,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 31,
+    "stock": 30,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -40775,7 +40579,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1887,
+    "id": 1883,
     "name": "GUGW1102L3 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1102L3",
@@ -40821,7 +40625,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1888,
+    "id": 1884,
     "name": "GUGW1099L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1099L2",
@@ -40845,7 +40649,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 47,
+    "stock": 43,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -40867,7 +40671,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1889,
+    "id": 1885,
     "name": "GUGW1082L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1082L2",
@@ -40913,7 +40717,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1890,
+    "id": 1886,
     "name": "GUGW1120L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1120L1",
@@ -40937,7 +40741,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 44,
+    "stock": 42,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -40959,7 +40763,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1891,
+    "id": 1887,
     "name": "GUGW1119L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1119L1",
@@ -40983,7 +40787,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 52,
+    "stock": 51,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -41005,7 +40809,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1892,
+    "id": 1888,
     "name": "GUGW1116L1 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1116L1",
@@ -41029,7 +40833,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 67,
+    "stock": 66,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -41051,7 +40855,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1893,
+    "id": 1889,
     "name": "GUGW1114L7 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1114L7",
@@ -41075,7 +40879,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 6,
+    "stock": 2,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -41097,53 +40901,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1894,
-    "name": "GUGW1114L2 Kadın Kol Saati",
-    "brand": "Guess",
-    "ref": "GUGW1114L2",
-    "reference": "GUGW1114L2",
-    "price": 24332,
-    "category": "saat",
-    "subCategory": "Kadın Saat",
-    "metal": "Çelik",
-    "origin": "ABD",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/1/c/1ce13b76b2b276a7ffee0d52ed9fcbd935c8749cf54f22cf7403e849720788c2.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/c/c/cc41b81ffe2f6511886968048163ab34d80ed6fa39877c33bccce3278dbe49ad.jpeg",
-    "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/1/c/1ce13b76b2b276a7ffee0d52ed9fcbd935c8749cf54f22cf7403e849720788c2.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/c/c/cc41b81ffe2f6511886968048163ab34d80ed6fa39877c33bccce3278dbe49ad.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/a/2/a23199157467251dce6bb7ee40468446b2a9f895b9c797dd80ef7e4e78f754d9.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/d/6/d6c8d1794d373ad7acc264929ded966e14ce8e3530a73ef7e76fe58ecf9f9ecf.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/c/7/c7eccdfab82cd9924dded8ba1387b7b09a0c1211c905aa09db8e7b8a9f1b9b5c.jpeg"
-    ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/guess-kadin-kol-saati-p-gugw1114l2",
-    "statusBadge": "Distribütör Garantili",
-    "conditionBadge": "Sıfır",
-    "isPreOwned": false,
-    "isGold": false,
-    "stock": 2,
-    "inStock": true,
-    "isNew": true,
-    "isHighValue": true,
-    "description": "Guess GUGW1114L2 Kadın Kol Saati, 30 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Guess GUGW1114L2 Kadın Kol Saati, 30 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "specs": {
-      "Kasa Çapı": "30 mm",
-      "Mekanizma": "Quartz",
-      "Cam Tipi": "Mineral",
-      "Su Geçirmezlik": "5 ATM",
-      "Kordon / Kayış": "Çelik",
-      "Kadran Rengi": "Desenli",
-      "Kasa Materyali": "Çelik",
-      "Kasa Rengi": "Altın Rengi",
-      "Cinsiyet": "Kadın",
-      "Menşei": "ABD",
-      "Garanti": "2 Yıl Distribütör Garantili",
-      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
-    }
-  },
-  {
-    "id": 1895,
+    "id": 1890,
     "name": "GUGW1110L2 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW1110L2",
@@ -41167,7 +40925,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 47,
+    "stock": 46,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -41189,7 +40947,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1896,
+    "id": 1891,
     "name": "GUGW0869L5 Kadın Kol Saati",
     "brand": "Guess",
     "ref": "GUGW0869L5",
@@ -41213,7 +40971,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 59,
+    "stock": 58,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -41235,7 +40993,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1897,
+    "id": 1892,
     "name": "FME3233 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FME3233",
@@ -41280,7 +41038,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1898,
+    "id": 1893,
     "name": "FME3230 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FME3230",
@@ -41325,7 +41083,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1899,
+    "id": 1894,
     "name": "FFS5933 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS5933",
@@ -41369,7 +41127,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1900,
+    "id": 1895,
     "name": "FFS5822 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS5822",
@@ -41414,7 +41172,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1901,
+    "id": 1896,
     "name": "FFS5792 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS5792",
@@ -41458,7 +41216,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1902,
+    "id": 1897,
     "name": "FFS5713 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS5713",
@@ -41503,7 +41261,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1903,
+    "id": 1898,
     "name": "FES4319 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES4319",
@@ -41524,7 +41282,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 254,
+    "stock": 253,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -41546,7 +41304,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1904,
+    "id": 1899,
     "name": "FFS5452 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS5452",
@@ -41590,7 +41348,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1905,
+    "id": 1900,
     "name": "FES4432 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES4432",
@@ -41611,7 +41369,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 230,
+    "stock": 229,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -41633,7 +41391,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1906,
+    "id": 1901,
     "name": "FME3155 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FME3155",
@@ -41677,7 +41435,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1907,
+    "id": 1902,
     "name": "FME3154 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FME3154",
@@ -41699,7 +41457,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 6,
+    "stock": 7,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -41721,7 +41479,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1908,
+    "id": 1903,
     "name": "FFS5384 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS5384",
@@ -41765,7 +41523,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1909,
+    "id": 1904,
     "name": "FES4315 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES4315",
@@ -41808,7 +41566,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1910,
+    "id": 1905,
     "name": "FES5344 Kadın Yüzük Saat",
     "brand": "Fossil",
     "ref": "FES5344",
@@ -41853,7 +41611,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1911,
+    "id": 1906,
     "name": "FFS6045 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6045",
@@ -41898,7 +41656,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1912,
+    "id": 1907,
     "name": "FFS6047 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6047",
@@ -41943,7 +41701,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1913,
+    "id": 1908,
     "name": "FBQ2811 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FBQ2811",
@@ -41989,7 +41747,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1914,
+    "id": 1909,
     "name": "FME3206 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FME3206",
@@ -42034,7 +41792,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1915,
+    "id": 1910,
     "name": "FFS6008 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6008",
@@ -42079,7 +41837,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1916,
+    "id": 1911,
     "name": "FFS6009 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6009",
@@ -42124,7 +41882,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1917,
+    "id": 1912,
     "name": "FFS6064 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6064",
@@ -42169,7 +41927,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1918,
+    "id": 1913,
     "name": "FBQ2869 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FBQ2869",
@@ -42211,7 +41969,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1919,
+    "id": 1914,
     "name": "FFS6077 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6077",
@@ -42256,7 +42014,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1920,
+    "id": 1915,
     "name": "FES5366 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5366",
@@ -42301,7 +42059,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1921,
+    "id": 1916,
     "name": "FES5367 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5367",
@@ -42324,7 +42082,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 366,
+    "stock": 363,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -42346,7 +42104,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1922,
+    "id": 1917,
     "name": "FES5308 Kadın Yüzük Saat",
     "brand": "Fossil",
     "ref": "FES5308",
@@ -42391,7 +42149,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1923,
+    "id": 1918,
     "name": "FES5373 Kadın Kolye Saat",
     "brand": "Fossil",
     "ref": "FES5373",
@@ -42438,7 +42196,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1924,
+    "id": 1919,
     "name": "FFS6029 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6029",
@@ -42483,7 +42241,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1925,
+    "id": 1920,
     "name": "FES5340 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5340",
@@ -42528,7 +42286,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1926,
+    "id": 1921,
     "name": "FFS6090 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6090",
@@ -42573,7 +42331,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1927,
+    "id": 1922,
     "name": "FFS6091 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6091",
@@ -42618,7 +42376,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1928,
+    "id": 1923,
     "name": "FES5388 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5388",
@@ -42641,7 +42399,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 434,
+    "stock": 433,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -42663,7 +42421,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1929,
+    "id": 1924,
     "name": "FFS6093 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6093",
@@ -42686,7 +42444,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 61,
+    "stock": 60,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -42708,7 +42466,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1930,
+    "id": 1925,
     "name": "FLE1199 The Wizard of Oz x Fossil Glinda The Good Witch Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FLE1199",
@@ -42756,7 +42514,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1931,
+    "id": 1926,
     "name": "FFS6137 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6137",
@@ -42781,7 +42539,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 84,
+    "stock": 83,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -42803,7 +42561,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1932,
+    "id": 1927,
     "name": "FES5433 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5433",
@@ -42848,7 +42606,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1933,
+    "id": 1928,
     "name": "FFS6131 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6131",
@@ -42894,7 +42652,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1934,
+    "id": 1929,
     "name": "FFS6133 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6133",
@@ -42940,7 +42698,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1935,
+    "id": 1930,
     "name": "FLE1215 Nick Jonas x Fossil Machine Luxe Blue Vignette Kol Saati",
     "brand": "Fossil",
     "ref": "FLE1215",
@@ -42987,7 +42745,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1936,
+    "id": 1931,
     "name": "FLE1216 Nick Jonas x Fossil Machine Luxe Aventurine Kol Saati",
     "brand": "Fossil",
     "ref": "FLE1216",
@@ -43033,7 +42791,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1937,
+    "id": 1932,
     "name": "FME3270 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FME3270",
@@ -43058,7 +42816,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 68,
+    "stock": 67,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -43080,7 +42838,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1938,
+    "id": 1933,
     "name": "FES5437 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5437",
@@ -43104,7 +42862,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 150,
+    "stock": 152,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -43126,7 +42884,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1939,
+    "id": 1934,
     "name": "FFS6150 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6150",
@@ -43173,7 +42931,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1940,
+    "id": 1935,
     "name": "FES5444 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5444",
@@ -43218,7 +42976,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1941,
+    "id": 1936,
     "name": "FME3271 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FME3271",
@@ -43243,7 +43001,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 121,
+    "stock": 120,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -43265,7 +43023,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1942,
+    "id": 1937,
     "name": "FME3273 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FME3273",
@@ -43290,7 +43048,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 85,
+    "stock": 84,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -43312,7 +43070,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1943,
+    "id": 1938,
     "name": "FES5465 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5465",
@@ -43336,7 +43094,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 115,
+    "stock": 114,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -43358,7 +43116,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1944,
+    "id": 1939,
     "name": "FES5470 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5470",
@@ -43382,7 +43140,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 203,
+    "stock": 201,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -43404,7 +43162,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1945,
+    "id": 1940,
     "name": "FFS6164 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6164",
@@ -43449,7 +43207,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1946,
+    "id": 1941,
     "name": "FME3278 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FME3278",
@@ -43497,7 +43255,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1947,
+    "id": 1942,
     "name": "FLE1228 Big Tic Limited Edition Kol Saati",
     "brand": "Fossil",
     "ref": "FLE1228",
@@ -43528,7 +43286,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 3,
+    "stock": 4,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -43550,7 +43308,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1948,
+    "id": 1943,
     "name": "FFS6165 Big Tic Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6165",
@@ -43599,7 +43357,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1949,
+    "id": 1944,
     "name": "FFS6161 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6161",
@@ -43645,7 +43403,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1950,
+    "id": 1945,
     "name": "FES5457 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5457",
@@ -43691,7 +43449,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1951,
+    "id": 1946,
     "name": "FES5482 Kadın Yüzük Saat",
     "brand": "Fossil",
     "ref": "FES5482",
@@ -43738,7 +43496,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1952,
+    "id": 1947,
     "name": "FLE1243 Big Tic Kol Saati",
     "brand": "Fossil",
     "ref": "FLE1243",
@@ -43785,7 +43543,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1953,
+    "id": 1948,
     "name": "FLE1240 Big Tic Kol Saati",
     "brand": "Fossil",
     "ref": "FLE1240",
@@ -43834,7 +43592,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1954,
+    "id": 1949,
     "name": "FES5485 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5485",
@@ -43879,7 +43637,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1955,
+    "id": 1950,
     "name": "FES5474 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5474",
@@ -43903,7 +43661,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 129,
+    "stock": 123,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -43925,7 +43683,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1956,
+    "id": 1951,
     "name": "FLE1232  Disney x Fossil Limited-Edition Mickey Mouse Big Tic Erkek Kol Saati ",
     "brand": "Fossil",
     "ref": "FLE1232",
@@ -43971,7 +43729,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1957,
+    "id": 1952,
     "name": "FES4949 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES4949",
@@ -43993,7 +43751,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 200,
+    "stock": 199,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -44015,7 +43773,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1958,
+    "id": 1953,
     "name": "FFS5699 Erkek Kol Saati ",
     "brand": "Fossil",
     "ref": "FFS5699",
@@ -44059,7 +43817,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1959,
+    "id": 1954,
     "name": "FES4649 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES4649",
@@ -44103,7 +43861,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1960,
+    "id": 1955,
     "name": "FFS5525 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS5525",
@@ -44126,7 +43884,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 16,
+    "stock": 15,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -44148,7 +43906,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1961,
+    "id": 1956,
     "name": "FES4433 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES4433",
@@ -44193,7 +43951,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1962,
+    "id": 1957,
     "name": "FFS5437 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS5437",
@@ -44236,7 +43994,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1963,
+    "id": 1958,
     "name": "FES4301 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES4301",
@@ -44280,7 +44038,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1964,
+    "id": 1959,
     "name": "FJR1401 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FJR1401",
@@ -44324,7 +44082,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1965,
+    "id": 1960,
     "name": "FJR1487 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FJR1487",
@@ -44368,7 +44126,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1966,
+    "id": 1961,
     "name": "FES3282 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES3282",
@@ -44413,7 +44171,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1967,
+    "id": 1962,
     "name": "FFS4812 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS4812",
@@ -44458,7 +44216,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1968,
+    "id": 1963,
     "name": "FBQ3908 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FBQ3908",
@@ -44502,7 +44260,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1969,
+    "id": 1964,
     "name": "FBQ3884 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FBQ3884",
@@ -44546,7 +44304,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1970,
+    "id": 1965,
     "name": "FES5305 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5305",
@@ -44590,7 +44348,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1971,
+    "id": 1966,
     "name": "FES5370 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5370",
@@ -44635,7 +44393,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1972,
+    "id": 1967,
     "name": "FES5362 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5362",
@@ -44658,7 +44416,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 500,
+    "stock": 499,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -44680,7 +44438,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1973,
+    "id": 1968,
     "name": "FES5368 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5368",
@@ -44703,7 +44461,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 376,
+    "stock": 375,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -44725,7 +44483,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1974,
+    "id": 1969,
     "name": "FES5358 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5358",
@@ -44770,7 +44528,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1975,
+    "id": 1970,
     "name": "FME3264 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FME3264",
@@ -44816,7 +44574,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1976,
+    "id": 1971,
     "name": "FBQ3970 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FBQ3970",
@@ -44860,7 +44618,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1977,
+    "id": 1972,
     "name": "FES5364 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5364",
@@ -44905,7 +44663,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1978,
+    "id": 1973,
     "name": "FBQ2809 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FBQ2809",
@@ -44950,7 +44708,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1979,
+    "id": 1974,
     "name": "FBQ2888 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FBQ2888",
@@ -44994,7 +44752,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1980,
+    "id": 1975,
     "name": "FES5386 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5386",
@@ -45039,7 +44797,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1981,
+    "id": 1976,
     "name": "FME3266 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FME3266",
@@ -45063,7 +44821,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 72,
+    "stock": 70,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -45085,7 +44843,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1982,
+    "id": 1977,
     "name": "FES5381 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5381",
@@ -45130,7 +44888,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1983,
+    "id": 1978,
     "name": "FFS6092 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6092",
@@ -45175,7 +44933,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1984,
+    "id": 1979,
     "name": "FES5380 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5380",
@@ -45220,7 +44978,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1985,
+    "id": 1980,
     "name": "FLE1197SET Marvel x Fossil Limited Edition SPIDER-MAN Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FLE1197SET",
@@ -45267,7 +45025,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1986,
+    "id": 1981,
     "name": "FFS6109 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6109",
@@ -45312,7 +45070,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1987,
+    "id": 1982,
     "name": "FFS6112 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6112",
@@ -45357,7 +45115,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1988,
+    "id": 1983,
     "name": "FES5401 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5401",
@@ -45402,7 +45160,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1989,
+    "id": 1984,
     "name": "FFS6110 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6110",
@@ -45447,7 +45205,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1990,
+    "id": 1985,
     "name": "FFS6100 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6100",
@@ -45470,7 +45228,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 85,
+    "stock": 84,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -45492,7 +45250,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1991,
+    "id": 1986,
     "name": "FFS6098 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6098",
@@ -45537,7 +45295,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1992,
+    "id": 1987,
     "name": "FES5399 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5399",
@@ -45582,7 +45340,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1993,
+    "id": 1988,
     "name": "FBQ2904 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FBQ2904",
@@ -45604,7 +45362,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 22,
+    "stock": 21,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -45626,7 +45384,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1994,
+    "id": 1989,
     "name": "FBQ5009 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FBQ5009",
@@ -45668,7 +45426,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1995,
+    "id": 1990,
     "name": "FES5426 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5426",
@@ -45692,7 +45450,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 159,
+    "stock": 157,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -45714,7 +45472,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1996,
+    "id": 1991,
     "name": "FES5428 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5428",
@@ -45760,52 +45518,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1997,
-    "name": "FES5421 Kadın Kol Saati",
-    "brand": "Fossil",
-    "ref": "FES5421",
-    "reference": "FES5421",
-    "price": 17038,
-    "category": "saat",
-    "subCategory": "Kadın Saat",
-    "metal": "Çelik",
-    "origin": "ABD",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/a/eaf2d641ca6582974d29167da9239c731532381cf237c45bb659d326ea277816.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/a/f/afcdbd9bdfe43a950ab94a5a264b7e76a6dffed09c6b1ba7bfa2d1511cd92056.jpeg",
-    "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/a/eaf2d641ca6582974d29167da9239c731532381cf237c45bb659d326ea277816.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/a/f/afcdbd9bdfe43a950ab94a5a264b7e76a6dffed09c6b1ba7bfa2d1511cd92056.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/f/4/f42f3449ec30a1d957b70e897b5ac0d3140421feaaaf3c0271e0038d3f8b9b89.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/0/b0590791a7aa7a703a316662945d31bf5fd71bf2a97cda64cd1388cad4f3b944.jpeg"
-    ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/fossil-kadin-kol-saati-p-fes5421",
-    "statusBadge": "Distribütör Garantili",
-    "conditionBadge": "Sıfır",
-    "isPreOwned": false,
-    "isGold": false,
-    "stock": 139,
-    "inStock": true,
-    "isNew": true,
-    "isHighValue": true,
-    "description": "Fossil FES5421 Kadın Kol Saati, 28 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Fossil FES5421 Kadın Kol Saati, 28 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "specs": {
-      "Kasa Çapı": "28 mm",
-      "Mekanizma": "Quartz",
-      "Cam Tipi": "Mineral",
-      "Su Geçirmezlik": "5 ATM",
-      "Kordon / Kayış": "Çelik",
-      "Kadran Rengi": "Metalik Gri",
-      "Kasa Materyali": "Çelik",
-      "Kasa Rengi": "Altın Rengi",
-      "Cinsiyet": "Kadın",
-      "Menşei": "ABD",
-      "Garanti": "2 Yıl Distribütör Garantili",
-      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
-    }
-  },
-  {
-    "id": 1998,
+    "id": 1992,
     "name": "FME3280 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FME3280",
@@ -45851,7 +45564,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 1999,
+    "id": 1993,
     "name": "FES5462 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5462",
@@ -45875,7 +45588,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 358,
+    "stock": 357,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -45897,7 +45610,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2000,
+    "id": 1994,
     "name": "FLE1242 Big Tic Kol Saati",
     "brand": "Fossil",
     "ref": "FLE1242",
@@ -45943,7 +45656,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2001,
+    "id": 1995,
     "name": "FLE1237 Big Tic Kol Saati",
     "brand": "Fossil",
     "ref": "FLE1237",
@@ -45992,7 +45705,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2002,
+    "id": 1996,
     "name": "FES5483 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5483",
@@ -46037,7 +45750,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2003,
+    "id": 1997,
     "name": "FES5475 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5475",
@@ -46061,7 +45774,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 130,
+    "stock": 129,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -46083,7 +45796,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2004,
+    "id": 1998,
     "name": "FES5503 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5503",
@@ -46128,7 +45841,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2005,
+    "id": 1999,
     "name": "FES5496 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5496",
@@ -46174,7 +45887,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2006,
+    "id": 2000,
     "name": "FES5493 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5493",
@@ -46219,7 +45932,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2007,
+    "id": 2001,
     "name": "FES5271 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5271",
@@ -46263,7 +45976,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2008,
+    "id": 2002,
     "name": "FES5259 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5259",
@@ -46308,7 +46021,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2009,
+    "id": 2003,
     "name": "FES5258 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5258",
@@ -46352,7 +46065,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2010,
+    "id": 2004,
     "name": "FBQ3802  Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FBQ3802",
@@ -46396,7 +46109,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2011,
+    "id": 2005,
     "name": "FLE1159 Fossil &amp; Harry Potter Hufflepuff Kol Saati",
     "brand": "Fossil",
     "ref": "FLE1159",
@@ -46445,7 +46158,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2012,
+    "id": 2006,
     "name": "FES5219 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5219",
@@ -46490,7 +46203,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2013,
+    "id": 2007,
     "name": "FES5222 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5222",
@@ -46534,7 +46247,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2014,
+    "id": 2008,
     "name": "FES5221 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5221",
@@ -46558,7 +46271,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 167,
+    "stock": 166,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -46580,7 +46293,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2015,
+    "id": 2009,
     "name": "FES5166 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5166",
@@ -46625,52 +46338,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2016,
-    "name": "FES4992  Kadın Kol Saati",
-    "brand": "Fossil",
-    "ref": "FES4992",
-    "reference": "FES4992",
-    "price": 14014,
-    "category": "saat",
-    "subCategory": "Kadın Saat",
-    "metal": "Çelik",
-    "origin": "ABD",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/f/4/f4fc55ab4d1feaaa8797297a7399398580b049105dbbead9ba281c0a51551c96.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/c/f/cf612068c3600411dfe520ea8c3f9866c407773dfa131d99d81c39d5bb0e358f.jpeg",
-    "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/f/4/f4fc55ab4d1feaaa8797297a7399398580b049105dbbead9ba281c0a51551c96.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/c/f/cf612068c3600411dfe520ea8c3f9866c407773dfa131d99d81c39d5bb0e358f.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/a/c/acafce268618442237dfdc9e16d4e265eb6d608f9a4de6745a30db8de29323c6.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/6/7677d8cb2af4c40915c74f40801d63a6a95a9a8290e77a0148811de31713958e.jpeg"
-    ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/fossil-kadin-kol-saati-p-fes4992",
-    "statusBadge": "Distribütör Garantili",
-    "conditionBadge": "Sıfır",
-    "isPreOwned": false,
-    "isGold": false,
-    "stock": 1,
-    "inStock": true,
-    "isNew": true,
-    "isHighValue": true,
-    "description": "Fossil FES4992  Kadın Kol Saati, 28 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Rose Gold kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Fossil FES4992  Kadın Kol Saati, 28 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Rose Gold kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "specs": {
-      "Kasa Çapı": "28 mm",
-      "Mekanizma": "Quartz",
-      "Cam Tipi": "Mineral",
-      "Su Geçirmezlik": "5 ATM",
-      "Kordon / Kayış": "Çelik",
-      "Kadran Rengi": "Rose Gold",
-      "Kasa Materyali": "Çelik",
-      "Kasa Rengi": "Rose Gold",
-      "Cinsiyet": "Kadın",
-      "Menşei": "ABD",
-      "Garanti": "2 Yıl Distribütör Garantili",
-      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
-    }
-  },
-  {
-    "id": 2017,
+    "id": 2010,
     "name": "FBQ3852 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FBQ3852",
@@ -46714,7 +46382,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2018,
+    "id": 2011,
     "name": "FBQ3832 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FBQ3832",
@@ -46758,7 +46426,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2019,
+    "id": 2012,
     "name": "FES5303 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5303",
@@ -46802,7 +46470,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2020,
+    "id": 2013,
     "name": "FES5307 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5307",
@@ -46825,7 +46493,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 148,
+    "stock": 147,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -46847,7 +46515,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2021,
+    "id": 2014,
     "name": "FES5310 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5310",
@@ -46892,7 +46560,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2022,
+    "id": 2015,
     "name": "FES5304 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5304",
@@ -46938,7 +46606,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2023,
+    "id": 2016,
     "name": "FFS6011 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6011",
@@ -46983,7 +46651,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2024,
+    "id": 2017,
     "name": "FES5326 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5326",
@@ -47028,7 +46696,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2025,
+    "id": 2018,
     "name": "FES5327 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5327",
@@ -47073,7 +46741,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2026,
+    "id": 2019,
     "name": "FBQ3925 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FBQ3925",
@@ -47117,7 +46785,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2027,
+    "id": 2020,
     "name": "FES5331 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5331",
@@ -47162,7 +46830,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2028,
+    "id": 2021,
     "name": "FES5338 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5338",
@@ -47207,7 +46875,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2029,
+    "id": 2022,
     "name": "FES5343 Kadın Yüzük Saat",
     "brand": "Fossil",
     "ref": "FES5343",
@@ -47252,7 +46920,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2030,
+    "id": 2023,
     "name": "FFS6054 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6054",
@@ -47297,7 +46965,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2031,
+    "id": 2024,
     "name": "FFS6063 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6063",
@@ -47341,7 +47009,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2032,
+    "id": 2025,
     "name": "FBQ3979 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FBQ3979",
@@ -47383,7 +47051,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2033,
+    "id": 2026,
     "name": "FBQ3972 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FBQ3972",
@@ -47425,7 +47093,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2034,
+    "id": 2027,
     "name": "FES5361 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5361",
@@ -47470,7 +47138,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2035,
+    "id": 2028,
     "name": "FFS6079 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6079",
@@ -47515,7 +47183,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2036,
+    "id": 2029,
     "name": "FFS6078 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6078",
@@ -47538,7 +47206,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 284,
+    "stock": 282,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -47560,7 +47228,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2037,
+    "id": 2030,
     "name": "FES5357 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5357",
@@ -47605,7 +47273,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2038,
+    "id": 2031,
     "name": "FES5363 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5363",
@@ -47650,7 +47318,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2039,
+    "id": 2032,
     "name": "FES5365 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5365",
@@ -47695,7 +47363,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2040,
+    "id": 2033,
     "name": "FME3261 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FME3261",
@@ -47741,7 +47409,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2041,
+    "id": 2034,
     "name": "FME3263 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FME3263",
@@ -47787,7 +47455,52 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2042,
+    "id": 2035,
+    "name": "FFS6117 Erkek Kol Saati",
+    "brand": "Fossil",
+    "ref": "FFS6117",
+    "reference": "FFS6117",
+    "price": 14448,
+    "category": "saat",
+    "subCategory": "Erkek Saat",
+    "metal": "Çelik",
+    "origin": "ABD",
+    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/3/f/3f62d3a9e20116120824cc88bbafa3be86dda0cbe32f60429e4b44264d86a22f.jpeg",
+    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/3/1/310f4828cd27c6f877810d1cd8384ee3700f69a07add7508e99717dc8c62c3f6.jpeg",
+    "images": [
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/3/f/3f62d3a9e20116120824cc88bbafa3be86dda0cbe32f60429e4b44264d86a22f.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/3/1/310f4828cd27c6f877810d1cd8384ee3700f69a07add7508e99717dc8c62c3f6.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/c/bcb1549d4ef8fbcab4fa99ae92d44971d6ae631221dbaf58adb830eb5924304c.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/3/4/345d9fa8b34964f56f761c68e18e340fbe3d54e1a295480488a84df3af2641db.jpeg"
+    ],
+    "sourceUrl": "https://www.saatvesaat.com.tr/fossil-erkek-kol-saati-p-ffs6117",
+    "statusBadge": "Distribütör Garantili",
+    "conditionBadge": "Sıfır",
+    "isPreOwned": false,
+    "isGold": false,
+    "stock": 78,
+    "inStock": true,
+    "isNew": true,
+    "isHighValue": true,
+    "description": "Fossil FFS6117 Erkek Kol Saati, 44 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "desc": "Fossil FFS6117 Erkek Kol Saati, 44 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "specs": {
+      "Kasa Çapı": "44 mm",
+      "Mekanizma": "Quartz",
+      "Cam Tipi": "Mineral",
+      "Su Geçirmezlik": "5 ATM",
+      "Kordon / Kayış": "Çelik",
+      "Kadran Rengi": "Turkuaz",
+      "Kasa Materyali": "Çelik",
+      "Kasa Rengi": "Metalik Gri",
+      "Cinsiyet": "Erkek",
+      "Menşei": "ABD",
+      "Garanti": "2 Yıl Distribütör Garantili",
+      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
+    }
+  },
+  {
+    "id": 2036,
     "name": "FBQ5001 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FBQ5001",
@@ -47831,7 +47544,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2043,
+    "id": 2037,
     "name": "FBQ5007 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FBQ5007",
@@ -47873,7 +47586,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2044,
+    "id": 2038,
     "name": "FFS6135 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6135",
@@ -47919,7 +47632,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2045,
+    "id": 2039,
     "name": "FES5422 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5422",
@@ -47942,7 +47655,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 129,
+    "stock": 128,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -47964,7 +47677,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2046,
+    "id": 2040,
     "name": "FFS6138 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6138",
@@ -47989,7 +47702,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 400,
+    "stock": 396,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -48011,7 +47724,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2047,
+    "id": 2041,
     "name": "FFS6148 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6148",
@@ -48057,7 +47770,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2048,
+    "id": 2042,
     "name": "FFS6128 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6128",
@@ -48103,7 +47816,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2049,
+    "id": 2043,
     "name": "FLE1217 Nick Jonas x Fossil Machine Luxe Malachite Kol Saati",
     "brand": "Fossil",
     "ref": "FLE1217",
@@ -48149,7 +47862,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2050,
+    "id": 2044,
     "name": "FES5436 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5436",
@@ -48195,7 +47908,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2051,
+    "id": 2045,
     "name": "FES5439 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5439",
@@ -48218,7 +47931,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 415,
+    "stock": 414,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -48240,7 +47953,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2052,
+    "id": 2046,
     "name": "FES5443 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5443",
@@ -48263,7 +47976,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 209,
+    "stock": 207,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -48285,7 +47998,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2053,
+    "id": 2047,
     "name": "FFS6144 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6144",
@@ -48309,7 +48022,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 39,
+    "stock": 40,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -48331,7 +48044,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2054,
+    "id": 2048,
     "name": "FFS6151 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6151",
@@ -48378,7 +48091,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2055,
+    "id": 2049,
     "name": "FES5451 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5451",
@@ -48423,7 +48136,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2056,
+    "id": 2050,
     "name": "FES5441 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5441",
@@ -48446,7 +48159,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 227,
+    "stock": 226,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -48468,7 +48181,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2057,
+    "id": 2051,
     "name": "FME3276 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FME3276",
@@ -48514,7 +48227,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2058,
+    "id": 2052,
     "name": "FES5461 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5461",
@@ -48559,7 +48272,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2059,
+    "id": 2053,
     "name": "FES5468 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5468",
@@ -48582,7 +48295,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 625,
+    "stock": 623,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -48604,7 +48317,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2060,
+    "id": 2054,
     "name": "FES5469 Kadın Kol Saati",
     "brand": "Fossil",
     "ref": "FES5469",
@@ -48627,7 +48340,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 234,
+    "stock": 233,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -48649,7 +48362,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2061,
+    "id": 2055,
     "name": "FFS6154 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FFS6154",
@@ -48695,7 +48408,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2062,
+    "id": 2056,
     "name": "FME3274 Erkek Kol Saati",
     "brand": "Fossil",
     "ref": "FME3274",
@@ -48742,7 +48455,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2063,
+    "id": 2057,
     "name": "SEIRPJ17J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIRPJ17J",
@@ -48762,7 +48475,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 67,
+    "stock": 66,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -48784,7 +48497,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2064,
+    "id": 2058,
     "name": "SEIRPG23J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIRPG23J",
@@ -48804,7 +48517,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 85,
+    "stock": 81,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -48826,7 +48539,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2065,
+    "id": 2059,
     "name": "SEISC911P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISC911P",
@@ -48868,7 +48581,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2066,
+    "id": 2060,
     "name": "SEIRPH89K Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIRPH89K",
@@ -48888,7 +48601,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 55,
+    "stock": 51,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -48910,7 +48623,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2067,
+    "id": 2061,
     "name": "SEIRPH87K Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIRPH87K",
@@ -48930,7 +48643,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 52,
+    "stock": 51,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -48952,7 +48665,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2068,
+    "id": 2062,
     "name": "SEIRPH85K Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIRPH85K",
@@ -48994,7 +48707,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2069,
+    "id": 2063,
     "name": "SEISH111J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISH111J",
@@ -49036,7 +48749,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2070,
+    "id": 2064,
     "name": "SEISB415P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISB415P",
@@ -49056,7 +48769,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 76,
+    "stock": 75,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -49078,7 +48791,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2071,
+    "id": 2065,
     "name": "SEIUR503P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR503P",
@@ -49098,7 +48811,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 29,
+    "stock": 27,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -49120,7 +48833,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2072,
+    "id": 2066,
     "name": "SEISB405P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISB405P",
@@ -49140,7 +48853,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 28,
+    "stock": 26,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -49162,7 +48875,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2073,
+    "id": 2067,
     "name": "SEINE527P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEINE527P",
@@ -49182,7 +48895,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 114,
+    "stock": 113,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -49204,7 +48917,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2074,
+    "id": 2068,
     "name": "SEINE525P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEINE525P",
@@ -49224,7 +48937,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 226,
+    "stock": 221,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -49246,7 +48959,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2075,
+    "id": 2069,
     "name": "SEISA425J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISA425J",
@@ -49288,7 +49001,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2076,
+    "id": 2070,
     "name": "SEINE529P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEINE529P",
@@ -49308,7 +49021,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 223,
+    "stock": 218,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -49330,7 +49043,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2077,
+    "id": 2071,
     "name": "SEIUR380P Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR380P",
@@ -49350,7 +49063,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 114,
+    "stock": 112,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -49372,7 +49085,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2078,
+    "id": 2072,
     "name": "SEISC803P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISC803P",
@@ -49414,7 +49127,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2079,
+    "id": 2073,
     "name": "SEISA405J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISA405J",
@@ -49434,7 +49147,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 94,
+    "stock": 93,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -49456,7 +49169,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2080,
+    "id": 2074,
     "name": "SEISB349P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISB349P",
@@ -49498,7 +49211,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2081,
+    "id": 2075,
     "name": "SEISA347J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISA347J",
@@ -49540,7 +49253,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2082,
+    "id": 2076,
     "name": "SEIRPB43J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIRPB43J",
@@ -49560,7 +49273,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 47,
+    "stock": 46,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -49582,7 +49295,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2083,
+    "id": 2077,
     "name": "SEISB419P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISB419P",
@@ -49624,7 +49337,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2084,
+    "id": 2078,
     "name": "SEIUR449P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR449P",
@@ -49666,7 +49379,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2085,
+    "id": 2079,
     "name": "SEIWR078P Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIWR078P",
@@ -49708,7 +49421,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2086,
+    "id": 2080,
     "name": "SEIPB103J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIPB103J",
@@ -49750,7 +49463,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2087,
+    "id": 2081,
     "name": "SEISB425P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISB425P",
@@ -49792,7 +49505,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2088,
+    "id": 2082,
     "name": "SEIUR529P Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR529P",
@@ -49812,7 +49525,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 49,
+    "stock": 48,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -49834,7 +49547,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2089,
+    "id": 2083,
     "name": "SEIUR558P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR558P",
@@ -49876,7 +49589,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2090,
+    "id": 2084,
     "name": "SEISK009J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISK009J",
@@ -49920,7 +49633,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2091,
+    "id": 2085,
     "name": "SEIUR309P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR309P",
@@ -49940,7 +49653,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 13,
+    "stock": 10,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -49962,7 +49675,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2092,
+    "id": 2086,
     "name": "SEIPB383J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIPB383J",
@@ -50008,7 +49721,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2093,
+    "id": 2087,
     "name": "SEISC935P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISC935P",
@@ -50053,7 +49766,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2094,
+    "id": 2088,
     "name": "SEIUR538P Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR538P",
@@ -50095,7 +49808,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2095,
+    "id": 2089,
     "name": "SEIUR550P Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR550P",
@@ -50138,7 +49851,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2096,
+    "id": 2090,
     "name": "SEIUR561P Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR561P",
@@ -50182,7 +49895,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2097,
+    "id": 2091,
     "name": "SEISB445P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISB445P",
@@ -50204,7 +49917,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 41,
+    "stock": 40,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -50226,7 +49939,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2098,
+    "id": 2092,
     "name": "SEIPB463J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIPB463J",
@@ -50268,7 +49981,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2099,
+    "id": 2093,
     "name": "SEIPB471J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIPB471J",
@@ -50310,7 +50023,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2100,
+    "id": 2094,
     "name": "SEIRPL09J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIRPL09J",
@@ -50352,7 +50065,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2101,
+    "id": 2095,
     "name": "SEISC941P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISC941P",
@@ -50375,7 +50088,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 31,
+    "stock": 30,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -50397,7 +50110,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2102,
+    "id": 2096,
     "name": "SEISB449P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISB449P",
@@ -50441,7 +50154,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2103,
+    "id": 2097,
     "name": "SEISB447P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISB447P",
@@ -50463,7 +50176,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 50,
+    "stock": 48,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -50485,7 +50198,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2104,
+    "id": 2098,
     "name": "SEISK037J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISK037J",
@@ -50508,7 +50221,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 34,
+    "stock": 33,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -50530,7 +50243,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2105,
+    "id": 2099,
     "name": "SEISH155J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISH155J",
@@ -50576,7 +50289,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2106,
+    "id": 2100,
     "name": "SEIRZ554P Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIRZ554P",
@@ -50620,7 +50333,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2107,
+    "id": 2101,
     "name": "SEIUR579P Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR579P",
@@ -50663,7 +50376,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2108,
+    "id": 2102,
     "name": "SEISJ025J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISJ025J",
@@ -50710,7 +50423,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2109,
+    "id": 2103,
     "name": "SEISH161J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISH161J",
@@ -50757,7 +50470,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2110,
+    "id": 2104,
     "name": "SEISH159J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISH159J",
@@ -50804,7 +50517,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2111,
+    "id": 2105,
     "name": "SEINE597P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEINE597P",
@@ -50848,7 +50561,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2112,
+    "id": 2106,
     "name": "SEISK041J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISK041J",
@@ -50892,7 +50605,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2113,
+    "id": 2107,
     "name": "SEIPB478J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIPB478J",
@@ -50939,7 +50652,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2114,
+    "id": 2108,
     "name": "SEISA464J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISA464J",
@@ -50961,7 +50674,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 92,
+    "stock": 89,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -50983,7 +50696,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2115,
+    "id": 2109,
     "name": "SEIRPL11K Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIRPL11K",
@@ -51028,7 +50741,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2116,
+    "id": 2110,
     "name": "SEIUR605J Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR605J",
@@ -51075,7 +50788,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2117,
+    "id": 2111,
     "name": "SEIRPL71J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIRPL71J",
@@ -51120,7 +50833,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2118,
+    "id": 2112,
     "name": "SEIRPL61J Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIRPL61J",
@@ -51142,7 +50855,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 55,
+    "stock": 56,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -51164,7 +50877,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2119,
+    "id": 2113,
     "name": "SEISB461P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISB461P",
@@ -51206,7 +50919,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2120,
+    "id": 2114,
     "name": "SEIUR599P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR599P",
@@ -51248,7 +50961,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2121,
+    "id": 2115,
     "name": "SEIUR611P Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR611P",
@@ -51290,7 +51003,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2122,
+    "id": 2116,
     "name": "SEIWR100P Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIWR100P",
@@ -51332,7 +51045,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2123,
+    "id": 2117,
     "name": "SEIUR531P Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR531P",
@@ -51374,7 +51087,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2124,
+    "id": 2118,
     "name": "SEIUR349P Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR349P",
@@ -51416,7 +51129,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2125,
+    "id": 2119,
     "name": "SEISA421J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISA421J",
@@ -51436,7 +51149,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 42,
+    "stock": 40,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -51458,7 +51171,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2126,
+    "id": 2120,
     "name": "SEIWR075P Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIWR075P",
@@ -51500,7 +51213,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2127,
+    "id": 2121,
     "name": "SEIUR539P Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR539P",
@@ -51542,7 +51255,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2128,
+    "id": 2122,
     "name": "SEIUR527P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR527P",
@@ -51563,7 +51276,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 38,
+    "stock": 36,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -51585,7 +51298,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2129,
+    "id": 2123,
     "name": "SEIUR525P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR525P",
@@ -51628,7 +51341,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2130,
+    "id": 2124,
     "name": "SEIRZ550P Pırlantalı Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIRZ550P",
@@ -51670,7 +51383,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2131,
+    "id": 2125,
     "name": "SEISA459J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISA459J",
@@ -51714,7 +51427,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2132,
+    "id": 2126,
     "name": "SEIUR307P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR307P",
@@ -51734,7 +51447,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 21,
+    "stock": 20,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -51756,7 +51469,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2133,
+    "id": 2127,
     "name": "SEISJ013J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISJ013J",
@@ -51802,7 +51515,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2134,
+    "id": 2128,
     "name": "SEISJ015J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISJ015J",
@@ -51847,7 +51560,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2135,
+    "id": 2129,
     "name": "SEISC933P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISC933P",
@@ -51893,7 +51606,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2136,
+    "id": 2130,
     "name": "SEIWR083P Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIWR083P",
@@ -51914,7 +51627,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 66,
+    "stock": 65,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -51936,7 +51649,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2137,
+    "id": 2131,
     "name": "SEIUR562P Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR562P",
@@ -51979,7 +51692,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2138,
+    "id": 2132,
     "name": "SEISB455P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISB455P",
@@ -52000,7 +51713,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 10,
+    "stock": 9,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -52022,7 +51735,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2139,
+    "id": 2133,
     "name": "SEISB451P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISB451P",
@@ -52065,7 +51778,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2140,
+    "id": 2134,
     "name": "SEISK039J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISK039J",
@@ -52087,7 +51800,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 38,
+    "stock": 37,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -52109,7 +51822,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2141,
+    "id": 2135,
     "name": "SEISB453P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISB453P",
@@ -52130,7 +51843,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 53,
+    "stock": 52,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -52152,7 +51865,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2142,
+    "id": 2136,
     "name": "SEIUR582P Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR582P",
@@ -52195,7 +51908,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2143,
+    "id": 2137,
     "name": "SEISJ023J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISJ023J",
@@ -52241,7 +51954,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2144,
+    "id": 2138,
     "name": "SEIPB485J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIPB485J",
@@ -52285,7 +51998,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2145,
+    "id": 2139,
     "name": "SEIPB481J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIPB481J",
@@ -52329,7 +52042,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2146,
+    "id": 2140,
     "name": "SEISA463J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISA463J",
@@ -52352,7 +52065,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 128,
+    "stock": 110,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -52374,7 +52087,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2147,
+    "id": 2141,
     "name": "SEIPB480J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIPB480J",
@@ -52421,7 +52134,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2148,
+    "id": 2142,
     "name": "SEIPB495J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIPB495J",
@@ -52466,7 +52179,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2149,
+    "id": 2143,
     "name": "SEISH175J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISH175J",
@@ -52514,7 +52227,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2150,
+    "id": 2144,
     "name": "SEIRP841J Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIRP841J",
@@ -52534,7 +52247,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 60,
+    "stock": 61,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -52556,7 +52269,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2151,
+    "id": 2145,
     "name": "SEISB459P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISB459P",
@@ -52598,7 +52311,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2152,
+    "id": 2146,
     "name": "SEIUR609P Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR609P",
@@ -52640,7 +52353,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2153,
+    "id": 2147,
     "name": "SEIUR612P Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR612P",
@@ -52682,7 +52395,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2154,
+    "id": 2148,
     "name": "SEIRPL51K Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIRPL51K",
@@ -52728,7 +52441,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2155,
+    "id": 2149,
     "name": "SEIPB523J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIPB523J",
@@ -52772,7 +52485,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2156,
+    "id": 2150,
     "name": "SEIPB501J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIPB501J",
@@ -52818,7 +52531,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2157,
+    "id": 2151,
     "name": "SEIWR110P Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIWR110P",
@@ -52838,7 +52551,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 1,
+    "stock": 2,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -52860,7 +52573,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2158,
+    "id": 2152,
     "name": "SEIWR107P Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIWR107P",
@@ -52880,7 +52593,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 35,
+    "stock": 33,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -52902,7 +52615,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2159,
+    "id": 2153,
     "name": "SEISB481P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISB481P",
@@ -52944,7 +52657,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2160,
+    "id": 2154,
     "name": "SEIRPL73J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIRPL73J",
@@ -52970,7 +52683,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 32,
+    "stock": 31,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -52992,7 +52705,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2161,
+    "id": 2155,
     "name": "SEIPB513J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIPB513J",
@@ -53034,7 +52747,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2162,
+    "id": 2156,
     "name": "SEISA377J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISA377J",
@@ -53054,7 +52767,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 208,
+    "stock": 198,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -53076,7 +52789,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2163,
+    "id": 2157,
     "name": "SEIPB545J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIPB545J",
@@ -53122,7 +52835,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2164,
+    "id": 2158,
     "name": "SEISC961P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISC961P",
@@ -53144,7 +52857,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 23,
+    "stock": 22,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -53166,7 +52879,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2165,
+    "id": 2159,
     "name": "HBB001K1 Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "HBB001K1",
@@ -53189,7 +52902,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 13,
+    "stock": 12,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -53211,7 +52924,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2166,
+    "id": 2160,
     "name": "SEISA468J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISA468J",
@@ -53234,7 +52947,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 15,
+    "stock": 14,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -53256,7 +52969,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2167,
+    "id": 2161,
     "name": "HCC007J1 Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "HCC007J1",
@@ -53302,7 +53015,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2168,
+    "id": 2162,
     "name": "HCC003J1 Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "HCC003J1",
@@ -53348,7 +53061,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2169,
+    "id": 2163,
     "name": "HCC001J1 Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "HCC001J1",
@@ -53394,7 +53107,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2170,
+    "id": 2164,
     "name": "HAB006J1 Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "HAB006J1",
@@ -53438,7 +53151,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2171,
+    "id": 2165,
     "name": "HAB002J1 Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "HAB002J1",
@@ -53486,7 +53199,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2172,
+    "id": 2166,
     "name": "HAB001J1 Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "HAB001J1",
@@ -53512,7 +53225,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 21,
+    "stock": 20,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -53534,7 +53247,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2173,
+    "id": 2167,
     "name": "SEIPB249J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIPB249J",
@@ -53576,7 +53289,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2174,
+    "id": 2168,
     "name": "SEISB413P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISB413P",
@@ -53596,7 +53309,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 88,
+    "stock": 87,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -53618,7 +53331,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2175,
+    "id": 2169,
     "name": "SEIWR069P Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIWR069P",
@@ -53638,7 +53351,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 51,
+    "stock": 50,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -53660,7 +53373,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2176,
+    "id": 2170,
     "name": "SEIRPG57K Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIRPG57K",
@@ -53680,7 +53393,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 46,
+    "stock": 45,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -53702,7 +53415,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2177,
+    "id": 2171,
     "name": "SEIRPE19J Kol Saati ",
     "brand": "Seiko",
     "ref": "SEIRPE19J",
@@ -53722,7 +53435,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 31,
+    "stock": 30,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -53744,7 +53457,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2178,
+    "id": 2172,
     "name": "SEISB345P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISB345P",
@@ -53764,7 +53477,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 28,
+    "stock": 26,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -53786,7 +53499,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2179,
+    "id": 2173,
     "name": "SEISA343J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISA343J",
@@ -53828,7 +53541,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2180,
+    "id": 2174,
     "name": "SEIUR533P Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR533P",
@@ -53848,7 +53561,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 64,
+    "stock": 63,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -53870,7 +53583,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2181,
+    "id": 2175,
     "name": "SEIWR073P Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIWR073P",
@@ -53912,7 +53625,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2182,
+    "id": 2176,
     "name": "SEISB479P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISB479P",
@@ -53932,7 +53645,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 75,
+    "stock": 73,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -53954,7 +53667,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2183,
+    "id": 2177,
     "name": "SEIRZ532P Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIRZ532P",
@@ -53996,7 +53709,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2184,
+    "id": 2178,
     "name": "SEISC957P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISC957P",
@@ -54038,7 +53751,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2185,
+    "id": 2179,
     "name": "SEISA465J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISA465J",
@@ -54082,7 +53795,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2186,
+    "id": 2180,
     "name": "SEIRE020J Pırlantalı Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIRE020J",
@@ -54126,7 +53839,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2187,
+    "id": 2181,
     "name": "SEIPB525J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIPB525J",
@@ -54153,7 +53866,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 63,
+    "stock": 62,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -54175,7 +53888,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2188,
+    "id": 2182,
     "name": "SEIPB527J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIPB527J",
@@ -54200,7 +53913,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 83,
+    "stock": 79,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -54222,7 +53935,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2189,
+    "id": 2183,
     "name": "SEIUR618J Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR618J",
@@ -54266,7 +53979,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2190,
+    "id": 2184,
     "name": "SEIRPE45J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIRPE45J",
@@ -54286,7 +53999,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 59,
+    "stock": 57,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -54308,7 +54021,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2191,
+    "id": 2185,
     "name": "SEIRZ536P Pırlantalı Kadın Kol Saati",
     "brand": "Seiko",
     "ref": "SEIRZ536P",
@@ -54350,7 +54063,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2192,
+    "id": 2186,
     "name": "SEISA379J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISA379J",
@@ -54370,7 +54083,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 99,
+    "stock": 96,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -54392,7 +54105,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2193,
+    "id": 2187,
     "name": "SEISJ037J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISJ037J",
@@ -54437,7 +54150,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2194,
+    "id": 2188,
     "name": "SEISJ039J Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISJ039J",
@@ -54480,7 +54193,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2195,
+    "id": 2189,
     "name": "SEISC965P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISC965P",
@@ -54523,7 +54236,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2196,
+    "id": 2190,
     "name": "SEISC963P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEISC963P",
@@ -54566,7 +54279,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2197,
+    "id": 2191,
     "name": "SEIMGG17P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIMGG17P",
@@ -54609,7 +54322,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2198,
+    "id": 2192,
     "name": "HBC001J1 Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "HBC001J1",
@@ -54657,7 +54370,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2199,
+    "id": 2193,
     "name": "SEIUR311P Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "SEIUR311P",
@@ -54699,7 +54412,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2200,
+    "id": 2194,
     "name": "HBB002K1 Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "HBB002K1",
@@ -54745,7 +54458,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2201,
+    "id": 2195,
     "name": "HAB005J1 Erkek Kol Saati",
     "brand": "Seiko",
     "ref": "HAB005J1",
@@ -54789,7 +54502,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2202,
+    "id": 2196,
     "name": "CK25200247 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200247",
@@ -54834,7 +54547,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2203,
+    "id": 2197,
     "name": "CK25200236 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200236",
@@ -54879,7 +54592,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2204,
+    "id": 2198,
     "name": "CK25200264 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200264",
@@ -54924,7 +54637,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2205,
+    "id": 2199,
     "name": "CK25200251 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200251",
@@ -54969,7 +54682,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2206,
+    "id": 2200,
     "name": "CK25200235 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200235",
@@ -55014,7 +54727,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2207,
+    "id": 2201,
     "name": "CK25200232 Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200232",
@@ -55059,7 +54772,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2208,
+    "id": 2202,
     "name": "CK25200207 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200207",
@@ -55104,7 +54817,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2209,
+    "id": 2203,
     "name": "CK25200167 Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200167",
@@ -55149,7 +54862,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2210,
+    "id": 2204,
     "name": "CK25200163 Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200163",
@@ -55194,7 +54907,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2211,
+    "id": 2205,
     "name": "CK25200140 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200140",
@@ -55217,7 +54930,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 39,
+    "stock": 40,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -55239,7 +54952,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2212,
+    "id": 2206,
     "name": "CK25200134 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200134",
@@ -55283,7 +54996,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2213,
+    "id": 2207,
     "name": "CK25200106 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200106",
@@ -55327,7 +55040,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2214,
+    "id": 2208,
     "name": "CK25200084 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200084",
@@ -55371,7 +55084,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2215,
+    "id": 2209,
     "name": "CK25200083 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200083",
@@ -55415,7 +55128,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2216,
+    "id": 2210,
     "name": "CK25200067 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200067",
@@ -55459,7 +55172,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2217,
+    "id": 2211,
     "name": "CK25200064 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200064",
@@ -55482,7 +55195,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 24,
+    "stock": 23,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -55504,7 +55217,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2218,
+    "id": 2212,
     "name": "CK25200033 Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200033",
@@ -55548,7 +55261,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2219,
+    "id": 2213,
     "name": "CK25200032 Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200032",
@@ -55592,7 +55305,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2220,
+    "id": 2214,
     "name": "CK25000046 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25000046",
@@ -55636,7 +55349,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2221,
+    "id": 2215,
     "name": "CK25200284 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200284",
@@ -55681,7 +55394,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2222,
+    "id": 2216,
     "name": "CK25200265 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200265",
@@ -55726,7 +55439,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2223,
+    "id": 2217,
     "name": "CK25200377 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200377",
@@ -55771,7 +55484,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2224,
+    "id": 2218,
     "name": "CK25300022 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25300022",
@@ -55816,7 +55529,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2225,
+    "id": 2219,
     "name": "CK25100061 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100061",
@@ -55861,7 +55574,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2226,
+    "id": 2220,
     "name": "CK25100062 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100062",
@@ -55885,7 +55598,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 56,
+    "stock": 55,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -55907,7 +55620,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2227,
+    "id": 2221,
     "name": "CK25300005 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25300005",
@@ -55952,7 +55665,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2228,
+    "id": 2222,
     "name": "CK25100053 Kadın Kol Saati ",
     "brand": "Calvin Klein",
     "ref": "CK25100053",
@@ -55997,7 +55710,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2229,
+    "id": 2223,
     "name": "CK25300023 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25300023",
@@ -56042,7 +55755,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2230,
+    "id": 2224,
     "name": "CK25100055 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100055",
@@ -56065,7 +55778,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 204,
+    "stock": 202,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -56087,7 +55800,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2231,
+    "id": 2225,
     "name": "CK25300019 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25300019",
@@ -56132,7 +55845,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2232,
+    "id": 2226,
     "name": "CK25100090 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100090",
@@ -56177,7 +55890,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2233,
+    "id": 2227,
     "name": "CK25200489 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200489",
@@ -56222,7 +55935,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2234,
+    "id": 2228,
     "name": "CK25200484 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200484",
@@ -56267,7 +55980,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2235,
+    "id": 2229,
     "name": "CK25100079 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100079",
@@ -56312,7 +56025,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2236,
+    "id": 2230,
     "name": "CK25100080 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100080",
@@ -56357,7 +56070,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2237,
+    "id": 2231,
     "name": "CK25100072 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100072",
@@ -56402,7 +56115,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2238,
+    "id": 2232,
     "name": "CK25100073 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100073",
@@ -56447,7 +56160,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2239,
+    "id": 2233,
     "name": "CK25100083 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100083",
@@ -56492,7 +56205,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2240,
+    "id": 2234,
     "name": "CK25100075 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100075",
@@ -56537,7 +56250,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2241,
+    "id": 2235,
     "name": "CK25200497 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200497",
@@ -56582,7 +56295,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2242,
+    "id": 2236,
     "name": "CK25100113 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100113",
@@ -56627,7 +56340,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2243,
+    "id": 2237,
     "name": "CK25100099 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100099",
@@ -56650,7 +56363,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 123,
+    "stock": 122,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -56672,7 +56385,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2244,
+    "id": 2238,
     "name": "CK25100108 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100108",
@@ -56717,7 +56430,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2245,
+    "id": 2239,
     "name": "CK25200494 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200494",
@@ -56740,7 +56453,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 25,
+    "stock": 24,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -56762,7 +56475,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2246,
+    "id": 2240,
     "name": "CK25100134 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100134",
@@ -56785,7 +56498,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 309,
+    "stock": 306,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -56807,7 +56520,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2247,
+    "id": 2241,
     "name": "CK25200520 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200520",
@@ -56852,7 +56565,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2248,
+    "id": 2242,
     "name": "CK25100197 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100197",
@@ -56897,7 +56610,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2249,
+    "id": 2243,
     "name": "CK25100225 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100225",
@@ -56942,7 +56655,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2250,
+    "id": 2244,
     "name": "CK25100226 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100226",
@@ -56965,7 +56678,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 23,
+    "stock": 22,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -56987,7 +56700,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2251,
+    "id": 2245,
     "name": "CK25100224 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100224",
@@ -57010,7 +56723,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 27,
+    "stock": 25,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -57032,7 +56745,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2252,
+    "id": 2246,
     "name": "CK25100039 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100039",
@@ -57077,7 +56790,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2253,
+    "id": 2247,
     "name": "CK25200301 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200301",
@@ -57121,7 +56834,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2254,
+    "id": 2248,
     "name": "CK25000038 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25000038",
@@ -57165,7 +56878,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2255,
+    "id": 2249,
     "name": "CK25000026 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25000026",
@@ -57209,7 +56922,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2256,
+    "id": 2250,
     "name": "CK25200237 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200237",
@@ -57254,7 +56967,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2257,
+    "id": 2251,
     "name": "CK25200181 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200181",
@@ -57299,7 +57012,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2258,
+    "id": 2252,
     "name": "CK25200178 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200178",
@@ -57344,7 +57057,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2259,
+    "id": 2253,
     "name": "CK25200139 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200139",
@@ -57389,7 +57102,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2260,
+    "id": 2254,
     "name": "CK25200138 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200138",
@@ -57433,7 +57146,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2261,
+    "id": 2255,
     "name": "CK25200135 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200135",
@@ -57455,7 +57168,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 6,
+    "stock": 5,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -57477,7 +57190,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2262,
+    "id": 2256,
     "name": "CK25200115 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200115",
@@ -57521,7 +57234,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2263,
+    "id": 2257,
     "name": "CK25200062 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200062",
@@ -57565,7 +57278,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2264,
+    "id": 2258,
     "name": "CK25200043 Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200043",
@@ -57609,7 +57322,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2265,
+    "id": 2259,
     "name": "CK25200042 Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200042",
@@ -57653,7 +57366,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2266,
+    "id": 2260,
     "name": "CK25200035 Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200035",
@@ -57697,7 +57410,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2267,
+    "id": 2261,
     "name": "CK25200034 Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200034",
@@ -57741,7 +57454,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2268,
+    "id": 2262,
     "name": "CK25200279 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200279",
@@ -57764,7 +57477,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 147,
+    "stock": 146,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -57786,7 +57499,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2269,
+    "id": 2263,
     "name": "CK25200327 Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200327",
@@ -57830,7 +57543,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2270,
+    "id": 2264,
     "name": "CK25200466 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200466",
@@ -57875,7 +57588,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2271,
+    "id": 2265,
     "name": "CK25300020 Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25300020",
@@ -57898,7 +57611,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 12,
+    "stock": 11,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -57920,7 +57633,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2272,
+    "id": 2266,
     "name": "CK25100048 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100048",
@@ -57965,7 +57678,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2273,
+    "id": 2267,
     "name": "CK25100056 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100056",
@@ -57988,7 +57701,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 380,
+    "stock": 377,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -58010,7 +57723,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2274,
+    "id": 2268,
     "name": "CK25100066 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100066",
@@ -58055,7 +57768,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2275,
+    "id": 2269,
     "name": "CK25300017 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25300017",
@@ -58100,7 +57813,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2276,
+    "id": 2270,
     "name": "CK25100088 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100088",
@@ -58145,7 +57858,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2277,
+    "id": 2271,
     "name": "CK25100076 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100076",
@@ -58190,7 +57903,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2278,
+    "id": 2272,
     "name": "CK25100060 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100060",
@@ -58235,7 +57948,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2279,
+    "id": 2273,
     "name": "CK25200490 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200490",
@@ -58280,7 +57993,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2280,
+    "id": 2274,
     "name": "CK25100094 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100094",
@@ -58325,7 +58038,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2281,
+    "id": 2275,
     "name": "CK25200493 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200493",
@@ -58370,7 +58083,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2282,
+    "id": 2276,
     "name": "CK25100058 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100058",
@@ -58415,7 +58128,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2283,
+    "id": 2277,
     "name": "CK25100059 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100059",
@@ -58460,7 +58173,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2284,
+    "id": 2278,
     "name": "CK25100093 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100093",
@@ -58505,7 +58218,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2285,
+    "id": 2279,
     "name": "CK25100106 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100106",
@@ -58550,7 +58263,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2286,
+    "id": 2280,
     "name": "CK25200496 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200496",
@@ -58595,7 +58308,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2287,
+    "id": 2281,
     "name": "CK25100095 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100095",
@@ -58640,7 +58353,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2288,
+    "id": 2282,
     "name": "CK25100098 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100098",
@@ -58685,7 +58398,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2289,
+    "id": 2283,
     "name": "CK25200234 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200234",
@@ -58730,7 +58443,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2290,
+    "id": 2284,
     "name": "CK25200229 Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200229",
@@ -58775,7 +58488,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2291,
+    "id": 2285,
     "name": "CK25200172 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200172",
@@ -58820,7 +58533,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2292,
+    "id": 2286,
     "name": "CK25200221 Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200221",
@@ -58865,7 +58578,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2293,
+    "id": 2287,
     "name": "CK25200185 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200185",
@@ -58910,7 +58623,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2294,
+    "id": 2288,
     "name": "CK25200209 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200209",
@@ -58955,7 +58668,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2295,
+    "id": 2289,
     "name": "CK25200208 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200208",
@@ -59001,7 +58714,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2296,
+    "id": 2290,
     "name": "CK25200151 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200151",
@@ -59046,7 +58759,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2297,
+    "id": 2291,
     "name": "CK25200137 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200137",
@@ -59090,7 +58803,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2298,
+    "id": 2292,
     "name": "CK25200132 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200132",
@@ -59134,7 +58847,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2299,
+    "id": 2293,
     "name": "CK25200128 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200128",
@@ -59178,7 +58891,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2300,
+    "id": 2294,
     "name": "CK25200082 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200082",
@@ -59222,7 +58935,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2301,
+    "id": 2295,
     "name": "CK25200063 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200063",
@@ -59244,7 +58957,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 170,
+    "stock": 169,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -59266,7 +58979,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2302,
+    "id": 2296,
     "name": "CK25200054 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200054",
@@ -59310,7 +59023,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2303,
+    "id": 2297,
     "name": "CK25200053 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200053",
@@ -59354,7 +59067,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2304,
+    "id": 2298,
     "name": "CK25200044 Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200044",
@@ -59398,7 +59111,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2305,
+    "id": 2299,
     "name": "CK25200041 Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200041",
@@ -59442,7 +59155,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2306,
+    "id": 2300,
     "name": "CK25200030 Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200030",
@@ -59486,7 +59199,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2307,
+    "id": 2301,
     "name": "CK25300004 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25300004",
@@ -59531,7 +59244,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2308,
+    "id": 2302,
     "name": "CK25100054 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100054",
@@ -59576,7 +59289,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2309,
+    "id": 2303,
     "name": "CK25100052 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100052",
@@ -59621,7 +59334,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2310,
+    "id": 2304,
     "name": "CK25200468 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200468",
@@ -59666,7 +59379,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2311,
+    "id": 2305,
     "name": "CK25200464 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200464",
@@ -59712,7 +59425,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2312,
+    "id": 2306,
     "name": "CK25100063 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100063",
@@ -59735,7 +59448,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 85,
+    "stock": 84,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -59757,7 +59470,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2313,
+    "id": 2307,
     "name": "CK25100049 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100049",
@@ -59802,7 +59515,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2314,
+    "id": 2308,
     "name": "CK25100065 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100065",
@@ -59847,7 +59560,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2315,
+    "id": 2309,
     "name": "CK25100067 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100067",
@@ -59892,7 +59605,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2316,
+    "id": 2310,
     "name": "CK25100089 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100089",
@@ -59915,7 +59628,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 115,
+    "stock": 114,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -59937,7 +59650,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2317,
+    "id": 2311,
     "name": "CK25100091 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100091",
@@ -59982,7 +59695,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2318,
+    "id": 2312,
     "name": "CK25200488 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200488",
@@ -60005,7 +59718,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 147,
+    "stock": 146,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -60027,7 +59740,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2319,
+    "id": 2313,
     "name": "CK25200482 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200482",
@@ -60072,7 +59785,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2320,
+    "id": 2314,
     "name": "CK25200492 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200492",
@@ -60117,7 +59830,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2321,
+    "id": 2315,
     "name": "CK25100077 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100077",
@@ -60140,7 +59853,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 82,
+    "stock": 81,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -60162,7 +59875,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2322,
+    "id": 2316,
     "name": "CK25100177 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100177",
@@ -60185,7 +59898,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 108,
+    "stock": 107,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -60207,7 +59920,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2323,
+    "id": 2317,
     "name": "CK25200548 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200548",
@@ -60253,7 +59966,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2324,
+    "id": 2318,
     "name": "CK25100186 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100186",
@@ -60298,7 +60011,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2325,
+    "id": 2319,
     "name": "CK25100202 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100202",
@@ -60321,7 +60034,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 165,
+    "stock": 163,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -60343,7 +60056,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2326,
+    "id": 2320,
     "name": "CK25100201 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100201",
@@ -60388,7 +60101,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2327,
+    "id": 2321,
     "name": "CK25200561 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200561",
@@ -60433,7 +60146,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2328,
+    "id": 2322,
     "name": "CK25100207 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100207",
@@ -60456,7 +60169,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 174,
+    "stock": 173,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -60478,7 +60191,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2329,
+    "id": 2323,
     "name": "CK25100203 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100203",
@@ -60501,7 +60214,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 177,
+    "stock": 176,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -60523,7 +60236,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2330,
+    "id": 2324,
     "name": "CK25100184 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100184",
@@ -60546,7 +60259,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 55,
+    "stock": 54,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -60568,7 +60281,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2331,
+    "id": 2325,
     "name": "CK25200581 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200581",
@@ -60590,7 +60303,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 29,
+    "stock": 27,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -60612,7 +60325,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2332,
+    "id": 2326,
     "name": "CK25200580 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200580",
@@ -60635,7 +60348,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 24,
+    "stock": 21,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -60657,7 +60370,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2333,
+    "id": 2327,
     "name": "CK25200538 Erkek Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25200538",
@@ -60701,7 +60414,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2334,
+    "id": 2328,
     "name": "CK25100182 Kadın Kol Saati",
     "brand": "Calvin Klein",
     "ref": "CK25100182",
@@ -60746,7 +60459,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2335,
+    "id": 2329,
     "name": "DZ4620 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4620",
@@ -60790,7 +60503,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2336,
+    "id": 2330,
     "name": "DZ4627 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4627",
@@ -60835,7 +60548,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2337,
+    "id": 2331,
     "name": "DZ4606 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4606",
@@ -60880,7 +60593,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2338,
+    "id": 2332,
     "name": "DZ4604 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4604",
@@ -60925,7 +60638,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2339,
+    "id": 2333,
     "name": "DZ4595 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4595",
@@ -60971,7 +60684,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2340,
+    "id": 2334,
     "name": "DZ7461 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ7461",
@@ -61015,7 +60728,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2341,
+    "id": 2335,
     "name": "DZ4592 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4592",
@@ -61059,7 +60772,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2342,
+    "id": 2336,
     "name": "DZ4578 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4578",
@@ -61104,7 +60817,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2343,
+    "id": 2337,
     "name": "DZ1964 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ1964",
@@ -61149,7 +60862,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2344,
+    "id": 2338,
     "name": "DZ7333 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ7333",
@@ -61171,7 +60884,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 6,
+    "stock": 5,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -61193,7 +60906,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2345,
+    "id": 2339,
     "name": "DZ4522 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4522",
@@ -61238,7 +60951,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2346,
+    "id": 2340,
     "name": "DZ4519 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4519",
@@ -61287,7 +61000,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2347,
+    "id": 2341,
     "name": "DZ4360 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4360",
@@ -61332,7 +61045,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2348,
+    "id": 2342,
     "name": "DZ7395 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ7395",
@@ -61375,7 +61088,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2349,
+    "id": 2343,
     "name": "DZ4481 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4481",
@@ -61419,7 +61132,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2350,
+    "id": 2344,
     "name": "DZ4465 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4465",
@@ -61462,7 +61175,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2351,
+    "id": 2345,
     "name": "DZ4308 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4308",
@@ -61507,7 +61220,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2352,
+    "id": 2346,
     "name": "DZ4283 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4283",
@@ -61551,7 +61264,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2353,
+    "id": 2347,
     "name": "DZ4180 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4180",
@@ -61595,7 +61308,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2354,
+    "id": 2348,
     "name": "DZ7368 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ7368",
@@ -61640,7 +61353,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2355,
+    "id": 2349,
     "name": "DZ4309 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4309",
@@ -61662,7 +61375,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 109,
+    "stock": 108,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -61684,7 +61397,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2356,
+    "id": 2350,
     "name": "DZ7313 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ7313",
@@ -61728,7 +61441,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2357,
+    "id": 2351,
     "name": "DZ4282 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4282",
@@ -61751,7 +61464,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 132,
+    "stock": 129,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -61773,7 +61486,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2358,
+    "id": 2352,
     "name": "DZ7479 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ7479",
@@ -61818,7 +61531,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2359,
+    "id": 2353,
     "name": "DZ4629 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4629",
@@ -61863,7 +61576,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2360,
+    "id": 2354,
     "name": "DZ2178 Kol Saati",
     "brand": "Diesel",
     "ref": "DZ2178",
@@ -61886,7 +61599,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 8,
+    "stock": 7,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -61908,7 +61621,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2361,
+    "id": 2355,
     "name": "DZ4643 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4643",
@@ -61953,7 +61666,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2362,
+    "id": 2356,
     "name": "DZ4651 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4651",
@@ -61997,7 +61710,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2363,
+    "id": 2357,
     "name": "DZ4656 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4656",
@@ -62042,7 +61755,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2364,
+    "id": 2358,
     "name": "DZ7486 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ7486",
@@ -62087,7 +61800,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2365,
+    "id": 2359,
     "name": "DZ4703 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4703",
@@ -62112,7 +61825,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 78,
+    "stock": 79,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -62134,7 +61847,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2366,
+    "id": 2360,
     "name": "DZ4707 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4707",
@@ -62180,7 +61893,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2367,
+    "id": 2361,
     "name": "DZ4712 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4712",
@@ -62225,7 +61938,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2368,
+    "id": 2362,
     "name": "DZ4619 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4619",
@@ -62269,7 +61982,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2369,
+    "id": 2363,
     "name": "DZ7378 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ7378",
@@ -62312,7 +62025,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2370,
+    "id": 2364,
     "name": "DZ4624 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4624",
@@ -62354,7 +62067,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2371,
+    "id": 2365,
     "name": "DZ4617 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4617",
@@ -62399,7 +62112,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2372,
+    "id": 2366,
     "name": "DZ2159 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ2159",
@@ -62444,7 +62157,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2373,
+    "id": 2367,
     "name": "DZ4605 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4605",
@@ -62489,7 +62202,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2374,
+    "id": 2368,
     "name": "DZ1989 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ1989",
@@ -62534,7 +62247,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2375,
+    "id": 2369,
     "name": "DZ4586 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4586",
@@ -62578,7 +62291,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2376,
+    "id": 2370,
     "name": "DZ4590 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4590",
@@ -62625,7 +62338,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2377,
+    "id": 2371,
     "name": "DZ4581 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4581",
@@ -62670,7 +62383,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2378,
+    "id": 2372,
     "name": "DZ4569 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4569",
@@ -62714,7 +62427,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2379,
+    "id": 2373,
     "name": "DZ4566 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4566",
@@ -62758,7 +62471,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2380,
+    "id": 2374,
     "name": "DZ4548 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4548",
@@ -62806,7 +62519,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2381,
+    "id": 2375,
     "name": "DZ4477 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4477",
@@ -62827,7 +62540,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 177,
+    "stock": 178,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -62849,7 +62562,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2382,
+    "id": 2376,
     "name": "DZ4318 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4318",
@@ -62895,7 +62608,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2383,
+    "id": 2377,
     "name": "DZ4636 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4636",
@@ -62918,7 +62631,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 78,
+    "stock": 77,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -62940,7 +62653,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2384,
+    "id": 2378,
     "name": "DZ4634 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4634",
@@ -62985,7 +62698,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2385,
+    "id": 2379,
     "name": "DZ2175 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ2175",
@@ -63030,7 +62743,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2386,
+    "id": 2380,
     "name": "DZ4697 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4697",
@@ -63074,7 +62787,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2387,
+    "id": 2381,
     "name": "DZ7493 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ7493",
@@ -63119,7 +62832,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2388,
+    "id": 2382,
     "name": "DZ5627 Kadın Kol Saati",
     "brand": "Diesel",
     "ref": "DZ5627",
@@ -63142,7 +62855,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 38,
+    "stock": 37,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -63164,7 +62877,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2389,
+    "id": 2383,
     "name": "DZ4709 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4709",
@@ -63188,7 +62901,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 297,
+    "stock": 295,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -63210,7 +62923,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2390,
+    "id": 2384,
     "name": "DZ4710 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4710",
@@ -63257,7 +62970,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2391,
+    "id": 2385,
     "name": "DZ7495 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ7495",
@@ -63302,7 +63015,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2392,
+    "id": 2386,
     "name": "DZ4711 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4711",
@@ -63347,7 +63060,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2393,
+    "id": 2387,
     "name": "DZ2239 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ2239",
@@ -63392,7 +63105,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2394,
+    "id": 2388,
     "name": "DZ7475 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ7475",
@@ -63437,7 +63150,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2395,
+    "id": 2389,
     "name": "DZ4621 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4621",
@@ -63481,7 +63194,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2396,
+    "id": 2390,
     "name": "DZ2157 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ2157",
@@ -63526,7 +63239,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2397,
+    "id": 2391,
     "name": "DZ4607 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4607",
@@ -63571,7 +63284,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2398,
+    "id": 2392,
     "name": "DZ7460 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ7460",
@@ -63616,7 +63329,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2399,
+    "id": 2393,
     "name": "DZ7459 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ7459",
@@ -63661,7 +63374,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2400,
+    "id": 2394,
     "name": "DZ1965 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ1965",
@@ -63683,7 +63396,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 130,
+    "stock": 129,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -63705,7 +63418,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2401,
+    "id": 2395,
     "name": "DZ4565 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4565",
@@ -63749,7 +63462,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2402,
+    "id": 2396,
     "name": "DZ4552 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4552",
@@ -63797,7 +63510,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2403,
+    "id": 2397,
     "name": "DZ4417 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4417",
@@ -63841,7 +63554,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2404,
+    "id": 2398,
     "name": "DZ4530 Erkek Kol Saati ",
     "brand": "Diesel",
     "ref": "DZ4530",
@@ -63886,7 +63599,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2405,
+    "id": 2399,
     "name": "DZ4500 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4500",
@@ -63931,7 +63644,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2406,
+    "id": 2400,
     "name": "DZ4501 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4501",
@@ -63974,7 +63687,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2407,
+    "id": 2401,
     "name": "DZ1886 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ1886",
@@ -64017,7 +63730,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2408,
+    "id": 2402,
     "name": "DZ4329 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4329",
@@ -64064,7 +63777,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2409,
+    "id": 2403,
     "name": "DZ5612 Kadın Kol Saati",
     "brand": "Diesel",
     "ref": "DZ5612",
@@ -64109,7 +63822,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2410,
+    "id": 2404,
     "name": "DZ5611 Kadın Kol Saati",
     "brand": "Diesel",
     "ref": "DZ5611",
@@ -64154,7 +63867,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2411,
+    "id": 2405,
     "name": "DZ5608 Kadın Kol Saati",
     "brand": "Diesel",
     "ref": "DZ5608",
@@ -64199,7 +63912,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2412,
+    "id": 2406,
     "name": "DZ5607 Kadın Kol Saati",
     "brand": "Diesel",
     "ref": "DZ5607",
@@ -64244,7 +63957,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2413,
+    "id": 2407,
     "name": "DZ4676 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4676",
@@ -64288,7 +64001,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2414,
+    "id": 2408,
     "name": "DZ4683 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4683",
@@ -64331,7 +64044,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2415,
+    "id": 2409,
     "name": "DZ7490 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ7490",
@@ -64376,7 +64089,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2416,
+    "id": 2410,
     "name": "DZ2225 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ2225",
@@ -64421,7 +64134,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2417,
+    "id": 2411,
     "name": "DZ5626 Kadın Yüzük Saat",
     "brand": "Diesel",
     "ref": "DZ5626",
@@ -64467,7 +64180,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2418,
+    "id": 2412,
     "name": "DZ4702 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4702",
@@ -64513,7 +64226,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2419,
+    "id": 2413,
     "name": "DZ7419 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ7419",
@@ -64556,7 +64269,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2420,
+    "id": 2414,
     "name": "DZ7484 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ7484",
@@ -64601,7 +64314,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2421,
+    "id": 2415,
     "name": "DZ4706 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4706",
@@ -64625,7 +64338,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 124,
+    "stock": 123,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -64647,7 +64360,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2422,
+    "id": 2416,
     "name": "DZ4708 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ4708",
@@ -64693,7 +64406,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2423,
+    "id": 2417,
     "name": "DZ2238 Erkek Kol Saati",
     "brand": "Diesel",
     "ref": "DZ2238",
@@ -64738,7 +64451,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2424,
+    "id": 2418,
     "name": "WWRC835 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC835",
@@ -64758,7 +64471,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 8,
+    "stock": 7,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -64780,7 +64493,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2425,
+    "id": 2419,
     "name": "WWRC124 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC124",
@@ -64825,7 +64538,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2426,
+    "id": 2420,
     "name": "WWRC629 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC629",
@@ -64867,7 +64580,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2427,
+    "id": 2421,
     "name": "WWRC692 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC692",
@@ -64911,7 +64624,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2428,
+    "id": 2422,
     "name": "WWRC1037 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC1037",
@@ -64953,7 +64666,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2429,
+    "id": 2423,
     "name": "WWRD100S 38 mm Pırlantalı Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRD100S",
@@ -64996,7 +64709,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2430,
+    "id": 2424,
     "name": "WWRC1035 47 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC1035",
@@ -65038,7 +64751,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2431,
+    "id": 2425,
     "name": "WWRC1034 47 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC1034",
@@ -65086,7 +64799,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2432,
+    "id": 2426,
     "name": "WWRC676 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC676",
@@ -65109,7 +64822,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 38,
+    "stock": 36,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -65131,7 +64844,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2433,
+    "id": 2427,
     "name": "WWRC670 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC670",
@@ -65173,7 +64886,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2434,
+    "id": 2428,
     "name": "WRC669 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRC669",
@@ -65217,7 +64930,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2435,
+    "id": 2429,
     "name": "WWRC663 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC663",
@@ -65239,7 +64952,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 90,
+    "stock": 89,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -65261,7 +64974,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2436,
+    "id": 2430,
     "name": "WWRC1025 47 mm  Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC1025",
@@ -65303,7 +65016,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2437,
+    "id": 2431,
     "name": "WWRC1024 47 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC1024",
@@ -65345,7 +65058,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2438,
+    "id": 2432,
     "name": "WWRC1023 47 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC1023",
@@ -65367,7 +65080,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 148,
+    "stock": 145,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -65389,7 +65102,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2439,
+    "id": 2433,
     "name": "WWRC658 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC658",
@@ -65432,7 +65145,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2440,
+    "id": 2434,
     "name": "WRS645  36 mm Slim Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRS645",
@@ -65474,7 +65187,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2441,
+    "id": 2435,
     "name": "WWRS614 36 mm Slim Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRS614",
@@ -65519,7 +65232,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2442,
+    "id": 2436,
     "name": "WWRS605 36 mm Slim Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRS605",
@@ -65562,7 +65275,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2443,
+    "id": 2437,
     "name": "WRS625 36 mm Slim  Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRS625",
@@ -65608,7 +65321,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2444,
+    "id": 2438,
     "name": "WWRC1016 47 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC1016",
@@ -65653,7 +65366,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2445,
+    "id": 2439,
     "name": "WRC739 36 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRC739",
@@ -65697,7 +65410,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2446,
+    "id": 2440,
     "name": "WWRC736 36 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC736",
@@ -65717,7 +65430,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 259,
+    "stock": 256,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -65739,7 +65452,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2447,
+    "id": 2441,
     "name": "WWRC419 45 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC419",
@@ -65783,7 +65496,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2448,
+    "id": 2442,
     "name": "WWRC715 36 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC715",
@@ -65805,7 +65518,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 90,
+    "stock": 88,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -65827,7 +65540,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2449,
+    "id": 2443,
     "name": "WWRC713 36 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC713",
@@ -65870,7 +65583,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2450,
+    "id": 2444,
     "name": "WWRC1007 47 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC1007",
@@ -65913,7 +65626,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2451,
+    "id": 2445,
     "name": "WWRC1001 47 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC1001",
@@ -65934,7 +65647,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 212,
+    "stock": 210,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -65956,7 +65669,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2452,
+    "id": 2446,
     "name": "WWRC802 42 mm Kol Saati",
     "brand": "Welder",
     "ref": "WWRC802",
@@ -65998,7 +65711,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2453,
+    "id": 2447,
     "name": "WWRC405 45 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC405",
@@ -66041,7 +65754,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2454,
+    "id": 2448,
     "name": "WWRC401 45 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC401",
@@ -66063,7 +65776,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 88,
+    "stock": 86,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -66085,7 +65798,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2455,
+    "id": 2449,
     "name": "WWRC304 45 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC304",
@@ -66128,7 +65841,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2456,
+    "id": 2450,
     "name": "WWRC302 45 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC302",
@@ -66170,7 +65883,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2457,
+    "id": 2451,
     "name": "WWRC300 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC300",
@@ -66212,7 +65925,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2458,
+    "id": 2452,
     "name": "WRC627 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRC627",
@@ -66254,7 +65967,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2459,
+    "id": 2453,
     "name": "WRC625 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRC625",
@@ -66296,7 +66009,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2460,
+    "id": 2454,
     "name": "WRC624 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRC624",
@@ -66318,7 +66031,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 59,
+    "stock": 58,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -66340,7 +66053,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2461,
+    "id": 2455,
     "name": "WRC622 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRC622",
@@ -66383,7 +66096,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2462,
+    "id": 2456,
     "name": "WRC607 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRC607",
@@ -66426,7 +66139,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2463,
+    "id": 2457,
     "name": "WRC408 45 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRC408",
@@ -66446,7 +66159,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 32,
+    "stock": 30,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -66468,7 +66181,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2464,
+    "id": 2458,
     "name": "WRC407 45 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRC407",
@@ -66511,7 +66224,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2465,
+    "id": 2459,
     "name": "WRT1001 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRT1001",
@@ -66559,7 +66272,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2466,
+    "id": 2460,
     "name": "WRM2008-R Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRM2008-R",
@@ -66606,7 +66319,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2467,
+    "id": 2461,
     "name": "WRT1003 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRT1003",
@@ -66654,7 +66367,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2468,
+    "id": 2462,
     "name": "WWRC126 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC126",
@@ -66698,7 +66411,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2469,
+    "id": 2463,
     "name": "WRH3001-R Kol Saati",
     "brand": "Welder",
     "ref": "WRH3001-R",
@@ -66723,7 +66436,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 12,
+    "stock": 13,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -66745,7 +66458,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2470,
+    "id": 2464,
     "name": "WRH3005-R Kol Saati",
     "brand": "Welder",
     "ref": "WRH3005-R",
@@ -66792,7 +66505,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2471,
+    "id": 2465,
     "name": "WRH3004-R Kol Saati",
     "brand": "Welder",
     "ref": "WRH3004-R",
@@ -66839,7 +66552,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2472,
+    "id": 2466,
     "name": "WRH3002-R Kol Saati",
     "brand": "Welder",
     "ref": "WRH3002-R",
@@ -66887,7 +66600,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2473,
+    "id": 2467,
     "name": "WRT1006 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRT1006",
@@ -66934,7 +66647,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2474,
+    "id": 2468,
     "name": "WRT1005 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRT1005",
@@ -66959,7 +66672,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 20,
+    "stock": 21,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -66981,7 +66694,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2475,
+    "id": 2469,
     "name": "WRD1000-03 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRD1000-03",
@@ -67026,7 +66739,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2476,
+    "id": 2470,
     "name": "WRN2002 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRN2002",
@@ -67048,7 +66761,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 5,
+    "stock": 6,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -67070,7 +66783,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2477,
+    "id": 2471,
     "name": "WRC3004 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRC3004",
@@ -67092,7 +66805,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 245,
+    "stock": 237,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -67114,7 +66827,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2478,
+    "id": 2472,
     "name": "WRC2002 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRC2002",
@@ -67158,7 +66871,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2479,
+    "id": 2473,
     "name": "WRC3000 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRC3000",
@@ -67180,7 +66893,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 154,
+    "stock": 152,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -67202,7 +66915,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2480,
+    "id": 2474,
     "name": "WWMD6002 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWMD6002",
@@ -67249,7 +66962,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2481,
+    "id": 2475,
     "name": "WMD7003 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WMD7003",
@@ -67274,7 +66987,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 121,
+    "stock": 152,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -67296,7 +67009,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2482,
+    "id": 2476,
     "name": "WMD7002 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WMD7002",
@@ -67343,7 +67056,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2483,
+    "id": 2477,
     "name": "WRT1015 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRT1015",
@@ -67368,7 +67081,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 33,
+    "stock": 32,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -67390,7 +67103,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2484,
+    "id": 2478,
     "name": "WRT1017 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRT1017",
@@ -67437,7 +67150,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2485,
+    "id": 2479,
     "name": "WWMD5002 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWMD5002",
@@ -67484,7 +67197,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2486,
+    "id": 2480,
     "name": "WWMD5001 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWMD5001",
@@ -67531,7 +67244,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2487,
+    "id": 2481,
     "name": "WWMD4002 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWMD4002",
@@ -67578,7 +67291,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2488,
+    "id": 2482,
     "name": "WWMD4001 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWMD4001",
@@ -67625,7 +67338,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2489,
+    "id": 2483,
     "name": "WRT1019 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRT1019",
@@ -67650,7 +67363,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 35,
+    "stock": 36,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -67672,7 +67385,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2490,
+    "id": 2484,
     "name": "WRM5009 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRM5009",
@@ -67717,7 +67430,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2491,
+    "id": 2485,
     "name": "WRM5007 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRM5007",
@@ -67740,7 +67453,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 16,
+    "stock": 15,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -67762,7 +67475,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2492,
+    "id": 2486,
     "name": "WWRE1004 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRE1004",
@@ -67785,7 +67498,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 23,
+    "stock": 22,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -67807,7 +67520,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2493,
+    "id": 2487,
     "name": "WWRE1002 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRE1002",
@@ -67830,7 +67543,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 43,
+    "stock": 42,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -67852,7 +67565,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2494,
+    "id": 2488,
     "name": "WWRC699 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC699",
@@ -67874,7 +67587,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 215,
+    "stock": 212,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -67896,7 +67609,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2495,
+    "id": 2489,
     "name": "WWRC654 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC654",
@@ -67919,7 +67632,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 223,
+    "stock": 263,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -67941,7 +67654,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2496,
+    "id": 2490,
     "name": "WWRC653 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC653",
@@ -67965,7 +67678,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 67,
+    "stock": 63,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -67987,7 +67700,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2497,
+    "id": 2491,
     "name": "WRK3000 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRK3000",
@@ -68030,7 +67743,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2498,
+    "id": 2492,
     "name": "WWRC682 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC682",
@@ -68050,7 +67763,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 89,
+    "stock": 87,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -68072,7 +67785,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2499,
+    "id": 2493,
     "name": "WWRC677 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC677",
@@ -68114,7 +67827,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2500,
+    "id": 2494,
     "name": "WWRC672 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC672",
@@ -68134,7 +67847,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 143,
+    "stock": 140,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -68156,7 +67869,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2501,
+    "id": 2495,
     "name": "WWRC668 38 mm  Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC668",
@@ -68178,7 +67891,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 110,
+    "stock": 109,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -68200,7 +67913,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2502,
+    "id": 2496,
     "name": "WWRC665 38 mm  Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC665",
@@ -68242,7 +67955,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2503,
+    "id": 2497,
     "name": "WWRC1020 47 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC1020",
@@ -68264,7 +67977,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 48,
+    "stock": 47,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -68286,7 +67999,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2504,
+    "id": 2498,
     "name": "WWRC519 45 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC519",
@@ -68306,7 +68019,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 51,
+    "stock": 50,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -68328,7 +68041,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2505,
+    "id": 2499,
     "name": "WWRC646 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC646",
@@ -68350,7 +68063,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 248,
+    "stock": 247,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -68372,7 +68085,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2506,
+    "id": 2500,
     "name": "WRC645 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRC645",
@@ -68416,7 +68129,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2507,
+    "id": 2501,
     "name": "WWRC738 36 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC738",
@@ -68459,7 +68172,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2508,
+    "id": 2502,
     "name": "WWRC610 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC610",
@@ -68480,7 +68193,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 138,
+    "stock": 137,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -68502,7 +68215,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2509,
+    "id": 2503,
     "name": "WWRC422 45 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC422",
@@ -68546,7 +68259,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2510,
+    "id": 2504,
     "name": "WWRC421 45 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC421",
@@ -68566,7 +68279,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 194,
+    "stock": 193,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -68588,7 +68301,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2511,
+    "id": 2505,
     "name": "WWRC1009 47 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC1009",
@@ -68609,7 +68322,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 93,
+    "stock": 92,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -68631,7 +68344,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2512,
+    "id": 2506,
     "name": "WWRC1005 47 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC1005",
@@ -68653,7 +68366,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 145,
+    "stock": 139,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -68675,7 +68388,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2513,
+    "id": 2507,
     "name": "WWRC1003 47 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC1003",
@@ -68696,7 +68409,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 82,
+    "stock": 122,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -68718,7 +68431,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2514,
+    "id": 2508,
     "name": "WWRC1002 47 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC1002",
@@ -68738,7 +68451,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 95,
+    "stock": 94,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -68760,7 +68473,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2515,
+    "id": 2509,
     "name": "WRC723 36 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRC723",
@@ -68803,7 +68516,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2516,
+    "id": 2510,
     "name": "WWRC402 45 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC402",
@@ -68826,7 +68539,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 102,
+    "stock": 100,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -68848,7 +68561,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2517,
+    "id": 2511,
     "name": "WWRC615 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC615",
@@ -68890,7 +68603,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2518,
+    "id": 2512,
     "name": "WWRC606 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC606",
@@ -68910,7 +68623,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 103,
+    "stock": 100,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -68932,7 +68645,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2519,
+    "id": 2513,
     "name": "WWRC605 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC605",
@@ -68955,7 +68668,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 83,
+    "stock": 126,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -68977,7 +68690,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2520,
+    "id": 2514,
     "name": "WWRC604 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC604",
@@ -68999,7 +68712,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 117,
+    "stock": 152,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -69021,7 +68734,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2521,
+    "id": 2515,
     "name": "WWRC601 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC601",
@@ -69063,7 +68776,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2522,
+    "id": 2516,
     "name": "WWRC414 45 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC414",
@@ -69107,7 +68820,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2523,
+    "id": 2517,
     "name": "WWRC404 45 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC404",
@@ -69128,7 +68841,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 67,
+    "stock": 64,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -69150,7 +68863,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2524,
+    "id": 2518,
     "name": "WWRC314 45 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC314",
@@ -69193,7 +68906,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2525,
+    "id": 2519,
     "name": "WRC608 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRC608",
@@ -69236,7 +68949,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2526,
+    "id": 2520,
     "name": "WRM2005-R Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRM2005-R",
@@ -69261,7 +68974,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 23,
+    "stock": 24,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -69283,7 +68996,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2527,
+    "id": 2521,
     "name": "WRT1004 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRT1004",
@@ -69330,7 +69043,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2528,
+    "id": 2522,
     "name": "WRM2002-R Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRM2002-R",
@@ -69355,7 +69068,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 13,
+    "stock": 12,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -69377,7 +69090,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2529,
+    "id": 2523,
     "name": "WRM2004-R Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRM2004-R",
@@ -69426,7 +69139,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2530,
+    "id": 2524,
     "name": "WRM2009-R Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRM2009-R",
@@ -69474,7 +69187,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2531,
+    "id": 2525,
     "name": "WRT1014 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRT1014",
@@ -69500,7 +69213,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 7,
+    "stock": 8,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -69522,7 +69235,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2532,
+    "id": 2526,
     "name": "WRC255 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRC255",
@@ -69566,7 +69279,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2533,
+    "id": 2527,
     "name": "WRC254 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRC254",
@@ -69610,7 +69323,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2534,
+    "id": 2528,
     "name": "WRC253 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRC253",
@@ -69654,7 +69367,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2535,
+    "id": 2529,
     "name": "WRC760 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRC760",
@@ -69676,7 +69389,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 178,
+    "stock": 172,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -69698,7 +69411,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2536,
+    "id": 2530,
     "name": "WWMD1015 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWMD1015",
@@ -69723,7 +69436,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 75,
+    "stock": 74,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -69745,7 +69458,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2537,
+    "id": 2531,
     "name": "WRC919 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRC919",
@@ -69767,7 +69480,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 163,
+    "stock": 155,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -69789,7 +69502,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2538,
+    "id": 2532,
     "name": "WRM5001 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRM5001",
@@ -69812,7 +69525,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 40,
+    "stock": 51,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -69834,7 +69547,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2539,
+    "id": 2533,
     "name": "WMD3001 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WMD3001",
@@ -69859,7 +69572,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 32,
+    "stock": 31,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -69881,7 +69594,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2540,
+    "id": 2534,
     "name": "WWRC551 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC551",
@@ -69904,7 +69617,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 80,
+    "stock": 78,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -69926,7 +69639,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2541,
+    "id": 2535,
     "name": "WWRC553 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC553",
@@ -69971,7 +69684,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2542,
+    "id": 2536,
     "name": "WWRC554 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC554",
@@ -70016,7 +69729,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2543,
+    "id": 2537,
     "name": "WRC2004 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRC2004",
@@ -70038,7 +69751,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 450,
+    "stock": 444,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -70060,7 +69773,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2544,
+    "id": 2538,
     "name": "WRC3003 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRC3003",
@@ -70082,7 +69795,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 166,
+    "stock": 158,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -70104,7 +69817,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2545,
+    "id": 2539,
     "name": "WRC3001 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRC3001",
@@ -70126,7 +69839,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 78,
+    "stock": 77,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -70148,7 +69861,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2546,
+    "id": 2540,
     "name": "WMD7000 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WMD7000",
@@ -70173,7 +69886,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 89,
+    "stock": 106,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -70195,7 +69908,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2547,
+    "id": 2541,
     "name": "WMD7001 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WMD7001",
@@ -70242,7 +69955,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2548,
+    "id": 2542,
     "name": "WRT1016 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRT1016",
@@ -70289,7 +70002,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2549,
+    "id": 2543,
     "name": "WWMD5000 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWMD5000",
@@ -70336,7 +70049,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2550,
+    "id": 2544,
     "name": "WWMD4000 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWMD4000",
@@ -70361,7 +70074,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 55,
+    "stock": 53,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -70383,7 +70096,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2551,
+    "id": 2545,
     "name": "WWMD4004 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWMD4004",
@@ -70408,7 +70121,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 65,
+    "stock": 62,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -70430,7 +70143,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2552,
+    "id": 2546,
     "name": "WWRC853 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC853",
@@ -70452,7 +70165,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 123,
+    "stock": 119,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -70474,7 +70187,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2553,
+    "id": 2547,
     "name": "WWRC852 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC852",
@@ -70496,7 +70209,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 138,
+    "stock": 133,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -70518,7 +70231,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2554,
+    "id": 2548,
     "name": "WWRC851 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC851",
@@ -70540,7 +70253,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 181,
+    "stock": 180,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -70562,7 +70275,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2555,
+    "id": 2549,
     "name": "WRM5010 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRM5010",
@@ -70585,7 +70298,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 32,
+    "stock": 30,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -70607,7 +70320,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2556,
+    "id": 2550,
     "name": "WRM5008 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRM5008",
@@ -70652,7 +70365,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2557,
+    "id": 2551,
     "name": "WWRC850 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC850",
@@ -70674,7 +70387,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 169,
+    "stock": 168,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -70696,7 +70409,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2558,
+    "id": 2552,
     "name": "WWRE1006 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRE1006",
@@ -70741,7 +70454,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2559,
+    "id": 2553,
     "name": "WWRE1005 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRE1005",
@@ -70786,7 +70499,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2560,
+    "id": 2554,
     "name": "WWRE1000 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRE1000",
@@ -70831,7 +70544,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2561,
+    "id": 2555,
     "name": "WRC3001D Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRC3001D",
@@ -70853,7 +70566,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 124,
+    "stock": 120,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -70875,7 +70588,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2562,
+    "id": 2556,
     "name": "WWRC834 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC834",
@@ -70895,7 +70608,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 67,
+    "stock": 66,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -70917,7 +70630,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2563,
+    "id": 2557,
     "name": "WWRC698 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC698",
@@ -70940,7 +70653,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 296,
+    "stock": 351,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -70962,7 +70675,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2564,
+    "id": 2558,
     "name": "WWRC655 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC655",
@@ -70986,7 +70699,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 179,
+    "stock": 240,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -71008,7 +70721,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2565,
+    "id": 2559,
     "name": "WWRC647 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC647",
@@ -71033,7 +70746,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 236,
+    "stock": 234,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -71055,7 +70768,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2566,
+    "id": 2560,
     "name": "WWRC641 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC641",
@@ -71097,7 +70810,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2567,
+    "id": 2561,
     "name": "WWRC695 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC695",
@@ -71139,7 +70852,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2568,
+    "id": 2562,
     "name": "WWRC613 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC613",
@@ -71182,7 +70895,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2569,
+    "id": 2563,
     "name": "WWRD100G 38 mm Pırlantalı Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRD100G",
@@ -71225,7 +70938,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2570,
+    "id": 2564,
     "name": "WWRC671 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC671",
@@ -71267,7 +70980,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2571,
+    "id": 2565,
     "name": "WWRC664 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC664",
@@ -71290,7 +71003,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 135,
+    "stock": 183,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -71312,7 +71025,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2572,
+    "id": 2566,
     "name": "WWRC1021 47 mm  Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC1021",
@@ -71332,7 +71045,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 42,
+    "stock": 41,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -71354,7 +71067,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2573,
+    "id": 2567,
     "name": "WWRC656 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC656",
@@ -71375,7 +71088,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 139,
+    "stock": 134,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -71397,7 +71110,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2574,
+    "id": 2568,
     "name": "WWRC521 45 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC521",
@@ -71441,7 +71154,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2575,
+    "id": 2569,
     "name": "WWRC511 45 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC511",
@@ -71485,7 +71198,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2576,
+    "id": 2570,
     "name": "WRS624 36 mm Slim Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRS624",
@@ -71527,7 +71240,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2577,
+    "id": 2571,
     "name": "WWRS636 36 mm Slim Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRS636",
@@ -71569,7 +71282,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2578,
+    "id": 2572,
     "name": "WWRS419 42 mm Slim Kol Saati",
     "brand": "Welder",
     "ref": "WWRS419",
@@ -71614,7 +71327,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2579,
+    "id": 2573,
     "name": "WWRS414 42 mm Slim  Kol Saati",
     "brand": "Welder",
     "ref": "WWRS414",
@@ -71637,7 +71350,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 4,
+    "stock": 3,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -71659,7 +71372,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2580,
+    "id": 2574,
     "name": "WWRC819 42 mm Kol Saati",
     "brand": "Welder",
     "ref": "WWRC819",
@@ -71703,7 +71416,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2581,
+    "id": 2575,
     "name": "WWRC1013 47 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC1013",
@@ -71745,7 +71458,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2582,
+    "id": 2576,
     "name": "WWRC643 38 mm Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC643",
@@ -71766,7 +71479,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 174,
+    "stock": 247,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -71788,7 +71501,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2583,
+    "id": 2577,
     "name": "WWRC1011 47 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC1011",
@@ -71809,7 +71522,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 111,
+    "stock": 109,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -71831,7 +71544,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2584,
+    "id": 2578,
     "name": "WWRC1006 47 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC1006",
@@ -71853,7 +71566,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 178,
+    "stock": 175,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -71875,7 +71588,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2585,
+    "id": 2579,
     "name": "WWRC1004 47 mm Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC1004",
@@ -71918,7 +71631,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2586,
+    "id": 2580,
     "name": "WRD1000-04 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRD1000-04",
@@ -71963,7 +71676,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2587,
+    "id": 2581,
     "name": "WRN2000 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRN2000",
@@ -71985,7 +71698,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 22,
+    "stock": 21,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -72007,7 +71720,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2588,
+    "id": 2582,
     "name": "WWRR1004 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRR1004",
@@ -72052,7 +71765,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2589,
+    "id": 2583,
     "name": "WWRR1002 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRR1002",
@@ -72097,7 +71810,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2590,
+    "id": 2584,
     "name": "WRM2018 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRM2018",
@@ -72144,7 +71857,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2591,
+    "id": 2585,
     "name": "WRT1010 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRT1010",
@@ -72191,7 +71904,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2592,
+    "id": 2586,
     "name": "WRT1009 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRT1009",
@@ -72238,7 +71951,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2593,
+    "id": 2587,
     "name": "WRC751 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRC751",
@@ -72260,7 +71973,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 116,
+    "stock": 163,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -72282,7 +71995,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2594,
+    "id": 2588,
     "name": "WRC758 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRC758",
@@ -72326,7 +72039,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2595,
+    "id": 2589,
     "name": "WMD2000 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WMD2000",
@@ -72373,7 +72086,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2596,
+    "id": 2590,
     "name": "WMD2003 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WMD2003",
@@ -72420,7 +72133,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2597,
+    "id": 2591,
     "name": "WMD2008 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WMD2008",
@@ -72467,7 +72180,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2598,
+    "id": 2592,
     "name": "WMD2009 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WMD2009",
@@ -72493,7 +72206,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 53,
+    "stock": 52,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -72515,7 +72228,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2599,
+    "id": 2593,
     "name": "WMD2010 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WMD2010",
@@ -72562,7 +72275,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2600,
+    "id": 2594,
     "name": "WWMD1000 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWMD1000",
@@ -72588,7 +72301,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 55,
+    "stock": 54,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -72610,7 +72323,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2601,
+    "id": 2595,
     "name": "WWMD1005 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWMD1005",
@@ -72636,7 +72349,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 66,
+    "stock": 65,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -72658,7 +72371,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2602,
+    "id": 2596,
     "name": "WWMD1006 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWMD1006",
@@ -72685,7 +72398,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 84,
+    "stock": 83,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -72707,7 +72420,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2603,
+    "id": 2597,
     "name": "WWMD1007 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWMD1007",
@@ -72733,7 +72446,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 81,
+    "stock": 80,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -72755,7 +72468,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2604,
+    "id": 2598,
     "name": "WWMD1008 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWMD1008",
@@ -72780,7 +72493,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 8,
+    "stock": 6,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -72802,7 +72515,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2605,
+    "id": 2599,
     "name": "WWMD1009 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWMD1009",
@@ -72849,7 +72562,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2606,
+    "id": 2600,
     "name": "WWRC877 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC877",
@@ -72872,7 +72585,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 173,
+    "stock": 172,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -72894,7 +72607,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2607,
+    "id": 2601,
     "name": "WRC910 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRC910",
@@ -72916,7 +72629,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 12,
+    "stock": 11,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -72938,7 +72651,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2608,
+    "id": 2602,
     "name": "WRC914 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRC914",
@@ -72982,7 +72695,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2609,
+    "id": 2603,
     "name": "WRC917 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WRC917",
@@ -73004,7 +72717,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 20,
+    "stock": 19,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -73026,7 +72739,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2610,
+    "id": 2604,
     "name": "WWRC874 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC874",
@@ -73048,7 +72761,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 369,
+    "stock": 360,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -73070,51 +72783,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2611,
-    "name": "WWRC875 Erkek Kol Saati",
-    "brand": "Welder",
-    "ref": "WWRC875",
-    "reference": "WWRC875",
-    "price": 12502,
-    "category": "saat",
-    "subCategory": "Erkek Saat",
-    "metal": "Çelik",
-    "origin": "İtalya",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/8/e8ec4c051b87c7f086d0300bc82f65cd33f4f95e86c909393ce5c147204a3308.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/1/b/1bc21bd6628f668a9b8cf873a17b00a30fecb47c789ccab6155440fce2530b10.jpeg",
-    "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/8/e8ec4c051b87c7f086d0300bc82f65cd33f4f95e86c909393ce5c147204a3308.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/1/b/1bc21bd6628f668a9b8cf873a17b00a30fecb47c789ccab6155440fce2530b10.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/6/d/6dc07ba0ed1159308199238f378762328fbbd0adcdb40b18320c09c49ece461e.jpeg"
-    ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/welder-erkek-kol-saati-p-wwrc875",
-    "statusBadge": "Distribütör Garantili",
-    "conditionBadge": "Sıfır",
-    "isPreOwned": false,
-    "isGold": false,
-    "stock": 1,
-    "inStock": true,
-    "isNew": true,
-    "isHighValue": true,
-    "description": "Welder WWRC875 Erkek Kol Saati, 43 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral Photochromic cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Siyah kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Welder WWRC875 Erkek Kol Saati, 43 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral Photochromic cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Siyah kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "specs": {
-      "Kasa Çapı": "43 mm",
-      "Mekanizma": "Quartz",
-      "Cam Tipi": "Mineral Photochromic",
-      "Su Geçirmezlik": "5 ATM",
-      "Kordon / Kayış": "Çelik",
-      "Kadran Rengi": "Siyah",
-      "Kasa Materyali": "Çelik",
-      "Kasa Rengi": "Siyah",
-      "Cinsiyet": "Erkek",
-      "Menşei": "İtalya",
-      "Garanti": "2 Yıl Distribütör Garantili",
-      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
-    }
-  },
-  {
-    "id": 2612,
+    "id": 2605,
     "name": "WWRC129 Kadın Kol Saati",
     "brand": "Welder",
     "ref": "WWRC129",
@@ -73136,7 +72805,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 230,
+    "stock": 301,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -73158,7 +72827,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2613,
+    "id": 2606,
     "name": "WWMD1010 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWMD1010",
@@ -73205,7 +72874,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2614,
+    "id": 2607,
     "name": "WWMD1013 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWMD1013",
@@ -73230,7 +72899,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 38,
+    "stock": 36,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -73252,7 +72921,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2615,
+    "id": 2608,
     "name": "WWMD1014 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWMD1014",
@@ -73277,7 +72946,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 6,
+    "stock": 7,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -73299,7 +72968,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2616,
+    "id": 2609,
     "name": "WWMD1011 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWMD1011",
@@ -73346,7 +73015,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2617,
+    "id": 2610,
     "name": "WWMD1012 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWMD1012",
@@ -73393,7 +73062,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2618,
+    "id": 2611,
     "name": "WWMD1016 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWMD1016",
@@ -73418,7 +73087,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 62,
+    "stock": 58,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -73440,7 +73109,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2619,
+    "id": 2612,
     "name": "WRM5002 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WRM5002",
@@ -73463,7 +73132,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 10,
+    "stock": 9,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -73485,7 +73154,54 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2620,
+    "id": 2613,
+    "name": "WMD3003 Erkek Kol Saati",
+    "brand": "Welder",
+    "ref": "WMD3003",
+    "reference": "WMD3003",
+    "price": 23156,
+    "category": "saat",
+    "subCategory": "Erkek Saat",
+    "metal": "Çelik",
+    "origin": "İtalya",
+    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/b/7b18a55d16ebe0a781d8d61a92f55e2be1f1347c7d6118c6fec4c6947f51aeaf.jpeg",
+    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/e/7ec2db59cbadb708d7f6c3a5ba4a6ca4891dbdf97171ccbe42caf44375115e97.jpeg",
+    "images": [
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/b/7b18a55d16ebe0a781d8d61a92f55e2be1f1347c7d6118c6fec4c6947f51aeaf.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/e/7ec2db59cbadb708d7f6c3a5ba4a6ca4891dbdf97171ccbe42caf44375115e97.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/8/c/8c5a80a03bb17f4065116b3b75cb5be2e12edde907dcab359ec1e0fc916274d3.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/d/1/d1224990274aa024af3de2427035b09856f334c53b9298eb75683f185668efa7.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/4/3/4305c075a36efd10be321e6fbcd9dc9d96ce575ef80088eb5b5ad5f0ec52a815.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/8/0/801fed082ffc87cd84488e8770f747816e168f18abe121d04fbb1ef2d4035de3.jpeg"
+    ],
+    "sourceUrl": "https://www.saatvesaat.com.tr/welder-erkek-kol-saati-p-wmd3003",
+    "statusBadge": "Distribütör Garantili",
+    "conditionBadge": "Sıfır",
+    "isPreOwned": false,
+    "isGold": false,
+    "stock": 42,
+    "inStock": true,
+    "isNew": true,
+    "isHighValue": true,
+    "description": "Welder WMD3003 Erkek Kol Saati, 45 mm kasa çapı, Otomatik mekanizma hassasiyeti ve Mineral Photochromic cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Silikon kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "desc": "Welder WMD3003 Erkek Kol Saati, 45 mm kasa çapı, Otomatik mekanizma hassasiyeti ve Mineral Photochromic cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Silikon kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "specs": {
+      "Kasa Çapı": "45 mm",
+      "Mekanizma": "Otomatik",
+      "Cam Tipi": "Mineral Photochromic",
+      "Su Geçirmezlik": "3 ATM",
+      "Kordon / Kayış": "Silikon",
+      "Kadran Rengi": "Siyah",
+      "Kasa Materyali": "Çelik",
+      "Kasa Rengi": "Metalik Gri",
+      "Cinsiyet": "Erkek",
+      "Menşei": "İtalya",
+      "Garanti": "2 Yıl Distribütör Garantili",
+      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
+    }
+  },
+  {
+    "id": 2614,
     "name": "WMD3004 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WMD3004",
@@ -73532,7 +73248,54 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2621,
+    "id": 2615,
+    "name": "WMD3002 Erkek Kol Saati",
+    "brand": "Welder",
+    "ref": "WMD3002",
+    "reference": "WMD3002",
+    "price": 23156,
+    "category": "saat",
+    "subCategory": "Erkek Saat",
+    "metal": "Çelik",
+    "origin": "İtalya",
+    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/e/bef145238f6b10a9d10ac81834b117c192b7429031c691c595b4892f627940f2.jpeg",
+    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/c/7/c7cdb7f50bb748d9271430bd6d7f4b4fd4f35f016d87a369ad28e3c39069d2df.jpeg",
+    "images": [
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/e/bef145238f6b10a9d10ac81834b117c192b7429031c691c595b4892f627940f2.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/c/7/c7cdb7f50bb748d9271430bd6d7f4b4fd4f35f016d87a369ad28e3c39069d2df.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/f/a/fa12f2c53198c802bec5dd5c3e3a2c90bd5614503ddd3ef4ce50913d690fe94d.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/8/3/83927f493cad30b99450d8a9c6d8c372bd1cf2dc85248178a0a82d2462f6b726.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/c/7/c7fbed6a970cfe7d57d71a41273a114cc02048a88af583266a9d0221a7d9ae1b.jpeg",
+      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/a/4/a4346ec933ce249a7e9bcb050d23ec02b3a06c4744076f889e45bfd4d4f75027.jpeg"
+    ],
+    "sourceUrl": "https://www.saatvesaat.com.tr/welder-erkek-kol-saati-p-wmd3002",
+    "statusBadge": "Distribütör Garantili",
+    "conditionBadge": "Sıfır",
+    "isPreOwned": false,
+    "isGold": false,
+    "stock": 40,
+    "inStock": true,
+    "isNew": true,
+    "isHighValue": true,
+    "description": "Welder WMD3002 Erkek Kol Saati, 45 mm kasa çapı, Otomatik mekanizma hassasiyeti ve Mineral Photochromic cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Silikon kordon yapısına ve Siyah kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "desc": "Welder WMD3002 Erkek Kol Saati, 45 mm kasa çapı, Otomatik mekanizma hassasiyeti ve Mineral Photochromic cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Silikon kordon yapısına ve Siyah kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
+    "specs": {
+      "Kasa Çapı": "45 mm",
+      "Mekanizma": "Otomatik",
+      "Cam Tipi": "Mineral Photochromic",
+      "Su Geçirmezlik": "3 ATM",
+      "Kordon / Kayış": "Silikon",
+      "Kadran Rengi": "Siyah",
+      "Kasa Materyali": "Çelik",
+      "Kasa Rengi": "Siyah",
+      "Cinsiyet": "Erkek",
+      "Menşei": "İtalya",
+      "Garanti": "2 Yıl Distribütör Garantili",
+      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
+    }
+  },
+  {
+    "id": 2616,
     "name": "WWRC555 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC555",
@@ -73555,7 +73318,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": false,
-    "stock": 30,
+    "stock": 29,
     "inStock": true,
     "isNew": true,
     "isHighValue": true,
@@ -73577,7 +73340,7 @@ const PRODUCTS = [
     }
   },
   {
-    "id": 2622,
+    "id": 2617,
     "name": "WWRC556 Erkek Kol Saati",
     "brand": "Welder",
     "ref": "WWRC556",
@@ -73616,95 +73379,6 @@ const PRODUCTS = [
       "Kasa Materyali": "Çelik",
       "Kasa Rengi": "Metalik Gri",
       "Cinsiyet": "Erkek",
-      "Menşei": "İtalya",
-      "Garanti": "2 Yıl Distribütör Garantili",
-      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
-    }
-  },
-  {
-    "id": 2623,
-    "name": "WWRC557 Erkek Kol Saati",
-    "brand": "Welder",
-    "ref": "WWRC557",
-    "reference": "WWRC557",
-    "price": 13524,
-    "category": "saat",
-    "subCategory": "Erkek Saat",
-    "metal": "Çelik",
-    "origin": "İtalya",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/3/b3c808e7cb1726fc5160e364cf626da5d5f8cf34e85d83da6cfb41d8942ea252.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/f/e/fe909b74795584ada59f7f7522e05bc19a175b4183830d2cc02500f2440ce0f4.jpeg",
-    "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/3/b3c808e7cb1726fc5160e364cf626da5d5f8cf34e85d83da6cfb41d8942ea252.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/f/e/fe909b74795584ada59f7f7522e05bc19a175b4183830d2cc02500f2440ce0f4.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/1/0/10217a91634bb7b01a51d0fcc4dc2befa91e7db66af1f99d2f96a8a424a35dd8.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/6/6/66ffdb616c1c55ffe2be41039763f8e8b1192db857cfa119994d16484133b862.jpeg"
-    ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/welder-erkek-kol-saati-p-wwrc557",
-    "statusBadge": "Distribütör Garantili",
-    "conditionBadge": "Sıfır",
-    "isPreOwned": false,
-    "isGold": false,
-    "stock": 43,
-    "inStock": true,
-    "isNew": true,
-    "isHighValue": true,
-    "description": "Welder WWRC557 Erkek Kol Saati, 45 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Hasır kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Welder WWRC557 Erkek Kol Saati, 45 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral cam korumasıyla üretilmiş orijinal lüks saat modelidir. 3 ATM su geçirmezlik derecesine, Hasır kordon yapısına ve Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "specs": {
-      "Kasa Çapı": "45 mm",
-      "Mekanizma": "Quartz",
-      "Cam Tipi": "Mineral",
-      "Su Geçirmezlik": "3 ATM",
-      "Kordon / Kayış": "Hasır",
-      "Kadran Rengi": "Siyah",
-      "Kasa Materyali": "Çelik",
-      "Kasa Rengi": "Metalik Gri",
-      "Cinsiyet": "Erkek",
-      "Menşei": "İtalya",
-      "Garanti": "2 Yıl Distribütör Garantili",
-      "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
-    }
-  },
-  {
-    "id": 2624,
-    "name": "WRC2003 Kadın Kol Saati",
-    "brand": "Welder",
-    "ref": "WRC2003",
-    "reference": "WRC2003",
-    "price": 14070,
-    "category": "saat",
-    "subCategory": "Kadın Saat",
-    "metal": "Çelik",
-    "origin": "İtalya",
-    "image": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/b/bb3b6c61e530e378e317ba9bb10f24c44a20aa93f3f95cc647a0d46d7d6b5d33.jpeg",
-    "hoverImage": "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/8/e/8e8ce699d8c01f6ba7e4b0887ee500f0b7b23f55962f21acfd69b3e879bb8f59.jpeg",
-    "images": [
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/b/b/bb3b6c61e530e378e317ba9bb10f24c44a20aa93f3f95cc647a0d46d7d6b5d33.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/8/e/8e8ce699d8c01f6ba7e4b0887ee500f0b7b23f55962f21acfd69b3e879bb8f59.jpeg",
-      "https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/2/22817c6279910904a976ba662d9f952527a2b259910a6e126793730bdef7d6a3.jpeg"
-    ],
-    "sourceUrl": "https://www.saatvesaat.com.tr/welder-kadin-kol-saati-p-wrc2003",
-    "statusBadge": "Distribütör Garantili",
-    "conditionBadge": "Sıfır",
-    "isPreOwned": false,
-    "isGold": false,
-    "stock": 378,
-    "inStock": true,
-    "isNew": true,
-    "isHighValue": true,
-    "description": "Welder WRC2003 Kadın Kol Saati, 19 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral Photochromic cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "desc": "Welder WRC2003 Kadın Kol Saati, 19 mm kasa çapı, Quartz mekanizma hassasiyeti ve Mineral Photochromic cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.",
-    "specs": {
-      "Kasa Çapı": "19 mm",
-      "Mekanizma": "Quartz",
-      "Cam Tipi": "Mineral Photochromic",
-      "Su Geçirmezlik": "5 ATM",
-      "Kordon / Kayış": "Çelik",
-      "Kadran Rengi": "Siyah",
-      "Kasa Materyali": "Çelik",
-      "Kasa Rengi": "Altın Rengi",
-      "Cinsiyet": "Kadın",
       "Menşei": "İtalya",
       "Garanti": "2 Yıl Distribütör Garantili",
       "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
@@ -76221,8 +75895,8 @@ const PRODUCTS = [
   }
 ];
 
-const WATCHES = PRODUCTS.filter(p => (p.category === 'saat' || p.category === 'watch') && !p.isPreOwned);
-const JEWELLERY = PRODUCTS.filter(p => (p.category === 'jewelry' || p.category === 'jewellery') && !p.isPreOwned);
+const WATCHES = PRODUCTS.filter(p => p.category === 'saat' || (p.category === 'watch' && !p.isPreOwned));
+const JEWELLERY = PRODUCTS.filter(p => p.category === 'jewelry' || p.category === 'jewellery');
 const PRE_OWNED_ITEMS = PRODUCTS.filter(p => p.isPreOwned === true);
 const PRE_OWNED_GOLD = PRODUCTS.filter(p => p.isPreOwned && p.isGold);
 

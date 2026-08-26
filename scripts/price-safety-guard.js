@@ -1,5 +1,5 @@
-// BELGIN KUYUMCULUK — ENTERPRISE PRICE SAFETY & FINANCIAL GUARD v1.0
-// Amaç: Altın, Ziynet, Sarrafiye ve Saat fiyatlarında %100 sıfır hata, +%5 marj garantisi ve anomali koruması sağlamak.
+// BELGIN KUYUMCULUK — ENTERPRISE PRICE SAFETY & FINANCIAL GUARD v2.0
+// Amaç: Altın, Ziynet, Sarrafiye ve Saat fiyatlarında %100 sıfır hata, +%5 altın marjı, +%40 saat marjı ve anomali koruması sağlamak.
 
 const fs = require('fs');
 const path = require('path');
@@ -76,8 +76,22 @@ for (const p of goldItems) {
 }
 assert(floorBreaches === 0, `Hiçbir altın ürünü taban/tavan piyasa güvenlik bandını ihlal etmemeli (İhlal: ${floorBreaches})`);
 
-// 3. Sıfır, Negatif, NaN ve Eksik Fiyat Taraması (Tüm Katalog)
-console.log('\n--- 3. TÜM KATALOG FİYAT BÜTÜNLÜĞÜ (1.721 ÜRÜN) ---');
+// 3. Lüks Saat Kataloğu & +%40 Marj Emniyet Denetimi (Saat&Saat 9 Marka)
+console.log('\n--- 3. LÜKS SAAT KATALOĞU (SAAT&SAAT 9 MARKA) EMNİYET DENETİMİ ---');
+const watches = PRODUCTS.filter(p => p.category === 'saat' || (p.category === 'watch' && !p.isPreOwned));
+assert(watches.length >= 1000, `Yayında en az 1.000 adet lüks saat bulunmalı (Mevcut: ${watches.length})`);
+
+let watchBreaches = 0;
+for (const w of watches) {
+  if (w.price < 12000) {
+    console.error(`    ⚠️ [WATCH-PRICE-BREACH]: Saat 12.000 TL tabanının altında: [${w.reference}] ${w.name} = ${w.price} TL`);
+    watchBreaches++;
+  }
+}
+assert(watchBreaches === 0, `Hiçbir saat 12.000 TL mağaza teslim / MASAK iç güvenlik tabanının altında olamaz (İhlal: ${watchBreaches})`);
+
+// 4. Sıfır, Negatif, NaN ve Eksik Fiyat Taraması (Tüm Katalog)
+console.log('\n--- 4. TÜM KATALOG FİYAT BÜTÜNLÜĞÜ (1.714 ÜRÜN) ---');
 let invalidPrices = 0;
 for (const p of PRODUCTS) {
   if (typeof p.price !== 'number' || isNaN(p.price) || p.price <= 0 || !Number.isInteger(p.price)) {
@@ -87,8 +101,8 @@ for (const p of PRODUCTS) {
 }
 assert(invalidPrices === 0, `Tüm ürünlerin fiyatı pozitif tamsayı olmalıdır (Hatalı: ${invalidPrices})`);
 
-// 4. Sunucu Ödeme Kataloğu ve Client data.js Birebir Eşleşme
-console.log('\n--- 4. SUNUCU CHECKOUT DELİL KATALOĞU (PAYTR) 1:1 SENKRONİZASYON ---');
+// 5. Sunucu Ödeme Kataloğu ve Client data.js Birebir Eşleşme
+console.log('\n--- 5. SUNUCU CHECKOUT DELİL KATALOĞU (PAYTR) 1:1 SENKRONİZASYON ---');
 if (fs.existsSync(paymentCatalogPath)) {
   const paymentCatalog = JSON.parse(fs.readFileSync(paymentCatalogPath, 'utf8'));
   let mismatchCount = 0;

@@ -293,6 +293,18 @@ async function syncAllBrands() {
 
   fs.writeFileSync(path.join(ROOT_DIR, 'scripts', 'sync-report.json'), JSON.stringify(reportPayload, null, 2), 'utf8');
 
+  // GÜVENLİK DEVRE KESİCİSİ (CIRCUIT BREAKER)
+  if (newWatchList.length < 1000) {
+    throw new Error(`[CRITICAL CIRCUIT BREAKER]: Saat&Saat senkronizasyonunda yetersiz saat çekildi (${newWatchList.length} < 1000). Olası API/bot kesintisi! data.js güncellenmedi, eski güvenli katalog korundu.`);
+  }
+
+  // Tüm saatlerin +%40 marj ve >= 12.000 TL kuralı kontrolü
+  for (const w of newWatchList) {
+    if (!w.price || w.price < 12000 || !Number.isInteger(w.price)) {
+      throw new Error(`[CRITICAL PRICE ERROR]: [${w.reference}] ${w.name} geçersiz saat fiyatı: ${w.price} TL. İşlem durduruldu.`);
+    }
+  }
+
   // Combine watches with non-watch items
   const combinedProducts = [...newWatchList, ...nonWatchProducts];
   console.log(`[sync] Toplam Yayın Kataloğu: ${combinedProducts.length} (Saatler: ${newWatchList.length}, İkinci El & Mücevherat: ${nonWatchProducts.length})`);
@@ -339,16 +351,12 @@ if (typeof module !== 'undefined' && module.exports) {
   console.log('✅ js/data.js başarıyla güncellendi.');
 
   // Run build pipelines (payment catalog, sitemaps, schemas, manifests)
-  console.log('[sync] Build scriptleri çalıştırılıyor...');
-  const buildResult = spawnSync('node', ['scripts/generate-payment-catalog.js'], { cwd: ROOT_DIR, stdio: 'inherit' });
-  if (buildResult.status !== 0) {
-    console.error('❌ Payment catalog generation failed.');
-  }
-
-  const seoResult = spawnSync('node', ['scripts/generate-seo-assets.js'], { cwd: ROOT_DIR, stdio: 'inherit' });
-  if (seoResult.status !== 0) {
-    console.error('❌ SEO assets generation failed.');
-  }
+  console.log('[sync] Build & Güvenlik pipeline scriptleri çalıştırılıyor...');
+  spawnSync('node', ['scripts/generate-payment-catalog.js'], { cwd: ROOT_DIR, stdio: 'inherit' });
+  spawnSync('node', ['scripts/generate-seo-assets.js'], { cwd: ROOT_DIR, stdio: 'inherit' });
+  spawnSync('node', ['scripts/izko-safety-crosscheck.js'], { cwd: ROOT_DIR, stdio: 'inherit' });
+  spawnSync('node', ['scripts/price-safety-guard.js'], { cwd: ROOT_DIR, stdio: 'inherit' });
+  spawnSync('node', ['scripts/verify-product-catalog.js'], { cwd: ROOT_DIR, stdio: 'inherit' });
 
   console.log('🌟 [sync] Canlı katalog senkronizasyonu 0 hata ile tamamlandı!');
 }
