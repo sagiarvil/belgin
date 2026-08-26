@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VIP Güvenli Ödeme | Belgin Kuyumculuk & Saat</title>
-  <meta name="description" content="Belgin Kuyumculuk & Saat VIP Güvenli 3D Secure Ödeme ve Sipariş Sayfası.">
-  <meta name="theme-color" content="#084C47">
+  <title>Güvenli Ödeme | Belgin Kuyumculuk & Saat</title>
+  <meta name="description" content="Belgin Kuyumculuk & Saat 3D Secure 256-Bit SSL Güvenli Ödeme ve Sipariş Doğrulama Sayfası.">
+  <meta name="theme-color" content="#0A1412">
   <meta name="apple-mobile-web-app-title" content="Belgin Ödeme">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -18,81 +18,197 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #F4F7F6;
-      --card-bg: #FFFFFF;
-      --border: #DDE7E4;
-      --teal: #084C47;
-      --teal-dark: #042926;
-      --gold: #B68A32;
-      --gold-light: #DFBA67;
-      --ink: #111A18;
-      --muted: #5C726E;
+      --bg: #0A1412;
+      --card-bg: #122220;
+      --card-border: #1E3835;
+      --gold: #D4AF37;
+      --gold-light: #F3E5AB;
+      --teal-accent: #178370;
+      --text: #F0F4F3;
+      --text-muted: #8EAAA5;
+      --input-bg: #0B1917;
+      --input-border: #23433F;
+      --success: #25D366;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
-    body { background: var(--bg); color: var(--ink); min-height: 100vh; display: flex; flex-direction: column; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+    }
     
-    .header { background: var(--teal-dark); color: #fff; padding: 28px 16px 24px; text-align: center; border-bottom: 3px solid var(--gold); }
-    .brand-title { font-family: 'Cinzel', serif; font-size: clamp(15px, 4.2vw, 22px); letter-spacing: clamp(1px, 0.5vw, 2.5px); color: #fff; text-transform: uppercase; font-weight: 700; white-space: nowrap; }
-    .brand-sub { font-size: 11px; letter-spacing: 2px; color: var(--gold-light); text-transform: uppercase; margin-top: 4px; }
+    .header {
+      text-align: center;
+      padding: 20px 0 24px;
+    }
+    .brand-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(15px, 4.2vw, 20px);
+      letter-spacing: clamp(1px, 0.5vw, 2.5px);
+      color: var(--gold);
+      text-transform: uppercase;
+      font-weight: 700;
+      white-space: nowrap;
+      text-align: center;
+      margin: 0 auto;
+    }
     
-    .container { max-width: 620px; width: 100%; margin: 24px auto; padding: 0 16px; flex: 1; }
-    .order-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; padding: 24px; box-shadow: 0 4px 24px rgba(8,76,71,0.06); margin-bottom: 20px; }
+    .container {
+      max-width: 520px;
+      width: 100%;
+      margin: 0 auto;
+      flex: 1;
+    }
+    .order-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+      margin-bottom: 20px;
+    }
     
-    .section-title { font-size: 15px; font-weight: 700; color: var(--teal); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 16px; }
+    .section-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--gold-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
     
-    .product-summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
-    .product-name { font-size: 20px; font-weight: 800; color: var(--ink); line-height: 1.3; }
-    .order-id-tag { display: inline-block; background: #eef6f4; color: var(--teal); font-family: monospace; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px; }
-    .product-price { font-size: 28px; font-weight: 800; color: var(--teal); }
+    .product-summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .product-name {
+      font-size: 19px;
+      font-weight: 800;
+      color: #FFFFFF;
+      line-height: 1.35;
+    }
+    .order-id-tag {
+      display: inline-block;
+      background: var(--input-bg);
+      color: var(--gold);
+      border: 1px solid var(--input-border);
+      font-family: monospace;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+    .product-price {
+      font-size: 28px;
+      font-weight: 850;
+      color: var(--gold);
+      text-shadow: 0 2px 10px rgba(212,175,55,0.25);
+    }
     
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
-    @media (max-width: 540px) { .form-row { grid-template-columns: 1fr; } }
-    .form-group { margin-bottom: 14px; }
-    .form-label { display: block; font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .form-input { width: 100%; padding: 14px 16px; border: 1px solid var(--border); border-radius: 8px; font-size: 14.5px; outline: none; transition: border-color 0.2s; }
-    .form-input:focus { border-color: var(--teal); }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    @media (max-width: 520px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-label {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .form-input {
+      width: 100%;
+      padding: 13px 15px;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 8px;
+      font-size: 14.5px;
+      color: #FFFFFF;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(212,175,55,0.15);
+    }
+    .form-input::placeholder {
+      color: #4A6B65;
+    }
     
-    .security-badge-strip { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 12px; font-weight: 600; color: #1f6b38; background: #eaf8f0; border: 1px solid #cbead6; border-radius: 8px; padding: 10px; margin-bottom: 18px; }
-    
-    /* BÜYÜK LÜKS ÖDEME BUTONU */
+    /* BÜYÜK LÜKS ALTIN ÖDEME BUTONU */
     .btn-pay-giant {
       width: 100%;
-      background: linear-gradient(135deg, #084C47 0%, #042926 100%);
-      color: #FFFFFF;
-      border: 2px solid var(--gold);
-      padding: 22px 24px;
+      background: linear-gradient(135deg, #D4AF37 0%, #AA7C11 100%);
+      color: #0A1412;
+      border: none;
+      padding: 18px 24px;
       border-radius: 12px;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 800;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
+      gap: 10px;
       letter-spacing: 0.5px;
-      box-shadow: 0 8px 30px rgba(8,76,71,0.35);
+      box-shadow: 0 8px 30px rgba(212,175,55,0.3);
       transition: transform 0.1s, box-shadow 0.2s;
+      margin-top: 10px;
     }
-    .btn-pay-giant:hover { box-shadow: 0 10px 36px rgba(8,76,71,0.45); }
-    .btn-pay-giant:active { transform: scale(0.98); }
+    .btn-pay-giant:hover {
+      box-shadow: 0 10px 36px rgba(212,175,55,0.45);
+    }
+    .btn-pay-giant:active {
+      transform: scale(0.98);
+    }
     
-    /* ÖDEME BUTONUNUN ALTINDAKİ YASAL KUTU */
-    .legal-footer-box { background: #faf9f6; border: 1px solid #eae6df; border-radius: 10px; padding: 16px 18px; font-size: 12px; line-height: 1.65; color: #555; margin-top: 20px; }
-    .legal-item { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; cursor: pointer; }
-    .legal-item:last-child { margin-bottom: 0; }
-    .legal-item input { margin-top: 3px; accent-color: var(--teal); }
-    .legal-item a { color: var(--teal); font-weight: 600; text-decoration: underline; }
+    .security-badge-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: 16px;
+    }
     
-    .footer-simple { text-align: center; font-size: 11.5px; color: var(--muted); padding: 24px 16px; line-height: 1.6; }
+    /* PAYTR CONTAINER */
+    #paytr-container {
+      display: none;
+      margin-top: 20px;
+      background: #FFFFFF;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    }
   </style>
 </head>
 <body>
 
-  <header class="header">
-    <img src="images/belgin-crest-b.png" alt="Belgin Emblemi" style="width:76px; height:76px; object-fit:contain; margin-bottom:8px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));">
+  <div class="header">
+    <img src="images/belgin-crest-b.png" alt="Belgin Emblemi" style="width:84px; height:84px; object-fit:contain; margin-bottom:12px; filter: drop-shadow(0 4px 16px rgba(212,175,55,0.4));">
     <div class="brand-title">Belgin Kuyumculuk & Saat</div>
-    <div class="brand-sub">İzmir Buca Showroom · VIP Güvenli Ödeme</div>
-  </header>
+  </div>
 
   <main class="container">
     
@@ -100,18 +216,18 @@
       
       <!-- 1. ÜRÜN VE TUTAR KARTI -->
       <div class="section-title">
-        <span>📦 Sipariş Bilgisi</span>
-        <span id="orderIdDisplay" class="order-id-tag">BLG-VIP-SİPARİŞ</span>
+        <span>✨ Sipariş Detayı</span>
+        <span id="orderIdDisplay" class="order-id-tag">BLG-SİPARİŞ</span>
       </div>
       
       <div class="product-summary">
         <div>
-          <div id="productTitleDisplay" class="product-name">Lüks Saat / Mücevherat Ürünü</div>
+          <div id="productTitleDisplay" class="product-name">Lüks Koleksiyon Ürünü</div>
         </div>
         <div id="productAmountDisplay" class="product-price">₺0</div>
       </div>
 
-      <hr style="border:0; border-top:1px solid var(--border); margin:20px 0;">
+      <hr style="border:0; border-top:1px solid var(--card-border); margin:20px 0;">
 
       <!-- 2. ALICI BİLGİLERİ -->
       <div class="form-row">
@@ -120,29 +236,29 @@
           <input type="text" id="custName" class="form-input" required placeholder="Adınız Soyadınız">
         </div>
         <div class="form-group" style="margin-bottom:0;">
-          <label class="form-label">Telefon Numaranız (WhatsApp) *</label>
+          <label class="form-label">Telefon Numaranız *</label>
           <input type="tel" id="custPhone" class="form-input" required placeholder="05XX XXX XX XX">
         </div>
       </div>
 
-      <div class="form-group" style="margin-top:14px; margin-bottom:20px;">
-        <label class="form-label">T.C. Kimlik No / Pasaport No *</label>
-        <input type="text" id="custIdentity" class="form-input" required placeholder="T.C. Kimlik Numaranız">
+      <div class="form-group" style="margin-top:14px; margin-bottom:18px;">
+        <label class="form-label">T.C. Kimlik / Pasaport No *</label>
+        <input type="text" id="custIdentity" class="form-input" required placeholder="Fatura & Doğrulama İçin T.C. Kimlik No">
       </div>
 
-      <!-- BÜYÜK ÖDEME BUTONU -->
+      <!-- BÜYÜK ALTIN ÖDEME BUTONU -->
       <button type="button" id="btnCompletePayment" class="btn-pay-giant" onclick="processVipPayment()">
-        <span>🔒</span> SİPARİŞİ TAMAMLA & 3D SECURE İLE ÖDE
+        <span>🔒</span> 3D Secure ile Güvenli Öde
       </button>
 
-      <div style="text-align:center; font-size:11.5px; color:var(--muted); margin-top:14px;">
-        🔒 256-Bit SSL Şifreleme ve 3D Secure Güvenli Ödeme Altyapısı
+      <div class="security-badge-footer">
+        <span>🛡️</span> 256-Bit SSL Şifreleme · 3D Secure SMS Onayı · PayTR
       </div>
 
       <!-- PAYTR 3D SECURE IFRAME ALANI -->
-      <div id="paytr-container" style="display:none; margin-top:24px; background:#ffffff; border-radius:12px; padding:16px; box-shadow:0 8px 30px rgba(0,0,0,0.4);">
-        <div style="text-align:center; font-weight:600; color:#05332f; margin-bottom:14px; font-size:13.5px; display:flex; align-items:center; justify-content:center; gap:8px;">
-          <span>🔒</span> PayTR 256-Bit SSL & 3D Secure Güvenli Kart Ödeme Ekranı
+      <div id="paytr-container">
+        <div style="text-align:center; font-weight:700; color:#0A1412; margin-bottom:12px; font-size:13px; display:flex; align-items:center; justify-content:center; gap:6px;">
+          <span>🔒</span> PayTR 256-Bit SSL & 3D Secure Kart Ödeme Ekranı
         </div>
         <div id="paytr-iframe-wrapper"></div>
       </div>
