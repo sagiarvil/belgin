@@ -1,5 +1,5 @@
 // ==========================================================
-// BELGIN KUYUMCULUK — ENTERPRISE SPA ROUTER
+// BELGIN KUYUMCULUK — ENTERPRISE SPA & PATH ROUTER
 // ==========================================================
 
 const PAGE_TITLES = {
@@ -14,7 +14,7 @@ const PAGE_TITLES = {
   'odeme': "Güvenli Ödeme (PayTR) | Belgin Kuyumculuk",
   'favoriler': "İstek Listem & Favoriler | Belgin Kuyumculuk",
   'hesabim': "VIP Müşteri Hesabı | Belgin Kuyumculuk",
-  'iletisim': "İletişim & Nişantaşı Mağazamız | Belgin Kuyumculuk",
+  'iletisim': "İletişim & Buca Showroom Mağazamız | Belgin Kuyumculuk",
   'sertifika': "Sertifika Doğrulama | Belgin Kuyumculuk",
   'basarili-odeme': "Sipariş Onayı | Belgin Kuyumculuk",
   'basarisiz-odeme': "Ödeme Bildirimi | Belgin Kuyumculuk"
@@ -23,26 +23,97 @@ const PAGE_TITLES = {
 const Router = {
   currentPage: 'ana-sayfa',
 
+  resolveLocation() {
+    const path = location.pathname.replace(/\/+$/, '') || '/';
+    if (path === '/') return { page: 'ana-sayfa' };
+    if (path === '/saatler') return { page: 'saatler' };
+    if (path === '/mucevherat') return { page: 'mucevherat' };
+    if (path === '/ikinci-el') return { page: 'ikinci-el' };
+    if (path.startsWith('/urun/')) {
+      const match = Object.entries(window.SEO_ROUTE_MAP || {}).find(([,route]) => route.replace(/\/+$/, '') === path);
+      if (match) return { page: 'urun', productId: Number(match[0]) };
+    }
+    return { page: 'ana-sayfa' };
+  },
+
+  routeForPage(page) {
+    return (window.SEO_CATEGORY_ROUTES || {})[page] || (page === 'ana-sayfa' ? '/' : `/${page}/`);
+  },
+
+  routeForProduct(id) {
+    return (window.SEO_ROUTE_MAP || {})[String(id)] || null;
+  },
+
+  migrateLegacyHash() {
+    const hash = location.hash.replace(/^#/, '');
+    if (!hash) return null;
+    const m = hash.match(/^(?:urun|product)-(\d+)$/);
+    if (m) {
+      const id = Number(m[1]);
+      const route = this.routeForProduct(id);
+      if (route) {
+        history.replaceState({page:'urun', productId:id}, '', route);
+        return {page:'urun', productId:id};
+      }
+    }
+    const old = {
+      'saatler': '/saatler/',
+      'watches': '/saatler/',
+      'mucevherat': '/mucevherat/',
+      'jewellery': '/mucevherat/',
+      'ikinci-el': '/ikinci-el/',
+      'preowned': '/ikinci-el/'
+    };
+    if (old[hash]) {
+      history.replaceState({page:hash}, '', old[hash]);
+      return {page:hash};
+    }
+    return null;
+  },
+
   init() {
     document.addEventListener('click', (e) => {
-      // Prevent default jump for any href="#" links
-      const hrefHash = e.target.closest('a[href="#"]');
-      if (hrefHash && !hrefHash.getAttribute('data-page')) {
+      // 1. Ürün kartı linkleri (data-product-id)
+      const productLink = e.target.closest('a[data-product-id]');
+      if (productLink) {
         e.preventDefault();
+        const id = Number(productLink.dataset.productId);
+        const route = this.routeForProduct(id);
+        this.navigate('urun', false);
+        if (typeof App !== 'undefined' && App.openProduct) {
+          App.openProduct(id, { skipHistory: true });
+        }
+        if (route) history.pushState({ page: 'urun', productId: id }, '', route);
+        return;
       }
-      
+
+      // 2. data-page navigasyon linkleri
       const link = e.target.closest('[data-page]');
       if (link) {
         e.preventDefault();
         const page = link.getAttribute('data-page');
         const filterVal = link.getAttribute('data-filter');
         this.navigate(page, true, { filter: filterVal });
+        return;
+      }
+
+      // 3. Prevent default jump for href="#"
+      const hrefHash = e.target.closest('a[href="#"]');
+      if (hrefHash && !hrefHash.getAttribute('data-page') && !hrefHash.getAttribute('onclick')) {
+        e.preventDefault();
       }
     });
 
     window.addEventListener('popstate', () => {
-      const page = location.hash.replace('#', '') || 'ana-sayfa';
-      this.navigate(page, false);
+      const state = this.resolveLocation();
+      if (state.page === 'urun' && state.productId) {
+        this.navigate('urun', false);
+        if (typeof App !== 'undefined' && App.openProduct) {
+          App.openProduct(state.productId, { skipHistory: true });
+        }
+        return;
+      }
+      this.navigate(state.page, false);
     });
   },
 
@@ -56,11 +127,8 @@ const Router = {
     if (page.startsWith('urun-') || page.startsWith('product-')) {
       const id = parseInt(page.replace('urun-', '').replace('product-', ''));
       if (typeof App !== 'undefined' && App.openProduct) {
-        this.navigate('urun', pushState);
-        App.openProduct(id);
-        if (pushState) {
-          history.replaceState(null, '', '#urun-' + id);
-        }
+        this.navigate('urun', false);
+        App.openProduct(id, { skipHistory: !pushState });
         return;
       }
     }
@@ -102,7 +170,7 @@ const Router = {
     }
 
     // 2. Navigasyon Aktif Linkleri
-    document.querySelectorAll('.nav-links a, .nav-desktop a, .mobile-drawer-nav a').forEach(a => a.classList.remove('active'));
+    document.querySelectorAll('.nav-links a, .nav-desktop a, .mobile-drawer-nav a, .mobile-bottom-dock a').forEach(a => a.classList.remove('active'));
     const navLinks = document.querySelectorAll(`[data-page="${page}"]`);
     navLinks.forEach(a => a.classList.add('active'));
 
@@ -137,8 +205,15 @@ const Router = {
     }
 
     // 7. History State
-    if (pushState) {
-      history.pushState(null, '', '#' + page);
+    if (pushState && page !== 'urun') {
+      const categoryRoute = (window.SEO_CATEGORY_ROUTES || {})[page];
+      if (categoryRoute) {
+        history.pushState({ page }, '', categoryRoute);
+      } else if (page === 'ana-sayfa') {
+        history.pushState({ page }, '', '/');
+      } else {
+        history.pushState({ page }, '', '#' + page);
+      }
     }
   },
 

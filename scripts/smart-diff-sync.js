@@ -275,6 +275,7 @@ async function runSmartDiffSync() {
   fs.writeFileSync(dataJsPath, exportHeader + exportBody + exportMiddle + exportFooter, 'utf8');
 
   // Ödeme ve SEO varlıklarını güncelle
+  execSync('node scripts/generate-static-seo-pages.js', { stdio: 'inherit' });
   execSync('node scripts/generate-payment-catalog.js', { stdio: 'inherit' });
   execSync('node scripts/generate-seo-assets.js', { stdio: 'inherit' });
   execSync('node scripts/verify-product-catalog.js', { stdio: 'inherit' });

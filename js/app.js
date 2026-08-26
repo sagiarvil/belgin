@@ -1,5 +1,5 @@
 // ==========================================================
-// BELGIN — LÜKS SAAT & MÜCEVHERAT (EST. 1987)
+// BELGIN — LÜKS SAAT & MÜCEVHERAT (EST. 1999)
 // TÜRKİYE LOKASYON & YASAL E-TİCARET ALTYAPISI MOTORU
 // ==========================================================
 
@@ -32,11 +32,23 @@ const App = {
       }
     });
 
-    const hash = location.hash.replace('#', '');
-    if (hash && document.getElementById('page-' + hash)) {
-      Router.navigate(hash, false);
+    const legacy = Router.migrateLegacyHash();
+    const queryProductId = Number(new URLSearchParams(location.search).get('urun'));
+
+    if (queryProductId && findProduct(queryProductId)) {
+      Router.navigate('urun', false);
+      this.openProduct(queryProductId, { skipHistory: true });
+      const route = Router.routeForProduct(queryProductId);
+      if (route) history.replaceState({ page: 'urun', productId: queryProductId }, '', route);
+      return;
+    }
+
+    const state = legacy || Router.resolveLocation();
+    if (state.page === 'urun' && state.productId) {
+      Router.navigate('urun', false);
+      this.openProduct(state.productId, { skipHistory: true });
     } else {
-      Router.navigate('ana-sayfa', false);
+      Router.navigate(state.page, false);
     }
   },
 
@@ -478,8 +490,13 @@ const App = {
       <div class="prod-price-tag">${formatPrice(p.price)}</div>
     `;
 
+    const productHref = (window.SEO_ROUTE_MAP || {})[String(p.id)] || `/?urun=${encodeURIComponent(p.id)}`;
+
     return `
-      <div class="product-art-card ${isPreOwned ? 'product-art-card-preowned' : ''}" onclick="App.openProduct(${p.id})">
+      <a class="product-art-card ${isPreOwned ? 'product-art-card-preowned' : ''}"
+         href="${productHref}"
+         data-product-id="${p.id}"
+         style="text-decoration:none; color:inherit; display:flex;">
         <div class="product-art-thumb">
           ${isPreOwned ? '<span class="badge-cond-gold">İkinci El</span>' : ''}
           <img class="img-primary" src="${p.image}" alt="${p.brand} ${p.name}" loading="lazy">
@@ -491,7 +508,7 @@ const App = {
           <p class="prod-ref-size">${p.reference}</p>
           ${priceHtml}
         </div>
-      </div>
+      </a>
     `;
   },
 
@@ -581,7 +598,7 @@ const App = {
   // ==========================================================
   // ÜRÜN DETAY SAYFASI (SAAT&SAAT ENTERPRISE PDP MİMARİSİ)
   // ==========================================================
-  openProduct(id) {
+  openProduct(id, options = {}) {
     const p = findProduct(id);
     if (!p) return;
 
@@ -1086,8 +1103,9 @@ const App = {
     `;
 
     Router.navigate('urun', false);
-    if (history.pushState) {
-      history.pushState(null, '', '#urun-' + p.id);
+    const route = Router.routeForProduct(p.id);
+    if (!options.skipHistory && route && location.pathname !== route) {
+      history.pushState({ page: 'urun', productId: p.id }, '', route);
     }
     window.scrollTo({ top: 0, behavior: 'instant' });
     setTimeout(() => {

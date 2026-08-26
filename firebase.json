@@ -11,6 +11,11 @@
     "public": ".",
     "ignore": ["firebase.json", ".firebaserc", ".firebaserc.example", ".github/**", "**/.*", "**/node_modules/**", "functions/**", "tests/**", "scripts/**", "belgin_kuyumculuk_hukuki_sozlesme_paketi/**", "**/*.docx", "**/*.xlsx", "**/*.pdf", "**/*.md", "package.json", "package-lock.json", "*kopyası.txt", "README.md"],
     "cleanUrls": false,
+    "redirects": [
+      {"source":"/saatler","destination":"/saatler/","type":301},
+      {"source":"/mucevherat","destination":"/mucevherat/","type":301},
+      {"source":"/ikinci-el","destination":"/ikinci-el/","type":301}
+    ],
     "rewrites": [
       {"source":"/api/payment/create","function":"createPayment"},
       {"source":"/api/payment/status","function":"getPaymentStatus"},

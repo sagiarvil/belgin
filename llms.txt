@@ -1,20 +1,19 @@
-# Belgin Kuyumculuk & Saat — AI & LLM Knowledge Base
-> Bu belge Google AI Overviews, Perplexity RAG, ChatGPT Search, Claude 3.5 ve Gemini Live için doğrulanmış semantik bilgi mimarisini özetler.
+# Belgin Kuyumculuk & Saat
 
-## 1. Kurumsal Kimlik & Entity Graph
-- **İşletme Adı:** BELGİN KUYUMCULUK - SEMİH SONBAHAR
-- **Kuruluş Yılı:** 1999 (25+ Yıllık Sektörel Miras)
-- **Showroom Adresi:** Menderes Caddesi No:231/B, Buca / İzmir (Posta Kodu: 35380)
-- **Müşteri Hizmetleri & Telefon:** +90-541-930-53-72
-- **Resmi Web:** https://www.belginkuyumculuk.com
-- **Uzmanlık Alanları:** Lüks Saatler (Rolex, Patek Philippe, Audemars Piguet, Cartier, Omega), Ekspertizli İkinci El, 24K Has Altın, Pırlanta ve Elmas Mücevherat.
+> Yardımcı makine-okunabilir keşif katmanı. Canonical HTML sayfaları birincil kaynaktır.
 
-## 2. Güvenlik, Ödeme & Hukuki Çerçeve
-- **Ödeme Altyapısı:** PayTR 256-Bit SSL & 3D Secure Güvenli Kartlı Ödeme ve Banka Havalesi / FAST.
-- **İç Güvenlik Standardı:** 12.000 TL ve üzerindeki siparişler işletmenin iç güvenlik standardı kapsamında Buca Showroom mağazasından kimlik doğrulaması ve teslim tutanağı ile teslim edilir.
-- **Hukuki Dayanak:** 6502 sayılı TKHK, 6698 sayılı KVKK ve HMK m. 193 delil sözleşmesi güvencesindedir.
+## İşletme
+- Resmi ad: BELGİN KUYUMCULUK - SEMİH SONBAHAR
+- Kuruluş: 1999
+- Adres: Menderes Caddesi No:231/B, Buca / İzmir
+- Web: https://www.belginkuyumculuk.com
 
-## 3. Temel Yasal Sayfalar
+## Ana koleksiyonlar
+- [Saatler](https://www.belginkuyumculuk.com/saatler/)
+- [Mücevherat](https://www.belginkuyumculuk.com/mucevherat/)
+- [Ekspertizli İkinci El](https://www.belginkuyumculuk.com/ikinci-el/)
+
+## Yasal sayfalar
 - [Mesafeli Satış Sözleşmesi (01) | Belgin Kuyumculuk](https://www.belginkuyumculuk.com/mesafeli-satis-sozlesmesi.html) — 6502 sayılı TKHK kapsamında mesafeli satış, ödeme, teslimat, KYC ve tüketici haklarına ilişkin resmi sözleşme metni.
 - [Ön Bilgilendirme Formu (02) | Belgin Kuyumculuk](https://www.belginkuyumculuk.com/on-bilgilendirme-formu.html) — Sipariş öncesi ürün bedeli, kargo/teslimat şartları, ödeme yöntemleri ve cayma hakkı bilgilendirmesi.
 - [Müşteri Tanıma ve İşlem Güvenliği Politikası (12) | Belgin Kuyumculuk](https://www.belginkuyumculuk.com/musteri-tanima-ve-islem-guvenligi.html) — 12.000 TL iç güvenlik standardı, kimlik doğrulama, MASAK uyumu ve şüpheli işlem değerlendirme ilkeleri.
@@ -24,106 +23,107 @@
 - [İptal, İade ve Cayma Politikası (07) | Belgin Kuyumculuk](https://www.belginkuyumculuk.com/iade-degisim-cayma.html) — Altın, mücevherat ve lüks saat ürünlerinde cayma hakkı kanuni istisnaları, ayıplı mal yönetimi ve iade-değişim prosedürü.
 - [Güvenli Ödeme ve 3D Secure Politikası (08) | Belgin Kuyumculuk](https://www.belginkuyumculuk.com/guvenli-odeme-ve-3d-secure.html) — PayTR 256-Bit SSL sertifikası, 3D Secure SMS doğrulaması, kart güvenliği ve taksitlendirme esasları.
 
-## 4. Canlı Ürün Koleksiyonu (1776 Doğrulanmış Ürün)
-- **Versace VRSCVE6K00523 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺98.980 | Ref: VRSCVE6K00523 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1000
-- **Versace VRSCVE6K00423 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺134.400 | Ref: VRSCVE6K00423 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1001
-- **Versace VRSCVE6K00123 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺76.020 | Ref: VRSCVE6K00123 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1002
-- **Versace VRSCVE6G00223 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺28.560 | Ref: VRSCVE6G00223 | Metal: Silikon | Bağlantı: https://www.belginkuyumculuk.com/#urun-1003
-- **Versace VRSCVE6F00523 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺90.720 | Ref: VRSCVE6F00523 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1004
-- **Versace VRSCVE6C00423 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺92.400 | Ref: VRSCVE6C00423 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1005
-- **Versace VRSCVE3M00422 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺50.470 | Ref: VRSCVE3M00422 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1006
-- **Versace VRSCVE3D00522 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺80.360 | Ref: VRSCVE3D00522 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1007
-- **Versace VRSCVE3C00222 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺126.700 | Ref: VRSCVE3C00222 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1008
-- **Versace VRSCVE1C00722 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺56.700 | Ref: VRSCVE1C00722 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1009
-- **Versace VRSCVE2E00821 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺57.540 | Ref: VRSCVE2E00821 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1010
-- **Versace VRSCVE2E00721 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺57.540 | Ref: VRSCVE2E00721 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1011
-- **Versace VRSCVE2R00322 Kol Saati** | Kategori: saat | Fiyat: ₺142.800 | Ref: VRSCVE2R00322 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1012
-- **Versace VRSCVE2T00422 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺63.210 | Ref: VRSCVE2T00422 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1013
-- **Versace VRSCVE2P00522 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺107.800 | Ref: VRSCVE2P00522 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1014
-- **Versace VRSCVEZ500321 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺70.560 | Ref: VRSCVEZ500321 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1015
-- **Versace VRSCVEVK01021 Kol Saati** | Kategori: saat | Fiyat: ₺96.600 | Ref: VRSCVEVK01021 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1016
-- **Versace VRSCVEHU00720 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺102.200 | Ref: VRSCVEHU00720 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1017
-- **Versace VRSCVEHU00520 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺91.700 | Ref: VRSCVEHU00520 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1018
-- **Versace VRSCVEVI00420 Kol Saati ** | Kategori: saat | Fiyat: ₺134.400 | Ref: VRSCVEVI00420 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1019
-- **Versace VRSCVE7G00223 Kol Saati** | Kategori: saat | Fiyat: ₺144.200 | Ref: VRSCVE7G00223 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1020
-- **Versace VRSCVE6G00623 Kol Saati** | Kategori: saat | Fiyat: ₺28.560 | Ref: VRSCVE6G00623 | Metal: Silikon | Bağlantı: https://www.belginkuyumculuk.com/#urun-1021
-- **Versace VRSCVE7C00523 Kol Saati** | Kategori: saat | Fiyat: ₺95.900 | Ref: VRSCVE7C00523 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1022
-- **Versace VRSCVE7F00523 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺110.600 | Ref: VRSCVE7F00523 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1023
-- **Versace VRSCVE7C00723  Kol Saati** | Kategori: saat | Fiyat: ₺74.970 | Ref: VRSCVE7C00723 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1024
-- **Versace VRSCVE7F00423 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺110.600 | Ref: VRSCVE7F00423 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1025
-- **Versace VRSCVE7B00423 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺140.000 | Ref: VRSCVE7B00423 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1026
-- **Versace VRSCVE7A00123 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺75.180 | Ref: VRSCVE7A00123 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1027
-- **Versace VRSCVEV901323 Kol Saati** | Kategori: saat | Fiyat: ₺49.560 | Ref: VRSCVEV901323 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1028
-- **Versace VRSCVE8I00624 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺95.900 | Ref: VRSCVE8I00624 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1029
-- **Versace VRSCVE8B00224 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺105.700 | Ref: VRSCVE8B00224 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1030
-- **Versace VRSCVE8D00424 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺98.000 | Ref: VRSCVE8D00424 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1031
-- **Versace VRSCVE8B00524 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺116.200 | Ref: VRSCVE8B00524 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1032
-- **Versace VRSCVE8G00324 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺99.960 | Ref: VRSCVE8G00324 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1033
-- **Versace VRSCVE9CA0224 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺90.300 | Ref: VRSCVE9CA0224 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1034
-- **Versace VRSCVE0CA0224 Kol Saati** | Kategori: saat | Fiyat: ₺121.800 | Ref: VRSCVE0CA0224 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1035
-- **Versace VRSCVE8R00324 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺123.200 | Ref: VRSCVE8R00324 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1036
-- **Versace VRSCVE8I00524 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺98.700 | Ref: VRSCVE8I00524 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1037
-- **Versace VRSCVE8P00324 Kol Saati** | Kategori: saat | Fiyat: ₺95.900 | Ref: VRSCVE8P00324 | Metal: Polikarbonat | Bağlantı: https://www.belginkuyumculuk.com/#urun-1038
-- **Versace VRSCVE8J00224 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺28.476 | Ref: VRSCVE8J00224 | Metal: Silikon | Bağlantı: https://www.belginkuyumculuk.com/#urun-1039
-- **Versace VRSCVE9B00124 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺85.260 | Ref: VRSCVE9B00124 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1040
-- **Versace VRSCVEOCA0324 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺52.920 | Ref: VRSCVEOCA0324 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1041
-- **Versace VRSCVE9D00324 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺144.200 | Ref: VRSCVE9D00324 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1042
-- **Versace VRSCVEZI00524 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺105.840 | Ref: VRSCVEZI00524 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1043
-- **Versace VRSCVEVK01324 Kol Saati** | Kategori: saat | Fiyat: ₺91.700 | Ref: VRSCVEVK01324 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1044
-- **Versace VRSCVEPCA0424 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺76.020 | Ref: VRSCVEPCA0424 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1045
-- **Versace VRSCVESO01324 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺114.800 | Ref: VRSCVESO01324 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1046
-- **Versace VRSCVE9A00324 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺84.000 | Ref: VRSCVE9A00324 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1047
-- **Versace VRSCVE9A00424 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺84.000 | Ref: VRSCVE9A00424 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1048
-- **Versace VRSCVE9L00124 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺95.900 | Ref: VRSCVE9L00124 | Metal: Bioseramik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1049
-- **Versace VRSCVE9B00324 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺88.690 | Ref: VRSCVE9B00324 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1050
-- **Versace VRSCVE9F00124 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺98.000 | Ref: VRSCVE9F00124 | Metal: Seramik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1051
-- **Versace VRSCVE9K01124 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺133.000 | Ref: VRSCVE9K01124 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1052
-- **Versace VRSCVE9A00224 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺77.700 | Ref: VRSCVE9A00224 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1053
-- **Versace VRSCVE8P00624 Kol Saati** | Kategori: saat | Fiyat: ₺67.130 | Ref: VRSCVE8P00624 | Metal: Polikarbonat | Bağlantı: https://www.belginkuyumculuk.com/#urun-1054
-- **Versace VRSCVEDFA0124 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺91.700 | Ref: VRSCVEDFA0124 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1055
-- **Versace VRSCVEAFA0424 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺47.502 | Ref: VRSCVEAFA0424 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1056
-- **Versace VRSCVE8J00424 Kol Saati** | Kategori: saat | Fiyat: ₺37.534 | Ref: VRSCVE8J00424 | Metal: Silikon | Bağlantı: https://www.belginkuyumculuk.com/#urun-1057
-- **Versace VRSCVE0W00525 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺136.500 | Ref: VRSCVE0W00525 | Metal: Geri Dönüştürülmüş Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1058
-- **Versace VRSCVE2C01225 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺43.898 | Ref: VRSCVE2C01225 | Metal: Geri Dönüştürülmüş Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1059
-- **Versace VRSCVEKJA0525 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺114.100 | Ref: VRSCVEKJA0525 | Metal: Geri Dönüştürülmüş Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1060
-- **Versace VRSCVEGFA0725 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺96.600 | Ref: VRSCVEGFA0725 | Metal: Geri Dönüştürülmüş Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1061
-- **Versace VRSCVEKMA0325 Kol Saati** | Kategori: saat | Fiyat: ₺128.100 | Ref: VRSCVEKMA0325 | Metal: Geri Dönüştürülmüş Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1062
-- **Versace VRSCVEV601923 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺50.123 | Ref: VRSCVEV601923 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1063
-- **Versace VRSCVEVK01625 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺108.500 | Ref: VRSCVEVK01625 | Metal: Geri Dönüştürülmüş Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1064
-- **Versace VRSCVE5L00326 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺109.900 | Ref: VRSCVE5L00326 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1065
-- **Versace VRSCVE5R00226 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺231.000 | Ref: VRSCVE5R00226 | Metal: Geri Dönüştürülmüş Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1066
-- **Versace VRSCVE5L00426 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺116.200 | Ref: VRSCVE5L00426 | Metal: Geri Dönüştürülmüş Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1067
-- **Versace VRSCVE5K00826 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺98.700 | Ref: VRSCVE5K00826 | Metal: Geri Dönüştürülmüş Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1068
-- **Versace VRSCVE5K00726 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺93.100 | Ref: VRSCVE5K00726 | Metal: Geri Dönüştürülmüş Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1069
-- **Versace VRSCVE5N00526 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺145.600 | Ref: VRSCVE5N00526 | Metal: Geri Dönüştürülmüş Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1070
-- **Versace VRSCVE5N00326 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺133.000 | Ref: VRSCVE5N00326 | Metal: Geri Dönüştürülmüş Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1071
-- **Versace VRSCVE5K01026 Pırlantalı Kadın Kol Saati** | Kategori: saat | Fiyat: ₺135.800 | Ref: VRSCVE5K01026 | Metal: Geri Dönüştürülmüş Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1072
-- **Versace VRSCVEKWA0326 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺52.114 | Ref: VRSCVEKWA0326 | Metal: Geri Dönüştürülmüş Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1073
-- **Versace VRSCVE7Y00326 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺130.900 | Ref: VRSCVE7Y00326 | Metal: Geri Dönüştürülmüş Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1074
-- **Versace VRSCVE7Y00226 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺124.600 | Ref: VRSCVE7Y00226 | Metal: Geri Dönüştürülmüş Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1075
-- **Versace VRSCVEYZ00526 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺105.000 | Ref: VRSCVEYZ00526 | Metal: Geri Dönüştürülmüş Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1076
-- **Versace VRSCVEYZ00426 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺98.840 | Ref: VRSCVEYZ00426 | Metal: Geri Dönüştürülmüş Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1077
-- **Versace VRSCVEYX00126 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺103.740 | Ref: VRSCVEYX00126 | Metal: Geri Dönüştürülmüş Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1078
-- **Versace VRSCVEYR00326 Kol Saati** | Kategori: saat | Fiyat: ₺142.800 | Ref: VRSCVEYR00326 | Metal: Geri Dönüştürülmüş Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1079
-- **Versace VRSCVEY800326 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺115.920 | Ref: VRSCVEY800326 | Metal: Geri Dönüştürülmüş Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1080
-- **Versace VRSCVEKSA0526 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺53.621 | Ref: VRSCVEKSA0526 | Metal: Geri Dönüştürülmüş Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1081
-- **Versace VRSCVE6K00323 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺89.670 | Ref: VRSCVE6K00323 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1082
-- **Versace VRSCVE6G00423 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺28.560 | Ref: VRSCVE6G00423 | Metal: Silikon | Bağlantı: https://www.belginkuyumculuk.com/#urun-1083
-- **Versace VRSCVE6G00323 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺28.560 | Ref: VRSCVE6G00323 | Metal: Silikon | Bağlantı: https://www.belginkuyumculuk.com/#urun-1084
-- **Versace VRSCVE6I00423 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺77.420 | Ref: VRSCVE6I00423 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1085
-- **Versace VRSCVE6C00323 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺82.600 | Ref: VRSCVE6C00323 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1086
-- **Versace VRSCVE3K00522 Kol Saati** | Kategori: saat | Fiyat: ₺70.560 | Ref: VRSCVE3K00522 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1087
-- **Versace VRSCVE3K00422 Kol Saati** | Kategori: saat | Fiyat: ₺97.300 | Ref: VRSCVE3K00422 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1088
-- **Versace VRSCVE3K00322 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺87.500 | Ref: VRSCVE3K00322 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1089
-- **Versace VRSCVE3K00222 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺61.250 | Ref: VRSCVE3K00222 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1090
-- **Versace VRSCVE3L00422 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺53.071 | Ref: VRSCVE3L00422 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1091
-- **Versace VRSCVE2E00421 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺47.502 | Ref: VRSCVE2E00421 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1092
-- **Versace VRSCVE2S00622 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺103.600 | Ref: VRSCVE2S00622 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1093
-- **Versace VRSCVEZ900521 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺156.800 | Ref: VRSCVEZ900521 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1094
-- **Versace VRSCVEZ600321 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺110.600 | Ref: VRSCVEZ600321 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1095
-- **Versace VRSCVEVK01221 Kol Saati** | Kategori: saat | Fiyat: ₺96.600 | Ref: VRSCVEVK01221 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1096
-- **Versace VRSCVEU300421 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺82.320 | Ref: VRSCVEU300421 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1097
-- **Versace VRSCVEHU00420 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺91.700 | Ref: VRSCVEHU00420 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1098
-- **Versace VRSCVEVK00620 Kol Saati** | Kategori: saat | Fiyat: ₺91.700 | Ref: VRSCVEVK00620 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1099
+## Seçilmiş ürünler
+- **Versace VRSCVE6K00523 Erkek Kol Saati | Ref: VRSCVE6K00523 | Fiyat: ₺98.980 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve6k00523-1000/
+- **Versace VRSCVE6K00423 Erkek Kol Saati | Ref: VRSCVE6K00423 | Fiyat: ₺134.400 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve6k00423-1001/
+- **Versace VRSCVE6K00123 Erkek Kol Saati | Ref: VRSCVE6K00123 | Fiyat: ₺76.020 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve6k00123-1002/
+- **Versace VRSCVE6G00223 Kadın Kol Saati | Ref: VRSCVE6G00223 | Fiyat: ₺28.560 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve6g00223-1003/
+- **Versace VRSCVE6F00523 Kadın Kol Saati | Ref: VRSCVE6F00523 | Fiyat: ₺90.720 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve6f00523-1004/
+- **Versace VRSCVE6C00423 Kadın Kol Saati | Ref: VRSCVE6C00423 | Fiyat: ₺92.400 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve6c00423-1005/
+- **Versace VRSCVE3M00422 Kadın Kol Saati | Ref: VRSCVE3M00422 | Fiyat: ₺50.470 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve3m00422-1006/
+- **Versace VRSCVE3D00522 Kadın Kol Saati | Ref: VRSCVE3D00522 | Fiyat: ₺80.360 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve3d00522-1007/
+- **Versace VRSCVE3C00222 Kadın Kol Saati | Ref: VRSCVE3C00222 | Fiyat: ₺126.700 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve3c00222-1008/
+- **Versace VRSCVE1C00722 Kadın Kol Saati | Ref: VRSCVE1C00722 | Fiyat: ₺56.700 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve1c00722-1009/
+- **Versace VRSCVE2E00821 Erkek Kol Saati | Ref: VRSCVE2E00821 | Fiyat: ₺57.540 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve2e00821-1010/
+- **Versace VRSCVE2E00721 Erkek Kol Saati | Ref: VRSCVE2E00721 | Fiyat: ₺57.540 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve2e00721-1011/
+- **Versace VRSCVE2R00322 Kol Saati | Ref: VRSCVE2R00322 | Fiyat: ₺142.800 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve2r00322-1012/
+- **Versace VRSCVE2T00422 Erkek Kol Saati | Ref: VRSCVE2T00422 | Fiyat: ₺63.210 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve2t00422-1013/
+- **Versace VRSCVE2P00522 Kadın Kol Saati | Ref: VRSCVE2P00522 | Fiyat: ₺107.800 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve2p00522-1014/
+- **Versace VRSCVEZ500321 Kadın Kol Saati | Ref: VRSCVEZ500321 | Fiyat: ₺70.560 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscvez500321-1015/
+- **Versace VRSCVEVK01021 Kol Saati | Ref: VRSCVEVK01021 | Fiyat: ₺96.600 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscvevk01021-1016/
+- **Versace VRSCVEHU00720 Kadın Kol Saati | Ref: VRSCVEHU00720 | Fiyat: ₺102.200 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscvehu00720-1017/
+- **Versace VRSCVEHU00520 Kadın Kol Saati | Ref: VRSCVEHU00520 | Fiyat: ₺91.700 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscvehu00520-1018/
+- **Versace VRSCVEVI00420 Kol Saati | Ref: VRSCVEVI00420 | Fiyat: ₺134.400 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscvevi00420-1019/
+- **Versace VRSCVE7G00223 Kol Saati | Ref: VRSCVE7G00223 | Fiyat: ₺144.200 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve7g00223-1020/
+- **Versace VRSCVE6G00623 Kol Saati | Ref: VRSCVE6G00623 | Fiyat: ₺28.560 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve6g00623-1021/
+- **Versace VRSCVE7C00523 Kol Saati | Ref: VRSCVE7C00523 | Fiyat: ₺95.900 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve7c00523-1022/
+- **Versace VRSCVE7F00523 Kadın Kol Saati | Ref: VRSCVE7F00523 | Fiyat: ₺110.600 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve7f00523-1023/
+- **Versace VRSCVE7C00723  Kol Saati | Ref: VRSCVE7C00723 | Fiyat: ₺74.970 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve7c00723-1024/
+- **Versace VRSCVE7F00423 Kadın Kol Saati | Ref: VRSCVE7F00423 | Fiyat: ₺110.600 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve7f00423-1025/
+- **Versace VRSCVE7B00423 Kadın Kol Saati | Ref: VRSCVE7B00423 | Fiyat: ₺140.000 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve7b00423-1026/
+- **Versace VRSCVE7A00123 Kadın Kol Saati | Ref: VRSCVE7A00123 | Fiyat: ₺75.180 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve7a00123-1027/
+- **Versace VRSCVEV901323 Kol Saati | Ref: VRSCVEV901323 | Fiyat: ₺49.560 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscvev901323-1028/
+- **Versace VRSCVE8I00624 Kadın Kol Saati | Ref: VRSCVE8I00624 | Fiyat: ₺95.900 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve8i00624-1029/
+- **Versace VRSCVE8B00224 Kadın Kol Saati | Ref: VRSCVE8B00224 | Fiyat: ₺105.700 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve8b00224-1030/
+- **Versace VRSCVE8D00424 Kadın Kol Saati | Ref: VRSCVE8D00424 | Fiyat: ₺98.000 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve8d00424-1031/
+- **Versace VRSCVE8B00524 Kadın Kol Saati | Ref: VRSCVE8B00524 | Fiyat: ₺116.200 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve8b00524-1032/
+- **Versace VRSCVE8G00324 Erkek Kol Saati | Ref: VRSCVE8G00324 | Fiyat: ₺99.960 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve8g00324-1033/
+- **Versace VRSCVE9CA0224 Kadın Kol Saati | Ref: VRSCVE9CA0224 | Fiyat: ₺90.300 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve9ca0224-1034/
+- **Versace VRSCVE0CA0224 Kol Saati | Ref: VRSCVE0CA0224 | Fiyat: ₺121.800 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve0ca0224-1035/
+- **Versace VRSCVE8R00324 Erkek Kol Saati | Ref: VRSCVE8R00324 | Fiyat: ₺123.200 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve8r00324-1036/
+- **Versace VRSCVE8I00524 Kadın Kol Saati | Ref: VRSCVE8I00524 | Fiyat: ₺98.700 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve8i00524-1037/
+- **Versace VRSCVE8P00324 Kol Saati | Ref: VRSCVE8P00324 | Fiyat: ₺95.900 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve8p00324-1038/
+- **Versace VRSCVE8J00224 Kadın Kol Saati | Ref: VRSCVE8J00224 | Fiyat: ₺28.476 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve8j00224-1039/
+- **Versace VRSCVE9B00124 Kadın Kol Saati | Ref: VRSCVE9B00124 | Fiyat: ₺85.260 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve9b00124-1040/
+- **Versace VRSCVEOCA0324 Kadın Kol Saati | Ref: VRSCVEOCA0324 | Fiyat: ₺52.920 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscveoca0324-1041/
+- **Versace VRSCVE9D00324 Kadın Kol Saati | Ref: VRSCVE9D00324 | Fiyat: ₺144.200 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve9d00324-1042/
+- **Versace VRSCVEZI00524 Erkek Kol Saati | Ref: VRSCVEZI00524 | Fiyat: ₺105.840 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscvezi00524-1043/
+- **Versace VRSCVEVK01324 Kol Saati | Ref: VRSCVEVK01324 | Fiyat: ₺91.700 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscvevk01324-1044/
+- **Versace VRSCVEPCA0424 Erkek Kol Saati | Ref: VRSCVEPCA0424 | Fiyat: ₺76.020 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscvepca0424-1045/
+- **Versace VRSCVESO01324 Erkek Kol Saati | Ref: VRSCVESO01324 | Fiyat: ₺114.800 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscveso01324-1046/
+- **Versace VRSCVE9A00324 Kadın Kol Saati | Ref: VRSCVE9A00324 | Fiyat: ₺84.000 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve9a00324-1047/
+- **Versace VRSCVE9A00424 Kadın Kol Saati | Ref: VRSCVE9A00424 | Fiyat: ₺84.000 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve9a00424-1048/
+- **Versace VRSCVE9L00124 Erkek Kol Saati | Ref: VRSCVE9L00124 | Fiyat: ₺95.900 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve9l00124-1049/
+- **Versace VRSCVE9B00324 Kadın Kol Saati | Ref: VRSCVE9B00324 | Fiyat: ₺88.690 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve9b00324-1050/
+- **Versace VRSCVE9F00124 Kadın Kol Saati | Ref: VRSCVE9F00124 | Fiyat: ₺98.000 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve9f00124-1051/
+- **Versace VRSCVE9K01124 Erkek Kol Saati | Ref: VRSCVE9K01124 | Fiyat: ₺133.000 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve9k01124-1052/
+- **Versace VRSCVE9A00224 Kadın Kol Saati | Ref: VRSCVE9A00224 | Fiyat: ₺77.700 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve9a00224-1053/
+- **Versace VRSCVE8P00624 Kol Saati | Ref: VRSCVE8P00624 | Fiyat: ₺67.130 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve8p00624-1054/
+- **Versace VRSCVEDFA0124 Kadın Kol Saati | Ref: VRSCVEDFA0124 | Fiyat: ₺91.700 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscvedfa0124-1055/
+- **Versace VRSCVEAFA0424 Erkek Kol Saati | Ref: VRSCVEAFA0424 | Fiyat: ₺47.502 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscveafa0424-1056/
+- **Versace VRSCVE8J00424 Kol Saati | Ref: VRSCVE8J00424 | Fiyat: ₺37.534 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve8j00424-1057/
+- **Versace VRSCVE0W00525 Erkek Kol Saati | Ref: VRSCVE0W00525 | Fiyat: ₺136.500 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve0w00525-1058/
+- **Versace VRSCVE2C01225 Erkek Kol Saati | Ref: VRSCVE2C01225 | Fiyat: ₺43.898 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve2c01225-1059/
+- **Versace VRSCVEKJA0525 Erkek Kol Saati | Ref: VRSCVEKJA0525 | Fiyat: ₺114.100 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscvekja0525-1060/
+- **Versace VRSCVEGFA0725 Kadın Kol Saati | Ref: VRSCVEGFA0725 | Fiyat: ₺96.600 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscvegfa0725-1061/
+- **Versace VRSCVEKMA0325 Kol Saati | Ref: VRSCVEKMA0325 | Fiyat: ₺128.100 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscvekma0325-1062/
+- **Versace VRSCVEV601923 Erkek Kol Saati | Ref: VRSCVEV601923 | Fiyat: ₺50.123 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscvev601923-1063/
+- **Versace VRSCVEVK01625 Erkek Kol Saati | Ref: VRSCVEVK01625 | Fiyat: ₺108.500 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscvevk01625-1064/
+- **Versace VRSCVE5L00326 Kadın Kol Saati | Ref: VRSCVE5L00326 | Fiyat: ₺109.900 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve5l00326-1065/
+- **Versace VRSCVE5R00226 Erkek Kol Saati | Ref: VRSCVE5R00226 | Fiyat: ₺231.000 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve5r00226-1066/
+- **Versace VRSCVE5L00426 Kadın Kol Saati | Ref: VRSCVE5L00426 | Fiyat: ₺116.200 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve5l00426-1067/
+- **Versace VRSCVE5K00826 Kadın Kol Saati | Ref: VRSCVE5K00826 | Fiyat: ₺98.700 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve5k00826-1068/
+- **Versace VRSCVE5K00726 Kadın Kol Saati | Ref: VRSCVE5K00726 | Fiyat: ₺93.100 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve5k00726-1069/
+- **Versace VRSCVE5N00526 Erkek Kol Saati | Ref: VRSCVE5N00526 | Fiyat: ₺145.600 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve5n00526-1070/
+- **Versace VRSCVE5N00326 Erkek Kol Saati | Ref: VRSCVE5N00326 | Fiyat: ₺133.000 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve5n00326-1071/
+- **Versace VRSCVE5K01026 Pırlantalı Kadın Kol Saati | Ref: VRSCVE5K01026 | Fiyat: ₺135.800 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve5k01026-1072/
+- **Versace VRSCVEKWA0326 Erkek Kol Saati | Ref: VRSCVEKWA0326 | Fiyat: ₺52.114 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscvekwa0326-1073/
+- **Versace VRSCVE7Y00326 Erkek Kol Saati | Ref: VRSCVE7Y00326 | Fiyat: ₺130.900 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve7y00326-1074/
+- **Versace VRSCVE7Y00226 Erkek Kol Saati | Ref: VRSCVE7Y00226 | Fiyat: ₺124.600 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve7y00226-1075/
+- **Versace VRSCVEYZ00526 Kadın Kol Saati | Ref: VRSCVEYZ00526 | Fiyat: ₺105.000 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscveyz00526-1076/
+- **Versace VRSCVEYZ00426 Kadın Kol Saati | Ref: VRSCVEYZ00426 | Fiyat: ₺98.840 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscveyz00426-1077/
+- **Versace VRSCVEYX00126 Kadın Kol Saati | Ref: VRSCVEYX00126 | Fiyat: ₺103.740 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscveyx00126-1078/
+- **Versace VRSCVEYR00326 Kol Saati | Ref: VRSCVEYR00326 | Fiyat: ₺142.800 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscveyr00326-1079/
+- **Versace VRSCVEY800326 Kadın Kol Saati | Ref: VRSCVEY800326 | Fiyat: ₺115.920 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscvey800326-1080/
+- **Versace VRSCVEKSA0526 Kadın Kol Saati | Ref: VRSCVEKSA0526 | Fiyat: ₺53.621 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscveksa0526-1081/
+- **Versace VRSCVE6K00323 Erkek Kol Saati | Ref: VRSCVE6K00323 | Fiyat: ₺89.670 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve6k00323-1082/
+- **Versace VRSCVE6G00423 Kadın Kol Saati | Ref: VRSCVE6G00423 | Fiyat: ₺28.560 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve6g00423-1083/
+- **Versace VRSCVE6G00323 Kadın Kol Saati | Ref: VRSCVE6G00323 | Fiyat: ₺28.560 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve6g00323-1084/
+- **Versace VRSCVE6I00423 Kadın Kol Saati | Ref: VRSCVE6I00423 | Fiyat: ₺77.420 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve6i00423-1085/
+- **Versace VRSCVE6C00323 Kadın Kol Saati | Ref: VRSCVE6C00323 | Fiyat: ₺82.600 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve6c00323-1086/
+- **Versace VRSCVE3K00522 Kol Saati | Ref: VRSCVE3K00522 | Fiyat: ₺70.560 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve3k00522-1087/
+- **Versace VRSCVE3K00422 Kol Saati | Ref: VRSCVE3K00422 | Fiyat: ₺97.300 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve3k00422-1088/
+- **Versace VRSCVE3K00322 Erkek Kol Saati | Ref: VRSCVE3K00322 | Fiyat: ₺87.500 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve3k00322-1089/
+- **Versace VRSCVE3K00222 Erkek Kol Saati | Ref: VRSCVE3K00222 | Fiyat: ₺61.250 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve3k00222-1090/
+- **Versace VRSCVE3L00422 Erkek Kol Saati | Ref: VRSCVE3L00422 | Fiyat: ₺53.071 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve3l00422-1091/
+- **Versace VRSCVE2E00421 Erkek Kol Saati | Ref: VRSCVE2E00421 | Fiyat: ₺47.502 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve2e00421-1092/
+- **Versace VRSCVE2S00622 Kadın Kol Saati | Ref: VRSCVE2S00622 | Fiyat: ₺103.600 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscve2s00622-1093/
+- **Versace VRSCVEZ900521 Erkek Kol Saati | Ref: VRSCVEZ900521 | Fiyat: ₺156.800 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscvez900521-1094/
+- **Versace VRSCVEZ600321 Kadın Kol Saati | Ref: VRSCVEZ600321 | Fiyat: ₺110.600 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscvez600321-1095/
+- **Versace VRSCVEVK01221 Kol Saati | Ref: VRSCVEVK01221 | Fiyat: ₺96.600 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscvevk01221-1096/
+- **Versace VRSCVEU300421 Kadın Kol Saati | Ref: VRSCVEU300421 | Fiyat: ₺82.320 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscveu300421-1097/
+- **Versace VRSCVEHU00420 Kadın Kol Saati | Ref: VRSCVEHU00420 | Fiyat: ₺91.700 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscvehu00420-1098/
+- **Versace VRSCVEVK00620 Kol Saati | Ref: VRSCVEVK00620 | Fiyat: ₺91.700 | URL: https://www.belginkuyumculuk.com/urun/versace-vrscvevk00620-1099/
 
-*(Tam 1776 ürünlük katalog için llms-full.txt dosyasını inceleyiniz).*
+## Tam katalog
+- [llms-full.txt](https://www.belginkuyumculuk.com/llms-full.txt)
