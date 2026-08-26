@@ -197,15 +197,22 @@ body{font-family:Inter,Arial,sans-serif;margin:0;background:#f7f7f4;color:#14211
 
 function renderCategoryPage(key, list) {
   const meta = {
-    saatler: ['Lüks Saatler | Belgin Kuyumculuk İzmir Buca', 'Lüks Saatler'],
-    mucevherat: ['Mücevherat ve Altın | Belgin Kuyumculuk İzmir Buca', 'Mücevherat ve Altın'],
-    'ikinci-el': ['Ekspertizli İkinci El | Belgin Kuyumculuk İzmir Buca', 'Ekspertizli İkinci El']
+    saatler: ['Lüks Saatler & Yüksek Saatçilik | Belgin Kuyumculuk İzmir Buca', 'Lüks Saatler'],
+    mucevherat: ['Mücevher Koleksiyonu & Altın | Belgin Kuyumculuk İzmir Buca', 'Mücevherat ve Altın'],
+    'ikinci-el': ['Ekspertizli İkinci El & Altın | Belgin Kuyumculuk İzmir Buca', 'Ekspertizli İkinci El']
   }[key];
 
   const canonical = `${BASE_URL}${CATEGORY_ROUTES[key]}`;
-  const items = list.map(p => `<li><a href="${productRoute(p)}"><strong>${esc(`${p.brand || ''} ${p.name || ''}`.trim())}</strong><span>${esc(p.reference || p.ref || '')}</span><b>${esc(money(p.price))}</b></a></li>`).join('');
+  const indexHtmlPath = path.join(ROOT, 'index.html');
+  const indexHtml = fs.readFileSync(indexHtmlPath, 'utf8');
 
-  return `<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(meta[0])}</title><meta name="robots" content="index,follow,max-image-preview:large"><link rel="canonical" href="${canonical}"><style>body{font-family:Inter,Arial,sans-serif;margin:0;background:#f7f7f4;color:#14211f}.wrap{width:min(1180px,calc(100% - 32px));margin:auto}header{background:#073c36;color:#fff;padding:18px 0}header a{color:#fff;text-decoration:none;font-weight:800}h1{font-size:48px;margin:44px 0 24px}ul{padding:0;list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}li a{height:100%;display:flex;flex-direction:column;gap:8px;background:#fff;border:1px solid #e1e5e2;border-radius:12px;padding:16px;text-decoration:none;color:inherit}li span{font-size:12px;color:#6f7775}li b{margin-top:auto;color:#073c36}@media(max-width:850px){ul{grid-template-columns:1fr 1fr}}@media(max-width:560px){ul{grid-template-columns:1fr}}</style></head><body><header><div class="wrap"><a href="/">BELGİN KUYUMCULUK & SAAT</a></div></header><main class="wrap"><h1>${esc(meta[1])}</h1><ul>${items}</ul></main></body></html>`;
+  let pageHtml = indexHtml
+    .replace(/<link rel="canonical" href="https:\/\/www\.belginkuyumculuk\.com\/">/, `<link rel="canonical" href="${canonical}">`)
+    .replace(/<title>[^<]+<\/title>/, `<title>${esc(meta[0])}</title>`)
+    .replace('id="page-ana-sayfa" class="page active"', 'id="page-ana-sayfa" class="page"')
+    .replace(`id="page-${key}" class="page"`, `id="page-${key}" class="page active"`);
+
+  return pageHtml;
 }
 
 function buildRouteMap() {
