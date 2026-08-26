@@ -32,7 +32,7 @@
     body { background: var(--bg); color: var(--ink); min-height: 100vh; display: flex; flex-direction: column; }
     
     .header { background: var(--teal-dark); color: #fff; padding: 28px 16px 24px; text-align: center; border-bottom: 3px solid var(--gold); }
-    .brand-title { font-family: 'Cinzel', serif; font-size: 22px; letter-spacing: 3px; color: #fff; text-transform: uppercase; font-weight: 700; }
+    .brand-title { font-family: 'Cinzel', serif; font-size: clamp(15px, 4.2vw, 22px); letter-spacing: clamp(1px, 0.5vw, 2.5px); color: #fff; text-transform: uppercase; font-weight: 700; white-space: nowrap; }
     .brand-sub { font-size: 11px; letter-spacing: 2px; color: var(--gold-light); text-transform: uppercase; margin-top: 4px; }
     
     .container { max-width: 620px; width: 100%; margin: 24px auto; padding: 0 16px; flex: 1; }
