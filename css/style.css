@@ -674,78 +674,88 @@ p, span, li, td, th, label, input, button, select, textarea {
 }
 
 /* ==========================================================
-   4. SİNEMATİK ASİMETRİK MAISON HERO (ZÜMRÜT IŞIK & HOLOGRAFİK VİTRİN)
+   4. SİNEMATİK LOŞ ASİMETRİK MAISON HERO (CHIAROSCURO & PRESTİJ VİTRİNİ)
    ========================================================== */
 .hero-cinematic-asymmetric {
   position: relative;
   min-height: 720px;
-  background: #021310 url('https://artjewellerywatches.com/api/photo/site/banner.primary') center/cover no-repeat;
+  background: #040706 url('https://artjewellerywatches.com/api/photo/site/banner.primary') center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 100px 32px 80px;
+  padding: 105px 32px 85px;
   overflow: hidden;
 }
 
-/* Asimetrik Işık Beams & Orbs */
-.hero-emerald-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  -webkit-filter: blur(80px);
-  pointer-events: none;
-  z-index: 1;
-}
-.hero-orb-topright {
-  width: 640px;
-  height: 640px;
-  top: -140px;
-  right: -100px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.42) 0%, rgba(5, 150, 105, 0.2) 45%, transparent 70%);
-  animation: orbFloatTop 11s ease-in-out infinite alternate;
-}
-.hero-orb-bottomleft {
-  width: 560px;
-  height: 560px;
-  bottom: -160px;
-  left: -120px;
-  background: radial-gradient(circle, rgba(4, 120, 87, 0.38) 0%, rgba(6, 78, 59, 0.18) 50%, transparent 70%);
-  animation: orbFloatBottom 13s ease-in-out infinite alternate;
-}
-.hero-emerald-beam {
+/* 1. Doğal & Loş Sinematik Karartma (Teatral Chiaroscuro Vignette) */
+.hero-dark-vignette {
   position: absolute;
   inset: 0;
   background: 
-    linear-gradient(125deg, rgba(18, 142, 125, 0.38) 0%, rgba(6, 78, 59, 0.18) 35%, transparent 65%),
-    linear-gradient(180deg, rgba(2, 22, 19, 0.45) 0%, rgba(1, 15, 13, 0.92) 100%);
+    radial-gradient(ellipse at 65% 42%, rgba(0, 0, 0, 0.22) 0%, rgba(4, 7, 6, 0.72) 58%, #030605 100%),
+    linear-gradient(to bottom, rgba(4, 7, 6, 0.35) 0%, rgba(4, 7, 6, 0.65) 65%, #070A09 100%);
   z-index: 1;
   pointer-events: none;
-}
-.hero-emerald-mesh {
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(rgba(194, 167, 104, 0.09) 1px, transparent 1px);
-  background-size: 32px 32px;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0.75;
 }
 
-@keyframes orbFloatTop {
-  0% { transform: translate(0, 0) scale(1); opacity: 0.75; }
-  50% { transform: translate(-30px, 40px) scale(1.1); opacity: 1; }
-  100% { transform: translate(20px, -20px) scale(0.95); opacity: 0.85; }
+/* 2. Değişken Tonlu Asimetrik Spot Işığı & Prizma Geçişi */
+.hero-light-sweep {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background: linear-gradient(118deg, transparent 40%, rgba(212, 175, 55, 0.09) 47%, rgba(255, 255, 255, 0.08) 50%, rgba(16, 185, 129, 0.08) 53%, transparent 62%);
+  z-index: 1;
+  pointer-events: none;
+  animation: lightRayShift 14s ease-in-out infinite alternate;
 }
-@keyframes orbFloatBottom {
-  0% { transform: translate(0, 0) scale(1); opacity: 0.7; }
-  50% { transform: translate(40px, -30px) scale(1.08); opacity: 0.95; }
-  100% { transform: translate(-20px, 20px) scale(0.92); opacity: 0.8; }
+
+@keyframes lightRayShift {
+  0% { transform: translate(-3%, -2%) rotate(0deg); opacity: 0.75; }
+  50% { transform: translate(2%, 3%) rotate(1.5deg); opacity: 1; }
+  100% { transform: translate(-1%, 1%) rotate(-1deg); opacity: 0.85; }
+}
+
+/* 3. Loş Vurgular (Sağ Altta Sıcak Altın Parıltısı, Sol Üstte Derin Zümrüt Nüansı) */
+.hero-accent-glow-gold {
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  bottom: -120px;
+  right: -60px;
+  background: radial-gradient(circle, rgba(194, 167, 104, 0.16) 0%, rgba(158, 133, 72, 0.06) 45%, transparent 70%);
+  filter: blur(70px);
+  -webkit-filter: blur(70px);
+  z-index: 1;
+  pointer-events: none;
+}
+.hero-accent-glow-emerald {
+  position: absolute;
+  width: 480px;
+  height: 480px;
+  top: -100px;
+  left: -40px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.14) 0%, rgba(5, 150, 105, 0.05) 50%, transparent 70%);
+  filter: blur(80px);
+  -webkit-filter: blur(80px);
+  z-index: 1;
+  pointer-events: none;
+}
+.hero-ambient-mesh {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(212, 175, 55, 0.07) 1px, transparent 1px);
+  background-size: 36px 36px;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.6;
 }
 
 .hero-asymmetric-wrapper {
   display: grid;
   grid-template-columns: 1.18fr 0.82fr;
-  gap: 52px;
+  gap: 54px;
   align-items: center;
   max-width: 1240px;
   width: 100%;
@@ -765,11 +775,11 @@ p, span, li, td, th, label, input, button, select, textarea {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(5, 52, 46, 0.65);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(194, 167, 104, 0.5);
-  color: #F0E6D2;
+  background: rgba(18, 26, 23, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(194, 167, 104, 0.45);
+  color: #EAE2D0;
   font-size: 11px;
   letter-spacing: 3.5px;
   text-transform: uppercase;
@@ -777,7 +787,7 @@ p, span, li, td, th, label, input, button, select, textarea {
   padding: 8px 22px;
   border-radius: var(--radius-full);
   margin-bottom: 22px;
-  box-shadow: 0 8px 24px rgba(2, 30, 26, 0.4), 0 0 15px rgba(18, 138, 121, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55), 0 0 12px rgba(194, 167, 104, 0.15);
 }
 .hero-badge-dot {
   width: 6px;
@@ -791,16 +801,16 @@ p, span, li, td, th, label, input, button, select, textarea {
 
 .hero-cinematic-title {
   font-family: var(--font-display);
-  font-size: clamp(36px, 4.2vw, 62px);
+  font-size: clamp(38px, 4.4vw, 64px);
   color: #FFFFFF;
   line-height: 1.12;
   margin-bottom: 20px;
   font-weight: 400;
   letter-spacing: 1px;
-  text-shadow: 0 4px 28px rgba(0, 0, 0, 0.6), 0 0 35px rgba(18, 142, 125, 0.25);
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.9);
 }
 .hero-title-gradient {
-  background: linear-gradient(135deg, #FFFFFF 15%, #E2D7BE 45%, #C2A768 75%, #34D399 100%);
+  background: linear-gradient(135deg, #FFFFFF 15%, #F5E6C8 45%, #D4AF37 75%, #F0E2C6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-style: italic;
@@ -811,25 +821,25 @@ p, span, li, td, th, label, input, button, select, textarea {
   color: rgba(255, 255, 255, 0.9);
   line-height: 1.75;
   max-width: 620px;
-  margin: 0 0 26px;
+  margin: 0 0 28px;
   font-weight: 300;
   letter-spacing: 0.2px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
 }
 
 .hero-quick-tabs {
   display: inline-flex;
-  background: rgba(4, 42, 37, 0.72);
+  background: rgba(14, 20, 18, 0.75);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  border: 1px solid rgba(194, 167, 104, 0.45);
+  border: 1px solid rgba(194, 167, 104, 0.38);
   border-radius: var(--radius-full);
   padding: 6px;
   gap: 6px;
   margin-bottom: 30px;
   flex-wrap: wrap;
   justify-content: flex-start;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35), 0 0 20px rgba(18, 138, 121, 0.2);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55), 0 0 15px rgba(194, 167, 104, 0.12);
 }
 .hero-tab-btn {
   background: transparent;
@@ -857,7 +867,7 @@ p, span, li, td, th, label, input, button, select, textarea {
   gap: 24px;
   flex-wrap: wrap;
   padding-top: 18px;
-  border-top: 1px solid rgba(194, 167, 104, 0.22);
+  border-top: 1px solid rgba(194, 167, 104, 0.2);
 }
 .hero-stat-item {
   display: flex;
@@ -872,7 +882,7 @@ p, span, li, td, th, label, input, button, select, textarea {
 }
 .hero-stat-lbl {
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255, 255, 255, 0.7);
   text-transform: uppercase;
   letter-spacing: 0.6px;
 }
@@ -882,20 +892,20 @@ p, span, li, td, th, label, input, button, select, textarea {
   background: rgba(194, 167, 104, 0.25);
 }
 
-/* Sağ Asimetrik Kart */
+/* Sağ Asimetrik Füme Cam Vitrin Kartı (Smoked Obsidian Vault) */
 .hero-asymmetric-right {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 .hero-gem-card {
-  background: linear-gradient(135deg, rgba(6, 68, 60, 0.78) 0%, rgba(2, 36, 31, 0.88) 100%);
-  border: 1px solid rgba(194, 167, 104, 0.45);
+  background: linear-gradient(145deg, rgba(16, 24, 21, 0.82) 0%, rgba(7, 12, 10, 0.92) 100%);
+  border: 1px solid rgba(194, 167, 104, 0.38);
   border-radius: 20px;
   padding: 30px;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), 0 0 35px rgba(16, 185, 129, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.75), 0 0 25px rgba(194, 167, 104, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.12);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -903,7 +913,7 @@ p, span, li, td, th, label, input, button, select, textarea {
 }
 .hero-gem-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6), 0 0 45px rgba(16, 185, 129, 0.35);
+  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.85), 0 0 35px rgba(194, 167, 104, 0.2);
 }
 .hero-gem-header {
   display: flex;
@@ -914,14 +924,14 @@ p, span, li, td, th, label, input, button, select, textarea {
   width: 48px;
   height: 48px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #0D9488 0%, #064E3B 100%);
+  background: linear-gradient(135deg, #1C2B26 0%, #0D1613 100%);
   border: 1px solid #C2A768;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 20px;
   position: relative;
-  box-shadow: 0 0 20px rgba(13, 148, 136, 0.5);
+  box-shadow: 0 0 16px rgba(194, 167, 104, 0.25);
   flex-shrink: 0;
 }
 .hero-gem-sparkle {
@@ -949,13 +959,13 @@ p, span, li, td, th, label, input, button, select, textarea {
 }
 .hero-gem-desc {
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.82);
   line-height: 1.6;
   margin: 0;
 }
 .hero-gem-rates {
-  background: rgba(1, 24, 21, 0.75);
-  border: 1px solid rgba(194, 167, 104, 0.3);
+  background: rgba(6, 10, 9, 0.8);
+  border: 1px solid rgba(194, 167, 104, 0.25);
   border-radius: 12px;
   padding: 12px 16px;
   display: flex;
@@ -972,7 +982,7 @@ p, span, li, td, th, label, input, button, select, textarea {
   color: rgba(255, 255, 255, 0.75);
 }
 .hero-rate-val {
-  color: #34D399;
+  color: #E2D7BE;
   font-weight: 800;
   font-family: var(--font-sans);
   font-variant-numeric: tabular-nums;
@@ -1005,13 +1015,13 @@ p, span, li, td, th, label, input, button, select, textarea {
   box-shadow: 0 6px 18px rgba(194, 167, 104, 0.45);
 }
 .btn-hero-gem-secondary {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.07);
   color: #FFF;
   font-weight: 600;
   font-size: 12.5px;
   padding: 11px;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   cursor: pointer;
   text-align: center;
   text-decoration: none;
@@ -1021,7 +1031,7 @@ p, span, li, td, th, label, input, button, select, textarea {
   transition: all 0.2s;
 }
 .btn-hero-gem-secondary:hover {
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.14);
   border-color: rgba(194, 167, 104, 0.4);
 }
 
@@ -1034,8 +1044,8 @@ p, span, li, td, th, label, input, button, select, textarea {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: rgba(4, 40, 35, 0.6);
-  border: 1px solid rgba(194, 167, 104, 0.25);
+  background: rgba(10, 16, 14, 0.7);
+  border: 1px solid rgba(194, 167, 104, 0.22);
   padding: 10px 14px;
   border-radius: 10px;
   font-size: 12px;
