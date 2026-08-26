@@ -273,7 +273,7 @@
 
 
 
-        <button type="submit" class="btn-submit">
+        <button type="submit" id="btnSubmit" class="btn-submit">
           <span>🔗</span> VIP Ödeme Linkini Oluştur
         </button>
       </form>
@@ -302,11 +302,10 @@
 
   <div id="toast" class="toast">Link panoya kopyalandı!</div>
 
-
-
   <script src="js/vip-payment.js"></script>
   <script>
     const form = document.getElementById('linkForm');
+    const titleInput = document.getElementById('productTitle');
     const amountInput = document.getElementById('productAmount');
     const resultSection = document.getElementById('resultSection');
     const generatedUrlText = document.getElementById('generatedUrlText');
@@ -316,11 +315,21 @@
     const toast = document.getElementById('toast');
     let currentUrl = '';
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const title = document.getElementById('productTitle').value.trim();
+    function handleGenerate() {
+      const title = titleInput.value.trim();
       const amount = parseFloat(amountInput.value);
+
+      if (!title) {
+        alert('Lütfen ürün veya model adını giriniz.');
+        titleInput.focus();
+        return;
+      }
+
+      if (!amount || amount < 10) {
+        alert('Lütfen geçerli bir satış tutarı giriniz.');
+        amountInput.focus();
+        return;
+      }
 
       const payload = {
         orderId: 'VIP-' + Math.floor(100000 + Math.random() * 900000),
@@ -339,14 +348,42 @@
 
       resultSection.style.display = 'block';
       resultSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      handleGenerate();
     });
 
     btnCopy.addEventListener('click', () => {
       if (!currentUrl) return;
-      navigator.clipboard.writeText(currentUrl).then(() => {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(currentUrl).then(() => {
+          toast.classList.add('show');
+          setTimeout(() => toast.classList.remove('show'), 2500);
+        }).catch(() => fallbackCopy(currentUrl));
+      } else {
+        fallbackCopy(currentUrl);
+      }
+    });
+
+    function fallbackCopy(text) {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-9999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
         toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), 2500);
-      });
-    });
+      } catch (e) {
+        prompt('Linki kopyalayınız:', text);
+      }
+      document.body.removeChild(textArea);
+    }
+  </script>
 </body>
 </html>
