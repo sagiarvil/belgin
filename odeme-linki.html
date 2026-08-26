@@ -2,408 +2,356 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>VIP WhatsApp Ödeme Linki Oluşturucu | Belgin Kuyumculuk & Saat</title>
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#0A1412">
+  <meta name="theme-color" content="#0B1B18">
   <meta name="apple-mobile-web-app-title" content="Belgin Link">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <link rel="icon" type="image/png" href="images/link-icon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="images/link-icon-180.png">
   <link rel="apple-touch-icon-precomposed" href="images/link-icon-180.png">
   <link rel="manifest" href="link.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0A1412;
-      --card-bg: #122220;
-      --card-border: #1E3835;
-      --gold: #D4AF37;
-      --gold-light: #F3E5AB;
-      --teal-accent: #178370;
-      --text: #F0F4F3;
-      --text-muted: #8EAAA5;
-      --input-bg: #0B1917;
-      --input-border: #23433F;
-      --success: #25D366;
+      --ink: #10221e;
+      --forest: #0b1b18;
+      --forest-2: #133129;
+      --forest-3: #1d4438;
+      --ivory: #f6f2e9;
+      --paper: #fffdfa;
+      --paper-2: #fbf8f1;
+      --gold: #b58b2a;
+      --gold-soft: #d8bd78;
+      --line: #ddd7ca;
+      --muted: #6e7772;
+      --success: #128c55;
+      --success-dark: #087242;
+      --danger: #a63a3a;
+      --shadow: 0 18px 50px rgba(28, 42, 36, 0.10);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      padding: 16px;
-    }
-    .header {
-      text-align: center;
-      padding: 20px 0 24px;
-    }
-    .brand-title {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(15px, 4.2vw, 20px);
-      letter-spacing: clamp(1px, 0.5vw, 2.5px);
-      color: var(--gold);
-      text-transform: uppercase;
-      font-weight: 700;
-      white-space: nowrap;
-      text-align: center;
-      margin: 0 auto;
-    }
-    .container {
-      max-width: 500px;
-      width: 100%;
-      margin: 0 auto;
-      flex: 1;
-    }
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
-    }
-    .card-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--gold-light);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 20px;
-      border-bottom: 1px solid var(--card-border);
-      padding-bottom: 12px;
-    }
-    .form-group {
-      margin-bottom: 18px;
-    }
-    .form-label {
-      display: block;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 6px;
-    }
-    .form-input {
-      width: 100%;
-      background: var(--input-bg);
-      border: 1px solid var(--input-border);
-      color: #fff;
-      padding: 14px 16px;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: 500;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .form-input:focus {
-      border-color: var(--gold);
-    }
-    .amount-wrapper {
-      position: relative;
-    }
-    .currency-symbol {
-      position: absolute;
-      left: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--gold);
-      font-weight: 700;
-      font-size: 20px;
-    }
-    .amount-input {
-      padding-left: 40px;
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--gold-light);
-    }
-    .badge-high-value {
-      display: none;
-      margin-top: 8px;
-      background: rgba(212, 175, 55, 0.15);
-      border: 1px solid var(--gold);
-      color: var(--gold-light);
-      padding: 10px 14px;
-      border-radius: 8px;
-      font-size: 12.5px;
-      line-height: 1.4;
-    }
-    .btn-submit {
-      width: 100%;
-      background: linear-gradient(135deg, #D4AF37 0%, #B38F24 100%);
-      color: #0A1412;
-      border: none;
-      padding: 16px;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 800;
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 24px;
-      box-shadow: 0 6px 20px rgba(212,175,55,0.3);
-      transition: transform 0.1s;
-    }
-    .btn-submit:active {
-      transform: scale(0.98);
-    }
-    .result-section {
-      display: none;
-      margin-top: 24px;
-      border-top: 1px solid var(--card-border);
-      padding-top: 20px;
-    }
-    .result-box {
-      background: #081210;
-      border: 1px solid var(--card-border);
-      border-radius: 10px;
-      padding: 14px;
-      font-size: 13px;
-      color: #A8C5BF;
-      word-break: break-all;
-      margin-bottom: 16px;
-      font-family: monospace;
-    }
-    .action-btn-group {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-    .btn-whatsapp {
-      background: #25D366;
-      color: #FFFFFF;
-      text-decoration: none;
-      padding: 16px;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
-    }
-    .btn-copy {
-      background: #173832;
-      color: var(--gold-light);
-      border: 1px solid var(--card-border);
-      padding: 14px;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-    .btn-test {
-      background: transparent;
-      color: var(--text-muted);
-      border: 1px solid #1E3835;
-      padding: 12px;
-      border-radius: 10px;
-      font-size: 13px;
-      text-decoration: none;
-      text-align: center;
-      display: block;
-    }
-    .toast {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--gold);
-      color: #0A1412;
-      padding: 12px 24px;
-      border-radius: 30px;
-      font-weight: 700;
-      font-size: 13px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-      z-index: 100;
-    }
-    .toast.show { opacity: 1; }
 
+    * { box-sizing: border-box; }
+    html { background: var(--ivory); -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      min-height: 100svh;
+      color: var(--ink);
+      background: radial-gradient(circle at 50% -140px, rgba(181, 139, 42, 0.14), transparent 360px), linear-gradient(180deg, #f8f5ef 0%, var(--ivory) 100%);
+      font-family: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      padding: max(14px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) max(28px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+    }
+    button, input, summary, a { -webkit-tap-highlight-color: transparent; }
+    button, input { font: inherit; }
+    button, a { touch-action: manipulation; }
+    .app-shell { width: min(100%, 560px); margin: 0 auto; }
+    .brand-bar { min-height: 66px; display: flex; align-items: center; gap: 12px; padding: 6px 4px 14px; }
+    .brand-mark { width: 48px; height: 48px; object-fit: contain; flex: 0 0 auto; }
+    .brand-copy { min-width: 0; flex: 1; }
+    .brand-name { margin: 0; color: var(--forest); font-family: "Cinzel", Georgia, serif; font-size: 15px; line-height: 1.2; letter-spacing: 0.7px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .brand-sub { margin: 4px 0 0; color: var(--muted); font-size: 11px; font-weight: 600; }
+    .secure-pill { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 0 10px; border: 1px solid rgba(19, 49, 41, 0.12); border-radius: 999px; color: var(--forest-2); background: rgba(255, 253, 250, 0.82); font-size: 11px; font-weight: 700; white-space: nowrap; }
+    .secure-pill svg { width: 14px; height: 14px; color: var(--gold); }
+    .hero { padding: 8px 4px 18px; }
+    .eyebrow { margin: 0 0 8px; color: var(--gold); font-size: 11px; font-weight: 800; letter-spacing: 1.1px; text-transform: uppercase; }
+    h1 { margin: 0; max-width: 460px; color: var(--forest); font-size: clamp(28px, 8vw, 38px); line-height: 1.06; letter-spacing: -1.1px; font-weight: 800; }
+    .hero-copy { margin: 10px 0 0; max-width: 470px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin: 0 0 12px; }
+    .step { min-width: 0; min-height: 42px; display: flex; align-items: center; gap: 7px; padding: 8px 9px; border: 1px solid rgba(16, 34, 30, 0.10); border-radius: 12px; color: #76807b; background: rgba(255, 253, 250, 0.62); font-size: 10px; font-weight: 700; }
+    .step-index { width: 22px; height: 22px; display: grid; place-items: center; flex: 0 0 22px; border-radius: 50%; background: #e9e4d9; color: #6f746f; font-size: 10px; font-weight: 800; }
+    .step.is-active { border-color: rgba(181, 139, 42, 0.36); color: var(--forest); background: #fffdfa; }
+    .step.is-active .step-index { color: #fff; background: var(--forest-2); }
+    .step.is-done { color: var(--forest-2); border-color: rgba(18, 140, 85, 0.18); background: rgba(18, 140, 85, 0.06); }
+    .step.is-done .step-index { color: #fff; background: var(--success); }
+    .panel, .result-section { overflow: hidden; background: var(--paper); border: 1px solid rgba(16, 34, 30, 0.10); border-radius: var(--radius-xl); box-shadow: var(--shadow); }
+    .panel-head { display: flex; align-items: flex-start; gap: 12px; padding: 20px 20px 4px; }
+    .panel-icon { width: 40px; height: 40px; display: grid; place-items: center; flex: 0 0 40px; border-radius: 13px; color: var(--gold); background: rgba(181, 139, 42, 0.09); border: 1px solid rgba(181, 139, 42, 0.16); }
+    .panel-icon svg { width: 20px; height: 20px; }
+    .panel-title { margin: 1px 0 0; color: var(--forest); font-size: 16px; line-height: 1.3; font-weight: 800; }
+    .panel-note { margin: 4px 0 0; color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .form-body { padding: 16px 20px 20px; }
+    .form-group { margin-bottom: 17px; }
+    .form-label { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 8px; color: var(--forest-2); font-size: 13px; font-weight: 750; }
+    .required-note { color: #8a8f8a; font-size: 10px; font-weight: 600; }
+    .input-wrap { position: relative; }
+    .form-input { width: 100%; min-height: 58px; padding: 0 16px; border: 1.5px solid #d9d5cc; border-radius: var(--radius-md); outline: none; color: var(--forest); background: #fff; font-size: 16px; font-weight: 650; transition: border-color .18s ease, box-shadow .18s ease, background .18s ease; }
+    .form-input::placeholder { color: #a4aaa6; font-weight: 500; }
+    .form-input:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(181, 139, 42, 0.11); background: #fffefa; }
+    .form-input[aria-invalid="true"] { border-color: var(--danger); box-shadow: 0 0 0 4px rgba(166, 58, 58, 0.08); }
+    .amount-wrap .currency { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--gold); font-size: 20px; line-height: 1; font-weight: 800; pointer-events: none; }
+    .amount-input { padding-left: 43px; padding-right: 44px; font-size: 22px; font-variant-numeric: tabular-nums; letter-spacing: -0.4px; }
+    .amount-suffix { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #89908b; font-size: 11px; font-weight: 800; pointer-events: none; }
+    .field-help { margin: 7px 2px 0; color: #858c87; font-size: 11px; line-height: 1.45; }
+    .field-error { min-height: 0; margin: 7px 2px 0; color: var(--danger); font-size: 11px; line-height: 1.4; font-weight: 700; }
+    .field-error:empty { display: none; }
+    .primary-btn { width: 100%; min-height: 58px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; margin-top: 4px; padding: 0 18px; border: 0; border-radius: 15px; color: #fff; background: linear-gradient(180deg, #153b31 0%, #0b241e 100%); box-shadow: 0 12px 25px rgba(11, 36, 30, 0.18); font-size: 14px; font-weight: 800; cursor: pointer; transition: transform .12s ease, box-shadow .18s ease, opacity .18s ease; }
+    .primary-btn svg { width: 19px; height: 19px; color: var(--gold-soft); }
+    .primary-btn:active { transform: translateY(1px) scale(.995); box-shadow: 0 8px 18px rgba(11, 36, 30, 0.16); }
+    .form-assurance { display: flex; align-items: flex-start; gap: 8px; margin: 12px 2px 0; color: #7b827e; font-size: 10.5px; line-height: 1.5; }
+    .form-assurance svg { width: 14px; height: 14px; flex: 0 0 14px; margin-top: 1px; color: var(--gold); }
+    .result-section { display: none; margin-top: 14px; }
+    .result-section.is-visible { display: block; animation: resultIn .28s ease both; }
+    @keyframes resultIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .result-head { display: flex; gap: 12px; align-items: flex-start; padding: 20px 20px 14px; background: linear-gradient(180deg, rgba(18, 140, 85, 0.08), rgba(18, 140, 85, 0.02)); border-bottom: 1px solid rgba(18, 140, 85, 0.10); }
+    .result-check { width: 42px; height: 42px; display: grid; place-items: center; flex: 0 0 42px; border-radius: 50%; color: #fff; background: var(--success); box-shadow: 0 8px 20px rgba(18, 140, 85, 0.18); }
+    .result-check svg { width: 20px; height: 20px; }
+    .result-title { margin: 1px 0 0; color: var(--forest); font-size: 16px; font-weight: 800; }
+    .result-copy { margin: 4px 0 0; color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .summary-card { margin: 16px 20px 0; padding: 14px; border: 1px solid var(--line); border-radius: 16px; background: var(--paper-2); }
+    .summary-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 8px 0; }
+    .summary-row + .summary-row { border-top: 1px solid #e8e3da; }
+    .summary-label { color: #858d88; font-size: 11px; font-weight: 650; }
+    .summary-value { max-width: 68%; color: var(--forest); text-align: right; font-size: 12px; line-height: 1.4; font-weight: 800; overflow-wrap: anywhere; }
+    .summary-value.amount { color: var(--gold); font-size: 14px; font-variant-numeric: tabular-nums; }
+    .link-block { margin: 12px 20px 0; }
+    .section-label { display: block; margin-bottom: 7px; color: #747d78; font-size: 10px; font-weight: 800; letter-spacing: .7px; text-transform: uppercase; }
+    .generated-link { min-height: 50px; display: flex; align-items: center; padding: 11px 13px; border: 1px solid #d8ddd9; border-radius: 13px; color: var(--forest-2); background: #f7faf8; font-size: 11px; line-height: 1.45; font-weight: 700; word-break: break-all; }
+    .result-actions { display: grid; grid-template-columns: 1fr; gap: 9px; padding: 14px 20px 20px; }
+    .action-btn { min-height: 54px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; width: 100%; padding: 0 15px; border-radius: 14px; text-decoration: none; font-size: 13px; font-weight: 800; cursor: pointer; }
+    .action-btn svg { width: 18px; height: 18px; flex: 0 0 18px; }
+    .btn-whatsapp { border: 1px solid var(--success); color: #fff; background: linear-gradient(180deg, #1a9d61, var(--success-dark)); box-shadow: 0 10px 24px rgba(18, 140, 85, 0.19); }
+    .btn-secondary { border: 1px solid #d6dcd8; color: var(--forest-2); background: #fff; }
+    .btn-secondary:active, .btn-ghost:active { background: #f2f4f2; }
+    .preview { margin: 0 20px 14px; border: 1px solid var(--line); border-radius: 15px; background: #fff; overflow: hidden; }
+    .preview summary { min-height: 50px; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 0 14px; list-style: none; color: var(--forest-2); font-size: 12px; font-weight: 800; cursor: pointer; }
+    .preview summary::-webkit-details-marker { display: none; }
+    .preview summary::after { content: ""; width: 8px; height: 8px; border-right: 1.8px solid #718079; border-bottom: 1.8px solid #718079; transform: rotate(45deg) translateY(-2px); transition: transform .18s ease; }
+    .preview[open] summary::after { transform: rotate(225deg) translate(-2px, -2px); }
+    .message-preview { margin: 0; padding: 14px; border-top: 1px solid var(--line); color: #33433d; background: #fafcfb; font-family: inherit; font-size: 12px; line-height: 1.65; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .utility-row { display: grid; grid-template-columns: 1fr; gap: 8px; padding: 0 20px 20px; }
+    .btn-ghost { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 13px; border: 1px solid transparent; border-radius: 12px; color: #6f7974; background: transparent; text-decoration: none; font-size: 11px; font-weight: 750; cursor: pointer; }
+    .btn-ghost svg { width: 16px; height: 16px; }
+    .trust-footer { display: flex; align-items: center; justify-content: center; gap: 7px; padding: 20px 6px 4px; color: #7d847f; font-size: 10px; line-height: 1.4; text-align: center; }
+    .trust-footer svg { width: 13px; height: 13px; color: var(--gold); }
+    .toast { position: fixed; left: 50%; bottom: max(18px, calc(env(safe-area-inset-bottom) + 10px)); z-index: 1000; max-width: calc(100vw - 28px); padding: 12px 16px; border-radius: 999px; color: #fff; background: #10221e; box-shadow: 0 14px 35px rgba(16, 34, 30, .25); font-size: 12px; line-height: 1.3; font-weight: 750; text-align: center; opacity: 0; pointer-events: none; transform: translate(-50%, 8px); transition: opacity .2s ease, transform .2s ease; }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    :focus-visible { outline: 3px solid rgba(181, 139, 42, .48); outline-offset: 3px; }
+
+    @media (min-width: 520px) {
+      body { padding-top: max(22px, env(safe-area-inset-top)); }
+      .hero { padding-top: 16px; padding-bottom: 22px; }
+      .panel-head, .form-body, .result-head { padding-left: 24px; padding-right: 24px; }
+      .summary-card, .link-block, .preview { margin-left: 24px; margin-right: 24px; }
+      .result-actions { grid-template-columns: 1fr 1fr; padding-left: 24px; padding-right: 24px; }
+      .btn-whatsapp { grid-column: 1 / -1; }
+      .utility-row { grid-template-columns: 1fr 1fr; padding-left: 24px; padding-right: 24px; }
+    }
+    @media (max-width: 380px) {
+      .secure-pill { display: none; }
+      .brand-name { font-size: 14px; }
+      .step { justify-content: center; padding-left: 6px; padding-right: 6px; }
+      .step-label { display: none; }
+      .summary-value { max-width: 62%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
   </style>
 </head>
 <body>
+  <main class="app-shell">
+    <header class="brand-bar">
+      <img class="brand-mark" src="images/belgin-crest-b.png" alt="Belgin Kuyumculuk amblemi">
+      <div class="brand-copy">
+        <p class="brand-name">Belgin Kuyumculuk & Saat</p>
+        <p class="brand-sub">VIP satış işlemleri</p>
+      </div>
+      <div class="secure-pill" aria-label="Güvenli bağlantı">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 10V8a5 5 0 0 1 10 0v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><rect x="5" y="10" width="14" height="10" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M12 14v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Güvenli panel
+      </div>
+    </header>
 
-  <div class="header">
-    <img src="images/belgin-crest-b.png" alt="Belgin Emblemi" style="width:84px; height:84px; object-fit:contain; margin-bottom:12px; filter: drop-shadow(0 4px 16px rgba(212,175,55,0.4));">
-    <div class="brand-title">Belgin Kuyumculuk & Saat</div>
-  </div>
+    <section class="hero" aria-labelledby="pageTitle">
+      <p class="eyebrow">Satış Paneli</p>
+      <h1 id="pageTitle">Ödeme linkini saniyeler içinde hazırlayın.</h1>
+      <p class="hero-copy">Ürün bilgisini ve satış tutarını girin. Güvenli link oluşturulduğunda müşteriye doğrudan WhatsApp üzerinden gönderin.</p>
+    </section>
 
-  <div class="container">
-    <div class="card">
-      <div class="card-title">
-        <span>✨</span> Ürün ve Fiyat Belirleme Paneli
+    <nav class="steps" aria-label="Ödeme linki oluşturma adımları">
+      <div class="step is-active" id="step1"><span class="step-index">1</span><span class="step-label">Bilgiler</span></div>
+      <div class="step" id="step2"><span class="step-index">2</span><span class="step-label">Link</span></div>
+      <div class="step" id="step3"><span class="step-index">3</span><span class="step-label">Gönder</span></div>
+    </nav>
+
+    <section class="panel" aria-labelledby="formTitle">
+      <div class="panel-head">
+        <div class="panel-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7.5h16M7 4v3.5M17 4v3.5M6.5 11h4M6.5 15h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><rect x="3" y="5" width="18" height="16" rx="4" stroke="currentColor" stroke-width="1.8"/></svg></div>
+        <div><h2 class="panel-title" id="formTitle">Satış bilgileri</h2><p class="panel-note">Müşterinin göreceği ürün adı ve tahsil edilecek toplam tutar.</p></div>
       </div>
 
-      <form id="linkForm">
+      <form id="linkForm" class="form-body" novalidate>
         <div class="form-group">
-          <label class="form-label">Ürün / Model Adı *</label>
-          <input type="text" id="productTitle" class="form-input" required placeholder="Örn: Rolex Submariner 41mm Date">
+          <label class="form-label" for="productTitle"><span>Ürün / model adı</span><span class="required-note">Zorunlu</span></label>
+          <input type="text" id="productTitle" class="form-input" required maxlength="140" autocomplete="off" enterkeyhint="next" placeholder="Örn. Rolex Submariner 41mm Date" aria-describedby="titleHelp titleError">
+          <p class="field-help" id="titleHelp">Müşterinin link ekranında göreceği isimdir.</p>
+          <p class="field-error" id="titleError" role="alert"></p>
         </div>
 
         <div class="form-group">
-          <label class="form-label">Satış Tutarı (TL) *</label>
-          <div class="amount-wrapper">
-            <span class="currency-symbol">₺</span>
-            <input type="number" id="productAmount" class="form-input amount-input" required min="100" step="1" placeholder="45.000">
+          <label class="form-label" for="productAmount"><span>Satış tutarı</span><span class="required-note">TL</span></label>
+          <div class="input-wrap amount-wrap">
+            <span class="currency" aria-hidden="true">₺</span>
+            <input type="text" id="productAmount" class="form-input amount-input" required inputmode="numeric" enterkeyhint="done" autocomplete="off" placeholder="45.000" aria-describedby="amountHelp amountError">
+            <span class="amount-suffix" aria-hidden="true">TL</span>
           </div>
+          <p class="field-help" id="amountHelp">Binlik ayraç otomatik eklenir. Minimum tutar 100 TL.</p>
+          <p class="field-error" id="amountError" role="alert"></p>
         </div>
 
-
-
-        <button type="submit" id="btnSubmit" class="btn-submit">
-          Ödeme Linkini Oluştur
+        <button type="submit" id="btnSubmit" class="primary-btn">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13 5h6v6M11 13l8-8M19 13v4a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Ödeme linkini oluştur
         </button>
+
+        <div class="form-assurance">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 5 6v5c0 4.7 2.9 8.1 7 10 4.1-1.9 7-5.3 7-10V6l-7-3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Bu ekran kart bilgisi toplamaz; yalnızca müşteriye gönderilecek ödeme bağlantısını hazırlar.
+        </div>
       </form>
+    </section>
 
-      <!-- ÇIKTI VE AKSİYONLAR -->
-      <div id="resultSection" class="result-section">
-        <div class="form-label">Müşteriye Gönderilecek Güvenli Kısa Link:</div>
-        <div id="generatedUrlText" class="result-box" style="font-weight:700; color:#084C47; word-break:break-all;"></div>
-
-        <div style="margin:16px 0 8px;">
-          <div class="form-label" style="margin-bottom:6px;">📲 Hazır Lüks WhatsApp Mesaj Önizlemesi:</div>
-          <div id="whatsappPreviewBox" style="background:#f4f9f7; border:1px solid #cbe3dc; border-radius:8px; padding:14px; font-size:13px; line-height:1.6; color:#14211f; white-space:pre-wrap; font-family:inherit;"></div>
-        </div>
-
-        <div class="action-btn-group" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:16px;">
-          <a id="btnWhatsApp" href="#" target="_blank" class="btn-whatsapp" style="grid-column:1 / -1; display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; padding:14px;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
-            📲 WhatsApp ile Müşteriye Gönder
-          </a>
-          <button type="button" id="btnCopyMsg" class="btn-copy" style="background:#084C47; color:#fff; border:none; padding:12px; border-radius:8px; font-weight:700; cursor:pointer;">
-            💬 Mesaj Metnini Kopyala
-          </button>
-          <button type="button" id="btnCopy" class="btn-copy" style="background:#eef6f4; color:#084C47; border:1px solid #cbe3dc; padding:12px; border-radius:8px; font-weight:700; cursor:pointer;">
-            📋 Sadece Linki Kopyala
-          </button>
-          <a id="btnTestLink" href="#" target="_blank" class="btn-test" style="grid-column:1 / -1; display:block; text-align:center; padding:10px; font-size:13px; text-decoration:none; color:#5C726E;">
-            👁️ Müşteri Ödeme Ekranını Önizle →
-          </a>
-        </div>
+    <section id="resultSection" class="result-section" aria-labelledby="resultTitle" aria-live="polite" tabindex="-1">
+      <div class="result-head">
+        <div class="result-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m7 12.5 3.2 3.2L17.5 8.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div><h2 class="result-title" id="resultTitle">Link hazır</h2><p class="result-copy">Bilgileri son kez kontrol edin ve müşteriye gönderin.</p></div>
       </div>
 
-    </div>
-  </div>
+      <div class="summary-card" aria-label="Oluşturulan ödeme özeti">
+        <div class="summary-row"><span class="summary-label">Ürün</span><span class="summary-value" id="summaryTitle">—</span></div>
+        <div class="summary-row"><span class="summary-label">Tutar</span><span class="summary-value amount" id="summaryAmount">—</span></div>
+        <div class="summary-row"><span class="summary-label">İşlem No</span><span class="summary-value" id="summaryOrderId">—</span></div>
+      </div>
 
-  <div id="toast" class="toast">Panoya kopyalandı!</div>
+      <div class="link-block"><span class="section-label">Güvenli ödeme bağlantısı</span><div id="generatedUrlText" class="generated-link"></div></div>
 
+      <div class="result-actions">
+        <a id="btnWhatsApp" href="#" target="_blank" rel="noopener noreferrer" class="action-btn btn-whatsapp">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2a9.86 9.86 0 0 0-8.46 14.93L2 22l5.2-1.53A9.98 9.98 0 1 0 12.04 2Zm5.78 14.06c-.24.68-1.42 1.3-1.96 1.38-.5.09-1.12.13-1.8-.08-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.8-4.18-4.94-4.37-.14-.2-1.18-1.56-1.18-2.98 0-1.42.75-2.12 1.01-2.41.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.58.8 1.99.87 2.13.07.14.12.31.02.5-.1.19-.14.31-.28.48-.14.17-.3.37-.43.5-.14.14-.29.29-.12.57.17.29.75 1.24 1.62 2.01 1.11.99 2.05 1.3 2.34 1.45.29.14.46.12.63-.07.17-.19.73-.85.92-1.14.19-.29.38-.24.64-.14.26.1 1.65.78 1.94.92.29.14.48.22.55.34.07.12.07.7-.17 1.38Z"/></svg>
+          WhatsApp ile müşteriye gönder
+        </a>
+        <button type="button" id="btnCopyMsg" class="action-btn btn-secondary"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 7h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8"/><path d="M16 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h1" stroke="currentColor" stroke-width="1.8"/></svg>Mesajı kopyala</button>
+        <button type="button" id="btnCopy" class="action-btn btn-secondary"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.5 14.5 14.5 9M8 17H6a4 4 0 0 1 0-8h3M16 7h2a4 4 0 1 1 0 8h-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Sadece linki kopyala</button>
+      </div>
+
+      <details class="preview"><summary>WhatsApp mesaj önizlemesi</summary><div id="whatsappPreviewBox" class="message-preview"></div></details>
+
+      <div class="utility-row">
+        <a id="btnTestLink" href="#" target="_blank" rel="noopener noreferrer" class="btn-ghost"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="2.5" stroke="currentColor" stroke-width="1.8"/></svg>Müşteri ekranını önizle</a>
+        <button type="button" id="btnNewLink" class="btn-ghost"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.34 5.66M20 5v6h-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Yeni link oluştur</button>
+      </div>
+    </section>
+
+    <footer class="trust-footer"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 5 6v5c0 4.7 2.9 8.1 7 10 4.1-1.9 7-5.3 7-10V6l-7-3Z" stroke="currentColor" stroke-width="1.8"/></svg>Belgin Kuyumculuk & Saat · Güvenli VIP satış bağlantısı</footer>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite">Panoya kopyalandı.</div>
   <script src="js/vip-payment.js"></script>
   <script>
-    const form = document.getElementById('linkForm');
-    const titleInput = document.getElementById('productTitle');
-    const amountInput = document.getElementById('productAmount');
-    const resultSection = document.getElementById('resultSection');
-    const generatedUrlText = document.getElementById('generatedUrlText');
-    const whatsappPreviewBox = document.getElementById('whatsappPreviewBox');
-    const btnWhatsApp = document.getElementById('btnWhatsApp');
-    const btnCopy = document.getElementById('btnCopy');
-    const btnCopyMsg = document.getElementById('btnCopyMsg');
-    const btnTestLink = document.getElementById('btnTestLink');
-    const toast = document.getElementById('toast');
-    let currentUrl = '';
-    let currentMsg = '';
+    const form = document.getElementById("linkForm");
+    const titleInput = document.getElementById("productTitle");
+    const amountInput = document.getElementById("productAmount");
+    const titleError = document.getElementById("titleError");
+    const amountError = document.getElementById("amountError");
+    const resultSection = document.getElementById("resultSection");
+    const generatedUrlText = document.getElementById("generatedUrlText");
+    const whatsappPreviewBox = document.getElementById("whatsappPreviewBox");
+    const summaryTitle = document.getElementById("summaryTitle");
+    const summaryAmount = document.getElementById("summaryAmount");
+    const summaryOrderId = document.getElementById("summaryOrderId");
+    const btnWhatsApp = document.getElementById("btnWhatsApp");
+    const btnCopy = document.getElementById("btnCopy");
+    const btnCopyMsg = document.getElementById("btnCopyMsg");
+    const btnTestLink = document.getElementById("btnTestLink");
+    const btnNewLink = document.getElementById("btnNewLink");
+    const toast = document.getElementById("toast");
+    const step1 = document.getElementById("step1");
+    const step2 = document.getElementById("step2");
+    const step3 = document.getElementById("step3");
+    const tlFormatter = new Intl.NumberFormat("tr-TR", { maximumFractionDigits: 0 });
+    let currentUrl = "";
+    let currentMsg = "";
+
+    function digitsOnly(value) { return String(value || "").replace(/\D/g, ""); }
+    function getAmount() { const digits = digitsOnly(amountInput.value); return digits ? Number(digits) : 0; }
+    function formatAmountField() { const amount = getAmount(); amountInput.value = amount ? tlFormatter.format(amount) : ""; }
+    function setError(input, errorNode, message) { input.setAttribute("aria-invalid", message ? "true" : "false"); errorNode.textContent = message || ""; }
+
+    function validateForm() {
+      const title = titleInput.value.trim();
+      const amount = getAmount();
+      let valid = true;
+      setError(titleInput, titleError, "");
+      setError(amountInput, amountError, "");
+      if (!title) { setError(titleInput, titleError, "Ürün veya model adını girin."); valid = false; }
+      if (!amount || amount < 100) { setError(amountInput, amountError, "Satış tutarı en az 100 TL olmalıdır."); valid = false; }
+      if (!valid) { const firstInvalid = form.querySelector('[aria-invalid="true"]'); if (firstInvalid) firstInvalid.focus(); }
+      return { valid, title, amount };
+    }
+
+    function setStepsCompleted() {
+      step1.classList.remove("is-active");
+      step1.classList.add("is-done");
+      step2.classList.add("is-done");
+      step3.classList.add("is-active");
+    }
+    function resetSteps() { step1.className = "step is-active"; step2.className = "step"; step3.className = "step"; }
 
     function handleGenerate() {
-      const title = titleInput.value.trim();
-      const amount = parseFloat(amountInput.value);
-
-      if (!title) {
-        alert('Lütfen ürün veya model adını giriniz.');
-        titleInput.focus();
-        return;
-      }
-
-      if (!amount || amount < 10) {
-        alert('Lütfen geçerli bir satış tutarı giriniz.');
-        amountInput.focus();
-        return;
-      }
-
-      const payload = {
-        orderId: 'VIP-' + Math.floor(100000 + Math.random() * 900000),
-        title,
-        amount,
-        createdAt: new Date().toISOString()
-      };
-
+      const { valid, title, amount } = validateForm();
+      if (!valid) return;
+      const payload = { orderId: "VIP-" + Math.floor(100000 + Math.random() * 900000), title, amount, createdAt: new Date().toISOString() };
       const compactToken = VipEngine.encodeCompact(payload);
-      const origin = window.location.origin.includes('localhost') ? window.location.origin : 'https://www.belginkuyumculuk.com';
+      const origin = window.location.origin.includes("localhost") ? window.location.origin : "https://www.belginkuyumculuk.com";
       currentUrl = `${origin}/vip?p=${compactToken}`;
       currentMsg = VipEngine.buildWhatsAppMessageText(payload, currentUrl);
-
       generatedUrlText.textContent = currentUrl;
       whatsappPreviewBox.textContent = currentMsg;
+      summaryTitle.textContent = payload.title;
+      summaryAmount.textContent = `${tlFormatter.format(payload.amount)} TL`;
+      summaryOrderId.textContent = payload.orderId;
       btnWhatsApp.href = VipEngine.buildWhatsAppShareUrl(payload, currentUrl);
       btnTestLink.href = currentUrl;
-
-      resultSection.style.display = 'block';
-      resultSection.scrollIntoView({ behavior: 'smooth' });
+      resultSection.classList.add("is-visible");
+      setStepsCompleted();
+      window.requestAnimationFrame(() => { resultSection.focus({ preventScroll: true }); resultSection.scrollIntoView({ behavior: "smooth", block: "start" }); });
     }
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      handleGenerate();
-    });
+    form.addEventListener("submit", (event) => { event.preventDefault(); handleGenerate(); });
+    titleInput.addEventListener("input", () => { if (titleInput.value.trim()) setError(titleInput, titleError, ""); });
+    amountInput.addEventListener("input", () => { formatAmountField(); if (getAmount() >= 100) setError(amountInput, amountError, ""); });
+    amountInput.addEventListener("blur", formatAmountField);
+    btnCopy.addEventListener("click", () => { if (currentUrl) copyToClipboard(currentUrl, "Ödeme linki kopyalandı."); });
+    btnCopyMsg.addEventListener("click", () => { if (currentMsg) copyToClipboard(currentMsg, "WhatsApp mesajı kopyalandı."); });
+    btnNewLink.addEventListener("click", () => { currentUrl = ""; currentMsg = ""; form.reset(); setError(titleInput, titleError, ""); setError(amountInput, amountError, ""); resultSection.classList.remove("is-visible"); resetSteps(); titleInput.focus(); window.scrollTo({ top: 0, behavior: "smooth" }); });
 
-    btnCopy.addEventListener('click', () => {
-      if (!currentUrl) return;
-      copyToClipboard(currentUrl, 'Kısa link panoya kopyalandı!');
-    });
-
-    btnCopyMsg.addEventListener('click', () => {
-      if (!currentMsg) return;
-      copyToClipboard(currentMsg, 'Lüks WhatsApp mesajı panoya kopyalandı!');
-    });
-
-    function copyToClipboard(text, msg) {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(() => {
-          showToast(msg);
-        }).catch(() => fallbackCopy(text, msg));
-      } else {
-        fallbackCopy(text, msg);
-      }
+    function copyToClipboard(text, message) {
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(() => showToast(message)).catch(() => fallbackCopy(text, message));
+      else fallbackCopy(text, message);
     }
-
-    function showToast(msg) {
-      toast.textContent = msg;
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2500);
-    }
-
-    function fallbackCopy(text, msg) {
-      const textArea = document.createElement('textarea');
+    function fallbackCopy(text, message) {
+      const textArea = document.createElement("textarea");
       textArea.value = text;
-      textArea.style.position = 'fixed';
-      textArea.style.left = '-9999px';
+      textArea.setAttribute("readonly", "");
+      textArea.style.position = "fixed";
+      textArea.style.left = "-9999px";
       document.body.appendChild(textArea);
-      textArea.focus();
       textArea.select();
-      try {
-        document.execCommand('copy');
-        showToast(msg);
-      } catch (e) {
-        prompt('Metni kopyalayınız:', text);
-      }
+      try { document.execCommand("copy"); showToast(message); } catch (error) { window.prompt("Metni kopyalayın:", text); }
       document.body.removeChild(textArea);
+    }
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      window.clearTimeout(showToast.timer);
+      showToast.timer = window.setTimeout(() => toast.classList.remove("show"), 2200);
     }
   </script>
 </body>
