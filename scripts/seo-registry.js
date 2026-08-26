@@ -25,7 +25,7 @@ const PRIMARY_ORGANIZATION = {
   },
   sameAs: [
     'https://www.instagram.com/belginmucevherat/',
-    'https://maps.google.com/?cid=belginkuyumculuk'
+    'https://share.google/e2vmC425agvKPAAHR'
   ]
 };
 
