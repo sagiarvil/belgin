@@ -16397,7 +16397,7 @@
     "category": "jewelry",
     "isGold": true,
     "metal": "24 Ayar Saf Altın (995/1000)",
-    "inStock": true
+    "inStock": false
   },
   "2635": {
     "id": "2635",
@@ -16937,7 +16937,7 @@
     "category": "jewelry",
     "isGold": true,
     "metal": "14 Ayar Altın (585/1000)",
-    "inStock": true
+    "inStock": false
   },
   "2738": {
     "id": "2738",
@@ -16947,7 +16947,7 @@
     "category": "jewelry",
     "isGold": true,
     "metal": "14 Ayar Altın (585/1000)",
-    "inStock": true
+    "inStock": false
   },
   "2739": {
     "id": "2739",
@@ -16957,7 +16957,7 @@
     "category": "jewelry",
     "isGold": true,
     "metal": "14 Ayar Altın (585/1000)",
-    "inStock": true
+    "inStock": false
   },
   "2740": {
     "id": "2740",

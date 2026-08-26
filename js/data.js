@@ -74100,7 +74100,7 @@ const PRODUCTS = [
     "reference": "BLG-KUL-007",
     "category": "jewelry",
     "subCategory": "Külçe & Gram Altın",
-    "statusBadge": "Stokta",
+    "statusBadge": "Tükendi",
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
@@ -74113,7 +74113,7 @@ const PRODUCTS = [
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-2-5-gr-995-24-ayar-amr-kulce-altin-1750687930-3.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
     "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
-    "inStock": true,
+    "inStock": false,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-2-5-gr-995-24-ayar-amr-kulce-altin-1750687930-3.jpg"
     ],
@@ -75500,7 +75500,7 @@ const PRODUCTS = [
     "reference": "BLG-BLZ-113",
     "category": "jewelry",
     "subCategory": "Altın Bilezik",
-    "statusBadge": "Stokta",
+    "statusBadge": "Tükendi",
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
@@ -75513,7 +75513,7 @@ const PRODUCTS = [
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-10-gram-ajda-bilezik-1768251489-6.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
     "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
-    "inStock": true,
+    "inStock": false,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-10-gram-ajda-bilezik-1768251489-6.jpg"
     ],
@@ -75526,7 +75526,7 @@ const PRODUCTS = [
     "reference": "BLG-BLZ-114",
     "category": "jewelry",
     "subCategory": "Altın Bilezik",
-    "statusBadge": "Stokta",
+    "statusBadge": "Tükendi",
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
@@ -75539,7 +75539,7 @@ const PRODUCTS = [
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-10-gram-kibrit-copu-ajda-bilezik-1768250661-5.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
     "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
-    "inStock": true,
+    "inStock": false,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-10-gram-kibrit-copu-ajda-bilezik-1768250661-5.jpg"
     ],
@@ -75552,7 +75552,7 @@ const PRODUCTS = [
     "reference": "BLG-BLZ-115",
     "category": "jewelry",
     "subCategory": "Altın Bilezik",
-    "statusBadge": "Stokta",
+    "statusBadge": "Tükendi",
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
@@ -75565,7 +75565,7 @@ const PRODUCTS = [
     "hoverImage": "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-10-gram-kalemli-ajda-bilezik-1768251249-1.jpg",
     "sourceUrl": "https://www.belginkuyumculuk.com/#mucevherat",
     "hallmark": "T.C. Darphane / Resmi Ayar Damgalı",
-    "inStock": true,
+    "inStock": false,
     "images": [
       "https://agakulche.mncdn.com/image/product/agakulche-14-ayar-10-gram-kalemli-ajda-bilezik-1768251249-1.jpg"
     ],

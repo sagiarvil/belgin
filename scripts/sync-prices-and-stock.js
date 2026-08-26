@@ -196,6 +196,10 @@ async function syncAll() {
   fs.writeFileSync(dataJsPath, headerPart + updatedProductsBlock + footerPart, 'utf8');
   console.log(`[SYNC-ENGINE] js/data.js başarıyla güncellendi (Kalan Tekil Ürün: ${PRODUCTS.length}).`);
 
+  // İZKO Resmi Kur Çapraz Sağlama ve Güvenlik Motorunu Çalıştır
+  console.log(`[SYNC-ENGINE] 🏛️ İZKO Resmi Kur Çapraz Doğrulama Çalıştırılıyor...`);
+  execSync('node scripts/izko-safety-crosscheck.js', { stdio: 'inherit' });
+
   // Ödeme kataloğunu ve SEO varlıklarını güncelle
   console.log(`[SYNC-ENGINE] Ödeme ve SEO katalogları senkronize ediliyor...`);
   execSync('node scripts/generate-payment-catalog.js', { stdio: 'inherit' });
