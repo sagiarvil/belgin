@@ -131,6 +131,7 @@ const App = {
   allWatchPage: 1,
   homeJewelryPage: 1,
   PAGE_SIZE: 30,
+  HOME_WATCH_PAGE_SIZE: 16, // 4 sütun x 4 sıra = 16 saat (en fazla 4 sıra)
   JEWELRY_PAGE_SIZE: 20, // 4 sütun x 5 sıra = 20 ürün (en fazla 5 sıra)
 
   // 1. ANA SAYFA RENDER
@@ -201,22 +202,23 @@ const App = {
     }, 2500);
   },
 
-  // ANA SAYFA SAAT SAYFALAMA (EN FAZLA 30 ÜRÜN)
+  // ANA SAYFA SAAT SAYFALAMA (EN FAZLA 4 SIRA = 16 SAAT)
   renderHomeWatches(page = 1) {
     this.homeWatchPage = page;
     const el = document.getElementById('homeWatchesGrid');
     const pagEl = document.getElementById('homeWatchesPagination');
     if (!el) return;
 
+    const pageSize = this.HOME_WATCH_PAGE_SIZE || 16;
     const total = WATCHES.length;
-    const start = (page - 1) * this.PAGE_SIZE;
-    const end = start + this.PAGE_SIZE;
+    const start = (page - 1) * pageSize;
+    const end = start + pageSize;
     const pageItems = WATCHES.slice(start, end);
 
     el.innerHTML = pageItems.map(p => this.renderProductCard(p)).join('');
 
     if (pagEl) {
-      pagEl.innerHTML = this.buildPaginationHtml(page, total, this.PAGE_SIZE, 'App.changeHomeWatchPage');
+      pagEl.innerHTML = this.buildPaginationHtml(page, total, pageSize, 'App.changeHomeWatchPage');
     }
   },
 
