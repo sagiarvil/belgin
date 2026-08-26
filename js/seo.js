@@ -60,8 +60,8 @@ const SeoManager = {
       },
       'odeme': {
         title: "Güvenli Ödeme & VIP Teslimat | Belgin Kuyumculuk",
-        desc: "BDDK lisanslı PayTR 256-bit SSL korumalı kredi kartına 12 taksit veya banka havalesi seçeneği. Loomis VIP zırhlı kurye teslimat bilgileri.",
-        keywords: "paytr ödeme, taksitli saat alımı, zırhlı kurye teslimat",
+        desc: "BDDK lisanslı PayTR 256-bit SSL korumalı 3D Secure tek çekim ve banka havalesi seçeneği. Loomis VIP zırhlı kurye teslimat bilgileri.",
+        keywords: "paytr ödeme, zırhlı kurye teslimat",
         breadcrumb: "Güvenli Ödeme"
       },
       'sertifika': {

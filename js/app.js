@@ -607,15 +607,10 @@ const App = {
     const discountPercent = hasDiscount ? Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100) : 0;
     const monthlyInstallment = Math.round(p.price / 3);
 
-    // Taksit Banner (Altın için tek çekim mevzuat uyarısı, saat için 3 taksit)
-    const installmentBannerHtml = isGoldProduct ? `
-      <div class="pdp-installment-banner" style="background:#FFF9EE; border:1px solid #E6D2A8; color:#5D4411; padding:10px 14px; border-radius:6px; font-size:12.5px; margin-top:14px; line-height:1.5;">
-        <span>🔒 <strong>BDDK Mevzuat Uyarısı:</strong> Külçe altın, ziynet ve sarrafiye ürünlerinde finansal mevzuat gereğince <strong>tek çekim</strong> uygulanır.</span>
-      </div>
-    ` : `
-      <div class="pdp-installment-banner" style="${p.isPreOwned ? 'margin-top:14px;' : ''}">
-        <span>💳 Vade farksız 3 taksit: <strong>3 x ${formatPrice(monthlyInstallment)}</strong></span>
-        <span style="color:#888; font-weight:normal; font-size:12px;">(Tüm kartlara Mevzuata Uygun Taksit imkanı)</span>
+    // Güvenli Ödeme Bannerı (Tek Çekim & 3D Secure Güvencesi)
+    const secureBannerHtml = `
+      <div class="pdp-installment-banner" style="background:#FAF8F5; border:1px solid #EAE5D9; color:#4A3B18; padding:10px 14px; border-radius:6px; font-size:12.5px; margin-top:14px; line-height:1.5;">
+        <span>🔒 <strong>Güvenli Ödeme:</strong> 256-bit SSL ve 3D Secure ile <strong>tek çekim</strong> veya havale/EFT güvencesi.</span>
       </div>
     `;
 
@@ -922,24 +917,26 @@ const App = {
       </div>
     `;
 
-    // Sekme 3: Taksit / Ödeme Seçenekleri
-    const installmentsTabHtml = isGoldProduct ? `
+    // Sekme 3: Güvenli Ödeme & 3D Secure
+    const paymentTabHtml = `
       <div id="tab-installments" class="pdp-tab-pane" role="tabpanel">
-        <div style="background:#FFFFFF; border:1px solid var(--color-border); border-radius:8px; padding:24px; line-height:1.7;">
-          <strong style="display:block; margin-bottom:8px; font-size:16px; color:var(--color-ink);">⚖️ BDDK Finansal Mevzuatı ve Taksit Kısıtlaması</strong>
-          <p style="font-size:14px; color:#444; margin-bottom:12px;">
-            Bankacılık Düzenleme ve Denetleme Kurumu (BDDK) ile Ticaret Bakanlığı Mesafeli Sözleşmeler Yönetmeliği hükümleri uyarınca; <strong>külçe altın, gram altın, ziynet, ata altın ve sarrafiye ürünlerinde kredi kartına taksit uygulanmamaktadır</strong>.
+        <div style="background:#FFFFFF; border:1px solid var(--color-border); border-radius:8px; padding:28px 32px; line-height:1.8; color:#444; font-size:14px;">
+          <h3 style="font-size:18px; font-weight:700; color:var(--color-ink); margin-bottom:14px;">
+            💳 BDDK Lisanslı 3D Secure Güvenli Ödeme Standartları
+          </h3>
+          <p style="margin-bottom:12px;">
+            Belgin Kuyumculuk olarak tüm saat, altın ve mücevher siparişlerinizde <strong>PayTR 256-bit SSL şifrelemeli 3D Secure altyapısı</strong> kullanılmaktadır. Tüm kredi ve banka kartlarıyla <strong>tek çekim</strong> olarak güvenle işlem yapabilirsiniz.
           </p>
-          <div style="background:#FBF9F5; border:1px solid rgba(194,167,104,0.35); padding:14px 18px; border-radius:6px; font-size:13px; color:#5D4411;">
-            💡 <strong>Geçerli Ödeme Yöntemleri:</strong> Tüm kredi kartları veya banka kartlarıyla 3D Secure Kart Ödemesi tek çekim veya güvenli banka havalesi ile siparişinizi tamamlayabilirsiniz.
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0;">
+            <div style="background:#FBF9F5; border:1px solid rgba(194,167,104,0.35); padding:16px; border-radius:6px;">
+              <strong style="color:var(--color-ink); display:block; margin-bottom:6px;">💳 Kredi / Banka Kartı (3D Secure Tek Çekim)</strong>
+              <span style="font-size:13px; color:#666;">Kart sahibinin cep telefonuna iletilen tek kullanımlık SMS onay kodu ile banka düzeyinde doğrulanır. Kart bilgileri sunucularımızda asla tutulmaz.</span>
+            </div>
+            <div style="background:#FBF9F5; border:1px solid rgba(194,167,104,0.35); padding:16px; border-radius:6px;">
+              <strong style="color:var(--color-ink); display:block; margin-bottom:6px;">🏦 Banka Havalesi / FAST (%3 İndirimli)</strong>
+              <span style="font-size:13px; color:#666;">Kurumsal banka hesaplarımıza anında transfer ile sipariş oluşturabilirsiniz. Açıklama kısmına sipariş kodunun yazılması yeterlidir.</span>
+            </div>
           </div>
-        </div>
-      </div>
-    ` : `
-      <div id="tab-installments" class="pdp-tab-pane" role="tabpanel">
-        <div style="background:#FFFFFF; border:1px solid var(--color-border); border-radius:8px; padding:24px; line-height:1.7;">
-          <strong style="display:block; margin-bottom:8px;">Kart ve banka koşullarına göre taksit</strong>
-          <p style="font-size:13.5px; color:var(--color-muted); margin:0;">Taksit seçenekleri ödeme adımında, kartın bankası ve işlem tarihinde yürürlükte bulunan mevzuat sınırlarına göre gösterilir. Sitede mevzuatın üzerinde sabit taksit taahhüdü verilmez.</p>
         </div>
       </div>
     `;
@@ -1023,7 +1020,7 @@ const App = {
                   ${hasDiscount ? `<span class="pdp-discount-badge">-%${discountPercent} İNDİRİM</span>` : ''}
                 </div>
               `}
-              ${installmentBannerHtml}
+              ${secureBannerHtml}
             </div>
 
             <!-- Hızlı Özet Teknik Çipler -->
@@ -1059,7 +1056,7 @@ const App = {
               <span>⚙️ Teknik Özellikler Tablosu</span>
             </button>
             <button class="pdp-tab-btn" onclick="App.switchPdpTab('tab-installments', this)" role="tab">
-              <span>💳 Ödeme & Mevzuat</span>
+              <span>💳 Güvenli Ödeme & 3D Secure</span>
             </button>
             <button class="pdp-tab-btn" onclick="App.switchPdpTab('tab-delivery', this)" role="tab">
               <span>🚚 Teslimat, Güvenlik & İade Koşulları</span>
