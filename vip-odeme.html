@@ -167,10 +167,10 @@
 
     function initPage() {
       const urlParams = new URLSearchParams(window.location.search);
-      const token = urlParams.get('token');
+      const param = urlParams.get('p') || urlParams.get('token');
       
-      if (token) {
-        currentPayload = VipEngine.decodePayload(token);
+      if (param && typeof VipEngine !== 'undefined') {
+        currentPayload = VipEngine.resolvePayload(param);
       }
 
       if (!currentPayload) {
