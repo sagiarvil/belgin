@@ -92,20 +92,18 @@
       return null;
     },
 
-    // 6. Lüks WhatsApp Mesaj Metni
+    // 6. Sade & Güvenli WhatsApp Mesaj Metni
     buildWhatsAppMessageText(payload, shortUrl) {
-      const title = payload.title || 'Lüks Showroom Ürünü';
+      const title = payload.title || 'Siparişiniz';
       const amount = Number(payload.amount || 0).toLocaleString('tr-TR');
 
-      return `Sayın Değerli Müşterimiz,
+      return `${title} için güvenli ödeme bağlantınız hazırlanmıştır:
 
-Belgin Kuyumculuk Buca Showroom'umuzda adınıza ayrılan *${title}* için VIP güvenli ödeme bağlantınız hazırlanmıştır:
-
-💳 *Tutar:* ₺${amount}
-🔒 *Güvenli Ödeme Linki:*
+Tutar: ₺${amount}
+Güvenli Ödeme Linki:
 ${shortUrl}
 
-3D Secure ve 256-Bit SSL güvencesiyle ödemenizi tek çekim veya havale ile tamamlayabilirsiniz.`;
+3D Secure güvencesiyle ödemenizi tamamlayabilirsiniz.`;
     },
 
     // 7. WhatsApp Paylaşım URL'i
