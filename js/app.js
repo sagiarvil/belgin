@@ -90,13 +90,19 @@ const App = {
         this.renderHome();
         break;
       case 'saatler':
-        this.renderWatches(options.filter || this.currentWatchBrand || 'all');
+        const watchFilter = (options.filter !== undefined && options.filter !== null) ? options.filter : (this.currentWatchBrand || 'all');
+        this.currentWatchBrand = watchFilter;
+        this.renderWatches(watchFilter, 1);
         break;
       case 'mucevherat':
-        this.renderJewellery(options.filter || 'all');
+        const jewelleryFilter = (options.filter !== undefined && options.filter !== null) ? options.filter : (this.currentJewelleryCategory || 'all');
+        this.currentJewelleryCategory = jewelleryFilter;
+        this.renderJewellery(jewelleryFilter);
         break;
       case 'ikinci-el':
-        this.renderPreOwned(options.filter || this.currentPreOwnedCategory || 'all');
+        const preOwnedFilter = (options.filter !== undefined && options.filter !== null) ? options.filter : (this.currentPreOwnedCategory || 'all');
+        this.currentPreOwnedCategory = preOwnedFilter;
+        this.renderPreOwned(preOwnedFilter);
         break;
       case 'sepet':
         this.renderCart();
@@ -400,12 +406,14 @@ const App = {
       b.classList.remove('active');
       const txt = b.textContent.trim().toLowerCase();
       if ((filter === 'all' || !filter) && txt.includes('tümü')) b.classList.add('active');
-      else if (filter === 'jewelry' && txt.includes('mücevher')) b.classList.add('active');
+      else if (filter === 'jewelry' && (txt.includes('mücevher') || txt.includes('cartier'))) b.classList.add('active');
       else if (filter === 'watch' && txt.includes('saat')) b.classList.add('active');
+      else if (filter && txt.includes(filter.toLowerCase())) b.classList.add('active');
     });
   },
 
   filterPreOwnedCategory(cat = 'all', btn = null) {
+    this.closeNavDropdowns();
     this.currentPreOwnedCategory = cat;
     if (Router.currentPage !== 'ikinci-el') {
       Router.navigate('ikinci-el', true, { filter: cat });
@@ -465,6 +473,7 @@ const App = {
   },
 
   filterJewelleryCategory(cat = 'all', btn = null) {
+    this.closeNavDropdowns();
     this.currentJewelleryCategory = cat;
     if (Router.currentPage !== 'mucevherat') {
       Router.navigate('mucevherat', true, { filter: cat });
@@ -475,6 +484,12 @@ const App = {
       document.querySelectorAll('.jewellery-filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
     }
+    setTimeout(() => {
+      const target = document.querySelector('#page-mucevherat .section-header-flex') || document.getElementById('allJewelleryGrid');
+      if (target && typeof Router !== 'undefined' && Router.scrollToTarget) {
+        Router.scrollToTarget(target);
+      }
+    }, 60);
   },
 
   // HERO TAB SWITCHER
