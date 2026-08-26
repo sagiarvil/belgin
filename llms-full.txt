@@ -11457,168 +11457,168 @@ Birincil kaynak her ürünün canonical HTML sayfasıdır.
 ### Belgin Kuyumculuk 1 gr 995 24 Ayar Külçe Altın
 - ID: 2625
 - Referans: BLG-KUL-001
-- Fiyat: ₺8.186
+- Fiyat: ₺8.149
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-001-2625/
 
 ### Belgin Kuyumculuk 1 gr 995 24 Ayar Külçe Altın
 - ID: 2626
 - Referans: BLG-KUL-002
-- Fiyat: ₺8.186
+- Fiyat: ₺8.149
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-002-2626/
 
 ### Belgin Kuyumculuk 24 Ayar 1 gr 995 Külçe Altın
 - ID: 2627
 - Referans: BLG-KUL-003
-- Fiyat: ₺8.214
+- Fiyat: ₺8.177
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-003-2627/
 
 ### Belgin Kuyumculuk 24 Ayar 2 Adet 1 gr 995 Külçe Altın
 - ID: 2628
 - Referans: BLG-KUL-004
-- Fiyat: ₺16.112
+- Fiyat: ₺16.039
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-004-2628/
 
 ### Belgin Kuyumculuk 1 gr 2 Adet 995 24 Ayar Külçe Altın
 - ID: 2629
 - Referans: BLG-KUL-005
-- Fiyat: ₺16.137
+- Fiyat: ₺16.082
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-005-2629/
 
 ### Belgin Kuyumculuk 24 Ayar 2 Adet 1 gr 995 Külçe Altın
 - ID: 2630
 - Referans: BLG-KUL-006
-- Fiyat: ₺16.112
+- Fiyat: ₺16.039
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-006-2630/
 
 ### Belgin Kuyumculuk 2,5 gr 995 24 Ayar Külçe Altın
 - ID: 2631
 - Referans: BLG-KUL-007
-- Fiyat: ₺20.056
+- Fiyat: ₺19.964
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-007-2631/
 
 ### Belgin Kuyumculuk 24 Ayar 3 Adet 1 gr 995 Külçe Altın
 - ID: 2632
 - Referans: BLG-KUL-008
-- Fiyat: ₺24.038
+- Fiyat: ₺23.927
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-008-2632/
 
 ### Belgin Kuyumculuk 1 gr 3 Adet 995 24 Ayar Külçe Altın
 - ID: 2633
 - Referans: BLG-KUL-009
-- Fiyat: ₺24.075
+- Fiyat: ₺23.993
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-009-2633/
 
 ### Belgin Kuyumculuk 24 Ayar 3 Adet 1 gr 995 Külçe Altın
 - ID: 2634
 - Referans: BLG-KUL-010
-- Fiyat: ₺24.038
+- Fiyat: ₺23.927
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-010-2634/
 
 ### Belgin Kuyumculuk 5 gr 995 24 Ayar Külçe Altın
 - ID: 2635
 - Referans: BLG-KUL-011
-- Fiyat: ₺20.056
+- Fiyat: ₺39.627
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-011-2635/
 
 ### Belgin Kuyumculuk 24 Ayar 5 Adet 1 gr 995 Külçe Altın
 - ID: 2636
 - Referans: BLG-KUL-012
-- Fiyat: ₺39.890
+- Fiyat: ₺39.706
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-012-2636/
 
 ### Belgin Kuyumculuk 24 Ayar 5 gr 995 Külçe Altın
 - ID: 2637
 - Referans: BLG-KUL-013
-- Fiyat: ₺39.947
+- Fiyat: ₺39.764
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-013-2637/
 
 ### Belgin Kuyumculuk 5 gr 995 24 Ayar Külçe Altın
 - ID: 2638
 - Referans: BLG-KUL-014
-- Fiyat: ₺20.056
+- Fiyat: ₺39.627
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-014-2638/
 
 ### Belgin Kuyumculuk 1 gr 5 Adet 995 24 Ayar Külçe Altın
 - ID: 2639
 - Referans: BLG-KUL-015
-- Fiyat: ₺39.953
+- Fiyat: ₺39.814
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-015-2639/
 
 ### Belgin Kuyumculuk 24 Ayar 5 Adet 1 gr 995 Külçe Altın
 - ID: 2640
 - Referans: BLG-KUL-016
-- Fiyat: ₺39.890
+- Fiyat: ₺39.706
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-016-2640/
 
 ### Belgin Kuyumculuk 1 gr 6 Adet 995 24 Ayar Külçe Altın
 - ID: 2641
 - Referans: BLG-KUL-017
-- Fiyat: ₺47.888
+- Fiyat: ₺47.725
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-017-2641/
 
 ### Belgin Kuyumculuk 24 Ayar 6 Adet 1 gr 995 Külçe Altın
 - ID: 2642
 - Referans: BLG-KUL-018
-- Fiyat: ₺47.980
+- Fiyat: ₺47.759
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-018-2642/
 
 ### Belgin Kuyumculuk 10 gr 995 24 Ayar Külçe Altın
 - ID: 2643
 - Referans: BLG-KUL-019
-- Fiyat: ₺79.365
+- Fiyat: ₺78.995
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-019-2643/
 
 ### Belgin Kuyumculuk 24 Ayar 10 Adet 1 gr 995 Külçe Altın
 - ID: 2644
 - Referans: BLG-KUL-020
-- Fiyat: ₺79.519
+- Fiyat: ₺79.152
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-020-2644/
 
 ### Belgin Kuyumculuk 24 Ayar 10 gr 995 Külçe Altın
 - ID: 2645
 - Referans: BLG-KUL-021
-- Fiyat: ₺79.635
+- Fiyat: ₺79.268
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-021-2645/
 
 ### Belgin Kuyumculuk 10 gr 995 24 Ayar Külçe Altın
 - ID: 2646
 - Referans: BLG-KUL-022
-- Fiyat: ₺79.365
+- Fiyat: ₺78.995
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-022-2646/
 
 ### Belgin Kuyumculuk 1 gr 10 Adet 995 24 Ayar Külçe Altın
 - ID: 2647
 - Referans: BLG-KUL-023
-- Fiyat: ₺79.640
+- Fiyat: ₺79.367
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-023-2647/
 
 ### Belgin Kuyumculuk 24 Ayar 10 Adet 1 gr 995 Külçe Altın
 - ID: 2648
 - Referans: BLG-KUL-024
-- Fiyat: ₺79.519
+- Fiyat: ₺79.152
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-024-2648/
 
@@ -11632,98 +11632,98 @@ Birincil kaynak her ürünün canonical HTML sayfasıdır.
 ### Belgin Kuyumculuk 24 Ayar 3 Adet 5 gr 995 Külçe Altın
 - ID: 2650
 - Referans: BLG-KUL-026
-- Fiyat: ₺119.559
+- Fiyat: ₺119.008
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-026-2650/
 
 ### Belgin Kuyumculuk 20 gr 995 24 Ayar Külçe Altın
 - ID: 2651
 - Referans: BLG-KUL-027
-- Fiyat: ₺158.470
+- Fiyat: ₺157.729
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-027-2651/
 
 ### Belgin Kuyumculuk 24 Ayar 20 gr 995 Külçe Altın
 - ID: 2652
 - Referans: BLG-KUL-028
-- Fiyat: ₺159.009
+- Fiyat: ₺158.274
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-028-2652/
 
 ### Belgin Kuyumculuk 20 gr 995 24 Ayar Külçe Altın
 - ID: 2653
 - Referans: BLG-KUL-029
-- Fiyat: ₺158.470
+- Fiyat: ₺157.729
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-029-2653/
 
 ### Belgin Kuyumculuk 1 gr 20 Adet 995 24 Ayar Külçe Altın
 - ID: 2654
 - Referans: BLG-KUL-030
-- Fiyat: ₺158.999
+- Fiyat: ₺158.442
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-030-2654/
 
 ### Belgin Kuyumculuk 1 gr 30 Adet 995 24 Ayar Külçe Altın
 - ID: 2655
 - Referans: BLG-KUL-031
-- Fiyat: ₺238.369
+- Fiyat: ₺237.533
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-031-2655/
 
 ### Belgin Kuyumculuk 50 gr 995 24 Ayar Külçe Altın
 - ID: 2656
 - Referans: BLG-KUL-032
-- Fiyat: ₺395.389
+- Fiyat: ₺393.539
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-032-2656/
 
 ### Belgin Kuyumculuk 24 Ayar 50 gr 995 Külçe Altın
 - ID: 2657
 - Referans: BLG-KUL-033
-- Fiyat: ₺396.337
+- Fiyat: ₺394.504
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-033-2657/
 
 ### Belgin Kuyumculuk 50 gr 995 24 Ayar Külçe Altın
 - ID: 2658
 - Referans: BLG-KUL-034
-- Fiyat: ₺395.389
+- Fiyat: ₺393.539
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-034-2658/
 
 ### Belgin Kuyumculuk 1 gr 50 Adet 995 24 Ayar Külçe Altın
 - ID: 2659
 - Referans: BLG-KUL-035
-- Fiyat: ₺397.108
+- Fiyat: ₺395.715
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-035-2659/
 
 ### Belgin Kuyumculuk 100 gr 995 24 Ayar Külçe Altın
 - ID: 2660
 - Referans: BLG-KUL-036
-- Fiyat: ₺790.518
+- Fiyat: ₺786.819
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-036-2660/
 
 ### Belgin Kuyumculuk 24 Ayar 100 gr 995 Külçe Altın
 - ID: 2661
 - Referans: BLG-KUL-037
-- Fiyat: ₺792.414
+- Fiyat: ₺788.747
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-037-2661/
 
 ### Belgin Kuyumculuk 100 gr 995 24 Ayar Külçe Altın
 - ID: 2662
 - Referans: BLG-KUL-038
-- Fiyat: ₺790.518
+- Fiyat: ₺786.819
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-038-2662/
 
 ### Belgin Kuyumculuk 1 kg 995 24 ayar Külçe Altın
 - ID: 2663
 - Referans: BLG-KUL-039
-- Fiyat: ₺8.083.400
+- Fiyat: ₺8.055.522
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-kul-039-2663/
 
@@ -11751,560 +11751,560 @@ Birincil kaynak her ürünün canonical HTML sayfasıdır.
 ### Belgin Kuyumculuk Eski Kulplu Ziynet Çeyrek Altın
 - ID: 2667
 - Referans: BLG-ZYN-043
-- Fiyat: ₺12.982
+- Fiyat: ₺12.938
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-043-2667/
 
 ### Belgin Kuyumculuk Yeni Kulplu Ziynet Çeyrek Altın
 - ID: 2668
 - Referans: BLG-ZYN-044
-- Fiyat: ₺13.211
+- Fiyat: ₺13.166
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-044-2668/
 
 ### Belgin Kuyumculuk Eski Ata Çeyrek Altın
 - ID: 2669
 - Referans: BLG-ZYN-045
-- Fiyat: ₺13.529
+- Fiyat: ₺13.457
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-045-2669/
 
 ### Belgin Kuyumculuk Eski Kulplu Ziynet Yarım Altın
 - ID: 2670
 - Referans: BLG-ZYN-046
-- Fiyat: ₺25.649
+- Fiyat: ₺25.562
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-046-2670/
 
 ### Belgin Kuyumculuk Eski Kulplu Ziynet Çeyrek Altın 2 Adet
 - ID: 2671
 - Referans: BLG-ZYN-047
-- Fiyat: ₺12.982
+- Fiyat: ₺25.617
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-047-2671/
 
 ### Belgin Kuyumculuk Yeni Kulplu Ziynet Yarım Altın
 - ID: 2672
 - Referans: BLG-ZYN-048
-- Fiyat: ₺26.133
+- Fiyat: ₺26.045
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-048-2672/
 
 ### Belgin Kuyumculuk Yeni Kulplu Ziynet Çeyrek Altın 2 Adet
 - ID: 2673
 - Referans: BLG-ZYN-049
-- Fiyat: ₺13.211
+- Fiyat: ₺26.073
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-049-2673/
 
 ### Belgin Kuyumculuk 22 Ayar Yarım Altınlı Kırmızı İpli Bileklik
 - ID: 2674
 - Referans: BLG-ZYN-050
-- Fiyat: ₺26.542
+- Fiyat: ₺26.421
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-050-2674/
 
 ### Belgin Kuyumculuk 22 Ayar Yarım Altınlı Beyaz İpli Bileklik
 - ID: 2675
 - Referans: BLG-ZYN-051
-- Fiyat: ₺26.542
+- Fiyat: ₺26.421
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-051-2675/
 
 ### Belgin Kuyumculuk 22 Ayar Yarım Altınlı Siyah İpli Bileklik
 - ID: 2676
 - Referans: BLG-ZYN-052
-- Fiyat: ₺26.542
+- Fiyat: ₺26.421
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-052-2676/
 
 ### Belgin Kuyumculuk 22 Ayar Yarım Altın Siyah İpli Kolye
 - ID: 2677
 - Referans: BLG-ZYN-053
-- Fiyat: ₺26.542
+- Fiyat: ₺26.421
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-053-2677/
 
 ### Belgin Kuyumculuk Eski Ata Yarım Altın
 - ID: 2678
 - Referans: BLG-ZYN-054
-- Fiyat: ₺26.797
+- Fiyat: ₺26.652
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-054-2678/
 
 ### Belgin Kuyumculuk Eski Kulplu Ziynet Çeyrek Altın 3 Adet
 - ID: 2679
 - Referans: BLG-ZYN-055
-- Fiyat: ₺12.982
+- Fiyat: ₺38.296
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-055-2679/
 
 ### Belgin Kuyumculuk Yeni Kulplu Ziynet Çeyrek Altın 3 Adet
 - ID: 2680
 - Referans: BLG-ZYN-056
-- Fiyat: ₺13.211
+- Fiyat: ₺38.978
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-056-2680/
 
 ### Belgin Kuyumculuk Eski Kulplu Ziynet Tam Altın
 - ID: 2681
 - Referans: BLG-ZYN-057
-- Fiyat: ₺51.067
+- Fiyat: ₺50.891
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-057-2681/
 
 ### Belgin Kuyumculuk Yeni Tarihli Ziynet Tam Altın
 - ID: 2682
 - Referans: BLG-ZYN-058
-- Fiyat: ₺51.786
+- Fiyat: ₺51.609
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-058-2682/
 
 ### Belgin Kuyumculuk 22 Ayar Tam Altınlı Siyah İpli Bileklik
 - ID: 2683
 - Referans: BLG-ZYN-059
-- Fiyat: ₺52.597
+- Fiyat: ₺52.354
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-059-2683/
 
 ### Belgin Kuyumculuk 22 Ayar Tam Altın Siyah İpli Kolye
 - ID: 2684
 - Referans: BLG-ZYN-060
-- Fiyat: ₺52.597
+- Fiyat: ₺52.354
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-060-2684/
 
 ### Belgin Kuyumculuk Eski 2 Adet Yarım Altın
 - ID: 2685
 - Referans: BLG-ZYN-061
-- Fiyat: ₺52.602
+- Fiyat: ₺52.415
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-061-2685/
 
 ### Belgin Kuyumculuk Eski Ata Tam Altın
 - ID: 2686
 - Referans: BLG-ZYN-062
-- Fiyat: ₺52.649
+- Fiyat: ₺52.367
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-062-2686/
 
 ### Belgin Kuyumculuk Ata Tam Yeni
 - ID: 2687
 - Referans: BLG-ZYN-063
-- Fiyat: ₺53.279
+- Fiyat: ₺52.992
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-063-2687/
 
 ### Belgin Kuyumculuk Yeni 2 Adet Yarım Altın
 - ID: 2688
 - Referans: BLG-ZYN-064
-- Fiyat: ₺53.601
+- Fiyat: ₺53.410
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-064-2688/
 
 ### Belgin Kuyumculuk Reşat Altın
 - ID: 2689
 - Referans: BLG-ZYN-065
-- Fiyat: ₺54.224
+- Fiyat: ₺53.933
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-065-2689/
 
 ### Belgin Kuyumculuk 22 Ayar Reşat Altın Siyah İpli Kolye
 - ID: 2690
 - Referans: BLG-ZYN-066
-- Fiyat: ₺54.224
+- Fiyat: ₺54.591
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-066-2690/
 
 ### Belgin Kuyumculuk Eski Kulplu Ziynet Çeyrek Altın 5 Adet
 - ID: 2691
 - Referans: BLG-ZYN-067
-- Fiyat: ₺12.982
+- Fiyat: ₺63.653
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-067-2691/
 
 ### Belgin Kuyumculuk Yeni Kulplu Ziynet Çeyrek Altın 5 Adet
 - ID: 2692
 - Referans: BLG-ZYN-068
-- Fiyat: ₺13.211
+- Fiyat: ₺64.791
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-068-2692/
 
 ### Belgin Kuyumculuk Eski Kulplu Ziynet Çeyrek Altın 6 Adet
 - ID: 2693
 - Referans: BLG-ZYN-069
-- Fiyat: ₺12.982
+- Fiyat: ₺76.332
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-069-2693/
 
 ### Belgin Kuyumculuk Yeni Kulplu Ziynet Çeyrek Altın 6 Adet
 - ID: 2694
 - Referans: BLG-ZYN-070
-- Fiyat: ₺13.211
+- Fiyat: ₺77.697
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-070-2694/
 
 ### Belgin Kuyumculuk Eski 3 Adet Yarım Altın
 - ID: 2695
 - Referans: BLG-ZYN-071
-- Fiyat: ₺78.773
+- Fiyat: ₺78.493
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-071-2695/
 
 ### Belgin Kuyumculuk Yeni 3 Adet Yarım Altın
 - ID: 2696
 - Referans: BLG-ZYN-072
-- Fiyat: ₺80.271
+- Fiyat: ₺79.985
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-072-2696/
 
 ### Belgin Kuyumculuk Eski 2 Adet Tam Altın
 - ID: 2697
 - Referans: BLG-ZYN-073
-- Fiyat: ₺101.866
+- Fiyat: ₺101.502
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-073-2697/
 
 ### Belgin Kuyumculuk Yeni 2 Adet Tam Altın
 - ID: 2698
 - Referans: BLG-ZYN-074
-- Fiyat: ₺103.305
+- Fiyat: ₺102.937
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-074-2698/
 
 ### Belgin Kuyumculuk Eski 2 Adet Ata Tam Altın
 - ID: 2699
 - Referans: BLG-ZYN-075
-- Fiyat: ₺105.265
+- Fiyat: ₺104.683
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-075-2699/
 
 ### Belgin Kuyumculuk Yeni 2 Adet Ata Tam Altın
 - ID: 2700
 - Referans: BLG-ZYN-076
-- Fiyat: ₺106.294
+- Fiyat: ₺105.708
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-076-2700/
 
 ### Belgin Kuyumculuk Eski Kulplu Ziynet Çeyrek Altın 10 Adet
 - ID: 2701
 - Referans: BLG-ZYN-077
-- Fiyat: ₺12.982
+- Fiyat: ₺127.046
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-077-2701/
 
 ### Belgin Kuyumculuk Ziynet 2.5 luk Gremse Altın Eski Kulplu
 - ID: 2702
 - Referans: BLG-ZYN-078
-- Fiyat: ₺128.028
+- Fiyat: ₺127.331
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-078-2702/
 
 ### Belgin Kuyumculuk Ziynet 2.5 luk Gremse Altın Yeni Kulplu
 - ID: 2703
 - Referans: BLG-ZYN-079
-- Fiyat: ₺129.348
+- Fiyat: ₺128.645
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-079-2703/
 
 ### Belgin Kuyumculuk Yeni Kulplu Ziynet Çeyrek Altın 10 Adet
 - ID: 2704
 - Referans: BLG-ZYN-080
-- Fiyat: ₺13.211
+- Fiyat: ₺129.322
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-080-2704/
 
 ### Belgin Kuyumculuk Eski 5 Adet Yarım Altın
 - ID: 2705
 - Referans: BLG-ZYN-081
-- Fiyat: ₺131.116
+- Fiyat: ₺130.647
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-081-2705/
 
 ### Belgin Kuyumculuk Ata 2.5 luk Gremse Altın Eski
 - ID: 2706
 - Referans: BLG-ZYN-082
-- Fiyat: ₺132.098
+- Fiyat: ₺131.380
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-082-2706/
 
 ### Belgin Kuyumculuk Yeni 5 Adet Yarım Altın
 - ID: 2707
 - Referans: BLG-ZYN-083
-- Fiyat: ₺133.613
+- Fiyat: ₺133.136
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-083-2707/
 
 ### Belgin Kuyumculuk Eski 3 Adet Tam Altın
 - ID: 2708
 - Referans: BLG-ZYN-084
-- Fiyat: ₺152.669
+- Fiyat: ₺152.124
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-084-2708/
 
 ### Belgin Kuyumculuk Yeni 3 Adet Tam Altın
 - ID: 2709
 - Referans: BLG-ZYN-085
-- Fiyat: ₺154.829
+- Fiyat: ₺154.275
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-085-2709/
 
 ### Belgin Kuyumculuk 22 Ayar 3 Tam Altın Siyah İpli Kolye
 - ID: 2710
 - Referans: BLG-ZYN-086
-- Fiyat: ₺157.261
+- Fiyat: ₺156.534
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-086-2710/
 
 ### Belgin Kuyumculuk Eski 3 Adet Ata Tam Altın
 - ID: 2711
 - Referans: BLG-ZYN-087
-- Fiyat: ₺157.767
+- Fiyat: ₺156.895
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-087-2711/
 
 ### Belgin Kuyumculuk Yeni 3 Adet Ata Tam Altın
 - ID: 2712
 - Referans: BLG-ZYN-088
-- Fiyat: ₺159.310
+- Fiyat: ₺158.430
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-088-2712/
 
 ### Belgin Kuyumculuk Eski 5 Adet Tam Altın
 - ID: 2713
 - Referans: BLG-ZYN-089
-- Fiyat: ₺254.275
+- Fiyat: ₺253.366
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-089-2713/
 
 ### Belgin Kuyumculuk Ziynet Beşli Altın Eski Kulplu
 - ID: 2714
 - Referans: BLG-ZYN-090
-- Fiyat: ₺255.794
+- Fiyat: ₺254.402
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-090-2714/
 
 ### Belgin Kuyumculuk Yeni 5 Adet Tam Altın
 - ID: 2715
 - Referans: BLG-ZYN-091
-- Fiyat: ₺257.875
+- Fiyat: ₺256.953
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-091-2715/
 
 ### Belgin Kuyumculuk Ziynet Beşli Altın Yeni
 - ID: 2716
 - Referans: BLG-ZYN-092
-- Fiyat: ₺258.435
+- Fiyat: ₺257.030
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-092-2716/
 
 ### Belgin Kuyumculuk 22 Ayar 5 Tam Altın Siyah İpli Kolye
 - ID: 2717
 - Referans: BLG-ZYN-093
-- Fiyat: ₺261.926
+- Fiyat: ₺260.714
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-093-2717/
 
 ### Belgin Kuyumculuk Eski 10 Adet Yarım Altın
 - ID: 2718
 - Referans: BLG-ZYN-094
-- Fiyat: ₺261.971
+- Fiyat: ₺261.034
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-094-2718/
 
 ### Belgin Kuyumculuk Eski 20 Adet Çeyrek Altın
 - ID: 2719
 - Referans: BLG-ZYN-095
-- Fiyat: ₺262.542
+- Fiyat: ₺261.603
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-095-2719/
 
 ### Belgin Kuyumculuk Eski 5 Adet Ata Tam Altın
 - ID: 2720
 - Referans: BLG-ZYN-096
-- Fiyat: ₺262.770
+- Fiyat: ₺261.319
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-096-2720/
 
 ### Belgin Kuyumculuk Ata Beşli Altın Eski
 - ID: 2721
 - Referans: BLG-ZYN-097
-- Fiyat: ₺263.936
+- Fiyat: ₺262.500
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-097-2721/
 
 ### Belgin Kuyumculuk Yeni 5 Adet Ata Tam Altın
 - ID: 2722
 - Referans: BLG-ZYN-098
-- Fiyat: ₺265.344
+- Fiyat: ₺263.878
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-098-2722/
 
 ### Belgin Kuyumculuk Ata Beşli Altın Yeni
 - ID: 2723
 - Referans: BLG-ZYN-099
-- Fiyat: ₺265.652
+- Fiyat: ₺264.207
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-099-2723/
 
 ### Belgin Kuyumculuk Yeni 10 Adet Yarım Altın
 - ID: 2724
 - Referans: BLG-ZYN-100
-- Fiyat: ₺266.966
+- Fiyat: ₺266.011
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-100-2724/
 
 ### Belgin Kuyumculuk Yeni 20 Adet Çeyrek Altın
 - ID: 2725
 - Referans: BLG-ZYN-101
-- Fiyat: ₺267.250
+- Fiyat: ₺266.296
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-101-2725/
 
 ### Belgin Kuyumculuk Eski 10 Adet Tam Altın
 - ID: 2726
 - Referans: BLG-ZYN-102
-- Fiyat: ₺508.290
+- Fiyat: ₺506.473
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-102-2726/
 
 ### Belgin Kuyumculuk Yeni 10 Adet Tam Altın
 - ID: 2727
 - Referans: BLG-ZYN-103
-- Fiyat: ₺515.489
+- Fiyat: ₺513.645
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-103-2727/
 
 ### Belgin Kuyumculuk Eski 10 Adet Ata Tam Altın
 - ID: 2728
 - Referans: BLG-ZYN-104
-- Fiyat: ₺525.280
+- Fiyat: ₺522.377
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-104-2728/
 
 ### Belgin Kuyumculuk Yeni 10 Adet Ata Tam Altın
 - ID: 2729
 - Referans: BLG-ZYN-105
-- Fiyat: ₺530.427
+- Fiyat: ₺527.496
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-105-2729/
 
 ### Belgin Kuyumculuk Eski 50 Adet Çeyrek Altın
 - ID: 2730
 - Referans: BLG-ZYN-106
-- Fiyat: ₺655.963
+- Fiyat: ₺653.618
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-106-2730/
 
 ### Belgin Kuyumculuk 14 Ayar 5 Gram Ajda Altın Bilezik
 - ID: 2731
 - Referans: BLG-BLZ-107
-- Fiyat: ₺28.443
+- Fiyat: ₺28.313
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-107-2731/
 
 ### Belgin Kuyumculuk 14 Ayar 5 Gram Kibrit Çöpü Ajda Altın Bilezik
 - ID: 2732
 - Referans: BLG-BLZ-108
-- Fiyat: ₺28.443
+- Fiyat: ₺28.313
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-108-2732/
 
 ### Belgin Kuyumculuk 14 Ayar 5 Gram Kalemli Ajda Altın Bilezik
 - ID: 2733
 - Referans: BLG-BLZ-109
-- Fiyat: ₺28.443
+- Fiyat: ₺28.313
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-109-2733/
 
 ### Belgin Kuyumculuk 5 Gram 22 Ayar Ajda Altın Bilezik
 - ID: 2734
 - Referans: BLG-BLZ-110
-- Fiyat: ₺38.022
+- Fiyat: ₺37.845
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-110-2734/
 
 ### Belgin Kuyumculuk 14 Ayar 7 Gram Şarnel Altın Bilezik
 - ID: 2735
 - Referans: BLG-BLZ-111
-- Fiyat: ₺40.239
+- Fiyat: ₺40.051
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-111-2735/
 
 ### Belgin Kuyumculuk 7 Gram 22 Ayar Ajda Altın Bilezik
 - ID: 2736
 - Referans: BLG-BLZ-112
-- Fiyat: ₺52.096
+- Fiyat: ₺51.853
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-112-2736/
 
 ### Belgin Kuyumculuk 14 Ayar 10 Gram Ajda Altın Bilezik
 - ID: 2737
 - Referans: BLG-BLZ-113
-- Fiyat: ₺55.502
+- Fiyat: ₺55.246
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-113-2737/
 
 ### Belgin Kuyumculuk 14 Ayar 10 Gram Kibrit Çöpü Ajda Altın Bilezik
 - ID: 2738
 - Referans: BLG-BLZ-114
-- Fiyat: ₺55.502
+- Fiyat: ₺55.246
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-114-2738/
 
 ### Belgin Kuyumculuk 14 Ayar 10 Gram Kalemli Ajda Altın Bilezik
 - ID: 2739
 - Referans: BLG-BLZ-115
-- Fiyat: ₺55.502
+- Fiyat: ₺55.243
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-115-2739/
 
 ### Belgin Kuyumculuk 14 Ayar 10 Gram Dalgalı Şarnel Altın Bilezik
 - ID: 2740
 - Referans: BLG-BLZ-116
-- Fiyat: ₺57.118
+- Fiyat: ₺56.850
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-116-2740/
 
 ### Belgin Kuyumculuk 10 gr 22 Ayar Burma Altın Bilezik
 - ID: 2741
 - Referans: BLG-BLZ-117
-- Fiyat: ₺73.992
+- Fiyat: ₺73.647
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-117-2741/
 
 ### Belgin Kuyumculuk 10 Gram 22 Ayar Ajda Altın Bilezik
 - ID: 2742
 - Referans: BLG-BLZ-118
-- Fiyat: ₺73.920
+- Fiyat: ₺73.666
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-118-2742/
 
 ### Belgin Kuyumculuk Müjde Kristal 10 gr 22 Ayar Altın Bilezik
 - ID: 2743
 - Referans: BLG-BLZ-119
-- Fiyat: ₺73.920
+- Fiyat: ₺73.666
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-119-2743/
 
 ### Belgin Kuyumculuk Ajda Zik-Zak 10 gr 22 Ayar Altın Bilezik
 - ID: 2744
 - Referans: BLG-BLZ-120
-- Fiyat: ₺73.920
+- Fiyat: ₺73.666
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-120-2744/
 
 ### Belgin Kuyumculuk Ajda Kibrit Çöpü Ray 10 gr 22 Ayar Altın Bilezik
 - ID: 2745
 - Referans: BLG-BLZ-121
-- Fiyat: ₺74.159
+- Fiyat: ₺73.904
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-121-2745/
 
 ### Belgin Kuyumculuk 20 Gram 22 Ayar Ajda Altın Bilezik
 - ID: 2746
 - Referans: BLG-BLZ-122
-- Fiyat: ₺147.005
+- Fiyat: ₺146.319
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-122-2746/
 
@@ -12318,7 +12318,7 @@ Birincil kaynak her ürünün canonical HTML sayfasıdır.
 ### Belgin Kuyumculuk 20 gr 22 Ayar Burma Altın Bilezik
 - ID: 2748
 - Referans: BLG-BLZ-124
-- Fiyat: ₺147.127
+- Fiyat: ₺146.622
 - Stok: Var
 - URL: https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-124-2748/
 

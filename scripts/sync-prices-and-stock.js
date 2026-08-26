@@ -87,6 +87,18 @@ function parseAgaKulchePage(html) {
   return products;
 }
 
+function normalizeName(s) {
+  return (s || '')
+    .toLowerCase()
+    .replace(/ç/g, 'c')
+    .replace(/ğ/g, 'g')
+    .replace(/ı/g, 'i')
+    .replace(/ö/g, 'o')
+    .replace(/ş/g, 's')
+    .replace(/ü/g, 'u')
+    .replace(/[^a-z0-9]/g, '');
+}
+
 async function syncAll() {
   console.log(`[SYNC-ENGINE] Canlı Fiyat & Stok Senkronizasyonu Başlatıldı: ${new Date().toISOString()}`);
   
@@ -122,53 +134,43 @@ async function syncAll() {
 
   // Mevcut data.js yükle
   const dataJsPath = path.join(__dirname, '../js/data.js');
-  const { PRODUCTS } = require(dataJsPath);
+  const currentDataRaw = fs.readFileSync(dataJsPath, 'utf8');
+  const { PRODUCTS, WATCH_BRANDS, JEWELRY_BRANDS, CERTIFICATE_DB } = require(dataJsPath);
   let updatedCount = 0;
 
-  // Altın ürünlerini güncelle ve +%5 marj uygula
+  // Altın ürünlerini tam eşleşme ile güncelle ve +%5 marj uygula
   for (const p of PRODUCTS) {
     if (p.isPreOwned || (p.category !== 'jewelry' && p.category !== 'jewellery' && !p.isGold)) continue;
 
-    // Eşleşen canlı ürün bul
-    const match = scrapedItems.find(item => {
-      const cleanScraped = item.cleanName.toLowerCase().replace(/\s+/g, '');
-      const cleanBelgin = p.name.toLowerCase().replace(/\s+/g, '');
-      return cleanScraped === cleanBelgin || cleanBelgin.includes(cleanScraped) || cleanScraped.includes(cleanBelgin);
-    });
+    // Tam normalize isim eşleşmesi (1 Adet, 2 Adet, 6 Adet vb. karışmasını engeller)
+    const normBelgin = normalizeName(p.name);
+    const match = scrapedItems.find(item => normalizeName(item.cleanName) === normBelgin);
 
     if (match && match.sourcePrice > 0) {
       const newPriceWithMargin = Math.round(match.sourcePrice * GOLD_MARGIN);
       if (p.price !== newPriceWithMargin) {
+        console.log(`  -> Fiyat Güncellendi: [${p.reference}] ${p.name} : ${p.price} TL => ${newPriceWithMargin} TL`);
         p.price = newPriceWithMargin;
         updatedCount++;
       }
       p.inStock = match.inStock;
       p.statusBadge = match.inStock ? 'Stokta' : 'Tükendi';
-    } else if (p.price && !p.hasCustomMargin) {
-      // Eğer doğrudan eşleşmediyse mevcut fiyata +%5 marjı uygula
-      p.price = Math.round(p.price * GOLD_MARGIN);
-      p.hasCustomMargin = true;
-      updatedCount++;
     }
   }
 
   console.log(`[SYNC-ENGINE] Güncellenen altın/mücevher ürün sayısı: ${updatedCount}`);
 
-  // js/data.js dosyasını serialize et ve kaydet
-  const headerContent = fs.existsSync(path.join(__dirname, '../scratch/clean_header.js'))
-    ? fs.readFileSync(path.join(__dirname, '../scratch/clean_header.js'), 'utf8')
-    : 'const WATCH_BRANDS = [];\nconst JEWELRY_BRANDS = [];\n';
-  
-  const footerContent = fs.existsSync(path.join(__dirname, '../scratch/clean_footer.js'))
-    ? fs.readFileSync(path.join(__dirname, '../scratch/clean_footer.js'), 'utf8')
-    : 'const PRE_OWNED_GOLD = PRODUCTS.filter(p => p.isPreOwned && p.isGold);\nif (typeof module !== "undefined" && module.exports) { module.exports = { PRODUCTS, WATCH_BRANDS, JEWELRY_BRANDS, WATCHES, JEWELLERY, PRE_OWNED_ITEMS, PRE_OWNED_GOLD, ALL_PRODUCTS: PRODUCTS }; }';
+  // js/data.js Header ve Footer'ını dinamik ayrıştır
+  const productsMatch = currentDataRaw.match(/const PRODUCTS = \[[\s\S]*?\n\];/);
+  if (!productsMatch) {
+    throw new Error('js/data.js içinde const PRODUCTS dizisi bulunamadı.');
+  }
 
-  const exportHeader = headerContent;
-  const exportBody = `const PRODUCTS = ${JSON.stringify(PRODUCTS, null, 2)};\n\n`;
-  const exportMiddle = `const WATCHES = PRODUCTS.filter(p => (p.category === 'saat' || p.category === 'watch') && !p.isPreOwned);\nconst JEWELLERY = PRODUCTS.filter(p => (p.category === 'jewelry' || p.category === 'jewellery') && !p.isPreOwned);\nconst PRE_OWNED_ITEMS = PRODUCTS.filter(p => p.isPreOwned === true);\n`;
-  const exportFooter = footerContent;
+  const headerPart = currentDataRaw.substring(0, productsMatch.index);
+  const footerPart = currentDataRaw.substring(productsMatch.index + productsMatch[0].length);
 
-  fs.writeFileSync(dataJsPath, exportHeader + exportBody + exportMiddle + exportFooter, 'utf8');
+  const updatedProductsBlock = `const PRODUCTS = ${JSON.stringify(PRODUCTS, null, 2)};`;
+  fs.writeFileSync(dataJsPath, headerPart + updatedProductsBlock + footerPart, 'utf8');
   console.log(`[SYNC-ENGINE] js/data.js başarıyla güncellendi.`);
 
   // Ödeme kataloğunu ve SEO varlıklarını güncelle
@@ -177,7 +179,7 @@ async function syncAll() {
   execSync('node scripts/generate-seo-assets.js', { stdio: 'inherit' });
   execSync('node scripts/verify-product-catalog.js', { stdio: 'inherit' });
 
-  console.log(`[SYNC-ENGINE] ✅ 5 Dakikalık Fiyat & Stok Senkronizasyonu Başarıyla Tamamlandı.`);
+  console.log(`[SYNC-ENGINE] ✅ Fiyat & Stok Senkronizasyonu Başarıyla Tamamlandı.`);
 }
 
 if (require.main === module) {
