@@ -1,9 +1,9 @@
 {
   "schema": "belgin-legal-evidence-manifest-v3",
   "version": "2026-08-25-v3.1",
-  "generatedAt": "2026-08-26T14:35:07.393Z",
+  "generatedAt": "2026-08-26T16:39:23.670Z",
   "algorithm": "SHA-256",
-  "manifestRootSha256": "bbe1a1c6a1c16f4738b8cd256dcac810547cec595085288f8af278caebeefb46",
+  "manifestRootSha256": "36bc542460dc4004c9d05abe0d72fe70ac8fd73ad3b07075e47bc4b2216d77b7",
   "externalTimestampModel": "OpenTimestamps/Bitcoin auxiliary proof",
   "legalNotice": "SHA-256 ve OpenTimestamps kayıtları teknik belge bütünlüğü ve zaman ispatı katmanıdır; tek başına 5070 sayılı Kanun kapsamında nitelikli elektronik imza veya ESHS zaman damgası olarak sunulmaz.",
   "documents": {
@@ -32,8 +32,8 @@
       "code": "15",
       "version": "15_v2.1 (25.08.2026)",
       "title": "Güvenli Ödeme ve 3D Secure",
-      "sha256": "9d8227d5ddf96ef580f54a4c2abe746180bb3317dec014d5ffc24f593ba21179",
-      "bytes": 30500
+      "sha256": "df18943a83033517c388cfb2b7cd89696c3a04723ae9e1e7f5dd3cfd32323731",
+      "bytes": 31544
     },
     "hukuki-delil-ve-kayit-politikasi.html": {
       "code": "16",
