@@ -24,7 +24,7 @@
 - [İptal, İade ve Cayma Politikası (07) | Belgin Kuyumculuk](https://www.belginkuyumculuk.com/iade-degisim-cayma.html) — Altın, mücevherat ve lüks saat ürünlerinde cayma hakkı kanuni istisnaları, ayıplı mal yönetimi ve iade-değişim prosedürü.
 - [Güvenli Ödeme ve 3D Secure Politikası (08) | Belgin Kuyumculuk](https://www.belginkuyumculuk.com/guvenli-odeme-ve-3d-secure.html) — PayTR 256-Bit SSL sertifikası, 3D Secure SMS doğrulaması, kart güvenliği ve taksitlendirme esasları.
 
-## 4. Canlı Ürün Koleksiyonu (1636 Doğrulanmış Ürün)
+## 4. Canlı Ürün Koleksiyonu (1776 Doğrulanmış Ürün)
 - **Versace VRSCVE6K00523 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺98.980 | Ref: VRSCVE6K00523 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1000
 - **Versace VRSCVE6K00423 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺134.400 | Ref: VRSCVE6K00423 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1001
 - **Versace VRSCVE6K00123 Erkek Kol Saati** | Kategori: saat | Fiyat: ₺76.020 | Ref: VRSCVE6K00123 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1002
@@ -126,4 +126,4 @@
 - **Versace VRSCVEHU00420 Kadın Kol Saati** | Kategori: saat | Fiyat: ₺91.700 | Ref: VRSCVEHU00420 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1098
 - **Versace VRSCVEVK00620 Kol Saati** | Kategori: saat | Fiyat: ₺91.700 | Ref: VRSCVEVK00620 | Metal: Çelik | Bağlantı: https://www.belginkuyumculuk.com/#urun-1099
 
-*(Tam 1636 ürünlük katalog için llms-full.txt dosyasını inceleyiniz).*
+*(Tam 1776 ürünlük katalog için llms-full.txt dosyasını inceleyiniz).*

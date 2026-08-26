@@ -382,18 +382,56 @@ const App = {
     }, 60);
   },
 
-  // 4. TÜM MÜCEVHERLER SAYFASI (Tüm ürünler İkinci El sayfasına taşındı)
-  renderJewellery() {
+  // 4. TÜM MÜCEVHERLER VE ALTIN SAYFASI
+  renderJewellery(filter = 'all') {
+    this.currentJewelleryCategory = filter;
     const el = document.getElementById('allJewelleryGrid');
-    if (el) {
+    if (!el) return;
+
+    let items = JEWELLERY;
+    if (filter === 'Külçe & Gram Altın' || filter === 'gold_bar') {
+      items = JEWELLERY.filter(p => p.subCategory === 'Külçe & Gram Altın' || p.name.includes('Külçe') || p.name.includes('Gram'));
+    } else if (filter === 'Ziynet & Sarrafiye' || filter === 'ziynet') {
+      items = JEWELLERY.filter(p => p.subCategory === 'Ziynet & Sarrafiye' || p.name.includes('Ziynet') || p.name.includes('Ata') || p.name.includes('Çeyrek') || p.name.includes('Yarım') || p.name.includes('Tam') || p.name.includes('Gremse'));
+    } else if (filter === 'Altın Bilezik' || filter === 'bracelet') {
+      items = JEWELLERY.filter(p => p.subCategory === 'Altın Bilezik' || p.name.includes('Bilezik'));
+    } else if (filter === 'design' || filter === 'Tasarım Mücevher') {
+      items = JEWELLERY.filter(p => p.brand === 'Cartier' || p.category === 'jewelry' && !p.subCategory);
+    }
+
+    if (items.length === 0) {
       el.innerHTML = `
-        <div class="empty-category-notice" style="grid-column: 1 / -1; text-align: center; padding: 60px 24px; background: #fafafa; border: 1px solid #e5e5e5; border-radius: 12px; margin: 20px 0;">
-          <div style="font-size: 36px; margin-bottom: 12px;">💎</div>
-          <h3 style="font-family: 'Playfair Display', serif; font-size: 22px; color: var(--color-ink); margin-bottom: 8px;">Tüm Mücevherlerimiz İkinci El Koleksiyonumuzda</h3>
-          <p style="color: var(--color-muted); max-width: 480px; margin: 0 auto 20px; font-size: 14px; line-height: 1.6;">24 parçalık Cartier Juste un Clou altın ve pırlantalı mücevher koleksiyonumuzun tamamı İkinci El vitrinimize taşınmıştır.</p>
-          <a href="#" data-page="ikinci-el" onclick="setTimeout(() => { const btn = document.querySelectorAll('.preowned-filter-btn')[1]; if (btn) App.filterPreOwnedCategory('jewelry', btn); }, 100)" class="btn-action-vip" style="display: inline-flex; padding: 12px 28px;">İkinci El Mücevherleri İncele (24 Parça) →</a>
+        <div class="empty-category-notice" style="grid-column: 1 / -1; text-align: center; padding: 48px 24px; background: #fafafa; border: 1px solid #e5e5e5; border-radius: 12px; margin: 20px 0;">
+          <div style="font-size: 32px; margin-bottom: 8px;">✨</div>
+          <h3 style="font-family: 'Playfair Display', serif; font-size: 20px; color: var(--color-ink); margin-bottom: 6px;">Seçilen kategoride ürün hazırlanıyor</h3>
+          <p style="color: var(--color-muted); font-size: 13.5px;">Showroom stoğumuzdaki diğer altın ve mücevherleri inceleyebilirsiniz.</p>
         </div>
       `;
+      return;
+    }
+
+    el.innerHTML = items.map(p => this.renderProductCard(p)).join('');
+
+    // Update filter tabs UI
+    document.querySelectorAll('.jewellery-filter-btn').forEach(b => {
+      b.classList.remove('active');
+      const attr = b.getAttribute('data-filter') || b.textContent.trim();
+      if ((filter === 'all' && (attr === 'all' || attr === 'Tümü')) || attr === filter) {
+        b.classList.add('active');
+      }
+    });
+  },
+
+  filterJewelleryCategory(cat = 'all', btn = null) {
+    this.currentJewelleryCategory = cat;
+    if (Router.currentPage !== 'mucevherat') {
+      Router.navigate('mucevherat', true, { filter: cat });
+    } else {
+      this.renderJewellery(cat);
+    }
+    if (btn) {
+      document.querySelectorAll('.jewellery-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
     }
   },
 

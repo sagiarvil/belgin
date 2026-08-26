@@ -825,8 +825,15 @@
     <div class="container-art section-art">
       <div class="section-header-flex">
         <div>
-          <h2>Tasarım Mücevher Koleksiyonu</h2>
-          <p style="color:var(--color-muted); font-size:13.5px; margin-top:4px;">Cartier, Van Cleef & Arpels, Tiffany & Co., Bvlgari parçaları</p>
+          <h2>Mücevherat, Altın & Sarrafiye Koleksiyonu</h2>
+          <p style="color:var(--color-muted); font-size:13.5px; margin-top:4px;">Gram & Külçe Altınlar, Ziynet & Ata Altınları, 22 Ayar & 14 Ayar Ajda Bilezikler ve Lüks Tasarım Mücevherler.</p>
+        </div>
+        <div class="jewellery-filter-tabs" style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+          <button class="hero-tab-btn jewellery-filter-btn active" data-filter="all" onclick="App.filterJewelleryCategory('all', this)">Tümü (143)</button>
+          <button class="hero-tab-btn jewellery-filter-btn" data-filter="Külçe & Gram Altın" onclick="App.filterJewelleryCategory('Külçe & Gram Altın', this)">Gram & Külçe Altın</button>
+          <button class="hero-tab-btn jewellery-filter-btn" data-filter="Ziynet & Sarrafiye" onclick="App.filterJewelleryCategory('Ziynet & Sarrafiye', this)">Ziynet & Ata Altın</button>
+          <button class="hero-tab-btn jewellery-filter-btn" data-filter="Altın Bilezik" onclick="App.filterJewelleryCategory('Altın Bilezik', this)">Altın Bilezikler</button>
+          <button class="hero-tab-btn jewellery-filter-btn" data-filter="design" onclick="App.filterJewelleryCategory('design', this)">Tasarım Mücevherat</button>
         </div>
       </div>
       <div class="products-grid-4" id="allJewelleryGrid"></div>
