@@ -24,10 +24,9 @@ class AkbankProvider {
 
   async createPayment(params, req) {
     const order = params?.order || params;
-    const testMode = params?.testMode === true || process.env.NODE_ENV === 'test' || process.env.AKBANK_TEST_MODE === '1' || Number(process.env.AKBANK_TEST_MODE) === 1;
-    if (!order || (!process.env.AKBANK_CLIENT_ID && !process.env.AKBANK_STORE_KEY && !testMode)) {
-      const error = new Error('PROVIDER_NOT_CONFIGURED: Akbank sanal POS entegrasyonu teknik doküman ve API kimlik bilgileri bekleniyor.');
-      error.code = 'PROVIDER_NOT_CONFIGURED';
+    if (!order) {
+      const error = new Error('Geçersiz sipariş.');
+      error.code = 'INVALID_ORDER';
       throw error;
     }
     const config = getAkbankConfig();
