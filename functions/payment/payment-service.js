@@ -418,6 +418,8 @@ class PaymentService {
       token: providerResult.token || null,
       iframeUrl: providerResult.iframeUrl || null,
       redirectUrl: providerResult.redirectUrl || null,
+      gatewayUrl: providerResult.gatewayUrl || null,
+      postParams: providerResult.postParams || null,
       paymentType: providerResult.paymentType || 'REDIRECT',
       merchant_oid,
       evidenceId,
