@@ -229,7 +229,7 @@
 
       <hr style="border:0; border-top:1px solid var(--card-border); margin:20px 0;">
 
-      <!-- 2. ALICI BİLGİLERİ -->
+      <!-- 2. ALICI & FATURA BİLGİLERİ -->
       <div class="form-row">
         <div class="form-group" style="margin-bottom:0;">
           <label class="form-label">Adınız Soyadınız *</label>
@@ -241,44 +241,28 @@
         </div>
       </div>
       <div class="form-group" style="margin-top:14px; margin-bottom:18px;">
-        <label class="form-label">T.C. Kimlik / Pasaport No *</label>
+        <label class="form-label">T.C. Kimlik / Pasaport No (Fatura & MASAK Güvencesi) *</label>
         <input type="text" id="custIdentity" class="form-input" required placeholder="T.C. Kimlik veya Pasaport Numarası" maxlength="20">
       </div>
 
-      <!-- 3. DOĞRUDAN AKBANK SANAL POS KART GİRİŞ FORMU -->
-      <div style="background:var(--input-bg); border:1.5px solid var(--input-border); border-radius:12px; padding:18px; margin-bottom:18px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; border-bottom:1px solid var(--card-border); padding-bottom:10px;">
-          <span style="font-size:13px; font-weight:700; color:var(--gold-light); display:flex; align-items:center; gap:6px;">
-            <span>💳</span> Kart Bilgileri
-          </span>
-          <span id="vipCardTypeBadge" style="font-size:11px; font-weight:800; background:rgba(212,175,55,0.15); color:var(--gold); border:1px solid rgba(212,175,55,0.3); padding:3px 8px; border-radius:4px;">KART</span>
+      <!-- 3. TESLİMAT VE BANKA GÜVENCE KARTI -->
+      <div style="background:var(--input-bg); border:1.5px solid var(--input-border); border-radius:12px; padding:16px; margin-bottom:18px;">
+        <div style="font-size:13px; font-weight:700; color:var(--gold-light); display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+          <span>🏛️</span> Buca Showroom Güvenli Teslimat & Banka Koruması
         </div>
+        <div style="font-size:12px; line-height:1.6; color:var(--text-muted);">
+          Ödemeniz <strong>Akbank Sanal POS (256-Bit EV SSL & 3D Secure 2.0)</strong> resmi banka ödeme sayfasında kart bilgisi girişi ve SMS şifresi doğrulamasıyla güvenle tamamlanacaktır.
+        </div>
+      </div>
 
-        <div class="form-group" style="margin-bottom:12px;">
-          <label class="form-label">Kart Üzerindeki İsim Soyisim *</label>
-          <input type="text" id="vipCcHolder" class="form-input" required placeholder="AD SOYAD" autocomplete="cc-name" oninput="this.value = this.value.toLocaleUpperCase('tr-TR')">
-        </div>
-
-        <div class="form-group" style="margin-bottom:12px;">
-          <label class="form-label">Kart Numarası *</label>
-          <input type="tel" id="vipCcNumber" class="form-input" required placeholder="0000 0000 0000 0000" maxlength="19" autocomplete="cc-number" oninput="formatVipCardNumber(this)" style="font-family:monospace; letter-spacing:1px; font-size:15px;">
-        </div>
-
-        <div class="form-row" style="margin-bottom:0;">
-          <div class="form-group" style="margin-bottom:0;">
-            <label class="form-label">Son Kullanma *</label>
-            <input type="tel" id="vipCcExpiry" class="form-input" required placeholder="AA / YY" maxlength="7" autocomplete="cc-exp" oninput="formatVipCardExpiry(this)">
-          </div>
-          <div class="form-group" style="margin-bottom:0;">
-            <label class="form-label">CVC / Güvenlik Kodu *</label>
-            <input type="tel" id="vipCcCvc" class="form-input" required placeholder="CVC" maxlength="4" autocomplete="cc-csc" oninput="formatVipCardCvv(this)">
-          </div>
-        </div>
+      <!-- 4. HUKUKİ ONAY VE SÖZLEŞME BİLGİLENDİRMESİ -->
+      <div style="font-size:11.5px; line-height:1.5; color:var(--text-muted); text-align:center; margin-bottom:14px; padding:0 4px;">
+        Ödeme adımına geçerek <a href="/mesafeli-satis-sozlesmesi.html" target="_blank" style="color:var(--gold); text-decoration:underline;">Mesafeli Satış Sözleşmesi</a>, <a href="/on-bilgilendirme-formu.html" target="_blank" style="color:var(--gold); text-decoration:underline;">Ön Bilgilendirme Formu</a> ve <a href="/kvkk.html" target="_blank" style="color:var(--gold); text-decoration:underline;">MASAK/KVKK Güvenlik Şartları</a>'nı onaylamış sayılırsınız.
       </div>
 
       <!-- BÜYÜK ALTIN ÖDEME BUTONU -->
       <button type="button" id="btnCompletePayment" class="btn-pay-giant" onclick="processVipPayment()">
-        <span>🔒</span> Akbank 3D Secure ile Güvenli Öde
+        <span>🔒</span> Akbank ile Güvenli Öde (3D Secure)
       </button>
 
       <!-- ÖDEME SAĞLAYICI LOGO BANTI (AKBANK SANAL POS & KART AĞLARI) -->
@@ -288,14 +272,6 @@
 
       <div class="security-badge-footer">
         <span>🛡️</span> Akbank Sanal POS (No: 12865794) · 256-Bit EV SSL · 3D Secure 2.0 · Tek Çekim
-      </div>
-
-      <!-- AKBANK 3D SECURE MODAL / IFRAME -->
-      <div id="paytr-container">
-        <div style="text-align:center; font-weight:700; color:#0A1412; margin-bottom:12px; font-size:13px; display:flex; align-items:center; justify-content:center; gap:6px;">
-          <span>🔒</span> Akbank 256-Bit SSL & 3D Secure Kart Ödeme Ekranı
-        </div>
-        <div id="paytr-iframe-wrapper"></div>
       </div>
 
       <!-- ARKA PLANDA ÇALIŞAN GİZLİ YASAL ONAY VE DELİL MOTORU -->
@@ -315,48 +291,6 @@
   <script src="/js/vip-payment.js?v=2.8.1"></script>
   <script>
     let currentPayload = null;
-
-    function formatVipCardNumber(input) {
-      if (!input) return;
-      let v = input.value.replace(/\D/g, '').slice(0, 16);
-      let formatted = v.replace(/(\d{4})(?=\d)/g, '$1 ');
-      input.value = formatted;
-
-      const badge = document.getElementById('vipCardTypeBadge');
-      if (!badge) return;
-      if (v.startsWith('4')) {
-        badge.textContent = 'VISA';
-        badge.style.color = '#1A1F71';
-        badge.style.background = '#E8ECF8';
-      } else if (v.startsWith('51') || v.startsWith('52') || v.startsWith('53') || v.startsWith('54') || v.startsWith('55') || (v >= '2221' && v <= '2720')) {
-        badge.textContent = 'MASTERCARD';
-        badge.style.color = '#EB001B';
-        badge.style.background = '#FDE8E9';
-      } else if (v.startsWith('9792')) {
-        badge.textContent = 'TROY';
-        badge.style.color = '#0083CA';
-        badge.style.background = '#E6F4FB';
-      } else {
-        badge.textContent = 'KART';
-        badge.style.color = 'var(--gold)';
-        badge.style.background = 'rgba(212,175,55,0.15)';
-      }
-    }
-
-    function formatVipCardExpiry(input) {
-      if (!input) return;
-      let v = input.value.replace(/\D/g, '').slice(0, 4);
-      if (v.length > 2) {
-        input.value = v.slice(0, 2) + ' / ' + v.slice(2);
-      } else {
-        input.value = v;
-      }
-    }
-
-    function formatVipCardCvv(input) {
-      if (!input) return;
-      input.value = input.value.replace(/\D/g, '').slice(0, 4);
-    }
 
     function initPage() {
       try {
@@ -425,10 +359,6 @@
       const name = document.getElementById('custName')?.value?.trim() || '';
       const phone = document.getElementById('custPhone')?.value?.trim() || '';
       const identity = document.getElementById('custIdentity')?.value?.trim() || '';
-      const cardHolder = document.getElementById('vipCcHolder')?.value?.trim() || '';
-      const cardNumber = (document.getElementById('vipCcNumber')?.value || '').replace(/\D/g, '');
-      const cardExpiry = document.getElementById('vipCcExpiry')?.value?.trim() || '';
-      const cardCvc = document.getElementById('vipCcCvc')?.value?.trim() || '';
 
       if (!name || !phone) {
         alert('Lütfen adınızı, soyadınızı ve telefon numaranızı eksiksiz doldurunuz.');
@@ -442,37 +372,13 @@
         return;
       }
 
-      if (!cardHolder) {
-        alert('Lütfen kart üzerindeki isim soyismi giriniz.');
-        document.getElementById('vipCcHolder')?.focus();
-        return;
-      }
-
-      if (cardNumber.length < 15) {
-        alert('Lütfen geçerli bir 16 haneli kart numarası giriniz.');
-        document.getElementById('vipCcNumber')?.focus();
-        return;
-      }
-
-      if (cardExpiry.length < 5) {
-        alert('Lütfen kart son kullanma tarihini (AA / YY) giriniz.');
-        document.getElementById('vipCcExpiry')?.focus();
-        return;
-      }
-
-      if (cardCvc.length < 3) {
-        alert('Lütfen kart güvenlik kodunu (CVC) giriniz.');
-        document.getElementById('vipCcCvc')?.focus();
-        return;
-      }
-
       syncDraft();
 
       const btn = document.getElementById('btnCompletePayment');
       const originalHtml = btn ? btn.innerHTML : '';
       if (btn) {
         btn.disabled = true;
-        btn.innerHTML = '<span>🔒</span> Akbank 3D Secure Kapısına Bağlanılıyor...';
+        btn.innerHTML = '<span>🔒</span> Akbank 256-Bit SSL Kapısına Bağlanılıyor...';
       }
 
       try {
@@ -486,10 +392,6 @@
           user_phone: phone,
           email: cleanPhone ? `musteri_${cleanPhone}@belginkuyumculuk.com` : `vip_${Date.now()}@belginkuyumculuk.com`,
           customerIdentity: identity,
-          cardHolder: cardHolder,
-          cardNumber: cardNumber,
-          cardExpiry: cardExpiry,
-          cardCvc: cardCvc,
           deliveryMethod: 'showroom',
           termsAccepted: true,
           preInformationAccepted: true,
@@ -519,11 +421,11 @@
         try { data = await response.json(); } catch (_) { data = {}; }
 
         if (!response.ok || !data.success) {
-          throw new Error(data.message || 'Akbank Sanal POS 3D Secure bağlantısı kurulamadı.');
+          throw new Error(data.message || 'Akbank Sanal POS bağlantısı kurulamadı.');
         }
 
         if (data.gatewayUrl && data.postParams) {
-          // DOĞRUDAN RESMİ AKBANK EST 3D SECURE KAPISINA GÖNDERİM
+          // DOĞRUDAN RESMİ AKBANK 256-BIT SSL PAY HOSTING KAPISINA GÖNDERİM
           const form = document.createElement('form');
           form.method = 'POST';
           form.action = data.gatewayUrl;
