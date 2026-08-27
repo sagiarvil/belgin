@@ -65,7 +65,7 @@ class AkbankProvider {
     const randomNumber = getRandomNumberBase16(128);
     const requestDateTime = formatRequestDateTime();
     const currencyCode = '949'; // TL
-    const paymentModel = process.env.AKBANK_PAYMENT_MODEL || '3D';
+    const paymentModel = process.env.AKBANK_PAYMENT_MODEL || 'PAY_HOSTING';
     const txnCode = paymentModel === 'PAY_HOSTING' ? '1000' : '3000'; // 1000: PayHosting Satış, 3000: 3D Satış
     const lang = 'TR';
     const installCount = '1';
