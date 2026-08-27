@@ -60,12 +60,12 @@ class AkbankProvider {
     }
     const config = getAkbankConfig();
     const amount = (order.amountInKurus / 100).toFixed(2);
-    const okUrl = `https://www.belginkuyumculuk.com/api/payment/callback/akbank?status=success&oid=${order.orderId}`;
-    const failUrl = `https://www.belginkuyumculuk.com/api/payment/callback/akbank?status=fail&oid=${order.orderId}`;
+    const okUrl = `https://www.belginkuyumculuk.com/api/payment/callback/akbank`;
+    const failUrl = `https://www.belginkuyumculuk.com/api/payment/callback/akbank`;
     const randomNumber = getRandomNumberBase16(128);
     const requestDateTime = formatRequestDateTime();
     const currencyCode = '949'; // TL
-    const paymentModel = process.env.AKBANK_PAYMENT_MODEL || 'PAY_HOSTING';
+    const paymentModel = process.env.AKBANK_PAYMENT_MODEL || '3D';
     const txnCode = paymentModel === 'PAY_HOSTING' ? '1000' : '3000'; // 1000: PayHosting Satış, 3000: 3D Satış
     const lang = 'TR';
     const installCount = '1';
