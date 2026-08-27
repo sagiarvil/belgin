@@ -1868,36 +1868,36 @@ const App = {
       return;
     }
 
-    // Kredi Kartı Bilgileri Validasyonu
+    // Kredi Kartı Bilgileri Validasyonu (Luhn Algoritması, SKT ve CVV)
     const cardHolder = (document.getElementById('ccCardHolder')?.value || '').trim();
     const rawCardNum = (document.getElementById('ccCardNumber')?.value || '').replace(/\s/g, '');
     const cardExpiry = (document.getElementById('ccCardExpiry')?.value || '').trim();
     const cardCvc = (document.getElementById('ccCardCvc')?.value || '').trim();
 
-    if (!cardHolder || cardHolder.length < 3) {
-      if (typeof showToast === 'function') showToast('Lütfen kart üzerindeki isim ve soyismi giriniz.', 'error');
-      else alert('Lütfen kart üzerindeki isim ve soyismi giriniz.');
+    if (!cardHolder || cardHolder.split(/\s+/).length < 2) {
+      if (typeof showToast === 'function') showToast('Lütfen kart üzerindeki Ad ve Soyadı eksiksiz giriniz.', 'error');
+      else alert('Lütfen kart üzerindeki Ad ve Soyadı eksiksiz giriniz.');
       document.getElementById('ccCardHolder')?.focus();
       return;
     }
 
-    if (!rawCardNum || rawCardNum.length < 15) {
-      if (typeof showToast === 'function') showToast('Lütfen 16 haneli geçerli kart numarasını giriniz.', 'error');
-      else alert('Lütfen 16 haneli geçerli kart numarasını giriniz.');
+    if (!rawCardNum || rawCardNum.length < 13 || rawCardNum.length > 19 || (typeof isValidLuhn === 'function' && !isValidLuhn(rawCardNum))) {
+      if (typeof showToast === 'function') showToast('Geçersiz kart numarası. Kart numarası banka algoritması (Luhn) tarafından doğrulanamadı.', 'error');
+      else alert('Geçersiz kart numarası. Lütfen 16 haneli geçerli kart numarasını kontrol ediniz.');
       document.getElementById('ccCardNumber')?.focus();
       return;
     }
 
-    if (!cardExpiry || cardExpiry.length < 5) {
-      if (typeof showToast === 'function') showToast('Lütfen kart son kullanma tarihini (AA / YY) giriniz.', 'error');
-      else alert('Lütfen kart son kullanma tarihini (AA / YY) giriniz.');
+    if (!cardExpiry || (typeof isValidCardExpiry === 'function' && !isValidCardExpiry(cardExpiry))) {
+      if (typeof showToast === 'function') showToast('Geçersiz veya süresi dolmuş son kullanma tarihi. Lütfen (AA / YY) formatında geçerli bir tarih giriniz.', 'error');
+      else alert('Geçersiz son kullanma tarihi.');
       document.getElementById('ccCardExpiry')?.focus();
       return;
     }
 
-    if (!cardCvc || cardCvc.length < 3) {
-      if (typeof showToast === 'function') showToast('Lütfen kartın arka yüzündeki 3 haneli güvenlik kodunu (CVV) giriniz.', 'error');
-      else alert('Lütfen kartın arka yüzündeki 3 haneli güvenlik kodunu (CVV) giriniz.');
+    if (!cardCvc || (typeof isValidCardCvv === 'function' && !isValidCardCvv(cardCvc))) {
+      if (typeof showToast === 'function') showToast('Lütfen kartın arka yüzündeki 3 veya 4 haneli geçerli güvenlik kodunu (CVV) giriniz.', 'error');
+      else alert('Lütfen geçerli CVV kodunu giriniz.');
       document.getElementById('ccCardCvc')?.focus();
       return;
     }
@@ -1910,6 +1910,7 @@ const App = {
 
   open3DSecureModal(payload) {
     this._pendingOrder = payload;
+    this._otpFailAttempts = 0;
     const modal = document.getElementById('akbank3dOverlay');
     if (!modal) return;
 
@@ -1918,6 +1919,7 @@ const App = {
     const phoneEl = document.getElementById('modal3dPhoneMask');
     const otpInput = document.getElementById('akbankOtpInput');
     const timerEl = document.getElementById('akbank3dTimer');
+    const btn = document.getElementById('btnConfirm3d');
 
     if (amountEl) amountEl.textContent = payload.formattedAmount || `₺${payload.totalAmount}`;
     if (cardEl) cardEl.textContent = payload.cardMask || '**** **** **** ****';
@@ -1926,8 +1928,14 @@ const App = {
       phoneEl.textContent = p.length >= 10 ? (p.substring(0, 4) + ' *** ** ' + p.substring(p.length - 2)) : '05** *** ** **';
     }
 
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = 'Doğrula ve Ödemeyi Tamamla';
+    }
+
     if (otpInput) {
       otpInput.value = '';
+      otpInput.style.borderColor = '';
       setTimeout(() => otpInput.focus(), 150);
     }
 
@@ -1965,16 +1973,50 @@ const App = {
     const otp = (otpInput?.value || '').trim();
     const btn = document.getElementById('btnConfirm3d');
 
-    if (!otp || otp.length < 6) {
-      if (typeof showToast === 'function') showToast('Lütfen 6 haneli 3D Secure SMS onay kodunu giriniz (Test kodu: 123456).', 'error');
+    if (!otp || otp.length !== 6) {
+      if (typeof showToast === 'function') showToast('Lütfen 6 haneli SMS onay kodunu eksiksiz giriniz.', 'error');
       else alert('Lütfen 6 haneli onay kodunu giriniz.');
-      if (otpInput) otpInput.focus();
+      if (otpInput) {
+        otpInput.style.borderColor = '#ED1C24';
+        otpInput.focus();
+      }
       return;
     }
 
     if (btn) {
       btn.disabled = true;
-      btn.innerHTML = '🔒 Akbank Sanal POS Onaylanıyor...';
+      btn.innerHTML = '🔒 Akbank Sanal POS Doğrulanıyor...';
+    }
+
+    // STRICT BANK VALIDATION: Geçersiz OTP Kodu Kontrolü
+    const VALID_TEST_OTP = '123456';
+    if (otp !== VALID_TEST_OTP) {
+      this._otpFailAttempts = (this._otpFailAttempts || 0) + 1;
+      setTimeout(() => {
+        if (typeof showToast === 'function') {
+          showToast(`❌ Banka Onay Reddi (Hata 51): Girilen SMS onay kodu (${otp}) geçersizdir. Kalan deneme: ${Math.max(0, 3 - this._otpFailAttempts)}`, 'error');
+        } else {
+          alert(`Banka Reddi: Girilen SMS onay kodu (${otp}) geçersizdir.`);
+        }
+
+        if (otpInput) {
+          otpInput.value = '';
+          otpInput.style.borderColor = '#ED1C24';
+          otpInput.focus();
+        }
+
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = 'Tekrar Dene';
+        }
+
+        if (this._otpFailAttempts >= 3) {
+          const order = this._pendingOrder || { orderId: 'BLG-' + Math.floor(100000 + Math.random() * 900000) };
+          this.close3DSecureModal();
+          window.location.href = `odeme-basarisiz.html?orderId=${encodeURIComponent(order.orderId)}&reason=${encodeURIComponent('3D Secure SMS doğrulama kodu 3 kez hatalı girildi (Banka Hata Kodu: 51)')}`;
+        }
+      }, 500);
+      return;
     }
 
     setTimeout(() => {

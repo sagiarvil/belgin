@@ -394,6 +394,51 @@ function isHighValueSecureDelivery(product) {
   return ['altin', 'saat', 'watch', 'jewelry', 'jewellery', 'gold'].includes(cat) || Boolean(product.isGold) || Boolean(product.isPreOwned);
 }
 
+// ==========================================================
+// BANKA KART DOĞRULAMA MOTORU (LUHN ALGORİTMASI & SKT & CVV)
+// ==========================================================
+function isValidLuhn(cardNumber) {
+  if (!cardNumber) return false;
+  const digits = String(cardNumber).replace(/\D/g, '');
+  if (digits.length < 13 || digits.length > 19) return false;
+  let sum = 0;
+  let shouldDouble = false;
+  for (let i = digits.length - 1; i >= 0; i--) {
+    let digit = parseInt(digits.charAt(i), 10);
+    if (shouldDouble) {
+      digit *= 2;
+      if (digit > 9) digit -= 9;
+    }
+    sum += digit;
+    shouldDouble = !shouldDouble;
+  }
+  return sum % 10 === 0;
+}
+
+function isValidCardExpiry(expiryStr) {
+  if (!expiryStr) return false;
+  const clean = String(expiryStr).trim();
+  const parts = clean.split('/');
+  if (parts.length !== 2) return false;
+  const month = parseInt(parts[0].trim(), 10);
+  let year = parseInt(parts[1].trim(), 10);
+  if (isNaN(month) || isNaN(year) || month < 1 || month > 12) return false;
+  if (year < 100) year += 2000;
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const currentMonth = now.getMonth() + 1;
+  if (year < currentYear) return false;
+  if (year === currentYear && month < currentMonth) return false;
+  if (year > currentYear + 25) return false;
+  return true;
+}
+
+function isValidCardCvv(cvv) {
+  if (!cvv) return false;
+  const clean = String(cvv).replace(/\D/g, '');
+  return clean.length === 3 || clean.length === 4;
+}
+
 if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', initMarqueeTouchSupport);
 }
@@ -407,6 +452,10 @@ if (typeof module !== 'undefined' && module.exports) {
     formatPrice,
     getInstallmentBreakdown,
     HIGH_VALUE_SECURE_DELIVERY_THRESHOLD,
-    isHighValueSecureDelivery
+    isHighValueSecureDelivery,
+    isValidLuhn,
+    isValidCardExpiry,
+    isValidCardCvv
   };
 }
+
