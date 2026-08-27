@@ -525,6 +525,8 @@ class PaymentService {
           console.error('[Mailer] Callback e-posta gönderim hatası:', mailErr.message);
         }
       }
+
+      return { status: 200, message: 'OK', isSuccess: true, orderId };
     } else {
       assertValidTransition(order.status, ORDER_STATUS.PAYMENT_FAILED, orderId);
 
@@ -543,9 +545,16 @@ class PaymentService {
         paymentStatus: 'FAILED',
         failReason: String(verification.failReasonCode || '').slice(0, 100),
       }, admin);
-    }
 
-    return { status: 200, message: 'OK' };
+      return {
+        status: 200,
+        message: 'FAIL',
+        isSuccess: false,
+        orderId,
+        failReasonCode: verification.failReasonCode || 'BANK_REJECT',
+        failReasonMsg: verification.failReasonMsg || 'Ödeme banka tarafından onaylanmadı.'
+      };
+    }
   }
 }
 

@@ -149,18 +149,18 @@ exports.paymentCallback = functions
       });
 
       // AKBANK EST 3D Gate veya Browser POST durumunda tarayıcıyı doğrudan sonuç sayfasına yönlendir
-      const isBrowserCallback = providerParam === 'AKBANK' || req.headers['accept']?.includes('text/html') || Boolean(req.body?.mdStatus || req.body?.oid);
+      const isBrowserCallback = providerParam === 'AKBANK' || req.headers['accept']?.includes('text/html') || Boolean(req.body?.mdStatus !== undefined || req.body?.oid || req.body?.orderId || req.body?.responseCode);
       if (isBrowserCallback) {
-        const orderId = encodeURIComponent(req.body?.oid || req.body?.orderId || req.query?.oid || '');
-        const authCode = encodeURIComponent(req.body?.AuthCode || req.body?.authCode || 'AKB-APPROVED');
+        const orderId = encodeURIComponent(req.body?.orderId || req.body?.oid || req.query?.oid || outcome.orderId || '');
+        const authCode = encodeURIComponent(req.body?.authCode || req.body?.AuthCode || 'AKB-APPROVED');
         const amount = encodeURIComponent(req.body?.amount || req.body?.totalAmount || '');
-        const isSuccess = outcome.status === 200 && (!outcome.message || outcome.message === 'OK');
+        const isSuccess = outcome.isSuccess === true;
 
         if (isSuccess) {
           return res.redirect(303, `https://www.belginkuyumculuk.com/odeme-basarili.html?orderId=${orderId}&authCode=${authCode}&amount=${amount}`);
         } else {
-          const reason = encodeURIComponent(req.body?.ErrMsg || req.body?.mdErrorMsg || outcome.message || 'Ödeme banka tarafından onaylanmadı.');
-          const code = encodeURIComponent(req.body?.ProcReturnCode || req.body?.mdStatus || 'FAIL');
+          const reason = encodeURIComponent(req.body?.responseMessage || req.body?.ErrMsg || req.body?.mdErrorMsg || outcome.failReasonMsg || 'Kart limiti yetersiz veya işlem banka tarafından onaylanmadı.');
+          const code = encodeURIComponent(req.body?.responseCode || req.body?.ProcReturnCode || req.body?.mdStatus || outcome.failReasonCode || 'FAIL');
           return res.redirect(303, `https://www.belginkuyumculuk.com/odeme-basarisiz.html?orderId=${orderId}&code=${code}&reason=${reason}`);
         }
       }

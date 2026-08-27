@@ -187,15 +187,17 @@ class AkbankProvider {
       }
     }
 
-    // 3D Secure / Onay Başarısı
-    const isApproved = (currentResponseCode === '00' || currentResponseCode === 'VPS-0000' || Response === 'Approved' || testMode) && isHashValid;
+    // 3D Secure / Onay Başarısı (Doküman Bölüm 5 & 6)
+    const isResponseApproved = currentResponseCode === '00' || currentResponseCode === 'VPS-0000' || Response === 'Approved';
+    const is3dAuthenticated = !mdStatus || ['1', '2', '3', '4'].includes(String(mdStatus));
+    const isApproved = isResponseApproved && is3dAuthenticated && isHashValid;
 
     if (!isApproved) {
       return {
         isValid: true,
         isSuccess: false,
         failReasonCode: currentResponseCode || 'BANK_REJECT',
-        failReasonMsg: ErrMsg || responseMessage || 'İşlem banka tarafından onaylanmadı.',
+        failReasonMsg: ErrMsg || responseMessage || 'Kart limiti yetersiz veya işlem banka tarafından onaylanmadı.',
         orderId: currentOrderId
       };
     }
