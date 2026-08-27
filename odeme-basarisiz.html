@@ -138,15 +138,31 @@
     <img src="images/belgin-crest-b.png" alt="Belgin Kuyumculuk" class="brand-crest">
     <div class="status-icon">✕</div>
     <h1>Ödeme Tamamlanamadı</h1>
-    <p class="status-subtitle">Kartınızdan herhangi bir tahsilat yapılmamıştır. İşlem bankanız veya ödeme sağlayıcınız tarafından onaylanmadı.</p>
+    <p class="status-subtitle" id="failSubtitle">Kartınızdan herhangi bir tahsilat yapılmamıştır. İşlem bankanız veya 3D Secure güvenlik protokolü tarafından onaylanmadı.</p>
+
+    <!-- Banka Hata Dekontu -->
+    <div id="bankErrorBox" class="info-box" style="background: rgba(231, 76, 60, 0.08); border: 1px solid rgba(231, 76, 60, 0.3); border-radius: 8px; padding: 14px 18px; margin-bottom: 20px; font-size: 13px; text-align: left; line-height: 1.6;">
+      <div style="display:flex; justify-content:space-between; margin-bottom:6px; border-bottom:1px solid rgba(231,76,60,0.2); padding-bottom:4px;">
+        <span style="color:var(--text-muted);">Sipariş Referansı:</span>
+        <strong style="color:var(--gold-light);" id="failOrderId">BLG-******</strong>
+      </div>
+      <div style="display:flex; justify-content:space-between; margin-bottom:6px; border-bottom:1px solid rgba(231,76,60,0.2); padding-bottom:4px;">
+        <span style="color:var(--text-muted);">Banka Hata Kodu:</span>
+        <strong style="color:#FF6B6B;" id="failErrorCode">Hata 51 (REJECTED)</strong>
+      </div>
+      <div style="margin-top:6px;">
+        <span style="color:var(--text-muted); display:block; font-size:12px;">Banka Açıklaması:</span>
+        <strong style="color:#FFF; display:block; font-size:12.5px; margin-top:2px;" id="failReasonText">İşlem banka tarafından reddedildi.</strong>
+      </div>
+    </div>
 
     <div class="info-box">
       • Kart limitinizi, internet alışveriş yetkisini ve 3D Secure SMS kodunu kontrol ederek tekrar deneyebilirsiniz.<br>
-      • Banka kartınızla tek çekim veya FAST/Havale yöntemini tercih edebilirsiniz.
+      • Banka kartınızla tek çekim yaparak ödemeyi tamamlayabilirsiniz.
     </div>
 
     <div class="security-badge">
-      🔒 İşlem Güvenliği ve Kart Gizliliği Standartları Korunmaktadır
+      🔒 256-Bit EV SSL & Akbank Sanal POS Güvenlik Katmanı
     </div>
 
     <div class="btn-group">
@@ -156,5 +172,26 @@
     </div>
   </div>
 
+  <script>
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const orderId = params.get('orderId');
+      const code = params.get('code') || params.get('errorCode') || 'BANK-REJECT';
+      const reason = params.get('reason');
+
+      if (orderId) {
+        const el = document.getElementById('failOrderId');
+        if (el) el.textContent = orderId;
+      }
+      if (code) {
+        const el = document.getElementById('failErrorCode');
+        if (el) el.textContent = code;
+      }
+      if (reason) {
+        const el = document.getElementById('failReasonText');
+        if (el) el.textContent = decodeURIComponent(reason);
+      }
+    })();
+  </script>
 </body>
 </html>
