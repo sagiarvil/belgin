@@ -8,6 +8,8 @@ const AdminApp = {
   filteredOrders: [],
   knownPaidOrderIds: new Set(),
   currentPreset: 'all',
+  currentPage: 1,
+  pageSize: 10,
   pollTimer: null,
 
   init() {
@@ -385,7 +387,47 @@ const AdminApp = {
     this.filterTable();
   },
 
-  // CANLI ARAMA & DURUM FİLTRESİ
+  // DURUM FİLTRESİ DEĞİŞTİR (PİLLER VEYA SELECT)
+  setStatusFilter(status, btn) {
+    this.currentPage = 1;
+    const select = document.getElementById('statusFilter');
+    if (select) select.value = status;
+    document.querySelectorAll('.btn-status-pill').forEach(b => b.classList.remove('active'));
+    if (btn) {
+      btn.classList.add('active');
+    } else {
+      const targetBtn = document.querySelector(`.btn-status-pill[data-status="${status}"]`);
+      if (targetBtn) targetBtn.classList.add('active');
+    }
+    this.loadOrders();
+  },
+
+  onStatusSelectChange(statusVal) {
+    this.currentPage = 1;
+    document.querySelectorAll('.btn-status-pill').forEach(b => b.classList.remove('active'));
+    const targetBtn = document.querySelector(`.btn-status-pill[data-status="${statusVal}"]`);
+    if (targetBtn) targetBtn.classList.add('active');
+    this.loadOrders();
+  },
+
+  goToPage(page) {
+    this.currentPage = page;
+    this.filterTable();
+  },
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.filterTable();
+    }
+  },
+
+  nextPage() {
+    this.currentPage++;
+    this.filterTable();
+  },
+
+  // CANLI ARAMA, DURUM FİLTRESİ & 10'LU SAYFALAMA
   filterTable() {
     const searchVal = (document.getElementById('searchInput')?.value || '').toLowerCase().trim();
     const statusVal = document.getElementById('statusFilter')?.value || 'PAID';
@@ -416,10 +458,43 @@ const AdminApp = {
         : `(${visibleOrders.length} Kayıt)`;
     }
 
+    const totalItems = visibleOrders.length;
+    const totalPages = Math.ceil(totalItems / this.pageSize) || 1;
+    if (this.currentPage > totalPages) this.currentPage = totalPages;
+    if (this.currentPage < 1) this.currentPage = 1;
+
+    const startIdx = totalItems === 0 ? 0 : (this.currentPage - 1) * this.pageSize + 1;
+    const endIdx = Math.min(this.currentPage * this.pageSize, totalItems);
+    const pagedOrders = visibleOrders.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize);
+
+    // Sayfalama Bilgi ve Butonlarını Güncelle
+    const pageInfo = document.getElementById('paginationInfo');
+    if (pageInfo) {
+      pageInfo.textContent = `Toplam ${totalItems} işlemden ${startIdx}-${endIdx} arası gösteriliyor (Sayfa ${this.currentPage} / ${totalPages})`;
+    }
+
+    const btnPrev = document.getElementById('btnPrevPage');
+    const btnNext = document.getElementById('btnNextPage');
+    if (btnPrev) btnPrev.disabled = this.currentPage <= 1;
+    if (btnNext) btnNext.disabled = this.currentPage >= totalPages;
+
+    const pageButtonsContainer = document.getElementById('pageNumberButtons');
+    if (pageButtonsContainer) {
+      let pageBtnsHtml = '';
+      for (let p = 1; p <= totalPages; p++) {
+        pageBtnsHtml += `
+          <button class="btn-page ${p === this.currentPage ? 'active' : ''}" onclick="AdminApp.goToPage(${p})">
+            ${p}
+          </button>
+        `;
+      }
+      pageButtonsContainer.innerHTML = pageBtnsHtml;
+    }
+
     const tbody = document.getElementById('ordersTableBody');
     if (!tbody) return;
 
-    if (visibleOrders.length === 0) {
+    if (pagedOrders.length === 0) {
       tbody.innerHTML = `
         <tr>
           <td colspan="8" style="text-align:center; padding:36px; color:var(--admin-muted);">
@@ -430,8 +505,8 @@ const AdminApp = {
       return;
     }
 
-    tbody.innerHTML = visibleOrders.map(o => {
-      const isPaid = o.paymentStatus === 'PAID' || o.status === 'COMPLETED' || o.status === 'PAID';
+    tbody.innerHTML = pagedOrders.map(o => {
+      const isPaid = o.paymentStatus === 'PAID' || o.status === 'COMPLETED' || o.status === 'PAID' || o.isPaid;
       const isFailed = o.status === 'FAILED' || o.paymentStatus === 'FAILED';
 
       const statusBadge = isPaid

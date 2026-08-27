@@ -222,8 +222,99 @@
       gap: 6px;
       transition: all 0.2s;
     }
-    .btn-admin-secondary:hover {
-      background: #F0F7F6;
+    /* DURUM PİLLERİ & PAGINATION */
+    .status-pills-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--admin-border);
+      padding-bottom: 12px;
+    }
+    .btn-status-pill {
+      background: #F3F1EB;
+      border: 1px solid var(--admin-border);
+      color: var(--admin-ink);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+    .btn-status-pill:hover {
+      background: #E8E4DA;
+    }
+    .btn-status-pill.active {
+      background: var(--admin-teal);
+      color: #FFF;
+      border-color: var(--admin-teal);
+      font-weight: 700;
+    }
+    .btn-status-pill.pill-paid.active {
+      background: #196C3A;
+      border-color: #196C3A;
+    }
+    .btn-status-pill.pill-pending.active {
+      background: #B45309;
+      border-color: #B45309;
+    }
+    .btn-status-pill.pill-failed.active {
+      background: #991B1B;
+      border-color: #991B1B;
+    }
+
+    /* PAGINATION BAR */
+    .admin-pagination-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      background: #FAF9F5;
+      border-top: 1px solid var(--admin-border);
+      border-radius: 0 0 12px 12px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .pagination-info {
+      font-size: 12.5px;
+      color: var(--admin-muted);
+      font-weight: 600;
+    }
+    .pagination-buttons {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+    .btn-page {
+      background: #FFF;
+      border: 1px solid var(--admin-border);
+      color: var(--admin-ink);
+      padding: 5px 12px;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      min-width: 32px;
+      text-align: center;
+    }
+    .btn-page:hover:not(:disabled) {
+      background: #F0F7F5;
+      border-color: var(--admin-teal);
+    }
+    .btn-page.active {
+      background: var(--admin-teal);
+      color: #FFF;
+      border-color: var(--admin-teal);
+      font-weight: 700;
+    }
+    .btn-page:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
     }
 
     /* KPI METRİK KARTLARI */
@@ -505,7 +596,24 @@
   <!-- 1. FİLTRE VE TARİH SEÇİM ÇUBUĞU -->
   <section class="admin-filter-panel">
     
-    <!-- Hızlı Tarih Seçim Butonları -->
+    <!-- 1.1 Hızlı Durum Filtreleme Butonları (Onaylananlar, Bekleyenler, Başarısızlar, Tümü) -->
+    <div class="status-pills-bar">
+      <span style="font-size:12px; font-weight:700; color:var(--admin-muted); align-self:center; margin-right:4px;">İşlem Durumu:</span>
+      <button class="btn-status-pill pill-paid active" data-status="PAID" onclick="AdminApp.setStatusFilter('PAID', this)">
+        <span>✅ Onaylananlar (Tahsil Edilen)</span>
+      </button>
+      <button class="btn-status-pill pill-pending" data-status="PENDING" onclick="AdminApp.setStatusFilter('PENDING', this)">
+        <span>⏳ Bekleyenler</span>
+      </button>
+      <button class="btn-status-pill pill-failed" data-status="FAILED" onclick="AdminApp.setStatusFilter('FAILED', this)">
+        <span>❌ Başarısızlar</span>
+      </button>
+      <button class="btn-status-pill" data-status="ALL" onclick="AdminApp.setStatusFilter('ALL', this)">
+        <span>📋 Tümü (Hepsi)</span>
+      </button>
+    </div>
+
+    <!-- 1.2 Hızlı Tarih Seçim Butonları -->
     <div class="admin-presets">
       <span style="font-size:12px; font-weight:700; color:var(--admin-muted); align-self:center; margin-right:4px;">Tarih Aralığı:</span>
       <button class="btn-preset active" data-preset="all" onclick="AdminApp.selectPreset('all', this)">Tüm Zamanlar</button>
@@ -532,11 +640,11 @@
       </div>
 
       <div>
-        <select id="statusFilter" class="admin-select" onchange="AdminApp.filterTable()">
+        <select id="statusFilter" class="admin-select" onchange="AdminApp.onStatusSelectChange(this.value)">
           <option value="PAID" selected>✅ Sadece Onaylananlar (Tahsil Edilen)</option>
-          <option value="ALL">📋 Tümü (Onaylanan & Bekleyenler)</option>
           <option value="PENDING">⏳ Sadece Bekleyenler</option>
           <option value="FAILED">❌ Sadece Başarısız</option>
+          <option value="ALL">📋 Tümü (Onaylanan, Bekleyen & Başarısız)</option>
         </select>
       </div>
 
@@ -620,6 +728,18 @@
           </tr>
         </tbody>
       </table>
+    </div>
+
+    <!-- 3.1 SAYFALAMA (PAGINATION - SAYFA BAŞINA EN FAZLA 10 İŞLEM) -->
+    <div class="admin-pagination-bar" id="adminPaginationBar">
+      <div class="pagination-info" id="paginationInfo">
+        Kayıtlar yükleniyor...
+      </div>
+      <div class="pagination-buttons" id="paginationButtons">
+        <button class="btn-page" id="btnPrevPage" onclick="AdminApp.prevPage()" disabled>◀ Önceki</button>
+        <div id="pageNumberButtons" style="display:flex; gap:4px;"></div>
+        <button class="btn-page" id="btnNextPage" onclick="AdminApp.nextPage()" disabled>Sonraki ▶</button>
+      </div>
     </div>
 
   </section>
