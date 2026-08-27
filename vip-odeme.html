@@ -308,56 +308,11 @@
 
   </main>
 
-  <!-- AKBANK 3D SECURE SMS SIMULATION MODAL (DOĞRUDAN BANKA 3D SECURE SMS ONAYI) -->
-  <div id="vipOtpModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(6px); z-index:9999; align-items:center; justify-content:center; padding:16px; box-sizing:border-box;">
-    <div style="background:#FFFFFF; color:#1A1A1A; border-radius:16px; max-width:440px; width:100%; padding:24px; box-shadow:0 20px 60px rgba(0,0,0,0.6); position:relative;">
-      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #E50914; padding-bottom:12px; margin-bottom:16px;">
-        <div style="font-weight:800; font-size:18px; color:#E50914; display:flex; align-items:center; gap:6px;">
-          <span>🏛️</span> AKBANK 3D SECURE
-        </div>
-        <span style="font-size:11px; font-weight:700; color:#666; background:#F4F4F4; padding:3px 8px; border-radius:4px;">Doğrulama</span>
-      </div>
-      
-      <p style="font-size:13px; color:#444; line-height:1.5; margin-bottom:14px;">
-        Belgin Kuyumculuk alışverişiniz için <strong><span id="vipOtpPhoneDisplay">05XX *** ** XX</span></strong> nolu telefonunuza SMS doğrulama kodu gönderilmiştir.
-      </p>
-      
-      <div style="background:#F8F9FA; border:1px solid #E9ECEF; border-radius:8px; padding:12px; margin-bottom:16px; font-size:12.5px;">
-        <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-          <span style="color:#666;">İşyeri:</span>
-          <strong style="color:#111;">BELGİN KUYUMCULUK</strong>
-        </div>
-        <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-          <span style="color:#666;">Tutar:</span>
-          <strong style="color:#E50914; font-size:14px;" id="vipOtpAmountDisplay">₺0</strong>
-        </div>
-        <div style="display:flex; justify-content:space-between;">
-          <span style="color:#666;">İşlem Tipi:</span>
-          <strong style="color:#111;">3D Secure Satış (Tek Çekim)</strong>
-        </div>
-      </div>
-
-      <div style="margin-bottom:16px;">
-        <label style="display:block; font-size:12px; font-weight:700; color:#333; margin-bottom:6px;">SMS Onay Kodu *</label>
-        <input type="tel" id="vipOtpCode" maxlength="6" placeholder="6 haneli SMS kodu" style="width:100%; padding:12px; font-size:18px; font-weight:800; letter-spacing:4px; text-align:center; border:2px solid #CED4DA; border-radius:8px; outline:none; box-sizing:border-box;">
-        <div style="font-size:11px; color:#888; margin-top:6px; text-align:center;">Kalan Süre: <span id="vipOtpTimer" style="font-weight:700; color:#E50914;">02:59</span></div>
-      </div>
-
-      <button type="button" id="btnVipConfirmOtp" onclick="confirmVipOtp()" style="width:100%; background:#E50914; color:#FFF; border:none; padding:14px; border-radius:8px; font-size:15px; font-weight:800; cursor:pointer; transition:background 0.2s;">
-        ✓ Ödemeyi Onayla
-      </button>
-
-      <button type="button" onclick="closeVipOtpModal()" style="width:100%; background:transparent; border:none; color:#777; font-size:12px; margin-top:10px; cursor:pointer; text-decoration:underline;">
-        İptal Et
-      </button>
-    </div>
-  </div>
+  </main>
 
   <script src="/js/vip-payment.js?v=2.8.0"></script>
   <script>
     let currentPayload = null;
-    let otpTimerInterval = null;
-    let pendingOrderId = null;
 
     function formatVipCardNumber(input) {
       let v = input.value.replace(/\D/g, '').slice(0, 16);
@@ -492,7 +447,7 @@
       const btn = document.getElementById('btnCompletePayment');
       const originalHtml = btn.innerHTML;
       btn.disabled = true;
-      btn.innerHTML = '<span>⏳</span> Akbank 3D Secure Bağlantısı Kuruluyor...';
+      btn.innerHTML = '<span>🔒</span> Akbank 3D Secure Kapısına Bağlanılıyor...';
 
       try {
         const cleanPhone = phone.replace(/\D/g, '');
@@ -539,10 +494,25 @@
           throw new Error(data.message || 'Akbank Sanal POS 3D Secure bağlantısı kurulamadı.');
         }
 
-        pendingOrderId = data.merchant_oid || currentPayload.orderId;
-
-        // Akbank 3D Secure OTP Modal Açılışı
-        openVipOtpModal(phone, Number(currentPayload.amount));
+        if (data.gatewayUrl && data.postParams) {
+          // DOĞRUDAN RESMİ AKBANK EST 3D SECURE KAPISINA GÖNDERİM
+          const form = document.createElement('form');
+          form.method = 'POST';
+          form.action = data.gatewayUrl;
+          for (const [k, v] of Object.entries(data.postParams)) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = k;
+            input.value = v;
+            form.appendChild(input);
+          }
+          document.body.appendChild(form);
+          form.submit();
+        } else if (data.redirectUrl) {
+          window.location.href = data.redirectUrl;
+        } else {
+          window.location.href = `/odeme-basarili.html?orderId=${encodeURIComponent(data.merchant_oid || '')}`;
+        }
 
       } catch (err) {
         console.error('VIP Ödeme Hatası:', err);
@@ -550,67 +520,6 @@
         btn.disabled = false;
         btn.innerHTML = originalHtml;
       }
-    }
-
-    function openVipOtpModal(phone, amount) {
-      const modal = document.getElementById('vipOtpModal');
-      const phoneDisplay = document.getElementById('vipOtpPhoneDisplay');
-      const amountDisplay = document.getElementById('vipOtpAmountDisplay');
-      const otpInput = document.getElementById('vipOtpCode');
-
-      const clean = phone.replace(/\D/g, '');
-      const masked = clean.length >= 10 
-        ? `${clean.slice(0, 3)} *** ** ${clean.slice(-2)}`
-        : phone;
-
-      phoneDisplay.textContent = masked;
-      amountDisplay.textContent = '₺' + amount.toLocaleString('tr-TR');
-      otpInput.value = '';
-
-      modal.style.display = 'flex';
-      otpInput.focus();
-
-      let timeLeft = 180;
-      const timerEl = document.getElementById('vipOtpTimer');
-      if (otpTimerInterval) clearInterval(otpTimerInterval);
-
-      otpTimerInterval = setInterval(() => {
-        timeLeft--;
-        const m = String(Math.floor(timeLeft / 60)).padStart(2, '0');
-        const s = String(timeLeft % 60).padStart(2, '0');
-        timerEl.textContent = `${m}:${s}`;
-        if (timeLeft <= 0) {
-          clearInterval(otpTimerInterval);
-          alert('Doğrulama süresi doldu. Lütfen tekrar deneyiniz.');
-          closeVipOtpModal();
-        }
-      }, 1000);
-    }
-
-    function closeVipOtpModal() {
-      const modal = document.getElementById('vipOtpModal');
-      modal.style.display = 'none';
-      if (otpTimerInterval) clearInterval(otpTimerInterval);
-      const btn = document.getElementById('btnCompletePayment');
-      btn.disabled = false;
-      btn.innerHTML = '<span>🔒</span> Akbank 3D Secure ile Güvenli Öde';
-    }
-
-    async function confirmVipOtp() {
-      const code = document.getElementById('vipOtpCode').value.trim();
-      if (code.length < 6) {
-        alert('Lütfen telefonunuza gelen 6 haneli SMS kodunu eksiksiz giriniz.');
-        document.getElementById('vipOtpCode').focus();
-        return;
-      }
-
-      const btn = document.getElementById('btnVipConfirmOtp');
-      btn.disabled = true;
-      btn.textContent = '⏳ Doğrulanıyor...';
-
-      setTimeout(() => {
-        window.location.href = `/odeme-basarili.html?orderId=${encodeURIComponent(pendingOrderId || '')}`;
-      }, 1000);
     }
 
     window.addEventListener('DOMContentLoaded', initPage);

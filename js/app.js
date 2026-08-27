@@ -1897,229 +1897,71 @@ const App = {
       this.setFieldError('ccCardNumber', '16 haneli geçerli kart numarasını eksiksiz giriniz.');
       if (typeof showToast === 'function') showToast('Lütfen 16 haneli geçerli kart numarasını giriniz.', 'error');
       document.getElementById('ccCardNumber')?.focus();
-      return;
-    }
-
-    if (typeof isValidLuhn === 'function' && !isValidLuhn(rawCardNum)) {
-      this.setFieldError('ccCardNumber', 'Banka Hata 14: Geçersiz kart numarası (Banka takas kontrolü / Luhn geçersiz).');
-      if (typeof showToast === 'function') showToast('❌ Banka Reddi (Hata 14): Kart numarası geçersizdir. Lütfen kart üzerindeki numarayı kontrol ediniz.', 'error');
-      document.getElementById('ccCardNumber')?.focus();
-      return;
-    }
-
-    if (!cardExpiry || (typeof isValidCardExpiry === 'function' && !isValidCardExpiry(cardExpiry))) {
-      this.setFieldError('ccCardExpiry', 'Banka Hata 54: Geçersiz veya süresi dolmuş son kullanma tarihi.');
-      if (typeof showToast === 'function') showToast('❌ Banka Reddi (Hata 54): Kartın son kullanma tarihi geçmiştir veya geçersizdir.', 'error');
-      document.getElementById('ccCardExpiry')?.focus();
-      return;
-    }
-
-    if (!cardCvc || (typeof isValidCardCvv === 'function' && !isValidCardCvv(cardCvc))) {
-      this.setFieldError('ccCardCvc', 'Banka Hata 82: Geçerli 3 haneli güvenlik kodunu (CVV) giriniz.');
-      if (typeof showToast === 'function') showToast('❌ Banka Reddi (Hata 82): Güvenlik kodu (CVV) hatalıdır.', 'error');
-      document.getElementById('ccCardCvc')?.focus();
-      return;
+    const btn = document.getElementById('btnSubmitOrder');
+    const originalBtnHtml = btn ? btn.innerHTML : '';
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = '<span>🔒</span> Akbank 3D Secure Bağlantısı Kuruluyor...';
     }
 
     const orderPayload = {
-      orderId: 'BLG-' + Math.floor(100000 + Math.random() * 900000),
-      customerName: customerFullName,
-      customerPhone: phone,
-      customerEmail: email || 'musteri@belginkuyumculuk.com',
-      items: items,
-      totalAmount: totalAmount,
-      formattedAmount: formattedAmount,
-      paymentMethod: 'Akbank Sanal POS 256-Bit EV SSL 3D Secure',
-      isHighValueSecureDelivery: isHighVal,
+      provider: 'AKBANK',
+      user_name: customerFullName,
+      user_phone: phone,
+      email: email || 'musteri@belginkuyumculuk.com',
+      customerIdentity: document.getElementById('checkoutIdentity')?.value || '',
+      cardNumber: rawCardNum,
+      cardExpiry: cardExpiry,
+      cardCvc: cardCvc,
+      items: items.map(i => ({ id: i.id, qty: i.qty })),
+      deliveryMethod: 'showroom',
       termsAccepted: true,
-      termsVersion: "2026.08.27.v2",
-      termsAcceptedAt: new Date().toISOString(),
-      kycProtocolAccepted: Boolean(document.getElementById('chkKyc')?.checked),
-      handoverFormAccepted: Boolean(document.getElementById('chkHandover')?.checked),
+      preInformationAccepted: true,
+      highValueDeliveryAccepted: true,
       marketingConsent: Boolean(document.getElementById('chkMarketing')?.checked),
-      optionalConsent: Boolean(document.getElementById('chkConsent')?.checked),
-      deliveryProtocolVersion: "03_v1",
-      kycStatus: "verified",
-      posTerminalNo: "12865794",
-      rawCardLast4: rawCardNum.slice(-4),
-      cardMask: rawCardNum.substring(0, 4) + ' **** **** ' + rawCardNum.substring(rawCardNum.length - 4),
-      cardHolder: cardHolder
+      optionalConsent: Boolean(document.getElementById('chkConsent')?.checked)
     };
 
-    this.open3DSecureModal(orderPayload);
-  },
-
-  open3DSecureModal(payload) {
-    this._pendingOrder = payload;
-    this._otpFailAttempts = 0;
-    const modal = document.getElementById('akbank3dOverlay');
-    if (!modal) return;
-
-    const amountEl = document.getElementById('modal3dAmount');
-    const cardEl = document.getElementById('modal3dCardMask');
-    const phoneEl = document.getElementById('modal3dPhoneMask');
-    const otpInput = document.getElementById('akbankOtpInput');
-    const timerEl = document.getElementById('akbank3dTimer');
-    const btn = document.getElementById('btnConfirm3d');
-
-    if (amountEl) amountEl.textContent = payload.formattedAmount || `₺${payload.totalAmount}`;
-    if (cardEl) cardEl.textContent = payload.cardMask || '**** **** **** ****';
-    if (phoneEl) {
-      const p = payload.customerPhone || '';
-      phoneEl.textContent = p.length >= 10 ? (p.substring(0, 4) + ' *** ** ' + p.substring(p.length - 2)) : '05** *** ** **';
-    }
-
-    if (btn) {
-      btn.disabled = false;
-      btn.innerHTML = 'Doğrula ve Ödemeyi Tamamla';
-    }
-
-    if (otpInput) {
-      otpInput.value = '';
-      otpInput.style.borderColor = '#ED1C24';
-      otpInput.classList.remove('input-field-error');
-      setTimeout(() => otpInput.focus(), 150);
-    }
-
-    modal.classList.add('active');
-
-    // 3 Dakikalık Banka Oturum Geri Sayımı
-    let duration = 180;
-    if (this._timerInterval) clearInterval(this._timerInterval);
-    const updateTimer = () => {
-      const min = String(Math.floor(duration / 60)).padStart(2, '0');
-      const sec = String(duration % 60).padStart(2, '0');
-      if (timerEl) timerEl.textContent = `${min}:${sec}`;
-      if (duration <= 0) {
-        clearInterval(this._timerInterval);
-        this.close3DSecureModal();
-        const order = this._pendingOrder || { orderId: 'BLG-' + Math.floor(100000 + Math.random() * 900000) };
-        window.location.href = `odeme-basarisiz.html?orderId=${encodeURIComponent(order.orderId)}&code=3D-TIMEOUT&reason=${encodeURIComponent('3D Secure SMS doğrulama oturum süresi doldu (Zaman Aşımı / Hata 3D-TIMEOUT)')}`;
+    fetch('/api/payment/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(orderPayload)
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (!data.success) {
+        throw new Error(data.message || 'Akbank Sanal POS oturumu açılamadı.');
       }
-      duration--;
-    };
-    updateTimer();
-    this._timerInterval = setInterval(updateTimer, 1000);
-  },
 
-  close3DSecureModal() {
-    const modal = document.getElementById('akbank3dOverlay');
-    if (modal) modal.classList.remove('active');
-    if (this._timerInterval) {
-      clearInterval(this._timerInterval);
-      this._timerInterval = null;
-    }
-  },
-
-  verify3dOtp() {
-    const otpInput = document.getElementById('akbankOtpInput');
-    const otp = (otpInput?.value || '').trim();
-    const btn = document.getElementById('btnConfirm3d');
-    const dialog = document.querySelector('.akbank-3d-dialog');
-
-    if (!otp || otp.length !== 6) {
-      if (typeof showToast === 'function') showToast('Lütfen telefonunuza iletilen 6 haneli SMS onay şifresini eksiksiz giriniz.', 'error');
-      else alert('Lütfen 6 haneli SMS onay kodunu giriniz.');
-      if (otpInput) {
-        otpInput.classList.add('input-field-error', 'shake-error');
-        setTimeout(() => otpInput.classList.remove('shake-error'), 500);
-        otpInput.focus();
-      }
-      return;
-    }
-
-    if (btn) {
-      btn.disabled = true;
-      btn.innerHTML = '🔒 Akbank Sanal POS Doğrulanıyor...';
-    }
-
-    // STRICT PRODUCTION BANKING VALIDATION
-    const VALID_TEST_OTP = '123456';
-    if (otp !== VALID_TEST_OTP) {
-      this._otpFailAttempts = (this._otpFailAttempts || 0) + 1;
-      setTimeout(() => {
-        if (dialog) {
-          dialog.classList.add('shake-error');
-          setTimeout(() => dialog.classList.remove('shake-error'), 500);
+      if (data.gatewayUrl && data.postParams) {
+        // DOĞRUDAN RESMİ AKBANK EST 3D SECURE KAPISINA GÖNDERİM
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = data.gatewayUrl;
+        for (const [k, v] of Object.entries(data.postParams)) {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = k;
+          input.value = v;
+          form.appendChild(input);
         }
-
-        const remaining = Math.max(0, 3 - this._otpFailAttempts);
-        if (typeof showToast === 'function') {
-          showToast(`❌ Akbank 3D Secure Reddi (Hata 3D-300): Girilen SMS şifresi hatalıdır. Kalan deneme hakkı: ${remaining}`, 'error');
-        } else {
-          alert(`Akbank 3D Secure Reddi (Hata 3D-300): Girilen SMS şifresi hatalıdır. Kalan hak: ${remaining}`);
-        }
-
-        if (otpInput) {
-          otpInput.value = '';
-          otpInput.classList.add('input-field-error');
-          otpInput.focus();
-        }
-
-        if (btn) {
-          btn.disabled = false;
-          btn.innerHTML = 'Tekrar Dene';
-        }
-
-        if (this._otpFailAttempts >= 3) {
-          const order = this._pendingOrder || { orderId: 'BLG-' + Math.floor(100000 + Math.random() * 900000) };
-          this.close3DSecureModal();
-          window.location.href = `odeme-basarisiz.html?orderId=${encodeURIComponent(order.orderId)}&code=3D-302&reason=${encodeURIComponent('3D Secure SMS doğrulama şifresi 3 kez hatalı girildi (Banka Hata Kodu: 3D-302 - OTP_LIMIT_EXCEEDED)')}`;
-        }
-      }, 600);
-      return;
-    }
-
-    // OTP Doğruysa -> Banka Yetkilendirme & Kart Statüsü Denetimi
-    setTimeout(() => {
-      const order = this._pendingOrder || {
-        orderId: 'BLG-' + Math.floor(100000 + Math.random() * 900000),
-        totalAmount: typeof Cart !== 'undefined' ? Cart.getTotal() : 0,
-        rawCardLast4: '0000'
-      };
-
-      const last4 = order.rawCardLast4 || '';
-
-      // Gerçek Banka POS Test Kartı Red Simülasyonları
-      if (last4 === '0051') {
-        this.close3DSecureModal();
-        window.location.href = `odeme-basarisiz.html?orderId=${encodeURIComponent(order.orderId)}&code=51&reason=${encodeURIComponent('Banka Reddi: Kart bakiyesi veya kullanılabilir limit yetersizdir (Hata Kodu: 51 - INSUFFICIENT_FUNDS)')}`;
-        return;
+        document.body.appendChild(form);
+        form.submit();
+      } else if (data.redirectUrl) {
+        window.location.href = data.redirectUrl;
+      } else {
+        window.location.href = `/odeme-basarili.html?orderId=${encodeURIComponent(data.merchant_oid || '')}`;
       }
-      if (last4 === '0054') {
-        this.close3DSecureModal();
-        window.location.href = `odeme-basarisiz.html?orderId=${encodeURIComponent(order.orderId)}&code=54&reason=${encodeURIComponent('Banka Reddi: Kartın son kullanma tarihi geçmiştir (Hata Kodu: 54 - EXPIRED_CARD)')}`;
-        return;
+    })
+    .catch(err => {
+      console.error('Akbank Ödeme Başlatma Hatası:', err);
+      if (typeof showToast === 'function') showToast(`Ödeme başlatılamadı: ${err.message}`, 'error');
+      else alert(`Ödeme başlatılamadı: ${err.message}`);
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = originalBtnHtml;
       }
-      if (last4 === '0057') {
-        this.close3DSecureModal();
-        window.location.href = `odeme-basarisiz.html?orderId=${encodeURIComponent(order.orderId)}&code=57&reason=${encodeURIComponent('Banka Reddi: Kartınız internet üzerinden alışverişe kapalıdır (Hata Kodu: 57 - TRANSACTION_NOT_PERMITTED)')}`;
-        return;
-      }
-      if (last4 === '0005') {
-        this.close3DSecureModal();
-        window.location.href = `odeme-basarisiz.html?orderId=${encodeURIComponent(order.orderId)}&code=05&reason=${encodeURIComponent('Banka Reddi: İşlem onaylanmadı / Do Not Honor (Hata Kodu: 05 - DO_NOT_HONOR)')}`;
-        return;
-      }
-
-      // Başarılı Banka Provizyonu
-      const authCode = 'AKB-' + Math.floor(100000 + Math.random() * 900000);
-      order.authCode = authCode;
-      order.paymentStatus = 'SUCCESS';
-      order.posProvider = 'AKBANK_SANAL_POS';
-      order.terminalId = '12865794';
-      order.confirmedAt = new Date().toISOString();
-
-      localStorage.setItem('last_order_audit', JSON.stringify(order));
-      localStorage.setItem('belgin_active_transaction', JSON.stringify(order));
-      sessionStorage.setItem('last_order_id', order.orderId);
-
-      if (typeof Cart !== 'undefined') Cart.clear();
-      this.updateHeaderCartCount();
-      this.close3DSecureModal();
-
-      window.location.href = `odeme-basarili.html?orderId=${encodeURIComponent(order.orderId)}&authCode=${encodeURIComponent(authCode)}&amount=${encodeURIComponent(order.totalAmount)}`;
-    }, 700);
+    });
   },
 
   // ÖDEME FORMU GERÇEK ZAMANLI OTOMATİK SENKRONİZASYON

@@ -44,24 +44,41 @@ class AkbankProvider {
     const hashStr = [config.clientId, order.orderId, amount, okUrl, failUrl, storetype, rnd, config.storeKey].join('');
     const hash = crypto.createHash('sha512').update(hashStr, 'utf-8').digest('base64');
 
+    const postParams = {
+      clientid: config.clientId,
+      amount: amount,
+      oid: order.orderId,
+      okUrl: okUrl,
+      failUrl: failUrl,
+      rnd: rnd,
+      hash: hash,
+      storetype: storetype,
+      currency: currency,
+      lang: 'tr'
+    };
+
+    // İstemciden gelen kart bilgileri doğrudan Akbank 3D Kapısına form ile iletilir
+    const cardNum = String(order.cardNumber || params?.cardNumber || '').replace(/\D/g, '');
+    const cardCvc = String(order.cardCvc || params?.cardCvc || '').replace(/\D/g, '');
+    const cardExp = String(order.cardExpiry || params?.cardExpiry || '').trim();
+
+    if (cardNum) postParams.pan = cardNum;
+    if (cardCvc) postParams.cv2 = cardCvc;
+    if (cardExp.includes('/')) {
+      const parts = cardExp.split('/');
+      postParams.Ecom_Payment_Card_ExpDate_Month = parts[0].trim().padStart(2, '0');
+      let yr = parts[1].trim();
+      if (yr.length === 4) yr = yr.slice(-2);
+      postParams.Ecom_Payment_Card_ExpDate_Year = yr;
+    }
+
     return {
       paymentType: 'REDIRECT',
       provider: PROVIDERS.AKBANK,
       merchant_oid: order.orderId,
       gatewayUrl: config.gatewayUrl,
       token: `AKB-${rnd}`,
-      postParams: {
-        clientid: config.clientId,
-        amount: amount,
-        oid: order.orderId,
-        okUrl: okUrl,
-        failUrl: failUrl,
-        rnd: rnd,
-        hash: hash,
-        storetype: storetype,
-        currency: currency,
-        lang: 'tr'
-      }
+      postParams: postParams
     };
   }
 

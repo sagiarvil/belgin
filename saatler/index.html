@@ -40445,68 +40445,6 @@
   </a>
 </nav>
 
-<!-- AKBANK 3D SECURE DOĞRULAMA MODAL KATMANI -->
-<div class="akbank-3d-overlay" id="akbank3dOverlay" role="dialog" aria-modal="true" aria-labelledby="akbank3dTitle">
-  <div class="akbank-3d-dialog">
-    <div class="akbank-3d-header">
-      <div style="display:flex; align-items:center; gap:8px;">
-        <span class="akbank-3d-logo-text">AKBANK</span>
-        <span style="font-size:12px; font-weight:700; opacity:0.9;">| Sanal POS</span>
-      </div>
-      <span class="akbank-3d-sec-tag">3D Secure 2.0</span>
-    </div>
-    
-    <div class="akbank-3d-body">
-      <div style="text-align:center; margin-bottom:16px;">
-        <h3 id="akbank3dTitle" style="font-size:16px; font-weight:700; color:#111827; margin-bottom:4px;">İşlem Güvenlik Doğrulaması</h3>
-        <p style="font-size:12px; color:#6B7280; margin:0;">Bankanızda kayıtlı cep telefonunuza iletilen tek kullanımlık SMS onay kodunu giriniz.</p>
-      </div>
-
-      <div class="akbank-3d-info-table">
-        <div class="akbank-3d-info-row">
-          <span>İşyeri / Firma:</span>
-          <strong>BELGİN KUYUMCULUK - SEMİH SONBAHAR</strong>
-        </div>
-        <div class="akbank-3d-info-row">
-          <span>Üye İşyeri No:</span>
-          <strong>12865794</strong>
-        </div>
-        <div class="akbank-3d-info-row">
-          <span>İşlem Tutarı:</span>
-          <strong id="modal3dAmount" style="color:#ED1C24; font-size:14px;">₺0,00</strong>
-        </div>
-        <div class="akbank-3d-info-row">
-          <span>Kart Numarası:</span>
-          <strong id="modal3dCardMask">**** **** **** ****</strong>
-        </div>
-        <div class="akbank-3d-info-row">
-          <span>Telefon:</span>
-          <strong id="modal3dPhoneMask">05** *** ** **</strong>
-        </div>
-      </div>
-
-      <form onsubmit="event.preventDefault(); App.verify3dOtp();">
-        <div class="akbank-otp-box">
-          <label style="display:block; font-size:12px; font-weight:700; color:#374151; margin-bottom:6px;">6 Haneli Onay Kodu</label>
-          <input type="text" id="akbankOtpInput" class="akbank-otp-input" maxlength="6" placeholder="••••••" autocomplete="one-time-code" autofocus required>
-          <div class="akbank-timer-text">Kalan Süre: <span id="akbank3dTimer" style="font-weight:700; color:#ED1C24;">03:00</span></div>
-        </div>
-
-        <div style="background:#FEF2F2; border:1px solid #FECACA; border-radius:6px; padding:8px 12px; font-size:11.5px; color:#991B1B; margin-bottom:16px; text-align:center;">
-          ℹ️ <strong>Banka Değerlendirme & Test Kodu:</strong> <code>123456</code>
-        </div>
-
-        <button type="submit" id="btnConfirm3d" class="akbank-3d-btn-submit">
-          Doğrula ve Ödemeyi Tamamla
-        </button>
-        <button type="button" class="akbank-3d-btn-cancel" onclick="App.close3DSecureModal()">
-          İşlemi İptal Et
-        </button>
-      </form>
-    </div>
-  </div>
-</div>
-
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 

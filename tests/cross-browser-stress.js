@@ -76,13 +76,13 @@ runTest('5. Edge InPrivate ve Safari Private Browsing modunda StorageException �
   assert(appJs.includes('processOrder'), 'App processOrder fonksiyonu mevcut');
 });
 
-// 6. VIP Payment Page Form Validation and Akbank 3D OTP Modal
-runTest('6. VIP ödeme sayfası tüm tarayıcılarda doğrudan kart giriş formu ve Akbank 3D Secure modalı barındırıyor', () => {
+// 6. VIP Payment Page Form Validation and Akbank 3D Secure Integration
+runTest('6. VIP ödeme sayfası tüm tarayıcılarda doğrudan kart giriş formu ve Akbank 3D Secure kapısı barındırıyor', () => {
   const vipHtml = fs.readFileSync(path.join(ROOT_DIR, 'vip-odeme.html'), 'utf8');
   assert(vipHtml.includes('id="vipCcNumber"'), 'Kart numarası alanı eksik');
   assert(vipHtml.includes('id="vipCcExpiry"'), 'Son kullanma tarihi alanı eksik');
   assert(vipHtml.includes('id="vipCcCvc"'), 'CVC alanı eksik');
-  assert(vipHtml.includes('id="vipOtpModal"'), 'Akbank OTP modalı eksik');
+  assert(vipHtml.includes('processVipPayment'), 'VIP ödeme işleme motoru eksik');
 });
 
 // 7. Simulating 100 concurrent cart updates and conversions

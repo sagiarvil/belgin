@@ -378,6 +378,9 @@ class PaymentService {
     try {
       providerResult = await provider.createPayment({
         order: orderData,
+        cardNumber: body.cardNumber,
+        cardCvc: body.cardCvc,
+        cardExpiry: body.cardExpiry,
         clientIp,
         testMode,
       });
