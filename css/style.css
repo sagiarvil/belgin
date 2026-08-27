@@ -117,8 +117,8 @@ p, span, li, td, th, label, input, button, select, textarea {
    1. ULTRA-PREMIUM TOPBAR & İZMİR TELEFONLARI & ÇOKLU PARA BİRİMİ
    ========================================================== */
 .topbar-teal {
-  background: #00223e;
-  color: #E2EAF0;
+  background: #072618;
+  color: #EAF3EF;
   font-size: 11.5px;
   height: 40px;
   display: flex;
@@ -306,9 +306,9 @@ p, span, li, td, th, label, input, button, select, textarea {
 .header {
   position: sticky;
   top: 0;
-  background: #003057;
+  background: linear-gradient(90deg, #0b3e27 0%, #197149 100%);
   border-bottom: 1px solid rgba(194, 167, 104, 0.35);
-  box-shadow: 0 4px 25px rgba(0, 48, 87, 0.35);
+  box-shadow: 0 4px 25px rgba(11, 62, 39, 0.28);
   z-index: 1000;
   transition: all 0.3s var(--ease-silk);
 }
