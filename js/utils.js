@@ -75,148 +75,115 @@ function isValidMarketRate(val, min = 1000, max = 500000) {
 }
 
 /**
- * 3-KADEMELİ HATA TOLERANSLI CANLI KUR MOTORU (İZKO + TRUNCGIL + SENTETİK ONS)
- * Tier-1: İzmir Kuyumcular Odası (İZKO) Resmi API
- * Tier-2: Truncgil Finans API
- * Tier-3: Ons & USD/TRY Sentetik Borsa Türetimi
+ * İZMİR KUYUMCULAR ODASI (İZKO) CANLI KUR MOTORU (15 DAKİKALIK OTOMASYON)
+ * Kaynak: https://www.izko.org.tr/guncel-kur
+ * Tier-1: Belgin Backend İZKO Proxy & Cache Servisi (/api/market/izko-rates)
+ * Tier-2: İZKO Resmi API Doğrudan Çağrısı (https://www.izko.org.tr/api/web/v1/gold-prices)
  */
 async function fetchLiveMarketRates() {
   let izkoSuccess = false;
-  let truncgilSuccess = false;
 
-  // 1. TIER-1: İZKO RESMİ KUR API ÇAĞRISI
+  // 1. TIER-1: Belgin Backend İZKO Servisi (CORS korumalı & 15 dk önbellekli)
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 6000);
-    const res = await fetch('https://www.izko.org.tr/api/web/v1/gold-prices', { signal: controller.signal });
+    const res = await fetch('/api/market/izko-rates', { signal: controller.signal });
     clearTimeout(timeoutId);
 
     if (res.ok) {
-      const json = await res.json();
-      if (json && json.success && Array.isArray(json.data) && json.data.length > 0) {
-        json.data.forEach(item => {
-          const price = parseFloat(item.sell_price || item.buy_price) || 0;
-          if (isValidMarketRate(price)) {
-            switch (item.key) {
-              case 'hasaltin':
-                LIVE_MARKET_DATA.hasAltin = price;
-                LIVE_MARKET_DATA.gramGold24k = price;
-                break;
-              case 'yirmiiki':
-              case 'gram':
-                LIVE_MARKET_DATA.gramGold22k = price;
-                break;
-              case 'onsekiz':
-                LIVE_MARKET_DATA.gramGold18k = price;
-                break;
-              case 'ondort':
-                LIVE_MARKET_DATA.gramGold14k = price;
-                break;
-              case 'sekizayar':
-                LIVE_MARKET_DATA.gramGold8k = price;
-                break;
-              case 'yeniceyrek':
-                LIVE_MARKET_DATA.quarterGold = price;
-                break;
-              case 'eskiceyrek':
-                LIVE_MARKET_DATA.oldQuarterGold = price;
-                break;
-              case 'yeniyarim':
-                LIVE_MARKET_DATA.halfGold = price;
-                break;
-              case 'yenitam':
-                LIVE_MARKET_DATA.fullGold = price;
-                break;
-              case 'ata':
-                LIVE_MARKET_DATA.ataGold = price;
-                break;
-              case 'paketlihas':
-                LIVE_MARKET_DATA.packagedGold = price;
-                break;
-            }
-          }
-        });
-
-        if (json.data[0] && json.data[0].percent_change !== undefined) {
-          const chgNum = parseFloat(json.data[0].percent_change) || 0;
-          const chg = (chgNum >= 0 ? '+' : '') + chgNum.toFixed(2) + '%';
-          LIVE_MARKET_DATA.changeGram = chg;
-          LIVE_MARKET_DATA.change22k = chg;
-          LIVE_MARKET_DATA.changeQuarter = chg;
-        }
-
-        LIVE_MARKET_DATA.lastUpdated = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      const data = await res.json();
+      if (data && data.hasAltin && data.hasAltin > 1000) {
+        LIVE_MARKET_DATA.hasAltin = data.hasAltin;
+        LIVE_MARKET_DATA.gramGold24k = data.gramGold24k || data.hasAltin;
+        LIVE_MARKET_DATA.gramGold22k = data.gramGold22k || 6680;
+        LIVE_MARKET_DATA.gramGold18k = data.gramGold18k || 6400;
+        LIVE_MARKET_DATA.gramGold14k = data.gramGold14k || 5940;
+        LIVE_MARKET_DATA.gramGold8k = data.gramGold8k || 3440;
+        LIVE_MARKET_DATA.quarterGold = data.quarterGold || 11740;
+        LIVE_MARKET_DATA.oldQuarterGold = data.oldQuarterGold || 11570;
+        LIVE_MARKET_DATA.halfGold = data.halfGold || 23500;
+        LIVE_MARKET_DATA.fullGold = data.fullGold || 46710;
+        LIVE_MARKET_DATA.ataGold = data.ataGold || 47330;
+        LIVE_MARKET_DATA.packagedGold = data.packagedGold || 7224.27;
+        LIVE_MARKET_DATA.changeGram = data.changeGram || '+0.04%';
+        LIVE_MARKET_DATA.change22k = data.change22k || '+0.04%';
+        LIVE_MARKET_DATA.changeQuarter = data.changeQuarter || '+0.04%';
+        LIVE_MARKET_DATA.lastUpdated = data.lastUpdatedFormatted || new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
         izkoSuccess = true;
       }
     }
   } catch (err) {
-    // Tier-1 geçici bağlantı/ağ durumu
+    // Backend servisi henüz başlamamışsa Tier-2 doğrudan İZKO'ya bağlanır
   }
 
-  // 2. TIER-2: TRUNCGIL FİNANS API (DÖVİZ & YEDEK ALTIN)
-  let rawOnsUsd = 0;
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 6000);
-    const dRes = await fetch('https://finans.truncgil.com/v3/today.json', { signal: controller.signal });
-    clearTimeout(timeoutId);
+  // 2. TIER-2: İZKO Resmi API Doğrudan Çağrısı
+  if (!izkoSuccess) {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 6000);
+      const res = await fetch('https://www.izko.org.tr/api/web/v1/gold-prices', { signal: controller.signal });
+      clearTimeout(timeoutId);
 
-    if (dRes.ok) {
-      const dData = await dRes.json();
-      if (dData && dData.USD) {
-        const usd = parseFloat(String(dData.USD.Selling || dData.USD.Buying || 0).replace(/\./g, '').replace(',', '.'));
-        const eur = parseFloat(String(dData.EUR.Selling || dData.EUR.Buying || 0).replace(/\./g, '').replace(',', '.'));
-        if (isValidMarketRate(usd, 10, 200)) {
-          LIVE_MARKET_DATA.usdTry = +usd.toFixed(2);
-          EXCHANGE_RATES.USD = 1 / usd;
-        }
-        if (isValidMarketRate(eur, 10, 250)) {
-          LIVE_MARKET_DATA.eurTry = +eur.toFixed(2);
-          EXCHANGE_RATES.EUR = 1 / eur;
-        }
+      if (res.ok) {
+        const json = await res.json();
+        if (json && json.success && Array.isArray(json.data) && json.data.length > 0) {
+          json.data.forEach(item => {
+            const price = parseFloat(item.sell_price || item.buy_price) || 0;
+            if (isValidMarketRate(price)) {
+              switch (item.key) {
+                case 'hasaltin':
+                  LIVE_MARKET_DATA.hasAltin = price;
+                  LIVE_MARKET_DATA.gramGold24k = price;
+                  break;
+                case 'yirmiiki':
+                case 'gram':
+                  LIVE_MARKET_DATA.gramGold22k = price;
+                  break;
+                case 'onsekiz':
+                  LIVE_MARKET_DATA.gramGold18k = price;
+                  break;
+                case 'ondort':
+                  LIVE_MARKET_DATA.gramGold14k = price;
+                  break;
+                case 'sekizayar':
+                  LIVE_MARKET_DATA.gramGold8k = price;
+                  break;
+                case 'yeniceyrek':
+                  LIVE_MARKET_DATA.quarterGold = price;
+                  break;
+                case 'eskiceyrek':
+                  LIVE_MARKET_DATA.oldQuarterGold = price;
+                  break;
+                case 'yeniyarim':
+                  LIVE_MARKET_DATA.halfGold = price;
+                  break;
+                case 'yenitam':
+                  LIVE_MARKET_DATA.fullGold = price;
+                  break;
+                case 'ata':
+                  LIVE_MARKET_DATA.ataGold = price;
+                  break;
+                case 'paketlihas':
+                  LIVE_MARKET_DATA.packagedGold = price;
+                  break;
+              }
+            }
+          });
 
-        if (dData.ons && dData.ons.Selling) {
-          const ons = parseFloat(String(dData.ons.Selling).replace(/\$/g, '').replace(/\./g, '').replace(',', '.'));
-          if (isValidMarketRate(ons, 1000, 10000)) rawOnsUsd = ons;
-        }
-
-        // İZKO başarısız olduysa Truncgil altın kurları ile devre kesiciyi doldur
-        if (!izkoSuccess && dData['gram-altin']) {
-          const g24 = parseFloat(String(dData['gram-altin'].Selling || 0).replace(/\./g, '').replace(',', '.'));
-          const g22 = parseFloat(String(dData['22-ayar-bilezik']?.Selling || 0).replace(/\./g, '').replace(',', '.'));
-          const qtr = parseFloat(String(dData['ceyrek-altin']?.Selling || 0).replace(/\./g, '').replace(',', '.'));
-          const yar = parseFloat(String(dData['yarim-altin']?.Selling || 0).replace(/\./g, '').replace(',', '.'));
-          const tam = parseFloat(String(dData['tam-altin']?.Selling || 0).replace(/\./g, '').replace(',', '.'));
-          const ata = parseFloat(String(dData['cumhuriyet-altini']?.Selling || 0).replace(/\./g, '').replace(',', '.'));
-
-          if (isValidMarketRate(g24, 3000, 50000)) {
-            LIVE_MARKET_DATA.gramGold24k = Math.round(g24);
-            LIVE_MARKET_DATA.hasAltin = Math.round(g24);
+          if (json.data[0] && json.data[0].percent_change !== undefined) {
+            const chgNum = parseFloat(json.data[0].percent_change) || 0;
+            const chg = (chgNum >= 0 ? '+' : '') + chgNum.toFixed(2) + '%';
+            LIVE_MARKET_DATA.changeGram = chg;
+            LIVE_MARKET_DATA.change22k = chg;
+            LIVE_MARKET_DATA.changeQuarter = chg;
           }
-          if (isValidMarketRate(g22, 3000, 50000)) LIVE_MARKET_DATA.gramGold22k = Math.round(g22);
-          if (isValidMarketRate(qtr, 5000, 100000)) LIVE_MARKET_DATA.quarterGold = Math.round(qtr);
-          if (isValidMarketRate(yar, 10000, 200000)) LIVE_MARKET_DATA.halfGold = Math.round(yar);
-          if (isValidMarketRate(tam, 20000, 400000)) LIVE_MARKET_DATA.fullGold = Math.round(tam);
-          if (isValidMarketRate(ata, 20000, 400000)) LIVE_MARKET_DATA.ataGold = Math.round(ata);
-          truncgilSuccess = true;
+
+          LIVE_MARKET_DATA.lastUpdated = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+          izkoSuccess = true;
         }
       }
-    }
-  } catch (e) {
-    // Tier-2 geçici bağlantı/ağ durumu
-  }
-
-  // 3. TIER-3: SENTETİK ONS HESAPLAMA (Tüm API'ler kesilirse sentetik türetim)
-  if (!izkoSuccess && !truncgilSuccess && rawOnsUsd > 0 && LIVE_MARKET_DATA.usdTry > 0) {
-    const syntheticGram24k = Math.round((rawOnsUsd / 31.1034768) * LIVE_MARKET_DATA.usdTry * 0.995);
-    if (isValidMarketRate(syntheticGram24k, 3000, 50000)) {
-      LIVE_MARKET_DATA.gramGold24k = syntheticGram24k;
-      LIVE_MARKET_DATA.hasAltin = syntheticGram24k;
-      LIVE_MARKET_DATA.gramGold22k = Math.round(syntheticGram24k * 0.916);
-      LIVE_MARKET_DATA.quarterGold = Math.round(syntheticGram24k * 1.754 * 0.916 * 1.03);
-      LIVE_MARKET_DATA.halfGold = Math.round(LIVE_MARKET_DATA.quarterGold * 2);
-      LIVE_MARKET_DATA.fullGold = Math.round(LIVE_MARKET_DATA.quarterGold * 4);
-      LIVE_MARKET_DATA.ataGold = Math.round(syntheticGram24k * 7.216 * 0.916 * 1.03);
+    } catch (err) {
+      // Tier-2 geçici durum
     }
   }
 

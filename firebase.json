@@ -25,6 +25,9 @@
       "functions/**",
       "tests/**",
       "scripts/**",
+      "scratch/**",
+      "izko-rates-cache.json",
+      "*.log",
       "belgin_kuyumculuk_hukuki_sozlesme_paketi/**",
       "**/*.docx",
       "**/*.xlsx",
@@ -37,6 +40,22 @@
     ],
     "cleanUrls": false,
     "rewrites": [
+      {
+        "source": "/admin",
+        "destination": "/admin.html"
+      },
+      {
+        "source": "/api/admin/orders/confirm",
+        "function": "confirmAdminOrder"
+      },
+      {
+        "source": "/api/admin/orders",
+        "function": "getAdminOrders"
+      },
+      {
+        "source": "/api/market/izko-rates",
+        "function": "getIzkoRates"
+      },
       {
         "source": "/api/payment/create",
         "function": "createPayment"

@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yönetici Paneli — Satış ve Tahsilat Takibi | Belgin Kuyumculuk</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    :root {
+      --admin-bg: #FAF9F5;
+      --admin-card: #FFFFFF;
+      --admin-border: #E2DED5;
+      --admin-teal: #084C47;
+      --admin-teal-dark: #05332F;
+      --admin-gold: #C2A768;
+      --admin-gold-dark: #9A7B38;
+      --admin-ink: #111413;
+      --admin-muted: #6B7280;
+    }
+
+    body {
+      background-color: var(--admin-bg);
+      color: var(--admin-ink);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    /* ÜST YÖNETİCİ BAŞLIĞI */
+    .admin-navbar {
+      background: var(--admin-teal-dark);
+      color: #FFFFFF;
+      border-bottom: 2px solid var(--admin-gold);
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+
+    .admin-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .admin-brand img {
+      height: 36px;
+      width: auto;
+      filter: brightness(0) invert(1);
+    }
+
+    .admin-title-badge {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      background: rgba(194, 167, 104, 0.2);
+      color: var(--admin-gold);
+      border: 1px solid rgba(194, 167, 104, 0.4);
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+
+    .admin-nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-admin-logout {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.25);
+      color: #FFF;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-admin-logout:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: var(--admin-gold);
+    }
+
+    /* ANA KONTEYNER */
+    .admin-container {
+      max-width: 1340px;
+      margin: 28px auto;
+      padding: 0 20px;
+    }
+
+    /* FİLTRE & TARİH ÇUBUĞU */
+    .admin-filter-panel {
+      background: var(--admin-card);
+      border: 1px solid var(--admin-border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    }
+
+    .admin-presets {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-preset {
+      background: #F3F1EB;
+      border: 1px solid var(--admin-border);
+      color: var(--admin-ink);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-preset:hover {
+      background: #E8E4DA;
+    }
+    .btn-preset.active {
+      background: var(--admin-teal);
+      color: #FFFFFF;
+      border-color: var(--admin-teal);
+    }
+
+    .admin-filter-row {
+      display: grid;
+      grid-template-columns: auto auto 1fr auto auto;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .date-input-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .date-input-wrap label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--admin-muted);
+    }
+    .date-input-wrap input[type="date"] {
+      border: 1px solid var(--admin-border);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      background: #FFF;
+      font-weight: 600;
+    }
+
+    .admin-search-input {
+      width: 100%;
+      border: 1px solid var(--admin-border);
+      padding: 9px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      background: #FFF;
+      box-sizing: border-box;
+    }
+
+    .admin-select {
+      border: 1px solid var(--admin-border);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      background: #FFF;
+      font-weight: 600;
+    }
+
+    .btn-admin-primary {
+      background: var(--admin-teal);
+      color: #FFF;
+      border: 1px solid var(--admin-teal);
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-admin-primary:hover {
+      background: var(--admin-teal-dark);
+    }
+
+    .btn-admin-secondary {
+      background: #FFFFFF;
+      color: var(--admin-teal);
+      border: 1px solid var(--admin-teal);
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-admin-secondary:hover {
+      background: #F0F7F6;
+    }
+
+    /* KPI METRİK KARTLARI */
+    .admin-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .admin-kpi-card {
+      background: var(--admin-card);
+      border: 1px solid var(--admin-border);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+      position: relative;
+      overflow: hidden;
+    }
+    .admin-kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--admin-gold);
+    }
+    .admin-kpi-card.kpi-teal::before {
+      background: var(--admin-teal);
+    }
+
+    .kpi-label {
+      font-size: 11.5px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--admin-muted);
+      margin-bottom: 6px;
+    }
+
+    .kpi-value {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--admin-ink);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .kpi-subtext {
+      font-size: 12px;
+      color: var(--admin-muted);
+      margin-top: 6px;
+    }
+
+    /* SİPARİŞ TABLOSU */
+    .admin-table-card {
+      background: var(--admin-card);
+      border: 1px solid var(--admin-border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.03);
+    }
+
+    .admin-table-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--admin-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #FCFBF9;
+    }
+
+    .admin-table-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--admin-teal-dark);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .admin-table-wrapper {
+      overflow-x: auto;
+    }
+
+    table.admin-orders-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+
+    table.admin-orders-table th {
+      background: #F7F5EE;
+      color: var(--admin-teal-dark);
+      padding: 12px 16px;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--admin-border);
+      white-space: nowrap;
+    }
+
+    table.admin-orders-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #ECE8E0;
+      vertical-align: middle;
+    }
+
+    table.admin-orders-table tr:hover {
+      background: #FAF8F2;
+    }
+
+    /* DURUM ROZETLERİ */
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .badge-status-paid {
+      background: #EAF8F0;
+      color: #196C3A;
+      border: 1px solid #C4EED4;
+    }
+    .badge-status-pending {
+      background: #FFF8E6;
+      color: #946800;
+      border: 1px solid #FBE6B1;
+    }
+    .badge-status-failed {
+      background: #FDF2F2;
+      color: #9B1C1C;
+      border: 1px solid #F8B4B4;
+    }
+
+    .badge-provider {
+      background: #F0F4F8;
+      color: #1E429F;
+      border: 1px solid #D1D5DB;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    /* PIN GİRİŞ GÜVENLİK MODALI */
+    .admin-auth-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(4, 41, 38, 0.85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+    }
+
+    .admin-auth-box {
+      background: #FFFFFF;
+      border-radius: 14px;
+      border: 2px solid var(--admin-gold);
+      padding: 36px 32px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .admin-pin-input {
+      width: 100%;
+      letter-spacing: 8px;
+      font-size: 24px;
+      font-weight: 800;
+      text-align: center;
+      padding: 12px;
+      border: 2px solid var(--admin-border);
+      border-radius: 8px;
+      margin: 20px 0;
+      box-sizing: border-box;
+      font-family: monospace;
+    }
+    .admin-pin-input:focus {
+      outline: none;
+      border-color: var(--admin-teal);
+    }
+
+    /* DETAY MODALI */
+    .admin-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .admin-modal-overlay.open {
+      display: flex;
+    }
+    .admin-modal-box {
+      background: #FFF;
+      border-radius: 12px;
+      max-width: 650px;
+      width: 92%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 28px;
+      border: 1px solid var(--admin-border);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    }
+
+    @media (max-width: 992px) {
+      .admin-kpi-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .admin-filter-row {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 600px) {
+      .admin-kpi-grid {
+        grid-template-columns: 1fr;
+      }
+      .admin-filter-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- GÜVENLİ YÖNETİCİ PIN GİRİŞ KORUMASI -->
+<div class="admin-auth-overlay" id="adminAuthGate">
+  <div class="admin-auth-box">
+    <div style="font-size:36px; margin-bottom:10px;">🔒</div>
+    <h2 style="font-family:'Playfair Display',serif; margin:0 0 8px; color:var(--admin-teal-dark);">Belgin Yönetici Girişi</h2>
+    <p style="font-size:13px; color:var(--admin-muted); margin:0;">Satış ve tahsilat kayıtlarını görüntülemek için lütfen 4 haneli yönetici PIN kodunuzu giriniz.</p>
+    
+    <input type="password" id="adminPinInput" class="admin-pin-input" maxlength="8" placeholder="••••" autofocus onkeydown="if(event.key==='Enter') AdminApp.verifyPin()">
+    <div id="pinErrorMsg" style="color:#C81E1E; font-size:12.5px; font-weight:700; margin-bottom:14px; display:none;">Geçersiz PIN Kodu. Lütfen tekrar deneyiniz.</div>
+
+    <button type="button" class="btn-admin-primary" style="width:100%; justify-content:center; padding:12px; font-size:14px;" onclick="AdminApp.verifyPin()">
+      <span>Giriş Yap →</span>
+    </button>
+  </div>
+</div>
+
+<!-- ÜST YÖNETİCİ BAŞLIĞI -->
+<header class="admin-navbar">
+  <a href="/admin" class="admin-brand">
+    <img src="images/belgin-logo.png" alt="Belgin Kuyumculuk">
+    <span class="admin-title-badge">YÖNETİM & TAHSIILAT PANELİ</span>
+  </a>
+
+  <div class="admin-nav-actions">
+    <span id="liveClock" style="font-size:13px; color:var(--admin-gold); font-weight:600; font-family:monospace;">--:--:--</span>
+    <button class="btn-admin-logout" onclick="AdminApp.logout()">Çıkış Yap</button>
+  </div>
+</header>
+
+<main class="admin-container">
+
+  <!-- 1. FİLTRE VE TARİH SEÇİM ÇUBUĞU -->
+  <section class="admin-filter-panel">
+    
+    <!-- Hızlı Tarih Seçim Butonları -->
+    <div class="admin-presets">
+      <span style="font-size:12px; font-weight:700; color:var(--admin-muted); align-self:center; margin-right:4px;">Tarih Aralığı:</span>
+      <button class="btn-preset active" data-preset="all" onclick="AdminApp.selectPreset('all', this)">Tüm Zamanlar</button>
+      <button class="btn-preset" data-preset="today" onclick="AdminApp.selectPreset('today', this)">Bugün</button>
+      <button class="btn-preset" data-preset="yesterday" onclick="AdminApp.selectPreset('yesterday', this)">Dün</button>
+      <button class="btn-preset" data-preset="last7" onclick="AdminApp.selectPreset('last7', this)">Son 7 Gün</button>
+      <button class="btn-preset" data-preset="thisMonth" onclick="AdminApp.selectPreset('thisMonth', this)">Bu Ay</button>
+      <button class="btn-preset" data-preset="last30" onclick="AdminApp.selectPreset('last30', this)">Son 30 Gün</button>
+    </div>
+
+    <div class="admin-filter-row">
+      <div class="date-input-wrap">
+        <label for="startDate">Başlangıç:</label>
+        <input type="date" id="startDate" onchange="AdminApp.onCustomDateChange()">
+      </div>
+
+      <div class="date-input-wrap">
+        <label for="endDate">Bitiş:</label>
+        <input type="date" id="endDate" onchange="AdminApp.onCustomDateChange()">
+      </div>
+
+      <div>
+        <input type="text" id="searchInput" class="admin-search-input" placeholder="🔍 Sipariş no, müşteri adı veya telefon ile ara..." oninput="AdminApp.filterTable()">
+      </div>
+
+      <div>
+        <select id="statusFilter" class="admin-select" onchange="AdminApp.filterTable()">
+          <option value="PAID" selected>✅ Sadece Onaylananlar (Tahsil Edilen)</option>
+          <option value="ALL">📋 Tümü (Onaylanan & Bekleyenler)</option>
+          <option value="PENDING">⏳ Sadece Bekleyenler</option>
+          <option value="FAILED">❌ Sadece Başarısız</option>
+        </select>
+      </div>
+
+      <div style="display:flex; gap:8px;">
+        <button class="btn-admin-secondary" onclick="AdminApp.exportToCsv()" title="Muhasebe için Excel / CSV Raporu İndir">
+          <span>📥 CSV İndir</span>
+        </button>
+        <button class="btn-admin-primary" onclick="AdminApp.loadOrders()" title="Kayıtları Canlı Yenile">
+          <span>🔄 Yenile</span>
+        </button>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- 2. ÖZET METRİK KPI KARTLARI -->
+  <section class="admin-kpi-grid">
+    
+    <div class="admin-kpi-card kpi-teal">
+      <div class="kpi-label">Toplam Tahsilat (Ciro)</div>
+      <div class="kpi-value" id="kpiTotalVolume">₺0</div>
+      <div class="kpi-subtext" id="kpiVolumeSubtext">Filtrelenen dönemdeki onaylı net tutar</div>
+    </div>
+
+    <div class="admin-kpi-card">
+      <div class="kpi-label">Başarılı İşlem Adedi</div>
+      <div class="kpi-value" id="kpiSuccessCount">0</div>
+      <div class="kpi-subtext" id="kpiCountSubtext">Toplam sipariş / tahsilat sayısı</div>
+    </div>
+
+    <div class="admin-kpi-card">
+      <div class="kpi-label">Ortalama Sepet Tutarı (AOV)</div>
+      <div class="kpi-value" id="kpiAov">₺0</div>
+      <div class="kpi-subtext">İşlem başına ortalama tutar</div>
+    </div>
+
+    <div class="admin-kpi-card">
+      <div class="kpi-label">POS Kanal Dağılımı</div>
+      <div class="kpi-value" style="font-size:16px; font-weight:700; margin-top:4px;" id="kpiProviderStats">
+        Akbank: ₺0<br>POS Linki: ₺0
+      </div>
+      <div class="kpi-subtext" style="margin-top:4px;">Kanal bazında tahsilat</div>
+    </div>
+
+  </section>
+
+  <!-- 3. DETAYLI ÖDEME LİSTESİ TABLOSU -->
+  <section class="admin-table-card">
+    
+    <div class="admin-table-header">
+      <h3 class="admin-table-title">
+        <span>📋</span>
+        <span>Ödeme ve Satış Hareketleri</span>
+        <span style="font-size:12px; font-weight:600; color:var(--admin-muted);" id="tableCountBadge">(0 Kayıt)</span>
+      </h3>
+
+      <div style="font-size:12px; color:var(--admin-muted);" id="lastSyncTime">
+        Son Güncelleme: --:--:--
+      </div>
+    </div>
+
+    <div class="admin-table-wrapper">
+      <table class="admin-orders-table">
+        <thead>
+          <tr>
+            <th>Sipariş No</th>
+            <th>Tarih & Saat</th>
+            <th>Müşteri Adı & Telefon</th>
+            <th>Tutar (₺)</th>
+            <th>Kanal / POS</th>
+            <th>Durum</th>
+            <th>Teslimat</th>
+            <th>İşlem</th>
+          </tr>
+        </thead>
+        <tbody id="ordersTableBody">
+          <tr>
+            <td colspan="8" style="text-align:center; padding:36px; color:var(--admin-muted);">
+              Yükleniyor...
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </section>
+
+</main>
+
+<!-- İŞLEM DETAY MODALI -->
+<div class="admin-modal-overlay" id="orderDetailModal" onclick="if(event.target===this) AdminApp.closeModal();">
+  <div class="admin-modal-box">
+    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #EEE; padding-bottom:12px; margin-bottom:16px;">
+      <h3 style="margin:0; font-family:'Playfair Display',serif; color:var(--admin-teal-dark);">Sipariş & Tahsilat Detayı</h3>
+      <button style="background:none; border:none; font-size:22px; cursor:pointer; color:#888;" onclick="AdminApp.closeModal()">✕</button>
+    </div>
+
+    <div id="modalOrderContent"></div>
+  </div>
+</div>
+
+<script src="js/admin.js"></script>
+
+
+<div data-bank-pos-readiness="v1" style="max-width:1200px;margin:12px auto;padding:12px 18px;border:1px solid #d8e4e1;border-radius:8px;background:#f8fbfa;font-size:12px;line-height:1.6;color:#33413e;">
+  <strong>Müşteri Hizmetleri:</strong> <a href="mailto:destek@belginkuyumculuk.com">destek@belginkuyumculuk.com</a> · <strong>POS & Ödeme:</strong> <a href="mailto:pos@belginkuyumculuk.com">pos@belginkuyumculuk.com</a> · <strong>İade & Cayma:</strong> <a href="mailto:iade@belginkuyumculuk.com">iade@belginkuyumculuk.com</a> · <strong>Muhasebe:</strong> <a href="mailto:muhasebe@belginkuyumculuk.com">muhasebe@belginkuyumculuk.com</a> · <a href="tel:+905419305372">+90 541 930 53 72</a> · Menderes Caddesi No:231/B Buca / İzmir
+</div>
+</body>
+</html>

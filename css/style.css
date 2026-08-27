@@ -117,13 +117,13 @@ p, span, li, td, th, label, input, button, select, textarea {
    1. ULTRA-PREMIUM TOPBAR & İZMİR TELEFONLARI & ÇOKLU PARA BİRİMİ
    ========================================================== */
 .topbar-teal {
-  background: #03201e;
-  color: #E2DDD5;
+  background: #072618;
+  color: #EAF3EF;
   font-size: 11.5px;
   height: 40px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid rgba(194, 167, 104, 0.2);
+  border-bottom: 1px solid rgba(194, 167, 104, 0.25);
   letter-spacing: 0.3px;
 }
 .topbar-inner {
@@ -306,11 +306,9 @@ p, span, li, td, th, label, input, button, select, textarea {
 .header {
   position: sticky;
   top: 0;
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(194, 167, 104, 0.28);
-  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.04);
+  background: linear-gradient(90deg, #0b3e27 0%, #197149 100%);
+  border-bottom: 1px solid rgba(194, 167, 104, 0.35);
+  box-shadow: 0 4px 25px rgba(11, 62, 39, 0.28);
   z-index: 1000;
   transition: all 0.3s var(--ease-silk);
 }
@@ -331,7 +329,7 @@ p, span, li, td, th, label, input, button, select, textarea {
   flex-shrink: 0;
 }
 .logo-area-main .brand-crest, .logo-area .brand-crest {
-  color: var(--color-teal);
+  color: #D8BD7E;
   transition: transform 0.4s ease;
 }
 .logo-area-main:hover .brand-crest, .logo-area:hover .brand-crest {
@@ -346,14 +344,14 @@ p, span, li, td, th, label, input, button, select, textarea {
   font-size: 28px;
   font-weight: 700;
   letter-spacing: 5px;
-  color: var(--color-ink);
+  color: #FFFFFF;
   line-height: 1;
 }
 .logo-area-main .logo-sub, .logo-area .logo-sub {
   font-family: var(--font-sans);
   font-size: 9px;
   letter-spacing: 2px;
-  color: var(--color-teal);
+  color: #D8BD7E;
   text-transform: uppercase;
   font-weight: 700;
   margin-top: 3px;
@@ -381,7 +379,7 @@ p, span, li, td, th, label, input, button, select, textarea {
 }
 .nav-desktop a {
   text-decoration: none;
-  color: var(--color-ink);
+  color: #FFFFFF;
   font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 600;
@@ -407,7 +405,7 @@ p, span, li, td, th, label, input, button, select, textarea {
   transition: width 0.35s var(--ease-silk);
 }
 .nav-desktop a:hover::after, .nav-desktop a.active::after { width: 100%; }
-.nav-desktop a:hover, .nav-desktop a.active { color: var(--color-teal); }
+.nav-desktop a:hover, .nav-desktop a.active { color: #D8BD7E; }
 
 /* DROPDOWN & SUB-BRANDS ANIMATED MENU */
 .nav-has-dropdown {
@@ -419,10 +417,11 @@ p, span, li, td, th, label, input, button, select, textarea {
   display: inline-block;
   transition: transform 0.25s ease;
   vertical-align: middle;
+  color: #D8BD7E;
 }
 .nav-has-dropdown:hover .nav-arrow {
   transform: rotate(180deg);
-  color: var(--color-gold-dark);
+  color: var(--color-gold-bright);
 }
 .nav-dropdown-menu {
   position: absolute;
@@ -629,8 +628,8 @@ p, span, li, td, th, label, input, button, select, textarea {
   white-space: nowrap;
 }
 .btn-action-vip {
-  background: linear-gradient(135deg, #05332f 0%, #084c47 100%);
-  border: 1px solid rgba(194, 167, 104, 0.6);
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(194, 167, 104, 0.7);
   color: #FFFFFF;
   padding: 8px 18px;
   border-radius: var(--radius-full);
@@ -644,20 +643,20 @@ p, span, li, td, th, label, input, button, select, textarea {
   gap: 6px;
   transition: all 0.3s var(--ease-silk);
   text-decoration: none;
-  box-shadow: 0 4px 16px rgba(8, 76, 71, 0.22);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
   white-space: nowrap;
 }
 .btn-action-vip:hover {
-  background: #03201e;
+  background: #0b3e27;
   border-color: var(--color-gold-bright);
-  box-shadow: 0 6px 22px rgba(8, 76, 71, 0.4);
+  box-shadow: 0 6px 22px rgba(11, 62, 39, 0.45);
   transform: translateY(-1px);
 }
 
 .header-icon-btn {
-  background: transparent;
-  border: 1px solid var(--color-border);
-  color: var(--color-ink);
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
   width: 36px;
   height: 36px;
   border-radius: var(--radius-full);
@@ -668,9 +667,14 @@ p, span, li, td, th, label, input, button, select, textarea {
   cursor: pointer;
 }
 .header-icon-btn:hover {
-  color: var(--color-teal);
-  border-color: var(--color-gold);
-  background: var(--color-accent);
+  color: #D8BD7E;
+  border-color: #D8BD7E;
+  background: rgba(255, 255, 255, 0.12);
+}
+.btn-hamburger {
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
 }
 
 /* ==========================================================
@@ -2406,11 +2410,11 @@ p, span, li, td, th, label, input, button, select, textarea {
    10. HAUTE MAISON FOOTER (PAHALI & PRESTİJLİ GÖRÜNÜM)
    ========================================================== */
 .footer-art {
-  background: #070A09;
+  background: linear-gradient(90deg, #0b3e27 0%, #197149 100%);
   color: #FFFFFF;
   padding: 80px 0 40px;
   margin-top: auto;
-  border-top: 1px solid rgba(194, 167, 104, 0.3);
+  border-top: 1px solid rgba(194, 167, 104, 0.4);
   position: relative;
 }
 .footer-art::before {
@@ -2420,12 +2424,12 @@ p, span, li, td, th, label, input, button, select, textarea {
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(194, 167, 104, 0.6) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(216, 189, 126, 0.8) 50%, transparent 100%);
 }
 
 .footer-vip-strip {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(194, 167, 104, 0.2);
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(194, 167, 104, 0.35);
   border-radius: var(--radius-md);
   padding: 24px 32px;
   margin-bottom: 50px;
@@ -2446,7 +2450,7 @@ p, span, li, td, th, label, input, button, select, textarea {
 .footer-vip-left p {
   font-family: var(--font-body);
   font-size: 13px;
-  color: #9C9CA8;
+  color: #DCE8E3;
   font-weight: 400;
 }
 
@@ -2466,7 +2470,7 @@ p, span, li, td, th, label, input, button, select, textarea {
 }
 .footer-art-text, .footer-brand-desc {
   font-size: 13.5px;
-  color: #9C9CA8;
+  color: #DCE8E3;
   line-height: 1.8;
   max-width: 380px;
 }
@@ -2483,7 +2487,7 @@ p, span, li, td, th, label, input, button, select, textarea {
 .footer-art-col li { margin-bottom: 11px; }
 .footer-art-col a {
   text-decoration: none;
-  color: #8E8E9A;
+  color: #C4DCD3;
   font-size: 13px;
   transition: color 0.25s;
 }
@@ -2491,8 +2495,8 @@ p, span, li, td, th, label, input, button, select, textarea {
 
 .footer-etbis-box,
 .footer-legal-badge-box {
-  background: rgba(255, 255, 255, 0.025);
-  border: 1px solid rgba(194, 167, 104, 0.18);
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(194, 167, 104, 0.28);
   border-radius: var(--radius-md);
   padding: 18px 24px;
   margin-bottom: 34px;
@@ -2502,7 +2506,7 @@ p, span, li, td, th, label, input, button, select, textarea {
   flex-wrap: wrap;
   gap: 16px;
   font-size: 12px;
-  color: #A0A0AC;
+  color: #DCE8E3;
 }
 .etbis-badge-pill,
 .legal-badge-pill {
@@ -2510,7 +2514,7 @@ p, span, li, td, th, label, input, button, select, textarea {
   align-items: center;
   gap: 8px;
   background: #FFFFFF;
-  color: #070A09;
+  color: #0b3e27;
   padding: 6px 14px;
   border-radius: 4px;
   font-weight: 700;
@@ -2519,7 +2523,7 @@ p, span, li, td, th, label, input, button, select, textarea {
 }
 
 .footer-art-bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
   padding-top: 28px;
   display: flex;
   justify-content: space-between;
@@ -2527,7 +2531,7 @@ p, span, li, td, th, label, input, button, select, textarea {
   flex-wrap: wrap;
   gap: 14px;
   font-size: 12px;
-  color: #72727C;
+  color: #B2D2C6;
 }
 .footer-legal-links {
   display: flex;
@@ -2535,11 +2539,11 @@ p, span, li, td, th, label, input, button, select, textarea {
   flex-wrap: wrap;
 }
 .footer-legal-links a {
-  color: #8E8E9A;
+  color: #C4DCD3;
   text-decoration: none;
   transition: color 0.2s;
 }
-.footer-legal-links a:hover { color: var(--color-gold); }
+.footer-legal-links a:hover { color: var(--color-gold-bright); }
 
 /* ==========================================================
    11. KVKK ÇEREZ BANNER'I

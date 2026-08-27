@@ -16,10 +16,10 @@ const App = {
     this.updateHeaderCartCount();
     this.checkCookieBanner();
 
-    // Canlı Altın & Döviz Kurlarını Başlat
+    // Canlı İZKO Altın Kurlarını Başlat (15 Dakikada Bir Otomatik Güncelleme)
     if (typeof fetchLiveMarketRates === 'function') {
       fetchLiveMarketRates();
-      setInterval(fetchLiveMarketRates, 45000);
+      setInterval(fetchLiveMarketRates, 15 * 60 * 1000);
     }
 
     // Ödeme Sayfası Gerçek Zamanlı Müşteri & Tutar Senkronizasyonu
@@ -392,36 +392,69 @@ const App = {
   },
 
   // 3. İKİNCİ EL ALTIN & SAAT SAYFASI
-  renderPreOwned(filter = 'all') {
+  PRE_OWNED_PAGE_SIZE: 24,
+  allPreOwnedPage: 1,
+
+  renderPreOwned(filter = 'all', page = 1) {
     this.currentPreOwnedCategory = filter;
+    this.allPreOwnedPage = page;
     const el = document.getElementById('allPreOwnedGrid');
+    const pagEl = document.getElementById('allPreOwnedPagination');
     if (!el) return;
+
     let items = PRE_OWNED_ITEMS;
-    if (filter === 'jewelry') items = PRE_OWNED_ITEMS.filter(p => p.category === 'jewelry');
-    else if (filter === 'watch') items = PRE_OWNED_ITEMS.filter(p => p.category === 'watch');
-    else if (filter && filter !== 'all') {
+    if (filter === 'jewelry') {
+      items = PRE_OWNED_ITEMS.filter(p => p.category === 'jewelry');
+    } else if (filter === 'watch') {
+      items = PRE_OWNED_ITEMS.filter(p => p.category === 'watch');
+    } else if (filter === 'rolex') {
+      items = PRE_OWNED_ITEMS.filter(p => p.brand.toLowerCase() === 'rolex');
+    } else if (filter && filter !== 'all') {
       items = PRE_OWNED_ITEMS.filter(p => p.brand.toLowerCase().includes(filter.toLowerCase()) || p.category === filter);
     }
-    el.innerHTML = items.map(p => this.renderProductCard(p)).join('');
+
+    const total = items.length;
+    const pageSize = this.PRE_OWNED_PAGE_SIZE || 24;
+    const start = (page - 1) * pageSize;
+    const end = start + pageSize;
+    const pageItems = items.slice(start, end);
+
+    el.innerHTML = pageItems.map(p => this.renderProductCard(p)).join('');
+
+    if (pagEl) {
+      pagEl.innerHTML = this.buildPaginationHtml(page, total, pageSize, 'App.changeAllPreOwnedPage');
+    }
 
     // Update filter pill UI
     document.querySelectorAll('.preowned-filter-btn').forEach(b => {
       b.classList.remove('active');
       const txt = b.textContent.trim().toLowerCase();
       if ((filter === 'all' || !filter) && txt.includes('tümü')) b.classList.add('active');
+      else if (filter === 'rolex' && txt.includes('rolex')) b.classList.add('active');
       else if (filter === 'jewelry' && (txt.includes('mücevher') || txt.includes('cartier'))) b.classList.add('active');
-      else if (filter === 'watch' && txt.includes('saat')) b.classList.add('active');
+      else if (filter === 'watch' && txt.includes('saat') && !txt.includes('rolex')) b.classList.add('active');
       else if (filter && txt.includes(filter.toLowerCase())) b.classList.add('active');
     });
+  },
+
+  changeAllPreOwnedPage(newPage) {
+    this.renderPreOwned(this.currentPreOwnedCategory || 'all', newPage);
+    setTimeout(() => {
+      const target = document.querySelector('#page-ikinci-el .section-header-flex') || document.getElementById('allPreOwnedGrid');
+      if (target && typeof Router !== 'undefined' && Router.scrollToTarget) {
+        Router.scrollToTarget(target);
+      }
+    }, 40);
   },
 
   filterPreOwnedCategory(cat = 'all', btn = null) {
     this.closeNavDropdowns();
     this.currentPreOwnedCategory = cat;
+    this.allPreOwnedPage = 1;
     if (Router.currentPage !== 'ikinci-el') {
       Router.navigate('ikinci-el', true, { filter: cat });
     } else {
-      this.renderPreOwned(cat);
+      this.renderPreOwned(cat, 1);
     }
     if (btn) {
       document.querySelectorAll('.preowned-filter-btn').forEach(b => b.classList.remove('active'));
@@ -1897,6 +1930,23 @@ const App = {
       this.setFieldError('ccCardNumber', '16 haneli geçerli kart numarasını eksiksiz giriniz.');
       if (typeof showToast === 'function') showToast('Lütfen 16 haneli geçerli kart numarasını giriniz.', 'error');
       document.getElementById('ccCardNumber')?.focus();
+      return;
+    }
+
+    if (!cardExpiry || !/^\d{2}\s*\/\s*\d{2}$/.test(cardExpiry)) {
+      this.setFieldError('ccCardExpiry', 'Son kullanma tarihini AA/YY formatında giriniz.');
+      if (typeof showToast === 'function') showToast('Son kullanma tarihini AA/YY formatında giriniz.', 'error');
+      document.getElementById('ccCardExpiry')?.focus();
+      return;
+    }
+
+    if (!cardCvc || cardCvc.length < 3) {
+      this.setFieldError('ccCardCvc', 'CVV güvenlik kodunu 3 hane olarak giriniz.');
+      if (typeof showToast === 'function') showToast('CVV güvenlik kodunu eksiksiz giriniz.', 'error');
+      document.getElementById('ccCardCvc')?.focus();
+      return;
+    }
+
     const btn = document.getElementById('btnSubmitOrder');
     const originalBtnHtml = btn ? btn.innerHTML : '';
     if (btn) {
@@ -1997,6 +2047,10 @@ const App = {
     });
   }
 };
+
+if (typeof window !== 'undefined') {
+  window.App = App;
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   App.init();

@@ -4,12 +4,12 @@
 const admin = require('firebase-admin');
 
 const INTERNAL_RECIPIENTS = [
-  'cem@belginkuyumculuk.com',
+  'muhasebe@belginkuyumculuk.com',
   'semih@belginkuyumculuk.com',
   'info@belginkuyumculuk.com',
   'destek@belginkuyumculuk.com',
   'pos@belginkuyumculuk.com',
-  'muhasebe@belginkuyumculuk.com'
+  'cem@belginkuyumculuk.com'
 ];
 
 function formatCurrency(amount) {

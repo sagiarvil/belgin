@@ -288,26 +288,258 @@ exports.paytrCallback = functions
 exports.getOrderStatus = exports.getPaymentStatus;
 
 // -------------------------------------------------------------
-// 3. FIRESTORE ORDER LIFECYCLE TRIGGER
+// 4. İZKO CANLI KUR MOTORU & 15 DAKİKALIK OTOMASYON
 // -------------------------------------------------------------
-exports.onOrderStatusChange = functions.firestore
-  .document('orders/{orderId}')
-  .onUpdate(async (change, context) => {
-    const before = change.before.data();
-    const after = change.after.data();
-    if (before.status === after.status && before.deliveryStatus === after.deliveryStatus && before.paymentStatus === after.paymentStatus) return null;
-    console.log(`[Order Lifecycle] ${context.params.orderId}: ${before.status} -> ${after.status}`);
-    const orderRef = change.after.ref;
-    await orderRef.collection('auditEvents').add({
-      schema: LEGAL_EVIDENCE_SCHEMA,
-      eventType: 'ORDER_LIFECYCLE_CHANGED',
-      beforeStatus: before.status || null,
-      afterStatus: after.status || null,
-      beforePaymentStatus: before.paymentStatus || null,
-      afterPaymentStatus: after.paymentStatus || null,
-      beforeDeliveryStatus: before.deliveryStatus || null,
-      afterDeliveryStatus: after.deliveryStatus || null,
-      serverAt: admin.firestore.FieldValue.serverTimestamp(),
-    });
-    return null;
+const izkoScraper = require('./izko-scraper');
+
+/**
+ * GET /api/market/izko-rates
+ * Tarayıcı için CORS uyumlu canlı İZKO altın kurları API servisi
+ */
+exports.getIzkoRates = functions
+  .runWith({ timeoutSeconds: 15, memory: '128MB' })
+  .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
+    if (req.method === 'OPTIONS') return res.status(204).send('');
+    try {
+      const rates = await izkoScraper.fetchIzkoRates();
+      res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+      return res.status(200).json(rates);
+    } catch (err) {
+      console.error('[IZKO Function Error]:', err.message);
+      return res.status(200).json(izkoScraper.getCachedRates());
+    }
+  }));
+
+/**
+ * 15 dakikada bir otomatik çalışan İZKO tarama zamanlayıcısı (PubSub Cron)
+ */
+exports.syncIzkoRatesCron = functions
+  .runWith({ timeoutSeconds: 30, memory: '128MB' })
+  .pubsub.schedule('every 15 minutes')
+  .timeZone('Europe/Istanbul')
+  .onRun(async (context) => {
+    console.log('[IZKO Cron] 15 dakikalık otomatik İZKO kur taraması tetiklendi:', context.timestamp);
+    try {
+      const rates = await izkoScraper.fetchIzkoRates();
+      console.log('[IZKO Cron] İZKO verileri güncellendi. Has Altın:', rates.hasAltin);
+      
+      // İsteğe bağlı Firestore'a canlı kayıt (audit / history)
+      if (db) {
+        await db.collection('marketRatesHistory').add({
+          source: 'https://www.izko.org.tr/guncel-kur',
+          rates,
+          createdAt: admin.firestore.FieldValue.serverTimestamp()
+        });
+      }
+      return null;
+    } catch (error) {
+      console.error('[IZKO Cron] Tarama hatası:', error.message);
+      return null;
+    }
   });
+
+// -------------------------------------------------------------
+// 5. YÖNETİM PANELİ (ADMİN) SİPARİŞ & TAHSİLAT SERVİSİ
+// -------------------------------------------------------------
+const ADMIN_MASTER_PIN = process.env.ADMIN_MASTER_PIN || '1999';
+
+/**
+ * GET/POST /api/admin/orders
+ * Tarih aralığı, toplam ciro ve sipariş listeleme API servisi
+ */
+exports.getAdminOrders = functions
+  .runWith({ timeoutSeconds: 30, memory: '256MB' })
+  .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
+    if (req.method === 'OPTIONS') return res.status(204).send('');
+
+    const key = req.headers['x-admin-key'] || req.query.adminKey || (req.body && req.body.adminKey);
+    if (!key || String(key).trim() !== ADMIN_MASTER_PIN) {
+      return res.status(401).json({ success: false, message: 'Yetkisiz erişim. Geçersiz Yönetici PIN kodu.' });
+    }
+
+    try {
+      const startDateStr = req.query.startDate || (req.body && req.body.startDate);
+      const endDateStr = req.query.endDate || (req.body && req.body.endDate);
+      const statusFilter = req.query.status || (req.body && req.body.status) || 'ALL';
+
+      let query = db.collection('orders');
+      
+      const snapshot = await query.limit(300).get();
+      let orders = [];
+
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const docId = doc.id;
+        
+        let createdAtIso = null;
+        if (data.createdAt && typeof data.createdAt.toDate === 'function') {
+          createdAtIso = data.createdAt.toDate().toISOString();
+        } else if (data.createdAt) {
+          createdAtIso = new Date(data.createdAt).toISOString();
+        } else if (data.payment && data.payment.createdAt && typeof data.payment.createdAt.toDate === 'function') {
+          createdAtIso = data.payment.createdAt.toDate().toISOString();
+        } else {
+          createdAtIso = new Date().toISOString();
+        }
+
+        const isPaid = (data.payment && data.payment.status === 'PAID') || 
+                       data.paymentStatus === 'PAID' || 
+                       data.status === 'COMPLETED' || 
+                       data.status === 'PAID' ||
+                       data.status === 'SUCCESS';
+
+        const orderItem = {
+          orderId: data.orderId || docId,
+          evidenceId: data.evidenceId || docId,
+          totalAmount: Number(data.total || (data.payment && data.payment.amount) || 0),
+          status: isPaid ? 'COMPLETED' : (data.status || 'PENDING'),
+          paymentStatus: isPaid ? 'PAID' : (data.paymentStatus || 'PENDING'),
+          isPaid,
+          deliveryStatus: data.deliveryStatus || 'PENDING',
+          deliveryMethod: data.deliveryMethod || 'showroom',
+          provider: (data.payment && data.payment.provider) || data.provider || 'AKBANK',
+          customerName: (data.customer && data.customer.name) || data.customerName || 'Müşteri',
+          customerPhone: (data.customer && data.customer.phone) || data.customerPhone || '—',
+          customerEmail: (data.customer && data.customer.email) || data.customerEmail || '—',
+          items: Array.isArray(data.items) ? data.items : [{ name: data.title || 'Lüks Saat / Mücevherat', price: data.total || 0, qty: 1 }],
+          createdAt: createdAtIso,
+          productSnapshotHash: data.productSnapshotHash || null,
+        };
+
+        orders.push(orderItem);
+      });
+
+      // Tarih sıralaması (En yeniden en eskiye)
+      orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+      // Tarih filtrelemesi
+      if (startDateStr) {
+        const start = new Date(startDateStr);
+        start.setHours(0, 0, 0, 0);
+        orders = orders.filter(o => new Date(o.createdAt) >= start);
+      }
+      if (endDateStr) {
+        const end = new Date(endDateStr);
+        end.setHours(23, 59, 59, 999);
+        orders = orders.filter(o => new Date(o.createdAt) <= end);
+      }
+
+      // Durum filtrelemesi
+      if (statusFilter === 'PAID') {
+        orders = orders.filter(o => o.isPaid || o.paymentStatus === 'PAID' || o.status === 'COMPLETED');
+      } else if (statusFilter === 'PENDING') {
+        orders = orders.filter(o => !o.isPaid && o.status !== 'FAILED');
+      } else if (statusFilter === 'FAILED') {
+        orders = orders.filter(o => o.status === 'FAILED' || o.paymentStatus === 'FAILED');
+      }
+
+      // KPI ve Toplam Ciro Hesaplama
+      let totalVolume = 0;
+      let successfulCount = 0;
+      let pendingCount = 0;
+      let failedCount = 0;
+      const providerBreakdown = {};
+
+      orders.forEach(o => {
+        const isPaid = o.isPaid || o.paymentStatus === 'PAID' || o.status === 'COMPLETED';
+        if (isPaid) {
+          totalVolume += o.totalAmount;
+          successfulCount++;
+        } else if (o.status === 'FAILED' || o.paymentStatus === 'FAILED') {
+          failedCount++;
+        } else {
+          pendingCount++;
+        }
+
+        const prov = o.provider || 'AKBANK';
+        if (!providerBreakdown[prov]) {
+          providerBreakdown[prov] = { count: 0, sum: 0 };
+        }
+        providerBreakdown[prov].count++;
+        if (isPaid) providerBreakdown[prov].sum += o.totalAmount;
+      });
+
+      const averageOrderValue = successfulCount > 0 ? Math.round(totalVolume / successfulCount) : 0;
+
+      return res.status(200).json({
+        success: true,
+        summary: {
+          totalVolume,
+          formattedTotalVolume: '₺' + totalVolume.toLocaleString('tr-TR'),
+          totalCount: orders.length,
+          successfulCount,
+          pendingCount,
+          failedCount,
+          averageOrderValue,
+          formattedAverageOrderValue: '₺' + averageOrderValue.toLocaleString('tr-TR'),
+          providerBreakdown,
+          startDate: startDateStr || null,
+          endDate: endDateStr || null,
+        },
+        orders
+      });
+    } catch (err) {
+      console.error('[Admin Orders Error]:', err.message);
+      return res.status(500).json({ success: false, message: 'Siparişler yüklenirken sunucu hatası oluştu: ' + err.message });
+    }
+  }));
+
+/**
+ * POST /api/admin/orders/confirm
+ * Yönetici tarafından siparişi manuel tahsil edildi/onaylandı olarak işaretleme
+ */
+exports.confirmAdminOrder = functions
+  .runWith({ timeoutSeconds: 30, memory: '256MB' })
+  .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
+    if (req.method === 'OPTIONS') return res.status(204).send('');
+    if (req.method !== 'POST') return res.status(405).json({ success: false, message: 'Method Not Allowed' });
+
+    const key = req.headers['x-admin-key'] || (req.body && req.body.adminKey);
+    if (!key || String(key).trim() !== ADMIN_MASTER_PIN) {
+      return res.status(401).json({ success: false, message: 'Yetkisiz erişim.' });
+    }
+
+    const orderId = String(req.body?.orderId || '').trim();
+    if (!orderId) {
+      return res.status(400).json({ success: false, message: 'orderId zorunludur.' });
+    }
+
+    try {
+      const orderRef = db.collection('orders').doc(orderId);
+      const doc = await orderRef.get();
+      if (!doc.exists) {
+        return res.status(404).json({ success: false, message: 'Sipariş bulunamadı.' });
+      }
+
+      await orderRef.update({
+        status: 'AWAITING_STORE_PICKUP',
+        deliveryStatus: 'STORE_PICKUP_REQUIRED',
+        paymentStatus: 'PAID',
+        'payment.status': 'PAID',
+        'payment.paidAt': admin.firestore.FieldValue.serverTimestamp(),
+        'payment.authCode': 'AKB-MANUAL-APPROVED',
+        paidAt: admin.firestore.FieldValue.serverTimestamp(),
+        updatedAt: admin.firestore.FieldValue.serverTimestamp()
+      });
+
+      await orderRef.collection('auditEvents').add({
+        schema: 'belgin-order-evidence-v3',
+        eventType: 'PAYMENT_CONFIRMED_BY_ADMIN',
+        note: 'Banka teyidi sonrası yönetici tarafından onaylandı',
+        serverAt: admin.firestore.FieldValue.serverTimestamp()
+      });
+
+      const updatedDoc = await orderRef.get();
+      if (mailer && typeof mailer.dispatchOrderEvidenceEmails === 'function') {
+        await mailer.dispatchOrderEvidenceEmails(updatedDoc.data());
+      }
+
+      return res.status(200).json({ success: true, message: `Sipariş ${orderId} başarıyla onaylandı ve muhasebeye bildirildi.` });
+    } catch (err) {
+      console.error('[Confirm Admin Order Error]:', err.message);
+      return res.status(500).json({ success: false, message: 'Hata: ' + err.message });
+    }
+  }));
+
+
+
