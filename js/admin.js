@@ -349,14 +349,22 @@ const AdminApp = {
           <td><span class="badge-provider">${o.provider || 'AKBANK'}</span></td>
           <td>${statusBadge}</td>
           <td style="font-size:12px;">${o.deliveryMethod === 'showroom' ? '🏢 Showroom' : '📦 Kargo'}</td>
-          <td>
-            <button class="btn-admin-secondary" style="padding:4px 10px; font-size:11.5px;" onclick="AdminApp.showDetail('${o.orderId}')">
+          <td style="display:flex; gap:6px;">
+            <button class="btn-admin-secondary" style="padding:4px 9px; font-size:11.5px;" onclick="AdminApp.showDetail('${o.orderId}')">
               Detay
+            </button>
+            <button class="btn-admin-secondary" style="padding:4px 9px; font-size:11.5px; border-color:#C2A768; color:#084C47; font-weight:700;" onclick="AdminApp.printLegalDocument('${o.orderId}')" title="Zaman Damgalı Sözleşme & Delil Çıktısı">
+              📜 Yasal Evrak
             </button>
           </td>
         </tr>
       `;
     }).join('');
+  },
+
+  // HUKUKİ DELİL & SÖZLEŞME ÇIKTISI AÇ
+  printLegalDocument(orderId) {
+    window.open(`/hukuki-evrak-yazdir.html?orderId=${encodeURIComponent(orderId)}`, '_blank');
   },
 
   // SİPARİŞ DETAY MODALI
@@ -417,7 +425,10 @@ const AdminApp = {
             ✅ Banka Tahsilatını Onayla
           </button>
         ` : ''}
-        <button class="btn-admin-secondary" onclick="window.print()">🖨️ Yazdır / Dekont Al</button>
+        <button class="btn-admin-secondary" style="background:#FAF8F2; border-color:#C2A768; color:#084C47; font-weight:700;" onclick="AdminApp.printLegalDocument('${order.orderId}')">
+          📜 Zaman Damgalı Sözleşme & Delil Çıktısı Al
+        </button>
+        <button class="btn-admin-secondary" onclick="window.print()">🖨️ Dekont Yazdır</button>
         <button class="btn-admin-primary" onclick="AdminApp.closeModal()">Kapat</button>
       </div>
     `;
