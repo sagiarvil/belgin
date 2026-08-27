@@ -65,13 +65,16 @@ class AkbankProvider {
     const randomNumber = getRandomNumberBase16(128);
     const requestDateTime = formatRequestDateTime();
     const currencyCode = '949'; // TL
-    const paymentModel = '3D';
-    const txnCode = '3000'; // Satış
+    const paymentModel = process.env.AKBANK_PAYMENT_MODEL || 'PAY_HOSTING';
+    const txnCode = paymentModel === 'PAY_HOSTING' ? '1000' : '3000'; // 1000: PayHosting Satış, 3000: 3D Satış
     const lang = 'TR';
     const installCount = '1';
     const emailAddress = order.customer?.email || 'destek@belginkuyumculuk.com';
+    const ccbRewardAmount = '0.00';
+    const pcbRewardAmount = '0.00';
+    const xcbRewardAmount = '0.00';
 
-    // Kart Bilgileri (3D Modelinde)
+    // Kart Bilgileri (Eğer 3D modeli kullanılıyorsa)
     const creditCard = String(order.cardNumber || params?.cardNumber || '').replace(/\D/g, '');
     const cvv = String(order.cardCvc || params?.cardCvc || '').replace(/\D/g, '');
     const rawExp = String(order.cardExpiry || params?.cardExpiry || '').trim();
@@ -86,31 +89,7 @@ class AkbankProvider {
 
     const cardHolderName = String(order.cardHolder || order.customer?.name || params?.cardHolder || 'SEMİH SONBAHAR').slice(0, 50).toLocaleUpperCase('tr-TR');
 
-    // Doküman Bölüm 6.1.1.1 Hash Sıralaması:
-    // paymentModel + txnCode + merchantSafeId + terminalSafeId + orderId + lang + amount + ccbRewardAmount + pcbRewardAmount + xcbRewardAmount + currencyCode + installCount + okUrl + failUrl + emailAddress + mobilePhone + homePhone + workPhone + subMerchantId + creditCard + expiredDate + cvv + cardHolderName + randomNumber + requestDateTime + b2bIdentityNumber + merchantData + merchantBranchNo + mobileEci + walletProgramData + mobileAssignedId + mobileDeviceType
-    const hashPlainItems = [
-      paymentModel,
-      txnCode,
-      config.merchantSafeId,
-      config.terminalSafeId,
-      order.orderId,
-      lang,
-      amount,
-      currencyCode,
-      installCount,
-      okUrl,
-      failUrl,
-      emailAddress,
-      creditCard,
-      expiredDate,
-      cvv,
-      cardHolderName,
-      randomNumber,
-      requestDateTime
-    ].join('');
-
-    const hash = calculateAkbankHash(hashPlainItems, config.storeKey);
-
+    let hashPlainItems = '';
     const postParams = {
       paymentModel,
       txnCode,
@@ -119,25 +98,82 @@ class AkbankProvider {
       orderId: order.orderId,
       lang,
       amount,
+      ccbRewardAmount,
+      pcbRewardAmount,
+      xcbRewardAmount,
       currencyCode,
       installCount,
       okUrl,
       failUrl,
       emailAddress,
-      creditCard,
-      expiredDate,
-      cvv,
-      cardHolderName,
       randomNumber,
-      requestDateTime,
-      hash
+      requestDateTime
     };
+
+    if (paymentModel === 'PAY_HOSTING') {
+      // Doküman Bölüm 5.2.1.1 PAY_HOSTING Hash Sıralaması:
+      // PAY_HOSTING + txnCode + merchantSafeId + terminalSafeId + orderId + lang + amount + ccbRewardAmount + pcbRewardAmount + xcbRewardAmount + currencyCode + installCount + okUrl + failUrl + emailAddress + randomNumber + requestDateTime
+      hashPlainItems = [
+        paymentModel,
+        txnCode,
+        config.merchantSafeId,
+        config.terminalSafeId,
+        order.orderId,
+        lang,
+        amount,
+        ccbRewardAmount,
+        pcbRewardAmount,
+        xcbRewardAmount,
+        currencyCode,
+        installCount,
+        okUrl,
+        failUrl,
+        emailAddress,
+        randomNumber,
+        requestDateTime
+      ].join('');
+    } else {
+      // Doküman Bölüm 6.1.1.1 3D Hash Sıralaması:
+      postParams.creditCard = creditCard;
+      postParams.expiredDate = expiredDate;
+      postParams.cvv = cvv;
+      postParams.cardHolderName = cardHolderName;
+
+      hashPlainItems = [
+        paymentModel,
+        txnCode,
+        config.merchantSafeId,
+        config.terminalSafeId,
+        order.orderId,
+        lang,
+        amount,
+        ccbRewardAmount,
+        pcbRewardAmount,
+        xcbRewardAmount,
+        currencyCode,
+        installCount,
+        okUrl,
+        failUrl,
+        emailAddress,
+        creditCard,
+        expiredDate,
+        cvv,
+        cardHolderName,
+        randomNumber,
+        requestDateTime
+      ].join('');
+    }
+
+    const hash = calculateAkbankHash(hashPlainItems, config.storeKey);
+    postParams.hash = hash;
+
+    const gatewayUrl = paymentModel === 'PAY_HOSTING' ? config.payHostingUrl : config.securePayUrl;
 
     return {
       paymentType: 'REDIRECT',
       provider: PROVIDERS.AKBANK,
       merchant_oid: order.orderId,
-      gatewayUrl: config.securePayUrl,
+      gatewayUrl: gatewayUrl,
       token: `AKB-${randomNumber.slice(0, 16)}`,
       postParams: postParams
     };
