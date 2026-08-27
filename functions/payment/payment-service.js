@@ -322,11 +322,11 @@ class PaymentService {
       total: serverTotal,
       amountInKurus,
       customer: {
-        name: String(body.user_name || '').slice(0, 150),
+        name: String(body.user_name || '').replace(/<[^>]*>?/gm, '').trim().slice(0, 150),
         email,
-        phone: String(body.user_phone || '').slice(0, 50),
-        identityNumber: String(body.customerIdentity || body.identityNumber || '').trim().slice(0, 50),
-        address: customerAddress,
+        phone: String(body.user_phone || '').replace(/<[^>]*>?/gm, '').trim().slice(0, 50),
+        identityNumber: String(body.customerIdentity || body.identityNumber || '').replace(/<[^>]*>?/gm, '').trim().slice(0, 50),
+        address: customerAddress ? String(customerAddress).replace(/<[^>]*>?/gm, '').trim() : null,
       },
       payment: {
         provider: provider.name,

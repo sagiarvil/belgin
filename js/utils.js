@@ -440,7 +440,6 @@ if (typeof module !== 'undefined' && module.exports) {
     CURRENCY_SYMBOLS,
     LIVE_MARKET_DATA,
     formatPrice,
-    getInstallmentBreakdown,
     HIGH_VALUE_SECURE_DELIVERY_THRESHOLD,
     isHighValueSecureDelivery,
     isValidLuhn,

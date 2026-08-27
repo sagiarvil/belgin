@@ -3930,3 +3930,25 @@ input[type="email"] {
 .checkout-grid-container {
   min-width: 0;
 }
+
+/* iOS Safari auto-zoom prevention on input focus (minimum 16px on mobile) */
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="tel"],
+  input[type="email"],
+  input[type="number"],
+  input[type="password"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Touch responsiveness & elimination of 300ms tap delay */
+button,
+a,
+input,
+select {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
