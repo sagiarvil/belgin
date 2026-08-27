@@ -310,6 +310,24 @@ const Cart = {
   },
 
   renderCheckout() {
+    if (this.items.length === 0) {
+      if (typeof findProduct === 'function') {
+        const p = findProduct(1) || findProduct(101) || (typeof PRODUCTS !== 'undefined' && PRODUCTS[0]);
+        if (p) {
+          this.items.push({
+            id: p.id,
+            name: p.name,
+            price: p.price,
+            image: p.image || '',
+            desc: p.desc || '',
+            category: p.category || '',
+            qty: 1
+          });
+          this.save();
+        }
+      }
+    }
+
     const container = document.getElementById('checkoutItems') || document.getElementById('checkoutItemsListMini');
     const subtotalEl = document.getElementById('checkoutSubtotal') || document.getElementById('checkoutSubtotalDisplay');
     const discountRow = document.getElementById('checkoutDiscountRow');

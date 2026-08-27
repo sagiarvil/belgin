@@ -30,6 +30,8 @@ const Router = {
     if (path === '/saatler') return { page: 'saatler' };
     if (path === '/mucevherat') return { page: 'mucevherat' };
     if (path === '/seckin-urunler' || path === '/ikinci-el') return { page: 'seckin-urunler' };
+    if (path === '/sepet' || path === '/cart') return { page: 'sepet' };
+    if (path === '/odeme' || path === '/checkout') return { page: 'odeme' };
     if (path.startsWith('/urun/')) {
       const match = Object.entries(window.SEO_ROUTE_MAP || {}).find(([,route]) => route.replace(/\/+$/, '') === path);
       if (match) return { page: 'urun', productId: Number(match[0]) };
@@ -48,6 +50,8 @@ const Router = {
   migrateLegacyHash() {
     const hash = location.hash.replace(/^#/, '');
     if (!hash) return null;
+    if (hash === 'odeme' || hash === 'checkout') return { page: 'odeme' };
+    if (hash === 'sepet' || hash === 'cart') return { page: 'sepet' };
     const m = hash.match(/^(?:urun|product)-(\d+)$/);
     if (m) {
       const id = Number(m[1]);
@@ -64,7 +68,9 @@ const Router = {
       'jewellery': '/mucevherat/',
       'seckin-urunler': '/seckin-urunler/',
       'ikinci-el': '/seckin-urunler/',
-      'preowned': '/seckin-urunler/'
+      'preowned': '/seckin-urunler/',
+      'odeme': '#odeme',
+      'sepet': '#sepet'
     };
     if (old[hash]) {
       history.replaceState({page:hash}, '', old[hash]);
