@@ -1,6 +1,7 @@
 /**
  * BELGIN KUYUMCULUK — AKBANK SANAL POS ADAPTER (12865794)
- * Akbank Sanal POS EST / Nestpay 3D Secure Doğrulama ve Tahsilat Modülü
+ * Akbank Sanal POS v2.0 In-House Gateway & 3D Secure Modülü
+ * Resmi Banka Dokümantasyonu (HMAC-SHA512 / securepay & payhosting)
  */
 
 const crypto = require('crypto');
@@ -8,16 +9,41 @@ const { PROVIDERS } = require('../payment-constants');
 
 function getAkbankConfig() {
   const clientId = process.env.AKBANK_CLIENT_ID || '12865794';
-  const terminalId = process.env.AKBANK_TERMINAL_ID || '12865794';
-  const secureMerchantId = process.env.AKBANK_SECURE_MERCHANT_ID || '20260827100031940D57F8604B5DDFEE';
-  const secureTerminalId = process.env.AKBANK_SECURE_TERMINAL_ID || '2026082710003196623B96DC9724OE60';
+  const merchantSafeId = process.env.AKBANK_SECURE_MERCHANT_ID || '20260827100031940D57F8604B5DDFEE';
+  const terminalSafeId = process.env.AKBANK_SECURE_TERMINAL_ID || '2026082710003196623B96DC9724OE60';
   const storeKey = process.env.AKBANK_STORE_KEY || '323032363038323731303030333139323667335f373535313131317474385f38743372323231765f313776727235727267677276737632337674767272765f73';
   const mode = process.env.AKBANK_TEST_MODE === 'true' ? 'TEST' : 'PROD';
-  const gatewayUrl = mode === 'PROD' 
-    ? 'https://www.sanalakpos.com/fim/est3Dgate'
-    : 'https://entegrasyon.asseco-see.com.tr/fim/est3Dgate';
+  
+  // Resmi Akbank Gateway URL'leri (Doküman Bölüm 5.2 & 6.1)
+  const securePayUrl = mode === 'PROD' 
+    ? 'https://virtualpospaymentgateway.akbank.com/securepay'
+    : 'https://virtualpospaymentgatewaypre.akbank.com/securepay';
 
-  return { clientId, terminalId, secureMerchantId, secureTerminalId, storeKey, mode, gatewayUrl };
+  const payHostingUrl = mode === 'PROD'
+    ? 'https://virtualpospaymentgateway.akbank.com/payhosting'
+    : 'https://virtualpospaymentgatewaypre.akbank.com/payhosting';
+
+  return { clientId, merchantSafeId, terminalSafeId, storeKey, mode, securePayUrl, payHostingUrl };
+}
+
+function getRandomNumberBase16(length = 128) {
+  return crypto.randomBytes(length / 2).toString('hex').toUpperCase();
+}
+
+function formatRequestDateTime(date = new Date()) {
+  const pad = (n, digits = 2) => String(n).padStart(digits, '0');
+  const yr = date.getFullYear();
+  const mo = pad(date.getMonth() + 1);
+  const da = pad(date.getDate());
+  const hr = pad(date.getHours());
+  const mi = pad(date.getMinutes());
+  const se = pad(date.getSeconds());
+  const ms = pad(date.getMilliseconds(), 3);
+  return `${yr}-${mo}-${da}T${hr}:${mi}:${se}.${ms}`;
+}
+
+function calculateAkbankHash(plainString, secretKey) {
+  return crypto.createHmac('sha512', secretKey).update(plainString, 'utf8').digest('base64');
 }
 
 class AkbankProvider {
@@ -36,48 +62,83 @@ class AkbankProvider {
     const amount = (order.amountInKurus / 100).toFixed(2);
     const okUrl = `https://www.belginkuyumculuk.com/api/payment/callback/akbank?status=success&oid=${order.orderId}`;
     const failUrl = `https://www.belginkuyumculuk.com/api/payment/callback/akbank?status=fail&oid=${order.orderId}`;
-    const rnd = Date.now().toString();
-    const currency = '949'; // TL
-    const storetype = '3d_pay';
+    const randomNumber = getRandomNumberBase16(128);
+    const requestDateTime = formatRequestDateTime();
+    const currencyCode = '949'; // TL
+    const paymentModel = '3D';
+    const txnCode = '3000'; // Satış
+    const lang = 'TR';
+    const installCount = '1';
+    const emailAddress = order.customer?.email || 'destek@belginkuyumculuk.com';
 
-    // Hash: clientId + oid + amount + okUrl + failUrl + storetype + rnd + storeKey
-    const hashStr = [config.clientId, order.orderId, amount, okUrl, failUrl, storetype, rnd, config.storeKey].join('');
-    const hash = crypto.createHash('sha512').update(hashStr, 'utf-8').digest('base64');
+    // Kart Bilgileri (3D Modelinde)
+    const creditCard = String(order.cardNumber || params?.cardNumber || '').replace(/\D/g, '');
+    const cvv = String(order.cardCvc || params?.cardCvc || '').replace(/\D/g, '');
+    const rawExp = String(order.cardExpiry || params?.cardExpiry || '').trim();
+    let expiredDate = '';
+    if (rawExp.includes('/')) {
+      const parts = rawExp.split('/');
+      const mm = parts[0].trim().padStart(2, '0');
+      let yy = parts[1].trim();
+      if (yy.length === 4) yy = yy.slice(-2);
+      expiredDate = `${mm}${yy}`;
+    }
+
+    const cardHolderName = String(order.cardHolder || order.customer?.name || params?.cardHolder || 'SEMİH SONBAHAR').slice(0, 50).toLocaleUpperCase('tr-TR');
+
+    // Doküman Bölüm 6.1.1.1 Hash Sıralaması:
+    // paymentModel + txnCode + merchantSafeId + terminalSafeId + orderId + lang + amount + ccbRewardAmount + pcbRewardAmount + xcbRewardAmount + currencyCode + installCount + okUrl + failUrl + emailAddress + mobilePhone + homePhone + workPhone + subMerchantId + creditCard + expiredDate + cvv + cardHolderName + randomNumber + requestDateTime + b2bIdentityNumber + merchantData + merchantBranchNo + mobileEci + walletProgramData + mobileAssignedId + mobileDeviceType
+    const hashPlainItems = [
+      paymentModel,
+      txnCode,
+      config.merchantSafeId,
+      config.terminalSafeId,
+      order.orderId,
+      lang,
+      amount,
+      currencyCode,
+      installCount,
+      okUrl,
+      failUrl,
+      emailAddress,
+      creditCard,
+      expiredDate,
+      cvv,
+      cardHolderName,
+      randomNumber,
+      requestDateTime
+    ].join('');
+
+    const hash = calculateAkbankHash(hashPlainItems, config.storeKey);
 
     const postParams = {
-      clientid: config.clientId,
-      amount: amount,
-      oid: order.orderId,
-      okUrl: okUrl,
-      failUrl: failUrl,
-      rnd: rnd,
-      hash: hash,
-      storetype: storetype,
-      currency: currency,
-      lang: 'tr'
+      paymentModel,
+      txnCode,
+      merchantSafeId: config.merchantSafeId,
+      terminalSafeId: config.terminalSafeId,
+      orderId: order.orderId,
+      lang,
+      amount,
+      currencyCode,
+      installCount,
+      okUrl,
+      failUrl,
+      emailAddress,
+      creditCard,
+      expiredDate,
+      cvv,
+      cardHolderName,
+      randomNumber,
+      requestDateTime,
+      hash
     };
-
-    // İstemciden gelen kart bilgileri doğrudan Akbank 3D Kapısına form ile iletilir
-    const cardNum = String(order.cardNumber || params?.cardNumber || '').replace(/\D/g, '');
-    const cardCvc = String(order.cardCvc || params?.cardCvc || '').replace(/\D/g, '');
-    const cardExp = String(order.cardExpiry || params?.cardExpiry || '').trim();
-
-    if (cardNum) postParams.pan = cardNum;
-    if (cardCvc) postParams.cv2 = cardCvc;
-    if (cardExp.includes('/')) {
-      const parts = cardExp.split('/');
-      postParams.Ecom_Payment_Card_ExpDate_Month = parts[0].trim().padStart(2, '0');
-      let yr = parts[1].trim();
-      if (yr.length === 4) yr = yr.slice(-2);
-      postParams.Ecom_Payment_Card_ExpDate_Year = yr;
-    }
 
     return {
       paymentType: 'REDIRECT',
       provider: PROVIDERS.AKBANK,
       merchant_oid: order.orderId,
-      gatewayUrl: config.gatewayUrl,
-      token: `AKB-${rnd}`,
+      gatewayUrl: config.securePayUrl,
+      token: `AKB-${randomNumber.slice(0, 16)}`,
       postParams: postParams
     };
   }
@@ -86,35 +147,66 @@ class AkbankProvider {
     const callbackData = params?.body || params;
     const config = getAkbankConfig();
     const testMode = process.env.NODE_ENV === 'test' || process.env.AKBANK_TEST_MODE === '1' || Number(process.env.AKBANK_TEST_MODE) === 1;
-    if (!callbackData || (!config.clientId || !config.storeKey)) {
+    if (!callbackData || (!config.merchantSafeId && !config.storeKey && !testMode)) {
       return {
         isValid: false,
         reason: 'PROVIDER_NOT_CONFIGURED'
       };
     }
-    const { oid, Response, AuthCode, ProcReturnCode, mdStatus } = callbackData;
 
-    // 3D Secure mdStatus: 1, 2, 3, 4 geçerli doğrulamadır
-    const is3dValid = ['1', '2', '3', '4'].includes(String(mdStatus));
-    const isApproved = Response === 'Approved' || ProcReturnCode === '00' || testMode;
+    const {
+      orderId,
+      oid,
+      responseCode,
+      Response,
+      authCode,
+      AuthCode,
+      hostResponseCode,
+      ProcReturnCode,
+      mdStatus,
+      hash,
+      hashParams,
+      ErrMsg,
+      responseMessage
+    } = callbackData;
+
+    const currentOrderId = orderId || oid || '';
+    const currentAuthCode = authCode || AuthCode || 'AKB-APPROVED';
+    const currentResponseCode = responseCode || ProcReturnCode || (Response === 'Approved' ? '00' : '99');
+
+    // Doküman Bölüm 6.1.1.2: Response Hash Doğrulaması
+    let isHashValid = true;
+    if (hash && hashParams && config.storeKey) {
+      try {
+        const paramKeys = hashParams.split('+');
+        const hashBuilder = paramKeys.map(k => callbackData[k] !== undefined ? callbackData[k] : '').join('');
+        const expectedHash = calculateAkbankHash(hashBuilder, config.storeKey);
+        isHashValid = (hash === expectedHash) || testMode;
+      } catch (_) {
+        isHashValid = testMode;
+      }
+    }
+
+    // 3D Secure / Onay Başarısı
+    const isApproved = (currentResponseCode === '00' || currentResponseCode === 'VPS-0000' || Response === 'Approved' || testMode) && isHashValid;
 
     if (!isApproved) {
       return {
         isValid: true,
         isSuccess: false,
-        failReasonCode: ProcReturnCode || 'BANK_REJECT',
-        failReasonMsg: callbackData.ErrMsg || 'İşlem banka tarafından onaylanmadı.',
-        orderId: oid
+        failReasonCode: currentResponseCode || 'BANK_REJECT',
+        failReasonMsg: ErrMsg || responseMessage || 'İşlem banka tarafından onaylanmadı.',
+        orderId: currentOrderId
       };
     }
 
     return {
       isValid: true,
       isSuccess: true,
-      orderId: oid,
-      authCode: AuthCode,
+      orderId: currentOrderId,
+      authCode: currentAuthCode,
       provider: PROVIDERS.AKBANK,
-      terminalId: config.clientId,
+      terminalId: config.terminalSafeId,
       totalAmountReceived: String(Math.round(Number(callbackData.amount || 0) * 100)) || String(params?.order?.amountInKurus || '')
     };
   }
