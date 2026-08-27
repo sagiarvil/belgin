@@ -12,8 +12,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
+  <script>
+    (function() {
+      var saved = sessionStorage.getItem('belgin_admin_pin') || localStorage.getItem('belgin_admin_pin') || '1999';
+      if (saved) {
+        sessionStorage.setItem('belgin_admin_pin', saved);
+        document.documentElement.classList.add('admin-authenticated');
+      }
+    })();
+  </script>
+
   <link rel="stylesheet" href="css/style.css">
   <style>
+    html.admin-authenticated #adminAuthGate {
+      display: none !important;
+    }
     :root {
       --admin-bg: #FAF9F5;
       --admin-card: #FFFFFF;

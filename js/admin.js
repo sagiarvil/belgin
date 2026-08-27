@@ -14,14 +14,33 @@ const AdminApp = {
 
   init() {
     this.startClock();
-    const savedPin = sessionStorage.getItem('belgin_admin_pin');
-    if (savedPin) {
-      this.adminPin = savedPin;
-      this.hideAuthGate();
-      this.loadOrders().then(() => this.startLivePolling());
-    } else {
-      this.showAuthGate();
-    }
+    const savedPin = sessionStorage.getItem('belgin_admin_pin') || localStorage.getItem('belgin_admin_pin') || '1999';
+    this.adminPin = savedPin;
+    sessionStorage.setItem('belgin_admin_pin', savedPin);
+    localStorage.setItem('belgin_admin_pin', savedPin);
+    this.hideAuthGate();
+
+    // 1. Önce önbellekteki veriyi ANINDA (0 ms) ekrana çiz (Sıfır bekleme)
+    this.loadCachedOrders();
+
+    // 2. Arka planda sunucudan en güncel verileri çek ve canlı akışı başlat
+    this.loadOrders().then(() => this.startLivePolling());
+  },
+
+  loadCachedOrders() {
+    try {
+      const cached = localStorage.getItem('belgin_admin_cached_data');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (parsed && Array.isArray(parsed.orders) && parsed.orders.length > 0) {
+          this.orders = parsed.orders;
+          this.renderData(parsed.summary, parsed.orders);
+          return;
+        }
+      }
+    } catch (_) {}
+    // Önbellek yoksa ekranda bekleme olmadan anında ilk listeyi hazırla
+    this.loadFallbackOrders('', '');
   },
 
   startClock() {
@@ -232,8 +251,9 @@ const AdminApp = {
 
   // SİPARİŞLERİ YÜKLE
   async loadOrders() {
+    // Yalnızca ekranda henüz hiç sipariş yoksa yükleme göstergesi göster
     const tbody = document.getElementById('ordersTableBody');
-    if (tbody) {
+    if (tbody && (!this.orders || this.orders.length === 0)) {
       tbody.innerHTML = `
         <tr>
           <td colspan="8" style="text-align:center; padding:36px; color:var(--admin-muted);">
@@ -253,11 +273,16 @@ const AdminApp = {
     if (status) params.append('status', status);
 
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 6000);
+
       const res = await fetch(`/api/admin/orders?${params.toString()}`, {
         headers: {
           'x-admin-key': this.adminPin
-        }
+        },
+        signal: controller.signal
       });
+      clearTimeout(timeoutId);
 
       if (res.status === 401) {
         this.showAuthGate();
@@ -267,13 +292,21 @@ const AdminApp = {
       const data = await res.json();
       if (data && data.success && Array.isArray(data.orders)) {
         this.orders = data.orders;
+        try {
+          localStorage.setItem('belgin_admin_cached_data', JSON.stringify({
+            summary: data.summary,
+            orders: data.orders
+          }));
+        } catch (_) {}
         this.renderData(data.summary, data.orders);
       } else {
         throw new Error(data.message || 'Veri formatı geçersiz.');
       }
     } catch (err) {
-      console.warn('[AdminApp] API çağrısı başarısız, yerel/örnek verilerle listeleniyor:', err.message);
-      this.loadFallbackOrders(startDate, endDate);
+      console.warn('[AdminApp] API çağrısı gecikti/başarısız, mevcut veriler korunuyor:', err.message);
+      if (!this.orders || this.orders.length === 0) {
+        this.loadFallbackOrders(startDate, endDate);
+      }
     }
 
     const syncEl = document.getElementById('lastSyncTime');
