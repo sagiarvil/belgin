@@ -65,8 +65,8 @@ class AkbankProvider {
     const randomNumber = getRandomNumberBase16(128);
     const requestDateTime = formatRequestDateTime();
     const currencyCode = '949'; // TL
-    const paymentModel = process.env.AKBANK_PAYMENT_MODEL || 'PAY_HOSTING';
-    const txnCode = paymentModel === 'PAY_HOSTING' ? '1000' : '3000'; // 1000: PayHosting Satış, 3000: 3D Satış
+    const paymentModel = process.env.AKBANK_PAYMENT_MODEL || '3D_PAY_HOSTING';
+    const txnCode = '3000'; // 3D_PAY_HOSTING ve 3D için resmi satış kodu: 3000
     const lang = 'TR';
     const installCount = '1';
     const emailAddress = order.customer?.email || 'destek@belginkuyumculuk.com';
@@ -74,7 +74,7 @@ class AkbankProvider {
     const pcbRewardAmount = '0.00';
     const xcbRewardAmount = '0.00';
 
-    // Kart Bilgileri (Eğer 3D modeli kullanılıyorsa)
+    // Kart Bilgileri (Eğer doğrudan 3D modeli kullanılıyorsa)
     const creditCard = String(order.cardNumber || params?.cardNumber || '').replace(/\D/g, '');
     const cvv = String(order.cardCvc || params?.cardCvc || '').replace(/\D/g, '');
     const rawExp = String(order.cardExpiry || params?.cardExpiry || '').trim();
@@ -110,9 +110,9 @@ class AkbankProvider {
       requestDateTime
     };
 
-    if (paymentModel === 'PAY_HOSTING') {
-      // Doküman Bölüm 5.2.1.1 PAY_HOSTING Hash Sıralaması:
-      // PAY_HOSTING + txnCode + merchantSafeId + terminalSafeId + orderId + lang + amount + ccbRewardAmount + pcbRewardAmount + xcbRewardAmount + currencyCode + installCount + okUrl + failUrl + emailAddress + randomNumber + requestDateTime
+    if (paymentModel === 'PAY_HOSTING' || paymentModel === '3D_PAY_HOSTING') {
+      // Doküman Bölüm 5.2.1.1 PAY_HOSTING & 3D_PAY_HOSTING Hash Sıralaması:
+      // paymentModel + txnCode + merchantSafeId + terminalSafeId + orderId + lang + amount + ccbRewardAmount + pcbRewardAmount + xcbRewardAmount + currencyCode + installCount + okUrl + failUrl + emailAddress + randomNumber + requestDateTime
       hashPlainItems = [
         paymentModel,
         txnCode,
@@ -133,7 +133,7 @@ class AkbankProvider {
         requestDateTime
       ].join('');
     } else {
-      // Doküman Bölüm 6.1.1.1 3D Hash Sıralaması:
+      // Doküman Bölüm 6.1.1.1 3D Direct Hash Sıralaması:
       postParams.creditCard = creditCard;
       postParams.expiredDate = expiredDate;
       postParams.cvv = cvv;
@@ -167,7 +167,7 @@ class AkbankProvider {
     const hash = calculateAkbankHash(hashPlainItems, config.storeKey);
     postParams.hash = hash;
 
-    const gatewayUrl = paymentModel === 'PAY_HOSTING' ? config.payHostingUrl : config.securePayUrl;
+    const gatewayUrl = (paymentModel === 'PAY_HOSTING' || paymentModel === '3D_PAY_HOSTING') ? config.payHostingUrl : config.securePayUrl;
 
     return {
       paymentType: 'REDIRECT',
