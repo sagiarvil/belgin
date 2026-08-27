@@ -147,9 +147,30 @@ exports.paymentCallback = functions
         admin,
         mailer,
       });
+
+      // AKBANK EST 3D Gate veya Browser POST durumunda tarayıcıyı doğrudan sonuç sayfasına yönlendir
+      const isBrowserCallback = providerParam === 'AKBANK' || req.headers['accept']?.includes('text/html') || Boolean(req.body?.mdStatus || req.body?.oid);
+      if (isBrowserCallback) {
+        const orderId = encodeURIComponent(req.body?.oid || req.body?.orderId || req.query?.oid || '');
+        const authCode = encodeURIComponent(req.body?.AuthCode || req.body?.authCode || 'AKB-APPROVED');
+        const amount = encodeURIComponent(req.body?.amount || req.body?.totalAmount || '');
+        const isSuccess = outcome.status === 200 && (!outcome.message || outcome.message === 'OK');
+
+        if (isSuccess) {
+          return res.redirect(303, `https://www.belginkuyumculuk.com/odeme-basarili.html?orderId=${orderId}&authCode=${authCode}&amount=${amount}`);
+        } else {
+          const reason = encodeURIComponent(req.body?.ErrMsg || req.body?.mdErrorMsg || outcome.message || 'Ödeme banka tarafından onaylanmadı.');
+          const code = encodeURIComponent(req.body?.ProcReturnCode || req.body?.mdStatus || 'FAIL');
+          return res.redirect(303, `https://www.belginkuyumculuk.com/odeme-basarisiz.html?orderId=${orderId}&code=${code}&reason=${reason}`);
+        }
+      }
+
       return res.status(outcome.status).send(outcome.message);
     } catch (error) {
       console.error(`[Payment API] paymentCallback Error (${providerParam}):`, error.message);
+      if (providerParam === 'AKBANK') {
+        return res.redirect(303, `https://www.belginkuyumculuk.com/odeme-basarisiz.html?code=500&reason=${encodeURIComponent('Sunucu işlem hatası')}`);
+      }
       return res.status(500).send('Internal Server Error');
     }
   });

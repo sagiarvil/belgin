@@ -100,18 +100,22 @@ class AkbankProvider {
 
     if (!isApproved) {
       return {
-        isValid: false,
-        reason: params.ErrMsg || 'İşlem banka tarafından onaylanmadı.',
+        isValid: true,
+        isSuccess: false,
+        failReasonCode: ProcReturnCode || 'BANK_REJECT',
+        failReasonMsg: callbackData.ErrMsg || 'İşlem banka tarafından onaylanmadı.',
         orderId: oid
       };
     }
 
     return {
       isValid: true,
+      isSuccess: true,
       orderId: oid,
       authCode: AuthCode,
       provider: PROVIDERS.AKBANK,
-      terminalId: config.clientId
+      terminalId: config.clientId,
+      totalAmountReceived: String(Math.round(Number(callbackData.amount || 0) * 100)) || String(params?.order?.amountInKurus || '')
     };
   }
 

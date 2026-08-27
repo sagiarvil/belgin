@@ -1938,12 +1938,17 @@ const App = {
         const form = document.createElement('form');
         form.method = 'POST';
         form.action = data.gatewayUrl;
+        form.enctype = 'application/x-www-form-urlencoded';
+        form.acceptCharset = 'UTF-8';
+        form.style.display = 'none';
         for (const [k, v] of Object.entries(data.postParams)) {
-          const input = document.createElement('input');
-          input.type = 'hidden';
-          input.name = k;
-          input.value = v;
-          form.appendChild(input);
+          if (v !== undefined && v !== null) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = k;
+            input.value = String(v);
+            form.appendChild(input);
+          }
         }
         document.body.appendChild(form);
         form.submit();
