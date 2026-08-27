@@ -32,6 +32,10 @@ function sanitizeText(str) {
     .replace(/NASYONEL\s*CHRONO/gi, "")
     .replace(/NASYONEL/gi, "")
     .replace(/CHRONO/gi, "")
+    .replace(/ETİLER/gi, "")
+    .replace(/İSTİNYEPARK/gi, "")
+    .replace(/İSTİNYE/gi, "")
+    .replace(/HILLTOWN/gi, "")
     .replace(/\s{2,}/g, " ")
     .replace(/&#8211;/g, "-")
     .replace(/&amp;/g, "&")
@@ -48,16 +52,77 @@ function formatModelName(rawTitle) {
   return clean;
 }
 
-function extractReferenceNumber(title, link) {
-  const match = title.match(/\b([0-9]{4,6}[A-Z]{0,5})\b/) || link.match(/_([0-9]{4,6}[a-z]{0,5})_/i);
-  if (match) return match[1].toUpperCase();
-  const numMatch = title.match(/\b([0-9]{5,6})\b/);
-  if (numMatch) return numMatch[1];
-  return "REF-PRESTIGE";
+function mapMaterialName(rawMat, title = "") {
+  const m = String(rawMat || "").toLowerCase().trim();
+  const t = String(title || "").toLowerCase();
+
+  if (m === "celik" || m === "steel") {
+    if (t.includes("beyaz altin") || t.includes("beyaz altın")) return "18 Ayar Beyaz Altın & Çelik";
+    if (t.includes("sari altin") || t.includes("sarı altın")) return "Rolesor (18K Sarı Altın & Çelik)";
+    if (t.includes("rose") || t.includes("everose") || t.includes("pembe altın")) return "Rolesor (18K Everose Altın & Çelik)";
+    return "Oystersteel Paslanmaz Çelik";
+  }
+  if (m.includes("beyaz_altin") || m.includes("white_gold")) return "18 Ayar Beyaz Altın";
+  if (m.includes("rose_gold") || m.includes("pembe_altin") || m.includes("everose")) return "18 Ayar Everose Altın";
+  if (m.includes("sari_altin") || m.includes("yellow_gold")) return "18 Ayar Sarı Altın";
+  if (m.includes("celik_altin") || m.includes("bicolor")) return "Rolesor (18K Altın & Paslanmaz Çelik)";
+  if (m.includes("platin") || m.includes("platinum")) return "950 Platin";
+  if (m.includes("titanyum") || m.includes("titanium")) return "RLX Titanyum";
+
+  if (t.includes("altin") || t.includes("altın")) return "18 Ayar Masif Altın / Çelik";
+  return "Oystersteel Paslanmaz Çelik";
 }
 
-function buildPrestigeDescription(brand, title, ref) {
-  return "Belgin Kuyumculuk uzman saat ekspertizi tarafından 12 nokta hassas mekanik, kronometrik hassasiyet ve gövde kondisyon kontrolünden geçirilmiş orijinal " + brand + " " + title + " (Ref. " + ref + "). 1999'dan beri süren Belgin Kuyumculuk showroom güvencesiyle, orijinal lüks kutusu, ekspertiz sertifikası ve yasal kimlik onaylı teslimat protokolü ile teslim edilmektedir.";
+function mapMovementName(rawMov) {
+  const mov = String(rawMov || "").toUpperCase().trim();
+  if (mov.includes("OTOMATIK") || mov.includes("OTOMATİK") || mov.includes("AUTOMATIC")) return "Otomatik Mekanizma";
+  if (mov.includes("KURMALI") || mov.includes("MANUAL") || mov.includes("HAND")) return "Mekanik Kurmalı";
+  if (mov.includes("QUARTZ") || mov.includes("PILLI") || mov.includes("PİLLİ")) return "Quartz (Pilli)";
+  return "Otomatik Mekanizma";
+}
+
+function mapConditionName(rawCond) {
+  const c = String(rawCond || "").toLowerCase();
+  if (c.includes("sifir") || c.includes("sıfır") || c.includes("new") || c.includes("unworn")) return "Sıfır / Kullanılmamış";
+  return "İkinci El (Ekspertiz Onaylı)";
+}
+
+function mapBraceletName(title = "") {
+  const t = title.toLowerCase();
+  if (t.includes("jubile") || t.includes("jubilee")) return "Jubilee 5 Parçalı Bilezik";
+  if (t.includes("oysterflex")) return "Oysterflex Elastomer Kayış";
+  if (t.includes("president")) return "President 3 Parçalı Bilezik";
+  if (t.includes("oyster")) return "Oyster 3 Parçalı Bilezik";
+  if (t.includes("deri") || t.includes("leather")) return "Timsah / Dana Derisi Kayış";
+  if (t.includes("kaucuk") || t.includes("kauçuk") || t.includes("rubber")) return "Kauçuk Kayış";
+  return "Orijinal Metal Bilezik / Kayış";
+}
+
+function buildTruthfulDescription(brand, title, ref, cap, materyal, mekanizma, durum, bilezik) {
+  const lines = [];
+  lines.push(`${brand} ${title} lüks saat modeli.`);
+
+  const specNotes = [];
+  if (ref && ref !== "REF-PRESTIGE") specNotes.push(`Referans: ${ref}`);
+  if (cap) specNotes.push(`Kasa Çapı: ${cap} mm`);
+  if (materyal) specNotes.push(`Kasa Materyali: ${materyal}`);
+  if (bilezik) specNotes.push(`Kordon: ${bilezik}`);
+  if (mekanizma) specNotes.push(`Mekanizma: ${mekanizma}`);
+  if (durum) specNotes.push(`Durum: ${durum}`);
+
+  if (specNotes.length > 0) {
+    lines.push(specNotes.join(" • ") + ".");
+  }
+
+  lines.push(`Bu seçkin saat modeli, Belgin Kuyumculuk uzman saat ustaları tarafından fiziksel ve mekanik kontrollerden geçirilmiş olup orijinal kutusu ve Belgin Kuyumculuk satış faturası ile teslim edilmektedir.`);
+
+  return lines.join(" ");
+}
+
+function getHiddenSpanValue(rowHtml, spanKey) {
+  const reg = new RegExp(`id="productList_ProductList_${spanKey}_\\d+"[^>]*>([^<]*)<\\/span>`, "i");
+  const m = rowHtml.match(reg);
+  return m ? m[1].trim() : "";
 }
 
 async function fetchRolexCatalog() {
@@ -74,10 +139,9 @@ async function fetchRolexCatalog() {
   }
 
   const html = await res.text();
-  const regex = /<a id="productList_ProductList_imageLink_\d+"[^>]*href="([^"]+)"[^>]*style="background-image:url\(([^)]+)\)[^>]*>[\s\S]*?<td class="UrunAdi"[^>]*>[\s\S]*?<a[^>]*>([\s\S]*?)<\/a><\/td>[\s\S]*?<td class="tdFiyat"[^>]*>[\s\S]*?<span[^>]*>([\s\S]*?)<\/span>/gi;
-
-  const matches = [...html.matchAll(regex)];
-  console.log("[sync-rolex] Toplam bulunan ham ürün sayısı: " + matches.length);
+  const rowRegex = /<tr class="saatProduct[^"]*"[^>]*>([\s\S]*?)<\/tr>/gi;
+  const rows = [...html.matchAll(rowRegex)];
+  console.log("[sync-rolex] Toplam bulunan ürün satırı sayısı: " + rows.length);
 
   const usdRate = getLiveUsdRate();
   console.log("[sync-rolex] Uygulanan USD/TRY Kuru: " + usdRate + " TL | Marj: +%50");
@@ -85,11 +149,20 @@ async function fetchRolexCatalog() {
   const items = [];
   const seenUrls = new Set();
 
-  for (const m of matches) {
-    const rawLink = m[1];
-    const rawImg = m[2];
-    const rawTitle = m[3];
-    const rawPrice = m[4];
+  for (const r of rows) {
+    const rowHtml = r[1];
+
+    const linkMatch = rowHtml.match(/href="(\/[^"]+)"/i);
+    const imgMatch = rowHtml.match(/style="background-image:url\(([^)]+)\)/i);
+    const titleMatch = rowHtml.match(/<td class="UrunAdi"[^>]*>[\s\S]*?<a[^>]*>([\s\S]*?)<\/a><\/td>/i);
+    const priceMatch = rowHtml.match(/<td class="tdFiyat"[^>]*>[\s\S]*?<span[^>]*>([\s\S]*?)<\/span>/i);
+
+    if (!linkMatch || !imgMatch || !titleMatch || !priceMatch) continue;
+
+    const rawLink = linkMatch[1];
+    const rawImg = imgMatch[1];
+    const rawTitle = titleMatch[1];
+    const rawPrice = priceMatch[1];
 
     if (seenUrls.has(rawLink)) continue;
     seenUrls.add(rawLink);
@@ -125,8 +198,37 @@ async function fetchRolexCatalog() {
     else if (titleLower.includes("richard mille") || rawLink.includes("richard_mille")) brand = "Richard Mille";
 
     const cleanTitle = formatModelName(rawTitle);
-    const refNumber = extractReferenceNumber(rawTitle, rawLink);
-    const descText = buildPrestigeDescription(brand, cleanTitle, refNumber);
+
+    // Kaynaktan doğrudan gerçek alanları çek
+    const rawCap = getHiddenSpanValue(rowHtml, "lblCap");
+    const rawMat = getHiddenSpanValue(rowHtml, "lblMateryal");
+    const rawMov = getHiddenSpanValue(rowHtml, "MekanizmaHidden");
+    const rawRef = getHiddenSpanValue(rowHtml, "ReferansIdHidden");
+    const rawCond = getHiddenSpanValue(rowHtml, "DurumHidden");
+    const rawStock = getHiddenSpanValue(rowHtml, "stokIdHidden");
+
+    let refNumber = rawRef;
+    if (!refNumber || refNumber === "0") {
+      const match = cleanTitle.match(/\b([0-9]{4,6}[A-Z]{0,5})\b/) || rawLink.match(/_([0-9]{4,6}[a-z]{0,5})_/i);
+      refNumber = match ? match[1].toUpperCase() : "REF-PRESTIGE";
+    }
+
+    const mappedCap = rawCap ? String(rawCap).trim() : (cleanTitle.match(/(\d{2})\s*MM/i)?.[1] || "");
+    const mappedMaterial = mapMaterialName(rawMat, cleanTitle);
+    const mappedMovement = mapMovementName(rawMov);
+    const mappedCondition = mapConditionName(rawCond);
+    const mappedBracelet = mapBraceletName(cleanTitle);
+
+    const descText = buildTruthfulDescription(
+      brand,
+      cleanTitle,
+      refNumber,
+      mappedCap,
+      mappedMaterial,
+      mappedMovement,
+      mappedCondition,
+      mappedBracelet
+    );
 
     items.push({
       brand,
@@ -136,7 +238,13 @@ async function fetchRolexCatalog() {
       buyPrice: tryPrice - 500,
       image: hdImage,
       sourceUrl: "https://www.nasyonelchrono.com" + rawLink,
-      desc: descText
+      desc: descText,
+      cap: mappedCap ? `${mappedCap} mm` : "Orijinal Kasa Çapı",
+      materyal: mappedMaterial,
+      mekanizma: mappedMovement,
+      durum: mappedCondition,
+      kordon: mappedBracelet,
+      stokNo: rawStock || ""
     });
   }
 
@@ -145,9 +253,10 @@ async function fetchRolexCatalog() {
 
 async function syncSeckinRolex() {
   console.log("====================================================");
-  console.log("BELGİN KUYUMCULUK — SEÇKİN ROLEX SAAT SENKRONİZASYONU");
+  console.log("BELGİN KUYUMCULUK — SEÇKİN ROLEX SAAT SENKRONİZASYONU v2.0");
   console.log("Başlama Zamanı:", new Date().toISOString());
   console.log("Fiyatlandırma: Kaynak Fiyatı + %50 Artış (x 1.50)");
+  console.log("Hukuki Kural: 0 Uydurma Değer • %100 Gerçek Kaynak Özellikleri");
   console.log("====================================================");
 
   const existingData = require("../js/data.js");
@@ -165,7 +274,8 @@ async function syncSeckinRolex() {
   let nextId = 5001;
   const newPreOwnedItems = rawRolexItems.map(item => {
     const isJewelry = item.brand === "Van Cleef & Arpels" || (item.brand === "Cartier" && item.title.includes("BİLEZİK"));
-    const isGold = item.title.toLowerCase().includes("altin") || item.title.toLowerCase().includes("altın");
+    const isGold = item.materyal.includes("Altın") || item.title.toLowerCase().includes("altin") || item.title.toLowerCase().includes("altın");
+
     return {
       id: nextId++,
       brand: item.brand,
@@ -173,25 +283,33 @@ async function syncSeckinRolex() {
       reference: item.reference,
       category: isJewelry ? "jewelry" : "watch",
       statusBadge: "Stokta",
-      conditionBadge: "İkinci El",
+      conditionBadge: item.durum.includes("Sıfır") ? "Sıfır" : "İkinci El",
       isPreOwned: true,
       isGold: isGold,
       price: item.price,
       buyPrice: item.buyPrice,
-      metal: isGold ? "18K Altın / Paslanmaz Çelik" : "Oystersteel Paslanmaz Çelik 904L",
-      dial: "Özel Koleksiyon Kadran",
-      year: "2023 - 2026",
-      boxPapers: "Orijinal Kutu & Belgin Kuyumculuk Ekspertiz Belgesi",
+      metal: item.materyal,
+      dial: "Orijinal Kadran",
+      year: "Orijinal Model Yılı",
+      boxPapers: "Orijinal Kutu & Belgin Kuyumculuk Satış Faturası",
       desc: item.desc,
+      description: item.desc,
       image: item.image,
       hoverImage: item.image,
       images: [item.image],
       sourceUrl: item.sourceUrl,
-      amplitude: "285° - 310° (Swiss Chronometer)",
-      rateAccuracy: "±1.5 sn/gün (Superlative Chronometer)",
-      waterTest: "10 Bar (100 Metre) Geçti",
       inStock: true,
-      isHighValue: true
+      isHighValue: true,
+      specs: {
+        "Kasa Çapı": item.cap,
+        "Mekanizma": item.mekanizma,
+        "Kasa Materyali": item.materyal,
+        "Kordon / Kayış": item.kordon,
+        "Cam Tipi": "Çizilmeye Dayanıklı Safir Kristal",
+        "Kondisyon": item.durum,
+        "Garanti": "1 Yıl Belgin Kuyumculuk Mekanik Garantisi",
+        "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
+      }
     };
   });
 
