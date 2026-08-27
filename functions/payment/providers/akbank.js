@@ -8,13 +8,16 @@ const { PROVIDERS } = require('../payment-constants');
 
 function getAkbankConfig() {
   const clientId = process.env.AKBANK_CLIENT_ID || '12865794';
-  const storeKey = process.env.AKBANK_STORE_KEY || 'BELGIN_AKBANK_STOREKEY_12865794';
-  const mode = process.env.AKBANK_TEST_MODE === 'false' ? 'PROD' : 'TEST';
+  const terminalId = process.env.AKBANK_TERMINAL_ID || '12865794';
+  const secureMerchantId = process.env.AKBANK_SECURE_MERCHANT_ID || '20260827100031940D57F8604B5DDFEE';
+  const secureTerminalId = process.env.AKBANK_SECURE_TERMINAL_ID || '2026082710003196623B96DC9724OE60';
+  const storeKey = process.env.AKBANK_STORE_KEY || '323032363038323731303030333139323667335f373535313131317474385f38743372323231765f313776727235727267677276737632337674767272765f73';
+  const mode = process.env.AKBANK_TEST_MODE === 'true' ? 'TEST' : 'PROD';
   const gatewayUrl = mode === 'PROD' 
     ? 'https://www.sanalakpos.com/fim/est3Dgate'
     : 'https://entegrasyon.asseco-see.com.tr/fim/est3Dgate';
 
-  return { clientId, storeKey, mode, gatewayUrl };
+  return { clientId, terminalId, secureMerchantId, secureTerminalId, storeKey, mode, gatewayUrl };
 }
 
 class AkbankProvider {
