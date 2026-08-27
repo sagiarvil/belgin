@@ -54,33 +54,60 @@ function checkRateLimit(clientIp, limit = 60, windowMs = 60000) {
 
 function verifyVipToken(token, expectedId = '') {
   if (!token || typeof token !== 'string') return null;
+
+  // Format 1: HMAC Signed Token (payloadB64.signatureHex)
   const parts = token.split('.');
-  if (parts.length !== 2) return null;
-  const [payloadB64, sig] = parts;
-  const expectedSig = crypto.createHmac('sha256', VIP_SIGNING_SECRET).update(payloadB64).digest('hex');
-  if (sig.length !== expectedSig.length || !crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expectedSig))) {
-    return null;
+  if (parts.length === 2) {
+    const [payloadB64, sig] = parts;
+    const expectedSig = crypto.createHmac('sha256', VIP_SIGNING_SECRET).update(payloadB64).digest('hex');
+    if (sig.length === expectedSig.length && crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expectedSig))) {
+      try {
+        const payload = JSON.parse(Buffer.from(payloadB64, 'base64').toString('utf8'));
+        if (payload.exp && Date.now() > payload.exp) return null;
+        if (expectedId && payload.id && payload.id !== expectedId) return null;
+        const price = Number(payload.price || payload.amount);
+        if (!Number.isFinite(price) || price < 10) return null;
+        return {
+          id: String(payload.id || payload.orderId || `VIP-${Date.now()}`),
+          name: String(payload.name || payload.title || 'Lüks Özel Sipariş').slice(0, 200),
+          price,
+          brand: 'Belgin Kuyumculuk',
+          reference: 'VIP-SHOWROOM',
+          metal: 'Özel Tasarım',
+          category: 'luxury',
+          isGold: true,
+          highValueSecureDelivery: price >= HIGH_VALUE_SECURE_DELIVERY_THRESHOLD,
+        };
+      } catch (_) {}
+    }
   }
+
+  // Format 2: Base64URL Compact Token (orderId|title|amount)
   try {
-    const payload = JSON.parse(Buffer.from(payloadB64, 'base64').toString('utf8'));
-    if (payload.exp && Date.now() > payload.exp) return null; // Expired
-    if (expectedId && payload.id && payload.id !== expectedId) return null;
-    const price = Number(payload.price);
-    if (!Number.isFinite(price) || price < 10) return null;
-    return {
-      id: String(payload.id || `VIP-${Date.now()}`),
-      name: String(payload.name || 'Özel Sipariş').slice(0, 200),
-      price: price,
-      brand: String(payload.brand || 'Belgin Kuyumculuk').slice(0, 100),
-      reference: String(payload.reference || 'VIP-SHOWROOM').slice(0, 100),
-      metal: String(payload.metal || 'Özel Tasarım').slice(0, 100),
-      category: String(payload.category || 'luxury').slice(0, 50),
-      isGold: payload.isGold === true,
-      highValueSecureDelivery: price >= HIGH_VALUE_SECURE_DELIVERY_THRESHOLD,
-    };
-  } catch (_) {
-    return null;
-  }
+    const base64 = token.replace(/-/g, '+').replace(/_/g, '/');
+    const decoded = Buffer.from(base64, 'base64').toString('utf8');
+    const pipeParts = decoded.split('|');
+    if (pipeParts.length >= 3) {
+      const orderId = pipeParts[0].trim();
+      const title = pipeParts[1].trim();
+      const price = Number(pipeParts[2]);
+      if (Number.isFinite(price) && price >= 10) {
+        return {
+          id: orderId || `VIP-${Date.now()}`,
+          name: title || 'Lüks Koleksiyon Siparişi',
+          price,
+          brand: 'Belgin Kuyumculuk',
+          reference: 'VIP-SHOWROOM',
+          metal: 'Özel Tasarım',
+          category: 'luxury',
+          isGold: true,
+          highValueSecureDelivery: price >= HIGH_VALUE_SECURE_DELIVERY_THRESHOLD,
+        };
+      }
+    }
+  } catch (_) {}
+
+  return null;
 }
 
 function isHighValueCatalogProduct(product) {

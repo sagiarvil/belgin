@@ -358,7 +358,9 @@
       try {
         const cleanPhone = phone.replace(/\D/g, '');
         const orderPayload = {
+          provider: 'AKBANK',
           isVipPayment: true,
+          vipToken: currentPayload.rawToken || null,
           user_name: name,
           user_phone: phone,
           email: cleanPhone ? `musteri_${cleanPhone}@belginkuyumculuk.com` : `vip_${Date.now()}@belginkuyumculuk.com`,
@@ -381,52 +383,45 @@
           ]
         };
 
-        const response = await fetch('/api/createPayTRToken', {
+        const response = await fetch('/api/payment/create', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(orderPayload)
         });
 
-        const data = await response.json();
-        if (!response.ok || !data.success || !data.iframeUrl) {
-          throw new Error(data.message || 'PayTR ödeme servisi yanıt vermedi.');
+        let data = {};
+        try { data = await response.json(); } catch (_) { data = {}; }
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.message || 'Akbank Sanal POS 3D Secure bağlantısı kurulamadı.');
         }
 
-        // PayTR iframe alanını yükle
-        const container = document.getElementById('paytr-container');
-        const wrapper = document.getElementById('paytr-iframe-wrapper');
-        wrapper.innerHTML = '';
+        if (data.redirectUrl) {
+          window.location.href = data.redirectUrl;
+        } else if (data.iframeUrl) {
+          const container = document.getElementById('paytr-container');
+          const wrapper = document.getElementById('paytr-iframe-wrapper');
+          wrapper.innerHTML = '';
 
-        const iframe = document.createElement('iframe');
-        iframe.src = data.iframeUrl;
-        iframe.id = 'paytriframe';
-        iframe.setAttribute('frameborder', '0');
-        iframe.setAttribute('scrolling', 'no');
-        iframe.setAttribute('title', 'PayTR Güvenli Ödeme');
-        iframe.style.width = '100%';
-        iframe.style.minHeight = '520px';
-        iframe.style.border = 'none';
-        iframe.style.borderRadius = '8px';
+          const iframe = document.createElement('iframe');
+          iframe.src = data.iframeUrl;
+          iframe.setAttribute('frameborder', '0');
+          iframe.setAttribute('title', '3D Secure Güvenli Ödeme');
+          iframe.style.width = '100%';
+          iframe.style.minHeight = '520px';
+          iframe.style.border = 'none';
+          iframe.style.borderRadius = '8px';
 
-        wrapper.appendChild(iframe);
-        container.style.display = 'block';
-        btn.style.display = 'none';
-        container.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-        // PayTR Dinamik Boyutlandırma Dinleyicisi
-        window.addEventListener('message', (event) => {
-          if (event.origin !== 'https://www.paytr.com') return;
-          try {
-            const msgData = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
-            const height = Number.parseInt(msgData?.height, 10);
-            if (Number.isFinite(height) && height >= 300 && height <= 2400) {
-              iframe.style.height = `${height + 20}px`;
-            }
-          } catch (_) {}
-        });
+          wrapper.appendChild(iframe);
+          container.style.display = 'block';
+          btn.style.display = 'none';
+          container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          window.location.href = `/odeme-basarili.html?orderId=${encodeURIComponent(data.merchant_oid || '')}`;
+        }
 
       } catch (err) {
-        console.error('VIP PayTR Hatası:', err);
+        console.error('VIP Ödeme Hatası:', err);
         alert('Ödeme başlatılamadı: ' + err.message);
         btn.disabled = false;
         btn.innerHTML = originalHtml;
