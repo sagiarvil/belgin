@@ -175,14 +175,16 @@ async function syncCarrenWatches() {
       hoverImage: item.image,
       images: [item.image],
       sourceUrl: item.sourceUrl || "https://carren.com.tr",
-      statusBadge: "Distribütör Garantili",
+      statusBadge: "Sigortalı Kargo ile Gönderim",
       conditionBadge: "Sıfır",
       isPreOwned: false,
       isGold: false,
       stock: 1,
       inStock: true,
       isNew: true,
-      isHighValue: true,
+      isHighValue: false,
+      deliveryMethod: "cargo",
+      deliveryBadge: "Sigortalı Kargo ile Gönderim",
       description: desc,
       desc: desc,
       specs: {
@@ -195,7 +197,7 @@ async function syncCarrenWatches() {
         "Cinsiyet": item.gender,
         "Menşei": "Türkiye / İsviçre Tasarım",
         "Garanti": "2 Yıl Distribütör Garantili",
-        "Teslimat": "12.000 TL Üzeri Mağaza Teslimi (Kimlik & İmza İle)"
+        "Teslimat": "Sigortalı Hızlı Kargo ile Adresinize Gönderim"
       }
     };
     return watchItem;

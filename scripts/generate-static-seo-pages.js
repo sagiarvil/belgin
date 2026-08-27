@@ -167,6 +167,7 @@ function renderSeoProductCard(p) {
   const href = productRoute(p);
   const image = productImage(p);
   const ref = p.reference || p.ref || p.id;
+  const isCarren = p.brand === 'Carren';
 
   return `
     <a
@@ -176,6 +177,7 @@ function renderSeoProductCard(p) {
       style="text-decoration:none;color:inherit"
     >
       <div class="product-art-thumb">
+        ${isCarren ? '<span class="badge-shipping-pill" style="position:absolute; top:10px; left:10px; background:rgba(0,48,87,0.92); color:#FFFFFF; padding:4px 8px; border-radius:4px; font-size:10px; font-weight:700; letter-spacing:0.5px; z-index:2; backdrop-filter:blur(4px); border:1px solid rgba(255,255,255,0.2);">📦 Kargo ile Teslimat</span>' : ''}
         <img
           class="img-primary"
           src="${esc(image)}"

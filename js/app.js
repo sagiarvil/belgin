@@ -580,6 +580,7 @@ const App = {
          style="text-decoration:none; color:inherit; display:flex;">
         <div class="product-art-thumb">
           ${isPreOwned ? '<span class="badge-cond-gold">İkinci El</span>' : ''}
+          ${p.brand === 'Carren' ? '<span class="badge-shipping-pill" style="position:absolute; top:10px; left:10px; background:rgba(0,48,87,0.92); color:#FFFFFF; padding:4px 8px; border-radius:4px; font-size:10px; font-weight:700; letter-spacing:0.5px; z-index:2; backdrop-filter:blur(4px); border:1px solid rgba(255,255,255,0.2);">📦 Kargo ile Teslimat</span>' : ''}
           <img class="img-primary" src="${p.image}" alt="${p.brand} ${p.name}" loading="lazy">
           <img class="img-hover" src="${hoverImg}" alt="${p.brand} ${p.name}" loading="lazy">
         </div>
@@ -654,7 +655,12 @@ const App = {
         <div style="font-size:11.5px; color:#5D4411; background:#FFF9EE; border:1px solid #E6D2A8; padding:10px 12px; border-radius:6px; margin-bottom:16px; line-height:1.5;">
           <strong>🏛️ Yalnız Mağazadan Teslim (03):</strong> 12.000 TL üzerindeki ürünler güvenlik gereği kimlik ibrazı ve imza ile yalnızca Buca mağazamızdan teslim edilir. Kargo/kurye ile gönderilmez.
         </div>
-      ` : ''}
+      ` : `
+        <div style="font-size:11.5px; color:#003057; background:#F0F7FF; border:1px solid #C4D9EC; padding:10px 12px; border-radius:6px; margin-bottom:16px; line-height:1.5; display:flex; align-items:center; gap:8px;">
+          <span style="font-size:16px;">📦</span>
+          <span><strong>Sigortalı Hızlı Kargo:</strong> Siparişiniz özel korumalı ambalajında sigortalı kargo ile adresinize teslim edilir.</span>
+        </div>
+      `}
 
       <div style="display:flex; flex-direction:column; gap:10px; margin-top:auto;">
         <button class="btn-art-buy" onclick="Cart.add(${p.id}); App.updateHeaderCartCount(); App.closeQuickDrawer(); Router.navigate('cart');">
@@ -819,10 +825,10 @@ const App = {
           </div>
         </div>
         <div class="pdp-trust-item">
-          <span class="pdp-trust-item-icon">🏛️</span>
+          <span class="pdp-trust-item-icon">${p.brand === 'Carren' || !isHighVal ? '📦' : '🏛️'}</span>
           <div class="pdp-trust-item-text">
-            <strong>Buca Showroom'dan Teslimat</strong>
-            <span>12.000 TL üzeri yasal kimlik ve imza ile mağazadan güvenli teslim.</span>
+            <strong>${p.brand === 'Carren' || !isHighVal ? 'Sigortalı Kargo ile Teslimat' : "Buca Showroom'dan Teslimat"}</strong>
+            <span>${p.brand === 'Carren' || !isHighVal ? "Tüm Türkiye'ye özel güvenlikli ambalajında sigortalı kargo ile gönderim yapılır." : '12.000 TL üzeri yasal kimlik ve imza ile mağazadan güvenli teslim.'}</span>
           </div>
         </div>
         <div class="pdp-trust-item">

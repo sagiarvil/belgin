@@ -345,6 +345,7 @@ const HIGH_VALUE_SECURE_DELIVERY_THRESHOLD = 12000;
 
 function isHighValueSecureDelivery(product) {
   if (!product) return false;
+  if (String(product.brand || '').toLowerCase() === 'carren' || product.deliveryMethod === 'cargo') return false;
   const price = typeof product.price === 'number' ? product.price : parseFloat(product.price);
   if (isNaN(price) || price <= HIGH_VALUE_SECURE_DELIVERY_THRESHOLD) return false;
   const cat = String(product.category || '').toLowerCase();
