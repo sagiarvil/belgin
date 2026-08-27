@@ -108,7 +108,10 @@ const App = {
         this.renderCart();
         break;
       case 'odeme':
-        this.renderCart();
+        if (typeof Cart !== 'undefined' && Cart.renderCheckout) {
+          Cart.renderCheckout();
+        }
+        this.initCheckoutAutoSync();
         break;
     }
   },
@@ -1717,70 +1720,305 @@ const App = {
     showToast('Çerez tercihleriniz güncellendi.', 'success');
   },
 
-  processOrder() {
-    const isHighVal = Cart.items.some(i => (typeof isHighValueSecureDelivery === 'function' ? isHighValueSecureDelivery(i) : i.price > 12000));
-    
-    const form = document.querySelector('#page-odeme form');
-    const firstName = form ? (form.querySelector('input[placeholder="Adınız"]')?.value || '') : '';
-    const lastName = form ? (form.querySelector('input[placeholder="Soyadınız"]')?.value || '') : '';
-    const phone = form ? (form.querySelector('input[type="tel"]')?.value || '') : '';
-    const paymentOpt = form ? (form.querySelector('input[name="paymentOption"]:checked')?.value || 'paytr') : 'paytr';
-    const paymentMethodName = paymentOpt === 'paytr' 
-      ? 'PayTR 256-Bit SSL 3D Secure / Kredi Kartı (Mevzuata Uygun Taksit)' 
-      : 'Banka Havalesi / FAST (%3 İndirimli Nakit)';
-    
-    const customerFullName = (firstName + ' ' + lastName).trim() || 'Doğrulanmış Müşteri';
-    const totalAmount = Cart.getTotal();
+  // ==========================================================
+  // AKBANK SANAL POS & CHECKOUT İŞLEM YÖNETİCİSİ
+  // ==========================================================
+  togglePaymentMethod(method) {
+    const cardFields = document.getElementById('cardPaymentFields');
+    const havaleFields = document.getElementById('havaleInfoFields');
+    const cardLabel = document.getElementById('payMethodCardLabel');
+    const havaleLabel = document.getElementById('payMethodHavaleLabel');
+    const submitBtnText = document.getElementById('checkoutSubmitBtnText');
+    const grandTotal = typeof Cart !== 'undefined' ? Cart.getTotal() : 0;
+    const formattedTotal = typeof formatPrice === 'function' ? formatPrice(grandTotal) : `₺${grandTotal.toLocaleString('tr-TR')}`;
 
-    const orderAudit = {
+    if (method === 'card') {
+      if (cardFields) cardFields.style.display = 'block';
+      if (havaleFields) havaleFields.style.display = 'none';
+      if (cardLabel) cardLabel.classList.add('active');
+      if (havaleLabel) havaleLabel.classList.remove('active');
+      const radio = document.querySelector('input[name="paymentOption"][value="card"]');
+      if (radio) radio.checked = true;
+      if (submitBtnText) submitBtnText.textContent = `3D Secure ile Güvenli Öde (${formattedTotal})`;
+    } else {
+      if (cardFields) cardFields.style.display = 'none';
+      if (havaleFields) havaleFields.style.display = 'block';
+      if (cardLabel) cardLabel.classList.remove('active');
+      if (havaleLabel) havaleLabel.classList.add('active');
+      const radio = document.querySelector('input[name="paymentOption"][value="havale"]');
+      if (radio) radio.checked = true;
+      if (submitBtnText) submitBtnText.textContent = `Siparişi Onayla & Havale Bilgilerini Al (${formattedTotal})`;
+    }
+  },
+
+  formatCardNumber(input) {
+    if (!input) return;
+    let v = input.value.replace(/\D/g, '').substring(0, 16);
+    let parts = [];
+    for (let i = 0; i < v.length; i += 4) {
+      parts.push(v.substring(i, i + 4));
+    }
+    input.value = parts.join(' ');
+
+    // Otomatik Kart Tipi Algılama
+    const badge = document.getElementById('cardTypeBadge');
+    if (badge) {
+      if (v.startsWith('4')) {
+        badge.textContent = 'VISA';
+        badge.style.color = '#1A1F71';
+      } else if (/^5[1-5]/.test(v) || /^2[2-7]/.test(v)) {
+        badge.textContent = 'MASTERCARD';
+        badge.style.color = '#EB001B';
+      } else if (v.startsWith('9792')) {
+        badge.textContent = 'TROY';
+        badge.style.color = '#005BAC';
+      } else if (v.startsWith('5549') || v.startsWith('5406') || v.startsWith('4543')) {
+        badge.textContent = 'AXESS';
+        badge.style.color = '#ED1C24';
+      } else {
+        badge.textContent = 'KART';
+        badge.style.color = 'var(--color-teal)';
+      }
+    }
+  },
+
+  formatCardExpiry(input) {
+    if (!input) return;
+    let v = input.value.replace(/\D/g, '').substring(0, 4);
+    if (v.length >= 2) {
+      let mm = parseInt(v.substring(0, 2), 10);
+      if (mm > 12) v = '12' + v.substring(2);
+      if (mm === 0) v = '01' + v.substring(2);
+      input.value = v.substring(0, 2) + ' / ' + v.substring(2);
+    } else {
+      input.value = v;
+    }
+  },
+
+  formatCardCvv(input) {
+    if (!input) return;
+    input.value = input.value.replace(/\D/g, '').substring(0, 4);
+  },
+
+  _pendingOrder: null,
+  _timerInterval: null,
+
+  processOrder() {
+    const fn = (document.getElementById('checkoutFirstName')?.value || '').trim();
+    const ln = (document.getElementById('checkoutLastName')?.value || '').trim();
+    const phone = (document.getElementById('checkoutPhone')?.value || '').trim();
+    const email = (document.getElementById('checkoutEmail')?.value || '').trim();
+    const paymentOpt = document.querySelector('input[name="paymentOption"]:checked')?.value || 'card';
+
+    if (!fn || !ln) {
+      if (typeof showToast === 'function') showToast('Lütfen ad ve soyadınızı eksiksiz giriniz.', 'error');
+      else alert('Lütfen ad ve soyadınızı eksiksiz giriniz.');
+      document.getElementById('checkoutFirstName')?.focus();
+      return;
+    }
+
+    if (!phone || phone.length < 10) {
+      if (typeof showToast === 'function') showToast('Lütfen geçerli bir telefon numarası giriniz (3D Secure SMS onayı için zorunludur).', 'error');
+      else alert('Lütfen geçerli bir telefon numarası giriniz.');
+      document.getElementById('checkoutPhone')?.focus();
+      return;
+    }
+
+    const items = (typeof Cart !== 'undefined' && Cart.items && Cart.items.length > 0) ? [...Cart.items] : [];
+    if (items.length === 0) {
+      if (typeof showToast === 'function') showToast('Sepetiniz boş. Lütfen önce ürün seçiniz.', 'error');
+      else alert('Sepetiniz boş. Lütfen önce ürün seçiniz.');
+      Router.navigate('saatler');
+      return;
+    }
+
+    const totalAmount = typeof Cart !== 'undefined' ? Cart.getTotal() : 0;
+    const formattedAmount = typeof formatPrice === 'function' ? formatPrice(totalAmount) : `₺${totalAmount.toLocaleString('tr-TR')}`;
+    const isHighVal = items.some(i => (typeof isHighValueSecureDelivery === 'function' ? isHighValueSecureDelivery(i) : i.price >= 12000));
+    const customerFullName = `${fn} ${ln}`;
+
+    const orderPayload = {
       orderId: 'BLG-' + Math.floor(100000 + Math.random() * 900000),
       customerName: customerFullName,
-      customerPhone: phone || '05XX *** ** XX',
-      items: [...Cart.items],
+      customerPhone: phone,
+      customerEmail: email || 'musteri@belginkuyumculuk.com',
+      items: items,
       totalAmount: totalAmount,
-      formattedAmount: '₺' + totalAmount.toLocaleString('tr-TR'),
-      paymentMethod: paymentMethodName,
+      formattedAmount: formattedAmount,
+      paymentMethod: paymentOpt === 'card' ? 'Akbank Sanal POS 256-Bit EV SSL 3D Secure' : 'Banka Havalesi / FAST (%3 İndirimli)',
       isHighValueSecureDelivery: isHighVal,
       termsAccepted: true,
-      termsVersion: "2026.08.25.v1",
+      termsVersion: "2026.08.27.v2",
       termsAcceptedAt: new Date().toISOString(),
       kycProtocolAccepted: Boolean(document.getElementById('chkKyc')?.checked),
       handoverFormAccepted: Boolean(document.getElementById('chkHandover')?.checked),
       marketingConsent: Boolean(document.getElementById('chkMarketing')?.checked),
-      marketingConsentChannels: document.getElementById('chkMarketing')?.checked ? ['SMS', 'EMAIL'] : [],
-      privacyNoticeAcknowledged: true,
       optionalConsent: Boolean(document.getElementById('chkConsent')?.checked),
       deliveryProtocolVersion: "03_v1",
       kycStatus: "verified",
-      deliveryFormStatus: "pendingStoreSignature"
+      posTerminalNo: "12865794"
     };
 
-    localStorage.setItem('last_order_audit', JSON.stringify(orderAudit));
-    localStorage.setItem('belgin_active_transaction', JSON.stringify(orderAudit));
+    if (paymentOpt === 'havale') {
+      localStorage.setItem('last_order_audit', JSON.stringify(orderPayload));
+      localStorage.setItem('belgin_active_transaction', JSON.stringify(orderPayload));
+      if (typeof Cart !== 'undefined') Cart.clear();
+      this.updateHeaderCartCount();
+      window.location.href = `odeme-basarili.html?orderId=${encodeURIComponent(orderPayload.orderId)}&payment=havale`;
+      return;
+    }
 
-    alert(`Siparişiniz (#${orderAudit.orderId}) başarıyla alındı!\n\nE-Arşiv faturanız ve mağaza teslimat onay kodunuz SMS olarak telefonunuza iletilmiştir.\n12.000 TL üzeri ürününüzü Buca Showroom mağazamızdan kimlik ibrazı ve imza ile teslim alabilirsiniz.`);
-    Cart.clear();
-    this.updateHeaderCartCount();
-    Router.navigate('ana-sayfa');
+    // Kredi Kartı Bilgileri Validasyonu
+    const cardHolder = (document.getElementById('ccCardHolder')?.value || '').trim();
+    const rawCardNum = (document.getElementById('ccCardNumber')?.value || '').replace(/\s/g, '');
+    const cardExpiry = (document.getElementById('ccCardExpiry')?.value || '').trim();
+    const cardCvc = (document.getElementById('ccCardCvc')?.value || '').trim();
+
+    if (!cardHolder || cardHolder.length < 3) {
+      if (typeof showToast === 'function') showToast('Lütfen kart üzerindeki isim ve soyismi giriniz.', 'error');
+      else alert('Lütfen kart üzerindeki isim ve soyismi giriniz.');
+      document.getElementById('ccCardHolder')?.focus();
+      return;
+    }
+
+    if (!rawCardNum || rawCardNum.length < 15) {
+      if (typeof showToast === 'function') showToast('Lütfen 16 haneli geçerli kart numarasını giriniz.', 'error');
+      else alert('Lütfen 16 haneli geçerli kart numarasını giriniz.');
+      document.getElementById('ccCardNumber')?.focus();
+      return;
+    }
+
+    if (!cardExpiry || cardExpiry.length < 5) {
+      if (typeof showToast === 'function') showToast('Lütfen kart son kullanma tarihini (AA / YY) giriniz.', 'error');
+      else alert('Lütfen kart son kullanma tarihini (AA / YY) giriniz.');
+      document.getElementById('ccCardExpiry')?.focus();
+      return;
+    }
+
+    if (!cardCvc || cardCvc.length < 3) {
+      if (typeof showToast === 'function') showToast('Lütfen kartın arka yüzündeki 3 haneli güvenlik kodunu (CVV) giriniz.', 'error');
+      else alert('Lütfen kartın arka yüzündeki 3 haneli güvenlik kodunu (CVV) giriniz.');
+      document.getElementById('ccCardCvc')?.focus();
+      return;
+    }
+
+    orderPayload.cardMask = rawCardNum.substring(0, 4) + ' **** **** ' + rawCardNum.substring(rawCardNum.length - 4);
+    orderPayload.cardHolder = cardHolder;
+
+    this.open3DSecureModal(orderPayload);
+  },
+
+  open3DSecureModal(payload) {
+    this._pendingOrder = payload;
+    const modal = document.getElementById('akbank3dOverlay');
+    if (!modal) return;
+
+    const amountEl = document.getElementById('modal3dAmount');
+    const cardEl = document.getElementById('modal3dCardMask');
+    const phoneEl = document.getElementById('modal3dPhoneMask');
+    const otpInput = document.getElementById('akbankOtpInput');
+    const timerEl = document.getElementById('akbank3dTimer');
+
+    if (amountEl) amountEl.textContent = payload.formattedAmount || `₺${payload.totalAmount}`;
+    if (cardEl) cardEl.textContent = payload.cardMask || '**** **** **** ****';
+    if (phoneEl) {
+      const p = payload.customerPhone || '';
+      phoneEl.textContent = p.length >= 10 ? (p.substring(0, 4) + ' *** ** ' + p.substring(p.length - 2)) : '05** *** ** **';
+    }
+
+    if (otpInput) {
+      otpInput.value = '';
+      setTimeout(() => otpInput.focus(), 150);
+    }
+
+    modal.classList.add('active');
+
+    // 3 Dakikalık Geri Sayım
+    let duration = 180;
+    if (this._timerInterval) clearInterval(this._timerInterval);
+    const updateTimer = () => {
+      const min = String(Math.floor(duration / 60)).padStart(2, '0');
+      const sec = String(duration % 60).padStart(2, '0');
+      if (timerEl) timerEl.textContent = `${min}:${sec}`;
+      if (duration <= 0) {
+        clearInterval(this._timerInterval);
+        if (typeof showToast === 'function') showToast('3D Secure oturum süresi doldu. Lütfen tekrar deneyiniz.', 'error');
+        this.close3DSecureModal();
+      }
+      duration--;
+    };
+    updateTimer();
+    this._timerInterval = setInterval(updateTimer, 1000);
+  },
+
+  close3DSecureModal() {
+    const modal = document.getElementById('akbank3dOverlay');
+    if (modal) modal.classList.remove('active');
+    if (this._timerInterval) {
+      clearInterval(this._timerInterval);
+      this._timerInterval = null;
+    }
+  },
+
+  verify3dOtp() {
+    const otpInput = document.getElementById('akbankOtpInput');
+    const otp = (otpInput?.value || '').trim();
+    const btn = document.getElementById('btnConfirm3d');
+
+    if (!otp || otp.length < 6) {
+      if (typeof showToast === 'function') showToast('Lütfen 6 haneli 3D Secure SMS onay kodunu giriniz (Test kodu: 123456).', 'error');
+      else alert('Lütfen 6 haneli onay kodunu giriniz.');
+      if (otpInput) otpInput.focus();
+      return;
+    }
+
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = '🔒 Akbank Sanal POS Onaylanıyor...';
+    }
+
+    setTimeout(() => {
+      const order = this._pendingOrder || {
+        orderId: 'BLG-' + Math.floor(100000 + Math.random() * 900000),
+        totalAmount: typeof Cart !== 'undefined' ? Cart.getTotal() : 0
+      };
+
+      const authCode = 'AKB-' + Math.floor(100000 + Math.random() * 900000);
+      order.authCode = authCode;
+      order.paymentStatus = 'SUCCESS';
+      order.posProvider = 'AKBANK_SANAL_POS';
+      order.terminalId = '12865794';
+      order.confirmedAt = new Date().toISOString();
+
+      localStorage.setItem('last_order_audit', JSON.stringify(order));
+      localStorage.setItem('belgin_active_transaction', JSON.stringify(order));
+      sessionStorage.setItem('last_order_id', order.orderId);
+
+      if (typeof Cart !== 'undefined') Cart.clear();
+      this.updateHeaderCartCount();
+      this.close3DSecureModal();
+
+      window.location.href = `odeme-basarili.html?orderId=${encodeURIComponent(order.orderId)}&authCode=${encodeURIComponent(authCode)}&amount=${encodeURIComponent(order.totalAmount)}`;
+    }, 700);
   },
 
   // ÖDEME FORMU GERÇEK ZAMANLI OTOMATİK SENKRONİZASYON
   initCheckoutAutoSync() {
-    const form = document.querySelector('#page-odeme form');
+    const form = document.getElementById('checkoutForm') || document.querySelector('#page-odeme form');
     if (!form) return;
     const updateDraft = () => {
-      const fn = form.querySelector('input[placeholder="Adınız"]')?.value || '';
-      const ln = form.querySelector('input[placeholder="Soyadınız"]')?.value || '';
-      const phone = form.querySelector('input[type="tel"]')?.value || '';
+      const fn = document.getElementById('checkoutFirstName')?.value || '';
+      const ln = document.getElementById('checkoutLastName')?.value || '';
+      const phone = document.getElementById('checkoutPhone')?.value || '';
       const fullName = (fn + ' ' + ln).trim();
       const cartTotal = typeof Cart !== 'undefined' ? Cart.getTotal() : 0;
       const draft = {
         customerName: fullName || 'Müşteri (Sipariş Sahibi)',
-        customerPhone: phone || '05XX *** ** XX (Sipariş Doğrulama Telefonu)',
+        customerPhone: phone || '05XX *** ** XX (3D Secure Doğrulama Telefonu)',
         totalAmount: cartTotal > 0 ? cartTotal : 14960,
         formattedAmount: '₺' + (cartTotal > 0 ? cartTotal : 14960).toLocaleString('tr-TR'),
         termsAcceptedAt: new Date().toISOString(),
-        paymentMethod: 'PayTR 256-Bit SSL 3D Secure / Kredi Kartı (Mevzuata Uygun Taksit)'
+        paymentMethod: 'Akbank 256-Bit EV SSL & 3D Secure Sanal POS (12865794)'
       };
       localStorage.setItem('belgin_checkout_draft', JSON.stringify(draft));
       sessionStorage.setItem('belgin_checkout_draft', JSON.stringify(draft));

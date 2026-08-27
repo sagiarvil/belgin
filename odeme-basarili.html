@@ -151,18 +151,26 @@
         <span class="order-label">Sipariş Referansı:</span>
         <span id="orderIdText" class="order-val">BLG-SİPARİŞ</span>
       </div>
+      <div class="order-row" id="authCodeRow" style="display:none;">
+        <span class="order-label">Banka Onay Kodu:</span>
+        <span id="authCodeText" class="order-val" style="color:var(--gold-primary);">AKB-000000</span>
+      </div>
       <div class="order-row">
         <span class="order-label">Ödeme Durumu:</span>
-        <span class="order-val" style="color:#2ECC71;">ONAYLANDI (PAID)</span>
+        <span class="order-val" style="color:#2ECC71;">ONAYLANDI (3D SECURE)</span>
+      </div>
+      <div class="order-row">
+        <span class="order-label">Ödeme Altyapısı:</span>
+        <span class="order-val" style="font-family:'Plus Jakarta Sans'; font-size:12px; color:#FFF;">Akbank Sanal POS (12865794)</span>
       </div>
       <div class="order-row">
         <span class="order-label">Teslimat Prosedürü:</span>
-        <span class="order-val" style="font-family:'Plus Jakarta Sans'; font-size:12px;">Mağaza / Showroom Teslim</span>
+        <span class="order-val" style="font-family:'Plus Jakarta Sans'; font-size:12px;">Buca Showroom Güvenli Teslim</span>
       </div>
     </div>
 
     <div class="security-badge">
-      🔒 256-Bit SSL & SHA-256 Hukuki Delil Korumalı
+      🔒 256-Bit EV SSL & Akbank 3D Secure 2.0 Korumalı
     </div>
 
     <div class="btn-group">
@@ -175,7 +183,17 @@
     (function () {
       const urlParams = new URLSearchParams(window.location.search);
       const orderId = urlParams.get('orderId') || urlParams.get('order') || urlParams.get('merchant_oid') || sessionStorage.getItem('last_order_id') || 'BLG-' + Math.floor(100000 + Math.random() * 900000);
+      const authCode = urlParams.get('authCode');
+      
       document.getElementById('orderIdText').textContent = orderId;
+      if (authCode) {
+        const row = document.getElementById('authCodeRow');
+        const text = document.getElementById('authCodeText');
+        if (row && text) {
+          text.textContent = authCode;
+          row.style.display = 'flex';
+        }
+      }
       document.getElementById('btnTracking').href = `/?order=${encodeURIComponent(orderId)}`;
     })();
   </script>

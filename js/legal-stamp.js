@@ -63,7 +63,7 @@
           customerPhone: qPhone || parsedStored?.customerPhone || parsedDraft?.customerPhone || '05XX *** ** XX (Sipariş Doğrulama Telefonu)',
           totalAmount: qAmount ? parseFloat(qAmount) : (parsedStored?.totalAmount || parsedDraft?.totalAmount || 14960),
           termsAcceptedAt: parsedStored?.termsAcceptedAt || parsedDraft?.termsAcceptedAt || new Date().toISOString(),
-          paymentMethod: parsedStored?.paymentMethod || parsedDraft?.paymentMethod || 'PayTR 256-Bit SSL 3D Secure / Kredi Kartı'
+          paymentMethod: parsedStored?.paymentMethod || parsedDraft?.paymentMethod || 'Akbank Sanal POS 256-Bit EV SSL 3D Secure / Kredi Kartı'
         };
       }
 
@@ -129,7 +129,7 @@
       const customerName = (tx.customerName && tx.customerName !== 'Doğrulanmış Müşteri') ? tx.customerName : 'Müşteri (Sipariş Sahibi)';
       const customerPhone = tx.customerPhone || '05XX *** ** XX (Sipariş Doğrulama Telefonu)';
       const totalAmount = tx.totalAmount ? ('₺' + Number(tx.totalAmount).toLocaleString('tr-TR')) : '₺14.960';
-      const paymentMethod = tx.paymentMethod || 'PayTR 256-Bit SSL 3D Secure / Kredi Kartı';
+      const paymentMethod = tx.paymentMethod || 'Akbank Sanal POS 256-Bit EV SSL 3D Secure / Kredi Kartı';
       const timeStr = tx.termsAcceptedAt 
         ? new Date(tx.termsAcceptedAt).toLocaleString('tr-TR', { timeZone: 'Europe/Istanbul' })
         : new Date().toLocaleString('tr-TR', { timeZone: 'Europe/Istanbul' });

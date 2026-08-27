@@ -6,12 +6,13 @@ const PAGE_TITLES = {
   'ana-sayfa': "Belgin Kuyumculuk | Lüks Mücevher, Pırlanta & Saat",
   'mucevherat': "Mücevher Koleksiyonu | Belgin Kuyumculuk",
   'saatler': "Lüks Saatler & Yüksek Saatçilik | Belgin Kuyumculuk",
-  'ikinci-el': "Ekspertizli İkinci El & Altın | Belgin Kuyumculuk",
+  'seckin-urunler': "Seçkin Ürünler & Altın | Belgin Kuyumculuk",
+  'ikinci-el': "Seçkin Ürünler & Altın | Belgin Kuyumculuk",
   'hikayemiz': "Hikayemiz & Tarihçe | Belgin Kuyumculuk",
   'koleksiyonlar': "Özel Koleksiyonlar & Haute Joaillerie | Belgin Kuyumculuk",
   'urun': "Ürün Detayı | Belgin Kuyumculuk",
   'sepet': "Mücevher Kasası & Sepetim | Belgin Kuyumculuk",
-  'odeme': "Güvenli Ödeme (PayTR) | Belgin Kuyumculuk",
+  'odeme': "Güvenli Ödeme | Belgin Kuyumculuk",
   'favoriler': "İstek Listem & Favoriler | Belgin Kuyumculuk",
   'hesabim': "VIP Müşteri Hesabı | Belgin Kuyumculuk",
   'iletisim': "İletişim & Buca Showroom Mağazamız | Belgin Kuyumculuk",
@@ -28,7 +29,7 @@ const Router = {
     if (path === '/') return { page: 'ana-sayfa' };
     if (path === '/saatler') return { page: 'saatler' };
     if (path === '/mucevherat') return { page: 'mucevherat' };
-    if (path === '/ikinci-el') return { page: 'ikinci-el' };
+    if (path === '/seckin-urunler' || path === '/ikinci-el') return { page: 'seckin-urunler' };
     if (path.startsWith('/urun/')) {
       const match = Object.entries(window.SEO_ROUTE_MAP || {}).find(([,route]) => route.replace(/\/+$/, '') === path);
       if (match) return { page: 'urun', productId: Number(match[0]) };
@@ -61,8 +62,9 @@ const Router = {
       'watches': '/saatler/',
       'mucevherat': '/mucevherat/',
       'jewellery': '/mucevherat/',
-      'ikinci-el': '/ikinci-el/',
-      'preowned': '/ikinci-el/'
+      'seckin-urunler': '/seckin-urunler/',
+      'ikinci-el': '/seckin-urunler/',
+      'preowned': '/seckin-urunler/'
     };
     if (old[hash]) {
       history.replaceState({page:hash}, '', old[hash]);
@@ -138,7 +140,8 @@ const Router = {
       'home': 'ana-sayfa',
       'watches': 'saatler',
       'jewellery': 'mucevherat',
-      'preowned': 'ikinci-el',
+      'preowned': 'seckin-urunler',
+      'ikinci-el': 'seckin-urunler',
       'story': 'hikayemiz',
       'cart': 'sepet',
       'checkout': 'odeme',
@@ -158,6 +161,9 @@ const Router = {
     // 1. Sayfa Görünürlüğü
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     let target = document.getElementById('page-' + page);
+    if (!target && page === 'seckin-urunler') {
+      target = document.getElementById('page-ikinci-el') || document.getElementById('page-seckin-urunler');
+    }
     if (!target && page === 'iletisim') {
       target = document.getElementById('page-contact');
     }

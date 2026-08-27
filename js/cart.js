@@ -310,44 +310,53 @@ const Cart = {
   },
 
   renderCheckout() {
-    const container = document.getElementById('checkoutItems');
-    const subtotalEl = document.getElementById('checkoutSubtotal');
-    const discountEl = document.getElementById('checkoutDiscountRow');
-    const totalEl = document.getElementById('checkoutTotal');
-    if (!container) return;
+    const container = document.getElementById('checkoutItems') || document.getElementById('checkoutItemsListMini');
+    const subtotalEl = document.getElementById('checkoutSubtotal') || document.getElementById('checkoutSubtotalDisplay');
+    const discountRow = document.getElementById('checkoutDiscountRow');
+    const discountEl = document.getElementById('checkoutDiscountDisplay');
+    const totalEl = document.getElementById('checkoutTotal') || document.getElementById('checkoutGrandTotalDisplay');
+    const submitBtnText = document.getElementById('checkoutSubmitBtnText');
 
     const subtotal = this.getSubtotal();
     const discount = this.getDiscountAmount();
     const grandTotal = this.getTotal();
 
-    container.innerHTML = this.items.map(item => `
-      <div class="checkout-item" style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border-hairline);">
-        <div style="display:flex; align-items:center; gap:12px;">
-          <div style="width:48px; height:48px; border-radius:var(--radius-xs); overflow:hidden; border:1px solid var(--border-hairline);">
-            <img src="${item.image}" alt="${item.name}" style="width:100%; height:100%; object-fit:cover;">
+    if (container) {
+      if (this.items.length === 0) {
+        container.innerHTML = `
+          <div style="padding:16px; text-align:center; color:var(--color-muted); font-size:13px;">
+            Sepetinizde ürün bulunmamaktadır. <a href="#" data-page="saatler" style="color:var(--color-teal); text-decoration:underline;">Alışverişe Başla</a>
           </div>
-          <div>
-            <h5 style="font-size:14px; font-weight:600; color:var(--text-main); font-family:var(--font-sans);">${item.name}</h5>
-            ${item.ringSize ? `<span style="font-size:12px; color:var(--text-muted);">Ölçü: ${item.ringSize}</span>` : ''}
-            <span style="font-size:12px; color:var(--text-muted); display:block;">${item.qty} adet × ${formatPrice(item.price)}</span>
+        `;
+      } else {
+        container.innerHTML = this.items.map(item => `
+          <div class="checkout-item-mini-row" style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px dashed rgba(0,0,0,0.08);">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div style="width:40px; height:40px; border-radius:4px; overflow:hidden; border:1px solid #EAE5D9; background:#FFF; flex-shrink:0;">
+                <img src="${item.image}" alt="${item.name}" style="width:100%; height:100%; object-fit:contain;">
+              </div>
+              <div>
+                <strong style="font-size:13px; color:var(--color-ink); display:block; line-height:1.3;">${item.name}</strong>
+                ${item.ringSize ? `<span style="font-size:11px; color:var(--color-muted);">Ölçü: ${item.ringSize} · </span>` : ''}
+                <span style="font-size:11.5px; color:var(--color-muted);">${item.qty} adet × ${formatPrice(item.price)}</span>
+              </div>
+            </div>
+            <div style="font-size:14px; font-weight:700; color:var(--color-ink); font-family:var(--font-sans); font-variant-numeric:tabular-nums;">${formatPrice(item.price * item.qty)}</div>
           </div>
-        </div>
-        <div style="font-size:15px; font-weight:700; color:var(--text-main); font-family:var(--font-sans); font-variant-numeric:tabular-nums;">${formatPrice(item.price * item.qty)}</div>
-      </div>
-    `).join('');
+        `).join('');
+      }
+    }
 
     if (subtotalEl) subtotalEl.textContent = formatPrice(subtotal);
     if (totalEl) totalEl.textContent = formatPrice(grandTotal);
+    if (submitBtnText) submitBtnText.textContent = `3D Secure ile Güvenli Öde (${formatPrice(grandTotal)})`;
 
-    if (discountEl) {
-      if (this.coupon) {
-        discountEl.style.display = 'flex';
-        discountEl.innerHTML = `
-          <span>VIP İndirim (${this.coupon.code})</span>
-          <span style="color:var(--gold-primary); font-weight:700;">- ${formatPrice(discount)}</span>
-        `;
+    if (discountRow) {
+      if (this.coupon && discount > 0) {
+        discountRow.style.display = 'flex';
+        if (discountEl) discountEl.textContent = `- ${formatPrice(discount)}`;
       } else {
-        discountEl.style.display = 'none';
+        discountRow.style.display = 'none';
       }
     }
   }

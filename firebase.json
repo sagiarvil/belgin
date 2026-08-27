@@ -194,7 +194,12 @@
     ],
     "redirects": [
       {
-        "source": "/ikinci-el{,/**}",
+        "source": "/ikinci-el",
+        "destination": "/seckin-urunler/",
+        "type": 301
+      },
+      {
+        "source": "/ikinci-el/**",
         "destination": "/seckin-urunler/",
         "type": 301
       }
