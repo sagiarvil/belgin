@@ -69,7 +69,7 @@ const ValuationEngine = {
     const mode = this.currentMode || 'gold';
 
     if (mode === 'gold') {
-      const hasGramPrice = (typeof LIVE_MARKET_DATA !== 'undefined' ? LIVE_MARKET_DATA.gramGold24k : 3442);
+      const hasGramPrice = (typeof LIVE_MARKET_DATA !== 'undefined' && LIVE_MARKET_DATA.gramGold24k ? LIVE_MARKET_DATA.gramGold24k : 7111);
       
       container.innerHTML = `
         <div class="val-tab-bar" style="display:flex; gap:10px; margin-bottom:24px;">

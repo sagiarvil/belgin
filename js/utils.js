@@ -68,20 +68,35 @@ function setCurrency(curr) {
 }
 
 /**
- * İZMİR KUYUMCULAR ODASI (İZKO) RESMİ CANLI KUR ÇEKİCİ
- * URL: https://www.izko.org.tr/guncel-kur -> API: https://www.izko.org.tr/api/web/v1/gold-prices
+ * Sanity Validator & Circuit Breaker for Financial Market Rates
+ */
+function isValidMarketRate(val, min = 1000, max = 500000) {
+  return typeof val === 'number' && !isNaN(val) && isFinite(val) && val >= min && val <= max;
+}
+
+/**
+ * 3-KADEMELİ HATA TOLERANSLI CANLI KUR MOTORU (İZKO + TRUNCGIL + SENTETİK ONS)
+ * Tier-1: İzmir Kuyumcular Odası (İZKO) Resmi API
+ * Tier-2: Truncgil Finans API
+ * Tier-3: Ons & USD/TRY Sentetik Borsa Türetimi
  */
 async function fetchLiveMarketRates() {
   let izkoSuccess = false;
+  let truncgilSuccess = false;
 
+  // 1. TIER-1: İZKO RESMİ KUR API ÇAĞRISI
   try {
-    const res = await fetch('https://www.izko.org.tr/api/web/v1/gold-prices');
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 6000);
+    const res = await fetch('https://www.izko.org.tr/api/web/v1/gold-prices', { signal: controller.signal });
+    clearTimeout(timeoutId);
+
     if (res.ok) {
       const json = await res.json();
-      if (json && json.success && Array.isArray(json.data)) {
+      if (json && json.success && Array.isArray(json.data) && json.data.length > 0) {
         json.data.forEach(item => {
           const price = parseFloat(item.sell_price || item.buy_price) || 0;
-          if (price > 0) {
+          if (isValidMarketRate(price)) {
             switch (item.key) {
               case 'hasaltin':
                 LIVE_MARKET_DATA.hasAltin = price;
@@ -122,8 +137,9 @@ async function fetchLiveMarketRates() {
           }
         });
 
-        if (json.data[0] && json.data[0].percent_change) {
-          const chg = '+' + json.data[0].percent_change + '%';
+        if (json.data[0] && json.data[0].percent_change !== undefined) {
+          const chgNum = parseFloat(json.data[0].percent_change) || 0;
+          const chg = (chgNum >= 0 ? '+' : '') + chgNum.toFixed(2) + '%';
           LIVE_MARKET_DATA.changeGram = chg;
           LIVE_MARKET_DATA.change22k = chg;
           LIVE_MARKET_DATA.changeQuarter = chg;
@@ -134,41 +150,77 @@ async function fetchLiveMarketRates() {
       }
     }
   } catch (err) {
-    console.warn('İZKO direkt API çağrısı proxy/CORS durumuna göre yedeklendi:', err.message);
+    // Tier-1 geçici bağlantı/ağ durumu
   }
 
-  // Canlı Döviz Kurlarını Çek (USD/TRY, EUR/TRY)
+  // 2. TIER-2: TRUNCGIL FİNANS API (DÖVİZ & YEDEK ALTIN)
+  let rawOnsUsd = 0;
   try {
-    const dRes = await fetch('https://finans.truncgil.com/v3/today.json');
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 6000);
+    const dRes = await fetch('https://finans.truncgil.com/v3/today.json', { signal: controller.signal });
+    clearTimeout(timeoutId);
+
     if (dRes.ok) {
       const dData = await dRes.json();
       if (dData && dData.USD) {
         const usd = parseFloat(String(dData.USD.Selling || dData.USD.Buying || 0).replace(/\./g, '').replace(',', '.'));
         const eur = parseFloat(String(dData.EUR.Selling || dData.EUR.Buying || 0).replace(/\./g, '').replace(',', '.'));
-        if (usd > 0) {
+        if (isValidMarketRate(usd, 10, 200)) {
           LIVE_MARKET_DATA.usdTry = +usd.toFixed(2);
           EXCHANGE_RATES.USD = 1 / usd;
         }
-        if (eur > 0) {
+        if (isValidMarketRate(eur, 10, 250)) {
           LIVE_MARKET_DATA.eurTry = +eur.toFixed(2);
           EXCHANGE_RATES.EUR = 1 / eur;
         }
 
-        // Eğer İZKO API ilk adımda tarayıcı CORS kısıtına takılırsa Truncgil altın fiyatlarıyla anında doldur
+        if (dData.ons && dData.ons.Selling) {
+          const ons = parseFloat(String(dData.ons.Selling).replace(/\$/g, '').replace(/\./g, '').replace(',', '.'));
+          if (isValidMarketRate(ons, 1000, 10000)) rawOnsUsd = ons;
+        }
+
+        // İZKO başarısız olduysa Truncgil altın kurları ile devre kesiciyi doldur
         if (!izkoSuccess && dData['gram-altin']) {
-          const g24 = parseFloat(String(dData['gram-altin'].Selling).replace(/\./g, '').replace(',', '.'));
-          const g22 = parseFloat(String(dData['22-ayar-bilezik'].Selling).replace(/\./g, '').replace(',', '.'));
-          const qtr = parseFloat(String(dData['ceyrek-altin'].Selling).replace(/\./g, '').replace(',', '.'));
-          if (g24 > 0) LIVE_MARKET_DATA.gramGold24k = Math.round(g24);
-          if (g22 > 0) LIVE_MARKET_DATA.gramGold22k = Math.round(g22);
-          if (qtr > 0) LIVE_MARKET_DATA.quarterGold = Math.round(qtr);
-          LIVE_MARKET_DATA.hasAltin = LIVE_MARKET_DATA.gramGold24k;
+          const g24 = parseFloat(String(dData['gram-altin'].Selling || 0).replace(/\./g, '').replace(',', '.'));
+          const g22 = parseFloat(String(dData['22-ayar-bilezik']?.Selling || 0).replace(/\./g, '').replace(',', '.'));
+          const qtr = parseFloat(String(dData['ceyrek-altin']?.Selling || 0).replace(/\./g, '').replace(',', '.'));
+          const yar = parseFloat(String(dData['yarim-altin']?.Selling || 0).replace(/\./g, '').replace(',', '.'));
+          const tam = parseFloat(String(dData['tam-altin']?.Selling || 0).replace(/\./g, '').replace(',', '.'));
+          const ata = parseFloat(String(dData['cumhuriyet-altini']?.Selling || 0).replace(/\./g, '').replace(',', '.'));
+
+          if (isValidMarketRate(g24, 3000, 50000)) {
+            LIVE_MARKET_DATA.gramGold24k = Math.round(g24);
+            LIVE_MARKET_DATA.hasAltin = Math.round(g24);
+          }
+          if (isValidMarketRate(g22, 3000, 50000)) LIVE_MARKET_DATA.gramGold22k = Math.round(g22);
+          if (isValidMarketRate(qtr, 5000, 100000)) LIVE_MARKET_DATA.quarterGold = Math.round(qtr);
+          if (isValidMarketRate(yar, 10000, 200000)) LIVE_MARKET_DATA.halfGold = Math.round(yar);
+          if (isValidMarketRate(tam, 20000, 400000)) LIVE_MARKET_DATA.fullGold = Math.round(tam);
+          if (isValidMarketRate(ata, 20000, 400000)) LIVE_MARKET_DATA.ataGold = Math.round(ata);
+          truncgilSuccess = true;
         }
       }
     }
-  } catch (e) {}
+  } catch (e) {
+    // Tier-2 geçici bağlantı/ağ durumu
+  }
 
-  // DOM Ticker ve Değerleme Motorunu Canlı Verilerle Yenile
+  // 3. TIER-3: SENTETİK ONS HESAPLAMA (Tüm API'ler kesilirse sentetik türetim)
+  if (!izkoSuccess && !truncgilSuccess && rawOnsUsd > 0 && LIVE_MARKET_DATA.usdTry > 0) {
+    const syntheticGram24k = Math.round((rawOnsUsd / 31.1034768) * LIVE_MARKET_DATA.usdTry * 0.995);
+    if (isValidMarketRate(syntheticGram24k, 3000, 50000)) {
+      LIVE_MARKET_DATA.gramGold24k = syntheticGram24k;
+      LIVE_MARKET_DATA.hasAltin = syntheticGram24k;
+      LIVE_MARKET_DATA.gramGold22k = Math.round(syntheticGram24k * 0.916);
+      LIVE_MARKET_DATA.quarterGold = Math.round(syntheticGram24k * 1.754 * 0.916 * 1.03);
+      LIVE_MARKET_DATA.halfGold = Math.round(LIVE_MARKET_DATA.quarterGold * 2);
+      LIVE_MARKET_DATA.fullGold = Math.round(LIVE_MARKET_DATA.quarterGold * 4);
+      LIVE_MARKET_DATA.ataGold = Math.round(syntheticGram24k * 7.216 * 0.916 * 1.03);
+    }
+  }
+
+  // DOM Ticker, Hero Vitrin ve Değerleme Motorunu Yenile
   updateMarketTickerDOM();
   updateShowroomStatus();
 
@@ -178,26 +230,29 @@ async function fetchLiveMarketRates() {
 }
 
 /**
- * Ticker DOM Güncellemesi
+ * Ticker ve Showroom Vitrini DOM Güncellemesi (Pürüzsüz Flaş Animasyonu ile)
  */
 function updateMarketTickerDOM() {
+  const currentGram = Math.round(LIVE_MARKET_DATA.gramGold24k || LIVE_MARKET_DATA.hasAltin || 7111);
+  const currentQuarter = Math.round(LIVE_MARKET_DATA.quarterGold || 11740);
+
   const elements = [
-    { id: 'liveGramGold', val: '₺' + Number(LIVE_MARKET_DATA.gramGold24k).toLocaleString('tr-TR'), chg: 'liveGramChange', chgVal: '▲ ' + LIVE_MARKET_DATA.changeGram },
-    { id: 'live22KGold', val: '₺' + Number(LIVE_MARKET_DATA.gramGold22k).toLocaleString('tr-TR'), chg: 'live22KChange', chgVal: '▲ ' + LIVE_MARKET_DATA.change22k },
-    { id: 'liveQuarterGold', val: '₺' + Number(LIVE_MARKET_DATA.quarterGold).toLocaleString('tr-TR'), chg: 'liveQuarterChange', chgVal: '▲ ' + LIVE_MARKET_DATA.changeQuarter },
-    { id: 'liveAtaGold', val: '₺' + Number(LIVE_MARKET_DATA.ataGold).toLocaleString('tr-TR') },
-    { id: 'liveUsdTry', val: '₺' + Number(LIVE_MARKET_DATA.usdTry).toFixed(2) },
-    { id: 'liveEurTry', val: '₺' + Number(LIVE_MARKET_DATA.eurTry).toFixed(2) },
+    { id: 'liveGramGold', val: '₺' + currentGram.toLocaleString('tr-TR'), chg: 'liveGramChange', chgVal: '▲ ' + LIVE_MARKET_DATA.changeGram },
+    { id: 'live22KGold', val: '₺' + Number(LIVE_MARKET_DATA.gramGold22k || 6680).toLocaleString('tr-TR'), chg: 'live22KChange', chgVal: '▲ ' + LIVE_MARKET_DATA.change22k },
+    { id: 'liveQuarterGold', val: '₺' + currentQuarter.toLocaleString('tr-TR'), chg: 'liveQuarterChange', chgVal: '▲ ' + LIVE_MARKET_DATA.changeQuarter },
+    { id: 'liveAtaGold', val: '₺' + Number(LIVE_MARKET_DATA.ataGold || 47340).toLocaleString('tr-TR') },
+    { id: 'liveUsdTry', val: '₺' + Number(LIVE_MARKET_DATA.usdTry || 48.14).toFixed(2) },
+    { id: 'liveEurTry', val: '₺' + Number(LIVE_MARKET_DATA.eurTry || 56.23).toFixed(2) },
     
     // Marquee 2. Döngü
-    { id: 'liveGramGold2', val: '₺' + Number(LIVE_MARKET_DATA.gramGold24k).toLocaleString('tr-TR'), chg: 'liveGramChange2', chgVal: '▲ ' + LIVE_MARKET_DATA.changeGram },
-    { id: 'live22KGold2', val: '₺' + Number(LIVE_MARKET_DATA.gramGold22k).toLocaleString('tr-TR'), chg: 'live22KChange2', chgVal: '▲ ' + LIVE_MARKET_DATA.change22k },
-    { id: 'liveUsdTry2', val: '₺' + Number(LIVE_MARKET_DATA.usdTry).toFixed(2) },
-    { id: 'liveEurTry2', val: '₺' + Number(LIVE_MARKET_DATA.eurTry).toFixed(2) },
+    { id: 'liveGramGold2', val: '₺' + currentGram.toLocaleString('tr-TR'), chg: 'liveGramChange2', chgVal: '▲ ' + LIVE_MARKET_DATA.changeGram },
+    { id: 'live22KGold2', val: '₺' + Number(LIVE_MARKET_DATA.gramGold22k || 6680).toLocaleString('tr-TR'), chg: 'live22KChange2', chgVal: '▲ ' + LIVE_MARKET_DATA.change22k },
+    { id: 'liveUsdTry2', val: '₺' + Number(LIVE_MARKET_DATA.usdTry || 48.14).toFixed(2) },
+    { id: 'liveEurTry2', val: '₺' + Number(LIVE_MARKET_DATA.eurTry || 56.23).toFixed(2) },
     
-    // Hero Asimetrik Vitrin Paneli
-    { id: 'heroGoldRate', val: '₺' + Number(LIVE_MARKET_DATA.gramGold24k || 8149).toLocaleString('tr-TR') },
-    { id: 'heroQuarterRate', val: '₺' + Number(LIVE_MARKET_DATA.quarterGold || 13166).toLocaleString('tr-TR') }
+    // Hero Asimetrik Özel Showroom Vitrini
+    { id: 'heroGoldRate', val: '₺' + currentGram.toLocaleString('tr-TR') },
+    { id: 'heroQuarterRate', val: '₺' + currentQuarter.toLocaleString('tr-TR') }
   ];
 
   elements.forEach(item => {
