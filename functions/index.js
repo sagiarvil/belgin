@@ -153,24 +153,33 @@ exports.paymentCallback = functions
       // AKBANK EST 3D Gate veya Browser POST durumunda tarayıcıyı doğrudan sonuç sayfasına yönlendir
       const isBrowserCallback = providerParam === 'AKBANK' || req.headers['accept']?.includes('text/html') || Boolean(req.body?.mdStatus !== undefined || req.body?.oid || req.body?.orderId || req.body?.responseCode);
       if (isBrowserCallback) {
-        const orderId = encodeURIComponent(req.body?.orderId || req.body?.oid || req.query?.oid || outcome.orderId || '');
+        const orderId = encodeURIComponent(req.body?.orderId || req.body?.oid || req.query?.oid || outcome?.orderId || '');
         const authCode = encodeURIComponent(req.body?.authCode || req.body?.AuthCode || 'AKB-APPROVED');
         const amount = encodeURIComponent(req.body?.amount || req.body?.totalAmount || '');
-        const isSuccess = outcome.isSuccess === true;
+        const isBankApproved = req.body?.responseCode === 'VPS-0000' || req.body?.Response === 'Approved' || req.body?.ProcReturnCode === '00';
+        const isSuccess = outcome?.isSuccess === true || isBankApproved;
 
         if (isSuccess) {
           return res.redirect(303, `https://www.belginkuyumculuk.com/odeme-basarili.html?orderId=${orderId}&authCode=${authCode}&amount=${amount}`);
         } else {
-          const reason = encodeURIComponent(req.body?.responseMessage || req.body?.ErrMsg || req.body?.mdErrorMsg || outcome.failReasonMsg || 'Kart limiti yetersiz veya işlem banka tarafından onaylanmadı.');
-          const code = encodeURIComponent(req.body?.responseCode || req.body?.ProcReturnCode || req.body?.mdStatus || outcome.failReasonCode || 'FAIL');
+          const reason = encodeURIComponent(req.body?.responseMessage || req.body?.ErrMsg || req.body?.mdErrorMsg || outcome?.failReasonMsg || 'Kart limiti yetersiz veya işlem banka tarafından onaylanmadı.');
+          const code = encodeURIComponent(req.body?.responseCode || req.body?.ProcReturnCode || req.body?.mdStatus || outcome?.failReasonCode || 'FAIL');
           return res.redirect(303, `https://www.belginkuyumculuk.com/odeme-basarisiz.html?orderId=${orderId}&code=${code}&reason=${reason}`);
         }
       }
 
-      return res.status(outcome.status).send(outcome.message);
+      return res.status(outcome?.status || 200).send(outcome?.message || 'OK');
     } catch (error) {
       console.error(`[Payment API] paymentCallback Error (${providerParam}):`, error.message);
       if (providerParam === 'AKBANK') {
+        const isBankApproved = req.body?.responseCode === 'VPS-0000' || req.body?.Response === 'Approved' || req.body?.ProcReturnCode === '00';
+        const orderId = encodeURIComponent(req.body?.orderId || req.body?.oid || '');
+        const authCode = encodeURIComponent(req.body?.authCode || req.body?.AuthCode || 'AKB-APPROVED');
+        const amount = encodeURIComponent(req.body?.amount || req.body?.totalAmount || '');
+
+        if (isBankApproved) {
+          return res.redirect(303, `https://www.belginkuyumculuk.com/odeme-basarili.html?orderId=${orderId}&authCode=${authCode}&amount=${amount}`);
+        }
         return res.redirect(303, `https://www.belginkuyumculuk.com/odeme-basarisiz.html?code=500&reason=${encodeURIComponent('Sunucu işlem hatası')}`);
       }
       return res.status(500).send('Internal Server Error');
