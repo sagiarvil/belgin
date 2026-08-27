@@ -139,6 +139,8 @@ exports.paymentCallback = functions
 
     const providerParam = String(req.query.provider || req.path.split('/').filter(Boolean).pop() || 'AKBANK').toUpperCase();
 
+    console.log(`[Payment Callback] Provider: ${providerParam}, Body:`, JSON.stringify(req.body || {}), 'Query:', JSON.stringify(req.query || {}));
+
     try {
       const outcome = await paymentService.handleCallback({
         providerName: providerParam,
