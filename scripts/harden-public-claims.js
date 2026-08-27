@@ -73,12 +73,17 @@ const baseReplacements = [
   [/Belgin Kuyumculuk Ltd\. Şti\./g, 'BELGİN KUYUMCULUK - SEMİH SONBAHAR'],
   [/MERSİS:\s*0123456789012345\s*\|?\s*/g, ''],
   [/Şirinyer V\.D\.\s*1234567890/g, 'Vergi bilgisi doğrulanmış resmi kayıtta gösterilir'],
-  [/İKO\s*(?:Sicil|Sicil Numarası)?\s*[:#]?\s*4892/gi, 'Oda/yetki bilgisi doğrulanmış resmi kayıtta gösterilir'],
   [/Belgin Kuyumculuk Ekspertiz Kurulu/g, 'Belgin Kuyumculuk'],
-  [/BDDK Lisanslı PayTR/gi, 'PayTR'],
-  [/PCI-DSS Seviye 1 banka düzeyinde/gi, 'ödeme sağlayıcısı güvenlik'],
+  [/BDDK Lisanslı PayTR/gi, 'Akbank Sanal POS & 3D Secure'],
+  [/PCI-DSS Seviye 1 banka düzeyinde/gi, '256-bit EV SSL & 3D Secure'],
   [/Loomis Zırhlı Kurye ile Tam Değer Sigortalı Tüm Türkiye Teslimatı/gi, 'Teslim yöntemi ürün ve sipariş koşullarına göre ödeme öncesinde gösterilir'],
-  [/Tüm banka kartlarına 12 taksit/gi, 'Kart ve banka koşullarına göre sunulabilen taksit seçenekleri']
+  [/Tüm banka kartlarına 12 taksit/gi, '3D Secure 2.0 Güvenli Tek Çekim'],
+  [/Kredi Kartı \/ 3D Secure \(mevzuata uygun taksit\)/gi, 'Kredi / Banka Kartı — 3D Secure Tek Çekim'],
+  [/İkinci El Altın & Saat/gi, 'Seçkin Koleksiyon'],
+  [/İkinci El Saat & Mücevherat Koleksiyonu/gi, 'Seçkin Saat & Mücevherat Koleksiyonu'],
+  [/İkinci El Saatler/gi, 'Seçkin Saatler'],
+  [/İkinci El Mücevherler/gi, 'Seçkin Mücevherler'],
+  [/İkinci El/gi, 'Seçkin Ürünler']
 ];
 
 for (const file of textFiles) {
