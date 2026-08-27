@@ -1723,32 +1723,18 @@ const App = {
   // ==========================================================
   // AKBANK SANAL POS & CHECKOUT İŞLEM YÖNETİCİSİ
   // ==========================================================
-  togglePaymentMethod(method) {
+  togglePaymentMethod(method = 'card') {
     const cardFields = document.getElementById('cardPaymentFields');
-    const havaleFields = document.getElementById('havaleInfoFields');
     const cardLabel = document.getElementById('payMethodCardLabel');
-    const havaleLabel = document.getElementById('payMethodHavaleLabel');
     const submitBtnText = document.getElementById('checkoutSubmitBtnText');
     const grandTotal = typeof Cart !== 'undefined' ? Cart.getTotal() : 0;
     const formattedTotal = typeof formatPrice === 'function' ? formatPrice(grandTotal) : `₺${grandTotal.toLocaleString('tr-TR')}`;
 
-    if (method === 'card') {
-      if (cardFields) cardFields.style.display = 'block';
-      if (havaleFields) havaleFields.style.display = 'none';
-      if (cardLabel) cardLabel.classList.add('active');
-      if (havaleLabel) havaleLabel.classList.remove('active');
-      const radio = document.querySelector('input[name="paymentOption"][value="card"]');
-      if (radio) radio.checked = true;
-      if (submitBtnText) submitBtnText.textContent = `3D Secure ile Güvenli Öde (${formattedTotal})`;
-    } else {
-      if (cardFields) cardFields.style.display = 'none';
-      if (havaleFields) havaleFields.style.display = 'block';
-      if (cardLabel) cardLabel.classList.remove('active');
-      if (havaleLabel) havaleLabel.classList.add('active');
-      const radio = document.querySelector('input[name="paymentOption"][value="havale"]');
-      if (radio) radio.checked = true;
-      if (submitBtnText) submitBtnText.textContent = `Siparişi Onayla & Havale Bilgilerini Al (${formattedTotal})`;
-    }
+    if (cardFields) cardFields.style.display = 'block';
+    if (cardLabel) cardLabel.classList.add('active');
+    const radio = document.querySelector('input[name="paymentOption"][value="card"]');
+    if (radio) radio.checked = true;
+    if (submitBtnText) submitBtnText.textContent = `3D Secure ile Güvenli Öde (${formattedTotal})`;
   },
 
   formatCardNumber(input) {
@@ -1845,7 +1831,7 @@ const App = {
       items: items,
       totalAmount: totalAmount,
       formattedAmount: formattedAmount,
-      paymentMethod: paymentOpt === 'card' ? 'Akbank Sanal POS 256-Bit EV SSL 3D Secure' : 'Banka Havalesi / FAST (%3 İndirimli)',
+      paymentMethod: 'Akbank Sanal POS 256-Bit EV SSL 3D Secure',
       isHighValueSecureDelivery: isHighVal,
       termsAccepted: true,
       termsVersion: "2026.08.27.v2",
@@ -1858,15 +1844,6 @@ const App = {
       kycStatus: "verified",
       posTerminalNo: "12865794"
     };
-
-    if (paymentOpt === 'havale') {
-      localStorage.setItem('last_order_audit', JSON.stringify(orderPayload));
-      localStorage.setItem('belgin_active_transaction', JSON.stringify(orderPayload));
-      if (typeof Cart !== 'undefined') Cart.clear();
-      this.updateHeaderCartCount();
-      window.location.href = `odeme-basarili.html?orderId=${encodeURIComponent(orderPayload.orderId)}&payment=havale`;
-      return;
-    }
 
     // Kredi Kartı Bilgileri Validasyonu (Luhn Algoritması, SKT ve CVV)
     const cardHolder = (document.getElementById('ccCardHolder')?.value || '').trim();

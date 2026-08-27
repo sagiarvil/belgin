@@ -3748,8 +3748,96 @@ p, span, li, td, th, label, input, button, select, textarea {
   padding: 10px;
   font-size: 13px;
   border-radius: 6px;
-  cursor: pointer;
-  margin-top: 8px;
+.akbank-3d-btn-cancel:hover {
+  background: #F3F4F6;
+  color: #111827;
 }
+
+/* ==========================================================
+   ULTRA-PREMIUM LUXURY CHECKOUT CTA BUTTON (BELGIN MAISON)
+   ========================================================== */
+.btn-checkout-luxe {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 18px 32px;
+  background: linear-gradient(135deg, #0A544F 0%, #05332F 50%, #084843 100%);
+  color: #FFFFFF !important;
+  font-family: var(--font-sans);
+  font-size: 16.5px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  border: 1.5px solid rgba(194, 167, 104, 0.7);
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(8, 76, 71, 0.35), 0 2px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.btn-checkout-luxe::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(194, 167, 104, 0.25) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.btn-checkout-luxe:hover {
+  background: linear-gradient(135deg, #0D6660 0%, #07423D 50%, #0A544F 100%);
+  border-color: var(--color-gold-bright, #D4AF37);
+  box-shadow: 0 12px 32px rgba(8, 76, 71, 0.45), 0 0 22px rgba(194, 167, 104, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transform: translateY(-2px);
+  color: #FFFFFF !important;
+}
+
+.btn-checkout-luxe:hover::before {
+  opacity: 1;
+}
+
+.btn-checkout-luxe:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(8, 76, 71, 0.25);
+}
+
+.btn-checkout-luxe .btn-checkout-icon {
+  font-size: 18px;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
+}
+
+.btn-art-buy {
+  background: linear-gradient(135deg, #084C47 0%, #05332F 100%);
+  color: #FFFFFF !important;
+  border: 1px solid rgba(194, 167, 104, 0.5);
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 14px 24px;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.btn-art-buy:hover {
+  background: linear-gradient(135deg, #0A5E57 0%, #07423D 100%);
+  border-color: #C2A768;
+  box-shadow: 0 6px 20px rgba(8, 76, 71, 0.25);
+  transform: translateY(-1px);
+  color: #FFFFFF !important;
+}
+
 
 

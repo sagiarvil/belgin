@@ -1539,19 +1539,12 @@
 
           <!-- 3. Ödeme Yöntemi -->
           <h4 style="font-size:14px; font-weight:700; color:var(--color-teal); margin:24px 0 12px; text-transform:uppercase; letter-spacing:0.5px;">3. Güvenli Ödeme Seçeneği</h4>
-          <div class="payment-method-selector">
-            <label class="payment-method-card active" id="payMethodCardLabel" onclick="App.togglePaymentMethod('card')">
-              <input type="radio" name="paymentOption" value="card" checked style="margin-top:3px;">
+          <div class="payment-method-selector" style="margin-bottom:16px;">
+            <label class="payment-method-card active" id="payMethodCardLabel" style="cursor:default; border-color:var(--color-teal); background:var(--color-teal-soft); display:flex; gap:12px; align-items:center;">
+              <input type="radio" name="paymentOption" value="card" checked style="margin-top:0; accent-color:var(--color-teal);">
               <div>
-                <strong style="display:block; font-size:13px; color:var(--color-teal);">Kredi Kartı / Banka Kartı (3D Secure Tek Çekim)</strong>
-                <span style="font-size:11px; color:#555; display:block; margin-top:2px;">Akbank Sanal POS · Axess, Bonus, World, Maximum, CardFinans, Paraf</span>
-              </div>
-            </label>
-            <label class="payment-method-card" id="payMethodHavaleLabel" onclick="App.togglePaymentMethod('havale')">
-              <input type="radio" name="paymentOption" value="havale" style="margin-top:3px;">
-              <div>
-                <strong style="display:block; font-size:13px;">Banka Havalesi / FAST (%3 İndirim)</strong>
-                <span style="font-size:11px; color:var(--color-muted); display:block; margin-top:2px;">Akbank, İş Bankası, Garanti BBVA, Yapı Kredi</span>
+                <strong style="display:block; font-size:13.5px; color:var(--color-teal);">Kredi Kartı / Banka Kartı (3D Secure 2.0 Tek Çekim)</strong>
+                <span style="font-size:11.5px; color:#555; display:block; margin-top:2px;">Akbank Sanal POS · Axess, Bonus, World, Maximum, CardFinans, Paraf, Sağlam Kart</span>
               </div>
             </label>
           </div>
@@ -1597,24 +1590,6 @@
 
             <div style="margin-top:14px; padding:10px 12px; background:#FFFFFF; border:1px solid #EAE6DE; border-radius:6px; font-size:11.5px; color:#555; line-height:1.5;">
               🔒 <strong>Akbank Sanal POS Güvencesi:</strong> Ödemeniz 256-bit EV SSL şifreleme ve banka 3D Secure SMS şifresi ile korunmaktadır. Kart bilgileriniz PCI-DSS standartlarına uygun olarak sunucularımızda kesinlikle saklanmaz. Kuyumculuk ve sarrafiye ürünlerinde mevzuat gereği tek çekim uygulanmaktadır.
-            </div>
-          </div>
-
-          <!-- Havale / FAST Bilgilendirme Kutusu -->
-          <div id="havaleInfoFields" class="cc-form-panel" style="display:none;">
-            <div class="cc-form-title">
-              <span>🏦 Kurumsal Banka Hesap Bilgilerimiz</span>
-              <span style="font-size:11px; font-weight:700; color:#15803D; background:#DCFCE7; padding:2px 8px; border-radius:4px;">%3 Havale İndirimi</span>
-            </div>
-            <div style="font-size:12.5px; color:#333; line-height:1.6; display:flex; flex-direction:column; gap:10px;">
-              <div style="background:#FFF; border:1px solid #E5E7EB; padding:12px; border-radius:6px;">
-                <strong style="color:var(--color-teal); display:block;">AKBANK T.A.Ş. — İzmir Şirinyer Şubesi</strong>
-                <div><strong>Alıcı:</strong> BELGİN KUYUMCULUK - SEMİH SONBAHAR</div>
-                <div><strong>IBAN:</strong> TR00 0000 0000 0000 0000 0000 00</div>
-              </div>
-              <p style="font-size:11.5px; color:#666; margin:0;">
-                ℹ️ Havale/EFT açıklama kısmına <strong>Adınız Soyadınız ve Sipariş Numaranızı</strong> yazmanız yeterlidir. Ödemeniz onaylandıktan sonra SMS ve e-posta ile bildirim iletilecektir.
-              </p>
             </div>
           </div>
 
@@ -1680,8 +1655,8 @@
             </label>
           </div>
 
-          <button type="submit" id="checkoutSubmitBtn" class="btn-art-buy" style="width:100%; font-size:16px; padding:16px; font-weight:700; display:flex; align-items:center; justify-content:center; gap:8px;">
-            <span>🔒</span>
+          <button type="submit" id="checkoutSubmitBtn" class="btn-checkout-luxe">
+            <span class="btn-checkout-icon">🔒</span>
             <span id="checkoutSubmitBtnText">3D Secure ile Güvenli Öde</span>
           </button>
         </form>
