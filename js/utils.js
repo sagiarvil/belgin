@@ -343,24 +343,14 @@ function debounce(fn, ms = 250) {
 }
 
 function calculateInstallments(amount) {
-  const installments = [
-    { count: 1, rate: 0.00, name: "Tek Çekim" },
-    { count: 3, rate: 0.035, name: "3 Taksit" },
-    { count: 6, rate: 0.068, name: "6 Taksit" },
-    { count: 9, rate: 0.098, name: "9 Taksit" },
-    { count: 12, rate: 0.125, name: "12 Taksit" }
+  return [
+    {
+      count: 1,
+      name: "Tek Çekim",
+      monthlyPrice: formatPrice(amount),
+      totalPrice: formatPrice(amount)
+    }
   ];
-
-  return installments.map(inst => {
-    const totalWithInterest = amount * (1 + inst.rate);
-    const monthly = totalWithInterest / inst.count;
-    return {
-      count: inst.count,
-      name: inst.name,
-      monthlyPrice: formatPrice(monthly),
-      totalPrice: formatPrice(totalWithInterest)
-    };
-  });
 }
 
 /**

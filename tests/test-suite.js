@@ -120,14 +120,16 @@ const marketingPolicy = read('ticari-elektronik-ileti-onayi.html');
 assert(marketingPolicy.length > 500, 'Ticari elektronik ileti politikası mevcut');
 
 console.log('\n--- 8. Çoklu Sanal POS Mimarisi ve Güvenlik Testleri ---');
-const { PROVIDERS, PAYMENT_STATUS, DEFAULT_PROVIDER } = require('../functions/payment/payment-constants');
+const { PROVIDERS, PAYMENT_STATUS, DEFAULT_PROVIDER, ORDER_STATUS, canTransition } = require('../functions/payment/payment-constants');
 assert(PROVIDERS.PAYTR === 'PAYTR' && PROVIDERS.QNB === 'QNB' && PROVIDERS.AKBANK === 'AKBANK' && PROVIDERS.YAPIKREDI === 'YAPIKREDI', 'Merkezi 4 POS sağlayıcı sabiti tanımlı');
-assert(DEFAULT_PROVIDER === 'PAYTR', 'Varsayılan sağlayıcı PAYTR');
+assert(DEFAULT_PROVIDER === 'AKBANK', 'Varsayılan sağlayıcı AKBANK');
 assert(PAYMENT_STATUS.PAID === 'PAYMENT_PAID' && PAYMENT_STATUS.PENDING === 'PAYMENT_PENDING', 'Standart ödeme durum modelleri tanımlı');
+assert(canTransition(ORDER_STATUS.CREATED, ORDER_STATUS.PAYMENT_SESSION_CREATING), 'FSM: CREATED -> PAYMENT_SESSION_CREATING geçerli');
+assert(!canTransition(ORDER_STATUS.CREATED, ORDER_STATUS.COMPLETED), 'FSM: CREATED -> COMPLETED doğrudan geçiş engellenir');
 
 const paymentRouter = require('../functions/payment/payment-router');
-assert(paymentRouter.getProvider('PAYTR').name === 'PAYTR', 'Payment router PAYTR sağlayıcısını çözümlüyor');
-assert(paymentRouter.getProvider().name === 'PAYTR', 'Payment router boş çağrıda varsayılan PAYTR dönüyor');
+assert(paymentRouter.getProvider('AKBANK').name === 'AKBANK', 'Payment router AKBANK sağlayıcısını çözümlüyor');
+assert(paymentRouter.getProvider().name === 'AKBANK', 'Payment router boş çağrıda varsayılan AKBANK dönüyor');
 
 const qnbAdapter = paymentRouter.getProvider('QNB');
 let qnbBlocked = false;

@@ -1,14 +1,27 @@
 /**
- * BELGIN KUYUMCULUK — UNIFIED PAYMENT SERVICE
- * Çoklu POS İş Mantığı, Doğrulama, Sipariş Kaydı ve Callback Yönetimi
+ * BELGIN KUYUMCULUK — PRODUCTION HARDENED PAYMENT SERVICE
+ * Akbank Sanal POS Odaklı Çoklu POS, FSM Durum Modeli, Idempotency ve Finansal Güvenlik
  */
 
 const crypto = require('crypto');
-const { PROVIDERS, PAYMENT_STATUS, DEFAULT_PROVIDER } = require('./payment-constants');
+const {
+  PROVIDERS,
+  DEFAULT_PROVIDER,
+  ORDER_STATUS,
+  PAYMENT_STATUS,
+  canTransition,
+  assertValidTransition,
+} = require('./payment-constants');
 const paymentRouter = require('./payment-router');
 
 const HIGH_VALUE_SECURE_DELIVERY_THRESHOLD = 12000;
 const LEGAL_EVIDENCE_SCHEMA = 'belgin-order-evidence-v2';
+const VIP_SIGNING_SECRET = process.env.VIP_PAYMENT_SECRET || 'BELGIN_VIP_SECURITY_SECRET_2026';
+
+// Idempotency & Rate Limit In-Memory Cache (LRU-like with TTL)
+const idempotencyCache = new Map();
+const inFlightIdempotency = new Map();
+const rateLimitMap = new Map();
 
 function sha256(value) {
   return crypto.createHash('sha256').update(String(value), 'utf8').digest('hex');
@@ -22,6 +35,54 @@ function generateRequestId() {
   return `REQ-${Date.now()}-${crypto.randomBytes(6).toString('hex')}`;
 }
 
+function checkRateLimit(clientIp, limit = 60, windowMs = 60000) {
+  const now = Date.now();
+  const record = rateLimitMap.get(clientIp) || { count: 0, resetAt: now + windowMs };
+  if (now > record.resetAt) {
+    record.count = 1;
+    record.resetAt = now + windowMs;
+  } else {
+    record.count += 1;
+  }
+  rateLimitMap.set(clientIp, record);
+  if (record.count > limit) {
+    const error = new Error('İstek sınırı aşıldı. Lütfen bir süre sonra tekrar deneyiniz.');
+    error.code = 'RATE_LIMIT_EXCEEDED';
+    throw error;
+  }
+}
+
+function verifyVipToken(token, expectedId = '') {
+  if (!token || typeof token !== 'string') return null;
+  const parts = token.split('.');
+  if (parts.length !== 2) return null;
+  const [payloadB64, sig] = parts;
+  const expectedSig = crypto.createHmac('sha256', VIP_SIGNING_SECRET).update(payloadB64).digest('hex');
+  if (sig.length !== expectedSig.length || !crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expectedSig))) {
+    return null;
+  }
+  try {
+    const payload = JSON.parse(Buffer.from(payloadB64, 'base64').toString('utf8'));
+    if (payload.exp && Date.now() > payload.exp) return null; // Expired
+    if (expectedId && payload.id && payload.id !== expectedId) return null;
+    const price = Number(payload.price);
+    if (!Number.isFinite(price) || price < 10) return null;
+    return {
+      id: String(payload.id || `VIP-${Date.now()}`),
+      name: String(payload.name || 'Özel Sipariş').slice(0, 200),
+      price: price,
+      brand: String(payload.brand || 'Belgin Kuyumculuk').slice(0, 100),
+      reference: String(payload.reference || 'VIP-SHOWROOM').slice(0, 100),
+      metal: String(payload.metal || 'Özel Tasarım').slice(0, 100),
+      category: String(payload.category || 'luxury').slice(0, 50),
+      isGold: payload.isGold === true,
+      highValueSecureDelivery: price >= HIGH_VALUE_SECURE_DELIVERY_THRESHOLD,
+    };
+  } catch (_) {
+    return null;
+  }
+}
+
 function isHighValueCatalogProduct(product) {
   if (!product || Number(product.price) < HIGH_VALUE_SECURE_DELIVERY_THRESHOLD) return false;
   const category = String(product.category || '').toLowerCase();
@@ -31,37 +92,54 @@ function isHighValueCatalogProduct(product) {
   return isWatch || isGold;
 }
 
-function normalizeCart(clientItems, isVipPayment = false, productCatalog = {}) {
+function normalizeCart(clientItems, isVipPayment = false, vipToken = null, productCatalog = {}) {
   if (!Array.isArray(clientItems) || clientItems.length === 0) throw new Error('Sepet boş olamaz.');
   if (clientItems.length > 20) throw new Error('Sepet ürün sınırı aşıldı.');
 
   return clientItems.map((item) => {
     const id = String(item.id ?? '');
-    const qty = Number(item.qty || 1);
-    if (!Number.isInteger(qty) || qty < 1 || qty > 10) throw new Error(`Geçersiz ürün adedi: ${id}`);
+    const rawQty = item.qty !== undefined && item.qty !== null ? Number(item.qty) : 1;
+    if (!Number.isInteger(rawQty) || rawQty < 1 || rawQty > 10) {
+      const error = new Error(`Geçersiz ürün adedi: ${id}`);
+      error.code = 'INVALID_QUANTITY';
+      throw error;
+    }
+    const qty = rawQty;
 
+    // VIP / Özel Sipariş Güvenlik Denetimi
     if (isVipPayment || item.isVipCustom === true || id.startsWith('VIP-') || id.startsWith('BLG-')) {
-      const price = Number(item.price);
-      if (!Number.isFinite(price) || price < 10) throw new Error('Geçersiz VIP sipariş tutarı.');
-      const name = String(item.name || 'Lüks Koleksiyon Siparişi').slice(0, 200).trim();
-      const isHighValue = price >= HIGH_VALUE_SECURE_DELIVERY_THRESHOLD;
+      const verifiedVip = verifyVipToken(vipToken || item.vipToken || item.signedToken, id);
+      if (!verifiedVip) {
+        const error = new Error('VIP / Özel ödeme tutarı güvenliği: Yetkisiz istemci fiyatı reddedildi. Geçerli sunucu imzalı token zorunludur.');
+        error.code = 'VIP_PRICE_TAMPERING_DETECTED';
+        throw error;
+      }
       return {
-        id: id || `VIP-${Date.now()}`,
-        name,
-        brand: String(item.brand || 'Belgin Kuyumculuk').slice(0, 100),
-        reference: String(item.reference || 'VIP-SHOWROOM').slice(0, 100),
-        metal: String(item.metal || 'Lüks Özel Sipariş').slice(0, 100),
-        price,
+        id: verifiedVip.id,
+        name: verifiedVip.name,
+        brand: verifiedVip.brand,
+        reference: verifiedVip.reference,
+        metal: verifiedVip.metal,
+        price: verifiedVip.price,
         qty,
-        category: String(item.category || 'luxury').slice(0, 50),
-        isGold: item.isGold === true,
-        highValueSecureDelivery: isHighValue,
+        category: verifiedVip.category,
+        isGold: verifiedVip.isGold,
+        highValueSecureDelivery: verifiedVip.highValueSecureDelivery,
       };
     }
 
+    // Katalog Ürün Fiyatı: Client'tan gelen price KESİNLİKLE dikkate alınmaz, server kataloğundan okunur!
     const product = productCatalog[id];
-    if (!product) throw new Error(`Ürün doğrulanamadı: ${id}`);
-    if (product.inStock === false) throw new Error(`${product.name} stokta değil.`);
+    if (!product) {
+      const error = new Error(`Ürün doğrulanamadı: ${id}`);
+      error.code = 'PRODUCT_NOT_FOUND';
+      throw error;
+    }
+    if (product.inStock === false) {
+      const error = new Error(`${product.name} stokta değil.`);
+      error.code = 'PRODUCT_OUT_OF_STOCK';
+      throw error;
+    }
 
     return {
       id,
@@ -126,38 +204,66 @@ function validateLegalAndDelivery(body, items) {
 
 async function appendAuditEvent(orderRef, eventType, data = {}, admin) {
   const safeData = JSON.parse(JSON.stringify(data));
-  await orderRef.collection('auditEvents').add({
-    schema: LEGAL_EVIDENCE_SCHEMA,
-    eventType,
-    ...safeData,
-    serverAt: admin.firestore.FieldValue.serverTimestamp(),
-  });
+  if (orderRef && typeof orderRef.collection === 'function') {
+    await orderRef.collection('auditEvents').add({
+      schema: LEGAL_EVIDENCE_SCHEMA,
+      eventType,
+      ...safeData,
+      serverAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+  }
 }
 
 class PaymentService {
   async createPaymentSession({ body, reqContext, db, admin, productCatalog, getLegalEvidenceSnapshot }) {
-    const isVipPayment = body.isVipPayment === true || (Array.isArray(body.items) && body.items.some((i) => i.isVipCustom || String(i.id).startsWith('VIP-') || String(i.id).startsWith('BLG-')));
-    let email = String(body.email || '').trim().toLowerCase();
-    if (!email && isVipPayment) {
-      const cleanPhone = String(body.user_phone || '').replace(/\D/g, '');
-      email = cleanPhone ? `musteri_${cleanPhone}@belginkuyumculuk.com` : `vip_${Date.now()}@belginkuyumculuk.com`;
+    const clientIp = reqContext.clientIp || '127.0.0.1';
+    const userAgent = reqContext.userAgent || '';
+
+    // 1. Abuse & Rate Limit Control
+    checkRateLimit(clientIp, 60, 60000);
+
+    // 2. Idempotency Control
+    const idempotencyKey = String(
+      reqContext.idempotencyKey ||
+      body.idempotencyKey ||
+      body.idempotency_key ||
+      ''
+    ).trim();
+
+    if (idempotencyKey) {
+      if (idempotencyCache.has(idempotencyKey)) {
+        const cached = idempotencyCache.get(idempotencyKey);
+        if (Date.now() - cached.timestamp < 300000) { // 5 min TTL
+          return { ...cached.response, isIdempotentReplay: true };
+        }
+      }
+      if (inFlightIdempotency.has(idempotencyKey)) {
+        const inFlightRes = await inFlightIdempotency.get(idempotencyKey);
+        return { ...inFlightRes, isIdempotentReplay: true };
+      }
     }
+
+    const sessionTask = async () => {
+      const isVipPayment = body.isVipPayment === true || (Array.isArray(body.items) && body.items.some((i) => i.isVipCustom || String(i.id).startsWith('VIP-') || String(i.id).startsWith('BLG-')));
+      let email = String(body.email || '').trim().toLowerCase();
+      if (!email && isVipPayment) {
+        const cleanPhone = String(body.user_phone || '').replace(/\D/g, '');
+        email = cleanPhone ? `musteri_${cleanPhone}@belginkuyumculuk.com` : `vip_${Date.now()}@belginkuyumculuk.com`;
+      }
     if (!/^\S+@\S+\.\S+$/.test(email)) {
       const error = new Error('Geçerli e-posta zorunludur.');
       error.code = 'INVALID_EMAIL';
       throw error;
     }
 
-    const items = normalizeCart(body.items, isVipPayment, productCatalog);
+    const items = normalizeCart(body.items, isVipPayment, body.vipToken, productCatalog);
     const compliance = validateLegalAndDelivery(body, items);
     const legalEvidence = getLegalEvidenceSnapshot(compliance.hasHighValue);
     const serverTotal = calculateTotal(items);
     const merchant_oid = generateOrderId();
     const requestId = generateRequestId();
-    const clientIp = reqContext.clientIp || '127.0.0.1';
-    const userAgent = reqContext.userAgent || '';
     const amountInKurus = String(Math.round(serverTotal * 100));
-    const testMode = Number(process.env.PAYTR_TEST_MODE || 0) === 1;
+    const testMode = Number(process.env.PAYTR_TEST_MODE || process.env.AKBANK_TEST_MODE || 0) === 1;
     const productSnapshotHash = sha256(JSON.stringify(items));
     const evidenceId = sha256(JSON.stringify({ merchant_oid, requestId, productSnapshotHash, legalEvidence, total: serverTotal, deliveryMethod: compliance.deliveryMethod }));
 
@@ -173,9 +279,10 @@ class PaymentService {
       orderId: merchant_oid,
       requestId,
       evidenceId,
+      idempotencyKey: idempotencyKey || null,
       evidenceSchema: LEGAL_EVIDENCE_SCHEMA,
-      status: 'pending',
-      paymentStatus: 'PENDING',
+      status: ORDER_STATUS.PAYMENT_SESSION_CREATING,
+      paymentStatus: PAYMENT_STATUS.PENDING,
       deliveryStatus: compliance.hasHighValue ? 'STORE_PICKUP_REQUIRED' : 'PENDING',
       deliveryMethod: compliance.deliveryMethod,
       highValueSecureDelivery: compliance.hasHighValue,
@@ -233,49 +340,87 @@ class PaymentService {
       requestId,
       evidenceId,
       provider: provider.name,
-      paymentStatus: 'PENDING',
+      status: ORDER_STATUS.PAYMENT_SESSION_CREATING,
+      paymentStatus: PAYMENT_STATUS.PENDING,
       deliveryMethod: compliance.deliveryMethod,
       highValueSecureDelivery: compliance.hasHighValue,
-      highValueThreshold: HIGH_VALUE_SECURE_DELIVERY_THRESHOLD,
-      customerIdentity: String(body.customerIdentity || body.identityNumber || '').trim().slice(0, 50),
-      productSnapshotHash,
-      legalEvidence,
+      total: serverTotal,
     }, admin);
 
-    const providerResult = await provider.createPayment({
-      order: orderData,
-      clientIp,
-      testMode,
-    });
+    let providerResult;
+    try {
+      providerResult = await provider.createPayment({
+        order: orderData,
+        clientIp,
+        testMode,
+      });
 
-    await orderRef.update({
-      status: 'token_created',
-      'payment.providerToken': providerResult.token || null,
-      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-    });
+      assertValidTransition(ORDER_STATUS.PAYMENT_SESSION_CREATING, ORDER_STATUS.PAYMENT_SESSION_READY, merchant_oid);
 
-    await appendAuditEvent(orderRef, 'PAYMENT_SESSION_INITIATED', {
-      provider: provider.name,
-      paymentType: providerResult.paymentType || 'IFRAME',
-    }, admin);
+      await orderRef.update({
+        status: ORDER_STATUS.PAYMENT_SESSION_READY,
+        'payment.providerToken': providerResult.token || null,
+        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
 
-    return {
+      await appendAuditEvent(orderRef, 'PAYMENT_SESSION_READY', {
+        provider: provider.name,
+        paymentType: providerResult.paymentType || 'REDIRECT',
+      }, admin);
+    } catch (providerError) {
+      await orderRef.update({
+        status: ORDER_STATUS.PAYMENT_SESSION_FAILED,
+        failReason: providerError.code || providerError.message,
+        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+
+      await appendAuditEvent(orderRef, 'PAYMENT_SESSION_FAILED', {
+        provider: provider.name,
+        error: providerError.message,
+      }, admin);
+
+      throw providerError;
+    }
+
+    const sessionResponse = {
       success: true,
       provider: provider.name,
-      token: providerResult.token,
+      token: providerResult.token || null,
       iframeUrl: providerResult.iframeUrl || null,
       redirectUrl: providerResult.redirectUrl || null,
-      paymentType: providerResult.paymentType || 'IFRAME',
+      paymentType: providerResult.paymentType || 'REDIRECT',
       merchant_oid,
       evidenceId,
       deliveryMethod: compliance.deliveryMethod,
       highValueSecureDelivery: compliance.hasHighValue,
     };
+
+    if (idempotencyKey) {
+      idempotencyCache.set(idempotencyKey, {
+        response: sessionResponse,
+        timestamp: Date.now(),
+      });
+    }
+
+    return sessionResponse;
+    };
+
+    if (idempotencyKey) {
+      const taskPromise = sessionTask();
+      inFlightIdempotency.set(idempotencyKey, taskPromise);
+      try {
+        return await taskPromise;
+      } finally {
+        inFlightIdempotency.delete(idempotencyKey);
+      }
+    }
+
+    return await sessionTask();
   }
 
   async handleCallback({ providerName, body, db, admin, mailer }) {
     const provider = paymentRouter.getProvider(providerName);
-    const orderId = String(body.merchant_oid || body.orderId || '');
+    const orderId = String(body.merchant_oid || body.orderId || body.oid || '');
     if (!orderId) {
       return { status: 400, message: 'Geçersiz sipariş numarası' };
     }
@@ -287,6 +432,22 @@ class PaymentService {
     }
 
     const order = orderDoc.data();
+
+    // Provider Binding Güvenlik Kontrolü
+    if (order.payment?.provider && order.payment.provider !== provider.name) {
+      console.error(`[Payment Security] PROVIDER_MISMATCH! Sipariş Provider: ${order.payment.provider}, Gelen: ${provider.name}`);
+      await appendAuditEvent(orderRef, 'PROVIDER_MISMATCH', {
+        expectedProvider: order.payment.provider,
+        incomingProvider: provider.name,
+      }, admin);
+      return { status: 400, message: 'PROVIDER_MISMATCH: Callback sağlayıcısı sipariş ile eşleşmiyor.' };
+    }
+
+    // Atomic Idempotency Kontrolü: Zaten PAID ise hemen 200 OK dön
+    if (['PAID', 'PAYMENT_PAID'].includes(order.paymentStatus) || [ORDER_STATUS.PAID, ORDER_STATUS.AWAITING_STORE_PICKUP, ORDER_STATUS.COMPLETED].includes(order.status)) {
+      return { status: 200, message: 'OK' };
+    }
+
     const verification = provider.verifyCallback({ body, order });
 
     if (!verification.isValid) {
@@ -294,37 +455,34 @@ class PaymentService {
       await appendAuditEvent(orderRef, 'CALLBACK_VERIFICATION_FAILED', {
         provider: provider.name,
         reason: verification.reason,
-        details: verification,
       }, admin);
       return { status: 400, message: `Callback verification failed: ${verification.reason}` };
-    }
-
-    // Idempotency: Eğer zaten PAID ise tekrar işlem yapma
-    if (['paid_awaiting_store_pickup', 'completed'].includes(order.status) && order.paymentStatus === 'PAID') {
-      return { status: 200, message: 'OK' };
     }
 
     if (verification.isSuccess) {
       const highValue = order.highValueSecureDelivery === true;
       const totalReceived = verification.totalAmountReceived || String(order.amountInKurus);
+      const nextStatus = highValue ? ORDER_STATUS.AWAITING_STORE_PICKUP : ORDER_STATUS.PAID;
+
+      assertValidTransition(order.status, nextStatus, orderId);
 
       await orderRef.update({
-        status: highValue ? 'paid_awaiting_store_pickup' : 'completed',
+        status: nextStatus,
         deliveryStatus: highValue ? 'STORE_PICKUP_REQUIRED' : (order.deliveryStatus || 'PENDING'),
         totalAmountReceived: totalReceived,
-        paymentConfirmedAt: admin.firestore.FieldValue.serverTimestamp(),
-        completedAt: admin.firestore.FieldValue.serverTimestamp(),
         paymentStatus: 'PAID',
         'payment.status': PAYMENT_STATUS.PAID,
         'payment.paidAt': admin.firestore.FieldValue.serverTimestamp(),
         'payment.totalAmountReceived': totalReceived,
+        paidAt: admin.firestore.FieldValue.serverTimestamp(),
+        // completedAt KESİNLİKLE BURADA YAZILMAZ! Sadece teslimat tamamlandığında COMPLETED state'inde yazılır.
       });
 
       await appendAuditEvent(orderRef, 'PAYMENT_CONFIRMED', {
         provider: provider.name,
         paymentStatus: 'PAID',
         totalAmountReceived: totalReceived,
-        nextDeliveryStatus: highValue ? 'STORE_PICKUP_REQUIRED' : (order.deliveryStatus || 'PENDING'),
+        status: nextStatus,
       }, admin);
 
       if (mailer && typeof mailer.dispatchOrderEvidenceEmails === 'function') {
@@ -336,8 +494,10 @@ class PaymentService {
         }
       }
     } else {
+      assertValidTransition(order.status, ORDER_STATUS.PAYMENT_FAILED, orderId);
+
       await orderRef.update({
-        status: 'failed',
+        status: ORDER_STATUS.PAYMENT_FAILED,
         failReason: String(verification.failReasonCode || 'Bilinmeyen hata').slice(0, 100),
         failMessage: String(verification.failReasonMsg || '').slice(0, 500),
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
@@ -358,3 +518,4 @@ class PaymentService {
 }
 
 module.exports = new PaymentService();
+

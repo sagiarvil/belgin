@@ -11,8 +11,8 @@
     _messageHandler: null,
 
     async createSession(orderPayload, options = {}) {
-      const provider = options.provider || 'PAYTR';
-      const submitBtn = options.submitBtn || document.getElementById('checkoutSubmit') || document.getElementById('btnCompletePayment');
+      const provider = options.provider || 'AKBANK';
+      const submitBtn = options.submitBtn || document.getElementById('checkoutSubmit') || document.getElementById('btnCompletePayment') || document.getElementById('checkoutSubmitBtn');
       const originalHtml = submitBtn ? submitBtn.innerHTML : '';
 
       try {

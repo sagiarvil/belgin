@@ -1097,7 +1097,7 @@ const App = {
           </div>
         </div>
 
-        <!-- 3. Alt Sekmeler (Detaylar, Teknik Özellikler, Taksit, Teslimat) -->
+        <!-- 3. Alt Sekmeler (Detaylar, Teknik Özellikler, Güvenli Ödeme, Teslimat) -->
         <div class="pdp-tabs-container">
           <div class="pdp-tabs-nav" role="tablist">
             <button class="pdp-tab-btn active" onclick="App.switchPdpTab('tab-details', this)" role="tab">
@@ -1107,7 +1107,7 @@ const App = {
               <span>⚙️ Teknik Özellikler Tablosu</span>
             </button>
             <button class="pdp-tab-btn" onclick="App.switchPdpTab('tab-installments', this)" role="tab">
-              <span>💳 Güvenli Ödeme & 3D Secure</span>
+              <span>💳 3D Secure Güvenli Ödeme (Tek Çekim)</span>
             </button>
             <button class="pdp-tab-btn" onclick="App.switchPdpTab('tab-delivery', this)" role="tab">
               <span>🚚 Teslimat, Güvenlik & İade Koşulları</span>

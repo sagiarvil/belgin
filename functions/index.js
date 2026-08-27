@@ -137,7 +137,7 @@ exports.paymentCallback = functions
   .https.onRequest(async (req, res) => {
     if (req.method !== 'POST') return res.status(405).send('Method Not Allowed');
 
-    const providerParam = String(req.query.provider || req.path.split('/').filter(Boolean).pop() || 'PAYTR').toUpperCase();
+    const providerParam = String(req.query.provider || req.path.split('/').filter(Boolean).pop() || 'AKBANK').toUpperCase();
 
     try {
       const outcome = await paymentService.handleCallback({

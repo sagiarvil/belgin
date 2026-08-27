@@ -140,13 +140,13 @@
 </head>
 <body>
 
-  <div class="status-card">
+  <div class="status-card" id="statusCardContainer">
     <img src="images/belgin-crest-b.png" alt="Belgin Kuyumculuk" class="brand-crest">
-    <div class="status-icon">✓</div>
-    <h1>Ödemeniz Başarıyla Alındı</h1>
-    <p class="status-subtitle">3D Secure doğrulaması tamamlandı. Siparişiniz ve resmi hukuki delil tutanağınız sistemimize işlenmiştir.</p>
+    <div id="statusIcon" class="status-icon">⏳</div>
+    <h1 id="statusHeading">Ödeme Doğrulanıyor...</h1>
+    <p id="statusSubtitle" class="status-subtitle">Akbank Sanal POS ve 3D Secure işlem kaydı sunucudan doğrulanıyor, lütfen bekleyiniz.</p>
 
-    <div class="order-box">
+    <div class="order-box" id="orderInfoBox" style="display:none;">
       <div class="order-row">
         <span class="order-label">Sipariş Referansı:</span>
         <span id="orderIdText" class="order-val">BLG-SİPARİŞ</span>
@@ -157,7 +157,7 @@
       </div>
       <div class="order-row">
         <span class="order-label">Ödeme Durumu:</span>
-        <span class="order-val" style="color:#2ECC71;">ONAYLANDI (3D SECURE)</span>
+        <span id="orderStatusVal" class="order-val" style="color:#2ECC71;">ONAYLANDI (3D SECURE)</span>
       </div>
       <div class="order-row">
         <span class="order-label">Ödeme Altyapısı:</span>
@@ -174,27 +174,89 @@
     </div>
 
     <div class="btn-group">
-      <a href="/" class="btn-primary">Ana Sayfaya Dön</a>
-      <a id="btnTracking" href="/" class="btn-secondary">Sipariş Takibi</a>
+      <a href="/" class="btn-primary" id="btnMainAction">Ana Sayfaya Dön</a>
+      <a id="btnTracking" href="/" class="btn-secondary" style="display:none;">Sipariş Takibi</a>
     </div>
   </div>
 
   <script>
-    (function () {
+    (async function () {
       const urlParams = new URLSearchParams(window.location.search);
-      const orderId = urlParams.get('orderId') || urlParams.get('order') || urlParams.get('merchant_oid') || sessionStorage.getItem('last_order_id') || 'BLG-' + Math.floor(100000 + Math.random() * 900000);
+      const orderId = urlParams.get('orderId') || urlParams.get('order') || urlParams.get('merchant_oid') || urlParams.get('oid');
       const authCode = urlParams.get('authCode');
-      
-      document.getElementById('orderIdText').textContent = orderId;
-      if (authCode) {
-        const row = document.getElementById('authCodeRow');
-        const text = document.getElementById('authCodeText');
-        if (row && text) {
-          text.textContent = authCode;
-          row.style.display = 'flex';
+      const iconEl = document.getElementById('statusIcon');
+      const headingEl = document.getElementById('statusHeading');
+      const subtitleEl = document.getElementById('statusSubtitle');
+      const boxEl = document.getElementById('orderInfoBox');
+      const orderIdText = document.getElementById('orderIdText');
+      const orderStatusVal = document.getElementById('orderStatusVal');
+      const btnTracking = document.getElementById('btnTracking');
+      const btnMainAction = document.getElementById('btnMainAction');
+
+      if (!orderId) {
+        iconEl.innerHTML = '⚠️';
+        iconEl.style.borderColor = '#E67E22';
+        iconEl.style.color = '#E67E22';
+        iconEl.style.background = 'rgba(230, 126, 34, 0.15)';
+        headingEl.textContent = 'Sipariş Kaydı Bulunamadı';
+        subtitleEl.textContent = 'Doğrudan erişim sağlandı veya sipariş numarası belirtilmedi. Lütfen sepetinizden siparişinizi tamamlayınız.';
+        btnMainAction.textContent = 'Alışverişe Başla';
+        btnMainAction.href = '/#sepet';
+        return;
+      }
+
+      orderIdText.textContent = orderId;
+
+      try {
+        const response = await fetch(`/api/payment/status?orderId=${encodeURIComponent(orderId)}`);
+        let data = {};
+        try { data = await response.json(); } catch (_) { data = {}; }
+
+        const isPaid = response.ok && data.success && ['PAID', 'PAYMENT_PAID', 'AWAITING_STORE_PICKUP', 'COMPLETED', 'paid_awaiting_store_pickup', 'completed'].includes(data.paymentStatus);
+
+        if (isPaid || authCode) {
+          iconEl.innerHTML = '✓';
+          iconEl.style.borderColor = 'var(--success-green)';
+          iconEl.style.color = 'var(--success-green)';
+          iconEl.style.background = 'rgba(46, 204, 113, 0.15)';
+          headingEl.textContent = 'Ödemeniz Başarıyla Alındı';
+          subtitleEl.textContent = '3D Secure doğrulaması tamamlandı. Siparişiniz ve resmi hukuki delil tutanağınız sistemimize işlenmiştir.';
+          boxEl.style.display = 'block';
+          orderStatusVal.textContent = 'ONAYLANDI (3D SECURE)';
+          orderStatusVal.style.color = '#2ECC71';
+
+          if (authCode) {
+            const row = document.getElementById('authCodeRow');
+            const text = document.getElementById('authCodeText');
+            if (row && text) {
+              text.textContent = authCode;
+              row.style.display = 'flex';
+            }
+          }
+          btnTracking.style.display = 'block';
+          btnTracking.href = `/?order=${encodeURIComponent(orderId)}`;
+        } else {
+          iconEl.innerHTML = '✕';
+          iconEl.style.borderColor = '#ED1C24';
+          iconEl.style.color = '#ED1C24';
+          iconEl.style.background = 'rgba(237, 28, 36, 0.15)';
+          headingEl.textContent = 'Ödeme Doğrulanamadı';
+          subtitleEl.textContent = 'Bu sipariş numarasına ait onaylanmış bir banka tahsilatı bulunamadı. Lütfen kart bilgilerinizi kontrol ederek tekrar deneyiniz.';
+          btnMainAction.textContent = 'Ödeme Ekranına Dön';
+          btnMainAction.href = '/#odeme';
+        }
+      } catch (err) {
+        if (authCode) {
+          iconEl.innerHTML = '✓';
+          headingEl.textContent = 'Ödemeniz Başarıyla Alındı';
+          subtitleEl.textContent = '3D Secure doğrulaması tamamlandı.';
+          boxEl.style.display = 'block';
+        } else {
+          iconEl.innerHTML = 'ℹ️';
+          headingEl.textContent = 'Ödeme Durumu Sorgulanamadı';
+          subtitleEl.textContent = 'Banka bağlantısı teyit edilemedi. Lütfen müşteri hizmetlerimizle iletişime geçiniz.';
         }
       }
-      document.getElementById('btnTracking').href = `/?order=${encodeURIComponent(orderId)}`;
     })();
   </script>
 </body>
