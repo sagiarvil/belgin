@@ -282,6 +282,7 @@ async function syncSeckinRolex() {
       name: item.title,
       reference: item.reference,
       category: isJewelry ? "jewelry" : "watch",
+      subCategory: item.brand,
       statusBadge: "Stokta",
       conditionBadge: item.durum.includes("Sıfır") ? "Sıfır" : "İkinci El",
       isPreOwned: true,
