@@ -248,22 +248,23 @@
 
       <!-- BÜYÜK ALTIN ÖDEME BUTONU -->
       <button type="button" id="btnCompletePayment" class="btn-pay-giant" onclick="processVipPayment()">
-        <span>🔒</span> 3D Secure ile Güvenli Öde
+        <span>🔒</span> Akbank 3D Secure ile Güvenli Öde
       </button>
 
-      <!-- ÖDEME SAĞLAYICI LOGO BANTI -->
-      <div style="background:#FFFFFF; border-radius:10px; padding:10px 14px; margin-top:16px; display:flex; align-items:center; justify-content:center;">
-        <img src="images/iyzico-odeme-yontemleri.png" alt="iyzico ile Öde - Mastercard, Visa, American Express, Troy" style="max-height:26px; width:auto; max-width:100%; object-fit:contain;" loading="lazy">
+      <!-- ÖDEME SAĞLAYICI LOGO BANTI (AKBANK SANAL POS & KART AĞLARI) -->
+      <div style="background:#FFFFFF; border-radius:10px; padding:10px 14px; margin-top:16px; display:flex; align-items:center; justify-content:center; gap:12px;">
+        <img src="images/akbank-pos-logo.png" onerror="this.style.display='none'" alt="Akbank Sanal POS" style="max-height:24px; width:auto; object-fit:contain;" loading="lazy">
+        <img src="images/iyzico-odeme-yontemleri.png" alt="Mastercard, Visa, Troy, 3D Secure" style="max-height:24px; width:auto; max-width:100%; object-fit:contain;" loading="lazy">
       </div>
 
       <div class="security-badge-footer">
-        <span>🛡️</span> 256-Bit SSL Şifreleme · 3D Secure SMS Onayı · BDDK Lisanslı Güvenli Ödeme
+        <span>🛡️</span> Akbank Sanal POS · 256-Bit EV SSL · 3D Secure 2.0 Doğrulama · Tek Çekim
       </div>
 
-      <!-- PAYTR 3D SECURE IFRAME ALANI -->
+      <!-- AKBANK 3D SECURE YÖNLENDİRME / IFRAME ALANI -->
       <div id="paytr-container">
         <div style="text-align:center; font-weight:700; color:#0A1412; margin-bottom:12px; font-size:13px; display:flex; align-items:center; justify-content:center; gap:6px;">
-          <span>🔒</span> PayTR 256-Bit SSL & 3D Secure Kart Ödeme Ekranı
+          <span>🔒</span> Akbank 256-Bit SSL & 3D Secure Kart Ödeme Ekranı
         </div>
         <div id="paytr-iframe-wrapper"></div>
       </div>
@@ -396,7 +397,21 @@
           throw new Error(data.message || 'Akbank Sanal POS 3D Secure bağlantısı kurulamadı.');
         }
 
-        if (data.redirectUrl) {
+        if (data.gatewayUrl && data.postParams) {
+          // Akbank EST 3D Secure Doğrudan Yönlendirme (Form POST)
+          const form = document.createElement('form');
+          form.method = 'POST';
+          form.action = data.gatewayUrl;
+          for (const [key, value] of Object.entries(data.postParams)) {
+            const hiddenField = document.createElement('input');
+            hiddenField.type = 'hidden';
+            hiddenField.name = key;
+            hiddenField.value = value;
+            form.appendChild(hiddenField);
+          }
+          document.body.appendChild(form);
+          form.submit();
+        } else if (data.redirectUrl) {
           window.location.href = data.redirectUrl;
         } else if (data.iframeUrl) {
           const container = document.getElementById('paytr-container');
