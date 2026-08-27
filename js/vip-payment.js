@@ -89,14 +89,44 @@
       return `${origin}/vip?p=${compactToken}`;
     },
 
-    // 6. Akıllı Çözücü (?p=... -> ?token=... -> /vip/slug-amount)
-    resolvePayload(param, pathname) {
+    // 6. Akıllı Çözücü (?p=... -> ?token=... -> ?amount=... -> ?tutar=... -> /vip/slug-amount)
+    resolvePayload(param, pathname, search) {
+      // 6.1. Token Parametresi (?p=... veya ?token=...)
       if (param) {
         const compact = this.decodeCompact(param);
-        if (compact && compact.amount > 0) return compact;
+        if (compact && compact.amount > 0) {
+          compact.rawToken = param;
+          return compact;
+        }
         const json = this.decodePayload(param);
-        if (json && json.amount > 0) return json;
+        if (json && json.amount > 0) {
+          json.rawToken = param;
+          return json;
+        }
       }
+
+      // 6.2. Doğrudan Tutar / Parametre Desteği (?amount=100 veya ?tutar=100 veya ?fiyat=100)
+      if (search || (typeof window !== 'undefined' && window.location.search)) {
+        const queryStr = search || window.location.search;
+        const sp = new URLSearchParams(queryStr);
+        const rawAmt = sp.get('amount') || sp.get('tutar') || sp.get('fiyat') || sp.get('price');
+        if (rawAmt) {
+          const numAmt = Number(String(rawAmt).replace(/\D/g, '')) || Number(rawAmt) || 0;
+          if (numAmt > 0) {
+            const rawTitle = sp.get('title') || sp.get('baslik') || sp.get('urun') || sp.get('name') || 'Lüks Özel Sipariş';
+            const orderId = sp.get('orderId') || sp.get('oid') || ('VIP-' + Math.floor(100000 + Math.random() * 900000));
+            const payload = {
+              orderId,
+              title: rawTitle,
+              amount: numAmt
+            };
+            payload.rawToken = this.encodeCompact(payload);
+            return payload;
+          }
+        }
+      }
+
+      // 6.3. URL Yolu Desteği (/vip/altin-kolye-5000 veya /vip/slug-amount)
       if (pathname) {
         const cleanPath = pathname.replace(/\/+$/, '');
         const match = cleanPath.match(/\/vip\/([a-zA-Z0-9_-]+)-(\d+)$/);
@@ -107,13 +137,16 @@
             .split('-')
             .map(w => w ? (w.length <= 2 ? w.toUpperCase() : w.charAt(0).toUpperCase() + w.slice(1)) : '')
             .join(' ');
-          return {
+          const payload = {
             orderId: 'VIP-' + Math.floor(100000 + Math.random() * 900000),
             title,
             amount
           };
+          payload.rawToken = this.encodeCompact(payload);
+          return payload;
         }
       }
+
       return null;
     },
 

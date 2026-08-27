@@ -240,6 +240,10 @@
           <input type="tel" id="custPhone" class="form-input" required placeholder="05XX XXX XX XX">
         </div>
       </div>
+      <div class="form-group" style="margin-top:14px; margin-bottom:18px;">
+        <label class="form-label">T.C. Kimlik / Pasaport No *</label>
+        <input type="text" id="custIdentity" class="form-input" required placeholder="T.C. Kimlik veya Pasaport Numarası" maxlength="20">
+      </div>
 
       <!-- 3. DOĞRUDAN AKBANK SANAL POS KART GİRİŞ FORMU -->
       <div style="background:var(--input-bg); border:1.5px solid var(--input-border); border-radius:12px; padding:18px; margin-bottom:18px;">
@@ -308,18 +312,18 @@
 
   </main>
 
-  </main>
-
-  <script src="/js/vip-payment.js?v=2.8.0"></script>
+  <script src="/js/vip-payment.js?v=2.8.1"></script>
   <script>
     let currentPayload = null;
 
     function formatVipCardNumber(input) {
+      if (!input) return;
       let v = input.value.replace(/\D/g, '').slice(0, 16);
       let formatted = v.replace(/(\d{4})(?=\d)/g, '$1 ');
       input.value = formatted;
 
       const badge = document.getElementById('vipCardTypeBadge');
+      if (!badge) return;
       if (v.startsWith('4')) {
         badge.textContent = 'VISA';
         badge.style.color = '#1A1F71';
@@ -340,6 +344,7 @@
     }
 
     function formatVipCardExpiry(input) {
+      if (!input) return;
       let v = input.value.replace(/\D/g, '').slice(0, 4);
       if (v.length > 2) {
         input.value = v.slice(0, 2) + ' / ' + v.slice(2);
@@ -349,45 +354,62 @@
     }
 
     function formatVipCardCvv(input) {
+      if (!input) return;
       input.value = input.value.replace(/\D/g, '').slice(0, 4);
     }
 
     function initPage() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const param = urlParams.get('p') || urlParams.get('token');
-      
-      if (typeof VipEngine !== 'undefined') {
-        currentPayload = VipEngine.resolvePayload(param, window.location.pathname);
-      }
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const param = urlParams.get('p') || urlParams.get('token') || urlParams.get('amount') || urlParams.get('tutar');
+        
+        if (typeof VipEngine !== 'undefined') {
+          currentPayload = VipEngine.resolvePayload(param, window.location.pathname, window.location.search);
+        }
 
-      if (!currentPayload) {
-        currentPayload = {
-          orderId: 'BLG-' + Math.floor(100000 + Math.random() * 900000),
-          title: 'Lüks Showroom Siparişi',
-          amount: 14960,
-          orderNote: 'Showroom Özel Siparişi'
-        };
-      }
+        if (!currentPayload || !currentPayload.amount) {
+          const fallbackAmt = Number(urlParams.get('amount') || urlParams.get('tutar') || 100);
+          currentPayload = {
+            orderId: 'VIP-' + Math.floor(100000 + Math.random() * 900000),
+            title: urlParams.get('title') || urlParams.get('baslik') || 'Lüks Showroom Siparişi',
+            amount: fallbackAmt,
+            orderNote: 'Showroom Özel Siparişi'
+          };
+        }
 
-      document.getElementById('orderIdDisplay').textContent = currentPayload.orderId || 'BLG-VIP';
-      document.getElementById('productTitleDisplay').textContent = currentPayload.title || 'Lüks Koleksiyon Ürünü';
-      document.getElementById('productAmountDisplay').textContent = '₺' + Number(currentPayload.amount || 0).toLocaleString('tr-TR');
-      
-      syncDraft();
+        if (!currentPayload.rawToken && typeof VipEngine !== 'undefined') {
+          currentPayload.rawToken = VipEngine.encodeCompact(currentPayload);
+        }
+
+        const orderIdEl = document.getElementById('orderIdDisplay');
+        const titleEl = document.getElementById('productTitleDisplay');
+        const amountEl = document.getElementById('productAmountDisplay');
+        const btn = document.getElementById('btnCompletePayment');
+
+        if (orderIdEl) orderIdEl.textContent = currentPayload.orderId || 'BLG-VIP';
+        if (titleEl) titleEl.textContent = currentPayload.title || 'Lüks Koleksiyon Ürünü';
+        if (amountEl) amountEl.textContent = '₺' + Number(currentPayload.amount || 0).toLocaleString('tr-TR');
+        if (btn) btn.disabled = false;
+        
+        syncDraft();
+      } catch (err) {
+        console.error('initPage Error:', err);
+      }
     }
 
     function syncDraft() {
-      const name = document.getElementById('custName').value.trim();
-      const phone = document.getElementById('custPhone').value.trim();
-      const identity = document.getElementById('custIdentity').value.trim();
+      const name = document.getElementById('custName')?.value?.trim() || '';
+      const phone = document.getElementById('custPhone')?.value?.trim() || '';
+      const identity = document.getElementById('custIdentity')?.value?.trim() || '';
+      const amt = Number(currentPayload?.amount || 0);
 
       const draft = {
         orderId: currentPayload?.orderId,
         customerName: name || 'Müşteri (Sipariş Sahibi)',
         customerPhone: phone || '05XX *** ** XX',
         customerIdentity: identity || '',
-        totalAmount: currentPayload?.amount || 14960,
-        formattedAmount: '₺' + Number(currentPayload?.amount || 14960).toLocaleString('tr-TR'),
+        totalAmount: amt > 0 ? amt : 100,
+        formattedAmount: '₺' + (amt > 0 ? amt : 100).toLocaleString('tr-TR'),
         termsAcceptedAt: new Date().toISOString(),
         paymentMethod: 'Akbank Sanal POS 256-Bit SSL 3D Secure / Kredi Kartı'
       };
@@ -395,66 +417,71 @@
       localStorage.setItem('belgin_checkout_draft', JSON.stringify(draft));
     }
 
-    document.getElementById('custName').addEventListener('input', syncDraft);
-    document.getElementById('custPhone').addEventListener('input', syncDraft);
-    document.getElementById('custIdentity').addEventListener('input', syncDraft);
+    document.getElementById('custName')?.addEventListener('input', syncDraft);
+    document.getElementById('custPhone')?.addEventListener('input', syncDraft);
+    document.getElementById('custIdentity')?.addEventListener('input', syncDraft);
 
     async function processVipPayment() {
-      const name = document.getElementById('custName').value.trim();
-      const phone = document.getElementById('custPhone').value.trim();
-      const identity = document.getElementById('custIdentity').value.trim();
-      const cardHolder = document.getElementById('vipCcHolder').value.trim();
-      const cardNumber = document.getElementById('vipCcNumber').value.replace(/\D/g, '');
-      const cardExpiry = document.getElementById('vipCcExpiry').value.trim();
-      const cardCvc = document.getElementById('vipCcCvc').value.trim();
+      const name = document.getElementById('custName')?.value?.trim() || '';
+      const phone = document.getElementById('custPhone')?.value?.trim() || '';
+      const identity = document.getElementById('custIdentity')?.value?.trim() || '';
+      const cardHolder = document.getElementById('vipCcHolder')?.value?.trim() || '';
+      const cardNumber = (document.getElementById('vipCcNumber')?.value || '').replace(/\D/g, '');
+      const cardExpiry = document.getElementById('vipCcExpiry')?.value?.trim() || '';
+      const cardCvc = document.getElementById('vipCcCvc')?.value?.trim() || '';
 
       if (!name || !phone) {
         alert('Lütfen adınızı, soyadınızı ve telefon numaranızı eksiksiz doldurunuz.');
+        document.getElementById('custName')?.focus();
         return;
       }
 
       if (!identity) {
         alert('Lütfen fatura ve güvenlik doğrulaması için T.C. Kimlik / Pasaport numaranızı giriniz.');
+        document.getElementById('custIdentity')?.focus();
         return;
       }
 
       if (!cardHolder) {
         alert('Lütfen kart üzerindeki isim soyismi giriniz.');
-        document.getElementById('vipCcHolder').focus();
+        document.getElementById('vipCcHolder')?.focus();
         return;
       }
 
       if (cardNumber.length < 15) {
         alert('Lütfen geçerli bir 16 haneli kart numarası giriniz.');
-        document.getElementById('vipCcNumber').focus();
+        document.getElementById('vipCcNumber')?.focus();
         return;
       }
 
       if (cardExpiry.length < 5) {
         alert('Lütfen kart son kullanma tarihini (AA / YY) giriniz.');
-        document.getElementById('vipCcExpiry').focus();
+        document.getElementById('vipCcExpiry')?.focus();
         return;
       }
 
       if (cardCvc.length < 3) {
         alert('Lütfen kart güvenlik kodunu (CVC) giriniz.');
-        document.getElementById('vipCcCvc').focus();
+        document.getElementById('vipCcCvc')?.focus();
         return;
       }
 
       syncDraft();
 
       const btn = document.getElementById('btnCompletePayment');
-      const originalHtml = btn.innerHTML;
-      btn.disabled = true;
-      btn.innerHTML = '<span>🔒</span> Akbank 3D Secure Kapısına Bağlanılıyor...';
+      const originalHtml = btn ? btn.innerHTML : '';
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<span>🔒</span> Akbank 3D Secure Kapısına Bağlanılıyor...';
+      }
 
       try {
         const cleanPhone = phone.replace(/\D/g, '');
+        const token = currentPayload.rawToken || (typeof VipEngine !== 'undefined' ? VipEngine.encodeCompact(currentPayload) : null);
         const orderPayload = {
           provider: 'AKBANK',
           isVipPayment: true,
-          vipToken: currentPayload.rawToken || null,
+          vipToken: token,
           user_name: name,
           user_phone: phone,
           email: cleanPhone ? `musteri_${cleanPhone}@belginkuyumculuk.com` : `vip_${Date.now()}@belginkuyumculuk.com`,
@@ -472,9 +499,10 @@
             {
               id: currentPayload.orderId || `VIP-${Date.now()}`,
               name: currentPayload.title || 'Lüks Showroom Siparişi',
-              price: Number(currentPayload.amount),
+              price: Number(currentPayload.amount || 100),
               qty: 1,
               isVipCustom: true,
+              vipToken: token,
               brand: 'Belgin Kuyumculuk',
               category: 'luxury'
             }
@@ -517,8 +545,10 @@
       } catch (err) {
         console.error('VIP Ödeme Hatası:', err);
         alert('Ödeme başlatılamadı: ' + err.message);
-        btn.disabled = false;
-        btn.innerHTML = originalHtml;
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = originalHtml;
+        }
       }
     }
 
