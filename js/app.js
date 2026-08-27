@@ -1881,16 +1881,11 @@ const App = {
   _timerInterval: null,
 
   processOrder() {
-    // Hataları Temizle
-    this.clearFieldError('ccCardHolder');
-    this.clearFieldError('ccCardNumber');
-    this.clearFieldError('ccCardExpiry');
-    this.clearFieldError('ccCardCvc');
-
     const fn = (document.getElementById('checkoutFirstName')?.value || '').trim();
     const ln = (document.getElementById('checkoutLastName')?.value || '').trim();
     const phone = (document.getElementById('checkoutPhone')?.value || '').trim();
     const email = (document.getElementById('checkoutEmail')?.value || '').trim();
+    const identity = (document.getElementById('checkoutIdentity')?.value || '').trim();
 
     if (!fn || !ln) {
       if (typeof showToast === 'function') showToast('Lütfen teslimat için ad ve soyadınızı eksiksiz giriniz.', 'error');
@@ -1901,8 +1896,26 @@ const App = {
 
     if (!phone || phone.length < 10) {
       if (typeof showToast === 'function') showToast('Lütfen geçerli bir telefon numarası giriniz (3D Secure SMS şifresi için zorunludur).', 'error');
-      else alert('Lütfen geçerli bir telefon numarası giriniz.');
+      else alert('Lütfen geçerli bir telefon numarası giriniz (3D Secure SMS şifresi için zorunludur).');
       document.getElementById('checkoutPhone')?.focus();
+      return;
+    }
+
+    if (!email || !email.includes('@')) {
+      if (typeof showToast === 'function') showToast('Lütfen e-Arşiv faturanız ve yasal evraklar için geçerli bir e-posta adresi giriniz.', 'error');
+      else alert('Lütfen geçerli bir e-posta adresi giriniz.');
+      document.getElementById('checkoutEmail')?.focus();
+      return;
+    }
+
+    // Yasal Sözleşme Kontrolleri
+    const chkTerms = document.getElementById('chkTerms');
+    const chkKyc = document.getElementById('chkKyc');
+    const chkHandover = document.getElementById('chkHandover');
+
+    if ((chkTerms && !chkTerms.checked) || (chkKyc && !chkKyc.checked) || (chkHandover && !chkHandover.checked)) {
+      if (typeof showToast === 'function') showToast('Lütfen mesafeli satış, MASAK ve teslimat yasal onay kutularını işaretleyiniz.', 'error');
+      else alert('Lütfen zorunlu yasal onay kutularını işaretleyiniz.');
       return;
     }
 
@@ -1924,60 +1937,21 @@ const App = {
     }
 
     const totalAmount = typeof Cart !== 'undefined' ? Cart.getTotal() : 0;
-    const formattedAmount = typeof formatPrice === 'function' ? formatPrice(totalAmount) : `₺${totalAmount.toLocaleString('tr-TR')}`;
-    const isHighVal = items.some(i => (typeof isHighValueSecureDelivery === 'function' ? isHighValueSecureDelivery(i) : i.price >= 12000));
     const customerFullName = `${fn} ${ln}`;
 
-    // Kredi Kartı Bilgileri Doğrulaması (Gerçek Banka Standartları)
-    const cardHolder = (document.getElementById('ccCardHolder')?.value || '').trim();
-    const rawCardNum = (document.getElementById('ccCardNumber')?.value || '').replace(/\s/g, '');
-    const cardExpiry = (document.getElementById('ccCardExpiry')?.value || '').trim();
-    const cardCvc = (document.getElementById('ccCardCvc')?.value || '').trim();
-
-    if (!cardHolder || cardHolder.split(/\s+/).length < 2) {
-      this.setFieldError('ccCardHolder', 'Lütfen kart üzerindeki Ad ve Soyadı eksiksiz giriniz.');
-      if (typeof showToast === 'function') showToast('Lütfen kart üzerindeki Ad ve Soyadı eksiksiz giriniz.', 'error');
-      document.getElementById('ccCardHolder')?.focus();
-      return;
-    }
-
-    if (!rawCardNum || rawCardNum.length < 13 || rawCardNum.length > 19) {
-      this.setFieldError('ccCardNumber', '16 haneli geçerli kart numarasını eksiksiz giriniz.');
-      if (typeof showToast === 'function') showToast('Lütfen 16 haneli geçerli kart numarasını giriniz.', 'error');
-      document.getElementById('ccCardNumber')?.focus();
-      return;
-    }
-
-    if (!cardExpiry || !/^\d{2}\s*\/\s*\d{2}$/.test(cardExpiry)) {
-      this.setFieldError('ccCardExpiry', 'Son kullanma tarihini AA/YY formatında giriniz.');
-      if (typeof showToast === 'function') showToast('Son kullanma tarihini AA/YY formatında giriniz.', 'error');
-      document.getElementById('ccCardExpiry')?.focus();
-      return;
-    }
-
-    if (!cardCvc || cardCvc.length < 3) {
-      this.setFieldError('ccCardCvc', 'CVV güvenlik kodunu 3 hane olarak giriniz.');
-      if (typeof showToast === 'function') showToast('CVV güvenlik kodunu eksiksiz giriniz.', 'error');
-      document.getElementById('ccCardCvc')?.focus();
-      return;
-    }
-
-    const btn = document.getElementById('btnSubmitOrder');
+    const btn = document.getElementById('checkoutSubmitBtn') || document.getElementById('btnSubmitOrder');
     const originalBtnHtml = btn ? btn.innerHTML : '';
     if (btn) {
       btn.disabled = true;
-      btn.innerHTML = '<span>🔒</span> Akbank 3D Secure Bağlantısı Kuruluyor...';
+      btn.innerHTML = '<span style="font-size:20px;">🔒</span> <span>Akbank 3D Secure Kapısına Yönlendiriliyorsunuz...</span>';
     }
 
     const orderPayload = {
       provider: 'AKBANK',
       user_name: customerFullName,
       user_phone: phone,
-      email: email || 'musteri@belginkuyumculuk.com',
-      customerIdentity: document.getElementById('checkoutIdentity')?.value || '',
-      cardNumber: rawCardNum,
-      cardExpiry: cardExpiry,
-      cardCvc: cardCvc,
+      email: email,
+      customerIdentity: identity || '',
       items: items.map(i => ({ id: i.id, qty: i.qty })),
       deliveryMethod: 'showroom',
       termsAccepted: true,
@@ -1999,7 +1973,7 @@ const App = {
       }
 
       if (data.gatewayUrl && data.postParams) {
-        // DOĞRUDAN RESMİ AKBANK EST 3D SECURE KAPISINA GÖNDERİM
+        // DOĞRUDAN RESMİ AKBANK EST 3D SECURE / PAYHOSTING KAPISINA GÖNDERİM
         const form = document.createElement('form');
         form.method = 'POST';
         form.action = data.gatewayUrl;

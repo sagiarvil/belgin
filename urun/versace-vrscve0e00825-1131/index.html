@@ -1221,146 +1221,185 @@
   <!-- 8. GÜVENLİ ÖDEME VE İZMİR TESLİMAT SAYFASI (LUXURY 2-COLUMN MAISON CHECKOUT) -->
   <section id="page-odeme" class="page">
     <div class="container-art">
+      
+      <!-- MAISON HEADER & TRUST BANNER -->
+      <div style="margin-bottom:24px; padding-bottom:18px; border-bottom:1px solid var(--color-border); display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px;">
+        <div>
+          <span style="font-size:11px; letter-spacing:2px; font-weight:800; color:var(--color-gold-dark); text-transform:uppercase; display:block; margin-bottom:4px;">
+            🏛️ BELGIN HAUTE JOAILLERIE & YÜKSEK SAATÇİLİK (EST. 1999)
+          </span>
+          <h1 style="font-family:var(--font-sans); font-size:24px; font-weight:800; color:var(--color-ink); margin:0 0 4px;">
+            Güvenli Ödeme & Sipariş Onayı
+          </h1>
+          <p style="font-size:13px; color:var(--color-muted); margin:0;">
+            Akbank 256-Bit EV SSL & 3D Secure 2.0 Doğrudan Tahsilat Protokolü
+          </p>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; background:linear-gradient(135deg, #F4FAF9 0%, #E8F5F3 100%); border:1px solid #B8DDD9; padding:8px 14px; border-radius:8px; font-size:12px; font-weight:700; color:var(--color-teal); box-shadow:0 2px 6px rgba(8,76,71,0.06);">
+          <span style="font-size:15px;">🔒</span>
+          <span>Akbank Sanal POS (Üye No: 12865794)</span>
+        </div>
+      </div>
+
       <div class="checkout-grid-container">
         
-        <!-- SOL KOLON: MÜŞTERİ BİLGİLERİ, DOĞRUDAN AKBANK SANAL POS KART FORMU VE BUTON -->
+        <!-- SOL KOLON: MÜŞTERİ BİLGİLERİ, RESMİ AKBANK 3D SECURE GÜVENCESİ VE ONAY BUTONU -->
         <div class="checkout-main-panel">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:20px; border-bottom:1px solid var(--color-border); padding-bottom:16px;">
-            <div>
-              <h2 style="font-family:var(--font-sans); font-size:22px; font-weight:700; color:var(--color-ink); margin-bottom:4px;">Güvenli Ödeme & Sipariş Onayı</h2>
-              <p style="font-size:12.5px; color:var(--color-muted); margin:0;">Akbank 256-Bit EV SSL & 3D Secure 2.0 Doğrudan Tahsilat</p>
-            </div>
-            <div style="display:flex; align-items:center; gap:6px; background:#F4FAF9; border:1px solid #CBE5E2; padding:5px 10px; border-radius:6px; font-size:11.5px; font-weight:700; color:var(--color-teal);">
-              <span>🔒</span>
-              <span>Akbank Sanal POS (No: 12865794)</span>
-            </div>
-          </div>
-
           <form id="checkoutForm" onsubmit="event.preventDefault(); App.processOrder();">
             
             <!-- 1. Müşteri & İletişim Bilgileri -->
-            <div style="margin-bottom:16px;">
-              <h4 style="font-size:13px; font-weight:700; color:var(--color-teal); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.5px;">1. Müşteri & İletişim Bilgileri</h4>
-              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:10px;">
+            <div style="background:#FFFFFF; border:1px solid var(--color-border); border-radius:10px; padding:20px 22px; margin-bottom:20px; box-shadow:0 2px 8px rgba(0,0,0,0.02);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; border-bottom:1px solid #F0ECE4; padding-bottom:10px;">
+                <h3 style="font-size:13.5px; font-weight:800; color:var(--color-teal); text-transform:uppercase; letter-spacing:0.8px; margin:0; display:flex; align-items:center; gap:6px;">
+                  <span>👤 1. Alıcı & İletişim Bilgileri</span>
+                </h3>
+                <span style="font-size:11px; color:#777; font-weight:600;">e-Arşiv Fatura & 3D SMS</span>
+              </div>
+
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:12px;">
                 <div>
-                  <label style="font-size:11.5px; font-weight:600; display:block; margin-bottom:3px; color:#333;">Adınız *</label>
-                  <input type="text" id="checkoutFirstName" required placeholder="Adınız" style="width:100%; padding:9px 12px; border:1px solid var(--color-border); border-radius:6px; font-family:inherit; font-size:13px; box-sizing:border-box;">
+                  <label style="font-size:12px; font-weight:700; display:block; margin-bottom:5px; color:#222;">Adınız *</label>
+                  <input type="text" id="checkoutFirstName" required placeholder="Adınız" autocomplete="given-name" style="width:100%; padding:10px 14px; border:1.5px solid #D8D2C5; border-radius:6px; font-family:inherit; font-size:13.5px; background:#FAFAFA; box-sizing:border-box;">
                 </div>
                 <div>
-                  <label style="font-size:11.5px; font-weight:600; display:block; margin-bottom:3px; color:#333;">Soyadınız *</label>
-                  <input type="text" id="checkoutLastName" required placeholder="Soyadınız" style="width:100%; padding:9px 12px; border:1px solid var(--color-border); border-radius:6px; font-family:inherit; font-size:13px; box-sizing:border-box;">
+                  <label style="font-size:12px; font-weight:700; display:block; margin-bottom:5px; color:#222;">Soyadınız *</label>
+                  <input type="text" id="checkoutLastName" required placeholder="Soyadınız" autocomplete="family-name" style="width:100%; padding:10px 14px; border:1.5px solid #D8D2C5; border-radius:6px; font-family:inherit; font-size:13.5px; background:#FAFAFA; box-sizing:border-box;">
                 </div>
               </div>
-              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:12px;">
                 <div>
-                  <label style="font-size:11.5px; font-weight:600; display:block; margin-bottom:3px; color:#333;">Telefon (3D Secure SMS için) *</label>
-                  <input type="tel" id="checkoutPhone" required placeholder="05XX XXX XX XX" style="width:100%; padding:9px 12px; border:1px solid var(--color-border); border-radius:6px; font-family:inherit; font-size:13px; box-sizing:border-box;">
+                  <label style="font-size:12px; font-weight:700; display:block; margin-bottom:5px; color:#222;">Telefon (3D Secure SMS için) *</label>
+                  <input type="tel" id="checkoutPhone" required placeholder="05XX XXX XX XX" autocomplete="tel" style="width:100%; padding:10px 14px; border:1.5px solid #D8D2C5; border-radius:6px; font-family:inherit; font-size:13.5px; background:#FAFAFA; box-sizing:border-box;">
                 </div>
                 <div>
-                  <label style="font-size:11.5px; font-weight:600; display:block; margin-bottom:3px; color:#333;">E-Posta (e-Arşiv Fatura) *</label>
-                  <input type="email" id="checkoutEmail" required placeholder="ornek@alanadi.com" style="width:100%; padding:9px 12px; border:1px solid var(--color-border); border-radius:6px; font-family:inherit; font-size:13px; box-sizing:border-box;">
+                  <label style="font-size:12px; font-weight:700; display:block; margin-bottom:5px; color:#222;">E-Posta (e-Arşiv & Sözleşmeler) *</label>
+                  <input type="email" id="checkoutEmail" required placeholder="ornek@alanadi.com" autocomplete="email" style="width:100%; padding:10px 14px; border:1.5px solid #D8D2C5; border-radius:6px; font-family:inherit; font-size:13.5px; background:#FAFAFA; box-sizing:border-box;">
                 </div>
+              </div>
+
+              <div>
+                <label style="font-size:12px; font-weight:700; display:block; margin-bottom:5px; color:#222;">T.C. Kimlik / Pasaport No <small style="font-weight:400; color:#888;">(MASAK Uyum & Resmi Fatura)</small></label>
+                <input type="text" id="checkoutIdentity" maxlength="11" placeholder="T.C. Kimlik No (11 Haneli)" style="width:100%; padding:10px 14px; border:1.5px solid #D8D2C5; border-radius:6px; font-family:inherit; font-size:13.5px; background:#FAFAFA; box-sizing:border-box;">
               </div>
             </div>
 
-            <!-- Showroom Teslimat Protokolü (Kompakt Rozet) -->
-            <div style="margin-bottom:18px; border:1px solid rgba(8,76,71,0.2); background:var(--color-teal-soft); padding:10px 14px; border-radius:8px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
-              <div style="display:flex; align-items:center; gap:8px;">
-                <span style="font-size:16px;">🏛️</span>
-                <span style="font-size:12px; font-weight:600; color:var(--color-teal);">Buca Showroom Mağazadan Güvenli Teslimat</span>
-              </div>
-              <span style="font-size:11px; color:#555; background:#FFF; padding:2px 8px; border-radius:4px; border:1px solid rgba(8,76,71,0.15);">12.000 TL+ Kimlik/İmza Protokolü</span>
-              <input type="radio" name="shippingMethod" value="showroom" checked style="display:none;">
-            </div>
-
-            <!-- 2. Akbank Sanal POS Doğrudan Kredi Kartı Formu -->
-            <div style="margin-bottom:18px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <h4 style="font-size:13px; font-weight:700; color:var(--color-teal); text-transform:uppercase; letter-spacing:0.5px; margin:0;">2. Kart Bilgileri (Akbank Sanal POS)</h4>
-                <span style="font-size:11px; font-weight:600; color:#555;">Tek Çekim · 3D Secure 2.0</span>
+            <!-- 2. Akbank Sanal POS 3D Secure Doğrudan Ödeme Kapısı (Ultra-Lüks Güvenlik Paneli) -->
+            <div id="cardPaymentFields" style="background:#FFFFFF; border:1.5px solid #C2A768; border-radius:10px; padding:22px 24px; margin-bottom:20px; box-shadow:0 4px 16px rgba(194,167,104,0.12);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; border-bottom:1px solid #F0ECE4; padding-bottom:12px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span style="font-size:16px;">💳</span>
+                  <h3 style="font-size:13.5px; font-weight:800; color:var(--color-teal); text-transform:uppercase; letter-spacing:0.8px; margin:0;">
+                    2. Ödeme Kapısı (Akbank Sanal POS)
+                  </h3>
+                </div>
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <span style="background:#ED1C24; color:#FFF; font-size:10.5px; font-weight:900; padding:2px 7px; border-radius:4px; letter-spacing:0.5px;">AKBANK</span>
+                  <span style="background:#005BAC; color:#FFF; font-size:10px; font-weight:800; padding:2px 6px; border-radius:4px;">TROY</span>
+                  <span style="background:#1A1F71; color:#FFF; font-size:10px; font-weight:800; padding:2px 6px; border-radius:4px;">VISA</span>
+                  <span style="background:#EB001B; color:#FFF; font-size:10px; font-weight:800; padding:2px 6px; border-radius:4px;">Mastercard</span>
+                </div>
                 <input type="radio" name="paymentOption" value="card" checked style="display:none;">
               </div>
 
-              <div id="cardPaymentFields" class="cc-form-panel" style="margin:0; padding:18px 20px;">
-                <div class="cc-form-title" style="margin-bottom:12px;">
-                  <span style="font-size:12.5px; font-weight:700; color:var(--color-ink);">💳 256-Bit SSL Doğrudan Kart Girişi</span>
-                  <span id="cardTypeBadge" class="cc-brand-icon" style="position:static; font-size:11px; padding:3px 8px; border-radius:4px;">KART</span>
-                </div>
-
-                <div style="margin-bottom:10px;">
-                  <label style="font-size:11.5px; font-weight:600; display:block; margin-bottom:3px; color:#333;">Kart Üzerindeki İsim Soyisim *</label>
-                  <div class="cc-input-wrap">
-                    <input type="text" id="ccCardHolder" placeholder="AD SOYAD" autocomplete="cc-name" oninput="this.value = this.value.toLocaleUpperCase('tr-TR')" style="padding:9px 12px; font-size:13px;">
-                  </div>
-                </div>
-
-                <div style="margin-bottom:10px;">
-                  <label style="font-size:11.5px; font-weight:600; display:block; margin-bottom:3px; color:#333;">Kart Numarası *</label>
-                  <div class="cc-input-wrap">
-                    <input type="tel" id="ccCardNumber" placeholder="0000 0000 0000 0000" maxlength="19" autocomplete="cc-number" oninput="App.formatCardNumber(this)" style="padding:9px 12px; font-size:13.5px; font-family:monospace; letter-spacing:1px;">
-                  </div>
-                </div>
-
-                <div class="cc-grid-2" style="gap:12px;">
-                  <div>
-                    <label style="font-size:11.5px; font-weight:600; display:block; margin-bottom:3px; color:#333;">Son Kullanma Tarihi *</label>
-                    <div class="cc-input-wrap">
-                      <input type="tel" id="ccCardExpiry" placeholder="AA / YY" maxlength="7" autocomplete="cc-exp" oninput="App.formatCardExpiry(this)" style="padding:9px 12px; font-size:13px;">
-                    </div>
+              <!-- Banka Güvenlik Kartı İçeriği -->
+              <div style="background:linear-gradient(135deg, #FAF8F5 0%, #F5F1E8 100%); border:1px solid #E6DEC9; border-radius:8px; padding:18px 20px; margin-bottom:14px;">
+                <div style="display:flex; align-items:flex-start; gap:12px; margin-bottom:12px;">
+                  <div style="background:var(--color-teal); color:#FFF; width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; box-shadow:0 2px 6px rgba(8,76,71,0.25);">
+                    🔒
                   </div>
                   <div>
-                    <label style="font-size:11.5px; font-weight:600; display:block; margin-bottom:3px; color:#333;">Güvenlik Kodu (CVV) *</label>
-                    <div class="cc-input-wrap">
-                      <input type="tel" id="ccCardCvc" placeholder="CVC" maxlength="4" autocomplete="cc-csc" oninput="App.formatCardCvv(this)" style="padding:9px 12px; font-size:13px;">
-                    </div>
+                    <h4 style="font-size:14px; font-weight:800; color:var(--color-ink); margin:0 0 4px;">
+                      Kart Bilgileriniz %100 Akbank Güvencesindedir
+                    </h4>
+                    <p style="font-size:12.5px; color:#444; line-height:1.55; margin:0;">
+                      Kart bilgileriniz bu sayfada <strong>asla istenmez ve saklanmaz</strong>. Siparişinizi onayladığınızda, kart bilgilerinizi girmek üzere doğrudan <strong>Akbank T.A.Ş. Resmi 256-Bit SSL 3D Secure</strong> ödeme kapısına yönlendirilirsiniz.
+                    </p>
+                  </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:10px; padding-top:12px; border-top:1px dashed #D9D0B8; font-size:11.5px; color:#5D4411;">
+                  <div style="display:flex; align-items:center; gap:6px;">
+                    <span>🛡️</span>
+                    <span><strong>PCI-DSS Seviye 1:</strong> Sıfır veri saklama</span>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:6px;">
+                    <span>📲</span>
+                    <span><strong>SMS OTP:</strong> Banka şifreli onay</span>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:6px;">
+                    <span>💎</span>
+                    <span><strong>Mevzuata Uygun:</strong> Tek çekim güvencesi</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- 3. Hukuki Onaylar ve Aydınlatma Metinleri -->
-            <div style="margin-bottom:18px; font-size:11.5px; color:#555; display:flex; flex-direction:column; gap:8px; background:#FAF9F6; border:1px solid #EAE6DF; padding:12px 14px; border-radius:8px;">
-              <div style="font-size:11px; color:#666; line-height:1.4; border-bottom:1px solid #EAE6DF; padding-bottom:6px;">
-                ℹ️ Verileriniz siparişin ifası için <a href="kvkk-aydinlatma-metni.html" target="_blank" style="color:var(--color-teal); font-weight:600; text-decoration:underline;">KVKK Aydınlatma Metni (05)</a> kapsamında işlenmektedir.
+            <!-- 3. Showroom & Teslimat Tercihi -->
+            <div style="background:#FFFFFF; border:1px solid var(--color-border); border-radius:10px; padding:18px 22px; margin-bottom:20px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                <h3 style="font-size:13.5px; font-weight:800; color:var(--color-teal); text-transform:uppercase; letter-spacing:0.8px; margin:0;">
+                  🏛️ 3. Mağaza Teslimat & Randevu
+                </h3>
+                <span style="font-size:11px; color:#15803D; font-weight:700; background:#EAF5ED; padding:2px 8px; border-radius:4px;">Sigortalı & Ücretsiz</span>
+              </div>
+              
+              <div style="border:1px solid #CBE5E2; background:#F4FAF9; padding:12px 16px; border-radius:8px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+                <div>
+                  <strong style="font-size:13px; color:var(--color-ink); display:block; margin-bottom:2px;">İzmir Buca Showroom Mağazadan Teslimat</strong>
+                  <span style="font-size:12px; color:#555;">Menderes Cad. No:231/B Buca / İzmir · 12.000 TL+ MASAK Kimlik İbraz Protokolü</span>
+                </div>
+                <input type="radio" name="shippingMethod" value="showroom" checked style="accent-color:var(--color-teal); width:16px; height:16px;">
+              </div>
+            </div>
+
+            <!-- 4. Hukuki Onaylar ve HMK m.193 Delil Şerhi -->
+            <div style="margin-bottom:20px; font-size:11.5px; color:#555; display:flex; flex-direction:column; gap:9px; background:#FAF9F6; border:1px solid #EAE6DF; padding:14px 18px; border-radius:10px;">
+              <div style="font-size:11px; color:#666; line-height:1.4; border-bottom:1px solid #EAE6DF; padding-bottom:8px; display:flex; align-items:center; gap:6px;">
+                <span>ℹ️</span>
+                <span>Verileriniz siparişin ifası için <a href="kvkk-aydinlatma-metni.html" target="_blank" style="color:var(--color-teal); font-weight:700; text-decoration:underline;">KVKK Aydınlatma Metni (05)</a> kapsamında korunmaktadır.</span>
               </div>
 
               <!-- 01 + 02: Zorunlu Ortak Hukuk Onayı -->
-              <label style="display:flex; gap:6px; align-items:flex-start; cursor:pointer;">
+              <label style="display:flex; gap:8px; align-items:flex-start; cursor:pointer;">
                 <input type="checkbox" id="chkTerms" required checked style="margin-top:2px; accent-color:var(--color-teal);">
-                <span><a href="on-bilgilendirme-formu.html?source=checkout" target="_blank" style="color:var(--color-teal); font-weight:600; text-decoration:underline;">Ön Bilgilendirme Formunu (02)</a> ve <a href="mesafeli-satis-sozlesmesi.html?source=checkout" target="_blank" style="color:var(--color-teal); font-weight:600; text-decoration:underline;">Mesafeli Satış Sözleşmesini (01)</a> onaylıyorum. *</span>
+                <span><a href="on-bilgilendirme-formu.html?source=checkout" target="_blank" style="color:var(--color-teal); font-weight:700; text-decoration:underline;">Ön Bilgilendirme Formunu (02)</a> ve <a href="mesafeli-satis-sozlesmesi.html?source=checkout" target="_blank" style="color:var(--color-teal); font-weight:700; text-decoration:underline;">Mesafeli Satış Sözleşmesini (01)</a> onaylıyorum. *</span>
               </label>
 
               <!-- 12 + 03 + 13: Güvenlik ve Teslimat Protokolleri -->
-              <label style="display:flex; gap:6px; align-items:flex-start; cursor:pointer;">
+              <label style="display:flex; gap:8px; align-items:flex-start; cursor:pointer;">
                 <input type="checkbox" id="chkKyc" required checked style="margin-top:2px; accent-color:var(--color-teal);">
-                <span><a href="musteri-tanima-ve-islem-guvenligi.html?source=checkout" target="_blank" style="color:var(--color-teal); font-weight:600; text-decoration:underline;">Müşteri Tanıma (12)</a> ve 12.000 TL+ <a href="yuksek-degerli-urun-teslimi.html?source=checkout" target="_blank" style="color:var(--color-teal); font-weight:600; text-decoration:underline;">Yüksek Değerli Teslim (03)</a> esaslarını kabul ediyorum. *</span>
+                <span><a href="musteri-tanima-ve-islem-guvenligi.html?source=checkout" target="_blank" style="color:var(--color-teal); font-weight:700; text-decoration:underline;">Müşteri Tanıma (12)</a> ve 12.000 TL+ <a href="yuksek-degerli-urun-teslimi.html?source=checkout" target="_blank" style="color:var(--color-teal); font-weight:700; text-decoration:underline;">Yüksek Değerli Teslim (03)</a> esaslarını kabul ediyorum. *</span>
               </label>
               <input type="checkbox" id="chkHighValue" required checked style="display:none;">
 
               <!-- 13: Mağaza Teslim-Tesellüm -->
-              <label style="display:flex; gap:6px; align-items:flex-start; cursor:pointer;">
+              <label style="display:flex; gap:8px; align-items:flex-start; cursor:pointer;">
                 <input type="checkbox" id="chkHandover" required checked style="margin-top:2px; accent-color:var(--color-teal);">
-                <span><a href="magaza-teslim-tesellum-formu.html?source=checkout" target="_blank" style="color:var(--color-teal); font-weight:600; text-decoration:underline;">Mağaza Teslim-Tesellüm Formu (13)</a> şartlarını kabul ediyorum. *</span>
+                <span><a href="magaza-teslim-tesellum-formu.html?source=checkout" target="_blank" style="color:var(--color-teal); font-weight:700; text-decoration:underline;">Mağaza Teslim-Tesellüm Formu (13)</a> şartlarını kabul ediyorum. *</span>
               </label>
 
               <!-- 09 + 10: Pazarlama & KVKK Rıza -->
-              <div style="display:flex; flex-direction:column; gap:6px; border-top:1px dashed #EAE6DF; padding-top:6px; margin-top:2px;">
-                <label style="display:flex; gap:6px; align-items:flex-start; cursor:pointer;">
+              <div style="display:flex; flex-direction:column; gap:6px; border-top:1px dashed #EAE6DF; padding-top:8px; margin-top:2px;">
+                <label style="display:flex; gap:8px; align-items:flex-start; cursor:pointer;">
                   <input type="checkbox" id="chkMarketing" checked style="margin-top:2px; accent-color:var(--color-teal);">
                   <span>Fırsatlardan SMS/e-posta ile haberdar olmak istiyorum (<a href="ticari-elektronik-ileti-onayi.html?source=checkout" target="_blank" style="color:var(--color-teal); text-decoration:underline;">09</a>).</span>
                 </label>
-                <label style="display:flex; gap:6px; align-items:flex-start; cursor:pointer;">
+                <label style="display:flex; gap:8px; align-items:flex-start; cursor:pointer;">
                   <input type="checkbox" id="chkConsent" checked style="margin-top:2px; accent-color:var(--color-teal);">
                   <span>Kişiselleştirilmiş ürün/öneri analizine rıza veriyorum (<a href="kvkk-acik-riza.html?source=checkout" target="_blank" style="color:var(--color-teal); text-decoration:underline;">10</a>).</span>
                 </label>
               </div>
             </div>
 
-            <!-- 4. Ultra-Lüks CTA Butonu -->
-            <button type="submit" id="checkoutSubmitBtn" class="btn-checkout-luxe" style="display:flex !important; align-items:center !important; justify-content:center !important; gap:12px !important; width:100% !important; min-height:56px !important; padding:16px 24px !important; background:linear-gradient(135deg, #0A544F 0%, #05332F 50%, #084843 100%) !important; color:#FFFFFF !important; font-family:'Plus Jakarta Sans', sans-serif !important; font-size:16px !important; font-weight:800 !important; letter-spacing:0.4px !important; border:1.5px solid #C2A768 !important; border-radius:10px !important; cursor:pointer !important; box-shadow:0 8px 24px rgba(8, 76, 71, 0.35), 0 2px 6px rgba(0,0,0,0.15) !important; text-shadow:0 1px 2px rgba(0,0,0,0.4) !important; transition:all 0.28s ease !important; margin-top:14px !important; box-sizing:border-box !important;">
-              <span class="btn-checkout-icon" style="font-size:20px; line-height:1; filter:drop-shadow(0 1px 2px rgba(0,0,0,0.4));">🔒</span>
-              <span id="checkoutSubmitBtnText" style="font-size:15.5px; font-weight:800; color:#FFFFFF; letter-spacing:0.4px;">3D Secure ile Güvenli Öde</span>
+            <!-- 5. Ultra-Lüks Baskın CTA Butonu -->
+            <button type="submit" id="checkoutSubmitBtn" class="btn-checkout-luxe" style="display:flex !important; align-items:center !important; justify-content:center !important; gap:12px !important; width:100% !important; min-height:58px !important; padding:16px 24px !important; background:linear-gradient(135deg, #0A544F 0%, #05332F 50%, #084843 100%) !important; color:#FFFFFF !important; font-family:'Plus Jakarta Sans', sans-serif !important; font-size:16.5px !important; font-weight:800 !important; letter-spacing:0.5px !important; border:1.5px solid #C2A768 !important; border-radius:10px !important; cursor:pointer !important; box-shadow:0 8px 26px rgba(8, 76, 71, 0.35), 0 2px 6px rgba(0,0,0,0.15) !important; text-shadow:0 1px 2px rgba(0,0,0,0.4) !important; transition:all 0.28s ease !important; margin-top:8px !important; box-sizing:border-box !important;">
+              <span class="btn-checkout-icon" style="font-size:22px; line-height:1; filter:drop-shadow(0 1px 2px rgba(0,0,0,0.4));">🔒</span>
+              <span id="checkoutSubmitBtnText" style="font-size:16px; font-weight:800; color:#FFFFFF; letter-spacing:0.5px;">Akbank 3D Secure ile Güvenli Öde</span>
             </button>
+            <p style="text-align:center; font-size:11.5px; color:#777; margin:8px 0 0;">
+              🔒 Akbank T.A.Ş. Sanal POS altyapısıyla işlem anında cep telefonunuza gelen SMS şifresiyle onaylanır.
+            </p>
           </form>
         </div>
 
@@ -1368,18 +1407,18 @@
         <div class="checkout-sidebar-panel">
           
           <!-- Sipariş Özeti Kutusu -->
-          <div id="checkoutSummaryContainer" class="checkout-summary-box">
-            <div class="checkout-summary-title">
-              <span>📦 Sipariş Özeti</span>
-              <a href="#" data-page="sepet" style="font-size:12px; color:var(--color-teal); text-decoration:underline;">Sepeti Düzenle</a>
+          <div id="checkoutSummaryContainer" class="checkout-summary-box" style="background:#FFFFFF; border:1px solid var(--color-border); border-radius:10px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.02); margin-bottom:18px;">
+            <div class="checkout-summary-title" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; border-bottom:1px solid #F0ECE4; padding-bottom:10px;">
+              <span style="font-size:14px; font-weight:800; color:var(--color-ink);">📦 Sipariş Özeti</span>
+              <a href="#" data-page="sepet" style="font-size:12px; color:var(--color-teal); text-decoration:underline; font-weight:600;">Sepeti Düzenle</a>
             </div>
-            <div id="checkoutItemsListMini" class="checkout-items-mini">
+            <div id="checkoutItemsListMini" class="checkout-items-mini" style="max-height:260px; overflow-y:auto; margin-bottom:14px;">
               <!-- JS ile dinamik doldurulur -->
             </div>
-            <div style="border-top:1px solid #EAE5D9; padding-top:10px; display:flex; flex-direction:column; gap:6px; font-size:13px;">
+            <div style="border-top:1px solid #EAE5D9; padding-top:12px; display:flex; flex-direction:column; gap:8px; font-size:13px;">
               <div style="display:flex; justify-content:space-between; color:var(--color-muted);">
                 <span>Ara Toplam (KDV Dahil)</span>
-                <span id="checkoutSubtotalDisplay" style="font-weight:600; color:var(--color-ink);">₺0</span>
+                <span id="checkoutSubtotalDisplay" style="font-weight:700; color:var(--color-ink);">₺0</span>
               </div>
               <div id="checkoutDiscountRow" style="display:none; justify-content:space-between; color:var(--color-gold-dark);">
                 <span>İndirim Tutarı</span>
@@ -1389,7 +1428,7 @@
                 <span>Teslimat & Sigorta</span>
                 <span style="color:#15803D; font-weight:700;">Ücretsiz (Sigortalı)</span>
               </div>
-              <div class="checkout-total-row">
+              <div class="checkout-total-row" style="display:flex; justify-content:space-between; align-items:baseline; font-size:18px; font-weight:900; color:var(--color-teal); padding-top:10px; border-top:1px solid #EAE5D9; margin-top:4px;">
                 <span>Ödenecek Tutar</span>
                 <span id="checkoutGrandTotalDisplay">₺0</span>
               </div>
@@ -1397,30 +1436,31 @@
           </div>
 
           <!-- Güvenlik & Kart Ağları Rozeti -->
-          <div style="background:#FAF8F5; border:1px solid #EAE5D9; border-radius:10px; padding:16px 18px;">
+          <div style="background:#FAF8F5; border:1px solid #EAE5D9; border-radius:10px; padding:16px 18px; margin-bottom:16px;" data-payment-network-readiness="v1">
             <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
-              <span style="font-size:18px;">🛡️</span>
+              <span style="font-size:20px;">🛡️</span>
               <div>
-                <strong style="font-size:12px; color:var(--color-ink); display:block;">Akbank Sanal POS Güvencesi</strong>
+                <strong style="font-size:12.5px; color:var(--color-ink); display:block;">Akbank Sanal POS Güvencesi</strong>
                 <span style="font-size:11px; color:#666;">256-Bit EV SSL & BDDK Lisanslı 3D Secure</span>
               </div>
             </div>
             <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-bottom:8px;">
-              <span style="background:#ED1C24; color:#FFF; font-size:10.5px; font-weight:800; padding:3px 6px; border-radius:4px;">AKBANK</span>
+              <span style="background:#ED1C24; color:#FFF; font-size:10.5px; font-weight:900; padding:3px 7px; border-radius:4px;">AKBANK</span>
               <span style="background:#FFF; border:1px solid #CCC; color:#1A1F71; font-size:10.5px; font-weight:800; padding:2px 6px; border-radius:4px;">VISA</span>
               <span style="background:#FFF; border:1px solid #CCC; color:#EB001B; font-size:10.5px; font-weight:800; padding:2px 6px; border-radius:4px;">Mastercard</span>
               <span style="background:#FFF; border:1px solid #CCC; color:#005BAC; font-size:10.5px; font-weight:800; padding:2px 6px; border-radius:4px;">TROY</span>
             </div>
-            <p style="font-size:10.5px; color:#777; line-height:1.4; margin:0;">
+            <p style="font-size:11px; color:#777; line-height:1.45; margin:0;">
               Kart bilgileriniz PCI-DSS standartlarına uygun olarak sunucularımızda saklanmaz. Kuyumculuk ürünlerinde mevzuat gereği tek çekim uygulanmaktadır.
             </p>
           </div>
 
           <!-- Mağaza & Destek Kartı -->
-          <div style="background:#FFFFFF; border:1px solid var(--color-border); border-radius:10px; padding:14px 16px; font-size:12px; color:#444; display:flex; flex-direction:column; gap:6px;">
-            <strong style="color:var(--color-teal); font-size:12.5px;">🏛️ Belgin Kuyumculuk Showroom</strong>
+          <div style="background:#FFFFFF; border:1px solid var(--color-border); border-radius:10px; padding:16px 18px; font-size:12px; color:#444; display:flex; flex-direction:column; gap:6px;">
+            <strong style="color:var(--color-teal); font-size:13px;">🏛️ Belgin Kuyumculuk Showroom</strong>
             <span>📍 Menderes Cad. No:231/B Buca / İzmir</span>
-            <a href="https://wa.me/905419305372?text=Merhaba,%20sipari%C5%9F%20ve%20%C3%B6deme%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener" style="color:var(--color-teal); text-decoration:underline; font-weight:600; display:inline-flex; align-items:center; gap:4px; margin-top:2px;">
+            <span>✉️ <a href="mailto:destek@belginkuyumculuk.com" style="color:var(--color-teal); text-decoration:underline;">destek@belginkuyumculuk.com</a></span>
+            <a href="https://wa.me/905419305372?text=Merhaba,%20sipari%C5%9F%20ve%20%C3%B6deme%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener" style="color:var(--color-teal); text-decoration:underline; font-weight:700; display:inline-flex; align-items:center; gap:4px; margin-top:4px;">
               💬 WhatsApp Müşteri Temsilcisi (+90 541 930 53 72)
             </a>
           </div>
