@@ -413,7 +413,7 @@
             }
           }
           document.body.appendChild(form);
-          form.submit();
+          HTMLFormElement.prototype.submit.call(form);
         } else if (data.redirectUrl) {
           window.location.href = data.redirectUrl;
         } else {
