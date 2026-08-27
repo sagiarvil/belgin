@@ -67,14 +67,14 @@ class AkbankProvider {
 
   verifyCallback(params, req) {
     const callbackData = params?.body || params;
+    const config = getAkbankConfig();
     const testMode = process.env.NODE_ENV === 'test' || process.env.AKBANK_TEST_MODE === '1' || Number(process.env.AKBANK_TEST_MODE) === 1;
-    if (!callbackData || (!process.env.AKBANK_CLIENT_ID && !process.env.AKBANK_STORE_KEY && !testMode)) {
+    if (!callbackData || (!config.clientId || !config.storeKey)) {
       return {
         isValid: false,
         reason: 'PROVIDER_NOT_CONFIGURED'
       };
     }
-    const config = getAkbankConfig();
     const { oid, Response, AuthCode, ProcReturnCode, mdStatus } = callbackData;
 
     // 3D Secure mdStatus: 1, 2, 3, 4 geçerli doğrulamadır

@@ -30,7 +30,7 @@ let result = spawnSync('npm', ['run', 'ci'], {
 });
 if (result.status !== 0) process.exit(result.status || 1);
 
-const args = ['deploy', '--project', projectId, '--only', only];
+const args = ['deploy', '--project', projectId, '--only', only, '--force'];
 result = spawnSync('firebase', args, {
   stdio: 'inherit',
   shell: process.platform === 'win32',

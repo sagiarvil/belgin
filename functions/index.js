@@ -158,7 +158,7 @@ exports.paymentCallback = functions
  * GET/POST /api/payment/status
  */
 exports.getPaymentStatus = functions
-  .runWith({ timeoutSeconds: 10, memory: '128MB' })
+  .runWith({ timeoutSeconds: 30, memory: '256MB' })
   .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
     if (!['GET', 'POST', 'OPTIONS'].includes(req.method)) return res.status(405).json({ success: false });
     if (req.method === 'OPTIONS') return res.status(204).send('');
