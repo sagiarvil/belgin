@@ -6,7 +6,9 @@ const AdminApp = {
   adminPin: '1999',
   orders: [],
   filteredOrders: [],
+  knownPaidOrderIds: new Set(),
   currentPreset: 'all',
+  pollTimer: null,
 
   init() {
     this.startClock();
@@ -14,7 +16,7 @@ const AdminApp = {
     if (savedPin) {
       this.adminPin = savedPin;
       this.hideAuthGate();
-      this.loadOrders();
+      this.loadOrders().then(() => this.startLivePolling());
     } else {
       this.showAuthGate();
     }
@@ -27,6 +29,114 @@ const AdminApp = {
     };
     update();
     setInterval(update, 1000);
+  },
+
+  startLivePolling() {
+    if (this.pollTimer) clearInterval(this.pollTimer);
+    this.pollTimer = setInterval(() => {
+      this.pollNewOrders();
+    }, 8000);
+  },
+
+  async pollNewOrders() {
+    if (!this.adminPin || document.getElementById('adminAuthGate')?.style.display === 'flex') return;
+
+    try {
+      const startDate = document.getElementById('startDate')?.value || '';
+      const endDate = document.getElementById('endDate')?.value || '';
+      const status = document.getElementById('statusFilter')?.value || 'PAID';
+
+      const params = new URLSearchParams();
+      if (startDate) params.append('startDate', startDate);
+      if (endDate) params.append('endDate', endDate);
+      if (status) params.append('status', status);
+
+      const res = await fetch(`/api/admin/orders?${params.toString()}`, {
+        headers: { 'x-admin-key': this.adminPin }
+      });
+
+      if (res.status === 200) {
+        const data = await res.json();
+        if (data && data.success && Array.isArray(data.orders)) {
+          // Yeni ödeme geldi mi kontrol et
+          let hasNewPayment = false;
+          let newPaymentName = '';
+          let newPaymentAmount = '';
+
+          data.orders.forEach(o => {
+            if (o.isPaid || o.paymentStatus === 'PAID') {
+              if (this.knownPaidOrderIds.size > 0 && !this.knownPaidOrderIds.has(o.orderId)) {
+                hasNewPayment = true;
+                newPaymentName = o.customerName || 'Yeni Müşteri';
+                newPaymentAmount = '₺' + Number(o.totalAmount || 0).toLocaleString('tr-TR');
+              }
+              this.knownPaidOrderIds.add(o.orderId);
+            }
+          });
+
+          this.orders = data.orders;
+          this.renderData(data.summary, data.orders);
+
+          if (hasNewPayment) {
+            this.playChime();
+            this.showToast(`🔔 YENİ TAHSİLAT: ${newPaymentName} — ${newPaymentAmount}`);
+          }
+        }
+      }
+    } catch (_) {}
+  },
+
+  playChime() {
+    try {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
+      osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.15); // A5
+      gain.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.4);
+    } catch (_) {}
+  },
+
+  showToast(msg) {
+    let toast = document.getElementById('adminLiveToast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'adminLiveToast';
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        background: #042926;
+        color: #FFF;
+        border: 2px solid #C2A768;
+        padding: 14px 20px;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 13.5px;
+        z-index: 9999;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.3s;
+      `;
+      document.body.appendChild(toast);
+    }
+    toast.innerHTML = msg;
+    toast.style.display = 'flex';
+    toast.style.opacity = '1';
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      setTimeout(() => toast.style.display = 'none', 300);
+    }, 5000);
   },
 
   showAuthGate() {

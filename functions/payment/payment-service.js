@@ -452,7 +452,11 @@ class PaymentService {
 
   async handleCallback({ providerName, body, db, admin, mailer }) {
     const provider = paymentRouter.getProvider(providerName);
-    const orderId = String(body.merchant_oid || body.orderId || body.oid || '');
+    const orderId = String(
+      body?.merchant_oid || body?.orderId || body?.oid || 
+      body?.merch_oid || body?.ORDERID || body?.MerchantOrderId || 
+      body?.order_id || ''
+    ).trim();
     if (!orderId) {
       return { status: 400, message: 'Geçersiz sipariş numarası' };
     }

@@ -99,10 +99,11 @@ const App = {
         this.currentJewelleryCategory = jewelleryFilter;
         this.renderJewellery(jewelleryFilter);
         break;
+      case 'seckin-urunler':
       case 'ikinci-el':
         const preOwnedFilter = (options.filter !== undefined && options.filter !== null) ? options.filter : (this.currentPreOwnedCategory || 'all');
         this.currentPreOwnedCategory = preOwnedFilter;
-        this.renderPreOwned(preOwnedFilter);
+        this.renderPreOwned(preOwnedFilter, 1);
         break;
       case 'sepet':
         this.renderCart();
@@ -402,15 +403,22 @@ const App = {
     const pagEl = document.getElementById('allPreOwnedPagination');
     if (!el) return;
 
-    let items = PRE_OWNED_ITEMS;
-    if (filter === 'jewelry') {
-      items = PRE_OWNED_ITEMS.filter(p => p.category === 'jewelry');
-    } else if (filter === 'watch') {
-      items = PRE_OWNED_ITEMS.filter(p => p.category === 'watch');
-    } else if (filter === 'rolex') {
-      items = PRE_OWNED_ITEMS.filter(p => p.brand.toLowerCase() === 'rolex');
-    } else if (filter && filter !== 'all') {
-      items = PRE_OWNED_ITEMS.filter(p => p.brand.toLowerCase().includes(filter.toLowerCase()) || p.category === filter);
+    let items = (typeof PRE_OWNED_ITEMS !== 'undefined' ? PRE_OWNED_ITEMS : (typeof PRODUCTS !== 'undefined' ? PRODUCTS.filter(p => p.isPreOwned) : []));
+    const f = String(filter || 'all').toLowerCase().trim();
+
+    if (f === 'jewelry' || f === 'mucevher' || f === 'cartier') {
+      items = items.filter(p => p.category === 'jewelry' || p.category === 'jewellery' || (p.brand && p.brand.toLowerCase().includes('cartier')));
+    } else if (f === 'rolex') {
+      items = items.filter(p => (p.brand && p.brand.toLowerCase() === 'rolex') || (p.subCategory && p.subCategory.toLowerCase() === 'rolex'));
+    } else if (f === 'watch' || f === 'saat' || f === 'prestij') {
+      items = items.filter(p => p.category === 'watch' || p.category === 'saat');
+    } else if (f !== 'all' && f !== '') {
+      items = items.filter(p =>
+        (p.brand && p.brand.toLowerCase().includes(f)) ||
+        (p.subCategory && p.subCategory.toLowerCase().includes(f)) ||
+        (p.category && p.category.toLowerCase() === f) ||
+        (p.name && p.name.toLowerCase().includes(f))
+      );
     }
 
     const total = items.length;
@@ -429,18 +437,18 @@ const App = {
     document.querySelectorAll('.preowned-filter-btn').forEach(b => {
       b.classList.remove('active');
       const txt = b.textContent.trim().toLowerCase();
-      if ((filter === 'all' || !filter) && txt.includes('tümü')) b.classList.add('active');
-      else if (filter === 'rolex' && txt.includes('rolex')) b.classList.add('active');
-      else if (filter === 'jewelry' && (txt.includes('mücevher') || txt.includes('cartier'))) b.classList.add('active');
-      else if (filter === 'watch' && txt.includes('saat') && !txt.includes('rolex')) b.classList.add('active');
-      else if (filter && txt.includes(filter.toLowerCase())) b.classList.add('active');
+      if ((f === 'all' || !f) && txt.includes('tümü')) b.classList.add('active');
+      else if (f === 'rolex' && txt.includes('rolex')) b.classList.add('active');
+      else if ((f === 'jewelry' || f === 'cartier') && (txt.includes('mücevher') || txt.includes('cartier'))) b.classList.add('active');
+      else if ((f === 'watch' || f === 'prestij') && txt.includes('prestij')) b.classList.add('active');
+      else if (f && txt.includes(f)) b.classList.add('active');
     });
   },
 
   changeAllPreOwnedPage(newPage) {
     this.renderPreOwned(this.currentPreOwnedCategory || 'all', newPage);
     setTimeout(() => {
-      const target = document.querySelector('#page-ikinci-el .section-header-flex') || document.getElementById('allPreOwnedGrid');
+      const target = document.querySelector('#page-ikinci-el .section-header-flex') || document.querySelector('#page-seckin-urunler .section-header-flex') || document.getElementById('allPreOwnedGrid');
       if (target && typeof Router !== 'undefined' && Router.scrollToTarget) {
         Router.scrollToTarget(target);
       }
@@ -451,17 +459,18 @@ const App = {
     this.closeNavDropdowns();
     this.currentPreOwnedCategory = cat;
     this.allPreOwnedPage = 1;
-    if (Router.currentPage !== 'ikinci-el') {
-      Router.navigate('ikinci-el', true, { filter: cat });
-    } else {
-      this.renderPreOwned(cat, 1);
+    this.renderPreOwned(cat, 1);
+
+    if (Router.currentPage !== 'seckin-urunler' && Router.currentPage !== 'ikinci-el') {
+      Router.navigate('seckin-urunler', true, { filter: cat });
     }
+
     if (btn) {
       document.querySelectorAll('.preowned-filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
     }
     setTimeout(() => {
-      const target = document.querySelector('#page-ikinci-el .section-header-flex') || document.getElementById('allPreOwnedGrid');
+      const target = document.querySelector('#page-ikinci-el .section-header-flex') || document.querySelector('#page-seckin-urunler .section-header-flex') || document.getElementById('allPreOwnedGrid');
       if (target && typeof Router !== 'undefined' && Router.scrollToTarget) {
         Router.scrollToTarget(target);
       }
