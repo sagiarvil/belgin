@@ -140,7 +140,7 @@ const App = {
   homeWatchPage: 1,
   allWatchPage: 1,
   homeJewelryPage: 1,
-  PAGE_SIZE: 30,
+  PAGE_SIZE: 24, // 4 sütun x 6 sıra = 24 saat (tam dolu ve simetrik satırlar, boşluksuz)
   HOME_WATCH_PAGE_SIZE: 16, // 4 sütun x 4 sıra = 16 saat (en fazla 4 sıra)
   JEWELRY_PAGE_SIZE: 20, // 4 sütun x 5 sıra = 20 ürün (en fazla 5 sıra)
 
@@ -163,7 +163,7 @@ const App = {
       `).join('');
     }
 
-    // Yeni Eklenen Saatler (Sayfa Başına 30 Ürün)
+    // Yeni Eklenen Saatler (Sayfa Başına 16 Ürün)
     this.renderHomeWatches(1);
 
     // İkinci El Altın & Saat Bölümü (8'li)
@@ -271,7 +271,7 @@ const App = {
     }, 40);
   },
 
-  // 2. TÜM SAATLER SAYFASI (12.000 TL ve Üzeri Saat Modelleri - 30 Ürün Sayfalama)
+  // 2. TÜM SAATLER SAYFASI (12.000 TL ve Üzeri Saat Modelleri - 24 Ürün / 6 Tam Sıra Sayfalama)
   renderWatches(brandFilter = 'all', page = 1) {
     this.currentWatchBrand = brandFilter;
     this.allWatchPage = page;
@@ -1537,7 +1537,7 @@ const App = {
       return;
     }
 
-    listEl.innerHTML = results.slice(0, 30).map(p => {
+    listEl.innerHTML = results.slice(0, 24).map(p => {
       const img = p.image || p.img || (p.images && p.images[0]) || 'images/belgin-logo.png';
       const brand = p.brand || (p.category === 'gold' ? '24K ALTIN' : 'MÜCEVHERAT');
       const title = `${p.brand || ''} ${p.name || ''}`.trim();
