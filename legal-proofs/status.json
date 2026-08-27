@@ -4,7 +4,7 @@
   "manifestRootSha256": "2f7b1bb794920afc5a18bf531de7dfa5a472bc330b299da98183d31fb6390dcd",
   "rootFile": "legal-root-2f7b1bb794920afc5a18bf531de7dfa5a472bc330b299da98183d31fb6390dcd.txt",
   "proofFile": "legal-root-2f7b1bb794920afc5a18bf531de7dfa5a472bc330b299da98183d31fb6390dcd.txt.ots",
-  "submittedAt": "2026-08-27T07:09:33.515Z",
+  "submittedAt": "2026-08-27T07:14:37.905Z",
   "status": "SUBMITTED_OR_UPGRADED",
   "legalQualification": "Auxiliary technical existence/integrity proof; not a 5070 qualified electronic signature or ESHS timestamp."
 }
