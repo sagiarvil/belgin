@@ -400,99 +400,49 @@
   <!-- 1. ANA SAYFA -->
   <section id="page-ana-sayfa" class="page">
     
-    <!-- GÜÇLÜ & SİNEMATİK MAISON HERO (YÜKSEK DÖNÜŞÜM & PRESTİJ VİTRİNİ) -->
-    <div class="hero-cinematic-asymmetric">
-      
-      <!-- Sinematik Loş Işık & Spot Katmanları -->
-      <div class="hero-dark-vignette"></div>
-      <div class="hero-light-sweep"></div>
-      <div class="hero-accent-glow-gold"></div>
-      <div class="hero-accent-glow-emerald"></div>
-      <div class="hero-ambient-mesh"></div>
+    <!-- BELGIN SIGNATURE MAISON HERO -->
+    <section class="hero-signature" aria-label="Belgin Kuyumculuk Ana Vitrin">
+      <picture class="hero-media">
+        <source srcset="/images/hero-belgin-signature.avif" type="image/avif">
+        <source srcset="/images/hero-belgin-signature.webp" type="image/webp">
+        <img
+          src="/images/hero-belgin-signature.webp"
+          width="1916"
+          height="821"
+          alt="Belgin Kuyumculuk lüks mücevher koleksiyonu"
+          fetchpriority="high"
+          loading="eager"
+          decoding="async"
+        >
+      </picture>
 
-      <div class="hero-maison-container">
-        
-        <!-- ANA BAŞLIK -->
-        <h1 class="hero-cinematic-title">
-          Belgin Kuyumculuk: <span class="hero-title-gradient">Lüks Saatler, 24K Yatırım Altını & Mücevherat</span>
-        </h1>
-        
-        <!-- AÇIKLAMA -->
-        <p class="hero-cinematic-sub">
-          Ekspertiz onaylı sıfır ve seçkin lüks saatler, Darphane 24K has altın ve sertifikalı pırlanta mücevherat. 1999'dan beri süren zanaat mirası, 12 nokta mekanizma testi ve anında takas güvencesi.
-        </p>
+      <div class="hero-gradient-overlay" aria-hidden="true"></div>
 
-        <!-- DOĞRUDAN DÖNÜŞÜM BUTONLARI (PARA KAZANDIRAN EYLEMLER) -->
-        <div class="hero-action-group">
-          <a href="/saatler/" class="btn-hero-action-primary" onclick="Router.navigate('saatler'); return false;">
-            <span>Lüks Koleksiyonu İncele</span>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-          <button type="button" class="btn-hero-action-secondary" onclick="App.openTradeInModal()">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
-            <span>Saat & Altın Değerleme / Takas</span>
-          </button>
-          <a href="https://wa.me/905419305372" target="_blank" rel="noopener" class="btn-hero-action-whatsapp">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.074-2.147-.53-1.859-.773-3.057-2.673-3.151-2.798-.093-.125-.758-1.009-.758-1.926 0-.916.48-1.368.65-1.556.172-.189.376-.236.502-.236.126 0 .252.001.362.007.116.006.273-.044.428.329.157.377.534 1.306.581 1.4.047.094.079.204.016.329-.063.125-.094.204-.188.313-.094.11-.198.245-.282.329-.095.094-.194.196-.084.385.11.188.489.807 1.05 1.306.722.643 1.33.842 1.518.936.188.094.298.079.408-.047.11-.126.471-.549.597-.738.125-.188.251-.157.423-.094.173.063 1.099.518 1.288.612.188.094.314.141.361.22.047.078.047.455-.097.86zM12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.98-1.399C8.423 21.493 10.153 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
-            <span>WhatsApp VIP Danışman</span>
-          </a>
-        </div>
-
-        <!-- İNTERAKTİF HIZLI KEŞİF SEKMELERİ -->
-        <div class="hero-quick-tabs">
-          <button class="hero-tab-btn active" onclick="App.filterHeroTab('all', this)">Tüm Vitrin</button>
-          <button class="hero-tab-btn" onclick="App.filterHeroTab('saatler', this)">⌚ Lüks Saatler (1.618+)</button>
-          <button class="hero-tab-btn" onclick="App.filterHeroTab('ikinci-el', this)">🪙 Seçkin Koleksiyon</button>
-          <button class="hero-tab-btn" onclick="App.filterHeroTab('mucevherat', this)">💎 Mücevherat & Altın</button>
-          <button class="hero-tab-btn" onclick="App.openTradeInModal()">⚖️ Takas & Değerleme</button>
-        </div>
-
-        <!-- 4'LÜ KURUMSAL GÜVEN VE DÖNÜŞÜM KONSOLU -->
-        <div class="hero-trust-grid">
-          <div class="hero-trust-card">
-            <div class="hero-trust-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C2A768" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
-            <div class="hero-trust-content">
-              <strong>Ürüne göre ekspertiz ve kontrol bilgileri</strong>
-              <span>Orijinallik & Mekanizma Testi</span>
-            </div>
-          </div>
+      <div class="container-art hero-container">
+        <div class="hero-content">
+          <span class="hero-eyebrow">BELGİN KUYUMCULUK • EST. 1999 • İZMİR</span>
           
-          <div class="hero-trust-card">
-            <div class="hero-trust-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C2A768" stroke-width="2"><rect x="1" y="3" width="22" height="18" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-            </div>
-            <div class="hero-trust-content">
-              <strong>Akbank Sanal POS & 3D Secure</strong>
-              <span>256-Bit SSL ile %100 Güvenli Ödeme</span>
-            </div>
+          <h1 class="hero-title">Lüks Saat &amp; Mücevherat</h1>
+          
+          <p class="hero-desc">
+            1999’dan beri İzmir Buca’da; ekspertizli seçkin saatler, 24K has altın ve sertifikalı mücevherat.
+          </p>
+
+          <div class="hero-actions">
+            <a href="/saatler/" class="btn-hero-primary" onclick="Router.navigate('saatler'); return false;">
+              Koleksiyonu Keşfet
+            </a>
+            <button type="button" class="btn-hero-secondary" onclick="App.openVipModal()">
+              VIP Randevu
+            </button>
           </div>
 
-          <div class="hero-trust-card">
-            <div class="hero-trust-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C2A768" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-            </div>
-            <div class="hero-trust-content">
-              <strong>Sigortalı Teslimat</strong>
-              <span>Tam Değerinde Güvenceli Kargo</span>
-            </div>
-          </div>
-
-          <div class="hero-trust-card">
-            <div class="hero-trust-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C2A768" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-            </div>
-            <div class="hero-trust-content">
-              <strong>İzmir Buca Showroom</strong>
-              <span>1999'dan Beri Menderes Cad. No:63</span>
-            </div>
+          <div class="hero-trust-line">
+            Ekspertiz • Takas • Güvenli Ödeme • Mağazadan Teslim
           </div>
         </div>
-
       </div>
-
-    </div>
+    </section>
 
     <div class="container-art">
       

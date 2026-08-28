@@ -678,385 +678,266 @@ p, span, li, td, th, label, input, button, select, textarea {
 }
 
 /* ==========================================================
-   4. SİNEMATİK LOŞ ASİMETRİK MAISON HERO (CHIAROSCURO & PRESTİJ VİTRİNİ)
+   4. BELGIN SIGNATURE MAISON HERO (LUXURY EDITORIAL)
    ========================================================== */
-.hero-cinematic-asymmetric {
+.hero-signature {
   position: relative;
-  min-height: 720px;
-  background: #040706 url('https://artjewellerywatches.com/api/photo/site/banner.primary') center/cover no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 105px 32px 85px;
-  overflow: hidden;
-}
-
-/* 1. Doğal & Loş Sinematik Karartma (Teatral Chiaroscuro Vignette) */
-.hero-dark-vignette {
-  position: absolute;
-  inset: 0;
-  background: 
-    radial-gradient(ellipse at 65% 42%, rgba(0, 0, 0, 0.22) 0%, rgba(4, 7, 6, 0.72) 58%, #030605 100%),
-    linear-gradient(to bottom, rgba(4, 7, 6, 0.35) 0%, rgba(4, 7, 6, 0.65) 65%, #070A09 100%);
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* 2. Değişken Tonlu Asimetrik Spot Işığı & Prizma Geçişi */
-.hero-light-sweep {
-  position: absolute;
-  width: 200%;
-  height: 200%;
-  top: -50%;
-  left: -50%;
-  background: linear-gradient(118deg, transparent 40%, rgba(212, 175, 55, 0.09) 47%, rgba(255, 255, 255, 0.08) 50%, rgba(16, 185, 129, 0.08) 53%, transparent 62%);
-  z-index: 1;
-  pointer-events: none;
-  animation: lightRayShift 14s ease-in-out infinite alternate;
-}
-
-@keyframes lightRayShift {
-  0% { transform: translate(-3%, -2%) rotate(0deg); opacity: 0.75; }
-  50% { transform: translate(2%, 3%) rotate(1.5deg); opacity: 1; }
-  100% { transform: translate(-1%, 1%) rotate(-1deg); opacity: 0.85; }
-}
-
-/* 3. Loş Vurgular (Sağ Altta Sıcak Altın Parıltısı, Sol Üstte Derin Zümrüt Nüansı) */
-.hero-accent-glow-gold {
-  position: absolute;
-  width: 520px;
-  height: 520px;
-  bottom: -120px;
-  right: -60px;
-  background: radial-gradient(circle, rgba(194, 167, 104, 0.16) 0%, rgba(158, 133, 72, 0.06) 45%, transparent 70%);
-  filter: blur(70px);
-  -webkit-filter: blur(70px);
-  z-index: 1;
-  pointer-events: none;
-}
-.hero-accent-glow-emerald {
-  position: absolute;
-  width: 480px;
-  height: 480px;
-  top: -100px;
-  left: -40px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.14) 0%, rgba(5, 150, 105, 0.05) 50%, transparent 70%);
-  filter: blur(80px);
-  -webkit-filter: blur(80px);
-  z-index: 1;
-  pointer-events: none;
-}
-.hero-ambient-mesh {
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(rgba(212, 175, 55, 0.07) 1px, transparent 1px);
-  background-size: 36px 36px;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0.6;
-}
-
-/* Hero Maison Container (Ortalanmış & Geniş Prestij Vitrini) */
-.hero-maison-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  max-width: 960px;
   width: 100%;
-  margin: 0 auto;
-  position: relative;
-  z-index: 2;
-}
-
-.hero-prestige-badge {
-  display: inline-flex;
+  min-height: clamp(560px, 42vw, 720px);
+  display: flex;
   align-items: center;
-  gap: 8px;
-  background: rgba(18, 26, 23, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(194, 167, 104, 0.45);
-  color: #EAE2D0;
-  font-size: 11px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  font-weight: 600;
-  padding: 8px 24px;
-  border-radius: var(--radius-full);
-  margin-bottom: 22px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55), 0 0 12px rgba(194, 167, 104, 0.15);
+  overflow: hidden;
+  background: #070A09;
 }
-.hero-badge-dot {
-  width: 6px;
-  height: 6px;
-  background: #C2A768;
-  border-radius: 50%;
-  box-shadow: 0 0 8px #C2A768;
-  animation: pulseDot 2s infinite ease-in-out;
-}
-@keyframes pulseDot { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; transform: scale(1.3); } }
 
-.hero-cinematic-title {
-  font-family: var(--font-display);
-  font-size: clamp(34px, 4.2vw, 56px);
-  color: #FFFFFF;
-  line-height: 1.15;
-  margin: 0 0 18px;
-  font-weight: 400;
-  letter-spacing: 0.5px;
-  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.9);
+.hero-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
 }
-.hero-title-gradient {
-  background: linear-gradient(135deg, #FFFFFF 15%, #F5E6C8 45%, #D4AF37 75%, #F0E2C6 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-style: italic;
+
+.hero-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
   display: block;
 }
-.hero-cinematic-sub {
-  font-family: var(--font-body);
-  font-size: 15.5px;
-  color: rgba(255, 255, 255, 0.88);
-  line-height: 1.7;
-  max-width: 720px;
-  margin: 0 auto 28px;
-  font-weight: 300;
-  letter-spacing: 0.2px;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
+
+/* Sağ metin kontrastı için hafif yönlü karartma */
+.hero-gradient-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(3, 6, 5, 0) 30%,
+    rgba(3, 6, 5, 0.10) 48%,
+    rgba(3, 6, 5, 0.46) 72%,
+    rgba(3, 6, 5, 0.65) 100%
+  );
 }
 
-/* Doğrudan Dönüşüm & Para Kazandıran Aksiyon Butonları */
-.hero-action-group {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin-bottom: 26px;
-}
-.btn-hero-action-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: linear-gradient(135deg, #C2A768 0%, #9E8548 100%);
-  color: #070A09;
-  font-family: var(--font-sans);
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 0.5px;
-  padding: 13px 28px;
-  border-radius: var(--radius-full);
-  text-decoration: none;
-  box-shadow: 0 8px 24px rgba(194, 167, 104, 0.35), 0 2px 6px rgba(0, 0, 0, 0.4);
-  transition: transform 0.25s var(--ease-silk), box-shadow 0.25s var(--ease-silk);
-  border: none;
-  cursor: pointer;
-}
-.btn-hero-action-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(194, 167, 104, 0.5);
-  color: #000;
-}
-.btn-hero-action-secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(18, 26, 23, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(194, 167, 104, 0.4);
-  color: #F0E6D2;
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: 13.5px;
-  padding: 13px 24px;
-  border-radius: var(--radius-full);
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.25s var(--ease-silk);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-}
-.btn-hero-action-secondary:hover {
-  background: rgba(30, 42, 38, 0.95);
-  border-color: #C2A768;
-  color: #FFF;
-  transform: translateY(-2px);
-}
-.btn-hero-action-whatsapp {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(37, 211, 102, 0.14);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(37, 211, 102, 0.45);
-  color: #4ADE80;
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: 13.5px;
-  padding: 13px 22px;
-  border-radius: var(--radius-full);
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.25s var(--ease-silk);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
-}
-.btn-hero-action-whatsapp:hover {
-  background: rgba(37, 211, 102, 0.25);
-  border-color: #25D366;
-  color: #86EFAC;
-  transform: translateY(-2px);
-}
-
-/* Hızlı Kategori & Vitrin Sekmeleri */
-.hero-quick-tabs {
-  display: inline-flex;
-  background: rgba(14, 20, 18, 0.75);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border: 1px solid rgba(194, 167, 104, 0.32);
-  border-radius: var(--radius-full);
-  padding: 5px;
-  gap: 5px;
-  margin-bottom: 34px;
-  flex-wrap: wrap;
-  justify-content: center;
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55), 0 0 15px rgba(194, 167, 104, 0.1);
-}
-.hero-tab-btn {
-  background: transparent;
-  border: none;
-  color: rgba(255, 255, 255, 0.85);
-  padding: 8px 18px;
-  font-family: var(--font-sans);
-  font-size: 12.5px;
-  font-weight: 500;
-  letter-spacing: 0.4px;
-  border-radius: var(--radius-full);
-  cursor: pointer;
-  transition: all 0.25s var(--ease-silk);
-  text-decoration: none;
-}
-.hero-tab-btn:hover, .hero-tab-btn.active {
-  background: #FFFFFF;
-  color: var(--color-ink);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
-}
-
-/* 4'lü Kurumsal Güven & Dönüşüm Konsolu (Hero Trust Grid) */
-.hero-trust-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+.hero-container {
+  position: relative;
+  z-index: 3;
   width: 100%;
-  max-width: 960px;
-  padding-top: 18px;
-  border-top: 1px solid rgba(194, 167, 104, 0.22);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 40px 0;
 }
-.hero-trust-card {
+
+.hero-content {
+  width: min(42%, 560px);
+  max-width: 560px;
+  text-align: left;
+  margin-left: auto;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: #C2A768;
+  margin-bottom: 14px;
+  display: block;
+}
+
+.hero-title {
+  font-family: var(--font-serif);
+  font-size: clamp(44px, 4vw, 68px);
+  font-weight: 500;
+  line-height: 1.03;
+  letter-spacing: -0.025em;
+  color: #F8F5ED;
+  margin: 0 0 16px;
+}
+
+.hero-desc {
+  font-family: var(--font-sans);
+  font-size: clamp(15px, 1.1vw, 17px);
+  font-weight: 400;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, .78);
+  max-width: 510px;
+  margin: 0 0 26px;
+}
+
+.hero-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
-  background: rgba(14, 22, 19, 0.65);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(194, 167, 104, 0.24);
-  border-radius: 12px;
-  padding: 12px 14px;
-  text-align: left;
-  transition: transform 0.25s ease, border-color 0.25s ease;
+  gap: 14px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
 }
-.hero-trust-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(194, 167, 104, 0.45);
-  background: rgba(18, 28, 24, 0.85);
-}
-.hero-trust-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  background: rgba(194, 167, 104, 0.12);
-  border: 1px solid rgba(194, 167, 104, 0.3);
-  display: flex;
+
+.btn-hero-primary {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-}
-.hero-trust-content {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-}
-.hero-trust-content strong {
+  background: #C2A768;
+  color: #070A09;
+  border: 1px solid #C2A768;
+  min-height: 48px;
+  padding-inline: 26px;
+  border-radius: 4px;
   font-family: var(--font-sans);
-  font-size: 12.5px;
-  font-weight: 700;
-  color: #F0E6D2;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.hero-trust-content span {
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.7);
-  line-height: 1.35;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
 }
 
-@media (max-width: 980px) {
-  .hero-trust-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+.btn-hero-primary:hover {
+  background: #D8BD7E;
+  border-color: #D8BD7E;
+  color: #070A09;
+  transform: translateY(-1px);
+}
+
+.btn-hero-primary:focus-visible {
+  outline: 2px solid #D8BD7E;
+  outline-offset: 2px;
+}
+
+.btn-hero-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, .45);
+  min-height: 48px;
+  padding-inline: 26px;
+  border-radius: 4px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-hero-secondary:hover {
+  border-color: #C2A768;
+  color: #D8BD7E;
+  transform: translateY(-1px);
+}
+
+.btn-hero-secondary:focus-visible {
+  outline: 2px solid #C2A768;
+  outline-offset: 2px;
+}
+
+.hero-trust-line {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+}
+
+/* Tablet (769px–1100px) */
+@media (min-width: 769px) and (max-width: 1100px) {
+  .hero-content {
+    width: min(48%, 430px);
+    max-width: 430px;
   }
-  .hero-cinematic-asymmetric {
-    padding: 70px 18px 50px;
+  .hero-title {
+    font-size: clamp(38px, 4vw, 50px);
+  }
+  .hero-media img {
+    object-position: 25% center;
+  }
+  .hero-gradient-overlay {
+    background: linear-gradient(
+      90deg,
+      rgba(3, 6, 5, 0) 20%,
+      rgba(3, 6, 5, 0.25) 45%,
+      rgba(3, 6, 5, 0.65) 70%,
+      rgba(3, 6, 5, 0.85) 100%
+    );
+  }
+}
+
+/* Mobil (<= 768px): İki Parçalı Hero */
+@media (max-width: 768px) {
+  .hero-signature {
+    flex-direction: column;
     min-height: auto;
+    padding: 0;
+    background: #070A09;
+    align-items: stretch;
   }
-}
-
-@media (max-width: 600px) {
-  .hero-prestige-badge {
-    font-size: 9.5px;
-    letter-spacing: 1.5px;
-    padding: 6px 14px;
-    margin-bottom: 16px;
+  .hero-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    height: auto;
+    inset: auto;
   }
-  .hero-cinematic-title {
-    font-size: 26px;
-    line-height: 1.2;
+  .hero-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 18% center;
+  }
+  .hero-gradient-overlay {
+    display: none;
+  }
+  .hero-container {
+    position: relative;
+    width: 100%;
+    padding: 0;
+    display: block;
+  }
+  .hero-content {
+    width: 100%;
+    max-width: 100%;
+    background: #070A09;
+    padding: 32px 22px 38px;
+    text-align: left;
+    margin: 0;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    margin-bottom: 12px;
+  }
+  .hero-title {
+    font-size: clamp(34px, 8.5vw, 44px);
+    line-height: 1.1;
     margin-bottom: 14px;
   }
-  .hero-cinematic-sub {
-    font-size: 13.5px;
-    line-height: 1.6;
+  .hero-desc {
+    font-size: 14.5px;
+    line-height: 1.65;
     margin-bottom: 22px;
   }
-  .hero-action-group {
+  .hero-actions {
+    display: flex;
     flex-direction: column;
     width: 100%;
     gap: 10px;
+    margin-bottom: 18px;
   }
-  .btn-hero-action-primary,
-  .btn-hero-action-secondary,
-  .btn-hero-action-whatsapp {
+  .btn-hero-primary,
+  .btn-hero-secondary {
     width: 100%;
-    justify-content: center;
-    padding: 12px 18px;
-    font-size: 13px;
+    min-height: 48px;
   }
-  .hero-quick-tabs {
-    gap: 4px;
-    padding: 4px;
-    margin-bottom: 24px;
-  }
-  .hero-tab-btn {
+  .hero-trust-line {
     font-size: 11.5px;
-    padding: 6px 12px;
-  }
-  .hero-trust-grid {
-    grid-template-columns: 1fr;
-    gap: 10px;
+    text-align: center;
   }
 }
 
@@ -2999,21 +2880,6 @@ p, span, li, td, th, label, input, button, select, textarea {
 
 @media (max-width: 640px) {
   .container-art { padding: 0 16px; }
-  .hero-cinematic { padding: 60px 16px 40px; min-height: 480px; }
-  .hero-cinematic-title { font-size: 32px; letter-spacing: 2px; }
-  .hero-cinematic-sub { font-size: 13.5px; }
-  .hero-quick-tabs {
-    display: flex;
-    overflow-x: auto;
-    width: 100%;
-    padding-bottom: 8px;
-    -webkit-overflow-scrolling: touch;
-    white-space: nowrap;
-    justify-content: flex-start;
-  }
-  .hero-tab-btn { flex-shrink: 0; padding: 7px 14px; font-size: 11.5px; }
-  .hero-trust-strip { grid-template-columns: 1fr; gap: 8px; }
-  .hero-trust-pill { font-size: 11px; padding: 6px 12px; }
   
   .products-grid-4 { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .product-art-card { border-radius: 8px; }
