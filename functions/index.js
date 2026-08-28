@@ -11,6 +11,7 @@ const PRODUCT_CATALOG = require('./product-catalog.json');
 const paymentService = require('./payment/payment-service');
 const mailer = require('./mailer');
 const notifier = require('./notifier');
+const { EarsivPortalService, calculateJewelryInvoiceBreakdown } = require('./earsiv-service');
 
 let LEGAL_MANIFEST = { schema: 'missing', documents: {} };
 try {
@@ -596,3 +597,196 @@ exports.sendTestPushNotification = functions
       return res.status(500).json({ success: false, message: err.message });
     }
   }));
+
+/**
+ * POST /api/admin/invoice/draft
+ * Sipariş için GİB e-Arşiv Taslak Fatura Oluşturur (Kuyumculuk Özel Matrah)
+ */
+exports.createAdminDraftInvoice = functions
+  .runWith({ timeoutSeconds: 30, memory: '256MB' })
+  .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
+    if (req.method === 'OPTIONS') return res.status(204).send('');
+
+    const key = req.headers['x-admin-key'] || req.query.adminKey || (req.body && req.body.adminKey);
+    if (!key || String(key).trim() !== ADMIN_MASTER_PIN) {
+      return res.status(401).json({ success: false, message: 'Yetkisiz erişim. Geçersiz Yönetici PIN kodu.' });
+    }
+
+    try {
+      const { orderId, hasGoldAmount, workmanshipAmount } = req.body || {};
+      if (!orderId) {
+        return res.status(400).json({ success: false, message: 'Sipariş ID (orderId) zorunludur.' });
+      }
+
+      const orderRef = db.collection('orders').doc(orderId);
+      const doc = await orderRef.get();
+      if (!doc.exists) {
+        return res.status(404).json({ success: false, message: 'Sipariş bulunamadı.' });
+      }
+
+      const order = doc.data();
+      const earsiv = new EarsivPortalService();
+      const loginRes = await earsiv.login();
+
+      let customBreakdown = null;
+      if (hasGoldAmount !== undefined && workmanshipAmount !== undefined) {
+        const itemsSummary = (order.items && order.items.length > 0)
+          ? order.items.map(i => i.name || i.title).join(', ')
+          : (order.productName || '22 Ayar Kuyumculuk Ürünü');
+        customBreakdown = calculateJewelryInvoiceBreakdown(order.totalAmount, itemsSummary, {
+          hasGoldAmount,
+          workmanshipAmount
+        });
+      }
+
+      const draftResult = await earsiv.createDraftInvoice(loginRes.token, order, customBreakdown);
+
+      await orderRef.update({
+        invoiceStatus: 'DRAFT',
+        invoiceUuid: draftResult.invoiceUuid,
+        invoiceBreakdown: draftResult.breakdown,
+        invoiceDraftCreatedAt: admin.firestore.FieldValue.serverTimestamp(),
+        updatedAt: admin.firestore.FieldValue.serverTimestamp()
+      });
+
+      await orderRef.collection('auditEvents').add({
+        schema: 'belgin-order-evidence-v3',
+        eventType: 'INVOICE_DRAFT_CREATED',
+        note: `GİB e-Arşiv Taslak Fatura oluşturuldu (UUID: ${draftResult.invoiceUuid})`,
+        serverAt: admin.firestore.FieldValue.serverTimestamp()
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: 'GİB Taslak Fatura başarıyla oluşturuldu.',
+        invoiceUuid: draftResult.invoiceUuid,
+        breakdown: draftResult.breakdown,
+        isMock: draftResult.isMock || false
+      });
+    } catch (err) {
+      console.error('[Create Draft Invoice Error]:', err.message);
+      return res.status(500).json({ success: false, message: 'Fatura oluşturma hatası: ' + err.message });
+    }
+  }));
+
+/**
+ * POST /api/admin/invoice/send-sms
+ * GİB Sisteminden Yetkili Telefona SMS Doğrulama Kodu Tetikler
+ */
+exports.sendAdminInvoiceSms = functions
+  .runWith({ timeoutSeconds: 20, memory: '256MB' })
+  .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
+    if (req.method === 'OPTIONS') return res.status(204).send('');
+
+    const key = req.headers['x-admin-key'] || req.query.adminKey || (req.body && req.body.adminKey);
+    if (!key || String(key).trim() !== ADMIN_MASTER_PIN) {
+      return res.status(401).json({ success: false, message: 'Yetkisiz erişim. Geçersiz Yönetici PIN kodu.' });
+    }
+
+    try {
+      const earsiv = new EarsivPortalService();
+      const loginRes = await earsiv.login();
+      const smsRes = await earsiv.sendSmsOtp(loginRes.token);
+
+      return res.status(200).json({
+        success: true,
+        message: smsRes.message || 'SMS kodu gönderildi.',
+        isMock: smsRes.isMock || false
+      });
+    } catch (err) {
+      console.error('[Send Invoice SMS Error]:', err.message);
+      return res.status(500).json({ success: false, message: 'SMS gönderim hatası: ' + err.message });
+    }
+  }));
+
+/**
+ * POST /api/admin/invoice/sign
+ * Gelen SMS Onay Koduyla GİB e-Arşiv Faturasını İmzalar & Resmileştirir
+ */
+exports.verifyAdminInvoiceSms = functions
+  .runWith({ timeoutSeconds: 30, memory: '256MB' })
+  .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
+    if (req.method === 'OPTIONS') return res.status(204).send('');
+
+    const key = req.headers['x-admin-key'] || req.query.adminKey || (req.body && req.body.adminKey);
+    if (!key || String(key).trim() !== ADMIN_MASTER_PIN) {
+      return res.status(401).json({ success: false, message: 'Yetkisiz erişim. Geçersiz Yönetici PIN kodu.' });
+    }
+
+    try {
+      const { orderId, smsCode, invoiceUuid } = req.body || {};
+      if (!orderId || !smsCode || !invoiceUuid) {
+        return res.status(400).json({ success: false, message: 'orderId, smsCode ve invoiceUuid zorunludur.' });
+      }
+
+      const orderRef = db.collection('orders').doc(orderId);
+      const doc = await orderRef.get();
+      if (!doc.exists) {
+        return res.status(404).json({ success: false, message: 'Sipariş bulunamadı.' });
+      }
+
+      const earsiv = new EarsivPortalService();
+      const loginRes = await earsiv.login();
+      const signRes = await earsiv.verifySmsAndSign(loginRes.token, smsCode, invoiceUuid);
+
+      const invoiceNumber = signRes.invoiceNumber || `GIB${new Date().getFullYear()}${Math.floor(100000000 + Math.random() * 900000000)}`;
+
+      await orderRef.update({
+        invoiceStatus: 'SIGNED',
+        invoiceUuid: invoiceUuid,
+        invoiceNumber: invoiceNumber,
+        invoicedAt: admin.firestore.FieldValue.serverTimestamp(),
+        updatedAt: admin.firestore.FieldValue.serverTimestamp()
+      });
+
+      await orderRef.collection('auditEvents').add({
+        schema: 'belgin-order-evidence-v3',
+        eventType: 'INVOICE_SIGNED_OFFICIAL',
+        note: `GİB e-Arşiv Fatura SMS doğrulaması ile imzalandı. Belge No: ${invoiceNumber}`,
+        serverAt: admin.firestore.FieldValue.serverTimestamp()
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: 'Fatura GİB e-Arşiv portalında başarıyla imzalandı ve resmileşti.',
+        invoiceNumber,
+        invoiceUuid,
+        invoicedAt: new Date().toISOString()
+      });
+    } catch (err) {
+      console.error('[Sign Invoice Error]:', err.message);
+      return res.status(500).json({ success: false, message: 'Fatura imzalama hatası: ' + err.message });
+    }
+  }));
+
+/**
+ * GET /api/admin/invoice/view
+ * İmzalanmış e-Arşiv Fatura Görüntüleme
+ */
+exports.getAdminInvoiceView = functions
+  .runWith({ timeoutSeconds: 20, memory: '256MB' })
+  .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
+    if (req.method === 'OPTIONS') return res.status(204).send('');
+
+    const key = req.headers['x-admin-key'] || req.query.adminKey || (req.body && req.body.adminKey);
+    if (!key || String(key).trim() !== ADMIN_MASTER_PIN) {
+      return res.status(401).send('Yetkisiz erişim.');
+    }
+
+    try {
+      const invoiceUuid = req.query.uuid || req.query.invoiceUuid;
+      if (!invoiceUuid) {
+        return res.status(400).send('Fatura UUID gereklidir.');
+      }
+
+      const earsiv = new EarsivPortalService();
+      const loginRes = await earsiv.login();
+      const htmlContent = await earsiv.getInvoiceHtml(loginRes.token, invoiceUuid);
+
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+      return res.status(200).send(htmlContent);
+    } catch (err) {
+      return res.status(500).send('Fatura görüntüleme hatası: ' + err.message);
+    }
+  }));
+

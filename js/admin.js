@@ -11,6 +11,9 @@ const AdminApp = {
   currentPage: 1,
   pageSize: 10,
   pollTimer: null,
+  activeInvoiceOrderId: null,
+  activeInvoiceUuid: null,
+  activeInvoiceBreakdown: null,
 
   init() {
     this.startClock();
@@ -548,6 +551,12 @@ const AdminApp = {
         ? '<span class="badge-status badge-status-failed">❌ Başarısız</span>'
         : '<span class="badge-status badge-status-pending">⏳ Beklemede</span>';
 
+      const invoiceBadge = o.invoiceStatus === 'SIGNED'
+        ? '<div style="font-size:11px; margin-top:3px;"><span style="background:#E8F5E9; color:#1B5E20; padding:2px 6px; border-radius:4px; font-weight:700; border:1px solid #A5D6A7;">🧾 Fatura: İmzalandı</span></div>'
+        : (o.invoiceStatus === 'DRAFT'
+        ? '<div style="font-size:11px; margin-top:3px;"><span style="background:#FFF8E1; color:#F57F17; padding:2px 6px; border-radius:4px; font-weight:700; border:1px solid #FFE082;">🧾 Fatura: Taslak</span></div>'
+        : '');
+
       const dateFormatted = new Date(o.createdAt).toLocaleString('tr-TR', {
         day: '2-digit', month: '2-digit', year: 'numeric',
         hour: '2-digit', minute: '2-digit'
@@ -566,7 +575,7 @@ const AdminApp = {
             ₺${Number(o.totalAmount || 0).toLocaleString('tr-TR')}
           </td>
           <td><span class="badge-provider">${o.provider || 'AKBANK'}</span></td>
-          <td>${statusBadge}</td>
+          <td>${statusBadge}${invoiceBadge}</td>
           <td style="font-size:12px;">${o.deliveryMethod === 'showroom' ? '🏢 Showroom' : '📦 Kargo'}</td>
           <td style="display:flex; gap:6px;">
             ${!isPaid ? `<button class="btn-admin-primary" style="padding:4px 9px; font-size:11.5px; background:#196C3A; border-color:#196C3A;" onclick="AdminApp.confirmOrder('${o.orderId}')" title="Tahsilatı Onayla">✅ Onayla</button>` : ''}
@@ -582,6 +591,22 @@ const AdminApp = {
     }).join('');
   },
 
+  // KUYUMCULUK ÖZEL MATRAH HESAPLAMA
+  calculateJewelryBreakdown(totalAmount) {
+    const total = Number(totalAmount) || 0;
+    const workmanshipTotal = Math.max(1, Math.round(total * 0.01 * 100) / 100);
+    const hasGoldAmount = Math.round((total - workmanshipTotal) * 100) / 100;
+    const workmanshipNet = Math.round((workmanshipTotal / 1.20) * 100) / 100;
+    const workmanshipKdv = Math.round((workmanshipTotal - workmanshipNet) * 100) / 100;
+    return {
+      hasGoldAmount,
+      workmanshipNet,
+      workmanshipKdv,
+      workmanshipTotal,
+      grandTotal: total
+    };
+  },
+
   // HUKUKİ DELİL & SÖZLEŞME ÇIKTISI AÇ
   printLegalDocument(orderId) {
     window.open(`/hukuki-evrak-yazdir.html?orderId=${encodeURIComponent(orderId)}`, '_blank');
@@ -595,6 +620,8 @@ const AdminApp = {
     const modal = document.getElementById('orderDetailModal');
     const content = document.getElementById('modalOrderContent');
     if (!modal || !content) return;
+
+    const bd = this.calculateJewelryBreakdown(order.totalAmount);
 
     const itemsHtml = (order.items || []).map(it => `
       <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #EEE; font-size:13px;">
@@ -636,6 +663,40 @@ const AdminApp = {
         <div><strong>Toplam Tutar:</strong> <span style="font-size:16px; font-weight:800; color:var(--admin-teal);">₺${Number(order.totalAmount || 0).toLocaleString('tr-TR')}</span></div>
       </div>
 
+      <h4 style="margin:16px 0 8px; font-size:14px; color:var(--admin-teal-dark); display:flex; justify-content:space-between; align-items:center;">
+        <span>🧾 GİB e-Arşiv Fatura Bilgileri</span>
+        <span style="font-size:11px; padding:3px 8px; border-radius:4px; font-weight:700; ${
+          order.invoiceStatus === 'SIGNED' ? 'background:#E8F5E9; color:#1B5E20; border:1px solid #A5D6A7;' :
+          order.invoiceStatus === 'DRAFT' ? 'background:#FFF8E1; color:#F57F17; border:1px solid #FFE082;' :
+          'background:#F3F4F6; color:#4B5563; border:1px solid #E5E7EB;'
+        }">
+          ${order.invoiceStatus === 'SIGNED' ? '✅ İmzalandı (Resmi Belge)' : (order.invoiceStatus === 'DRAFT' ? '⏳ GİB Taslak Hazır' : '⚠️ Fatura Henüz Kesilmedi')}
+        </span>
+      </h4>
+
+      <div style="background:#F4F8F7; border:1px solid #D1E5E1; border-radius:8px; padding:12px 14px; font-size:12.5px; line-height:1.6; margin-bottom:16px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+          <span><strong>1. Kalem:</strong> Has Altın Bedeli (%0 KDV / Özel Matrah 351)</span>
+          <strong>₺${bd.hasGoldAmount.toLocaleString('tr-TR', {minimumFractionDigits:2})}</strong>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+          <span><strong>2. Kalem:</strong> İşçilik Bedeli (₺${bd.workmanshipNet.toLocaleString('tr-TR', {minimumFractionDigits:2})} Matrah + ₺${bd.workmanshipKdv.toLocaleString('tr-TR', {minimumFractionDigits:2})} KDV)</span>
+          <strong>₺${bd.workmanshipTotal.toLocaleString('tr-TR', {minimumFractionDigits:2})}</strong>
+        </div>
+        <div style="display:flex; justify-content:space-between; border-top:1px dashed #B8D6CF; padding-top:5px; margin-top:5px; font-weight:800; color:var(--admin-teal); font-size:13px;">
+          <span>Toplam Fatura Tutarı:</span>
+          <span>₺${Number(order.totalAmount || 0).toLocaleString('tr-TR', {minimumFractionDigits:2})}</span>
+        </div>
+        ${order.invoiceNumber ? `
+          <div style="margin-top:10px; padding-top:8px; border-top:1px solid #D1E5E1; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <span><strong>GİB Belge No:</strong> <span style="font-family:monospace; color:#084C47; font-weight:800;">${order.invoiceNumber}</span></span>
+            <button class="btn-admin-secondary" style="padding:4px 10px; font-size:11.5px; background:#FFF; border-color:#084C47; color:#084C47; font-weight:700;" onclick="AdminApp.viewInvoice('${order.invoiceUuid}')">
+              📄 Resmi Faturayı Aç / Yazdır
+            </button>
+          </div>
+        ` : ''}
+      </div>
+
       <h4 style="margin:14px 0 8px; font-size:14px; color:var(--admin-teal-dark);">Ürün Dökümü</h4>
       <div style="margin-bottom:20px;">
         ${itemsHtml || '<div>Ürün kaydı yok</div>'}
@@ -647,6 +708,11 @@ const AdminApp = {
             ✅ Banka Tahsilatını Onayla
           </button>
         ` : ''}
+        ${order.invoiceStatus !== 'SIGNED' ? `
+          <button class="btn-admin-primary" style="background:#084C47; border-color:#084C47;" onclick="AdminApp.startInvoiceSigning('${order.orderId}')">
+            🧾 GİB e-Arşiv Fatura İmzala (SMS)
+          </button>
+        ` : ''}
         <button class="btn-admin-secondary" style="background:#FAF8F2; border-color:#C2A768; color:#084C47; font-weight:700;" onclick="AdminApp.printLegalDocument('${order.orderId}')">
           📜 Zaman Damgalı Sözleşme & Delil Çıktısı Al
         </button>
@@ -656,6 +722,186 @@ const AdminApp = {
     `;
 
     modal.classList.add('open');
+  },
+
+  // GİB E-ARŞİV FATURA İMZALAMA AKIŞINI BAŞLAT (TASLAK OLUŞTUR & SMS GÖNDER)
+  async startInvoiceSigning(orderId) {
+    const order = this.orders.find(o => o.orderId === orderId);
+    if (!order) return;
+
+    this.activeInvoiceOrderId = orderId;
+    const bd = this.calculateJewelryBreakdown(order.totalAmount);
+    this.activeInvoiceBreakdown = bd;
+
+    const summaryBox = document.getElementById('smsModalOrderSummary');
+    if (summaryBox) {
+      summaryBox.innerHTML = `
+        <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
+          <span><strong>Sipariş No:</strong> ${order.orderId}</span>
+          <span><strong>Müşteri:</strong> ${order.customerName || 'Nihai Tüketici'}</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
+          <span><strong>1. Kalem Has Altın (%0 KDV):</strong> ₺${bd.hasGoldAmount.toLocaleString('tr-TR', {minimumFractionDigits:2})}</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
+          <span><strong>2. Kalem İşçilik (%20 KDV):</strong> ₺${bd.workmanshipTotal.toLocaleString('tr-TR', {minimumFractionDigits:2})}</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-weight:800; color:var(--admin-teal); border-top:1px solid #D1E5E1; padding-top:3px; margin-top:3px;">
+          <span>Toplam Fatura Tutarı:</span>
+          <span>₺${Number(order.totalAmount || 0).toLocaleString('tr-TR', {minimumFractionDigits:2})}</span>
+        </div>
+      `;
+    }
+
+    const input = document.getElementById('gibSmsInput');
+    const errDiv = document.getElementById('smsErrorMsg');
+    const submitBtn = document.getElementById('btnSubmitGibSms');
+    if (input) input.value = '';
+    if (errDiv) { errDiv.style.display = 'none'; errDiv.textContent = ''; }
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = '<span>✅ Doğrula & Faturayı İmzala</span>'; }
+
+    // 1. Önce Taslak Oluştur (GİB'de kayıt aç)
+    try {
+      if (submitBtn) submitBtn.innerHTML = '<span>⏳ GİB Taslak Hazırlanıyor...</span>';
+      const draftRes = await fetch('/api/admin/invoice/draft', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-key': this.adminPin
+        },
+        body: JSON.stringify({
+          orderId: order.orderId,
+          adminKey: this.adminPin
+        })
+      });
+
+      const draftData = await draftRes.json();
+      if (!draftData || !draftData.success) {
+        alert('❌ Taslak Fatura Hatası: ' + (draftData?.message || 'Oluşturulamadı'));
+        if (submitBtn) submitBtn.innerHTML = '<span>✅ Doğrula & Faturayı İmzala</span>';
+        return;
+      }
+
+      this.activeInvoiceUuid = draftData.invoiceUuid;
+
+      // 2. GİB'den SMS Kodu Tetikle
+      if (submitBtn) submitBtn.innerHTML = '<span>📲 SMS Gönderiliyor...</span>';
+      const smsRes = await fetch('/api/admin/invoice/send-sms', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-key': this.adminPin
+        },
+        body: JSON.stringify({ adminKey: this.adminPin })
+      });
+
+      const smsData = await smsRes.json();
+      if (submitBtn) submitBtn.innerHTML = '<span>✅ Doğrula & Faturayı İmzala</span>';
+
+      // SMS Modalını Aç
+      const smsModal = document.getElementById('invoiceSmsModal');
+      if (smsModal) smsModal.classList.add('open');
+      if (input) setTimeout(() => input.focus(), 150);
+
+      if (smsData && smsData.isMock) {
+        if (errDiv) {
+          errDiv.style.display = 'block';
+          errDiv.style.color = '#084C47';
+          errDiv.textContent = 'ℹ️ Test / Simülasyon Modu: Kod olarak 123456 girebilirsiniz.';
+        }
+      }
+    } catch (e) {
+      alert('❌ GİB Bağlantı Hatası: ' + e.message);
+      if (submitBtn) submitBtn.innerHTML = '<span>✅ Doğrula & Faturayı İmzala</span>';
+    }
+  },
+
+  // SMS KODUNU GÖNDER VE İMZALAT
+  async submitInvoiceSms() {
+    const input = document.getElementById('gibSmsInput');
+    const errDiv = document.getElementById('smsErrorMsg');
+    const submitBtn = document.getElementById('btnSubmitGibSms');
+    const smsCode = (input?.value || '').trim();
+
+    if (!smsCode || smsCode.length < 4) {
+      if (errDiv) {
+        errDiv.style.display = 'block';
+        errDiv.style.color = '#C81E1E';
+        errDiv.textContent = 'Lütfen en az 4-6 haneli SMS kodunu giriniz.';
+      }
+      return;
+    }
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>⏳ GİB Faturası İmzalanıyor...</span>';
+    }
+
+    try {
+      const res = await fetch('/api/admin/invoice/sign', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-key': this.adminPin
+        },
+        body: JSON.stringify({
+          orderId: this.activeInvoiceOrderId,
+          invoiceUuid: this.activeInvoiceUuid,
+          smsCode: smsCode,
+          adminKey: this.adminPin
+        })
+      });
+
+      const data = await res.json();
+      if (data && data.success) {
+        alert(`✅ Fatura Başarıyla İmzalandı!\n\nBelge No: ${data.invoiceNumber}\n\nFatura GİB e-Arşiv sistemine kaydedildi ve resmiyet kazandı.`);
+        
+        // Sipariş yerel durumunu güncelle
+        const targetOrder = this.orders.find(o => o.orderId === this.activeInvoiceOrderId);
+        if (targetOrder) {
+          targetOrder.invoiceStatus = 'SIGNED';
+          targetOrder.invoiceNumber = data.invoiceNumber;
+          targetOrder.invoiceUuid = this.activeInvoiceUuid;
+        }
+
+        this.closeSmsModal();
+        this.filterTable();
+        if (this.activeInvoiceOrderId) {
+          this.showDetail(this.activeInvoiceOrderId);
+        }
+      } else {
+        if (errDiv) {
+          errDiv.style.display = 'block';
+          errDiv.style.color = '#C81E1E';
+          errDiv.textContent = 'Hata: ' + (data?.message || 'İmzalama başarısız oldu.');
+        }
+      }
+    } catch (e) {
+      if (errDiv) {
+        errDiv.style.display = 'block';
+        errDiv.style.color = '#C81E1E';
+        errDiv.textContent = 'Bağlantı hatası: ' + e.message;
+      }
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>✅ Doğrula & Faturayı İmzala</span>';
+      }
+    }
+  },
+
+  // İMZALANMIŞ FATURAYI YENİ SEKMEDE GÖRÜNTÜLE
+  viewInvoice(invoiceUuid) {
+    if (!invoiceUuid) return;
+    const url = `/api/admin/invoice/view?uuid=${encodeURIComponent(invoiceUuid)}&adminKey=${encodeURIComponent(this.adminPin)}`;
+    window.open(url, '_blank');
+  },
+
+  closeSmsModal() {
+    const modal = document.getElementById('invoiceSmsModal');
+    if (modal) modal.classList.remove('open');
+    this.activeInvoiceOrderId = null;
+    this.activeInvoiceUuid = null;
   },
 
   async confirmOrder(orderId) {

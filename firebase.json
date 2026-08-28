@@ -49,6 +49,22 @@
         "destination": "/hukuki-evrak-yazdir.html"
       },
       {
+        "source": "/api/admin/invoice/draft",
+        "function": "createAdminDraftInvoice"
+      },
+      {
+        "source": "/api/admin/invoice/send-sms",
+        "function": "sendAdminInvoiceSms"
+      },
+      {
+        "source": "/api/admin/invoice/sign",
+        "function": "verifyAdminInvoiceSms"
+      },
+      {
+        "source": "/api/admin/invoice/view",
+        "function": "getAdminInvoiceView"
+      },
+      {
         "source": "/api/admin/orders/confirm",
         "function": "confirmAdminOrder"
       },

@@ -484,9 +484,7 @@ const App = {
     if (!el) return;
 
     let items = JEWELLERY;
-    if (filter === 'Külçe & Gram Altın' || filter === 'gold_bar') {
-      items = JEWELLERY.filter(p => p.subCategory === 'Külçe & Gram Altın' || p.name.includes('Külçe') || p.name.includes('Gram'));
-    } else if (filter === 'Ziynet & Sarrafiye' || filter === 'ziynet') {
+    if (filter === 'Ziynet & Sarrafiye' || filter === 'ziynet') {
       items = JEWELLERY.filter(p => p.subCategory === 'Ziynet & Sarrafiye' || p.name.includes('Ziynet') || p.name.includes('Ata') || p.name.includes('Çeyrek') || p.name.includes('Yarım') || p.name.includes('Tam') || p.name.includes('Gremse'));
     } else if (filter === 'Altın Bilezik' || filter === 'bracelet') {
       items = JEWELLERY.filter(p => p.subCategory === 'Altın Bilezik' || p.name.includes('Bilezik'));
