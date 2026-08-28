@@ -650,7 +650,10 @@ class EarsivPortalService {
           lastError = new Error(res.data.messages[0].text);
           continue;
         } else if (res.data?.data) {
-          lastError = new Error(String(res.data.data));
+          const errMsg = typeof res.data.data === 'object' 
+            ? (res.data.data.msg || res.data.data.mesaj || res.data.data.text || JSON.stringify(res.data.data))
+            : String(res.data.data);
+          lastError = new Error(errMsg);
           continue;
         }
       } catch (err) {
