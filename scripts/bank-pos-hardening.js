@@ -58,7 +58,7 @@ function scrubPublicClaims(content) {
   return out;
 }
 
-const EXCLUDED_HTML = ['vip-odeme.html', 'odeme-linki.html', 'odeme-basarili.html', 'odeme-basarisiz.html'];
+const EXCLUDED_HTML = ['admin.html', 'vip-odeme.html', 'odeme-linki.html', 'odeme-basarili.html', 'odeme-basarisiz.html'];
 const htmlFiles = fs.readdirSync(root).filter((name) => /\.html$/i.test(name) && !EXCLUDED_HTML.includes(name));
 for (const file of htmlFiles) {
   writeIfChanged(file, (content) => {
