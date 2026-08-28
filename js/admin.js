@@ -557,7 +557,7 @@ const AdminApp = {
                 🧾 Fatura Kes
               </button>
             ` : `
-              <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#F0FDF4; border-color:#059669; color:#065F46; font-weight:700;" onclick="AdminApp.viewInvoice('${o.invoiceUuid}')" title="Faturayı Aç / Yazdır">
+              <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#F0FDF4; border-color:#059669; color:#065F46; font-weight:700;" onclick="AdminApp.viewInvoice('${o.invoiceUuid}', '${o.orderId}')" title="Faturayı Aç / Yazdır">
                 📄 Fatura
               </button>
               <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#10B981; border-color:#10B981; color:#FFF; font-weight:700;" onclick="AdminApp.sendInvoiceViaWhatsApp('${o.orderId}')" title="Faturayı WhatsApp ile Müşteriye İlet">
@@ -1222,9 +1222,8 @@ const AdminApp = {
   },
 
   // İMZALANMIŞ FATURAYI YENİ SEKMEDE GÖRÜNTÜLE
-  viewInvoice(invoiceUuid) {
-    if (!invoiceUuid) return;
-    const url = `/api/admin/invoice/view?uuid=${encodeURIComponent(invoiceUuid)}&adminKey=${encodeURIComponent(this.adminPin)}`;
+  viewInvoice(invoiceUuid, orderId) {
+    const url = `/api/admin/invoice/view?uuid=${encodeURIComponent(invoiceUuid || '')}&orderId=${encodeURIComponent(orderId || '')}&adminKey=${encodeURIComponent(this.adminPin)}`;
     window.open(url, '_blank');
   },
 
