@@ -526,14 +526,14 @@ const AdminApp = {
 
       return `
         <tr>
-          <td style="font-family:monospace; font-weight:700; color:var(--admin-teal-dark);">${o.orderId}</td>
-          <td style="font-size:12px; color:var(--admin-muted);">${dateFormatted}</td>
+          <td style="font-family:monospace; font-weight:800; font-size:11.5px; color:#064E3B;">${o.orderId}</td>
+          <td style="font-size:11px; color:#64748B; white-space:nowrap;">${dateFormatted}</td>
           <td>
-            <div style="font-weight:700;">${o.customerName || 'Müşteri'}</div>
-            <div style="font-size:11.5px; color:var(--admin-muted);">${o.customerPhone || '—'}</div>
-            <div style="font-size:11px; color:#9A7B38; font-weight:700; margin-top:2px;">🆔 TC: <span style="font-family:monospace;">${o.customerIdentity && o.customerIdentity !== '—' ? o.customerIdentity : 'Showroomda Alınacak'}</span></div>
+            <div style="font-weight:800; font-size:12px; color:#0F172A;">${o.customerName || 'Müşteri'}</div>
+            <div style="font-size:11px; color:#64748B;">${o.customerPhone || '—'}</div>
+            <div style="font-size:10.5px; color:#B45309; font-weight:700;">🆔 <span style="font-family:monospace;">${o.customerIdentity && o.customerIdentity !== '—' ? o.customerIdentity : 'Showroom'}</span></div>
           </td>
-          <td style="font-weight:800; font-size:14.5px; color:var(--admin-teal);">
+          <td style="font-weight:800; font-size:13.5px; color:#047857; white-space:nowrap;">
             ₺${Number(o.totalAmount || 0).toLocaleString('tr-TR')}
           </td>
           <td>
@@ -547,24 +547,27 @@ const AdminApp = {
             </select>
             ${invoiceBadge}
           </td>
-          <td style="display:flex; gap:6px; flex-wrap:wrap;">
-            ${!isPaid ? `<button class="btn-admin-primary" style="padding:4px 9px; font-size:11.5px; background:#196C3A; border-color:#196C3A;" onclick="AdminApp.confirmOrder('${o.orderId}')" title="Tahsilatı Onayla">✅ Onayla</button>` : ''}
-            <button class="btn-admin-secondary" style="padding:4px 9px; font-size:11.5px;" onclick="AdminApp.showDetail('${o.orderId}')">
+          <td style="display:flex; gap:4px; flex-wrap:wrap; align-items:center;">
+            ${!isPaid ? `<button class="btn-admin-primary" style="padding:3px 7px; font-size:11px; background:#15803D; border-color:#15803D;" onclick="AdminApp.confirmOrder('${o.orderId}')" title="Tahsilatı Onayla">✅ Onayla</button>` : ''}
+            <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#F0F9FF; border-color:#0284C7; color:#0369A1; font-weight:700;" onclick="AdminApp.showDetail('${o.orderId}')">
               Detay
             </button>
             ${o.invoiceStatus !== 'SIGNED' ? `
-              <button class="btn-admin-primary" style="padding:4px 9px; font-size:11.5px; background:#084C47; border-color:#084C47; color:#FFF;" onclick="AdminApp.startInvoiceSigning('${o.orderId}')" title="GİB e-Arşiv Fatura Kes">
+              <button class="btn-admin-primary" style="padding:3px 7px; font-size:11px; background:#059669; border-color:#059669; color:#FFF; font-weight:700;" onclick="AdminApp.startInvoiceSigning('${o.orderId}')" title="GİB e-Arşiv Fatura Kes">
                 🧾 Fatura Kes
               </button>
             ` : `
-              <button class="btn-admin-secondary" style="padding:4px 9px; font-size:11.5px; background:#25D366; border-color:#25D366; color:#FFF; font-weight:700;" onclick="AdminApp.sendInvoiceViaWhatsApp('${o.orderId}')" title="Faturayı WhatsApp ile Müşteriye İlet">
+              <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#F0FDF4; border-color:#059669; color:#065F46; font-weight:700;" onclick="AdminApp.viewInvoice('${o.invoiceUuid}')" title="Faturayı Aç / Yazdır">
+                📄 Fatura
+              </button>
+              <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#10B981; border-color:#10B981; color:#FFF; font-weight:700;" onclick="AdminApp.sendInvoiceViaWhatsApp('${o.orderId}')" title="Faturayı WhatsApp ile Müşteriye İlet">
                 📲 WhatsApp
               </button>
             `}
-            <button class="btn-admin-secondary" style="padding:4px 9px; font-size:11.5px; border-color:#C2A768; color:#084C47; font-weight:700;" onclick="AdminApp.printLegalDocument('${o.orderId}')" title="Zaman Damgalı Sözleşme & Delil Çıktısı">
-              📜 Yasal Evrak
+            <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#FFFBEB; border-color:#D97706; color:#92400E; font-weight:700;" onclick="AdminApp.printLegalDocument('${o.orderId}')" title="Zaman Damgalı Sözleşme & Delil Çıktısı">
+              📜 Yasal
             </button>
-            <button class="btn-admin-secondary" style="padding:4px 8px; font-size:11.5px; border-color:#EF9A9A; color:#C62828;" onclick="AdminApp.deleteOrder('${o.orderId}')" title="Test/mükerrer kaydı veritabanından kalıcı olarak sil">
+            <button class="btn-admin-secondary" style="padding:3px 6px; font-size:11px; border-color:#FCA5A5; color:#DC2626; background:#FEF2F2;" onclick="AdminApp.deleteOrder('${o.orderId}')" title="Test/mükerrer kaydı veritabanından kalıcı olarak sil">
               🗑️
             </button>
           </td>

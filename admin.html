@@ -28,288 +28,273 @@
       display: none !important;
     }
     :root {
-      --admin-bg: #FAF9F5;
+      --admin-bg: #F4F6F5;
       --admin-card: #FFFFFF;
-      --admin-border: #E2DED5;
+      --admin-border: #DCE5E2;
       --admin-teal: #084C47;
-      --admin-teal-dark: #05332F;
-      --admin-gold: #C2A768;
+      --admin-teal-dark: #042A27;
+      --admin-teal-light: #0D6962;
+      --admin-gold: #D4AF37;
       --admin-gold-dark: #9A7B38;
-      --admin-ink: #111413;
-      --admin-muted: #6B7280;
+      --admin-gold-light: #FBF5E6;
+      --admin-ink: #0F172A;
+      --admin-muted: #64748B;
+      --admin-emerald: #059669;
+      --admin-amber: #D97706;
+      --admin-indigo: #4F46E5;
     }
 
     body {
-      background-color: var(--admin-bg);
+      background: linear-gradient(180deg, #EDF3F1 0%, #F8FAF9 250px, #F4F6F5 100%);
       color: var(--admin-ink);
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       margin: 0;
       padding: 0;
       min-height: 100vh;
+      font-size: 13px;
     }
 
-    /* ÜST YÖNETİCİ BAŞLIĞI */
+    /* ÜST YÖNETİCİ BAŞLIĞI - ULTRA LÜKS EMERALD / GOLD */
     .admin-navbar {
-      background: var(--admin-teal-dark);
+      background: linear-gradient(135deg, #022522 0%, #064540 50%, #095953 100%);
       color: #FFFFFF;
-      border-bottom: 2px solid var(--admin-gold);
-      padding: 14px 24px;
+      border-bottom: 2px solid #D4AF37;
+      padding: 10px 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 20px rgba(4, 37, 34, 0.25);
     }
 
     .admin-brand {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       text-decoration: none;
       color: inherit;
     }
 
     .admin-brand img {
-      height: 36px;
+      height: 32px;
       width: auto;
       filter: brightness(0) invert(1);
     }
 
     .admin-title-badge {
-      font-size: 11px;
+      font-size: 10.5px;
       letter-spacing: 1.5px;
       text-transform: uppercase;
-      background: rgba(194, 167, 104, 0.2);
-      color: var(--admin-gold);
-      border: 1px solid rgba(194, 167, 104, 0.4);
-      padding: 3px 10px;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.25) 0%, rgba(212, 175, 55, 0.1) 100%);
+      color: #FDE68A;
+      border: 1px solid rgba(212, 175, 55, 0.5);
+      padding: 3px 9px;
       border-radius: 4px;
-      font-weight: 700;
+      font-weight: 800;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.3);
     }
 
     .admin-nav-actions {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
     }
 
     .btn-admin-logout {
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.25);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255,255,255,0.3);
       color: #FFF;
-      padding: 6px 14px;
+      padding: 5px 12px;
       border-radius: 6px;
-      font-size: 12.5px;
-      font-weight: 600;
+      font-size: 11.5px;
+      font-weight: 700;
       cursor: pointer;
       transition: all 0.2s;
     }
     .btn-admin-logout:hover {
-      background: rgba(255,255,255,0.1);
-      border-color: var(--admin-gold);
+      background: rgba(220, 38, 38, 0.2);
+      border-color: #EF4444;
+      color: #FCA5A5;
     }
 
     /* ANA KONTEYNER */
     .admin-container {
-      max-width: 1340px;
-      margin: 28px auto;
-      padding: 0 20px;
+      max-width: 1440px;
+      margin: 16px auto 32px;
+      padding: 0 18px;
     }
 
     /* FİLTRE & TARİH ÇUBUĞU */
     .admin-filter-panel {
-      background: var(--admin-card);
+      background: #FFFFFF;
       border: 1px solid var(--admin-border);
-      border-radius: 12px;
-      padding: 20px 24px;
-      margin-bottom: 24px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+      border-radius: 10px;
+      padding: 12px 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 14px rgba(8, 76, 71, 0.05);
     }
 
     .admin-presets {
       display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
+      gap: 6px;
+      margin-bottom: 10px;
       flex-wrap: wrap;
+      align-items: center;
     }
 
     .btn-preset {
-      background: #F3F1EB;
-      border: 1px solid var(--admin-border);
-      color: var(--admin-ink);
-      padding: 6px 14px;
-      border-radius: 6px;
-      font-size: 12.5px;
-      font-weight: 600;
+      background: #F1F5F4;
+      border: 1px solid #D2DFDC;
+      color: #334155;
+      padding: 4px 11px;
+      border-radius: 5px;
+      font-size: 11.5px;
+      font-weight: 700;
       cursor: pointer;
       transition: all 0.15s;
     }
     .btn-preset:hover {
-      background: #E8E4DA;
+      background: #E2ECE9;
+      color: var(--admin-teal-dark);
     }
     .btn-preset.active {
-      background: var(--admin-teal);
+      background: linear-gradient(135deg, #084C47 0%, #0D6962 100%);
       color: #FFFFFF;
-      border-color: var(--admin-teal);
+      border-color: #084C47;
+      box-shadow: 0 2px 6px rgba(8, 76, 71, 0.25);
     }
 
     .admin-filter-row {
       display: grid;
       grid-template-columns: auto auto 1fr auto auto;
-      gap: 14px;
+      gap: 10px;
       align-items: center;
     }
 
     .date-input-wrap {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
     .date-input-wrap label {
-      font-size: 12px;
-      font-weight: 700;
+      font-size: 11px;
+      font-weight: 800;
       color: var(--admin-muted);
+      text-transform: uppercase;
     }
     .date-input-wrap input[type="date"] {
-      border: 1px solid var(--admin-border);
-      padding: 8px 12px;
+      border: 1.5px solid #CBD5E1;
+      padding: 6px 10px;
       border-radius: 6px;
-      font-size: 13px;
+      font-size: 12px;
       font-family: inherit;
       background: #FFF;
-      font-weight: 600;
+      font-weight: 700;
+      color: #1E293B;
     }
 
     .admin-search-input {
       width: 100%;
-      border: 1px solid var(--admin-border);
-      padding: 9px 14px;
+      border: 1.5px solid #CBD5E1;
+      padding: 7px 12px;
       border-radius: 6px;
-      font-size: 13px;
+      font-size: 12.5px;
       font-family: inherit;
       background: #FFF;
       box-sizing: border-box;
+      color: #0F172A;
+      transition: border-color 0.2s;
+    }
+    .admin-search-input:focus {
+      outline: none;
+      border-color: var(--admin-teal);
+      box-shadow: 0 0 0 3px rgba(8, 76, 71, 0.15);
     }
 
     .admin-select {
-      border: 1px solid var(--admin-border);
-      padding: 8px 12px;
+      border: 1.5px solid #CBD5E1;
+      padding: 7px 12px;
       border-radius: 6px;
-      font-size: 13px;
+      font-size: 12px;
       font-family: inherit;
       background: #FFF;
-      font-weight: 600;
+      font-weight: 700;
+      color: #0F172A;
+      cursor: pointer;
+    }
+    .admin-select:focus {
+      outline: none;
+      border-color: var(--admin-teal);
     }
 
     .admin-status-dropdown {
-      font-size: 11.5px;
-      font-weight: 700;
-      padding: 4px 8px;
-      border-radius: 6px;
-      border: 1px solid var(--admin-border);
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 7px;
+      border-radius: 4px;
+      border: 1px solid #CBD5E1;
       background-color: #FFF;
       cursor: pointer;
       font-family: inherit;
       outline: none;
-      transition: all 0.2s;
+      transition: all 0.15s;
       display: inline-block;
     }
-    .admin-status-dropdown:hover {
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
     .admin-status-dropdown.status-paid {
-      background: #E8F5E9;
-      color: #1B5E20;
-      border-color: #A5D6A7;
+      background: #DCFCE7;
+      color: #15803D;
+      border-color: #86EFAC;
     }
     .admin-status-dropdown.status-pending {
-      background: #FFF8E1;
-      color: #F57F17;
-      border-color: #FFE082;
+      background: #FEF3C7;
+      color: #B45309;
+      border-color: #FCD34D;
     }
     .admin-status-dropdown.status-failed {
-      background: #FFEBEE;
-      color: #C62828;
-      border-color: #EF9A9A;
+      background: #FEE2E2;
+      color: #991B1B;
+      border-color: #FCA5A5;
     }
 
     .btn-admin-primary {
-      background: var(--admin-teal);
+      background: linear-gradient(135deg, #084C47 0%, #0C625B 100%);
       color: #FFF;
-      border: 1px solid var(--admin-teal);
-      padding: 8px 18px;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 700;
+      border: 1px solid #063935;
+      padding: 6px 14px;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: 800;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      transition: all 0.2s;
+      gap: 5px;
+      transition: all 0.15s;
+      box-shadow: 0 2px 6px rgba(8, 76, 71, 0.25);
     }
     .btn-admin-primary:hover {
-      background: var(--admin-teal-dark);
+      background: linear-gradient(135deg, #042D2A 0%, #084C47 100%);
+      transform: translateY(-1px);
     }
 
     .btn-admin-secondary {
       background: #FFFFFF;
       color: var(--admin-teal);
-      border: 1px solid var(--admin-teal);
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-size: 13px;
+      border: 1.5px solid #94A3B8;
+      padding: 5px 12px;
+      border-radius: 5px;
+      font-size: 11.5px;
       font-weight: 700;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      transition: all 0.2s;
-    }
-    /* DURUM PİLLERİ & PAGINATION */
-    .status-pills-bar {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 14px;
-      flex-wrap: wrap;
-      border-bottom: 1px solid var(--admin-border);
-      padding-bottom: 12px;
-    }
-    .btn-status-pill {
-      background: #F3F1EB;
-      border: 1px solid var(--admin-border);
-      color: var(--admin-ink);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 12.5px;
-      font-weight: 600;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      gap: 5px;
       transition: all 0.15s;
     }
-    .btn-status-pill:hover {
-      background: #E8E4DA;
-    }
-    .btn-status-pill.active {
-      background: var(--admin-teal);
-      color: #FFF;
+    .btn-admin-secondary:hover {
+      background: #F1F5F9;
       border-color: var(--admin-teal);
-      font-weight: 700;
-    }
-    .btn-status-pill.pill-paid.active {
-      background: #196C3A;
-      border-color: #196C3A;
-    }
-    .btn-status-pill.pill-pending.active {
-      background: #B45309;
-      border-color: #B45309;
-    }
-    .btn-status-pill.pill-failed.active {
-      background: #991B1B;
-      border-color: #991B1B;
     }
 
     /* PAGINATION BAR */
@@ -317,129 +302,175 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 14px 20px;
-      background: #FAF9F5;
+      padding: 8px 16px;
+      background: #F8FAFA;
       border-top: 1px solid var(--admin-border);
-      border-radius: 0 0 12px 12px;
+      border-radius: 0 0 10px 10px;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 8px;
     }
     .pagination-info {
-      font-size: 12.5px;
+      font-size: 11.5px;
       color: var(--admin-muted);
-      font-weight: 600;
+      font-weight: 700;
     }
     .pagination-buttons {
       display: flex;
-      gap: 5px;
+      gap: 4px;
       align-items: center;
     }
     .btn-page {
       background: #FFF;
-      border: 1px solid var(--admin-border);
+      border: 1px solid #CBD5E1;
       color: var(--admin-ink);
-      padding: 5px 12px;
-      border-radius: 5px;
-      font-size: 12px;
-      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
       cursor: pointer;
       transition: all 0.15s;
-      min-width: 32px;
+      min-width: 28px;
       text-align: center;
     }
     .btn-page:hover:not(:disabled) {
-      background: #F0F7F5;
+      background: #F0FDF4;
       border-color: var(--admin-teal);
+      color: var(--admin-teal);
     }
     .btn-page.active {
       background: var(--admin-teal);
       color: #FFF;
       border-color: var(--admin-teal);
-      font-weight: 700;
+      font-weight: 800;
     }
     .btn-page:disabled {
-      opacity: 0.4;
+      opacity: 0.35;
       cursor: not-allowed;
     }
 
-    /* KPI METRİK KARTLARI */
+    /* KPI METRİK KARTLARI — AGRESIF & PARLAK PREMİUM DEGRADE */
     .admin-kpi-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      margin-bottom: 24px;
+      gap: 14px;
+      margin-bottom: 16px;
     }
 
     .admin-kpi-card {
-      background: var(--admin-card);
-      border: 1px solid var(--admin-border);
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+      border-radius: 10px;
+      padding: 16px 20px;
       position: relative;
       overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    .admin-kpi-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
-      background: var(--admin-gold);
+    .admin-kpi-card:hover {
+      transform: translateY(-2px);
     }
-    .admin-kpi-card.kpi-teal::before {
-      background: var(--admin-teal);
+
+    /* 1. KART: ZÜMRÜT YEŞİLİ CİRO KARTI */
+    .admin-kpi-card.kpi-emerald {
+      background: linear-gradient(135deg, #022C28 0%, #064E3B 45%, #047857 100%);
+      color: #FFFFFF;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      box-shadow: 0 8px 24px -4px rgba(4, 120, 87, 0.35);
+    }
+    .admin-kpi-card.kpi-emerald .kpi-label {
+      color: #A7F3D0;
+      letter-spacing: 1px;
+    }
+    .admin-kpi-card.kpi-emerald .kpi-value {
+      color: #FDE68A;
+      text-shadow: 0 2px 12px rgba(253, 230, 138, 0.3);
+    }
+    .admin-kpi-card.kpi-emerald .kpi-subtext {
+      color: #D1FAE5;
+    }
+
+    /* 2. KART: KRALİYET ALTIN/AMBER İŞLEM ADEDİ KARTI */
+    .admin-kpi-card.kpi-gold {
+      background: linear-gradient(135deg, #451A03 0%, #78350F 45%, #B45309 100%);
+      color: #FFFFFF;
+      border: 1px solid rgba(251, 191, 36, 0.4);
+      box-shadow: 0 8px 24px -4px rgba(180, 83, 9, 0.35);
+    }
+    .admin-kpi-card.kpi-gold .kpi-label {
+      color: #FDE68A;
+      letter-spacing: 1px;
+    }
+    .admin-kpi-card.kpi-gold .kpi-value {
+      color: #FFFFFF;
+      text-shadow: 0 2px 12px rgba(255, 255, 255, 0.3);
+    }
+    .admin-kpi-card.kpi-gold .kpi-subtext {
+      color: #FEF3C7;
+    }
+
+    /* 3. KART: SAFİR/LACİVERT POS KANAL KARTI */
+    .admin-kpi-card.kpi-indigo {
+      background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 45%, #312E81 100%);
+      color: #FFFFFF;
+      border: 1px solid rgba(129, 140, 248, 0.4);
+      box-shadow: 0 8px 24px -4px rgba(49, 46, 129, 0.35);
+    }
+    .admin-kpi-card.kpi-indigo .kpi-label {
+      color: #C7D2FE;
+      letter-spacing: 1px;
+    }
+    .admin-kpi-card.kpi-indigo .kpi-value {
+      color: #E0E7FF;
+    }
+    .admin-kpi-card.kpi-indigo .kpi-subtext {
+      color: #A5B4FC;
     }
 
     .kpi-label {
-      font-size: 11.5px;
+      font-size: 11px;
       letter-spacing: 1px;
       text-transform: uppercase;
-      font-weight: 700;
-      color: var(--admin-muted);
-      margin-bottom: 6px;
+      font-weight: 800;
+      margin-bottom: 4px;
     }
 
     .kpi-value {
-      font-size: 26px;
+      font-size: 23px;
       font-weight: 800;
-      color: var(--admin-ink);
       font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.2;
     }
 
     .kpi-subtext {
-      font-size: 12px;
-      color: var(--admin-muted);
-      margin-top: 6px;
+      font-size: 11px;
+      margin-top: 4px;
+      font-weight: 500;
     }
 
-    /* SİPARİŞ TABLOSU */
+    /* SİPARİŞ TABLOSU — ULTRA KOMPAKT & YÜKSEK SATIR KAPASİTESİ */
     .admin-table-card {
-      background: var(--admin-card);
+      background: #FFFFFF;
       border: 1px solid var(--admin-border);
-      border-radius: 12px;
+      border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.03);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
     }
 
     .admin-table-header {
-      padding: 16px 24px;
+      padding: 10px 18px;
       border-bottom: 1px solid var(--admin-border);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #FCFBF9;
+      background: linear-gradient(180deg, #FAFAF7 0%, #F1F5F4 100%);
     }
 
     .admin-table-title {
-      font-size: 16px;
-      font-weight: 700;
+      font-size: 14px;
+      font-weight: 800;
       color: var(--admin-teal-dark);
       margin: 0;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .admin-table-wrapper {
@@ -449,57 +480,63 @@
     table.admin-orders-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 13px;
+      font-size: 12px;
       text-align: left;
     }
 
     table.admin-orders-table th {
-      background: #F7F5EE;
-      color: var(--admin-teal-dark);
-      padding: 12px 16px;
-      font-weight: 700;
-      font-size: 12px;
+      background: linear-gradient(180deg, #F8FAF9 0%, #E9F1EF 100%);
+      color: #064E3B;
+      padding: 7px 10px;
+      font-weight: 800;
+      font-size: 11px;
       letter-spacing: 0.5px;
       text-transform: uppercase;
-      border-bottom: 1px solid var(--admin-border);
+      border-bottom: 1.5px solid #CBD5E1;
       white-space: nowrap;
     }
 
     table.admin-orders-table td {
-      padding: 14px 16px;
-      border-bottom: 1px solid #ECE8E0;
+      padding: 6px 10px;
+      border-bottom: 1px solid #E2E8F0;
       vertical-align: middle;
+      line-height: 1.35;
     }
 
-    table.admin-orders-table tr:hover {
-      background: #FAF8F2;
+    table.admin-orders-table tbody tr:nth-child(even) {
+      background: #F8FAFC;
+    }
+
+    table.admin-orders-table tbody tr:hover {
+      background: #F0FDF4 !important;
+      border-left: 3px solid #10B981;
     }
 
     /* DURUM ROZETLERİ */
     .badge-status {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 11.5px;
-      font-weight: 700;
+      gap: 4px;
+      padding: 2px 7px;
+      border-radius: 12px;
+      font-size: 10.5px;
+      font-weight: 800;
       white-space: nowrap;
     }
     .badge-status-paid {
-      background: #EAF8F0;
-      color: #196C3A;
-      border: 1px solid #C4EED4;
+      background: #DCFCE7;
+      color: #15803D;
+      border: 1px solid #86EFAC;
     }
     .badge-status-pending {
-      background: #FFF8E6;
-      color: #946800;
-      border: 1px solid #FBE6B1;
+      background: #FEF3C7;
+      color: #B45309;
+      border: 1px solid #FCD34D;
     }
     .badge-status-failed {
-      background: #FDF2F2;
-      color: #9B1C1C;
-      border: 1px solid #F8B4B4;
+      background: #FEE2E2;
+      color: #991B1B;
+      border: 1px solid #FCA5A5;
     }
 
     .badge-provider {
@@ -696,21 +733,21 @@
   <!-- 2. ÖZET METRİK KPI KARTLARI -->
   <section class="admin-kpi-grid">
     
-    <div class="admin-kpi-card kpi-teal">
+    <div class="admin-kpi-card kpi-emerald">
       <div class="kpi-label">Toplam Tahsilat (Ciro)</div>
       <div class="kpi-value" id="kpiTotalVolume">₺0</div>
       <div class="kpi-subtext" id="kpiVolumeSubtext">Filtrelenen dönemdeki onaylı net tutar</div>
     </div>
 
-    <div class="admin-kpi-card">
+    <div class="admin-kpi-card kpi-gold">
       <div class="kpi-label">Başarılı İşlem Adedi</div>
       <div class="kpi-value" id="kpiSuccessCount">0</div>
       <div class="kpi-subtext" id="kpiCountSubtext">Toplam sipariş / tahsilat sayısı</div>
     </div>
 
-    <div class="admin-kpi-card">
+    <div class="admin-kpi-card kpi-indigo">
       <div class="kpi-label">POS Kanal Dağılımı</div>
-      <div class="kpi-value" style="font-size:16px; font-weight:700; margin-top:4px;" id="kpiProviderStats">
+      <div class="kpi-value" style="font-size:15px; font-weight:700; margin-top:4px;" id="kpiProviderStats">
         Akbank: ₺0<br>POS Linki: ₺0
       </div>
       <div class="kpi-subtext" style="margin-top:4px;">Kanal bazında tahsilat</div>
