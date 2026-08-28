@@ -641,11 +641,17 @@
   <!-- 1. FİLTRE VE TARİH SEÇİM ÇUBUĞU -->
   <section class="admin-filter-panel">
     
-    <!-- 1.1 Hızlı Durum Filtreleme Butonları (Onaylananlar, Bekleyenler, Başarısızlar, Tümü) -->
+    <!-- 1.1 Hızlı Durum Filtreleme Butonları (Onaylananlar, Fatura Kesilecekler, Fatura Kesilenler, Bekleyenler, Başarısızlar, Tümü) -->
     <div class="status-pills-bar">
       <span style="font-size:12px; font-weight:700; color:var(--admin-muted); align-self:center; margin-right:4px;">İşlem Durumu:</span>
       <button class="btn-status-pill pill-paid active" data-status="PAID" onclick="AdminApp.setStatusFilter('PAID', this)">
         <span>✅ Onaylananlar (Tahsil Edilen)</span>
+      </button>
+      <button class="btn-status-pill pill-invoice-pending" data-status="INVOICE_PENDING" style="background:#FFF9E6; border-color:#F59E0B; color:#B45309; font-weight:700;" onclick="AdminApp.setStatusFilter('INVOICE_PENDING', this)" title="Ödemesi alınmış fakat henüz e-Arşiv faturası kesilmemiş işlemler">
+        <span>⚠️ Fatura Kesilecekler (Eksik)</span>
+      </button>
+      <button class="btn-status-pill pill-invoice-signed" data-status="INVOICE_SIGNED" style="background:#F0FDF4; border-color:#16A34A; color:#15803D; font-weight:700;" onclick="AdminApp.setStatusFilter('INVOICE_SIGNED', this)" title="GİB e-Arşiv faturası başarıyla kesilmiş işlemler">
+        <span>🧾 Faturası Kesilenler</span>
       </button>
       <button class="btn-status-pill pill-pending" data-status="PENDING" onclick="AdminApp.setStatusFilter('PENDING', this)">
         <span>⏳ Bekleyenler</span>
@@ -687,6 +693,8 @@
       <div>
         <select id="statusFilter" class="admin-select" onchange="AdminApp.onStatusSelectChange(this.value)">
           <option value="PAID" selected>✅ Sadece Onaylananlar (Tahsil Edilen)</option>
+          <option value="INVOICE_PENDING">⚠️ Fatura Kesilecekler (Ödemesi Alınmış Ama Faturası Kesilmemiş)</option>
+          <option value="INVOICE_SIGNED">🧾 Faturası Kesilenler (İmzalanmış)</option>
           <option value="PENDING">⏳ Sadece Bekleyenler</option>
           <option value="FAILED">❌ Sadece Başarısız</option>
           <option value="ALL">📋 Tümü (Onaylanan, Bekleyen & Başarısız)</option>
