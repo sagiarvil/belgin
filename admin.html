@@ -715,12 +715,15 @@
         </select>
       </div>
 
-      <div style="display:flex; gap:8px;">
+      <div style="display:flex; gap:6px; flex-wrap:wrap;">
+        <button class="btn-admin-primary" style="background:linear-gradient(135deg, #059669 0%, #10B981 100%); border-color:#059669; color:#FFF;" onclick="AdminApp.startBatchInvoiceSigning()" title="Ödemesi alınmış faturası eksik tüm siparişleri tek bir SMS ile topluca mühürle">
+          <span>🧾 Toplu Fatura Kes</span>
+        </button>
         <button class="btn-admin-secondary" onclick="AdminApp.sendTestPush(event)" title="Telefona ntfy test bildirimi gönder">
-          <span>📱 Test Bildirimi</span>
+          <span>📱 Test</span>
         </button>
         <button class="btn-admin-secondary" onclick="AdminApp.exportToCsv()" title="Muhasebe için Excel / CSV Raporu İndir">
-          <span>📥 CSV İndir</span>
+          <span>📥 CSV</span>
         </button>
         <button class="btn-admin-primary" onclick="AdminApp.loadOrders()" title="Kayıtları Canlı Yenile">
           <span>🔄 Yenile</span>

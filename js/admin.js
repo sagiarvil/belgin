@@ -879,8 +879,101 @@ const AdminApp = {
     }
   },
 
+  // TOPLU FATURA KESME (BİRDEN FAZLA SİPARİŞİ TEK SMS İLE MÜHÜRLE)
+  async startBatchInvoiceSigning() {
+    const pendingOrders = this.orders.filter(o => {
+      const isPaid = (o.status === 'PAID' || o.paymentStatus === 'PAID' || o.paymentStatus === 'SUCCESS' || o.isPaid === true);
+      return isPaid && o.invoiceStatus !== 'SIGNED';
+    });
+
+    if (pendingOrders.length === 0) {
+      alert('ℹ️ Faturası kesilecek onaylanmış sipariş bulunamadı.\n\n(Tüm tahsil edilen siparişlerin faturaları zaten imzalanmış durumdadır.)');
+      return;
+    }
+
+    const totalBatchAmount = pendingOrders.reduce((sum, o) => {
+      const amt = Number(o.totalAmount || o.total || (o.payment && o.payment.amount) || (o.amountInKurus ? o.amountInKurus / 100 : 0) || 0);
+      return sum + amt;
+    }, 0);
+
+    if (!confirm(`🧾 TOPLU FATURA KESİMİ\n\nFaturası kesilecek ${pendingOrders.length} adet sipariş bulundu.\nToplam Tutar: ₺${totalBatchAmount.toLocaleString('tr-TR', { minimumFractionDigits: 2 })}\n\nBu siparişlerin tamamı için GİB üzerinde taslak açılıp telefonunuza TEK BİR SMS onay kodu gönderilecektir.\n\nOnaylıyor musunuz?`)) {
+      return;
+    }
+
+    this.isBatchInvoice = true;
+    this.batchPendingOrders = pendingOrders;
+
+    const summaryBox = document.getElementById('smsModalOrderSummary');
+    if (summaryBox) {
+      const itemsListHtml = pendingOrders.map((o, idx) => `
+        <div style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:2px;">
+          <span>${idx + 1}. ${o.customerName || 'Müşteri'} (${o.orderId})</span>
+          <span>₺${Number(o.totalAmount || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</span>
+        </div>
+      `).join('');
+
+      summaryBox.innerHTML = `
+        <div style="font-weight:700; color:var(--admin-gold); margin-bottom:4px; font-size:12px;">🧾 Toplu Fatura Listesi (${pendingOrders.length} Adet Sipariş)</div>
+        <div style="max-height:90px; overflow-y:auto; border:1px solid #E2E8F0; padding:4px 6px; border-radius:4px; margin-bottom:4px; background:#F8FAFC;">
+          ${itemsListHtml}
+        </div>
+        <div style="display:flex; justify-content:space-between; font-weight:800; color:var(--admin-teal); border-top:1px solid #D1E5E1; padding-top:3px;">
+          <span>Genel Toplam:</span>
+          <span>₺${totalBatchAmount.toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</span>
+        </div>
+      `;
+    }
+
+    const input = document.getElementById('gibSmsInput');
+    const errDiv = document.getElementById('smsErrorMsg');
+    const submitBtn = document.getElementById('btnSubmitGibSms');
+    if (input) input.value = '';
+    if (errDiv) { errDiv.style.display = 'none'; errDiv.textContent = ''; }
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.innerHTML = '<span>⏳ GİB Taslaklar Açılıyor & SMS Gönderiliyor...</span>'; }
+
+    // SMS Modalını Aç
+    const smsModal = document.getElementById('invoiceSmsModal');
+    if (smsModal) smsModal.classList.add('open');
+
+    try {
+      const res = await fetch('/api/admin/invoice/batch-draft', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-admin-key': this.adminPin },
+        body: JSON.stringify({
+          orderIds: pendingOrders.map(o => o.orderId),
+          adminKey: this.adminPin
+        })
+      });
+
+      const data = await res.json();
+      if (!data || !data.success) {
+        alert('❌ Toplu Taslak Uyarısı:\n\n' + (data?.message || 'GİB bağlantısı kurulamadı.'));
+        this.closeSmsModal();
+        return;
+      }
+
+      this.activeInvoiceOid = data.oid || '';
+      this.batchDraftItems = data.draftInvoices || [];
+
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>✅ Doğrula & Tüm Faturaları İmzala</span>';
+      }
+      if (input) setTimeout(() => input.focus(), 150);
+
+      if (data.phone) {
+        const phoneBox = document.getElementById('smsModalPhoneInfo');
+        if (phoneBox) phoneBox.textContent = `Yetkili Telefon: ${data.phone}`;
+      }
+    } catch (e) {
+      alert('❌ GİB Bağlantı Hatası: ' + e.message);
+      this.closeSmsModal();
+    }
+  },
+
   // GİB E-ARŞİV FATURA İMZALAMA AKIŞINI BAŞLAT (TASLAK OLUŞTUR & SMS GÖNDER)
   async startInvoiceSigning(orderId) {
+    this.isBatchInvoice = false;
     const order = this.orders.find(o => o.orderId === orderId);
     if (!order) return;
 
@@ -1042,43 +1135,76 @@ const AdminApp = {
     }
 
     try {
-      const res = await fetch('/api/admin/invoice/sign', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-key': this.adminPin
-        },
-        body: JSON.stringify({
-          orderId: this.activeInvoiceOrderId,
-          invoiceUuid: this.activeInvoiceUuid,
-          oid: this.activeInvoiceOid || '',
-          smsCode: smsCode,
-          adminKey: this.adminPin
-        })
-      });
+      if (this.isBatchInvoice) {
+        // TOPLU İMZALAMA İSTEĞİ
+        const res = await fetch('/api/admin/invoice/batch-sign', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-admin-key': this.adminPin },
+          body: JSON.stringify({
+            items: this.batchDraftItems || [],
+            oid: this.activeInvoiceOid || '',
+            smsCode: smsCode,
+            adminKey: this.adminPin
+          })
+        });
 
-      const data = await res.json();
-      if (data && data.success) {
-        alert(`✅ Fatura Başarıyla İmzalandı!\n\nBelge No: ${data.invoiceNumber}\n\nFatura GİB e-Arşiv sistemine kaydedildi ve resmiyet kazandı.`);
-        
-        // Sipariş yerel durumunu güncelle
-        const targetOrder = this.orders.find(o => o.orderId === this.activeInvoiceOrderId);
-        if (targetOrder) {
-          targetOrder.invoiceStatus = 'SIGNED';
-          targetOrder.invoiceNumber = data.invoiceNumber;
-          targetOrder.invoiceUuid = this.activeInvoiceUuid;
-        }
-
-        this.closeSmsModal();
-        this.filterTable();
-        if (this.activeInvoiceOrderId) {
-          this.showDetail(this.activeInvoiceOrderId);
+        const data = await res.json();
+        if (data && data.success) {
+          alert(`🎉 TOPLU İMZA BAŞARILI!\n\n${data.signedCount || (this.batchDraftItems || []).length} adet siparişin faturası tek SMS ile GİB üzerinde resmi olarak imzalandı.`);
+          if (this.batchPendingOrders) {
+            this.batchPendingOrders.forEach(o => {
+              o.invoiceStatus = 'SIGNED';
+            });
+          }
+          this.closeSmsModal();
+          this.filterTable();
+        } else {
+          if (errDiv) {
+            errDiv.style.display = 'block';
+            errDiv.style.color = '#C81E1E';
+            errDiv.textContent = 'Hata: ' + (data?.message || 'Toplu imzalama başarısız oldu.');
+          }
         }
       } else {
-        if (errDiv) {
-          errDiv.style.display = 'block';
-          errDiv.style.color = '#C81E1E';
-          errDiv.textContent = 'Hata: ' + (data?.message || 'İmzalama başarısız oldu.');
+        // TEKİL İMZALAMA İSTEĞİ
+        const res = await fetch('/api/admin/invoice/sign', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-admin-key': this.adminPin
+          },
+          body: JSON.stringify({
+            orderId: this.activeInvoiceOrderId,
+            invoiceUuid: this.activeInvoiceUuid,
+            oid: this.activeInvoiceOid || '',
+            smsCode: smsCode,
+            adminKey: this.adminPin
+          })
+        });
+
+        const data = await res.json();
+        if (data && data.success) {
+          alert(`✅ Fatura Başarıyla İmzalandı!\n\nBelge No: ${data.invoiceNumber}\n\nFatura GİB e-Arşiv sistemine kaydedildi ve resmiyet kazandı.`);
+          
+          // Sipariş yerel durumunu güncelle
+          const targetOrder = this.orders.find(o => o.orderId === this.activeInvoiceOrderId);
+          if (targetOrder) {
+            targetOrder.invoiceStatus = 'SIGNED';
+            targetOrder.invoiceNumber = data.invoiceNumber;
+            targetOrder.invoiceUuid = this.activeInvoiceUuid;
+          }
+
+          this.closeSmsModal();
+          this.filterTable();
+          if (this.activeInvoiceOrderId) {
+            this.showDetail(this.activeInvoiceOrderId);
+          }
+        } else {
+          if (errDiv) {
+            errDiv.style.display = 'block';
+            errDiv.style.color = '#C81E1E';
+            errDiv.textContent = 'Hata: ' + (data?.message || 'İmzalama başarısız oldu.');
+          }
         }
       }
     } catch (e) {

@@ -558,21 +558,24 @@ class EarsivPortalService {
     };
     if (cookie) reqHeaders['Cookie'] = cookie;
 
-    // GİB Resmi e-Arşiv SMS İmzalama Protokolü (Furkan Kadıoğlu & mlevent/fatura & Cybersoft Standartı)
+    // GİB Resmi e-Arşiv SMS İmzalama Protokolü (Toplu & Tekil Destekli)
     const now = new Date();
     const formattedDate = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
     
-    const invoiceDescriptor = {
-      belgeTuru: 'FATURA',
-      ettn: invoiceUuid,
-      faturauuid: invoiceUuid,
-      onayDurumu: 'Onaylanmadı',
-      belgeTarihi: formattedDate,
-      ...(options.invoiceSummary || {})
-    };
+    const uuidList = Array.isArray(invoiceUuid) ? invoiceUuid : [invoiceUuid];
+    const dataArray = uuidList.map(item => {
+      const ettn = typeof item === 'object' ? (item.ettn || item.invoiceUuid) : item;
+      return {
+        belgeTuru: 'FATURA',
+        ettn: ettn,
+        faturauuid: ettn,
+        onayDurumu: 'Onaylanmadı',
+        belgeTarihi: formattedDate
+      };
+    });
 
     const signPayload = {
-      DATA: [invoiceDescriptor],
+      DATA: dataArray,
       SIFRE: cleanSms,
       OID: oid || '',
       OPR: 1
@@ -588,7 +591,7 @@ class EarsivPortalService {
         cmd: '0lhozfib5410mp',
         pageName: 'RG_SMSONAY',
         jp: {
-          DATA: [{ belgeTuru: 'FATURA', ettn: invoiceUuid }],
+          DATA: dataArray.map(d => ({ belgeTuru: 'FATURA', ettn: d.ettn })),
           SIFRE: cleanSms,
           OID: oid || '',
           OPR: 1
@@ -598,17 +601,6 @@ class EarsivPortalService {
         cmd: 'EARSIV_PORTAL_SMSSIFRE_DOGRULA',
         pageName: 'RG_SMSONAY',
         jp: signPayload
-      },
-      {
-        cmd: 'EARSIV_PORTAL_SMSSIFRE_DOGRULA',
-        pageName: 'RG_SMSONAY',
-        jp: {
-          SIFRE: cleanSms,
-          sifre: cleanSms,
-          OID: oid || '',
-          opr: 1,
-          list: [{ faturauuid: invoiceUuid, ettn: invoiceUuid }]
-        }
       }
     ];
 

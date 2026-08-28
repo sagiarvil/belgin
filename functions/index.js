@@ -885,6 +885,103 @@ async function handleInvoiceRequest(req, res) {
     }
   }
 
+  // 3.5. TOPLU TASLAK OLUŞTURMA & TEK SMS GÖNDERME
+  if (path.endsWith('/batch-draft') || req.body?.action === 'batch-draft') {
+    let activeToken = null;
+    let activeCookie = '';
+    try {
+      const { orderIds } = req.body || {};
+      if (!Array.isArray(orderIds) || orderIds.length === 0) {
+        return res.status(400).json({ success: false, message: 'orderIds dizisi zorunludur.' });
+      }
+
+      const authData = await earsiv.login();
+      activeToken = authData.token;
+      activeCookie = authData.cookie || '';
+
+      const results = [];
+      for (const orderId of orderIds) {
+        const orderRef = db.collection('orders').doc(orderId);
+        const doc = await orderRef.get();
+        if (!doc.exists) continue;
+        const order = doc.data();
+        const rawTotal = Number(order.totalAmount || order.total || (order.payment && order.payment.amount) || (order.amountInKurus ? order.amountInKurus / 100 : 0) || 0);
+        order.totalAmount = rawTotal;
+
+        const draftRes = await earsiv.createDraftInvoice(activeToken, order, null, { cookie: activeCookie });
+        await orderRef.update({
+          invoiceStatus: 'DRAFT',
+          invoiceUuid: draftRes.invoiceUuid,
+          invoiceBreakdown: draftRes.breakdown,
+          invoiceDraftCreatedAt: admin.firestore.FieldValue.serverTimestamp(),
+          updatedAt: admin.firestore.FieldValue.serverTimestamp()
+        });
+        results.push({ orderId, invoiceUuid: draftRes.invoiceUuid, totalAmount: rawTotal });
+      }
+
+      // Tüm taslaklar için TEK BİR SMS kodu tetikle
+      const smsResult = await earsiv.sendSmsOtp(activeToken, { cookie: activeCookie });
+
+      return res.status(200).json({
+        success: true,
+        message: `${results.length} adet sipariş için GİB taslağı açıldı ve tek SMS onay kodu iletildi.`,
+        oid: smsResult.oid || '',
+        phone: smsResult.phone || '',
+        draftInvoices: results
+      });
+    } catch (err) {
+      console.error('[Invoice API Batch Draft Error]:', err.message);
+      return res.status(500).json({ success: false, message: 'Toplu taslak hatası: ' + err.message });
+    } finally {
+      if (activeToken) {
+        try { await earsiv.logout(activeToken, activeCookie); } catch (_) {}
+      }
+    }
+  }
+
+  // 3.6. TOPLU SMS DOĞRULAMA & HEPSİNİ İMZALAMA
+  if (path.endsWith('/batch-sign') || req.body?.action === 'batch-sign') {
+    let activeToken = null;
+    let activeCookie = '';
+    try {
+      const { items, smsCode, oid } = req.body || {}; // items: [{ orderId, invoiceUuid }]
+      if (!Array.isArray(items) || items.length === 0 || !smsCode) {
+        return res.status(400).json({ success: false, message: 'items ve smsCode zorunludur.' });
+      }
+
+      const authData = await earsiv.login();
+      activeToken = authData.token;
+      activeCookie = authData.cookie || '';
+
+      const uuidList = items.map(it => it.invoiceUuid);
+      await earsiv.verifySmsAndSign(activeToken, smsCode, uuidList, oid || '', { cookie: activeCookie });
+
+      const signedCount = items.length;
+      for (const it of items) {
+        const orderRef = db.collection('orders').doc(it.orderId);
+        await orderRef.update({
+          invoiceStatus: 'SIGNED',
+          invoiceUuid: it.invoiceUuid,
+          invoicedAt: admin.firestore.FieldValue.serverTimestamp(),
+          updatedAt: admin.firestore.FieldValue.serverTimestamp()
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: `Tebrikler! ${signedCount} adet fatura tek SMS ile GİB üzerinde başarıyla imzalandı.`,
+        signedCount
+      });
+    } catch (err) {
+      console.error('[Invoice API Batch Sign Error]:', err.message);
+      return res.status(500).json({ success: false, message: 'Toplu imzalama hatası: ' + err.message });
+    } finally {
+      if (activeToken) {
+        try { await earsiv.logout(activeToken, activeCookie); } catch (_) {}
+      }
+    }
+  }
+
   // 4. GÜVENLİ ÇIKIŞ / FORCE LOGOUT
   if (path.endsWith('/force-logout') || req.body?.action === 'logout') {
     try {
