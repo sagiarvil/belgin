@@ -513,22 +513,29 @@ class PaymentService {
         status: nextStatus,
       }, admin);
 
+      // 1. MOBİL ANLIK PUSH BİLDİRİMİ (iPhone / Android Telegram & NTFY) — SIFIR GECİKME
+      const updatedOrderData = {
+        ...order,
+        status: nextStatus,
+        paymentStatus: 'PAID',
+        totalAmountReceived: totalReceived,
+        paidAt: new Date(),
+      };
+      
+      const pushPromise = notifier.sendPaymentPushNotification(updatedOrderData).catch((pushErr) => {
+        console.error('[Notifier] Push bildirim hatası:', pushErr.message);
+      });
+
+      // 2. Hukuki Delil E-Postaları (Arka planda paralel işlensin)
       if (mailer && typeof mailer.dispatchOrderEvidenceEmails === 'function') {
-        try {
-          const updatedDoc = await orderRef.get();
-          await mailer.dispatchOrderEvidenceEmails(updatedDoc.data());
-        } catch (mailErr) {
-          console.error('[Mailer] Callback e-posta gönderim hatası:', mailErr.message);
-        }
+        orderRef.get().then((snap) => {
+          mailer.dispatchOrderEvidenceEmails(snap.data()).catch((mErr) => {
+            console.error('[Mailer] Callback e-posta hatası:', mErr.message);
+          });
+        }).catch(() => {});
       }
 
-      // Mobil Anlık Push Bildirimi (iPhone & Android ntfy)
-      try {
-        const orderSnapshot = (await orderRef.get()).data() || order;
-        await notifier.sendPaymentPushNotification(orderSnapshot);
-      } catch (pushErr) {
-        console.error('[Notifier] Push bildirim gönderim hatası:', pushErr.message);
-      }
+      await pushPromise;
 
       return { status: 200, message: 'OK', isSuccess: true, orderId };
     } else {

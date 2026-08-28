@@ -705,24 +705,21 @@ p, span, li, td, th, label, input, button, select, textarea {
   object-fit: cover;
   object-position: center center;
   display: block;
-  filter: brightness(1.08) contrast(1.02);
 }
 
-/* Hafif aydınlık & sıcak tonlu atmosfer filtresi ve sağ metin kontrastı */
+/* Hafif Karartan Lüks Sinematik Katman & Metin Kontrastı */
 .hero-gradient-overlay {
   position: absolute;
   inset: 0;
   z-index: 2;
   pointer-events: none;
-  background: 
-    radial-gradient(ellipse at 30% 45%, rgba(255, 245, 225, 0.07) 0%, rgba(212, 175, 55, 0.04) 45%, transparent 75%),
-    linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.04) 0%,
-      rgba(3, 6, 5, 0) 35%,
-      rgba(3, 6, 5, 0.35) 68%,
-      rgba(3, 6, 5, 0.58) 100%
-    );
+  background: linear-gradient(
+    90deg,
+    rgba(7, 10, 9, 0.28) 0%,
+    rgba(7, 10, 9, 0.38) 40%,
+    rgba(7, 10, 9, 0.65) 70%,
+    rgba(7, 10, 9, 0.84) 100%
+  );
 }
 
 .hero-container {

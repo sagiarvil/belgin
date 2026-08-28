@@ -383,22 +383,32 @@ exports.getAdminOrders = functions
           createdAtIso = new Date().toISOString();
         }
 
-        const isPaid = (data.payment && (data.payment.status === 'PAID' || data.payment.status === 'PAYMENT_PAID')) || 
+        const isFailed = data.status === 'PAYMENT_FAILED' || 
+                         data.status === 'FAILED' || 
+                         data.paymentStatus === 'FAILED' || 
+                         data.paymentStatus === 'PAYMENT_FAILED' ||
+                         data.status === 'CANCELLED';
+
+        const isPaid = !isFailed && (
+                       (data.payment && (data.payment.status === 'PAID' || data.payment.status === 'PAYMENT_PAID')) || 
                        data.paymentStatus === 'PAID' || 
                        data.paymentStatus === 'PAYMENT_PAID' || 
                        data.status === 'COMPLETED' || 
                        data.status === 'PAID' ||
                        data.status === 'AWAITING_STORE_PICKUP' ||
+                       data.status === 'PAYMENT_SESSION_READY' ||
                        data.status === 'IDENTITY_VERIFIED' ||
                        data.status === 'DELIVERED' ||
-                       data.status === 'SUCCESS';
+                       data.status === 'SUCCESS' ||
+                       (Number(data.total || data.totalAmount || 0) > 0)
+        );
 
         const orderItem = {
           orderId: data.orderId || docId,
           evidenceId: data.evidenceId || docId,
           totalAmount: Number(data.total || (data.payment && data.payment.amount) || 0),
-          status: isPaid ? (data.status === 'AWAITING_STORE_PICKUP' ? 'AWAITING_STORE_PICKUP' : 'COMPLETED') : (data.status || 'PENDING'),
-          paymentStatus: isPaid ? 'PAID' : (data.paymentStatus || 'PENDING'),
+          status: isPaid ? (data.status === 'AWAITING_STORE_PICKUP' ? 'AWAITING_STORE_PICKUP' : 'COMPLETED') : (isFailed ? 'FAILED' : 'PENDING'),
+          paymentStatus: isPaid ? 'PAID' : (isFailed ? 'FAILED' : 'PENDING'),
           isPaid,
           deliveryStatus: data.deliveryStatus || (isPaid ? 'STORE_PICKUP_REQUIRED' : 'PENDING'),
           deliveryMethod: data.deliveryMethod || 'showroom',
