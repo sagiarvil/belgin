@@ -1050,6 +1050,15 @@ async function handleInvoiceRequest(req, res) {
       const customerPhone = order?.customerPhone || order?.customer?.phone || '05315779069';
       const customerEmail = order?.customerEmail || order?.customer?.email || 'musteri@belginkuyumculuk.com';
 
+      const bd = order?.invoiceBreakdown || {
+        hasGoldAmount: (Number(order?.totalAmount || 120000) * 0.99).toFixed(2),
+        workmanshipNet: ((Number(order?.totalAmount || 120000) * 0.01) / 1.20).toFixed(2),
+        workmanshipKdv: (((Number(order?.totalAmount || 120000) * 0.01) / 1.20) * 0.20).toFixed(2),
+        workmanshipTotal: (Number(order?.totalAmount || 120000) * 0.01).toFixed(2),
+        totalMatrah: ((Number(order?.totalAmount || 120000) * 0.99) + ((Number(order?.totalAmount || 120000) * 0.01) / 1.20)).toFixed(2),
+        grandTotal: Number(order?.totalAmount || 120000).toFixed(2)
+      };
+
       // 1:1 Resmi GİB e-Arşiv Şablonu (Kırmızı-Mavi GİB Logosu, Karekod, Resmi Tablo ve Ay-Yıldız)
       const officialGibHtml = `<!DOCTYPE html>
 <html lang="tr">
