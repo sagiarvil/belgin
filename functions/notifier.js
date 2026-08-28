@@ -89,13 +89,47 @@ async function sendTelegramNotification(order, botToken = TELEGRAM_BOT_TOKEN, ch
   }
 }
 
+// Mükerrer bildirim engelleme önbelleği (OrderId -> timestamp)
+const recentNotifiedOrders = new Map();
+const NOTIFY_DEDUPE_MS = 15 * 60 * 1000; // 15 dakika içinde aynı sipariş için tekrar bildirim atılmaz
+
 /**
  * Başarılı Kredi Kartı Ödemesi İçin Hem NTFY Hem Telegram Bildirimi Gönderir
  */
 async function sendPaymentPushNotification(order, options = {}) {
-  const topic = String(options.topic || process.env.NTFY_TOPIC || DEFAULT_NTFY_TOPIC).trim();
-  const orderId = order.orderId || 'BLG-' + Date.now();
+  if (!order || typeof order !== 'object') {
+    return { success: false, skipped: true, reason: 'INVALID_ORDER_DATA' };
+  }
+
+  const orderId = String(order.orderId || '').trim();
   const amount = Number(order.totalAmount || order.total || (order.payment && order.payment.amount) || 0);
+
+  // Yalnızca başarılı, ödenmiş ve pozitif tutarlı siparişler bildirilir
+  const isPaid = order.isPaid === true || order.paymentStatus === 'PAID' || order.status === 'PAID' || order.status === 'COMPLETED' || (order.payment && order.payment.status === 'PAID');
+  if (!isPaid || amount <= 0) {
+    return { success: false, skipped: true, reason: 'NOT_A_PAID_ORDER' };
+  }
+
+  // Mükerrer bildirim kontrolü
+  const now = Date.now();
+  if (orderId && recentNotifiedOrders.has(orderId)) {
+    const lastNotified = recentNotifiedOrders.get(orderId);
+    if (now - lastNotified < NOTIFY_DEDUPE_MS) {
+      console.log(`[Notifier] Sipariş ${orderId} yakın zamanda zaten bildirildi, mükerrer bildirim atlandı.`);
+      return { success: true, skipped: true, reason: 'ALREADY_NOTIFIED_RECENTLY' };
+    }
+  }
+  if (orderId) {
+    recentNotifiedOrders.set(orderId, now);
+    // Eski kayıtları temizle
+    if (recentNotifiedOrders.size > 200) {
+      for (const [id, ts] of recentNotifiedOrders.entries()) {
+        if (now - ts > NOTIFY_DEDUPE_MS) recentNotifiedOrders.delete(id);
+      }
+    }
+  }
+
+  const topic = String(options.topic || process.env.NTFY_TOPIC || DEFAULT_NTFY_TOPIC).trim();
   const formattedAmount = formatCurrency(amount);
   const customerName = (order.customer && order.customer.name) || order.customerName || 'Müşteri';
   const customerPhone = (order.customer && order.customer.phone) || order.customerPhone || '—';

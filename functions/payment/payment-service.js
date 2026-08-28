@@ -113,11 +113,22 @@ function verifyVipToken(token, expectedId = '') {
 
 function isHighValueCatalogProduct(product) {
   if (!product || Number(product.price) < HIGH_VALUE_SECURE_DELIVERY_THRESHOLD) return false;
+
   const category = String(product.category || '').toLowerCase();
   const metal = String(product.metal || '').toLowerCase();
-  const isWatch = category === 'watch' || category === 'saat';
-  const isGold = product.isGold === true || category === 'gold' || category === 'altin' || category === 'altın' || metal.includes('altın') || /au\s?\d{3}/i.test(metal);
-  return isWatch || isGold;
+  const isPreOwned = product.isPreOwned === true || category === 'seckin-urunler' || category === 'ikinci-el' || category === 'luxury';
+  const isGold = product.isGold === true || category === 'gold' || category === 'altin' || category === 'altın' || category === 'mucevherat' || category === 'jewelry' || category === 'jewellery' || metal.includes('altın') || /au\s?\d{3}/i.test(metal);
+
+  // 1. Seçkin Ürünler (İkinci El / Lüks Koleksiyon Saatler: Rolex, AP vb.) -> Sadece Mağaza Teslim Zorunludur
+  if (isPreOwned) return true;
+
+  // 2. Altın ve Mücevherat Ürünleri (Bilezik, Sarrafiye, Pırlanta) -> Sadece Mağaza Teslim Zorunludur
+  if (isGold) return true;
+
+  // 3. Saatler Kategorisi (Carren, Saat&Saat vb. tüm sıfır saatler) -> Ücretsiz Kargo Yapılabilir
+  if (category === 'saat' || category === 'watch') return false;
+
+  return true;
 }
 
 function normalizeCart(clientItems, isVipPayment = false, vipToken = null, productCatalog = {}) {
@@ -205,24 +216,35 @@ function validateLegalAndDelivery(body, items) {
 
   if (hasHighValue) {
     if (!highValueDeliveryAccepted) {
-      const error = new Error('12.000 TL ve üzerindeki altın/saat ürünü için mağaza teslim, kimlik doğrulama ve işlem güvenliği koşulu onayı zorunludur.');
+      const error = new Error('12.000 TL ve üzerindeki altın/mücevherat ürünü için mağaza teslim, kimlik doğrulama ve işlem güvenliği koşulu onayı zorunludur.');
       error.code = 'HIGH_VALUE_CONSENT_REQUIRED';
       throw error;
     }
     if (deliveryMethod !== 'showroom') {
-      const error = new Error('12.000 TL ve üzerindeki altın ve saat ürünleri yalnız mağazadan teslim edilir.');
+      const error = new Error('12.000 TL ve üzerindeki altın ve mücevherat ürünleri yalnız mağazadan teslim edilir.');
       error.code = 'HIGH_VALUE_DELIVERY_REQUIRED';
       throw error;
     }
-  } else if (!['showroom', 'carrier'].includes(deliveryMethod)) {
+  } else if (!['showroom', 'carrier', 'cargo'].includes(deliveryMethod)) {
     const error = new Error('Geçerli teslim yöntemi seçilmelidir.');
     error.code = 'DELIVERY_METHOD_INVALID';
     throw error;
   }
 
+  const normalizedDelivery = hasHighValue ? 'showroom' : (deliveryMethod === 'cargo' ? 'carrier' : deliveryMethod);
+
+  if (normalizedDelivery === 'carrier') {
+    const address = String(body.customerAddress || body.user_address || body.address || '').trim();
+    if (!address || address.length < 10) {
+      const error = new Error('Kargo ile teslimat için geçerli ve eksiksiz bir teslimat adresi zorunludur.');
+      error.code = 'SHIPPING_ADDRESS_REQUIRED';
+      throw error;
+    }
+  }
+
   return {
     hasHighValue,
-    deliveryMethod: hasHighValue ? 'showroom' : deliveryMethod,
+    deliveryMethod: normalizedDelivery,
     termsAccepted,
     preInformationAccepted,
     highValueDeliveryAccepted: hasHighValue ? highValueDeliveryAccepted : false,

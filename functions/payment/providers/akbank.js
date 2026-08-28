@@ -221,25 +221,24 @@ class AkbankProvider {
       }
     }
 
-    // 3D Secure / Onay Başarısı (Doküman Bölüm 5 & 6)
+    // 3D Secure / Akbank EST Onay Başarısı (Doküman Bölüm 5 & 6)
+    const responseText = String(callbackData.Response || callbackData.response || '').trim();
     const isResponseApproved = (
+      responseText.toLowerCase() === 'approved' ||
       currentResponseCode === '00' || 
-      currentResponseCode === 'VPS-0000' || 
-      currentResponseCode === '0' || 
-      callbackData.Response === 'Approved' || 
-      callbackData.responseMessage === 'Approved' ||
-      callbackData.ErrMsg === '' ||
-      !callbackData.ErrMsg
+      currentResponseCode === 'VPS-0000'
     );
-    const is3dAuthenticated = ['1', '2', '3', '4'].includes(mdStatusStr) || !rawMdStatus;
-    const isApproved = isResponseApproved && is3dAuthenticated && isHashValid;
+    const is3dAuthenticated = ['1', '2', '3', '4'].includes(mdStatusStr);
+    const hasError = Boolean(callbackData.ErrMsg && callbackData.ErrMsg.trim() !== '');
 
-    if (!isApproved && !testMode) {
+    const isApproved = isResponseApproved && is3dAuthenticated && isHashValid && !hasError;
+
+    if (!isApproved) {
       return {
         isValid: true,
         isSuccess: false,
         failReasonCode: currentResponseCode || 'BANK_REJECT',
-        failReasonMsg: callbackData.ErrMsg || callbackData.responseMessage || 'Kart limiti yetersiz veya işlem banka tarafından onaylanmadı.',
+        failReasonMsg: callbackData.ErrMsg || callbackData.responseMessage || 'İşlem banka veya 3D Secure tarafından onaylanmadı.',
         orderId: currentOrderId
       };
     }
