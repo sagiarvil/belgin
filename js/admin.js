@@ -687,6 +687,41 @@ const AdminApp = {
     if (modal) modal.classList.remove('open');
   },
 
+  // MOBİL PUSH BİLDİRİM TESTİ GÖNDER
+  async sendTestPush(evt) {
+    const btn = evt?.currentTarget;
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = '⏳ Gönderiliyor...';
+    }
+    try {
+      const res = await fetch('/api/admin/test-notification', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-key': this.adminPin
+        },
+        body: JSON.stringify({
+          adminKey: this.adminPin,
+          amount: 120000
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert('✅ 120.000 TL Test Ödeme Bildirimi ntfy üzerinden telefonunuza gönderildi!\n\nLütfen telefonunuzdaki ntfy uygulamasını ve kilit ekranınızı kontrol ediniz.');
+      } else {
+        alert('❌ Bildirim gönderilemedi: ' + (data.message || data.error || 'Bilinmeyen hata'));
+      }
+    } catch (e) {
+      alert('❌ Bildirim gönderilirken hata oluştu: ' + e.message);
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = '<span>📱 Test Bildirimi</span>';
+      }
+    }
+  },
+
   // EXCEL / CSV RAPORU İNDİR
   exportToCsv() {
     if (!this.orders || this.orders.length === 0) {

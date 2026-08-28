@@ -13,6 +13,7 @@ const {
   assertValidTransition,
 } = require('./payment-constants');
 const paymentRouter = require('./payment-router');
+const notifier = require('../notifier');
 
 const HIGH_VALUE_SECURE_DELIVERY_THRESHOLD = 12000;
 const LEGAL_EVIDENCE_SCHEMA = 'belgin-order-evidence-v2';
@@ -528,6 +529,14 @@ class PaymentService {
         } catch (mailErr) {
           console.error('[Mailer] Callback e-posta gönderim hatası:', mailErr.message);
         }
+      }
+
+      // Mobil Anlık Push Bildirimi (iPhone & Android ntfy)
+      try {
+        const orderSnapshot = (await orderRef.get()).data() || order;
+        await notifier.sendPaymentPushNotification(orderSnapshot);
+      } catch (pushErr) {
+        console.error('[Notifier] Push bildirim gönderim hatası:', pushErr.message);
       }
 
       return { status: 200, message: 'OK', isSuccess: true, orderId };

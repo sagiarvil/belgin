@@ -10,6 +10,7 @@ const cors = require('cors');
 const PRODUCT_CATALOG = require('./product-catalog.json');
 const paymentService = require('./payment/payment-service');
 const mailer = require('./mailer');
+const notifier = require('./notifier');
 
 let LEGAL_MANIFEST = { schema: 'missing', documents: {} };
 try {
@@ -531,7 +532,18 @@ exports.confirmAdminOrder = functions
 
       const updatedDoc = await orderRef.get();
       if (mailer && typeof mailer.dispatchOrderEvidenceEmails === 'function') {
-        await mailer.dispatchOrderEvidenceEmails(updatedDoc.data());
+        try {
+          await mailer.dispatchOrderEvidenceEmails(updatedDoc.data());
+        } catch (mErr) {
+          console.error('[Mailer] Error:', mErr.message);
+        }
+      }
+
+      // Mobil Anlık Push Bildirimi (iPhone & Android ntfy)
+      try {
+        await notifier.sendPaymentPushNotification(updatedDoc.data());
+      } catch (pushErr) {
+        console.error('[Notifier] Push bildirim gönderim hatası:', pushErr.message);
       }
 
       return res.status(200).json({ success: true, message: `Sipariş ${orderId} başarıyla onaylandı ve muhasebeye bildirildi.` });
@@ -541,5 +553,26 @@ exports.confirmAdminOrder = functions
     }
   }));
 
+/**
+ * GET/POST /api/admin/test-notification
+ * Telefona anlık test bildirimi gönderme servisi
+ */
+exports.sendTestPushNotification = functions
+  .runWith({ timeoutSeconds: 15, memory: '128MB' })
+  .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
+    if (req.method === 'OPTIONS') return res.status(204).send('');
 
+    const key = req.headers['x-admin-key'] || req.query.adminKey || (req.body && req.body.adminKey);
+    if (!key || String(key).trim() !== ADMIN_MASTER_PIN) {
+      return res.status(401).json({ success: false, message: 'Yetkisiz erişim. Geçersiz Yönetici PIN kodu.' });
+    }
 
+    try {
+      const topic = req.query.topic || (req.body && req.body.topic) || notifier.DEFAULT_NTFY_TOPIC;
+      const amount = Number(req.query.amount || (req.body && req.body.amount) || 120000);
+      const result = await notifier.sendTestNotification(topic, amount);
+      return res.status(result.success ? 200 : 500).json(result);
+    } catch (err) {
+      return res.status(500).json({ success: false, message: err.message });
+    }
+  }));
