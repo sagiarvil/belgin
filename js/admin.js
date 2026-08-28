@@ -568,6 +568,7 @@ const AdminApp = {
           <td>${statusBadge}</td>
           <td style="font-size:12px;">${o.deliveryMethod === 'showroom' ? '🏢 Showroom' : '📦 Kargo'}</td>
           <td style="display:flex; gap:6px;">
+            ${!isPaid ? `<button class="btn-admin-primary" style="padding:4px 9px; font-size:11.5px; background:#196C3A; border-color:#196C3A;" onclick="AdminApp.confirmOrder('${o.orderId}')" title="Tahsilatı Onayla">✅ Onayla</button>` : ''}
             <button class="btn-admin-secondary" style="padding:4px 9px; font-size:11.5px;" onclick="AdminApp.showDetail('${o.orderId}')">
               Detay
             </button>

@@ -383,20 +383,24 @@ exports.getAdminOrders = functions
           createdAtIso = new Date().toISOString();
         }
 
-        const isPaid = (data.payment && data.payment.status === 'PAID') || 
+        const isPaid = (data.payment && (data.payment.status === 'PAID' || data.payment.status === 'PAYMENT_PAID')) || 
                        data.paymentStatus === 'PAID' || 
+                       data.paymentStatus === 'PAYMENT_PAID' || 
                        data.status === 'COMPLETED' || 
                        data.status === 'PAID' ||
+                       data.status === 'AWAITING_STORE_PICKUP' ||
+                       data.status === 'IDENTITY_VERIFIED' ||
+                       data.status === 'DELIVERED' ||
                        data.status === 'SUCCESS';
 
         const orderItem = {
           orderId: data.orderId || docId,
           evidenceId: data.evidenceId || docId,
           totalAmount: Number(data.total || (data.payment && data.payment.amount) || 0),
-          status: isPaid ? 'COMPLETED' : (data.status || 'PENDING'),
+          status: isPaid ? (data.status === 'AWAITING_STORE_PICKUP' ? 'AWAITING_STORE_PICKUP' : 'COMPLETED') : (data.status || 'PENDING'),
           paymentStatus: isPaid ? 'PAID' : (data.paymentStatus || 'PENDING'),
           isPaid,
-          deliveryStatus: data.deliveryStatus || 'PENDING',
+          deliveryStatus: data.deliveryStatus || (isPaid ? 'STORE_PICKUP_REQUIRED' : 'PENDING'),
           deliveryMethod: data.deliveryMethod || 'showroom',
           provider: (data.payment && data.payment.provider) || data.provider || 'AKBANK',
           customerName: (data.customer && data.customer.name) || data.customerName || 'Müşteri',

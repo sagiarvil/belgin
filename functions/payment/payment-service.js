@@ -452,7 +452,6 @@ class PaymentService {
   }
 
   async handleCallback({ providerName, body, db, admin, mailer }) {
-    const provider = paymentRouter.getProvider(providerName);
     const orderId = String(
       body?.merchant_oid || body?.orderId || body?.oid || 
       body?.merch_oid || body?.ORDERID || body?.MerchantOrderId || 
@@ -469,16 +468,8 @@ class PaymentService {
     }
 
     const order = orderDoc.data();
-
-    // Provider Binding Güvenlik Kontrolü
-    if (order.payment?.provider && order.payment.provider !== provider.name) {
-      console.error(`[Payment Security] PROVIDER_MISMATCH! Sipariş Provider: ${order.payment.provider}, Gelen: ${provider.name}`);
-      await appendAuditEvent(orderRef, 'PROVIDER_MISMATCH', {
-        expectedProvider: order.payment.provider,
-        incomingProvider: provider.name,
-      }, admin);
-      return { status: 400, message: 'PROVIDER_MISMATCH: Callback sağlayıcısı sipariş ile eşleşmiyor.' };
-    }
+    const effectiveProviderName = String(order.payment?.provider || order.provider || providerName || DEFAULT_PROVIDER).toUpperCase();
+    const provider = paymentRouter.getProvider(effectiveProviderName);
 
     // Atomic Idempotency Kontrolü: Zaten PAID ise hemen 200 OK dön
     if (['PAID', 'PAYMENT_PAID'].includes(order.paymentStatus) || [ORDER_STATUS.PAID, ORDER_STATUS.AWAITING_STORE_PICKUP, ORDER_STATUS.COMPLETED].includes(order.status)) {
