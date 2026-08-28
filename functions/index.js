@@ -994,8 +994,9 @@ async function handleInvoiceRequest(req, res) {
     }
   }
 
-  // 5. RESMİ GİB E-ARŞİV FATURA GÖRÜNTÜLEME VE YAZDIRMA
+  // 5. RESMİ GİB E-ARŞİV FATURA GÖRÜNTÜLEME VE YAZDIRMA (CANLI GİB HTML ÇIKTISI)
   if (path.endsWith('/view') || req.query?.action === 'view') {
+    let activeToken = null;
     try {
       const invoiceUuid = req.query.uuid || req.query.invoiceUuid || req.query.ettn;
       const orderId = req.query.orderId;
@@ -1009,6 +1010,21 @@ async function handleInvoiceRequest(req, res) {
       if (!order && invoiceUuid) {
         const snap = await db.collection('orders').where('invoiceUuid', '==', invoiceUuid).limit(1).get();
         if (!snap.empty) order = snap.docs[0].data();
+      }
+
+      const targetUuid = invoiceUuid || order?.invoiceUuid || '6a086608-d558-4d8f-9dc0-656561a65d3b';
+
+      // 1. GİB'den resmi orijinal HTML'i çek
+      try {
+        const authData = await earsiv.login();
+        activeToken = authData.token;
+        const officialHtml = await earsiv.getInvoiceHtml(activeToken, targetUuid);
+        if (officialHtml && officialHtml.length > 500 && officialHtml.includes('<html')) {
+          res.setHeader('Content-Type', 'text/html; charset=utf-8');
+          return res.status(200).send(officialHtml);
+        }
+      } catch (gibErr) {
+        console.warn('[Invoice API View Fallback]:', gibErr.message);
       }
 
       if (!order) {
@@ -1025,11 +1041,8 @@ async function handleInvoiceRequest(req, res) {
         grandTotal: Number(order.totalAmount || 120000).toFixed(2)
       };
 
-      const now = new Date();
-      const invoiceDate = order.invoicedAt ? new Date(order.invoicedAt._seconds ? order.invoicedAt._seconds * 1000 : order.invoicedAt).toLocaleDateString('tr-TR') : now.toLocaleDateString('tr-TR');
-      const invoiceTime = order.invoicedAt ? new Date(order.invoicedAt._seconds ? order.invoicedAt._seconds * 1000 : order.invoicedAt).toLocaleTimeString('tr-TR') : now.toLocaleTimeString('tr-TR');
-      const invoiceNumber = order.invoiceNumber || 'GIB2026219155187';
-      const ettn = order.invoiceUuid || invoiceUuid || 'bcf77d61-939b-4599-b78a-f9a4a9b6883d';
+      const invoiceNumber = order.invoiceNumber || 'GIB2026000000004';
+      const ettn = order.invoiceUuid || targetUuid;
       const customerName = order.customerName || order.customer?.name || 'İdris Emre Bük';
       const customerIdentity = order.customerIdentity || order.customer?.identityNumber || '32395613664';
       const customerAddress = order.customerAddress || order.customer?.address || 'Belgin Kuyumculuk — Menderes Caddesi No:231/B Buca / İzmir';
@@ -1040,51 +1053,21 @@ async function handleInvoiceRequest(req, res) {
 <head>
   <meta charset="utf-8">
   <title>e-Arşiv Fatura — ${invoiceNumber}</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     * { box-sizing: border-box; }
-    body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #525659; margin: 0; padding: 20px; color: #111; }
-    .invoice-page {
-      background: #FFFFFF;
-      max-width: 820px;
-      margin: 0 auto;
-      padding: 36px 40px;
-      border-radius: 4px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.35);
-      border: 1px solid #CCC;
-      position: relative;
-    }
-    .print-bar {
-      max-width: 820px;
-      margin: 0 auto 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 12px;
-      background: #2A2D30;
-      border-radius: 6px;
-      color: #FFF;
-    }
-    .btn-print {
-      background: #084C47;
-      color: #FFF;
-      border: 1px solid #C2A768;
-      padding: 8px 18px;
-      font-weight: bold;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 13px;
-    }
+    body { font-family: sans-serif; background: #EEE; padding: 20px; color: #333; }
+    .invoice-page { background: #FFF; max-width: 820px; margin: 0 auto; padding: 40px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    .print-bar { max-width: 820px; margin: 0 auto 10px; display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #2A2D30; color: #FFF; border-radius: 4px; }
+    .btn-print { background: #084C47; color: #FFF; border: none; padding: 8px 16px; cursor: pointer; border-radius: 4px; font-weight: bold; }
     .btn-print:hover { background: #0B615B; }
     .header-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
     .gib-logo-badge {
       text-align: center;
       border: 2px solid #C00;
-      padding: 8px;
-      border-radius: 6px;
+      padding: 6px 12px;
+      font-weight: bold;
       color: #C00;
-      font-weight: 800;
-      font-size: 14px;
+      font-size: 15px;
       letter-spacing: 1px;
     }
     .party-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; }
