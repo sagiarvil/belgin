@@ -716,13 +716,14 @@ async function handleInvoiceRequest(req, res) {
   const path = req.path || '';
   const earsiv = new EarsivPortalService();
 
-  // 1. DRAFT & SMS TETİKLEME
-  // 1. DRAFT & SMS TETİKLEME
+  // 1. GİB E-ARŞİV TASLAK FATURA OLUŞTUR VE SMS TETİKLE
   if (path.endsWith('/draft') || req.body?.action === 'draft') {
+    let activeToken = null;
+    let activeCookie = '';
     try {
       const { orderId, hasGoldAmount, workmanshipAmount } = req.body || {};
       if (!orderId) {
-        return res.status(400).json({ success: false, message: 'Sipariş ID (orderId) zorunludur.' });
+        return res.status(400).json({ success: false, message: 'orderId zorunludur.' });
       }
 
       const orderRef = db.collection('orders').doc(orderId);
@@ -735,29 +736,9 @@ async function handleInvoiceRequest(req, res) {
       const rawTotal = Number(req.body.totalAmount || order.totalAmount || order.total || (order.payment && order.payment.amount) || (order.amountInKurus ? order.amountInKurus / 100 : 0) || 0);
       order.totalAmount = rawTotal;
 
-      let token = order.gibSessionToken || null;
-      let cookie = order.gibSessionCookie || '';
-
-      if (!token) {
-        try {
-          const authData = await earsiv.getActiveToken();
-          token = authData.token || authData;
-          cookie = authData.cookie || '';
-        } catch (loginErr) {
-          if (String(loginErr.message).includes('birden fazla giriş')) {
-            console.warn('[Invoice API] Oturum çakışması yakalandı, temizlik yapılıyor...');
-            if (order.gibSessionToken) {
-              try { await earsiv.logout(order.gibSessionToken, order.gibSessionCookie); } catch (_) {}
-            }
-            await new Promise(r => setTimeout(r, 1500));
-            const authData = await earsiv.getActiveToken();
-            token = authData.token || authData;
-            cookie = authData.cookie || '';
-          } else {
-            throw loginErr;
-          }
-        }
-      }
+      const authData = await earsiv.login();
+      activeToken = authData.token;
+      activeCookie = authData.cookie || '';
 
       let customBreakdown = null;
       if (hasGoldAmount !== undefined && workmanshipAmount !== undefined) {
@@ -770,34 +751,13 @@ async function handleInvoiceRequest(req, res) {
         });
       }
 
-      let draftResult;
-      try {
-        draftResult = await earsiv.createDraftInvoice(token, order, customBreakdown, { cookie });
-      } catch (draftErr) {
-        if (String(draftErr.message).includes('Oturum') || String(draftErr.message).includes('giriş') || String(draftErr.message).includes('clientIP')) {
-          try { await earsiv.logout(token, cookie); } catch (_) {}
-          const authData = await earsiv.getActiveToken();
-          token = authData.token || authData;
-          cookie = authData.cookie || '';
-          draftResult = await earsiv.createDraftInvoice(token, order, customBreakdown, { cookie });
-        } else {
-          throw draftErr;
-        }
-      }
-
-      let smsResult = { success: true };
-      try {
-        smsResult = await earsiv.sendSmsOtp(token, { cookie });
-      } catch (smsErr) {
-        console.warn('[Invoice API] SMS tetikleme uyarısı:', smsErr.message);
-      }
+      const draftResult = await earsiv.createDraftInvoice(activeToken, order, customBreakdown, { cookie: activeCookie });
+      const smsResult = await earsiv.sendSmsOtp(activeToken, { cookie: activeCookie });
 
       await orderRef.update({
         invoiceStatus: 'DRAFT',
         invoiceUuid: draftResult.invoiceUuid,
         invoiceBreakdown: draftResult.breakdown,
-        gibSessionToken: token,
-        gibSessionCookie: cookie || '',
         gibSessionOid: smsResult.oid || '',
         invoiceDraftCreatedAt: admin.firestore.FieldValue.serverTimestamp(),
         updatedAt: admin.firestore.FieldValue.serverTimestamp()
@@ -823,34 +783,27 @@ async function handleInvoiceRequest(req, res) {
     } catch (err) {
       console.error('[Invoice API Draft Error]:', err.message);
       return res.status(500).json({ success: false, message: 'Fatura oluşturma hatası: ' + err.message });
+    } finally {
+      if (activeToken) {
+        try { await earsiv.logout(activeToken, activeCookie); } catch (_) {}
+      }
     }
   }
 
   // 2. SMS TEKRAR GÖNDERME
   if (path.endsWith('/send-sms') || req.body?.action === 'send-sms') {
+    let activeToken = null;
+    let activeCookie = '';
     try {
       const { orderId } = req.body || {};
-      let token = null;
-      let cookie = '';
-      let orderRef = null;
-      if (orderId) {
-        orderRef = db.collection('orders').doc(orderId);
-        const doc = await orderRef.get();
-        if (doc.exists && doc.data().gibSessionToken) {
-          token = doc.data().gibSessionToken;
-          cookie = doc.data().gibSessionCookie || '';
-        }
-      }
+      const authData = await earsiv.login();
+      activeToken = authData.token;
+      activeCookie = authData.cookie || '';
 
-      if (!token) {
-        const authData = await earsiv.getActiveToken();
-        token = authData.token || authData;
-        cookie = authData.cookie || '';
-      }
-      const smsRes = await earsiv.sendSmsOtp(token, { cookie });
+      const smsRes = await earsiv.sendSmsOtp(activeToken, { cookie: activeCookie });
 
-      if (orderRef && smsRes.oid) {
-        await orderRef.update({ gibSessionOid: smsRes.oid });
+      if (orderId && smsRes.oid) {
+        await db.collection('orders').doc(orderId).update({ gibSessionOid: smsRes.oid });
       }
 
       return res.status(200).json({
@@ -863,6 +816,10 @@ async function handleInvoiceRequest(req, res) {
     } catch (err) {
       console.error('[Invoice API Send SMS Error]:', err.message);
       return res.status(500).json({ success: false, message: 'SMS gönderim hatası: ' + err.message });
+    } finally {
+      if (activeToken) {
+        try { await earsiv.logout(activeToken, activeCookie); } catch (_) {}
+      }
     }
   }
 
@@ -883,16 +840,12 @@ async function handleInvoiceRequest(req, res) {
       }
 
       const orderData = doc.data() || {};
-      activeToken = orderData.gibSessionToken;
-      activeCookie = orderData.gibSessionCookie || '';
-
-      if (!activeToken) {
-        const authData = await earsiv.getActiveToken();
-        activeToken = authData.token || authData;
-        activeCookie = authData.cookie || '';
-      }
-
       const oid = orderData.gibSessionOid || req.body.oid || '';
+
+      const authData = await earsiv.login();
+      activeToken = authData.token;
+      activeCookie = authData.cookie || '';
+
       const signRes = await earsiv.verifySmsAndSign(activeToken, smsCode, invoiceUuid, oid, { cookie: activeCookie });
 
       const invoiceNumber = signRes.invoiceNumber || `GIB${new Date().getFullYear()}${Math.floor(100000000 + Math.random() * 900000000)}`;
@@ -926,11 +879,8 @@ async function handleInvoiceRequest(req, res) {
       console.error('[Invoice API Sign Error]:', err.message);
       return res.status(500).json({ success: false, message: 'Fatura imzalama hatası: ' + err.message });
     } finally {
-      // 4. GARANTİLİ ÇİFT KATMANLI ÇIKIŞ (Finally Block Teardown)
       if (activeToken) {
-        try {
-          await earsiv.logout(activeToken, activeCookie);
-        } catch (_) {}
+        try { await earsiv.logout(activeToken, activeCookie); } catch (_) {}
       }
     }
   }
