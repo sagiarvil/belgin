@@ -1012,16 +1012,28 @@ async function handleInvoiceRequest(req, res) {
         if (!snap.empty) order = snap.docs[0].data();
       }
 
-      const targetUuid = invoiceUuid || order?.invoiceUuid || '6a086608-d558-4d8f-9dc0-656561a65d3b';
+      const now = new Date();
+      const invoiceDate = order?.invoicedAt ? new Date(order.invoicedAt._seconds ? order.invoicedAt._seconds * 1000 : order.invoicedAt).toLocaleDateString('tr-TR') : now.toLocaleDateString('tr-TR');
+      const invoiceTime = order?.invoicedAt ? new Date(order.invoicedAt._seconds ? order.invoicedAt._seconds * 1000 : order.invoicedAt).toLocaleTimeString('tr-TR') : now.toLocaleTimeString('tr-TR');
 
-      // 1. GİB'den resmi orijinal HTML'i çek
+      // 1. GİB'den resmi orijinal HTML'i çek (Ekran Görüntüsü 2'deki resmi GİB çıktısı)
       try {
         const authData = await earsiv.login();
         activeToken = authData.token;
         const officialHtml = await earsiv.getInvoiceHtml(activeToken, targetUuid);
         if (officialHtml && officialHtml.length > 500 && officialHtml.includes('<html')) {
+          const printBar = `
+            <div style="background:#2A2D30; color:#FFF; padding:10px 20px; display:flex; justify-content:space-between; align-items:center; font-family:sans-serif; font-size:13px; position:sticky; top:0; z-index:9999; box-shadow:0 2px 8px rgba(0,0,0,0.3);">
+              <div><strong>🧾 Gelir İdaresi Başkanlığı</strong> — e-Arşiv Resmi Fatura Çıktısı (ETTN: ${targetUuid})</div>
+              <div>
+                <button onclick="window.print()" style="background:#084C47; color:#FFF; border:1px solid #C2A768; padding:7px 16px; font-weight:bold; border-radius:4px; cursor:pointer; font-size:13px;">🖨️ Faturayı Yazdır / PDF İndir</button>
+              </div>
+            </div>
+            <style>@media print { div:first-child { display: none !important; } }</style>
+          `;
+          const finalHtml = officialHtml.replace('<body', printBar + '<body');
           res.setHeader('Content-Type', 'text/html; charset=utf-8');
-          return res.status(200).send(officialHtml);
+          return res.status(200).send(finalHtml.includes('printBar') ? finalHtml : printBar + officialHtml);
         }
       } catch (gibErr) {
         console.warn('[Invoice API View Fallback]:', gibErr.message);
