@@ -203,6 +203,38 @@
       font-weight: 600;
     }
 
+    .admin-status-dropdown {
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--admin-border);
+      background-color: #FFF;
+      cursor: pointer;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+    .admin-status-dropdown:hover {
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .admin-status-dropdown.status-paid {
+      background: #E8F5E9;
+      color: #1B5E20;
+      border-color: #A5D6A7;
+    }
+    .admin-status-dropdown.status-pending {
+      background: #FFF8E1;
+      color: #F57F17;
+      border-color: #FFE082;
+    }
+    .admin-status-dropdown.status-failed {
+      background: #FFEBEE;
+      color: #C62828;
+      border-color: #EF9A9A;
+    }
+
     .btn-admin-primary {
       background: var(--admin-teal);
       color: #FFF;
@@ -600,7 +632,7 @@
   <div class="admin-nav-actions">
     <span style="display:inline-flex; align-items:center; gap:6px; font-size:12px; color:#A9D5CB; background:rgba(255,255,255,0.08); padding:4px 10px; border-radius:20px; font-weight:600;"><span style="width:8px; height:8px; border-radius:50%; background:#4EBA6F; display:inline-block; box-shadow:0 0 8px #4EBA6F;"></span> Anlık Canlı Akış</span>
     <span id="liveClock" style="font-size:13px; color:var(--admin-gold); font-weight:600; font-family:monospace;">--:--:--</span>
-    <button class="btn-admin-logout" onclick="AdminApp.logout()">Çıkış Yap</button>
+    <button type="button" id="btnAdminLogout" class="btn-admin-logout" onclick="AdminApp.logout()">Çıkış Yap</button>
   </div>
 </header>
 
@@ -724,15 +756,13 @@
             <th>Tarih & Saat</th>
             <th>Müşteri Adı & Telefon</th>
             <th>Tutar (₺)</th>
-            <th>Kanal / POS</th>
             <th>Durum</th>
-            <th>Teslimat</th>
             <th>İşlem</th>
           </tr>
         </thead>
         <tbody id="ordersTableBody">
           <tr>
-            <td colspan="8" style="text-align:center; padding:36px; color:var(--admin-muted);">
+            <td colspan="6" style="text-align:center; padding:36px; color:var(--admin-muted);">
               Yükleniyor...
             </td>
           </tr>
@@ -784,6 +814,12 @@
     <input type="text" id="gibSmsInput" class="admin-pin-input" maxlength="6" placeholder="••••••" autofocus onkeydown="if(event.key==='Enter') AdminApp.submitInvoiceSms()">
     <div id="smsErrorMsg" style="color:#C81E1E; font-size:12.5px; font-weight:700; margin-bottom:14px; display:none;"></div>
 
+    <div style="margin-bottom:14px;">
+      <button type="button" id="btnResendGibSms" style="background:none; border:none; color:var(--admin-teal); font-size:12px; font-weight:700; cursor:pointer; text-decoration:underline;" onclick="AdminApp.resendInvoiceSms()">
+        📲 SMS Gelmedi mi? Kodu Tekrar Gönder
+      </button>
+    </div>
+
     <div style="display:flex; gap:10px; justify-content:center;">
       <button type="button" class="btn-admin-secondary" style="padding:10px 18px;" onclick="AdminApp.closeSmsModal()">Vazgeç</button>
       <button type="button" class="btn-admin-primary" id="btnSubmitGibSms" style="padding:10px 22px; background:#084C47; border-color:#084C47;" onclick="AdminApp.submitInvoiceSms()">
@@ -793,7 +829,7 @@
   </div>
 </div>
 
-<script src="js/admin.js"></script>
+<script src="js/admin.js?v=20260828-v16"></script>
 
 
 <div data-bank-pos-readiness="v1" style="max-width:1200px;margin:12px auto;padding:12px 18px;border:1px solid #d8e4e1;border-radius:8px;background:#f8fbfa;font-size:12px;line-height:1.6;color:#33413e;">

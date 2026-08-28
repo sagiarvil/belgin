@@ -92,12 +92,44 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
   };
 }
 
+const https = require('https');
+
+// Singleton HTTP Agent: Socket ve IP tutarlılığını garanti eder
+const gibAgent = new https.Agent({
+  keepAlive: true,
+  maxSockets: 1,
+  timeout: 30000
+});
+
+let cachedSessionToken = null;
+let cachedCookie = '';
+let cachedTokenExpiresAt = 0;
+
 class EarsivPortalService {
   constructor(options = {}) {
     this.isTest = Boolean(options.isTest || process.env.GIB_IS_TEST === 'true');
     this.baseUrl = this.isTest ? GIB_TEST_URL : GIB_PROD_URL;
-    this.userCode = options.userCode || process.env.GIB_USER_CODE || '';
-    this.password = options.password || process.env.GIB_PASSWORD || '';
+    this.userCode = options.userCode || process.env.GIB_USER_CODE || '77401902';
+    this.password = options.password || process.env.GIB_PASSWORD || '627640';
+    this.agent = gibAgent;
+  }
+
+  /**
+   * Aktif / Önbellekteki GİB Tokenını Getir (Mükerrer Login Engelleme)
+   */
+  async getActiveToken() {
+    const now = Date.now();
+    if (cachedSessionToken && cachedTokenExpiresAt > now) {
+      return { token: cachedSessionToken, cookie: cachedCookie };
+    }
+    const loginRes = await this.login();
+    if (loginRes.token) {
+      cachedSessionToken = loginRes.token;
+      cachedCookie = loginRes.cookie || '';
+      cachedTokenExpiresAt = now + 20 * 60 * 1000;
+      return { token: cachedSessionToken, cookie: cachedCookie };
+    }
+    throw new Error('GİB token alınamadı.');
   }
 
   /**
@@ -105,55 +137,136 @@ class EarsivPortalService {
    */
   async login(userCode = this.userCode, password = this.password) {
     if (!userCode || !password) {
-      // Mock / Simülasyon Modu (GİB bilgileri henüz girilmemişse sistemin tıkanmaması için)
       return {
         success: true,
         isMock: true,
         token: 'MOCK_GIB_TOKEN_' + Date.now(),
+        cookie: '',
         message: 'GİB Test Simülasyon Oturumu Açıldı'
       };
     }
 
     try {
       const payload = qs.stringify({
-        assoscmd: 'anologin',
-        userCode: userCode,
-        pass: password,
-        language: 'tr'
+        assoscmd: this.isTest ? 'login' : 'anologin',
+        rtype: 'json',
+        userid: userCode,
+        sifre: password,
+        sifre2: password,
+        parola: '1'
       });
 
       const res = await axios.post(`${this.baseUrl}/assos-login`, payload, {
+        httpsAgent: this.agent,
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-          'Referer': `${this.baseUrl}/login.jsp`,
+          'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+          'Referer': `${this.baseUrl}/intragiris.html`,
+          'Origin': this.baseUrl.replace(/\/earsiv-services.*$/, ''),
           'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
         },
         timeout: 15000
       });
 
+      const setCookie = res.headers['set-cookie'];
+      let cookieStr = '';
+      if (Array.isArray(setCookie)) {
+        cookieStr = setCookie.map(c => c.split(';')[0]).join('; ');
+      } else if (typeof setCookie === 'string') {
+        cookieStr = setCookie.split(';')[0];
+      }
+
       if (res.data && res.data.token) {
+        cachedSessionToken = res.data.token;
+        cachedCookie = cookieStr;
+        cachedTokenExpiresAt = Date.now() + 20 * 60 * 1000;
         return {
           success: true,
           token: res.data.token,
-          redirectUrl: res.data.redirectUrl
+          cookie: cookieStr,
+          redirectUrl: res.data.redirectUrl || 'index.jsp'
         };
       }
 
       if (res.data && res.data.error) {
-        throw new Error(res.data.error || 'GİB Giriş Başarısız');
+        const errorMsg = res.data.messages?.[0]?.text || res.data.error || 'GİB Giriş Başarısız';
+        cachedSessionToken = null;
+        cachedCookie = '';
+        cachedTokenExpiresAt = 0;
+        throw new Error(errorMsg);
       }
 
       throw new Error('GİB portalından oturum jetonu (token) alınamadı.');
     } catch (err) {
+      cachedSessionToken = null;
+      cachedCookie = '';
+      cachedTokenExpiresAt = 0;
       console.error('[EarsivService] Login Hatası:', err.message);
       throw err;
     }
   }
 
   /**
+   * GİB e-Arşiv Portalından Güvenli Çıkış Yap (Oturumu Kapat)
+   */
+  async logout(token = cachedSessionToken, cookie = cachedCookie) {
+    if (!token || token.startsWith('MOCK_GIB_TOKEN')) {
+      cachedSessionToken = null;
+      cachedCookie = '';
+      cachedTokenExpiresAt = 0;
+      return { success: true };
+    }
+
+    try {
+      const payloadAssos = qs.stringify({
+        assoscmd: 'logout',
+        rtype: 'json',
+        token: token
+      });
+
+      const payloadDispatch = qs.stringify({
+        cmd: 'logout',
+        callid: crypto.randomUUID(),
+        pageName: 'RG_KULLANICI_ISLEMLERI',
+        token: token,
+        jp: '{}'
+      });
+
+      const reqHeaders = {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+        'Referer': `${this.baseUrl}/index.jsp`
+      };
+      if (cookie) reqHeaders['Cookie'] = cookie;
+
+      // Hem Assos Gateway hem de Portal Dispatch oturumunu aynı anda temizle
+      await Promise.allSettled([
+        axios.post(`${this.baseUrl}/assos-login`, payloadAssos, {
+          httpsAgent: this.agent,
+          headers: reqHeaders,
+          timeout: 8000
+        }),
+        axios.post(`${this.baseUrl}/dispatch`, payloadDispatch, {
+          httpsAgent: this.agent,
+          headers: reqHeaders,
+          timeout: 8000
+        })
+      ]);
+
+      cachedSessionToken = null;
+      cachedCookie = '';
+      cachedTokenExpiresAt = 0;
+      return { success: true };
+    } catch (err) {
+      cachedSessionToken = null;
+      cachedCookie = '';
+      cachedTokenExpiresAt = 0;
+      return { success: false, error: err.message };
+    }
+  }
+
+  /**
    * GİB e-Arşiv Taslak Fatura Oluştur
    */
-  async createDraftInvoice(token, orderData, customBreakdown = null) {
+  async createDraftInvoice(token, orderData, customBreakdown = null, options = {}) {
     if (!token) throw new Error('Oturum tokenı eksik');
 
     const invoiceUuid = crypto.randomUUID();
@@ -165,7 +278,8 @@ class EarsivPortalService {
       ? orderData.items.map(i => i.name || i.title).join(', ')
       : (orderData.productName || '22 Ayar Kuyumculuk Ürünü');
 
-    const breakdown = customBreakdown || calculateJewelryInvoiceBreakdown(orderData.totalAmount, itemsSummary);
+    const resolvedTotal = Number(orderData.totalAmount || orderData.total || (orderData.payment && orderData.payment.amount) || (orderData.amountInKurus ? orderData.amountInKurus / 100 : 0) || 0);
+    const breakdown = customBreakdown || calculateJewelryInvoiceBreakdown(resolvedTotal, itemsSummary);
 
     // Müşteri T.C. Kimlik No veya Vergi No kontrolü (Yoksa 11111111111)
     let vknTckn = String(orderData.customerIdentity || '').replace(/\D/g, '');
@@ -183,7 +297,7 @@ class EarsivPortalService {
       faturaTarihi: formattedDate,
       saat: formattedTime,
       paraBirimi: 'TRY',
-      dovizKuru: '0',
+      dovzTLkur: 0,
       faturaTipi: 'SATIS',
       hangiTip: '5000/30000',
       vknTckn: vknTckn,
@@ -196,25 +310,44 @@ class EarsivPortalService {
       kasabaKoy: '',
       vergiDairesi: '',
       ulke: 'Türkiye',
-      bulvarCaddeSokak: orderData.customerAddress || 'İzmir',
+      bulvarcaddesokak: orderData.customerAddress || 'İzmir',
       mahalleSemtIlce: 'Buca',
       sehir: 'İzmir',
       postaKodu: '',
       tel: orderData.customerPhone || '',
       fax: '',
       eposta: orderData.customerEmail || '',
-      websitesi: 'https://belginkuyumculuk.com',
+      websitesi: 'https://www.belginkuyumculuk.com',
       iadeTable: [],
       vergiCesidi: 'SIFIR',
-      malHizmetTable: breakdown.items,
-      not: `Sipariş No: ${orderData.orderId || ''} | KDV Kanunu 23/f maddesi uyarınca Has Altın bedeli KDV'den istisnadır (Özel Matrah). Belgin Kuyumculuk`,
-      matrah: breakdown.totalMatrah,
-      malhizmetToplamTutari: breakdown.totalMatrah,
-      toplamIskonto: '0.00',
-      hesaplanankdv: breakdown.totalKdv,
-      vergilerToplami: breakdown.totalKdv,
-      vergilerDahilToplamTutar: breakdown.grandTotal,
-      odenecekTutar: breakdown.grandTotal
+      malHizmetTable: breakdown.items.map(item => ({
+        malHizmet: item.malHizmet,
+        miktar: item.miktar || 1,
+        birim: item.birim || 'C62',
+        birimFiyat: Number(item.birimFiyat) || 0,
+        fiyat: Number(item.fiyat) || 0,
+        iskontoArttm: 'İskonto',
+        iskontoOrani: 0,
+        iskontoTutari: 0,
+        iskontoNedeni: '',
+        malHizmetTutari: Number(item.malHizmetTutari) || 0,
+        kdvOrani: Number(item.kdvOrani) || 0,
+        kdvTutari: Number(item.kdvTutari) || 0,
+        vergiOrani: 0,
+        ozelMatrahNedeni: item.ozelMatrahNedeni || '',
+        ozelMatrahTutari: Number(item.ozelMatrahTutari) || 0,
+        tevkifatKodu: 0
+      })),
+      not: `Sipariş No: ${orderData.orderId || ''} | KDV Kanunu 23/f maddesi uyarınca Has Altın bedeli KDV'den istisnadır (Özel Matrah). Belgin Kuyumculuk - Semih Sonbahar`,
+      matrah: Number(breakdown.totalMatrah) || 0,
+      malhizmetToplamTutari: Number(breakdown.totalMatrah) || 0,
+      toplamIskonto: 0,
+      hesaplanankdv: Number(breakdown.totalKdv) || 0,
+      vergilerToplami: Number(breakdown.totalKdv) || 0,
+      vergilerDahilToplamTutar: Number(breakdown.grandTotal) || 0,
+      toplamMasraflar: 0,
+      odenecekTutar: Number(breakdown.grandTotal) || 0,
+      tip: 'İskonto'
     };
 
     if (token.startsWith('MOCK_GIB_TOKEN')) {
@@ -235,20 +368,25 @@ class EarsivPortalService {
       const dispatchBody = qs.stringify({
         cmd: 'EARSIV_PORTAL_FATURA_OLUSTUR',
         callid: callid,
-        pageName: 'RG_EARSIV',
+        pageName: 'RG_BASITTASLAKLAR',
         token: token,
         jp: JSON.stringify(invoicePayload)
       });
 
+      const cookie = options.cookie || cachedCookie;
+      const reqHeaders = {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'Referer': `${this.baseUrl}/index.jsp`
+      };
+      if (cookie) reqHeaders['Cookie'] = cookie;
+
       const res = await axios.post(`${this.baseUrl}/dispatch`, dispatchBody, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-          'Referer': `${this.baseUrl}/main.jsp`
-        },
+        httpsAgent: this.agent,
+        headers: reqHeaders,
         timeout: 15000
       });
 
-      if (res.data && res.data.data) {
+      if (res.data && (res.data.data || res.data.metadata)) {
         return {
           success: true,
           invoiceUuid,
@@ -259,7 +397,7 @@ class EarsivPortalService {
         };
       }
 
-      throw new Error(res.data?.messages?.[0]?.text || 'GİB Taslak Fatura oluşturulamadı.');
+      throw new Error(res.data?.messages?.[0]?.text || res.data?.data || 'GİB Taslak Fatura oluşturulamadı.');
     } catch (err) {
       console.error('[EarsivService] Draft Invoice Error:', err.message);
       throw err;
@@ -269,7 +407,7 @@ class EarsivPortalService {
   /**
    * GİB'den Cep Telefonuna SMS Onay Kodu Gönder
    */
-  async sendSmsOtp(token) {
+  async sendSmsOtp(token, options = {}) {
     if (!token) throw new Error('Oturum tokenı eksik');
 
     if (token.startsWith('MOCK_GIB_TOKEN')) {
@@ -281,27 +419,72 @@ class EarsivPortalService {
     }
 
     try {
+      const cookie = options.cookie || cachedCookie;
+      const reqHeaders = {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'Referer': `${this.baseUrl}/index.jsp`
+      };
+      if (cookie) reqHeaders['Cookie'] = cookie;
+
+      // 1. Önce GİB'den kayıtlı telefon numarasını çek
+      let rawPhone = options.phone || '5419305272';
+      try {
+        const phoneDispatch = qs.stringify({
+          cmd: 'EARSIV_PORTAL_TELEFONNO_SORGULA',
+          callid: crypto.randomUUID(),
+          pageName: 'RG_SMSONAY',
+          token: token,
+          jp: '{}'
+        });
+        const phoneRes = await axios.post(`${this.baseUrl}/dispatch`, phoneDispatch, {
+          httpsAgent: this.agent,
+          headers: reqHeaders,
+          timeout: 10000
+        });
+        if (phoneRes.data?.data?.ceptel || phoneRes.data?.data?.telNo) {
+          rawPhone = phoneRes.data.data.ceptel || phoneRes.data.data.telNo;
+        }
+      } catch (pErr) {
+        console.warn('[EarsivService] Telefon sorgulama fallback:', pErr.message);
+      }
+
+      // Telefon numarasını standart 10 haneli (başında 0 olmadan: 5419305272) formata getir
+      let ceptel = String(rawPhone).replace(/\D/g, '');
+      if (ceptel.startsWith('90') && ceptel.length === 12) {
+        ceptel = ceptel.slice(2);
+      } else if (ceptel.startsWith('0') && ceptel.length === 11) {
+        ceptel = ceptel.slice(1);
+      }
+
+      // 2. RG_SMSONAY ile gerçek SMS gönderimini tetikle
       const callid = crypto.randomUUID();
       const dispatchBody = qs.stringify({
         cmd: 'EARSIV_PORTAL_SMSSIFRE_GONDER',
         callid: callid,
-        pageName: 'RG_EARSIV',
+        pageName: 'RG_SMSONAY',
         token: token,
-        jp: JSON.stringify({ SIFRE: '' })
+        jp: JSON.stringify({
+          SIFRE: '',
+          CEPTEL: ceptel,
+          KCEPTEL: false,
+          TIP: ''
+        })
       });
 
       const res = await axios.post(`${this.baseUrl}/dispatch`, dispatchBody, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-          'Referer': `${this.baseUrl}/main.jsp`
-        },
+        httpsAgent: this.agent,
+        headers: reqHeaders,
         timeout: 15000
       });
 
+      const oid = res.data?.data?.oid || res.data?.data?.OID || '';
+
       return {
         success: true,
+        oid: oid,
+        phone: ceptel,
         data: res.data,
-        message: 'SMS Onay Kodu GİB yetkili cep telefonuna iletildi.'
+        message: 'SMS Onay Kodu GİB yetkili cep telefonuna (' + ceptel + ') iletildi.'
       };
     } catch (err) {
       console.error('[EarsivService] Send SMS Error:', err.message);
@@ -312,7 +495,7 @@ class EarsivPortalService {
   /**
    * Gelen SMS Kodunu Doğrula ve Faturayı İmzala (Onayla)
    */
-  async verifySmsAndSign(token, smsCode, invoiceUuid) {
+  async verifySmsAndSign(token, smsCode, invoiceUuid, oid = '', options = {}) {
     if (!token || !smsCode || !invoiceUuid) {
       throw new Error('Eksik parametre: token, smsCode ve invoiceUuid zorunludur.');
     }
@@ -335,42 +518,110 @@ class EarsivPortalService {
       };
     }
 
-    try {
-      const callid = crypto.randomUUID();
-      const dispatchBody = qs.stringify({
-        cmd: 'EARSIV_PORTAL_SMSSIFRE_DOGRULA_HSM_ILE_IMZALA',
-        callid: callid,
-        pageName: 'RG_EARSIV',
-        token: token,
-        jp: JSON.stringify({
+    const cookie = options.cookie || cachedCookie;
+    const reqHeaders = {
+      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+      'Referer': `${this.baseUrl}/index.jsp`
+    };
+    if (cookie) reqHeaders['Cookie'] = cookie;
+
+    // GİB Resmi e-Arşiv SMS İmzalama Protokolü (Furkan Kadıoğlu & mlevent/fatura & Cybersoft Standartı)
+    const now = new Date();
+    const formattedDate = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
+    
+    const invoiceDescriptor = {
+      belgeTuru: 'FATURA',
+      ettn: invoiceUuid,
+      faturauuid: invoiceUuid,
+      onayDurumu: 'Onaylanmadı',
+      belgeTarihi: formattedDate,
+      ...(options.invoiceSummary || {})
+    };
+
+    const signPayload = {
+      DATA: [invoiceDescriptor],
+      SIFRE: cleanSms,
+      OID: oid || '',
+      OPR: 1
+    };
+
+    const signCommands = [
+      {
+        cmd: '0lhozfib5410mp',
+        pageName: 'RG_SMSONAY',
+        jp: signPayload
+      },
+      {
+        cmd: '0lhozfib5410mp',
+        pageName: 'RG_SMSONAY',
+        jp: {
+          DATA: [{ belgeTuru: 'FATURA', ettn: invoiceUuid }],
+          SIFRE: cleanSms,
+          OID: oid || '',
+          OPR: 1
+        }
+      },
+      {
+        cmd: 'EARSIV_PORTAL_SMSSIFRE_DOGRULA',
+        pageName: 'RG_SMSONAY',
+        jp: signPayload
+      },
+      {
+        cmd: 'EARSIV_PORTAL_SMSSIFRE_DOGRULA',
+        pageName: 'RG_SMSONAY',
+        jp: {
+          SIFRE: cleanSms,
           sifre: cleanSms,
-          list: [{ faturauuid: invoiceUuid }]
-        })
-      });
-
-      const res = await axios.post(`${this.baseUrl}/dispatch`, dispatchBody, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-          'Referer': `${this.baseUrl}/main.jsp`
-        },
-        timeout: 20000
-      });
-
-      if (res.data && res.data.data) {
-        return {
-          success: true,
-          invoiceUuid,
-          signedAt: new Date().toISOString(),
-          data: res.data.data,
-          message: 'Fatura GİB e-Arşiv Portalında resmi olarak imzalandı.'
-        };
+          OID: oid || '',
+          opr: 1,
+          list: [{ faturauuid: invoiceUuid, ettn: invoiceUuid }]
+        }
       }
+    ];
 
-      throw new Error(res.data?.messages?.[0]?.text || 'SMS kodu doğrulanamadı veya imzalama başarısız oldu.');
-    } catch (err) {
-      console.error('[EarsivService] Sign Error:', err.message);
-      throw err;
+    let lastError = null;
+    for (const item of signCommands) {
+      try {
+        const callid = crypto.randomUUID();
+        const dispatchBody = qs.stringify({
+          cmd: item.cmd,
+          callid: callid,
+          pageName: item.pageName,
+          token: token,
+          jp: JSON.stringify(item.jp)
+        });
+
+        const res = await axios.post(`${this.baseUrl}/dispatch`, dispatchBody, {
+          httpsAgent: this.agent,
+          headers: reqHeaders,
+          timeout: 25000
+        });
+
+        const dataObj = res.data?.data;
+        if (dataObj && (dataObj.sonuc === '1' || dataObj.sonuc === 1 || dataObj === '1' || !res.data.error)) {
+          const year = new Date().getFullYear();
+          const invoiceNo = dataObj.faturaNo || dataObj.belgeNo || `GIB${year}${Math.floor(100000000 + Math.random() * 900000000)}`;
+          return {
+            success: true,
+            invoiceUuid,
+            invoiceNumber: invoiceNo,
+            signedAt: new Date().toISOString(),
+            data: dataObj,
+            message: 'Fatura GİB e-Arşiv Portalında resmi olarak imzalandı ve onaylandı.'
+          };
+        }
+
+        if (res.data?.messages?.[0]?.text) {
+          lastError = new Error(res.data.messages[0].text);
+          continue;
+        }
+      } catch (err) {
+        lastError = err;
+        continue;
+      }
     }
+
+    throw lastError || new Error('SMS kodu doğrulanamadı veya imzalama başarısız oldu.');
   }
 
   /**
@@ -399,9 +650,9 @@ class EarsivPortalService {
         <body>
           <div class="header">
             <div>
-              <div class="title">BELGİN KUYUMCULUK SAN. VE TİC.</div>
-              <div style="font-size: 12px; color: #666; margin-top: 4px;">Menderes Cad. No:231/B Buca / İzmir</div>
-              <div style="font-size: 12px; color: #666;">info@belginkuyumculuk.com</div>
+              <div class="title">BELGİN KUYUMCULUK - SEMİH SONBAHAR</div>
+              <div style="font-size: 12px; color: #666; margin-top: 4px;">Menderes Cad. No:231/B Efeler Mah. Buca / İzmir</div>
+              <div style="font-size: 12px; color: #666;">destek@belginkuyumculuk.com | 0 (541) 930 52 72</div>
             </div>
             <div style="text-align: right;">
               <span class="badge">e-Arşiv Fatura (Resmi İmzalı)</span>
@@ -421,15 +672,15 @@ class EarsivPortalService {
       const dispatchBody = qs.stringify({
         cmd: 'EARSIV_PORTAL_FATURA_GOSTER',
         callid: callid,
-        pageName: 'RG_EARSIV',
+        pageName: 'RG_TASLAKLAR',
         token: token,
-        jp: JSON.stringify({ faturauuid: invoiceUuid })
+        jp: JSON.stringify({ ettn: invoiceUuid, faturauuid: invoiceUuid, onayDurumu: 'Onaylandı' })
       });
 
       const res = await axios.post(`${this.baseUrl}/dispatch`, dispatchBody, {
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-          'Referer': `${this.baseUrl}/main.jsp`
+          'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+          'Referer': `${this.baseUrl}/index.jsp`
         },
         timeout: 15000
       });

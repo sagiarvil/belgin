@@ -7,6 +7,7 @@ const AdminApp = {
   orders: [],
   filteredOrders: [],
   knownPaidOrderIds: new Set(),
+  isInitialLoadDone: false,
   currentPreset: 'all',
   currentPage: 1,
   pageSize: 10,
@@ -17,33 +18,42 @@ const AdminApp = {
 
   init() {
     this.startClock();
-    const savedPin = sessionStorage.getItem('belgin_admin_pin') || localStorage.getItem('belgin_admin_pin') || '1999';
-    this.adminPin = savedPin;
-    sessionStorage.setItem('belgin_admin_pin', savedPin);
-    localStorage.setItem('belgin_admin_pin', savedPin);
-    this.hideAuthGate();
-
-    // 1. Önce önbellekteki veriyi ANINDA (0 ms) ekrana çiz (Sıfır bekleme)
-    this.loadCachedOrders();
-
-    // 2. Arka planda sunucudan en güncel verileri çek ve canlı akışı başlat
-    this.loadOrders().then(() => this.startLivePolling());
+    const savedPin = sessionStorage.getItem('belgin_admin_pin');
+    if (savedPin === '1999') {
+      this.adminPin = savedPin;
+      this.hideAuthGate();
+      this.loadCachedOrders();
+      this.loadOrders().then(() => {
+        this.isInitialLoadDone = true;
+        this.startLivePolling();
+      });
+    } else {
+      this.showAuthGate();
+      const input = document.getElementById('adminPinInput');
+      if (input) setTimeout(() => input.focus(), 150);
+    }
   },
 
   loadCachedOrders() {
     try {
       const cached = localStorage.getItem('belgin_admin_cached_data');
       if (cached) {
+        // Eski sahte/mock verileri temizle
+        if (cached.includes('POS-14000-8291') || cached.includes('BLG-12865794') || cached.includes('VIP-9941-45000')) {
+          localStorage.removeItem('belgin_admin_cached_data');
+          return;
+        }
         const parsed = JSON.parse(cached);
         if (parsed && Array.isArray(parsed.orders) && parsed.orders.length > 0) {
           this.orders = parsed.orders;
+          parsed.orders.forEach(o => {
+            if (o && o.orderId) this.knownPaidOrderIds.add(o.orderId);
+          });
           this.renderData(parsed.summary, parsed.orders);
           return;
         }
       }
     } catch (_) {}
-    // Önbellek yoksa ekranda bekleme olmadan anında ilk listeyi hazırla
-    this.loadFallbackOrders('', '');
   },
 
   startClock() {
@@ -82,17 +92,21 @@ const AdminApp = {
       if (res.status === 200) {
         const data = await res.json();
         if (data && data.success && Array.isArray(data.orders)) {
-          // Yeni ödeme geldi mi kontrol et
+          // Yalnızca son 5 dakikada yeni gelen gerçek ödemeleri bildir
           let hasNewPayment = false;
           let newPaymentName = '';
           let newPaymentAmount = '';
+          const fiveMinutesAgo = Date.now() - 5 * 60 * 1000;
 
           data.orders.forEach(o => {
-            if (o.isPaid || o.paymentStatus === 'PAID') {
-              if (this.knownPaidOrderIds.size > 0 && !this.knownPaidOrderIds.has(o.orderId)) {
-                hasNewPayment = true;
-                newPaymentName = o.customerName || 'Yeni Müşteri';
-                newPaymentAmount = '₺' + Number(o.totalAmount || 0).toLocaleString('tr-TR');
+            if (o.isPaid && o.paymentStatus === 'PAID') {
+              if (this.isInitialLoadDone && !this.knownPaidOrderIds.has(o.orderId)) {
+                const orderTime = o.paidAt ? new Date(o.paidAt).getTime() : (o.createdAt ? new Date(o.createdAt).getTime() : 0);
+                if (orderTime >= fiveMinutesAgo || orderTime === 0) {
+                  hasNewPayment = true;
+                  newPaymentName = o.customerName || 'Yeni Müşteri';
+                  newPaymentAmount = '₺' + Number(o.totalAmount || 0).toLocaleString('tr-TR');
+                }
               }
               this.knownPaidOrderIds.add(o.orderId);
             }
@@ -178,12 +192,12 @@ const AdminApp = {
     const val = (input ? input.value : '').trim();
     const err = document.getElementById('pinErrorMsg');
 
-    if (val === '1999' || val === this.adminPin) {
+    if (val === '1999') {
       this.adminPin = val;
       sessionStorage.setItem('belgin_admin_pin', val);
       if (err) err.style.display = 'none';
       this.hideAuthGate();
-      this.loadOrders();
+      this.loadOrders().then(() => this.startLivePolling());
     } else {
       if (err) err.style.display = 'block';
       if (input) {
@@ -194,8 +208,16 @@ const AdminApp = {
   },
 
   logout() {
-    sessionStorage.removeItem('belgin_admin_pin');
-    location.reload();
+    try {
+      sessionStorage.removeItem('belgin_admin_pin');
+      localStorage.removeItem('belgin_admin_pin');
+    } catch (_) {}
+    this.adminPin = '';
+    if (this.pollTimer) {
+      clearInterval(this.pollTimer);
+      this.pollTimer = null;
+    }
+    window.location.href = '/';
   },
 
   // TARİH PRESETLERİ
@@ -306,9 +328,9 @@ const AdminApp = {
         throw new Error(data.message || 'Veri formatı geçersiz.');
       }
     } catch (err) {
-      console.warn('[AdminApp] API çağrısı gecikti/başarısız, mevcut veriler korunuyor:', err.message);
+      console.warn('[AdminApp] API çağrısı gecikti/başarısız:', err.message);
       if (!this.orders || this.orders.length === 0) {
-        this.loadFallbackOrders(startDate, endDate);
+        this.renderEmptyState();
       }
     }
 
@@ -316,87 +338,18 @@ const AdminApp = {
     if (syncEl) syncEl.textContent = 'Son Güncelleme: ' + new Date().toLocaleTimeString('tr-TR');
   },
 
-  // YEREL FALLBACK / SİMÜLASYON VERİSİ
-  loadFallbackOrders(startDateStr, endDateStr) {
-    let mockOrders = [
-      {
-        orderId: 'POS-14000-8291',
-        evidenceId: 'EVD-POS-14000-8291',
-        totalAmount: 14000,
-        status: 'COMPLETED',
-        paymentStatus: 'PAID',
-        deliveryStatus: 'STORE_PICKUP_REQUIRED',
-        deliveryMethod: 'showroom',
-        provider: 'AKBANK',
-        customerName: 'Ahmet Yılmaz',
-        customerPhone: '0532 555 12 34',
-        customerEmail: 'ahmet.yilmaz@example.com',
-        items: [{ name: '22 Ayar Burma Altın Bilezik (2.10 gr)', price: 14000, qty: 1 }],
-        createdAt: new Date().toISOString()
-      },
-      {
-        orderId: 'BLG-12865794',
-        evidenceId: 'EVD-12865794',
-        totalAmount: 14960,
-        status: 'COMPLETED',
-        paymentStatus: 'PAID',
-        deliveryStatus: 'STORE_PICKUP_REQUIRED',
-        deliveryMethod: 'showroom',
-        provider: 'AKBANK',
-        customerName: 'Mehmet Demir',
-        customerPhone: '0541 930 53 72',
-        customerEmail: 'mehmet@example.com',
-        items: [{ name: 'Masif Altın Takı & Sarrafiye', price: 14960, qty: 1 }],
-        createdAt: new Date(Date.now() - 3600000 * 2).toISOString()
-      },
-      {
-        orderId: 'VIP-9941-45000',
-        evidenceId: 'EVD-VIP-9941',
-        totalAmount: 45000,
-        status: 'COMPLETED',
-        paymentStatus: 'PAID',
-        deliveryStatus: 'STORE_PICKUP_REQUIRED',
-        deliveryMethod: 'showroom',
-        provider: 'PAYTR',
-        customerName: 'Selin Kaya',
-        customerPhone: '0533 111 22 33',
-        customerEmail: 'selin@example.com',
-        items: [{ name: 'Rolex Datejust 41 Ekspertizli Ön Ödeme', price: 45000, qty: 1 }],
-        createdAt: new Date(Date.now() - 86400000).toISOString()
-      }
-    ];
-
-    // Tarih filtresi uygula
-    if (startDateStr) {
-      const start = new Date(startDateStr);
-      start.setHours(0, 0, 0, 0);
-      mockOrders = mockOrders.filter(o => new Date(o.createdAt) >= start);
-    }
-    if (endDateStr) {
-      const end = new Date(endDateStr);
-      end.setHours(23, 59, 59, 999);
-      mockOrders = mockOrders.filter(o => new Date(o.createdAt) <= end);
-    }
-
-    let totalVolume = mockOrders.reduce((sum, o) => sum + (o.paymentStatus === 'PAID' ? o.totalAmount : 0), 0);
-    let successCount = mockOrders.filter(o => o.paymentStatus === 'PAID').length;
-    let aov = successCount > 0 ? Math.round(totalVolume / successCount) : 0;
-
+  renderEmptyState() {
+    this.orders = [];
     const summary = {
-      totalVolume,
-      formattedTotalVolume: '₺' + totalVolume.toLocaleString('tr-TR'),
-      totalCount: mockOrders.length,
-      successfulCount: successCount,
-      averageOrderValue: aov,
-      formattedAverageOrderValue: '₺' + aov.toLocaleString('tr-TR'),
-      providerBreakdown: {
-        AKBANK: { count: 2, sum: 28960 },
-        PAYTR: { count: 1, sum: 45000 }
-      }
+      totalVolume: 0,
+      formattedTotalVolume: '₺0',
+      totalCount: 0,
+      successfulCount: 0,
+      averageOrderValue: 0,
+      formattedAverageOrderValue: '₺0',
+      providerBreakdown: {}
     };
-
-    this.orders = mockOrders;
-    this.renderData(summary, mockOrders);
+    this.renderData(summary, []);
   },
 
   // VERİLERİ RENDER ET
@@ -475,13 +428,14 @@ const AdminApp = {
         (o.customerPhone && o.customerPhone.includes(searchVal)) ||
         (o.provider && o.provider.toLowerCase().includes(searchVal));
 
-      const isPaid = o.isPaid || o.paymentStatus === 'PAID' || o.status === 'COMPLETED' || o.status === 'PAID' || o.status === 'SUCCESS';
-      const isPending = o.status === 'PENDING' || o.paymentStatus === 'PENDING' || o.paymentStatus === 'PAYMENT_PENDING' || o.status === 'pending';
-      const isFailed = o.status === 'FAILED' || o.paymentStatus === 'FAILED';
+      // TEK VE KESİN REFERANS: Akbank POS / Banka tarafından GERÇEKTEN onaylanmış ve kayda geçmiş tahsilatlar
+      const isPaid = Boolean(o.isPaid) && (o.paymentStatus === 'PAID' || o.status === 'PAID' || o.status === 'AWAITING_STORE_PICKUP');
+      const isFailed = o.status === 'FAILED' || o.paymentStatus === 'FAILED' || o.status === 'PAYMENT_FAILED';
+      const isPending = !isPaid && !isFailed;
 
       let matchStatus = true;
       if (statusVal === 'PAID') matchStatus = isPaid;
-      else if (statusVal === 'PENDING') matchStatus = isPending && !isPaid;
+      else if (statusVal === 'PENDING') matchStatus = isPending;
       else if (statusVal === 'FAILED') matchStatus = isFailed;
 
       return matchSearch && matchStatus;
@@ -533,7 +487,7 @@ const AdminApp = {
     if (pagedOrders.length === 0) {
       tbody.innerHTML = `
         <tr>
-          <td colspan="8" style="text-align:center; padding:36px; color:var(--admin-muted);">
+          <td colspan="6" style="text-align:center; padding:36px; color:var(--admin-muted);">
             Seçilen filtrelere uygun ödeme kaydı bulunamadı.
           </td>
         </tr>
@@ -542,8 +496,8 @@ const AdminApp = {
     }
 
     tbody.innerHTML = pagedOrders.map(o => {
-      const isPaid = o.paymentStatus === 'PAID' || o.status === 'COMPLETED' || o.status === 'PAID' || o.isPaid;
-      const isFailed = o.status === 'FAILED' || o.paymentStatus === 'FAILED';
+      const isPaid = Boolean(o.isPaid) && (o.paymentStatus === 'PAID' || o.status === 'PAID' || o.status === 'AWAITING_STORE_PICKUP');
+      const isFailed = o.status === 'FAILED' || o.paymentStatus === 'FAILED' || o.status === 'PAYMENT_FAILED';
 
       const statusBadge = isPaid
         ? '<span class="badge-status badge-status-paid">✅ Tahsil Edildi</span>'
@@ -574,16 +528,32 @@ const AdminApp = {
           <td style="font-weight:800; font-size:14.5px; color:var(--admin-teal);">
             ₺${Number(o.totalAmount || 0).toLocaleString('tr-TR')}
           </td>
-          <td><span class="badge-provider">${o.provider || 'AKBANK'}</span></td>
-          <td>${statusBadge}${invoiceBadge}</td>
-          <td style="font-size:12px;">${o.deliveryMethod === 'showroom' ? '🏢 Showroom' : '📦 Kargo'}</td>
-          <td style="display:flex; gap:6px;">
+          <td>
+            <select class="admin-status-dropdown ${isPaid ? 'status-paid' : (isFailed ? 'status-failed' : 'status-pending')}" 
+                    onchange="AdminApp.quickChangeStatus('${o.orderId}', this.value, this)" 
+                    title="Durumu doğrudan değiştirmek veya silmek için seçiniz">
+              <option value="PAID" ${isPaid ? 'selected' : ''}>✅ Tahsil Edildi</option>
+              <option value="PENDING" ${!isPaid && !isFailed ? 'selected' : ''}>⏳ Beklemede</option>
+              <option value="FAILED" ${isFailed ? 'selected' : ''}>❌ Başarısız / İptal</option>
+              <option value="DELETE" style="color:#C62828; font-weight:800;">🗑️ Kaydı Sil</option>
+            </select>
+            ${invoiceBadge}
+          </td>
+          <td style="display:flex; gap:6px; flex-wrap:wrap;">
             ${!isPaid ? `<button class="btn-admin-primary" style="padding:4px 9px; font-size:11.5px; background:#196C3A; border-color:#196C3A;" onclick="AdminApp.confirmOrder('${o.orderId}')" title="Tahsilatı Onayla">✅ Onayla</button>` : ''}
             <button class="btn-admin-secondary" style="padding:4px 9px; font-size:11.5px;" onclick="AdminApp.showDetail('${o.orderId}')">
               Detay
             </button>
+            ${o.invoiceStatus === 'SIGNED' ? `
+              <button class="btn-admin-secondary" style="padding:4px 9px; font-size:11.5px; background:#25D366; border-color:#25D366; color:#FFF; font-weight:700;" onclick="AdminApp.sendInvoiceViaWhatsApp('${o.orderId}')" title="Faturayı WhatsApp ile Müşteriye İlet">
+                📲 WhatsApp
+              </button>
+            ` : ''}
             <button class="btn-admin-secondary" style="padding:4px 9px; font-size:11.5px; border-color:#C2A768; color:#084C47; font-weight:700;" onclick="AdminApp.printLegalDocument('${o.orderId}')" title="Zaman Damgalı Sözleşme & Delil Çıktısı">
               📜 Yasal Evrak
+            </button>
+            <button class="btn-admin-secondary" style="padding:4px 8px; font-size:11.5px; border-color:#EF9A9A; color:#C62828;" onclick="AdminApp.deleteOrder('${o.orderId}')" title="Test/mükerrer kaydı veritabanından kalıcı olarak sil">
+              🗑️
             </button>
           </td>
         </tr>
@@ -610,6 +580,11 @@ const AdminApp = {
   // HUKUKİ DELİL & SÖZLEŞME ÇIKTISI AÇ
   printLegalDocument(orderId) {
     window.open(`/hukuki-evrak-yazdir.html?orderId=${encodeURIComponent(orderId)}`, '_blank');
+  },
+
+  // ÜRÜN TESLİM, KONTROL VE ÖDEME İŞLEMİ TEYİT BEYANI AÇ
+  printDeliveryStatement(orderId) {
+    window.open(`/hukuki-evrak-yazdir.html?orderId=${encodeURIComponent(orderId)}&tab=delivery-statement`, '_blank');
   },
 
   // SİPARİŞ DETAY MODALI
@@ -659,7 +634,7 @@ const AdminApp = {
       <h4 style="margin:14px 0 8px; font-size:14px; color:var(--admin-teal-dark);">Tahsilat & POS Bilgileri</h4>
       <div style="font-size:13px; line-height:1.6; margin-bottom:16px;">
         <div><strong>POS Kanalı:</strong> ${order.provider || 'AKBANK'} Sanal POS 3D Secure</div>
-        <div><strong>Ödeme Durumu:</strong> ${order.paymentStatus === 'PAID' ? '✅ Tahsil Edildi (Başarılı)' : order.paymentStatus}</div>
+        <div><strong>Ödeme Durumu:</strong> ${order.isPaid && order.paymentStatus === 'PAID' ? '✅ Tahsil Edildi (Akbank 3D Onaylı)' : (order.status === 'FAILED' || order.paymentStatus === 'FAILED' ? '❌ Başarısız' : '⏳ Beklemede (Ödeme Tamamlanmadı)')}</div>
         <div><strong>Toplam Tutar:</strong> <span style="font-size:16px; font-weight:800; color:var(--admin-teal);">₺${Number(order.totalAmount || 0).toLocaleString('tr-TR')}</span></div>
       </div>
 
@@ -690,9 +665,14 @@ const AdminApp = {
         ${order.invoiceNumber ? `
           <div style="margin-top:10px; padding-top:8px; border-top:1px solid #D1E5E1; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
             <span><strong>GİB Belge No:</strong> <span style="font-family:monospace; color:#084C47; font-weight:800;">${order.invoiceNumber}</span></span>
-            <button class="btn-admin-secondary" style="padding:4px 10px; font-size:11.5px; background:#FFF; border-color:#084C47; color:#084C47; font-weight:700;" onclick="AdminApp.viewInvoice('${order.invoiceUuid}')">
-              📄 Resmi Faturayı Aç / Yazdır
-            </button>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <button class="btn-admin-secondary" style="padding:4px 10px; font-size:11.5px; background:#FFF; border-color:#084C47; color:#084C47; font-weight:700;" onclick="AdminApp.viewInvoice('${order.invoiceUuid}')">
+                📄 Resmi Faturayı Aç / Yazdır
+              </button>
+              <button class="btn-admin-secondary" style="padding:4px 10px; font-size:11.5px; background:#25D366; border-color:#25D366; color:#FFF; font-weight:700;" onclick="AdminApp.sendInvoiceViaWhatsApp('${order.orderId}')">
+                📲 WhatsApp ile Faturayı Gönder
+              </button>
+            </div>
           </div>
         ` : ''}
       </div>
@@ -707,12 +687,22 @@ const AdminApp = {
           <button class="btn-admin-primary" style="background:#196C3A; border-color:#196C3A;" onclick="AdminApp.confirmOrder('${order.orderId}')">
             ✅ Banka Tahsilatını Onayla
           </button>
-        ` : ''}
+        ` : `
+          <button class="btn-admin-secondary" style="border-color:#E74C3C; color:#C0392B;" onclick="AdminApp.markOrderFailed('${order.orderId}')" title="Bu işlem mükerrer veya ödenmemiş ise iptal durumuna al">
+            ❌ İptal / Başarısız Yap
+          </button>
+        `}
         ${order.invoiceStatus !== 'SIGNED' ? `
           <button class="btn-admin-primary" style="background:#084C47; border-color:#084C47;" onclick="AdminApp.startInvoiceSigning('${order.orderId}')">
             🧾 GİB e-Arşiv Fatura İmzala (SMS)
           </button>
         ` : ''}
+        <button class="btn-admin-secondary" style="border-color:#EF9A9A; color:#C62828; font-weight:700;" onclick="AdminApp.deleteOrder('${order.orderId}')" title="Bu test siparişini veritabanından kalıcı olarak sil">
+          🗑️ Kaydı Tamamen Sil
+        </button>
+        <button class="btn-admin-secondary" style="background:#F0F7F5; border-color:#084C47; color:#084C47; font-weight:700;" onclick="AdminApp.printDeliveryStatement('${order.orderId}')" title="Ürün Teslim, Kontrol ve Ödeme İşlemi Teyit Beyanını Aç">
+          🛡️ Ürün Teslim Beyanı (28.08.2026)
+        </button>
         <button class="btn-admin-secondary" style="background:#FAF8F2; border-color:#C2A768; color:#084C47; font-weight:700;" onclick="AdminApp.printLegalDocument('${order.orderId}')">
           📜 Zaman Damgalı Sözleşme & Delil Çıktısı Al
         </button>
@@ -722,6 +712,156 @@ const AdminApp = {
     `;
 
     modal.classList.add('open');
+  },
+
+  // SİPARİŞİ / TEST KAYDINI VERİTABANINDAN KALICI OLARAK SİL
+  async deleteOrder(orderId) {
+    if (!confirm(`⚠️ DİKKAT:\n\n${orderId} numaralı test/mükerrer sipariş kaydını veritabanından TAMAMEN SİLMEK istediğinize emin misiniz?\n\nBu işlem geri alınamaz.`)) {
+      this.filterTable();
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/admin/orders/delete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-key': this.adminPin
+        },
+        body: JSON.stringify({
+          orderId,
+          adminKey: this.adminPin
+        })
+      });
+
+      let data = null;
+      try {
+        data = await res.json();
+      } catch (_) {
+        throw new Error(`Sunucu bağlantısı kurulamadı (${res.status})`);
+      }
+
+      if (res.ok && data && data.success) {
+        this.orders = this.orders.filter(o => o.orderId !== orderId);
+        this.filteredOrders = this.filteredOrders.filter(o => o.orderId !== orderId);
+        alert('✅ ' + (data.message || 'Kayıt başarıyla silindi.'));
+        this.closeModal();
+        this.loadOrders();
+      } else {
+        alert('❌ Hata: ' + (data?.message || `Silinemedi (${res.status}).`));
+        this.filterTable();
+      }
+    } catch (e) {
+      alert('❌ Bağlantı hatası: ' + e.message);
+      this.filterTable();
+    }
+  },
+
+  // İŞLEMİ BAŞARISIZ / İPTAL OLARAK İŞARETLE
+  async markOrderFailed(orderId) {
+    if (!confirm(`${orderId} numaralı işlemi 'Başarısız / İptal' olarak işaretlemek istiyor musunuz?\n\nBu işlem kaydı 'Onaylananlar (Tahsil Edilen)' listesinden çıkaracak ve ciroyu güncelleyecektir.`)) {
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/admin/orders/status', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-key': this.adminPin
+        },
+        body: JSON.stringify({
+          orderId,
+          status: 'FAILED',
+          paymentStatus: 'FAILED',
+          reason: 'Yönetici tarafından mükerrer/ödenmemiş olarak işaretlendi',
+          adminKey: this.adminPin
+        })
+      });
+
+      let data = null;
+      try {
+        data = await res.json();
+      } catch (_) {
+        throw new Error(`Sunucu bağlantısı kurulamadı (${res.status})`);
+      }
+
+      if (res.ok && data && data.success) {
+        alert('✅ ' + (data.message || 'Durum güncellendi.'));
+        this.closeModal();
+        this.loadOrders();
+      } else {
+        alert('❌ Hata: ' + (data?.message || `Güncellenemedi (${res.status}).`));
+      }
+    } catch (e) {
+      alert('❌ Bağlantı hatası: ' + e.message);
+    }
+  },
+
+  // DURUM SÜTUNUNDAN DOĞRUDAN AÇILIR MENÜ (SELECT) İLE DURUM DEĞİŞTİRME / SİLME
+  async quickChangeStatus(orderId, newStatus, selectEl) {
+    if (newStatus === 'DELETE') {
+      this.deleteOrder(orderId);
+      return;
+    }
+
+    const statusLabels = {
+      PAID: '✅ Tahsil Edildi (Onaylı)',
+      PENDING: '⏳ Beklemede',
+      FAILED: '❌ Başarısız / İptal'
+    };
+
+    if (!confirm(`${orderId} numaralı işlemin durumunu '${statusLabels[newStatus] || newStatus}' olarak güncellemek istediğinize emin misiniz?`)) {
+      this.filterTable();
+      return;
+    }
+
+    if (selectEl) selectEl.disabled = true;
+
+    try {
+      const res = await fetch('/api/admin/orders/status', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-key': this.adminPin
+        },
+        body: JSON.stringify({
+          orderId,
+          status: newStatus,
+          paymentStatus: newStatus,
+          reason: `Yönetici tarafından durum '${newStatus}' olarak değiştirildi`,
+          adminKey: this.adminPin
+        })
+      });
+
+      let data = null;
+      try {
+        data = await res.json();
+      } catch (_) {
+        throw new Error(`Sunucu bağlantısı kurulamadı (${res.status})`);
+      }
+
+      if (res.ok && data && data.success) {
+        const targetOrder = this.orders.find(o => o.orderId === orderId);
+        if (targetOrder) {
+          targetOrder.status = newStatus;
+          targetOrder.paymentStatus = newStatus;
+          targetOrder.isPaid = (newStatus === 'PAID');
+        }
+        if (typeof this.showToast === 'function') {
+          this.showToast(`✅ ${orderId} durumu '${statusLabels[newStatus] || newStatus}' olarak güncellendi.`);
+        }
+        this.loadOrders();
+      } else {
+        alert('❌ Hata: ' + (data?.message || `Güncellenemedi (${res.status}).`));
+        this.filterTable();
+      }
+    } catch (e) {
+      alert('❌ Bağlantı hatası: ' + e.message);
+      this.filterTable();
+    } finally {
+      if (selectEl) selectEl.disabled = false;
+    }
   },
 
   // GİB E-ARŞİV FATURA İMZALAMA AKIŞINI BAŞLAT (TASLAK OLUŞTUR & SMS GÖNDER)
@@ -760,10 +900,10 @@ const AdminApp = {
     if (errDiv) { errDiv.style.display = 'none'; errDiv.textContent = ''; }
     if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = '<span>✅ Doğrula & Faturayı İmzala</span>'; }
 
-    // 1. Önce Taslak Oluştur (GİB'de kayıt aç)
+    // Tek İstekle GİB Taslak ve SMS Tetikleme
     try {
-      if (submitBtn) submitBtn.innerHTML = '<span>⏳ GİB Taslak Hazırlanıyor...</span>';
-      const draftRes = await fetch('/api/admin/invoice/draft', {
+      if (submitBtn) submitBtn.innerHTML = '<span>⏳ GİB Taslak & SMS Hazırlanıyor...</span>';
+      let draftRes = await fetch('/api/admin/invoice/draft', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -771,31 +911,21 @@ const AdminApp = {
         },
         body: JSON.stringify({
           orderId: order.orderId,
+          totalAmount: Number(order.totalAmount || order.total || (order.payment && order.payment.amount) || (order.amountInKurus ? order.amountInKurus / 100 : 0) || 0),
           adminKey: this.adminPin
         })
       });
 
-      const draftData = await draftRes.json();
+      let draftData = await draftRes.json();
+
       if (!draftData || !draftData.success) {
-        alert('❌ Taslak Fatura Hatası: ' + (draftData?.message || 'Oluşturulamadı'));
+        alert('❌ Taslak Fatura Uyarısı:\n\n' + (draftData?.message || 'GİB bağlantısı kurulamadı.') + '\n\n💡 İpucu: Başka bir sekmede earsivportal.efatura.gov.tr açık ise lütfen o sekmeden Güvenli Çıkış yapıp tekrar deneyiniz.');
         if (submitBtn) submitBtn.innerHTML = '<span>✅ Doğrula & Faturayı İmzala</span>';
         return;
       }
 
       this.activeInvoiceUuid = draftData.invoiceUuid;
-
-      // 2. GİB'den SMS Kodu Tetikle
-      if (submitBtn) submitBtn.innerHTML = '<span>📲 SMS Gönderiliyor...</span>';
-      const smsRes = await fetch('/api/admin/invoice/send-sms', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-key': this.adminPin
-        },
-        body: JSON.stringify({ adminKey: this.adminPin })
-      });
-
-      const smsData = await smsRes.json();
+      this.activeInvoiceOid = draftData.oid || '';
       if (submitBtn) submitBtn.innerHTML = '<span>✅ Doğrula & Faturayı İmzala</span>';
 
       // SMS Modalını Aç
@@ -803,7 +933,14 @@ const AdminApp = {
       if (smsModal) smsModal.classList.add('open');
       if (input) setTimeout(() => input.focus(), 150);
 
-      if (smsData && smsData.isMock) {
+      if (draftData && draftData.phone) {
+        const phoneBox = document.getElementById('smsModalPhoneInfo');
+        if (phoneBox) {
+          phoneBox.textContent = `Yetkili Telefon: ${draftData.phone}`;
+        }
+      }
+
+      if (draftData && draftData.isMock) {
         if (errDiv) {
           errDiv.style.display = 'block';
           errDiv.style.color = '#084C47';
@@ -813,6 +950,58 @@ const AdminApp = {
     } catch (e) {
       alert('❌ GİB Bağlantı Hatası: ' + e.message);
       if (submitBtn) submitBtn.innerHTML = '<span>✅ Doğrula & Faturayı İmzala</span>';
+    }
+  },
+
+  // TEKRAR SMS GÖNDER
+  async resendInvoiceSms() {
+    const btn = document.getElementById('btnResendGibSms');
+    const errDiv = document.getElementById('smsErrorMsg');
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = '⏳ SMS Gönderiliyor...';
+    }
+    if (errDiv) { errDiv.style.display = 'none'; }
+
+    try {
+      const res = await fetch('/api/admin/invoice/send-sms', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-key': this.adminPin
+        },
+        body: JSON.stringify({
+          orderId: this.activeInvoiceOrderId,
+          adminKey: this.adminPin
+        })
+      });
+
+      const data = await res.json();
+      if (data && data.success) {
+        this.activeInvoiceOid = data.oid || this.activeInvoiceOid;
+        if (errDiv) {
+          errDiv.style.display = 'block';
+          errDiv.style.color = '#084C47';
+          errDiv.textContent = `📲 ${data.message || 'SMS kodu tekrar iletildi.'}`;
+        }
+      } else {
+        if (errDiv) {
+          errDiv.style.display = 'block';
+          errDiv.style.color = '#C81E1E';
+          errDiv.textContent = data?.message || 'SMS gönderilemedi.';
+        }
+      }
+    } catch (e) {
+      if (errDiv) {
+        errDiv.style.display = 'block';
+        errDiv.style.color = '#C81E1E';
+        errDiv.textContent = 'Bağlantı hatası: ' + e.message;
+      }
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = '📲 SMS Gelmedi mi? Kodu Tekrar Gönder';
+      }
     }
   },
 
@@ -847,6 +1036,7 @@ const AdminApp = {
         body: JSON.stringify({
           orderId: this.activeInvoiceOrderId,
           invoiceUuid: this.activeInvoiceUuid,
+          oid: this.activeInvoiceOid || '',
           smsCode: smsCode,
           adminKey: this.adminPin
         })
@@ -897,9 +1087,37 @@ const AdminApp = {
     window.open(url, '_blank');
   },
 
+  // FATURAYI MÜŞTERİYE WHATSAPP İLE GÖNDER
+  sendInvoiceViaWhatsApp(orderId) {
+    const order = this.orders.find(o => o.orderId === orderId);
+    if (!order) return;
+
+    let phone = String(order.customerPhone || order.customer?.phone || '').replace(/\D/g, '');
+    if (phone.startsWith('0')) phone = '9' + phone;
+    if (!phone.startsWith('90') && phone.length === 10) phone = '90' + phone;
+
+    const invoiceUrl = `https://belginkuyumculuk.com/api/admin/invoice/view?uuid=${order.invoiceUuid || ''}&adminKey=1999`;
+    const customerName = order.customerName || order.customer?.name || 'Değerli Müşterimiz';
+    const amount = Number(order.totalAmount || order.total || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2 });
+    const invoiceNo = order.invoiceNumber || 'GİB e-Arşiv Faturanız';
+
+    const msg = `Sayın *${customerName}*,\n\nBelgin Kuyumculuk'tan yapmış olduğunuz *₺${amount}* tutarındaki alışverişinize ait resmi GİB e-Arşiv faturanız düzenlenmiştir.\n\n🧾 *Fatura No:* ${invoiceNo}\n📄 *Faturayı Görüntüle & İndir:*\n${invoiceUrl}\n\nBizi tercih ettiğiniz için teşekkür eder, sağlıklı ve bol kazançlı günler dileriz.\n\n*Belgin Kuyumculuk*\nMenderes Cad. No:231/B Buca / İzmir\n0 (541) 930 52 72`;
+
+    const waUrl = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`;
+    window.open(waUrl, '_blank');
+  },
+
   closeSmsModal() {
     const modal = document.getElementById('invoiceSmsModal');
     if (modal) modal.classList.remove('open');
+    // Eğer imzalanmadan kapatıldıysa oturumu arka planda serbest bırak
+    if (this.activeInvoiceOrderId) {
+      fetch('/api/admin/invoice/force-logout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-admin-key': this.adminPin },
+        body: JSON.stringify({ adminKey: this.adminPin })
+      }).catch(() => {});
+    }
     this.activeInvoiceOrderId = null;
     this.activeInvoiceUuid = null;
   },
