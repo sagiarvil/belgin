@@ -292,7 +292,6 @@ class EarsivPortalService {
     const aliciAdi = nameParts.join(' ') || 'Sayın Müşteri';
 
     const invoicePayload = {
-      faturaUuid: invoiceUuid,
       belgeNumarasi: '',
       faturaTarihi: formattedDate,
       saat: formattedTime,
@@ -368,7 +367,7 @@ class EarsivPortalService {
       const dispatchBody = qs.stringify({
         cmd: 'EARSIV_PORTAL_FATURA_OLUSTUR',
         callid: callid,
-        pageName: 'RG_BASITTASLAKLAR',
+        pageName: 'RG_BASITFATURA',
         token: token,
         jp: JSON.stringify(invoicePayload)
       });
@@ -383,21 +382,55 @@ class EarsivPortalService {
       const res = await axios.post(`${this.baseUrl}/dispatch`, dispatchBody, {
         httpsAgent: this.agent,
         headers: reqHeaders,
-        timeout: 15000
+        timeout: 20000
       });
 
-      if (res.data && (res.data.data || res.data.metadata)) {
-        return {
-          success: true,
-          invoiceUuid,
-          invoiceDate: formattedDate,
-          breakdown,
-          result: res.data.data,
-          message: 'Fatura taslağı GİB e-Arşiv sistemine başarıyla kaydedildi.'
-        };
+      const responseText = String(res.data?.data || '');
+      if (!responseText.includes('başarıyla')) {
+        throw new Error(responseText || res.data?.messages?.[0]?.text || 'GİB Taslak Fatura oluşturulamadı.');
       }
 
-      throw new Error(res.data?.messages?.[0]?.text || res.data?.data || 'GİB Taslak Fatura oluşturulamadı.');
+      // GİB üzerinde oluşan gerçek ETTN ve Belge Numarasını RG_TASLAKLAR üzerinden çek
+      let realEttn = invoiceUuid;
+      let realBelgeNo = '';
+      try {
+        const listCall = await axios.post(`${this.baseUrl}/dispatch`, qs.stringify({
+          cmd: 'EARSIV_PORTAL_TASLAKLARI_GETIR',
+          callid: crypto.randomUUID(),
+          pageName: 'RG_TASLAKLAR',
+          token: token,
+          jp: JSON.stringify({
+            baslangic: formattedDate,
+            bitis: formattedDate,
+            hangiTip: '5000/30000'
+          })
+        }), {
+          httpsAgent: this.agent,
+          headers: reqHeaders,
+          timeout: 15000
+        });
+
+        const list = listCall.data?.data;
+        if (Array.isArray(list) && list.length > 0) {
+          const match = list.find(d => d.aliciVknTckn === vknTckn) || list[list.length - 1];
+          if (match) {
+            realEttn = match.ettn || realEttn;
+            realBelgeNo = match.belgeNumarasi || '';
+          }
+        }
+      } catch (listErr) {
+        console.warn('[EarsivService] Could not resolve ETTN from list:', listErr.message);
+      }
+
+      return {
+        success: true,
+        invoiceUuid: realEttn,
+        invoiceNumber: realBelgeNo,
+        invoiceDate: formattedDate,
+        breakdown,
+        result: responseText,
+        message: 'Fatura taslağı GİB e-Arşiv sistemine başarıyla kaydedildi.'
+      };
     } catch (err) {
       console.error('[EarsivService] Draft Invoice Error:', err.message);
       throw err;
@@ -598,13 +631,12 @@ class EarsivPortalService {
         });
 
         const dataObj = res.data?.data;
-        if (dataObj && (dataObj.sonuc === '1' || dataObj.sonuc === 1 || dataObj === '1' || !res.data.error)) {
-          const year = new Date().getFullYear();
-          const invoiceNo = dataObj.faturaNo || dataObj.belgeNo || `GIB${year}${Math.floor(100000000 + Math.random() * 900000000)}`;
+        const msgText = String(dataObj || res.data?.messages?.[0]?.text || '');
+        if (msgText.includes('başarıyla') || msgText.includes('imzalanmıştır') || (dataObj && (dataObj.sonuc === '1' || dataObj.sonuc === 1))) {
           return {
             success: true,
             invoiceUuid,
-            invoiceNumber: invoiceNo,
+            invoiceNumber: options.invoiceNumber || dataObj?.faturaNo || dataObj?.belgeNo || '',
             signedAt: new Date().toISOString(),
             data: dataObj,
             message: 'Fatura GİB e-Arşiv Portalında resmi olarak imzalandı ve onaylandı.'
@@ -613,6 +645,9 @@ class EarsivPortalService {
 
         if (res.data?.messages?.[0]?.text) {
           lastError = new Error(res.data.messages[0].text);
+          continue;
+        } else if (res.data?.data) {
+          lastError = new Error(String(res.data.data));
           continue;
         }
       } catch (err) {

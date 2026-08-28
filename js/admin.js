@@ -544,11 +544,15 @@ const AdminApp = {
             <button class="btn-admin-secondary" style="padding:4px 9px; font-size:11.5px;" onclick="AdminApp.showDetail('${o.orderId}')">
               Detay
             </button>
-            ${o.invoiceStatus === 'SIGNED' ? `
+            ${o.invoiceStatus !== 'SIGNED' ? `
+              <button class="btn-admin-primary" style="padding:4px 9px; font-size:11.5px; background:#084C47; border-color:#084C47; color:#FFF;" onclick="AdminApp.startInvoiceSigning('${o.orderId}')" title="GİB e-Arşiv Fatura Kes">
+                🧾 Fatura Kes
+              </button>
+            ` : `
               <button class="btn-admin-secondary" style="padding:4px 9px; font-size:11.5px; background:#25D366; border-color:#25D366; color:#FFF; font-weight:700;" onclick="AdminApp.sendInvoiceViaWhatsApp('${o.orderId}')" title="Faturayı WhatsApp ile Müşteriye İlet">
                 📲 WhatsApp
               </button>
-            ` : ''}
+            `}
             <button class="btn-admin-secondary" style="padding:4px 9px; font-size:11.5px; border-color:#C2A768; color:#084C47; font-weight:700;" onclick="AdminApp.printLegalDocument('${o.orderId}')" title="Zaman Damgalı Sözleşme & Delil Çıktısı">
               📜 Yasal Evrak
             </button>
