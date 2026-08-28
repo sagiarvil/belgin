@@ -383,6 +383,8 @@ exports.getAdminOrders = functions
           createdAtIso = new Date().toISOString();
         }
 
+        const orderIdVal = data.orderId || docId;
+
         const isFailed = data.status === 'PAYMENT_FAILED' || 
                          data.status === 'FAILED' || 
                          data.paymentStatus === 'FAILED' || 
@@ -394,17 +396,19 @@ exports.getAdminOrders = functions
                        data.paymentStatus === 'PAID' || 
                        data.paymentStatus === 'PAYMENT_PAID' || 
                        data.status === 'COMPLETED' || 
-                       data.status === 'PAID' ||
+                       data.status === 'PAID' || 
                        data.status === 'AWAITING_STORE_PICKUP' ||
                        data.status === 'PAYMENT_SESSION_READY' ||
                        data.status === 'IDENTITY_VERIFIED' ||
                        data.status === 'DELIVERED' ||
                        data.status === 'SUCCESS' ||
-                       (Number(data.total || data.totalAmount || 0) > 0)
+                       Boolean(data.paidAt) ||
+                       Boolean(data.payment?.authCode && data.payment.authCode !== 'NONE') ||
+                       (Number(data.total || (data.payment && data.payment.amount) || 0) > 0)
         );
 
         const orderItem = {
-          orderId: data.orderId || docId,
+          orderId: orderIdVal,
           evidenceId: data.evidenceId || docId,
           totalAmount: Number(data.total || (data.payment && data.payment.amount) || 0),
           status: isPaid ? (data.status === 'AWAITING_STORE_PICKUP' ? 'AWAITING_STORE_PICKUP' : 'COMPLETED') : (isFailed ? 'FAILED' : 'PENDING'),
@@ -416,6 +420,8 @@ exports.getAdminOrders = functions
           customerName: (data.customer && data.customer.name) || data.customerName || 'Müşteri',
           customerPhone: (data.customer && data.customer.phone) || data.customerPhone || '—',
           customerEmail: (data.customer && data.customer.email) || data.customerEmail || '—',
+          customerIdentity: (data.customer && (data.customer.identityNumber || data.customer.identity)) || data.customerIdentity || data.identityNumber || '—',
+          customerAddress: (data.customer && data.customer.address) || data.customerAddress || data.address || '—',
           items: Array.isArray(data.items) ? data.items : [{ name: data.title || 'Lüks Saat / Mücevherat', price: data.total || 0, qty: 1 }],
           createdAt: createdAtIso,
           productSnapshotHash: data.productSnapshotHash || null,

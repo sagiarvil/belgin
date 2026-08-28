@@ -560,6 +560,7 @@ const AdminApp = {
           <td>
             <div style="font-weight:700;">${o.customerName || 'Müşteri'}</div>
             <div style="font-size:11.5px; color:var(--admin-muted);">${o.customerPhone || '—'}</div>
+            <div style="font-size:11px; color:#9A7B38; font-weight:700; margin-top:2px;">🆔 TC: <span style="font-family:monospace;">${o.customerIdentity && o.customerIdentity !== '—' ? o.customerIdentity : 'Showroomda Alınacak'}</span></div>
           </td>
           <td style="font-weight:800; font-size:14.5px; color:var(--admin-teal);">
             ₺${Number(o.totalAmount || 0).toLocaleString('tr-TR')}
@@ -618,9 +619,11 @@ const AdminApp = {
         </div>
       </div>
 
-      <h4 style="margin:14px 0 8px; font-size:14px; color:var(--admin-teal-dark);">Müşteri Bilgileri</h4>
-      <div style="font-size:13px; line-height:1.6; margin-bottom:16px;">
+      <h4 style="margin:14px 0 8px; font-size:14px; color:var(--admin-teal-dark);">Müşteri & Fatura Kimlik Bilgileri</h4>
+      <div style="font-size:13px; line-height:1.7; margin-bottom:16px;">
         <div><strong>Ad Soyad:</strong> ${order.customerName || '—'}</div>
+        <div><strong>T.C. Kimlik / Pasaport:</strong> <span style="font-family:monospace; font-weight:800; color:#084C47; background:#F0F7F5; padding:2px 8px; border-radius:4px; border:1px solid #D3E4E0;">${order.customerIdentity || 'Showroomda İbraz Edilecek'}</span></div>
+        <div><strong>Fatura Adresi:</strong> <span>${order.customerAddress || 'Showroom / Mağazadan Teslim'}</span></div>
         <div><strong>Telefon:</strong> ${order.customerPhone || '—'}</div>
         <div><strong>E-Posta:</strong> ${order.customerEmail || '—'}</div>
         <div><strong>Teslimat Şekli:</strong> ${order.deliveryMethod === 'showroom' ? 'İzmir Buca Showroom Mağazadan Teslim' : 'Kargo Teslimatı'}</div>
@@ -730,12 +733,14 @@ const AdminApp = {
       return;
     }
 
-    const headers = ['Sipariş No', 'Hukuki Delil ID', 'Tarih', 'Müşteri Adı', 'Telefon', 'E-Posta', 'Tutar (TL)', 'POS Kanalı', 'Ödeme Durumu', 'Teslimat'];
+    const headers = ['Sipariş No', 'Hukuki Delil ID', 'Tarih', 'Müşteri Adı', 'T.C. Kimlik / Pasaport', 'Fatura Adresi', 'Telefon', 'E-Posta', 'Tutar (TL)', 'POS Kanalı', 'Ödeme Durumu', 'Teslimat'];
     const rows = this.orders.map(o => [
       `"${o.orderId}"`,
       `"${o.evidenceId || o.orderId}"`,
       `"${new Date(o.createdAt).toLocaleString('tr-TR')}"`,
       `"${(o.customerName || '').replace(/"/g, '""')}"`,
+      `"${(o.customerIdentity || '').replace(/"/g, '""')}"`,
+      `"${(o.customerAddress || '').replace(/"/g, '""')}"`,
       `"${o.customerPhone || ''}"`,
       `"${o.customerEmail || ''}"`,
       `"${Number(o.totalAmount || 0)}"`,

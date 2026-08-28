@@ -295,9 +295,10 @@ class PaymentService {
     const productSnapshotHash = sha256(JSON.stringify(items));
     const evidenceId = sha256(JSON.stringify({ merchant_oid, requestId, productSnapshotHash, legalEvidence, total: serverTotal, deliveryMethod: compliance.deliveryMethod }));
 
-    const customerAddress = compliance.deliveryMethod === 'showroom'
-      ? 'Belgin Kuyumculuk — Menderes Caddesi No:231/B Buca / İzmir — Mağazadan Teslim'
-      : String(body.user_address || '').slice(0, 1000);
+    const customerAddress = String(body.customerAddress || body.user_address || body.address || '').trim().slice(0, 1000) ||
+      (compliance.deliveryMethod === 'showroom'
+        ? 'Showroom / Mağazadan Teslim'
+        : 'İzmir');
 
     const providerName = String(body.provider || DEFAULT_PROVIDER).toUpperCase();
     const provider = paymentRouter.getProvider(providerName);
@@ -307,6 +308,7 @@ class PaymentService {
       orderId: merchant_oid,
       requestId,
       evidenceId,
+      customerAddress,
       idempotencyKey: idempotencyKey || null,
       evidenceSchema: LEGAL_EVIDENCE_SCHEMA,
       status: ORDER_STATUS.PAYMENT_SESSION_CREATING,
@@ -468,7 +470,11 @@ class PaymentService {
     }
 
     const order = orderDoc.data();
-    const effectiveProviderName = String(order.payment?.provider || order.provider || providerName || DEFAULT_PROVIDER).toUpperCase();
+    const orderProvider = String(order.payment?.provider || order.provider || '').toUpperCase();
+    if (providerName && orderProvider && orderProvider !== String(providerName).toUpperCase()) {
+      return { status: 400, message: 'FAIL: PROVIDER_MISMATCH' };
+    }
+    const effectiveProviderName = orderProvider || String(providerName || DEFAULT_PROVIDER).toUpperCase();
     const provider = paymentRouter.getProvider(effectiveProviderName);
 
     // Atomic Idempotency Kontrolü: Zaten PAID ise hemen 200 OK dön

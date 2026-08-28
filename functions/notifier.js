@@ -31,6 +31,8 @@ async function sendTelegramNotification(order, botToken = TELEGRAM_BOT_TOKEN, ch
   const formattedAmount = formatCurrency(amount);
   const customerName = (order.customer && order.customer.name) || order.customerName || 'Müşteri';
   const customerPhone = (order.customer && order.customer.phone) || order.customerPhone || '—';
+  const customerIdentity = (order.customer && (order.customer.identityNumber || order.customer.identity)) || order.customerIdentity || '—';
+  const customerAddress = (order.customer && order.customer.address) || order.customerAddress || order.address || '';
   const rawPhone = String(customerPhone).replace(/\D/g, '');
   const provider = (order.payment && order.payment.provider) || order.provider || 'AKBANK';
   const isShowroom = order.deliveryMethod === 'showroom' || order.highValueSecureDelivery === true;
@@ -47,6 +49,8 @@ async function sendTelegramNotification(order, botToken = TELEGRAM_BOT_TOKEN, ch
     ``,
     `💰 <b>Tutar:</b> <code>${formattedAmount}</code>`,
     `👤 <b>Müşteri:</b> ${customerName}`,
+    `🆔 <b>T.C. Kimlik / Pasaport:</b> <code>${customerIdentity}</code>`,
+    customerAddress ? `🏠 <b>Fatura Adresi:</b> ${customerAddress}` : '',
     `📞 <b>Telefon:</b> ${customerPhone}`,
     `💳 <b>POS / Banka:</b> ${provider} (3D Secure)`,
     `📦 <b>Sipariş No:</b> <code>${orderId}</code>`,
@@ -106,8 +110,10 @@ async function sendPaymentPushNotification(order, options = {}) {
   }
 
   // 1. NTFY Gönderimi
+  const customerIdentity = (order.customer && (order.customer.identityNumber || order.customer.identity)) || order.customerIdentity || '—';
   const messageLines = [
     `👤 Müşteri: ${customerName}`,
+    `🆔 T.C. Kimlik / Pasaport: ${customerIdentity}`,
     `📞 Tel: ${customerPhone}`,
     `💳 POS / Banka: ${provider} (3D Secure Onaylı)`,
     `📦 Sipariş No: ${orderId}`,
