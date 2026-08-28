@@ -309,15 +309,16 @@ class EarsivPortalService {
       kasabaKoy: '',
       vergiDairesi: '',
       ulke: 'Türkiye',
-      bulvarcaddesokak: orderData.customerAddress || 'İzmir',
+      bulvarcaddesokak: orderData.customerAddress || 'Menderes Cad. No:231/B Buca İzmir',
       mahalleSemtIlce: 'Buca',
       sehir: 'İzmir',
       postaKodu: '',
       tel: orderData.customerPhone || '',
       fax: '',
-      eposta: orderData.customerEmail || '',
+      eposta: orderData.customerEmail || 'musteri@belginkuyumculuk.com',
       websitesi: 'https://www.belginkuyumculuk.com',
       iadeTable: [],
+      ozelMatrahTutari: Number(breakdown.hasGoldAmount) || 0,
       vergiCesidi: 'SIFIR',
       malHizmetTable: breakdown.items.map(item => ({
         malHizmet: item.malHizmet,
@@ -333,11 +334,10 @@ class EarsivPortalService {
         kdvOrani: Number(item.kdvOrani) || 0,
         kdvTutari: Number(item.kdvTutari) || 0,
         vergiOrani: 0,
-        ozelMatrahNedeni: item.ozelMatrahNedeni || '',
-        ozelMatrahTutari: Number(item.ozelMatrahTutari) || 0,
+        ozelMatrahNedeni: item.ozelMatrahNedeni || (item.kdvOrani === 0 ? '351' : ''),
+        ozelMatrahTutari: Number(item.ozelMatrahTutari) || (item.kdvOrani === 0 ? Number(item.fiyat) : 0),
         tevkifatKodu: 0
       })),
-      not: `Sipariş No: ${orderData.orderId || ''} | KDV Kanunu 23/f maddesi uyarınca Has Altın bedeli KDV'den istisnadır (Özel Matrah). Belgin Kuyumculuk - Semih Sonbahar`,
       matrah: Number(breakdown.totalMatrah) || 0,
       malhizmetToplamTutari: Number(breakdown.totalMatrah) || 0,
       toplamIskonto: 0,
@@ -346,6 +346,17 @@ class EarsivPortalService {
       vergilerDahilToplamTutar: Number(breakdown.grandTotal) || 0,
       toplamMasraflar: 0,
       odenecekTutar: Number(breakdown.grandTotal) || 0,
+      not: `Sipariş No: ${orderData.orderId || ''} | 3065 sayılı KDV Kanununun 23/f maddesi uyarınca Özel Matrah uygulanmıştır. Belgin Kuyumculuk`,
+      siparisNumarasi: '',
+      siparisTarihi: '',
+      irsaliyeNumarasi: '',
+      irsaliyeTarihi: '',
+      fisNo: '',
+      fisTarihi: '',
+      fisSaati: '',
+      fisTipi: '',
+      zRaporNo: '',
+      okcSeriNo: '',
       tip: 'İskonto'
     };
 
@@ -474,8 +485,8 @@ class EarsivPortalService {
           headers: reqHeaders,
           timeout: 10000
         });
-        if (phoneRes.data?.data?.ceptel || phoneRes.data?.data?.telNo) {
-          rawPhone = phoneRes.data.data.ceptel || phoneRes.data.data.telNo;
+        if (phoneRes.data?.data?.telefon || phoneRes.data?.data?.ceptel || phoneRes.data?.data?.telNo) {
+          rawPhone = phoneRes.data.data.telefon || phoneRes.data.data.ceptel || phoneRes.data.data.telNo;
         }
       } catch (pErr) {
         console.warn('[EarsivService] Telefon sorgulama fallback:', pErr.message);
