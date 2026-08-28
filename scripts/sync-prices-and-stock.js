@@ -71,6 +71,11 @@ function parseAgaKulchePage(html) {
         continue;
       }
 
+      // 24 Ayar altınlar, külçeler ve gram altınlar KESİNLİKLE dahil edilmez (Kalıcı olarak kaldırıldı)
+      if (/24\s*ayar/i.test(rawTitle) || /24k/i.test(rawTitle) || /külçe/i.test(rawTitle) || /kulce/i.test(rawTitle) || /995/i.test(rawTitle) || /999/i.test(rawTitle) || /has\s*altın/i.test(rawTitle) || /gram\s*altın/i.test(rawTitle) || /valcambi/i.test(rawTitle) || /argor/i.test(rawTitle) || /pamp/i.test(rawTitle)) {
+        continue;
+      }
+
       // Temiz Başlık (Marka ve aracı isimleri arındırılmış)
       let cleanName = rawTitle
         .replace(/AgaKulche\s*/gi, '')

@@ -24,7 +24,7 @@ assert(Array.isArray(PRODUCTS) && PRODUCTS.length >= 1000, `Yayın kataloğunda 
 assert(Array.isArray(WATCHES) && WATCHES.length >= 1000, `Saat koleksiyonunda ${WATCHES.length} ürün mevcut (>= 1.000)`);
 assert(Array.isArray(JEWELLERY) && JEWELLERY.length >= 3, 'Mücevher koleksiyonu mevcut');
 assert(Array.isArray(PRE_OWNED_ITEMS) && PRE_OWNED_ITEMS.length >= 10, 'İkinci el koleksiyonu mevcut');
-assert(Array.isArray(PRE_OWNED_GOLD) && PRE_OWNED_GOLD.length >= 2, 'İkinci el altın ürünleri mevcut');
+assert(Array.isArray(PRE_OWNED_GOLD) && !PRODUCTS.some(p => /24\s*ayar/i.test(p.title || p.name) || /külçe/i.test(p.title || p.name)), '24 Ayar külçe/gram altınlar kalıcı olarak katalogdan kaldırılmıştır');
 assert(PRE_OWNED_ITEMS.every(p => p.price - p.buyPrice === 500), 'İkinci el tüm ürünlerde al-sat marjı tam 500 TL');
 assert(Array.isArray(WATCH_BRANDS) && WATCH_BRANDS.length >= 9, `Saat markaları mevcut (${WATCH_BRANDS.length} marka)`);
 assert(Array.isArray(JEWELRY_BRANDS) && JEWELRY_BRANDS.length === 5, 'Mücevher markaları mevcut');
