@@ -50,28 +50,31 @@
       },
       {
         "source": "/api/admin/invoice/draft",
-        "function": "adminInvoiceApi",
-        "region": "europe-west3"
+        "function": "adminInvoiceApi"
+      },
+      {
+        "source": "/api/admin/invoice/batch-draft",
+        "function": "adminInvoiceApi"
+      },
+      {
+        "source": "/api/admin/invoice/batch-sign",
+        "function": "adminInvoiceApi"
       },
       {
         "source": "/api/admin/invoice/send-sms",
-        "function": "adminInvoiceApi",
-        "region": "europe-west3"
+        "function": "adminInvoiceApi"
       },
       {
         "source": "/api/admin/invoice/sign",
-        "function": "adminInvoiceApi",
-        "region": "europe-west3"
+        "function": "adminInvoiceApi"
       },
       {
         "source": "/api/admin/invoice/view",
-        "function": "adminInvoiceApi",
-        "region": "europe-west3"
+        "function": "adminInvoiceApi"
       },
       {
         "source": "/api/admin/invoice/force-logout",
-        "function": "adminInvoiceApi",
-        "region": "europe-west3"
+        "function": "adminInvoiceApi"
       },
       {
         "source": "/api/admin/orders/delete",
