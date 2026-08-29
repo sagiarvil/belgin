@@ -1,3 +1,97 @@
+
+// --- UNIVERSAL TURKISH SEARCH ENGINE (STANDARDIZED) ---
+function normalizeTr(text) {
+  if (!text) return "";
+  return text.trim().toLocaleLowerCase("tr-TR")
+    .replace(/i̇/g, "i").replace(/ı/g, "i").replace(/ğ/g, "g").replace(/ü/g, "u")
+    .replace(/ş/g, "s").replace(/ö/g, "o").replace(/ç/g, "c").replace(/â/g, "a")
+    .replace(/î/g, "i").replace(/û/g, "u").replace(/\s+/g, " ");
+}
+
+function levenshteinDist(a, b) {
+  if (a === b) return 0;
+  if (!a.length) return b.length;
+  if (!b.length) return a.length;
+  const matrix = [];
+  for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+  for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+  for (let i = 1; i <= b.length; i++) {
+    for (let j = 1; j <= a.length; j++) {
+      matrix[i][j] = b.charAt(i - 1) === a.charAt(j - 1)
+        ? matrix[i - 1][j - 1]
+        : Math.min(matrix[i - 1][j - 1] + 1, matrix[i][j - 1] + 1, matrix[i - 1][j] + 1);
+    }
+  }
+  return matrix[b.length][a.length];
+}
+
+const STOP_WORDS_SET = new Set(["nasil", "nedir", "ne", "icin", "kadar", "olan", "mi", "fiyat", "fiyati"]);
+
+function runBelginSearch(items, query) {
+  const qNorm = normalizeTr(query);
+  if (!qNorm) return { results: [], didYouMean: null, suggested: [] };
+  
+  const rawTokens = qNorm.split(/[^a-z0-9]+/i).filter(Boolean);
+  const intentTokens = rawTokens.filter(t => !STOP_WORDS_SET.has(t));
+  const tokens = intentTokens.length > 0 ? intentTokens : rawTokens;
+  
+  const scored = [];
+  const allWords = new Set();
+  
+  for (const p of items) {
+    const titleNorm = normalizeTr((p.brand || "") + " " + (p.name || ""));
+    const detailsNorm = normalizeTr((p.reference || "") + " " + (p.metal || "") + " " + (p.category || "") + " " + (p.subCategory || ""));
+    const combined = titleNorm + " " + detailsNorm;
+    
+    titleNorm.split(" ").forEach(w => w.length >= 3 && allWords.add(w));
+    
+    let score = 0;
+    if (titleNorm === qNorm) score += 150;
+    else if (titleNorm.startsWith(qNorm)) score += 90;
+    else if (titleNorm.includes(qNorm)) score += 70;
+    else if (combined.includes(qNorm)) score += 40;
+    
+    for (const t of tokens) {
+      if (t.length < 2) continue;
+      if (titleNorm.includes(t)) score += 35;
+      else if (combined.includes(t)) score += 15;
+      
+      for (const w of titleNorm.split(" ")) {
+        if (w.length >= 3 && t.length >= 3) {
+          const d = levenshteinDist(t, w);
+          if (d <= 2 && d / Math.max(t.length, w.length) <= 0.35) {
+            score += 25 - d * 8;
+          }
+        }
+      }
+    }
+    
+    if (score >= 20) {
+      scored.push({ p, score });
+    }
+  }
+  
+  scored.sort((a, b) => b.score - a.score);
+  const results = scored.slice(0, 24).map(s => s.p);
+  
+  let didYouMean = null;
+  if (results.length === 0 || (scored[0] && scored[0].score < 50)) {
+    let bestDist = Infinity;
+    let bestWord = null;
+    for (const w of allWords) {
+      const d = levenshteinDist(qNorm, w);
+      if (d > 0 && d <= 2 && d < bestDist) {
+        bestDist = d;
+        bestWord = w;
+      }
+    }
+    if (bestWord) didYouMean = bestWord;
+  }
+  
+  const suggested = results.length === 0 && scored.length > 0 ? scored.slice(0, 6).map(s => s.p) : [];
+  return { results, didYouMean, suggested };
+}
+
 // ==========================================================
 // BELGIN — LÜKS SAAT & MÜCEVHERAT (EST. 1999)
 // TÜRKİYE LOKASYON & YASAL E-TİCARET ALTYAPISI MOTORU
@@ -127,13 +221,24 @@ const App = {
 
   updateHeaderCartCount() {
     const badge = document.getElementById('headerCartCount');
-    if (!badge) return;
-    const total = Cart.items.reduce((sum, i) => sum + i.qty, 0);
-    if (total > 0) {
-      badge.textContent = total;
-      badge.style.display = 'inline-flex';
-    } else {
-      badge.style.display = 'none';
+    const mobileBadge = document.getElementById('mobileCartBadge');
+    const total = (typeof Cart !== 'undefined' && Cart.items) ? Cart.items.reduce((sum, i) => sum + i.qty, 0) : 0;
+    
+    if (badge) {
+      if (total > 0) {
+        badge.textContent = total;
+        badge.style.display = 'inline-flex';
+      } else {
+        badge.style.display = 'none';
+      }
+    }
+    if (mobileBadge) {
+      if (total > 0) {
+        mobileBadge.textContent = total;
+        mobileBadge.style.display = 'inline-flex';
+      } else {
+        mobileBadge.style.display = 'none';
+      }
     }
   },
 
@@ -1489,71 +1594,79 @@ const App = {
     this.handleLiveSearch(term);
   },
 
-  handleLiveSearch(query = '') {
-    const clearBtn = document.getElementById('searchClearBtn');
-    const metaEl = document.getElementById('searchResultsMeta');
-    const listEl = document.getElementById('searchResultsList');
+  handleLiveSearch(query = "") {
+    const clearBtn = document.getElementById("searchClearBtn");
+    const metaEl = document.getElementById("searchResultsMeta");
+    const listEl = document.getElementById("searchResultsList");
     if (!listEl) return;
 
-    const term = (query || '').trim().toLowerCase();
+    const term = (query || "").trim();
     if (clearBtn) {
-      clearBtn.style.display = term ? 'inline-flex' : 'none';
+      clearBtn.style.display = term ? "inline-flex" : "none";
     }
 
     let results = [];
+    let didYouMean = null;
+    let suggested = [];
+
     if (!term) {
       results = PRODUCTS.slice(0, 8);
       if (metaEl) {
-        metaEl.style.display = 'flex';
-        metaEl.innerHTML = `<span>ÖNE ÇIKAN MODELLER & KOLEKSİYON</span><span>${PRODUCTS.length.toLocaleString('tr-TR')} Ürün</span>`;
+        metaEl.style.display = "flex";
+        metaEl.innerHTML = "<span>ÖNE ÇIKAN MODELLER & KOLEKSİYON</span><span>" + PRODUCTS.length.toLocaleString("tr-TR") + " Ürün</span>";
       }
     } else {
-      results = PRODUCTS.filter(p => {
-        const name = (p.name || '').toLowerCase();
-        const brand = (p.brand || '').toLowerCase();
-        const ref = (p.reference || p.ref || '').toLowerCase();
-        const metal = (p.metal || '').toLowerCase();
-        const cat = (p.category || '').toLowerCase();
-        const subCat = (p.subCategory || '').toLowerCase();
-        return name.includes(term) || brand.includes(term) || ref.includes(term) || metal.includes(term) || cat.includes(term) || subCat.includes(term);
-      });
+      const res = runBelginSearch(PRODUCTS, term);
+      results = res.results;
+      didYouMean = res.didYouMean;
+      suggested = res.suggested;
 
       if (metaEl) {
-        metaEl.style.display = 'flex';
-        metaEl.innerHTML = `<span>"${query}" İÇİN BULUNAN SONUÇLAR</span><span>${results.length} Adet</span>`;
+        metaEl.style.display = "flex";
+        if (results.length > 0) {
+          metaEl.innerHTML = "<span>\"" + term + "\" İÇİN BULUNAN SONUÇLAR</span><span>" + results.length + " Adet</span>";
+        } else if (suggested.length > 0) {
+          metaEl.innerHTML = "<span>EN YAKIN İLGİLİ MODELLER</span><span>" + suggested.length + " Adet</span>";
+        } else {
+          metaEl.innerHTML = "<span>SONUÇ BULUNAMADI</span><span>0 Adet</span>";
+        }
       }
     }
 
-    if (results.length === 0) {
-      listEl.innerHTML = `
-        <div class="search-empty-state">
-          <div class="search-empty-icon">🔍</div>
-          <h4 class="search-empty-title">"${query}" ile eşleşen model bulunamadı</h4>
-          <p class="search-empty-desc">Farklı bir marka adı, model referansı veya "Rolex, Cartier, Altın, Saat" gibi genel bir arama terimi deneyebilirsiniz.</p>
-        </div>
-      `;
+    const displayItems = results.length > 0 ? results : suggested;
+
+    if (displayItems.length === 0) {
+      listEl.innerHTML = "<div class=\"search-empty-state\">" +
+        "<div class=\"search-empty-icon\">🔍</div>" +
+        "<h4 class=\"search-empty-title\">\"" + term + "\" ile eşleşen model bulunamadı</h4>" +
+        (didYouMean ? "<div style=\"margin: 12px 0;\"><button type=\"button\" onclick=\"const inp=document.getElementById('searchInput'); if(inp){ inp.value='" + didYouMean + "'; App.handleLiveSearch('" + didYouMean + "'); }\" style=\"background:#f4f4f5;border:1px solid #d4d4d8;padding:6px 12px;border-radius:8px;font-size:12px;cursor:pointer;font-weight:bold;color:#18181b;\">Bunu mu demek istediniz: <span style=\"text-decoration:underline;\">" + didYouMean + "</span> (Uygula ↵)</button></div>" : "") +
+        "<p class=\"search-empty-desc\">Farklı bir marka adı, model referansı veya \"Rolex, Cartier, Altın, Saat\" gibi genel bir arama terimi deneyebilirsiniz.</p>" +
+        "</div>";
       return;
     }
 
-    listEl.innerHTML = results.slice(0, 24).map(p => {
-      const img = p.image || p.img || (p.images && p.images[0]) || 'images/belgin-logo.png';
-      const brand = p.brand || (p.category === 'gold' ? '24K ALTIN' : 'MÜCEVHERAT');
-      const title = `${p.brand || ''} ${p.name || ''}`.trim();
-      const ref = p.reference || p.ref || p.metal || (p.category === 'gold' ? 'Sertifikalı Külçe/Ziynet' : 'Özel Koleksiyon');
-      const priceFormatted = (typeof formatPrice === 'function') ? formatPrice(p.price) : `₺${Number(p.price).toLocaleString('tr-TR')}`;
+    const dymBanner = didYouMean && results.length > 0 ? "<div style=\"grid-column: 1/-1; margin-bottom: 8px;\">" +
+      "<button type=\"button\" onclick=\"const inp=document.getElementById('searchInput'); if(inp){ inp.value='" + didYouMean + "'; App.handleLiveSearch('" + didYouMean + "'); }\" style=\"background:#ecfdf5;border:1px solid #a7f3d0;padding:6px 12px;border-radius:8px;font-size:12px;cursor:pointer;font-weight:bold;color:#065f46;\">" +
+      "Bunu mu demek istediniz: <span style=\"text-decoration:underline;\">" + didYouMean + "</span> (Uygula ↵)" +
+      "</button></div>" : "";
 
-      return `
-        <div class="search-result-item" onclick="App.closeSearchModal(); App.openProduct(${p.id});">
-          <img src="${img}" alt="${title}" class="search-result-thumb" loading="lazy">
-          <div class="search-result-info">
-            <span class="search-result-brand">${brand}</span>
-            <div class="search-result-title">${title}</div>
-            <span class="search-result-ref">${ref}</span>
-          </div>
-          <div class="search-result-price">${priceFormatted}</div>
-        </div>
-      `;
-    }).join('');
+    listEl.innerHTML = dymBanner + displayItems.slice(0, 24).map(p => {
+      const img = p.image || p.img || (p.images && p.images[0]) || "images/belgin-logo.png";
+      const brand = p.brand || (p.category === "gold" ? "24K ALTIN" : "MÜCEVHERAT");
+      const title = ((p.brand || "") + " " + (p.name || "")).trim();
+      const ref = p.reference || p.ref || p.metal || (p.category === "gold" ? "Sertifikalı Külçe/Ziynet" : "Özel Koleksiyon");
+      const priceFormatted = (typeof formatPrice === "function") ? formatPrice(p.price) : ("₺" + Number(p.price).toLocaleString("tr-TR"));
+
+      return "<div class=\"search-result-item\" onclick=\"App.closeSearchModal(); App.openProduct(" + p.id + ");\">" +
+        "<img src=\"" + img + "\" alt=\"" + title + "\" class=\"search-result-thumb\" loading=\"lazy\">" +
+        "<div class=\"search-result-info\">" +
+        "<span class=\"search-result-brand\">" + brand + "</span>" +
+        "<div class=\"search-result-title\">" + title + "</div>" +
+        "<span class=\"search-result-ref\">" + ref + "</span>" +
+        "</div>" +
+        "<div class=\"search-result-price\">" + priceFormatted + "</div>" +
+        "</div>";
+    }).join("");
   },
 
   calculateInstantValuation() {
