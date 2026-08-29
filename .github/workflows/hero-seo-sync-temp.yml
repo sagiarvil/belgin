@@ -15,7 +15,7 @@ concurrency:
 jobs:
   diagnose-generated-seo:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 15
     steps:
       - name: Checkout feature branch
         uses: actions/checkout@v4
@@ -26,6 +26,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
+          cache: npm
+          cache-dependency-path: functions/package-lock.json
+
+      - name: Install functions dependencies
+        run: npm ci --prefix functions
+
+      - name: Run full tests exactly as quality gate
+        run: npm test
 
       - name: Run guard exactly as quality gate
         run: npm run guard
@@ -54,7 +62,7 @@ jobs:
           for f in sitemap.xml sitemap-pages.xml sitemap-categories.xml sitemap-products.xml llms.txt llms-full.txt; do
             if ! cmp --silent "/tmp/seo-before/$f" "$f"; then
               echo "::error title=SEO deterministic delta::$f changed after regeneration"
-              diff -u "/tmp/seo-before/$f" "$f" | head -120 || true
+              diff -u "/tmp/seo-before/$f" "$f" | head -200 || true
               failed=1
             else
               echo "STABLE=$f"
@@ -62,7 +70,7 @@ jobs:
           done
           if ! cmp --silent /tmp/seo-before/js/seo-route-map.js js/seo-route-map.js; then
             echo "::error title=SEO deterministic delta::js/seo-route-map.js changed after regeneration"
-            diff -u /tmp/seo-before/js/seo-route-map.js js/seo-route-map.js | head -120 || true
+            diff -u /tmp/seo-before/js/seo-route-map.js js/seo-route-map.js | head -200 || true
             failed=1
           else
             echo "STABLE=js/seo-route-map.js"
