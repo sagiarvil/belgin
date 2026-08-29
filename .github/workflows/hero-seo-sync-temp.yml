@@ -38,6 +38,19 @@ jobs:
       - name: Run guard exactly as quality gate
         run: npm run guard
 
+      - name: Run legal and payment determinism pre-step exactly as quality gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp functions/product-catalog.json /tmp/product-catalog.json
+          cp legal-manifest.json /tmp/legal-manifest.json
+          npm run public:harden
+          npm run legal:harden
+          npm run payments:catalog
+          npm run legal:manifest
+          cmp --silent /tmp/product-catalog.json functions/product-catalog.json
+          node -e "const fs=require('fs');const a=JSON.parse(fs.readFileSync('/tmp/legal-manifest.json'));const b=JSON.parse(fs.readFileSync('legal-manifest.json'));delete a.generatedAt;delete b.generatedAt;if(JSON.stringify(a)!==JSON.stringify(b))process.exit(1)"
+
       - name: Snapshot deterministic SEO artifacts
         shell: bash
         run: |
