@@ -21,12 +21,22 @@ function formatDate(date) {
 /**
  * Telegram Bot Bildirimi Gönderir
  */
-async function sendTelegramNotification(order, botToken = TELEGRAM_BOT_TOKEN, chatId = TELEGRAM_CHAT_ID) {
+async function sendTelegramNotification(order, botToken = TELEGRAM_BOT_TOKEN, chatId = TELEGRAM_CHAT_ID, options = {}) {
   if (!botToken || !chatId) {
     return { success: false, skipped: true, reason: 'TELEGRAM_CONFIG_MISSING' };
   }
 
+  // Test ve Mock Koruması
+  if (!options.isExplicitTest && (process.env.NODE_ENV === 'test' || options.isTest === true)) {
+    return { success: true, skipped: true, reason: 'TEST_ENV_SUPPRESSED' };
+  }
+
   const orderId = order.orderId || 'BLG-' + Date.now();
+  const upperId = String(orderId).toUpperCase();
+  if (!options.isExplicitTest && (upperId.includes('TEST') || upperId.includes('MOCK') || upperId.includes('SAMPLE') || upperId.includes('PARALLEL') || upperId.includes('MAIL-FAIL') || upperId.includes('MISMATCH') || upperId.includes('N8N'))) {
+    return { success: true, skipped: true, reason: 'TEST_ORDER_SUPPRESSED' };
+  }
+
   const amount = Number(order.totalAmount || order.total || (order.payment && order.payment.amount) || 0);
   const formattedAmount = formatCurrency(amount);
   const customerName = (order.customer && order.customer.name) || order.customerName || 'Müşteri';
@@ -101,12 +111,55 @@ async function sendPaymentPushNotification(order, options = {}) {
     return { success: false, skipped: true, reason: 'INVALID_ORDER_DATA' };
   }
 
+  const isExplicitTest = options.isExplicitTest === true;
+
+  // 1. Ortam ve Test Koruması: Test, Mock, Suite çalıştırmalarında veya test ortamında ASLA push atılmaz
+  if (!isExplicitTest && (process.env.NODE_ENV === 'test' || options.isTest === true || order.isTest === true || order.testMode === true)) {
+    return { success: true, skipped: true, reason: 'TEST_ENV_SUPPRESSED' };
+  }
+
   const orderId = String(order.orderId || '').trim();
+  const upperOrderId = orderId.toUpperCase();
+
+  // Test ve mock sipariş ID kalıpları kontrolü
+  if (!isExplicitTest && (
+    upperOrderId.includes('TEST') ||
+    upperOrderId.includes('MOCK') ||
+    upperOrderId.includes('SAMPLE') ||
+    upperOrderId.includes('PARALLEL') ||
+    upperOrderId.includes('MAIL-FAIL') ||
+    upperOrderId.includes('MISMATCH') ||
+    upperOrderId.includes('REPLAY') ||
+    upperOrderId.includes('N8N') ||
+    upperOrderId.includes('DEMO') ||
+    upperOrderId.includes('DEV') ||
+    upperOrderId.includes('FAKE')
+  )) {
+    console.log(`[Notifier] Test/Mock sipariş tespit edildi (${orderId}), push bildirim engellendi.`);
+    return { success: true, skipped: true, reason: 'TEST_ORDER_SUPPRESSED' };
+  }
+
   const amount = Number(order.totalAmount || order.total || (order.payment && order.payment.amount) || 0);
 
   // Yalnızca başarılı, ödenmiş ve pozitif tutarlı siparişler bildirilir
-  const isPaid = order.isPaid === true || order.paymentStatus === 'PAID' || order.status === 'PAID' || order.status === 'COMPLETED' || (order.payment && order.payment.status === 'PAID');
-  if (!isPaid || amount <= 0) {
+  const isPaid = (
+    order.isPaid === true ||
+    order.paymentStatus === 'PAID' ||
+    order.status === 'PAID' ||
+    order.status === 'COMPLETED' ||
+    (order.payment && order.payment.status === 'PAID')
+  ) && (
+    order.status !== 'FAILED' &&
+    order.paymentStatus !== 'FAILED' &&
+    order.status !== 'CANCELLED' &&
+    order.status !== 'PAYMENT_SESSION_READY' &&
+    order.status !== 'PAYMENT_PENDING' &&
+    order.status !== 'CREATED' &&
+    order.status !== 'pending' &&
+    order.paymentStatus !== 'PENDING'
+  );
+
+  if (!isExplicitTest && (!isPaid || amount <= 0)) {
     return { success: false, skipped: true, reason: 'NOT_A_PAID_ORDER' };
   }
 
@@ -192,14 +245,14 @@ async function sendPaymentPushNotification(order, options = {}) {
   const botToken = options.telegramBotToken || TELEGRAM_BOT_TOKEN;
   const chatId = options.telegramChatId || TELEGRAM_CHAT_ID;
   if (botToken && chatId) {
-    results.telegram = await sendTelegramNotification(order, botToken, chatId);
+    results.telegram = await sendTelegramNotification(order, botToken, chatId, options);
   }
 
   return { success: true, results };
 }
 
 /**
- * Test Bildirimi Gönderme (Kurulum ve ses testi için)
+ * Test Bildirimi Gönderme (Kurulum ve ses testi için - Yalnızca Yönetici Paneli Üzerinden)
  */
 async function sendTestNotification(topic = DEFAULT_NTFY_TOPIC, customAmount = 120000, telegramOpts = {}) {
   const sampleOrder = {
@@ -209,8 +262,11 @@ async function sendTestNotification(topic = DEFAULT_NTFY_TOPIC, customAmount = 1
     provider: 'AKBANK',
     deliveryMethod: 'showroom',
     highValueSecureDelivery: true,
+    isPaid: true,
+    paymentStatus: 'PAID',
+    status: 'PAID',
     customer: {
-      name: 'Örnek Müşteri (Test Bildirimi)',
+      name: 'Örnek Müşteri (Yönetici Test Bildirimi)',
       phone: '+90 541 930 53 72',
     },
     items: [
@@ -221,6 +277,7 @@ async function sendTestNotification(topic = DEFAULT_NTFY_TOPIC, customAmount = 1
 
   return await sendPaymentPushNotification(sampleOrder, {
     topic,
+    isExplicitTest: true,
     telegramBotToken: telegramOpts.botToken,
     telegramChatId: telegramOpts.chatId,
   });

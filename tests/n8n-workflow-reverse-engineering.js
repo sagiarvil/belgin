@@ -6,6 +6,8 @@
 
 'use strict';
 
+process.env.NODE_ENV = 'test';
+
 const assert = require('assert');
 const crypto = require('crypto');
 const fs = require('fs');
