@@ -1,0 +1,47 @@
+name: hero-seo-sync-temp
+
+on:
+  push:
+    branches:
+      - feat/hero-micro-smile-20260829
+
+permissions:
+  contents: write
+
+concurrency:
+  group: hero-seo-sync-temp
+  cancel-in-progress: true
+
+jobs:
+  sync-generated-seo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Regenerate deterministic SEO artifacts
+        run: npm run seo:generate
+
+      - name: Commit only deterministic SEO artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "Belgin Build Bot"
+          git config user.email "bot@belginkuyumculuk.com"
+          git add sitemap.xml sitemap-pages.xml sitemap-categories.xml sitemap-products.xml llms.txt llms-full.txt js/seo-route-map.js
+          if git diff --cached --quiet; then
+            echo "SEO_SYNC_DELTA=0"
+            exit 0
+          fi
+          echo "SEO_SYNC_DELTA=1"
+          git diff --cached --stat
+          git commit -m "chore: sync deterministic SEO artifacts"
+          git push origin HEAD:feat/hero-micro-smile-20260829
