@@ -6,6 +6,9 @@ const AdminApp = {
   adminPin: '1999',
   orders: [],
   filteredOrders: [],
+  currentPagedOrders: [],
+  selectedInvoiceIds: new Set(),
+  ACCOUNTING_PHONE: '905419305372',
   knownPaidOrderIds: new Set(),
   isInitialLoadDone: false,
   currentPreset: 'all',
@@ -489,91 +492,240 @@ const AdminApp = {
       pageButtonsContainer.innerHTML = pageBtnsHtml;
     }
 
+    this.currentPagedOrders = pagedOrders;
     const tbody = document.getElementById('ordersTableBody');
-    if (!tbody) return;
+    const mobileList = document.getElementById('ordersMobileList');
 
     if (pagedOrders.length === 0) {
-      tbody.innerHTML = `
-        <tr>
-          <td colspan="6" style="text-align:center; padding:36px; color:var(--admin-muted);">
+      if (tbody) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" style="text-align:center; padding:36px; color:var(--admin-muted); font-size:13px; font-weight:600;">
+              Seçilen filtrelere uygun ödeme kaydı bulunamadı.
+            </td>
+          </tr>
+        `;
+      }
+      if (mobileList) {
+        mobileList.innerHTML = `
+          <div style="text-align:center; padding:32px 16px; color:var(--admin-muted); font-size:13px; font-weight:600;">
             Seçilen filtrelere uygun ödeme kaydı bulunamadı.
-          </td>
-        </tr>
-      `;
+          </div>
+        `;
+      }
+      this.updateAccountingUI();
       return;
     }
 
-    tbody.innerHTML = pagedOrders.map(o => {
-      const isPaid = Boolean(o.isPaid) && (o.paymentStatus === 'PAID' || o.status === 'PAID' || o.status === 'AWAITING_STORE_PICKUP');
-      const isFailed = o.status === 'FAILED' || o.paymentStatus === 'FAILED' || o.status === 'PAYMENT_FAILED';
+    // 1. MASAÜSTÜ TABLO SATIRLARI
+    if (tbody) {
+      tbody.innerHTML = pagedOrders.map(o => {
+        const isPaid = Boolean(o.isPaid) && (o.paymentStatus === 'PAID' || o.status === 'PAID' || o.status === 'AWAITING_STORE_PICKUP');
+        const isFailed = o.status === 'FAILED' || o.paymentStatus === 'FAILED' || o.status === 'PAYMENT_FAILED';
+        const isSigned = (o.invoiceStatus === 'SIGNED');
+        const isSelected = this.selectedInvoiceIds.has(o.orderId);
 
-      const statusBadge = isPaid
-        ? '<span class="badge-status badge-status-paid">✅ Tahsil Edildi</span>'
-        : isFailed
-        ? '<span class="badge-status badge-status-failed">❌ Başarısız</span>'
-        : '<span class="badge-status badge-status-pending">⏳ Beklemede</span>';
+        const statusBadge = isPaid
+          ? '<span class="badge-status badge-status-paid">✅ Tahsil Edildi</span>'
+          : isFailed
+          ? '<span class="badge-status badge-status-failed">❌ Başarısız</span>'
+          : '<span class="badge-status badge-status-pending">⏳ Beklemede</span>';
 
-      const invoiceBadge = o.invoiceStatus === 'SIGNED'
-        ? '<div style="font-size:11px; margin-top:3px;"><span style="background:#E8F5E9; color:#1B5E20; padding:2px 6px; border-radius:4px; font-weight:700; border:1px solid #A5D6A7;">🧾 Fatura: İmzalandı</span></div>'
-        : (o.invoiceStatus === 'DRAFT'
-        ? '<div style="font-size:11px; margin-top:3px;"><span style="background:#FFF8E1; color:#F57F17; padding:2px 6px; border-radius:4px; font-weight:700; border:1px solid #FFE082;">🧾 Fatura: Taslak</span></div>'
-        : '');
+        const invoiceBadge = isSigned
+          ? '<div style="font-size:11px; margin-top:3px;"><span style="background:#E8F5E9; color:#1B5E20; padding:2px 6px; border-radius:4px; font-weight:700; border:1px solid #A5D6A7;">🧾 Fatura: İmzalandı</span></div>'
+          : (o.invoiceStatus === 'DRAFT'
+          ? '<div style="font-size:11px; margin-top:3px;"><span style="background:#FFF8E1; color:#F57F17; padding:2px 6px; border-radius:4px; font-weight:700; border:1px solid #FFE082;">🧾 Fatura: Taslak</span></div>'
+          : '<div style="font-size:11px; margin-top:3px;"><span style="background:#FEF2F2; color:#B91C1C; padding:2px 6px; border-radius:4px; font-weight:700; border:1px solid #FECACA;">⚠️ Fatura: Kesilmedi</span></div>');
 
-      const dateFormatted = new Date(o.createdAt).toLocaleString('tr-TR', {
-        day: '2-digit', month: '2-digit', year: 'numeric',
-        hour: '2-digit', minute: '2-digit'
-      });
+        const dateFormatted = new Date(o.createdAt).toLocaleString('tr-TR', {
+          day: '2-digit', month: '2-digit', year: 'numeric',
+          hour: '2-digit', minute: '2-digit'
+        });
 
-      return `
-        <tr>
-          <td style="font-family:monospace; font-weight:800; font-size:11.5px; color:#064E3B;">${o.orderId}</td>
-          <td style="font-size:11px; color:#64748B; white-space:nowrap;">${dateFormatted}</td>
-          <td>
-            <div style="font-weight:800; font-size:12px; color:#0F172A;">${o.customerName || 'Müşteri'}</div>
-            <div style="font-size:11px; color:#64748B;">${o.customerPhone || '—'}</div>
-            <div style="font-size:10.5px; color:#B45309; font-weight:700;">🆔 <span style="font-family:monospace;">${o.customerIdentity && o.customerIdentity !== '—' ? o.customerIdentity : 'Showroom'}</span></div>
-          </td>
-          <td style="font-weight:800; font-size:13.5px; color:#047857; white-space:nowrap;">
-            ₺${Number(o.totalAmount || 0).toLocaleString('tr-TR')}
-          </td>
-          <td>
-            <select class="admin-status-dropdown ${isPaid ? 'status-paid' : (isFailed ? 'status-failed' : 'status-pending')}" 
-                    onchange="AdminApp.quickChangeStatus('${o.orderId}', this.value, this)" 
-                    title="Durumu doğrudan değiştirmek veya silmek için seçiniz">
-              <option value="PAID" ${isPaid ? 'selected' : ''}>✅ Tahsil Edildi</option>
-              <option value="PENDING" ${!isPaid && !isFailed ? 'selected' : ''}>⏳ Beklemede</option>
-              <option value="FAILED" ${isFailed ? 'selected' : ''}>❌ Başarısız / İptal</option>
-              <option value="DELETE" style="color:#C62828; font-weight:800;">🗑️ Kaydı Sil</option>
-            </select>
-            ${invoiceBadge}
-          </td>
-          <td style="display:flex; gap:4px; flex-wrap:wrap; align-items:center;">
-            ${!isPaid ? `<button class="btn-admin-primary" style="padding:3px 7px; font-size:11px; background:#15803D; border-color:#15803D;" onclick="AdminApp.confirmOrder('${o.orderId}')" title="Tahsilatı Onayla">✅ Onayla</button>` : ''}
-            <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#F0F9FF; border-color:#0284C7; color:#0369A1; font-weight:700;" onclick="AdminApp.showDetail('${o.orderId}')">
-              Detay
-            </button>
-            ${o.invoiceStatus !== 'SIGNED' ? `
-              <button class="btn-admin-primary" style="padding:3px 7px; font-size:11px; background:#059669; border-color:#059669; color:#FFF; font-weight:700;" onclick="AdminApp.startInvoiceSigning('${o.orderId}')" title="GİB e-Arşiv Fatura Kes">
-                🧾 Fatura Kes
+        return `
+          <tr style="${isSelected ? 'background:#F0FDF4;' : ''}">
+            <td style="text-align:center;">
+              <input type="checkbox" class="invoice-row-checkbox" value="${o.orderId}" 
+                     ${isSelected ? 'checked' : ''} 
+                     ${!isSigned ? 'disabled title="Yalnızca imzalanmış faturalar seçilebilir"' : 'title="Muhasebeye iletmek için seçin"'} 
+                     onchange="AdminApp.toggleInvoiceSelection('${o.orderId}', this.checked)">
+            </td>
+            <td style="font-family:monospace; font-weight:800; font-size:11.5px; color:#064E3B;">${o.orderId}</td>
+            <td style="font-size:11px; color:#64748B; white-space:nowrap;">${dateFormatted}</td>
+            <td>
+              <div style="font-weight:800; font-size:12px; color:#0F172A;">${o.customerName || 'Müşteri'}</div>
+              <div style="font-size:11px; color:#64748B;">${o.customerPhone || '—'}</div>
+              <div style="font-size:10.5px; color:#B45309; font-weight:700;">🆔 <span style="font-family:monospace;">${o.customerIdentity && o.customerIdentity !== '—' ? o.customerIdentity : 'Showroom'}</span></div>
+            </td>
+            <td style="font-weight:800; font-size:13.5px; color:#047857; white-space:nowrap;">
+              ₺${Number(o.totalAmount || 0).toLocaleString('tr-TR')}
+            </td>
+            <td>
+              <select class="admin-status-dropdown ${isPaid ? 'status-paid' : (isFailed ? 'status-failed' : 'status-pending')}" 
+                      onchange="AdminApp.quickChangeStatus('${o.orderId}', this.value, this)" 
+                      title="Durumu doğrudan değiştirmek veya silmek için seçiniz">
+                <option value="PAID" ${isPaid ? 'selected' : ''}>✅ Tahsil Edildi</option>
+                <option value="PENDING" ${!isPaid && !isFailed ? 'selected' : ''}>⏳ Beklemede</option>
+                <option value="FAILED" ${isFailed ? 'selected' : ''}>❌ Başarısız / İptal</option>
+                <option value="DELETE" style="color:#C62828; font-weight:800;">🗑️ Kaydı Sil</option>
+              </select>
+              ${invoiceBadge}
+            </td>
+            <td style="display:flex; gap:4px; flex-wrap:wrap; align-items:center;">
+              ${!isPaid ? `<button class="btn-admin-primary" style="padding:3px 7px; font-size:11px; background:#15803D; border-color:#15803D;" onclick="AdminApp.confirmOrder('${o.orderId}')" title="Tahsilatı Onayla">✅ Onayla</button>` : ''}
+              <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#F0F9FF; border-color:#0284C7; color:#0369A1; font-weight:700;" onclick="AdminApp.showDetail('${o.orderId}')">
+                Detay
               </button>
-            ` : `
-              <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#F0FDF4; border-color:#059669; color:#065F46; font-weight:700;" onclick="AdminApp.viewInvoice('${o.invoiceUuid}', '${o.orderId}')" title="Faturayı Aç / Yazdır">
-                📄 Fatura
+              ${o.invoiceStatus !== 'SIGNED' ? `
+                <button class="btn-admin-primary" style="padding:3px 7px; font-size:11px; background:#059669; border-color:#059669; color:#FFF; font-weight:700;" onclick="AdminApp.startInvoiceSigning('${o.orderId}')" title="GİB e-Arşiv Fatura Kes">
+                  🧾 Fatura Kes
+                </button>
+              ` : `
+                <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#F0FDF4; border-color:#059669; color:#065F46; font-weight:700;" onclick="AdminApp.viewInvoice('${o.invoiceUuid}', '${o.orderId}')" title="Faturayı Aç / Yazdır">
+                  📄 Fatura
+                </button>
+                <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#10B981; border-color:#10B981; color:#FFF; font-weight:700;" onclick="AdminApp.sendInvoiceViaWhatsApp('${o.orderId}')" title="Faturayı WhatsApp ile Müşteriye İlet">
+                  📲 Müşteri
+                </button>
+                <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#DCFCE7; border-color:#86EFAC; color:#166534; font-weight:800;" onclick="AdminApp.sendSingleInvoiceToAccounting('${o.orderId}')" title="Bu Faturayı Doğrudan Muhasebeye (+90 541 930 53 72) İlet">
+                  📲 Muhasebe
+                </button>
+              `}
+              <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#FFFBEB; border-color:#D97706; color:#92400E; font-weight:700;" onclick="AdminApp.printLegalDocument('${o.orderId}')" title="Zaman Damgalı Sözleşme & Delil Çıktısı">
+                📜 Yasal
               </button>
-              <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#10B981; border-color:#10B981; color:#FFF; font-weight:700;" onclick="AdminApp.sendInvoiceViaWhatsApp('${o.orderId}')" title="Faturayı WhatsApp ile Müşteriye İlet">
-                📲 WhatsApp
+              <button class="btn-admin-secondary" style="padding:3px 6px; font-size:11px; border-color:#FCA5A5; color:#DC2626; background:#FEF2F2;" onclick="AdminApp.deleteOrder('${o.orderId}')" title="Test/mükerrer kaydı veritabanından kalıcı olarak sil">
+                🗑️
               </button>
-            `}
-            <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#FFFBEB; border-color:#D97706; color:#92400E; font-weight:700;" onclick="AdminApp.printLegalDocument('${o.orderId}')" title="Zaman Damgalı Sözleşme & Delil Çıktısı">
-              📜 Yasal
-            </button>
-            <button class="btn-admin-secondary" style="padding:3px 6px; font-size:11px; border-color:#FCA5A5; color:#DC2626; background:#FEF2F2;" onclick="AdminApp.deleteOrder('${o.orderId}')" title="Test/mükerrer kaydı veritabanından kalıcı olarak sil">
-              🗑️
-            </button>
-          </td>
-        </tr>
-      `;
-    }).join('');
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // 2. MOBİL ULTRA LÜKS KART LİSTESİ (≤ 768px)
+    if (mobileList) {
+      mobileList.innerHTML = pagedOrders.map(o => {
+        const isPaid = Boolean(o.isPaid) && (o.paymentStatus === 'PAID' || o.status === 'PAID' || o.status === 'AWAITING_STORE_PICKUP');
+        const isFailed = o.status === 'FAILED' || o.paymentStatus === 'FAILED' || o.status === 'PAYMENT_FAILED';
+        const isSigned = (o.invoiceStatus === 'SIGNED');
+        const isSelected = this.selectedInvoiceIds.has(o.orderId);
+        const cleanPhone = String(o.customerPhone || '').replace(/\D/g, '');
+        const waPhone = cleanPhone.startsWith('0') ? '90' + cleanPhone.substring(1) : (cleanPhone.startsWith('90') ? cleanPhone : '90' + cleanPhone);
+
+        const statusBadge = isPaid
+          ? '<span class="badge-status badge-status-paid">✅ Tahsil Edildi</span>'
+          : isFailed
+          ? '<span class="badge-status badge-status-failed">❌ Başarısız</span>'
+          : '<span class="badge-status badge-status-pending">⏳ Beklemede</span>';
+
+        const invoiceBadge = isSigned
+          ? '<span style="display:inline-flex; align-items:center; gap:4px; font-size:11px; background:#E8F5E9; color:#1B5E20; padding:3px 8px; border-radius:6px; font-weight:800; border:1px solid #A5D6A7;">🧾 Fatura: İmzalandı</span>'
+          : (o.invoiceStatus === 'DRAFT'
+          ? '<span style="display:inline-flex; align-items:center; gap:4px; font-size:11px; background:#FFF8E1; color:#F57F17; padding:3px 8px; border-radius:6px; font-weight:800; border:1px solid #FFE082;">🧾 Fatura: Taslak</span>'
+          : '<span style="display:inline-flex; align-items:center; gap:4px; font-size:11px; background:#FEF2F2; color:#B91C1C; padding:3px 8px; border-radius:6px; font-weight:800; border:1px solid #FECACA;">⚠️ Fatura: Kesilmedi</span>');
+
+        const dateFormatted = new Date(o.createdAt).toLocaleString('tr-TR', {
+          day: '2-digit', month: '2-digit', year: 'numeric',
+          hour: '2-digit', minute: '2-digit'
+        });
+
+        return `
+          <article class="admin-mobile-card ${isPaid ? 'card-status-paid' : (isFailed ? 'card-status-failed' : 'card-status-pending')}" style="${isSelected ? 'border-color:#10B981; background:#F8FCF9;' : ''}">
+            <div class="mobile-card-header">
+              <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                ${isSigned ? `
+                  <label class="mobile-select-chip ${isSelected ? 'selected' : ''}" onclick="event.stopPropagation();">
+                    <input type="checkbox" class="mobile-invoice-checkbox" value="${o.orderId}" 
+                           ${isSelected ? 'checked' : ''} 
+                           onchange="AdminApp.toggleInvoiceSelection('${o.orderId}', this.checked)">
+                    <span>${isSelected ? '✓ Muhasebe Seçili' : '+ Muhasebe Seç'}</span>
+                  </label>
+                ` : ''}
+                <span class="mobile-order-id">${o.orderId}</span>
+                ${statusBadge}
+              </div>
+              <time class="mobile-order-time">${dateFormatted}</time>
+            </div>
+
+            <div class="mobile-card-body">
+              <div class="mobile-customer-info">
+                <div class="mobile-customer-name">${o.customerName || 'Müşteri'}</div>
+                <div class="mobile-customer-meta">
+                  ${o.customerPhone && o.customerPhone !== '—' ? `
+                    <a href="tel:${o.customerPhone}" class="mobile-meta-link mobile-meta-phone" title="Müşteriyi Ara">
+                      📞 ${o.customerPhone}
+                    </a>
+                    <a href="https://wa.me/${waPhone}" target="_blank" rel="noopener" class="mobile-meta-link mobile-meta-wa" title="WhatsApp Aç">
+                      💬 WhatsApp
+                    </a>
+                  ` : '<span style="color:#94A3B8; font-size:11px;">Telefon: —</span>'}
+                  <span class="mobile-meta-tckn">🆔 ${o.customerIdentity && o.customerIdentity !== '—' ? o.customerIdentity : 'Showroom'}</span>
+                </div>
+              </div>
+
+              <div class="mobile-financial-row">
+                <div class="mobile-amount-box">
+                  <span class="mobile-amount-label">Toplam Tutar</span>
+                  <span class="mobile-amount-value">₺${Number(o.totalAmount || 0).toLocaleString('tr-TR')}</span>
+                </div>
+                <div class="mobile-invoice-box">
+                  <span class="mobile-amount-label">e-Arşiv Durumu</span>
+                  <div>${invoiceBadge}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mobile-card-actions">
+              ${!isPaid ? `
+                <button type="button" class="btn-mobile-action btn-mobile-confirm" onclick="AdminApp.confirmOrder('${o.orderId}')">
+                  <span>✅ Tahsilatı Onayla</span>
+                </button>
+              ` : ''}
+
+              ${o.invoiceStatus !== 'SIGNED' ? `
+                <button type="button" class="btn-mobile-action btn-mobile-invoice-sign" onclick="AdminApp.startInvoiceSigning('${o.orderId}')">
+                  <span>🧾 GİB e-Arşiv Fatura Kes (SMS)</span>
+                </button>
+              ` : `
+                <div class="mobile-actions-split">
+                  <button type="button" class="btn-mobile-action btn-mobile-invoice-view" onclick="AdminApp.viewInvoice('${o.invoiceUuid}', '${o.orderId}')">
+                    <span>📄 Faturayı Aç</span>
+                  </button>
+                  <button type="button" class="btn-mobile-action btn-mobile-invoice-wa" onclick="AdminApp.sendInvoiceViaWhatsApp('${o.orderId}')">
+                    <span>📲 Müşteriye</span>
+                  </button>
+                </div>
+              `}
+
+              <div class="mobile-actions-grid-bottom">
+                <button type="button" class="btn-mobile-subaction" onclick="AdminApp.showDetail('${o.orderId}')">
+                  <span>🔍 Detay</span>
+                </button>
+                ${isSigned ? `
+                  <button type="button" class="btn-mobile-subaction" style="background:#DCFCE7; color:#166534; border-color:#86EFAC; font-weight:800;" onclick="AdminApp.sendSingleInvoiceToAccounting('${o.orderId}')" title="Bu Faturayı Doğrudan Muhasebeye (+90 541 930 53 72) Gönder">
+                    <span>📲 Muhasebe</span>
+                  </button>
+                ` : `
+                  <button type="button" class="btn-mobile-subaction" onclick="AdminApp.printLegalDocument('${o.orderId}')">
+                    <span>📜 Yasal</span>
+                  </button>
+                `}
+                <select class="mobile-status-select ${isPaid ? 'status-paid' : (isFailed ? 'status-failed' : 'status-pending')}" 
+                        onchange="AdminApp.quickChangeStatus('${o.orderId}', this.value, this)">
+                  <option value="PAID" ${isPaid ? 'selected' : ''}>✅ Tahsil Edildi</option>
+                  <option value="PENDING" ${!isPaid && !isFailed ? 'selected' : ''}>⏳ Beklemede</option>
+                  <option value="FAILED" ${isFailed ? 'selected' : ''}>❌ Başarısız</option>
+                  <option value="DELETE" style="color:#C62828;">🗑️ Kaydı Sil</option>
+                </select>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    this.updateAccountingUI();
   },
 
   // KUYUMCULUK ÖZEL MATRAH HESAPLAMA
@@ -666,7 +818,7 @@ const AdminApp = {
 
       <div style="background:#F4F8F7; border:1px solid #D1E5E1; border-radius:8px; padding:12px 14px; font-size:12.5px; line-height:1.6; margin-bottom:16px;">
         <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-          <span><strong>1. Kalem:</strong> Has Altın Bedeli (%0 KDV / Özel Matrah 351)</span>
+          <span><strong>1. Kalem:</strong> Kıymetli Maden Bedeli (%0 KDV / Özel Matrah 351)</span>
           <strong>₺${bd.hasGoldAmount.toLocaleString('tr-TR', {minimumFractionDigits:2})}</strong>
         </div>
         <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
@@ -697,7 +849,7 @@ const AdminApp = {
         ${itemsHtml || '<div>Ürün kaydı yok</div>'}
       </div>
 
-      <div style="display:flex; justify-content:flex-end; gap:10px; flex-wrap:wrap;">
+      <div class="modal-footer-actions">
         ${!order.isPaid && order.paymentStatus !== 'PAID' ? `
           <button class="btn-admin-primary" style="background:#196C3A; border-color:#196C3A;" onclick="AdminApp.confirmOrder('${order.orderId}')">
             ✅ Banka Tahsilatını Onayla
@@ -989,7 +1141,7 @@ const AdminApp = {
           <span><strong>Müşteri:</strong> ${order.customerName || 'Nihai Tüketici'}</span>
         </div>
         <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
-          <span><strong>1. Kalem Has Altın (%0 KDV):</strong> ₺${bd.hasGoldAmount.toLocaleString('tr-TR', {minimumFractionDigits:2})}</span>
+          <span><strong>1. Kalem Kıymetli Maden (%0 KDV):</strong> ₺${bd.hasGoldAmount.toLocaleString('tr-TR', {minimumFractionDigits:2})}</span>
         </div>
         <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
           <span><strong>2. Kalem İşçilik (%20 KDV):</strong> ₺${bd.workmanshipTotal.toLocaleString('tr-TR', {minimumFractionDigits:2})}</span>
@@ -1362,6 +1514,203 @@ const AdminApp = {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  },
+
+  // FATURA SEÇİMİNİ DEĞİŞTİR (CHECKBOX)
+  toggleInvoiceSelection(orderId, isChecked) {
+    if (isChecked) {
+      this.selectedInvoiceIds.add(orderId);
+    } else {
+      this.selectedInvoiceIds.delete(orderId);
+    }
+    this.updateAccountingUI();
+  },
+
+  // TÜM İMZALI FATURALARI SEÇ / BIRAK
+  toggleSelectAllInvoices(isChecked) {
+    const visibleSigned = (this.currentPagedOrders || []).filter(o => o.invoiceStatus === 'SIGNED');
+    if (visibleSigned.length === 0) return;
+
+    visibleSigned.forEach(o => {
+      if (isChecked) {
+        this.selectedInvoiceIds.add(o.orderId);
+      } else {
+        this.selectedInvoiceIds.delete(o.orderId);
+      }
+    });
+
+    // Checkbox DOM'larını güncelle
+    document.querySelectorAll('.invoice-row-checkbox, .mobile-invoice-checkbox').forEach(cb => {
+      if (!cb.disabled) {
+        cb.checked = isChecked;
+      }
+    });
+
+    this.updateAccountingUI();
+  },
+
+  // MUHASEBE ARAYÜZ ELEMANLARINI GÜNCELLE
+  updateAccountingUI() {
+    const signedOrders = this.orders.filter(o => o.invoiceStatus === 'SIGNED');
+    const selectedOrders = signedOrders.filter(o => this.selectedInvoiceIds.has(o.orderId));
+    const count = selectedOrders.length;
+    const total = selectedOrders.reduce((sum, o) => sum + Number(o.totalAmount || o.total || 0), 0);
+
+    // Buton Rozeti
+    const badge = document.getElementById('accountingSelectedBadge');
+    if (badge) {
+      if (count > 0) {
+        badge.style.display = 'inline-block';
+        badge.textContent = count;
+      } else {
+        badge.style.display = 'none';
+      }
+    }
+
+    // Tablo Master Checkbox
+    const masterCb = document.getElementById('masterInvoiceCheckbox');
+    if (masterCb) {
+      const visibleSigned = (this.currentPagedOrders || []).filter(o => o.invoiceStatus === 'SIGNED');
+      if (visibleSigned.length > 0) {
+        const allSelected = visibleSigned.every(o => this.selectedInvoiceIds.has(o.orderId));
+        const someSelected = visibleSigned.some(o => this.selectedInvoiceIds.has(o.orderId));
+        masterCb.checked = allSelected;
+        masterCb.indeterminate = (!allSelected && someSelected);
+        masterCb.disabled = false;
+      } else {
+        masterCb.checked = false;
+        masterCb.indeterminate = false;
+        masterCb.disabled = true;
+      }
+    }
+
+    // Mobil Kayan Alt Çubuk
+    const floatBar = document.getElementById('mobileAccountingFloatingBar');
+    const floatCount = document.getElementById('floatingSelectedCount');
+    const floatTotal = document.getElementById('floatingSelectedTotal');
+    if (floatBar) {
+      if (count > 0 && window.innerWidth <= 768) {
+        floatBar.style.display = 'flex';
+        if (floatCount) floatCount.textContent = `${count} Fatura Seçildi`;
+        if (floatTotal) floatTotal.textContent = `₺${total.toLocaleString('tr-TR', { minimumFractionDigits: 2 })}`;
+      } else {
+        floatBar.style.display = 'none';
+      }
+    }
+  },
+
+  // MUHASEBE GÖNDERİM MODALINI AÇ
+  openAccountingModal() {
+    const signedOrders = this.orders.filter(o => o.invoiceStatus === 'SIGNED');
+    if (signedOrders.length === 0) {
+      alert('ℹ️ Gönderilecek imzalanmış e-Arşiv faturası bulunamadı.\n\n(Lütfen önce fatura düzenleyip SMS onay kodu ile imzalayınız.)');
+      return;
+    }
+
+    // Eğer hiç seçim yapılmadıysa, mevcut tüm imzalı faturaları otomatik seç
+    if (this.selectedInvoiceIds.size === 0) {
+      signedOrders.forEach(o => this.selectedInvoiceIds.add(o.orderId));
+      this.updateAccountingUI();
+    }
+
+    const selectedOrders = signedOrders.filter(o => this.selectedInvoiceIds.has(o.orderId));
+    if (selectedOrders.length === 0) {
+      alert('ℹ️ Lütfen listeden en az 1 adet imzalanmış fatura seçiniz.');
+      return;
+    }
+
+    const total = selectedOrders.reduce((sum, o) => sum + Number(o.totalAmount || o.total || 0), 0);
+
+    // Modal içeriklerini güncelle
+    const countEl = document.getElementById('accModalSummaryCount');
+    const totalEl = document.getElementById('accModalSummaryTotal');
+    if (countEl) countEl.textContent = `${selectedOrders.length} Adet Fatura Seçildi`;
+    if (totalEl) totalEl.textContent = `₺${total.toLocaleString('tr-TR', { minimumFractionDigits: 2 })}`;
+
+    const listEl = document.getElementById('accModalList');
+    if (listEl) {
+      listEl.innerHTML = selectedOrders.map((o, idx) => `
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 8px; border-bottom:1px solid #E2E8F0; font-size:12px; background:${idx % 2 === 0 ? '#FFF' : '#F8FAFC'};">
+          <div>
+            <div style="font-weight:800; color:#0F172A;">${idx + 1}. ${o.customerName || 'Müşteri'}</div>
+            <div style="font-size:11px; color:#64748B;">
+              TCKN: <span style="font-family:monospace; color:#B45309; font-weight:700;">${o.customerIdentity || 'Showroom'}</span> • 
+              Belge No: <span style="font-family:monospace; color:#084C47; font-weight:700;">${o.invoiceNumber || o.orderId}</span>
+            </div>
+            <div style="font-size:11px; color:#059669; font-weight:600;">${o.productName || 'Kuyumculuk Ürünü'} (Özel Matrah)</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-weight:800; color:#15803D; font-size:13px;">₺${Number(o.totalAmount || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</div>
+            <a href="https://belginkuyumculuk.com/api/admin/invoice/view?uuid=${o.invoiceUuid || ''}&adminKey=1999" target="_blank" style="font-size:10.5px; color:#0284C7; font-weight:700; text-decoration:none;">📄 Faturayı Aç</a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    const previewMsg = this.generateAccountingWhatsAppMessage(selectedOrders);
+    const previewEl = document.getElementById('accModalMessagePreview');
+    if (previewEl) previewEl.value = previewMsg;
+
+    const modal = document.getElementById('accountingModal');
+    if (modal) modal.classList.add('open');
+  },
+
+  closeAccountingModal() {
+    const modal = document.getElementById('accountingModal');
+    if (modal) modal.classList.remove('open');
+  },
+
+  // MUHASEBEYE WHATSAPP METNİ OLUŞTURUCU
+  generateAccountingWhatsAppMessage(ordersToSend) {
+    const count = ordersToSend.length;
+    const total = ordersToSend.reduce((s, o) => s + (Number(o.totalAmount || o.total || 0)), 0);
+    const totalFormatted = total.toLocaleString('tr-TR', { minimumFractionDigits: 2 });
+    const now = new Date();
+    const dateFormatted = now.toLocaleDateString('tr-TR') + ' ' + now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+
+    const lines = ordersToSend.map((o, idx) => {
+      const custName = o.customerName || o.customer?.name || 'Müşteri';
+      const tckn = o.customerIdentity && o.customerIdentity !== '—' ? o.customerIdentity : '11111111111';
+      const invNo = o.invoiceNumber || o.orderId;
+      const prodName = o.productName || (o.invoiceBreakdown && o.invoiceBreakdown.productName) || 'Kuyumculuk Ürünü';
+      const amtFormatted = Number(o.totalAmount || o.total || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2 });
+      const invUrl = `https://belginkuyumculuk.com/api/admin/invoice/view?uuid=${o.invoiceUuid || ''}&adminKey=1999`;
+
+      return `${idx + 1}️⃣ *${custName}*\n• *TCKN / VKN:* ${tckn}\n• *Fatura No:* ${invNo}\n• *Ürün:* ${prodName} (Özel Matrah)\n• *Tutar:* ₺${amtFormatted}\n• *GİB Fatura Linki:*\n${invUrl}`;
+    }).join('\n\n');
+
+    return `📊 *BELGİN KUYUMCULUK — GİB E-ARŞİV FATURA DÖKÜMÜ*\n📅 *Tarih:* ${dateFormatted}\n📁 *Fatura Adedi:* ${count} Adet\n💰 *Genel Toplam:* ₺${totalFormatted}\n\n────────────────────────\n🧾 *FATURA DÖKÜMÜ:*\n\n${lines}\n\n────────────────────────\n📌 _KDV Kanunu 23/f özel matrah kapsamında muhasebe kayıtlarına işlenmek üzere iletilmiştir._\n🏢 *Belgin Kuyumculuk* (Buca / İzmir)`;
+  },
+
+  // WHATSAPP İLE MUHASEBEYE TEK SEFERDE İLET
+  dispatchInvoicesToAccountingWhatsApp() {
+    const signedOrders = this.orders.filter(o => o.invoiceStatus === 'SIGNED');
+    const selectedOrders = signedOrders.filter(o => this.selectedInvoiceIds.has(o.orderId));
+
+    if (selectedOrders.length === 0) {
+      alert('Gönderilecek fatura seçilmedi.');
+      return;
+    }
+
+    const msg = this.generateAccountingWhatsAppMessage(selectedOrders);
+    const waUrl = `https://api.whatsapp.com/send?phone=${this.ACCOUNTING_PHONE}&text=${encodeURIComponent(msg)}`;
+
+    this.closeAccountingModal();
+    window.open(waUrl, '_blank');
+  },
+
+  // TEKİL FATURAYI ANINDA MUHASEBEYE GÖNDER
+  sendSingleInvoiceToAccounting(orderId) {
+    const order = this.orders.find(o => o.orderId === orderId);
+    if (!order) return;
+    if (order.invoiceStatus !== 'SIGNED') {
+      alert('Bu siparişin faturası henüz imzalanmamıştır. Lütfen önce faturayı imzalayınız.');
+      return;
+    }
+
+    const msg = this.generateAccountingWhatsAppMessage([order]);
+    const waUrl = `https://api.whatsapp.com/send?phone=${this.ACCOUNTING_PHONE}&text=${encodeURIComponent(msg)}`;
+    window.open(waUrl, '_blank');
   }
 };
 

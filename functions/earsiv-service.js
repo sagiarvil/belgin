@@ -13,14 +13,16 @@ const GIB_TEST_URL = 'https://earsivportaltest.efatura.gov.tr/earsiv-services';
 
 /**
  * Kuyumculuk Özel Matrah Ayrıştırma Motoru
- * Toplam tutarı Has Altın Bedeli (%0 KDV) ve İşçilik Bedeli (%20 KDV Dahil) olarak böler.
- * Varsayılan: Toplamın %99'u Has Altın, %1'i İşçilik (veya parametre olarak verilen tutarlar)
+ * Toplam tutarı Kıymetli Maden Bedeli (%0 KDV) ve İşçilik Bedeli (%20 KDV Dahil) olarak böler.
+ * Varsayılan: Toplamın %99'u Kıymetli Maden, %1'i İşçilik (veya parametre olarak verilen tutarlar)
  */
 function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk Ürünü', options = {}) {
   const total = Number(totalAmount) || 0;
   if (total <= 0) {
     throw new Error('Geçersiz fatura tutarı');
   }
+
+  const resolvedProductName = String(productName || 'Kuyumculuk Ürünü').trim();
 
   let hasGoldAmount = 0;
   let workmanshipTotal = 0; // KDV Dahil işçilik
@@ -45,7 +47,7 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
   const grandTotal = Math.round((hasGoldAmount + workmanshipTotal) * 100) / 100;
 
   return {
-    productName,
+    productName: resolvedProductName,
     hasGoldAmount: hasGoldAmount.toFixed(2),
     workmanshipNet: workmanshipNet.toFixed(2),
     workmanshipKdv: workmanshipKdv.toFixed(2),
@@ -55,7 +57,7 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
     grandTotal: grandTotal.toFixed(2),
     items: [
       {
-        malHizmet: `${productName} (Has Altın Bedeli - Özel Matrah)`,
+        malHizmet: `${resolvedProductName} (Kıymetli Maden Bedeli - Özel Matrah)`,
         miktar: 1,
         birim: 'C62', // Adet
         birimFiyat: hasGoldAmount.toFixed(2),
@@ -73,9 +75,9 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
         tevkifatKodu: 0
       },
       {
-        malHizmet: 'Kuyumculuk İşçilik Bedeli',
+        malHizmet: `${resolvedProductName} İşçilik Bedeli`,
         miktar: 1,
-        birim: 'C62',
+        birim: 'C62', // Adet
         birimFiyat: workmanshipNet.toFixed(2),
         fiyat: workmanshipNet.toFixed(2),
         iskontoArttirim: 'İskonto',
@@ -86,6 +88,8 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
         kdvOrani: 20,
         kdvTutari: workmanshipKdv.toFixed(2),
         vergiOrani: 0,
+        ozelMatrahNedeni: '',
+        ozelMatrahTutari: 0,
         tevkifatKodu: 0
       }
     ]
@@ -274,22 +278,27 @@ class EarsivPortalService {
     const formattedDate = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
     const formattedTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
 
-    const itemsSummary = (orderData.items && orderData.items.length > 0)
+    const itemsSummary = (orderData.items && orderData.items.length > 0 && orderData.items[0]?.name)
       ? orderData.items.map(i => i.name || i.title).join(', ')
-      : (orderData.productName || '22 Ayar Kuyumculuk Ürünü');
+      : (orderData.productName || 'Kuyumculuk Ürünü');
 
     const resolvedTotal = Number(orderData.totalAmount || orderData.total || (orderData.payment && orderData.payment.amount) || (orderData.amountInKurus ? orderData.amountInKurus / 100 : 0) || 0);
     const breakdown = customBreakdown || calculateJewelryInvoiceBreakdown(resolvedTotal, itemsSummary);
 
-    // Müşteri T.C. Kimlik No veya Vergi No kontrolü (Yoksa 11111111111)
-    let vknTckn = String(orderData.customerIdentity || '').replace(/\D/g, '');
+    // Müşteri T.C. Kimlik No veya Vergi No kontrolü (Öncelik: customerIdentity, customer.identityNumber, customer.tckn, tc)
+    const customerObj = (orderData && typeof orderData.customer === 'object' && orderData.customer !== null) ? orderData.customer : {};
+    let vknTckn = String(orderData.customerIdentity || customerObj.identityNumber || customerObj.tckn || customerObj.vkn || customerObj.tc || customerObj.identity || '').replace(/\D/g, '');
     if (vknTckn.length !== 10 && vknTckn.length !== 11) {
-      vknTckn = '11111111111'; // Nihai tüketici
+      vknTckn = '11111111111'; // Nihai tüketici fallback
     }
 
-    const nameParts = (orderData.customerName || 'Nihai Tüketici').trim().split(' ');
+    const rawCustName = String(orderData.customerName || customerObj.name || customerObj.fullName || 'Nihai Tüketici').trim();
+    const nameParts = rawCustName.split(/\s+/);
     const aliciSoyadi = nameParts.length > 1 ? nameParts.pop() : '';
     const aliciAdi = nameParts.join(' ') || 'Sayın Müşteri';
+    const customerAddress = orderData.customerAddress || customerObj.address || 'Menderes Cad. No:231/B Buca İzmir';
+    const customerPhone = orderData.customerPhone || customerObj.phone || '';
+    const customerEmail = orderData.customerEmail || customerObj.email || 'musteri@belginkuyumculuk.com';
 
     const invoicePayload = {
       belgeNumarasi: '',
@@ -309,13 +318,13 @@ class EarsivPortalService {
       kasabaKoy: '',
       vergiDairesi: '',
       ulke: 'Türkiye',
-      bulvarcaddesokak: orderData.customerAddress || 'Menderes Cad. No:231/B Buca İzmir',
+      bulvarcaddesokak: customerAddress,
       mahalleSemtIlce: 'Buca',
       sehir: 'İzmir',
       postaKodu: '',
-      tel: orderData.customerPhone || '',
+      tel: customerPhone,
       fax: '',
-      eposta: orderData.customerEmail || 'musteri@belginkuyumculuk.com',
+      eposta: customerEmail,
       websitesi: 'https://www.belginkuyumculuk.com',
       iadeTable: [],
       ozelMatrahTutari: Number(breakdown.hasGoldAmount) || 0,

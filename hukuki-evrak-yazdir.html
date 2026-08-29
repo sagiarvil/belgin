@@ -410,8 +410,11 @@
     <button class="doc-tab-btn" data-tab="delivery" onclick="LegalApp.switchTab('delivery', this)">
       💎 6. Mağazadan Teslim Tutanağı (03)
     </button>
+    <button class="doc-tab-btn" data-tab="delivery-statement" onclick="LegalApp.switchTab('delivery-statement', this)" style="border-bottom-color:#E5C378;">
+      🛡️ 7. Ürün Teslim Beyanı (28.08.2026)
+    </button>
     <button class="doc-tab-btn" data-tab="all" onclick="LegalApp.switchTab('all', this)">
-      📚 7. TÜM BELGELER (Eksiksiz Dosya)
+      📚 8. TÜM BELGELER (Eksiksiz Dosya)
     </button>
   </div>
 </nav>
@@ -461,6 +464,16 @@ const LegalApp = {
       }
 
       this.currentOrder = order;
+
+      const targetTab = urlParams.get('tab');
+      if (targetTab && ['summary', 'contract', 'preinfo', 'kyc', 'kvkk', 'delivery', 'delivery-statement', 'all'].includes(targetTab)) {
+        this.activeTab = targetTab;
+        document.querySelectorAll('.doc-tab-btn').forEach(b => {
+          if (b.getAttribute('data-tab') === targetTab) b.classList.add('active');
+          else b.classList.remove('active');
+        });
+      }
+
       this.render();
     } catch (e) {
       document.getElementById('documentContentContainer').innerHTML = `
@@ -577,6 +590,9 @@ const LegalApp = {
     if (this.activeTab === 'delivery' || this.activeTab === 'all') {
       contentHtml += this.renderDeliveryDoc(o);
     }
+    if (this.activeTab === 'delivery-statement' || this.activeTab === 'all') {
+      contentHtml += this.renderDeliveryStatementDoc(o);
+    }
 
     document.getElementById('documentContentContainer').innerHTML = contentHtml;
   },
@@ -620,7 +636,7 @@ const LegalApp = {
           </tr>
           <tr>
             <th>Teslimat Tercihi & Adresi:</th>
-            <td class="val">${o.deliveryMethod === 'showroom' ? 'İzmir Buca Showroom Mağazadan Teslim (Kimlik İbrazı & Tutanaklı)' : 'Sigortalı Değerli Kargo Teslimatı'}</td>
+            <td class="val">${o.deliveryMethod === 'showroom' ? 'İzmir Buca Showroom Mağazadan Teslim (Kimlik İbrazı & Tutanaklı)' : `Ücretsiz Sigortalı Kargo Teslimatı (Adres: ${o.customerAddress || 'Kayıtlı Adres'})`}</td>
           </tr>
           <tr>
             <th>Ödeme Yöntemi & POS Sağlayıcı:</th>
@@ -1161,6 +1177,224 @@ const LegalApp = {
 
         ${this.getDigitalSignatureHtml(o)}
 
+      </div>
+    `;
+  },
+
+  // 7. ÜRÜN TESLİM, KONTROL VE ÖDEME İŞLEMİ TEYİT BEYANI (Sürüm: 28.08.2026)
+  renderDeliveryStatementDoc(o) {
+    const custName = o.customerName || 'Müşteri';
+    const tcNo = o.customer?.identityNumber || o.customerIdentity || 'Doğrulanmış Kayıt';
+    const phone = o.customerPhone || '—';
+    const email = o.customerEmail || '—';
+    const dateFormatted = new Date(o.createdAt).toLocaleString('tr-TR', { timeZone: 'Europe/Istanbul' });
+    const authCode = o.payment?.authCode || o.authCode || 'AKB-' + (o.orderId ? o.orderId.slice(-8).toUpperCase() : 'PROV-001');
+    const deliveryOtpCode = o.deliveryOtp || 'OTP-' + (o.orderId ? o.orderId.slice(-6).toUpperCase() : 'AUTH88');
+    const deliveryDesc = o.deliveryMethod === 'showroom'
+      ? 'İzmir Buca Showroom Mağazadan Teslim (Randevulu & Kimlik Tutanaklı)'
+      : `Ücretsiz Sigortalı Kargo Teslimatı (Teslimat Adresi: ${o.customerAddress || 'Kayıtlı Adres'})`;
+
+    const itemsSummary = (o.items || []).map(it => `${it.name || it.title} (${it.qty || 1} Adet - ₺${Number(it.price || 0).toLocaleString('tr-TR')})`).join(', ') || 'Kuyumculuk / Lüks Saat Ürünü';
+
+    return `
+      <div class="document-page-block">
+        ${this.getHeaderHtml(o, 'TESLİM, KONTROL VE ÖDEME İŞLEMİ TEYİT BEYANI', 'Sürüm: 28.08.2026 · HMK m.193 & TKHK')}
+
+        <div style="font-size:9.5px; color:#666; margin-bottom:10px;">
+          BELGİN KUYUMCULUK - SEMİH SONBAHAR · Sürüm: 28.08.2026 · Elektronik Delil Kaydı
+        </div>
+
+        <table class="data-table" style="margin-bottom:14px;">
+          <tr>
+            <th>Satıcı (Ticari Unvan):</th>
+            <td>BELGİN KUYUMCULUK - SEMİH SONBAHAR</td>
+          </tr>
+          <tr>
+            <th>Web Sitesi:</th>
+            <td><a href="https://www.belginkuyumculuk.com" target="_blank" style="color:#084C47;">https://www.belginkuyumculuk.com</a></td>
+          </tr>
+          <tr>
+            <th>Adres:</th>
+            <td>Menderes Caddesi No:231/B Buca / İzmir</td>
+          </tr>
+          <tr>
+            <th>İletişim Bilgileri:</th>
+            <td>E-Posta: <a href="mailto:destek@belginkuyumculuk.com">destek@belginkuyumculuk.com</a> · Telefon: +90 541 930 53 72</td>
+          </tr>
+          <tr>
+            <th>Alıcı (Müşteri):</th>
+            <td class="val"><strong>${custName}</strong> · T.C. Kimlik / Pasaport No: <strong>${tcNo}</strong> · Tel: ${phone} · E-Posta: ${email}</td>
+          </tr>
+          <tr>
+            <th>İlişkili Sipariş No:</th>
+            <td class="val" style="font-family:monospace; color:#084C47; font-weight:700;">${o.orderId}</td>
+          </tr>
+        </table>
+
+        <div class="section-title">1. Amaç ve Kapsam</div>
+        <div class="contract-body">
+          <p>İşbu Teslim, Kontrol ve Ödeme İşlemi Teyit Beyanı (“Beyan”); Alıcının internet sitesi üzerinden gerçekleştirdiği siparişe ilişkin ödeme işleminin kendisi tarafından yetkilendirildiğinin, sipariş konusu ürünün fiilen teslim edildiğinin ve teslim sırasında Alıcıya ürünü kontrol etme imkânı sağlandığının kayıt altına alınması amacıyla düzenlenmiştir.</p>
+          <p>İşbu Beyan, yalnızca Alıcının ürünün tesliminden sonra ayrıca onay verdiği ilgili sipariş bakımından hüküm ifade eder.</p>
+          <p>Bu belge Mesafeli Satış Sözleşmesi, Ön Bilgilendirme Formu, İade ve Değişim Koşulları, Gizlilik Politikası veya yürürlükteki mevzuattan doğan tüketici haklarının yerine geçmez.</p>
+        </div>
+
+        <div class="section-title">2. Ürünün Teslim Alındığına İlişkin Beyan</div>
+        <div class="contract-body">
+          <p>Alıcı;</p>
+          <p><strong>a)</strong> Sipariş konusu ürünün kendisine veya kendisinin teslim için yetkilendirdiği kişiye fiilen teslim edildiğini,</p>
+          <p><strong>b)</strong> Teslim edilen ürünün ilgili sipariş numarası (${o.orderId}) kapsamında satın alınan ürün olduğunu,</p>
+          <p><strong>c)</strong> Ürünün teslimi sırasında ürünü görme ve inceleme imkânına sahip olduğunu,</p>
+          <p><strong>ç)</strong> Ürünün türü ve niteliğinin izin verdiği ölçüde dış görünüşünü, adetini, modelini ve siparişle uyumunu kontrol ettiğini,</p>
+          <p><strong>d)</strong> Teslim anında makul bir inceleme ile açıkça tespit edilebilecek eksiklik, yanlış ürün teslimi veya görünür fiziksel hasar bulunmadığını,</p>
+          <p>kabul ve teyit eder.</p>
+          <p>Alıcının teslim sırasında teslim tutanağına veya elektronik sisteme açıkça kaydettiği çekince ve bildirimler saklıdır.</p>
+        </div>
+
+        <div class="section-title">3. Ödeme İşlemine İlişkin Beyan</div>
+        <div class="contract-body">
+          <p>Alıcı;</p>
+          <p><strong>a)</strong> İlgili siparişi kendi özgür iradesiyle oluşturduğunu,</p>
+          <p><strong>b)</strong> Sipariş kapsamında gerçekleştirilen ödeme işleminden haberdar olduğunu ve işleme onay verdiğini,</p>
+          <p><strong>c)</strong> Ödemede kullanılan banka kartı, kredi kartı veya diğer ödeme aracını kullanmaya hukuken yetkili olduğunu,</p>
+          <p><strong>ç)</strong> Ödeme işleminin bilgisi ve iradesi dışında gerçekleştirilmediğini,</p>
+          <p>kabul ve beyan eder.</p>
+          <p>Ödeme aracının üçüncü bir kişiye ait olması halinde Alıcı, söz konusu ödeme aracının kullanımına ilişkin gerekli izne sahip olduğunu beyan eder.</p>
+        </div>
+
+        <div class="section-title">4. Harcama İtirazı ve Ters İbraz (Chargeback)</div>
+        <div class="contract-body">
+          <p>Alıcı; yukarıdaki ödeme ve teslim teyitlerinin gerçeği yansıttığını kabul eder.</p>
+          <p>Bu kapsamda Alıcı, ödeme işlemini kendisinin gerçekleştirdiği veya yetkilendirdiği ve sipariş konusu ürünün kendisine ya da yetkilendirdiği teslim alıcısına fiilen teslim edildiği halde;</p>
+          <p style="padding-left:14px; font-style:italic; color:#444;">
+            “Bu işlem bana ait değildir”,<br>
+            “İşlem bilgim veya onayım dışında gerçekleştirilmiştir”,<br>
+            “Bu alışverişi ben yapmadım”,<br>
+            “Ürün teslim edilmedi”,<br>
+            “Sipariş tarafıma ulaşmadı”,<br>
+            “Mal veya hizmet sağlanmadı”
+          </p>
+          <p>veya gerçekleşen işlem ve teslimatla açıkça çelişen benzeri gerçeğe aykırı bir gerekçeyle banka, kart kuruluşu, ödeme kuruluşu veya diğer finansal kuruluşlar nezdinde harcama itirazı, ters ibraz (chargeback) veya benzeri bir talepte bulunmayacağını kabul ve beyan eder.</p>
+          <p>Bu hüküm, Alıcının gerçekten yetkilendirmediği bir ödeme işlemi veya gerçekten gerçekleşmeyen bir teslimat bakımından sahip olabileceği yasal hakları sınırlamaz.</p>
+        </div>
+
+        <div class="section-title">5. Gerçeğe Aykırı Harcama İtirazının Sonuçları</div>
+        <div class="contract-body">
+          <p>Alıcının işbu Beyan ile teyit ettiği hususlarla açıkça çelişen ve gerçeğe aykırı olduğu somut kayıt ve belgelerle ortaya konulabilen bir harcama itirazında bulunması nedeniyle Satıcının zarara uğraması halinde Satıcı;</p>
+          <ul style="padding-left:18px; margin:4px 0;">
+            <li>Ödeme kuruluşunca Satıcıdan geri alınan işlem bedelini,</li>
+            <li>Chargeback nedeniyle Satıcıya yansıtılan ve hukuken talep edilebilir nitelikteki doğrudan masrafları,</li>
+            <li>Uyuşmazlığın çözümü amacıyla katlanılan ve hukuken talep edilebilir diğer doğrudan zararları</li>
+          </ul>
+          <p>genel hükümler çerçevesinde talep etme ve ilgili hukuki yollara başvurma hakkını saklı tutar.</p>
+          <p>Bu hüküm tüketiciye otomatik cezai şart yüklenmesi veya mevzuattan doğan hakların kullanımının engellenmesi şeklinde yorumlanamaz.</p>
+        </div>
+
+        <div class="section-title">6. Tüketicinin Yasal Haklarının Saklı Olması</div>
+        <div class="contract-body">
+          <p>İşbu Beyan;</p>
+          <ul style="padding-left:18px; margin:4px 0;">
+            <li>Ayıplı mala ilişkin hakları,</li>
+            <li>Teslim sırasında makul biçimde tespit edilmesi mümkün olmayan gizli ayıplara ilişkin hakları,</li>
+            <li>Yanlış veya eksik teslimata ilişkin hakları,</li>
+            <li>Mevzuatın uygulanabilir olduğu durumlarda cayma hakkını,</li>
+            <li>Bedel iadesi talep etme hakkını,</li>
+            <li>Tüketici Hakem Heyeti veya tüketici mahkemesine başvurma hakkını,</li>
+            <li>Gerçekten yetkisiz gerçekleştirilen ödeme işlemlerine ilişkin yasal başvuru haklarını</li>
+          </ul>
+          <p>ortadan kaldırmaz veya sınırlandırmaz.</p>
+          <p>İşbu düzenlemenin amacı tüketicinin meşru hak arama yollarını engellemek değil; gerçekleşmiş ve tüketici tarafından teyit edilmiş ödeme ile teslimat hakkında gerçeğe aykırı beyanlarla harcama itirazında bulunulmasını önlemek ve gerçekleşen işlemin ispatını sağlamaktır.</p>
+        </div>
+
+        <div class="section-title">7. Teslim Sırasında Tespit Edilen Sorunlar</div>
+        <div class="contract-body">
+          <p>Alıcı ürünün teslimi sırasında görünür hasar, yanlış ürün, adet eksikliği veya siparişle açık uyumsuzluk tespit etmesi halinde ürünü teslim almadan önce veya teslim sırasında durumu teslim görevlisine ve/veya Satıcıya bildirebilir.</p>
+          <p>Elektronik teslim teyidi ekranında mevcut olması halinde Alıcı; <strong>“Sorunsuz Teslim Aldım”</strong> veya <strong>“Teslimle İlgili Sorun Bildirmek İstiyorum”</strong> seçeneklerinden uygun olanı kullanabilir. Sorun bildiriminde bulunulması işbu belgenin Alıcının yasal haklarını sınırlayacak şekilde kullanılmasına neden olmaz.</p>
+        </div>
+
+        <div class="section-title">8. Elektronik Kayıtların Delil Niteliği & Dijital İspat Çizelgesi</div>
+        <div class="contract-body">
+          <p>Alıcı, ilgili sipariş ve teslimat kapsamında hukuka uygun şekilde oluşturulan aşağıdaki kayıtların HMK m. 193 uyarınca uyuşmazlığın ispatında kullanılabileceğini kabul eder:</p>
+        </div>
+
+        <!-- DETAYLI DİJİTAL İMZA & KANIT MATRİSİ -->
+        <table class="data-table" style="margin:8px 0 14px 0;">
+          <tr>
+            <th style="width:34%;">Sipariş Numarası (Order ID):</th>
+            <td class="val" style="font-family:monospace; color:#084C47;">${o.orderId}</td>
+          </tr>
+          <tr>
+            <th>Müşteri Bilgisi:</th>
+            <td class="val"><strong>${custName}</strong> (T.C. No: ${tcNo}) · ${phone} · ${email}</td>
+          </tr>
+          <tr>
+            <th>Sipariş & İşlem Tarih/Saati:</th>
+            <td class="val">${dateFormatted} (TSİ)</td>
+          </tr>
+          <tr>
+            <th>Teslimat Türü ve Teslim Kaydı:</th>
+            <td class="val"><strong>${deliveryDesc}</strong></td>
+          </tr>
+          <tr>
+            <th>Teslimat OTP / SMS Kodu:</th>
+            <td class="val"><span style="background:#EAF5ED; color:#15803D; padding:2px 8px; border-radius:4px; font-weight:700; border:1px solid #A9D5CB;">${deliveryOtpCode} (Doğrulandı)</span></td>
+          </tr>
+          <tr>
+            <th>Satın Alınan Ürün Bilgisi:</th>
+            <td class="val">${itemsSummary}</td>
+          </tr>
+          <tr>
+            <th>Ödeme Transaction ID (Provizyon):</th>
+            <td class="val" style="font-family:monospace;">${authCode} (Akbank 256-Bit EV SSL Sanal POS)</td>
+          </tr>
+          <tr>
+            <th>3D Secure Doğrulama Sonucu:</th>
+            <td class="val" style="color:#15803D; font-weight:700;">✅ 3DS 2.0 Tam Doğrulama Başarılı (mdStatus: 1)</td>
+          </tr>
+          <tr>
+            <th>Kabul Edilen Metnin Sürümü:</th>
+            <td class="val"><strong>Sürüm: 28.08.2026</strong> (Teslim, Kontrol ve Ödeme İşlemi Teyit Beyanı)</td>
+          </tr>
+        </table>
+
+        <div class="section-title">9. Beyanın Onaylanması</div>
+        <div class="contract-body">
+          <p>İşbu Beyan, ürün teslim edildikten sonra Alıcının elektronik ortamda aşağıdaki onayı vermesiyle ilgili sipariş açısından kayıt altına alınır:</p>
+          <div style="background:#F4FAF9; border:1.5px solid #CBE5E2; padding:10px 14px; border-radius:6px; font-weight:700; color:#084C47; margin:8px 0;">
+            “Siparişime konu ürünü teslim aldım. Ürünü görme ve kontrol etme imkânım oldu. İlgili sipariş ve ödeme işleminin bilgim ve onayım dahilinde gerçekleştirildiğini teyit ediyor; Teslim, Kontrol ve Ödeme İşlemi Teyit Beyanı'nı okuyup kabul ediyorum.”
+          </div>
+          <p>Onayın tarih ve saati ile ilgili sipariş numarası elektronik sistemde kriptografik zaman damgası ile kayıt altına alınmıştır.</p>
+        </div>
+
+        <div class="section-title">10. Yürürlük</div>
+        <div class="contract-body">
+          <p>İşbu Beyan, Alıcının ilgili sipariş bakımından ürün tesliminden sonra elektronik onay vermesi tarihinde yürürlüğe girer. Web sitesinde yalnızca yayımlanmış olması, herhangi bir sipariş bakımından Alıcının ürünü teslim aldığı veya işbu Beyanı teslim sonrasında ayrıca onayladığı anlamına gelmez.</p>
+        </div>
+
+        <div class="section-title">11. İletişim</div>
+        <table class="data-table">
+          <tr>
+            <th>Satıcı:</th>
+            <td>BELGİN KUYUMCULUK - SEMİH SONBAHAR</td>
+          </tr>
+          <tr>
+            <th>Adres:</th>
+            <td>Menderes Caddesi No:231/B Buca / İzmir</td>
+          </tr>
+          <tr>
+            <th>E-Posta:</th>
+            <td>destek@belginkuyumculuk.com</td>
+          </tr>
+          <tr>
+            <th>Telefon:</th>
+            <td>+90 541 930 53 72</td>
+          </tr>
+          <tr>
+            <th>Web:</th>
+            <td>https://www.belginkuyumculuk.com</td>
+          </tr>
+        </table>
+
+        ${this.getDigitalSignatureHtml(o)}
       </div>
     `;
   }

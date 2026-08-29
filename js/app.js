@@ -1878,6 +1878,94 @@ const App = {
   _pendingOrder: null,
   _timerInterval: null,
 
+  renderCheckoutDeliveryOptions() {
+    const container = document.getElementById('checkoutDeliveryContent');
+    if (!container) return;
+
+    let items = (typeof Cart !== 'undefined' && Cart.items && Cart.items.length > 0) ? [...Cart.items] : [];
+    // Saatler kategorisindeki tüm sıfır saatler için ücretsiz kargo serbesttir (Seçkin Ürünler ve Altın HARİÇ)
+    const isCargoEligible = items.length > 0 && items.every(item => {
+      const p = (typeof findProduct === 'function' ? findProduct(item.id) : null) || item;
+      const cat = String(p.category || item.category || '').toLowerCase();
+      const isPreOwned = p.isPreOwned === true || cat === 'seckin-urunler' || cat === 'ikinci-el' || cat === 'luxury';
+      const isGold = Boolean(p.isGold) || Boolean(item.isGold) || ['altin', 'gold', 'mucevherat', 'jewelry', 'jewellery'].includes(cat);
+      const isWatch = (cat === 'saat' || cat === 'watch');
+      return isWatch && !isPreOwned && !isGold;
+    });
+
+    if (isCargoEligible) {
+      container.innerHTML = `
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <!-- 1. Seçenek: Ücretsiz Sigortalı Kargo (Varsayılan) -->
+          <label style="border:1.5px solid #084C47; background:#F2F8F7; padding:12px 14px; border-radius:8px; display:flex; align-items:flex-start; justify-content:space-between; cursor:pointer; gap:10px;">
+            <div style="display:flex; gap:10px; align-items:flex-start;">
+              <input type="radio" name="shippingMethod" value="carrier" checked onchange="App.onDeliveryMethodChange('carrier')" style="margin-top:3px; accent-color:var(--color-teal); width:16px; height:16px;">
+              <div>
+                <strong style="font-size:13px; color:var(--color-teal); display:flex; align-items:center; gap:6px;">
+                  <span>📦 Ücretsiz Sigortalı Kargo ile Adrese Teslim</span>
+                  <span style="font-size:10.5px; background:#E8F5E9; color:#1B5E20; padding:1px 6px; border-radius:4px; font-weight:700; border:1px solid #A5D6A7;">ÜCRETSİZ</span>
+                </strong>
+                <span style="font-size:11.5px; color:#444; display:block; margin-top:2px;">Türkiye geneli sigortalı ve takip numaralı ücretsiz kargo gönderimi.</span>
+              </div>
+            </div>
+          </label>
+
+          <!-- 2. Seçenek: Showroom Mağazadan Teslim -->
+          <label style="border:1px solid #D8D2C5; background:#FAFAFA; padding:12px 14px; border-radius:8px; display:flex; align-items:flex-start; justify-content:space-between; cursor:pointer; gap:10px;">
+            <div style="display:flex; gap:10px; align-items:flex-start;">
+              <input type="radio" name="shippingMethod" value="showroom" onchange="App.onDeliveryMethodChange('showroom')" style="margin-top:3px; accent-color:var(--color-teal); width:16px; height:16px;">
+              <div>
+                <strong style="font-size:13px; color:#222; display:block;">🏛️ İzmir Buca Showroom Mağazadan Teslimat</strong>
+                <span style="font-size:11.5px; color:#666; display:block; margin-top:2px;">Menderes Cad. No:231/B Buca / İzmir</span>
+              </div>
+            </div>
+          </label>
+
+          <!-- Kargo Gönderi Adresi Alanları -->
+          <div id="shippingAddressFields" style="margin-top:6px; background:#F8FAFA; border:1px solid #CBE5E2; padding:14px 16px; border-radius:8px;">
+            <h4 style="margin:0 0 10px; font-size:12.5px; font-weight:800; color:var(--color-teal); display:flex; align-items:center; gap:6px;">
+              <span>📍 Kargo Teslimat & Gönderi Adresi</span>
+            </h4>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
+              <div>
+                <label style="font-size:11.5px; font-weight:700; display:block; margin-bottom:4px; color:#333;">İl / Şehir *</label>
+                <input type="text" id="checkoutCity" required placeholder="Örn: İzmir, İstanbul, Ankara" style="width:100%; padding:9px 12px; border:1.5px solid #D8D2C5; border-radius:6px; font-family:inherit; font-size:13px; background:#FFF; box-sizing:border-box;">
+              </div>
+              <div>
+                <label style="font-size:11.5px; font-weight:700; display:block; margin-bottom:4px; color:#333;">İlçe *</label>
+                <input type="text" id="checkoutDistrict" required placeholder="Örn: Buca, Kadıköy, Çankaya" style="width:100%; padding:9px 12px; border:1.5px solid #D8D2C5; border-radius:6px; font-family:inherit; font-size:13px; background:#FFF; box-sizing:border-box;">
+              </div>
+            </div>
+            <div>
+              <label style="font-size:11.5px; font-weight:700; display:block; margin-bottom:4px; color:#333;">Açık Teslimat Adresi (Cadde, Mahalle, Sokak, No, Daire) *</label>
+              <textarea id="checkoutAddress" required rows="2" placeholder="Kargonuzun ulaştırılacağı açık adresi eksiksiz yazınız..." style="width:100%; padding:9px 12px; border:1.5px solid #D8D2C5; border-radius:6px; font-family:inherit; font-size:13px; background:#FFF; box-sizing:border-box; resize:vertical;"></textarea>
+            </div>
+          </div>
+        </div>
+      `;
+    } else {
+      container.innerHTML = `
+        <div style="border:1px solid #CBE5E2; background:#F4FAF9; padding:12px 14px; border-radius:8px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+          <div>
+            <strong style="font-size:13px; color:var(--color-ink); display:block; margin-bottom:2px;">İzmir Buca Showroom Mağazadan Teslimat</strong>
+            <span style="font-size:11.5px; color:#555;">Menderes Cad. No:231/B Buca / İzmir · 12.000 TL+ MASAK Kimlik İbraz Protokolü</span>
+          </div>
+          <input type="radio" name="shippingMethod" value="showroom" checked style="accent-color:var(--color-teal); width:16px; height:16px;">
+        </div>
+      `;
+    }
+  },
+
+  onDeliveryMethodChange(method) {
+    const addressBox = document.getElementById('shippingAddressFields');
+    if (!addressBox) return;
+    if (method === 'carrier' || method === 'cargo') {
+      addressBox.style.display = 'block';
+    } else {
+      addressBox.style.display = 'none';
+    }
+  },
+
   processOrder() {
     const fn = (document.getElementById('checkoutFirstName')?.value || '').trim();
     const ln = (document.getElementById('checkoutLastName')?.value || '').trim();
@@ -1904,6 +1992,25 @@ const App = {
       else alert('Lütfen geçerli bir e-posta adresi giriniz.');
       document.getElementById('checkoutEmail')?.focus();
       return;
+    }
+
+    // Teslimat Yöntemi ve Kargo Adresi Doğrulaması
+    const shippingRadio = document.querySelector('input[name="shippingMethod"]:checked');
+    const selectedMethod = shippingRadio ? shippingRadio.value : 'showroom';
+    let customerAddress = 'Showroom / Mağazadan Teslim';
+
+    if (selectedMethod === 'carrier' || selectedMethod === 'cargo') {
+      const city = (document.getElementById('checkoutCity')?.value || '').trim();
+      const district = (document.getElementById('checkoutDistrict')?.value || '').trim();
+      const address = (document.getElementById('checkoutAddress')?.value || '').trim();
+
+      if (!city || !district || !address || address.length < 8) {
+        if (typeof showToast === 'function') showToast('Lütfen ücretsiz kargo için teslimat ili, ilçesi ve açık adresinizi eksiksiz giriniz.', 'error');
+        else alert('Lütfen teslimat adresinizi eksiksiz giriniz.');
+        document.getElementById('checkoutAddress')?.focus();
+        return;
+      }
+      customerAddress = `${address}, ${district} / ${city}`;
     }
 
     // Yasal Sözleşme Kontrolleri
@@ -1934,7 +2041,6 @@ const App = {
       return;
     }
 
-    const totalAmount = typeof Cart !== 'undefined' ? Cart.getTotal() : 0;
     const customerFullName = `${fn} ${ln}`;
 
     const btn = document.getElementById('checkoutSubmitBtn') || document.getElementById('btnSubmitOrder');
@@ -1950,8 +2056,9 @@ const App = {
       user_phone: phone,
       email: email,
       customerIdentity: identity || '',
+      customerAddress: customerAddress,
       items: items.map(i => ({ id: i.id, qty: i.qty })),
-      deliveryMethod: 'showroom',
+      deliveryMethod: selectedMethod === 'showroom' ? 'showroom' : 'carrier',
       termsAccepted: true,
       preInformationAccepted: true,
       highValueDeliveryAccepted: true,
@@ -2008,6 +2115,7 @@ const App = {
 
   // ÖDEME FORMU GERÇEK ZAMANLI OTOMATİK SENKRONİZASYON
   initCheckoutAutoSync() {
+    this.renderCheckoutDeliveryOptions();
     const form = document.getElementById('checkoutForm') || document.querySelector('#page-odeme form');
     if (!form) return;
     const updateDraft = () => {
@@ -2028,7 +2136,7 @@ const App = {
       sessionStorage.setItem('belgin_checkout_draft', JSON.stringify(draft));
     };
 
-    form.querySelectorAll('input').forEach(inp => {
+    form.querySelectorAll('input, textarea').forEach(inp => {
       inp.addEventListener('input', updateDraft);
       inp.addEventListener('change', updateDraft);
     });

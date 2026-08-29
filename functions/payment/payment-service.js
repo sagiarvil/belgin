@@ -343,6 +343,7 @@ class PaymentService {
       internalKycThreshold: HIGH_VALUE_SECURE_DELIVERY_THRESHOLD,
       masakLegalOverlayRequired: true,
       items,
+      productName: (items && items[0]?.name) ? String(items[0].name).trim() : 'Kuyumculuk Ürünü',
       productSnapshotHash,
       total: serverTotal,
       amountInKurus,

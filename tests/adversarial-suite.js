@@ -223,10 +223,10 @@ const mockLegalSnapshot = () => ({
     assert(e.code === 'PRODUCT_OUT_OF_STOCK', '9. Stok dışı ürün (PRODUCT_OUT_OF_STOCK) engellendi');
   }
 
-  // 10. Delivery tampering (>= 12.000 TL ürün için kargo seçimi)
+  // 10. Delivery tampering (Seçkin Ürünler / Lüks Saat için kargo seçimi engellenir)
   try {
     const mockDb = createMockDb();
-    const customCatalog = { 'HIGH_VAL_WATCH': { id: 'HIGH_VAL_WATCH', name: 'Lüks Saat', brand: 'Omega', price: 50000, category: 'saat', inStock: true } };
+    const customCatalog = { 'HIGH_VAL_WATCH': { id: 'HIGH_VAL_WATCH', name: 'Lüks Seçkin Saat', brand: 'Omega', price: 50000, category: 'luxury', isPreOwned: true, inStock: true } };
     await paymentService.createPaymentSession({
       body: { email: 'test@example.com', termsAccepted: true, preInformationAccepted: true, highValueDeliveryAccepted: true, deliveryMethod: 'carrier', items: [{ id: 'HIGH_VAL_WATCH', qty: 1 }] },
       reqContext: { clientIp: '127.0.0.1' }, db: mockDb, admin: mockAdmin, productCatalog: customCatalog, getLegalEvidenceSnapshot: mockLegalSnapshot
@@ -240,13 +240,13 @@ const mockLegalSnapshot = () => ({
   const customCatalog11999 = { 'W_11999': { id: 'W_11999', name: 'Saat 11999', brand: 'B', price: 11999, category: 'saat', inStock: true } };
   const mockDb11999 = createMockDb();
   const res11999 = await paymentService.createPaymentSession({
-    body: { email: 'test@example.com', termsAccepted: true, preInformationAccepted: true, deliveryMethod: 'carrier', items: [{ id: 'W_11999', qty: 1 }] },
+    body: { email: 'test@example.com', termsAccepted: true, preInformationAccepted: true, deliveryMethod: 'carrier', customerAddress: 'Atatürk Cad. No:10 Kadıköy/İstanbul', items: [{ id: 'W_11999', qty: 1 }] },
     reqContext: { clientIp: '127.0.0.1' }, db: mockDb11999, admin: mockAdmin, productCatalog: customCatalog11999, getLegalEvidenceSnapshot: mockLegalSnapshot
   });
   assert(res11999.highValueSecureDelivery === false, '11. 11.999 TL saat iç güvenlik eşiğini tetiklemez (carrier serbest)');
 
-  // 12. 12.000 TL sınırı
-  const customCatalog12000 = { 'W_12000': { id: 'W_12000', name: 'Saat 12000', brand: 'B', price: 12000, category: 'saat', inStock: true } };
+  // 12. 12.000 TL Seçkin Ürün / Lüks Saat
+  const customCatalog12000 = { 'W_12000': { id: 'W_12000', name: 'Seçkin Saat 12000', brand: 'B', price: 12000, category: 'luxury', isPreOwned: true, inStock: true } };
   const mockDb12000 = createMockDb();
   const res12000 = await paymentService.createPaymentSession({
     body: { email: 'test@example.com', termsAccepted: true, preInformationAccepted: true, highValueDeliveryAccepted: true, deliveryMethod: 'showroom', items: [{ id: 'W_12000', qty: 1 }] },
@@ -254,8 +254,8 @@ const mockLegalSnapshot = () => ({
   });
   assert(res12000.highValueSecureDelivery === true, '12. 12.000 TL saat iç güvenlik/showroom standardını tetikler');
 
-  // 13. 12.001 TL sınırı
-  const customCatalog12001 = { 'W_12001': { id: 'W_12001', name: 'Saat 12001', brand: 'B', price: 12001, category: 'saat', inStock: true } };
+  // 13. 12.001 TL Seçkin Ürün / Lüks Saat
+  const customCatalog12001 = { 'W_12001': { id: 'W_12001', name: 'Seçkin Saat 12001', brand: 'B', price: 12001, category: 'luxury', isPreOwned: true, inStock: true } };
   const mockDb12001 = createMockDb();
   const res12001 = await paymentService.createPaymentSession({
     body: { email: 'test@example.com', termsAccepted: true, preInformationAccepted: true, highValueDeliveryAccepted: true, deliveryMethod: 'showroom', items: [{ id: 'W_12001', qty: 1 }] },

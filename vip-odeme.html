@@ -265,6 +265,7 @@
         <input type="checkbox" id="chkKyc" required checked>
         <input type="checkbox" id="chkHighValue" required checked>
         <input type="checkbox" id="chkHandover" required checked>
+        <input type="checkbox" id="chkDeliveryStatement" required checked>
         <input type="checkbox" id="chkMarketing" checked>
         <input type="checkbox" id="chkConsent" checked>
       </div>
@@ -273,7 +274,7 @@
 
   </main>
 
-  <script src="/js/vip-payment.js?v=2.8.7"></script>
+  <script src="/js/vip-payment.js?v=2.8.8"></script>
   <script>
     let currentPayload = null;
 
@@ -388,6 +389,7 @@
           termsAccepted: true,
           preInformationAccepted: true,
           highValueDeliveryAccepted: true,
+          deliveryStatementAccepted: true,
           marketingConsent: true,
           items: [
             {
