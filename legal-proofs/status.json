@@ -1,10 +1,10 @@
 {
   "schema": "belgin-free-external-timestamp-v1",
   "model": "OpenTimestamps/Bitcoin",
-  "manifestRootSha256": "77b63e58d16ead38b386fa8cf670f7b1cf7bb0832e0e2a09b1d7e640b96d4f32",
-  "rootFile": "legal-root-77b63e58d16ead38b386fa8cf670f7b1cf7bb0832e0e2a09b1d7e640b96d4f32.txt",
-  "proofFile": "legal-root-77b63e58d16ead38b386fa8cf670f7b1cf7bb0832e0e2a09b1d7e640b96d4f32.txt.ots",
-  "submittedAt": "2026-08-27T16:32:30.981Z",
+  "manifestRootSha256": "4b3499baa7fdbd1434d8dbed046f85425b7debf20cdf366273dd29333d510548",
+  "rootFile": "legal-root-4b3499baa7fdbd1434d8dbed046f85425b7debf20cdf366273dd29333d510548.txt",
+  "proofFile": "legal-root-4b3499baa7fdbd1434d8dbed046f85425b7debf20cdf366273dd29333d510548.txt.ots",
+  "submittedAt": "2026-08-29T09:46:40.521Z",
   "status": "SUBMITTED_OR_UPGRADED",
   "legalQualification": "Auxiliary technical existence/integrity proof; not a 5070 qualified electronic signature or ESHS timestamp."
 }
