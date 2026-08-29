@@ -377,5 +377,9 @@ const Cart = {
         discountRow.style.display = 'none';
       }
     }
+
+    if (typeof App !== 'undefined' && typeof App.renderCheckoutDeliveryOptions === 'function') {
+      App.renderCheckoutDeliveryOptions();
+    }
   }
 };

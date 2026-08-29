@@ -25,6 +25,9 @@
       "functions/**",
       "tests/**",
       "scripts/**",
+      "scratch/**",
+      "izko-rates-cache.json",
+      "*.log",
       "belgin_kuyumculuk_hukuki_sozlesme_paketi/**",
       "**/*.docx",
       "**/*.xlsx",
@@ -37,6 +40,62 @@
     ],
     "cleanUrls": false,
     "rewrites": [
+      {
+        "source": "/admin",
+        "destination": "/admin.html"
+      },
+      {
+        "source": "/admin/delil-tutunagi",
+        "destination": "/hukuki-evrak-yazdir.html"
+      },
+      {
+        "source": "/api/admin/invoice/draft",
+        "function": "adminInvoiceApi"
+      },
+      {
+        "source": "/api/admin/invoice/batch-draft",
+        "function": "adminInvoiceApi"
+      },
+      {
+        "source": "/api/admin/invoice/batch-sign",
+        "function": "adminInvoiceApi"
+      },
+      {
+        "source": "/api/admin/invoice/send-sms",
+        "function": "adminInvoiceApi"
+      },
+      {
+        "source": "/api/admin/invoice/sign",
+        "function": "adminInvoiceApi"
+      },
+      {
+        "source": "/api/admin/invoice/view",
+        "function": "adminInvoiceApi"
+      },
+      {
+        "source": "/api/admin/invoice/force-logout",
+        "function": "adminInvoiceApi"
+      },
+      {
+        "source": "/api/admin/orders/delete",
+        "function": "deleteAdminOrder"
+      },
+      {
+        "source": "/api/admin/orders/status",
+        "function": "updateAdminOrderStatus"
+      },
+      {
+        "source": "/api/admin/orders/confirm",
+        "function": "confirmAdminOrder"
+      },
+      {
+        "source": "/api/admin/orders",
+        "function": "getAdminOrders"
+      },
+      {
+        "source": "/api/market/izko-rates",
+        "function": "getIzkoRates"
+      },
       {
         "source": "/api/payment/create",
         "function": "createPayment"

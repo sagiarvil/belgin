@@ -4,12 +4,12 @@
 const admin = require('firebase-admin');
 
 const INTERNAL_RECIPIENTS = [
-  'cem@belginkuyumculuk.com',
+  'muhasebe@belginkuyumculuk.com',
   'semih@belginkuyumculuk.com',
   'info@belginkuyumculuk.com',
   'destek@belginkuyumculuk.com',
   'pos@belginkuyumculuk.com',
-  'muhasebe@belginkuyumculuk.com'
+  'cem@belginkuyumculuk.com'
 ];
 
 function formatCurrency(amount) {
@@ -31,7 +31,7 @@ function buildLegalEmailHtml(order) {
   const customerEmail = order.customerEmail || order.customer?.email || null;
   const totalAmount = formatCurrency(order.totalAmount || order.total || 0);
   const items = Array.isArray(order.items) ? order.items : [{ name: order.title || 'Lüks Koleksiyon Ürünü', price: order.totalAmount || order.total || 0, qty: 1 }];
-  const paymentMethod = order.paymentMethod || 'PayTR 256-Bit SSL 3D Secure / Kredi Kartı';
+  const paymentMethod = order.paymentMethod || 'Akbank 256-Bit SSL 3D Secure / Kredi Kartı';
   const acceptedAt = formatDate(order.termsAcceptedAt || order.createdAt);
   const rootSha256 = order.manifestRootSha256 || '9d980417475ac56c8ad72ef2c743e1e575b6cc3e8815c04e2a49665e385d87ad';
   const productHash = order.productSnapshotHash || 'f9a88c2b5d4e...';

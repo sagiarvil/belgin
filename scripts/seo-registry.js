@@ -58,6 +58,54 @@ const SEO_REGISTRY = [
     changefreq: 'daily'
   },
   {
+    route: '/rehber/altin-yatirimi-ve-ozel-matrah-rehberi/',
+    canonicalRoute: '/rehber/altin-yatirimi-ve-ozel-matrah-rehberi/',
+    locale: 'tr-TR',
+    role: 'guide',
+    indexDirective: 'index',
+    title: 'Altın Yatırımı & KDV Kanunu 23/f Özel Matrah Rehberi | Belgin Kuyumculuk',
+    metaDescription: '24K Has altın, 22 ayar bilezik ve sarrafiye alımında 3065 sayılı KDV Kanunu 23/f özel matrah uygulaması, İZKO resmi kur güvencesi ve güvenli faturalama rehberi.',
+    h1: 'Altın Yatırımı & 3065 Sayılı KDV Kanunu 23/f Özel Matrah Uygulaması',
+    priority: '0.9',
+    changefreq: 'weekly'
+  },
+  {
+    route: '/rehber/luks-saat-ekspertiz-ve-orijinallik-rehberi/',
+    canonicalRoute: '/rehber/luks-saat-ekspertiz-ve-orijinallik-rehberi/',
+    locale: 'tr-TR',
+    role: 'guide',
+    indexDirective: 'index',
+    title: 'İkinci El Lüks Saat Ekspertiz & Orijinallik Rehberi | Belgin Kuyumculuk',
+    metaDescription: 'Rolex, Patek Philippe, Audemars Piguet, TAG Heuer saatlerde mekanizma doğrulaması, kasa seri numarası analizi, zaman tutma testi ve ekspertiz raporu rehberi.',
+    h1: 'İkinci El Lüks Saat Alımında 12 Nokta Ekspertiz ve Orijinallik Kontrolü',
+    priority: '0.9',
+    changefreq: 'weekly'
+  },
+  {
+    route: '/rehber/izmir-kuyumculuk-ve-guvenli-teslimat/',
+    canonicalRoute: '/rehber/izmir-kuyumculuk-ve-guvenli-teslimat/',
+    locale: 'tr-TR',
+    role: 'guide',
+    indexDirective: 'index',
+    title: 'İzmir Buca Kuyumcu & Yüksek Değerli Güvenli Teslimat Protokolü | Belgin Kuyumculuk',
+    metaDescription: '1999 yılından beri İzmir Buca Menderes Caddesinde güvenilir kuyumculuk, darphane damgalı altın, MASAK uyumlu güvenli ödeme ve VIP teslimat hizmeti.',
+    h1: 'İzmir Buca Kuyumculuk Kültürü ve Yüksek Değerli Güvenli Teslimat Standartları',
+    priority: '0.9',
+    changefreq: 'weekly'
+  },
+  {
+    route: '/rehber/pirlanta-ve-gemoloji-degerleme-rehberi/',
+    canonicalRoute: '/rehber/pirlanta-ve-gemoloji-degerleme-rehberi/',
+    locale: 'tr-TR',
+    role: 'guide',
+    indexDirective: 'index',
+    title: 'Pırlanta & Değerli Taşlarda 4C Kriterleri Değerleme Rehberi | Belgin Kuyumculuk',
+    metaDescription: 'Tektaş yüzük, baget pırlanta ve elmas gerdanlıklarda GIA ve HRD uluslararası derecelendirme standartları, renk ve berraklık sınıflandırması rehberi.',
+    h1: 'Pırlanta Alımında 4C Standartları: Karat, Kesim, Berraklık ve Renk',
+    priority: '0.9',
+    changefreq: 'weekly'
+  },
+  {
     route: '/iletisim.html',
     canonicalRoute: '/iletisim.html',
     locale: 'tr-TR',

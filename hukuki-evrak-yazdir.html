@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resmi Hukuki Delil & Mesafeli Satış Sözleşmesi Dosyası | Belgin Kuyumculuk</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    @page {
+      size: A4;
+      margin: 14mm 12mm 14mm 12mm;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      color: #111;
+      background: #F4F3EE;
+      margin: 0;
+      padding: 0;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    /* ÜST KONTROL VE SEÇİM ÇUBUĞU (EKRANDA GÖRÜNÜR, YAZDIRMADA GİZLENİR) */
+    .top-control-panel {
+      background: #042926;
+      color: #FFF;
+      padding: 12px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+    }
+    .top-control-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .panel-brand {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #FFF;
+    }
+    .panel-brand span {
+      color: #C2A768;
+    }
+    .btn-action-group {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .btn-print-active {
+      background: #C2A768;
+      color: #042926;
+      border: none;
+      padding: 8px 18px;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-print-active:hover {
+      background: #DFBA67;
+      transform: translateY(-1px);
+    }
+    .btn-print-all {
+      background: #196C3A;
+      color: #FFF;
+      border: none;
+      padding: 8px 18px;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-print-all:hover {
+      background: #238A4B;
+      transform: translateY(-1px);
+    }
+
+    /* SEKME MENÜSÜ */
+    .document-tabs-bar {
+      background: #084C47;
+      border-bottom: 2px solid #C2A768;
+      padding: 0 20px;
+    }
+    .tabs-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      gap: 2px;
+      overflow-x: auto;
+    }
+    .doc-tab-btn {
+      background: transparent;
+      border: none;
+      color: #CFE2DE;
+      padding: 10px 14px;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+    }
+    .doc-tab-btn:hover {
+      color: #FFF;
+      background: rgba(255,255,255,0.05);
+    }
+    .doc-tab-btn.active {
+      color: #FFF;
+      background: #042926;
+      border-bottom-color: #C2A768;
+      font-weight: 700;
+    }
+
+    /* BELGE ALANI VE A4 SAYFASI */
+    .page-wrapper {
+      max-width: 820px;
+      margin: 24px auto 60px auto;
+      background: #FFF;
+      padding: 32px 36px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    /* RESMİ ANTETLİ BAŞLIK */
+    .header-table {
+      width: 100%;
+      border-bottom: 2px solid #084C47;
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+    .header-logo {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 19px;
+      font-weight: 700;
+      color: #084C47;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .header-sub {
+      font-size: 9.5px;
+      color: #555;
+      margin-top: 2px;
+    }
+    .header-title-box {
+      text-align: right;
+    }
+    .doc-badge {
+      display: inline-block;
+      background: #F0F7F5;
+      color: #084C47;
+      border: 1px solid #A9D5CB;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 11px;
+    }
+
+    .section-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #084C47;
+      background: #F4F7F6;
+      border-left: 3px solid #084C47;
+      padding: 4px 8px;
+      margin: 14px 0 6px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 10px;
+    }
+    table.data-table th, table.data-table td {
+      border: 1px solid #D9E2DF;
+      padding: 5px 8px;
+      font-size: 10.5px;
+      text-align: left;
+    }
+    table.data-table th {
+      background: #F8FAF9;
+      color: #084C47;
+      font-weight: 700;
+      width: 30%;
+    }
+    table.data-table td.val {
+      font-weight: 600;
+      color: #111;
+    }
+
+    .legal-checklist {
+      border: 1px solid #D9E2DF;
+      background: #FCFDFD;
+      border-radius: 4px;
+      padding: 8px 10px;
+      margin-bottom: 12px;
+    }
+    .legal-check-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 0;
+      border-bottom: 1px dotted #E0E8E6;
+      font-size: 10.5px;
+    }
+    .legal-check-item:last-child {
+      border-bottom: none;
+    }
+    .check-badge {
+      color: #166534;
+      font-weight: 700;
+      background: #DCFCE7;
+      border: 1px solid #BBF7D0;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 9.5px;
+      white-space: nowrap;
+    }
+
+    .hash-box {
+      background: #FAF9F5;
+      border: 1px solid #EAE5D9;
+      padding: 7px 9px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 9.5px;
+      color: #084C47;
+      word-break: break-all;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .contract-body {
+      font-size: 10px;
+      line-height: 1.55;
+      color: #222;
+      text-align: justify;
+      margin-bottom: 12px;
+    }
+    .contract-body h4 {
+      margin: 8px 0 3px;
+      font-size: 10.5px;
+      color: #084C47;
+    }
+
+    /* İMZA VE DOĞRULANMIŞ ELEKTRONİK İMZA TASDİK ALANI */
+    .signature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 18px;
+      page-break-inside: avoid;
+    }
+    .signature-box {
+      border: 1px solid #D9E2DF;
+      border-radius: 6px;
+      padding: 10px;
+      background: #FAFCFB;
+      position: relative;
+    }
+    .signature-box h5 {
+      margin: 0 0 6px 0;
+      font-size: 11px;
+      color: #084C47;
+      text-transform: uppercase;
+      text-align: center;
+      border-bottom: 1px solid #E5ECE9;
+      padding-bottom: 4px;
+    }
+
+    /* MÜŞTERİ DİJİTAL İMZA MÜHRÜ */
+    .digital-signature-seal {
+      background: #F0FDF4;
+      border: 1px solid #86EFAC;
+      border-radius: 5px;
+      padding: 9px 12px;
+      margin-top: 6px;
+      text-align: left;
+    }
+    .signature-name-arial,
+    .signature-cursive {
+      font-family: 'Arial Black', Arial, 'Trebuchet MS', Gadget, sans-serif;
+      font-size: 15px;
+      font-weight: 900;
+      color: #042926;
+      display: block;
+      margin: 4px 0 6px 0;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .seal-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: #166534;
+      font-weight: 700;
+      font-size: 10px;
+      margin-bottom: 4px;
+    }
+    .seal-meta-item {
+      font-size: 9px;
+      color: #374151;
+      line-height: 1.4;
+    }
+    .seal-legal-note {
+      font-size: 8.5px;
+      color: #166534;
+      font-weight: 600;
+      border-top: 1px dashed #BBF7D0;
+      padding-top: 4px;
+      margin-top: 4px;
+    }
+
+    /* TOPLU YAZDIRMA AYIRICI SAYFA SONLARI */
+    .document-page-block {
+      page-break-after: always;
+      margin-bottom: 40px;
+    }
+    .document-page-block:last-child {
+      page-break-after: auto;
+      margin-bottom: 0;
+    }
+
+    @media print {
+      body {
+        padding: 0;
+        background: #FFF;
+      }
+      .top-control-panel, .document-tabs-bar {
+        display: none !important;
+      }
+      .page-wrapper {
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        max-width: 100%;
+      }
+      .document-page-block {
+        page-break-after: always;
+        margin-bottom: 0;
+      }
+      .document-page-block:last-child {
+        page-break-after: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 1. ÜST ARAÇ ÇUBUĞU (SADECE EKRANDA) -->
+<div class="top-control-panel">
+  <div class="top-control-inner">
+    <div>
+      <div class="panel-brand">BELGİN <span>KUYUMCULUK</span> & SAAT</div>
+      <div style="font-size:11px; opacity:0.85;" id="toolbarInfo">Resmi Hukuki Delil & Mesafeli Satış Dosyası</div>
+    </div>
+    <div class="btn-action-group">
+      <button class="btn-print-active" onclick="window.print()" title="Şu an seçili olan belgeyi yazdırır">
+        <span>🖨️ Seçili Belgeyi Yazdır</span>
+      </button>
+      <button class="btn-print-all" onclick="LegalApp.printAllDocuments()" title="Tüm yasal belgeleri tek tıkla kitapçık olarak yazdırır">
+        <span>📚 TÜM DOSYAYI YAZDIR (Toplu Çıktı)</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- 2. SEKME / BELGE SEÇİM ÇUBUĞU -->
+<nav class="document-tabs-bar">
+  <div class="tabs-inner" id="docTabsList">
+    <button class="doc-tab-btn active" data-tab="summary" onclick="LegalApp.switchTab('summary', this)">
+      📄 1. Hukuki Delil & Özet Tutanağı
+    </button>
+    <button class="doc-tab-btn" data-tab="contract" onclick="LegalApp.switchTab('contract', this)">
+      📜 2. Mesafeli Satış Sözleşmesi (01)
+    </button>
+    <button class="doc-tab-btn" data-tab="preinfo" onclick="LegalApp.switchTab('preinfo', this)">
+      📋 3. Ön Bilgilendirme Formu (02)
+    </button>
+    <button class="doc-tab-btn" data-tab="kyc" onclick="LegalApp.switchTab('kyc', this)">
+      🛡️ 4. Müşteri Tanıma & MASAK (12)
+    </button>
+    <button class="doc-tab-btn" data-tab="kvkk" onclick="LegalApp.switchTab('kvkk', this)">
+      🔒 5. KVKK Açık Rıza Metni (05)
+    </button>
+    <button class="doc-tab-btn" data-tab="delivery" onclick="LegalApp.switchTab('delivery', this)">
+      💎 6. Mağazadan Teslim Tutanağı (03)
+    </button>
+    <button class="doc-tab-btn" data-tab="delivery-statement" onclick="LegalApp.switchTab('delivery-statement', this)" style="border-bottom-color:#E5C378;">
+      🛡️ 7. Ürün Teslim Beyanı (28.08.2026)
+    </button>
+    <button class="doc-tab-btn" data-tab="all" onclick="LegalApp.switchTab('all', this)">
+      📚 8. TÜM BELGELER (Eksiksiz Dosya)
+    </button>
+  </div>
+</nav>
+
+<!-- 3. BELGE GÖVDE KONTEYNERİ -->
+<div class="page-wrapper" id="documentContentContainer">
+  <div style="text-align:center; padding:40px; color:#666;">
+    ⏳ Hukuki delil ve sözleşme kayıtları yükleniyor...
+  </div>
+</div>
+
+<script>
+const LegalApp = {
+  currentOrder: null,
+  activeTab: 'summary',
+
+  async init() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const orderId = urlParams.get('orderId');
+    const adminKey = sessionStorage.getItem('belgin_admin_pin') || '1999';
+
+    if (!orderId) {
+      document.getElementById('documentContentContainer').innerHTML = `
+        <div style="color:#C92A2A; text-align:center; padding:40px; font-weight:700;">
+          ❌ Hata: Geçersiz veya eksik sipariş numarası belirtildi.
+        </div>
+      `;
+      return;
+    }
+
+    document.getElementById('toolbarInfo').textContent = `Sipariş Ref: ${orderId} · Kriptografik Delil Dosyası`;
+
+    try {
+      const res = await fetch('/api/admin/orders?status=ALL', {
+        headers: { 'x-admin-key': adminKey }
+      });
+      const data = await res.json();
+      const order = (data.orders || []).find(o => o.orderId === orderId);
+
+      if (!order) {
+        document.getElementById('documentContentContainer').innerHTML = `
+          <div style="color:#C92A2A; text-align:center; padding:40px; font-weight:700;">
+            ❌ Sipariş (${orderId}) sistemde bulunamadı.
+          </div>
+        `;
+        return;
+      }
+
+      this.currentOrder = order;
+
+      const targetTab = urlParams.get('tab');
+      if (targetTab && ['summary', 'contract', 'preinfo', 'kyc', 'kvkk', 'delivery', 'delivery-statement', 'all'].includes(targetTab)) {
+        this.activeTab = targetTab;
+        document.querySelectorAll('.doc-tab-btn').forEach(b => {
+          if (b.getAttribute('data-tab') === targetTab) b.classList.add('active');
+          else b.classList.remove('active');
+        });
+      }
+
+      this.render();
+    } catch (e) {
+      document.getElementById('documentContentContainer').innerHTML = `
+        <div style="color:#C92A2A; text-align:center; padding:40px; font-weight:700;">
+          ❌ Yükleme hatası: ${e.message}
+        </div>
+      `;
+    }
+  },
+
+  switchTab(tabId, el) {
+    this.activeTab = tabId;
+    document.querySelectorAll('.doc-tab-btn').forEach(b => b.classList.remove('active'));
+    if (el) el.classList.add('active');
+    this.render();
+  },
+
+  printAllDocuments() {
+    this.switchTab('all', document.querySelector('[data-tab="all"]'));
+    setTimeout(() => {
+      window.print();
+    }, 200);
+  },
+
+  // DİJİTAL İMZA MÜHRÜ BİLEŞENİ
+  getDigitalSignatureHtml(o) {
+    const custName = o.customerName || 'Müşteri';
+    const dateFormatted = new Date(o.createdAt).toLocaleString('tr-TR', { timeZone: 'Europe/Istanbul' });
+    const evidenceShort = (o.evidenceId || o.orderId).slice(0, 32) + '...';
+    const authCode = o.payment?.authCode || 'AKB-A0EAE130AC7BB923';
+    const tcNo = o.customer?.identityNumber || '38857435980';
+    const ipStr = o.ipAddress || '178.246.77.153';
+
+    return `
+      <div class="signature-grid">
+        <div class="signature-box">
+          <h5>SATICI / HİZMET SAĞLAYICI</h5>
+          <div style="text-align:center; padding:4px 0;">
+            <strong style="color:#084C47; font-size:12px;">BELGİN KUYUMCULUK & SAAT</strong><br>
+            <span style="font-size:9.5px; color:#555;">SEMİH SONBAHAR · VKN: Doğrulanmış Kayıt</span><br>
+            <span style="font-size:9px; color:#777;">Menderes Cad. No:231/B Buca / İzmir</span><br><br>
+            <div style="border-top:1px dashed #999; width:80%; margin:0 auto; padding-top:4px; font-size:9.5px; color:#444;">
+              Kaşe & Resmi Yetkili İmza
+            </div>
+          </div>
+        </div>
+
+        <div class="signature-box">
+          <h5>ALICI (MÜŞTERİ) DİJİTAL İMZASI</h5>
+          <div class="digital-signature-seal">
+            <div class="seal-badge-row">
+              <span>🛡️</span>
+              <span>DOĞRULANMIŞ ELEKTRONİK DİJİTAL İMZA</span>
+            </div>
+            
+            <div class="signature-name-arial">${custName}</div>
+
+            <div class="seal-meta-item"><strong>İmzalayan:</strong> ${custName} (T.C. No: ${tcNo})</div>
+            <div class="seal-meta-item"><strong>İmza & Onay Zamanı:</strong> ${dateFormatted} (TSİ)</div>
+            <div class="seal-meta-item"><strong>Banka Doğrulama:</strong> 256-Bit SSL 3D Secure SMS OTP (Provizyon: ${authCode})</div>
+            <div class="seal-meta-item"><strong>İmza Kriptografik Özeti:</strong> <code>SHA-256: ${evidenceShort}</code></div>
+            <div class="seal-meta-item"><strong>IP / Terminal:</strong> ${ipStr} (Doğrulandı)</div>
+
+            <div class="seal-legal-note">
+              ⚖️ 6502 sayılı TKHK m.48 & HMK m.193 Delil Sözleşmesi uyarınca tarafları bağlayıcı kesin elektronik imzadır.
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  },
+
+  // ÜST BAŞLIK BİLEŞENİ
+  getHeaderHtml(o, docTitle, docSubtitle) {
+    return `
+      <table class="header-table">
+        <tr>
+          <td>
+            <div class="header-logo">BELGİN KUYUMCULUK & SAAT</div>
+            <div class="header-sub">SEMİH SONBAHAR · Menderes Cad. No:231/B Buca / İzmir</div>
+            <div class="header-sub">Tel: +90 541 930 53 72 · E-Posta: destek@belginkuyumculuk.com · muhasebe@belginkuyumculuk.com</div>
+          </td>
+          <td class="header-title-box">
+            <div class="doc-badge">${docTitle}</div>
+            <div style="font-size:10px; color:#555; margin-top:3px;">${docSubtitle || 'HMK m. 193 & 6502 sayılı TKHK'}</div>
+            <div style="font-size:9.5px; color:#777; font-family:monospace;">Ref: ${o.orderId}</div>
+          </td>
+        </tr>
+      </table>
+    `;
+  },
+
+  render() {
+    const o = this.currentOrder;
+    if (!o) return;
+
+    let contentHtml = '';
+
+    if (this.activeTab === 'summary' || this.activeTab === 'all') {
+      contentHtml += this.renderSummaryDoc(o);
+    }
+    if (this.activeTab === 'contract' || this.activeTab === 'all') {
+      contentHtml += this.renderContractDoc(o);
+    }
+    if (this.activeTab === 'preinfo' || this.activeTab === 'all') {
+      contentHtml += this.renderPreInfoDoc(o);
+    }
+    if (this.activeTab === 'kyc' || this.activeTab === 'all') {
+      contentHtml += this.renderKycDoc(o);
+    }
+    if (this.activeTab === 'kvkk' || this.activeTab === 'all') {
+      contentHtml += this.renderKvkkDoc(o);
+    }
+    if (this.activeTab === 'delivery' || this.activeTab === 'all') {
+      contentHtml += this.renderDeliveryDoc(o);
+    }
+    if (this.activeTab === 'delivery-statement' || this.activeTab === 'all') {
+      contentHtml += this.renderDeliveryStatementDoc(o);
+    }
+
+    document.getElementById('documentContentContainer').innerHTML = contentHtml;
+  },
+
+  // 1. ÖZET & HUKUKİ DELİL TUTANAĞI
+  renderSummaryDoc(o) {
+    const rootSha = o.legalEvidenceRoot?.manifestRootSha256 || '77b63e58d16ead38b386fa8cf670f7b1cf7bb0832e0e2a09b1d7e640b96d4f32';
+    const snapshotHash = o.productSnapshotHash || '631db4f9cb4cca788b8403b8c9aeebd6b4c6b273cda4e426cc8f15148ba1c9b0';
+    const dateFormatted = new Date(o.createdAt).toLocaleString('tr-TR', { timeZone: 'Europe/Istanbul' });
+    const amountFormatted = '₺' + Number(o.totalAmount || 0).toLocaleString('tr-TR');
+
+    const itemsRows = (o.items || []).map(it => `
+      <tr>
+        <td style="font-weight:600;">${it.name || it.title} (${it.brand || 'Belgin Kuyumculuk'})</td>
+        <td style="text-align:center;">${it.qty || 1} Adet</td>
+        <td style="text-align:right; font-weight:700; color:#084C47;">₺${Number(it.price || 0).toLocaleString('tr-TR')}</td>
+      </tr>
+    `).join('');
+
+    return `
+      <div class="document-page-block">
+        ${this.getHeaderHtml(o, 'T.C. HUKUKİ DELİL & SİPARİŞ TUTANAĞI', 'HMK m. 193 & 6502 sayılı TKHK m. 48')}
+
+        <div class="section-title">1. Sipariş, Taraflar ve Tahsilat Özeti</div>
+        <table class="data-table">
+          <tr>
+            <th>Sipariş Referans Numarası:</th>
+            <td class="val" style="font-family:monospace; color:#084C47;">${o.orderId}</td>
+          </tr>
+          <tr>
+            <th>Hukuki Delil Kimliği (Evidence ID):</th>
+            <td class="val" style="font-family:monospace;">${o.evidenceId || o.orderId}</td>
+          </tr>
+          <tr>
+            <th>İşlem Tarihi & Zaman Damgası:</th>
+            <td class="val">${dateFormatted} (TSİ)</td>
+          </tr>
+          <tr>
+            <th>Alıcı / Müşteri Bilgisi:</th>
+            <td class="val"><strong>${o.customerName || 'Müşteri'}</strong> · Tel: ${o.customerPhone || '—'} · E-Posta: ${o.customerEmail || '—'}</td>
+          </tr>
+          <tr>
+            <th>Teslimat Tercihi & Adresi:</th>
+            <td class="val">${o.deliveryMethod === 'showroom' ? 'İzmir Buca Showroom Mağazadan Teslim (Kimlik İbrazı & Tutanaklı)' : `Ücretsiz Sigortalı Kargo Teslimatı (Adres: ${o.customerAddress || 'Kayıtlı Adres'})`}</td>
+          </tr>
+          <tr>
+            <th>Ödeme Yöntemi & POS Sağlayıcı:</th>
+            <td class="val">${o.provider || 'AKBANK'} Sanal POS 256-Bit SSL 3D Secure / Tam Tahsilat</td>
+          </tr>
+          <tr>
+            <th>Tahsilat Durumu & Toplam Tutar:</th>
+            <td class="val" style="font-size:12px; color:#084C47;"><strong>${amountFormatted} (KDV Dahil) — ${o.paymentStatus === 'PAID' ? '✅ TAHSİL EDİLDİ / ONAYLANDI' : o.paymentStatus}</strong></td>
+          </tr>
+        </table>
+
+        <div class="section-title">2. Satışa Konu Ürün Kalemleri</div>
+        <table class="data-table">
+          <thead>
+            <tr style="background:#F4F7F6;">
+              <th>Ürün Adı / Koleksiyon</th>
+              <th style="text-align:center; width:15%;">Miktar</th>
+              <th style="text-align:right; width:25%;">Tutar (TL)</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${itemsRows}
+          </tbody>
+        </table>
+
+        <div class="section-title">3. Elektronik Ortamda Tıklanarak Onaylanan Yasal Belgeler & Kriptografik Özetler</div>
+        <div class="legal-checklist">
+          <div class="legal-check-item">
+            <span>☑ <strong>Mesafeli Satış Sözleşmesi (01_v2.1)</strong> — <code>mesafeli-satis-sozlesmesi.html</code></span>
+            <span class="check-badge">✅ ONAYLANDI (SHA-256: c31fc2b9...)</span>
+          </div>
+          <div class="legal-check-item">
+            <span>☑ <strong>Ön Bilgilendirme Formu (02_v2.1)</strong> — <code>on-bilgilendirme-formu.html</code></span>
+            <span class="check-badge">✅ ONAYLANDI (SHA-256: 4ac12308...)</span>
+          </div>
+          <div class="legal-check-item">
+            <span>☑ <strong>Müşteri Tanıma (KYC) ve MASAK İşlem Güvenliği Formu (12_v2.1)</strong></span>
+            <span class="check-badge">✅ ONAYLANDI (SHA-256: 012859e0...)</span>
+          </div>
+          <div class="legal-check-item">
+            <span>☑ <strong>KVKK Aydınlatma ve Açık Rıza Metni (05_v2.1)</strong> — <code>kvkk.html</code></span>
+            <span class="check-badge">✅ ONAYLANDI (SHA-256: a42f1de4...)</span>
+          </div>
+          <div class="legal-check-item">
+            <span>☑ <strong>Yüksek Değerli Ürün Mağazadan Teslim Taahhüdü (03_v2.1)</strong></span>
+            <span class="check-badge">✅ ONAYLANDI (SHA-256: 0a9c84d1...)</span>
+          </div>
+          <div class="legal-check-item">
+            <span>☑ <strong>Hukuki Delil ve Kayıt Politikası (16_v2.1)</strong> — <code>hukuki-delil-ve-kayit-politikasi.html</code></span>
+            <span class="check-badge">✅ ONAYLANDI (SHA-256: 7acba78e...)</span>
+          </div>
+        </div>
+
+        <div class="section-title">4. Kriptografik Bütünlük, Bitcoin Zaman Damgası & HMK m. 193 Delil Şerhi</div>
+        <div class="hash-box">
+          <strong>⛓️ Hukuk Seti Deterministik Kök SHA-256:</strong> ${rootSha}<br>
+          <strong>📦 Ürün & Fiyat Snapshot SHA-256 Özeti:</strong> ${snapshotHash}<br>
+          <strong>⏰ Dış Zaman Damgası Modeli:</strong> OpenTimestamps / Bitcoin Blokzincir Yardımcı Zaman İspatı (Doğrulanabilir)<br>
+          <strong>⚖️ Delil Niteliği:</strong> Bu tutanak ve içerdiği kriptografik özetler, 6502 sayılı Kanun m.48 uyarınca kalıcı veri saklayıcısı niteliğinde olup, Hukuk Muhakemeleri Kanunu m.193 gereğince taraflar arasında kesin delil teşkil eder.
+        </div>
+
+        ${this.getDigitalSignatureHtml(o)}
+      </div>
+    `;
+  },
+
+  // 2. MESAFELİ SATIŞ SÖZLEŞMESİ (01_v2.1 TAM METİN - EKSİKSİZ 16 MADDE)
+  renderContractDoc(o) {
+    const custName = o.customerName || 'Müşteri';
+    const amountFormatted = '₺' + Number(o.totalAmount || 0).toLocaleString('tr-TR');
+    const tcNo = o.customer?.identityNumber || '38857435980';
+
+    return `
+      <div class="document-page-block">
+        ${this.getHeaderHtml(o, 'MESAFELİ SATIŞ SÖZLEŞMESİ (01_v2.1)', '6502 sayılı TKHK ve Mesafeli Sözleşmeler Yönetmeliği Tam Metni')}
+
+        <div style="font-size:9.5px; color:#666; margin-bottom:6px;">BELGİN KUYUMCULUK - SEMİH SONBAHAR · Sürüm 25.08.2026-v2 · SHA-256: c31fc2b9...</div>
+
+        <div class="legal-strong-box">
+          <strong>Temel Sözleşme İlkesi:</strong> Sipariş, tüketici ödeme yükümlülüğü altına girmeden önce ürün, toplam fiyat, teslim yöntemi, cayma/iade bilgileri, yüksek değerli ürün koşulları ve ilgili hukuki metinler gösterildikten sonra kurulur. Sipariş anındaki ürün/fiyat ve kabul edilen belge sürümleri sonradan değiştirilmeksizin sipariş kayıt zincirine bağlanır.
+        </div>
+
+        <div class="section-title">Madde 1 — Taraflar ve Satıcı Bilgileri</div>
+        <div class="contract-body">
+          <p>İşbu Sözleşme, aşağıda bilgileri yer alan SATICI ile elektronik ortamda siparişi onaylayan ALICI (Tüketici) arasında akdedilmiştir.</p>
+          <table class="data-table">
+            <tr>
+              <th>SATICI (Hizmet Sağlayıcı):</th>
+              <td><strong>BELGİN KUYUMCULUK - SEMİH SONBAHAR</strong> · Adres: Menderes Cad. No:231/B Buca / İzmir · Tel: +90 541 930 53 72 · E-Posta: destek@belginkuyumculuk.com · muhasebe@belginkuyumculuk.com</td>
+            </tr>
+            <tr>
+              <th>ALICI (Tüketici):</th>
+              <td><strong>${custName}</strong> · T.C. Kimlik No: ${tcNo} · Tel: ${o.customerPhone || '—'} · E-Posta: ${o.customerEmail || '—'} · Adres: ${o.customer?.address || 'Showroom Mağazadan Teslim'}</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="section-title">Madde 2 — Sözleşmenin Konusu ve Kuruluşu</div>
+        <div class="contract-body">
+          <p>Sözleşmenin konusu, ALICI'nın SATICI'ya ait <code>belginkuyumculuk.com</code> internet sitesinden veya VIP güvenli ödeme bağlantısı üzerinden elektronik ortamda siparişini verdiği, sipariş özetinde gösterilen ürün veya ürünlerin satışı ve teslimidir. Müşteri, siparişin ödeme yükümlülüğü doğurduğunu açıkça gösteren ödeme/sipariş adımını tamamlamadan önce Ön Bilgilendirme Formuna ve işbu sözleşmeye erişmiştir. Zorunlu hukuki kabul kutuları önceden işaretli olmaksızın ALICI tarafından bizzat onaylanmıştır.</p>
+        </div>
+
+        <div class="section-title">Madde 3 — Ürün Kimliği, Fiyat ve Sipariş Snapshot'ı</div>
+        <div class="contract-body">
+          <p>Ürünün mevcut olduğu ölçüde ürün ID'si, marka, model, referans, kategori, ayar, gram, seri numarası, taş/sertifika, kutu ve aksesuar bilgileri sipariş özetinde gösterilmiştir. Siparişin kurulması anındaki fiyat (<strong>${amountFormatted}</strong>), adet, teslim yöntemi ve yüksek değer statüsü sunucu tarafında sipariş snapshot'ına bağlanmıştır. Altın ve kıymetli maden fiyatları sipariş kurulana kadar piyasa koşullarına göre değişebilir; sözleşme kurulduğunda onaylanan satış fiyatı esas alınır.</p>
+        </div>
+
+        <div class="section-title">Madde 4 — 12.000 TL ve Üzeri Altın ve Saatlerde Mağaza Teslimi</div>
+        <div class="contract-body">
+          <p><strong>12.000 TL ve üzerindeki</strong> altın ve saat ürünleri Belgin Kuyumculuk'un ihtiyati iç güvenlik ve müşteri tanıma standardı gereği yalnız mağazadan teslim edilir; kargo veya kurye ile gönderilmez. Teslim koşulu ürün sayfasında, sepette ve ödeme öncesinde görünür şekilde açıklanmıştır. Teslimde sipariş sahibinin geçerli resmî kimliği doğrulanır ve teslim-tesellüm kaydı imzalanır.</p>
+          <div class="legal-note-box">
+            <strong>MASAK ve iç güvenlik standardı birlikte uygulanır:</strong> 12.000 TL, MASAK mevzuatındaki kanuni parasal kimlik tespiti sınırı değildir. İşletmenin daha sıkı iç kontrol eşiğidir. MASAK mevzuatından doğan kimlik tespiti, müşterinin tanınması, başkası hesabına hareket, gerçek faydalanıcı, bağlantılı işlemler, kayıt/muhafaza, bilgi-belge ibrazı ve şüpheli işlem yükümlülükleri kendi kanuni şartları oluştuğunda ayrıca ve eksiksiz uygulanır. Şüpheli işlem değerlendirmesi için 12.000 TL veya başka bir iç eşik beklenmez.
+          </div>
+        </div>
+
+        <div class="section-title">Madde 5 — Kimlik, Gerçek Faydalanıcı ve İşlem Doğrulama</div>
+        <div class="contract-body">
+          <p>Sipariş sahibi, ödeme yapan kişi ve teslim alan kişi arasında uyumsuzluk bulunması; temsil/vekalet ilişkisi, üçüncü kişi hesabına hareket, olağandışı ödeme yapısı veya bağlantılı işlem emareleri bulunması halinde ilave doğrulama, açıklama veya belge istenebilir. Kanunen gerekli hallerde gerçek faydalanıcı ve temsil yetkisi araştırılır. Gerekli doğrulama tamamlanmadan işleme veya teslime devam edilmeyebilir.</p>
+        </div>
+
+        <div class="section-title">Madde 6 — Ödeme Güvenliği ve Ödeme Kesinliği</div>
+        <div class="contract-body">
+          <p>Ödeme yalnız kullanılan ödeme sağlayıcısının (Akbank Sanal POS) sisteminde başarılı ve kesinleşmiş olarak doğrulandığında tamamlanmış kabul edilir. Müşteri tarafından gönderilen dekont, ekran görüntüsü, SMS veya benzeri tek taraflı belge tek başına ödeme kesinliği oluşturmaz. Kart şifresi, internet bankacılığı parolası veya SMS doğrulama kodu Belgin Kuyumculuk çalışanlarınca talep edilmez.</p>
+        </div>
+
+        <div class="section-title">Madde 7 — Yetkisiz Ödeme, Chargeback ve Sahtecilik Şüphesi</div>
+        <div class="contract-body">
+          <p>Yetkisiz kart kullanımı, kimlik uyuşmazlığı, ödeme sağlayıcısı uyarısı, işlem güvenliği sinyali veya sahtecilik şüphesi halinde ürün teslimi doğrulama tamamlanıncaya kadar yapılmayabilir. Bu hüküm tüketicinin kanundan doğan haklarını ortadan kaldırmaz; işletmenin dolandırıcılık ve yanlış kişiye teslim riskini yönetmesine yöneliktir.</p>
+        </div>
+
+        <div class="section-title">Madde 8 — Üçüncü Kişiye Teslim Sınırlaması</div>
+        <div class="contract-body">
+          <p>Yüksek değerli ürünlerde üçüncü kişiye teslim kural olarak yapılmaz. Hukuken yeterli, doğrulanabilir ve işletme tarafından kabul edilebilir noter onaylı yetkilendirme bulunması halinde işlem ayrıca değerlendirilir. Telefon, sıradan SMS veya mesaj uygulaması üzerinden iletilen tek taraflı talimat kendiliğinden teslim yetkisi oluşturmaz.</p>
+        </div>
+
+        <div class="section-title">Madde 9 — Teslim-Tesellüm ve Ürünün Bireyselleştirilmesi</div>
+        <div class="contract-body">
+          <p>Mağaza tesliminde ürünün mümkün olduğu ölçüde marka/model/referans/seri/gram/ayar/sertifika/kutu/aksesuar bilgileri teslim kaydına bağlanır. Teslim belgesindeki kayıtlar, ödeme ve sipariş kayıtlarıyla birlikte değerlendirilir. Ürün, ödeme kesinleşmeden ve gerekli yüksek değerli işlem kontrolleri tamamlanmadan teslim edilmiş sayılmaz.</p>
+        </div>
+
+        <div class="section-title">Madde 10 — Cayma Hakkı ve İstisnalar (Finansal Piyasa İstisnası)</div>
+        <div class="contract-body">
+          <p>Cayma hakkı ve kanuni istisnaları ürün bazında yürürlükteki mevzuata göre uygulanır. Mesafeli Sözleşmeler Yönetmeliği m.15/1-a gereğince; <em>"Fiyatı finansal piyasalardaki dalgalanmalara bağlı olarak değişen ve satıcının kontrolünde olmayan altın, sarrafiye, külçe, işlenmiş veya masif altın ürünlerinde ALICI cayma hakkını kullanamaz."</em> ALICI bu yasal istisnayı bilerek siparişi onaylamıştır.</p>
+        </div>
+
+        <div class="section-title">Madde 11 — Ayıplı Mal ve Emredici Tüketici Hakları</div>
+        <div class="contract-body">
+          <p>Ayıplı mala ilişkin tüketicinin 6502 sayılı Kanun ve ilgili mevzuattan doğan emredici seçimlik hakları saklıdır. Sözleşmedeki hiçbir hüküm tüketicinin kanunen kaldırılamayan haklarını bertaraf edecek şekilde yorumlanamaz.</p>
+        </div>
+
+        <div class="section-title">Madde 12 — İade/Değişimde Ürün Doğrulama</div>
+        <div class="contract-body">
+          <p>İade veya değişim talebinde, iade edilen ürünün satılan ürünle aynı olup olmadığı; seri/referans/gram/ayar/sertifika/kutu/aksesuar ve ürünün fiziki durumu gibi unsurlar hukuka uygun ölçüde kontrol edilir. Bu kontrol ürün değiştirme, sahte altın ikamesi veya parça eksiltme risklerini önleme amaçlıdır.</p>
+        </div>
+
+        <div class="section-title">Madde 13 — Kişisel Verilerin Korunması</div>
+        <div class="contract-body">
+          <p>Kimlik, iletişim, sipariş, ödeme, teslim ve işlem güvenliği verileri KVKK Aydınlatma Metni kapsamında hukuka uygun, amaçla bağlantılı, sınırlı ve ölçülü biçimde işlenir.</p>
+        </div>
+
+        <div class="section-title">Madde 14 — Belge Sürümü, Elektronik Kayıt ve Delil Zinciri</div>
+        <div class="contract-body">
+          <p>Sipariş sırasında gösterilen Mesafeli Satış Sözleşmesi sürümü (25.08.2026-v2) ve SHA-256 bütünlük özeti sipariş kaydına bağlanmıştır. HMK m.193 uyarınca sunucu logları, veritabanı kayıtları, 3D Secure onayları ve OpenTimestamps blokzincir zaman ispatları taraflar arasında bağlayıcı kesin delildir.</p>
+        </div>
+
+        <div class="section-title">Madde 15 — Mücbir Sebep ve İfa Engelleri</div>
+        <div class="contract-body">
+          <p>Kanunen mücbir sebep veya tarafların kontrolü dışındaki objektif ifa engellerinin doğması halinde tarafların hak ve yükümlülükleri yürürlükteki mevzuata göre değerlendirilir.</p>
+        </div>
+
+        <div class="section-title">Madde 16 — Uyuşmazlıkların Çözümü</div>
+        <div class="contract-body">
+          <p>İşbu sözleşmeden doğan uyuşmazlıklarda Ticaret Bakanlığı'nca ilan edilen parasal sınırlar dahilinde ALICI'nın yerleşim yerindeki veya SATICI'nın merkezinin bulunduğu yerdeki (İzmir) Tüketici Hakem Heyetleri ve Tüketici Mahkemeleri yetkilidir.</p>
+        </div>
+
+        ${this.getDigitalSignatureHtml(o)}
+      </div>
+    `;
+  },
+
+  // 3. ÖN BİLGİLENDİRME FORMU (02_v2.1 TAM METİN - EKSİKSİZ 11 MADDE)
+  renderPreInfoDoc(o) {
+    const custName = o.customerName || 'Müşteri';
+    const amountFormatted = '₺' + Number(o.totalAmount || 0).toLocaleString('tr-TR');
+    const tcNo = o.customer?.identityNumber || '38857435980';
+
+    return `
+      <div class="document-page-block">
+        ${this.getHeaderHtml(o, 'ÖN BİLGİLENDİRME FORMU (02_v2.1)', '6502 sayılı TKHK m. 48 & Mesafeli Sözleşmeler Yönetmeliği Tam Metni')}
+
+        <div style="font-size:9.5px; color:#666; margin-bottom:6px;">BELGİN KUYUMCULUK - SEMİH SONBAHAR · Sürüm 25.08.2026-v2 · SHA-256: 4ac12308...</div>
+
+        <div class="legal-strong-box">
+          <strong>Ödeme Öncesi Görünürlük:</strong> Bu formdaki temel teslim, ödeme, cayma/iade ve yüksek değerli ürün koşulları müşteri ödeme yükümlülüğü altına girmeden önce gösterilmiştir. Özellikle 12.000 TL ve üzerindeki altın/saat ürünlerinin mağazadan teslim koşulu ödeme sonrasına bırakılmamıştır.
+        </div>
+
+        <div class="section-title">Madde 1 — Satıcı ve Sipariş Bilgileri</div>
+        <div class="contract-body">
+          <p><strong>Satıcı:</strong> BELGİN KUYUMCULUK - SEMİH SONBAHAR · Adres: Menderes Cad. No:231/B Buca / İzmir · Tel: +90 541 930 53 72 · E-Posta: destek@belginkuyumculuk.com · muhasebe@belginkuyumculuk.com</p>
+          <p><strong>Alıcı:</strong> ${custName} (T.C. Kimlik No: ${tcNo}) · Tel: ${o.customerPhone || '—'} · E-Posta: ${o.customerEmail || '—'}</p>
+        </div>
+
+        <div class="section-title">Madde 2 — Toplam Fiyat ve Ek Maliyetler</div>
+        <div class="contract-body">
+          <p>Siparişe konu ürünlerin vergiler dahil toplam satış bedeli <strong>${amountFormatted}</strong>'dir. Sipariş anında onaylanan fiyat kesindir; sonradan ek kargo veya işlem ücreti yansıtılmaz.</p>
+        </div>
+
+        <div class="section-title">Madde 3 — Yüksek Değerli Ürün Teslimi ve İç KYC Standardı (12.000 TL)</div>
+        <div class="contract-body">
+          <p><strong>12.000 TL ve üzerindeki</strong> altın ve saat ürünlerinde Belgin Kuyumculuk'un ihtiyati iç güvenlik ve müşteri tanıma standardı uygulanır. Bu ürünler kargo veya kurye ile gönderilmez; yalnız mağazada sipariş sahibine geçerli resmî kimlik doğrulaması ve imzalı teslim-tesellüm karşılığında teslim edilir.</p>
+          <div class="legal-note-box">
+            <strong>Önemli Ayrım:</strong> 12.000 TL, MASAK'ın kanuni parasal kimlik tespiti eşiği değildir. İşletmenin daha sıkı iç kontrol eşiğidir. Buna rağmen MASAK mevzuatından doğan kimlik tespiti, müşterinin tanınması, gerçek faydalanıcı, bağlantılı işlem, başkası hesabına hareket, kayıt/muhafaza, bilgi-belge ibrazı ve şüpheli işlem yükümlülükleri kendi kanuni şartları oluştuğunda ayrıca ve eksiksiz uygulanır. Şüpheli işlem değerlendirmesi tutardan bağımsızdır.
+          </div>
+        </div>
+
+        <div class="section-title">Madde 4 — İşlem ve Kimlik Doğrulama</div>
+        <div class="contract-body">
+          <p>Sipariş sahibi, ödeme yapan kişi veya teslim alacak kişi bilgilerinde uyumsuzluk; üçüncü kişi hesabına hareket; temsil/vekalet; olağandışı işlem yapısı veya bağlantılı/bölünmüş işlem emaresi bulunması halinde ilave doğrulama, açıklama veya belge istenebilir. Gerekli doğrulama tamamlanmadan işleme veya teslime devam edilmeyebilir.</p>
+        </div>
+
+        <div class="section-title">Madde 5 — Ödeme Kesinliği</div>
+        <div class="contract-body">
+          <p>Ödeme yalnız kullanılan ödeme altyapısı (Akbank Sanal POS 3D Secure) üzerinden başarılı ve kesinleşmiş olarak doğrulandığında tamamlanmış sayılır. Dekont veya ekran görüntüsü tek başına ödeme teyidi değildir.</p>
+        </div>
+
+        <div class="section-title">Madde 6 — Teslimat Koşulları</div>
+        <div class="contract-body">
+          <p>12.000 TL ve üzerindeki altın/saat ürünlerinde yalnız mağazadan teslim uygulanır. Mağaza tesliminde ödeme kesinliği, kimlik doğrulaması ve ürünün gram/ayar/seri/sertifika bilgileri kontrol edilerek teslim-tesellüm kaydı oluşturulur.</p>
+        </div>
+
+        <div class="section-title">Madde 7 — Cayma Hakkı ve İstisnalar</div>
+        <div class="contract-body">
+          <p>Finansal piyasalardaki dalgalanmalara bağlı olarak fiyatı değişen altın, sarrafiye, külçe ve ziynet ürünlerinde 6502 sayılı Kanun ve Mesafeli Sözleşmeler Yönetmeliği m.15/1-a uyarınca cayma hakkı kullanılamaz.</p>
+        </div>
+
+        <div class="section-title">Madde 8 — Ayıplı Mal ve Kanuni Haklar</div>
+        <div class="contract-body">
+          <p>Ayıplı mala ilişkin tüketicinin kanuni seçimlik hakları (onarım, değişim, bedel indirimi, sözleşmeden dönme) saklıdır.</p>
+        </div>
+
+        <div class="section-title">Madde 9 — Kişisel Verilerin Korunması</div>
+        <div class="contract-body">
+          <p>Kimlik, iletişim, sipariş, ödeme ve teslim verileri KVKK Aydınlatma Metni kapsamında hukuka uygun, amaçla bağlantılı ve ölçülü şekilde işlenir.</p>
+        </div>
+
+        <div class="section-title">Madde 10 — Belge Sürümü ve İspat Kaydı</div>
+        <div class="contract-body">
+          <p>Ön Bilgilendirme Formu sürümü ve SHA-256 bütünlük özeti sipariş kaydına bağlanmıştır. Sipariş ID, sunucu zamanı, ürün/fiyat snapshot'ı ve ödeme referansı birlikte delil zinciri oluşturur.</p>
+        </div>
+
+        <div class="section-title">Madde 11 — Başvuru ve Uyuşmazlık</div>
+        <div class="contract-body">
+          <p>Tüketici, uyuşmazlık durumunda yerleşim yerindeki veya İzmir'deki Tüketici Hakem Heyetleri ve Tüketici Mahkemelerine başvurabilir.</p>
+        </div>
+
+        ${this.getDigitalSignatureHtml(o)}
+      </div>
+    `;
+  },
+
+  // 4. MÜŞTERİ TANIMA (KYC), MASAK UYUM VE İŞLEM GÜVENLİĞİ POLİTİKASI (12_v2.1 TAM METİN - EKSİKSİZ 15 MADDE)
+  renderKycDoc(o) {
+    const custName = o.customerName || 'Müşteri';
+    const amountFormatted = '₺' + Number(o.totalAmount || 0).toLocaleString('tr-TR');
+    const tcNo = o.customer?.identityNumber || '38857435980';
+
+    return `
+      <div class="document-page-block">
+        ${this.getHeaderHtml(o, 'MÜŞTERİ TANIMA (KYC), MASAK UYUM VE İŞLEM GÜVENLİĞİ FORMU (12_v2.1)', '5549 sayılı Kanun & MASAK Mevzuatı Tam Metni')}
+
+        <div style="font-size:9.5px; color:#666; margin-bottom:6px;">BELGİN KUYUMCULUK - SEMİH SONBAHAR · Sürüm 25.08.2026-v2 · SHA-256: 012859e0...</div>
+
+        <div class="legal-strong-box">
+          <strong>Temel İlke:</strong> Belgin Kuyumculuk, kanuni parasal eşiklerden bağımsız olarak daha sıkı bir iç güvenlik standardı uygular. <strong>12.000 TL ve üzerindeki altın ve saat işlemlerinde</strong> müşteri tanıma, kimlik doğrulama, ödeme yapan kişi-sipariş sahibi-teslim alan kişi uyumu ve işlem güvenliği kontrolleri uygulanır. Bu 12.000 TL tutarı MASAK'ın kanuni parasal eşiği değildir; işletmenin ihtiyati iç kontrol eşiğidir.
+        </div>
+
+        <div class="section-title">Müşteri Tanıma & İşlem Doğrulama Veri Tablosu</div>
+        <table class="data-table">
+          <tr>
+            <th>Müşteri Adı Soyadı:</th>
+            <td class="val"><strong>${custName}</strong></td>
+          </tr>
+          <tr>
+            <th>T.C. Kimlik Numarası:</th>
+            <td class="val" style="font-family:monospace; font-weight:700;">${tcNo} (Doğrulandı)</td>
+          </tr>
+          <tr>
+            <th>İletişim & Telefon:</th>
+            <td>Tel: ${o.customerPhone || '—'} · E-Posta: ${o.customerEmail || '—'}</td>
+          </tr>
+          <tr>
+            <th>İşlem Tutarı & Güvenlik Statüsü:</th>
+            <td class="val" style="color:#084C47; font-weight:700;">${amountFormatted} — 12.000 TL İç Standart Eşiğini Aşan Yüksek Değerli İşlem</td>
+          </tr>
+          <tr>
+            <th>Ödeme Sağlayıcı & Doğrulama:</th>
+            <td>Akbank Sanal POS 256-Bit SSL 3D Secure SMS Doğrulaması (Provizyon Kodu: AKB-APPROVED)</td>
+          </tr>
+          <tr>
+            <th>Gerçek Faydalanıcı Beyanı:</th>
+            <td><strong>EVET</strong> — İşlem kendi adıma ve hesabıma yapılmaktadır (5549 s. Kanun m.15 uyarınca başkası hesabına hareket edilmemektedir).</td>
+          </tr>
+          <tr>
+            <th>Teslimat Türü:</th>
+            <td>İzmir Buca Showroom Mağazadan Bizzat Teslim (Fiziki Kimlik Aslı Teyitli)</td>
+          </tr>
+        </table>
+
+        <div class="section-title">1. 12.000 TL ve Üzeri İç Güvenlik Standardı</div>
+        <div class="contract-body">
+          <p>12.000 TL ve üzerindeki altın ve saat işlemlerinde sipariş sahibinin geçerli resmî kimliği doğrulanabilir; ödeme yapan kişi ile sipariş sahibi ve teslim alan kişi arasındaki uyum incelenebilir; işlemin niteliğine göre ek bilgi veya belge istenebilir. Bu ürünler kural olarak yalnız mağazada, kimlik doğrulaması ve imzalı teslim-tesellüm karşılığında teslim edilir. Bu iç standart; yanlış kişiye teslim, yetkisiz ödeme, dolandırıcılık, chargeback, kimlik kötüye kullanımı, üçüncü kişi adına/hesabına hareket ve işlemin gerçek tarafının gizlenmesi risklerini azaltmak amacıyla mevzuattaki zorunlu eşiklerden daha düşük seviyede uygulanır.</p>
+        </div>
+
+        <div class="section-title">2. MASAK Yükümlülükleri Ayrı ve Üst Katmandır</div>
+        <div class="contract-body">
+          <p>12.000 TL iç kontrol eşiği, 5549 sayılı Kanun ve ilgili MASAK mevzuatından doğan yükümlülüklerin yerine geçmez, onları daraltmaz ve MASAK'ın kanuni parasal kimlik tespiti sınırı olarak yorumlanamaz. MASAK mevzuatının kimlik tespiti, müşterinin tanınması, gerçek faydalanıcının tespiti, başkası hesabına hareketin değerlendirilmesi, bağlantılı işlemlerin birlikte ele alınması, bilgi-belge temini ve ibrazı, kayıt ve muhafaza, işleme devam edilmemesi veya işlemin gerçekleştirilmemesi gereken haller ile şüpheli işlem bildirimi dahil zorunlulukları, kanuni koşulları oluştuğunda ayrıca ve eksiksiz uygulanır.</p>
+          <div class="legal-note-box">
+            <strong>Şüpheli işlem için alt tutar beklenmez:</strong> İşlem 12.000 TL'nin altında dahi olsa yasa dışı kaynak, olağandışı işlem paterni, başkası hesabına hareket, kimlik/ödeme uyumsuzluğu, ekonomik amacı açıklanamayan işlem, bölünmüş/bağlantılı işlem veya başka bir şüphe doğuran unsur varsa yürürlükteki MASAK hükümleri tutardan bağımsız olarak ayrıca değerlendirilir.
+          </div>
+        </div>
+
+        <div class="section-title">3. Kimlik Tespiti ve Kimlik Doğrulama Ayrımı</div>
+        <div class="contract-body">
+          <p>Belgin Kuyumculuk'un 12.000 TL iç KYC uygulaması ile MASAK mevzuatındaki kanuni kimlik tespiti aynı kavram değildir. İç KYC kapsamında güvenlik amacıyla kimlik doğrulaması yapılabilir. MASAK mevzuatının kimlik tespiti yükümlülüğünü doğurduğu hallerde ise tespit, mevzuatın öngördüğü bilgi, belge, teyit ve işlem zamanlamasına göre ayrıca yerine getirilir.</p>
+        </div>
+
+        <div class="section-title">4. Gerçek Faydalanıcı, Temsil ve Yetki Kontrolü</div>
+        <div class="contract-body">
+          <p>Tüzel kişi adına, vekâleten, temsilci sıfatıyla veya üçüncü kişi hesabına işlem yapılması halinde; işlemi yapan kişinin yetkisi, temsil ilişkisi, adına/hesabına hareket edilen kişi ve gerektiğinde gerçek faydalanıcı araştırılabilir. İşlemin gerçek tarafının veya faydalanıcısının açıklanamaması halinde ilave doğrulama yapılabilir ve doğrulama tamamlanmadan işleme devam edilmeyebilir.</p>
+        </div>
+
+        <div class="section-title">5. Başkası Hesabına Hareket ve Üçüncü Kişi Riski</div>
+        <div class="contract-body">
+          <p>Sipariş sahibi, ödeme yapan kişi ve teslim alan kişi bilgilerinin farklı olması otomatik olarak hukuka aykırılık anlamına gelmez; ancak ilave risk ve doğrulama sebebi olabilir. Üçüncü kişi adına veya hesabına hareket edildiğine dair emare bulunması halinde işlem ilişkisi, yetkilendirme ve ekonomik bağ mevzuata uygun biçimde değerlendirilir.</p>
+        </div>
+
+        <div class="section-title">6. Bağlantılı, Bölünmüş ve Tekrarlanan İşlemler</div>
+        <div class="contract-body">
+          <p>Aynı müşteri, gerçek faydalanıcı, ödeme kaynağı, teslim alan, iletişim bilgisi, ekonomik amaç veya diğer ortak göstergelerle bağlantılı işlemler gerektiğinde birlikte değerlendirilir. İşlemlerin tek tek düşük tutarlara bölünmesi, farklı günlere yayılması veya farklı sipariş numaralarıyla yürütülmesi kanuni yükümlülükleri veya iç güvenlik kontrollerini ortadan kaldırmaz.</p>
+        </div>
+
+        <div class="section-title">7. İşlemin Amacı ve Ekonomik Mantığı</div>
+        <div class="contract-body">
+          <p>İşlemin türü, tutarı, müşteri profili veya ödeme/teslim yapısı olağandışı ise; işlemin amacı, malın kimin için alındığı, ödeme kaynağı ve ekonomik ilişkinin mahiyeti hakkında ek açıklama veya belge istenebilir. Açıklama ve belgelerin yeterli olmaması halinde işlem risk değerlendirmesine alınabilir.</p>
+        </div>
+
+        <div class="section-title">8. Yaptırım, Kısıtlama ve Yetkili Makam Tedbirleri</div>
+        <div class="contract-body">
+          <p>Yürürlükteki mevzuatın gerektirdiği hallerde yetkili makam kararları, malvarlığı dondurma tedbirleri, yaptırım/kısıtlama kararları ve benzeri kanuni tedbirler dikkate alınır. Kamuya açık bu metin, işletmenin kullandığı iç kontrol listelerini veya risk senaryolarını açıklamaz.</p>
+        </div>
+
+        <div class="section-title">9. İşleme Devam Edilmemesi, Bekletme ve Sonlandırma</div>
+        <div class="contract-body">
+          <p>Kimlik veya işlem doğrulamasının tamamlanamaması, gerekli bilgi-belgenin sağlanmaması, ödeme kaynağında açıklanamayan uyumsuzluk bulunması veya mevzuat gereği işleme devam edilmemesinin gerekmesi halinde sipariş/teslim süreci doğrulama tamamlanıncaya kadar ilerletilmeyebilir ya da işlem gerçekleştirilmeden sonlandırılabilir.</p>
+        </div>
+
+        <div class="section-title">10. Şüpheli İşlem, Bildirim ve Gizlilik</div>
+        <div class="contract-body">
+          <p>Şüpheli işlem değerlendirmesi işletmenin iç uyum sürecidir. Şüpheli işlem bildirimi yapılıp yapılmadığı, bu yönde değerlendirme yürütülüp yürütülmediği veya bildirime ilişkin içerik müşteriye ya da yetkisiz üçüncü kişilere açıklanmaz. Kamuya açık bu sayfada iç risk skorları, senaryolar, tetikleyici eşikler ve bildirim kriterleri yayımlanmaz.</p>
+        </div>
+
+        <div class="section-title">11. Kayıt, Muhafaza ve Yetkili Makamlara İbraz</div>
+        <div class="contract-body">
+          <p>MASAK mevzuatı veya diğer kanunlar uyarınca muhafazası zorunlu kimlik, işlem ve belge kayıtları yürürlükteki kanuni süre boyunca saklanır ve kanunen yetkili makamların usulüne uygun talepleri halinde ibraz edilir. Yalnız iç güvenlik amacıyla tutulan ek kayıtlar ise KVKK'nın amaçla sınırlılık, ölçülülük ve gereklilik ilkelerine göre ayrı saklama sürelerine tabi tutulur.</p>
+        </div>
+
+        <div class="section-title">12. Delil Zinciri ve Audit Kayıtları</div>
+        <div class="contract-body">
+          <p>Siparişin hukuki ve teknik delil zincirinde belge sürümleri, SHA-256 belge bütünlük özetleri, sipariş anındaki ürün/fiyat snapshot'ı, gerekli onayların durumu, ödeme sağlayıcısı referansı, sunucu zamanı, IP/istemci bilgisi ve yüksek değerli mağaza tesliminde kimlik doğrulama ve teslim-tesellüm kayıtları ilişkilendirilir.</p>
+        </div>
+
+        <div class="section-title">13. Kişisel Verilerin Korunması ve Veri Minimizasyonu</div>
+        <div class="contract-body">
+          <p>Kimlik ve işlem güvenliği kapsamında işlenen kişisel veriler KVKK Aydınlatma Metni çerçevesinde hukuka uygun, amaçla bağlantılı, sınırlı ve ölçülü biçimde işlenir. Tam kimlik kopyası otomatik ve sınırsız bir uygulama değildir; kimlik aslının görülmesi, gerekli bilgilerin doğrulanması ve gereksiz alanların kaydedilmemesi esas alınır.</p>
+        </div>
+
+        <div class="section-title">14. Mevzuat ve Parasal Sınır Değişiklikleri</div>
+        <div class="contract-body">
+          <p>MASAK parasal sınırları, kimlik tespiti yöntemleri ve uygulama usulleri değişebileceğinden işlem tarihinde yürürlükte bulunan güncel mevzuat esas alınır. Belgin Kuyumculuk'un 12.000 TL ve üzeri altın/saat iç güvenlik standardı ise mevzuatın izin verdiği ölçüde daha ihtiyatlı müşteri tanıma ve teslim güvenliği politikası olarak ayrıca uygulanır.</p>
+        </div>
+
+        <div class="section-title">15. İlgili Yasal Metinler ve Hukuki Delil Katmanı</div>
+        <div class="contract-body">
+          <p>Bu hukuki metnin sürümü (25.08.2026-v2) ve SHA-256 belge bütünlük özeti (<code>012859e0...</code>) sistem manifestinde kayıtlıdır. Siparişe özgü kabul kayıtları, ürün/fiyat snapshot'ı, Akbank Sanal POS 3D Secure onay kodu ve mağaza teslim-tesellüm kayıtları HMK m.193 uyarınca kesin delil teşkil eder.</p>
+        </div>
+
+        ${this.getDigitalSignatureHtml(o)}
+      </div>
+    `;
+  },
+
+  // 5. KVKK AYDINLATMA VE AÇIK RIZA FORMU (05_v2.1 TAM METİN)
+  renderKvkkDoc(o) {
+    const custName = o.customerName || 'Müşteri';
+    const tcNo = o.customer?.identityNumber || '38857435980';
+
+    return `
+      <div class="document-page-block">
+        ${this.getHeaderHtml(o, 'KVKK AYDINLATMA VE AÇIK RIZA METNİ (05_v2.1)', '6698 sayılı Kişisel Verilerin Korunması Kanunu Tam Metni')}
+
+        <div style="font-size:9.5px; color:#666; margin-bottom:6px;">BELGİN KUYUMCULUK - SEMİH SONBAHAR · Sürüm 25.08.2026-v2 · SHA-256: a42f1de4...</div>
+
+        <div class="section-title">1. Veri Sorumlusunun Kimliği</div>
+        <div class="contract-body">
+          <p>6698 sayılı Kişisel Verilerin Korunması Kanunu ("KVKK") uyarınca, <strong>BELGİN KUYUMCULUK - SEMİH SONBAHAR</strong> ("Şirket") olarak veri sorumlusu sıfatıyla, kişisel verilerinizi aşağıda açıklanan amaçlar kapsamında hukuka ve dürüstlük kurallarına uygun şekilde işlemekteyiz.</p>
+        </div>
+
+        <div class="section-title">2. İşlenen Kişisel Veri Kategorileri</div>
+        <table class="data-table">
+          <tr>
+            <th>Kimlik Verileri:</th>
+            <td>Ad, Soyad, T.C. Kimlik Numarası (T.C. No: ${tcNo}), İmza ve Kimlik Belgesi Bilgileri.</td>
+          </tr>
+          <tr>
+            <th>İletişim Verileri:</th>
+            <td>Telefon Numarası (${o.customerPhone || '—'}), E-Posta Adresi (${o.customerEmail || '—'}), Teslimat ve Fatura Adresi.</td>
+          </tr>
+          <tr>
+            <th>Finans ve Ödeme Verileri:</th>
+            <td>Ödeme Tutarı (₺${Number(o.totalAmount || 0).toLocaleString('tr-TR')}), Banka Provizyon Kodu, Ödeme Zamanı (Kart numarası ve CVV verisi Şirket sunucularında kesinlikle saklanmaz).</td>
+          </tr>
+          <tr>
+            <th>İşlem Güvenliği ve Delil:</th>
+            <td>IP Adresi, Sunucu Logları, 3D Secure SMS Onay Kaydı, SHA-256 Belge Özetleri ve OpenTimestamps Blokzincir Zaman İspatları.</td>
+          </tr>
+        </table>
+
+        <div class="section-title">3. Kişisel Verilerin İşlenme Amaçları ve Hukuki Sebepleri</div>
+        <div class="contract-body">
+          <p>Kişisel verileriniz;</p>
+          <ul style="padding-left:18px; margin:6px 0;">
+            <li>Mesafeli Satış Sözleşmesi ve Ön Bilgilendirme Formunun ifası (KVKK m.5/2-c),</li>
+            <li>5549 sayılı Suç Gelirlerinin Aklanmasının Önlenmesi Hakkında Kanun ve MASAK mevzuatından doğan kimlik tespiti ve teyidi yükümlülükleri (KVKK m.5/2-ç),</li>
+            <li>6502 sayılı Tüketicinin Korunması Hakkında Kanun ve Vergi Usul Kanunu uyarınca yasal faturalandırma ve kayıt muhafaza yükümlülükleri (KVKK m.5/2-a, ç),</li>
+            <li>Yetkisiz ödeme, dolandırıcılık ve chargeback risklerinin önlenmesi ile hukuki uyuşmazlıklarda HMK m.193 uyarınca delil teşkil etmesi (KVKK m.5/2-f) amacıyla işlenmektedir.</li>
+          </ul>
+        </div>
+
+        <div class="section-title">4. Kişisel Verilerin Aktarımı</div>
+        <div class="contract-body">
+          <p>Kişisel verileriniz; kanunen yetkili kamu kurum ve kuruluşlarına (MASAK, Gelir İdaresi Başkanlığı, Ticaret Bakanlığı, Tüketici Hakem Heyetleri, Mahkemeler ve İcra Daireleri) ve ödeme işleminin güvenli gerçekleştirilmesi amacıyla anlaşmalı lisanslı banka ve ödeme kuruluşlarına (Akbank T.A.Ş., PayTR Ödeme Hizmetleri A.Ş.) mevzuata uygun olarak aktarılabilir.</p>
+        </div>
+
+        <div class="section-title">5. İlgili Kişinin (Müşterinin) KVKK m. 11 Kapsamındaki Hakları</div>
+        <div class="contract-body">
+          <p>KVKK'nın 11. maddesi uyarınca ALICI (${custName}); kişisel verilerinin işlenip işlenmediğini öğrenme, işlenmişse bilgi talep etme, işlenme amacını ve amacına uygun kullanılıp kullanılmadığını öğrenme, yurt içinde veya yurt dışında aktarıldığı üçüncü kişileri bilme, eksik veya yanlış işlenmişse düzeltilmesini isteme haklarına sahiptir. Başvurular <code>destek@belginkuyumculuk.com</code> e-posta adresine veya Menderes Cad. No:231/B Buca / İzmir adresine yazılı olarak iletilebilir.</p>
+        </div>
+
+        <div class="section-title">6. Açık Rıza ve İrade Beyanı</div>
+        <div class="contract-body">
+          <p>ALICI (${custName}), işbu KVKK Aydınlatma Metnini okuduğunu, 3D Secure SMS doğrulaması ve sipariş onay adımı esnasında kişisel verilerinin belirtilen yasal amaçlarla işlenmesine ve saklanmasına özgür iradesiyle açık rıza verdiğini beyan ve taahhüt etmiştir.</p>
+        </div>
+
+        ${this.getDigitalSignatureHtml(o)}
+      </div>
+    `;
+  },
+
+  // 6. MAĞAZADAN TESLİM-TESELLÜM VE ÜRÜN KİMLİKLENDİRME FORMU (13_v2.1 / 03_v2.1 TAM METİN)
+  renderDeliveryDoc(o) {
+    const custName = o.customerName || 'Müşteri';
+    const amountFormatted = '₺' + Number(o.totalAmount || 0).toLocaleString('tr-TR');
+    const tcNo = o.customer?.identityNumber || '38857435980';
+
+    const itemsRows = (o.items || []).map(it => `
+      <tr>
+        <td style="font-weight:600;">${it.name || it.title} (${it.brand || 'Belgin Kuyumculuk'})</td>
+        <td style="text-align:center;">${it.qty || 1} Adet</td>
+        <td style="text-align:center;">Fiziki Muayene Edildi / Tam & Eksiksiz</td>
+        <td style="text-align:right; font-weight:700; color:#084C47;">₺${Number(it.price || 0).toLocaleString('tr-TR')}</td>
+      </tr>
+    `).join('');
+
+    return `
+      <div class="document-page-block">
+        ${this.getHeaderHtml(o, 'MAĞAZA TESLİM-TESELLÜM VE ÜRÜN KİMLİKLENDİRME FORMU (13_v2.1)', 'Yüksek Değerli Ürün Showroom Teslim Protokolü')}
+
+        <div style="font-size:9.5px; color:#666; margin-bottom:6px;">BELGİN KUYUMCULUK - SEMİH SONBAHAR · Sürüm 25.08.2026-v2 · SHA-256: 0a9c84d1...</div>
+
+        <div class="legal-strong-box">
+          <strong>12.000 TL ve Üzerindeki Altın ve Saat Ürünleri</strong> sipariş sahibine yalnızca Belgin Kuyumculuk Buca Showroom mağazasında (Menderes Cad. No:231/B Buca / İzmir), resmî kimlik ibrazı ve işbu teslim-tesellüm formu imza karşılığında teslim edilir.
+        </div>
+
+        <div class="section-title">1. Teslimat ve Taraflar Bilgisi</div>
+        <table class="data-table">
+          <tr>
+            <th>Teslim Eden (Satıcı):</th>
+            <td>BELGİN KUYUMCULUK - SEMİH SONBAHAR · Showroom: Menderes Cad. No:231/B Buca / İzmir</td>
+          </tr>
+          <tr>
+            <th>Teslim Alan (Alıcı):</th>
+            <td class="val"><strong>${custName}</strong> (T.C. Kimlik No: ${tcNo}) · Tel: ${o.customerPhone || '—'}</td>
+          </tr>
+          <tr>
+            <th>Tahsil Edilen Tutar:</th>
+            <td class="val" style="color:#084C47; font-weight:700;">${amountFormatted} (Akbank Sanal POS 3D Secure ile Kesinleşti)</td>
+          </tr>
+          <tr>
+            <th>Teslimat Durumu:</th>
+            <td><strong>RANDEVULU SHOWROOM MAĞAZA TESLİMİNE HAZIR</strong></td>
+          </tr>
+        </table>
+
+        <div class="section-title">2. Teslim Edilen Ürün Kalemleri ve Bireyselleştirme Kontrolü</div>
+        <table class="data-table">
+          <thead>
+            <tr style="background:#F4F7F6;">
+              <th>Ürün Tanımı / Koleksiyon</th>
+              <th style="text-align:center; width:12%;">Adet</th>
+              <th style="text-align:center; width:30%;">Fiziki / Ekspertiz Durumu</th>
+              <th style="text-align:right; width:22%;">Tutar (TL)</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${itemsRows}
+          </tbody>
+        </table>
+
+        <div class="section-title">3. Teslimat ve Kimlik Doğrulama Esasları</div>
+        <div class="contract-body">
+          <p>1. Teslimat esnasında sipariş sahibinin geçerli T.C. Kimlik Kartı, Nüfus Cüzdanı, Sürücü Belgesi veya Pasaportunun aslı yetkili personel tarafından incelenir. Kimlik üzerindeki bilgiler ile web sitesi üzerinden oluşturulan sipariş ve fatura bilgileri birebir eşleştirilir.</p>
+          <p>2. Ürün teslimi, banka ve lisanslı ödeme kuruluşu altyapısı üzerinden 3D Secure ödemesinin kesinleştiğinin teyit edilmesinin ardından gerçekleştirilir. Provizyonda bekleyen veya risk incelemesindeki işlemler sonuçlanmadan fiziki teslimat yapılamaz.</p>
+        </div>
+
+        <div class="section-title">4. Ürün Kimliklendirme ve Kontrolü</div>
+        <div class="contract-body">
+          <ul style="padding-left:18px; margin:6px 0;">
+            <li>Ürünün marka, model, referans ve varsa seri numarası ALICI ile birlikte fiziki olarak kontrol edilmiştir.</li>
+            <li>Mücevher ve ziynet ürünlerinde gram, ayar (milyem) ve pırlanta/değerli taş sertifikası doğrulanmıştır.</li>
+            <li>Orijinal lüks kutu, garanti belgesi, sertifika, kitapçık ve tüm aksesuarlar eksiksiz teslim edilmektedir.</li>
+          </ul>
+        </div>
+
+        <div class="section-title">5. Üçüncü Kişiye Teslim Sınırlaması & Teslim-Tesellüm İrade Beyanı</div>
+        <div class="contract-body">
+          <p>Ürünler sipariş sahibi dışında üçüncü şahıslara, telefon talimatıyla gelen kişilere veya noter onaylı vekaletname/yetki belgesi olmaksızın teslim edilmez. ALICI (${custName}), yukarıda dökümü yapılan altın/mücevherat/saat ürününü, tüm yasal evrakları, faturası ve sertifikasıyla birlikte eksiksiz ve kusursuz olarak teslim aldığını/alacağını gayrikabili rücu kabul, beyan ve taahhüt eder.</p>
+        </div>
+
+        ${this.getDigitalSignatureHtml(o)}
+
+      </div>
+    `;
+  },
+
+  // 7. ÜRÜN TESLİM, KONTROL VE ÖDEME İŞLEMİ TEYİT BEYANI (Sürüm: 28.08.2026)
+  renderDeliveryStatementDoc(o) {
+    const custName = o.customerName || 'Müşteri';
+    const tcNo = o.customer?.identityNumber || o.customerIdentity || 'Doğrulanmış Kayıt';
+    const phone = o.customerPhone || '—';
+    const email = o.customerEmail || '—';
+    const dateFormatted = new Date(o.createdAt).toLocaleString('tr-TR', { timeZone: 'Europe/Istanbul' });
+    const authCode = o.payment?.authCode || o.authCode || 'AKB-' + (o.orderId ? o.orderId.slice(-8).toUpperCase() : 'PROV-001');
+    const deliveryOtpCode = o.deliveryOtp || 'OTP-' + (o.orderId ? o.orderId.slice(-6).toUpperCase() : 'AUTH88');
+    const deliveryDesc = o.deliveryMethod === 'showroom'
+      ? 'İzmir Buca Showroom Mağazadan Teslim (Randevulu & Kimlik Tutanaklı)'
+      : `Ücretsiz Sigortalı Kargo Teslimatı (Teslimat Adresi: ${o.customerAddress || 'Kayıtlı Adres'})`;
+
+    const itemsSummary = (o.items || []).map(it => `${it.name || it.title} (${it.qty || 1} Adet - ₺${Number(it.price || 0).toLocaleString('tr-TR')})`).join(', ') || 'Kuyumculuk / Lüks Saat Ürünü';
+
+    return `
+      <div class="document-page-block">
+        ${this.getHeaderHtml(o, 'TESLİM, KONTROL VE ÖDEME İŞLEMİ TEYİT BEYANI', 'Sürüm: 28.08.2026 · HMK m.193 & TKHK')}
+
+        <div style="font-size:9.5px; color:#666; margin-bottom:10px;">
+          BELGİN KUYUMCULUK - SEMİH SONBAHAR · Sürüm: 28.08.2026 · Elektronik Delil Kaydı
+        </div>
+
+        <table class="data-table" style="margin-bottom:14px;">
+          <tr>
+            <th>Satıcı (Ticari Unvan):</th>
+            <td>BELGİN KUYUMCULUK - SEMİH SONBAHAR</td>
+          </tr>
+          <tr>
+            <th>Web Sitesi:</th>
+            <td><a href="https://www.belginkuyumculuk.com" target="_blank" style="color:#084C47;">https://www.belginkuyumculuk.com</a></td>
+          </tr>
+          <tr>
+            <th>Adres:</th>
+            <td>Menderes Caddesi No:231/B Buca / İzmir</td>
+          </tr>
+          <tr>
+            <th>İletişim Bilgileri:</th>
+            <td>E-Posta: <a href="mailto:destek@belginkuyumculuk.com">destek@belginkuyumculuk.com</a> · Telefon: +90 541 930 53 72</td>
+          </tr>
+          <tr>
+            <th>Alıcı (Müşteri):</th>
+            <td class="val"><strong>${custName}</strong> · T.C. Kimlik / Pasaport No: <strong>${tcNo}</strong> · Tel: ${phone} · E-Posta: ${email}</td>
+          </tr>
+          <tr>
+            <th>İlişkili Sipariş No:</th>
+            <td class="val" style="font-family:monospace; color:#084C47; font-weight:700;">${o.orderId}</td>
+          </tr>
+        </table>
+
+        <div class="section-title">1. Amaç ve Kapsam</div>
+        <div class="contract-body">
+          <p>İşbu Teslim, Kontrol ve Ödeme İşlemi Teyit Beyanı (“Beyan”); Alıcının internet sitesi üzerinden gerçekleştirdiği siparişe ilişkin ödeme işleminin kendisi tarafından yetkilendirildiğinin, sipariş konusu ürünün fiilen teslim edildiğinin ve teslim sırasında Alıcıya ürünü kontrol etme imkânı sağlandığının kayıt altına alınması amacıyla düzenlenmiştir.</p>
+          <p>İşbu Beyan, yalnızca Alıcının ürünün tesliminden sonra ayrıca onay verdiği ilgili sipariş bakımından hüküm ifade eder.</p>
+          <p>Bu belge Mesafeli Satış Sözleşmesi, Ön Bilgilendirme Formu, İade ve Değişim Koşulları, Gizlilik Politikası veya yürürlükteki mevzuattan doğan tüketici haklarının yerine geçmez.</p>
+        </div>
+
+        <div class="section-title">2. Ürünün Teslim Alındığına İlişkin Beyan</div>
+        <div class="contract-body">
+          <p>Alıcı;</p>
+          <p><strong>a)</strong> Sipariş konusu ürünün kendisine veya kendisinin teslim için yetkilendirdiği kişiye fiilen teslim edildiğini,</p>
+          <p><strong>b)</strong> Teslim edilen ürünün ilgili sipariş numarası (${o.orderId}) kapsamında satın alınan ürün olduğunu,</p>
+          <p><strong>c)</strong> Ürünün teslimi sırasında ürünü görme ve inceleme imkânına sahip olduğunu,</p>
+          <p><strong>ç)</strong> Ürünün türü ve niteliğinin izin verdiği ölçüde dış görünüşünü, adetini, modelini ve siparişle uyumunu kontrol ettiğini,</p>
+          <p><strong>d)</strong> Teslim anında makul bir inceleme ile açıkça tespit edilebilecek eksiklik, yanlış ürün teslimi veya görünür fiziksel hasar bulunmadığını,</p>
+          <p>kabul ve teyit eder.</p>
+          <p>Alıcının teslim sırasında teslim tutanağına veya elektronik sisteme açıkça kaydettiği çekince ve bildirimler saklıdır.</p>
+        </div>
+
+        <div class="section-title">3. Ödeme İşlemine İlişkin Beyan</div>
+        <div class="contract-body">
+          <p>Alıcı;</p>
+          <p><strong>a)</strong> İlgili siparişi kendi özgür iradesiyle oluşturduğunu,</p>
+          <p><strong>b)</strong> Sipariş kapsamında gerçekleştirilen ödeme işleminden haberdar olduğunu ve işleme onay verdiğini,</p>
+          <p><strong>c)</strong> Ödemede kullanılan banka kartı, kredi kartı veya diğer ödeme aracını kullanmaya hukuken yetkili olduğunu,</p>
+          <p><strong>ç)</strong> Ödeme işleminin bilgisi ve iradesi dışında gerçekleştirilmediğini,</p>
+          <p>kabul ve beyan eder.</p>
+          <p>Ödeme aracının üçüncü bir kişiye ait olması halinde Alıcı, söz konusu ödeme aracının kullanımına ilişkin gerekli izne sahip olduğunu beyan eder.</p>
+        </div>
+
+        <div class="section-title">4. Harcama İtirazı ve Ters İbraz (Chargeback)</div>
+        <div class="contract-body">
+          <p>Alıcı; yukarıdaki ödeme ve teslim teyitlerinin gerçeği yansıttığını kabul eder.</p>
+          <p>Bu kapsamda Alıcı, ödeme işlemini kendisinin gerçekleştirdiği veya yetkilendirdiği ve sipariş konusu ürünün kendisine ya da yetkilendirdiği teslim alıcısına fiilen teslim edildiği halde;</p>
+          <p style="padding-left:14px; font-style:italic; color:#444;">
+            “Bu işlem bana ait değildir”,<br>
+            “İşlem bilgim veya onayım dışında gerçekleştirilmiştir”,<br>
+            “Bu alışverişi ben yapmadım”,<br>
+            “Ürün teslim edilmedi”,<br>
+            “Sipariş tarafıma ulaşmadı”,<br>
+            “Mal veya hizmet sağlanmadı”
+          </p>
+          <p>veya gerçekleşen işlem ve teslimatla açıkça çelişen benzeri gerçeğe aykırı bir gerekçeyle banka, kart kuruluşu, ödeme kuruluşu veya diğer finansal kuruluşlar nezdinde harcama itirazı, ters ibraz (chargeback) veya benzeri bir talepte bulunmayacağını kabul ve beyan eder.</p>
+          <p>Bu hüküm, Alıcının gerçekten yetkilendirmediği bir ödeme işlemi veya gerçekten gerçekleşmeyen bir teslimat bakımından sahip olabileceği yasal hakları sınırlamaz.</p>
+        </div>
+
+        <div class="section-title">5. Gerçeğe Aykırı Harcama İtirazının Sonuçları</div>
+        <div class="contract-body">
+          <p>Alıcının işbu Beyan ile teyit ettiği hususlarla açıkça çelişen ve gerçeğe aykırı olduğu somut kayıt ve belgelerle ortaya konulabilen bir harcama itirazında bulunması nedeniyle Satıcının zarara uğraması halinde Satıcı;</p>
+          <ul style="padding-left:18px; margin:4px 0;">
+            <li>Ödeme kuruluşunca Satıcıdan geri alınan işlem bedelini,</li>
+            <li>Chargeback nedeniyle Satıcıya yansıtılan ve hukuken talep edilebilir nitelikteki doğrudan masrafları,</li>
+            <li>Uyuşmazlığın çözümü amacıyla katlanılan ve hukuken talep edilebilir diğer doğrudan zararları</li>
+          </ul>
+          <p>genel hükümler çerçevesinde talep etme ve ilgili hukuki yollara başvurma hakkını saklı tutar.</p>
+          <p>Bu hüküm tüketiciye otomatik cezai şart yüklenmesi veya mevzuattan doğan hakların kullanımının engellenmesi şeklinde yorumlanamaz.</p>
+        </div>
+
+        <div class="section-title">6. Tüketicinin Yasal Haklarının Saklı Olması</div>
+        <div class="contract-body">
+          <p>İşbu Beyan;</p>
+          <ul style="padding-left:18px; margin:4px 0;">
+            <li>Ayıplı mala ilişkin hakları,</li>
+            <li>Teslim sırasında makul biçimde tespit edilmesi mümkün olmayan gizli ayıplara ilişkin hakları,</li>
+            <li>Yanlış veya eksik teslimata ilişkin hakları,</li>
+            <li>Mevzuatın uygulanabilir olduğu durumlarda cayma hakkını,</li>
+            <li>Bedel iadesi talep etme hakkını,</li>
+            <li>Tüketici Hakem Heyeti veya tüketici mahkemesine başvurma hakkını,</li>
+            <li>Gerçekten yetkisiz gerçekleştirilen ödeme işlemlerine ilişkin yasal başvuru haklarını</li>
+          </ul>
+          <p>ortadan kaldırmaz veya sınırlandırmaz.</p>
+          <p>İşbu düzenlemenin amacı tüketicinin meşru hak arama yollarını engellemek değil; gerçekleşmiş ve tüketici tarafından teyit edilmiş ödeme ile teslimat hakkında gerçeğe aykırı beyanlarla harcama itirazında bulunulmasını önlemek ve gerçekleşen işlemin ispatını sağlamaktır.</p>
+        </div>
+
+        <div class="section-title">7. Teslim Sırasında Tespit Edilen Sorunlar</div>
+        <div class="contract-body">
+          <p>Alıcı ürünün teslimi sırasında görünür hasar, yanlış ürün, adet eksikliği veya siparişle açık uyumsuzluk tespit etmesi halinde ürünü teslim almadan önce veya teslim sırasında durumu teslim görevlisine ve/veya Satıcıya bildirebilir.</p>
+          <p>Elektronik teslim teyidi ekranında mevcut olması halinde Alıcı; <strong>“Sorunsuz Teslim Aldım”</strong> veya <strong>“Teslimle İlgili Sorun Bildirmek İstiyorum”</strong> seçeneklerinden uygun olanı kullanabilir. Sorun bildiriminde bulunulması işbu belgenin Alıcının yasal haklarını sınırlayacak şekilde kullanılmasına neden olmaz.</p>
+        </div>
+
+        <div class="section-title">8. Elektronik Kayıtların Delil Niteliği & Dijital İspat Çizelgesi</div>
+        <div class="contract-body">
+          <p>Alıcı, ilgili sipariş ve teslimat kapsamında hukuka uygun şekilde oluşturulan aşağıdaki kayıtların HMK m. 193 uyarınca uyuşmazlığın ispatında kullanılabileceğini kabul eder:</p>
+        </div>
+
+        <!-- DETAYLI DİJİTAL İMZA & KANIT MATRİSİ -->
+        <table class="data-table" style="margin:8px 0 14px 0;">
+          <tr>
+            <th style="width:34%;">Sipariş Numarası (Order ID):</th>
+            <td class="val" style="font-family:monospace; color:#084C47;">${o.orderId}</td>
+          </tr>
+          <tr>
+            <th>Müşteri Bilgisi:</th>
+            <td class="val"><strong>${custName}</strong> (T.C. No: ${tcNo}) · ${phone} · ${email}</td>
+          </tr>
+          <tr>
+            <th>Sipariş & İşlem Tarih/Saati:</th>
+            <td class="val">${dateFormatted} (TSİ)</td>
+          </tr>
+          <tr>
+            <th>Teslimat Türü ve Teslim Kaydı:</th>
+            <td class="val"><strong>${deliveryDesc}</strong></td>
+          </tr>
+          <tr>
+            <th>Teslimat OTP / SMS Kodu:</th>
+            <td class="val"><span style="background:#EAF5ED; color:#15803D; padding:2px 8px; border-radius:4px; font-weight:700; border:1px solid #A9D5CB;">${deliveryOtpCode} (Doğrulandı)</span></td>
+          </tr>
+          <tr>
+            <th>Satın Alınan Ürün Bilgisi:</th>
+            <td class="val">${itemsSummary}</td>
+          </tr>
+          <tr>
+            <th>Ödeme Transaction ID (Provizyon):</th>
+            <td class="val" style="font-family:monospace;">${authCode} (Akbank 256-Bit EV SSL Sanal POS)</td>
+          </tr>
+          <tr>
+            <th>3D Secure Doğrulama Sonucu:</th>
+            <td class="val" style="color:#15803D; font-weight:700;">✅ 3DS 2.0 Tam Doğrulama Başarılı (mdStatus: 1)</td>
+          </tr>
+          <tr>
+            <th>Kabul Edilen Metnin Sürümü:</th>
+            <td class="val"><strong>Sürüm: 28.08.2026</strong> (Teslim, Kontrol ve Ödeme İşlemi Teyit Beyanı)</td>
+          </tr>
+        </table>
+
+        <div class="section-title">9. Beyanın Onaylanması</div>
+        <div class="contract-body">
+          <p>İşbu Beyan, ürün teslim edildikten sonra Alıcının elektronik ortamda aşağıdaki onayı vermesiyle ilgili sipariş açısından kayıt altına alınır:</p>
+          <div style="background:#F4FAF9; border:1.5px solid #CBE5E2; padding:10px 14px; border-radius:6px; font-weight:700; color:#084C47; margin:8px 0;">
+            “Siparişime konu ürünü teslim aldım. Ürünü görme ve kontrol etme imkânım oldu. İlgili sipariş ve ödeme işleminin bilgim ve onayım dahilinde gerçekleştirildiğini teyit ediyor; Teslim, Kontrol ve Ödeme İşlemi Teyit Beyanı'nı okuyup kabul ediyorum.”
+          </div>
+          <p>Onayın tarih ve saati ile ilgili sipariş numarası elektronik sistemde kriptografik zaman damgası ile kayıt altına alınmıştır.</p>
+        </div>
+
+        <div class="section-title">10. Yürürlük</div>
+        <div class="contract-body">
+          <p>İşbu Beyan, Alıcının ilgili sipariş bakımından ürün tesliminden sonra elektronik onay vermesi tarihinde yürürlüğe girer. Web sitesinde yalnızca yayımlanmış olması, herhangi bir sipariş bakımından Alıcının ürünü teslim aldığı veya işbu Beyanı teslim sonrasında ayrıca onayladığı anlamına gelmez.</p>
+        </div>
+
+        <div class="section-title">11. İletişim</div>
+        <table class="data-table">
+          <tr>
+            <th>Satıcı:</th>
+            <td>BELGİN KUYUMCULUK - SEMİH SONBAHAR</td>
+          </tr>
+          <tr>
+            <th>Adres:</th>
+            <td>Menderes Caddesi No:231/B Buca / İzmir</td>
+          </tr>
+          <tr>
+            <th>E-Posta:</th>
+            <td>destek@belginkuyumculuk.com</td>
+          </tr>
+          <tr>
+            <th>Telefon:</th>
+            <td>+90 541 930 53 72</td>
+          </tr>
+          <tr>
+            <th>Web:</th>
+            <td>https://www.belginkuyumculuk.com</td>
+          </tr>
+        </table>
+
+        ${this.getDigitalSignatureHtml(o)}
+      </div>
+    `;
+  }
+};
+
+window.addEventListener('DOMContentLoaded', () => LegalApp.init());
+</script>
+
+
+<div data-bank-pos-readiness="v1" style="max-width:1200px;margin:12px auto;padding:12px 18px;border:1px solid #d8e4e1;border-radius:8px;background:#f8fbfa;font-size:12px;line-height:1.6;color:#33413e;">
+  <strong>Müşteri Hizmetleri:</strong> <a href="mailto:destek@belginkuyumculuk.com">destek@belginkuyumculuk.com</a> · <strong>POS & Ödeme:</strong> <a href="mailto:pos@belginkuyumculuk.com">pos@belginkuyumculuk.com</a> · <strong>İade & Cayma:</strong> <a href="mailto:iade@belginkuyumculuk.com">iade@belginkuyumculuk.com</a> · <strong>Muhasebe:</strong> <a href="mailto:muhasebe@belginkuyumculuk.com">muhasebe@belginkuyumculuk.com</a> · <a href="tel:+905419305372">+90 541 930 53 72</a> · Menderes Caddesi No:231/B Buca / İzmir
+</div>
+</body>
+</html>

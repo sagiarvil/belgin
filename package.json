@@ -23,6 +23,8 @@
     "deploy:hosting": "node scripts/safe-deploy.js hosting",
     "deploy:functions": "node scripts/safe-deploy.js functions",
     "sync:saatvesaat": "node scripts/sync-saatvesaat.js",
+    "sync:carren": "node scripts/sync-carren.js",
+    "sync:rolex": "node scripts/sync-seckin-rolex.js",
     "sync:gold": "node scripts/sync-prices-and-stock.js",
     "sync:all": "node scripts/smart-diff-sync.js",
     "serve": "npx serve . -l 3000"

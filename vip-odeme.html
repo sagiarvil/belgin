@@ -234,9 +234,23 @@
           <input type="tel" id="custPhone" class="form-input" required placeholder="05XX XXX XX XX">
         </div>
       </div>
-      <div class="form-group" style="margin-top:14px; margin-bottom:24px;">
-        <label class="form-label">T.C. Kimlik / Pasaport No *</label>
-        <input type="text" id="custIdentity" class="form-input" required placeholder="T.C. Kimlik veya Pasaport Numarası" maxlength="20">
+      <div class="form-group" style="margin-top:14px; margin-bottom:14px;">
+        <label class="form-label" style="display:flex; justify-content:space-between; align-items:center;">
+          <span>T.C. Kimlik / Pasaport No *</span>
+          <span style="font-size:10.5px; color:#D4AF37; text-transform:none; font-weight:600;">⚖️ Fatura & MASAK Zorunlu</span>
+        </label>
+        <input type="text" id="custIdentity" class="form-input" required placeholder="11 Haneli T.C. Kimlik veya Pasaport No" maxlength="20" autocomplete="off">
+        <div style="font-size:11.5px; color:var(--text-muted); margin-top:5px; line-height:1.4;">
+          🔒 5549 Sayılı MASAK ve Vergi Mevzuatı uyarınca altın/mücevherat tahsilatlarında T.C. Kimlik Numarası yasal olarak zorunludur.
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-top:14px; margin-bottom:22px;">
+        <label class="form-label" style="display:flex; justify-content:space-between; align-items:center;">
+          <span>Fatura Adresi</span>
+          <span style="font-size:10.5px; color:var(--text-muted); text-transform:none; font-weight:500;">İl / İlçe / Açık Adres</span>
+        </label>
+        <textarea id="custAddress" class="form-input" rows="2" placeholder="Faturanızın düzenleneceği açık adres (İl, İlçe, Mahalle, Cadde/Sokak, Kapı No)" style="resize:vertical; min-height:56px; font-size:13.5px; line-height:1.4;"></textarea>
       </div>
 
       <!-- BÜYÜK ALTIN ÖDEME BUTONU -->
@@ -251,6 +265,7 @@
         <input type="checkbox" id="chkKyc" required checked>
         <input type="checkbox" id="chkHighValue" required checked>
         <input type="checkbox" id="chkHandover" required checked>
+        <input type="checkbox" id="chkDeliveryStatement" required checked>
         <input type="checkbox" id="chkMarketing" checked>
         <input type="checkbox" id="chkConsent" checked>
       </div>
@@ -259,7 +274,7 @@
 
   </main>
 
-  <script src="/js/vip-payment.js?v=2.8.7"></script>
+  <script src="/js/vip-payment.js?v=2.8.8"></script>
   <script>
     let currentPayload = null;
 
@@ -306,6 +321,7 @@
       const name = document.getElementById('custName')?.value?.trim() || '';
       const phone = document.getElementById('custPhone')?.value?.trim() || '';
       const identity = document.getElementById('custIdentity')?.value?.trim() || '';
+      const address = document.getElementById('custAddress')?.value?.trim() || '';
       const amt = Number(currentPayload?.amount || 0);
 
       const draft = {
@@ -313,6 +329,7 @@
         customerName: name || 'Müşteri (Sipariş Sahibi)',
         customerPhone: phone || '05XX *** ** XX',
         customerIdentity: identity || '',
+        customerAddress: address || '',
         totalAmount: amt > 0 ? amt : 100,
         formattedAmount: '₺' + (amt > 0 ? amt : 100).toLocaleString('tr-TR'),
         termsAcceptedAt: new Date().toISOString(),
@@ -325,11 +342,13 @@
     document.getElementById('custName')?.addEventListener('input', syncDraft);
     document.getElementById('custPhone')?.addEventListener('input', syncDraft);
     document.getElementById('custIdentity')?.addEventListener('input', syncDraft);
+    document.getElementById('custAddress')?.addEventListener('input', syncDraft);
 
     async function processVipPayment() {
       const name = document.getElementById('custName')?.value?.trim() || '';
       const phone = document.getElementById('custPhone')?.value?.trim() || '';
       const identity = document.getElementById('custIdentity')?.value?.trim() || '';
+      const address = document.getElementById('custAddress')?.value?.trim() || '';
 
       if (!name || !phone) {
         alert('Lütfen adınızı, soyadınızı ve telefon numaranızı eksiksiz doldurunuz.');
@@ -363,10 +382,14 @@
           user_phone: phone,
           email: cleanPhone ? `musteri_${cleanPhone}@belginkuyumculuk.com` : `vip_${Date.now()}@belginkuyumculuk.com`,
           customerIdentity: identity,
+          customerAddress: address,
+          user_address: address,
+          address: address,
           deliveryMethod: 'showroom',
           termsAccepted: true,
           preInformationAccepted: true,
           highValueDeliveryAccepted: true,
+          deliveryStatementAccepted: true,
           marketingConsent: true,
           items: [
             {

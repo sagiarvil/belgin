@@ -13,6 +13,7 @@ const {
   assertValidTransition,
 } = require('./payment-constants');
 const paymentRouter = require('./payment-router');
+const notifier = require('../notifier');
 
 const HIGH_VALUE_SECURE_DELIVERY_THRESHOLD = 12000;
 const LEGAL_EVIDENCE_SCHEMA = 'belgin-order-evidence-v2';
@@ -112,11 +113,22 @@ function verifyVipToken(token, expectedId = '') {
 
 function isHighValueCatalogProduct(product) {
   if (!product || Number(product.price) < HIGH_VALUE_SECURE_DELIVERY_THRESHOLD) return false;
+
   const category = String(product.category || '').toLowerCase();
   const metal = String(product.metal || '').toLowerCase();
-  const isWatch = category === 'watch' || category === 'saat';
-  const isGold = product.isGold === true || category === 'gold' || category === 'altin' || category === 'altın' || metal.includes('altın') || /au\s?\d{3}/i.test(metal);
-  return isWatch || isGold;
+  const isPreOwned = product.isPreOwned === true || category === 'seckin-urunler' || category === 'ikinci-el' || category === 'luxury';
+  const isGold = product.isGold === true || category === 'gold' || category === 'altin' || category === 'altın' || category === 'mucevherat' || category === 'jewelry' || category === 'jewellery' || metal.includes('altın') || /au\s?\d{3}/i.test(metal);
+
+  // 1. Seçkin Ürünler (İkinci El / Lüks Koleksiyon Saatler: Rolex, AP vb.) -> Sadece Mağaza Teslim Zorunludur
+  if (isPreOwned) return true;
+
+  // 2. Altın ve Mücevherat Ürünleri (Bilezik, Sarrafiye, Pırlanta) -> Sadece Mağaza Teslim Zorunludur
+  if (isGold) return true;
+
+  // 3. Saatler Kategorisi (Carren, Saat&Saat vb. tüm sıfır saatler) -> Ücretsiz Kargo Yapılabilir
+  if (category === 'saat' || category === 'watch') return false;
+
+  return true;
 }
 
 function normalizeCart(clientItems, isVipPayment = false, vipToken = null, productCatalog = {}) {
@@ -204,24 +216,35 @@ function validateLegalAndDelivery(body, items) {
 
   if (hasHighValue) {
     if (!highValueDeliveryAccepted) {
-      const error = new Error('12.000 TL ve üzerindeki altın/saat ürünü için mağaza teslim, kimlik doğrulama ve işlem güvenliği koşulu onayı zorunludur.');
+      const error = new Error('12.000 TL ve üzerindeki altın/mücevherat ürünü için mağaza teslim, kimlik doğrulama ve işlem güvenliği koşulu onayı zorunludur.');
       error.code = 'HIGH_VALUE_CONSENT_REQUIRED';
       throw error;
     }
     if (deliveryMethod !== 'showroom') {
-      const error = new Error('12.000 TL ve üzerindeki altın ve saat ürünleri yalnız mağazadan teslim edilir.');
+      const error = new Error('12.000 TL ve üzerindeki altın ve mücevherat ürünleri yalnız mağazadan teslim edilir.');
       error.code = 'HIGH_VALUE_DELIVERY_REQUIRED';
       throw error;
     }
-  } else if (!['showroom', 'carrier'].includes(deliveryMethod)) {
+  } else if (!['showroom', 'carrier', 'cargo'].includes(deliveryMethod)) {
     const error = new Error('Geçerli teslim yöntemi seçilmelidir.');
     error.code = 'DELIVERY_METHOD_INVALID';
     throw error;
   }
 
+  const normalizedDelivery = hasHighValue ? 'showroom' : (deliveryMethod === 'cargo' ? 'carrier' : deliveryMethod);
+
+  if (normalizedDelivery === 'carrier') {
+    const address = String(body.customerAddress || body.user_address || body.address || '').trim();
+    if (!address || address.length < 10) {
+      const error = new Error('Kargo ile teslimat için geçerli ve eksiksiz bir teslimat adresi zorunludur.');
+      error.code = 'SHIPPING_ADDRESS_REQUIRED';
+      throw error;
+    }
+  }
+
   return {
     hasHighValue,
-    deliveryMethod: hasHighValue ? 'showroom' : deliveryMethod,
+    deliveryMethod: normalizedDelivery,
     termsAccepted,
     preInformationAccepted,
     highValueDeliveryAccepted: hasHighValue ? highValueDeliveryAccepted : false,
@@ -294,9 +317,10 @@ class PaymentService {
     const productSnapshotHash = sha256(JSON.stringify(items));
     const evidenceId = sha256(JSON.stringify({ merchant_oid, requestId, productSnapshotHash, legalEvidence, total: serverTotal, deliveryMethod: compliance.deliveryMethod }));
 
-    const customerAddress = compliance.deliveryMethod === 'showroom'
-      ? 'Belgin Kuyumculuk — Menderes Caddesi No:231/B Buca / İzmir — Mağazadan Teslim'
-      : String(body.user_address || '').slice(0, 1000);
+    const customerAddress = String(body.customerAddress || body.user_address || body.address || '').trim().slice(0, 1000) ||
+      (compliance.deliveryMethod === 'showroom'
+        ? 'Showroom / Mağazadan Teslim'
+        : 'İzmir');
 
     const providerName = String(body.provider || DEFAULT_PROVIDER).toUpperCase();
     const provider = paymentRouter.getProvider(providerName);
@@ -306,6 +330,7 @@ class PaymentService {
       orderId: merchant_oid,
       requestId,
       evidenceId,
+      customerAddress,
       idempotencyKey: idempotencyKey || null,
       evidenceSchema: LEGAL_EVIDENCE_SCHEMA,
       status: ORDER_STATUS.PAYMENT_SESSION_CREATING,
@@ -318,6 +343,7 @@ class PaymentService {
       internalKycThreshold: HIGH_VALUE_SECURE_DELIVERY_THRESHOLD,
       masakLegalOverlayRequired: true,
       items,
+      productName: (items && items[0]?.name) ? String(items[0].name).trim() : 'Kuyumculuk Ürünü',
       productSnapshotHash,
       total: serverTotal,
       amountInKurus,
@@ -451,8 +477,11 @@ class PaymentService {
   }
 
   async handleCallback({ providerName, body, db, admin, mailer }) {
-    const provider = paymentRouter.getProvider(providerName);
-    const orderId = String(body.merchant_oid || body.orderId || body.oid || '');
+    const orderId = String(
+      body?.merchant_oid || body?.orderId || body?.oid || 
+      body?.merch_oid || body?.ORDERID || body?.MerchantOrderId || 
+      body?.order_id || ''
+    ).trim();
     if (!orderId) {
       return { status: 400, message: 'Geçersiz sipariş numarası' };
     }
@@ -464,16 +493,12 @@ class PaymentService {
     }
 
     const order = orderDoc.data();
-
-    // Provider Binding Güvenlik Kontrolü
-    if (order.payment?.provider && order.payment.provider !== provider.name) {
-      console.error(`[Payment Security] PROVIDER_MISMATCH! Sipariş Provider: ${order.payment.provider}, Gelen: ${provider.name}`);
-      await appendAuditEvent(orderRef, 'PROVIDER_MISMATCH', {
-        expectedProvider: order.payment.provider,
-        incomingProvider: provider.name,
-      }, admin);
-      return { status: 400, message: 'PROVIDER_MISMATCH: Callback sağlayıcısı sipariş ile eşleşmiyor.' };
+    const orderProvider = String(order.payment?.provider || order.provider || '').toUpperCase();
+    if (providerName && orderProvider && orderProvider !== String(providerName).toUpperCase()) {
+      return { status: 400, message: 'FAIL: PROVIDER_MISMATCH' };
     }
+    const effectiveProviderName = orderProvider || String(providerName || DEFAULT_PROVIDER).toUpperCase();
+    const provider = paymentRouter.getProvider(effectiveProviderName);
 
     // Atomic Idempotency Kontrolü: Zaten PAID ise hemen 200 OK dön
     if (['PAID', 'PAYMENT_PAID'].includes(order.paymentStatus) || [ORDER_STATUS.PAID, ORDER_STATUS.AWAITING_STORE_PICKUP, ORDER_STATUS.COMPLETED].includes(order.status)) {
@@ -517,14 +542,29 @@ class PaymentService {
         status: nextStatus,
       }, admin);
 
+      // 1. MOBİL ANLIK PUSH BİLDİRİMİ (iPhone / Android Telegram & NTFY) — SIFIR GECİKME
+      const updatedOrderData = {
+        ...order,
+        status: nextStatus,
+        paymentStatus: 'PAID',
+        totalAmountReceived: totalReceived,
+        paidAt: new Date(),
+      };
+      
+      const pushPromise = notifier.sendPaymentPushNotification(updatedOrderData).catch((pushErr) => {
+        console.error('[Notifier] Push bildirim hatası:', pushErr.message);
+      });
+
+      // 2. Hukuki Delil E-Postaları (Arka planda paralel işlensin)
       if (mailer && typeof mailer.dispatchOrderEvidenceEmails === 'function') {
-        try {
-          const updatedDoc = await orderRef.get();
-          await mailer.dispatchOrderEvidenceEmails(updatedDoc.data());
-        } catch (mailErr) {
-          console.error('[Mailer] Callback e-posta gönderim hatası:', mailErr.message);
-        }
+        orderRef.get().then((snap) => {
+          mailer.dispatchOrderEvidenceEmails(snap.data()).catch((mErr) => {
+            console.error('[Mailer] Callback e-posta hatası:', mErr.message);
+          });
+        }).catch(() => {});
       }
+
+      await pushPromise;
 
       return { status: 200, message: 'OK', isSuccess: true, orderId };
     } else {

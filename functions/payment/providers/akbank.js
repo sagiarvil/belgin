@@ -180,38 +180,36 @@ class AkbankProvider {
   }
 
   verifyCallback(params, req) {
-    const callbackData = params?.body || params;
-    const config = getAkbankConfig();
-    const testMode = process.env.NODE_ENV === 'test' || process.env.AKBANK_TEST_MODE === '1' || Number(process.env.AKBANK_TEST_MODE) === 1;
-    if (!callbackData || (!config.merchantSafeId && !config.storeKey && !testMode)) {
-      return {
-        isValid: false,
-        reason: 'PROVIDER_NOT_CONFIGURED'
-      };
+    if (!params || (typeof params === 'object' && Object.keys(params).length === 0)) {
+      return { isValid: false, reason: 'PROVIDER_NOT_CONFIGURED' };
     }
 
-    const {
-      orderId,
-      oid,
-      responseCode,
-      Response,
-      authCode,
-      AuthCode,
-      hostResponseCode,
-      ProcReturnCode,
-      mdStatus,
-      hash,
-      hashParams,
-      ErrMsg,
-      responseMessage
-    } = callbackData;
+    const callbackData = params?.body || params || {};
+    const config = getAkbankConfig();
+    const testMode = process.env.NODE_ENV === 'test' || process.env.AKBANK_TEST_MODE === '1' || Number(process.env.AKBANK_TEST_MODE) === 1;
 
-    const currentOrderId = orderId || oid || '';
-    const currentAuthCode = authCode || AuthCode || 'AKB-APPROVED';
-    const currentResponseCode = responseCode || ProcReturnCode || (Response === 'Approved' ? '00' : '99');
+    const currentOrderId = String(
+      callbackData.orderId || callbackData.oid || callbackData.ORDERID || 
+      callbackData.MerchantOrderId || callbackData.merchant_oid || callbackData.merch_oid || 
+      params?.order?.orderId || ''
+    ).trim();
+
+    const currentAuthCode = String(
+      callbackData.authCode || callbackData.AuthCode || callbackData.AUTHCODE || 'AKB-APPROVED'
+    ).trim();
+
+    const currentResponseCode = String(
+      callbackData.responseCode || callbackData.ProcReturnCode || callbackData.hostResponseCode || 
+      (callbackData.Response === 'Approved' ? '00' : '') || '99'
+    ).trim();
+
+    const rawMdStatus = callbackData.mdStatus !== undefined ? callbackData.mdStatus : callbackData.MDSTATUS;
+    const mdStatusStr = rawMdStatus !== undefined ? String(rawMdStatus).trim() : '1';
 
     // Doküman Bölüm 6.1.1.2: Response Hash Doğrulaması
     let isHashValid = true;
+    const hash = callbackData.hash || callbackData.HASH;
+    const hashParams = callbackData.hashParams || callbackData.HASHPARAMS;
     if (hash && hashParams && config.storeKey) {
       try {
         const paramKeys = hashParams.split('+');
@@ -223,19 +221,36 @@ class AkbankProvider {
       }
     }
 
-    // 3D Secure / Onay Başarısı (Doküman Bölüm 5 & 6)
-    const isResponseApproved = currentResponseCode === '00' || currentResponseCode === 'VPS-0000' || Response === 'Approved';
-    const is3dAuthenticated = !mdStatus || ['1', '2', '3', '4'].includes(String(mdStatus));
-    const isApproved = isResponseApproved && is3dAuthenticated && isHashValid;
+    // 3D Secure / Akbank EST Onay Başarısı (Doküman Bölüm 5 & 6)
+    const responseText = String(callbackData.Response || callbackData.response || '').trim();
+    const isResponseApproved = (
+      responseText.toLowerCase() === 'approved' ||
+      currentResponseCode === '00' || 
+      currentResponseCode === 'VPS-0000'
+    );
+    const is3dAuthenticated = ['1', '2', '3', '4'].includes(mdStatusStr);
+    const hasError = Boolean(callbackData.ErrMsg && callbackData.ErrMsg.trim() !== '');
+
+    const isApproved = isResponseApproved && is3dAuthenticated && isHashValid && !hasError;
 
     if (!isApproved) {
       return {
         isValid: true,
         isSuccess: false,
         failReasonCode: currentResponseCode || 'BANK_REJECT',
-        failReasonMsg: ErrMsg || responseMessage || 'Kart limiti yetersiz veya işlem banka tarafından onaylanmadı.',
+        failReasonMsg: callbackData.ErrMsg || callbackData.responseMessage || 'İşlem banka veya 3D Secure tarafından onaylanmadı.',
         orderId: currentOrderId
       };
+    }
+
+    const rawAmount = callbackData.amount || callbackData.Amount || callbackData.totalAmount;
+    let receivedKurus = String(params?.order?.amountInKurus || '');
+    if (rawAmount) {
+      const num = Number(rawAmount);
+      if (!Number.isNaN(num) && num > 0) {
+        // Eğer zaten kuruş formatında değilse (ondalıklı veya TL ise)
+        receivedKurus = num > 100000 && num === params?.order?.amountInKurus ? String(num) : String(Math.round(num * 100));
+      }
     }
 
     return {
@@ -245,7 +260,7 @@ class AkbankProvider {
       authCode: currentAuthCode,
       provider: PROVIDERS.AKBANK,
       terminalId: config.terminalSafeId,
-      totalAmountReceived: String(Math.round(Number(callbackData.amount || 0) * 100)) || String(params?.order?.amountInKurus || '')
+      totalAmountReceived: receivedKurus || String(params?.order?.amountInKurus || '')
     };
   }
 

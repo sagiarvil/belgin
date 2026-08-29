@@ -74,9 +74,13 @@ function processHtmlFiles() {
   for (const page of SEO_REGISTRY) {
     if (page.route === '/') continue; // index.html already has custom complex schema
     const filename = page.route.replace(/^\//, '');
-    const filePath = path.join(ROOT_DIR, filename);
+    let filePath = path.join(ROOT_DIR, filename);
 
-    if (!fs.existsSync(filePath)) continue;
+    if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
+      filePath = path.join(filePath, 'index.html');
+    }
+
+    if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) continue;
 
     let content = fs.readFileSync(filePath, 'utf8');
     const pageUrl = `${BASE_URL}${page.route}`;

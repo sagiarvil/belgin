@@ -1,0 +1,28 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="91" height="91">
+  <defs>
+    <!-- Üst yazı yolu (saat yönünde: soldan sağa üstten) -->
+    <path id="arcTop" d="M 18,80 A 62,62 0 0,1 142,80" fill="none"/>
+    <!-- Alt yazı yolu (saat yönünde: soldan sağa alttan) -> harfler tabana doğru dik durur, ters dönmez! -->
+    <path id="arcBottom" d="M 18,80 A 62,62 0 0,0 142,80" fill="none"/>
+  </defs>
+
+  <!-- Dış Mavi Çemberler -->
+  <circle cx="80" cy="80" r="76" fill="none" stroke="#1d4f91" stroke-width="3"/>
+  <circle cx="80" cy="80" r="69" fill="none" stroke="#1d4f91" stroke-width="1"/>
+
+  <!-- Üst Yazı -->
+  <text font-family="Arial, Helvetica, sans-serif" font-size="8.2" font-weight="bold" fill="#1d4f91" text-anchor="middle">
+    <textPath href="#arcTop" startOffset="50%">T.C. Hazine ve Maliye Bakanlığı</textPath>
+  </text>
+
+  <!-- Alt Yazı (Düzgün ve okunabilir) -->
+  <text font-family="Arial, Helvetica, sans-serif" font-size="8.2" font-weight="bold" fill="#1d4f91" text-anchor="middle">
+    <textPath href="#arcBottom" startOffset="50%">GELİR İDARESİ BAŞKANLIĞI</textPath>
+  </text>
+
+  <!-- Resmi Orijinal GİB Kırmızı Amblem Vektörü -->
+  <g transform="translate(52, 48) scale(1.4)">
+    <path fill="#e30613" fill-rule="evenodd" d="M18.34,20l14.38.2L28.79,47.25H18.63l4-21.72H16.06ZM32.43,7.78c2.25.65,3.33,3.74,2.41,6.89s-3.48,5.19-5.72,4.54-3.33-3.74-2.41-6.89,3.48-5.19,5.72-4.54M32.9.27A38.94,38.94,0,0,0,16.38,47H4A38.88,38.88,0,0,1,13.94.27Z" transform="translate(-4, -0.27)"/>
+  </g>
+</svg>

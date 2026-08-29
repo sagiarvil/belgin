@@ -1,0 +1,58 @@
+name: Carren Brand Live Catalog Synchronizer (Every 7 Days)
+
+on:
+  schedule:
+    # 03:00 UTC = 06:00 Turkey Time (TRT / UTC+3) every Monday (7 days interval)
+    - cron: "0 3 * * 1"
+  workflow_dispatch:
+
+concurrency:
+  group: sync-carren
+  cancel-in-progress: true
+
+jobs:
+  sync-and-deploy:
+    name: Sync Carren Live Catalog & Deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Carren Live Sync Engine
+        run: node scripts/sync-carren.js
+
+      - name: Run Quality Gate & Compliance CI
+        run: npm run ci
+
+      - name: Commit updated catalog & SEO assets
+        run: |
+          git config --global user.name "Belgin Sync Bot"
+          git config --global user.email "bot@belginkuyumculuk.com"
+          git add js/data.js functions/product-catalog.json sitemap.xml llms.txt llms-full.txt robots.txt legal-manifest.json functions/legal-manifest.json
+          if ! git diff --staged --quiet; then
+            git commit -m "chore(sync): automated 7-day Carren catalog update (stock check & 19.000 TL pricing)"
+            git push origin HEAD:${{ github.ref }}
+          else
+            echo "No catalog or price changes detected."
+          fi
+
+      - name: Deploy to Firebase Hosting & Functions (if credentials exist)
+        if: env.FIREBASE_TOKEN != ""
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_PROJECT_ID: carbon-web-1265b
+        run: |
+          npx firebase-tools deploy --project carbon-web-1265b --only hosting,functions --token "${{ secrets.FIREBASE_TOKEN }}"

@@ -1,7 +1,101 @@
-// ==========================================================
-// BELGIN — LÜKS SAAT & MÜCEVHERAT (EST. 1999)
-// TÜRKİYE LOKASYON & YASAL E-TİCARET ALTYAPISI MOTORU
-// ==========================================================
+// --- UNIVERSAL TURKISH SEARCH ENGINE (STANDARDIZED) ---
+function normalizeTr(text) {
+  if (!text) return "";
+  return text.trim().toLocaleLowerCase("tr-TR")
+    .replace(/i̇/g, "i").replace(/ı/g, "i").replace(/ğ/g, "g").replace(/ü/g, "u")
+    .replace(/ş/g, "s").replace(/ö/g, "o").replace(/ç/g, "c").replace(/â/g, "a")
+    .replace(/î/g, "i").replace(/û/g, "u").replace(/\s+/g, " ");
+}
+
+function levenshteinDist(a, b) {
+  if (a === b) return 0;
+  if (!a.length) return b.length;
+  if (!b.length) return a.length;
+  const matrix = [];
+  for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+  for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+  for (let i = 1; i <= b.length; i++) {
+    for (let j = 1; j <= a.length; j++) {
+      matrix[i][j] = b.charAt(i - 1) === a.charAt(j - 1)
+        ? matrix[i - 1][j - 1]
+        : Math.min(matrix[i - 1][j - 1] + 1, matrix[i][j - 1] + 1, matrix[i - 1][j] + 1);
+    }
+  }
+  return matrix[b.length][a.length];
+}
+
+const STOP_WORDS_SET = new Set(["nasil", "nedir", "ne", "icin", "kadar", "olan", "mi", "fiyat", "fiyati", "almak", "istiyorum", "secilir"]);
+
+function runBelginSearch(items, query) {
+  const qNorm = normalizeTr(query);
+  if (!qNorm) return { results: [], didYouMean: null, suggested: [] };
+  
+  const rawTokens = qNorm.split(/[^a-z0-9]+/i).filter(Boolean);
+  const intentTokens = rawTokens.filter(t => !STOP_WORDS_SET.has(t));
+  const tokens = intentTokens.length > 0 ? intentTokens : rawTokens;
+  
+  const scored = [];
+  const allWords = new Set();
+  
+  for (const p of items) {
+    const brandNorm = normalizeTr(p.brand || "");
+    const nameNorm = normalizeTr(p.name || "");
+    const titleNorm = brandNorm + " " + nameNorm;
+    const detailsNorm = normalizeTr((p.reference || "") + " " + (p.metal || "") + " " + (p.category || "") + " " + (p.subCategory || ""));
+    const combined = titleNorm + " " + detailsNorm;
+    
+    brandNorm.split(" ").forEach(w => w.length >= 3 && allWords.add(w));
+    nameNorm.split(" ").forEach(w => w.length >= 3 && allWords.add(w));
+    
+    let score = 0;
+    if (titleNorm === qNorm) score += 150;
+    else if (titleNorm.startsWith(qNorm)) score += 90;
+    else if (titleNorm.includes(qNorm)) score += 70;
+    else if (combined.includes(qNorm)) score += 40;
+    
+    for (const t of tokens) {
+      if (t.length < 2) continue;
+      if (brandNorm === t) score += 80;
+      else if (brandNorm.includes(t)) score += 60;
+      else if (titleNorm.includes(t)) score += 40;
+      else if (combined.includes(t)) score += 20;
+      
+      for (const w of titleNorm.split(" ")) {
+        if (w.length >= 3 && t.length >= 3) {
+          const d = levenshteinDist(t, w);
+          const maxL = Math.max(t.length, w.length);
+          if (d <= 2 && d / maxL <= 0.35) {
+            score += 45 - d * 15;
+          }
+        }
+      }
+    }
+    
+    if (score >= 12) {
+      scored.push({ p, score });
+    }
+  }
+  
+  scored.sort((a, b) => b.score - a.score);
+  const results = scored.slice(0, 24).map(s => s.p);
+  
+  let didYouMean = null;
+  if (results.length === 0 || (scored[0] && scored[0].score < 50)) {
+    let bestDist = Infinity;
+    let bestWord = null;
+    for (const w of allWords) {
+      const d = levenshteinDist(qNorm, w);
+      if (d > 0 && d <= 2 && d < bestDist) {
+        bestDist = d;
+        bestWord = w;
+      }
+    }
+    if (bestWord) didYouMean = bestWord;
+  }
+  
+  const suggested = results.length === 0 && scored.length > 0 ? scored.slice(0, 6).map(s => s.p) : [];
+  return { results, didYouMean, suggested };
+}
 
 const App = {
   init() {
@@ -16,10 +110,10 @@ const App = {
     this.updateHeaderCartCount();
     this.checkCookieBanner();
 
-    // Canlı Altın & Döviz Kurlarını Başlat
+    // Canlı İZKO Altın Kurlarını Başlat (15 Dakikada Bir Otomatik Güncelleme)
     if (typeof fetchLiveMarketRates === 'function') {
       fetchLiveMarketRates();
-      setInterval(fetchLiveMarketRates, 45000);
+      setInterval(fetchLiveMarketRates, 15 * 60 * 1000);
     }
 
     // Ödeme Sayfası Gerçek Zamanlı Müşteri & Tutar Senkronizasyonu
@@ -99,10 +193,11 @@ const App = {
         this.currentJewelleryCategory = jewelleryFilter;
         this.renderJewellery(jewelleryFilter);
         break;
+      case 'seckin-urunler':
       case 'ikinci-el':
         const preOwnedFilter = (options.filter !== undefined && options.filter !== null) ? options.filter : (this.currentPreOwnedCategory || 'all');
         this.currentPreOwnedCategory = preOwnedFilter;
-        this.renderPreOwned(preOwnedFilter);
+        this.renderPreOwned(preOwnedFilter, 1);
         break;
       case 'sepet':
         this.renderCart();
@@ -126,20 +221,31 @@ const App = {
 
   updateHeaderCartCount() {
     const badge = document.getElementById('headerCartCount');
-    if (!badge) return;
-    const total = Cart.items.reduce((sum, i) => sum + i.qty, 0);
-    if (total > 0) {
-      badge.textContent = total;
-      badge.style.display = 'inline-flex';
-    } else {
-      badge.style.display = 'none';
+    const mobileBadge = document.getElementById('mobileCartBadge');
+    const total = (typeof Cart !== 'undefined' && Cart.items) ? Cart.items.reduce((sum, i) => sum + i.qty, 0) : 0;
+    
+    if (badge) {
+      if (total > 0) {
+        badge.textContent = total;
+        badge.style.display = 'inline-flex';
+      } else {
+        badge.style.display = 'none';
+      }
+    }
+    if (mobileBadge) {
+      if (total > 0) {
+        mobileBadge.textContent = total;
+        mobileBadge.style.display = 'inline-flex';
+      } else {
+        mobileBadge.style.display = 'none';
+      }
     }
   },
 
   homeWatchPage: 1,
   allWatchPage: 1,
   homeJewelryPage: 1,
-  PAGE_SIZE: 30,
+  PAGE_SIZE: 24, // 4 sütun x 6 sıra = 24 saat (tam dolu ve simetrik satırlar, boşluksuz)
   HOME_WATCH_PAGE_SIZE: 16, // 4 sütun x 4 sıra = 16 saat (en fazla 4 sıra)
   JEWELRY_PAGE_SIZE: 20, // 4 sütun x 5 sıra = 20 ürün (en fazla 5 sıra)
 
@@ -162,7 +268,7 @@ const App = {
       `).join('');
     }
 
-    // Yeni Eklenen Saatler (Sayfa Başına 30 Ürün)
+    // Yeni Eklenen Saatler (Sayfa Başına 16 Ürün)
     this.renderHomeWatches(1);
 
     // İkinci El Altın & Saat Bölümü (8'li)
@@ -270,7 +376,7 @@ const App = {
     }, 40);
   },
 
-  // 2. TÜM SAATLER SAYFASI (12.000 TL ve Üzeri Saat Modelleri - 30 Ürün Sayfalama)
+  // 2. TÜM SAATLER SAYFASI (12.000 TL ve Üzeri Saat Modelleri - 24 Ürün / 6 Tam Sıra Sayfalama)
   renderWatches(brandFilter = 'all', page = 1) {
     this.currentWatchBrand = brandFilter;
     this.allWatchPage = page;
@@ -392,43 +498,84 @@ const App = {
   },
 
   // 3. İKİNCİ EL ALTIN & SAAT SAYFASI
-  renderPreOwned(filter = 'all') {
+  PRE_OWNED_PAGE_SIZE: 24,
+  allPreOwnedPage: 1,
+
+  renderPreOwned(filter = 'all', page = 1) {
     this.currentPreOwnedCategory = filter;
+    this.allPreOwnedPage = page;
     const el = document.getElementById('allPreOwnedGrid');
+    const pagEl = document.getElementById('allPreOwnedPagination');
     if (!el) return;
-    let items = PRE_OWNED_ITEMS;
-    if (filter === 'jewelry') items = PRE_OWNED_ITEMS.filter(p => p.category === 'jewelry');
-    else if (filter === 'watch') items = PRE_OWNED_ITEMS.filter(p => p.category === 'watch');
-    else if (filter && filter !== 'all') {
-      items = PRE_OWNED_ITEMS.filter(p => p.brand.toLowerCase().includes(filter.toLowerCase()) || p.category === filter);
+
+    let items = (typeof PRE_OWNED_ITEMS !== 'undefined' ? PRE_OWNED_ITEMS : (typeof PRODUCTS !== 'undefined' ? PRODUCTS.filter(p => p.isPreOwned) : []));
+    const f = String(filter || 'all').toLowerCase().trim();
+
+    if (f === 'jewelry' || f === 'mucevher' || f === 'cartier') {
+      items = items.filter(p => p.category === 'jewelry' || p.category === 'jewellery' || (p.brand && p.brand.toLowerCase().includes('cartier')));
+    } else if (f === 'rolex') {
+      items = items.filter(p => (p.brand && p.brand.toLowerCase() === 'rolex') || (p.subCategory && p.subCategory.toLowerCase() === 'rolex'));
+    } else if (f === 'watch' || f === 'saat' || f === 'prestij') {
+      items = items.filter(p => p.category === 'watch' || p.category === 'saat');
+    } else if (f !== 'all' && f !== '') {
+      items = items.filter(p =>
+        (p.brand && p.brand.toLowerCase().includes(f)) ||
+        (p.subCategory && p.subCategory.toLowerCase().includes(f)) ||
+        (p.category && p.category.toLowerCase() === f) ||
+        (p.name && p.name.toLowerCase().includes(f))
+      );
     }
-    el.innerHTML = items.map(p => this.renderProductCard(p)).join('');
+
+    const total = items.length;
+    const pageSize = this.PRE_OWNED_PAGE_SIZE || 24;
+    const start = (page - 1) * pageSize;
+    const end = start + pageSize;
+    const pageItems = items.slice(start, end);
+
+    el.innerHTML = pageItems.map(p => this.renderProductCard(p)).join('');
+
+    if (pagEl) {
+      pagEl.innerHTML = this.buildPaginationHtml(page, total, pageSize, 'App.changeAllPreOwnedPage');
+    }
 
     // Update filter pill UI
     document.querySelectorAll('.preowned-filter-btn').forEach(b => {
       b.classList.remove('active');
       const txt = b.textContent.trim().toLowerCase();
-      if ((filter === 'all' || !filter) && txt.includes('tümü')) b.classList.add('active');
-      else if (filter === 'jewelry' && (txt.includes('mücevher') || txt.includes('cartier'))) b.classList.add('active');
-      else if (filter === 'watch' && txt.includes('saat')) b.classList.add('active');
-      else if (filter && txt.includes(filter.toLowerCase())) b.classList.add('active');
+      if ((f === 'all' || !f) && txt.includes('tümü')) b.classList.add('active');
+      else if (f === 'rolex' && txt.includes('rolex')) b.classList.add('active');
+      else if ((f === 'jewelry' || f === 'cartier') && (txt.includes('mücevher') || txt.includes('cartier'))) b.classList.add('active');
+      else if ((f === 'watch' || f === 'prestij') && txt.includes('prestij')) b.classList.add('active');
+      else if (f && txt.includes(f)) b.classList.add('active');
     });
+  },
+
+  changeAllPreOwnedPage(newPage) {
+    this.renderPreOwned(this.currentPreOwnedCategory || 'all', newPage);
+    setTimeout(() => {
+      const target = document.querySelector('#page-ikinci-el .section-header-flex') || document.querySelector('#page-seckin-urunler .section-header-flex') || document.getElementById('allPreOwnedGrid');
+      if (target && typeof Router !== 'undefined' && Router.scrollToTarget) {
+        Router.scrollToTarget(target);
+      }
+    }, 40);
   },
 
   filterPreOwnedCategory(cat = 'all', btn = null) {
     this.closeNavDropdowns();
     this.currentPreOwnedCategory = cat;
-    if (Router.currentPage !== 'ikinci-el') {
-      Router.navigate('ikinci-el', true, { filter: cat });
-    } else {
-      this.renderPreOwned(cat);
+    this.allPreOwnedPage = 1;
+    this.renderPreOwned(cat, 1);
+
+    if (Router.currentPage !== 'seckin-urunler' && Router.currentPage !== 'ikinci-el') {
+      Router.navigate('seckin-urunler', true, { filter: cat });
     }
+
     if (btn) {
       document.querySelectorAll('.preowned-filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
     }
     setTimeout(() => {
-      const target = document.querySelector('#page-ikinci-el .section-header-flex') || document.getElementById('allPreOwnedGrid');
+      const target = document.querySelector('#page-ikinci-el .section-header-flex') || document.querySelector('#page-seckin-urunler .section-header-flex') || document.getElementById('allPreOwnedGrid');
       if (target && typeof Router !== 'undefined' && Router.scrollToTarget) {
         Router.scrollToTarget(target);
       }
@@ -442,9 +589,7 @@ const App = {
     if (!el) return;
 
     let items = JEWELLERY;
-    if (filter === 'Külçe & Gram Altın' || filter === 'gold_bar') {
-      items = JEWELLERY.filter(p => p.subCategory === 'Külçe & Gram Altın' || p.name.includes('Külçe') || p.name.includes('Gram'));
-    } else if (filter === 'Ziynet & Sarrafiye' || filter === 'ziynet') {
+    if (filter === 'Ziynet & Sarrafiye' || filter === 'ziynet') {
       items = JEWELLERY.filter(p => p.subCategory === 'Ziynet & Sarrafiye' || p.name.includes('Ziynet') || p.name.includes('Ata') || p.name.includes('Çeyrek') || p.name.includes('Yarım') || p.name.includes('Tam') || p.name.includes('Gremse'));
     } else if (filter === 'Altın Bilezik' || filter === 'bracelet') {
       items = JEWELLERY.filter(p => p.subCategory === 'Altın Bilezik' || p.name.includes('Bilezik'));
@@ -547,6 +692,7 @@ const App = {
          style="text-decoration:none; color:inherit; display:flex;">
         <div class="product-art-thumb">
           ${isPreOwned ? '<span class="badge-cond-gold">İkinci El</span>' : ''}
+          ${p.brand === 'Carren' ? '<span class="badge-shipping-pill" style="position:absolute; top:10px; left:10px; background:rgba(0,48,87,0.92); color:#FFFFFF; padding:4px 8px; border-radius:4px; font-size:10px; font-weight:700; letter-spacing:0.5px; z-index:2; backdrop-filter:blur(4px); border:1px solid rgba(255,255,255,0.2);">📦 Kargo ile Teslimat</span>' : ''}
           <img class="img-primary" src="${p.image}" alt="${p.brand} ${p.name}" loading="lazy">
           <img class="img-hover" src="${hoverImg}" alt="${p.brand} ${p.name}" loading="lazy">
         </div>
@@ -621,7 +767,12 @@ const App = {
         <div style="font-size:11.5px; color:#5D4411; background:#FFF9EE; border:1px solid #E6D2A8; padding:10px 12px; border-radius:6px; margin-bottom:16px; line-height:1.5;">
           <strong>🏛️ Yalnız Mağazadan Teslim (03):</strong> 12.000 TL üzerindeki ürünler güvenlik gereği kimlik ibrazı ve imza ile yalnızca Buca mağazamızdan teslim edilir. Kargo/kurye ile gönderilmez.
         </div>
-      ` : ''}
+      ` : `
+        <div style="font-size:11.5px; color:#003057; background:#F0F7FF; border:1px solid #C4D9EC; padding:10px 12px; border-radius:6px; margin-bottom:16px; line-height:1.5; display:flex; align-items:center; gap:8px;">
+          <span style="font-size:16px;">📦</span>
+          <span><strong>Sigortalı Hızlı Kargo:</strong> Siparişiniz özel korumalı ambalajında sigortalı kargo ile adresinize teslim edilir.</span>
+        </div>
+      `}
 
       <div style="display:flex; flex-direction:column; gap:10px; margin-top:auto;">
         <button class="btn-art-buy" onclick="Cart.add(${p.id}); App.updateHeaderCartCount(); App.closeQuickDrawer(); Router.navigate('cart');">
@@ -786,10 +937,10 @@ const App = {
           </div>
         </div>
         <div class="pdp-trust-item">
-          <span class="pdp-trust-item-icon">🏛️</span>
+          <span class="pdp-trust-item-icon">${p.brand === 'Carren' || !isHighVal ? '📦' : '🏛️'}</span>
           <div class="pdp-trust-item-text">
-            <strong>Buca Showroom'dan Teslimat</strong>
-            <span>12.000 TL üzeri yasal kimlik ve imza ile mağazadan güvenli teslim.</span>
+            <strong>${p.brand === 'Carren' || !isHighVal ? 'Sigortalı Kargo ile Teslimat' : "Buca Showroom'dan Teslimat"}</strong>
+            <span>${p.brand === 'Carren' || !isHighVal ? "Tüm Türkiye'ye özel güvenlikli ambalajında sigortalı kargo ile gönderim yapılır." : '12.000 TL üzeri yasal kimlik ve imza ile mağazadan güvenli teslim.'}</span>
           </div>
         </div>
         <div class="pdp-trust-item">
@@ -1443,71 +1594,79 @@ const App = {
     this.handleLiveSearch(term);
   },
 
-  handleLiveSearch(query = '') {
-    const clearBtn = document.getElementById('searchClearBtn');
-    const metaEl = document.getElementById('searchResultsMeta');
-    const listEl = document.getElementById('searchResultsList');
+  handleLiveSearch(query = "") {
+    const clearBtn = document.getElementById("searchClearBtn");
+    const metaEl = document.getElementById("searchResultsMeta");
+    const listEl = document.getElementById("searchResultsList");
     if (!listEl) return;
 
-    const term = (query || '').trim().toLowerCase();
+    const term = (query || "").trim();
     if (clearBtn) {
-      clearBtn.style.display = term ? 'inline-flex' : 'none';
+      clearBtn.style.display = term ? "inline-flex" : "none";
     }
 
     let results = [];
+    let didYouMean = null;
+    let suggested = [];
+
     if (!term) {
       results = PRODUCTS.slice(0, 8);
       if (metaEl) {
-        metaEl.style.display = 'flex';
-        metaEl.innerHTML = `<span>ÖNE ÇIKAN MODELLER & KOLEKSİYON</span><span>${PRODUCTS.length.toLocaleString('tr-TR')} Ürün</span>`;
+        metaEl.style.display = "flex";
+        metaEl.innerHTML = "<span>ÖNE ÇIKAN MODELLER & KOLEKSİYON</span><span>" + PRODUCTS.length.toLocaleString("tr-TR") + " Ürün</span>";
       }
     } else {
-      results = PRODUCTS.filter(p => {
-        const name = (p.name || '').toLowerCase();
-        const brand = (p.brand || '').toLowerCase();
-        const ref = (p.reference || p.ref || '').toLowerCase();
-        const metal = (p.metal || '').toLowerCase();
-        const cat = (p.category || '').toLowerCase();
-        const subCat = (p.subCategory || '').toLowerCase();
-        return name.includes(term) || brand.includes(term) || ref.includes(term) || metal.includes(term) || cat.includes(term) || subCat.includes(term);
-      });
+      const res = runBelginSearch(PRODUCTS, term);
+      results = res.results;
+      didYouMean = res.didYouMean;
+      suggested = res.suggested;
 
       if (metaEl) {
-        metaEl.style.display = 'flex';
-        metaEl.innerHTML = `<span>"${query}" İÇİN BULUNAN SONUÇLAR</span><span>${results.length} Adet</span>`;
+        metaEl.style.display = "flex";
+        if (results.length > 0) {
+          metaEl.innerHTML = "<span>\"" + term + "\" İÇİN BULUNAN SONUÇLAR</span><span>" + results.length + " Adet</span>";
+        } else if (suggested.length > 0) {
+          metaEl.innerHTML = "<span>EN YAKIN İLGİLİ MODELLER</span><span>" + suggested.length + " Adet</span>";
+        } else {
+          metaEl.innerHTML = "<span>SONUÇ BULUNAMADI</span><span>0 Adet</span>";
+        }
       }
     }
 
-    if (results.length === 0) {
-      listEl.innerHTML = `
-        <div class="search-empty-state">
-          <div class="search-empty-icon">🔍</div>
-          <h4 class="search-empty-title">"${query}" ile eşleşen model bulunamadı</h4>
-          <p class="search-empty-desc">Farklı bir marka adı, model referansı veya "Rolex, Cartier, Altın, Saat" gibi genel bir arama terimi deneyebilirsiniz.</p>
-        </div>
-      `;
+    const displayItems = results.length > 0 ? results : suggested;
+
+    if (displayItems.length === 0) {
+      listEl.innerHTML = "<div class=\"search-empty-state\">" +
+        "<div class=\"search-empty-icon\">🔍</div>" +
+        "<h4 class=\"search-empty-title\">\"" + term + "\" ile eşleşen model bulunamadı</h4>" +
+        (didYouMean ? "<div style=\"margin: 12px 0;\"><button type=\"button\" onclick=\"const inp=document.getElementById('searchInput'); if(inp){ inp.value='" + didYouMean + "'; App.handleLiveSearch('" + didYouMean + "'); }\" style=\"background:#f4f4f5;border:1px solid #d4d4d8;padding:6px 12px;border-radius:8px;font-size:12px;cursor:pointer;font-weight:bold;color:#18181b;\">Bunu mu demek istediniz: <span style=\"text-decoration:underline;\">" + didYouMean + "</span> (Uygula ↵)</button></div>" : "") +
+        "<p class=\"search-empty-desc\">Farklı bir marka adı, model referansı veya \"Rolex, Cartier, Altın, Saat\" gibi genel bir arama terimi deneyebilirsiniz.</p>" +
+        "</div>";
       return;
     }
 
-    listEl.innerHTML = results.slice(0, 30).map(p => {
-      const img = p.image || p.img || (p.images && p.images[0]) || 'images/belgin-logo.png';
-      const brand = p.brand || (p.category === 'gold' ? '24K ALTIN' : 'MÜCEVHERAT');
-      const title = `${p.brand || ''} ${p.name || ''}`.trim();
-      const ref = p.reference || p.ref || p.metal || (p.category === 'gold' ? 'Sertifikalı Külçe/Ziynet' : 'Özel Koleksiyon');
-      const priceFormatted = (typeof formatPrice === 'function') ? formatPrice(p.price) : `₺${Number(p.price).toLocaleString('tr-TR')}`;
+    const dymBanner = didYouMean && results.length > 0 ? "<div style=\"grid-column: 1/-1; margin-bottom: 8px;\">" +
+      "<button type=\"button\" onclick=\"const inp=document.getElementById('searchInput'); if(inp){ inp.value='" + didYouMean + "'; App.handleLiveSearch('" + didYouMean + "'); }\" style=\"background:#ecfdf5;border:1px solid #a7f3d0;padding:6px 12px;border-radius:8px;font-size:12px;cursor:pointer;font-weight:bold;color:#065f46;\">" +
+      "Bunu mu demek istediniz: <span style=\"text-decoration:underline;\">" + didYouMean + "</span> (Uygula ↵)" +
+      "</button></div>" : "";
 
-      return `
-        <div class="search-result-item" onclick="App.closeSearchModal(); App.openProduct(${p.id});">
-          <img src="${img}" alt="${title}" class="search-result-thumb" loading="lazy">
-          <div class="search-result-info">
-            <span class="search-result-brand">${brand}</span>
-            <div class="search-result-title">${title}</div>
-            <span class="search-result-ref">${ref}</span>
-          </div>
-          <div class="search-result-price">${priceFormatted}</div>
-        </div>
-      `;
-    }).join('');
+    listEl.innerHTML = dymBanner + displayItems.slice(0, 24).map(p => {
+      const img = p.image || p.img || (p.images && p.images[0]) || "images/belgin-logo.png";
+      const brand = p.brand || (p.category === "gold" ? "24K ALTIN" : "MÜCEVHERAT");
+      const title = ((p.brand || "") + " " + (p.name || "")).trim();
+      const ref = p.reference || p.ref || p.metal || (p.category === "gold" ? "Sertifikalı Külçe/Ziynet" : "Özel Koleksiyon");
+      const priceFormatted = (typeof formatPrice === "function") ? formatPrice(p.price) : ("₺" + Number(p.price).toLocaleString("tr-TR"));
+
+      return "<div class=\"search-result-item\" onclick=\"App.closeSearchModal(); App.openProduct(" + p.id + ");\">" +
+        "<img src=\"" + img + "\" alt=\"" + title + "\" class=\"search-result-thumb\" loading=\"lazy\">" +
+        "<div class=\"search-result-info\">" +
+        "<span class=\"search-result-brand\">" + brand + "</span>" +
+        "<div class=\"search-result-title\">" + title + "</div>" +
+        "<span class=\"search-result-ref\">" + ref + "</span>" +
+        "</div>" +
+        "<div class=\"search-result-price\">" + priceFormatted + "</div>" +
+        "</div>";
+    }).join("");
   },
 
   calculateInstantValuation() {
@@ -1832,17 +1991,100 @@ const App = {
   _pendingOrder: null,
   _timerInterval: null,
 
-  processOrder() {
-    // Hataları Temizle
-    this.clearFieldError('ccCardHolder');
-    this.clearFieldError('ccCardNumber');
-    this.clearFieldError('ccCardExpiry');
-    this.clearFieldError('ccCardCvc');
+  renderCheckoutDeliveryOptions() {
+    const container = document.getElementById('checkoutDeliveryContent');
+    if (!container) return;
 
+    let items = (typeof Cart !== 'undefined' && Cart.items && Cart.items.length > 0) ? [...Cart.items] : [];
+    // Saatler kategorisindeki tüm sıfır saatler için ücretsiz kargo serbesttir (Seçkin Ürünler ve Altın HARİÇ)
+    const isCargoEligible = items.length > 0 && items.every(item => {
+      const p = (typeof findProduct === 'function' ? findProduct(item.id) : null) || item;
+      const cat = String(p.category || item.category || '').toLowerCase();
+      const isPreOwned = p.isPreOwned === true || cat === 'seckin-urunler' || cat === 'ikinci-el' || cat === 'luxury';
+      const isGold = Boolean(p.isGold) || Boolean(item.isGold) || ['altin', 'gold', 'mucevherat', 'jewelry', 'jewellery'].includes(cat);
+      const isWatch = (cat === 'saat' || cat === 'watch');
+      return isWatch && !isPreOwned && !isGold;
+    });
+
+    if (isCargoEligible) {
+      container.innerHTML = `
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <!-- 1. Seçenek: Ücretsiz Sigortalı Kargo (Varsayılan) -->
+          <label style="border:1.5px solid #084C47; background:#F2F8F7; padding:12px 14px; border-radius:8px; display:flex; align-items:flex-start; justify-content:space-between; cursor:pointer; gap:10px;">
+            <div style="display:flex; gap:10px; align-items:flex-start;">
+              <input type="radio" name="shippingMethod" value="carrier" checked onchange="App.onDeliveryMethodChange('carrier')" style="margin-top:3px; accent-color:var(--color-teal); width:16px; height:16px;">
+              <div>
+                <strong style="font-size:13px; color:var(--color-teal); display:flex; align-items:center; gap:6px;">
+                  <span>📦 Ücretsiz Sigortalı Kargo ile Adrese Teslim</span>
+                  <span style="font-size:10.5px; background:#E8F5E9; color:#1B5E20; padding:1px 6px; border-radius:4px; font-weight:700; border:1px solid #A5D6A7;">ÜCRETSİZ</span>
+                </strong>
+                <span style="font-size:11.5px; color:#444; display:block; margin-top:2px;">Türkiye geneli sigortalı ve takip numaralı ücretsiz kargo gönderimi.</span>
+              </div>
+            </div>
+          </label>
+
+          <!-- 2. Seçenek: Showroom Mağazadan Teslim -->
+          <label style="border:1px solid #D8D2C5; background:#FAFAFA; padding:12px 14px; border-radius:8px; display:flex; align-items:flex-start; justify-content:space-between; cursor:pointer; gap:10px;">
+            <div style="display:flex; gap:10px; align-items:flex-start;">
+              <input type="radio" name="shippingMethod" value="showroom" onchange="App.onDeliveryMethodChange('showroom')" style="margin-top:3px; accent-color:var(--color-teal); width:16px; height:16px;">
+              <div>
+                <strong style="font-size:13px; color:#222; display:block;">🏛️ İzmir Buca Showroom Mağazadan Teslimat</strong>
+                <span style="font-size:11.5px; color:#666; display:block; margin-top:2px;">Menderes Cad. No:231/B Buca / İzmir</span>
+              </div>
+            </div>
+          </label>
+
+          <!-- Kargo Gönderi Adresi Alanları -->
+          <div id="shippingAddressFields" style="margin-top:6px; background:#F8FAFA; border:1px solid #CBE5E2; padding:14px 16px; border-radius:8px;">
+            <h4 style="margin:0 0 10px; font-size:12.5px; font-weight:800; color:var(--color-teal); display:flex; align-items:center; gap:6px;">
+              <span>📍 Kargo Teslimat & Gönderi Adresi</span>
+            </h4>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
+              <div>
+                <label style="font-size:11.5px; font-weight:700; display:block; margin-bottom:4px; color:#333;">İl / Şehir *</label>
+                <input type="text" id="checkoutCity" required placeholder="Örn: İzmir, İstanbul, Ankara" style="width:100%; padding:9px 12px; border:1.5px solid #D8D2C5; border-radius:6px; font-family:inherit; font-size:13px; background:#FFF; box-sizing:border-box;">
+              </div>
+              <div>
+                <label style="font-size:11.5px; font-weight:700; display:block; margin-bottom:4px; color:#333;">İlçe *</label>
+                <input type="text" id="checkoutDistrict" required placeholder="Örn: Buca, Kadıköy, Çankaya" style="width:100%; padding:9px 12px; border:1.5px solid #D8D2C5; border-radius:6px; font-family:inherit; font-size:13px; background:#FFF; box-sizing:border-box;">
+              </div>
+            </div>
+            <div>
+              <label style="font-size:11.5px; font-weight:700; display:block; margin-bottom:4px; color:#333;">Açık Teslimat Adresi (Cadde, Mahalle, Sokak, No, Daire) *</label>
+              <textarea id="checkoutAddress" required rows="2" placeholder="Kargonuzun ulaştırılacağı açık adresi eksiksiz yazınız..." style="width:100%; padding:9px 12px; border:1.5px solid #D8D2C5; border-radius:6px; font-family:inherit; font-size:13px; background:#FFF; box-sizing:border-box; resize:vertical;"></textarea>
+            </div>
+          </div>
+        </div>
+      `;
+    } else {
+      container.innerHTML = `
+        <div style="border:1px solid #CBE5E2; background:#F4FAF9; padding:12px 14px; border-radius:8px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+          <div>
+            <strong style="font-size:13px; color:var(--color-ink); display:block; margin-bottom:2px;">İzmir Buca Showroom Mağazadan Teslimat</strong>
+            <span style="font-size:11.5px; color:#555;">Menderes Cad. No:231/B Buca / İzmir · 12.000 TL+ MASAK Kimlik İbraz Protokolü</span>
+          </div>
+          <input type="radio" name="shippingMethod" value="showroom" checked style="accent-color:var(--color-teal); width:16px; height:16px;">
+        </div>
+      `;
+    }
+  },
+
+  onDeliveryMethodChange(method) {
+    const addressBox = document.getElementById('shippingAddressFields');
+    if (!addressBox) return;
+    if (method === 'carrier' || method === 'cargo') {
+      addressBox.style.display = 'block';
+    } else {
+      addressBox.style.display = 'none';
+    }
+  },
+
+  processOrder() {
     const fn = (document.getElementById('checkoutFirstName')?.value || '').trim();
     const ln = (document.getElementById('checkoutLastName')?.value || '').trim();
     const phone = (document.getElementById('checkoutPhone')?.value || '').trim();
     const email = (document.getElementById('checkoutEmail')?.value || '').trim();
+    const identity = (document.getElementById('checkoutIdentity')?.value || '').trim();
 
     if (!fn || !ln) {
       if (typeof showToast === 'function') showToast('Lütfen teslimat için ad ve soyadınızı eksiksiz giriniz.', 'error');
@@ -1853,8 +2095,45 @@ const App = {
 
     if (!phone || phone.length < 10) {
       if (typeof showToast === 'function') showToast('Lütfen geçerli bir telefon numarası giriniz (3D Secure SMS şifresi için zorunludur).', 'error');
-      else alert('Lütfen geçerli bir telefon numarası giriniz.');
+      else alert('Lütfen geçerli bir telefon numarası giriniz (3D Secure SMS şifresi için zorunludur).');
       document.getElementById('checkoutPhone')?.focus();
+      return;
+    }
+
+    if (!email || !email.includes('@')) {
+      if (typeof showToast === 'function') showToast('Lütfen e-Arşiv faturanız ve yasal evraklar için geçerli bir e-posta adresi giriniz.', 'error');
+      else alert('Lütfen geçerli bir e-posta adresi giriniz.');
+      document.getElementById('checkoutEmail')?.focus();
+      return;
+    }
+
+    // Teslimat Yöntemi ve Kargo Adresi Doğrulaması
+    const shippingRadio = document.querySelector('input[name="shippingMethod"]:checked');
+    const selectedMethod = shippingRadio ? shippingRadio.value : 'showroom';
+    let customerAddress = 'Showroom / Mağazadan Teslim';
+
+    if (selectedMethod === 'carrier' || selectedMethod === 'cargo') {
+      const city = (document.getElementById('checkoutCity')?.value || '').trim();
+      const district = (document.getElementById('checkoutDistrict')?.value || '').trim();
+      const address = (document.getElementById('checkoutAddress')?.value || '').trim();
+
+      if (!city || !district || !address || address.length < 8) {
+        if (typeof showToast === 'function') showToast('Lütfen ücretsiz kargo için teslimat ili, ilçesi ve açık adresinizi eksiksiz giriniz.', 'error');
+        else alert('Lütfen teslimat adresinizi eksiksiz giriniz.');
+        document.getElementById('checkoutAddress')?.focus();
+        return;
+      }
+      customerAddress = `${address}, ${district} / ${city}`;
+    }
+
+    // Yasal Sözleşme Kontrolleri
+    const chkTerms = document.getElementById('chkTerms');
+    const chkKyc = document.getElementById('chkKyc');
+    const chkHandover = document.getElementById('chkHandover');
+
+    if ((chkTerms && !chkTerms.checked) || (chkKyc && !chkKyc.checked) || (chkHandover && !chkHandover.checked)) {
+      if (typeof showToast === 'function') showToast('Lütfen mesafeli satış, MASAK ve teslimat yasal onay kutularını işaretleyiniz.', 'error');
+      else alert('Lütfen zorunlu yasal onay kutularını işaretleyiniz.');
       return;
     }
 
@@ -1875,46 +2154,24 @@ const App = {
       return;
     }
 
-    const totalAmount = typeof Cart !== 'undefined' ? Cart.getTotal() : 0;
-    const formattedAmount = typeof formatPrice === 'function' ? formatPrice(totalAmount) : `₺${totalAmount.toLocaleString('tr-TR')}`;
-    const isHighVal = items.some(i => (typeof isHighValueSecureDelivery === 'function' ? isHighValueSecureDelivery(i) : i.price >= 12000));
     const customerFullName = `${fn} ${ln}`;
 
-    // Kredi Kartı Bilgileri Doğrulaması (Gerçek Banka Standartları)
-    const cardHolder = (document.getElementById('ccCardHolder')?.value || '').trim();
-    const rawCardNum = (document.getElementById('ccCardNumber')?.value || '').replace(/\s/g, '');
-    const cardExpiry = (document.getElementById('ccCardExpiry')?.value || '').trim();
-    const cardCvc = (document.getElementById('ccCardCvc')?.value || '').trim();
-
-    if (!cardHolder || cardHolder.split(/\s+/).length < 2) {
-      this.setFieldError('ccCardHolder', 'Lütfen kart üzerindeki Ad ve Soyadı eksiksiz giriniz.');
-      if (typeof showToast === 'function') showToast('Lütfen kart üzerindeki Ad ve Soyadı eksiksiz giriniz.', 'error');
-      document.getElementById('ccCardHolder')?.focus();
-      return;
-    }
-
-    if (!rawCardNum || rawCardNum.length < 13 || rawCardNum.length > 19) {
-      this.setFieldError('ccCardNumber', '16 haneli geçerli kart numarasını eksiksiz giriniz.');
-      if (typeof showToast === 'function') showToast('Lütfen 16 haneli geçerli kart numarasını giriniz.', 'error');
-      document.getElementById('ccCardNumber')?.focus();
-    const btn = document.getElementById('btnSubmitOrder');
+    const btn = document.getElementById('checkoutSubmitBtn') || document.getElementById('btnSubmitOrder');
     const originalBtnHtml = btn ? btn.innerHTML : '';
     if (btn) {
       btn.disabled = true;
-      btn.innerHTML = '<span>🔒</span> Akbank 3D Secure Bağlantısı Kuruluyor...';
+      btn.innerHTML = '<span style="font-size:20px;">🔒</span> <span>Akbank 3D Secure Kapısına Yönlendiriliyorsunuz...</span>';
     }
 
     const orderPayload = {
       provider: 'AKBANK',
       user_name: customerFullName,
       user_phone: phone,
-      email: email || 'musteri@belginkuyumculuk.com',
-      customerIdentity: document.getElementById('checkoutIdentity')?.value || '',
-      cardNumber: rawCardNum,
-      cardExpiry: cardExpiry,
-      cardCvc: cardCvc,
+      email: email,
+      customerIdentity: identity || '',
+      customerAddress: customerAddress,
       items: items.map(i => ({ id: i.id, qty: i.qty })),
-      deliveryMethod: 'showroom',
+      deliveryMethod: selectedMethod === 'showroom' ? 'showroom' : 'carrier',
       termsAccepted: true,
       preInformationAccepted: true,
       highValueDeliveryAccepted: true,
@@ -1934,7 +2191,7 @@ const App = {
       }
 
       if (data.gatewayUrl && data.postParams) {
-        // DOĞRUDAN RESMİ AKBANK EST 3D SECURE KAPISINA GÖNDERİM
+        // DOĞRUDAN RESMİ AKBANK EST 3D SECURE / PAYHOSTING KAPISINA GÖNDERİM
         const form = document.createElement('form');
         form.method = 'POST';
         form.action = data.gatewayUrl;
@@ -1971,6 +2228,7 @@ const App = {
 
   // ÖDEME FORMU GERÇEK ZAMANLI OTOMATİK SENKRONİZASYON
   initCheckoutAutoSync() {
+    this.renderCheckoutDeliveryOptions();
     const form = document.getElementById('checkoutForm') || document.querySelector('#page-odeme form');
     if (!form) return;
     const updateDraft = () => {
@@ -1991,12 +2249,16 @@ const App = {
       sessionStorage.setItem('belgin_checkout_draft', JSON.stringify(draft));
     };
 
-    form.querySelectorAll('input').forEach(inp => {
+    form.querySelectorAll('input, textarea').forEach(inp => {
       inp.addEventListener('input', updateDraft);
       inp.addEventListener('change', updateDraft);
     });
   }
 };
+
+if (typeof window !== 'undefined') {
+  window.App = App;
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   App.init();
