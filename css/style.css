@@ -306,9 +306,9 @@ p, span, li, td, th, label, input, button, select, textarea {
 .header {
   position: sticky;
   top: 0;
-  background: linear-gradient(90deg, #0b3e27 0%, #197149 100%);
-  border-bottom: 1px solid rgba(194, 167, 104, 0.35);
-  box-shadow: 0 4px 25px rgba(11, 62, 39, 0.28);
+  background: #052621;
+  border-bottom: 1px solid rgba(194, 167, 104, 0.32);
+  box-shadow: 0 4px 20px rgba(3, 18, 15, 0.35);
   z-index: 1000;
   transition: all 0.3s var(--ease-silk);
 }
@@ -579,30 +579,45 @@ p, span, li, td, th, label, input, button, select, textarea {
   margin-top: 1px;
 }
 
-/* MOBILE DRAWER ACCORDION */
+/* MOBILE DRAWER ACCORDION (HAUTE MAISON STANDARDI) */
 .mobile-nav-accordion-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 12px 14px;
+  padding: 13px 14px;
   color: #FFFFFF;
   font-size: 14px;
   font-weight: 600;
   border-radius: 8px;
-  background: transparent;
-  border: none;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(194, 167, 104, 0.12);
   cursor: pointer;
   text-align: left;
+  transition: all 0.25s ease;
+  touch-action: manipulation;
 }
-.mobile-nav-accordion-header:hover {
-  background: rgba(255, 255, 255, 0.08);
+.mobile-nav-accordion-header:active {
+  transform: scale(0.98);
+}
+.mobile-nav-accordion-header:hover,
+.mobile-nav-accordion-header.open {
+  background: rgba(194, 167, 104, 0.12);
+  border-color: rgba(194, 167, 104, 0.35);
+  color: var(--color-gold);
+}
+.mobile-nav-accordion-header .acc-arr {
+  color: var(--color-gold);
+  font-size: 13px;
+  transition: transform 0.3s ease;
 }
 .mobile-nav-accordion-sub {
   display: none;
   flex-direction: column;
-  padding: 4px 0 8px 18px;
-  gap: 4px;
+  padding: 6px 0 8px 12px;
+  gap: 3px;
+  border-left: 2px solid rgba(194, 167, 104, 0.25);
+  margin: 4px 0 6px 14px;
 }
 .mobile-nav-accordion-sub.open {
   display: flex;
@@ -610,13 +625,17 @@ p, span, li, td, th, label, input, button, select, textarea {
 .mobile-nav-sub-link {
   font-size: 12.5px;
   color: #D1D1D8;
-  padding: 6px 10px;
+  padding: 8px 12px;
   border-radius: 6px;
   text-decoration: none;
+  transition: all 0.2s ease;
+  touch-action: manipulation;
 }
-.mobile-nav-sub-link:hover {
+.mobile-nav-sub-link:hover,
+.mobile-nav-sub-link:active {
   color: var(--color-gold);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(194, 167, 104, 0.1);
+  padding-left: 16px;
 }
 
 .header-actions {
@@ -870,73 +889,87 @@ p, span, li, td, th, label, input, button, select, textarea {
   }
 }
 
-/* Mobil (<= 768px): İki Parçalı Hero */
+/* Mobil (<= 768px): Entegre Lüks Maison Hero */
 @media (max-width: 768px) {
   .hero-signature {
-    flex-direction: column;
-    min-height: auto;
+    position: relative;
+    min-height: 480px;
+    display: flex;
+    align-items: flex-end;
     padding: 0;
-    background: #070A09;
-    align-items: stretch;
+    overflow: hidden;
+    background: #051A17;
   }
   .hero-media {
-    position: relative;
+    position: absolute;
+    inset: 0;
     width: 100%;
-    aspect-ratio: 4 / 5;
-    height: auto;
-    inset: auto;
+    height: 100%;
   }
   .hero-media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 18% center;
+    object-position: center 25%;
+    opacity: 0.62;
   }
   .hero-gradient-overlay {
-    display: none;
+    display: block;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(5,26,23,0.15) 0%, rgba(5,26,23,0.65) 50%, #051A17 100%);
+    z-index: 1;
   }
   .hero-container {
     position: relative;
+    z-index: 2;
     width: 100%;
-    padding: 0;
+    padding: 0 16px 28px;
     display: block;
   }
   .hero-content {
-    width: 100%;
+    background: transparent;
+    padding: 0;
     max-width: 100%;
-    background: #070A09;
-    padding: 32px 22px 38px;
     text-align: left;
     margin: 0;
   }
   .hero-eyebrow {
-    font-size: 11px;
-    margin-bottom: 12px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--color-gold);
+    margin-bottom: 8px;
   }
   .hero-title {
-    font-size: clamp(34px, 8.5vw, 44px);
-    line-height: 1.1;
-    margin-bottom: 14px;
+    font-size: 32px;
+    font-family: var(--font-serif);
+    color: #FFFFFF;
+    line-height: 1.15;
+    margin-bottom: 10px;
   }
   .hero-desc {
-    font-size: 14.5px;
-    line-height: 1.65;
-    margin-bottom: 22px;
+    font-size: 13.5px;
+    color: #ECE8E1;
+    line-height: 1.55;
+    margin-bottom: 18px;
   }
   .hero-actions {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     width: 100%;
     gap: 10px;
-    margin-bottom: 18px;
+    margin-bottom: 14px;
   }
   .btn-hero-primary,
   .btn-hero-secondary {
-    width: 100%;
-    min-height: 48px;
+    flex: 1;
+    min-height: 44px;
+    font-size: 12.5px;
+    padding: 10px 14px;
   }
   .hero-trust-line {
-    font-size: 11.5px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.7);
     text-align: center;
   }
 }
@@ -1095,15 +1128,94 @@ p, span, li, td, th, label, input, button, select, textarea {
 }
 
 @media (max-width: 768px) {
+  .brands-carousel-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    mask-image: none;
+    -webkit-mask-image: none;
+    padding: 6px 0 16px;
+  }
+  .brands-carousel-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+  .brands-carousel-track {
+    animation: none;
+    gap: 12px;
+    padding: 0 14px;
+    width: max-content;
+  }
   .brand-carousel-card {
-    flex: 0 0 170px;
-    padding: 12px;
+    flex: 0 0 145px;
+    padding: 12px 10px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(220, 214, 202, 0.85);
+    background: #FFFFFF;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
   }
   .brand-card-thumb {
-    height: 130px;
+    height: 105px;
+    background: radial-gradient(circle at 50% 50%, #ffffff 30%, #f7f5f0 100%);
+    border-radius: 8px;
+    padding: 8px;
+    margin-bottom: 8px;
   }
   .brand-card-name {
-    font-size: 14px;
+    font-size: 13.5px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  .brand-card-origin {
+    font-size: 10px;
+    margin-bottom: 6px;
+  }
+  .brand-card-count {
+    font-size: 10.5px;
+    padding: 3px 9px;
+  }
+  .slider-arrows-nav {
+    display: none;
+  }
+}
+
+/* MOBİL HIZLI LÜKS FİLTRE HAPLARI */
+.mobile-quick-filter-bar {
+  display: none;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  gap: 8px;
+  padding: 4px 0 14px;
+  margin-bottom: 6px;
+}
+.mobile-quick-filter-bar::-webkit-scrollbar {
+  display: none;
+}
+.mobile-filter-pill {
+  flex: 0 0 auto;
+  padding: 7px 14px;
+  border-radius: 20px;
+  background: #FFFFFF;
+  border: 1px solid rgba(194, 167, 104, 0.35);
+  color: var(--color-ink);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  touch-action: manipulation;
+}
+.mobile-filter-pill.active,
+.mobile-filter-pill:active,
+.mobile-filter-pill:hover {
+  background: var(--color-teal);
+  color: #FFFFFF;
+  border-color: var(--color-teal);
+  box-shadow: 0 2px 8px rgba(5, 51, 47, 0.25);
+}
+@media (max-width: 768px) {
+  .mobile-quick-filter-bar {
+    display: flex;
   }
 }
 
@@ -2729,17 +2841,22 @@ p, span, li, td, th, label, input, button, select, textarea {
   cursor: pointer;
 }
 
+/* ==========================================================
+   7. MOBİL MİMARİ — LÜKS MAISON STANDARDI (SAFE-AREA & GLASSMORPHISM)
+   ========================================================== */
+
 /* Mobil Kayar Menü (Drawer) */
 .mobile-drawer-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(3, 10, 8, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   z-index: 2000;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.3s ease;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s ease;
+  touch-action: manipulation;
 }
 .mobile-drawer-overlay.open {
   opacity: 1;
@@ -2750,81 +2867,109 @@ p, span, li, td, th, label, input, button, select, textarea {
   top: 0;
   left: 0;
   bottom: 0;
-  width: 82%;
-  max-width: 340px;
-  background: #070A09;
+  width: 86%;
+  max-width: 360px;
+  background: linear-gradient(180deg, #052420 0%, #031513 100%);
   color: #FFFFFF;
   z-index: 2001;
   transform: translate3d(-100%, 0, 0);
   -webkit-transform: translate3d(-100%, 0, 0);
-  transition: transform 0.35s var(--ease-silk);
-  -webkit-transition: -webkit-transform 0.35s var(--ease-silk);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-transition: -webkit-transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   flex-direction: column;
-  box-shadow: 10px 0 40px rgba(0, 0, 0, 0.5);
+  box-shadow: 16px 0 50px rgba(0, 0, 0, 0.65);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  border-right: 1px solid rgba(194, 167, 104, 0.28);
 }
 .mobile-drawer-overlay.open .mobile-drawer {
   transform: translate3d(0, 0, 0);
   -webkit-transform: translate3d(0, 0, 0);
 }
 .mobile-drawer-header {
-  padding: 24px 20px;
-  border-bottom: 1px solid rgba(194, 167, 104, 0.25);
+  padding: 20px 18px;
+  border-bottom: 1px solid rgba(194, 167, 104, 0.22);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: rgba(3, 15, 13, 0.6);
+}
+.mobile-drawer-header .brand-logo-mobile-surface {
+  background: #FFFFFF;
+  border: 1px solid rgba(194, 167, 104, 0.35);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+}
+.mobile-drawer-close {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(194, 167, 104, 0.3);
+  color: var(--color-gold);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  touch-action: manipulation;
+}
+.mobile-drawer-close:active {
+  transform: scale(0.92);
+  background: rgba(194, 167, 104, 0.2);
 }
 .mobile-drawer-nav {
-  padding: 20px;
+  padding: 16px 14px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   flex: 1;
 }
 .mobile-drawer-nav a {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 14px 16px;
-  color: #E2DDD5;
+  padding: 13px 15px;
+  color: #ECE8E1;
   text-decoration: none;
-  font-size: 14.5px;
+  font-size: 13.5px;
   font-weight: 600;
   border-radius: 8px;
-  transition: background 0.2s;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
+  transition: all 0.2s ease;
+  letter-spacing: 0.4px;
+  touch-action: manipulation;
 }
 .mobile-drawer-nav a:hover,
 .mobile-drawer-nav a.active {
-  background: rgba(194, 167, 104, 0.15);
+  background: rgba(194, 167, 104, 0.16);
   color: var(--color-gold);
+  border-left: 3px solid var(--color-gold);
 }
 .mobile-drawer-footer {
-  padding: 20px;
+  padding: 18px 16px calc(20px + env(safe-area-inset-bottom, 12px));
   border-top: 1px solid rgba(194, 167, 104, 0.2);
-  background: #03201e;
+  background: rgba(2, 12, 10, 0.85);
 }
 
-/* Mobil Alt Sabit Lüks Dock */
+/* Mobil Alt Sabit Lüks Dock (iOS Home-Bar & Android Safe-Area Uyumlu) */
 .mobile-bottom-dock {
   display: none;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 64px;
-  background: rgba(7, 10, 9, 0.94);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border-top: 1px solid rgba(194, 167, 104, 0.3);
-  z-index: 999;
+  height: calc(62px + env(safe-area-inset-bottom, 10px));
+  background: rgba(4, 24, 21, 0.92);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-top: 1px solid rgba(194, 167, 104, 0.32);
+  z-index: 1500;
   justify-content: space-around;
-  align-items: center;
-  padding: 4px 10px;
-  box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.2);
+  align-items: flex-start;
+  padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 10px));
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.35);
+  touch-action: manipulation;
 }
 .mobile-dock-btn {
   display: flex;
@@ -2832,20 +2977,27 @@ p, span, li, td, th, label, input, button, select, textarea {
   align-items: center;
   justify-content: center;
   gap: 3px;
-  color: #A0A0A8;
+  color: #B8B5AE;
   text-decoration: none;
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.3px;
   flex: 1;
-  height: 100%;
+  height: 48px;
   cursor: pointer;
   background: transparent;
   border: none;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
 }
 .mobile-dock-btn svg {
-  stroke: #A0A0A8;
-  transition: stroke 0.2s;
+  stroke: #B8B5AE;
+  transition: stroke 0.2s, transform 0.2s;
+}
+.mobile-dock-btn:active {
+  transform: scale(0.92);
 }
 .mobile-dock-btn.active,
 .mobile-dock-btn:hover {
@@ -2854,12 +3006,40 @@ p, span, li, td, th, label, input, button, select, textarea {
 .mobile-dock-btn.active svg,
 .mobile-dock-btn:hover svg {
   stroke: var(--color-gold);
+  transform: translateY(-1px);
+}
+.mobile-dock-btn.active::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  width: 16px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-gold);
+  box-shadow: 0 0 6px rgba(194, 167, 104, 0.8);
+}
+.mobile-dock-badge {
+  position: absolute;
+  top: 2px;
+  right: calc(50% - 16px);
+  background: var(--color-gold);
+  color: #052420;
+  font-size: 9px;
+  font-weight: 800;
+  min-width: 15px;
+  height: 15px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
 
 @media (max-width: 1024px) {
   .hero-trust-strip { grid-template-columns: repeat(2, 1fr); }
   .brands-grid-5 { grid-template-columns: repeat(3, 1fr); }
-  .products-grid-4 { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .products-grid-4 { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .trust-grid-art { grid-template-columns: repeat(2, 1fr); }
   .footer-art-grid { grid-template-columns: 1fr 1fr; }
   .pd-art-wrapper { grid-template-columns: 1fr; }
@@ -2868,7 +3048,7 @@ p, span, li, td, th, label, input, button, select, textarea {
   .btn-hamburger { display: inline-flex; }
   .header-grid { padding: 10px 0; }
   .mobile-bottom-dock { display: flex; }
-  body { padding-bottom: 64px; }
+  body { padding-bottom: calc(74px + env(safe-area-inset-bottom, 12px)) !important; }
 }
 
 @media (max-width: 900px) {
@@ -2879,13 +3059,71 @@ p, span, li, td, th, label, input, button, select, textarea {
 }
 
 @media (max-width: 640px) {
-  .container-art { padding: 0 16px; }
+  .container-art { padding: 0 14px; }
   
-  .products-grid-4 { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .product-art-card { border-radius: 8px; }
-  .product-art-info { padding: 10px 10px 14px; }
-  .prod-model-name { font-size: 12.5px; }
-  .prod-price-tag { font-size: 14.5px; }
+  .products-grid-4 { 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 12px; 
+  }
+  .product-art-card { 
+    border-radius: 12px; 
+    border: 1px solid rgba(218, 212, 200, 0.88);
+    background: #FFFFFF;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .product-art-card:active {
+    transform: scale(0.98);
+  }
+  .product-art-thumb {
+    padding-top: 100%;
+    background: radial-gradient(circle at 50% 50%, #FFFFFF 20%, #F7F5F0 100%);
+    border-bottom: 1px solid rgba(240, 235, 226, 0.85);
+  }
+  .product-art-info { 
+    padding: 12px 10px 14px; 
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
+  }
+  .prod-brand-name {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--color-gold-dark);
+    margin-bottom: 2px;
+    text-transform: uppercase;
+  }
+  .prod-model-name { 
+    font-size: 12.5px; 
+    font-weight: 600;
+    color: var(--color-ink);
+    line-height: 1.35;
+    margin-bottom: 6px;
+    min-height: 34px;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .prod-ref-size {
+    font-size: 10px;
+    color: var(--color-muted);
+    margin-bottom: 6px;
+  }
+  .prod-price-tag { 
+    font-size: 15px; 
+    font-weight: 800;
+    color: var(--color-teal);
+    font-variant-numeric: tabular-nums;
+  }
 
   .brands-grid-5 { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .trust-grid-art { grid-template-columns: 1fr; gap: 12px; }
@@ -2903,7 +3141,10 @@ p, span, li, td, th, label, input, button, select, textarea {
 
   .footer-vip-strip { flex-direction: column; text-align: center; }
   .footer-art-bottom { flex-direction: column; gap: 10px; text-align: center; }
-  .vip-whatsapp-float, .vip-whatsapp-float-compact { bottom: 74px; right: 14px; }
+  .vip-whatsapp-float, .vip-whatsapp-float-compact { 
+    bottom: calc(78px + env(safe-area-inset-bottom, 10px)); 
+    right: 14px; 
+  }
 }
 
 /* SADE & KÜÇÜK PREMİUM FLOATING WHATSAPP BUTONU */

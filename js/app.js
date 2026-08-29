@@ -1,4 +1,3 @@
-
 // --- UNIVERSAL TURKISH SEARCH ENGINE (STANDARDIZED) ---
 function normalizeTr(text) {
   if (!text) return "";
@@ -25,7 +24,7 @@ function levenshteinDist(a, b) {
   return matrix[b.length][a.length];
 }
 
-const STOP_WORDS_SET = new Set(["nasil", "nedir", "ne", "icin", "kadar", "olan", "mi", "fiyat", "fiyati"]);
+const STOP_WORDS_SET = new Set(["nasil", "nedir", "ne", "icin", "kadar", "olan", "mi", "fiyat", "fiyati", "almak", "istiyorum", "secilir"]);
 
 function runBelginSearch(items, query) {
   const qNorm = normalizeTr(query);
@@ -39,11 +38,14 @@ function runBelginSearch(items, query) {
   const allWords = new Set();
   
   for (const p of items) {
-    const titleNorm = normalizeTr((p.brand || "") + " " + (p.name || ""));
+    const brandNorm = normalizeTr(p.brand || "");
+    const nameNorm = normalizeTr(p.name || "");
+    const titleNorm = brandNorm + " " + nameNorm;
     const detailsNorm = normalizeTr((p.reference || "") + " " + (p.metal || "") + " " + (p.category || "") + " " + (p.subCategory || ""));
     const combined = titleNorm + " " + detailsNorm;
     
-    titleNorm.split(" ").forEach(w => w.length >= 3 && allWords.add(w));
+    brandNorm.split(" ").forEach(w => w.length >= 3 && allWords.add(w));
+    nameNorm.split(" ").forEach(w => w.length >= 3 && allWords.add(w));
     
     let score = 0;
     if (titleNorm === qNorm) score += 150;
@@ -53,20 +55,23 @@ function runBelginSearch(items, query) {
     
     for (const t of tokens) {
       if (t.length < 2) continue;
-      if (titleNorm.includes(t)) score += 35;
-      else if (combined.includes(t)) score += 15;
+      if (brandNorm === t) score += 80;
+      else if (brandNorm.includes(t)) score += 60;
+      else if (titleNorm.includes(t)) score += 40;
+      else if (combined.includes(t)) score += 20;
       
       for (const w of titleNorm.split(" ")) {
         if (w.length >= 3 && t.length >= 3) {
           const d = levenshteinDist(t, w);
-          if (d <= 2 && d / Math.max(t.length, w.length) <= 0.35) {
-            score += 25 - d * 8;
+          const maxL = Math.max(t.length, w.length);
+          if (d <= 2 && d / maxL <= 0.35) {
+            score += 45 - d * 15;
           }
         }
       }
     }
     
-    if (score >= 20) {
+    if (score >= 12) {
       scored.push({ p, score });
     }
   }
@@ -91,11 +96,6 @@ function runBelginSearch(items, query) {
   const suggested = results.length === 0 && scored.length > 0 ? scored.slice(0, 6).map(s => s.p) : [];
   return { results, didYouMean, suggested };
 }
-
-// ==========================================================
-// BELGIN — LÜKS SAAT & MÜCEVHERAT (EST. 1999)
-// TÜRKİYE LOKASYON & YASAL E-TİCARET ALTYAPISI MOTORU
-// ==========================================================
 
 const App = {
   init() {
