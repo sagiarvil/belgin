@@ -761,21 +761,25 @@ p, span, li, td, th, label, input, button, select, textarea {
   object-fit: cover;
   object-position: center center;
   display: block;
+  filter: contrast(1.09) saturate(1.14) brightness(0.96);
+  transform: scale(1.005);
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 1.2s ease;
+  will-change: transform, filter;
 }
 
-/* Hafif Karartan Lüks Sinematik Katman & Metin Kontrastı */
+/* Haute Joaillerie Sinematik Işık, Lens Vignette & Teal-Gold Renk Derecelendirmesi */
 .hero-gradient-overlay {
   position: absolute;
   inset: 0;
   z-index: 2;
   pointer-events: none;
-  background: linear-gradient(
-    90deg,
-    rgba(7, 10, 9, 0.28) 0%,
-    rgba(7, 10, 9, 0.38) 40%,
-    rgba(7, 10, 9, 0.65) 70%,
-    rgba(7, 10, 9, 0.84) 100%
-  );
+  background: 
+    /* 1. Anamorfik Sinematik Lens Vignette (Mücevhere ve Modele Odak) */
+    radial-gradient(ellipse 75% 65% at 32% 48%, rgba(0, 0, 0, 0) 30%, rgba(3, 10, 8, 0.38) 75%, rgba(2, 8, 6, 0.78) 100%),
+    /* 2. Sıcak Şampanya / Zümrüt Lüks Renk Derecelendirmesi (Teal & Gold Depth) */
+    linear-gradient(135deg, rgba(8, 48, 38, 0.10) 0%, rgba(194, 167, 104, 0.05) 45%, rgba(3, 12, 10, 0.32) 100%),
+    /* 3. Sağ Metin & Buton Kusursuz Kontrast Degradeli Geçiş */
+    linear-gradient(90deg, rgba(3, 8, 7, 0.12) 0%, rgba(3, 8, 7, 0.26) 35%, rgba(3, 8, 7, 0.66) 68%, rgba(3, 8, 7, 0.86) 100%);
 }
 
 .hero-container {
@@ -916,13 +920,9 @@ p, span, li, td, th, label, input, button, select, textarea {
     object-position: 25% center;
   }
   .hero-gradient-overlay {
-    background: linear-gradient(
-      90deg,
-      rgba(3, 6, 5, 0) 20%,
-      rgba(3, 6, 5, 0.25) 45%,
-      rgba(3, 6, 5, 0.65) 70%,
-      rgba(3, 6, 5, 0.85) 100%
-    );
+    background: 
+      radial-gradient(ellipse 80% 70% at 28% 48%, rgba(0, 0, 0, 0) 25%, rgba(3, 10, 8, 0.38) 70%, rgba(2, 8, 6, 0.82) 100%),
+      linear-gradient(90deg, rgba(3, 8, 7, 0.10) 0%, rgba(3, 8, 7, 0.25) 30%, rgba(3, 8, 7, 0.70) 65%, rgba(3, 8, 7, 0.88) 100%);
   }
 }
 
@@ -954,18 +954,15 @@ p, span, li, td, th, label, input, button, select, textarea {
     object-position: 18% center;
     opacity: 1 !important;
     display: block;
+    filter: contrast(1.08) saturate(1.12) brightness(0.96);
   }
   .hero-gradient-overlay {
     display: block;
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      90deg,
-      rgba(6, 24, 21, 0) 0%,
-      rgba(6, 24, 21, 0.15) 25%,
-      rgba(6, 24, 21, 0.72) 60%,
-      #061815 100%
-    );
+    background: 
+      radial-gradient(ellipse 90% 75% at 18% 50%, rgba(0, 0, 0, 0) 20%, rgba(3, 10, 8, 0.32) 65%, rgba(2, 8, 6, 0.82) 100%),
+      linear-gradient(90deg, rgba(3, 12, 10, 0.04) 0%, rgba(3, 12, 10, 0.22) 28%, rgba(3, 12, 10, 0.78) 65%, #051614 100%);
     pointer-events: none;
     z-index: 2;
   }
