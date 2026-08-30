@@ -1919,6 +1919,7 @@
             <th>Müşteri Adı & Telefon</th>
             <th>Tutar (₺)</th>
             <th>Durum</th>
+            <th style="text-align:center;">Beyan</th>
             <th>İşlem</th>
           </tr>
         </thead>
@@ -2854,10 +2855,67 @@
       </table>
     </div>
 
-    <div style="background:#F8FAFC; border-top:1px solid #E2E8F0; padding:12px 20px; display:flex; justify-content:flex-end;">
-      <button type="button" class="btn-admin-primary" style="padding:8px 18px;" onclick="AdminApp.closePosRatesModal()">
-        Tamam / Kapat
-      </button>
+<!-- MÜŞTERİ ISLAK İMZALI BEYAN VE BELGE YÜKLEME MODALI -->
+<div id="declarationModal" class="admin-modal-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.65); z-index:9999; align-items:center; justify-content:center; padding:16px;">
+  <div class="admin-modal-card" style="background:#FFF; border-radius:12px; max-width:680px; width:100%; box-shadow:0 25px 50px -12px rgba(0,0,0,0.3); overflow:hidden; display:flex; flex-direction:column; max-height:90vh;">
+    <div style="background:linear-gradient(135deg, #042926 0%, #084C47 100%); color:#FFF; padding:16px 20px; display:flex; justify-content:space-between; align-items:center;">
+      <h3 style="margin:0; font-size:16px; font-weight:800; display:flex; align-items:center; gap:8px;">
+        <span>📑</span>
+        <span>Müşteri Islak İmzalı Beyanı & Kimlik/Kart İbrazı</span>
+      </h3>
+      <button type="button" style="background:none; border:none; color:#FFF; font-size:20px; cursor:pointer; line-height:1;" onclick="AdminApp.closeDeclarationModal()">✕</button>
+    </div>
+
+    <div style="padding:20px; overflow-y:auto; flex:1;" id="declarationModalBody">
+      <div id="declarationOrderInfo" style="background:#F0FDF4; border:1px solid #BBF7D0; border-radius:8px; padding:12px; margin-bottom:16px; font-size:12.5px; color:#166534;">
+        Yükleniyor...
+      </div>
+
+      <!-- Önizleme Alanı -->
+      <div id="declarationPreviewContainer" style="margin-bottom:16px; text-align:center;">
+        <div id="declarationEmptyState" style="border:2px dashed #CBD5E1; border-radius:8px; padding:32px 20px; color:#64748B; background:#F8FAFC;">
+          <div style="font-size:36px; margin-bottom:8px;">📄</div>
+          <div style="font-weight:700; font-size:13px; color:#334155;">Henüz Islak İmzalı Beyan Belgesi Eklenmedi</div>
+          <div style="font-size:11.5px; margin-top:4px;">Aşağıdaki alandan müşteriden gelen ıslak imzalı beyan fotoğrafını (JPG/PNG) veya PDF belgesini yükleyebilirsiniz.</div>
+        </div>
+
+        <div id="declarationDocPreview" style="display:none; border:1px solid #E2E8F0; border-radius:8px; overflow:hidden; background:#F8FAFC; padding:8px;">
+          <img id="declarationImgElement" src="" alt="Müşteri İmzalı Beyan" style="max-width:100%; max-height:420px; object-fit:contain; border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+          <div id="declarationPdfNotice" style="display:none; padding:24px; font-weight:700; color:#084C47;">
+            <span>📑 PDF Belgesi Eklendi: </span><span id="declarationPdfName" style="font-family:monospace;"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dosya Yükleme Alanı -->
+      <div style="background:#FFFDF7; border:1.5px dashed #CA8A04; border-radius:8px; padding:16px; text-align:center;">
+        <label style="font-weight:800; font-size:12.5px; color:#854D0E; display:block; margin-bottom:6px; cursor:pointer;">
+          📁 Yeni / Güncel Beyan Belgesi Yükle (PNG, JPG, PDF)
+        </label>
+        <input type="file" id="declarationFileInput" accept="image/png, image/jpeg, image/jpg, application/pdf" style="display:none;" onchange="AdminApp.handleDeclarationUpload(event)">
+        <button type="button" class="btn-admin-primary" style="background:#C2A768; color:#042926; border-color:#DFBA67; font-weight:800; padding:8px 18px; font-size:12px; cursor:pointer;" onclick="document.getElementById('declarationFileInput').click()">
+          📂 Bilgisayardan Dosya Seç
+        </button>
+        <div style="font-size:11px; color:#78350F; margin-top:6px;">
+          Maksimum 10MB · Yüklenen belge doğrudan yasal delil kitapçığına (8. TÜM BELGELER) eklenir ve yazdırılabilir.
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#F8FAFC; border-top:1px solid #E2E8F0; padding:12px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+      <div>
+        <button type="button" class="btn-admin-secondary" id="btnDeleteDeclaration" style="color:#DC2626; border-color:#FCA5A5; background:#FEF2F2; font-size:11.5px; display:none;" onclick="AdminApp.removeDeclaration()">
+          🗑️ Beyanı Kaldır
+        </button>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="btn-admin-secondary" id="btnOpenInLegalApp" style="background:#ECFDF5; border-color:#10B981; color:#065F46; font-weight:700; font-size:12px; padding:7px 14px;" onclick="AdminApp.openDeclarationInLegalApp()">
+          📜 Yasal Evrak Kitapçığında Aç
+        </button>
+        <button type="button" class="btn-admin-primary" style="padding:7px 16px; font-size:12px;" onclick="AdminApp.closeDeclarationModal()">
+          Kapat
+        </button>
+      </div>
     </div>
   </div>
 </div>

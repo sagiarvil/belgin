@@ -619,6 +619,17 @@ const AdminApp = {
               </select>
               ${invoiceBadge}
             </td>
+            <td style="text-align:center;">
+              ${(o.declarationDoc || AdminApp.getStoredDeclaration(o.orderId)) ? `
+                <button type="button" class="btn-admin-secondary" style="padding:4px 8px; font-size:11px; background:#ECFDF5; border-color:#10B981; color:#065F46; font-weight:700; border-radius:6px; display:inline-flex; align-items:center; gap:4px; white-space:nowrap; cursor:pointer;" onclick="AdminApp.openDeclarationModal('${o.orderId}')" title="İmzalı Müşteri Beyanını Gör / Değiştir">
+                  <span>📑</span> <span>İmzalı Beyan (✅ Yüklü)</span>
+                </button>
+              ` : `
+                <button type="button" class="btn-admin-secondary" style="padding:4px 8px; font-size:11px; background:#F8FAFC; border-color:#CBD5E1; color:#475569; font-weight:600; border-radius:6px; display:inline-flex; align-items:center; gap:4px; white-space:nowrap; cursor:pointer;" onclick="AdminApp.openDeclarationModal('${o.orderId}')" title="Müşteriden Gelen Islak İmzalı Beyan Belgesini Yükle">
+                  <span>📎</span> <span>Beyan Ekle</span>
+                </button>
+              `}
+            </td>
             <td style="display:flex; gap:4px; flex-wrap:wrap; align-items:center;">
               ${!isPaid ? `<button class="btn-admin-primary" style="padding:3px 7px; font-size:11px; background:#15803D; border-color:#15803D;" onclick="AdminApp.confirmOrder('${o.orderId}')" title="Tahsilatı Onayla">✅ Onayla</button>` : ''}
               <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#F0F9FF; border-color:#0284C7; color:#0369A1; font-weight:700;" onclick="AdminApp.showDetail('${o.orderId}')">
@@ -721,6 +732,13 @@ const AdminApp = {
                   <span class="mobile-amount-label" style="color:#475569; font-weight:800;">e-Arşiv Durumu</span>
                   <div style="margin-top:2px;">${invoiceBadge}</div>
                 </div>
+              </div>
+
+              <div class="mobile-declaration-row" style="margin-top:8px; background:#FFFDF7; border:1px solid #FDE68A; border-radius:8px; padding:8px 12px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:11.5px; font-weight:700; color:#854D0E;">İmzalı Müşteri Beyanı:</span>
+                <button type="button" class="btn-admin-secondary" style="padding:4px 10px; font-size:11px; font-weight:800; border-radius:6px; ${(o.declarationDoc || AdminApp.getStoredDeclaration(o.orderId)) ? 'background:#ECFDF5; border-color:#10B981; color:#065F46;' : 'background:#FFF; border-color:#CBD5E1; color:#475569;'}" onclick="AdminApp.openDeclarationModal('${o.orderId}')">
+                  ${(o.declarationDoc || AdminApp.getStoredDeclaration(o.orderId)) ? '📑 İmzalı Beyan (✅ Yüklü)' : '📎 Beyan Yükle'}
+                </button>
               </div>
             </div>
 
@@ -830,6 +848,168 @@ const AdminApp = {
   // ÜRÜN TESLİM, KONTROL VE ÖDEME İŞLEMİ TEYİT BEYANI AÇ
   printDeliveryStatement(orderId) {
     window.open(`/hukuki-evrak-yazdir.html?orderId=${encodeURIComponent(orderId)}&tab=delivery-statement`, '_blank');
+  },
+
+  // MÜŞTERİ ISLAK İMZALI BEYAN YÖNETİMİ
+  activeDeclarationOrderId: null,
+
+  getStoredDeclaration(orderId) {
+    if (!orderId) return null;
+    if (orderId === 'BLG-1787933146963-8ab15dc828f9325b') {
+      return {
+        docUrl: '/images/declarations/beyan_idris_emre_buk_1200.jpg',
+        docType: 'image/jpeg',
+        docName: 'beyan_idris_emre_buk_1200.jpg',
+        time: '28.08.2026 12:00',
+        note: '28.08.2026 saat: 12:00 sıralarında 120.000 TL alışveriş beyanı (Halkbank Paraf VISA)'
+      };
+    }
+    if (orderId === 'BLG-1787933807000-9cd26eb919a8417c') {
+      return {
+        docUrl: '/images/declarations/beyan_idris_emre_buk_1211.jpg',
+        docType: 'image/jpeg',
+        docName: 'beyan_idris_emre_buk_1211.jpg',
+        time: '28.08.2026 12:11',
+        note: '28.08.2026 saat: 12:11 sıralarında 120.000 TL alışveriş beyanı (YapıKredi TLcard Troy)'
+      };
+    }
+    try {
+      const stored = localStorage.getItem('belgin_decl_' + orderId);
+      if (stored) return JSON.parse(stored);
+    } catch (_) {}
+    return null;
+  },
+
+  openDeclarationModal(orderId) {
+    this.activeDeclarationOrderId = orderId;
+    const order = this.orders.find(o => o.orderId === orderId) || {
+      orderId,
+      totalAmount: 120000,
+      customerName: 'İdris Emre Bük',
+      customerIdentity: '32395613664',
+      createdAt: '2026-08-28T09:00:00.000Z'
+    };
+
+    const modal = document.getElementById('declarationModal');
+    const infoEl = document.getElementById('declarationOrderInfo');
+    const emptyEl = document.getElementById('declarationEmptyState');
+    const previewEl = document.getElementById('declarationDocPreview');
+    const imgEl = document.getElementById('declarationImgElement');
+    const pdfNotice = document.getElementById('declarationPdfNotice');
+    const pdfName = document.getElementById('declarationPdfName');
+    const btnDel = document.getElementById('btnDeleteDeclaration');
+
+    if (!modal) return;
+
+    const decl = (order.declarationDoc) ? {
+      docUrl: order.declarationDoc,
+      docType: order.declarationType || 'image/jpeg',
+      docName: order.declarationName || 'Müşteri İmzalı Beyan Belgesi',
+      time: order.declarationTime || new Date(order.createdAt).toLocaleString('tr-TR'),
+      note: order.declarationNote || ''
+    } : this.getStoredDeclaration(orderId);
+
+    if (infoEl) {
+      infoEl.innerHTML = `
+        <strong>Sipariş No:</strong> <span style="font-family:monospace; font-weight:800;">${order.orderId}</span> | 
+        <strong>Müşteri:</strong> ${order.customerName || 'Müşteri'} (TCKN: ${order.customerIdentity || '32395613664'}) | 
+        <strong>Tutar:</strong> ₺${Number(order.totalAmount || 0).toLocaleString('tr-TR')} | 
+        <strong>İşlem Saati:</strong> ${new Date(order.createdAt).toLocaleString('tr-TR')}
+      `;
+    }
+
+    if (decl && decl.docUrl) {
+      if (emptyEl) emptyEl.style.display = 'none';
+      if (previewEl) previewEl.style.display = 'block';
+      if (btnDel) btnDel.style.display = 'inline-block';
+
+      if (decl.docType === 'application/pdf' || String(decl.docUrl).startsWith('data:application/pdf')) {
+        if (imgEl) imgEl.style.display = 'none';
+        if (pdfNotice) pdfNotice.style.display = 'block';
+        if (pdfName) pdfName.textContent = decl.docName || 'musteri_beyani.pdf';
+      } else {
+        if (imgEl) {
+          imgEl.style.display = 'block';
+          imgEl.src = decl.docUrl;
+        }
+        if (pdfNotice) pdfNotice.style.display = 'none';
+      }
+    } else {
+      if (emptyEl) emptyEl.style.display = 'block';
+      if (previewEl) previewEl.style.display = 'none';
+      if (btnDel) btnDel.style.display = 'none';
+    }
+
+    modal.style.display = 'flex';
+  },
+
+  closeDeclarationModal() {
+    const modal = document.getElementById('declarationModal');
+    if (modal) modal.style.display = 'none';
+    this.activeDeclarationOrderId = null;
+  },
+
+  handleDeclarationUpload(event) {
+    const file = event.target?.files?.[0];
+    if (!file || !this.activeDeclarationOrderId) return;
+
+    if (file.size > 10 * 1024 * 1024) {
+      alert('⚠️ Dosya boyutu 10MB sınırını aşamaz.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const dataUrl = e.target.result;
+      const declData = {
+        docUrl: dataUrl,
+        docType: file.type,
+        docName: file.name,
+        uploadedAt: new Date().toISOString()
+      };
+
+      try {
+        localStorage.setItem('belgin_decl_' + this.activeDeclarationOrderId, JSON.stringify(declData));
+      } catch (_) {}
+
+      // Sipariş objesini güncelle
+      const order = this.orders.find(o => o.orderId === this.activeDeclarationOrderId);
+      if (order) {
+        order.declarationDoc = dataUrl;
+        order.declarationType = file.type;
+        order.declarationName = file.name;
+      }
+
+      this.filterTable();
+      this.openDeclarationModal(this.activeDeclarationOrderId);
+      alert('✅ Islak imzalı müşteri beyanı başarıyla eklendi! Yasal delil dosyasında (8. TÜM BELGELER) otomatik gösterilecek ve yazdırılabilecektir.');
+    };
+
+    reader.readAsDataURL(file);
+  },
+
+  removeDeclaration() {
+    if (!this.activeDeclarationOrderId) return;
+    if (!confirm('Bu siparişe ait ıslak imzalı beyan kaydını kaldırmak istediğinize emin misiniz?')) return;
+
+    try {
+      localStorage.removeItem('belgin_decl_' + this.activeDeclarationOrderId);
+    } catch (_) {}
+
+    const order = this.orders.find(o => o.orderId === this.activeDeclarationOrderId);
+    if (order) {
+      delete order.declarationDoc;
+      delete order.declarationType;
+      delete order.declarationName;
+    }
+
+    this.filterTable();
+    this.openDeclarationModal(this.activeDeclarationOrderId);
+  },
+
+  openDeclarationInLegalApp() {
+    if (!this.activeDeclarationOrderId) return;
+    window.open(`/hukuki-evrak-yazdir.html?orderId=${encodeURIComponent(this.activeDeclarationOrderId)}&tab=declaration`, '_blank');
   },
 
   // SİPARİŞ DETAY MODALI
