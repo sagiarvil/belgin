@@ -210,11 +210,18 @@ const App = {
     this.updateHeaderCartCount();
     this.checkCookieBanner();
 
-    // Canlı İZKO Altın Kurlarını Başlat (15 Dakikada Bir Otomatik Güncelleme)
+    // Canlı İZKO Altın Kurlarını & Harem Altın Soketini Başlat
     if (typeof fetchLiveMarketRates === 'function') {
       fetchLiveMarketRates();
       setInterval(fetchLiveMarketRates, 15 * 60 * 1000);
     }
+    if (typeof initHaremAltinSocket === 'function') {
+      initHaremAltinSocket();
+    }
+    // Canlı Saat & Tarih Sayacı (1 Saniyede Bir Kesintisiz Akan Saat)
+    setInterval(() => {
+      this.updateLiveClock();
+    }, 1000);
 
     // Ödeme Sayfası Gerçek Zamanlı Müşteri & Tutar Senkronizasyonu
     this.initCheckoutAutoSync();
@@ -277,11 +284,15 @@ const App = {
 
   currentWatchBrand: 'all',
   currentPreOwnedCategory: 'all',
+  currentLiveRatesCategory: 'all',
 
   onPageChange(page, options = {}) {
     switch (page) {
       case 'ana-sayfa':
         this.renderHome();
+        break;
+      case 'canli-fiyatlar':
+        this.renderLivePricesPage();
         break;
       case 'saatler':
         const watchFilter = (options.filter !== undefined && options.filter !== null) ? options.filter : (this.currentWatchBrand || 'all');
@@ -316,6 +327,7 @@ const App = {
     this.renderWatches();
     this.renderJewellery();
     this.renderPreOwned();
+    if (Router.currentPage === 'canli-fiyatlar') this.renderLivePricesPage();
     if (Router.currentPage === 'sepet') this.renderCart();
   },
 
@@ -358,18 +370,16 @@ const App = {
       const marqueeList = [...WATCH_BRANDS, ...WATCH_BRANDS];
       watchBrandsEl.innerHTML = marqueeList.map(b => `
         <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('${b.name}', null)" title="${b.name} Saat Modelleri">
-          <div class="brand-card-thumb">
-            <img src="${b.image}" alt="${b.name} Saatleri" loading="lazy">
-          </div>
-          <div class="brand-card-name">${b.name}</div>
-          <div class="brand-card-origin">${b.origin || 'Orijinal Koleksiyon'}</div>
-          <div class="brand-card-count">${b.count} Model</div>
+          <img src="${b.image}" alt="${b.name}" loading="lazy" class="brand-carousel-logo">
         </div>
       `).join('');
     }
 
     // Yeni Eklenen Saatler (Sayfa Başına 16 Ürün)
     this.renderHomeWatches(1);
+
+    // Canlı Fiyatlar Tabelası DOM Güncellemesi
+    this.updateLivePricesTableDOM();
 
     // İkinci El Altın & Saat Bölümü (8'li)
     const homePreOwnedEl = document.getElementById('homePreOwnedGrid');
@@ -404,17 +414,19 @@ const App = {
   scrollBrandSlider(direction) {
     const track = document.getElementById('watchBrandsGrid');
     if (!track) return;
-    track.style.animationPlayState = 'paused';
     const computed = window.getComputedStyle(track);
     const matrix = (typeof DOMMatrixReadOnly !== 'undefined') ? new DOMMatrixReadOnly(computed.transform) : null;
     const currentX = matrix ? matrix.m41 : 0;
-    const shift = direction === 'next' ? -460 : 460;
-    track.style.transition = 'transform 0.4s ease-out';
+    const isMobile = window.innerWidth <= 768;
+    const shift = direction === 'next' ? (isMobile ? -240 : -440) : (isMobile ? 240 : 440);
+    track.style.animationPlayState = 'paused';
+    track.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
     track.style.transform = `translateX(${currentX + shift}px)`;
     setTimeout(() => {
       track.style.transition = '';
+      track.style.transform = '';
       track.style.animationPlayState = 'running';
-    }, 2500);
+    }, 1200);
   },
 
   // ANA SAYFA SAAT SAYFALAMA (EN FAZLA 4 SIRA = 16 SAAT)
@@ -1273,14 +1285,22 @@ const App = {
               ${thumbsHtml}
             </div>
             
-            <div class="pdp-main-photo-box" onmousemove="App.handleZoom(event, this)" onmouseleave="App.resetZoom(this)">
+            <div class="pdp-main-photo-box" id="pdpMainPhotoBox"
+                 onmouseenter="App.initDesktopLoupe(this)"
+                 onmousemove="App.handleDesktopLoupe(event, this)" 
+                 onmouseleave="App.resetDesktopLoupe(this)"
+                 onclick="App.handlePhotoBoxClick(event)">
               ${isHighVal ? `
                 <div class="pdp-badge-top-left">
                   <span class="pdp-badge-item pdp-badge-secure">🏛️ 12.000 TL+ MAĞAZA TESLİMİ</span>
                 </div>
               ` : ''}
-              <img src="${p.image}" alt="${p.brand} ${p.name}" id="pdpMainImageTarget">
-              <div class="pdp-loupe-hint">🔍 10x Optik İnceleme İçin Üzerine Gelin</div>
+              <img src="${p.image}" alt="${p.brand} ${p.name}" id="pdpMainImageTarget" draggable="false">
+              <div class="pdp-horlogerie-loupe" id="pdpHorlogerieLoupe"></div>
+              <div class="pdp-loupe-hint">
+                <span class="pdp-hint-desktop">🔍 10x Optik Büyüteç İçin Gezdirin</span>
+                <span class="pdp-hint-mobile">🔍 10x Büyüteç (Dokunun)</span>
+              </div>
             </div>
           </div>
 
@@ -1426,18 +1446,284 @@ const App = {
     if (btn) btn.classList.add('active');
   },
 
-  handleZoom(e, container) {
-    const img = container.querySelector('img');
-    if (!img) return;
+  // ==========================================================
+  // HAUTE HORLOGERIE LOUPE & MOBILE ULTRA-HD ZOOM CONTROLLER
+  // ==========================================================
+  _zoomModalState: {
+    scale: 1,
+    posX: 0,
+    posY: 0,
+    isDragging: false,
+    startX: 0,
+    startY: 0,
+    initialDistance: 0,
+    initialScale: 1,
+    lastTap: 0,
+    currentSrc: '',
+    currentBrand: '',
+    currentName: '',
+    currentRef: ''
+  },
+
+  initDesktopLoupe(container) {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    const img = container.querySelector('#pdpMainImageTarget') || container.querySelector('img');
+    const loupe = container.querySelector('#pdpHorlogerieLoupe') || container.querySelector('.pdp-horlogerie-loupe');
+    if (!img || !loupe) return;
+    loupe.style.backgroundImage = `url("${img.src}")`;
+  },
+
+  handleDesktopLoupe(e, container) {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    const img = container.querySelector('#pdpMainImageTarget') || container.querySelector('img');
+    const loupe = container.querySelector('#pdpHorlogerieLoupe') || container.querySelector('.pdp-horlogerie-loupe');
+    const hint = container.querySelector('.pdp-loupe-hint');
+    if (!img || !loupe) return;
+
     const rect = container.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    img.style.transformOrigin = `${x}% ${y}%`;
+    const cursorX = e.clientX - rect.left;
+    const cursorY = e.clientY - rect.top;
+
+    // Check bounds
+    if (cursorX < 0 || cursorY < 0 || cursorX > rect.width || cursorY > rect.height) {
+      this.resetDesktopLoupe(container);
+      return;
+    }
+
+    const zoomFactor = 3.2;
+    const loupeRadius = 95; // 190px / 2
+
+    loupe.classList.add('active');
+    loupe.style.left = `${cursorX}px`;
+    loupe.style.top = `${cursorY}px`;
+    loupe.style.backgroundSize = `${rect.width * zoomFactor}px ${rect.height * zoomFactor}px`;
+    loupe.style.backgroundPosition = `-${cursorX * zoomFactor - loupeRadius}px -${cursorY * zoomFactor - loupeRadius}px`;
+
+    if (hint) hint.style.opacity = '0.3';
+  },
+
+  resetDesktopLoupe(container) {
+    const loupe = container.querySelector('#pdpHorlogerieLoupe') || container.querySelector('.pdp-horlogerie-loupe');
+    const hint = container.querySelector('.pdp-loupe-hint');
+    if (loupe) loupe.classList.remove('active');
+    if (hint) hint.style.opacity = '1';
+  },
+
+  handleZoom(e, container) {
+    this.handleDesktopLoupe(e, container);
   },
 
   resetZoom(container) {
-    const img = container.querySelector('img');
-    if (img) img.style.transformOrigin = 'center center';
+    this.resetDesktopLoupe(container);
+  },
+
+  handlePhotoBoxClick(e) {
+    const img = document.getElementById('pdpMainImageTarget');
+    if (!img) return;
+    const brandEl = document.querySelector('.pdp-brand-title');
+    const titleEl = document.querySelector('.pdp-product-title');
+    const refEl = document.querySelector('.pdp-meta-sku');
+
+    const brand = brandEl ? brandEl.textContent.trim() : 'Belgin Kuyumculuk';
+    const name = titleEl ? titleEl.textContent.trim() : 'Lüks Saat';
+    const ref = refEl ? refEl.textContent.trim() : '';
+
+    this.openMobileZoomModal(img.src, brand, name, ref);
+  },
+
+  openMobileZoomModal(src, brand = '', name = '', ref = '') {
+    this._zoomModalState = {
+      scale: 1,
+      posX: 0,
+      posY: 0,
+      isDragging: false,
+      startX: 0,
+      startY: 0,
+      initialDistance: 0,
+      initialScale: 1,
+      lastTap: 0,
+      currentSrc: src,
+      currentBrand: brand,
+      currentName: name,
+      currentRef: ref
+    };
+
+    let modal = document.getElementById('pdpMobileZoomModal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'pdpMobileZoomModal';
+      modal.className = 'pdp-mobile-zoom-modal';
+      modal.setAttribute('role', 'dialog');
+      modal.setAttribute('aria-label', '10x Büyüteç ve Ultra-HD İnceleme');
+      document.body.appendChild(modal);
+    }
+
+    modal.innerHTML = `
+      <div class="pdp-zoom-header">
+        <div class="pdp-zoom-brand-info">
+          <span class="pdp-zoom-brand">${brand || 'BELGIN KUYUMCULUK'}</span>
+          <span class="pdp-zoom-title">${name || 'Lüks Saat'} ${ref ? '(' + ref + ')' : ''}</span>
+        </div>
+        <button class="pdp-zoom-close-btn" onclick="App.closeMobileZoomModal()" aria-label="Büyüteci Kapat">✕</button>
+      </div>
+
+      <div class="pdp-zoom-stage" id="pdpZoomStage">
+        <div class="pdp-zoom-image-wrap" id="pdpZoomImageWrap">
+          <img src="${src}" alt="${brand} ${name}" id="pdpZoomTargetImg" draggable="false">
+        </div>
+      </div>
+
+      <div class="pdp-zoom-footer-bar">
+        <div class="pdp-zoom-instructions">
+          <span>🔍 Çift Dokun • Sürükle • Büyüt</span>
+        </div>
+        <div class="pdp-zoom-controls-group">
+          <button class="pdp-zoom-ctrl-btn" onclick="App.zoomModalIn()">+ Yakınlaştır</button>
+          <button class="pdp-zoom-ctrl-btn" onclick="App.zoomModalOut()">- Uzaklaştır</button>
+          <button class="pdp-zoom-ctrl-btn" onclick="App.zoomModalReset()">1x Sıfırla</button>
+        </div>
+      </div>
+    `;
+
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    this.initZoomModalGestures();
+  },
+
+  closeMobileZoomModal() {
+    const modal = document.getElementById('pdpMobileZoomModal');
+    if (modal) {
+      modal.classList.remove('open');
+      this._zoomModalState.scale = 1;
+      this._zoomModalState.posX = 0;
+      this._zoomModalState.posY = 0;
+    }
+    document.body.style.overflow = '';
+  },
+
+  zoomModalIn() {
+    const s = this._zoomModalState;
+    s.scale = Math.min(5, Number((s.scale + 0.75).toFixed(2)));
+    this.applyModalZoomTransform(true);
+  },
+
+  zoomModalOut() {
+    const s = this._zoomModalState;
+    s.scale = Math.max(1, Number((s.scale - 0.75).toFixed(2)));
+    if (s.scale === 1) {
+      s.posX = 0;
+      s.posY = 0;
+    }
+    this.applyModalZoomTransform(true);
+  },
+
+  zoomModalReset() {
+    const s = this._zoomModalState;
+    s.scale = 1;
+    s.posX = 0;
+    s.posY = 0;
+    this.applyModalZoomTransform(true);
+  },
+
+  applyModalZoomTransform(animate = false) {
+    const wrap = document.getElementById('pdpZoomImageWrap');
+    if (!wrap) return;
+    const s = this._zoomModalState;
+    wrap.style.transition = animate ? 'transform 0.28s cubic-bezier(0.16, 1, 0.3, 1)' : 'none';
+    wrap.style.transform = `translate3d(${s.posX}px, ${s.posY}px, 0) scale(${s.scale})`;
+  },
+
+  initZoomModalGestures() {
+    const stage = document.getElementById('pdpZoomStage');
+    if (!stage) return;
+    const self = this;
+    const s = self._zoomModalState;
+
+    let touchStartDist = 0;
+    let initialTouchX = 0;
+    let initialTouchY = 0;
+    let initialPosX = 0;
+    let initialPosY = 0;
+
+    // Helper for touch distance
+    function getDistance(t1, t2) {
+      const dx = t1.clientX - t2.clientX;
+      const dy = t1.clientY - t2.clientY;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    stage.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        // Double tap detect
+        const now = Date.now();
+        if (now - s.lastTap < 300) {
+          e.preventDefault();
+          if (s.scale > 1.5) {
+            s.scale = 1;
+            s.posX = 0;
+            s.posY = 0;
+          } else if (s.scale === 1) {
+            s.scale = 2.6;
+          } else {
+            s.scale = 4.2;
+          }
+          self.applyModalZoomTransform(true);
+          s.lastTap = 0;
+          return;
+        }
+        s.lastTap = now;
+
+        // Single touch drag init
+        if (s.scale > 1) {
+          s.isDragging = true;
+          initialTouchX = e.touches[0].clientX;
+          initialTouchY = e.touches[0].clientY;
+          initialPosX = s.posX;
+          initialPosY = s.posY;
+        }
+      } else if (e.touches.length === 2) {
+        // Pinch init
+        s.isDragging = false;
+        touchStartDist = getDistance(e.touches[0], e.touches[1]);
+        s.initialScale = s.scale;
+      }
+    }, { passive: false });
+
+    stage.addEventListener('touchmove', (e) => {
+      e.preventDefault(); // Prevent background pull/scroll
+      if (e.touches.length === 1 && s.isDragging && s.scale > 1) {
+        const deltaX = e.touches[0].clientX - initialTouchX;
+        const deltaY = e.touches[0].clientY - initialTouchY;
+        const maxOffset = (s.scale - 1) * 220;
+        s.posX = Math.max(-maxOffset, Math.min(maxOffset, initialPosX + deltaX));
+        s.posY = Math.max(-maxOffset, Math.min(maxOffset, initialPosY + deltaY));
+        self.applyModalZoomTransform(false);
+      } else if (e.touches.length === 2 && touchStartDist > 0) {
+        const currentDist = getDistance(e.touches[0], e.touches[1]);
+        const factor = currentDist / touchStartDist;
+        s.scale = Math.max(1, Math.min(5, s.initialScale * factor));
+        self.applyModalZoomTransform(false);
+      }
+    }, { passive: false });
+
+    stage.addEventListener('touchend', (e) => {
+      if (e.touches.length === 0) {
+        s.isDragging = false;
+        touchStartDist = 0;
+        if (s.scale <= 1.05) {
+          s.scale = 1;
+          s.posX = 0;
+          s.posY = 0;
+          self.applyModalZoomTransform(true);
+        }
+      } else if (e.touches.length === 1 && s.scale > 1) {
+        s.isDragging = true;
+        initialTouchX = e.touches[0].clientX;
+        initialTouchY = e.touches[0].clientY;
+        initialPosX = s.posX;
+        initialPosY = s.posY;
+      }
+    }, { passive: true });
   },
 
   // SEPET GÖRÜNÜMÜ
@@ -1815,6 +2101,242 @@ const App = {
     } else {
       alert("Geçersiz VIP Kodu. Doğrudan VIP WhatsApp danışmanımızdan (+90 541 930 53 72) erişim izni talep edebilirsiniz.");
     }
+  },
+
+  // ==========================================================
+  // CANLI PİYASALAR & ALTIN FİYATLARI (HAREM ALTIN & İZKO)
+  // ==========================================================
+  LIVE_MARKETS_CATALOG: [
+    // 1. Sarrafiye & Ziynet
+    { code: 'CEYREK_YENI', name: 'Yeni Çeyrek Altın', category: 'sarrafiye', karats: '22 Ayar • 1.75 gr', icon: '🪙', fallbackKey: 'quarterGold', buyRatio: 0.985 },
+    { code: 'CEYREK_ESKI', name: 'Eski Çeyrek Altın', category: 'sarrafiye', karats: '22 Ayar • 1.75 gr', icon: '🪙', fallbackKey: 'oldQuarterGold', buyRatio: 0.985 },
+    { code: 'YARIM_YENI', name: 'Yeni Yarım Altın', category: 'sarrafiye', karats: '22 Ayar • 3.50 gr', icon: '🪙', fallbackKey: 'halfGold', buyRatio: 0.985 },
+    { code: 'YARIM_ESKI', name: 'Eski Yarım Altın', category: 'sarrafiye', karats: '22 Ayar • 3.50 gr', icon: '🪙', fallbackKey: 'oldHalfGold', buyRatio: 0.985 },
+    { code: 'TEK_YENI', name: 'Yeni Tam / Ziynet Altın', category: 'sarrafiye', karats: '22 Ayar • 7.00 gr', icon: '🪙', fallbackKey: 'fullGold', buyRatio: 0.985 },
+    { code: 'TEK_ESKI', name: 'Eski Tam Altın', category: 'sarrafiye', karats: '22 Ayar • 7.00 gr', icon: '🪙', fallbackKey: 'oldFullGold', buyRatio: 0.985 },
+    { code: 'ATA_YENI', name: 'Yeni Ata / Cumhuriyet Lira', category: 'sarrafiye', karats: '22 Ayar • 7.21 gr', icon: '🏅', fallbackKey: 'ataGold', buyRatio: 0.985 },
+    { code: 'ATA_ESKI', name: 'Eski Ata Lira', category: 'sarrafiye', karats: '22 Ayar • 7.21 gr', icon: '🏅', fallbackKey: 'oldAtaGold', buyRatio: 0.985 },
+    { code: 'GREMESE_YENI', name: 'Yeni Gremse Altın (10\'luk)', category: 'sarrafiye', karats: '22 Ayar • 17.54 gr', icon: '👑', fallbackKey: 'gremeseGold', buyRatio: 0.985 },
+    { code: 'GREMESE_ESKI', name: 'Eski Gremse Altın', category: 'sarrafiye', karats: '22 Ayar • 17.54 gr', icon: '👑', fallbackKey: 'oldGremeseGold', buyRatio: 0.985 },
+    { code: 'ATA5_YENI', name: 'Yeni 5\'li Ata Altını', category: 'sarrafiye', karats: '22 Ayar • 36.08 gr', icon: '🏆', fallbackKey: 'ata5Gold', buyRatio: 0.985 },
+    { code: 'ATA5_ESKI', name: 'Eski 5\'li Ata Altını', category: 'sarrafiye', karats: '22 Ayar • 36.08 gr', icon: '🏆', fallbackKey: 'oldAta5Gold', buyRatio: 0.985 },
+
+    // 2. Külçe & Ayar Bazlı Masif Altın
+    { code: 'ALTIN', name: '24 Ayar Has Altın (Gram / TL)', category: 'kulce', karats: '24 Ayar • %99.5 Saf', icon: '✨', fallbackKey: 'gramGold24k', buyRatio: 0.99 },
+    { code: 'KULCEALTIN', name: '1 gr Paketli Has Külçe Altın', category: 'kulce', karats: '24 Ayar • Darphane/IAR', icon: '📦', fallbackKey: 'packagedGold', buyRatio: 0.985 },
+    { code: 'AYAR22', name: '22 Ayar Bilezik / Hurda (Gram)', category: 'kulce', karats: '22 Ayar • %91.6 Milyem', icon: '💫', fallbackKey: 'gramGold22k', buyRatio: 0.96 },
+    { code: 'AYAR18', name: '18 Ayar Mücevher Altını (Gram)', category: 'kulce', karats: '18 Ayar • %75.0 Milyem', icon: '💍', fallbackKey: 'gramGold18k', buyRatio: 0.95 },
+    { code: 'AYAR14', name: '14 Ayar Takı Altını (Gram)', category: 'kulce', karats: '14 Ayar • %58.5 Milyem', icon: '⭐', fallbackKey: 'gramGold14k', buyRatio: 0.94 },
+    { code: 'AYAR8', name: '8 Ayar Takı Altını (Gram)', category: 'kulce', karats: '8 Ayar • %33.3 Milyem', icon: '🔸', fallbackKey: 'gramGold8k', buyRatio: 0.92 },
+    { code: 'ONS', name: 'ONS Altın (XAU / USD)', category: 'kulce', karats: 'Uluslararası Spot Altın', icon: '🌍', isUsd: true, fallbackKey: 'ons', buyRatio: 0.998 },
+    { code: 'USDKG', name: 'Külçe Altın (USD / KG)', category: 'kulce', karats: '1 Kilogram Külçe (USD)', icon: '💵', isUsd: true, fallbackVal: 93450, buyRatio: 0.997 },
+    { code: 'EURKG', name: 'Külçe Altın (EUR / KG)', category: 'kulce', karats: '1 Kilogram Külçe (EUR)', icon: '💶', isEur: true, fallbackVal: 89200, buyRatio: 0.997 },
+
+    // 3. Kıymetli Madenler & Döviz
+    { code: 'USDTRY', name: 'Amerikan Doları (USD / TRY)', category: 'doviz', karats: 'Serbest Piyasa Döviz', icon: '💵', isCurrency: true, fallbackKey: 'usdTry', buyRatio: 0.995 },
+    { code: 'EURTRY', name: 'Euro (EUR / TRY)', category: 'doviz', karats: 'Serbest Piyasa Döviz', icon: '💶', isCurrency: true, fallbackKey: 'eurTry', buyRatio: 0.995 },
+    { code: 'GBPTRY', name: 'İngiliz Sterlini (GBP / TRY)', category: 'doviz', karats: 'Serbest Piyasa Döviz', icon: '💷', isCurrency: true, fallbackKey: 'gbpTry', buyRatio: 0.994 },
+    { code: 'GUMUSTRY', name: 'Gümüş (Gram / TRY)', category: 'doviz', karats: 'Saf Külçe Gümüş (999)', icon: '🥈', fallbackKey: 'silverTry', buyRatio: 0.96 },
+    { code: 'GUMUSUSD', name: 'Gümüş ONS (XAG / USD)', category: 'doviz', karats: 'Spot Gümüş ONS', icon: '🪙', isUsd: true, fallbackKey: 'silverUsd', buyRatio: 0.99 },
+    { code: 'PLATIN', name: 'Platin ONS (XPT / USD)', category: 'doviz', karats: 'Spot Platin ONS', icon: '⚪', isUsd: true, fallbackVal: 980, buyRatio: 0.99 },
+    { code: 'PALADYUM', name: 'Paladyum ONS (XPD / USD)', category: 'doviz', karats: 'Spot Paladyum ONS', icon: '🔘', isUsd: true, fallbackVal: 1020, buyRatio: 0.99 }
+  ],
+
+  updateLiveClock() {
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString('tr-TR', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    const dateDotStr = now.toLocaleDateString('tr-TR');
+
+    const clockEls = document.querySelectorAll('#exactLiveTime, #livePageClock, .live-js-clock');
+    const dateEls = document.querySelectorAll('#exactLiveDate, #livePageDate, .live-js-date');
+
+    clockEls.forEach(el => { el.textContent = timeStr; });
+    dateEls.forEach(el => { el.textContent = dateDotStr; });
+  },
+
+  setLiveRatesCategory(category) {
+    this.currentLiveRatesCategory = category || 'all';
+    this.updateLivePricesTableDOM();
+  },
+
+  renderLivePricesPage() {
+    const container = document.getElementById('page-canli-fiyatlar');
+    if (!container) return;
+
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString('tr-TR', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    const dateDotStr = now.toLocaleDateString('tr-TR');
+
+    container.innerHTML = `
+      <div class="page-canli-fiyatlar-wrapper">
+        <div class="container-art" style="max-width: 100%; width: 100%; height: 100%; padding: 0; margin: 0;">
+          
+          <!-- BİREBİR DİJİTAL KUYUMCU TABELASI (#fff200) -->
+          <div class="board-exact-frame">
+            
+            <!-- Üst Kırmızı Başlık Metni -->
+            <div class="board-exact-top-bar">
+              Belgin Kuyumculuk Canlı Satış Fiyatlarıdır.
+            </div>
+
+            <!-- Birebir Tablo -->
+            <table class="board-exact-table">
+              <thead>
+                <tr>
+                  <th style="width: 38%;">ALTIN</th>
+                  <th style="width: 31%;">SATIŞ</th>
+                  <th style="width: 31%;">HOŞGELDİNİZ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="td-label">22 AYAR</td>
+                  <td class="td-price"><span class="price-num" id="live_22k">--</span></td>
+                  <td class="td-right-message" rowspan="5">
+                    <div class="right-message-inner">
+                      <div class="right-title">BELGİN</div>
+                      <div class="right-title">KUYUMCULUK</div>
+                      <div class="right-sub">CANLI</div>
+                      <div class="right-sub">SATIŞ</div>
+                      <div class="right-sub">FİYATLARIDIR!</div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="td-label">18 AYAR</td>
+                  <td class="td-price"><span class="price-num" id="live_18k">--</span></td>
+                </tr>
+                <tr>
+                  <td class="td-label">14 AYAR</td>
+                  <td class="td-price"><span class="price-num" id="live_14k">--</span></td>
+                </tr>
+                <tr>
+                  <td class="td-label">GRAM ALTIN</td>
+                  <td class="td-price"><span class="price-num" id="live_gram">--</span></td>
+                </tr>
+                <tr>
+                  <td class="td-label">CUMHURİYET</td>
+                  <td class="td-price"><span class="price-num" id="live_cumhuriyet">--</span></td>
+                </tr>
+                <tr class="tr-sarrafiye-header">
+                  <td style="background-color:#fff200; border: 2px solid #000;"></td>
+                  <th style="border: 2px solid #000;">YENİ</th>
+                  <th style="border: 2px solid #000;">ESKİ</th>
+                </tr>
+                <tr>
+                  <td class="td-label">ÇEYREK</td>
+                  <td class="td-price"><span class="price-num" id="live_ceyrek_yeni">--</span></td>
+                  <td class="td-price"><span class="price-num" id="live_ceyrek_eski">--</span></td>
+                </tr>
+                <tr>
+                  <td class="td-label">YARIM</td>
+                  <td class="td-price"><span class="price-num" id="live_yarim_yeni">--</span></td>
+                  <td class="td-price"><span class="price-num" id="live_yarim_eski">--</span></td>
+                </tr>
+                <tr>
+                  <td class="td-label">ZİYNET</td>
+                  <td class="td-price"><span class="price-num" id="live_ziynet_yeni">--</span></td>
+                  <td class="td-price"><span class="price-num" id="live_ziynet_eski">--</span></td>
+                </tr>
+                <tr>
+                  <td class="td-has-label">HAS ALTIN:</td>
+                  <td colspan="2" style="text-align: center; border: 2px solid #000;">
+                    <span class="has-red-box"><span class="price-num" id="live_has_altin">--</span></span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+
+        </div>
+      </div>
+    `;
+
+    this.updateLivePricesTableDOM();
+  },
+
+  _prevBoardValues: {},
+  _activeAnimationTimers: {},
+
+  updateLivePricesTableDOM() {
+    const formatIntOrDec = (val, dec = 0) => {
+      if (!val || isNaN(val)) return '--';
+      return Number(val).toLocaleString('tr-TR', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+    };
+
+    const rawItems = LIVE_MARKET_DATA.items || {};
+    const BOARD_MARGIN = 1.01; // Sarı Tabela Canlı Satış Kâr Marjı (+%1)
+
+    const baseHas = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.hasAltin || LIVE_MARKET_DATA.gramGold24k || 6892.70;
+    const baseGram = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.gramGold24k || baseHas;
+    const base22k = parseFloat(rawItems.AYAR22?.satis) || LIVE_MARKET_DATA.gramGold22k || Math.round(baseHas * 0.937);
+    const base18k = parseFloat(rawItems.AYAR18?.satis) || LIVE_MARKET_DATA.gramGold18k || Math.round(baseHas * 0.750);
+    const base14k = parseFloat(rawItems.AYAR14?.satis) || LIVE_MARKET_DATA.gramGold14k || Math.round(baseHas * 0.722);
+    const baseAta = parseFloat(rawItems.ATA_YENI?.satis) || LIVE_MARKET_DATA.ataGold || 45650;
+    
+    const baseCeyrekYeni = parseFloat(rawItems.CEYREK_YENI?.satis) || LIVE_MARKET_DATA.quarterGold || 11268;
+    const baseCeyrekEski = parseFloat(rawItems.CEYREK_ESKI?.satis) || LIVE_MARKET_DATA.oldQuarterGold || 11068;
+    const baseYarimYeni = parseFloat(rawItems.YARIM_YENI?.satis) || LIVE_MARKET_DATA.halfGold || 22528;
+    const baseYarimEski = parseFloat(rawItems.YARIM_ESKI?.satis) || LIVE_MARKET_DATA.oldHalfGold || 22120;
+    const baseZiynetYeni = parseFloat(rawItems.TEK_YENI?.satis) || LIVE_MARKET_DATA.fullGold || 44891;
+    const baseZiynetEski = parseFloat(rawItems.TEK_ESKI?.satis) || LIVE_MARKET_DATA.oldFullGold || 44200;
+
+    const pHas = Number((baseHas * BOARD_MARGIN).toFixed(2));
+    const pGram = Math.round(baseGram * BOARD_MARGIN);
+    const p22k = Math.round(base22k * BOARD_MARGIN);
+    const p18k = Math.round(base18k * BOARD_MARGIN);
+    const p14k = Math.round(base14k * BOARD_MARGIN);
+    const pAta = Math.round(baseAta * BOARD_MARGIN);
+    const pCeyrekYeni = Math.round(baseCeyrekYeni * BOARD_MARGIN);
+    const pCeyrekEski = Math.round(baseCeyrekEski * BOARD_MARGIN);
+    const pYarimYeni = Math.round(baseYarimYeni * BOARD_MARGIN);
+    const pYarimEski = Math.round(baseYarimEski * BOARD_MARGIN);
+    const pZiynetYeni = Math.round(baseZiynetYeni * BOARD_MARGIN);
+    const pZiynetEski = Math.round(baseZiynetEski * BOARD_MARGIN);
+
+    const setPriceCell = (id, text, numVal) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      
+      const prev = this._prevBoardValues[id];
+      el.textContent = text;
+
+      // SADECE değeri gerçekten değişen hücreyi 5 saniye boyunca yaylandır / yanıp söndür
+      if (prev !== undefined && prev !== numVal) {
+        if (this._activeAnimationTimers[id]) {
+          clearTimeout(this._activeAnimationTimers[id]);
+        }
+        el.classList.remove('price-changed-active');
+        void el.offsetWidth; // Reflow tetikle
+        el.classList.add('price-changed-active');
+
+        this._activeAnimationTimers[id] = setTimeout(() => {
+          el.classList.remove('price-changed-active');
+          delete this._activeAnimationTimers[id];
+        }, 5000); // 5 saniye boyunca aktif kalır
+      }
+      this._prevBoardValues[id] = numVal;
+    };
+
+    setPriceCell('live_22k', formatIntOrDec(p22k, 0), p22k);
+    setPriceCell('live_18k', formatIntOrDec(p18k, 0), p18k);
+    setPriceCell('live_14k', formatIntOrDec(p14k, 0), p14k);
+    setPriceCell('live_gram', formatIntOrDec(pGram, 0), pGram);
+    setPriceCell('live_cumhuriyet', formatIntOrDec(pAta, 0), pAta);
+
+    setPriceCell('live_ceyrek_yeni', formatIntOrDec(pCeyrekYeni, 0), pCeyrekYeni);
+    setPriceCell('live_ceyrek_eski', formatIntOrDec(pCeyrekEski, 0), pCeyrekEski);
+    setPriceCell('live_yarim_yeni', formatIntOrDec(pYarimYeni, 0), pYarimYeni);
+    setPriceCell('live_yarim_eski', formatIntOrDec(pYarimEski, 0), pYarimEski);
+    setPriceCell('live_ziynet_yeni', formatIntOrDec(pZiynetYeni, 0), pZiynetYeni);
+    setPriceCell('live_ziynet_eski', formatIntOrDec(pZiynetEski, 0), pZiynetEski);
+    setPriceCell('live_has_altin', formatIntOrDec(pHas, 2), pHas);
+  },
+
+  onLivePricesUpdated() {
+    this.updateLiveClock();
+    this.updateLivePricesTableDOM();
   },
 
   toggleMobileDrawer(force) {

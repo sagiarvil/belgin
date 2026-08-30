@@ -20,6 +20,6 @@ Kullanıcıya görünen HTML, CSS, responsive, product card, gallery, cart, chec
 - Yeni/edite edilen yüzey 320px–1440px aralığında page-level yatay taşma üretmez; `overflow-x:hidden` düzeltme yöntemi olarak kullanılmaz.
 - Fatura kesilirken veya fatura şablonu/açıklamalarında ASLA "has altın" ibaresi kullanılmaz. Özel matrah (%0 KDV) satırlarında "Kıymetli Maden Bedeli (Özel Matrah)" veya doğrudan sipariş edilen ürün adı kullanılır.
 - **Fiyatlama & Borsa Akışı Kuralları (DEĞİŞMEZ KURAL):**
-  1. **Sarı Tabela (`#canli-fiyatlar`) ve Üst Borsa Kayan Bandı:** Yalnızca ve doğrudan `https://canlipiyasalar.haremaltin.com/` canlı borsa soket akışını (`wss://hrmsocketonly.haremaltin.com`) 1:1 yansıtır.
+  1. **Sarı Tabela (`#canli-fiyatlar`) ve Üst Borsa Kayan Bandı:** Yalnızca ve doğrudan `https://canlipiyasalar.haremaltin.com/` canlı borsa soket akışı (`wss://hrmsocketonly.haremaltin.com`) referans alınarak, canlı gelen satış fiyatları üzerine her zaman **+%1 (x 1.01)** kâr marjı eklenerek anlık olarak güncellenir ve yansıtılır.
   2. **Katalogdaki Altın & Mücevherat Ürün Fiyatları:** Yalnızca `https://www.agakulche.com/ziynet-ata-altin` ve `https://www.agakulche.com/altin-bilezik` kaynaklarından çekilen canlı piyasa satış fiyatları üzerine her zaman istisnasız **+%1 (x 1.01)** kâr marjı eklenerek hesaplanır.
   3. **İZKO Referansı:** İZKO (İzmir Kuyumcular Odası) fiyatlama ve referansı sistemde tamamen devre dışıdır ve hiçbir hesaplama veya tabelada referans alınamaz.
