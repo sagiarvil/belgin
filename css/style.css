@@ -3700,45 +3700,149 @@ p, span, li, td, th, label, input, button, select, textarea {
 }
 
 /* ==========================================================
-   11. KVKK ÇEREZ BANNER'I
+   11. HAUTE JOAILLERIE MINIMALIST ÇEREZ & GİZLİLİK BANNERI
    ========================================================== */
 .cookie-banner {
   position: fixed;
   bottom: 24px;
   left: 24px;
-  right: 24px;
-  max-width: 620px;
-  background: #FFFFFF;
-  border: 1px solid rgba(194, 167, 104, 0.4);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
-  border-radius: var(--radius-md);
-  padding: 22px 26px;
+  max-width: 460px;
+  width: calc(100% - 48px);
+  background: rgba(7, 10, 9, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(194, 167, 104, 0.35);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  padding: 16px 18px;
   z-index: 4000;
   display: none;
   animation: pageFade 0.3s var(--ease-silk);
 }
 .cookie-banner.show { display: block; }
-.cookie-banner p { font-size: 13px; color: #444; line-height: 1.6; margin-bottom: 16px; }
-.cookie-banner-actions { display: flex; gap: 10px; justify-content: flex-end; }
-.btn-cookie-accept {
-  background: var(--color-teal);
-  color: #FFFFFF;
-  border: none;
-  border-radius: var(--radius-full);
-  padding: 9px 20px;
-  font-size: 12px;
+.cookie-banner-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.cookie-banner-title {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #D8BD7E;
+  letter-spacing: 0.02em;
+  margin-bottom: 2px;
+}
+.cookie-banner p {
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.5;
+  margin: 0;
+}
+.cookie-banner p a {
+  color: #D8BD7E;
+  text-decoration: underline;
+  text-underline-offset: 2px;
   font-weight: 600;
+  transition: color 0.2s ease;
+}
+.cookie-banner p a:hover {
+  color: #FFFFFF;
+}
+.cookie-banner-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+.btn-cookie-accept {
+  background: #C2A768;
+  color: #070A09;
+  border: 1px solid #C2A768;
+  border-radius: 4px;
+  padding: 7px 16px;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-cookie-accept:hover {
+  background: #D8BD7E;
+  border-color: #D8BD7E;
+  transform: translateY(-1px);
 }
 .btn-cookie-settings {
   background: transparent;
-  border: 1px solid var(--color-border);
-  color: var(--color-ink);
-  border-radius: var(--radius-full);
-  padding: 9px 20px;
-  font-size: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.85);
+  border-radius: 4px;
+  padding: 7px 12px;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-cookie-settings:hover {
+  border-color: rgba(194, 167, 104, 0.6);
+  color: #D8BD7E;
+}
+.btn-cookie-reject {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.55);
+  padding: 7px 8px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s ease;
+}
+.btn-cookie-reject:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 768px) {
+  .cookie-banner {
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-width: none;
+    padding: 12px 14px;
+    border-radius: 8px;
+  }
+  .cookie-banner-title {
+    font-size: 12.5px;
+  }
+  .cookie-banner p {
+    font-size: 11px;
+    line-height: 1.4;
+  }
+  .cookie-banner-actions {
+    justify-content: flex-end;
+    gap: 6px;
+  }
+  .btn-cookie-accept {
+    padding: 7px 14px;
+    font-size: 11px;
+  }
+  .btn-cookie-settings {
+    padding: 7px 10px;
+    font-size: 11px;
+  }
+  .btn-cookie-reject {
+    font-size: 10.5px;
+    padding: 7px 4px;
+  }
 }
 
 /* ==========================================================
