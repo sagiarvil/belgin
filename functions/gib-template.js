@@ -161,7 +161,7 @@ function renderOfficialGibHtml(data) {
       },
       {
         seq: 2,
-        description: `${resolvedProductName} İşçilik Bedeli`,
+        description: 'İşçilik',
         quantityDisplay: '1 Adet',
         unitPriceDisplay: formatMoney(workNet),
         discountRateDisplay: '%0,00',

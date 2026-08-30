@@ -2224,6 +2224,139 @@
                 </button>
               </div>
 
+              <!-- 🌟 AKILLI FATURA & İŞÇİLİK / ÖZEL MATRAH HESAPLAMA ASİSTANI -->
+              <div id="smartInvoiceCalculatorCard" style="background:linear-gradient(135deg, #F0FDF4 0%, #FDFBF7 100%); border:2px solid #084C47; border-radius:12px; padding:16px; margin-bottom:16px; box-shadow:0 4px 15px rgba(8, 76, 71, 0.08);">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; padding-bottom:8px; border-bottom:1.5px solid #BBF7D0; flex-wrap:wrap; gap:8px;">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-size:18px;">⚡</span>
+                    <h4 style="margin:0; font-size:14px; font-weight:800; color:#042926; letter-spacing:0.3px;">
+                      Akıllı Fatura & İşçilik / Özel Matrah Hesaplama Asistanı
+                    </h4>
+                    <span style="font-size:10.5px; font-weight:800; background:#084C47; color:#FFF; padding:2px 8px; border-radius:12px;">KDV 23/f (%0) & İşçilik (%20)</span>
+                  </div>
+                  <div style="font-size:11px; color:#166534; font-weight:700;">
+                    💡 Toplam tutarı yazın, ürün ve işçiliği seçin, anında fatura satırlarına aktarın!
+                  </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1.2fr 1.2fr 1fr; gap:12px; margin-bottom:12px; align-items:end;">
+                  <!-- 1. Toplam Fatura Tutarı -->
+                  <div>
+                    <label style="display:block; font-size:11.5px; font-weight:800; color:#0F172A; margin-bottom:4px;" for="smartCalcTotalAmount">
+                      1. Toplam Fatura Tutarı (₺): *
+                    </label>
+                    <div style="position:relative;">
+                      <input type="text" id="smartCalcTotalAmount" class="form-field-input" placeholder="Örn: 100.000 veya 100000" style="font-size:14px; font-weight:800; color:#042926; padding-left:26px; border:2px solid #084C47;" oninput="AdminApp.handleSmartCalcChange()">
+                      <span style="position:absolute; left:8px; top:50%; transform:translateY(-50%); font-weight:800; color:#084C47;">₺</span>
+                    </div>
+                    <!-- Hızlı Tutar Çipleri -->
+                    <div style="display:flex; gap:4px; margin-top:5px; flex-wrap:wrap;">
+                      <button type="button" class="btn-template-chip" style="padding:2px 6px; font-size:10.5px; background:#FFF;" onclick="AdminApp.setSmartCalcAmount(50000)">₺50B</button>
+                      <button type="button" class="btn-template-chip" style="padding:2px 6px; font-size:10.5px; background:#FFF;" onclick="AdminApp.setSmartCalcAmount(100000)">₺100B</button>
+                      <button type="button" class="btn-template-chip" style="padding:2px 6px; font-size:10.5px; background:#FFF;" onclick="AdminApp.setSmartCalcAmount(120000)">₺120B</button>
+                      <button type="button" class="btn-template-chip" style="padding:2px 6px; font-size:10.5px; background:#FFF;" onclick="AdminApp.setSmartCalcAmount(150000)">₺150B</button>
+                      <button type="button" class="btn-template-chip" style="padding:2px 6px; font-size:10.5px; background:#FFF;" onclick="AdminApp.setSmartCalcAmount(200000)">₺200B</button>
+                      <button type="button" class="btn-template-chip" style="padding:2px 6px; font-size:10.5px; background:#FFF;" onclick="AdminApp.setSmartCalcAmount(300000)">₺300B</button>
+                    </div>
+                  </div>
+
+                  <!-- 2. Ürün Seçimi & Birim Fiyat -->
+                  <div>
+                    <label style="display:block; font-size:11.5px; font-weight:800; color:#0F172A; margin-bottom:4px;" for="smartCalcProductName">
+                      2. Ürün Adı & Birim Fiyat (₺):
+                    </label>
+                    <input type="text" id="smartCalcProductName" class="form-field-input" placeholder="Ürün adı (Seçin veya yazın)" style="font-size:12.5px; font-weight:700; color:#0F172A; margin-bottom:4px;" oninput="AdminApp.handleSmartCalcChange()">
+                    <div style="display:flex; gap:6px; align-items:center;">
+                      <input type="number" id="smartCalcUnitPrice" class="form-field-input" placeholder="Birim Fiyat (₺)" style="font-size:12px; font-weight:700; width:100%;" oninput="AdminApp.handleSmartCalcChange()">
+                      <div style="display:flex; align-items:center; gap:2px;">
+                        <input type="number" id="smartCalcQty" min="1" step="1" value="1" class="form-field-input" placeholder="Adet" style="font-size:12.5px; font-weight:800; width:65px; text-align:center; color:#3730A3; background:#EEF2FF; border:1.5px solid #818CF8; border-radius:6px;" oninput="AdminApp.handleSmartCalcQtyChange()" title="Fatura Edilecek Adet">
+                        <span style="font-size:11px; font-weight:800; color:#3730A3;">Adet</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 3. İşçilik Oranı / Bedeli (%20 KDV) -->
+                  <div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                      <label style="font-size:11.5px; font-weight:800; color:#0F172A;" for="smartCalcWorkmanshipRate">
+                        3. İşçilik (%):
+                      </label>
+                      <span style="font-size:10px; font-weight:700; color:#0284C7;">KDV %20 Dahil</span>
+                    </div>
+                    <div style="display:flex; gap:6px; align-items:center;">
+                      <input type="number" id="smartCalcWorkmanshipRate" min="0" max="100" step="0.5" value="0" class="form-field-input" placeholder="% Oran" style="font-size:13px; font-weight:800; color:#0284C7; width:75px; text-align:center;" oninput="AdminApp.handleSmartCalcChange()">
+                      <span style="font-weight:800; color:#0284C7;">%</span>
+                      <input type="number" id="smartCalcWorkmanshipAmount" min="0" step="1" value="0" class="form-field-input" placeholder="₺ Tutar" style="font-size:12px; font-weight:700; color:#0284C7; width:100%;" oninput="AdminApp.handleSmartCalcWorkmanshipAmountChange()">
+                    </div>
+                    <!-- Hızlı İşçilik Oranı Çipleri -->
+                    <div style="display:flex; gap:4px; margin-top:5px; flex-wrap:wrap;">
+                      <button type="button" class="btn-template-chip" style="padding:2px 6px; font-size:10.5px; background:#FFF;" onclick="AdminApp.setSmartCalcWorkmanshipRate(0)">%0</button>
+                      <button type="button" class="btn-template-chip" style="padding:2px 6px; font-size:10.5px; background:#FFF;" onclick="AdminApp.setSmartCalcWorkmanshipRate(2)">%2</button>
+                      <button type="button" class="btn-template-chip" style="padding:2px 6px; font-size:10.5px; background:#FFF;" onclick="AdminApp.setSmartCalcWorkmanshipRate(3)">%3</button>
+                      <button type="button" class="btn-template-chip" style="padding:2px 6px; font-size:10.5px; background:#FFF;" onclick="AdminApp.setSmartCalcWorkmanshipRate(5)">%5</button>
+                      <button type="button" class="btn-template-chip" style="padding:2px 6px; font-size:10.5px; background:#FFF;" onclick="AdminApp.setSmartCalcWorkmanshipRate(7)">%7</button>
+                      <button type="button" class="btn-template-chip" style="padding:2px 6px; font-size:10.5px; background:#FFF;" onclick="AdminApp.setSmartCalcWorkmanshipRate(10)">%10</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Kayıtlı Perakende Altın Ürünleri Hızlı Seçim Butonları -->
+                <div style="margin-bottom:12px; padding:8px 10px; background:rgba(255,255,255,0.85); border:1px dashed #CBD5E1; border-radius:8px;">
+                  <div style="font-size:10.5px; font-weight:800; color:#475569; margin-bottom:6px; text-transform:uppercase;">
+                    💎 Kayıtlı Perakende Altın Ürünlerinden Hızlı Seç:
+                  </div>
+                  <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; font-weight:700; color:#042926;" onclick="AdminApp.selectSmartCalcProduct('7 Gram 22 Ayar Ajda Altın Bilezik', 32620)">
+                      <span>✨ 7gr 22A Ajda Bilezik (₺32.620)</span>
+                    </button>
+                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; font-weight:700; color:#042926;" onclick="AdminApp.selectSmartCalcProduct('Ata Tam Yeni 22 Ayar Altın', 46107)">
+                      <span>🪙 Ata Tam Yeni 22A (₺46.107)</span>
+                    </button>
+                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; font-weight:700; color:#042926;" onclick="AdminApp.selectSmartCalcProduct('Yeni Kulplu Ziynet Çeyrek Altın', 11070)">
+                      <span>🪙 Yeni Çeyrek (₺11.070)</span>
+                    </button>
+                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; font-weight:700; color:#042926;" onclick="AdminApp.selectSmartCalcProduct('Eski Kulplu Ziynet Çeyrek Altın', 11179)">
+                      <span>🪙 Eski Çeyrek (₺11.179)</span>
+                    </button>
+                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; font-weight:700; color:#042926;" onclick="AdminApp.selectSmartCalcProduct('Eski Kulplu Ziynet Yarım Altın', 22322)">
+                      <span>🪙 Yarım Altın (₺22.322)</span>
+                    </button>
+                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; font-weight:700; color:#042926;" onclick="AdminApp.selectSmartCalcProduct('24 Ayar Gram Altın (0.995 Saflık)', 5000)">
+                      <span>📦 24A Gram Altın (₺5.000)</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Anlık Canlı Hesaplama Özeti ve Faturaya Aktar Butonları -->
+                <div style="display:flex; justify-content:space-between; align-items:center; background:#FFFFFF; border:1.5px solid #059669; border-radius:10px; padding:10px 14px; flex-wrap:wrap; gap:10px;">
+                  <div style="display:flex; gap:16px; align-items:center; flex-wrap:wrap;">
+                    <div>
+                      <div style="font-size:10px; color:#64748B; font-weight:700; text-transform:uppercase;">Altın Bedeli (%0 KDV Özel Matrah)</div>
+                      <div style="font-size:14px; font-weight:800; color:#047857;" id="smartCalcLiveGoldText">₺0,00</div>
+                    </div>
+                    <div style="border-left:1px solid #E2E8F0; padding-left:16px;">
+                      <div style="font-size:10px; color:#64748B; font-weight:700; text-transform:uppercase;">İşçilik (%20 KDV Dahil)</div>
+                      <div style="font-size:14px; font-weight:800; color:#0284C7;" id="smartCalcLiveWorkmanshipText">₺0,00 (KDV: ₺0,00)</div>
+                    </div>
+                    <div style="border-left:1px solid #E2E8F0; padding-left:16px;">
+                      <div style="font-size:10px; color:#64748B; font-weight:700; text-transform:uppercase;">Fatura Toplamı</div>
+                      <div style="font-size:16px; font-weight:800; color:#042926;" id="smartCalcLiveGrandTotalText">₺0,00</div>
+                    </div>
+                  </div>
+
+                  <div style="display:flex; gap:8px; align-items:center;">
+                    <!-- Aktar / Satırları Doldur Butonu -->
+                    <button type="button" class="btn-admin-primary" style="background:linear-gradient(135deg, #059669 0%, #10B981 100%); border-color:#059669; color:#FFF; font-weight:800; font-size:12.5px; padding:9px 16px; border-radius:8px; box-shadow:0 2px 8px rgba(16,185,129,0.3); display:inline-flex; align-items:center; gap:6px; cursor:pointer;" onclick="AdminApp.applySmartCalcToInvoice(false)">
+                      <span>⚡ Faturaya Aktar (Satırları Doldur)</span>
+                    </button>
+                    <!-- Ek Kalem Olarak Ekle Butonu -->
+                    <button type="button" class="btn-admin-secondary" style="background:#FFF; border:1.5px solid #084C47; color:#084C47; font-weight:800; font-size:12px; padding:9px 14px; border-radius:8px; display:inline-flex; align-items:center; gap:5px; cursor:pointer;" onclick="AdminApp.applySmartCalcToInvoice(true)" title="Mevcut satırları silmeden faturaya ek kalem olarak ilave eder">
+                      <span>➕ Ek Kalem Olarak Ekle</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
               <!-- Hızlı Ürün Seçim Rozetleri -->
               <div style="margin-bottom:14px; padding:12px 14px; background:#F8FAFB; border:1.5px dashed #94A3B8; border-radius:10px;">
                 <div style="font-size:11.5px; font-weight:800; color:#0F172A; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.6px;">
@@ -2857,6 +2990,8 @@
         </tbody>
       </table>
     </div>
+  </div>
+</div>
 
 <!-- MÜŞTERİ ISLAK İMZALI BEYAN VE BELGE YÜKLEME MODALI -->
 <div class="admin-modal-overlay" id="declarationModal" onclick="if(event.target===this) AdminApp.closeDeclarationModal();">
@@ -2925,6 +3060,6 @@
 </div>
 
 <script src="js/vip-payment.js?v=2.8.8"></script>
-<script src="js/admin.js?v=20260830-beyan-v5-final"></script>
+<script src="js/admin.js?v=20260830-beyan-v6-dom-fixed"></script>
 </body>
 </html>

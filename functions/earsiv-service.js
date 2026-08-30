@@ -164,7 +164,7 @@ function calculateVip22Breakdown(totalAmount) {
 
   // İşçilik Bedeli Satırı (%20 KDV dahil)
   items.push({
-    malHizmet: '22 Ayar Altın İşçilik Bedeli',
+    malHizmet: 'İşçilik',
     miktar: 1,
     birim: 'C62',
     birimFiyat: workmanshipNet.toFixed(2),
@@ -360,7 +360,7 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
         tevkifatKodu: 0
       },
       {
-        malHizmet: `${resolvedProductName} İşçilik Bedeli`,
+        malHizmet: 'İşçilik',
         miktar: 1,
         birim: 'C62', // Adet
         birimFiyat: workmanshipNet.toFixed(2),

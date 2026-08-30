@@ -840,9 +840,17 @@ const AdminApp = {
     };
   },
 
-  // HUKUKİ DELİL & SÖZLEŞME ÇIKTISI AÇ
-  printLegalDocument(orderId) {
-    window.open(`/hukuki-evrak-yazdir.html?orderId=${encodeURIComponent(orderId)}`, '_blank');
+  // HUKUKİ DELİL & SÖZLEŞME ÇIKTISI AÇ (10/10 BANKA-READY)
+  printLegalDocument(orderId, tab = null) {
+    const url = tab 
+      ? `/hukuki-evrak-yazdir.html?orderId=${encodeURIComponent(orderId)}&tab=${encodeURIComponent(tab)}`
+      : `/hukuki-evrak-yazdir.html?orderId=${encodeURIComponent(orderId)}`;
+    window.open(url, '_blank');
+  },
+
+  // CHARGEBACK SAVUNMA PAKETİ ÇIKTISI AÇ (10.4 veya 13.1)
+  printChargebackPack(orderId, reasonCode = '10.4') {
+    window.open(`/hukuki-evrak-yazdir.html?orderId=${encodeURIComponent(orderId)}&reasonPack=${encodeURIComponent(reasonCode)}`, '_blank');
   },
 
   // ÜRÜN TESLİM, KONTROL VE ÖDEME İŞLEMİ TEYİT BEYANI AÇ
@@ -864,7 +872,7 @@ const AdminApp = {
         note: '28.08.2026 saat: 12:00 sıralarında 120.000 TL alışveriş beyanı (Halkbank Paraf VISA)'
       };
     }
-    if (orderId === 'BLG-1787933807000-9cd26eb919a8417c') {
+    if (orderId === 'BLG-1787933807000-9cd26eb919a8417c' || orderId === 'BLG-1787906878142-03da073a5aec9f6e' || String(orderId).includes('03da073a') || String(orderId).includes('1787906878142')) {
       return {
         docUrl: '/images/declarations/beyan_idris_emre_buk_1211.jpg',
         docType: 'image/jpeg',
@@ -3520,6 +3528,240 @@ const AdminApp = {
     }
   },
 
+  // ==========================================
+  // AKILLI FATURA & İŞÇİLİK HESAPLAMA ASİSTANI METODLARI
+  // ==========================================
+  setSmartCalcAmount(amount) {
+    const el = document.getElementById('smartCalcTotalAmount');
+    if (el) {
+      el.value = Number(amount).toLocaleString('tr-TR');
+    }
+    this.handleSmartCalcChange();
+  },
+
+  selectSmartCalcProduct(name, unitPrice) {
+    const nameEl = document.getElementById('smartCalcProductName');
+    const priceEl = document.getElementById('smartCalcUnitPrice');
+    if (nameEl) nameEl.value = name;
+    if (priceEl) priceEl.value = unitPrice;
+    this.handleSmartCalcChange();
+  },
+
+  setSmartCalcWorkmanshipRate(rate) {
+    const rateEl = document.getElementById('smartCalcWorkmanshipRate');
+    if (rateEl) {
+      rateEl.value = rate;
+    }
+    this.handleSmartCalcChange();
+  },
+
+  parseSmartCalcAmount(valStr) {
+    if (!valStr) return 0;
+    const clean = String(valStr).replace(/\./g, '').replace(/,/g, '.').replace(/[^0-9.]/g, '');
+    return Math.max(0, parseFloat(clean) || 0);
+  },
+
+  calculateSmartCalcBreakdown(skipQtyAutoCalc = false) {
+    const totalInput = document.getElementById('smartCalcTotalAmount');
+    const nameInput = document.getElementById('smartCalcProductName');
+    const priceInput = document.getElementById('smartCalcUnitPrice');
+    const qtyInput = document.getElementById('smartCalcQty');
+    const rateInput = document.getElementById('smartCalcWorkmanshipRate');
+    const amountInput = document.getElementById('smartCalcWorkmanshipAmount');
+
+    const totalAmount = this.parseSmartCalcAmount(totalInput?.value || 0);
+    const prodName = String(nameInput?.value || '22 Ayar Altın / Ziynet').trim();
+    let unitPrice = Math.max(0, parseFloat(priceInput?.value) || 0);
+    const workmanshipRate = Math.max(0, parseFloat(rateInput?.value) || 0);
+
+    // İşçilik tutarı ve altın matrahı hesabı
+    const workmanshipTotal = Math.round((totalAmount * (workmanshipRate / 100)) * 100) / 100;
+    const goldTotal = Math.max(0, Math.round((totalAmount - workmanshipTotal) * 100) / 100);
+
+    // İşçilik KDV %20 ayrıştırması
+    const workmanshipNet = Math.round((workmanshipTotal / 1.20) * 100) / 100;
+    const workmanshipKdv = Math.round((workmanshipTotal - workmanshipNet) * 100) / 100;
+
+    // Adet hesabı
+    let calcQty = 1;
+    if (skipQtyAutoCalc && qtyInput && parseInt(qtyInput.value, 10) > 0) {
+      calcQty = Math.max(1, parseInt(qtyInput.value, 10));
+      if (calcQty > 0 && goldTotal > 0 && priceInput) {
+        unitPrice = Math.round((goldTotal / calcQty) * 100) / 100;
+        priceInput.value = unitPrice;
+      }
+    } else if (unitPrice > 0 && goldTotal > 0) {
+      calcQty = Math.max(1, Math.floor(goldTotal / unitPrice));
+      if (qtyInput) {
+        qtyInput.value = calcQty;
+      }
+    } else if (qtyInput && parseInt(qtyInput.value, 10) > 0) {
+      calcQty = Math.max(1, parseInt(qtyInput.value, 10));
+    }
+
+    // Canlı metin alanlarını güncelle
+    const liveGoldEl = document.getElementById('smartCalcLiveGoldText');
+    const liveWorkEl = document.getElementById('smartCalcLiveWorkmanshipText');
+    const liveGrandEl = document.getElementById('smartCalcLiveGrandTotalText');
+
+    if (liveGoldEl) {
+      liveGoldEl.textContent = '₺' + goldTotal.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    if (liveWorkEl) {
+      liveWorkEl.textContent = '₺' + workmanshipTotal.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) +
+        ` (KDV %20: ₺${workmanshipKdv.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })})`;
+    }
+    if (liveGrandEl) {
+      liveGrandEl.textContent = '₺' + totalAmount.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    return {
+      totalAmount,
+      goldTotal,
+      workmanshipTotal,
+      workmanshipNet,
+      workmanshipKdv,
+      prodName,
+      unitPrice,
+      calcQty
+    };
+  },
+
+  handleSmartCalcChange() {
+    const res = this.calculateSmartCalcBreakdown(false);
+    const amountInput = document.getElementById('smartCalcWorkmanshipAmount');
+    if (amountInput && res.workmanshipTotal >= 0) {
+      amountInput.value = res.workmanshipTotal > 0 ? res.workmanshipTotal : 0;
+    }
+  },
+
+  handleSmartCalcQtyChange() {
+    const res = this.calculateSmartCalcBreakdown(true);
+    const amountInput = document.getElementById('smartCalcWorkmanshipAmount');
+    if (amountInput && res.workmanshipTotal >= 0) {
+      amountInput.value = res.workmanshipTotal > 0 ? res.workmanshipTotal : 0;
+    }
+  },
+
+  handleSmartCalcWorkmanshipAmountChange() {
+    const totalInput = document.getElementById('smartCalcTotalAmount');
+    const amountInput = document.getElementById('smartCalcWorkmanshipAmount');
+    const rateInput = document.getElementById('smartCalcWorkmanshipRate');
+
+    const totalAmount = this.parseSmartCalcAmount(totalInput?.value || 0);
+    const workAmt = Math.max(0, parseFloat(amountInput?.value) || 0);
+
+    if (totalAmount > 0 && rateInput) {
+      const calculatedRate = Math.round(((workAmt / totalAmount) * 100) * 100) / 100;
+      rateInput.value = calculatedRate;
+    }
+    this.calculateSmartCalcBreakdown(false);
+  },
+
+  applySmartCalcToInvoice(isAppend = false) {
+    const res = this.calculateSmartCalcBreakdown();
+    if (!res.totalAmount || res.totalAmount <= 0) {
+      alert('⚠️ Lütfen önce geçerli bir Fatura Toplam Tutarı giriniz (Örn: 100.000 TL).');
+      const totalInput = document.getElementById('smartCalcTotalAmount');
+      if (totalInput) totalInput.focus();
+      return;
+    }
+
+    const itemsToAdd = [];
+    const q = Math.max(1, Number(res.calcQty || 1));
+    const unitGoldPrice = Math.round((res.goldTotal / q) * 100) / 100;
+    const calculatedGoldLineTotal = Math.round(q * unitGoldPrice * 100) / 100;
+
+    if (res.workmanshipTotal > 0) {
+      // 1 kuruş yuvarlama farkını işçilik satırı ile dengeleyerek genel toplamı kuruşu kuruşuna tam res.totalAmount yap
+      const delta = Math.round((res.totalAmount - (calculatedGoldLineTotal + res.workmanshipTotal)) * 100) / 100;
+      const balancedWorkmanshipTotal = Math.round((res.workmanshipTotal + delta) * 100) / 100;
+      const workNet = Math.round((balancedWorkmanshipTotal / 1.20) * 100) / 100;
+      const workKdv = Math.round((balancedWorkmanshipTotal - workNet) * 100) / 100;
+
+      // 1. Kıymetli Maden Satırı (%0 KDV Özel Matrah)
+      if (calculatedGoldLineTotal > 0) {
+        itemsToAdd.push({
+          name: res.prodName,
+          qty: q,
+          unitPrice: unitGoldPrice,
+          kdvRate: 0,
+          lineTotal: calculatedGoldLineTotal,
+          kdvAmount: 0
+        });
+      }
+
+      // 2. İşçilik Satırı (%20 KDV)
+      if (balancedWorkmanshipTotal > 0) {
+        const workItemName = 'İşçilik';
+        itemsToAdd.push({
+          name: workItemName,
+          qty: 1,
+          unitPrice: balancedWorkmanshipTotal,
+          kdvRate: 20,
+          lineTotal: balancedWorkmanshipTotal,
+          kdvAmount: workKdv
+        });
+      }
+    } else {
+      // İşçiliksiz (%0 KDV) durumda 1 kuruş fark varsa adetleri dengele
+      const delta = Math.round((res.totalAmount - calculatedGoldLineTotal) * 100) / 100;
+      if (delta !== 0 && q > 1) {
+        const line1Qty = q - 1;
+        const line1Total = Math.round(line1Qty * unitGoldPrice * 100) / 100;
+        const line2Price = Math.round((unitGoldPrice + delta) * 100) / 100;
+
+        itemsToAdd.push({
+          name: res.prodName,
+          qty: line1Qty,
+          unitPrice: unitGoldPrice,
+          kdvRate: 0,
+          lineTotal: line1Total,
+          kdvAmount: 0
+        });
+        itemsToAdd.push({
+          name: res.prodName,
+          qty: 1,
+          unitPrice: line2Price,
+          kdvRate: 0,
+          lineTotal: line2Price,
+          kdvAmount: 0
+        });
+      } else {
+        itemsToAdd.push({
+          name: res.prodName,
+          qty: q,
+          unitPrice: unitGoldPrice,
+          kdvRate: 0,
+          lineTotal: calculatedGoldLineTotal,
+          kdvAmount: 0
+        });
+      }
+    }
+
+    if (itemsToAdd.length === 0) {
+      alert('⚠️ Eklenecek fatura kalemi oluşturulamadı.');
+      return;
+    }
+
+    if (!isAppend) {
+      // Satırları doldur (mevcut satırları temizle ve yenilerini koy)
+      this.storeItems = itemsToAdd;
+    } else {
+      // Ek kalem olarak ilave et
+      if (this.storeItems.length === 1 && (!this.storeItems[0].name || this.storeItems[0].unitPrice === 0)) {
+        this.storeItems = itemsToAdd;
+      } else {
+        this.storeItems.push(...itemsToAdd);
+      }
+    }
+
+    this.renderStoreInvoiceItems();
+    this.calculateStoreInvoiceLiveSummary();
+
+    this.showToast(isAppend ? `➕ ${itemsToAdd.length} yeni kalem faturaya eklendi.` : `⚡ Fatura satırları (₺${res.totalAmount.toLocaleString('tr-TR')}) kuruşu kuruşuna tam olarak dolduruldu.`);
+  },
+
   // Hızlı Ürün Şablonu Uygula
   applyStoreProductTemplate(name, price, kdvRate = 0) {
     const rate = Number(kdvRate);
@@ -3667,15 +3909,15 @@ const AdminApp = {
       const lineTot = Math.round(q * p * 100) / 100;
       const rate = Number(it.kdvRate !== undefined ? it.kdvRate : 0);
 
-      totalGrand += lineTot;
+      totalGrand = Math.round((totalGrand + lineTot) * 100) / 100;
 
       if (rate === 0) {
-        totalGoldMatrah += lineTot;
+        totalGoldMatrah = Math.round((totalGoldMatrah + lineTot) * 100) / 100;
       } else {
         const netMatrah = Math.round((lineTot / (1 + (rate / 100))) * 100) / 100;
         const kdvAmt = Math.round((lineTot - netMatrah) * 100) / 100;
-        totalTaxableNet += netMatrah;
-        totalKdv += kdvAmt;
+        totalTaxableNet = Math.round((totalTaxableNet + netMatrah) * 100) / 100;
+        totalKdv = Math.round((totalKdv + kdvAmt) * 100) / 100;
       }
     });
 

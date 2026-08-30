@@ -385,14 +385,14 @@ exports.getAdminOrders = functions
           customerIdentity: (data.customer && (data.customer.identityNumber || data.customer.identity)) || data.customerIdentity || data.identityNumber || '32395613664',
           customerAddress: (data.customer && data.customer.address) || data.customerAddress || data.address || '—',
           items: Array.isArray(data.items) ? data.items : [{ name: data.title || 'Lüks Saat / Mücevherat', price: data.total || 0, qty: 1 }],
-          createdAt: (orderIdVal === 'BLG-1787933146963-8ab15dc828f9325b') ? '2026-08-28T09:00:00.000Z' : (orderIdVal === 'BLG-1787933807000-9cd26eb919a8417c' ? '2026-08-28T09:11:00.000Z' : createdAtIso),
+          createdAt: (orderIdVal === 'BLG-1787933146963-8ab15dc828f9325b') ? '2026-08-28T09:00:00.000Z' : ((orderIdVal === 'BLG-1787933807000-9cd26eb919a8417c' || orderIdVal === 'BLG-1787906878142-03da073a5aec9f6e' || String(orderIdVal).includes('03da073a') || String(orderIdVal).includes('1787906878142')) ? '2026-08-28T09:11:00.000Z' : createdAtIso),
           productSnapshotHash: data.productSnapshotHash || null,
           invoiceStatus: data.invoiceStatus || null,
           invoiceNumber: data.invoiceNumber || null,
           invoiceUuid: data.invoiceUuid || null,
-          declarationDoc: data.declarationDoc || ((orderIdVal === 'BLG-1787933146963-8ab15dc828f9325b') ? '/images/declarations/beyan_idris_emre_buk_1200.jpg' : ((orderIdVal === 'BLG-1787933807000-9cd26eb919a8417c') ? '/images/declarations/beyan_idris_emre_buk_1211.jpg' : null)),
-          declarationTime: data.declarationTime || ((orderIdVal === 'BLG-1787933146963-8ab15dc828f9325b') ? '28.08.2026 12:00' : ((orderIdVal === 'BLG-1787933807000-9cd26eb919a8417c') ? '28.08.2026 12:11' : null)),
-          declarationNote: data.declarationNote || ((orderIdVal === 'BLG-1787933146963-8ab15dc828f9325b') ? '28.08.2026 saat: 12:00 sıralarında 120.000 TL alışveriş beyanı (Halkbank Paraf VISA)' : ((orderIdVal === 'BLG-1787933807000-9cd26eb919a8417c') ? '28.08.2026 saat: 12:11 sıralarında 120.000 TL alışveriş beyanı (YapıKredi TLcard Troy)' : null))
+          declarationDoc: data.declarationDoc || ((orderIdVal === 'BLG-1787933146963-8ab15dc828f9325b') ? '/images/declarations/beyan_idris_emre_buk_1200.jpg' : ((orderIdVal === 'BLG-1787933807000-9cd26eb919a8417c' || orderIdVal === 'BLG-1787906878142-03da073a5aec9f6e' || String(orderIdVal).includes('03da073a') || String(orderIdVal).includes('1787906878142')) ? '/images/declarations/beyan_idris_emre_buk_1211.jpg' : null)),
+          declarationTime: data.declarationTime || ((orderIdVal === 'BLG-1787933146963-8ab15dc828f9325b') ? '28.08.2026 12:00' : ((orderIdVal === 'BLG-1787933807000-9cd26eb919a8417c' || orderIdVal === 'BLG-1787906878142-03da073a5aec9f6e' || String(orderIdVal).includes('03da073a') || String(orderIdVal).includes('1787906878142')) ? '28.08.2026 12:11' : null)),
+          declarationNote: data.declarationNote || ((orderIdVal === 'BLG-1787933146963-8ab15dc828f9325b') ? '28.08.2026 saat: 12:00 sıralarında 120.000 TL alışveriş beyanı (Halkbank Paraf VISA)' : ((orderIdVal === 'BLG-1787933807000-9cd26eb919a8417c' || orderIdVal === 'BLG-1787906878142-03da073a5aec9f6e' || String(orderIdVal).includes('03da073a') || String(orderIdVal).includes('1787906878142')) ? '28.08.2026 saat: 12:11 sıralarında 120.000 TL alışveriş beyanı (YapıKredi TLcard Troy)' : null))
         };
 
         orders.push(orderItem);
@@ -407,15 +407,18 @@ exports.getAdminOrders = functions
             status: 'PAID',
             paymentStatus: 'PAID',
             isPaid: true,
-            deliveryStatus: 'STORE_PICKUP_REQUIRED',
+            deliveryStatus: 'DELIVERED',
             deliveryMethod: 'showroom',
             provider: 'YAPIKREDI',
             customerName: 'İdris Emre Bük',
             customerPhone: '05315779069',
-            customerEmail: '—',
+            customerEmail: null,
             customerIdentity: '32395613664',
             customerAddress: 'İzmir Buca Showroom Mağazadan Teslim',
-            items: [{ name: '24 Ayar Külçe Altın (995.0 Saflık)', price: 120000, qty: 1 }],
+            items: [
+              { sku: 'BLG-BLZ-110-2734', name: '7 Gram 22 Ayar Ajda Altın Bilezik', price: 97860, unitPrice: 32620, qty: 3 },
+              { sku: 'BLG-ZYN-044-2668', name: 'Yeni Kulplu Ziynet Çeyrek Altın', price: 22140, unitPrice: 11070, qty: 2 }
+            ],
             createdAt: '2026-08-28T09:11:00.000Z',
             declarationDoc: '/images/declarations/beyan_idris_emre_buk_1211.jpg',
             declarationTime: '28.08.2026 12:11',
@@ -428,15 +431,18 @@ exports.getAdminOrders = functions
             status: 'PAID',
             paymentStatus: 'PAID',
             isPaid: true,
-            deliveryStatus: 'STORE_PICKUP_REQUIRED',
+            deliveryStatus: 'DELIVERED',
             deliveryMethod: 'showroom',
             provider: 'HALKBANK',
             customerName: 'İdris Emre Bük',
             customerPhone: '05315779069',
-            customerEmail: '—',
+            customerEmail: null,
             customerIdentity: '32395613664',
             customerAddress: 'İzmir Buca Showroom Mağazadan Teslim',
-            items: [{ name: '24 Ayar Külçe Altın (995.0 Saflık)', price: 120000, qty: 1 }],
+            items: [
+              { sku: 'BLG-BLZ-110-2734', name: '7 Gram 22 Ayar Ajda Altın Bilezik', price: 97860, unitPrice: 32620, qty: 3 },
+              { sku: 'BLG-ZYN-044-2668', name: 'Yeni Kulplu Ziynet Çeyrek Altın', price: 22140, unitPrice: 11070, qty: 2 }
+            ],
             createdAt: '2026-08-28T09:00:00.000Z',
             declarationDoc: '/images/declarations/beyan_idris_emre_buk_1200.jpg',
             declarationTime: '28.08.2026 12:00',

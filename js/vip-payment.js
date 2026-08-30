@@ -217,8 +217,8 @@
       // 3. (veya 2.) Satır: İşçilik Bedeli (%20 KDV dahil)
       items.push({
         id: 'WORKMANSHIP-22K',
-        name: '22 Ayar Altın İşçilik Bedeli',
-        malHizmet: '22 Ayar Altın İşçilik Bedeli',
+        name: 'İşçilik',
+        malHizmet: 'İşçilik',
         reference: 'BLG-ISC-22K',
         url: 'https://www.belginkuyumculuk.com/',
         qty: 1,

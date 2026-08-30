@@ -263,7 +263,7 @@ const SEO_REGISTRY = [
     primaryIntent: 'Kuyumculuk ve saat iade değişim cayma hakkı',
     primaryEntity: { type: 'WebPage', name: 'İptal İade Politikası', sameAs: [] },
     semanticTriples: [
-      { subject: 'Finansal Piyasa Altın', predicate: 'caymaHakki', object: '6502 sayılı Kanun m.15/1-a Uyarınca İstisna' }
+      { subject: 'Finansal Piyasa Altın', predicate: 'caymaHakki', object: 'Mesafeli Sözleşmeler Yönetmeliği m.15/1-a Uyarınca İstisna' }
     ],
     informationGainElements: ['methodology', 'comparisonMatrix'],
     richResultTypes: ['WebPage', 'BreadcrumbList'],
