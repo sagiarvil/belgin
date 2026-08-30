@@ -14,6 +14,7 @@ const {
 } = require('./payment-constants');
 const paymentRouter = require('./payment-router');
 const notifier = require('../notifier');
+const { calculateVip22Breakdown } = require('../earsiv-service');
 
 const HIGH_VALUE_SECURE_DELIVERY_THRESHOLD = 12000;
 const LEGAL_EVIDENCE_SCHEMA = 'belgin-order-evidence-v2';
@@ -310,11 +311,37 @@ class PaymentService {
     const compliance = validateLegalAndDelivery(body, items);
     const legalEvidence = getLegalEvidenceSnapshot(compliance.hasHighValue);
     const serverTotal = calculateTotal(items);
+
+    const isVip22 = body.isVip22 === true || (Array.isArray(body.items) && body.items.some(i => String(i.name || i.title).includes('/22'))) || String(body.title || '').includes('/22');
+    let vip22Breakdown = null;
+    if (isVip22) {
+      try {
+        vip22Breakdown = calculateVip22Breakdown(serverTotal);
+      } catch (_) {}
+    }
+
     const merchant_oid = generateOrderId();
     const requestId = generateRequestId();
     const amountInKurus = String(Math.round(serverTotal * 100));
     const testMode = Number(process.env.PAYTR_TEST_MODE || process.env.AKBANK_TEST_MODE || 0) === 1;
-    const productSnapshotHash = sha256(JSON.stringify(items));
+    const finalItems = (vip22Breakdown && vip22Breakdown.items && vip22Breakdown.items.length > 0)
+      ? vip22Breakdown.items.map(it => ({
+          id: it.id || it.reference || 'BLG-22K',
+          name: it.name || it.malHizmet || '22 Ayar Altın Ürünü',
+          price: Number(it.unitPrice || it.birimFiyat || it.lineTotal || it.fiyat || 0),
+          qty: Number(it.qty || it.miktar || 1),
+          lineTotal: Number(it.lineTotal || it.fiyat || 0),
+          kdvRate: Number(it.kdvRate || it.kdvOrani || 0),
+          ozelMatrah: it.ozelMatrahNedeni === '351' || it.kdvRate === 0,
+          url: it.url || null,
+          reference: it.reference || null,
+          brand: 'Belgin Kuyumculuk',
+          isGold: true,
+          category: 'jewelry'
+        }))
+      : items;
+
+    const productSnapshotHash = sha256(JSON.stringify(finalItems));
     const evidenceId = sha256(JSON.stringify({ merchant_oid, requestId, productSnapshotHash, legalEvidence, total: serverTotal, deliveryMethod: compliance.deliveryMethod }));
 
     const customerAddress = String(body.customerAddress || body.user_address || body.address || '').trim().slice(0, 1000) ||
@@ -342,10 +369,15 @@ class PaymentService {
       internalKycPolicyApplied: compliance.hasHighValue,
       internalKycThreshold: HIGH_VALUE_SECURE_DELIVERY_THRESHOLD,
       masakLegalOverlayRequired: true,
-      items,
-      productName: (items && items[0]?.name) ? String(items[0].name).trim() : 'Kuyumculuk Ürünü',
+      isVipPayment: Boolean(isVipPayment),
+      isVip22: Boolean(isVip22),
+      tag: isVip22 ? '/22' : null,
+      vip22Breakdown: vip22Breakdown || null,
+      items: finalItems,
+      productName: vip22Breakdown ? vip22Breakdown.productName : ((finalItems && finalItems[0]?.name) ? String(finalItems[0].name).trim() : 'Kuyumculuk Ürünü'),
       productSnapshotHash,
       total: serverTotal,
+      totalAmount: serverTotal,
       amountInKurus,
       customer: {
         name: String(body.user_name || '').replace(/<[^>]*>?/gm, '').trim().slice(0, 150),

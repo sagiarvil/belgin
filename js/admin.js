@@ -19,8 +19,47 @@ const AdminApp = {
   activeInvoiceUuid: null,
   activeInvoiceBreakdown: null,
 
+  // CARİ HESAP EKSTRESİ VE ÖDEMELER DURUMU
+  currentTab: 'orders',
+  statementRows: [],
+  filteredStatementRows: [],
+  statementSummary: { totalPos: 0, totalHakedis: 0, totalPaid: 0, totalRemaining: 0 },
+  allPayments: [],
+  currentStmtPreset: 'all',
+  posBankCommissionRate: 3.74,
+  posRatePeriods: [],
+  isStatementInitialLoadDone: false,
+
+  // MAĞAZA VE MANUEL FATURALAR DURUMU
+  storeInvoices: [],
+  filteredStoreInvoices: [],
+  selectedStoreInvoiceIds: new Set(),
+  currentStorePreset: 'all',
+  currentStorePage: 1,
+  storePageSize: 10,
+  storeItems: [],
+  batchPendingStoreInvoices: [],
+
   init() {
     this.startClock();
+    const savedRate = localStorage.getItem('belgin_pos_bank_rate');
+    if (savedRate !== null && !isNaN(parseFloat(savedRate))) {
+      this.posBankCommissionRate = parseFloat(savedRate);
+    }
+    const rateInput = document.getElementById('posBankCommissionRate');
+    if (rateInput) rateInput.value = this.posBankCommissionRate;
+
+    try {
+      const savedPeriods = localStorage.getItem('belgin_pos_rate_periods');
+      if (savedPeriods) this.posRatePeriods = JSON.parse(savedPeriods) || [];
+    } catch (_) {
+      this.posRatePeriods = [];
+    }
+    this.updatePosRatePeriodsCount();
+
+    // Mağaza Fatura Formunu Hazırla
+    this.initStoreInvoiceForm();
+
     const savedPin = sessionStorage.getItem('belgin_admin_pin');
     if (savedPin === '1999') {
       this.adminPin = savedPin;
@@ -30,6 +69,10 @@ const AdminApp = {
         this.isInitialLoadDone = true;
         this.startLivePolling();
       });
+      // Cari Hesap Ekstresi verilerini arka planda hazırla
+      this.loadStatement();
+      // Mağaza Faturalarını yükle
+      this.loadStoreInvoices();
     } else {
       this.showAuthGate();
       const input = document.getElementById('adminPinInput');
@@ -121,6 +164,9 @@ const AdminApp = {
           if (hasNewPayment) {
             this.playChime();
             this.showToast(`🔔 YENİ TAHSİLAT: ${newPaymentName} — ${newPaymentAmount}`);
+            this.loadStatement();
+          } else if (this.currentTab === 'statement') {
+            this.loadStatement();
           }
         }
       }
@@ -327,6 +373,8 @@ const AdminApp = {
           }));
         } catch (_) {}
         this.renderData(data.summary, data.orders);
+        // Otomasyon: Siparişler güncellendiğinde ekstre ve %8 hakediş hesaplarını da anlık senkronize et
+        this.loadStatement();
       } else {
         throw new Error(data.message || 'Veri formatı geçersiz.');
       }
@@ -550,12 +598,12 @@ const AdminApp = {
                      ${!isSigned ? 'disabled title="Yalnızca imzalanmış faturalar seçilebilir"' : 'title="Muhasebeye iletmek için seçin"'} 
                      onchange="AdminApp.toggleInvoiceSelection('${o.orderId}', this.checked)">
             </td>
-            <td style="font-family:monospace; font-weight:800; font-size:11.5px; color:#064E3B;">${o.orderId}</td>
-            <td style="font-size:11px; color:#64748B; white-space:nowrap;">${dateFormatted}</td>
+            <td style="font-family:monospace; font-weight:800; font-size:12px; color:#064E3B;">${o.orderId}</td>
+            <td style="font-size:12px; color:#334155; font-weight:600; white-space:nowrap;">${dateFormatted}</td>
             <td>
-              <div style="font-weight:800; font-size:12px; color:#0F172A;">${o.customerName || 'Müşteri'}</div>
-              <div style="font-size:11px; color:#64748B;">${o.customerPhone || '—'}</div>
-              <div style="font-size:10.5px; color:#B45309; font-weight:700;">🆔 <span style="font-family:monospace;">${o.customerIdentity && o.customerIdentity !== '—' ? o.customerIdentity : 'Showroom'}</span></div>
+              <div style="font-weight:800; font-size:13px; color:#0F172A;">${o.customerName || 'Müşteri'}</div>
+              <div style="font-size:11.5px; color:#475569; font-weight:600;">${o.customerPhone || '—'}</div>
+              <div style="font-size:11px; color:#92400E; font-weight:800;">🆔 <span style="font-family:monospace;">${o.customerIdentity && o.customerIdentity !== '—' ? o.customerIdentity : 'Showroom'}</span></div>
             </td>
             <td style="font-weight:800; font-size:13.5px; color:#047857; white-space:nowrap;">
               ₺${Number(o.totalAmount || 0).toLocaleString('tr-TR')}
@@ -620,10 +668,10 @@ const AdminApp = {
           : '<span class="badge-status badge-status-pending">⏳ Beklemede</span>';
 
         const invoiceBadge = isSigned
-          ? '<span style="display:inline-flex; align-items:center; gap:4px; font-size:11px; background:#E8F5E9; color:#1B5E20; padding:3px 8px; border-radius:6px; font-weight:800; border:1px solid #A5D6A7;">🧾 Fatura: İmzalandı</span>'
+          ? '<span style="display:inline-flex; align-items:center; gap:4px; font-size:11px; background:#DCFCE7; color:#15803D; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #86EFAC;">🧾 İmzalandı</span>'
           : (o.invoiceStatus === 'DRAFT'
-          ? '<span style="display:inline-flex; align-items:center; gap:4px; font-size:11px; background:#FFF8E1; color:#F57F17; padding:3px 8px; border-radius:6px; font-weight:800; border:1px solid #FFE082;">🧾 Fatura: Taslak</span>'
-          : '<span style="display:inline-flex; align-items:center; gap:4px; font-size:11px; background:#FEF2F2; color:#B91C1C; padding:3px 8px; border-radius:6px; font-weight:800; border:1px solid #FECACA;">⚠️ Fatura: Kesilmedi</span>');
+          ? '<span style="display:inline-flex; align-items:center; gap:4px; font-size:11px; background:#FEF3C7; color:#92400E; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #FCD34D;">🧾 Taslak</span>'
+          : '<span style="display:inline-flex; align-items:center; gap:4px; font-size:11px; background:#FEE2E2; color:#991B1B; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #FCA5A5;">⚠️ Kesilmedi</span>');
 
         const dateFormatted = new Date(o.createdAt).toLocaleString('tr-TR', {
           day: '2-digit', month: '2-digit', year: 'numeric',
@@ -645,13 +693,13 @@ const AdminApp = {
                 <span class="mobile-order-id">${o.orderId}</span>
                 ${statusBadge}
               </div>
-              <time class="mobile-order-time">${dateFormatted}</time>
+              <time class="mobile-order-time" style="font-size:11.5px; font-weight:700; color:#334155;">${dateFormatted}</time>
             </div>
 
             <div class="mobile-card-body">
               <div class="mobile-customer-info">
-                <div class="mobile-customer-name">${o.customerName || 'Müşteri'}</div>
-                <div class="mobile-customer-meta">
+                <div class="mobile-customer-name" style="font-size:15px; font-weight:800; color:#0F172A;">${o.customerName || 'Müşteri'}</div>
+                <div class="mobile-customer-meta" style="margin-top:6px;">
                   ${o.customerPhone && o.customerPhone !== '—' ? `
                     <a href="tel:${o.customerPhone}" class="mobile-meta-link mobile-meta-phone" title="Müşteriyi Ara">
                       📞 ${o.customerPhone}
@@ -659,19 +707,19 @@ const AdminApp = {
                     <a href="https://wa.me/${waPhone}" target="_blank" rel="noopener" class="mobile-meta-link mobile-meta-wa" title="WhatsApp Aç">
                       💬 WhatsApp
                     </a>
-                  ` : '<span style="color:#94A3B8; font-size:11px;">Telefon: —</span>'}
+                  ` : '<span style="color:#64748B; font-size:11.5px; font-weight:600;">Telefon: —</span>'}
                   <span class="mobile-meta-tckn">🆔 ${o.customerIdentity && o.customerIdentity !== '—' ? o.customerIdentity : 'Showroom'}</span>
                 </div>
               </div>
 
-              <div class="mobile-financial-row">
+              <div class="mobile-financial-row" style="background:#F8FAFB; border:1px solid #CBD5E1; padding:12px 14px; border-radius:10px;">
                 <div class="mobile-amount-box">
-                  <span class="mobile-amount-label">Toplam Tutar</span>
-                  <span class="mobile-amount-value">₺${Number(o.totalAmount || 0).toLocaleString('tr-TR')}</span>
+                  <span class="mobile-amount-label" style="color:#475569; font-weight:800;">Toplam Tutar</span>
+                  <span class="mobile-amount-value" style="font-size:18px; color:#047857; font-weight:800;">₺${Number(o.totalAmount || 0).toLocaleString('tr-TR')}</span>
                 </div>
                 <div class="mobile-invoice-box">
-                  <span class="mobile-amount-label">e-Arşiv Durumu</span>
-                  <div>${invoiceBadge}</div>
+                  <span class="mobile-amount-label" style="color:#475569; font-weight:800;">e-Arşiv Durumu</span>
+                  <div style="margin-top:2px;">${invoiceBadge}</div>
                 </div>
               </div>
             </div>
@@ -729,13 +777,43 @@ const AdminApp = {
   },
 
   // KUYUMCULUK ÖZEL MATRAH HESAPLAMA
-  calculateJewelryBreakdown(totalAmount) {
+  calculateJewelryBreakdown(totalAmount, order = null) {
     const total = Number(totalAmount) || 0;
+    const is22 = order && (order.isVip22 || order.tag === '/22' || String(order.productName || '').includes('/22') || (Array.isArray(order.items) && order.items.some(i => String(i.name || '').includes('/22'))));
+
+    if (order && order.vip22Breakdown && order.vip22Breakdown.items) {
+      return {
+        isVip22: true,
+        items: order.vip22Breakdown.items,
+        hasGoldAmount: Number(order.vip22Breakdown.hasGoldAmount) || (total * 0.985),
+        workmanshipNet: Number(order.vip22Breakdown.workmanshipNet) || ((total * 0.015) / 1.20),
+        workmanshipKdv: Number(order.vip22Breakdown.workmanshipKdv) || ((total * 0.015) - (total * 0.015) / 1.20),
+        workmanshipTotal: Number(order.vip22Breakdown.workmanshipTotal) || (total * 0.015),
+        grandTotal: total
+      };
+    }
+
+    if (is22 && typeof VipEngine !== 'undefined' && VipEngine.calculateVip22Breakdown) {
+      const v22 = VipEngine.calculateVip22Breakdown(total);
+      if (v22) {
+        return {
+          isVip22: true,
+          items: v22.items,
+          hasGoldAmount: Number(v22.hasGoldAmount),
+          workmanshipNet: Number(v22.workmanshipNet),
+          workmanshipKdv: Number(v22.workmanshipKdv),
+          workmanshipTotal: Number(v22.workmanshipTotal),
+          grandTotal: total
+        };
+      }
+    }
+
     const workmanshipTotal = Math.max(1, Math.round(total * 0.01 * 100) / 100);
     const hasGoldAmount = Math.round((total - workmanshipTotal) * 100) / 100;
     const workmanshipNet = Math.round((workmanshipTotal / 1.20) * 100) / 100;
     const workmanshipKdv = Math.round((workmanshipTotal - workmanshipNet) * 100) / 100;
     return {
+      isVip22: false,
       hasGoldAmount,
       workmanshipNet,
       workmanshipKdv,
@@ -763,12 +841,13 @@ const AdminApp = {
     const content = document.getElementById('modalOrderContent');
     if (!modal || !content) return;
 
-    const bd = this.calculateJewelryBreakdown(order.totalAmount);
+    const bd = this.calculateJewelryBreakdown(order.totalAmount, order);
 
-    const itemsHtml = (order.items || []).map(it => `
+    const displayItems = (order.items && order.items.length > 0) ? order.items : (bd.items || []);
+    const itemsHtml = displayItems.map(it => `
       <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #EEE; font-size:13px;">
-        <span><strong>${it.name || it.title}</strong> (x${it.qty || 1})</span>
-        <strong style="color:var(--admin-teal);">₺${Number(it.price || 0).toLocaleString('tr-TR')}</strong>
+        <span><strong>${it.name || it.title || it.malHizmet}</strong> ${it.qty ? `(x${it.qty})` : ''}</span>
+        <strong style="color:var(--admin-teal);">₺${Number(it.price || it.lineTotal || it.fiyat || 0).toLocaleString('tr-TR')} ${it.kdvRate ? '(+%20 KDV)' : '(%0 KDV)'}</strong>
       </div>
     `).join('');
 
@@ -776,7 +855,7 @@ const AdminApp = {
       <div style="background:#F9F8F5; padding:14px; border-radius:8px; border:1px solid var(--admin-border); margin-bottom:16px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
           <span style="font-size:12px; color:var(--admin-muted); font-weight:700;">SİPARİŞ REFERANS:</span>
-          <strong style="font-family:monospace; font-size:14px; color:var(--admin-teal-dark);">${order.orderId}</strong>
+          <strong style="font-family:monospace; font-size:14px; color:var(--admin-teal-dark);">${order.orderId} ${order.isVip22 || order.tag === '/22' ? '<span style="background:#FEF3C7; color:#92400E; font-size:11px; padding:2px 6px; border-radius:4px; margin-left:6px; font-weight:800;">🏷️ /22 Ayar</span>' : ''}</strong>
         </div>
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
           <span style="font-size:12px; color:var(--admin-muted); font-weight:700;">HUKUKİ DELİL KİMLİĞİ:</span>
@@ -817,14 +896,21 @@ const AdminApp = {
       </h4>
 
       <div style="background:#F4F8F7; border:1px solid #D1E5E1; border-radius:8px; padding:12px 14px; font-size:12.5px; line-height:1.6; margin-bottom:16px;">
-        <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-          <span><strong>1. Kalem:</strong> Kıymetli Maden Bedeli (%0 KDV / Özel Matrah 351)</span>
-          <strong>₺${bd.hasGoldAmount.toLocaleString('tr-TR', {minimumFractionDigits:2})}</strong>
-        </div>
-        <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-          <span><strong>2. Kalem:</strong> İşçilik Bedeli (₺${bd.workmanshipNet.toLocaleString('tr-TR', {minimumFractionDigits:2})} Matrah + ₺${bd.workmanshipKdv.toLocaleString('tr-TR', {minimumFractionDigits:2})} KDV)</span>
-          <strong>₺${bd.workmanshipTotal.toLocaleString('tr-TR', {minimumFractionDigits:2})}</strong>
-        </div>
+        ${bd.items ? bd.items.map((it, idx) => `
+          <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+            <span><strong>${idx + 1}. Kalem:</strong> ${it.name || it.malHizmet} ${it.qty ? `(x${it.qty})` : ''}</span>
+            <strong>₺${Number(it.lineTotal || it.fiyat || it.totalWithKdv || 0).toLocaleString('tr-TR', {minimumFractionDigits:2})} ${it.kdvRate ? '(+%20 KDV)' : '(%0 KDV Özel Matrah)'}</strong>
+          </div>
+        `).join('') : `
+          <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+            <span><strong>1. Kalem:</strong> Kıymetli Maden Bedeli (%0 KDV / Özel Matrah 351)</span>
+            <strong>₺${bd.hasGoldAmount.toLocaleString('tr-TR', {minimumFractionDigits:2})}</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+            <span><strong>2. Kalem:</strong> İşçilik Bedeli (₺${bd.workmanshipNet.toLocaleString('tr-TR', {minimumFractionDigits:2})} Matrah + ₺${bd.workmanshipKdv.toLocaleString('tr-TR', {minimumFractionDigits:2})} KDV)</span>
+            <strong>₺${bd.workmanshipTotal.toLocaleString('tr-TR', {minimumFractionDigits:2})}</strong>
+          </div>
+        `}
         <div style="display:flex; justify-content:space-between; border-top:1px dashed #B8D6CF; padding-top:5px; margin-top:5px; font-weight:800; color:var(--admin-teal); font-size:13px;">
           <span>Toplam Fatura Tutarı:</span>
           <span>₺${Number(order.totalAmount || 0).toLocaleString('tr-TR', {minimumFractionDigits:2})}</span>
@@ -914,6 +1000,7 @@ const AdminApp = {
         alert('✅ ' + (data.message || 'Kayıt başarıyla silindi.'));
         this.closeModal();
         this.loadOrders();
+        this.loadStatement();
       } else {
         alert('❌ Hata: ' + (data?.message || `Silinemedi (${res.status}).`));
         this.filterTable();
@@ -1130,22 +1217,31 @@ const AdminApp = {
     if (!order) return;
 
     this.activeInvoiceOrderId = orderId;
-    const bd = this.calculateJewelryBreakdown(order.totalAmount);
+    const bd = this.calculateJewelryBreakdown(order.totalAmount, order);
     this.activeInvoiceBreakdown = bd;
 
     const summaryBox = document.getElementById('smsModalOrderSummary');
     if (summaryBox) {
-      summaryBox.innerHTML = `
+      const lines = bd.items ? bd.items.map((it, idx) => `
         <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
-          <span><strong>Sipariş No:</strong> ${order.orderId}</span>
-          <span><strong>Müşteri:</strong> ${order.customerName || 'Nihai Tüketici'}</span>
+          <span><strong>${idx + 1}. Kalem:</strong> ${it.name || it.malHizmet} ${it.qty ? `(x${it.qty})` : ''}</span>
+          <span>₺${Number(it.lineTotal || it.fiyat || it.totalWithKdv || 0).toLocaleString('tr-TR', {minimumFractionDigits:2})} ${it.kdvRate ? '(+%20 KDV)' : '(%0 KDV Özel Matrah)'}</span>
         </div>
+      `).join('') : `
         <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
           <span><strong>1. Kalem Kıymetli Maden (%0 KDV):</strong> ₺${bd.hasGoldAmount.toLocaleString('tr-TR', {minimumFractionDigits:2})}</span>
         </div>
         <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
           <span><strong>2. Kalem İşçilik (%20 KDV):</strong> ₺${bd.workmanshipTotal.toLocaleString('tr-TR', {minimumFractionDigits:2})}</span>
         </div>
+      `;
+
+      summaryBox.innerHTML = `
+        <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
+          <span><strong>Sipariş No:</strong> ${order.orderId}</span>
+          <span><strong>Müşteri:</strong> ${order.customerName || 'Nihai Tüketici'}</span>
+        </div>
+        ${lines}
         <div style="display:flex; justify-content:space-between; font-weight:800; color:var(--admin-teal); border-top:1px solid #D1E5E1; padding-top:3px; margin-top:3px;">
           <span>Toplam Fatura Tutarı:</span>
           <span>₺${Number(order.totalAmount || 0).toLocaleString('tr-TR', {minimumFractionDigits:2})}</span>
@@ -1308,8 +1404,15 @@ const AdminApp = {
               o.invoiceStatus = 'SIGNED';
             });
           }
+          if (this.batchPendingStoreInvoices) {
+            this.batchPendingStoreInvoices.forEach(inv => {
+              inv.invoiceStatus = 'SIGNED';
+            });
+            try { localStorage.setItem('belgin_store_invoices', JSON.stringify(this.storeInvoices)); } catch (_) {}
+          }
           this.closeSmsModal();
           this.filterTable();
+          this.filterStoreTable();
         } else {
           if (errDiv) {
             errDiv.style.display = 'block';
@@ -1319,6 +1422,8 @@ const AdminApp = {
         }
       } else {
         // TEKİL İMZALAMA İSTEĞİ
+        const targetStoreInv = this.storeInvoices.find(i => i.orderId === this.activeInvoiceOrderId || i.id === this.activeInvoiceOrderId);
+
         const res = await fetch('/api/admin/invoice/sign', {
           method: 'POST',
           headers: {
@@ -1330,11 +1435,15 @@ const AdminApp = {
             invoiceUuid: this.activeInvoiceUuid,
             oid: this.activeInvoiceOid || '',
             smsCode: smsCode,
+            orderData: targetStoreInv || null,
             adminKey: this.adminPin
           })
         });
 
-        const data = await res.json();
+        const rawText = await res.text();
+        let data = null;
+        try { data = JSON.parse(rawText); } catch (_) {}
+
         if (data && data.success) {
           alert(`✅ Fatura Başarıyla İmzalandı!\n\nBelge No: ${data.invoiceNumber}\n\nFatura GİB e-Arşiv sistemine kaydedildi ve resmiyet kazandı.`);
           
@@ -1346,9 +1455,17 @@ const AdminApp = {
             targetOrder.invoiceUuid = this.activeInvoiceUuid;
           }
 
+          if (targetStoreInv) {
+            targetStoreInv.invoiceStatus = 'SIGNED';
+            targetStoreInv.invoiceNumber = data.invoiceNumber;
+            targetStoreInv.invoiceUuid = this.activeInvoiceUuid;
+            try { localStorage.setItem('belgin_store_invoices', JSON.stringify(this.storeInvoices)); } catch (_) {}
+          }
+
           this.closeSmsModal();
           this.filterTable();
-          if (this.activeInvoiceOrderId) {
+          this.filterStoreTable();
+          if (this.activeInvoiceOrderId && targetOrder) {
             this.showDetail(this.activeInvoiceOrderId);
           }
         } else {
@@ -1380,20 +1497,25 @@ const AdminApp = {
   },
 
   // FATURAYI MÜŞTERİYE WHATSAPP İLE GÖNDER
+  // FATURAYI MÜŞTERİYE DOĞRUDAN WHATSAPP İLE GÖNDER (MÜŞTERİ NUMARASINA ÖZEL SOHBET)
   sendInvoiceViaWhatsApp(orderId) {
     const order = this.orders.find(o => o.orderId === orderId);
     if (!order) return;
 
     let phone = String(order.customerPhone || order.customer?.phone || '').replace(/\D/g, '');
-    if (phone.startsWith('0')) phone = '9' + phone;
-    if (!phone.startsWith('90') && phone.length === 10) phone = '90' + phone;
+    if (!phone) {
+      alert('⚠️ Müşterinin kayıtlı telefon numarası bulunamadı.');
+      return;
+    }
+    if (phone.startsWith('0')) phone = '90' + phone.substring(1);
+    if (!phone.startsWith('90')) phone = '90' + phone;
 
-    const invoiceUrl = `https://belginkuyumculuk.com/api/admin/invoice/view?uuid=${order.invoiceUuid || ''}&adminKey=1999`;
+    const invoiceUrl = `https://www.belginkuyumculuk.com/api/admin/invoice/view?uuid=${encodeURIComponent(order.invoiceUuid || '')}&orderId=${encodeURIComponent(order.orderId || '')}&print=1&adminKey=1999`;
     const customerName = order.customerName || order.customer?.name || 'Değerli Müşterimiz';
     const amount = Number(order.totalAmount || order.total || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2 });
     const invoiceNo = order.invoiceNumber || 'GİB e-Arşiv Faturanız';
 
-    const msg = `Sayın *${customerName}*,\n\nBelgin Kuyumculuk'tan yapmış olduğunuz *₺${amount}* tutarındaki alışverişinize ait resmi GİB e-Arşiv faturanız düzenlenmiştir.\n\n🧾 *Fatura No:* ${invoiceNo}\n📄 *Faturayı Görüntüle & İndir:*\n${invoiceUrl}\n\nBizi tercih ettiğiniz için teşekkür eder, sağlıklı ve bol kazançlı günler dileriz.\n\n*Belgin Kuyumculuk*\nMenderes Cad. No:231/B Buca / İzmir\n0 (541) 930 52 72`;
+    const msg = `Sayın *${customerName}*,\n\nBelgin Kuyumculuk'tan yapmış olduğunuz *₺${amount}* tutarındaki alışverişinize ait resmi GİB e-Arşiv faturanız düzenlenmiştir.\n\n🧾 *Fatura No:* ${invoiceNo}\n📄 *Faturayı PDF Olarak İndirmek & Görüntülemek İçin:*\n${invoiceUrl}\n\nBizi tercih ettiğiniz için teşekkür eder, iyi günlerde kullanmanızı dileriz.\n\n*Belgin Kuyumculuk*\nMenderes Cad. No:231/B Buca / İzmir\n0 (541) 930 52 72`;
 
     const waUrl = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`;
     window.open(waUrl, '_blank');
@@ -1482,38 +1604,158 @@ const AdminApp = {
     }
   },
 
-  // EXCEL / CSV RAPORU İNDİR
-  exportToCsv() {
-    if (!this.orders || this.orders.length === 0) {
+  // EXCEL (.XLS) RAPORU İNDİR (Formatlı Tablo, Veri Bozulma Koruması ve Toplam Satırı)
+  exportToExcel() {
+    const searchVal = (document.getElementById('searchInput')?.value || '').toLowerCase().trim();
+    const statusVal = document.getElementById('statusFilter')?.value || '';
+
+    const ordersToExport = (this.filteredOrders && this.filteredOrders.length > 0 ? this.filteredOrders : this.orders || []).filter(o => {
+      const matchSearch = !searchVal || 
+        (o.orderId && o.orderId.toLowerCase().includes(searchVal)) ||
+        (o.customerName && o.customerName.toLowerCase().includes(searchVal)) ||
+        (o.customerPhone && o.customerPhone.includes(searchVal)) ||
+        (o.provider && o.provider.toLowerCase().includes(searchVal));
+
+      const isPaid = Boolean(o.isPaid) && (o.paymentStatus === 'PAID' || o.status === 'PAID' || o.status === 'AWAITING_STORE_PICKUP');
+      const isFailed = o.status === 'FAILED' || o.paymentStatus === 'FAILED' || o.status === 'PAYMENT_FAILED';
+      const isPending = !isPaid && !isFailed;
+      const isInvoiceSigned = (o.invoiceStatus === 'SIGNED');
+      const isInvoicePending = isPaid && !isInvoiceSigned;
+
+      let matchStatus = true;
+      if (statusVal === 'PAID') matchStatus = isPaid;
+      else if (statusVal === 'INVOICE_PENDING') matchStatus = isInvoicePending;
+      else if (statusVal === 'INVOICE_SIGNED') matchStatus = isInvoiceSigned;
+      else if (statusVal === 'PENDING') matchStatus = isPending;
+      else if (statusVal === 'FAILED') matchStatus = isFailed;
+
+      return matchSearch && matchStatus;
+    });
+
+    if (!ordersToExport || ordersToExport.length === 0) {
       alert('Dışa aktarılacak ödeme kaydı bulunamadı.');
       return;
     }
 
-    const headers = ['Sipariş No', 'Hukuki Delil ID', 'Tarih', 'Müşteri Adı', 'T.C. Kimlik / Pasaport', 'Fatura Adresi', 'Telefon', 'E-Posta', 'Tutar (TL)', 'POS Kanalı', 'Ödeme Durumu', 'Teslimat'];
-    const rows = this.orders.map(o => [
-      `"${o.orderId}"`,
-      `"${o.evidenceId || o.orderId}"`,
-      `"${new Date(o.createdAt).toLocaleString('tr-TR')}"`,
-      `"${(o.customerName || '').replace(/"/g, '""')}"`,
-      `"${(o.customerIdentity || '').replace(/"/g, '""')}"`,
-      `"${(o.customerAddress || '').replace(/"/g, '""')}"`,
-      `"${o.customerPhone || ''}"`,
-      `"${o.customerEmail || ''}"`,
-      `"${Number(o.totalAmount || 0)}"`,
-      `"${o.provider || 'AKBANK'}"`,
-      `"${o.paymentStatus || o.status}"`,
-      `"${o.deliveryMethod || 'showroom'}"`
-    ]);
+    const startDate = document.getElementById('startDate')?.value || '';
+    const endDate = document.getElementById('endDate')?.value || '';
+    const periodText = (startDate && endDate) ? `${startDate} ile ${endDate} Arası` : `Tüm Kayıtlar (${new Date().toLocaleDateString('tr-TR')})`;
+    const dateSuffix = (startDate && endDate) ? `_${startDate}_${endDate}` : `_${new Date().toISOString().split('T')[0]}`;
 
-    const csvContent = '\uFEFF' + [headers.join(';'), ...rows.map(r => r.join(';'))].join('\r\n');
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    let totalSum = 0;
+    const tableRows = ordersToExport.map((o, idx) => {
+      const amount = Number(o.totalAmount || 0);
+      totalSum += amount;
+      const dateStr = new Date(o.createdAt).toLocaleString('tr-TR');
+      const escapedCustomer = (o.customerName || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const escapedAddress = (o.customerAddress || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const bgColor = idx % 2 === 0 ? '#FFFFFF' : '#F9FBFB';
+
+      return `
+        <tr style="background-color: ${bgColor};">
+          <td class="text-cell" style="font-weight:600;">${o.orderId}</td>
+          <td class="text-cell" style="color:#666;">${o.evidenceId || o.orderId}</td>
+          <td class="text-cell">${dateStr}</td>
+          <td>${escapedCustomer}</td>
+          <td class="text-cell">${o.customerIdentity || '—'}</td>
+          <td>${escapedAddress}</td>
+          <td class="text-cell">${o.customerPhone || '—'}</td>
+          <td class="text-cell">${o.customerEmail || '—'}</td>
+          <td class="num-cell" style="font-weight:700; color:#042926;">${amount.toFixed(2)}</td>
+          <td style="text-align:center;">${o.provider || 'AKBANK'}</td>
+          <td style="text-align:center; font-weight:600; color:${o.paymentStatus === 'PAID' ? '#166534' : '#991B1B'};">${o.paymentStatus || o.status}</td>
+          <td style="text-align:center;">${o.deliveryMethod === 'showroom' ? 'Showroom Teslim' : 'Kargo'}</td>
+        </tr>
+      `;
+    }).join('');
+
+    const excelHtml = `
+      <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+      <head>
+        <meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8">
+        <!--[if gte mso 9]>
+        <xml>
+          <x:ExcelWorkbook>
+            <x:ExcelWorksheets>
+              <x:ExcelWorksheet>
+                <x:Name>Tahsilat Raporu</x:Name>
+                <x:WorksheetOptions>
+                  <x:DisplayGridlines/>
+                </x:WorksheetOptions>
+              </x:ExcelWorksheet>
+            </x:ExcelWorksheets>
+          </x:ExcelWorkbook>
+        </xml>
+        <![endif]-->
+        <style>
+          body { font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 11pt; color: #1F2937; }
+          table { border-collapse: collapse; width: 100%; }
+          th { background-color: #042926; color: #FFFFFF; font-weight: bold; border: 1px solid #084C47; padding: 10px 12px; text-align: left; font-size: 11pt; }
+          td { border: 1px solid #D1D5DB; padding: 8px 10px; vertical-align: middle; font-size: 10.5pt; }
+          .text-cell { mso-number-format:"\\@"; }
+          .num-cell { mso-number-format:"\\#\\,\\#\\#0\\.00"; text-align: right; }
+          .total-row td { background-color: #E6F4EA; border-top: 2px solid #137333; border-bottom: 2px solid #137333; font-weight: bold; }
+          .total-amount { background-color: #E6F4EA; border-top: 2px solid #137333; border-bottom: 2px solid #137333; font-weight: bold; font-size: 12pt; color: #137333; mso-number-format:"\\#\\,\\#\\#0\\.00"; text-align: right; }
+        </style>
+      </head>
+      <body>
+        <table>
+          <tr>
+            <td colspan="12" style="border:none; font-size: 16pt; font-weight: bold; color: #042926; padding-bottom: 4px;">BELGİN KUYUMCULUK & SAAT</td>
+          </tr>
+          <tr>
+            <td colspan="12" style="border:none; font-size: 12pt; font-weight: bold; color: #B68A32; padding-bottom: 4px;">Sanal POS Tahsilat ve Hesap Özeti Raporu</td>
+          </tr>
+          <tr>
+            <td colspan="12" style="border:none; font-size: 10pt; color: #4B5563; padding-bottom: 14px;"><strong>Rapor Dönemi:</strong> ${periodText} | <strong>Oluşturulma:</strong> ${new Date().toLocaleString('tr-TR')}</td>
+          </tr>
+          <tr></tr>
+          <thead>
+            <tr>
+              <th style="width: 200px;">Sipariş No</th>
+              <th style="width: 200px;">Hukuki Delil ID</th>
+              <th style="width: 140px;">İşlem Tarihi</th>
+              <th style="width: 180px;">Müşteri Adı Soyadı</th>
+              <th style="width: 140px;">T.C. Kimlik / Pasaport</th>
+              <th style="width: 260px;">Fatura / Teslimat Adresi</th>
+              <th style="width: 130px;">Telefon</th>
+              <th style="width: 200px;">E-Posta</th>
+              <th style="width: 140px; text-align: right;">Tutar (TL)</th>
+              <th style="width: 100px; text-align: center;">POS / Banka</th>
+              <th style="width: 120px; text-align: center;">Ödeme Durumu</th>
+              <th style="width: 140px; text-align: center;">Teslimat Kanalı</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${tableRows}
+            <tr style="height: 12px;"><td colspan="12" style="border:none;"></td></tr>
+            <tr class="total-row">
+              <td class="text-cell" style="font-size: 11pt; color: #137333;">GENEL TOPLAM</td>
+              <td colspan="2" style="color: #555;"></td>
+              <td style="color: #137333;">Toplam ${ordersToExport.length} Adet İşlem</td>
+              <td colspan="4"></td>
+              <td class="total-amount">${totalSum.toFixed(2)}</td>
+              <td colspan="3" style="text-align: center; color: #137333; font-size: 10pt;">${(this.adminPin ? 'Onaylı Banka Kayıtları' : '')}</td>
+            </tr>
+          </tbody>
+        </table>
+      </body>
+      </html>
+    `;
+
+    const blob = new Blob(['\uFEFF' + excelHtml], { type: 'application/vnd.ms-excel;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.setAttribute('href', url);
-    link.setAttribute('download', `Belgin_Kuyumculuk_Tahsilat_Raporu_${new Date().toISOString().split('T')[0]}.csv`);
+    link.setAttribute('download', `Belgin_Kuyumculuk_Tahsilat_Raporu${dateSuffix}.xls`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  },
+
+  // CSV ve Excel fonksiyonları uyumluluğu
+  exportToCsv() {
+    this.exportToExcel();
   },
 
   // FATURA SEÇİMİNİ DEĞİŞTİR (CHECKBOX)
@@ -1674,9 +1916,9 @@ const AdminApp = {
       const invNo = o.invoiceNumber || o.orderId;
       const prodName = o.productName || (o.invoiceBreakdown && o.invoiceBreakdown.productName) || 'Kuyumculuk Ürünü';
       const amtFormatted = Number(o.totalAmount || o.total || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2 });
-      const invUrl = `https://belginkuyumculuk.com/api/admin/invoice/view?uuid=${o.invoiceUuid || ''}&adminKey=1999`;
+      const invUrl = `https://www.belginkuyumculuk.com/api/admin/invoice/view?uuid=${encodeURIComponent(o.invoiceUuid || '')}&orderId=${encodeURIComponent(o.orderId || '')}&print=1&adminKey=1999`;
 
-      return `${idx + 1}️⃣ *${custName}*\n• *TCKN / VKN:* ${tckn}\n• *Fatura No:* ${invNo}\n• *Ürün:* ${prodName} (Özel Matrah)\n• *Tutar:* ₺${amtFormatted}\n• *GİB Fatura Linki:*\n${invUrl}`;
+      return `${idx + 1}️⃣ *${custName}*\n• *TCKN / VKN:* ${tckn}\n• *Fatura No:* ${invNo}\n• *Ürün:* ${prodName} (Özel Matrah)\n• *Tutar:* ₺${amtFormatted}\n• *Resmi Fatura (PDF İndir):*\n${invUrl}`;
     }).join('\n\n');
 
     return `📊 *BELGİN KUYUMCULUK — GİB E-ARŞİV FATURA DÖKÜMÜ*\n📅 *Tarih:* ${dateFormatted}\n📁 *Fatura Adedi:* ${count} Adet\n💰 *Genel Toplam:* ₺${totalFormatted}\n\n────────────────────────\n🧾 *FATURA DÖKÜMÜ:*\n\n${lines}\n\n────────────────────────\n📌 _KDV Kanunu 23/f özel matrah kapsamında muhasebe kayıtlarına işlenmek üzere iletilmiştir._\n🏢 *Belgin Kuyumculuk* (Buca / İzmir)`;
@@ -1711,6 +1953,2472 @@ const AdminApp = {
     const msg = this.generateAccountingWhatsAppMessage([order]);
     const waUrl = `https://api.whatsapp.com/send?phone=${this.ACCOUNTING_PHONE}&text=${encodeURIComponent(msg)}`;
     window.open(waUrl, '_blank');
+  },
+
+  // ========================================================
+  // CARİ HESAP EKSTRESİ & ÖDEMELER MOTORU (EKSTRE MODÜLÜ)
+  // ========================================================
+
+  // 1. SEKME DEĞİŞTİRİCİ
+  switchTab(tab) {
+    this.currentTab = tab;
+    const tabBtnOrders = document.getElementById('tabBtnOrders');
+    const tabBtnStmt = document.getElementById('tabBtnStatement');
+    const tabBtnStore = document.getElementById('tabBtnStoreInvoices');
+    const ordersContent = document.getElementById('ordersTabContent');
+    const stmtContent = document.getElementById('statementTabContent');
+    const storeContent = document.getElementById('storeInvoicesTabContent');
+
+    if (tabBtnOrders) tabBtnOrders.classList.remove('active');
+    if (tabBtnStmt) tabBtnStmt.classList.remove('active');
+    if (tabBtnStore) tabBtnStore.classList.remove('active');
+
+    if (ordersContent) ordersContent.style.display = 'none';
+    if (stmtContent) stmtContent.style.display = 'none';
+    if (storeContent) storeContent.style.display = 'none';
+
+    if (tab === 'statement') {
+      if (tabBtnStmt) tabBtnStmt.classList.add('active');
+      if (stmtContent) stmtContent.style.display = 'block';
+      this.loadStatement();
+    } else if (tab === 'storeInvoices') {
+      if (tabBtnStore) tabBtnStore.classList.add('active');
+      if (storeContent) storeContent.style.display = 'block';
+      this.loadStoreInvoices();
+    } else {
+      if (tabBtnOrders) tabBtnOrders.classList.add('active');
+      if (ordersContent) ordersContent.style.display = 'block';
+      this.loadOrders();
+    }
+  },
+
+  // 2. EKSTRE TARİH ÖN AYAR SEÇİMİ (VARSAYILAN: 01.08.2016 - BUGÜN)
+  selectStmtPreset(preset, btnEl) {
+    this.currentStmtPreset = preset;
+    document.querySelectorAll('[data-stmt-preset]').forEach(b => b.classList.remove('active'));
+    if (btnEl) btnEl.classList.add('active');
+
+    const startInput = document.getElementById('stmtStartDate');
+    const endInput = document.getElementById('stmtEndDate');
+    const today = new Date();
+    const toDateStr = d => d.toISOString().split('T')[0];
+
+    if (preset === 'today') {
+      const todayStr = toDateStr(today);
+      if (startInput) startInput.value = todayStr;
+      if (endInput) endInput.value = todayStr;
+    } else if (preset === 'yesterday') {
+      const y = new Date(today);
+      y.setDate(y.getDate() - 1);
+      const yStr = toDateStr(y);
+      if (startInput) startInput.value = yStr;
+      if (endInput) endInput.value = yStr;
+    } else if (preset === 'last7') {
+      const d7 = new Date(today);
+      d7.setDate(d7.getDate() - 6);
+      if (startInput) startInput.value = toDateStr(d7);
+      if (endInput) endInput.value = toDateStr(today);
+    } else if (preset === 'thisMonth') {
+      const mStart = new Date(today.getFullYear(), today.getMonth(), 1);
+      if (startInput) startInput.value = toDateStr(mStart);
+      if (endInput) endInput.value = toDateStr(today);
+    } else if (preset === 'last30') {
+      const d30 = new Date(today);
+      d30.setDate(d30.getDate() - 29);
+      if (startInput) startInput.value = toDateStr(d30);
+      if (endInput) endInput.value = toDateStr(today);
+    } else { // 'all' (01.08.2016'dan başlat, bugünün tarihine gelsin)
+      if (startInput) startInput.value = '2016-08-01';
+      if (endInput) endInput.value = toDateStr(today);
+    }
+
+    this.loadStatement();
+  },
+
+  onStmtCustomDateChange() {
+    document.querySelectorAll('[data-stmt-preset]').forEach(b => b.classList.remove('active'));
+    this.loadStatement();
+  },
+
+  // 3. EKSTRE CANLI VERİLERİNİ ÇEK VE HESAPLA
+  async loadStatement() {
+    if (!this.adminPin) return;
+
+    let start = document.getElementById('stmtStartDate')?.value || '';
+    let end = document.getElementById('stmtEndDate')?.value || '';
+
+    // Varsayılan tarih aralığı: 01.08.2016 - Bugün
+    if (!start) {
+      start = '2016-08-01';
+      const sInput = document.getElementById('stmtStartDate');
+      if (sInput) sInput.value = start;
+    }
+    if (!end) {
+      end = new Date().toISOString().split('T')[0];
+      const eInput = document.getElementById('stmtEndDate');
+      if (eInput) eInput.value = end;
+    }
+
+    const params = new URLSearchParams();
+    if (start) params.append('startDate', start);
+    if (end) params.append('endDate', end);
+
+    try {
+      const res = await fetch(`/api/admin/statement?${params.toString()}`, {
+        headers: { 'x-admin-key': this.adminPin }
+      });
+
+      if (res.status === 401) {
+        this.showAuthGate();
+        return;
+      }
+
+      const data = await res.json();
+      if (data && data.success) {
+        this.statementRows = Array.isArray(data.rows) ? data.rows : [];
+        this.statementSummary = data.summary || { totalPos: 0, totalHakedis: 0, totalPaid: 0, totalRemaining: 0 };
+        this.allPayments = Array.isArray(data.allPayments) ? data.allPayments : [];
+
+        this.updateStatementMetrics();
+        this.filterStatementTable();
+
+        const syncEl = document.getElementById('stmtLastSyncTime');
+        if (syncEl) syncEl.textContent = 'Son Güncelleme: ' + new Date().toLocaleTimeString('tr-TR');
+      }
+    } catch (err) {
+      console.error('[Statement Load Error]:', err);
+    }
+  },
+
+  // 2.1. POS BANKA KOMİSYON ORANI DEĞİŞTİRME & DÖNEMSEL ORANLAR
+  onPosCommissionRateChange(newRate) {
+    const num = parseFloat(newRate);
+    this.posBankCommissionRate = isNaN(num) ? 0 : num;
+    try {
+      localStorage.setItem('belgin_pos_bank_rate', this.posBankCommissionRate);
+    } catch (_) {}
+
+    this.updateStatementMetrics();
+    this.renderStatementTable(this.filteredStatementRows);
+  },
+
+  getRateForDate(dateStr) {
+    if (Array.isArray(this.posRatePeriods) && this.posRatePeriods.length > 0) {
+      for (const p of this.posRatePeriods) {
+        const afterStart = !p.startDate || dateStr >= p.startDate;
+        const beforeEnd = !p.endDate || dateStr <= p.endDate;
+        if (afterStart && beforeEnd && !isNaN(Number(p.rate))) {
+          return Number(p.rate);
+        }
+      }
+    }
+    return this.posBankCommissionRate;
+  },
+
+  updatePosRatePeriodsCount() {
+    const badge = document.getElementById('posRatePeriodsCountBadge');
+    if (badge) badge.textContent = (this.posRatePeriods || []).length;
+  },
+
+  openPosRatesModal() {
+    const modal = document.getElementById('posRatesModal');
+    if (!modal) return;
+
+    this.renderPosRatePeriodsTable();
+    modal.style.display = 'flex';
+  },
+
+  closePosRatesModal() {
+    const modal = document.getElementById('posRatesModal');
+    if (modal) modal.style.display = 'none';
+    this.updatePosRatePeriodsCount();
+    this.updateStatementMetrics();
+    this.renderStatementTable(this.filteredStatementRows);
+  },
+
+  renderPosRatePeriodsTable() {
+    const tbody = document.getElementById('posRatePeriodsTableBody');
+    if (!tbody) return;
+
+    if (!this.posRatePeriods || this.posRatePeriods.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:16px; color:#64748B;">Henüz özel tarih aralığı eklenmedi. Tüm tarihler için üstteki genel oran (%${this.posBankCommissionRate}) uygulanır.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = this.posRatePeriods.map((p, idx) => {
+      const startFormatted = p.startDate ? this.formatDateTr(p.startDate) : 'Geçmişten';
+      const endFormatted = p.endDate ? this.formatDateTr(p.endDate) : 'Bugüne (Süresiz)';
+      const margin = (8 - Number(p.rate || 0)).toFixed(2);
+
+      return `
+        <tr style="border-bottom:1px solid #E2E8F0;">
+          <td style="padding:8px 10px; font-weight:700; color:#1E293B;">
+            📅 ${startFormatted} — ${endFormatted}
+          </td>
+          <td style="padding:8px 10px; text-align:center; font-weight:800; color:#B45309;">
+            %${Number(p.rate || 0).toFixed(2)}
+          </td>
+          <td style="padding:8px 10px; text-align:center; font-weight:800; color:#15803D;">
+            %${margin}
+          </td>
+          <td style="padding:8px 10px; text-align:center;">
+            <button type="button" style="background:#FEE2E2; border:1px solid #FCA5A5; color:#991B1B; border-radius:4px; padding:3px 8px; font-size:11px; font-weight:700; cursor:pointer;" onclick="AdminApp.deletePosRatePeriod(${idx})">
+              Sil
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  },
+
+  addPosRatePeriod() {
+    const start = document.getElementById('ratePeriodStart')?.value?.trim();
+    const end = document.getElementById('ratePeriodEnd')?.value?.trim();
+    const val = parseFloat(document.getElementById('ratePeriodValue')?.value);
+
+    if (isNaN(val) || val < 0) {
+      alert('Lütfen geçerli bir POS komisyon oranı (%) giriniz.');
+      return;
+    }
+    if (start && end && start > end) {
+      alert('Başlangıç tarihi bitiş tarihinden sonra olamaz.');
+      return;
+    }
+
+    this.posRatePeriods.push({
+      id: 'rate-' + Date.now(),
+      startDate: start || null,
+      endDate: end || null,
+      rate: val
+    });
+
+    try {
+      localStorage.setItem('belgin_pos_rate_periods', JSON.stringify(this.posRatePeriods));
+    } catch (_) {}
+
+    const sInput = document.getElementById('ratePeriodStart');
+    const eInput = document.getElementById('ratePeriodEnd');
+    const vInput = document.getElementById('ratePeriodValue');
+    if (sInput) sInput.value = '';
+    if (eInput) eInput.value = '';
+    if (vInput) vInput.value = '';
+
+    this.updatePosRatePeriodsCount();
+    this.renderPosRatePeriodsTable();
+    this.updateStatementMetrics();
+    this.renderStatementTable(this.filteredStatementRows);
+    this.showToast('✅ Dönemsel POS komisyon oranı eklendi.');
+  },
+
+  deletePosRatePeriod(idx) {
+    if (idx < 0 || idx >= this.posRatePeriods.length) return;
+    this.posRatePeriods.splice(idx, 1);
+    try {
+      localStorage.setItem('belgin_pos_rate_periods', JSON.stringify(this.posRatePeriods));
+    } catch (_) {}
+    this.updatePosRatePeriodsCount();
+    this.renderPosRatePeriodsTable();
+    this.updateStatementMetrics();
+    this.renderStatementTable(this.filteredStatementRows);
+    this.showToast('🗑️ Dönemsel oran silindi.');
+  },
+
+  // 4. METRİKLERİ VE SAĞ ÜSTTEKİ KIRMIZI KALAN TOPLAM TUTARI GÜNCELLE
+  updateStatementMetrics() {
+    const s = this.statementSummary || {};
+    const fmt = val => '₺' + Number(val || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const fmtShort = val => '₺' + Number(val || 0).toLocaleString('tr-TR', { maximumFractionDigits: 0 });
+
+    const heroRem = document.getElementById('stmtHeroRemaining');
+    if (heroRem) heroRem.textContent = fmt(s.totalRemaining);
+
+    const tabBadge = document.getElementById('tabBadgeStatement');
+    if (tabBadge) tabBadge.textContent = fmtShort(s.totalRemaining);
+
+    const kpiPos = document.getElementById('stmtKpiTotalPos');
+    if (kpiPos) kpiPos.textContent = fmt(s.totalPos);
+
+    const kpiHak = document.getElementById('stmtKpiTotalHakedis');
+    if (kpiHak) kpiHak.textContent = fmt(s.totalHakedis);
+
+    const kpiPaid = document.getElementById('stmtKpiTotalPaid');
+    if (kpiPaid) kpiPaid.textContent = fmt(s.totalPaid);
+
+    const kpiRem = document.getElementById('stmtKpiTotalRemaining');
+    if (kpiRem) kpiRem.textContent = fmt(s.totalRemaining);
+
+    // Toplam Net Kâr Hesabı: Tarihe duyarlı (getRateForDate) hesaplama
+    let totalProfit = 0;
+    (this.statementRows || []).forEach(r => {
+      if (r.pos > 0) {
+        const rate = this.getRateForDate(r.date);
+        const hakedis = Number(r.hakedis || 0);
+        const bankFee = r.pos * (rate / 100);
+        const profit = (r.pos - hakedis) - bankFee;
+        totalProfit += profit;
+      }
+    });
+    totalProfit = Math.round(totalProfit * 100) / 100;
+
+    const kpiProfit = document.getElementById('stmtKpiTotalProfit');
+    if (kpiProfit) kpiProfit.textContent = fmt(totalProfit);
+
+    const profitSub = document.getElementById('stmtKpiProfitSubtext');
+    if (profitSub) {
+      const hasPeriods = (this.posRatePeriods || []).length > 0;
+      profitSub.textContent = hasPeriods ? `Tarih Bazlı Oranlar (${this.posRatePeriods.length} Kural)` : `(Kesinti %8) — (Banka %${this.posBankCommissionRate})`;
+    }
+
+    const payCountBadge = document.getElementById('stmtTotalPaymentsBadge');
+    if (payCountBadge) payCountBadge.textContent = this.allPayments.length;
+
+    const allPayBadge = document.getElementById('allPaymentsCountBadge');
+    if (allPayBadge) allPayBadge.textContent = this.allPayments.length;
+
+    const allPayTotal = document.getElementById('allPaymentsTotalBadge');
+    if (allPayTotal) allPayTotal.textContent = fmt(s.totalPaid);
+  },
+
+  // 5. ARAMA VE TABLO FİLTRELEME
+  filterStatementTable() {
+    const query = (document.getElementById('stmtSearchInput')?.value || '').trim().toLowerCase();
+    
+    if (!query) {
+      this.filteredStatementRows = [...this.statementRows];
+    } else {
+      this.filteredStatementRows = this.statementRows.filter(r => {
+        const dateMatch = r.date && r.date.toLowerCase().includes(query);
+        const formattedDate = this.formatDateTr(r.date).toLowerCase();
+        const dateTrMatch = formattedDate.includes(query);
+        const descMatch = r.description && r.description.toLowerCase().includes(query);
+        const orderIdMatch = r.orderId && r.orderId.toLowerCase().includes(query);
+        const customerMatch = r.customerName && r.customerName.toLowerCase().includes(query);
+        const posMatch = String(r.pos).includes(query);
+        const hakMatch = String(r.hakedis).includes(query);
+        const payMatch = String(r.paid).includes(query);
+        return dateMatch || dateTrMatch || descMatch || orderIdMatch || customerMatch || posMatch || hakMatch || payMatch;
+      });
+    }
+
+    const countBadge = document.getElementById('stmtTableCountBadge');
+    if (countBadge) countBadge.textContent = `(${this.filteredStatementRows.length} Hareket)`;
+
+    this.renderStatementTable(this.filteredStatementRows);
+  },
+
+  // 6. EKSTRE TABLOSUNU TEK TEK İŞLEM HAREKETLERİYLE RENDER ET (YENİDEN ESKİYE)
+  renderStatementTable(rows) {
+    const tbody = document.getElementById('statementTableBody');
+    const mobileList = document.getElementById('statementMobileList');
+    if (!tbody) return;
+
+    if (!rows || rows.length === 0) {
+      const emptyHtml = `
+        <tr>
+          <td colspan="7" style="text-align:center; padding:40px 16px; color:var(--admin-muted);">
+            <div style="font-size:32px; margin-bottom:8px;">📊</div>
+            <div style="font-weight:700; font-size:14px; color:#334155;">Bu tarih aralığında ekstre hareketi bulunamadı.</div>
+          </td>
+        </tr>`;
+      tbody.innerHTML = emptyHtml;
+      if (mobileList) mobileList.innerHTML = `<div style="text-align:center; padding:32px; color:var(--admin-muted);">Kayıt bulunamadı.</div>`;
+      return;
+    }
+
+    const fmt = val => '₺' + Number(val || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    let html = '';
+    let mobileHtml = '';
+
+    rows.forEach(r => {
+      const isPosSale = r.type === 'POS_SALE';
+      const isPayment = r.type === 'PAYMENT';
+      const isManualPos = r.type === 'POS_MANUAL';
+
+      const dateFormatted = this.formatDateTr(r.date);
+      const timeStr = r.time && r.time !== '12:00' ? ` <span style="font-size:11px; color:#94A3B8;">${r.time}</span>` : '';
+
+      let typeBadge = '';
+      let descHtml = '';
+      let mainAmountStr = '';
+      let mainAmountColor = '#0F172A';
+
+      if (isPosSale) {
+        typeBadge = `<span style="background:#E0F2FE; color:#0369A1; border:1px solid #7DD3FC; font-size:11px; font-weight:800; padding:3px 8px; border-radius:6px; display:inline-flex; align-items:center; gap:4px;">💳 POS Satış</span>`;
+        descHtml = `<strong style="color:#0F172A; font-size:13.5px;">${r.orderId}</strong> — <span style="font-weight:700; color:#1E293B;">${this.escapeHtml(r.customerName || 'Müşteri')}</span> <span style="font-size:11px; color:#475569; font-weight:600;">(${r.provider || 'AKBANK'})</span>`;
+        mainAmountStr = `+${fmt(r.pos)}`;
+        mainAmountColor = '#0369A1';
+      } else if (isPayment) {
+        typeBadge = `<span style="background:#DCFCE7; color:#15803D; border:1px solid #86EFAC; font-size:11px; font-weight:800; padding:3px 8px; border-radius:6px; display:inline-flex; align-items:center; gap:4px;">🟢 Ödeme Çıkışı</span>`;
+        descHtml = `<strong style="color:#15803D; font-size:13.5px;">${this.escapeHtml(r.description || 'Ödeme')}</strong> <span style="font-size:11px; color:#475569; font-weight:600;">(${r.paymentType || 'Banka'})</span>`;
+        mainAmountStr = `-${fmt(r.paid)}`;
+        mainAmountColor = '#15803D';
+      } else if (isManualPos) {
+        typeBadge = `<span style="background:#FEF3C7; color:#92400E; border:1px solid #FCD34D; font-size:11px; font-weight:800; padding:3px 8px; border-radius:6px; display:inline-flex; align-items:center; gap:4px;">➕ Manuel POS</span>`;
+        descHtml = `<strong style="color:#92400E; font-size:13.5px;">${this.escapeHtml(r.description || 'Manuel POS')}</strong>`;
+        mainAmountStr = `+${fmt(r.pos)}`;
+        mainAmountColor = '#B45309';
+      }
+
+      const isPositiveRemaining = (r.remaining || 0) > 0;
+      const isZeroRemaining = Math.abs(r.remaining || 0) < 0.01;
+
+      // Kâr Hesabı: Tarihe göre geçerli POS komisyon oranını çek
+      let profitHtml = '';
+      let profitMobileHtml = '';
+      if (r.pos > 0) {
+        const rate = this.getRateForDate(r.date);
+        const bankFee = r.pos * (rate / 100);
+        const profit = Math.round(((r.pos - (r.hakedis || 0)) - bankFee) * 100) / 100;
+        const profitRate = (8 - rate).toFixed(2);
+
+        profitHtml = `
+          <div style="font-size:14px; font-weight:800; color:#15803D;">${fmt(profit)}</div>
+          <div style="font-size:10px; color:#166534; font-weight:700;" title="Uygulanan Banka POS Oranı: %${rate}">Net Kâr (%${profitRate}) <span style="color:#B45309;">(%${rate})</span></div>
+        `;
+        profitMobileHtml = `
+          <strong style="color:#15803D; font-size:13.5px;">${fmt(profit)}</strong> <span style="font-size:10.5px; color:#166534; font-weight:700;">(%${profitRate})</span>
+        `;
+      } else {
+        profitHtml = `<span style="color:#64748B; font-weight:600;">—</span>`;
+        profitMobileHtml = `
+          <span style="color:#64748B; font-weight:700; font-size:13px;">—</span>
+        `;
+      }
+
+      let actionsHtml = '';
+      let mobileActionsHtml = '';
+
+      if (isPosSale) {
+        actionsHtml = `
+          <div style="display:flex; justify-content:center; align-items:center; gap:4px;">
+            <button type="button" class="btn-admin-secondary" style="padding:5px 9px; font-size:11.5px; font-weight:700; color:#064E3B;" onclick="AdminApp.openOrderModal('${r.orderId}')" title="Sipariş detayını görüntüle / yönet">
+              ✏️ Düzenle
+            </button>
+            <button type="button" style="background:#FEE2E2; border:1px solid #FCA5A5; color:#991B1B; border-radius:6px; padding:5px 9px; font-size:11.5px; font-weight:800; cursor:pointer;" onclick="AdminApp.deleteOrder('${r.orderId}')" title="Bu siparişi sil">
+              🗑️ Sil
+            </button>
+          </div>
+        `;
+        mobileActionsHtml = `
+          <button type="button" class="btn-admin-secondary" style="width:100%; min-height:44px; justify-content:center; font-size:13px; font-weight:800; color:#064E3B; border-radius:8px;" onclick="AdminApp.openOrderModal('${r.orderId}')">
+            ✏️ Sipariş Detayını Düzenle
+          </button>
+          <button type="button" style="min-height:44px; padding:0 14px; background:#FEE2E2; border:1.5px solid #FCA5A5; color:#991B1B; border-radius:8px; font-size:13px; font-weight:800; cursor:pointer;" onclick="AdminApp.deleteOrder('${r.orderId}')" title="Siparişi Sil">
+            🗑️ Sil
+          </button>
+        `;
+      } else if (isPayment) {
+        actionsHtml = `
+          <div style="display:flex; justify-content:center; align-items:center; gap:4px;">
+            <button type="button" class="btn-admin-secondary" style="padding:5px 9px; font-size:11.5px; font-weight:700; color:#064E3B;" onclick="AdminApp.openPaymentModal('${r.date}', '${r.id}', ${r.paid || 0}, '${this.escapeHtml(r.description || '')}', '${r.paymentType || 'Banka/Havale'}')" title="Ödeme tutarı veya açıklamasını düzenle">
+              ✏️ Düzenle
+            </button>
+            <button type="button" style="background:#FEE2E2; border:1px solid #FCA5A5; color:#991B1B; border-radius:6px; padding:5px 9px; font-size:11.5px; font-weight:800; cursor:pointer;" onclick="AdminApp.deletePayment('${r.id}')" title="Bu ödeme kaydını sil">
+              🗑️ Sil
+            </button>
+          </div>
+        `;
+        mobileActionsHtml = `
+          <button type="button" class="btn-admin-secondary" style="width:100%; min-height:44px; justify-content:center; font-size:13px; font-weight:800; color:#064E3B; border-radius:8px;" onclick="AdminApp.openPaymentModal('${r.date}', '${r.id}', ${r.paid || 0}, '${this.escapeHtml(r.description || '')}', '${r.paymentType || 'Banka/Havale'}')">
+            ✏️ Ödeme Kaydını Düzenle
+          </button>
+          <button type="button" style="min-height:44px; padding:0 14px; background:#FEE2E2; border:1.5px solid #FCA5A5; color:#991B1B; border-radius:8px; font-size:13px; font-weight:800; cursor:pointer;" onclick="AdminApp.deletePayment('${r.id}')" title="Ödemeyi Sil">
+            🗑️ Sil
+          </button>
+        `;
+      } else if (isManualPos) {
+        actionsHtml = `
+          <div style="display:flex; justify-content:center; align-items:center; gap:4px;">
+            <button type="button" class="btn-admin-secondary" style="padding:5px 9px; font-size:11.5px; font-weight:700; color:#064E3B;" onclick="AdminApp.openManualPosModal('${r.date}', ${r.pos || 0}, '${this.escapeHtml(r.manualNote || '')}')" title="Manuel POS tutarını düzenle">
+              ✏️ Düzenle
+            </button>
+            <button type="button" style="background:#FEE2E2; border:1px solid #FCA5A5; color:#991B1B; border-radius:6px; padding:5px 9px; font-size:11.5px; font-weight:800; cursor:pointer;" onclick="AdminApp.deleteManualPos('${r.date}')" title="Manuel POS kaydını sil">
+              🗑️ Sil
+            </button>
+          </div>
+        `;
+        mobileActionsHtml = `
+          <button type="button" class="btn-admin-secondary" style="width:100%; min-height:44px; justify-content:center; font-size:13px; font-weight:800; color:#064E3B; border-radius:8px;" onclick="AdminApp.openManualPosModal('${r.date}', ${r.pos || 0}, '${this.escapeHtml(r.manualNote || '')}')">
+            ✏️ Manuel POS Düzenle
+          </button>
+          <button type="button" style="min-height:44px; padding:0 14px; background:#FEE2E2; border:1.5px solid #FCA5A5; color:#991B1B; border-radius:8px; font-size:13px; font-weight:800; cursor:pointer;" onclick="AdminApp.deleteManualPos('${r.date}')" title="Manuel POS Sil">
+            🗑️ Sil
+          </button>
+        `;
+      }
+
+      html += `
+        <tr style="${isPayment ? 'background:#F0FDF4;' : ''}">
+          <td style="text-align:center; font-weight:800; color:#0F172A; font-size:12px; white-space:nowrap;">
+            ${dateFormatted}${timeStr}
+          </td>
+          <td style="text-align:left; font-size:12.5px;">
+            <div style="display:flex; align-items:center; flex-wrap:wrap; gap:4px;">
+              ${typeBadge}
+              <span>${descHtml}</span>
+            </div>
+          </td>
+          <td style="text-align:right;" class="col-pos">
+            ${r.pos > 0 ? `<span style="font-weight:800; font-size:13px; color:#0F172A;">${fmt(r.pos)}</span>` : '<span style="color:#64748B;">—</span>'}
+          </td>
+          <td style="text-align:right;" class="col-hakedis">
+            ${r.hakedis > 0 ? `<div style="font-weight:800; font-size:13.5px; color:#0369A1;">${fmt(r.hakedis)}</div><div style="font-size:10px; color:#0284C7; font-weight:700;">%92 Net</div>` : '<span style="color:#64748B;">—</span>'}
+          </td>
+          <td style="text-align:right;" class="col-paid">
+            ${r.paid > 0 ? `<span style="font-weight:800; font-size:13.5px; color:#15803D;">${fmt(r.paid)}</span>` : '<span style="color:#64748B;">—</span>'}
+          </td>
+          <td style="text-align:right;" class="col-remaining">
+            <div style="font-size:14px; font-weight:800; color:${isZeroRemaining ? '#15803D' : (isPositiveRemaining ? '#B91C1C' : '#D97706')};">
+              ${fmt(r.remaining)}
+            </div>
+          </td>
+          <td style="text-align:right;" class="col-profit">
+            ${profitHtml}
+          </td>
+          <td style="text-align:center; white-space:nowrap;">
+            ${actionsHtml}
+          </td>
+        </tr>
+      `;
+
+      // 📱 MOBİL ULTRA LÜKS VE KULLANIŞLI İŞLEM KARTI (REVOLUT BUSINESS / APPLE CARD)
+      mobileHtml += `
+        <article class="admin-mobile-card" style="border-left: 6px solid ${isPayment ? '#10B981' : (isManualPos ? '#F59E0B' : '#0284C7')}; margin-bottom:14px; padding:16px; background:#FFFFFF; border-radius:14px; box-shadow:0 4px 14px rgba(8,76,71,0.06); border:1px solid #CBD5E1;">
+          
+          <!-- 1. Üst Satır: Rozet + Tarih -->
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; padding-bottom:8px; border-bottom:1px solid #EDF2F7; flex-wrap:wrap; gap:6px;">
+            <div style="display:flex; align-items:center; gap:6px;">
+              ${typeBadge}
+            </div>
+            <time style="font-size:12px; font-weight:700; color:#334155;">📅 ${dateFormatted}${timeStr}</time>
+          </div>
+
+          <!-- 2. Ana Açıklama & Büyük Tutar Satırı -->
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:12px;">
+            <div style="flex:1;">
+              <div style="font-size:13.5px; font-weight:800; color:#0F172A; line-height:1.4;">${descHtml}</div>
+            </div>
+            <div style="text-align:right; white-space:nowrap;">
+              <span style="font-size:10px; font-weight:800; color:#475569; text-transform:uppercase; letter-spacing:0.5px; display:block;">İşlem Tutarı</span>
+              <span style="font-size:18px; font-weight:800; color:${mainAmountColor}; letter-spacing:-0.5px;">${mainAmountStr}</span>
+            </div>
+          </div>
+
+          <!-- 3. Finansal Döküm Matrisi (4 Kutu) -->
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; background:#F8FAFB; padding:10px 12px; border-radius:10px; border:1px solid #CBD5E1; margin-bottom:12px;">
+            <div style="border-right:1px solid #E2E8F0; padding-right:6px;">
+              <span style="font-size:10.5px; color:#0369A1; font-weight:800; display:block;">🔵 Net Hakediş (%92):</span>
+              <strong style="font-size:13.5px; color:#0284C7;">${r.hakedis > 0 ? fmt(r.hakedis) : '—'}</strong>
+            </div>
+            <div style="padding-left:4px;">
+              <span style="font-size:10.5px; color:${isZeroRemaining ? '#15803D' : '#991B1B'}; font-weight:800; display:block;">🔴 Kalan Bakiye:</span>
+              <strong style="font-size:13.5px; color:${isZeroRemaining ? '#15803D' : '#DC2626'};">${fmt(r.remaining)}</strong>
+            </div>
+            <div style="border-right:1px solid #E2E8F0; padding-right:6px; border-top:1px solid #E2E8F0; padding-top:6px;">
+              <span style="font-size:10.5px; color:#166534; font-weight:800; display:block;">💎 Net Kâr:</span>
+              ${profitMobileHtml}
+            </div>
+            <div style="padding-left:4px; border-top:1px solid #E2E8F0; padding-top:6px;">
+              <span style="font-size:10.5px; color:#15803D; font-weight:800; display:block;">🟢 Ödenen Tutar:</span>
+              <strong style="font-size:13.5px; color:#16A34A;">${r.paid > 0 ? fmt(r.paid) : '—'}</strong>
+            </div>
+          </div>
+
+          <!-- 4. Aksiyon Butonları (Geniş Dokunmatik) -->
+          <div style="display:grid; grid-template-columns: 1fr auto; gap:8px;">
+            ${mobileActionsHtml}
+          </div>
+
+        </article>
+      `;
+    });
+
+    tbody.innerHTML = html;
+    if (mobileList) mobileList.innerHTML = mobileHtml;
+  },
+
+  // 7. ÖDEME MODALI KONTROLLERİ
+  openPaymentModal(prefillDate, editId, amount, description, paymentType) {
+    const modal = document.getElementById('paymentModal');
+    if (!modal) return;
+
+    const dateInput = document.getElementById('payDateInput');
+    const amountInput = document.getElementById('payAmountInput');
+    const descInput = document.getElementById('payDescInput');
+    const typeInput = document.getElementById('payTypeInput');
+    const editIdInput = document.getElementById('payEditId');
+    const errDiv = document.getElementById('payErrorMsg');
+
+    if (editIdInput) editIdInput.value = editId || '';
+    if (amountInput) amountInput.value = (amount > 0) ? amount : '';
+    if (descInput) descInput.value = description || '';
+    if (typeInput) typeInput.value = paymentType || 'Banka/Havale';
+    if (errDiv) errDiv.style.display = 'none';
+
+    const targetDate = prefillDate || new Date().toISOString().split('T')[0];
+    if (dateInput) dateInput.value = targetDate;
+
+    if (!editId) {
+      this.onPaymentDateSelected(targetDate);
+    } else {
+      const box = document.getElementById('payExistingSummaryBox');
+      if (box) box.style.display = 'none';
+    }
+
+    modal.style.display = 'flex';
+    setTimeout(() => {
+      if (amountInput) amountInput.focus();
+    }, 150);
+  },
+
+  closePaymentModal() {
+    const modal = document.getElementById('paymentModal');
+    if (modal) modal.style.display = 'none';
+  },
+
+  onPaymentDateSelected(dateStr) {
+    const box = document.getElementById('payExistingSummaryBox');
+    const list = document.getElementById('payExistingList');
+    const title = document.getElementById('payExistingSummaryTitle');
+    if (!box || !list) return;
+
+    const existing = this.allPayments.filter(p => p.date === dateStr);
+    if (existing.length === 0) {
+      box.style.display = 'none';
+      return;
+    }
+
+    const fmt = val => '₺' + Number(val || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2 });
+    const total = existing.reduce((s, p) => s + (p.amount || 0), 0);
+
+    if (title) title.textContent = `📅 ${this.formatDateTr(dateStr)} Tarihindeki Kayıtlı Ödemeler (Toplam: ${fmt(total)}):`;
+
+    list.innerHTML = existing.map(p => `
+      <div style="display:flex; justify-content:space-between; padding:3px 0; border-bottom:1px dashed #E2E8F0;">
+        <span>• <strong>${fmt(p.amount)}</strong> — ${this.escapeHtml(p.description || 'Ödeme')} <em style="font-size:10.5px; color:#64748B;">(${p.paymentType || 'Banka'})</em></span>
+      </div>
+    `).join('');
+
+    box.style.display = 'block';
+  },
+
+  // 8. ÖDEMEYİ KAYDET VE ANLIK HESAPLA
+  async submitPayment() {
+    const dateInput = document.getElementById('payDateInput');
+    const amountInput = document.getElementById('payAmountInput');
+    const descInput = document.getElementById('payDescInput');
+    const typeInput = document.getElementById('payTypeInput');
+    const editIdInput = document.getElementById('payEditId');
+    const errDiv = document.getElementById('payErrorMsg');
+
+    const date = dateInput?.value?.trim();
+    const amount = parseFloat(amountInput?.value || 0);
+    const description = descInput?.value?.trim() || 'Ödeme';
+    const paymentType = typeInput?.value || 'Banka/Havale';
+    const id = editIdInput?.value?.trim() || null;
+
+    if (errDiv) errDiv.style.display = 'none';
+
+    if (!date) {
+      if (errDiv) { errDiv.textContent = 'Lütfen geçerli bir tarih seçin.'; errDiv.style.display = 'block'; }
+      return;
+    }
+    if (isNaN(amount) || amount <= 0) {
+      if (errDiv) { errDiv.textContent = 'Ödeme tutarı 0\'dan büyük olmalıdır.'; errDiv.style.display = 'block'; }
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/admin/statement/payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-key': this.adminPin
+        },
+        body: JSON.stringify({ id, date, amount, description, paymentType })
+      });
+
+      const data = await res.json();
+      if (data && data.success) {
+        this.closePaymentModal();
+        this.playChime();
+        this.showToast(`✅ ÖDEME KAYDEDİLDİ: ₺${amount.toLocaleString('tr-TR')} (${this.formatDateTr(date)})`);
+        await this.loadStatement();
+      } else {
+        if (errDiv) { errDiv.textContent = data.message || 'Ödeme kaydedilemedi.'; errDiv.style.display = 'block'; }
+      }
+    } catch (err) {
+      if (errDiv) { errDiv.textContent = 'Bağlantı hatası: ' + err.message; errDiv.style.display = 'block'; }
+    }
+  },
+
+  // 9. TÜM ÖDEMELERİ LİSTELEME MODALI
+  openAllPaymentsModal() {
+    const modal = document.getElementById('allPaymentsModal');
+    const tbody = document.getElementById('allPaymentsTableBody');
+    if (!modal || !tbody) return;
+
+    const fmt = val => '₺' + Number(val || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2 });
+
+    if (!this.allPayments || this.allPayments.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:24px; color:var(--admin-muted);">Kayıtlı ödeme bulunmuyor.</td></tr>`;
+    } else {
+      tbody.innerHTML = this.allPayments.map(p => `
+        <tr style="border-bottom:1px solid #E2E8F0;">
+          <td style="padding:8px 10px; font-weight:700; color:#1E293B;">${this.formatDateTr(p.date)}</td>
+          <td style="padding:8px 10px; color:#334155;">${this.escapeHtml(p.description || 'Ödeme')}</td>
+          <td style="padding:8px 10px; font-size:11.5px; color:#64748B;">${this.escapeHtml(p.paymentType || 'Banka')}</td>
+          <td style="padding:8px 10px; text-align:right; font-weight:800; color:#15803D;">${fmt(p.amount)}</td>
+          <td style="padding:8px 10px; text-align:center;">
+            <button type="button" style="background:#FEE2E2; border:1px solid #FCA5A5; color:#991B1B; border-radius:4px; padding:3px 8px; font-size:11px; font-weight:700; cursor:pointer;" onclick="AdminApp.deletePayment('${p.id}')">
+              Sil
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    modal.style.display = 'flex';
+  },
+
+  closeAllPaymentsModal() {
+    const modal = document.getElementById('allPaymentsModal');
+    if (modal) modal.style.display = 'none';
+  },
+
+  // 10. ÖDEME SİL
+  async deletePayment(paymentId) {
+    if (!paymentId) return;
+    if (!confirm('Bu ödeme kaydını silmek istediğinize emin misiniz?\nİşlem sonrası kalan tutar otomatik güncellenecektir.')) {
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/admin/statement/payment/delete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-key': this.adminPin
+        },
+        body: JSON.stringify({ paymentId })
+      });
+
+      const data = await res.json();
+      if (data && data.success) {
+        this.showToast('🗑️ Ödeme kaydı silindi.');
+        await this.loadStatement();
+        const allModal = document.getElementById('allPaymentsModal');
+        if (allModal && allModal.style.display === 'flex') {
+          this.openAllPaymentsModal();
+        }
+      } else {
+        alert(data.message || 'Ödeme silinemedi.');
+      }
+    } catch (err) {
+      alert('Silme hatası: ' + err.message);
+    }
+  },
+
+  // 11. MANUEL POS MODALI
+  openManualPosModal(date, currentAmount, currentNote) {
+    const modal = document.getElementById('manualPosModal');
+    if (!modal) return;
+
+    const dateInput = document.getElementById('manualPosDateInput');
+    const amountInput = document.getElementById('manualPosAmountInput');
+    const noteInput = document.getElementById('manualPosNoteInput');
+    const btnDel = document.getElementById('btnDeleteManualPos');
+    const errDiv = document.getElementById('manualPosErrorMsg');
+
+    const targetDate = date || new Date().toISOString().split('T')[0];
+    if (dateInput) dateInput.value = targetDate;
+    if (amountInput) amountInput.value = currentAmount > 0 ? currentAmount : '';
+    if (noteInput) noteInput.value = currentNote || '';
+    if (errDiv) errDiv.style.display = 'none';
+
+    if (btnDel) btnDel.style.display = currentAmount > 0 ? 'inline-block' : 'none';
+
+    modal.style.display = 'flex';
+    setTimeout(() => {
+      if (amountInput) amountInput.focus();
+    }, 150);
+  },
+
+  closeManualPosModal() {
+    const modal = document.getElementById('manualPosModal');
+    if (modal) modal.style.display = 'none';
+  },
+
+  async submitManualPos() {
+    const dateInput = document.getElementById('manualPosDateInput');
+    const amountInput = document.getElementById('manualPosAmountInput');
+    const noteInput = document.getElementById('manualPosNoteInput');
+    const errDiv = document.getElementById('manualPosErrorMsg');
+
+    const date = dateInput?.value?.trim();
+    const amount = parseFloat(amountInput?.value || 0);
+    const note = noteInput?.value?.trim() || '';
+
+    if (errDiv) errDiv.style.display = 'none';
+
+    if (!date) {
+      if (errDiv) { errDiv.textContent = 'Lütfen geçerli bir tarih seçin.'; errDiv.style.display = 'block'; }
+      return;
+    }
+    if (isNaN(amount) || amount <= 0) {
+      if (errDiv) { errDiv.textContent = 'POS tutarı 0\'dan büyük olmalıdır.'; errDiv.style.display = 'block'; }
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/admin/statement/pos-entry', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-key': this.adminPin
+        },
+        body: JSON.stringify({ date, amount, note })
+      });
+
+      const data = await res.json();
+      if (data && data.success) {
+        this.closeManualPosModal();
+        this.showToast(`✅ POS Kaydı Güncellendi: ₺${amount.toLocaleString('tr-TR')} (${this.formatDateTr(date)})`);
+        await this.loadStatement();
+      } else {
+        if (errDiv) { errDiv.textContent = data.message || 'Kayıt yapılamadı.'; errDiv.style.display = 'block'; }
+      }
+    } catch (err) {
+      if (errDiv) { errDiv.textContent = 'Hata: ' + err.message; errDiv.style.display = 'block'; }
+    }
+  },
+
+  async deleteManualPos() {
+    const date = document.getElementById('manualPosDateInput')?.value?.trim();
+    if (!date) return;
+    if (!confirm(`${this.formatDateTr(date)} tarihindeki manuel POS kaydını silmek istediğinize emin misiniz?`)) return;
+
+    try {
+      const res = await fetch('/api/admin/statement/pos-entry/delete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-key': this.adminPin
+        },
+        body: JSON.stringify({ date })
+      });
+
+      const data = await res.json();
+      if (data && data.success) {
+        this.closeManualPosModal();
+        this.showToast('🗑️ Manuel POS kaydı silindi.');
+        await this.loadStatement();
+      }
+    } catch (err) {
+      alert('Silme hatası: ' + err.message);
+    }
+  },
+
+  // 12. EXCEL ŞABLONUNA BİREBİR UYGUN .XLS RAPORU İNDİR (KÂR SÜTUNU DAHİL)
+  exportStatementExcel() {
+    const rows = this.filteredStatementRows || this.statementRows || [];
+    if (rows.length === 0) {
+      alert('Dışa aktarılacak ekstre kaydı bulunmuyor.');
+      return;
+    }
+
+    const s = this.statementSummary || {};
+    const fmt = val => Number(val || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const todayStr = new Date().toLocaleDateString('tr-TR');
+
+    let totalProfit = 0;
+    let tableRowsHtml = '';
+    rows.forEach(r => {
+      const dateFormatted = this.formatDateTr(r.date) + (r.time && r.time !== '12:00' ? ` ${r.time}` : '');
+      const posVal = r.pos > 0 ? fmt(r.pos) : '—';
+      const hakVal = r.hakedis > 0 ? fmt(r.hakedis) : '—';
+      const payVal = r.paid > 0 ? fmt(r.paid) : '—';
+      const descVal = r.description || '';
+
+      let profitVal = '—';
+      if (r.pos > 0) {
+        const rate = this.getRateForDate(r.date);
+        const bankFee = r.pos * (rate / 100);
+        const profit = Math.round(((r.pos - (r.hakedis || 0)) - bankFee) * 100) / 100;
+        totalProfit += profit;
+        profitVal = fmt(profit);
+      }
+
+      tableRowsHtml += `
+        <tr>
+          <td style="text-align:center; padding:6px; border:1px solid #CBD5E1;">${dateFormatted}</td>
+          <td style="text-align:left; padding:6px; border:1px solid #CBD5E1;">${this.escapeHtml(descVal)}</td>
+          <td style="text-align:right; padding:6px; border:1px solid #CBD5E1; mso-number-format:'\\#,\\#\\#0\\.00';">${posVal}</td>
+          <td style="text-align:right; padding:6px; border:1px solid #CBD5E1; color:#0369A1; mso-number-format:'\\#,\\#\\#0\\.00';">${hakVal}</td>
+          <td style="text-align:right; padding:6px; border:1px solid #CBD5E1; color:#15803D; mso-number-format:'\\#,\\#\\#0\\.00';">${payVal}</td>
+          <td style="text-align:right; padding:6px; border:1px solid #CBD5E1; font-weight:bold; color:#991B1B; mso-number-format:'\\#,\\#\\#0\\.00';">${fmt(r.remaining)}</td>
+          <td style="text-align:right; padding:6px; border:1px solid #CBD5E1; font-weight:bold; color:#166534; mso-number-format:'\\#,\\#\\#0\\.00';">${profitVal}</td>
+        </tr>
+      `;
+    });
+
+    const excelHtml = `
+      <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <style>
+          body { font-family: Calibri, Arial, sans-serif; font-size: 11pt; }
+          .header-title { font-size: 16pt; font-weight: bold; color: #084C47; }
+          .remaining-hero { font-size: 14pt; font-weight: bold; color: #DC2626; background: #FEE2E2; text-align: right; padding: 10px; }
+          th { background: #084C47; color: #FFFFFF; font-weight: bold; padding: 8px; border: 1px solid #042A27; }
+          .total-row td { background: #F1F5F9; font-weight: bold; padding: 8px; border: 1.5px solid #64748B; }
+        </style>
+      </head>
+      <body>
+        <table style="width:100%; margin-bottom:15px;">
+          <tr>
+            <td colspan="4" class="header-title">BELGİN KUYUMCULUK — CARİ HESAP & KÂR EKSTRESİ</td>
+            <td colspan="3" class="remaining-hero">güncel ödenecek tutar: ${fmt(s.totalRemaining)} ₺</td>
+          </tr>
+          <tr>
+            <td colspan="4" style="color:#64748B; font-size:10pt;">Rapor Tarihi: ${todayStr} | Kesinti Oranı: %8 | Banka POS Oranı: %${this.posBankCommissionRate}</td>
+            <td colspan="3" style="text-align:right; color:#166534; font-size:10pt; font-weight:bold;">Toplam Net Kâr: ${fmt(totalProfit)} ₺</td>
+          </tr>
+        </table>
+
+        <table border="1" style="border-collapse:collapse; width:100%;">
+          <thead>
+            <tr>
+              <th style="width:130px;">tarih</th>
+              <th style="width:260px; text-align:left;">işlem / açıklama</th>
+              <th style="width:130px; text-align:right;">pos</th>
+              <th style="width:150px; text-align:right;">hakediş<br><span style="font-size:8.5pt; font-weight:normal;">pos - %8 kesinti</span></th>
+              <th style="width:130px; text-align:right;">ödenen</th>
+              <th style="width:150px; text-align:right;">kalan tutar</th>
+              <th style="width:150px; text-align:right;">kâr<br><span style="font-size:8.5pt; font-weight:normal;">pos - hakediş - pos komisyonu (%${this.posBankCommissionRate})</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            ${tableRowsHtml}
+            <tr class="total-row">
+              <td style="text-align:center;">TOPLAM</td>
+              <td style="text-align:right;">${fmt(s.totalPos)} ₺</td>
+              <td style="text-align:right; color:#0369A1;">${fmt(s.totalHakedis)} ₺</td>
+              <td style="text-align:left; color:#15803D;">${fmt(s.totalPaid)} ₺</td>
+              <td style="text-align:right; color:#991B1B; font-size:12pt;">${fmt(s.totalRemaining)} ₺</td>
+            </tr>
+          </tbody>
+        </table>
+      </body>
+      </html>
+    `;
+
+    const blob = new Blob(['\ufeff', excelHtml], { type: 'application/vnd.ms-excel;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Belgin_Kuyumculuk_Cari_Hesap_Ekstresi_${new Date().toISOString().slice(0, 10)}.xls`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  },
+
+  // 13. RESMİ CARİ HESAP EKSTRESİ PDF / YAZDIR (KÂR BÖLÜMÜ HARİÇ)
+  exportStatementPdf() {
+    const rows = this.filteredStatementRows || this.statementRows || [];
+    if (rows.length === 0) {
+      alert('PDF çıktısı alınacak ekstre hareketi bulunmuyor.');
+      return;
+    }
+
+    const s = this.statementSummary || {};
+    const fmt = val => '₺' + Number(val || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    
+    const startVal = document.getElementById('stmtStartDate')?.value || '2016-08-01';
+    const endVal = document.getElementById('stmtEndDate')?.value || new Date().toISOString().split('T')[0];
+    const periodStr = `${this.formatDateTr(startVal)} — ${this.formatDateTr(endVal)}`;
+    const nowStr = new Date().toLocaleString('tr-TR', { dateStyle: 'long', timeStyle: 'short' });
+
+    let rowsHtml = '';
+    rows.forEach((r, idx) => {
+      const dateFormatted = this.formatDateTr(r.date) + (r.time && r.time !== '12:00' ? ` ${r.time}` : '');
+      const isPayment = (r.type === 'PAYMENT');
+      const posVal = r.pos > 0 ? fmt(r.pos) : '—';
+      const hakVal = r.hakedis > 0 ? fmt(r.hakedis) : '—';
+      const payVal = r.paid > 0 ? fmt(r.paid) : '—';
+      const remVal = fmt(r.remaining);
+
+      rowsHtml += `
+        <tr style="border-bottom: 1px solid #E2E8F0; ${isPayment ? 'background:#F0FDF4;' : (idx % 2 === 1 ? 'background:#F8FAFC;' : 'background:#FFFFFF;')}">
+          <td style="padding: 7px 9px; text-align: center; white-space: nowrap; font-size: 10.5px; color: #334155;">
+            ${dateFormatted}
+          </td>
+          <td style="padding: 7px 9px; text-align: left; font-size: 11px; color: #0F172A;">
+            <div style="font-weight: 700;">${this.escapeHtml(r.description || 'İşlem')}</div>
+            ${r.customerName && r.type === 'POS_SALE' ? `<div style="font-size: 10px; color: #64748B;">Müşteri: ${this.escapeHtml(r.customerName)} | Sağlayıcı: ${r.provider || 'AKBANK'}</div>` : ''}
+          </td>
+          <td style="padding: 7px 9px; text-align: right; font-weight: 700; font-size: 11px; color: #1E293B;">
+            ${posVal}
+          </td>
+          <td style="padding: 7px 9px; text-align: right; font-weight: 700; font-size: 11px; color: #0369A1;">
+            ${hakVal}
+          </td>
+          <td style="padding: 7px 9px; text-align: right; font-weight: 700; font-size: 11px; color: #15803D;">
+            ${payVal}
+          </td>
+          <td style="padding: 7px 9px; text-align: right; font-weight: 800; font-size: 11.5px; color: ${Number(r.remaining || 0) > 0 ? '#B91C1C' : '#059669'};">
+            ${remVal}
+          </td>
+        </tr>
+      `;
+    });
+
+    const printHtml = `
+      <!DOCTYPE html>
+      <html lang="tr">
+      <head>
+        <meta charset="UTF-8">
+        <title>Cari Hesap Ekstresi — Belgin Kuyumculuk</title>
+        <style>
+          @page {
+            size: A4 portrait;
+            margin: 10mm 10mm 12mm 10mm;
+          }
+          * {
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+          }
+          body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: #0F172A;
+            margin: 0;
+            padding: 16px;
+            background: #FFF;
+          }
+          .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2.5px solid #084C47;
+            padding-bottom: 10px;
+            margin-bottom: 14px;
+          }
+          .brand-name {
+            font-size: 18px;
+            font-weight: 900;
+            color: #084C47;
+            letter-spacing: 0.5px;
+          }
+          .doc-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: #1E293B;
+            margin-top: 2px;
+          }
+          .doc-meta {
+            font-size: 10.5px;
+            color: #64748B;
+            margin-top: 4px;
+          }
+          .hero-box {
+            background: #FEF2F2;
+            border: 2px solid #F87171;
+            border-radius: 8px;
+            padding: 8px 14px;
+            text-align: right;
+            min-width: 220px;
+          }
+          .hero-label {
+            font-size: 10.5px;
+            font-weight: 800;
+            color: #991B1B;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          }
+          .hero-val {
+            font-size: 20px;
+            font-weight: 900;
+            color: #DC2626;
+            line-height: 1.2;
+          }
+          .hero-sub {
+            font-size: 9px;
+            color: #B91C1C;
+            font-weight: 600;
+          }
+          .kpi-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 14px;
+          }
+          .kpi-card {
+            border: 1px solid #E2E8F0;
+            border-radius: 6px;
+            padding: 6px 10px;
+            background: #F8FAFC;
+          }
+          .kpi-card-label {
+            font-size: 9.5px;
+            font-weight: 700;
+            color: #64748B;
+            text-transform: uppercase;
+          }
+          .kpi-card-val {
+            font-size: 13px;
+            font-weight: 800;
+            color: #0F172A;
+            margin-top: 2px;
+          }
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10.5px;
+          }
+          thead tr {
+            background: #084C47 !important;
+            color: #FFFFFF !important;
+          }
+          th {
+            padding: 7px 9px;
+            font-weight: 800;
+            font-size: 10.5px;
+            letter-spacing: 0.3px;
+          }
+          .footer-note {
+            margin-top: 16px;
+            border-top: 1px solid #E2E8F0;
+            padding-top: 8px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 9.5px;
+            color: #64748B;
+          }
+          @media print {
+            body { padding: 0; }
+            .no-print { display: none; }
+          }
+        </style>
+      </head>
+      <body>
+        <div class="no-print" style="margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; background:#F1F5F9; padding:8px 14px; border-radius:8px;">
+          <span style="font-size:12.5px; font-weight:700; color:#334155;">📄 Cari Hesap Ekstresi (Kâr Bilgisi Gizlenmiş Resmi Döküm)</span>
+          <button onclick="window.print()" style="background:#084C47; color:#FFF; border:none; padding:7px 16px; border-radius:6px; font-weight:800; font-size:12px; cursor:pointer;">🖨️ PDF Olarak Kaydet / Yazdır</button>
+        </div>
+
+        <div class="header">
+          <div>
+            <div class="brand-name">BELGİN KUYUMCULUK</div>
+            <div class="doc-title">CARİ HESAP EKSTRESİ</div>
+            <div class="doc-meta">
+              <strong>Dönem:</strong> ${periodStr} | <strong>Rapor Tarihi:</strong> ${nowStr}
+            </div>
+          </div>
+          <div class="hero-box">
+            <div class="hero-label">Güncel Ödenecek Tutar</div>
+            <div class="hero-val">${fmt(s.totalRemaining)}</div>
+            <div class="hero-sub">Hakediş — Ödenen Net Bakiye</div>
+          </div>
+        </div>
+
+        <div class="kpi-row">
+          <div class="kpi-card">
+            <div class="kpi-card-label">Toplam POS Cirosu</div>
+            <div class="kpi-card-val">${fmt(s.totalPos)}</div>
+          </div>
+          <div class="kpi-card" style="background:#F0F9FF; border-color:#BAE6FD;">
+            <div class="kpi-card-label" style="color:#0369A1;">Net Hakediş (%92)</div>
+            <div class="kpi-card-val" style="color:#0284C7;">${fmt(s.totalHakedis)}</div>
+          </div>
+          <div class="kpi-card" style="background:#F0FDF4; border-color:#BBF7D0;">
+            <div class="kpi-card-label" style="color:#166534;">Toplam Yapılan Ödemeler</div>
+            <div class="kpi-card-val" style="color:#16A34A;">${fmt(s.totalPaid)}</div>
+          </div>
+          <div class="kpi-card" style="background:#FEF2F2; border-color:#FEB2B2;">
+            <div class="kpi-card-label" style="color:#991B1B;">Güncel Ödenecek Tutar</div>
+            <div class="kpi-card-val" style="color:#DC2626;">${fmt(s.totalRemaining)}</div>
+          </div>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th style="width:115px; text-align:center;">Tarih & Saat</th>
+              <th style="text-align:left;">İşlem & Açıklama</th>
+              <th style="width:110px; text-align:right;">POS (₺)</th>
+              <th style="width:125px; text-align:right;">Hakediş (%92) (₺)</th>
+              <th style="width:110px; text-align:right;">Ödenen (₺)</th>
+              <th style="width:125px; text-align:right;">Bakiye (₺)</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rowsHtml}
+            <tr style="background:#084C47; color:#FFFFFF; font-weight:800; font-size:11.5px;">
+              <td colspan="2" style="padding:8px 9px; text-align:right; text-transform:uppercase;">GENEL TOPLAMLAR:</td>
+              <td style="padding:8px 9px; text-align:right;">${fmt(s.totalPos)}</td>
+              <td style="padding:8px 9px; text-align:right;">${fmt(s.totalHakedis)}</td>
+              <td style="padding:8px 9px; text-align:right;">${fmt(s.totalPaid)}</td>
+              <td style="padding:8px 9px; text-align:right; color:#FEF08A;">${fmt(s.totalRemaining)}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="footer-note">
+          <div>Belgin Kuyumculuk Resmi Cari Hesap Dökümüdür.</div>
+          <div>Menderes Cad. No:231/B Buca / İZMİR</div>
+        </div>
+
+        <script>
+          window.onload = function() {
+            setTimeout(function() {
+              window.print();
+            }, 350);
+          };
+        </script>
+      </body>
+      </html>
+    `;
+
+    const printWin = window.open('', '_blank', 'width=950,height=750');
+    if (!printWin) {
+      alert('Lütfen tarayıcınızın açılır pencere (pop-up) engelleyicisini kapatıp tekrar deneyin.');
+      return;
+    }
+    printWin.document.open();
+    printWin.document.write(printHtml);
+    printWin.document.close();
+  },
+
+  // ========================================================
+  // MAĞAZA VE MANUEL FATURALAR MODÜLÜ MOTORU
+  // ========================================================
+
+  // 1. FORM BAŞLATICI & SIFIRLAYICI
+  initStoreInvoiceForm() {
+    const dateInput = document.getElementById('storeInvoiceDate');
+    if (dateInput && !dateInput.value) {
+      dateInput.value = new Date().toISOString().slice(0, 10);
+    }
+    if (!this.storeItems || this.storeItems.length === 0) {
+      this.storeItems = [
+        { name: '7 Gram 22 Ayar Ajda Altın Bilezik', qty: 1, unitPrice: 10000, kdvRate: 0, lineTotal: 10000, kdvAmount: 0 },
+        { name: 'İşçilik', qty: 1, unitPrice: 1000, kdvRate: 20, lineTotal: 1000, kdvAmount: 166.67 }
+      ];
+    }
+    this.renderStoreInvoiceItems();
+    this.calculateStoreInvoiceLiveSummary();
+  },
+
+  editStoreInvoice(orderId) {
+    const inv = (this.storeInvoices || []).find(i => i.orderId === orderId || i.id === orderId);
+    if (!inv) {
+      alert('Fatura kaydı bulunamadı.');
+      return;
+    }
+
+    this.editingStoreInvoiceId = inv.orderId;
+
+    const nameEl = document.getElementById('storeCustName');
+    const idEl = document.getElementById('storeCustIdentity');
+    const dateEl = document.getElementById('storeInvoiceDate');
+    const addrEl = document.getElementById('storeCustAddress');
+    const phoneEl = document.getElementById('storeCustPhone');
+    const emailEl = document.getElementById('storeCustEmail');
+    const noteEl = document.getElementById('storeInvoiceNote');
+    const errEl = document.getElementById('storeInvoiceFormError');
+
+    if (nameEl) nameEl.value = inv.customerName || '';
+    if (idEl) idEl.value = inv.customerIdentity || '11111111111';
+    if (dateEl) dateEl.value = inv.invoiceDate || new Date().toISOString().slice(0, 10);
+    if (addrEl) addrEl.value = inv.customerAddress || 'Menderes Cad. No:231/B Buca İzmir';
+    if (phoneEl) phoneEl.value = inv.customerPhone || '';
+    if (emailEl) emailEl.value = inv.customerEmail || '';
+    if (noteEl) noteEl.value = inv.note || '';
+    if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
+
+    if (Array.isArray(inv.items) && inv.items.length > 0) {
+      this.storeItems = JSON.parse(JSON.stringify(inv.items));
+    } else {
+      this.storeItems = [
+        { name: inv.productName || 'Satış Kalemi', qty: 1, unitPrice: Number(inv.totalAmount || 0), kdvRate: 0, lineTotal: Number(inv.totalAmount || 0), kdvAmount: 0 }
+      ];
+    }
+
+    this.renderStoreInvoiceItems();
+    this.calculateStoreInvoiceLiveSummary();
+
+    const banner = document.getElementById('storeEditModeBanner');
+    const textEl = document.getElementById('storeEditInvoiceIdText');
+    if (banner) banner.style.display = 'flex';
+    if (textEl) textEl.textContent = inv.orderId;
+
+    const saveDraftBtn = document.getElementById('btnSaveStoreDraft');
+    const saveGibBtn = document.getElementById('btnSaveAndGibStore');
+    if (saveDraftBtn) saveDraftBtn.innerHTML = '<span>💾 Değişiklikleri Güncelle (Taslak)</span>';
+    if (saveGibBtn) saveGibBtn.innerHTML = '<span>🧾 Güncelle & GİB SMS Başlat</span>';
+
+    document.getElementById('storeInvoiceForm')?.scrollIntoView({ behavior: 'smooth' });
+    this.showToast(`✏️ Fatura (${inv.orderId}) düzenleme moduna alındı.`);
+  },
+
+  cancelStoreInvoiceEdit() {
+    this.editingStoreInvoiceId = null;
+    this.resetStoreInvoiceForm();
+    this.showToast('ℹ️ Fatura düzenleme işlemi iptal edildi.');
+  },
+
+  resetStoreInvoiceForm(showFeedback = true) {
+    this.editingStoreInvoiceId = null;
+
+    const banner = document.getElementById('storeEditModeBanner');
+    if (banner) banner.style.display = 'none';
+
+    const saveDraftBtn = document.getElementById('btnSaveStoreDraft');
+    const saveGibBtn = document.getElementById('btnSaveAndGibStore');
+    if (saveDraftBtn) saveDraftBtn.innerHTML = '<span>💾 Faturayı Kaydet (Taslak)</span>';
+    if (saveGibBtn) saveGibBtn.innerHTML = '<span>🧾 Resmi GİB e-Arşiv Faturası Kes (SMS Onayı)</span>';
+
+    const nameEl = document.getElementById('storeCustName');
+    const idEl = document.getElementById('storeCustIdentity');
+    const dateEl = document.getElementById('storeInvoiceDate');
+    const addrEl = document.getElementById('storeCustAddress');
+    const phoneEl = document.getElementById('storeCustPhone');
+    const emailEl = document.getElementById('storeCustEmail');
+    const noteEl = document.getElementById('storeInvoiceNote');
+    const errEl = document.getElementById('storeInvoiceFormError');
+
+    if (nameEl) nameEl.value = '';
+    if (idEl) idEl.value = '11111111111';
+    if (dateEl) dateEl.value = new Date().toISOString().slice(0, 10);
+    if (addrEl) addrEl.value = 'Menderes Cad. No:231/B Buca İzmir';
+    if (phoneEl) phoneEl.value = '';
+    if (emailEl) emailEl.value = '';
+    if (noteEl) noteEl.value = '';
+    if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
+
+    // Formu tamamen sıfırla - boş başlangıç kalemi
+    this.storeItems = [
+      { name: '', qty: 1, unitPrice: 0, kdvRate: 0, lineTotal: 0, kdvAmount: 0 }
+    ];
+    this.renderStoreInvoiceItems();
+    this.calculateStoreInvoiceLiveSummary();
+
+    if (showFeedback) {
+      this.showToast('🧹 Fatura formu temizlendi.');
+    }
+  },
+
+  // Hızlı Ürün Şablonu Uygula
+  applyStoreProductTemplate(name, price, kdvRate = 0) {
+    const rate = Number(kdvRate);
+    const lineTot = Number(price || 0);
+    let kdvAmt = 0;
+    if (rate > 0) {
+      kdvAmt = Math.round((lineTot - (lineTot / (1 + (rate / 100)))) * 100) / 100;
+    }
+
+    if (this.storeItems.length === 1 && (!this.storeItems[0].name || this.storeItems[0].unitPrice === 0)) {
+      this.storeItems[0] = { name, qty: 1, unitPrice: price, kdvRate: rate, lineTotal: lineTot, kdvAmount: kdvAmt };
+    } else {
+      this.storeItems.push({ name, qty: 1, unitPrice: price, kdvRate: rate, lineTotal: lineTot, kdvAmount: kdvAmt });
+    }
+    this.renderStoreInvoiceItems();
+    this.calculateStoreInvoiceLiveSummary();
+  },
+
+  addStoreInvoiceItemRow(name = '', qty = 1, unitPrice = 0, kdvRate = 20) {
+    const q = Math.max(1, Number(qty || 1));
+    const p = Number(unitPrice || 0);
+    const rate = Number(kdvRate !== undefined ? kdvRate : 20);
+    const lineTot = Math.round(q * p * 100) / 100;
+    let kdvAmt = 0;
+    if (rate > 0) {
+      kdvAmt = Math.round((lineTot - (lineTot / (1 + (rate / 100)))) * 100) / 100;
+    }
+
+    this.storeItems.push({
+      name: name || '',
+      qty: q,
+      unitPrice: p,
+      kdvRate: rate,
+      lineTotal: lineTot,
+      kdvAmount: kdvAmt
+    });
+    this.renderStoreInvoiceItems();
+    this.calculateStoreInvoiceLiveSummary();
+  },
+
+  removeStoreInvoiceItemRow(idx) {
+    if (this.storeItems.length <= 1) {
+      this.storeItems = [{ name: '', qty: 1, unitPrice: 0, kdvRate: 0, lineTotal: 0, kdvAmount: 0 }];
+    } else {
+      this.storeItems.splice(idx, 1);
+    }
+    this.renderStoreInvoiceItems();
+    this.calculateStoreInvoiceLiveSummary();
+  },
+
+  updateStoreItem(idx, field, val) {
+    if (!this.storeItems[idx]) return;
+    if (field === 'name') {
+      this.storeItems[idx].name = String(val || '');
+    } else if (field === 'kdvRate') {
+      this.storeItems[idx].kdvRate = Number(val || 0);
+    } else if (field === 'qty') {
+      this.storeItems[idx].qty = Math.max(1, parseInt(val, 10) || 1);
+    } else if (field === 'unitPrice') {
+      this.storeItems[idx].unitPrice = Math.max(0, parseFloat(val) || 0);
+    }
+
+    const q = Number(this.storeItems[idx].qty || 1);
+    const p = Number(this.storeItems[idx].unitPrice || 0);
+    const rate = Number(this.storeItems[idx].kdvRate || 0);
+    const lineTot = Math.round(q * p * 100) / 100;
+    let kdvAmt = 0;
+    if (rate > 0) {
+      kdvAmt = Math.round((lineTot - (lineTot / (1 + (rate / 100)))) * 100) / 100;
+    }
+
+    this.storeItems[idx].lineTotal = lineTot;
+    this.storeItems[idx].kdvAmount = kdvAmt;
+
+    const lineTotalEl = document.getElementById(`storeItemLineTotal_${idx}`);
+    if (lineTotalEl) {
+      lineTotalEl.textContent = '₺' + lineTot.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    const kdvAmountEl = document.getElementById(`storeItemKdvAmount_${idx}`);
+    if (kdvAmountEl) {
+      kdvAmountEl.textContent = '₺' + kdvAmt.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    this.calculateStoreInvoiceLiveSummary();
+  },
+
+  renderStoreInvoiceItems() {
+    const tbody = document.getElementById('storeItemsTableBody');
+    if (!tbody) return;
+
+    tbody.innerHTML = this.storeItems.map((item, idx) => `
+      <tr>
+        <td style="text-align:center; font-weight:700; color:var(--admin-muted);">${idx + 1}</td>
+        <td>
+          <input type="text" class="form-field-input" style="padding:6px 8px; font-size:12px; width:100%;" 
+                 value="${this.escapeHtml(item.name || '')}" 
+                 placeholder="Ürün veya hizmet adı (Örn: 22 Ayar Bilezik, İşçilik, Saat)" 
+                 oninput="AdminApp.updateStoreItem(${idx}, 'name', this.value)" required>
+        </td>
+        <td style="text-align:center;">
+          <input type="number" min="1" step="1" class="form-field-input" style="padding:6px 4px; font-size:12px; width:60px; text-align:center; font-weight:700;" 
+                 value="${item.qty || 1}" 
+                 oninput="AdminApp.updateStoreItem(${idx}, 'qty', this.value)" required>
+        </td>
+        <td style="text-align:right;">
+          <input type="number" min="0" step="0.01" class="form-field-input" style="padding:6px 6px; font-size:12px; width:110px; text-align:right; font-weight:700;" 
+                 value="${item.unitPrice || ''}" 
+                 placeholder="0.00" 
+                 oninput="AdminApp.updateStoreItem(${idx}, 'unitPrice', this.value)" required>
+        </td>
+        <td style="text-align:center;">
+          <select class="form-field-input" style="padding:5px 4px; font-size:12px; width:85px; text-align:center; font-weight:800; background:#FFF; border-color:${Number(item.kdvRate) === 0 ? '#10B981' : '#0284C7'};" 
+                  onchange="AdminApp.updateStoreItem(${idx}, 'kdvRate', this.value)">
+            <option value="0" ${Number(item.kdvRate) === 0 ? 'selected' : ''}>%0</option>
+            <option value="1" ${Number(item.kdvRate) === 1 ? 'selected' : ''}>%1</option>
+            <option value="10" ${Number(item.kdvRate) === 10 ? 'selected' : ''}>%10</option>
+            <option value="20" ${Number(item.kdvRate) === 20 ? 'selected' : ''}>%20</option>
+          </select>
+        </td>
+        <td style="text-align:right; font-weight:700; font-size:12px; color:#0284C7;" id="storeItemKdvAmount_${idx}">
+          ₺${Number(item.kdvAmount || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+        </td>
+        <td style="text-align:right; font-weight:800; font-size:12.5px; color:#047857;" id="storeItemLineTotal_${idx}">
+          ₺${Number(item.lineTotal || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+        </td>
+        <td style="text-align:center;">
+          <button type="button" style="background:none; border:none; color:#DC2626; font-size:15px; cursor:pointer; padding:4px;" 
+                  onclick="AdminApp.removeStoreInvoiceItemRow(${idx})" title="Kalemi Sil">
+            ✕
+          </button>
+        </td>
+      </tr>
+    `).join('');
+  },
+
+  calculateStoreInvoiceLiveSummary() {
+    let totalGoldMatrah = 0;
+    let totalTaxableNet = 0;
+    let totalKdv = 0;
+    let totalGrand = 0;
+
+    this.storeItems.forEach(it => {
+      const q = Math.max(1, Number(it.qty || 1));
+      const p = Number(it.unitPrice || 0);
+      const lineTot = Math.round(q * p * 100) / 100;
+      const rate = Number(it.kdvRate !== undefined ? it.kdvRate : 0);
+
+      totalGrand += lineTot;
+
+      if (rate === 0) {
+        totalGoldMatrah += lineTot;
+      } else {
+        const netMatrah = Math.round((lineTot / (1 + (rate / 100))) * 100) / 100;
+        const kdvAmt = Math.round((lineTot - netMatrah) * 100) / 100;
+        totalTaxableNet += netMatrah;
+        totalKdv += kdvAmt;
+      }
+    });
+
+    const goldEl = document.getElementById('storeLiveGoldMatrah');
+    const workNetEl = document.getElementById('storeLiveWorkmanshipNet');
+    const workKdvEl = document.getElementById('storeLiveWorkmanshipKdv');
+    const grandTotEl = document.getElementById('storeLiveGrandTotal');
+
+    if (goldEl) goldEl.textContent = '₺' + Number(totalGoldMatrah || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (workNetEl) workNetEl.textContent = '₺' + Number(totalTaxableNet || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (workKdvEl) workKdvEl.textContent = '₺' + Number(totalKdv || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (grandTotEl) grandTotEl.textContent = '₺' + Number(totalGrand || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    return {
+      total: totalGrand,
+      hasGoldAmount: totalGoldMatrah,
+      workmanshipNet: totalTaxableNet,
+      workmanshipKdv: totalKdv,
+      grandTotal: totalGrand
+    };
+  },
+
+  // 2. MAĞAZA FATURASI KAYDETME (TASLAK VEYA ANINDA GİB SMS)
+  async submitStoreInvoice(autoStartGibSms = false) {
+    const name = (document.getElementById('storeCustName')?.value || '').trim();
+    let identity = (document.getElementById('storeCustIdentity')?.value || '').trim().replace(/\D/g, '');
+    if (identity.length !== 10 && identity.length !== 11) {
+      identity = '11111111111';
+    }
+    const date = (document.getElementById('storeInvoiceDate')?.value || '').trim();
+    const address = (document.getElementById('storeCustAddress')?.value || '').trim();
+    const phone = (document.getElementById('storeCustPhone')?.value || '').trim();
+    const email = (document.getElementById('storeCustEmail')?.value || '').trim();
+    const note = (document.getElementById('storeInvoiceNote')?.value || '').trim();
+    const errEl = document.getElementById('storeInvoiceFormError');
+
+    if (!name) {
+      if (errEl) { errEl.style.display = 'block'; errEl.textContent = 'Lütfen alıcı müşteri adı / unvanını giriniz.'; }
+      return;
+    }
+    if (!date) {
+      if (errEl) { errEl.style.display = 'block'; errEl.textContent = 'Lütfen fatura düzenleme tarihini seçiniz.'; }
+      return;
+    }
+
+    const validItems = this.storeItems.filter(it => (it.name || '').trim() && (Number(it.lineTotal || 0) > 0 || Number(it.unitPrice || 0) > 0));
+    if (validItems.length === 0) {
+      if (errEl) { errEl.style.display = 'block'; errEl.textContent = 'Lütfen en az 1 adet geçerli ürün adı ve fiyatı giriniz.'; }
+      return;
+    }
+
+    const totalAmount = validItems.reduce((acc, it) => acc + Number(it.lineTotal || 0), 0);
+    if (totalAmount <= 0) {
+      if (errEl) { errEl.style.display = 'block'; errEl.textContent = 'Fatura toplam tutarı 0\'dan büyük olmalıdır.'; }
+      return;
+    }
+
+    if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
+
+    const saveDraftBtn = document.getElementById('btnSaveStoreDraft');
+    const saveGibBtn = document.getElementById('btnSaveAndGibStore');
+
+    if (saveDraftBtn) saveDraftBtn.disabled = true;
+    if (saveGibBtn) saveGibBtn.disabled = true;
+
+    const isEdit = Boolean(this.editingStoreInvoiceId);
+    let existingDoc = this.editingStoreInvoiceId ? (this.storeInvoices || []).find(i => i.orderId === this.editingStoreInvoiceId || i.id === this.editingStoreInvoiceId) : null;
+
+    let invoiceId = this.editingStoreInvoiceId;
+    if (!invoiceId) {
+      const datePart = date.replace(/-/g, '');
+      const randPart = Math.floor(1000 + Math.random() * 9000);
+      invoiceId = `MGS-${datePart}-${randPart}`;
+    }
+
+    const summaryData = this.calculateStoreInvoiceLiveSummary();
+    const nowIso = new Date().toISOString();
+    const invoiceDoc = {
+      orderId: invoiceId,
+      id: invoiceId,
+      isStoreManual: true,
+      source: 'STORE_MANUAL',
+      customerName: name,
+      customerIdentity: identity,
+      invoiceDate: date,
+      customerAddress: address || 'Menderes Cad. No:231/B Buca İzmir',
+      customerPhone: phone,
+      customerEmail: email,
+      items: validItems,
+      totalAmount: totalAmount,
+      total: totalAmount,
+      productName: validItems.map(i => `${i.name} (x${i.qty || 1})`).join(', '),
+      breakdown: summaryData,
+      invoiceStatus: existingDoc?.invoiceStatus || 'PENDING',
+      invoiceNumber: existingDoc?.invoiceNumber || null,
+      invoiceUuid: existingDoc?.invoiceUuid || null,
+      status: 'PAID',
+      paymentStatus: 'PAID',
+      isPaid: true,
+      note: note,
+      createdAt: existingDoc?.createdAt || nowIso,
+      updatedAt: isEdit ? nowIso : (existingDoc?.createdAt || nowIso)
+    };
+
+    // 1. Önce Local Cache'e anında kaydet ve ekranda listele
+    try {
+      let localList = [];
+      const stored = localStorage.getItem('belgin_store_invoices');
+      if (stored) {
+        try { localList = JSON.parse(stored); } catch (_) {}
+      }
+      localList = [invoiceDoc, ...localList.filter(x => x.orderId !== invoiceId)];
+      localStorage.setItem('belgin_store_invoices', JSON.stringify(localList));
+      this.storeInvoices = localList;
+      this.filterStoreTable();
+      this.showToast(isEdit ? `✅ Fatura (${invoiceId}) başarıyla güncellendi.` : `✅ Mağaza Fatura Taslağı (${invoiceId}) listeye eklendi.`);
+    } catch (_) {}
+
+    this.resetStoreInvoiceForm();
+
+    // 2. Sunucuya arka planda kaydet
+    try {
+      const res = await fetch('/api/admin/store-invoices/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-key': this.adminPin
+        },
+        body: JSON.stringify({
+          ...invoiceDoc,
+          adminKey: this.adminPin
+        })
+      });
+
+      const rawText = await res.text();
+      let data = null;
+      try { data = JSON.parse(rawText); } catch (_) {}
+
+      if (data && data.success) {
+        await this.loadStoreInvoices();
+      }
+    } catch (e) {
+      console.warn('[Store Invoices] Sunucu senkronizasyon uyarısı:', e.message);
+    } finally {
+      if (saveDraftBtn) saveDraftBtn.disabled = false;
+      if (saveGibBtn) saveGibBtn.disabled = false;
+    }
+
+    // 3. Kullanıcı "Hemen GİB SMS Başlat" dediyse SMS sürecini başlat
+    if (autoStartGibSms) {
+      await this.startStoreInvoiceSigning(invoiceId, invoiceDoc);
+    }
+  },
+
+  // 3. MAĞAZA FATURALARINI YÜKLE
+  async loadStoreInvoices() {
+    // 1. Önce localStorage'dan hızlıca yükle
+    try {
+      const stored = localStorage.getItem('belgin_store_invoices');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          this.storeInvoices = parsed;
+          this.filterStoreTable();
+        }
+      }
+    } catch (_) {}
+
+    const startDate = document.getElementById('storeStartDate')?.value || '';
+    const endDate = document.getElementById('storeEndDate')?.value || '';
+    const status = document.getElementById('storeStatusFilter')?.value || 'ALL';
+
+    const params = new URLSearchParams();
+    if (startDate) params.append('startDate', startDate);
+    if (endDate) params.append('endDate', endDate);
+    if (status) params.append('status', status);
+
+    try {
+      const res = await fetch(`/api/admin/store-invoices?${params.toString()}`, {
+        headers: { 'x-admin-key': this.adminPin }
+      });
+
+      if (res.status === 401) {
+        this.showAuthGate();
+        return;
+      }
+
+      const rawText = await res.text();
+      let data = null;
+      try { data = JSON.parse(rawText); } catch (_) {}
+
+      if (data && data.success && Array.isArray(data.invoices)) {
+        this.storeInvoices = data.invoices;
+        try { localStorage.setItem('belgin_store_invoices', JSON.stringify(this.storeInvoices)); } catch (_) {}
+
+        // KPI Metrikleri
+        const kpiVol = document.getElementById('storeKpiTotalVolume');
+        const kpiSigned = document.getElementById('storeKpiSignedCount');
+        const kpiPending = document.getElementById('storeKpiPendingCount');
+        const badgeStore = document.getElementById('tabBadgeStoreInvoices');
+
+        if (kpiVol) kpiVol.textContent = data.summary?.formattedTotalVolume || '₺0';
+        if (kpiSigned) kpiSigned.textContent = data.summary?.signedCount || 0;
+        if (kpiPending) kpiPending.textContent = data.summary?.pendingCount || 0;
+        if (badgeStore) badgeStore.textContent = this.storeInvoices.length;
+
+        this.filterStoreTable();
+      }
+    } catch (err) {
+      console.warn('[AdminApp] Mağaza faturaları yüklenirken hata:', err.message);
+    }
+
+    const syncEl = document.getElementById('storeLastSyncTime');
+    if (syncEl) syncEl.textContent = 'Son Güncelleme: ' + new Date().toLocaleTimeString('tr-TR');
+  },
+
+  // 4. MAĞAZA TARİH VE PRESET SEÇİMİ
+  selectStorePreset(preset, btnEl) {
+    this.currentStorePreset = preset;
+    document.querySelectorAll('[data-store-preset]').forEach(b => b.classList.remove('active'));
+    if (btnEl) btnEl.classList.add('active');
+
+    const startInput = document.getElementById('storeStartDate');
+    const endInput = document.getElementById('storeEndDate');
+    const today = new Date();
+    const toDateStr = d => d.toISOString().split('T')[0];
+
+    switch (preset) {
+      case 'today':
+        if (startInput) startInput.value = toDateStr(today);
+        if (endInput) endInput.value = toDateStr(today);
+        break;
+      case 'yesterday':
+        const y = new Date(today);
+        y.setDate(y.getDate() - 1);
+        if (startInput) startInput.value = toDateStr(y);
+        if (endInput) endInput.value = toDateStr(y);
+        break;
+      case 'last7':
+        const d7 = new Date(today);
+        d7.setDate(d7.getDate() - 6);
+        if (startInput) startInput.value = toDateStr(d7);
+        if (endInput) endInput.value = toDateStr(today);
+        break;
+      case 'thisMonth':
+        const fMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+        if (startInput) startInput.value = toDateStr(fMonth);
+        if (endInput) endInput.value = toDateStr(today);
+        break;
+      case 'last30':
+        const d30 = new Date(today);
+        d30.setDate(d30.getDate() - 29);
+        if (startInput) startInput.value = toDateStr(d30);
+        if (endInput) endInput.value = toDateStr(today);
+        break;
+      case 'all':
+      default:
+        if (startInput) startInput.value = '';
+        if (endInput) endInput.value = '';
+        break;
+    }
+
+    this.loadStoreInvoices();
+  },
+
+  onStoreCustomDateChange() {
+    document.querySelectorAll('[data-store-preset]').forEach(b => b.classList.remove('active'));
+    this.loadStoreInvoices();
+  },
+
+  // 5. MAĞAZA TABLO FİLTRELEME VE SAYFALAMA
+  filterStoreTable() {
+    const searchVal = (document.getElementById('storeSearchInput')?.value || '').toLowerCase().trim();
+    const statusVal = document.getElementById('storeStatusFilter')?.value || 'ALL';
+
+    const visibleInvoices = this.storeInvoices.filter(inv => {
+      const matchSearch = !searchVal ||
+        (inv.orderId && inv.orderId.toLowerCase().includes(searchVal)) ||
+        (inv.customerName && inv.customerName.toLowerCase().includes(searchVal)) ||
+        (inv.customerIdentity && inv.customerIdentity.includes(searchVal)) ||
+        (inv.customerPhone && inv.customerPhone.includes(searchVal)) ||
+        (inv.productName && inv.productName.toLowerCase().includes(searchVal));
+
+      let matchStatus = true;
+      if (statusVal === 'INVOICE_PENDING') {
+        matchStatus = inv.invoiceStatus !== 'SIGNED';
+      } else if (statusVal === 'INVOICE_SIGNED') {
+        matchStatus = inv.invoiceStatus === 'SIGNED';
+      }
+
+      return matchSearch && matchStatus;
+    });
+
+    const countBadge = document.getElementById('storeTableCountBadge');
+    if (countBadge) {
+      countBadge.textContent = `(${visibleInvoices.length} Fatura)`;
+    }
+
+    const totalItems = visibleInvoices.length;
+    const totalPages = Math.ceil(totalItems / this.storePageSize) || 1;
+    if (this.currentStorePage > totalPages) this.currentStorePage = totalPages;
+    if (this.currentStorePage < 1) this.currentStorePage = 1;
+
+    const startIdx = totalItems === 0 ? 0 : (this.currentStorePage - 1) * this.storePageSize + 1;
+    const endIdx = Math.min(this.currentStorePage * this.storePageSize, totalItems);
+    const pagedInvoices = visibleInvoices.slice((this.currentStorePage - 1) * this.storePageSize, this.currentStorePage * this.storePageSize);
+
+    // Sayfalama Barı
+    const pageInfo = document.getElementById('storePaginationInfo');
+    if (pageInfo) {
+      pageInfo.textContent = `Toplam ${totalItems} faturadan ${startIdx}-${endIdx} arası gösteriliyor (Sayfa ${this.currentStorePage} / ${totalPages})`;
+    }
+
+    const btnPrev = document.getElementById('btnStorePrevPage');
+    const btnNext = document.getElementById('btnStoreNextPage');
+    if (btnPrev) btnPrev.disabled = this.currentStorePage <= 1;
+    if (btnNext) btnNext.disabled = this.currentStorePage >= totalPages;
+
+    const pageButtonsContainer = document.getElementById('storePageNumberButtons');
+    if (pageButtonsContainer) {
+      let pageBtnsHtml = '';
+      for (let p = 1; p <= totalPages; p++) {
+        pageBtnsHtml += `
+          <button class="btn-page ${p === this.currentStorePage ? 'active' : ''}" onclick="AdminApp.goToStorePage(${p})">
+            ${p}
+          </button>
+        `;
+      }
+      pageButtonsContainer.innerHTML = pageBtnsHtml;
+    }
+
+    const tbody = document.getElementById('storeInvoicesTableBody');
+    const mobileList = document.getElementById('storeInvoicesMobileList');
+
+    if (pagedInvoices.length === 0) {
+      if (tbody) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" style="text-align:center; padding:36px; color:var(--admin-muted); font-size:13px; font-weight:600;">
+              Seçilen kriterlere uygun mağaza faturası bulunamadı.
+            </td>
+          </tr>
+        `;
+      }
+      if (mobileList) {
+        mobileList.innerHTML = `
+          <div style="text-align:center; padding:32px 16px; color:var(--admin-muted); font-size:13px; font-weight:600;">
+            Seçilen kriterlere uygun mağaza faturası bulunamadı.
+          </div>
+        `;
+      }
+      this.updateStoreAccountingUI();
+      return;
+    }
+
+    // 1. Masaüstü Tablo Satırları
+    if (tbody) {
+      tbody.innerHTML = pagedInvoices.map(inv => {
+        const isSigned = (inv.invoiceStatus === 'SIGNED');
+        const isSelected = this.selectedStoreInvoiceIds.has(inv.orderId);
+
+        const invoiceBadge = isSigned
+          ? '<span style="background:#DCFCE7; color:#15803D; padding:4px 9px; border-radius:6px; font-weight:800; border:1px solid #86EFAC;">🧾 İmzalandı</span>'
+          : (inv.invoiceStatus === 'DRAFT'
+          ? '<span style="background:#FEF3C7; color:#92400E; padding:4px 9px; border-radius:6px; font-weight:800; border:1px solid #FCD34D;">🧾 Taslak</span>'
+          : '<span style="background:#FEE2E2; color:#991B1B; padding:4px 9px; border-radius:6px; font-weight:800; border:1px solid #FCA5A5;">⚠️ Kesilmedi</span>');
+
+        const createdTime = this.formatTimeTr(inv.createdAt);
+        const updatedTime = this.formatTimeTr(inv.updatedAt);
+        const invoicedTime = this.formatTimeTr(inv.invoicedAt);
+
+        const itemsDisplay = Array.isArray(inv.items) && inv.items.length > 0
+          ? inv.items.map(i => `<span style="font-weight:700; color:#0F172A;">${this.escapeHtml(i.name || 'Ürün')}</span> <span style="color:#64748B; font-weight:800;">(x${i.qty || 1})</span>`).join('<br>')
+          : `<span style="font-weight:700; color:#0F172A;">${this.escapeHtml(inv.productName || 'Kuyumculuk Satışı')}</span>`;
+
+        return `
+          <tr style="${isSelected ? 'background:#F0FDF4;' : ''}">
+            <td style="text-align:center;">
+              <input type="checkbox" class="invoice-row-checkbox" value="${inv.orderId}" 
+                     ${isSelected ? 'checked' : ''} 
+                     ${!isSigned ? 'disabled title="Yalnızca imzalanmış faturalar seçilebilir"' : 'title="Muhasebeye iletmek için seçin"'} 
+                     onchange="AdminApp.toggleStoreInvoiceSelection('${inv.orderId}', this.checked)">
+            </td>
+            <td style="font-family:monospace; font-weight:800; font-size:12px; color:#064E3B;">${inv.orderId}</td>
+            <td style="font-size:11.5px; color:#334155; white-space:nowrap;">
+              <div style="font-weight:800; color:#0F172A; font-size:12px;">${this.formatDateTr(inv.invoiceDate)}</div>
+              ${createdTime ? `<div style="font-size:10.5px; color:#64748B; margin-top:2px;">🕒 Kayıt: <strong style="color:#334155;">${createdTime}</strong></div>` : ''}
+              ${(updatedTime && updatedTime !== createdTime) ? `<div style="font-size:10px; color:#92400E; margin-top:1px;">✏️ Günc: <strong>${updatedTime}</strong></div>` : ''}
+              ${invoicedTime ? `<div style="font-size:10px; color:#15803D; margin-top:1px;">🧾 İmza: <strong>${invoicedTime}</strong></div>` : ''}
+            </td>
+            <td>
+              <div style="font-weight:800; font-size:13px; color:#0F172A;">${this.escapeHtml(inv.customerName || 'Müşteri')}</div>
+              <div style="font-size:11.5px; color:#475569; font-weight:600;">${inv.customerPhone || '—'}</div>
+              <div style="font-size:11px; color:#92400E; font-weight:800;">🆔 <span style="font-family:monospace;">${inv.customerIdentity || '11111111111'}</span></div>
+            </td>
+            <td style="font-size:12px; color:#1E293B; line-height:1.4;">${itemsDisplay}</td>
+            <td style="font-weight:800; font-size:14px; color:#047857; text-align:right; white-space:nowrap;">
+              ₺${Number(inv.totalAmount || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            </td>
+            <td style="text-align:center;">
+              ${invoiceBadge}
+            </td>
+            <td style="display:flex; gap:4px; flex-wrap:wrap; align-items:center;">
+              ${!isSigned ? `
+                <button class="btn-admin-primary" style="padding:5px 10px; font-size:11.5px; background:linear-gradient(135deg, #059669 0%, #10B981 100%); border-color:#059669; color:#FFF; font-weight:800;" onclick="AdminApp.startStoreInvoiceSigning('${inv.orderId}')" title="GİB e-Arşiv Fatura Kes (SMS)">
+                  🧾 Fatura Kes
+                </button>
+                <button class="btn-admin-secondary" style="padding:5px 10px; font-size:11.5px; background:#FFFBEB; border-color:#FCD34D; color:#92400E; font-weight:800;" onclick="AdminApp.editStoreInvoice('${inv.orderId}')" title="Taslak Faturayı Düzenle">
+                  ✏️ Düzenle
+                </button>
+              ` : `
+                <button class="btn-admin-secondary" style="padding:5px 10px; font-size:11.5px; background:#F0FDF4; border-color:#86EFAC; color:#15803D; font-weight:800;" onclick="AdminApp.viewStoreInvoice('${inv.invoiceUuid}', '${inv.orderId}')" title="Faturayı Aç / Yazdır">
+                  📄 Fatura
+                </button>
+                <button class="btn-admin-secondary" style="padding:5px 10px; font-size:11.5px; background:#10B981; border-color:#059669; color:#FFF; font-weight:800;" onclick="AdminApp.sendStoreInvoiceViaWhatsApp('${inv.orderId}')" title="Faturayı WhatsApp ile Müşteriye İlet">
+                  📲 Müşteri
+                </button>
+                <button class="btn-admin-secondary" style="padding:5px 10px; font-size:11.5px; background:#DCFCE7; border-color:#86EFAC; color:#166534; font-weight:800;" onclick="AdminApp.sendStoreInvoiceToAccounting('${inv.orderId}')" title="Bu Faturayı Doğrudan Muhasebeye İlet">
+                  📲 Muhasebe
+                </button>
+              `}
+              <button class="btn-admin-secondary" style="padding:5px 8px; font-size:11.5px; border-color:#FCA5A5; color:#DC2626; background:#FEF2F2;" onclick="AdminApp.deleteStoreInvoice('${inv.orderId}')" title="Mağaza Faturasını Kalıcı Sil">
+                🗑️
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // 2. Mobil Kart Listesi (≤ 768px)
+    if (mobileList) {
+      mobileList.innerHTML = pagedInvoices.map(inv => {
+        const isSigned = (inv.invoiceStatus === 'SIGNED');
+        const isSelected = this.selectedStoreInvoiceIds.has(inv.orderId);
+        const cleanPhone = String(inv.customerPhone || '').replace(/\D/g, '');
+        const waPhone = cleanPhone.startsWith('0') ? '90' + cleanPhone.substring(1) : (cleanPhone.startsWith('90') ? cleanPhone : '90' + cleanPhone);
+
+        const createdTime = this.formatTimeTr(inv.createdAt);
+        const updatedTime = this.formatTimeTr(inv.updatedAt);
+
+        const invoiceBadge = isSigned
+          ? '<span style="background:#DCFCE7; color:#15803D; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #86EFAC; font-size:11px;">🧾 İmzalandı</span>'
+          : (inv.invoiceStatus === 'DRAFT'
+          ? '<span style="background:#FEF3C7; color:#92400E; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #FCD34D; font-size:11px;">🧾 Taslak</span>'
+          : '<span style="background:#FEE2E2; color:#991B1B; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #FCA5A5; font-size:11px;">⚠️ Kesilmedi</span>');
+
+        const itemsDisplay = Array.isArray(inv.items) && inv.items.length > 0
+          ? inv.items.map(i => `${this.escapeHtml(i.name || 'Ürün')} (x${i.qty || 1})`).join(', ')
+          : this.escapeHtml(inv.productName || 'Kuyumculuk Satışı');
+
+        return `
+          <article class="admin-mobile-card ${isSigned ? 'card-status-paid' : 'card-status-pending'}" style="${isSelected ? 'border-color:#10B981; background:#F8FCF9;' : ''}">
+            <div class="mobile-card-header">
+              <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                ${isSigned ? `
+                  <label class="mobile-select-chip ${isSelected ? 'selected' : ''}" onclick="event.stopPropagation();">
+                    <input type="checkbox" class="mobile-invoice-checkbox" value="${inv.orderId}" 
+                           ${isSelected ? 'checked' : ''} 
+                           onchange="AdminApp.toggleStoreInvoiceSelection('${inv.orderId}', this.checked)">
+                    <span>${isSelected ? '✓ Muhasebe Seçili' : '+ Muhasebe Seç'}</span>
+                  </label>
+                ` : ''}
+                <span class="mobile-order-id">${inv.orderId}</span>
+                ${invoiceBadge}
+              </div>
+              <time class="mobile-order-time" style="font-size:11.5px; line-height:1.3; text-align:right;">
+                <div style="color:#0F172A; font-weight:800;">${this.formatDateTr(inv.invoiceDate)}</div>
+                ${createdTime ? `<div style="font-size:10px; color:#475569; font-weight:600;">🕒 ${createdTime}</div>` : ''}
+                ${(updatedTime && updatedTime !== createdTime) ? `<div style="font-size:9.5px; color:#92400E; font-weight:700;">✏️ ${updatedTime}</div>` : ''}
+              </time>
+            </div>
+
+            <div class="mobile-card-body">
+              <div class="mobile-customer-info">
+                <div class="mobile-customer-name" style="font-size:15px; font-weight:800; color:#0F172A;">${this.escapeHtml(inv.customerName || 'Müşteri')}</div>
+                <div class="mobile-customer-meta" style="margin-top:6px;">
+                  ${inv.customerPhone && inv.customerPhone !== '—' ? `
+                    <a href="tel:${inv.customerPhone}" class="mobile-meta-link mobile-meta-phone" title="Müşteriyi Ara">
+                      📞 ${inv.customerPhone}
+                    </a>
+                    <a href="https://wa.me/${waPhone}" target="_blank" rel="noopener" class="mobile-meta-link mobile-meta-wa" title="WhatsApp Aç">
+                      💬 WhatsApp
+                    </a>
+                  ` : ''}
+                  <span class="mobile-meta-tckn">🆔 ${inv.customerIdentity || '11111111111'}</span>
+                </div>
+                <div style="font-size:12px; color:#1E293B; font-weight:600; margin-top:6px; background:#F1F5F4; padding:6px 10px; border-radius:6px;">📦 ${itemsDisplay}</div>
+              </div>
+
+              <div class="mobile-financial-row" style="background:#F8FAFB; border:1px solid #CBD5E1; padding:12px 14px; border-radius:10px;">
+                <div class="mobile-amount-box">
+                  <span class="mobile-amount-label" style="color:#475569; font-weight:800;">Fatura Tutarı</span>
+                  <span class="mobile-amount-value" style="font-size:18px; color:#047857; font-weight:800;">₺${Number(inv.totalAmount || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                </div>
+                <div class="mobile-invoice-box">
+                  <span class="mobile-amount-label" style="color:#475569; font-weight:800;">e-Arşiv Durumu</span>
+                  <div style="margin-top:2px;">${invoiceBadge}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mobile-card-actions">
+              ${!isSigned ? `
+                <button type="button" class="btn-mobile-action btn-mobile-invoice-sign" onclick="AdminApp.startStoreInvoiceSigning('${inv.orderId}')">
+                  <span>🧾 GİB e-Arşiv Fatura Kes (SMS)</span>
+                </button>
+              ` : `
+                <div class="mobile-actions-split">
+                  <button type="button" class="btn-mobile-action btn-mobile-invoice-view" onclick="AdminApp.viewStoreInvoice('${inv.invoiceUuid}', '${inv.orderId}')">
+                    <span>📄 Faturayı Aç</span>
+                  </button>
+                  <button type="button" class="btn-mobile-action btn-mobile-invoice-wa" onclick="AdminApp.sendStoreInvoiceViaWhatsApp('${inv.orderId}')">
+                    <span>📲 Müşteriye</span>
+                  </button>
+                </div>
+              `}
+
+              <div class="mobile-actions-grid-bottom" style="grid-template-columns: 1fr 1fr;">
+                ${isSigned ? `
+                  <button type="button" class="btn-mobile-subaction" style="background:#DCFCE7; color:#166534; border-color:#86EFAC; font-weight:800;" onclick="AdminApp.sendStoreInvoiceToAccounting('${inv.orderId}')">
+                    <span>📲 Muhasebe</span>
+                  </button>
+                ` : `
+                  <button type="button" class="btn-mobile-subaction" style="background:#FEF3C7; color:#92400E; border-color:#FCD34D; font-weight:800;" onclick="AdminApp.editStoreInvoice('${inv.orderId}')">
+                    <span>✏️ Düzenle</span>
+                  </button>
+                `}
+                <button type="button" class="btn-mobile-subaction" style="color:#991B1B; border-color:#FCA5A5; background:#FEE2E2; font-weight:800;" onclick="AdminApp.deleteStoreInvoice('${inv.orderId}')">
+                  <span>🗑️ Sil</span>
+                </button>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    this.updateStoreAccountingUI();
+  },
+
+  goToStorePage(p) {
+    this.currentStorePage = p;
+    this.filterStoreTable();
+  },
+  prevStorePage() {
+    if (this.currentStorePage > 1) {
+      this.currentStorePage--;
+      this.filterStoreTable();
+    }
+  },
+  nextStorePage() {
+    this.currentStorePage++;
+    this.filterStoreTable();
+  },
+
+  // 6. MAĞAZA SEÇİM & MUHASEBE GÖNDERİMİ
+  toggleStoreInvoiceSelection(orderId, isChecked) {
+    if (isChecked) {
+      this.selectedStoreInvoiceIds.add(orderId);
+    } else {
+      this.selectedStoreInvoiceIds.delete(orderId);
+    }
+    this.filterStoreTable();
+  },
+
+  toggleSelectAllStoreInvoices(isChecked) {
+    if (isChecked) {
+      this.storeInvoices.forEach(inv => {
+        if (inv.invoiceStatus === 'SIGNED') {
+          this.selectedStoreInvoiceIds.add(inv.orderId);
+        }
+      });
+    } else {
+      this.selectedStoreInvoiceIds.clear();
+    }
+    this.filterStoreTable();
+  },
+
+  updateStoreAccountingUI() {
+    const badge = document.getElementById('storeAccountingSelectedBadge');
+    const count = this.selectedStoreInvoiceIds.size;
+    if (badge) {
+      badge.textContent = count;
+      badge.style.display = count > 0 ? 'inline-block' : 'none';
+    }
+  },
+
+  openStoreAccountingModal() {
+    const selected = this.storeInvoices.filter(i => this.selectedStoreInvoiceIds.has(i.orderId) && i.invoiceStatus === 'SIGNED');
+    const invoicesToSend = selected.length > 0 ? selected : this.storeInvoices.filter(i => i.invoiceStatus === 'SIGNED');
+
+    if (invoicesToSend.length === 0) {
+      alert('⚠️ Muhasebeye gönderilecek imzalanmış mağaza faturası bulunamadı.\n\nLütfen önce faturaları GİB üzerinde imzalayınız.');
+      return;
+    }
+
+    const modal = document.getElementById('accountingModal');
+    const summaryCount = document.getElementById('accModalSummaryCount');
+    const summaryTotal = document.getElementById('accModalSummaryTotal');
+    const listEl = document.getElementById('accModalList');
+    const previewEl = document.getElementById('accModalMessagePreview');
+
+    const totalSum = invoicesToSend.reduce((acc, i) => acc + Number(i.totalAmount || 0), 0);
+
+    if (summaryCount) summaryCount.textContent = `${invoicesToSend.length} Mağaza Faturası Seçildi`;
+    if (summaryTotal) summaryTotal.textContent = '₺' + totalSum.toLocaleString('tr-TR', { minimumFractionDigits: 2 });
+
+    if (listEl) {
+      listEl.innerHTML = invoicesToSend.map((inv, idx) => `
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 8px; border-bottom:1px solid #EEE; font-size:12px;">
+          <div>
+            <span style="font-weight:800; color:#064E3B;">${idx + 1}. ${inv.orderId}</span> — 
+            <span style="font-weight:700; color:#1E293B;">${this.escapeHtml(inv.customerName || 'Müşteri')}</span>
+            <span style="font-size:11px; color:#64748B;">(${this.formatDateTr(inv.invoiceDate)})</span>
+          </div>
+          <div style="font-weight:800; color:#15803D;">
+            ₺${Number(inv.totalAmount || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2 })}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    const msg = this.generateAccountingWhatsAppMessage(invoicesToSend);
+    if (previewEl) previewEl.value = msg;
+
+    if (modal) modal.classList.add('open');
+  },
+
+  sendStoreInvoiceToAccounting(orderId) {
+    const inv = this.storeInvoices.find(i => i.orderId === orderId);
+    if (!inv || inv.invoiceStatus !== 'SIGNED') {
+      alert('⚠️ Bu fatura henüz imzalanmamış.');
+      return;
+    }
+
+    const msg = this.generateAccountingWhatsAppMessage([inv]);
+    const waUrl = `https://api.whatsapp.com/send?phone=${this.ACCOUNTING_PHONE}&text=${encodeURIComponent(msg)}`;
+    window.open(waUrl, '_blank');
+  },
+
+  // 7. GİB İŞLEMLERİ (TEKİL & TOPLU İMZA)
+  async startStoreInvoiceSigning(invoiceId, fallbackDoc = null) {
+    this.isBatchInvoice = false;
+    let inv = (this.storeInvoices || []).find(i => i.orderId === invoiceId || i.id === invoiceId);
+    if (!inv && fallbackDoc) inv = fallbackDoc;
+    if (!inv) return;
+
+    this.activeInvoiceOrderId = invoiceId;
+    const bd = inv.breakdown || this.calculateStoreInvoiceLiveSummary();
+    this.activeInvoiceBreakdown = bd;
+
+    const summaryBox = document.getElementById('smsModalOrderSummary');
+    if (summaryBox) {
+      summaryBox.innerHTML = `
+        <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
+          <span><strong>Fatura No:</strong> ${inv.orderId}</span>
+          <span><strong>Müşteri:</strong> ${this.escapeHtml(inv.customerName || 'Nihai Tüketici')}</span>
+        </div>
+        ${Number(bd.hasGoldAmount || 0) > 0 ? `
+        <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
+          <span><strong>Kıymetli Maden (%0 KDV):</strong> ₺${Number(bd.hasGoldAmount || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</span>
+        </div>` : ''}
+        ${Number(bd.workmanshipTotal || bd.workmanshipNet || 0) > 0 ? `
+        <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
+          <span><strong>Saat / İşçilik (%20 KDV):</strong> ₺${Number(bd.workmanshipTotal || (Number(bd.workmanshipNet || 0) + Number(bd.workmanshipKdv || 0))).toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</span>
+        </div>` : ''}
+        <div style="display:flex; justify-content:space-between; font-weight:800; color:var(--admin-teal); border-top:1px solid #D1E5E1; padding-top:3px; margin-top:3px;">
+          <span>Toplam Fatura Tutarı:</span>
+          <span>₺${Number(inv.totalAmount || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</span>
+        </div>
+      `;
+    }
+
+    const input = document.getElementById('gibSmsInput');
+    const errDiv = document.getElementById('smsErrorMsg');
+    const submitBtn = document.getElementById('btnSubmitGibSms');
+    if (input) input.value = '';
+    if (errDiv) { errDiv.style.display = 'none'; errDiv.textContent = ''; }
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = '<span>✅ Doğrula & Faturayı İmzala</span>'; }
+
+    try {
+      if (submitBtn) submitBtn.innerHTML = '<span>⏳ GİB Taslak & SMS Hazırlanıyor...</span>';
+      const draftRes = await fetch('/api/admin/invoice/draft', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-key': this.adminPin
+        },
+        body: JSON.stringify({
+          orderId: inv.orderId,
+          totalAmount: Number(inv.totalAmount || 0),
+          orderData: inv,
+          adminKey: this.adminPin
+        })
+      });
+
+      const rawText = await draftRes.text();
+      let draftData = null;
+      try { draftData = JSON.parse(rawText); } catch (_) {}
+
+      if (!draftData || !draftData.success) {
+        alert('❌ Taslak Fatura Uyarısı:\n\n' + (draftData?.message || 'GİB bağlantısı kurulamadı.'));
+        if (submitBtn) submitBtn.innerHTML = '<span>✅ Doğrula & Faturayı İmzala</span>';
+        return;
+      }
+
+      this.activeInvoiceUuid = draftData.invoiceUuid;
+      this.activeInvoiceOid = draftData.oid || '';
+      if (submitBtn) submitBtn.innerHTML = '<span>✅ Doğrula & Faturayı İmzala</span>';
+
+      const smsModal = document.getElementById('invoiceSmsModal');
+      if (smsModal) smsModal.classList.add('open');
+      if (input) setTimeout(() => input.focus(), 150);
+
+      if (draftData && draftData.isMock && errDiv) {
+        errDiv.style.display = 'block';
+        errDiv.style.color = '#084C47';
+        errDiv.textContent = 'ℹ️ Test / Simülasyon Modu: Kod olarak 123456 girebilirsiniz.';
+      }
+    } catch (e) {
+      alert('❌ GİB Bağlantı Hatası: ' + e.message);
+      if (submitBtn) submitBtn.innerHTML = '<span>✅ Doğrula & Faturayı İmzala</span>';
+    }
+  },
+
+  async startBatchStoreInvoiceSigning() {
+    const selected = this.storeInvoices.filter(i => this.selectedStoreInvoiceIds.has(i.orderId) && i.invoiceStatus !== 'SIGNED');
+    const pending = selected.length > 0 ? selected : this.storeInvoices.filter(i => i.invoiceStatus !== 'SIGNED');
+
+    if (pending.length === 0) {
+      alert('⚠️ Faturası kesilecek bekleyen veya seçilmiş mağaza kaydı bulunamadı.');
+      return;
+    }
+
+    const orderIds = pending.map(i => i.orderId);
+    const confirmMsg = `🧾 TOPLU GİB E-ARŞİV FATURA KESİMİ\n\nToplam ${orderIds.length} adet mağaza kaydı için tek seferde GİB taslağı açılacak ve telefonunuza TEK BİR SMS kodu gönderilecektir.\n\nİşlemi başlatmak istiyor musunuz?`;
+    if (!confirm(confirmMsg)) return;
+
+    this.isBatchInvoice = true;
+    this.batchPendingStoreInvoices = pending;
+
+    const summaryBox = document.getElementById('smsModalOrderSummary');
+    if (summaryBox) {
+      summaryBox.innerHTML = `
+        <div style="font-weight:800; color:var(--admin-teal); margin-bottom:4px;">
+          📦 Toplu Mağaza Fatura Listesi (${pending.length} Adet):
+        </div>
+        <div style="max-height:110px; overflow-y:auto; font-size:11.5px;">
+          ${pending.map(p => `<div>• <strong>${p.orderId}</strong> — ${this.escapeHtml(p.customerName)} (₺${Number(p.totalAmount || 0).toLocaleString('tr-TR')})</div>`).join('')}
+        </div>
+      `;
+    }
+
+    try {
+      const draftRes = await fetch('/api/admin/invoice/batch-draft', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-admin-key': this.adminPin },
+        body: JSON.stringify({ orderIds, adminKey: this.adminPin })
+      });
+
+      const draftData = await draftRes.json();
+      if (draftData && draftData.success) {
+        this.batchDraftItems = draftData.draftInvoices || [];
+        this.activeInvoiceOid = draftData.oid || '';
+
+        const smsModal = document.getElementById('invoiceSmsModal');
+        if (smsModal) smsModal.classList.add('open');
+        const input = document.getElementById('gibSmsInput');
+        if (input) setTimeout(() => input.focus(), 150);
+      } else {
+        alert('❌ Toplu taslak hatası: ' + (draftData?.message || 'Bağlantı kurulamadı.'));
+      }
+    } catch (e) {
+      alert('❌ Toplu işlem hatası: ' + e.message);
+    }
+  },
+
+  viewStoreInvoice(invoiceUuid, orderId) {
+    const url = `/api/admin/invoice/view?uuid=${encodeURIComponent(invoiceUuid || '')}&orderId=${encodeURIComponent(orderId || '')}&adminKey=${encodeURIComponent(this.adminPin)}`;
+    window.open(url, '_blank');
+  },
+
+  sendStoreInvoiceViaWhatsApp(orderId) {
+    const inv = this.storeInvoices.find(i => i.orderId === orderId);
+    if (!inv) return;
+
+    let phone = String(inv.customerPhone || '').replace(/\D/g, '');
+    if (!phone) {
+      alert('⚠️ Müşteri telefon numarası kayıtlı değil.');
+      return;
+    }
+    if (phone.startsWith('0')) phone = '90' + phone.substring(1);
+    if (!phone.startsWith('90')) phone = '90' + phone;
+
+    const invoiceUrl = `https://www.belginkuyumculuk.com/api/admin/invoice/view?uuid=${encodeURIComponent(inv.invoiceUuid || '')}&orderId=${encodeURIComponent(inv.orderId || '')}&print=1`;
+    const msg = `Sayın ${inv.customerName},\n\nBelgin Kuyumculuk mağazamızdan gerçekleştirdiğiniz alışverişe ait e-Arşiv faturanız düzenlenmiştir.\n\n📄 Belge No: ${inv.invoiceNumber || 'GİB e-Arşiv'}\n💰 Tutar: ₺${Number(inv.totalAmount || 0).toLocaleString('tr-TR')}\n📄 Fatura (PDF İndir): ${invoiceUrl}\n\nBizi tercih ettiğiniz için teşekkür ederiz.\nBelgin Kuyumculuk — Menderes Cad. No:231/B Buca İzmir`;
+
+    const waUrl = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`;
+    window.open(waUrl, '_blank');
+  },
+
+  async deleteStoreInvoice(orderId) {
+    if (!orderId) return;
+    if (!confirm(`⚠️ ${orderId} numaralı mağaza faturası kalıcı olarak silinecektir.\n\nOnaylıyor musunuz?`)) return;
+
+    // 1. Önce anında memory ve localStorage'dan sil ve arayüzü anında güncelle
+    this.storeInvoices = (this.storeInvoices || []).filter(inv => inv.orderId !== orderId && inv.id !== orderId);
+    this.selectedStoreInvoiceIds.delete(orderId);
+    try {
+      localStorage.setItem('belgin_store_invoices', JSON.stringify(this.storeInvoices));
+    } catch (_) {}
+    this.filterStoreTable();
+    this.showToast(`🗑️ ${orderId} başarıyla silindi.`);
+
+    // 2. Sunucudan sil
+    try {
+      const res = await fetch('/api/admin/store-invoices/delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-admin-key': this.adminPin },
+        body: JSON.stringify({ invoiceId: orderId, orderId: orderId, adminKey: this.adminPin })
+      });
+
+      const rawText = await res.text();
+      let data = null;
+      try { data = JSON.parse(rawText); } catch (_) {}
+
+      // Sunucu listesini tazeleyerek senkronize et
+      await this.loadStoreInvoices();
+    } catch (e) {
+      console.warn('[Store Invoice Delete Server]:', e.message);
+    }
+  },
+
+  exportStoreInvoicesExcel() {
+    if (!this.storeInvoices || this.storeInvoices.length === 0) {
+      alert('⚠️ İndirilecek mağaza faturası bulunmuyor.');
+      return;
+    }
+
+    const fmt = n => Number(n || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    let totalSum = 0;
+
+    const rowsHtml = this.storeInvoices.map((inv, idx) => {
+      totalSum += Number(inv.totalAmount || 0);
+      const itemsStr = Array.isArray(inv.items) ? inv.items.map(i => `${i.name} (x${i.qty})`).join(', ') : inv.productName;
+      return `
+        <tr>
+          <td style="text-align:center;">${idx + 1}</td>
+          <td style="text-align:center;">${inv.orderId}</td>
+          <td style="text-align:center;">${this.formatDateTr(inv.invoiceDate)}</td>
+          <td>${this.escapeHtml(inv.customerName || 'Müşteri')}</td>
+          <td style="text-align:center;">${inv.customerIdentity || '11111111111'}</td>
+          <td>${this.escapeHtml(inv.customerPhone || '—')}</td>
+          <td>${this.escapeHtml(itemsStr || '')}</td>
+          <td style="text-align:right;">${fmt(inv.totalAmount)} ₺</td>
+          <td style="text-align:center;">${inv.invoiceStatus === 'SIGNED' ? 'İmzalandı' : 'Taslak/Bekliyor'}</td>
+        </tr>
+      `;
+    }).join('');
+
+    const excelHtml = `
+      <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <style>
+          body { font-family: Calibri, Arial, sans-serif; font-size: 11pt; }
+          table { border-collapse: collapse; width: 100%; }
+          th { background: #064E3B; color: #FFFFFF; font-weight: bold; border: 1px solid #CBD5E1; padding: 8px; font-size: 11pt; }
+          td { border: 1px solid #E2E8F0; padding: 6px 8px; font-size: 10pt; }
+          .total-row { background: #F0FDF4; font-weight: bold; }
+        </style>
+      </head>
+      <body>
+        <h2>BELGİN KUYUMCULUK — MAĞAZA VE MANUEL FATURALAR LİSTESİ</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Fatura Takip No</th>
+              <th>Tarih</th>
+              <th>Müşteri Adı Soyadı</th>
+              <th>TCKN / VKN</th>
+              <th>Telefon</th>
+              <th>Ürünler / Kalemler</th>
+              <th>Tutar (₺)</th>
+              <th>e-Arşiv Durumu</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rowsHtml}
+            <tr class="total-row">
+              <td colspan="7" style="text-align:right;">GENEL TOPLAM:</td>
+              <td style="text-align:right; color:#047857;">${fmt(totalSum)} ₺</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </body>
+      </html>
+    `;
+
+    const blob = new Blob(['\ufeff', excelHtml], { type: 'application/vnd.ms-excel;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Belgin_Kuyumculuk_Magaza_Faturalari_${new Date().toISOString().slice(0, 10)}.xls`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  },
+
+  formatDateTr(dateStr) {
+    if (!dateStr) return '—';
+    try {
+      const [year, month, day] = dateStr.split('-');
+      if (year && month && day) {
+        return `${day}.${month}.${year}`;
+      }
+      const d = new Date(dateStr);
+      return d.toLocaleDateString('tr-TR');
+    } catch (_) {
+      return dateStr;
+    }
+  },
+
+  formatTimeTr(ts) {
+    if (!ts) return null;
+    try {
+      if (typeof ts === 'object' && ts._seconds) {
+        return new Date(ts._seconds * 1000).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      }
+      if (typeof ts === 'object' && ts.seconds) {
+        return new Date(ts.seconds * 1000).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      }
+      const d = new Date(ts);
+      if (isNaN(d.getTime())) return null;
+      return d.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    } catch (_) {
+      return null;
+    }
+  },
+
+  escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
   }
 };
 

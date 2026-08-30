@@ -16,6 +16,7 @@ const PAGE_TITLES = {
   'favoriler': "İstek Listem & Favoriler | Belgin Kuyumculuk",
   'hesabim': "VIP Müşteri Hesabı | Belgin Kuyumculuk",
   'iletisim': "İletişim & Buca Showroom Mağazamız | Belgin Kuyumculuk",
+  'canli-fiyatlar': "Canlı Altın & Piyasa Fiyatları | Belgin Kuyumculuk",
   'sertifika': "Sertifika Doğrulama | Belgin Kuyumculuk",
   'basarili-odeme': "Sipariş Onayı | Belgin Kuyumculuk",
   'basarisiz-odeme': "Ödeme Bildirimi | Belgin Kuyumculuk"
@@ -27,6 +28,7 @@ const Router = {
   resolveLocation() {
     const path = location.pathname.replace(/\/+$/, '') || '/';
     if (path === '/') return { page: 'ana-sayfa' };
+    if (path === '/canli-fiyatlar' || path === '/canlipiyasalar') return { page: 'canli-fiyatlar' };
     if (path === '/saatler') return { page: 'saatler' };
     if (path === '/mucevherat') return { page: 'mucevherat' };
     if (path === '/seckin-urunler' || path === '/ikinci-el') return { page: 'seckin-urunler' };
@@ -50,6 +52,7 @@ const Router = {
   migrateLegacyHash() {
     const hash = location.hash.replace(/^#/, '');
     if (!hash) return null;
+    if (hash === 'canli-fiyatlar' || hash === 'canlipiyasalar') return { page: 'canli-fiyatlar' };
     if (hash === 'odeme' || hash === 'checkout') return { page: 'odeme' };
     if (hash === 'sepet' || hash === 'cart') return { page: 'sepet' };
     const m = hash.match(/^(?:urun|product)-(\d+)$/);
@@ -62,6 +65,8 @@ const Router = {
       }
     }
     const old = {
+      'canli-fiyatlar': '/canli-fiyatlar/',
+      'canlipiyasalar': '/canli-fiyatlar/',
       'saatler': '/saatler/',
       'watches': '/saatler/',
       'mucevherat': '/mucevherat/',
@@ -163,6 +168,8 @@ const Router = {
     }
 
     this.currentPage = page;
+    document.body.classList.toggle('page-canli-fiyatlar', page === 'canli-fiyatlar');
+    document.body.classList.toggle('page-is-canli-fiyatlar', page === 'canli-fiyatlar');
 
     // 1. Sayfa Görünürlüğü
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -177,8 +184,15 @@ const Router = {
       target.classList.add('active');
     } else {
       const fallback = document.getElementById('page-ana-sayfa');
-      if (fallback) fallback.classList.add('active');
-      page = 'ana-sayfa';
+      if (fallback) {
+        fallback.classList.add('active');
+        page = 'ana-sayfa';
+      } else {
+        // Hedef sayfa bu HTML şablonunda yer almıyor (Örn: canli-fiyatlar sayfasındayken logoya tıklandı)
+        const targetUrl = this.routeForPage(page);
+        window.location.href = targetUrl;
+        return;
+      }
     }
 
     // 2. Navigasyon Aktif Linkleri

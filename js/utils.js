@@ -381,22 +381,44 @@ async function fetchLiveMarketRates() {
 }
 
 /**
- * TÜM ALTIN ÜRÜNLERİNİN FİYATINI CANLI SATIŞ FİYATINA GÖRE ANLIK GÜNCELLE
+ * TÜM ALTIN ÜRÜNLERİNİN FİYATINI SARI TABELA İLE %100 BİREBİR SENKRONİZE ET
+ * Kaynak: Harem Altın Canlı Borsa Soketi (wss://hrmsocketonly.haremaltin.com)
+ * Kural: Sarı Tabela Satış Fiyatları (+%1 Marj) ile Ürün Sayfası / Katalog Fiyatları 1:1 Eşittir.
  */
 function updateDynamicGoldProductPrices() {
   if (typeof PRODUCTS === 'undefined' || !Array.isArray(PRODUCTS)) return;
 
-  const hasGram = LIVE_MARKET_DATA.hasAltin || LIVE_MARKET_DATA.gramGold24k || 7121;
-  const k22 = LIVE_MARKET_DATA.gramGold22k || Math.round(hasGram * 0.925);
-  const k14 = LIVE_MARKET_DATA.gramGold14k || Math.round(hasGram * 0.835);
-  const qNew = LIVE_MARKET_DATA.quarterGold || 11750;
-  const qOld = LIVE_MARKET_DATA.oldQuarterGold || 11600;
-  const hNew = LIVE_MARKET_DATA.halfGold || 23500;
-  const hOld = LIVE_MARKET_DATA.oldHalfGold || 23060;
-  const fNew = LIVE_MARKET_DATA.fullGold || 47000;
-  const fOld = LIVE_MARKET_DATA.oldFullGold || 45930;
-  const ata = LIVE_MARKET_DATA.ataGold || 47400;
-  const pkgHas = LIVE_MARKET_DATA.packagedGold || Math.round(hasGram * 1.015);
+  const rawItems = LIVE_MARKET_DATA.items || {};
+  const BOARD_MARGIN = 1.01; // Sarı Tabela ve Ürün Sayfası Birebir Canlı Satış Marjı (+%1)
+
+  const baseHas = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.hasAltin || LIVE_MARKET_DATA.gramGold24k || 6892.70;
+  const baseGram = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.gramGold24k || baseHas;
+  const base22k = parseFloat(rawItems.AYAR22?.satis) || LIVE_MARKET_DATA.gramGold22k || Math.round(baseHas * 0.937);
+  const base18k = parseFloat(rawItems.AYAR18?.satis) || LIVE_MARKET_DATA.gramGold18k || Math.round(baseHas * 0.750);
+  const base14k = parseFloat(rawItems.AYAR14?.satis) || LIVE_MARKET_DATA.gramGold14k || Math.round(baseHas * 0.722);
+  const baseAtaYeni = parseFloat(rawItems.ATA_YENI?.satis) || LIVE_MARKET_DATA.ataGold || 45650;
+  const baseAtaEski = parseFloat(rawItems.ATA_ESKI?.satis) || LIVE_MARKET_DATA.oldAtaGold || 45581;
+
+  const baseCeyrekYeni = parseFloat(rawItems.CEYREK_YENI?.satis) || LIVE_MARKET_DATA.quarterGold || 11268;
+  const baseCeyrekEski = parseFloat(rawItems.CEYREK_ESKI?.satis) || LIVE_MARKET_DATA.oldQuarterGold || 11068;
+  const baseYarimYeni = parseFloat(rawItems.YARIM_YENI?.satis) || LIVE_MARKET_DATA.halfGold || 22528;
+  const baseYarimEski = parseFloat(rawItems.YARIM_ESKI?.satis) || LIVE_MARKET_DATA.oldHalfGold || 22101;
+  const baseZiynetYeni = parseFloat(rawItems.TEK_YENI?.satis) || LIVE_MARKET_DATA.fullGold || 44891;
+  const baseZiynetEski = parseFloat(rawItems.TEK_ESKI?.satis) || LIVE_MARKET_DATA.oldFullGold || 44271;
+
+  // Sarı Tabela ile %100 Birebir Eşleşen Nihai Satış Fiyatları
+  const pGram = Math.round(baseGram * BOARD_MARGIN);
+  const p22k = Math.round(base22k * BOARD_MARGIN);
+  const p18k = Math.round(base18k * BOARD_MARGIN);
+  const p14k = Math.round(base14k * BOARD_MARGIN);
+  const pCeyrekYeni = Math.round(baseCeyrekYeni * BOARD_MARGIN);
+  const pCeyrekEski = Math.round(baseCeyrekEski * BOARD_MARGIN);
+  const pYarimYeni = Math.round(baseYarimYeni * BOARD_MARGIN);
+  const pYarimEski = Math.round(baseYarimEski * BOARD_MARGIN);
+  const pZiynetYeni = Math.round(baseZiynetYeni * BOARD_MARGIN);
+  const pZiynetEski = Math.round(baseZiynetEski * BOARD_MARGIN);
+  const pAtaYeni = Math.round(baseAtaYeni * BOARD_MARGIN);
+  const pAtaEski = Math.round(baseAtaEski * BOARD_MARGIN);
 
   let updatedCount = 0;
 
@@ -406,81 +428,148 @@ function updateDynamicGoldProductPrices() {
     }
 
     const name = (p.name || '').toLowerCase();
-    let baseRef = null;
+    let exactTargetPrice = null;
 
-    // 1. Külçe / Gram Altın
-    if (name.includes('külçe') && !name.includes('bilezik')) {
-      if (name.includes('1 kg') || name.includes('1 kilogram')) baseRef = hasGram * 1000;
-      else if (name.includes('100 gr')) baseRef = hasGram * 100;
-      else if (name.includes('50 gr')) baseRef = hasGram * 50;
-      else if (name.includes('20 gr')) baseRef = hasGram * 20;
-      else if (name.includes('10 gr')) baseRef = hasGram * 10;
-      else if (name.includes('2,5 gr') || name.includes('2.5 gr')) baseRef = hasGram * 2.5;
-      else if (name.includes('5 gr')) baseRef = hasGram * 5;
-      else if (name.includes('1 gr')) baseRef = pkgHas;
+    // 1. Çeyrek Altın
+    if (name.includes('çeyrek')) {
+      if (name.includes('ata')) {
+        exactTargetPrice = name.includes('eski') ? Math.round(pAtaEski * 0.25) : Math.round(pAtaYeni * 0.25);
+      } else {
+        exactTargetPrice = name.includes('eski') ? pCeyrekEski : pCeyrekYeni;
+      }
     }
-    // 2. Çeyrek Altın
-    else if (name.includes('çeyrek altın')) {
-      baseRef = name.includes('eski') ? qOld : qNew;
+    // 2. Yarım Altın
+    else if (name.includes('yarım')) {
+      if (name.includes('ata')) {
+        exactTargetPrice = name.includes('eski') ? Math.round(pAtaEski * 0.5) : Math.round(pAtaYeni * 0.5);
+      } else {
+        exactTargetPrice = name.includes('eski') ? pYarimEski : pYarimYeni;
+      }
     }
-    // 3. Yarım Altın
-    else if (name.includes('yarım altın') && !name.includes('bileklik') && !name.includes('kolye')) {
-      baseRef = name.includes('eski') ? hOld : hNew;
+    // 3. Ziynet / Tam Altın / Reşat / Beşli / Gremse
+    else if (name.includes('tam altın') || name.includes('ziynet') || name.includes('reşat')) {
+      const isEski = name.includes('eski');
+      if (name.includes('beşli') || name.includes('5 tam')) {
+        exactTargetPrice = 5 * (isEski ? pZiynetEski : pZiynetYeni);
+      } else if (name.includes('2.5') || name.includes('gremse')) {
+        exactTargetPrice = Math.round(2.5 * (isEski ? pZiynetEski : pZiynetYeni));
+      } else if (name.includes('3 tam')) {
+        exactTargetPrice = 3 * pZiynetYeni;
+      } else {
+        exactTargetPrice = isEski ? pZiynetEski : pZiynetYeni;
+      }
     }
-    // 4. Tam Altın / Ziynet / Reşat
-    else if ((name.includes('tam altın') || name.includes('reşat') || name.includes('ziynet tam')) && !name.includes('bileklik') && !name.includes('kolye')) {
-      baseRef = name.includes('eski') ? fOld : fNew;
+    // 4. Ata Altın
+    else if (name.includes('ata')) {
+      const isEski = name.includes('eski');
+      if (name.includes('beşli')) {
+        exactTargetPrice = 5 * (isEski ? pAtaEski : pAtaYeni);
+      } else if (name.includes('2.5') || name.includes('gremse')) {
+        exactTargetPrice = Math.round(2.5 * (isEski ? pAtaEski : pAtaYeni));
+      } else {
+        exactTargetPrice = isEski ? pAtaEski : pAtaYeni;
+      }
     }
-    // 5. Ata Altın
-    else if (name.includes('ata') && !name.includes('bilezik')) {
-      baseRef = ata;
-    }
-    // 6. 22 Ayar Bilezikler
+    // 5. 22 Ayar Bilezikler
     else if (name.includes('22 ayar') && name.includes('bilezik')) {
       const gramMatch = name.match(/(\d+)\s*(?:gr|gram)/i);
       const gram = gramMatch ? parseFloat(gramMatch[1]) : 10;
-      baseRef = gram * k22;
+      exactTargetPrice = Math.round(gram * p22k);
     }
-    // 7. 14 Ayar Bilezikler
+    // 6. 14 Ayar Bilezikler
     else if (name.includes('14 ayar') && name.includes('bilezik')) {
       const gramMatch = name.match(/(\d+)\s*(?:gr|gram)/i);
       const gram = gramMatch ? parseFloat(gramMatch[1]) : 10;
-      baseRef = gram * k14;
+      exactTargetPrice = Math.round(gram * p14k);
+    }
+    // 7. Külçe / Gram Altın
+    else if (name.includes('külçe') || name.includes('gram altın') || name.includes('has altın')) {
+      const gramMatch = name.match(/(\d+)\s*(?:gr|gram|kg|kilogram)/i);
+      let gram = 1;
+      if (name.includes('1 kg') || name.includes('1 kilogram')) gram = 1000;
+      else if (gramMatch) gram = parseFloat(gramMatch[1]);
+      exactTargetPrice = Math.round(gram * pGram);
     }
 
-    if (baseRef && baseRef > 0) {
-      // Güvenceli Satış Fiyatı (+%5 İZKO/Harem Altın Marjı)
-      const dynamicPrice = Math.round(baseRef * 1.05);
-      if (p.price !== dynamicPrice) {
-        p.price = dynamicPrice;
+    if (exactTargetPrice && exactTargetPrice > 0) {
+      if (p.price !== exactTargetPrice) {
+        p.price = exactTargetPrice;
         updatedCount++;
       }
     }
   }
 
-  // Açık olan kartları ve fiyat DOM elemanlarını yenile
+  // DOM üzerindeki tüm fiyat alanlarını anlık yenile
   if (updatedCount > 0 && typeof document !== 'undefined') {
+    // 1. data-product-price-id taşıyan tüm etiketler
     const priceElements = document.querySelectorAll('[data-product-price-id]');
     priceElements.forEach(el => {
       const id = parseInt(el.getAttribute('data-product-price-id'), 10);
       const prod = PRODUCTS.find(x => x.id === id);
       if (prod) {
-        el.textContent = formatPrice(prod.price);
+        el.textContent = typeof formatPrice === 'function' ? formatPrice(prod.price) : '₺' + prod.price.toLocaleString('tr-TR');
       }
     });
+
+    // 2. Ürün kartları (data-product-id)
+    const cardElements = document.querySelectorAll('.product-art-card[data-product-id]');
+    cardElements.forEach(card => {
+      const id = parseInt(card.getAttribute('data-product-id'), 10);
+      const prod = PRODUCTS.find(x => x.id === id);
+      if (prod && (prod.isGold || prod.category === 'jewelry' || prod.category === 'gold')) {
+        const tag = card.querySelector('.prod-price-tag, .prod-price-value');
+        if (tag) {
+          tag.textContent = typeof formatPrice === 'function' ? formatPrice(prod.price) : '₺' + prod.price.toLocaleString('tr-TR');
+        }
+      }
+    });
+
+    // 3. PDP (Ürün Detay Sayfası) aktif ise
+    const pdpPrice = document.querySelector('.pdp-current-price');
+    if (pdpPrice && window.currentOpenProductId) {
+      const activeProd = PRODUCTS.find(x => x.id === window.currentOpenProductId);
+      if (activeProd && (activeProd.isGold || activeProd.category === 'jewelry' || activeProd.category === 'gold')) {
+        pdpPrice.textContent = typeof formatPrice === 'function' ? formatPrice(activeProd.price) : '₺' + activeProd.price.toLocaleString('tr-TR');
+      }
+    }
+
+    // 4. Sepetteki altın ürünlerinin fiyatlarını da senkronize et
+    if (typeof Cart !== 'undefined' && Array.isArray(Cart.items)) {
+      let cartChanged = false;
+      Cart.items.forEach(ci => {
+        const pr = PRODUCTS.find(x => x.id === ci.id);
+        if (pr && (pr.isGold || pr.category === 'jewelry' || pr.category === 'gold') && ci.price !== pr.price) {
+          ci.price = pr.price;
+          cartChanged = true;
+        }
+      });
+      if (cartChanged && typeof Cart.updateUI === 'function') {
+        Cart.updateUI();
+      }
+    }
   }
 }
 
 
 /**
- * Ticker ve Showroom Vitrini DOM Güncellemesi (Kusursuz Senkronizasyon & Çift Döngü Eşleme)
+ * Ticker ve Showroom Vitrini DOM Güncellemesi (Sarı Tabela ve Ürün Sayfası ile %100 Birebir Eşleme)
  */
 function updateMarketTickerDOM() {
-  const currentGram = Math.round(LIVE_MARKET_DATA.gramGold24k || LIVE_MARKET_DATA.hasAltin || 7121);
-  const current22k = Math.round(LIVE_MARKET_DATA.gramGold22k || 6690);
-  const currentQuarter = Math.round(LIVE_MARKET_DATA.quarterGold || 11750);
-  const currentAta = Math.round(LIVE_MARKET_DATA.ataGold || 47400);
-  const currentPackaged = Math.round(LIVE_MARKET_DATA.packagedGold || 7236);
+  const rawItems = LIVE_MARKET_DATA.items || {};
+  const BOARD_MARGIN = 1.01; // Sarı Tabela, Ürün Sayfası ve Kayan Bant %100 Birebir Eşleşme Marjı (+%1)
+
+  const baseHas = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.hasAltin || LIVE_MARKET_DATA.gramGold24k || 6892.70;
+  const baseGram = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.gramGold24k || baseHas;
+  const base22k = parseFloat(rawItems.AYAR22?.satis) || LIVE_MARKET_DATA.gramGold22k || Math.round(baseHas * 0.937);
+  const baseAtaYeni = parseFloat(rawItems.ATA_YENI?.satis) || LIVE_MARKET_DATA.ataGold || 45650;
+  const baseCeyrekYeni = parseFloat(rawItems.CEYREK_YENI?.satis) || LIVE_MARKET_DATA.quarterGold || 11268;
+  const basePackaged = parseFloat(rawItems.KULCEALTIN?.satis) || LIVE_MARKET_DATA.packagedGold || Math.round(baseHas * 1.015);
+
+  const currentGram = Math.round(baseGram * BOARD_MARGIN);
+  const current22k = Math.round(base22k * BOARD_MARGIN);
+  const currentQuarter = Math.round(baseCeyrekYeni * BOARD_MARGIN);
+  const currentAta = Math.round(baseAtaYeni * BOARD_MARGIN);
+  const currentPackaged = Math.round(basePackaged * BOARD_MARGIN);
   const currentUsd = Number(LIVE_MARKET_DATA.usdTry || 48.25).toFixed(2);
   const currentEur = Number(LIVE_MARKET_DATA.eurTry || 56.21).toFixed(2);
 
@@ -625,18 +714,10 @@ function calculateInstallments(amount) {
  * iOS & Mac Safari Marquee Dokunmatik Destek
  */
 function initMarqueeTouchSupport() {
-  const container = document.querySelector('.gold-marquee-container');
-  if (!container) return;
-
-  container.addEventListener('touchstart', () => {
-    const track = document.querySelector('.gold-marquee-track');
-    if (track) track.style.animationPlayState = 'paused';
-  }, { passive: true });
-
-  container.addEventListener('touchend', () => {
-    const track = document.querySelector('.gold-marquee-track');
-    if (track) track.style.animationPlayState = 'running';
-  }, { passive: true });
+  const tracks = document.querySelectorAll('.gold-marquee-track, .brands-carousel-track');
+  tracks.forEach(track => {
+    track.style.animationPlayState = 'running';
+  });
 }
 
 // ==========================================================

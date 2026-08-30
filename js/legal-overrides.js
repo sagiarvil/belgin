@@ -42,8 +42,8 @@
     const heroTab = document.querySelector('.hero-tab-btn[onclick*="filterHeroTab(\'ikinci-el\'"]');
     if (heroTab) heroTab.textContent = '🪙 Seçkin Ürünler';
 
-    const footerLink = document.querySelector('.footer-art a[data-page="ikinci-el"]');
-    if (footerLink) footerLink.textContent = 'Seçkin Ürünler (32)';
+    const footerLink = document.querySelector('.footer-art a[data-page="ikinci-el"], .footer-art a[data-page="seckin-urunler"]');
+    if (footerLink) footerLink.textContent = 'Seçkin Ürünler';
 
     const categoryTitle = document.querySelector('#page-ikinci-el h2');
     if (categoryTitle) categoryTitle.textContent = 'Seçkin Ürünler';

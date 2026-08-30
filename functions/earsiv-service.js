@@ -11,10 +11,196 @@ const crypto = require('crypto');
 const GIB_PROD_URL = 'https://earsivportal.efatura.gov.tr/earsiv-services';
 const GIB_TEST_URL = 'https://earsivportaltest.efatura.gov.tr/earsiv-services';
 
+// 5 ADET 22 AYAR ALTIN SABİT ÜRÜN KATALOĞU VE LİNKLERİ
+const VIP_22_CATALOG = Object.freeze([
+  {
+    id: '2734',
+    name: '7 Gram 22 Ayar Ajda Altın Bilezik',
+    reference: 'BLG-BLZ-110',
+    url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-110-2734/',
+    basePrice: 51853,
+    weight: 7.0,
+    karat: 22
+  },
+  {
+    id: '2669',
+    name: 'Ata Tam Yeni 22 ayar',
+    reference: 'BLG-ZYN-045',
+    url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-045-2669/',
+    basePrice: 47400,
+    weight: 7.216,
+    karat: 22
+  },
+  {
+    id: '2667',
+    name: 'Ziynet Çeyrek Altın',
+    reference: 'BLG-ZYN-043',
+    url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-043-2667/',
+    basePrice: 11750,
+    weight: 1.754,
+    karat: 22
+  },
+  {
+    id: '2670',
+    name: 'Yarım Altın',
+    reference: 'BLG-ZYN-046',
+    url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-046-2670/',
+    basePrice: 23500,
+    weight: 3.508,
+    karat: 22
+  },
+  {
+    id: '2668',
+    name: 'Çeyrek Altın',
+    reference: 'BLG-ZYN-044',
+    url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-044-2668/',
+    basePrice: 11750,
+    weight: 1.754,
+    karat: 22
+  }
+]);
+
+/**
+ * /22 Kısayolu ve Otomatik 22 Ayar Özel Matrah Ayrıştırma Motoru
+ * Toplam fiyata %1.5 işçilik (%20 KDV dahil) ekler, kalanı 5 üründen 1 veya 2 ürüne paylaştırır.
+ * Fatura tutarı tam olarak sipariş tutarına eşittir.
+ */
+function calculateVip22Breakdown(totalAmount) {
+  const total = Number(totalAmount) || 0;
+  if (total <= 0) {
+    throw new Error('Geçersiz fatura tutarı');
+  }
+
+  // %1.5 İşçilik ve %20 KDV Dahil
+  const workmanshipTotal = Math.round(total * 0.015 * 100) / 100;
+  const workmanshipNet = Math.round((workmanshipTotal / 1.20) * 100) / 100;
+  const workmanshipKdv = Math.round((workmanshipTotal - workmanshipNet) * 100) / 100;
+  const goldNetPool = Math.round((total - workmanshipTotal) * 100) / 100;
+
+  const items = [];
+  const catalog = [...VIP_22_CATALOG];
+  const shuffled = catalog.sort(() => 0.5 - Math.random());
+
+  if (total <= 200000) {
+    // DURUM A: <= 200.000 TL -> Tek 22 Ayar Ürün
+    const p1 = shuffled[0];
+    const p1Price = p1.basePrice || 35000;
+    const qty1 = Math.max(1, Math.round(goldNetPool / p1Price));
+    const unitPrice1 = Math.round((goldNetPool / qty1) * 100) / 100;
+
+    items.push({
+      malHizmet: `${p1.name} (Kıymetli Maden Bedeli - Özel Matrah)`,
+      miktar: qty1,
+      birim: 'C62',
+      birimFiyat: unitPrice1.toFixed(2),
+      fiyat: goldNetPool.toFixed(2),
+      iskontoArttirim: 'İskonto',
+      iskontoOrani: 0,
+      iskontoTutari: '0.00',
+      iskontoNedeni: '',
+      malHizmetTutari: goldNetPool.toFixed(2),
+      kdvOrani: 0,
+      kdvTutari: '0.00',
+      vergiOrani: 0,
+      ozelMatrahNedeni: '351',
+      ozelMatrahTutari: goldNetPool.toFixed(2),
+      tevkifatKodu: 0
+    });
+  } else {
+    // DURUM B: > 200.000 TL -> 2 Farklı 22 Ayar Ürün
+    const p1 = shuffled[0];
+    const p2 = shuffled[1];
+
+    const ratio1 = (Math.floor(Math.random() * 16) + 55) / 100; // 0.55 .. 0.70
+    const pool1 = Math.round(goldNetPool * ratio1 * 100) / 100;
+    const pool2 = Math.round((goldNetPool - pool1) * 100) / 100;
+
+    const p1Price = p1.basePrice || 35000;
+    const qty1 = Math.max(1, Math.round(pool1 / p1Price));
+    const unitPrice1 = Math.round((pool1 / qty1) * 100) / 100;
+
+    const p2Price = p2.basePrice || 35000;
+    const qty2 = Math.max(1, Math.round(pool2 / p2Price));
+    const unitPrice2 = Math.round((pool2 / qty2) * 100) / 100;
+
+    items.push({
+      malHizmet: `${p1.name} (Kıymetli Maden Bedeli - Özel Matrah)`,
+      miktar: qty1,
+      birim: 'C62',
+      birimFiyat: unitPrice1.toFixed(2),
+      fiyat: pool1.toFixed(2),
+      iskontoArttirim: 'İskonto',
+      iskontoOrani: 0,
+      iskontoTutari: '0.00',
+      iskontoNedeni: '',
+      malHizmetTutari: pool1.toFixed(2),
+      kdvOrani: 0,
+      kdvTutari: '0.00',
+      vergiOrani: 0,
+      ozelMatrahNedeni: '351',
+      ozelMatrahTutari: pool1.toFixed(2),
+      tevkifatKodu: 0
+    });
+
+    items.push({
+      malHizmet: `${p2.name} (Kıymetli Maden Bedeli - Özel Matrah)`,
+      miktar: qty2,
+      birim: 'C62',
+      birimFiyat: unitPrice2.toFixed(2),
+      fiyat: pool2.toFixed(2),
+      iskontoArttirim: 'İskonto',
+      iskontoOrani: 0,
+      iskontoTutari: '0.00',
+      iskontoNedeni: '',
+      malHizmetTutari: pool2.toFixed(2),
+      kdvOrani: 0,
+      kdvTutari: '0.00',
+      vergiOrani: 0,
+      ozelMatrahNedeni: '351',
+      ozelMatrahTutari: pool2.toFixed(2),
+      tevkifatKodu: 0
+    });
+  }
+
+  // İşçilik Bedeli Satırı (%20 KDV dahil)
+  items.push({
+    malHizmet: '22 Ayar Altın İşçilik Bedeli',
+    miktar: 1,
+    birim: 'C62',
+    birimFiyat: workmanshipNet.toFixed(2),
+    fiyat: workmanshipNet.toFixed(2),
+    iskontoArttirim: 'İskonto',
+    iskontoOrani: 0,
+    iskontoTutari: '0.00',
+    iskontoNedeni: '',
+    malHizmetTutari: workmanshipNet.toFixed(2),
+    kdvOrani: 20,
+    kdvTutari: workmanshipKdv.toFixed(2),
+    vergiOrani: 0,
+    ozelMatrahNedeni: '',
+    ozelMatrahTutari: 0,
+    tevkifatKodu: 0
+  });
+
+  const totalMatrah = Math.round((goldNetPool + workmanshipNet) * 100) / 100;
+
+  return {
+    isVip22: true,
+    productName: items.filter(i => !i.malHizmet.includes('İşçilik')).map(i => `${i.malHizmet.split('(')[0].trim()} (x${i.miktar})`).join(' + '),
+    hasGoldAmount: goldNetPool.toFixed(2),
+    workmanshipNet: workmanshipNet.toFixed(2),
+    workmanshipKdv: workmanshipKdv.toFixed(2),
+    workmanshipTotal: workmanshipTotal.toFixed(2),
+    totalMatrah: totalMatrah.toFixed(2),
+    totalKdv: workmanshipKdv.toFixed(2),
+    grandTotal: total.toFixed(2),
+    items: items
+  };
+}
+
 /**
  * Kuyumculuk Özel Matrah Ayrıştırma Motoru
  * Toplam tutarı Kıymetli Maden Bedeli (%0 KDV) ve İşçilik Bedeli (%20 KDV Dahil) olarak böler.
- * Varsayılan: Toplamın %99'u Kıymetli Maden, %1'i İşçilik (veya parametre olarak verilen tutarlar)
  */
 function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk Ürünü', options = {}) {
   const total = Number(totalAmount) || 0;
@@ -23,6 +209,106 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
   }
 
   const resolvedProductName = String(productName || 'Kuyumculuk Ürünü').trim();
+  const is22 = options.isVip22 === true || resolvedProductName === '/22' || resolvedProductName.includes('/22');
+
+  if (is22) {
+    return calculateVip22Breakdown(total);
+  }
+
+  // Çoklu Kalem Desteği (Örn: Mağaza Faturasında Saat, İşçilik ve/veya Altın Kalemleri)
+  if (Array.isArray(options.items) && options.items.length > 0) {
+    const gibItems = [];
+    let totalHasGold = 0;
+    let totalTaxableNet = 0;
+    let totalKdv = 0;
+    let computedGrandTotal = 0;
+
+    options.items.forEach(it => {
+      const itQty = Math.max(1, Number(it.qty || 1));
+      const itPrice = Number(it.unitPrice || 0);
+      const itTotal = Math.round(Number(it.lineTotal || (itQty * itPrice)) * 100) / 100;
+      const itName = String(it.name || 'Satış Kalemi').trim();
+      
+      // Kullanıcı manuel KDV oranı girdiyse (0, 1, 10, 20 vb.) doğrudan kullan
+      let kdvRate = 0;
+      if (it.kdvRate !== undefined && it.kdvRate !== null && !isNaN(Number(it.kdvRate))) {
+        kdvRate = Number(it.kdvRate);
+      } else {
+        kdvRate = (it.taxType === 'SAAT_STANDART' || itName.toLowerCase().includes('rolex') || itName.toLowerCase().includes('cartier') || itName.toLowerCase().includes('patek') || itName.toLowerCase().includes('saat') || itName.toLowerCase().includes('işçilik')) ? 20 : 0;
+      }
+
+      if (kdvRate === 0) {
+        // %0 KDV Kıymetli Maden Bedeli (Özel Matrah - KDV Kanunu 23/f)
+        totalHasGold += itTotal;
+        computedGrandTotal += itTotal;
+
+        const displayName = itName.includes('Özel Matrah') ? itName : `${itName} (Kıymetli Maden Bedeli - Özel Matrah)`;
+        const unitMatrah = Math.round((itTotal / itQty) * 100) / 100;
+
+        gibItems.push({
+          malHizmet: displayName,
+          miktar: itQty,
+          birim: 'C62',
+          birimFiyat: unitMatrah.toFixed(2),
+          fiyat: itTotal.toFixed(2),
+          iskontoArttirim: 'İskonto',
+          iskontoOrani: 0,
+          iskontoTutari: '0.00',
+          iskontoNedeni: '',
+          malHizmetTutari: itTotal.toFixed(2),
+          kdvOrani: 0,
+          kdvTutari: '0.00',
+          vergiOrani: 0,
+          ozelMatrahNedeni: '351',
+          ozelMatrahTutari: itTotal.toFixed(2),
+          tevkifatKodu: 0
+        });
+      } else {
+        // KDV'ye Tabi Ürün (Saat, İşçilik, Pırlanta vb.)
+        const netMatrah = Math.round((itTotal / (1 + (kdvRate / 100))) * 100) / 100;
+        const kdvAmount = Math.round((itTotal - netMatrah) * 100) / 100;
+        const unitNet = Math.round((netMatrah / itQty) * 100) / 100;
+
+        totalTaxableNet += netMatrah;
+        totalKdv += kdvAmount;
+        computedGrandTotal += itTotal;
+
+        gibItems.push({
+          malHizmet: itName,
+          miktar: itQty,
+          birim: 'C62',
+          birimFiyat: unitNet.toFixed(2),
+          fiyat: netMatrah.toFixed(2),
+          iskontoArttirim: 'İskonto',
+          iskontoOrani: 0,
+          iskontoTutari: '0.00',
+          iskontoNedeni: '',
+          malHizmetTutari: netMatrah.toFixed(2),
+          kdvOrani: kdvRate,
+          kdvTutari: kdvAmount.toFixed(2),
+          vergiOrani: 0,
+          ozelMatrahNedeni: '',
+          ozelMatrahTutari: 0,
+          tevkifatKodu: 0
+        });
+      }
+    });
+
+    const totalMatrah = Math.round((totalHasGold + totalTaxableNet) * 100) / 100;
+    const finalGrandTotal = Math.round((totalMatrah + totalKdv) * 100) / 100;
+
+    return {
+      productName: resolvedProductName,
+      hasGoldAmount: totalHasGold.toFixed(2),
+      workmanshipNet: totalTaxableNet.toFixed(2),
+      workmanshipKdv: totalKdv.toFixed(2),
+      workmanshipTotal: (totalTaxableNet + totalKdv).toFixed(2),
+      totalMatrah: totalMatrah.toFixed(2),
+      totalKdv: totalKdv.toFixed(2),
+      grandTotal: finalGrandTotal.toFixed(2),
+      items: gibItems
+    };
+  }
 
   let hasGoldAmount = 0;
   let workmanshipTotal = 0; // KDV Dahil işçilik
@@ -31,17 +317,16 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
     hasGoldAmount = Number(options.hasGoldAmount) || 0;
     workmanshipTotal = Number(options.workmanshipAmount) || 0;
   } else {
-    // 100.000 TL için 99.000 TL Has, 1.000 TL İşçilik kuralı
+    // Standart: %1 İşçilik, %99 Kıymetli Maden
     workmanshipTotal = Math.max(1, Math.round(total * 0.01 * 100) / 100);
     hasGoldAmount = Math.round((total - workmanshipTotal) * 100) / 100;
   }
 
   // İşçilik KDV Ayrıştırması (%20 KDV)
-  // workmanshipTotal = workmanshipNet * 1.20
   const workmanshipNet = Math.round((workmanshipTotal / 1.20) * 100) / 100;
   const workmanshipKdv = Math.round((workmanshipTotal - workmanshipNet) * 100) / 100;
 
-  // Toplam Matrah = Has Altın Bedeli (%0) + İşçilik Net Matrahı
+  // Toplam Matrah = Kıymetli Maden Bedeli (%0) + İşçilik Net Matrahı
   const totalMatrah = Math.round((hasGoldAmount + workmanshipNet) * 100) / 100;
   const totalKdv = workmanshipKdv;
   const grandTotal = Math.round((hasGoldAmount + workmanshipTotal) * 100) / 100;
@@ -645,13 +930,28 @@ class EarsivPortalService {
         const dataObj = res.data?.data;
         const msgText = String(dataObj || res.data?.messages?.[0]?.text || '');
         if (msgText.includes('başarıyla') || msgText.includes('imzalanmıştır') || (dataObj && (dataObj.sonuc === '1' || dataObj.sonuc === 1))) {
+          let realBelgeNo = '';
+          let officialHtml = '';
+
+          try {
+            const signedDetails = await this.getSignedInvoiceDetails(token, invoiceUuid, { cookie });
+            if (signedDetails && signedDetails.belgeNumarasi) {
+              realBelgeNo = signedDetails.belgeNumarasi;
+            }
+          } catch (_) {}
+
+          try {
+            officialHtml = await this.getInvoiceHtml(token, invoiceUuid, { cookie });
+          } catch (_) {}
+
           return {
             success: true,
             invoiceUuid,
-            invoiceNumber: options.invoiceNumber || dataObj?.faturaNo || dataObj?.belgeNo || '',
+            invoiceNumber: realBelgeNo || options.invoiceNumber || dataObj?.faturaNo || dataObj?.belgeNo || '',
+            officialHtml: officialHtml || null,
             signedAt: new Date().toISOString(),
             data: dataObj,
-            message: 'Fatura GİB e-Arşiv Portalında resmi olarak imzalandı ve onaylandı.'
+            message: `Fatura GİB e-Arşiv Portalında resmi olarak imzalandı. Belge No: ${realBelgeNo || 'Onaylandı'}`
           };
         }
 
@@ -675,49 +975,80 @@ class EarsivPortalService {
   }
 
   /**
-   * İmzalanmış Faturanın HTML Görünümünü Al
+   * İmzalanan Faturanın GİB Sistemindeki Resmi Belge Numarasını (Örn: GIB2026000000014) Sorgula
    */
-  async getInvoiceHtml(token, invoiceUuid) {
-    if (!token || !invoiceUuid) throw new Error('Eksik parametre');
-
+  async getSignedInvoiceDetails(token, invoiceUuid, options = {}) {
+    if (!token || !invoiceUuid) return null;
     if (token.startsWith('MOCK_GIB_TOKEN')) {
-      return `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <meta charset="utf-8">
-          <title>GİB e-Arşiv Fatura Görüntüleme</title>
-          <style>
-            body { font-family: 'Helvetica Neue', Arial, sans-serif; padding: 30px; color: #333; max-width: 800px; margin: 0 auto; }
-            .header { border-bottom: 2px solid #084C47; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; }
-            .title { color: #084C47; font-size: 20px; font-weight: bold; }
-            .table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-            .table th, .table td { border: 1px solid #ddd; padding: 10px; text-align: left; font-size: 13px; }
-            .table th { background: #084C47; color: white; }
-            .badge { background: #E8F5E9; color: #2E7D32; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
-          </style>
-        </head>
-        <body>
-          <div class="header">
-            <div>
-              <div class="title">BELGİN KUYUMCULUK - SEMİH SONBAHAR</div>
-              <div style="font-size: 12px; color: #666; margin-top: 4px;">Menderes Cad. No:231/B Efeler Mah. Buca / İzmir</div>
-              <div style="font-size: 12px; color: #666;">destek@belginkuyumculuk.com | 0 (541) 930 52 72</div>
-            </div>
-            <div style="text-align: right;">
-              <span class="badge">e-Arşiv Fatura (Resmi İmzalı)</span>
-              <div style="font-size: 12px; margin-top: 6px; font-weight: bold;">UUID: ${invoiceUuid}</div>
-              <div style="font-size: 12px; color: #666;">Tarih: ${new Date().toLocaleDateString('tr-TR')}</div>
-            </div>
-          </div>
-          <p><strong>Fatura Türü:</strong> Özel Matrah (KDV Kanunu 23/f - Altından mamul eşya teslimi)</p>
-          <p>Bu belge Gelir İdaresi Başkanlığı e-Arşiv Portal sistemi üzerinden elektronik olarak imzalanmıştır.</p>
-        </body>
-        </html>
-      `;
+      return {
+        belgeNumarasi: `GIB${new Date().getFullYear()}000000001`,
+        ettn: invoiceUuid,
+        onayDurumu: 'Onaylandı'
+      };
     }
 
     try {
+      const cookie = options.cookie || cachedCookie;
+      const reqHeaders = {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'Referer': `${this.baseUrl}/index.jsp`
+      };
+      if (cookie) reqHeaders['Cookie'] = cookie;
+
+      const d = new Date();
+      const formattedDate = String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0') + '/' + d.getFullYear();
+
+      const listCall = await axios.post(`${this.baseUrl}/dispatch`, qs.stringify({
+        cmd: 'EARSIV_PORTAL_TASLAKLARI_GETIR',
+        callid: crypto.randomUUID(),
+        pageName: 'RG_TASLAKLAR',
+        token: token,
+        jp: JSON.stringify({
+          baslangic: formattedDate,
+          bitis: formattedDate,
+          hangiTip: '5000/30000'
+        })
+      }), {
+        httpsAgent: this.agent,
+        headers: reqHeaders,
+        timeout: 15000
+      });
+
+      const list = listCall.data?.data;
+      if (Array.isArray(list) && list.length > 0) {
+        const found = list.find(item => item.ettn === invoiceUuid || item.faturauuid === invoiceUuid);
+        if (found) {
+          return {
+            belgeNumarasi: found.belgeNumarasi || found.faturaNo || '',
+            ettn: found.ettn || invoiceUuid,
+            alici: found.aliciUnvanAdSoyad || '',
+            tarih: found.belgeTarihi || '',
+            onayDurumu: found.onayDurumu || 'Onaylandı'
+          };
+        }
+      }
+      return null;
+    } catch (err) {
+      console.warn('[EarsivService] getSignedInvoiceDetails error:', err.message);
+      return null;
+    }
+  }
+
+  /**
+   * İmzalanmış Faturanın GİB Orijinal HTML Görünümünü Al
+   */
+  async getInvoiceHtml(token, invoiceUuid, options = {}) {
+    if (!token || !invoiceUuid) throw new Error('Eksik parametre');
+    if (token.startsWith('MOCK_GIB_TOKEN')) return null;
+
+    try {
+      const cookie = options.cookie || cachedCookie;
+      const reqHeaders = {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+        'Referer': `${this.baseUrl}/index.jsp`
+      };
+      if (cookie) reqHeaders['Cookie'] = cookie;
+
       const callid = crypto.randomUUID();
       const dispatchBody = qs.stringify({
         cmd: 'EARSIV_PORTAL_FATURA_GOSTER',
@@ -728,22 +1059,26 @@ class EarsivPortalService {
       });
 
       const res = await axios.post(`${this.baseUrl}/dispatch`, dispatchBody, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-          'Referer': `${this.baseUrl}/index.jsp`
-        },
+        httpsAgent: this.agent,
+        headers: reqHeaders,
         timeout: 15000
       });
 
-      return res.data?.data || '<p>Fatura içeriği alınamadı.</p>';
+      const htmlContent = res.data?.data;
+      if (typeof htmlContent === 'string' && htmlContent.includes('<html')) {
+        return htmlContent;
+      }
+      return null;
     } catch (err) {
-      console.error('[EarsivService] View HTML Error:', err.message);
-      throw err;
+      console.warn('[EarsivService] View HTML Error:', err.message);
+      return null;
     }
   }
 }
 
 module.exports = {
   EarsivPortalService,
-  calculateJewelryInvoiceBreakdown
+  calculateJewelryInvoiceBreakdown,
+  calculateVip22Breakdown,
+  VIP_22_CATALOG
 };

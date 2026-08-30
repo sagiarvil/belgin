@@ -363,14 +363,14 @@ const App = {
 
   // 1. ANA SAYFA RENDER
   renderHome() {
-    // Saat Markaları (Tek Sıra Kesintisiz Otomatik Kayan Marquee)
+    // Saat Markaları (Tek Sıra Kesintisiz Otomatik Kayan Marquee - Kesintisiz Stabil Döngü)
     const watchBrandsEl = document.getElementById('watchBrandsGrid');
-    if (watchBrandsEl) {
-      // 2 kez tekrar ederek pürüzsüz sonsuz döngü (infinite seamless loop) oluştur
-      const marqueeList = [...WATCH_BRANDS, ...WATCH_BRANDS];
+    if (watchBrandsEl && watchBrandsEl.children.length === 0) {
+      // 4 kez tekrar ederek mobilde ve tüm ekranlarda pürüzsüz, kesintisiz sonsuz akış sağla
+      const marqueeList = [...WATCH_BRANDS, ...WATCH_BRANDS, ...WATCH_BRANDS, ...WATCH_BRANDS];
       watchBrandsEl.innerHTML = marqueeList.map(b => `
         <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('${b.name}', null)" title="${b.name} Saat Modelleri">
-          <img src="${b.image}" alt="${b.name}" loading="lazy" class="brand-carousel-logo">
+          <img src="${b.image}" alt="${b.name}" class="brand-carousel-logo" width="220" height="100" decoding="async">
         </div>
       `).join('');
     }
@@ -784,7 +784,7 @@ const App = {
       <div class="prod-dual-pricing">
         <div class="prod-dual-price-row prod-sale-price-row">
           <span class="prod-price-label">Satış Fiyatı:</span>
-          <span class="prod-price-value">${formatPrice(p.price)} <small class="vat-text">(KDV Dahil)</small></span>
+          <span class="prod-price-value" data-product-price-id="${p.id}">${formatPrice(p.price)} <small class="vat-text">(KDV Dahil)</small></span>
         </div>
         <div class="prod-dual-price-row prod-buy-price-row">
           <span class="prod-price-label">Alış Fiyatı:</span>
@@ -792,7 +792,7 @@ const App = {
         </div>
       </div>
     ` : `
-      <div class="prod-price-tag">${formatPrice(p.price)}</div>
+      <div class="prod-price-tag" data-product-price-id="${p.id}">${formatPrice(p.price)}</div>
     `;
 
     const productHref = (window.SEO_ROUTE_MAP || {})[String(p.id)] || `/?urun=${encodeURIComponent(p.id)}`;
@@ -912,6 +912,7 @@ const App = {
   openProduct(id, options = {}) {
     const p = findProduct(id);
     if (!p) return;
+    window.currentOpenProductId = p.id;
 
     const container = document.getElementById('productDetailView');
     if (!container) return;
@@ -1338,7 +1339,7 @@ const App = {
               ` : `
                 <div class="pdp-price-header">
                   ${hasDiscount ? `<span class="pdp-old-price">${formatPrice(p.oldPrice)}</span>` : ''}
-                  <span class="pdp-current-price">${formatPrice(p.price)}</span>
+                  <span class="pdp-current-price" data-product-price-id="${p.id}">${formatPrice(p.price)}</span>
                   ${hasDiscount ? `<span class="pdp-discount-badge">-%${discountPercent} İNDİRİM</span>` : ''}
                 </div>
               `}

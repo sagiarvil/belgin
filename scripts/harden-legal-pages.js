@@ -21,8 +21,7 @@ const pages = [
   'iade-degisim.html',
   'magaza-teslim-tesellum-formu.html',
   'hukuki-delil-ve-kayit-politikasi.html',
-  'iletisim.html',
-  'canli-fiyatlar/index.html'
+  'iletisim.html'
 ];
 
 const marker = 'data-belgin-defense-layer="v2"';

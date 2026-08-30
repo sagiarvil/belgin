@@ -72,22 +72,24 @@ const ValuationEngine = {
       const hasGramPrice = (typeof LIVE_MARKET_DATA !== 'undefined' && LIVE_MARKET_DATA.gramGold24k ? LIVE_MARKET_DATA.gramGold24k : 7111);
       
       container.innerHTML = `
-        <div class="val-tab-bar" style="display:flex; gap:10px; margin-bottom:24px;">
-          <button class="btn-val-tab active" onclick="ValuationEngine.switchMode('gold')" style="flex:1; padding:12px; border-radius:6px; font-weight:700; background:var(--color-teal); color:#fff; border:none; cursor:pointer; font-size:13.5px;">
-            🪙 Masif Altın & Ziynet Değerleme
+        <div class="val-tab-bar">
+          <button class="btn-val-tab active" onclick="ValuationEngine.switchMode('gold')">
+            <span>🪙</span>
+            <span>Masif Altın & Ziynet Değerleme</span>
           </button>
-          <button class="btn-val-tab" onclick="ValuationEngine.switchMode('watch')" style="flex:1; padding:12px; border-radius:6px; font-weight:700; background:#FAFAF8; color:var(--color-ink); border:1px solid var(--color-border); cursor:pointer; font-size:13.5px;">
-            ⌚ Lüks Saat Ekspertiz & Değerleme
+          <button class="btn-val-tab" onclick="ValuationEngine.switchMode('watch')">
+            <span>⌚</span>
+            <span>Lüks Saat Ekspertiz & Değerleme</span>
           </button>
         </div>
 
-        <div style="background:#FAFAF8; border:1px solid var(--color-border); border-radius:8px; padding:24px;">
+        <div class="val-calc-body">
           <div style="display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:16px; margin-bottom:20px;">
             
             <!-- 1. Altın Kategorisi & Ayar -->
             <div>
               <label style="font-size:12px; font-weight:700; color:var(--color-teal); display:block; margin-bottom:6px;">Altın Türü & Ayarı</label>
-              <select id="goldPuritySelect" onchange="ValuationEngine.onPurityChange()" style="width:100%; padding:11px 14px; border:1px solid var(--color-border); border-radius:6px; font-size:13.5px; background:#fff;">
+              <select id="goldPuritySelect" onchange="ValuationEngine.onPurityChange()" style="width:100%; padding:11px 14px; border:1px solid rgba(194,167,104,0.4); border-radius:8px; font-size:13.5px; font-weight:600; background:#fff; color:var(--color-ink);">
                 <optgroup label="Masif & Hurda Altın">
                   <option value="24k">24 Ayar Külçe / Has Altın (%99.5)</option>
                   <option value="22k" selected>22 Ayar Burma / Ajda Bilezik (%91.6)</option>
@@ -108,13 +110,13 @@ const ValuationEngine = {
             <!-- 2. Gram Ağırlığı veya Adet -->
             <div>
               <label id="goldAmountLabel" style="font-size:12px; font-weight:700; color:var(--color-teal); display:block; margin-bottom:6px;">Net Ağırlık (Gram)</label>
-              <input type="number" id="goldWeightInput" value="25.00" step="0.5" min="0.5" oninput="ValuationEngine.calculateGold()" style="width:100%; padding:11px 14px; border:1px solid var(--color-border); border-radius:6px; font-size:13.5px; font-weight:600; background:#fff;">
+              <input type="number" id="goldWeightInput" value="25.00" step="0.5" min="0.5" oninput="ValuationEngine.calculateGold()" style="width:100%; padding:11px 14px; border:1px solid rgba(194,167,104,0.4); border-radius:8px; font-size:14px; font-weight:700; background:#fff; color:var(--color-teal);">
             </div>
 
             <!-- 3. Taş & Fire Durumu -->
             <div>
               <label style="font-size:12px; font-weight:700; color:var(--color-teal); display:block; margin-bottom:6px;">Taş / Fire Düşümü</label>
-              <select id="goldStoneLoss" onchange="ValuationEngine.calculateGold()" style="width:100%; padding:11px 14px; border:1px solid var(--color-border); border-radius:6px; font-size:13.5px; background:#fff;">
+              <select id="goldStoneLoss" onchange="ValuationEngine.calculateGold()" style="width:100%; padding:11px 14px; border:1px solid rgba(194,167,104,0.4); border-radius:8px; font-size:13.5px; font-weight:600; background:#fff; color:var(--color-ink);">
                 <option value="0">Taşsız / Masif (%0 Fire)</option>
                 <option value="0.02">Hafif Taşlı (%2 Taş Düşümü)</option>
                 <option value="0.05">Yoğun Taşlı / Zirkon (%5 Taş Düşümü)</option>
@@ -124,7 +126,7 @@ const ValuationEngine = {
 
           <!-- Hızlı Gram Butonları -->
           <div id="quickGramsBar" style="display:flex; align-items:center; gap:8px; margin-bottom:20px; flex-wrap:wrap;">
-            <span style="font-size:11.5px; font-weight:600; color:var(--color-muted);">Hızlı Seçim:</span>
+            <span style="font-size:11.5px; font-weight:700; color:var(--color-gold-dark);">Hızlı Seçim:</span>
             <button onclick="ValuationEngine.setWeight(5)" class="btn-quick-gram">5 gr</button>
             <button onclick="ValuationEngine.setWeight(10)" class="btn-quick-gram">10 gr</button>
             <button onclick="ValuationEngine.setWeight(20)" class="btn-quick-gram">20 gr</button>
@@ -142,20 +144,22 @@ const ValuationEngine = {
     } else {
       // Saat Modu
       container.innerHTML = `
-        <div class="val-tab-bar" style="display:flex; gap:10px; margin-bottom:24px;">
-          <button class="btn-val-tab" onclick="ValuationEngine.switchMode('gold')" style="flex:1; padding:12px; border-radius:6px; font-weight:700; background:#FAFAF8; color:var(--color-ink); border:1px solid var(--color-border); cursor:pointer; font-size:13.5px;">
-            🪙 Masif Altın & Ziynet Değerleme
+        <div class="val-tab-bar">
+          <button class="btn-val-tab" onclick="ValuationEngine.switchMode('gold')">
+            <span>🪙</span>
+            <span>Masif Altın & Ziynet Değerleme</span>
           </button>
-          <button class="btn-val-tab active" onclick="ValuationEngine.switchMode('watch')" style="flex:1; padding:12px; border-radius:6px; font-weight:700; background:var(--color-teal); color:#fff; border:none; cursor:pointer; font-size:13.5px;">
-            ⌚ Lüks Saat Ekspertiz & Değerleme
+          <button class="btn-val-tab active" onclick="ValuationEngine.switchMode('watch')">
+            <span>⌚</span>
+            <span>Lüks Saat Ekspertiz & Değerleme</span>
           </button>
         </div>
 
-        <div style="background:#FAFAF8; border:1px solid var(--color-border); border-radius:8px; padding:24px;">
+        <div class="val-calc-body">
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
             <div>
               <label style="font-size:12px; font-weight:700; color:var(--color-teal); display:block; margin-bottom:6px;">Saat Markası</label>
-              <select id="watchBrandSelect" onchange="ValuationEngine.onWatchBrandChange()" style="width:100%; padding:11px 14px; border:1px solid var(--color-border); border-radius:6px; font-size:13.5px; background:#fff;">
+              <select id="watchBrandSelect" onchange="ValuationEngine.onWatchBrandChange()" style="width:100%; padding:11px 14px; border:1px solid rgba(194,167,104,0.4); border-radius:8px; font-size:13.5px; font-weight:600; background:#fff; color:var(--color-ink);">
                 <option value="rolex">Rolex</option>
                 <option value="patek">Patek Philippe</option>
                 <option value="ap">Audemars Piguet</option>
@@ -164,14 +168,14 @@ const ValuationEngine = {
             </div>
             <div>
               <label style="font-size:12px; font-weight:700; color:var(--color-teal); display:block; margin-bottom:6px;">Model / Seri</label>
-              <select id="watchModelSelect" onchange="ValuationEngine.calculateWatch()" style="width:100%; padding:11px 14px; border:1px solid var(--color-border); border-radius:6px; font-size:13.5px; background:#fff;"></select>
+              <select id="watchModelSelect" onchange="ValuationEngine.calculateWatch()" style="width:100%; padding:11px 14px; border:1px solid rgba(194,167,104,0.4); border-radius:8px; font-size:13.5px; font-weight:600; background:#fff; color:var(--color-ink);"></select>
             </div>
           </div>
 
           <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:20px;">
             <div>
               <label style="font-size:12px; font-weight:700; color:var(--color-teal); display:block; margin-bottom:6px;">Kasa Materyali</label>
-              <select id="watchMetalSelect" onchange="ValuationEngine.calculateWatch()" style="width:100%; padding:11px 14px; border:1px solid var(--color-border); border-radius:6px; font-size:13px; background:#fff;">
+              <select id="watchMetalSelect" onchange="ValuationEngine.calculateWatch()" style="width:100%; padding:11px 14px; border:1px solid rgba(194,167,104,0.4); border-radius:8px; font-size:13px; font-weight:600; background:#fff; color:var(--color-ink);">
                 <option value="steel">Paslanmaz Çelik</option>
                 <option value="rolesor">Çelik-Altın (Rolesor)</option>
                 <option value="gold">18K Masif Altın (Sarı/Rose/Beyaz)</option>
@@ -179,7 +183,7 @@ const ValuationEngine = {
             </div>
             <div>
               <label style="font-size:12px; font-weight:700; color:var(--color-teal); display:block; margin-bottom:6px;">Kutu & Belge Durumu</label>
-              <select id="watchBoxSelect" onchange="ValuationEngine.calculateWatch()" style="width:100%; padding:11px 14px; border:1px solid var(--color-border); border-radius:6px; font-size:13px; background:#fff;">
+              <select id="watchBoxSelect" onchange="ValuationEngine.calculateWatch()" style="width:100%; padding:11px 14px; border:1px solid rgba(194,167,104,0.4); border-radius:8px; font-size:13px; font-weight:600; background:#fff; color:var(--color-ink);">
                 <option value="full">Tam Set (Kutu + Garanti Kartı)</option>
                 <option value="papers">Sadece Garanti Kartı Var</option>
                 <option value="watch">Sadece Saat (Belgesiz)</option>
@@ -187,7 +191,7 @@ const ValuationEngine = {
             </div>
             <div>
               <label style="font-size:12px; font-weight:700; color:var(--color-teal); display:block; margin-bottom:6px;">Kondisyon</label>
-              <select id="watchCondSelect" onchange="ValuationEngine.calculateWatch()" style="width:100%; padding:11px 14px; border:1px solid var(--color-border); border-radius:6px; font-size:13px; background:#fff;">
+              <select id="watchCondSelect" onchange="ValuationEngine.calculateWatch()" style="width:100%; padding:11px 14px; border:1px solid rgba(194,167,104,0.4); border-radius:8px; font-size:13px; font-weight:600; background:#fff; color:var(--color-ink);">
                 <option value="mint">Sıfır Ayarında / Koleksiyonluk</option>
                 <option value="good">Çok Temiz / Orijinal Polisajsız</option>
                 <option value="used">Kullanılmış / Polisaj Gerekli</option>
@@ -307,30 +311,32 @@ const ValuationEngine = {
     const resCard = document.getElementById('goldResultCard');
     if (resCard) {
       resCard.innerHTML = `
-        <div style="background:#FFFFFF; border:1px solid rgba(8, 76, 71, 0.25); border-radius:8px; padding:20px; margin-top:16px;">
+        <div class="val-result-card-luxury">
           
-          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--color-border); padding-bottom:14px; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(194, 167, 104, 0.3); padding-bottom:14px; margin-bottom:16px; flex-wrap:wrap; gap:10px; position:relative; z-index:2;">
             <div>
-              <span style="font-size:11px; letter-spacing:1.5px; text-transform:uppercase; font-weight:700; color:var(--color-teal); display:block;">İzmir Kuyumcular Odası (İZKO) Canlı Borsa Kuru</span>
-              <strong style="font-size:16px; color:var(--color-ink);">${title}</strong>
+              <span style="font-size:11px; letter-spacing:1.5px; text-transform:uppercase; font-weight:800; color:var(--color-gold); display:block; margin-bottom:2px;">✦ Canlı Kapalıçarşı & İZKO Kuru ✦</span>
+              <strong style="font-size:17px; color:#FFFFFF; font-weight:700;">${title}</strong>
             </div>
             <div style="text-align:right;">
-              <span style="font-size:11px; color:var(--color-muted);">İZKO Has Gram: ₺${Number(data.gramGold24k).toLocaleString('tr-TR')}</span>
-              <div style="font-size:13px; font-weight:700; color:var(--color-teal);">${isCoin ? 'Adet Fiyatı' : 'Ayar Başı Gram'}: ₺${Number(unitPrice).toLocaleString('tr-TR')}</div>
+              <span style="font-size:11.5px; color:#C4D9EC;">Has Altın Gramı: ₺${Number(data.gramGold24k).toLocaleString('tr-TR')}</span>
+              <div style="font-size:14px; font-weight:800; color:#F5E5BA;">${isCoin ? 'Birim Adet Fiyatı' : 'Ayar Başı Gram'}: ₺${Number(unitPrice).toLocaleString('tr-TR')}</div>
             </div>
           </div>
 
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:18px; position:relative; z-index:2;">
             <div>
-              <span style="font-size:12px; color:#555; display:block;">Anında Nakit / FAST Ödeme Tutarı:</span>
-              <div style="font-family:var(--font-sans); font-size:32px; font-weight:800; color:var(--color-teal); line-height:1.1; font-variant-numeric:tabular-nums; letter-spacing:-0.02em;">
+              <span style="font-size:12px; color:#CADAE6; display:block; font-weight:600;">Anında Nakit / FAST Ödeme Tutarı:</span>
+              <div style="font-family:var(--font-sans); font-size:36px; font-weight:800; color:#F5E5BA; line-height:1.1; font-variant-numeric:tabular-nums; letter-spacing:-0.02em; text-shadow:0 2px 12px rgba(245,229,186,0.3);">
                 ₺${totalCashOffer.toLocaleString('tr-TR')}
               </div>
-              <span style="font-size:11px; color:#1F6B38; font-weight:600;">✓ İzmir Buca Showroomumuzda 15 dakikada anında nakit veya hesaba FAST havale</span>
+              <span style="font-size:11.5px; color:#86EFAC; font-weight:700; display:inline-flex; align-items:center; gap:4px; margin-top:4px;">
+                <span>✓</span> İzmir Buca Showroomumuzda 15 dakikada anında nakit veya hesaba FAST havale
+              </span>
             </div>
 
-            <a href="https://wa.me/905419305372?text=Merhaba,%20sitenizden%20${encodeURIComponent(title)}%20icin%20₺${totalCashOffer.toLocaleString('tr-TR')}%20IZKO%20canli%20teklifi%20aldim.%20Bozdurmak%20icin%20randevu%20istiyorum." target="_blank" class="btn-action-vip" style="padding:12px 24px; font-size:13px;">
-              <span>Bu Fiyatı WhatsApp'ta Sabitle →</span>
+            <a href="https://wa.me/905419305372?text=Merhaba,%20sitenizden%20${encodeURIComponent(title)}%20icin%20₺${totalCashOffer.toLocaleString('tr-TR')}%20IZKO%20canli%20teklifi%20aldim.%20Bozdurmak%20icin%20randevu%20istiyorum." target="_blank" class="btn-luxury-whatsapp" style="font-size:13.5px; padding:14px 26px;">
+              <span>Bu Fiyatı WhatsApp'ta Sabitle 🔒 →</span>
             </a>
           </div>
 
@@ -378,27 +384,29 @@ const ValuationEngine = {
     const resCard = document.getElementById('watchResultCard');
     if (resCard) {
       resCard.innerHTML = `
-        <div style="background:#FFFFFF; border:1px solid rgba(8, 76, 71, 0.25); border-radius:8px; padding:20px; margin-top:16px;">
+        <div class="val-result-card-luxury">
           
-          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--color-border); padding-bottom:14px; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(194, 167, 104, 0.3); padding-bottom:14px; margin-bottom:16px; flex-wrap:wrap; gap:10px; position:relative; z-index:2;">
             <div>
-              <span style="font-size:11px; letter-spacing:1.5px; text-transform:uppercase; font-weight:700; color:var(--color-teal); display:block;">12 Nokta Ekspertiz Tahmini Piyasa Değeri</span>
-              <strong style="font-size:16px; color:var(--color-ink);">${brandData.name} — ${model.name}</strong>
+              <span style="font-size:11px; letter-spacing:1.5px; text-transform:uppercase; font-weight:800; color:var(--color-gold); display:block; margin-bottom:2px;">✦ 12 Nokta Ekspertiz Tahmini Piyasa Değeri ✦</span>
+              <strong style="font-size:17px; color:#FFFFFF; font-weight:700;">${brandData.name} — ${model.name}</strong>
             </div>
-            <span class="badge-stock-teal" style="position:static;">15 Dakikada Ekspertiz</span>
+            <span class="val-instant-badge">15 Dakikada Ekspertiz</span>
           </div>
 
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:18px; position:relative; z-index:2;">
             <div>
-              <span style="font-size:12px; color:#555; display:block;">Tahmini Anında Nakit / Takas Teklif Aralığı:</span>
-              <div style="font-family:var(--font-sans); font-size:30px; font-weight:800; color:var(--color-teal); line-height:1.1; font-variant-numeric:tabular-nums; letter-spacing:-0.02em;">
+              <span style="font-size:12px; color:#CADAE6; display:block; font-weight:600;">Tahmini Anında Nakit / Takas Teklif Aralığı:</span>
+              <div style="font-family:var(--font-sans); font-size:32px; font-weight:800; color:#F5E5BA; line-height:1.1; font-variant-numeric:tabular-nums; letter-spacing:-0.02em; text-shadow:0 2px 12px rgba(245,229,186,0.3);">
                 ₺${minOffer.toLocaleString('tr-TR')} — ₺${maxOffer.toLocaleString('tr-TR')}
               </div>
-              <span style="font-size:11px; color:#1F6B38; font-weight:600;">✓ Sertifikalı saat ustamız tarafından hassas zaman tutuş ve mekanizma testi</span>
+              <span style="font-size:11.5px; color:#86EFAC; font-weight:700; display:inline-flex; align-items:center; gap:4px; margin-top:4px;">
+                <span>✓</span> Sertifikalı saat ustamız tarafından hassas zaman tutuş ve mekanizma testi
+              </span>
             </div>
 
-            <a href="https://wa.me/905419305372?text=Merhaba,%20${encodeURIComponent(brandData.name + ' ' + model.name)}%20saatim%20icin%20ekspertiz%20ve%20satis%20randevusu%20almak%20istiyorum." target="_blank" class="btn-action-vip" style="padding:12px 24px; font-size:13px;">
-              <span>WhatsApp ile Ekspertiz Başlat →</span>
+            <a href="https://wa.me/905419305372?text=Merhaba,%20${encodeURIComponent(brandData.name + ' ' + model.name)}%20saatim%20icin%20ekspertiz%20ve%20satis%20randevusu%20almak%20istiyorum." target="_blank" class="btn-luxury-whatsapp" style="font-size:13.5px; padding:14px 26px;">
+              <span>WhatsApp ile Ekspertiz Başlat 🔒 →</span>
             </a>
           </div>
 

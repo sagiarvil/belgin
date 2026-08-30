@@ -222,6 +222,44 @@ async function fetchIzkoRates() {
     console.warn('[IZKO Scraper] HTML ayrıştırma başarısız:', htmlErr.message);
   }
 
+  // 3. TIER: Harem Altın Canlı Piyasa HTTP API Fallback
+  try {
+    const haremData = await fetchHttpsJson('https://canlipiyasalar.haremaltin.com/tmp/altin.json?dir=both', { timeout: 7000 });
+    if (haremData && haremData.data) {
+      const d = haremData.data;
+      const parseNum = (v) => parseFloat(String(v || '').replace(',', '.')) || 0;
+      
+      const parsedHarem = {
+        success: true,
+        source: 'https://canlipiyasalar.haremaltin.com/ (Harem Altın)',
+        lastUpdated: now.toISOString(),
+        lastUpdatedFormatted: `${formattedDate} ${formattedTime}`,
+      };
+
+      if (d.ALTIN && parseNum(d.ALTIN.satis) > 1000) {
+        parsedHarem.hasAltin = parseNum(d.ALTIN.satis);
+        parsedHarem.gramGold24k = parsedHarem.hasAltin;
+      }
+      if (d.AYAR22 && parseNum(d.AYAR22.satis) > 1000) parsedHarem.gramGold22k = parseNum(d.AYAR22.satis);
+      if (d.AYAR18 && parseNum(d.AYAR18.satis) > 1000) parsedHarem.gramGold18k = parseNum(d.AYAR18.satis);
+      if (d.AYAR14 && parseNum(d.AYAR14.satis) > 1000) parsedHarem.gramGold14k = parseNum(d.AYAR14.satis);
+      if (d.AYAR8 && parseNum(d.AYAR8.satis) > 1000) parsedHarem.gramGold8k = parseNum(d.AYAR8.satis);
+      if (d.CEYREK_YENI && parseNum(d.CEYREK_YENI.satis) > 1000) parsedHarem.quarterGold = parseNum(d.CEYREK_YENI.satis);
+      if (d.CEYREK_ESKI && parseNum(d.CEYREK_ESKI.satis) > 1000) parsedHarem.oldQuarterGold = parseNum(d.CEYREK_ESKI.satis);
+      if (d.YARIM_YENI && parseNum(d.YARIM_YENI.satis) > 1000) parsedHarem.halfGold = parseNum(d.YARIM_YENI.satis);
+      if (d.TEK_YENI && parseNum(d.TEK_YENI.satis) > 1000) parsedHarem.fullGold = parseNum(d.TEK_YENI.satis);
+      if (d.ATA_YENI && parseNum(d.ATA_YENI.satis) > 1000) parsedHarem.ataGold = parseNum(d.ATA_YENI.satis);
+      if (d.KULCEALTIN && parseNum(d.KULCEALTIN.satis) > 1000) parsedHarem.packagedGold = parseNum(d.KULCEALTIN.satis);
+      if (d.USDTRY && parseNum(d.USDTRY.satis) > 10) parsedHarem.usdTry = parseNum(d.USDTRY.satis);
+      if (d.EURTRY && parseNum(d.EURTRY.satis) > 10) parsedHarem.eurTry = parseNum(d.EURTRY.satis);
+
+      cachedRates = { ...cachedRates, ...parsedHarem };
+      return cachedRates;
+    }
+  } catch (haremErr) {
+    // Fallback korunur
+  }
+
   return cachedRates;
 }
 

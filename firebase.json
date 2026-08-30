@@ -33,10 +33,94 @@
       "**/*.xlsx",
       "**/*.pdf",
       "**/*.md",
+      "AGENTS.md",
+      "DESIGN.md",
       "package.json",
       "package-lock.json",
       "*kopyası.txt",
       "README.md"
+    ],
+    "headers": [
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache, no-store, must-revalidate"
+          },
+          {
+            "key": "Strict-Transport-Security",
+            "value": "max-age=31536000; includeSubDomains"
+          },
+          {
+            "key": "Content-Security-Policy",
+            "value": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self' https://virtualpospaymentgateway.akbank.com https://virtualpospaymentgatewaypre.akbank.com https://www.sanalakpos.com https://entegrasyon.asseco-see.com.tr; script-src 'self' 'unsafe-inline' https://cdn.socket.io https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://www.paytr.com https://www.izko.org.tr https://finans.truncgil.com https://canlipiyasalar.haremaltin.com https://hrmsocketonly.haremaltin.com wss://hrmsocketonly.haremaltin.com wss://socket.haremaltin.com https://virtualpospaymentgateway.akbank.com https://virtualpospaymentgatewaypre.akbank.com https://api.akbank.com https://apipre.akbank.com https://www.sanalakpos.com https://entegrasyon.asseco-see.com.tr; frame-src https://www.paytr.com https://www.google.com https://maps.google.com https://virtualpospaymentgateway.akbank.com https://virtualpospaymentgatewaypre.akbank.com https://www.sanalakpos.com https://entegrasyon.asseco-see.com.tr; media-src 'self'; manifest-src 'self'; upgrade-insecure-requests"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          },
+          {
+            "key": "X-Frame-Options",
+            "value": "SAMEORIGIN"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "strict-origin-when-cross-origin"
+          },
+          {
+            "key": "Permissions-Policy",
+            "value": "camera=(), microphone=(), geolocation=(), usb=(), browsing-topics=()"
+          },
+          {
+            "key": "Cross-Origin-Opener-Policy",
+            "value": "same-origin-allow-popups"
+          },
+          {
+            "key": "Cross-Origin-Resource-Policy",
+            "value": "same-site"
+          },
+          {
+            "key": "X-Permitted-Cross-Domain-Policies",
+            "value": "none"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(jpg|jpeg|gif|png|webp|svg|woff|woff2|ttf)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
+      },
+      {
+        "source": "**/*.txt",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=3600"
+          },
+          {
+            "key": "Content-Type",
+            "value": "text/plain; charset=utf-8"
+          }
+        ]
+      },
+      {
+        "source": "**/*.xml",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=3600"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/xml; charset=utf-8"
+          }
+        ]
+      }
     ],
     "cleanUrls": false,
     "rewrites": [
@@ -49,48 +133,114 @@
         "destination": "/hukuki-evrak-yazdir.html"
       },
       {
+        "source": "/api/admin/statement",
+        "function": "adminStatementApi",
+        "region": "us-central1"
+      },
+      {
+        "source": "/api/admin/statement/**",
+        "function": "adminStatementApi",
+        "region": "us-central1"
+      },
+      {
+        "source": "/api/admin/statement/payment/delete",
+        "function": "adminStatementApi",
+        "region": "us-central1"
+      },
+      {
+        "source": "/api/admin/statement/payment",
+        "function": "adminStatementApi",
+        "region": "us-central1"
+      },
+      {
+        "source": "/api/admin/statement/pos-entry/delete",
+        "function": "adminStatementApi",
+        "region": "us-central1"
+      },
+      {
+        "source": "/api/admin/statement/pos-entry",
+        "function": "adminStatementApi",
+        "region": "us-central1"
+      },
+      {
+        "source": "/api/admin/store-invoices/delete",
+        "function": "adminStoreInvoicesApi",
+        "region": "us-central1"
+      },
+      {
+        "source": "/api/admin/store-invoices/create",
+        "function": "adminStoreInvoicesApi",
+        "region": "us-central1"
+      },
+      {
+        "source": "/api/admin/store-invoices",
+        "function": "adminStoreInvoicesApi",
+        "region": "us-central1"
+      },
+      {
+        "source": "/api/admin/store-invoices/**",
+        "function": "adminStoreInvoicesApi",
+        "region": "us-central1"
+      },
+      {
         "source": "/api/admin/invoice/draft",
-        "function": "adminInvoiceApi"
+        "function": "adminInvoiceApi",
+        "region": "us-central1"
       },
       {
         "source": "/api/admin/invoice/batch-draft",
-        "function": "adminInvoiceApi"
+        "function": "adminInvoiceApi",
+        "region": "us-central1"
       },
       {
         "source": "/api/admin/invoice/batch-sign",
-        "function": "adminInvoiceApi"
+        "function": "adminInvoiceApi",
+        "region": "us-central1"
       },
       {
         "source": "/api/admin/invoice/send-sms",
-        "function": "adminInvoiceApi"
+        "function": "adminInvoiceApi",
+        "region": "us-central1"
       },
       {
         "source": "/api/admin/invoice/sign",
-        "function": "adminInvoiceApi"
+        "function": "adminInvoiceApi",
+        "region": "us-central1"
       },
       {
         "source": "/api/admin/invoice/view",
-        "function": "adminInvoiceApi"
+        "function": "adminInvoiceApi",
+        "region": "us-central1"
       },
       {
         "source": "/api/admin/invoice/force-logout",
-        "function": "adminInvoiceApi"
+        "function": "adminInvoiceApi",
+        "region": "us-central1"
+      },
+      {
+        "source": "/api/admin/invoice/**",
+        "function": "adminInvoiceApi",
+        "region": "us-central1"
       },
       {
         "source": "/api/admin/orders/delete",
-        "function": "deleteAdminOrder"
+        "function": "deleteAdminOrder",
+        "region": "us-central1"
       },
       {
         "source": "/api/admin/orders/status",
-        "function": "updateAdminOrderStatus"
+        "function": "updateAdminOrderStatus",
+        "region": "us-central1"
       },
       {
         "source": "/api/admin/orders/confirm",
-        "function": "confirmAdminOrder"
+        "function": "confirmAdminOrder",
+        "region": "us-central1"
       },
       {
         "source": "/api/admin/orders",
-        "function": "getAdminOrders"
+        "function": "getAdminOrders",
+        "region": "us-central1"
       },
       {
         "source": "/api/market/izko-rates",
@@ -167,88 +317,6 @@
       {
         "source": "/api/getOrderEvidence",
         "function": "getOrderEvidence"
-      }
-    ],
-    "headers": [
-      {
-        "source": "**",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "no-cache, no-store, must-revalidate"
-          },
-          {
-            "key": "Strict-Transport-Security",
-            "value": "max-age=31536000; includeSubDomains"
-          },
-          {
-            "key": "Content-Security-Policy",
-            "value": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self' https://virtualpospaymentgateway.akbank.com https://virtualpospaymentgatewaypre.akbank.com https://www.sanalakpos.com https://entegrasyon.asseco-see.com.tr; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://www.paytr.com https://www.izko.org.tr https://finans.truncgil.com https://virtualpospaymentgateway.akbank.com https://virtualpospaymentgatewaypre.akbank.com https://api.akbank.com https://apipre.akbank.com https://www.sanalakpos.com https://entegrasyon.asseco-see.com.tr; frame-src https://www.paytr.com https://www.google.com https://maps.google.com https://virtualpospaymentgateway.akbank.com https://virtualpospaymentgatewaypre.akbank.com https://www.sanalakpos.com https://entegrasyon.asseco-see.com.tr; media-src 'self'; manifest-src 'self'; upgrade-insecure-requests"
-          },
-          {
-            "key": "X-Content-Type-Options",
-            "value": "nosniff"
-          },
-          {
-            "key": "X-Frame-Options",
-            "value": "SAMEORIGIN"
-          },
-          {
-            "key": "Referrer-Policy",
-            "value": "strict-origin-when-cross-origin"
-          },
-          {
-            "key": "Permissions-Policy",
-            "value": "camera=(), microphone=(), geolocation=(), usb=(), browsing-topics=()"
-          },
-          {
-            "key": "Cross-Origin-Opener-Policy",
-            "value": "same-origin-allow-popups"
-          },
-          {
-            "key": "Cross-Origin-Resource-Policy",
-            "value": "same-site"
-          },
-          {
-            "key": "X-Permitted-Cross-Domain-Policies",
-            "value": "none"
-          }
-        ]
-      },
-      {
-        "source": "**/*.@(jpg|jpeg|gif|png|webp|svg|woff|woff2|ttf)",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=31536000, immutable"
-          }
-        ]
-      },
-      {
-        "source": "**/*.txt",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=3600"
-          },
-          {
-            "key": "Content-Type",
-            "value": "text/plain; charset=utf-8"
-          }
-        ]
-      },
-      {
-        "source": "**/*.xml",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=3600"
-          },
-          {
-            "key": "Content-Type",
-            "value": "application/xml; charset=utf-8"
-          }
-        ]
       }
     ],
     "redirects": [

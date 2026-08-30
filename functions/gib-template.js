@@ -85,34 +85,48 @@ function renderOfficialGibHtml(data) {
 
   if (items && items.length > 0) {
     displayLines = items.map((item, idx) => {
-      const unitP = Number(item.unitPrice || item.price || 0);
-      const qty = Number(item.quantity || 1);
+      const grossLine = Number(item.lineTotal || (Number(item.unitPrice || 0) * Number(item.qty || 1)) || 0);
+      const qty = Math.max(1, Number(item.qty || item.quantity || 1));
       const vatRate = item.kdvRate !== undefined ? Number(item.kdvRate) : (item.vatRate !== undefined ? Number(item.vatRate) : 20);
-      const vatAmt = Number(item.kdvAmount || ((unitP * qty * vatRate) / 100));
-      const lineTot = Number(item.totalAmount || (unitP * qty));
-      goodsServicesTotal += lineTot;
+
+      let netLine = grossLine;
+      let vatAmt = 0;
+      if (vatRate > 0) {
+        netLine = Math.round((grossLine / (1 + (vatRate / 100))) * 100) / 100;
+        vatAmt = Math.round((grossLine - netLine) * 100) / 100;
+      }
+      const unitNet = Math.round((netLine / qty) * 100) / 100;
+
+      goodsServicesTotal += netLine;
 
       if (vatRate === 0) {
         hasKdv0 = true;
-        totalKdv0Matrah += lineTot;
+        totalKdv0Matrah += netLine;
       } else if (vatRate === 20) {
         hasKdv20 = true;
-        totalKdv20Matrah += lineTot;
+        totalKdv20Matrah += netLine;
         totalKdv20Amount += vatAmt;
+      } else {
+        totalKdv20Amount += vatAmt;
+      }
+
+      let desc = item.name || item.title || 'Kuyumculuk Ürünü';
+      if (vatRate === 0 && !desc.includes('Özel Matrah')) {
+        desc += ' (Kıymetli Maden Bedeli - Özel Matrah)';
       }
 
       return {
         seq: idx + 1,
-        description: item.name || item.title || 'Altın / Mücevher',
+        description: desc,
         quantityDisplay: qty + ' Adet',
-        unitPriceDisplay: formatMoney(unitP),
+        unitPriceDisplay: formatMoney(unitNet),
         discountRateDisplay: '%0,00',
         discountAmountDisplay: '0,00 TL',
         discountReason: 'İskonto -',
         vatRateDisplay: '%' + vatRate + ',00',
         vatAmountDisplay: formatMoney(vatAmt),
         otherTaxesDisplay: '',
-        lineTotalDisplay: formatMoney(lineTot)
+        lineTotalDisplay: formatMoney(netLine)
       };
     });
     grandTotal = goodsServicesTotal + totalKdv20Amount;

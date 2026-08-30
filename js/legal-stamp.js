@@ -28,9 +28,19 @@
     'hukuki-delil-ve-kayit-politikasi.html': '16_v2.1 (25.08.2026)'
   };
 
+  const LEGAL_DOCS = new Set(Object.keys(FALLBACK_VERSIONS));
+
   function currentFileName() {
-    const path = String(window.location.pathname || '').split('/').pop();
-    return path || 'index.html';
+    const path = String(window.location.pathname || '').split('/').filter(Boolean).pop() || '';
+    if (!path.endsWith('.html') && path) {
+      return path + '.html';
+    }
+    return path;
+  }
+
+  function isLegalPage() {
+    const file = currentFileName();
+    return LEGAL_DOCS.has(file);
   }
 
   function escapeHtml(value) {
@@ -91,10 +101,13 @@
   }
 
   function renderBox(record, manifest, externalStatus) {
-    const mainEl = document.querySelector('main.legal') || document.querySelector('.legal-shell') || document.querySelector('.legal-doc-container') || document.querySelector('main') || document.body;
-    if (!mainEl || document.getElementById('legalEvidenceIntegrityBox')) return;
-
     const file = currentFileName();
+    if (file === 'canli-fiyatlar' || file === 'canli-fiyatlar.html' || file === 'index.html' || file === '' || document.body.classList.contains('page-canli-fiyatlar') || window.location.pathname.includes('canli-fiyatlar')) {
+      return;
+    }
+
+    const mainEl = document.querySelector('main.legal') || document.querySelector('.legal-shell') || document.querySelector('.legal-doc-container');
+    if (!mainEl || document.getElementById('legalEvidenceIntegrityBox')) return;
     const fallbackVer = FALLBACK_VERSIONS[file] || '2026-08-25-v3';
     const version = record?.version || fallbackVer;
     const sha256 = record?.sha256 || 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855';
@@ -258,6 +271,9 @@
   }
 
   async function init() {
+    if (!isLegalPage()) {
+      return; // ASLA ana sayfa, canlı fiyatlar veya mağaza sayfalarında çalışmaz!
+    }
     const [manifest, externalStatus] = await Promise.all([
       loadJson(MANIFEST_URL),
       loadJson(EXTERNAL_STATUS_URL)
