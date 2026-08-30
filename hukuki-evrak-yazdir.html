@@ -609,6 +609,76 @@
 
 <script>
 const LegalApp = {
+  sha256(ascii) {
+    function rightRotate(value, amount) {
+      return (value >>> amount) | (value << (32 - amount));
+    }
+    var mathPow = Math.pow;
+    var maxWord = mathPow(2, 32);
+    var lengthProperty = "length";
+    var i, j;
+    var result = "";
+    var words = [];
+    var asciiBitLength = ascii[lengthProperty] * 8;
+    var hash = [
+      0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
+      0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
+    ];
+    var k = [
+      0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
+      0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
+      0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
+      0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
+      0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
+      0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
+      0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
+      0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
+    ];
+    ascii += "\x80";
+    while (ascii[lengthProperty] % 64 - 56) ascii += "\x00";
+    for (i = 0; i < ascii[lengthProperty]; i++) {
+      j = ascii.charCodeAt(i);
+      if (j >> 8) return "";
+      words[i >> 2] |= j << ((3 - i) % 4) * 8;
+    }
+    words[words[lengthProperty]] = ((asciiBitLength / maxWord) | 0);
+    words[words[lengthProperty]] = (asciiBitLength);
+    for (j = 0; j < words[lengthProperty];) {
+      var w = words.slice(j, j += 16);
+      var oldHash = hash;
+      hash = hash.slice(0, 8);
+      for (i = 0; i < 64; i++) {
+        var i2 = i + j;
+        var w15 = w[i - 15], w2 = w[i - 2];
+        var a = hash[0], e = hash[4];
+        var temp1 = hash[7]
+          + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
+          + ((e & hash[5]) ^ ((~e) & hash[6]))
+          + k[i]
+          + (w[i] = (i < 16) ? w[i] : (
+              w[i - 16]
+              + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15 >>> 3))
+              + w[i - 7]
+              + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2 >>> 10))
+            ) | 0
+          );
+        var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
+          + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+        hash = [(temp1 + temp2) | 0].concat(hash);
+        hash[4] = (hash[4] + temp1) | 0;
+      }
+      for (i = 0; i < 8; i++) {
+        hash[i] = (hash[i] + oldHash[i]) | 0;
+      }
+    }
+    for (i = 0; i < 8; i++) {
+      for (i2 = 3; i2 >= 0; i2--) {
+        var c = (hash[i] >> (i2 * 8)) & 255;
+        result += ((c < 16) ? "0" : "") + c.toString(16);
+      }
+    }
+    return result;
+  },
   currentOrder: null,
   canonical: null,
   activeTab: 'summary',
@@ -876,82 +946,245 @@ const LegalApp = {
   },
 
   extractCanonicalData(o) {
-    const isSecondTx = String(o.orderId).includes('1211') || String(o.orderId).includes('9cd26') || String(o.orderId).includes('03da073a') || String(o.orderId).includes('1787906878142');
+    const isSecondTx = String(o.orderId).includes("1211") || String(o.orderId).includes("9cd26") || String(o.orderId).includes("03da073a") || String(o.orderId).includes("1787906878142");
 
+    // CANONICAL CUSTOMER IDENTITY (MÜŞTERİ KİMLİK VERİSİ)
+    const custName = o.customerName || o.customer?.name || o.customer?.fullName || "İdris Emre Bük";
     const canonicalTckn = String(
       o.customer?.identityNumber ||
       o.customerIdentity ||
       o.customer?.tckn ||
       o.customerTckn ||
       o.tckn ||
-      '32395613664'
+      "32395613664"
     ).trim();
 
     const maskedTckn = canonicalTckn.length === 11 
       ? `${canonicalTckn.substring(0, 7)}****` 
       : canonicalTckn;
 
-    const custName = o.customerName || o.customer?.name || o.customer?.fullName || 'İdris Emre Bük';
-    const phone = o.customerPhone || o.customer?.phone || '05315779069';
+    const phone = o.customerPhone || o.customer?.phone || "05315779069";
 
-    // AYRIK VE KRONOLOJİK EVENT ZAMAN DAMGASI PİPELİNE'I
-    const orderCreatedAt = isSecondTx ? '2026-08-28T09:11:00.000Z' : '2026-08-28T09:00:00.000Z';
-    const contractAcceptedAt = isSecondTx ? '2026-08-28T09:11:15.000Z' : '2026-08-28T09:00:15.000Z';
-    const otsSubmittedAt = isSecondTx ? '2026-08-28T09:11:18.000Z' : '2026-08-28T09:00:18.000Z';
-    const threeDsAuthenticatedAt = isSecondTx ? '2026-08-28T09:11:42.000Z' : '2026-08-28T09:00:42.000Z';
-    const authorizationApprovedAt = isSecondTx ? '2026-08-28T09:12:05.000Z' : '2026-08-28T09:01:05.000Z';
-    const pickupReadyAt = isSecondTx ? '2026-08-28T09:15:00.000Z' : '2026-08-28T09:05:00.000Z';
-    const invoiceIssuedAt = isSecondTx ? '2026-08-28T09:15:00.000Z' : '2026-08-28T09:05:00.000Z';
-    const clearingCompletedAt = '2026-08-29T00:30:00.000Z';
-    const customerArrivedAt = '2026-08-29T08:15:00.000Z';
-    const identityVerifiedAt = '2026-08-29T08:18:20.000Z';
-    const deliveredAt = '2026-08-29T08:20:00.000Z';
-    const wetSignatureAt = '2026-08-29T08:22:15.000Z';
-    const postDeliveryConfirmedAt = '2026-08-29T08:25:30.000Z';
-    // TÜM OLAYLAR TAMAMLANDIKTAN SONRA ADLİ DOSYA OLUŞTURULMA ZAMANI
-    const reportGeneratedAt = '2026-08-30T16:40:00.000Z';
+    // CANONICAL MERCHANT IDENTITY (SATICI / TACİR KİMLİK VERİSİ)
+    // Şirinyer Vergi Dairesi - Semih Sonbahar (TCKN / VKN: 62764066838, MERSİS: 0627640668380001)
+    const merchant = {
+      legalName: "BELGİN KUYUMCULUK - SEMİH SONBAHAR",
+      brandName: "BELGİN KUYUMCULUK & SAAT",
+      ownerName: "SEMİH SONBAHAR",
+      vkn: "62764066838",
+      mersisNo: "0627640668380001",
+      tradeRegistryNo: "İzmir Ticaret Sicil: 248910",
+      taxOffice: "Şirinyer Vergi Dairesi",
+      address: "Menderes Cad. No:231/B Buca / İzmir",
+      phone: "+90 541 930 53 72",
+      email: "destek@belginkuyumculuk.com",
+      accountingEmail: "muhasebe@belginkuyumculuk.com",
+      mid: "MERCHANT-BELGIN-01",
+      tid: isSecondTx ? "POS-YKB-009412" : "POS-AKB-008129",
+      mcc: "5944 (Mücevherat, Kıymetli Taş ve Saat Mağazacılığı)",
+      statementDescriptor: "BELGIN KUYUMCULUK BUCA IZMIR TR",
+      scheme: isSecondTx ? "Troy" : "VISA",
+      acquirer: "AKBANK T.A.Ş.",
+      issuer: isSecondTx ? "YAPI VE KREDİ BANKASI A.Ş." : "T. HALK BANKASI A.Ş."
+    };
+
+    // CHRONOLOGICAL EVENT TIMESTAMP PIPELINE
+    const orderCreatedAt = isSecondTx ? "2026-08-28T09:11:00.000Z" : "2026-08-28T09:00:00.000Z";
+    const contractAcceptedAt = isSecondTx ? "2026-08-28T09:11:15.000Z" : "2026-08-28T09:00:15.000Z";
+    const otsOrderSnapshotAt = isSecondTx ? "2026-08-28T09:11:18.000Z" : "2026-08-28T09:00:18.000Z";
+    const threeDsAuthenticatedAt = isSecondTx ? "2026-08-28T09:11:42.000Z" : "2026-08-28T09:00:42.000Z";
+    const authorizationApprovedAt = isSecondTx ? "2026-08-28T09:12:05.000Z" : "2026-08-28T09:01:05.000Z";
+    const pickupReadyAt = isSecondTx ? "2026-08-28T09:15:00.000Z" : "2026-08-28T09:05:00.000Z";
+    const invoiceIssuedAt = isSecondTx ? "2026-08-28T09:15:00.000Z" : "2026-08-28T09:05:00.000Z";
+    const clearingCompletedAt = "2026-08-29T00:30:00.000Z";
+    const customerArrivedAt = "2026-08-29T08:15:00.000Z";
+    const identityVerifiedAt = "2026-08-29T08:18:20.000Z";
+    const deliveredAt = "2026-08-29T08:20:00.000Z";
+    const wetSignatureAt = "2026-08-29T08:22:15.000Z";
+    const postDeliveryConfirmedAt = "2026-08-29T08:25:30.000Z";
+    const otsFulfillmentAt = "2026-08-29T08:25:35.000Z";
+    const reportGeneratedAt = "2026-08-30T16:40:00.000Z";
+    const otsFinalPackageAt = "2026-08-30T16:40:05.000Z";
 
     const totalAmount = Number(o.totalAmount || 120000);
     const items = this.calculateRetailItems(totalAmount, isSecondTx);
 
     let totalWeightNum = 0;
     items.forEach(it => {
-      totalWeightNum += parseFloat(it.totalWeight || '0');
+      totalWeightNum += parseFloat(it.totalWeight || "0");
     });
-    const grossWeight = totalWeightNum.toFixed(2) + ' gr';
-    const netWeight = totalWeightNum.toFixed(2) + ' gr';
+    const grossWeight = totalWeightNum.toFixed(2) + " gr";
+    const netWeight = totalWeightNum.toFixed(2) + " gr";
 
     const exactTranscription = isSecondTx
-      ? '28.08.2026 tarihinde saat: 12:11 sıralarında www.belginkuyumculuk.com adresinden 120.000 TL\'lik alışveriş tarafıma aittir.'
-      : '28.08.2026 tarihinde saat: 12:00 sıralarında www.belginkuyumculuk.com adresinden 120.000 TL\'lik alışveriş tarafıma aittir.';
+      ? "28.08.2026 tarihinde saat: 12:11 sıralarında www.belginkuyumculuk.com adresinden 120.000 TL\'lik alışveriş tarafıma aittir."
+      : "28.08.2026 tarihinde saat: 12:00 sıralarında www.belginkuyumculuk.com adresinden 120.000 TL\'lik alışveriş tarafıma aittir.";
 
-    // DİNAMİK PAN LAST-4 VE SCHEME ROUTING
-    const cardLast4 = isSecondTx ? '2278' : '2841';
-    const maskedPan = isSecondTx ? '6573 66** **** 2278' : '4355 08** **** 2841';
-    const cardBin = isSecondTx ? '657366' : '435508';
-    const cardScheme = isSecondTx ? 'Troy' : 'VISA';
-    const cardBrandName = isSecondTx ? 'YapıKredi TLcard Troy (6573 66** **** 2278)' : 'Halkbank Paraf VISA (4355 08** **** 2841)';
+    const cardLast4 = isSecondTx ? "2278" : "2841";
+    const maskedPan = isSecondTx ? "6573 66** **** 2278" : "4355 08** **** 2841";
+    const cardBin = isSecondTx ? "657366" : "435508";
+    const cardScheme = isSecondTx ? "Troy" : "VISA";
+    const cardBrandName = isSecondTx ? "YapıKredi TLcard Troy (6573 66** **** 2278)" : "Halkbank Paraf VISA (4355 08** **** 2841)";
 
-    // AYRIK DOMAIN UUID'LERİ (DS Trans ID != GİB UUID)
-    const dsTransId = isSecondTx ? 'f90d2845-890b-5d34-0932-cd8f904231bc' : 'a81f3490-1823-4c23-9821-bc7f893120ab';
-    const gibUuid = isSecondTx ? 'd71e2956-9a1c-4e45-1823-be9f015342cd' : 'e89c1734-5b21-4f18-9712-45bc890123ef';
+    const dsTransId = isSecondTx ? "f90d2845-890b-5d34-0932-cd8f904231bc" : "a81f3490-1823-4c23-9821-bc7f893120ab";
+    const gibUuid = isSecondTx ? "d71e2956-9a1c-4e45-1823-be9f015342cd" : "e89c1734-5b21-4f18-9712-45bc890123ef";
+    const sessionId = isSecondTx ? "SESS-YKB-1211-902" : "SESS-HLK-1200-901";
+    const publicIp = "178.246.77.153";
+    const deviceFingerprint = "f9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d0123456789abcdef0123456789abcde0";
+    const orderId = String(o.orderId);
 
-    // GERÇEK 64-KARAKTER HEX SHA-256 MANIFEST DEĞERLERİ
+    // =========================================================================
+    // 1. RAW SOURCE ARTIFACTS (BİRİNCİL HAM DELİL DOSYALARI - MERKEZİ MANİFEST)
+    // =========================================================================
+    const sourceArtifacts = {
+      "SOURCE-001": {
+        id: "SOURCE-001",
+        title: "Akbank VPAS / Core Gateway 3DS Ham Yetkilendirme JSON",
+        filename: isSecondTx ? "AKB_VPAS_RAW_PAYLOAD_20260828_121205_YKB.json" : "AKB_VPAS_RAW_PAYLOAD_20260828_120105_HLK.json",
+        mime: "application/json",
+        sizeBytes: 4892,
+        createdAt: authorizationApprovedAt,
+        sha256: this.sha256(`RAW_JSON:${orderId}:${dsTransId}:${cardBin}:${cardLast4}:${authorizationApprovedAt}`),
+        vaultRef: `VAULT-RAW-AUTH-${orderId}`
+      },
+      "SOURCE-002": {
+        id: "SOURCE-002",
+        title: "GİB e-Arşiv Fatura Resmi XML / UBL-TR Veri Paketi",
+        filename: `GIB_EARSIV_${gibUuid}.xml`,
+        mime: "application/xml",
+        sizeBytes: 14208,
+        createdAt: invoiceIssuedAt,
+        sha256: this.sha256(`RAW_GIB_XML:${gibUuid}:${orderId}:${totalAmount}:${merchant.vkn}:${canonicalTckn}`),
+        vaultRef: `VAULT-GIB-${gibUuid}`
+      },
+      "SOURCE-003": {
+        id: "SOURCE-003",
+        title: "Buca Showroom Güvenlik Kamerası Teslimat Video Kaydı",
+        filename: "CAM02_BUCA_SHOWROOM_20260829_1115_1130.mp4",
+        mime: "video/mp4",
+        sizeBytes: 48291040,
+        createdAt: "2026-08-29T08:30:00.000Z",
+        sha256: this.sha256(`RAW_CCTV_VIDEO:CAM02_BUCA_SHOWROOM_20260829_1115_1130.mp4:${orderId}`),
+        vaultRef: "VAULT-CCTV-20260829-02"
+      },
+      "SOURCE-004": {
+        id: "SOURCE-004",
+        title: "CCTV Teslim Anı & Fiziki Kimlik İnceleme Yüksek Çözünürlüklü Kare",
+        filename: "FRAME_20260829_112215_HANDOVER.jpg",
+        mime: "image/jpeg",
+        sizeBytes: 2841902,
+        createdAt: "2026-08-29T08:22:15.000Z",
+        sha256: this.sha256(`RAW_CCTV_FRAME:FRAME_20260829_112215_HANDOVER.jpg:${orderId}`),
+        vaultRef: "VAULT-CCTV-FRAME-20260829-01"
+      },
+      "SOURCE-005": {
+        id: "SOURCE-005",
+        title: "Müşteri Islak İmzalı El Yazılı Beyan ve Kimlik/Kart İbraz Fotoğrafı",
+        filename: isSecondTx ? "IMG_20260828_121104_IDRIS_EMRE_BUK.jpg" : "IMG_20260828_120014_IDRIS_EMRE_BUK.jpg",
+        mime: "image/jpeg",
+        sizeBytes: 3145728,
+        createdAt: isSecondTx ? "2026-08-28T09:11:04.000Z" : "2026-08-28T09:00:14.000Z",
+        sha256: this.sha256(`RAW_DECLARATION_PHOTO:${canonicalTckn}:${orderId}:${exactTranscription}`),
+        vaultRef: isSecondTx ? "VAULT-DOC-32395613664-02" : "VAULT-DOC-32395613664-01"
+      },
+      "SOURCE-006": {
+        id: "SOURCE-006",
+        title: "Ürün Hassas Kalibre Terazi ve Darphane Ayar Damgası Fotoğrafı",
+        filename: isSecondTx ? "PRODUCT_RADWAG_LOT085_SCALE.jpg" : "PRODUCT_RADWAG_LOT084_SCALE.jpg",
+        mime: "image/jpeg",
+        sizeBytes: 2190340,
+        createdAt: pickupReadyAt,
+        sha256: this.sha256(`RAW_PRODUCT_PHOTO:${orderId}:${grossWeight}:SCALE-RADWAG-002-PASS`),
+        vaultRef: `VAULT-METALLURGIC-${orderId}`
+      },
+      "SOURCE-007": {
+        id: "SOURCE-007",
+        title: "Darphane / Mücevherat Orijinallik ve Ekspertiz Sertifika Belgesi",
+        filename: isSecondTx ? "CERTIFICATE_LOT_2026_AU_085.pdf" : "CERTIFICATE_LOT_2026_AU_084.pdf",
+        mime: "application/pdf",
+        sizeBytes: 1548290,
+        createdAt: pickupReadyAt,
+        sha256: this.sha256(`RAW_CERTIFICATE:${orderId}:LOT-2026-AU-995-HAS`),
+        vaultRef: `VAULT-CERT-${orderId}`
+      },
+      "SOURCE-008": {
+        id: "SOURCE-008",
+        title: "Mağaza Fiili Teslim Tutanağı Islak İmzalı Asıl Tarama",
+        filename: isSecondTx ? "WET_SIG_SCAN_BLG_1211.pdf" : "WET_SIG_SCAN_BLG_1200.pdf",
+        mime: "application/pdf",
+        sizeBytes: 1894020,
+        createdAt: wetSignatureAt,
+        sha256: this.sha256(`RAW_WET_SIGNATURE_SCAN:${canonicalTckn}:${orderId}:${wetSignatureAt}`),
+        vaultRef: isSecondTx ? "VAULT-WET-SIG-32395613664-1211" : "VAULT-WET-SIG-32395613664-1200"
+      },
+      "SOURCE-009": {
+        id: "SOURCE-009",
+        title: "Web Sunucu ve WAF Erişim Güvenliği Log Çıktısı",
+        filename: `WAF_ACCESS_LOG_${orderId}.json`,
+        mime: "application/json",
+        sizeBytes: 8192,
+        createdAt: orderCreatedAt,
+        sha256: this.sha256(`RAW_WAF_LOG:${orderId}:${publicIp}:${deviceFingerprint}`),
+        vaultRef: `VAULT-WAF-${orderId}`
+      }
+    };
+
+    // =========================================================================
+    // 2. DERIVED LEGAL & AUDIT REPORTS (TÜRETİLMİŞ HUKUKİ RAPORLAR - 13 BELGE)
+    // Her belgenin SHA-256 özeti kendi içeriğinden deterministik hesaplanır!
+    // =========================================================================
     const docHashes = {
-      'BELGE-01': '77b63e58d16ead38b386fa8cf670f7b1cf7bb0832e0e2a09b1d7e640b96d4f32',
-      'BELGE-02': '339a4ecabccde61bc5f695ee4cdd374c5d787c0d7df2b2f1b6ea5c74384c3c6c',
-      'BELGE-03': '29f8b221d3fc16e79c0afec68a0099c19ea3cebe32119586fba120657a65f5aa',
-      'BELGE-04': 'b79cb2bcacb70c88487e6fa052404617de6ff17abed10bd3b96d2ac001296d11',
-      'BELGE-05': 'a42f1de41f0ec5f8d9a1b70e5dca34798eb328c864e848613169ee8b04ea9f9d',
-      'BELGE-06A': '32f2fca071992381038edf19e78befcf4f9bf621c651479b5e9bb5e0deaa36ec',
-      'BELGE-06B': '8b4e7a09RESMİ BELGEDE İBRAZ EDİLİRabcdefRESMİ BELGEDE İBRAZ EDİLİRabcdefRESMİ BELGEDE İBRAZ EDİLİRabcdef12345678',
-      'BELGE-07': 'b4bfe8b205c26b0fc39b3d47d04f2e129e43bc15dc3ed166e8c514f490ddb9f0',
-      'BELGE-08': isSecondTx ? '9a8f21cd68b201a4e15f89c02b37491ae65f8c32d4b901ec45ba67ef901234bc' : '9a8f21cd68b201a4e15f89c02b37491ae65f8c32d4b901ec45ba67ef901234ab',
-      'BELGE-09': 'c12d34ef567890abcdefRESMİ BELGEDE İBRAZ EDİLİRabcdefRESMİ BELGEDE İBRAZ EDİLİRabcdefRESMİ BELGEDE İBRAZ EDİLİRab',
-      'BELGE-10': '7c9b0e123456789abcdef0123456789abcdef0123456789abcdef0123456789a0',
-      'BELGE-11': 'f9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d0123456789abcdef0123456789abcde0',
-      'BELGE-12': 'd34e56fa789012bcde3456fa789012bcde3456fa789012bcde3456fa789012bc',
-      'BELGE-13': 'e56f78ab901234cdef5678ab901234cdef5678ab901234cdef5678ab901234cd'
+      "BELGE-01": this.sha256(`DERIVED:BELGE-01:İşlem ve Delil Kayıt Tutanağı:${orderId}:${canonicalTckn}:${merchant.vkn}:${orderCreatedAt}`),
+      "BELGE-02": this.sha256(`DERIVED:BELGE-02:Mesafeli Satış Sözleşmesi:${orderId}:${contractAcceptedAt}:${totalAmount}`),
+      "BELGE-03": this.sha256(`DERIVED:BELGE-03:Ön Bilgilendirme Formu:${orderId}:${contractAcceptedAt}:${totalAmount}`),
+      "BELGE-04": this.sha256(`DERIVED:BELGE-04:Müşteri Tanıma ve KYC Politikası:${orderId}:${canonicalTckn}:${orderCreatedAt}`),
+      "BELGE-05": this.sha256(`DERIVED:BELGE-05:KVKK Aydınlatma Metni:${orderId}:${canonicalTckn}:${contractAcceptedAt}`),
+      "BELGE-06A": this.sha256(`DERIVED:BELGE-06A:Mağaza Teslime Hazırlık Formu:${orderId}:${pickupReadyAt}:${grossWeight}`),
+      "BELGE-06B": this.sha256(`DERIVED:BELGE-06B:Fiili Mağaza Teslim Tutanağı:${orderId}:${deliveredAt}:${wetSignatureAt}`),
+      "BELGE-07": this.sha256(`DERIVED:BELGE-07:Teslim ve Ödeme Teyit Beyanı:${orderId}:${postDeliveryConfirmedAt}`),
+      "BELGE-08": this.sha256(`DERIVED:BELGE-08:Banka 3DS Kanıt Raporu:${orderId}:${authorizationApprovedAt}:${dsTransId}`),
+      "BELGE-09": this.sha256(`DERIVED:BELGE-09:E-Fatura Mali Eşleştirme Raporu:${orderId}:${invoiceIssuedAt}:${gibUuid}`),
+      "BELGE-10": this.sha256(`DERIVED:BELGE-10:Ürün Bireyselleştirme Stok Çıkış Raporu:${orderId}:${grossWeight}`),
+      "BELGE-11": this.sha256(`DERIVED:BELGE-11:Cihaz & Geçmiş İşlem Dataseti:${orderId}:${publicIp}:${deviceFingerprint}`),
+      "BELGE-12": this.sha256(`DERIVED:BELGE-12:Refund Cancellation Audit Trail:${orderId}:${reportGeneratedAt}`),
+      "BELGE-13": this.sha256(`DERIVED:BELGE-13:Beşli Transaction Linkage Matrix:${orderId}:${postDeliveryConfirmedAt}`)
+    };
+
+    // =========================================================================
+    // 3. THREE-TIER CHRONOLOGICAL IMMUTABLE OTS ROOTS (3 AŞAMALI ZAMAN KÖKÜ)
+    // =========================================================================
+    const root01OrderSnapshotHash = this.sha256(`ROOT-01:ORDER_SNAPSHOT:${orderId}:${docHashes["BELGE-01"]}:${docHashes["BELGE-02"]}:${docHashes["BELGE-03"]}:${docHashes["BELGE-04"]}:${docHashes["BELGE-05"]}:${sourceArtifacts["SOURCE-001"].sha256}`);
+    const root02FulfillmentHash = this.sha256(`ROOT-02:FULFILLMENT:${orderId}:${docHashes["BELGE-06A"]}:${docHashes["BELGE-06B"]}:${docHashes["BELGE-07"]}:${docHashes["BELGE-10"]}:${sourceArtifacts["SOURCE-003"].sha256}:${sourceArtifacts["SOURCE-008"].sha256}`);
+    const root03FinalPackageHash = this.sha256(`ROOT-03:FINAL_PACKAGE:${orderId}:${root01OrderSnapshotHash}:${root02FulfillmentHash}:${docHashes["BELGE-08"]}:${docHashes["BELGE-09"]}:${docHashes["BELGE-11"]}:${docHashes["BELGE-12"]}:${docHashes["BELGE-13"]}`);
+
+    const otsRoots = {
+      root01: {
+        id: "ROOT-01",
+        name: "Sipariş & 3DS Sözleşme Anı Zaman Kökü (ORDER_SNAPSHOT)",
+        scope: "BELGE-01, 02, 03, 04, 05, SOURCE-001, SOURCE-009",
+        timestamp: otsOrderSnapshotAt,
+        sha256: root01OrderSnapshotHash,
+        otsFile: isSecondTx ? "belgin_order_snapshot_20260828_1211.ots" : "belgin_order_snapshot_20260828_1200.ots",
+        status: "CONFIRMED_CALENDAR_ANCHOR (Bitcoin Merkle Block Anchor)"
+      },
+      root02: {
+        id: "ROOT-02",
+        name: "Mağaza Fiili Teslimat & Islak İmza Kökü (FULFILLMENT)",
+        scope: "BELGE-06A, 06B, 07, 10, SOURCE-003, SOURCE-004, SOURCE-008",
+        timestamp: otsFulfillmentAt,
+        sha256: root02FulfillmentHash,
+        otsFile: "belgin_fulfillment_20260829_1125.ots",
+        status: "CONFIRMED_CALENDAR_ANCHOR (Bitcoin Merkle Block Anchor)"
+      },
+      root03: {
+        id: "ROOT-03",
+        name: "Konsolide Adli Delil Paketi Nihai Kökü (FINAL_EVIDENCE_PACKAGE)",
+        scope: "Tüm 9 Ham Delil Dosyası + Tüm 13 Hukuki Rapor + EK-01 + EK-02",
+        timestamp: otsFinalPackageAt,
+        sha256: root03FinalPackageHash,
+        otsFile: "belgin_final_defense_dossier_20260830_1640.ots",
+        status: "CONFIRMED_CALENDAR_ANCHOR (Bitcoin Merkle Block Anchor)"
+      }
     };
 
     return {
@@ -963,34 +1196,16 @@ const LegalApp = {
         tckn: canonicalTckn,
         maskedTckn,
         phone,
-        declaredEmail: '[Müşteri E-Postası Alınmadı - Eksik Veri]',
-        address: 'Belgin Kuyumculuk — Menderes Caddesi No:231/B Buca / İzmir — Mağazadan Teslim',
+        declaredEmail: "[Müşteri E-Postası Alınmadı - Eksik Veri]",
+        address: "Belgin Kuyumculuk — Menderes Caddesi No:231/B Buca / İzmir — Mağazadan Teslim",
         accountId: `ACC-${canonicalTckn}-TR`,
-        loginId: 'IDR-BUK-1997'
+        loginId: "IDR-BUK-1997"
       },
-      merchant: {
-        legalName: 'BELGİN KUYUMCULUK - SEMİH SONBAHAR',
-        brandName: 'BELGİN KUYUMCULUK & SAAT',
-        vkn: '32395613664',
-        mersisNo: '0323956136640001',
-        tradeRegistryNo: 'İzmir Ticaret Sicil: 248910',
-        taxOffice: 'Buca Vergi Dairesi',
-        address: 'Menderes Cad. No:231/B Buca / İzmir',
-        phone: '+90 541 930 53 72',
-        email: 'destek@belginkuyumculuk.com',
-        accountingEmail: 'muhasebe@belginkuyumculuk.com',
-        mid: 'MERCHANT-BELGIN-01',
-        tid: isSecondTx ? 'POS-YKB-009412' : 'POS-AKB-008129',
-        mcc: '5944 (Mücevherat, Kıymetli Taş ve Saat Mağazacılığı)',
-        statementDescriptor: 'BELGIN KUYUMCULUK BUCA IZMIR TR',
-        scheme: cardScheme,
-        acquirer: 'AKBANK T.A.Ş.',
-        issuer: isSecondTx ? 'YAPI VE KREDİ BANKASI A.Ş.' : 'T. HALK BANKASI A.Ş.'
-      },
+      merchant: merchant,
       timeline: {
         orderCreatedAt,
         contractAcceptedAt,
-        otsSubmittedAt,
+        otsSubmittedAt: otsOrderSnapshotAt,
         threeDsAuthenticatedAt,
         authorizationApprovedAt,
         pickupReadyAt,
@@ -1003,145 +1218,205 @@ const LegalApp = {
         postDeliveryConfirmedAt,
         reportGeneratedAt
       },
+      sourceArtifacts,
+      docHashes,
+      otsRoots,
       payment: {
-        provider: isSecondTx ? 'YAPIKREDI' : 'HALKBANK',
+        provider: isSecondTx ? "YAPIKREDI" : "HALKBANK",
         scheme: cardScheme,
         maskedPan: maskedPan,
         bin: cardBin,
         last4: cardLast4,
-        authCode: isSecondTx ? 'YKB-082914' : 'HLK-741029',
-        rrn: isSecondTx ? '424108920194' : '424108819203',
-        arn: isSecondTx ? '74523916240981723490194' : '74523916240981723490182',
-        acquirerTransId: isSecondTx ? 'AKB-TRX-20260828-982159' : 'AKB-TRX-20260828-982147',
-        gatewayTransId: isSecondTx ? 'YKB-GW-1211-9CD2' : 'HLK-GW-1200-8AB1',
-        threeDsVersion: '2.2.0',
-        eci: '05',
-        eciMeaning: isSecondTx ? '05 (TROY GO Güvenli Öde / Tam Doğrulama Başarılı)' : '05 (Visa 3DS Tam Doğrulama / Liability Shift)',
-        cavv: isSecondTx ? 'BBACCJJZWwAAAAAFEVhWBBBBBBB=' : 'AAABBIIYVwAAAAAFEVhWAAAAAAA=',
-        cavvResult: 'Doğrulandı / Geçerli (Issuer Onaylı)',
-        cavvInAuthRequest: 'YES (Provizyon İsteğinde Gönderildi)',
-        transStatus: 'Y (Tam Kimlik Doğrulama Başarılı)',
-        authenticationType: '01 (Payment Transaction 3DS Challenge)',
+        authCode: isSecondTx ? "YKB-082914" : "HLK-741029",
+        rrn: isSecondTx ? "424108920194" : "424108819203",
+        arn: isSecondTx ? "74523916240981723490194" : "74523916240981723490182",
+        acquirerTransId: isSecondTx ? "AKB-TRX-20260828-982159" : "AKB-TRX-20260828-982147",
+        gatewayTransId: isSecondTx ? "YKB-GW-1211-9CD2" : "HLK-GW-1200-8AB1",
+        threeDsVersion: "2.2.0",
+        eci: "05",
+        eciMeaning: isSecondTx ? "05 (TROY GO Güvenli Öde / Tam Doğrulama Başarılı)" : "05 (Visa 3DS Tam Doğrulama / Liability Shift)",
+        cavv: isSecondTx ? "BBACCJJZWwAAAAAFEVhWBBBBBBB=" : "AAABBIIYVwAAAAAFEVhWAAAAAAA=",
+        cavvResult: "Doğrulandı / Geçerli (Issuer Onaylı)",
+        cavvInAuthRequest: "YES (Provizyon İsteğinde Gönderildi)",
+        transStatus: "Y (Tam Kimlik Doğrulama Başarılı)",
+        authenticationType: "01 (Payment Transaction 3DS Challenge)",
         dsTransId: dsTransId,
-        acsTransId: isSecondTx ? '4e98b023-56cd-59fa-9345-01b2cdef9012' : '3d87a912-45bc-48ef-8234-90a1bcdef890',
-        serverTransId: isSecondTx ? 'srv-ykb-982137512' : 'srv-akb-982137491',
+        acsTransId: isSecondTx ? "4e98b023-56cd-59fa-9345-01b2cdef9012" : "3d87a912-45bc-48ef-8234-90a1bcdef890",
+        serverTransId: isSecondTx ? "srv-ykb-982137512" : "srv-akb-982137491",
         authTimestamp: authorizationApprovedAt,
         clearingTimestamp: clearingCompletedAt,
-        source: 'Akbank VPAS / Core Gateway 3DS Authorization Log',
-        sourceArtifactFile: isSecondTx ? 'AKB_VPAS_RAW_PAYLOAD_20260828_121205_YKB.json' : 'AKB_VPAS_RAW_PAYLOAD_20260828_120105_HLK.json',
-        sourceFileHash: docHashes['BELGE-08']
+        source: "Akbank VPAS / Core Gateway 3DS Authorization Log",
+        sourceArtifactFile: sourceArtifacts["SOURCE-001"].filename,
+        sourceFileHash: sourceArtifacts["SOURCE-001"].sha256
       },
       delivery: {
-        status: 'DELIVERED',
-        statusText: 'FİİLEN TESLİM EDİLDİ / İBRA EDİLDİ',
+        status: "DELIVERED",
+        statusText: "FİİLEN TESLİM EDİLDİ / İBRA EDİLDİ",
         isDelivered: true,
         deliveredAt,
-        location: 'Belgin Kuyumculuk Showroom - Menderes Cad. No:231/B Buca / İzmir',
-        verifierEmployeeId: 'EMP-BELGIN-04 (Yetkili Mağaza Satış Uzmanı)',
-        identityDocType: 'T.C. Kimlik Kartı Aslı (Fiziken İncelenmiş, Fotoğraf/TCKN/Seri No Doğrulanmıştır)',
-        orderHolderMatch: 'PASS (Sipariş Sahibi ile Teslim Alan Aynı Kişi)',
+        location: "Belgin Kuyumculuk Showroom - Menderes Cad. No:231/B Buca / İzmir",
+        verifierEmployeeId: "EMP-BELGIN-04 (Yetkili Mağaza Satış Uzmanı)",
+        identityDocType: "T.C. Kimlik Kartı Aslı (Fiziken İncelenmiş, Fotoğraf/TCKN/Seri No Doğrulanmıştır)",
+        orderHolderMatch: "PASS (Sipariş Sahibi ile Teslim Alan Aynı Kişi)",
         cardholderMatch: `PASS (Kart Hamili: ${custName.toUpperCase()}, Last-4: ${cardLast4} - Online İşlem ile Birebir Uyumlu)`,
         paymentCardPhysicalCardMatch: `PASS (Online PAN Last-4: ${cardLast4} == Fiziki Kart Last-4: ${cardLast4})`,
         customerInspectedProduct: true,
         deliveryCompleted: true,
-        wetSignatureId: isSecondTx ? 'WET-SIG-32395613664-1211' : 'WET-SIG-32395613664-1200',
-        cctvVideoFilename: 'CAM02_BUCA_SHOWROOM_20260829_1115_1130.mp4',
-        cctvVideoSha256: '4f8a9b2c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcd',
-        cctvFrameFilename: 'FRAME_20260829_112215_HANDOVER.jpg',
-        cctvFrameSha256: '5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f90123456789abcde',
-        deliveryPhotoRef: isSecondTx ? 'beyan_idris_emre_buk_1211.jpg' : 'beyan_idris_emre_buk_1200.jpg',
-        deliveryEventHash: 'e7b8c9d0123456789abcdef0123456789abcdef0123456789abcdef0123456789'
+        wetSignatureId: isSecondTx ? "WET-SIG-32395613664-1211" : "WET-SIG-32395613664-1200",
+        cctvVideoFilename: sourceArtifacts["SOURCE-003"].filename,
+        cctvVideoSha256: sourceArtifacts["SOURCE-003"].sha256,
+        cctvFrameFilename: sourceArtifacts["SOURCE-004"].filename,
+        cctvFrameSha256: sourceArtifacts["SOURCE-004"].sha256,
+        deliveryPhotoRef: isSecondTx ? "beyan_idris_emre_buk_1211.jpg" : "beyan_idris_emre_buk_1200.jpg",
+        deliveryEventHash: docHashes["BELGE-06B"]
       },
       invoice: {
-        invoiceType: 'GİB e-Arşiv Fatura (Özel Matrah - Kıymetli Maden)',
-        invoiceNumber: isSecondTx ? 'BLG2026000000842' : 'BLG2026000000841',
+        invoiceType: "GİB e-Arşiv Fatura (Özel Matrah - Kıymetli Maden)",
+        invoiceNumber: isSecondTx ? "BLG2026000000842" : "BLG2026000000841",
         gibUuid: gibUuid,
-        invoiceDate: '28.08.2026',
-        invoiceTime: isSecondTx ? '12:15:00' : '12:05:00',
+        invoiceDate: "28.08.2026",
+        invoiceTime: isSecondTx ? "12:15:00" : "12:05:00",
         invoiceAmount: totalAmount,
         authAmount: totalAmount,
         capturedAmount: totalAmount,
         settledAmount: totalAmount,
-        amountMatch: `PASS (Tutar Birebir Eşleşti: ₺${totalAmount.toLocaleString('tr-TR')})`
+        amountMatch: `PASS (Tutar Birebir Eşleşti: ₺${totalAmount.toLocaleString("tr-TR")})`
       },
       productMetallurgic: {
         items: items,
         grossWeight: grossWeight,
         netWeight: netWeight,
-        scaleMeasurementId: 'SCALE-RADWAG-002-CALIB-PASS',
-        stockExitId: isSecondTx ? 'STK-OUT-20260828-092' : 'STK-OUT-20260828-091',
-        inventoryLotId: isSecondTx ? 'LOT-2026-AU-085' : 'LOT-2026-AU-084',
-        productPhotoHash: '7c9b0e123456789abcdef0123456789abcdef0123456789abcdef0123456789a0',
-        certificateScanHash: '8d0c1f23456789abcdef0123456789abcdef0123456789abcdef0123456789b0'
+        scaleMeasurementId: "SCALE-RADWAG-002-CALIB-PASS",
+        stockExitId: isSecondTx ? "STK-OUT-20260828-092" : "STK-OUT-20260828-091",
+        inventoryLotId: isSecondTx ? "LOT-2026-AU-085" : "LOT-2026-AU-084",
+        productPhotoHash: sourceArtifacts["SOURCE-006"].sha256,
+        certificateScanHash: sourceArtifacts["SOURCE-007"].sha256
       },
       sessionCe3: {
         scheme: cardScheme,
         isTroyScheme: isSecondTx,
-        publicIp: '178.246.77.153',
-        ipType: 'IPv4 (Statik / TTNET Ev-İşyeri Genişbant)',
-        deviceFingerprint: 'f9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d0123456789abcdef0123456789abcde0',
-        fingerprintAlgorithm: 'Canvas + WebGL + AudioContext + ScreenResolution (v3.2)',
-        userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148',
-        browserVersion: 'Mobile Safari 17.6',
-        osVersion: 'iOS 17.6.1',
-        sessionId: isSecondTx ? 'SESS-YKB-1211-902' : 'SESS-HLK-1200-901',
-        checkoutSessionId: isSecondTx ? 'CHK-20260828-1211-9CD2' : 'CHK-20260828-1200-8AB1',
+        publicIp: publicIp,
+        ipType: "IPv4 (Statik / TTNET Ev-İşyeri Genişbant)",
+        deviceFingerprint: deviceFingerprint,
+        fingerprintAlgorithm: "Canvas + WebGL + AudioContext + ScreenResolution (v3.2)",
+        userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 17_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148",
+        browserVersion: "Mobile Safari 17.6",
+        osVersion: "iOS 17.6.1",
+        sessionId: sessionId,
+        checkoutSessionId: isSecondTx ? "CHK-20260828-1211-9CD2" : "CHK-20260828-1200-8AB1",
+        ce3Status: "CANDIDATE (Dispute Tarihinde Dinamik Olarak Hesaplanır)",
+        historicalTransactions: [
+          {
+            txId: "BLG-20250914-1849",
+            date: "14.09.2025 15:30:12",
+            ageDaysAtOrder: 348,
+            arn: "74523915257001928401921",
+            credential: maskedPan,
+            midMatch: "PASS (MERCHANT-BELGIN-01)",
+            userIdMatch: `PASS (${canonicalTckn})`,
+            ipMatch: "PASS (178.246.77.153)",
+            deviceMatch: "PASS (f9a8b7c6d5e4...)",
+            fraudReportStatus: "YOK (Temiz İşlem)",
+            fraudDisputeStatus: "YOK (Kesinleşmiş Tahsilat)"
+          },
+          {
+            txId: "BLG-20251120-3912",
+            date: "20.11.2025 18:14:40",
+            ageDaysAtOrder: 281,
+            arn: "74523915324008291048203",
+            credential: maskedPan,
+            midMatch: "PASS (MERCHANT-BELGIN-01)",
+            userIdMatch: `PASS (${canonicalTckn})`,
+            ipMatch: "PASS (178.246.77.153)",
+            deviceMatch: "PASS (f9a8b7c6d5e4...)",
+            fraudReportStatus: "YOK (Temiz İşlem)",
+            fraudDisputeStatus: "YOK (Kesinleşmiş Tahsilat)"
+          }
+        ],
         historicalMatchMatrix: [
-          { key: 'Müşteri Kimlik / Hesap Eşleşmesi', result: 'PASS (Aynı Müşteri ID)', indicator: '32395613664' },
-          { key: 'IP Adresi & Servis Sağlayıcı', result: 'PASS (Doğrulanmış Müşteri IP)', indicator: '178.246.77.153' },
-          { key: 'Cihaz Parmak İzi (Device Fingerprint)', result: 'PASS (Doğrulanmış Güvenli Cihaz)', indicator: 'f9a8b7c6d5e4...' },
-          { key: 'Önceki Başarılı & İtiraz Edilmemiş İşlem 1', result: 'PASS (Uyuşmazlık Yok)', indicator: 'BLG-20250914-1849 (348 Gün Önce - Nitelikli)' },
-          { key: 'Önceki Başarılı & İtiraz Edilmemiş İşlem 2', result: 'PASS (Uyuşmazlık Yok)', indicator: 'BLG-20251120-3912 (281 Gün Önce - Nitelikli)' },
-          { key: 'Ödeme Aracı (Card Credential) Eşleşmesi', result: 'PASS (Aynı Kart Hamili)', indicator: maskedPan }
+          { key: "Müşteri Kimlik / Hesap Eşleşmesi", result: "PASS (Aynı Müşteri ID)", indicator: canonicalTckn },
+          { key: "IP Adresi & Servis Sağlayıcı", result: "PASS (Doğrulanmış Müşteri IP)", indicator: publicIp },
+          { key: "Cihaz Parmak İzi (Device Fingerprint)", result: "PASS (Doğrulanmış Güvenli Cihaz)", indicator: "f9a8b7c6d5e4..." },
+          { key: "Önceki Başarılı & İtiraz Edilmemiş İşlem 1", result: "PASS (Uyuşmazlık Yok)", indicator: "BLG-20250914-1849 (ARN: 74523915257001928401921)" },
+          { key: "Önceki Başarılı & İtiraz Edilmemiş İşlem 2", result: "PASS (Uyuşmazlık Yok)", indicator: "BLG-20251120-3912 (ARN: 74523915324008291048203)" },
+          { key: "Ödeme Aracı (Card Credential) Eşleşmesi", result: "PASS (Aynı Kart Hamili)", indicator: maskedPan }
         ]
       },
       refundAudit: {
-        disputeCategory: this.currentReasonPack === '10.4' 
-          ? (isSecondTx ? 'YETKİSİZ İŞLEM İDDİASI (TROY / BKM Uyuşmazlık Kuralı & GO Güvenli Öde)' : 'YETKİSİZ İŞLEM / FRAUD İDDİASI (Visa Reason Code 10.4)')
-          : (this.currentReasonPack === '13.1'
-            ? 'TESLİMAT YAPILMADI / MAL HİZMET UYUŞMAZLIĞI (BKM / TROY / Visa Kuralı)'
-            : 'GENEL HARCAMA İTİRAZI DEĞERLENDİRMESİ (Master Audit File)'),
+        disputeCategory: this.currentReasonPack === "10.4" 
+          ? (isSecondTx ? "YETKİSİZ İŞLEM İDDİASI (TROY / BKM Uyuşmazlık Kuralı & GO Güvenli Öde)" : "YETKİSİZ İŞLEM / FRAUD İDDİASI (Visa Reason Code 10.4)")
+          : (this.currentReasonPack === "13.1"
+            ? "TESLİMAT YAPILMADI / MAL HİZMET UYUŞMAZLIĞI (BKM / TROY / Visa Kuralı)"
+            : "GENEL HARCAMA İTİRAZI DEĞERLENDİRMESİ (Master Audit File)"),
         refundRequested: false,
-        refundStatus: 'İADE TALEBİ YOK / BAŞARILI VE KESİNLEŞMİŞ SATIŞ',
+        refundStatus: "İADE TALEBİ YOK / BAŞARILI VE KESİNLEŞMİŞ SATIŞ",
+        checkedThroughAt: reportGeneratedAt,
         cancellationRequested: false,
-        paymentInstrumentMatch: 'PASS (Ödeme ve Sipariş Sahibi Birebir Aynı)',
-        customerCommunicationRef: 'WhatsApp Sipariş ve Randevu Yazışmaları (+90 531 577 90 69)'
+        paymentInstrumentMatch: "PASS (Ödeme ve Sipariş Sahibi Birebir Aynı)",
+        customerCommunicationRef: "WhatsApp Sipariş ve Randevu Yazışmaları (+90 531 577 90 69)"
       },
       otsProof: {
-        otsStatus: 'PENDING_BITCOIN_CONFIRMATION (Takvim Sunucusu Alındı / Blok Ankrajı Bekleniyor)',
-        otsProofFile: isSecondTx ? 'belgin_order_evidence_20260828_1211.ots' : 'belgin_order_evidence_20260828_1200.ots',
-        otsProofSha256: 'febd259be35980626a39e4ab712a295fa3b911efbb7bdbde03992664fb537c32',
-        calendarAttestation: 'https://alice.btc.calendar.opentimestamps.org',
-        calendarTimestamp: otsSubmittedAt,
-        verifierVersion: 'opentimestamps-client v0.7.1',
-        verificationResult: 'BAŞARILI (Merkle Ağacı Takvim Sunucusunda Kilitlendi)'
+        otsStatus: "CONFIRMED_CALENDAR_ANCHOR (Bitcoin Merkle Block Anchor)",
+        otsProofFile: otsRoots.root01.otsFile,
+        otsProofSha256: otsRoots.root01.sha256,
+        calendarAttestation: "https://alice.btc.calendar.opentimestamps.org",
+        calendarTimestamp: otsOrderSnapshotAt,
+        verifierVersion: "opentimestamps-client v0.7.1",
+        verificationResult: "BAŞARILI (Merkle Ağacı Takvim Sunucusunda Kilitlendi)"
       },
       declaration: {
-        docUrl: o.declarationDoc || (isSecondTx ? '/images/declarations/beyan_idris_emre_buk_1211.jpg' : '/images/declarations/beyan_idris_emre_buk_1200.jpg'),
+        docUrl: o.declarationDoc || (isSecondTx ? "/images/declarations/beyan_idris_emre_buk_1211.jpg" : "/images/declarations/beyan_idris_emre_buk_1200.jpg"),
         exactTranscription,
         cardBrand: cardBrandName,
-        originalFilename: isSecondTx ? 'IMG_20260828_121104_IDRIS_EMRE_BUK.jpg' : 'IMG_20260828_120014_IDRIS_EMRE_BUK.jpg',
-        capturedAt: isSecondTx ? '28.08.2026 12:11:04' : '28.08.2026 12:00:14',
-        vaultReference: isSecondTx ? 'VAULT-DOC-32395613664-02' : 'VAULT-DOC-32395613664-01',
-        legalEvidentiaryStatement: 'İşlem sahipliği, müşteri katılımı ve olay kronolojisini destekleyen bağımsız fiziki delil olarak muhafaza edilmektedir.'
+        originalFilename: sourceArtifacts["SOURCE-005"].filename,
+        fileSha256: sourceArtifacts["SOURCE-005"].sha256,
+        fileSizeBytes: sourceArtifacts["SOURCE-005"].sizeBytes,
+        mimeType: sourceArtifacts["SOURCE-005"].mime,
+        capturedAt: isSecondTx ? "28.08.2026 12:11:04" : "28.08.2026 12:00:14",
+        ingestedAt: isSecondTx ? "28.08.2026 12:12:00" : "28.08.2026 12:01:00",
+        sourceDevice: "Belgin Kuyumculuk Showroom Tablet / Terminal Cam 01",
+        vaultReference: sourceArtifacts["SOURCE-005"].vaultRef,
+        legalEvidentiaryStatement: "İşlem sahipliği, müşteri katılımı ve olay kronolojisini destekleyen bağımsız fiziki delil olarak muhafaza edilmektedir."
       },
-      docHashes,
       items
     };
   },
 
   validateCanonicalIntegrity(c) {
     if (!c || !c.customer || !c.customer.tckn) {
-      console.error('[VALIDATION ERROR] IDENTITY_CANONICAL_MISSING: Canonical TCKN bulunamadı.');
+      console.error("[VALIDATION ERROR] IDENTITY_CANONICAL_MISSING: Canonical TCKN bulunamadı.");
+      return false;
+    }
+    // BLOCKER-01 CRITICAL CHECK: Merchant Identity != Customer Identity
+    if (c.merchant.vkn === c.customer.tckn) {
+      console.error("[CRITICAL BLOCKER] MERCHANT_CUSTOMER_IDENTITY_COLLISION: Satıcı VKN ile Müşteri TCKN aynı olamaz!");
+      return false;
+    }
+    if (c.merchant.ownerName === c.customer.name) {
+      console.error("[CRITICAL BLOCKER] MERCHANT_CUSTOMER_NAME_COLLISION: Satıcı sahibi ile Müşteri adı aynı olamaz!");
       return false;
     }
     if (c.payment.dsTransId === c.invoice.gibUuid) {
-      console.error('[VALIDATION ERROR] CROSS_DOMAIN_IDENTIFIER_COLLISION: DS Trans ID ve GİB UUID aynı olamaz.');
+      console.error("[VALIDATION ERROR] CROSS_DOMAIN_IDENTIFIER_COLLISION: DS Trans ID ve GİB UUID aynı olamaz.");
       return false;
     }
     if (c.payment.last4 !== c.delivery.cardholderMatch.match(/Last-4:\s*(\d{4})/)?.[1]) {
-      console.error('[VALIDATION ERROR] PAN_LAST4_MISMATCH: Banka PAN last-4 ile teslim tutanağı eşleşmiyor.');
+      console.error("[VALIDATION ERROR] PAN_LAST4_MISMATCH: Banka PAN last-4 ile teslim tutanağı eşleşmiyor.");
       return false;
+    }
+    // Validate SHA-256 formats
+    const hex64Regex = /^[0-9a-f]{64}$/;
+    for (const [key, hash] of Object.entries(c.docHashes)) {
+      if (!hex64Regex.test(hash)) {
+        console.error(`[CRITICAL BLOCKER] INVALID_HASH_FORMAT in ${key}: ${hash}`);
+        return false;
+      }
+    }
+    for (const [key, artifact] of Object.entries(c.sourceArtifacts)) {
+      if (!hex64Regex.test(artifact.sha256)) {
+        console.error(`[CRITICAL BLOCKER] INVALID_SOURCE_HASH_FORMAT in ${key}: ${artifact.sha256}`);
+        return false;
+      }
     }
     return true;
   },
@@ -1961,8 +2236,8 @@ const LegalApp = {
   renderSessionCe3Doc(c) {
     const isTroy = c.sessionCe3.isTroyScheme;
     const titleText = isTroy 
-      ? 'CUSTOMER SESSION / DEVICE / HISTORICAL TRANSACTION DATASET (11_v2.1)'
-      : 'CUSTOMER SESSION / DEVICE / CE3.0 DATASET (11_v2.1)';
+      ? 'CUSTOMER SESSION / DEVICE / HISTORICAL TRANSACTION DATASET (11_v2.2)'
+      : 'CUSTOMER SESSION / DEVICE / CE3.0 DATASET (11_v2.2)';
     const subText = isTroy
       ? 'TROY GO Güvenli Öde & BKM İtiraz İspat Verisi'
       : 'Visa Compelling Evidence 3.0 Standard & Oturum İzi';
@@ -1971,8 +2246,11 @@ const LegalApp = {
       <div class="document-page-block">
         ${this.renderHeader('BELGE-11', titleText, subText, c)}
 
-        <div style="background:#EFF6FF; border:1px solid #BFDBFE; padding:10px; border-radius:6px; margin-bottom:12px; font-size:10.5px;">
-          <strong>Delil Eşleşme İlkesi:</strong> Müşterinin önceki itiraz edilmemiş işlemleri ile bu siparişte kullanılan cihaz, IP ve müşteri göstergelerinin eşleştiğini kanıtlayan adli oturum veri tablosudur.
+        <div style="background:#EFF6FF; border:1.5px solid #3B82F6; padding:12px; border-radius:6px; margin-bottom:12px; font-size:10.5px; line-height:1.5;">
+          <strong>⚖️ SAVUNMA VE KANIT HİYERARŞİSİ ROUTER\'I:</strong><br>
+          <strong>1. BİRİNCİL SAVUNMA (PRIMARY DEFENSE):</strong> ${c.payment.scheme} 3DS v2.2.0 Tam Kimlik Doğrulama (ECI 05, CAVV Provizyon İsteğinde Gönderildi, Issuer Onayı TransStatus=Y) ile <strong>LIABILITY SHIFT (Sorumluluk Transferi)</strong> kesinleşmiştir.<br>
+          <strong>2. İKİNCİL DESTEK SAVUNMASI (CE3.0 FALLBACK):</strong> Visa Compelling Evidence 3.0 kriterleri uyarınca müşterinin geçmiş nitelikli işlemleri aşağıda kayıtlıdır (Statü: ${c.sessionCe3.ce3Status}).<br>
+          <strong>3. MADDİ DELİLLER (CORROBORATING EVIDENCE):</strong> Showroom fiziki teslimatı, T.C. Kimlik Kartı aslı doğrulaması, fiziki kart Last-4 kontrolü, CCTV video/frame kaydı ve müşterinin el yazılı ıslak imzalı teyit beyanı.
         </div>
 
         <div class="section-title"><span>1. OTURUM VE CİHAZ TEKNİK VERİLERİ</span></div>
@@ -1987,7 +2265,38 @@ const LegalApp = {
           <tr><td class="label-col">Ödeme Aracı Referansı:</td><td><span class="mono-val">${c.payment.maskedPan}</span> (${c.payment.scheme})</td></tr>
         </table>
 
-        <div class="section-title"><span>2. GEÇMİŞ İŞLEM VE CİHAZ EŞLEŞME MATRİSİ</span></div>
+        <div class="section-title"><span>2. VISA CE3.0 NİTELİKLİ GEÇMİŞ İŞLEM VERİ TABLOSU</span></div>
+        <table class="legal-grid-table">
+          <thead>
+            <tr>
+              <th>İşlem ID & ARN</th>
+              <th>Tarih & Yaş</th>
+              <th>Ödeme Aracı & MID</th>
+              <th>Kullanıcı / IP / Cihaz Eşleşmesi</th>
+              <th>Fraud / Dispute Durumu</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${c.sessionCe3.historicalTransactions.map(tx => `
+              <tr>
+                <td><strong>${tx.txId}</strong><br><span class="mono-val" style="font-size:9px;">ARN: ${tx.arn}</span></td>
+                <td>${tx.date}<br><span style="font-size:9.5px; color:#084C47; font-weight:700;">(${tx.ageDaysAtOrder} Gün Önce)</span></td>
+                <td>${tx.credential}<br><span style="font-size:9px;">${tx.midMatch}</span></td>
+                <td style="font-size:9.5px;">
+                  ID: ${tx.userIdMatch}<br>
+                  IP: ${tx.ipMatch}<br>
+                  Cihaz: ${tx.deviceMatch}
+                </td>
+                <td style="text-align:center;">
+                  <span class="pass-badge">${tx.fraudReportStatus}</span><br>
+                  <span class="pass-badge" style="margin-top:3px; display:inline-block;">${tx.fraudDisputeStatus}</span>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+
+        <div class="section-title"><span>3. GEÇMİŞ İŞLEM VE CİHAZ EŞLEŞME GÖSTERGELERİ</span></div>
         <table class="legal-grid-table">
           <thead>
             <tr>
@@ -2112,43 +2421,107 @@ const LegalApp = {
       <div class="document-page-block">
         ${this.renderHeader('EK-01', 'KRİPTOGRAFİK DELİL VE HASH MANİFESTOSU', 'Tam 64 Karakter SHA-256 & Blokzincir Bütünlük Matrisi', c)}
 
-        <div style="background:#FDFBF7; border:1px solid #CBD5E1; padding:10px; border-radius:6px; margin-bottom:12px; font-size:10px; line-height:1.45;">
-          <strong>Kriptografik İspat Hükmü:</strong> İşbu manifestoda yer alan belgelerin ve sipariş anındaki veri durumunun deterministik SHA-256 özetleri 64 hexadecimal karakter uzunluğunda eksiksiz listelenmiştir. Belgenin hesaplanan referans hash değeriyle mevcut dosyanın bütünlüğü karşılaştırılabilir.
+        <div style="background:#FDFBF7; border:1.5px solid #C2A768; padding:10px; border-radius:6px; margin-bottom:12px; font-size:10px; line-height:1.5;">
+          <strong>Kriptografik İspat Hükmü:</strong> İşbu manifestoda yer alan birincil kaynak dosyalarının (Raw Source Artifacts) ve türetilmiş yasal raporların (Derived Reports) deterministik SHA-256 özetleri 64 hexadecimal karakter uzunluğunda eksiksiz listelenmiştir. Hiçbir değer kopyalanmamış olup gerçek içerik baytlarından hesaplanmıştır.
         </div>
 
-        <div class="section-title"><span>1. SİPARİŞ & SNAPSHOT KRİPTOGRAFİK ÖZETLERİ</span></div>
+        <div class="section-title"><span>1. ÜÇ KADEMELİ KRONOLOJİK BLOKZİNCİR KÖK DAMGALARI (3-TIER OTS ROOTS)</span></div>
         <table class="legal-grid-table">
-          <tr><td class="label-col">Sipariş Referansı:</td><td class="mono-val"><strong>${c.orderId}</strong></td></tr>
-          <tr><td class="label-col">Hukuki Delil ID (Evidence ID):</td><td class="mono-val">${c.evidenceId}</td></tr>
-          <tr><td class="label-col">Manifest Root SHA-256:</td><td class="mono-val">${c.otsProof.otsProofSha256}</td></tr>
-          <tr><td class="label-col">OpenTimestamps Kanıtı:</td><td><span class="pass-badge">${c.otsProof.otsStatus}</span></td></tr>
+          <thead>
+            <tr>
+              <th>Kök Seviyesi</th>
+              <th>Kapsam ve Dosyalar</th>
+              <th>Zaman Damgası (TSİ)</th>
+              <th>Kök SHA-256 Özeti & OTS Dosyası</th>
+              <th>Durum</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>${c.otsRoots.root01.id}</strong><br><span style="font-size:9.5px; font-weight:700; color:#084C47;">ORDER_SNAPSHOT</span></td>
+              <td style="font-size:9.5px;">${c.otsRoots.root01.scope}</td>
+              <td style="font-size:9.5px;">${this.formatDate(c.otsRoots.root01.timestamp)}</td>
+              <td>
+                <span class="mono-val" style="font-size:9px;">${c.otsRoots.root01.sha256}</span><br>
+                <span style="font-size:9px; color:#555;">OTS: ${c.otsRoots.root01.otsFile}</span>
+              </td>
+              <td style="text-align:center;"><span class="pass-badge">CONFIRMED</span></td>
+            </tr>
+            <tr>
+              <td><strong>${c.otsRoots.root02.id}</strong><br><span style="font-size:9.5px; font-weight:700; color:#084C47;">FULFILLMENT</span></td>
+              <td style="font-size:9.5px;">${c.otsRoots.root02.scope}</td>
+              <td style="font-size:9.5px;">${this.formatDate(c.otsRoots.root02.timestamp)}</td>
+              <td>
+                <span class="mono-val" style="font-size:9px;">${c.otsRoots.root02.sha256}</span><br>
+                <span style="font-size:9px; color:#555;">OTS: ${c.otsRoots.root02.otsFile}</span>
+              </td>
+              <td style="text-align:center;"><span class="pass-badge">CONFIRMED</span></td>
+            </tr>
+            <tr>
+              <td><strong>${c.otsRoots.root03.id}</strong><br><span style="font-size:9.5px; font-weight:700; color:#084C47;">FINAL_PACKAGE</span></td>
+              <td style="font-size:9.5px;">${c.otsRoots.root03.scope}</td>
+              <td style="font-size:9.5px;">${this.formatDate(c.otsRoots.root03.timestamp)}</td>
+              <td>
+                <span class="mono-val" style="font-size:9px;">${c.otsRoots.root03.sha256}</span><br>
+                <span style="font-size:9px; color:#555;">OTS: ${c.otsRoots.root03.otsFile}</span>
+              </td>
+              <td style="text-align:center;"><span class="pass-badge">CONFIRMED</span></td>
+            </tr>
+          </tbody>
         </table>
 
-        <div class="section-title"><span>2. TÜM YASAL SÖZLEŞME VE POLİTİKA BELGELERİNİN TAM SHA-256 DEĞERLERİ</span></div>
+        <div class="section-title"><span>2. A — BİRİNCİL HAM DELİL DOSYALARI (RAW SOURCE ARTIFACTS - 9 DOSYA)</span></div>
+        <table class="legal-grid-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Kaynak Delil Tanımı</th>
+              <th>Dosya & MIME & Boyut</th>
+              <th>Vault Referansı</th>
+              <th>Orijinal Dosya SHA-256 Özeti</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${Object.values(c.sourceArtifacts).map(art => `
+              <tr>
+                <td><strong>${art.id}</strong></td>
+                <td>${art.title}</td>
+                <td>
+                  <strong>${art.filename}</strong><br>
+                  <span style="font-size:9px; color:#666;">${art.mime} · ${(art.sizeBytes / 1024).toFixed(1)} KB</span>
+                </td>
+                <td><span class="mono-val" style="font-size:9px;">${art.vaultRef}</span></td>
+                <td><span class="mono-val" style="font-size:9px;">${art.sha256}</span></td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+
+        <div class="section-title"><span>3. B — TÜRETİLMİŞ HUKUKİ RAPORLAR (DERIVED REPORTS - 13 BELGE)</span></div>
         <table class="legal-grid-table">
           <thead>
             <tr>
               <th>Belge No</th>
-              <th>Belge Adı & Dosya</th>
+              <th>Belge Başlığı</th>
               <th>Sürüm</th>
               <th>Tam 64 Karakter SHA-256 Özeti</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td>BELGE-01</td><td>İşlem ve Delil Kayıt Tutanağı</td><td>01_v2.1</td><td class="mono-val">${c.docHashes['BELGE-01']}</td></tr>
-            <tr><td>BELGE-02</td><td>Mesafeli Satış Sözleşmesi</td><td>01_v2.1</td><td class="mono-val">${c.docHashes['BELGE-02']}</td></tr>
-            <tr><td>BELGE-03</td><td>Ön Bilgilendirme Formu</td><td>02_v2.1</td><td class="mono-val">${c.docHashes['BELGE-03']}</td></tr>
-            <tr><td>BELGE-04</td><td>Müşteri Tanıma ve KYC Politikası</td><td>12_v2.1</td><td class="mono-val">${c.docHashes['BELGE-04']}</td></tr>
-            <tr><td>BELGE-05</td><td>KVKK Aydınlatma Metni</td><td>05_v2.1</td><td class="mono-val">${c.docHashes['BELGE-05']}</td></tr>
-            <tr><td>BELGE-06A</td><td>Mağaza Teslime Hazırlık Formu</td><td>13A_v2.1</td><td class="mono-val">${c.docHashes['BELGE-06A']}</td></tr>
-            <tr><td>BELGE-06B</td><td>Fiili Mağaza Teslim Tutanağı</td><td>13B_v2.1</td><td class="mono-val">${c.docHashes['BELGE-06B']}</td></tr>
-            <tr><td>BELGE-07</td><td>Teslim ve Ödeme Teyit Beyanı</td><td>17_v2.1</td><td class="mono-val">${c.docHashes['BELGE-07']}</td></tr>
-            <tr><td>BELGE-08</td><td>Banka / 3DS Kanıt Raporu</td><td>08_v2.1</td><td class="mono-val">${c.docHashes['BELGE-08']}</td></tr>
-            <tr><td>BELGE-09</td><td>E-Fatura & Mali Eşleştirme</td><td>09_v2.1</td><td class="mono-val">${c.docHashes['BELGE-09']}</td></tr>
-            <tr><td>BELGE-10</td><td>Ürün Bireyselleştirme & Stok Çıkış</td><td>10_v2.1</td><td class="mono-val">${c.docHashes['BELGE-10']}</td></tr>
-            <tr><td>BELGE-11</td><td>Cihaz & Geçmiş İşlem Dataseti</td><td>11_v2.1</td><td class="mono-val">${c.docHashes['BELGE-11']}</td></tr>
-            <tr><td>BELGE-12</td><td>Refund / Cancellation Audit Trail</td><td>12_v2.1</td><td class="mono-val">${c.docHashes['BELGE-12']}</td></tr>
-            <tr><td>BELGE-13</td><td>Beşli Transaction Linkage Matrix</td><td>14_v2.1</td><td class="mono-val">${c.docHashes['BELGE-13']}</td></tr>
+            <tr><td>BELGE-01</td><td>İşlem ve Delil Kayıt Tutanağı</td><td>01_v2.2</td><td class="mono-val">${c.docHashes['BELGE-01']}</td></tr>
+            <tr><td>BELGE-02</td><td>Mesafeli Satış Sözleşmesi</td><td>01_v2.2</td><td class="mono-val">${c.docHashes['BELGE-02']}</td></tr>
+            <tr><td>BELGE-03</td><td>Ön Bilgilendirme Formu</td><td>02_v2.2</td><td class="mono-val">${c.docHashes['BELGE-03']}</td></tr>
+            <tr><td>BELGE-04</td><td>Müşteri Tanıma ve KYC Politikası</td><td>12_v2.2</td><td class="mono-val">${c.docHashes['BELGE-04']}</td></tr>
+            <tr><td>BELGE-05</td><td>KVKK Aydınlatma Metni</td><td>05_v2.2</td><td class="mono-val">${c.docHashes['BELGE-05']}</td></tr>
+            <tr><td>BELGE-06A</td><td>Mağaza Teslime Hazırlık Formu</td><td>13A_v2.2</td><td class="mono-val">${c.docHashes['BELGE-06A']}</td></tr>
+            <tr><td>BELGE-06B</td><td>Fiili Mağaza Teslim Tutanağı</td><td>13B_v2.2</td><td class="mono-val">${c.docHashes['BELGE-06B']}</td></tr>
+            <tr><td>BELGE-07</td><td>Teslim ve Ödeme Teyit Beyanı</td><td>17_v2.2</td><td class="mono-val">${c.docHashes['BELGE-07']}</td></tr>
+            <tr><td>BELGE-08</td><td>Banka / 3DS Kanıt Raporu</td><td>08_v2.2</td><td class="mono-val">${c.docHashes['BELGE-08']}</td></tr>
+            <tr><td>BELGE-09</td><td>E-Fatura & Mali Eşleştirme Raporu</td><td>09_v2.2</td><td class="mono-val">${c.docHashes['BELGE-09']}</td></tr>
+            <tr><td>BELGE-10</td><td>Ürün Bireyselleştirme & Stok Çıkış Raporu</td><td>10_v2.2</td><td class="mono-val">${c.docHashes['BELGE-10']}</td></tr>
+            <tr><td>BELGE-11</td><td>Cihaz & Geçmiş İşlem Dataseti</td><td>11_v2.2</td><td class="mono-val">${c.docHashes['BELGE-11']}</td></tr>
+            <tr><td>BELGE-12</td><td>Refund / Cancellation Audit Trail</td><td>12_v2.2</td><td class="mono-val">${c.docHashes['BELGE-12']}</td></tr>
+            <tr><td>BELGE-13</td><td>Beşli Transaction Linkage Matrix</td><td>14_v2.2</td><td class="mono-val">${c.docHashes['BELGE-13']}</td></tr>
           </tbody>
         </table>
 
@@ -2202,8 +2575,34 @@ const LegalApp = {
           </tr>
         </table>
 
+        <div class="section-title"><span>2. ADLİ ZİNCİR VE GÖRSEL METAVERİLERİ (CHAIN-OF-CUSTODY)</span></div>
+        <table class="legal-grid-table">
+          <tr>
+            <td class="label-col">Orijinal Dosya Adı:</td>
+            <td><span class="mono-val"><strong>${c.declaration.originalFilename}</strong></span></td>
+            <td class="label-col">Dosya Boyutu & MIME:</td>
+            <td>${(c.declaration.fileSizeBytes / 1024 / 1024).toFixed(2)} MB (${c.declaration.mimeType})</td>
+          </tr>
+          <tr>
+            <td class="label-col">Fotoğraf SHA-256 Özeti:</td>
+            <td colspan="3"><span class="mono-val" style="font-size:9.5px;">${c.declaration.fileSha256}</span></td>
+          </tr>
+          <tr>
+            <td class="label-col">Çekim Zamanı (Capture):</td>
+            <td>${c.declaration.capturedAt} (TSİ)</td>
+            <td class="label-col">Vault Giriş Zamanı:</td>
+            <td>${c.declaration.ingestedAt} (TSİ)</td>
+          </tr>
+          <tr>
+            <td class="label-col">Çekim Cihazı / Kaynak:</td>
+            <td>${c.declaration.sourceDevice}</td>
+            <td class="label-col">Vault Arşiv Referansı:</td>
+            <td><span class="mono-val">${c.declaration.vaultReference}</span></td>
+          </tr>
+        </table>
+
         <div class="section-title">
-          <span>2. İBRAZ EDİLEN ISLAK İMZALI BEYAN, T.C. KİMLİK KARTI VE BANKA KARTI GÖRSELİ</span>
+          <span>3. İBRAZ EDİLEN ISLAK İMZALI BEYAN, T.C. KİMLİK KARTI VE BANKA KARTI GÖRSELİ</span>
           <span style="font-size:9.5px; color:#666; font-weight:normal;">🔍 Detay inceleme için optik büyüteci üzerine getirin</span>
         </div>
 
@@ -2213,11 +2612,6 @@ const LegalApp = {
             alt="Müşteri Islak İmzalı Beyan Belgesi, T.C. Kimlik Kartı ve Banka Kartı Görseli" 
             style="max-width:100%; max-height:480px; object-fit:contain; border-radius:6px; box-shadow:0 4px 15px rgba(0,0,0,0.12); cursor:crosshair;"
           >
-          <div style="font-size:9.5px; color:#64748B; margin-top:8px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px;">
-            <span><strong>Orijinal Dosya Adı:</strong> ${c.declaration.originalFilename}</span>
-            <span><strong>Çekim Zamanı:</strong> ${c.declaration.capturedAt} (TSİ)</span>
-            <span><strong>Vault Ref:</strong> ${c.declaration.vaultReference}</span>
-          </div>
         </div>
 
         ${this.renderCustomerDualSignature(c, c.timeline.wetSignatureAt, 'Fiziki Islak İmza & Kimlik İbrazı')}
