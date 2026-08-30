@@ -66,7 +66,7 @@ if (!header('Strict-Transport-Security')) fail('HSTS eksik.');
 else pass('HSTS mevcut.');
 
 const ignores = firebase.hosting?.ignore || [];
-for (const required of ['belgin_kuyumculuk_hukuki_sozlesme_paketi/**', '**/*.docx', '**/*.xlsx', '**/*.pdf', '**/*.md']) {
+for (const required of ['belgin_kuyumculuk_hukuki_sozlesme_paketi/**', '**/*.docx', '**/*.xlsx', '**/*.pdf', 'AGENTS.md', 'DESIGN.md']) {
   if (!ignores.includes(required)) fail(`Firebase public ignore eksik: ${required}`);
 }
 if (!failed) pass('İç doküman uzantıları/klasörleri public hosting dışında.');

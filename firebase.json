@@ -32,8 +32,6 @@
       "**/*.docx",
       "**/*.xlsx",
       "**/*.pdf",
-      "**/*.md",
-      "!llms/**",
       "AGENTS.md",
       "DESIGN.md",
       "package.json",
