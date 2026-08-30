@@ -1289,6 +1289,7 @@ const App = {
             <div class="pdp-main-photo-box" id="pdpMainPhotoBox"
                  onmouseenter="App.initDesktopLoupe(this)"
                  onmousemove="App.handleDesktopLoupe(event, this)" 
+                 onwheel="App.handleDesktopLoupeWheel(event, this)"
                  onmouseleave="App.resetDesktopLoupe(this)"
                  onclick="App.handlePhotoBoxClick(event)">
               ${isHighVal ? `
@@ -1297,10 +1298,12 @@ const App = {
                 </div>
               ` : ''}
               <img src="${p.image}" alt="${p.brand} ${p.name}" id="pdpMainImageTarget" draggable="false">
-              <div class="pdp-horlogerie-loupe" id="pdpHorlogerieLoupe"></div>
+              <div class="pdp-horlogerie-loupe" id="pdpHorlogerieLoupe">
+                <span class="pdp-loupe-mag-badge" id="pdpLoupeMagBadge">3.5× MAKRO</span>
+              </div>
               <div class="pdp-loupe-hint">
-                <span class="pdp-hint-desktop">🔍 10x Optik Büyüteç İçin Gezdirin</span>
-                <span class="pdp-hint-mobile">🔍 10x Büyüteç (Dokunun)</span>
+                <span class="pdp-hint-desktop">🔍 Optik Büyüteç İçin Gezdirin (Tekerlekle Yakınlaştır)</span>
+                <span class="pdp-hint-mobile">🔍 Ultra-HD İnceleme (Dokunun)</span>
               </div>
             </div>
           </div>
@@ -1448,8 +1451,10 @@ const App = {
   },
 
   // ==========================================================
-  // HAUTE HORLOGERIE LOUPE & MOBILE ULTRA-HD ZOOM CONTROLLER
+  // HAUTE HORLOGERIE & JEWELLERY PRECISION ZOOM CONTROLLER
   // ==========================================================
+  _desktopLoupeFactor: 3.5,
+
   _zoomModalState: {
     scale: 1,
     posX: 0,
@@ -1463,8 +1468,11 @@ const App = {
     currentSrc: '',
     currentBrand: '',
     currentName: '',
-    currentRef: ''
+    currentRef: '',
+    isGold: false
   },
+
+  _modalKeyHandler: null,
 
   initDesktopLoupe(container) {
     if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
@@ -1472,6 +1480,23 @@ const App = {
     const loupe = container.querySelector('#pdpHorlogerieLoupe') || container.querySelector('.pdp-horlogerie-loupe');
     if (!img || !loupe) return;
     loupe.style.backgroundImage = `url("${img.src}")`;
+    this._updateLoupeBadge(container);
+  },
+
+  _updateLoupeBadge(container) {
+    const badge = container.querySelector('#pdpLoupeMagBadge') || container.querySelector('.pdp-loupe-mag-badge');
+    if (badge) {
+      badge.textContent = `${this._desktopLoupeFactor.toFixed(1)}× MAKRO`;
+    }
+  },
+
+  handleDesktopLoupeWheel(e, container) {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    e.preventDefault();
+    const delta = e.deltaY < 0 ? 0.3 : -0.3;
+    this._desktopLoupeFactor = Math.max(2.0, Math.min(6.0, Number((this._desktopLoupeFactor + delta).toFixed(1))));
+    this._updateLoupeBadge(container);
+    this.handleDesktopLoupe(e, container);
   },
 
   handleDesktopLoupe(e, container) {
@@ -1491,8 +1516,8 @@ const App = {
       return;
     }
 
-    const zoomFactor = 3.2;
-    const loupeRadius = 95; // 190px / 2
+    const zoomFactor = this._desktopLoupeFactor || 3.5;
+    const loupeRadius = 110; // 220px / 2
 
     loupe.classList.add('active');
     loupe.style.left = `${cursorX}px`;
@@ -1500,7 +1525,7 @@ const App = {
     loupe.style.backgroundSize = `${rect.width * zoomFactor}px ${rect.height * zoomFactor}px`;
     loupe.style.backgroundPosition = `-${cursorX * zoomFactor - loupeRadius}px -${cursorY * zoomFactor - loupeRadius}px`;
 
-    if (hint) hint.style.opacity = '0.3';
+    if (hint) hint.style.opacity = '0.2';
   },
 
   resetDesktopLoupe(container) {
@@ -1526,13 +1551,19 @@ const App = {
     const refEl = document.querySelector('.pdp-meta-sku');
 
     const brand = brandEl ? brandEl.textContent.trim() : 'Belgin Kuyumculuk';
-    const name = titleEl ? titleEl.textContent.trim() : 'Lüks Saat';
+    const name = titleEl ? titleEl.textContent.trim() : 'Lüks Koleksiyon';
     const ref = refEl ? refEl.textContent.trim() : '';
 
     this.openMobileZoomModal(img.src, brand, name, ref);
   },
 
   openMobileZoomModal(src, brand = '', name = '', ref = '') {
+    const isGold = (brand + ' ' + name).toLowerCase().includes('altın') || 
+                   (brand + ' ' + name).toLowerCase().includes('bilezik') || 
+                   (brand + ' ' + name).toLowerCase().includes('çeyrek') || 
+                   (brand + ' ' + name).toLowerCase().includes('ziynet') || 
+                   (brand + ' ' + name).toLowerCase().includes('pırlanta');
+
     this._zoomModalState = {
       scale: 1,
       posX: 0,
@@ -1546,7 +1577,8 @@ const App = {
       currentSrc: src,
       currentBrand: brand,
       currentName: name,
-      currentRef: ref
+      currentRef: ref,
+      isGold: isGold
     };
 
     let modal = document.getElementById('pdpMobileZoomModal');
@@ -1555,16 +1587,32 @@ const App = {
       modal.id = 'pdpMobileZoomModal';
       modal.className = 'pdp-mobile-zoom-modal';
       modal.setAttribute('role', 'dialog');
-      modal.setAttribute('aria-label', '10x Büyüteç ve Ultra-HD İnceleme');
+      modal.setAttribute('aria-label', 'Haute Horlogerie & High Jewellery Precision Studio');
       document.body.appendChild(modal);
     }
+
+    const preset1Label = '1× Genel';
+    const preset2Label = isGold ? '2.5× Taş & Kesim' : '2.5× Kadran';
+    const preset3Label = isGold ? '5× Mıhlama & Damga' : '5× Bezel & Kasa';
+    const preset4Label = '8× Ultra Makro';
 
     modal.innerHTML = `
       <div class="pdp-zoom-header">
         <div class="pdp-zoom-brand-info">
-          <span class="pdp-zoom-brand">${brand || 'BELGIN KUYUMCULUK'}</span>
-          <span class="pdp-zoom-title">${name || 'Lüks Saat'} ${ref ? '(' + ref + ')' : ''}</span>
+          <div class="pdp-zoom-brand-row">
+            <span class="pdp-zoom-brand">${brand || 'BELGIN KUYUMCULUK'}</span>
+            <span class="pdp-zoom-live-pill">${isGold ? 'GEMOLOGY 10X' : 'HAUTE HORLOGERIE'}</span>
+          </div>
+          <span class="pdp-zoom-title">${name || 'Lüks Koleksiyon'} ${ref ? '(' + ref + ')' : ''}</span>
         </div>
+
+        <div class="pdp-zoom-presets-row">
+          <button class="pdp-zoom-preset-btn active" id="zoomPreset1" onclick="App.setPresetZoom(1, this)">${preset1Label}</button>
+          <button class="pdp-zoom-preset-btn" id="zoomPreset2" onclick="App.setPresetZoom(2.5, this)">${preset2Label}</button>
+          <button class="pdp-zoom-preset-btn" id="zoomPreset3" onclick="App.setPresetZoom(5, this)">${preset3Label}</button>
+          <button class="pdp-zoom-preset-btn" id="zoomPreset4" onclick="App.setPresetZoom(8, this)">${preset4Label}</button>
+        </div>
+
         <button class="pdp-zoom-close-btn" onclick="App.closeMobileZoomModal()" aria-label="Büyüteci Kapat">✕</button>
       </div>
 
@@ -1572,16 +1620,23 @@ const App = {
         <div class="pdp-zoom-image-wrap" id="pdpZoomImageWrap">
           <img src="${src}" alt="${brand} ${name}" id="pdpZoomTargetImg" draggable="false">
         </div>
+
+        <!-- Mini-Map Navigation Radar (Viewport Radar) -->
+        <div class="pdp-zoom-radar-container" id="pdpZoomRadar" onclick="App.handleRadarClick(event)" title="Navigasyon Radarı">
+          <img src="${src}" alt="Radar" class="pdp-zoom-radar-thumb" draggable="false">
+          <div class="pdp-zoom-radar-viewfinder" id="pdpZoomRadarViewfinder"></div>
+        </div>
       </div>
 
       <div class="pdp-zoom-footer-bar">
         <div class="pdp-zoom-instructions">
-          <span>🔍 Çift Dokun • Sürükle • Büyüt</span>
+          <span class="pdp-zoom-readout-badge" id="pdpZoomReadout">1.0× ODAK</span>
+          <span>🔍 Sürükle • Çift Tıkla • Tekerlek / Pinch ile Büyüt</span>
         </div>
         <div class="pdp-zoom-controls-group">
           <button class="pdp-zoom-ctrl-btn" onclick="App.zoomModalIn()">+ Yakınlaştır</button>
           <button class="pdp-zoom-ctrl-btn" onclick="App.zoomModalOut()">- Uzaklaştır</button>
-          <button class="pdp-zoom-ctrl-btn" onclick="App.zoomModalReset()">1x Sıfırla</button>
+          <button class="pdp-zoom-ctrl-btn" onclick="App.zoomModalReset()">1× Sıfırla</button>
         </div>
       </div>
     `;
@@ -1589,6 +1644,19 @@ const App = {
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
     this.initZoomModalGestures();
+    this.updateRadarViewfinder();
+
+    // Keyboard controls
+    if (this._modalKeyHandler) {
+      window.removeEventListener('keydown', this._modalKeyHandler);
+    }
+    this._modalKeyHandler = (e) => {
+      if (e.key === 'Escape') App.closeMobileZoomModal();
+      else if (e.key === '+' || e.key === '=') App.zoomModalIn();
+      else if (e.key === '-' || e.key === '_') App.zoomModalOut();
+      else if (e.key === '0') App.zoomModalReset();
+    };
+    window.addEventListener('keydown', this._modalKeyHandler);
   },
 
   closeMobileZoomModal() {
@@ -1599,22 +1667,40 @@ const App = {
       this._zoomModalState.posX = 0;
       this._zoomModalState.posY = 0;
     }
+    if (this._modalKeyHandler) {
+      window.removeEventListener('keydown', this._modalKeyHandler);
+      this._modalKeyHandler = null;
+    }
     document.body.style.overflow = '';
+  },
+
+  setPresetZoom(targetScale, btnEl) {
+    const s = this._zoomModalState;
+    s.scale = targetScale;
+    if (targetScale === 1) {
+      s.posX = 0;
+      s.posY = 0;
+    }
+    document.querySelectorAll('.pdp-zoom-preset-btn').forEach(b => b.classList.remove('active'));
+    if (btnEl) btnEl.classList.add('active');
+    this.applyModalZoomTransform(true);
   },
 
   zoomModalIn() {
     const s = this._zoomModalState;
-    s.scale = Math.min(5, Number((s.scale + 0.75).toFixed(2)));
+    s.scale = Math.min(8, Number((s.scale + 1).toFixed(2)));
+    this._syncPresetButtonState();
     this.applyModalZoomTransform(true);
   },
 
   zoomModalOut() {
     const s = this._zoomModalState;
-    s.scale = Math.max(1, Number((s.scale - 0.75).toFixed(2)));
+    s.scale = Math.max(1, Number((s.scale - 1).toFixed(2)));
     if (s.scale === 1) {
       s.posX = 0;
       s.posY = 0;
     }
+    this._syncPresetButtonState();
     this.applyModalZoomTransform(true);
   },
 
@@ -1623,7 +1709,21 @@ const App = {
     s.scale = 1;
     s.posX = 0;
     s.posY = 0;
+    document.querySelectorAll('.pdp-zoom-preset-btn').forEach((b, idx) => {
+      b.classList.toggle('active', idx === 0);
+    });
     this.applyModalZoomTransform(true);
+  },
+
+  _syncPresetButtonState() {
+    const s = this._zoomModalState;
+    document.querySelectorAll('.pdp-zoom-preset-btn').forEach((b, idx) => {
+      if (idx === 0 && s.scale === 1) b.classList.add('active');
+      else if (idx === 1 && s.scale >= 2 && s.scale < 4) b.classList.add('active');
+      else if (idx === 2 && s.scale >= 4 && s.scale < 7) b.classList.add('active');
+      else if (idx === 3 && s.scale >= 7) b.classList.add('active');
+      else b.classList.remove('active');
+    });
   },
 
   applyModalZoomTransform(animate = false) {
@@ -1632,6 +1732,62 @@ const App = {
     const s = this._zoomModalState;
     wrap.style.transition = animate ? 'transform 0.28s cubic-bezier(0.16, 1, 0.3, 1)' : 'none';
     wrap.style.transform = `translate3d(${s.posX}px, ${s.posY}px, 0) scale(${s.scale})`;
+
+    const readout = document.getElementById('pdpZoomReadout');
+    if (readout) {
+      readout.textContent = `${s.scale.toFixed(1)}× ODAK`;
+    }
+
+    this.updateRadarViewfinder();
+  },
+
+  updateRadarViewfinder() {
+    const vf = document.getElementById('pdpZoomRadarViewfinder');
+    const radar = document.getElementById('pdpZoomRadar');
+    if (!vf || !radar) return;
+    const s = this._zoomModalState;
+
+    if (s.scale <= 1) {
+      vf.style.display = 'none';
+      return;
+    }
+    vf.style.display = 'block';
+
+    const radarW = radar.clientWidth || 110;
+    const radarH = radar.clientHeight || 110;
+    const vfW = Math.max(16, radarW / s.scale);
+    const vfH = Math.max(16, radarH / s.scale);
+
+    const maxStageOffset = (s.scale - 1) * 280;
+    const normX = maxStageOffset > 0 ? (s.posX / maxStageOffset) : 0;
+    const normY = maxStageOffset > 0 ? (s.posY / maxStageOffset) : 0;
+
+    const maxRadarOffset = (radarW - vfW) / 2;
+    const vfLeft = (radarW - vfW) / 2 - (normX * maxRadarOffset);
+    const vfTop = (radarH - vfH) / 2 - (normY * maxRadarOffset);
+
+    vf.style.width = `${vfW}px`;
+    vf.style.height = `${vfH}px`;
+    vf.style.left = `${Math.max(0, Math.min(radarW - vfW, vfLeft))}px`;
+    vf.style.top = `${Math.max(0, Math.min(radarH - vfH, vfTop))}px`;
+  },
+
+  handleRadarClick(e) {
+    const radar = document.getElementById('pdpZoomRadar');
+    if (!radar) return;
+    const s = this._zoomModalState;
+    if (s.scale <= 1) {
+      s.scale = 3.5;
+    }
+    const rect = radar.getBoundingClientRect();
+    const clickX = e.clientX - rect.left - rect.width / 2;
+    const clickY = e.clientY - rect.top - rect.height / 2;
+
+    const maxStageOffset = (s.scale - 1) * 280;
+    s.posX = -(clickX / (rect.width / 2)) * maxStageOffset;
+    s.posY = -(clickY / (rect.height / 2)) * maxStageOffset;
+    this._syncPresetButtonState();
+    this.applyModalZoomTransform(true);
   },
 
   initZoomModalGestures() {
@@ -1645,6 +1801,52 @@ const App = {
     let initialTouchY = 0;
     let initialPosX = 0;
     let initialPosY = 0;
+
+    // Desktop Mouse Drag & Wheel Zoom
+    let isMouseDown = false;
+    let mouseStartX = 0;
+    let mouseStartY = 0;
+    let mouseStartPosX = 0;
+    let mouseStartPosY = 0;
+
+    stage.onmousedown = (e) => {
+      if (e.target.closest('#pdpZoomRadar')) return;
+      isMouseDown = true;
+      mouseStartX = e.clientX;
+      mouseStartY = e.clientY;
+      mouseStartPosX = s.posX;
+      mouseStartPosY = s.posY;
+      stage.classList.add('dragging');
+    };
+
+    window.onmousemove = (e) => {
+      if (!isMouseDown) return;
+      const deltaX = e.clientX - mouseStartX;
+      const deltaY = e.clientY - mouseStartY;
+      const maxOffset = (s.scale - 1) * 280;
+      s.posX = Math.max(-maxOffset, Math.min(maxOffset, mouseStartPosX + deltaX));
+      s.posY = Math.max(-maxOffset, Math.min(maxOffset, mouseStartPosY + deltaY));
+      self.applyModalZoomTransform(false);
+    };
+
+    window.onmouseup = () => {
+      if (isMouseDown) {
+        isMouseDown = false;
+        stage.classList.remove('dragging');
+      }
+    };
+
+    stage.onwheel = (e) => {
+      e.preventDefault();
+      const delta = e.deltaY < 0 ? 0.5 : -0.5;
+      s.scale = Math.max(1, Math.min(8, Number((s.scale + delta).toFixed(2))));
+      if (s.scale === 1) {
+        s.posX = 0;
+        s.posY = 0;
+      }
+      self._syncPresetButtonState();
+      self.applyModalZoomTransform(false);
+    };
 
     // Helper for touch distance
     function getDistance(t1, t2) {
@@ -1664,10 +1866,11 @@ const App = {
             s.posX = 0;
             s.posY = 0;
           } else if (s.scale === 1) {
-            s.scale = 2.6;
+            s.scale = 3.0;
           } else {
-            s.scale = 4.2;
+            s.scale = 6.0;
           }
+          self._syncPresetButtonState();
           self.applyModalZoomTransform(true);
           s.lastTap = 0;
           return;
@@ -1691,18 +1894,19 @@ const App = {
     }, { passive: false });
 
     stage.addEventListener('touchmove', (e) => {
-      e.preventDefault(); // Prevent background pull/scroll
+      e.preventDefault();
       if (e.touches.length === 1 && s.isDragging && s.scale > 1) {
         const deltaX = e.touches[0].clientX - initialTouchX;
         const deltaY = e.touches[0].clientY - initialTouchY;
-        const maxOffset = (s.scale - 1) * 220;
+        const maxOffset = (s.scale - 1) * 280;
         s.posX = Math.max(-maxOffset, Math.min(maxOffset, initialPosX + deltaX));
         s.posY = Math.max(-maxOffset, Math.min(maxOffset, initialPosY + deltaY));
         self.applyModalZoomTransform(false);
       } else if (e.touches.length === 2 && touchStartDist > 0) {
         const currentDist = getDistance(e.touches[0], e.touches[1]);
         const factor = currentDist / touchStartDist;
-        s.scale = Math.max(1, Math.min(5, s.initialScale * factor));
+        s.scale = Math.max(1, Math.min(8, s.initialScale * factor));
+        self._syncPresetButtonState();
         self.applyModalZoomTransform(false);
       }
     }, { passive: false });
@@ -1715,6 +1919,7 @@ const App = {
           s.scale = 1;
           s.posX = 0;
           s.posY = 0;
+          self._syncPresetButtonState();
           self.applyModalZoomTransform(true);
         }
       } else if (e.touches.length === 1 && s.scale > 1) {
