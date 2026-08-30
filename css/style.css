@@ -4111,9 +4111,10 @@ mark.legal-highlight {
   background: rgba(3, 15, 13, 0.6);
 }
 .mobile-drawer-header .brand-logo-mobile-surface {
-  background: #FFFFFF;
-  border: 1px solid rgba(194, 167, 104, 0.35);
-  box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
 }
 .mobile-drawer-close {
   background: rgba(255, 255, 255, 0.08);
@@ -4574,14 +4575,16 @@ mark.legal-highlight {
 .brand-logo-mobile-surface {
   width: 176px;
   min-height: 64px;
-  padding: 5px 8px;
-  border-radius: 8px;
-  background: #FFFFFF;
-  border: 1px solid rgba(194, 167, 104, 0.32);
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: transparent;
+  border: none;
 }
 .brand-logo-mobile {
-  width: 158px;
+  width: 164px;
   height: auto;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
 }
 .footer-brand-logo-wrap {
   display: inline-flex;
