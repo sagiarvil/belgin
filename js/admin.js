@@ -110,7 +110,7 @@ const AdminApp = {
               return;
             } else {
               await firebase.auth().signOut();
-              this.showGoogleAuthError(`❌ Yetkisiz Google Hesabı (${email}). Bu yönetim paneline yalnızca barisbagirlar@gmail.com erişebilir.`);
+              this.showGoogleAuthError(`❌ Yetkisiz Google Hesabı (${email}). Bu yönetim paneline yalnızca yetkilendirilmiş yönetici hesabı erişebilir.`);
             }
           }
           this.showAuthGate();
@@ -149,7 +149,7 @@ const AdminApp = {
 
       if (!ALLOWED_ADMIN_EMAILS.includes(email)) {
         await firebase.auth().signOut();
-        this.showGoogleAuthError(`❌ Yetkisiz Google Hesabı (${email}). Bu yönetim paneline yalnızca yetkili yönetici (barisbagirlar@gmail.com) erişebilir.`);
+        this.showGoogleAuthError(`❌ Yetkisiz Google Hesabı (${email}). Bu yönetim paneline yalnızca yetkilendirilmiş yönetici hesabı erişebilir.`);
         return;
       }
 

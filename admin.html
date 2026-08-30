@@ -1759,9 +1759,9 @@
   <div class="admin-auth-box">
     <div style="font-size:38px; margin-bottom:12px;">🛡️</div>
     <h2 style="font-family:'Playfair Display',serif; margin:0 0 8px; color:var(--admin-teal-dark); font-size:22px;">Belgin Yönetici Girişi</h2>
-    <p style="font-size:12.5px; color:var(--admin-muted); margin:0 0 20px; line-height:1.5;">
+    <p style="font-size:13px; color:var(--admin-muted); margin:0 0 24px; line-height:1.5;">
       Bu yönetim paneli en üst düzey güvenlik standardı olan <strong>Google 2FA (İki Adımlı Doğrulama)</strong> ile korunmaktadır.<br>
-      <span style="display:inline-block; margin-top:8px; font-size:11.5px; background:#F1F5F9; padding:4px 10px; border-radius:6px; color:#334155; font-weight:700;">Yetkili Hesap: barisbagirlar@gmail.com</span>
+      Lütfen yetkili yönetici hesabınız ile giriş yapınız.
     </p>
     
     <button type="button" class="btn-google-auth" onclick="AdminApp.loginWithGoogle()">
@@ -1770,15 +1770,6 @@
     </button>
 
     <div id="googleAuthError" style="color:#C81E1E; font-size:12px; font-weight:700; margin-top:14px; display:none; background:#FEF2F2; border:1px solid #FECACA; border-radius:8px; padding:10px 12px; text-align:left; line-height:1.4;"></div>
-
-    <div style="margin-top:20px; padding-top:14px; border-top:1px dashed #E2E8F0;">
-      <a href="javascript:void(0)" onclick="document.getElementById('pinFallbackWrap').style.display='block'; this.style.display='none';" style="font-size:11px; color:#94A3B8; text-decoration:underline;">Yedek PIN ile giriş yap</a>
-      <div id="pinFallbackWrap" style="display:none; margin-top:10px;">
-        <input type="password" id="adminPinInput" class="admin-pin-input" style="margin:8px 0; font-size:18px; padding:8px;" maxlength="8" placeholder="••••" inputmode="numeric" onkeydown="if(event.key==='Enter') AdminApp.verifyPin()">
-        <div id="pinErrorMsg" style="color:#C81E1E; font-size:11.5px; font-weight:700; margin-bottom:8px; display:none;">Geçersiz PIN Kodu.</div>
-        <button type="button" class="btn-admin-primary" style="width:100%; justify-content:center; padding:8px; font-size:12px;" onclick="AdminApp.verifyPin()">PIN ile Doğrula</button>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -3120,6 +3111,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 <script src="js/vip-payment.js?v=2.8.8"></script>
-<script src="js/admin.js?v=20260830-google-auth-v5"></script>
+<script src="js/admin.js?v=20260830-google-auth-v6"></script>
 </body>
 </html>
