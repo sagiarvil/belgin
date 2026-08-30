@@ -91,6 +91,9 @@ const AdminApp = {
     // Panel başlangıçta KESİNLİKLE KİLİTLİDİR
     this.showAuthGate();
 
+    // Eğer kullanıcı daha önce açıkça çıkış yaptıysa otomatik açma
+    const isExplicitlyLoggedOut = sessionStorage.getItem('belgin_admin_logged_out') === 'true';
+
     // Firebase Auth Başlat & Dinle
     if (typeof firebase !== 'undefined') {
       try {
@@ -98,7 +101,7 @@ const AdminApp = {
           firebase.initializeApp(FIREBASE_ADMIN_CONFIG);
         }
         firebase.auth().onAuthStateChanged(async (user) => {
-          if (user) {
+          if (user && !isExplicitlyLoggedOut) {
             const email = (user.email || '').toLowerCase().trim();
             if (ALLOWED_ADMIN_EMAILS.includes(email)) {
               this.adminToken = await user.getIdToken();
@@ -128,6 +131,7 @@ const AdminApp = {
   },
 
   async loginWithGoogle() {
+    sessionStorage.removeItem('belgin_admin_logged_out');
     const errEl = document.getElementById('googleAuthError');
     if (errEl) errEl.style.display = 'none';
 
@@ -353,14 +357,18 @@ const AdminApp = {
   },
 
   async logout() {
+    sessionStorage.setItem('belgin_admin_logged_out', 'true');
+    sessionStorage.removeItem('belgin_admin_pin');
+    sessionStorage.removeItem('belgin_admin_auth');
+    localStorage.removeItem('belgin_admin_pin');
+    localStorage.removeItem('belgin_admin_cached_data');
+
     try {
       if (typeof firebase !== 'undefined' && firebase.auth) {
         await firebase.auth().signOut();
       }
-      sessionStorage.removeItem('belgin_admin_pin');
-      sessionStorage.removeItem('belgin_admin_auth');
-      localStorage.removeItem('belgin_admin_pin');
     } catch (_) {}
+
     this.adminPin = '';
     this.adminToken = null;
     this.adminUser = null;
@@ -368,7 +376,15 @@ const AdminApp = {
       clearInterval(this.pollTimer);
       this.pollTimer = null;
     }
-    window.location.href = '/admin';
+
+    const userBadge = document.getElementById('adminUserBadge');
+    if (userBadge) {
+      userBadge.style.display = 'none';
+      userBadge.textContent = '';
+    }
+
+    this.showAuthGate();
+    this.showToast('🔒 Başarıyla çıkış yapıldı.');
   },
 
   // TARİH PRESETLERİ
