@@ -3830,7 +3830,10 @@ const AdminApp = {
 
   // Hızlı Ürün Şablonu Uygula
   applyStoreProductTemplate(name, price, kdvRate = 0) {
-    const rate = Number(kdvRate);
+    let rate = Number(kdvRate);
+    if (this.isWatchProduct(name)) {
+      rate = 20; // Saat ürünlerinde %20 KDV yasal zorunluluktur
+    }
     const lineTot = Number(price || 0);
     let kdvAmt = 0;
     if (rate > 0) {
@@ -3878,12 +3881,59 @@ const AdminApp = {
     this.calculateStoreInvoiceLiveSummary();
   },
 
+  isWatchProduct(name) {
+    if (!name) return false;
+    const n = String(name).toLowerCase().trim();
+    const watchKeywords = [
+      'saat', 'watch', 'rolex', 'submariner', 'datejust', 'daytona', 'oyster',
+      'gmt-master', 'day-date', 'yacht-master', 'sea-dweller', 'air-king', 'explorer', 'sky-dweller',
+      'cartier', 'santos', 'tank', 'panthere', 'ballon bleu', 'ronde',
+      'patek', 'philippe', 'nautilus', 'aquanaut', 'calatrava', 'complications',
+      'audemars', 'piguet', 'royal oak', 'offshore',
+      'omega', 'speedmaster', 'seamaster', 'constellation', 'de ville',
+      'breitling', 'navitimer', 'superocean', 'chronomat', 'avenger',
+      'tag heuer', 'monaco', 'carrera', 'aquaracer', 'formula 1',
+      'hublot', 'big bang', 'classic fusion',
+      'iwc', 'portugieser', 'portofino', 'da vinci',
+      'panerai', 'luminor', 'radiomir',
+      'vacheron', 'constantin', 'overseas', 'patrimony',
+      'seiko', 'prospex', 'presage', 'astron', 'king seiko', '5 sports',
+      'tissot', 'prx', 'seastar', 'gentleman', 'le locle',
+      'longines', 'hydroconquest', 'master collection', 'spirit',
+      'versace', 'medusa', 'icon active',
+      'calvin klein', 'michael kors', 'diesel', 'fossil', 'guess', 'welder', 'gc',
+      'citizen', 'orient', 'casio', 'edifice', 'g-shock', 'hamilton', 'chopard', 'zenith', 'montblanc'
+    ];
+
+    return watchKeywords.some(kw => {
+      const regex = new RegExp('(?:^|\\s|[^a-zA-Z0-9ğüşıöçĞÜŞİÖÇ])' + kw.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + '(?:$|\\s|[^a-zA-Z0-9ğüşıöçĞÜŞİÖÇ])', 'i');
+      return regex.test(n) || n.includes(kw);
+    });
+  },
+
   updateStoreItem(idx, field, val) {
     if (!this.storeItems[idx]) return;
     if (field === 'name') {
-      this.storeItems[idx].name = String(val || '');
+      const nameVal = String(val || '');
+      this.storeItems[idx].name = nameVal;
+      // Saat ürünü girildiyse ve KDV 0 ise otomatik 20 yap ve uyar
+      if (this.isWatchProduct(nameVal) && Number(this.storeItems[idx].kdvRate || 0) === 0) {
+        this.storeItems[idx].kdvRate = 20;
+        this.showToast(`⚠️ "${nameVal}" saat ürünü olduğu için 3065 Sayılı KDV Kanunu gereğince KDV oranı otomatik %20 yapıldı.`);
+        this.renderStoreInvoiceItems();
+        return;
+      }
     } else if (field === 'kdvRate') {
-      this.storeItems[idx].kdvRate = Number(val || 0);
+      const newRate = Number(val || 0);
+      // Eğer saat ürününe 0 KDV verilmek istenirse REDDET ve %20'de tut
+      if (newRate < 20 && this.isWatchProduct(this.storeItems[idx].name)) {
+        this.storeItems[idx].kdvRate = 20;
+        alert(`❌ MEVZUAT UYARISI / KDV KORUMASI:\n\n"${this.storeItems[idx].name}" bir saat ürünüdür.\n\n3065 Sayılı KDV Kanunu gereğince saat satışlarında %20 KDV oranı yasal zorunluluktur. Saat ürünleri altın gibi %0 KDV (Özel Matrah) olarak faturalandırılamaz!\n\nKDV oranı zorunlu olarak %20'ye sabitlendi.`);
+        this.showToast(`❌ Saat ürünlerinde %0 KDV uygulanamaz. %20 KDV zorunludur!`);
+        this.renderStoreInvoiceItems();
+        return;
+      }
+      this.storeItems[idx].kdvRate = newRate;
     } else if (field === 'qty') {
       this.storeItems[idx].qty = Math.max(1, parseInt(val, 10) || 1);
     } else if (field === 'unitPrice') {
@@ -4039,6 +4089,18 @@ const AdminApp = {
     if (totalAmount <= 0) {
       if (errEl) { errEl.style.display = 'block'; errEl.textContent = 'Fatura toplam tutarı 0\'dan büyük olmalıdır.'; }
       return;
+    }
+
+    // 3065 Sayılı KDV Kanunu Koruma Kalkanı: Saat ürünlerinde %20 KDV kontrolü
+    for (const it of validItems) {
+      if (this.isWatchProduct(it.name) && Number(it.kdvRate || 0) < 20) {
+        if (errEl) {
+          errEl.style.display = 'block';
+          errEl.innerHTML = `<strong>❌ MEVZUAT ENGELİ:</strong> "${it.name}" bir saat ürünüdür. 3065 Sayılı KDV Kanunu gereğince saat satışlarında %20 KDV oranı yasal zorunluluktur. %0 KDV (Özel Matrah) uygulanamaz! Lütfen KDV oranını %20 olarak güncelleyiniz.`;
+        }
+        alert(`❌ MEVZUAT ENGELİ / KDV KORUMASI:\n\n"${it.name}" bir saat ürünüdür.\n\n3065 Sayılı KDV Kanunu gereğince saat ürünlerinde %20 KDV oranı yasal zorunluluktur. Saat ürünleri altın gibi %0 KDV olarak faturalandırılamaz!\n\nLütfen ilgili satırın KDV oranını %20 yapınız.`);
+        return;
+      }
     }
 
     if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }

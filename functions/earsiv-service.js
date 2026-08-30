@@ -229,12 +229,34 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
       const itTotal = Math.round(Number(it.lineTotal || (itQty * itPrice)) * 100) / 100;
       const itName = String(it.name || 'Satış Kalemi').trim();
       
-      // Kullanıcı manuel KDV oranı girdiyse (0, 1, 10, 20 vb.) doğrudan kullan
+      const isWatch = (
+        it.taxType === 'SAAT_STANDART' ||
+        /\b(saat|watch|rolex|submariner|datejust|daytona|cartier|santos|patek|philippe|nautilus|audemars|piguet|royal oak|omega|speedmaster|seamaster|breitling|tag heuer|hublot|iwc|panerai|vacheron|seiko|tissot|longines|versace|calvin klein|michael kors|diesel|fossil|guess|welder|gc|citizen|orient|casio|chopard|zenith|montblanc)\b/i.test(itName) ||
+        itName.toLowerCase().includes('saat') ||
+        itName.toLowerCase().includes('rolex') ||
+        itName.toLowerCase().includes('cartier') ||
+        itName.toLowerCase().includes('patek') ||
+        itName.toLowerCase().includes('audemars') ||
+        itName.toLowerCase().includes('omega') ||
+        itName.toLowerCase().includes('breitling') ||
+        itName.toLowerCase().includes('tag heuer') ||
+        itName.toLowerCase().includes('hublot') ||
+        itName.toLowerCase().includes('iwc') ||
+        itName.toLowerCase().includes('panerai') ||
+        itName.toLowerCase().includes('vacheron') ||
+        itName.toLowerCase().includes('seiko') ||
+        itName.toLowerCase().includes('tissot') ||
+        itName.toLowerCase().includes('longines')
+      );
+
+      // Kullanıcı manuel KDV oranı girdiyse doğrudan kullan (Saatler hariç; saatlerde yasal olarak 20 zorunludur)
       let kdvRate = 0;
-      if (it.kdvRate !== undefined && it.kdvRate !== null && !isNaN(Number(it.kdvRate))) {
+      if (isWatch) {
+        kdvRate = 20; // 3065 Sayılı KDV Kanunu gereğince saat satışlarında %20 KDV yasal zorunluluktur.
+      } else if (it.kdvRate !== undefined && it.kdvRate !== null && !isNaN(Number(it.kdvRate))) {
         kdvRate = Number(it.kdvRate);
       } else {
-        kdvRate = (it.taxType === 'SAAT_STANDART' || itName.toLowerCase().includes('rolex') || itName.toLowerCase().includes('cartier') || itName.toLowerCase().includes('patek') || itName.toLowerCase().includes('saat') || itName.toLowerCase().includes('işçilik')) ? 20 : 0;
+        kdvRate = (itName.toLowerCase().includes('işçilik')) ? 20 : 0;
       }
 
       if (kdvRate === 0) {
