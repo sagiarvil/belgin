@@ -16,7 +16,7 @@ let origBpp = originalCg.bitsPerPixel / 8
 
 let colorSpace = CGColorSpaceCreateDeviceRGB()
 
-func generateLogo(textColor: NSColor, outPath: String) {
+func generateLogo(textColor: NSColor, fontName: String, fontSize: CGFloat, kernK: CGFloat, kernS: CGFloat, outPath: String) {
     let outW = 1600
     let outH = 740
 
@@ -92,7 +92,8 @@ func generateLogo(textColor: NSColor, outPath: String) {
 
     nsContext.draw(cleanBelginCg, in: CGRect(x: drawX, y: drawY, width: drawW, height: drawH))
 
-    let font = NSFont(name: "AvenirNext-Bold", size: 82.0) ?? NSFont.boldSystemFont(ofSize: 82.0)
+    // Non-bold, regular/medium elegant font
+    let font = NSFont(name: fontName, size: fontSize) ?? NSFont.systemFont(ofSize: fontSize, weight: .regular)
 
     let kuyumculukText = "Kuyumculuk"
     let saatText = "Saat"
@@ -100,26 +101,25 @@ func generateLogo(textColor: NSColor, outPath: String) {
     let kuyumculukAttrs: [NSAttributedString.Key: Any] = [
         .font: font,
         .foregroundColor: textColor,
-        .kern: 19.5
+        .kern: kernK
     ]
 
     let saatAttrs: [NSAttributedString.Key: Any] = [
         .font: font,
         .foregroundColor: textColor,
-        .kern: 28.0
+        .kern: kernS
     ]
 
     let attrKuyumculuk = NSAttributedString(string: kuyumculukText, attributes: kuyumculukAttrs)
     let attrSaat = NSAttributedString(string: saatText, attributes: saatAttrs)
 
-    let kSize = attrKuyumculuk.size()
     let sSize = attrSaat.size()
 
-    let kX: CGFloat = 55.0
-    let kY: CGFloat = 36.0
+    let kX: CGFloat = 60.0
+    let kY: CGFloat = 40.0
 
-    let sX: CGFloat = CGFloat(outW) - sSize.width - 55.0
-    let sY: CGFloat = 36.0
+    let sX: CGFloat = CGFloat(outW) - sSize.width - 60.0
+    let sY: CGFloat = 40.0
 
     attrKuyumculuk.draw(at: NSPoint(x: kX, y: kY))
     attrSaat.draw(at: NSPoint(x: sX, y: sY))
@@ -127,8 +127,8 @@ func generateLogo(textColor: NSColor, outPath: String) {
     nsImg.unlockFocus()
 
     guard let tiffData = nsImg.tiffRepresentation,
-          let rep = NSBitmapImageRep(data: tiffData),
-          let pngData = rep.representation(using: .png, properties: [:]) else {
+      let rep = NSBitmapImageRep(data: tiffData),
+      let pngData = rep.representation(using: .png, properties: [:]) else {
         print("Error creating PNG data")
         exit(1)
     }
@@ -137,12 +137,11 @@ func generateLogo(textColor: NSColor, outPath: String) {
     print("Successfully created \(outPath)")
 }
 
-// 1. Generate Header & Mobile Logo with Crisp Pure White text (#FFFFFF)
-let whiteColor = NSColor(calibratedRed: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1.0)
-generateLogo(textColor: whiteColor, outPath: "images/belgin-logo-header.png")
-generateLogo(textColor: whiteColor, outPath: "images/belgin-logo-mobile.png")
-generateLogo(textColor: whiteColor, outPath: "images/belgin-logo-white.png")
+// Light grey color: subtle, understated, elegant silver-grey (#C5CBD2)
+let lightGreyColor = NSColor(calibratedRed: 198/255.0, green: 204/255.0, blue: 212/255.0, alpha: 0.92)
 
-// 2. Generate Dark Text version for white paper/print if needed
-let darkColor = NSColor(calibratedRed: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0)
-generateLogo(textColor: darkColor, outPath: "images/belgin-logo-dark.png")
+// Use AvenirNext-Regular (clean, non-bold, refined)
+generateLogo(textColor: lightGreyColor, fontName: "AvenirNext-Regular", fontSize: 68.0, kernK: 16.0, kernS: 24.0, outPath: "images/belgin-logo-header.png")
+generateLogo(textColor: lightGreyColor, fontName: "AvenirNext-Regular", fontSize: 68.0, kernK: 16.0, kernS: 24.0, outPath: "images/belgin-logo-mobile.png")
+generateLogo(textColor: lightGreyColor, fontName: "AvenirNext-Regular", fontSize: 68.0, kernK: 16.0, kernS: 24.0, outPath: "images/belgin-logo-white.png")
+
