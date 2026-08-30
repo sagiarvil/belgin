@@ -2401,31 +2401,23 @@
                     </button>
                   </div>
 
-                  <!-- İşçilikli Altın (%0 KDV Altın + %20 KDV İşçilik) — Alternatifli (%1 - %1.5 - %2) -->
-                  <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap; padding:8px 10px; background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:8px;">
-                    <span style="font-size:11px; font-weight:800; color:#166534; background:#DCFCE7; padding:4px 9px; border-radius:6px; border:1px solid #86EFAC;">✨ İşçilikli Altın:</span>
+                  <!-- İşçilik Kalemi Ekle (Açıklama: 'İşçilik' | KDV: %1, %1.5, %2) -->
+                  <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; padding:8px 12px; background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:8px;">
+                    <span style="font-size:11px; font-weight:800; color:#166534; background:#DCFCE7; padding:4px 9px; border-radius:6px; border:1px solid #86EFAC;">🛠️ İşçilik Satırı Ekle:</span>
                     
-                    <!-- Alternatif İşçilik Oranı Seçimi -->
-                    <div style="display:inline-flex; align-items:center; background:#FFF; border:1px solid #86EFAC; border-radius:6px; padding:2px; gap:2px; margin-right:4px;">
-                      <button type="button" class="btn-labor-rate-toggle active" data-rate="1.0" style="padding:2px 8px; font-size:11px; font-weight:800; border-radius:4px; border:1px solid #047857; background:#065F46; color:#FFF; cursor:pointer;" onclick="AdminApp.setStoreLaborRate(1.0)">%1</button>
-                      <button type="button" class="btn-labor-rate-toggle" data-rate="1.5" style="padding:2px 8px; font-size:11px; font-weight:800; border-radius:4px; border:1px solid #A7F3D0; background:#FFF; color:#065F46; cursor:pointer;" onclick="AdminApp.setStoreLaborRate(1.5)">%1,5</button>
-                      <button type="button" class="btn-labor-rate-toggle" data-rate="2.0" style="padding:2px 8px; font-size:11px; font-weight:800; border-radius:4px; border:1px solid #A7F3D0; background:#FFF; color:#065F46; cursor:pointer;" onclick="AdminApp.setStoreLaborRate(2.0)">%2</button>
-                    </div>
+                    <!-- 1. Alternatif: Açıklama: İşçilik, KDV: %1 -->
+                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#059669; color:#064E3B; font-weight:800; padding:6px 12px;" onclick="AdminApp.addStoreLaborRow(1)" title="Faturaya Açıklama: 'İşçilik', KDV Oranı: %1 olan yeni satır ekler">
+                      <span>➕ İşçilik (%1 KDV)</span>
+                    </button>
 
-                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#86EFAC; color:#064E3B; font-weight:700;" onclick="AdminApp.applyStoreGoldWithLaborTemplate('7 Gram 22 Ayar Ajda Altın Bilezik', 51850)" title="Altın (%0) + İşçilik (%20) olarak faturayı 2 satırda otomatik böler">
-                      <span>22 Ayar Ajda Bilezik (₺51.850)</span>
+                    <!-- 2. Alternatif: Açıklama: İşçilik, KDV: %1.5 -->
+                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#059669; color:#064E3B; font-weight:800; padding:6px 12px;" onclick="AdminApp.addStoreLaborRow(1.5)" title="Faturaya Açıklama: 'İşçilik', KDV Oranı: %1.5 olan yeni satır ekler">
+                      <span>➕ İşçilik (%1,5 KDV)</span>
                     </button>
-                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#86EFAC; color:#064E3B; font-weight:700;" onclick="AdminApp.applyStoreGoldWithLaborTemplate('Yeni Tarihli Ziynet Çeyrek Altın', 11750)" title="Altın (%0) + İşçilik (%20) olarak faturayı 2 satırda otomatik böler">
-                      <span>Çeyrek Altın (₺11.750)</span>
-                    </button>
-                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#86EFAC; color:#064E3B; font-weight:700;" onclick="AdminApp.applyStoreGoldWithLaborTemplate('Yeni Tarihli Ziynet Yarım Altın', 23500)" title="Altın (%0) + İşçilik (%20) olarak faturayı 2 satırda otomatik böler">
-                      <span>Yarım Altın (₺23.500)</span>
-                    </button>
-                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#86EFAC; color:#064E3B; font-weight:700;" onclick="AdminApp.applyStoreGoldWithLaborTemplate('Ata Lira / Tam Altın 22 Ayar', 47400)" title="Altın (%0) + İşçilik (%20) olarak faturayı 2 satırda otomatik böler">
-                      <span>Ata / Tam Altın (₺47.400)</span>
-                    </button>
-                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#86EFAC; color:#064E3B; font-weight:700;" onclick="AdminApp.applyStoreProductTemplate('0.40 Karat Pırlanta Tektaş Yüzük', 45000, 20)" title="Pırlanta Tektaş (%20 KDV)">
-                      <span>💎 Pırlanta Tektaş (₺45.000, %20)</span>
+
+                    <!-- 3. Alternatif: Açıklama: İşçilik, KDV: %2 -->
+                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#059669; color:#064E3B; font-weight:800; padding:6px 12px;" onclick="AdminApp.addStoreLaborRow(2)" title="Faturaya Açıklama: 'İşçilik', KDV Oranı: %2 olan yeni satır ekler">
+                      <span>➕ İşçilik (%2 KDV)</span>
                     </button>
                   </div>
                 </div>
