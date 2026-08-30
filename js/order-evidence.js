@@ -85,6 +85,11 @@
 
       <div class="section"><h2>7. Delil Belgesinin Kendi Bütünlük Özeti</h2><div class="card"><b>Receipt SHA-256</b><span class="hash">${esc(r.receiptSha256)}</span></div><div class="card" style="margin-top:10px"><b>İstek Fingerprint Hash</b><span class="hash">${esc(r.order.requestFingerprintHash)}</span></div><div class="note">${esc(r.qualification)}</div></div>
 
+      <div class="legal-notice-box" style="border-left:5px solid #CA8A04; background:#FFFDF0; padding:16px 20px; font-size:14px; line-height:1.8; margin-top:20px; border-radius:8px; border:1px solid #FACC15;">
+        <strong style="color:#854D0E; font-size:15px; display:block; margin-bottom:6px;">⚖️ HMK m. 193 Delil Sözleşmesi & Kesin İbra Teyidi</strong>
+        İşbu dijital delil kaydı, <mark class="legal-highlight">tüketicinin kendi özgür iradesiyle gerçekleştirdiği sipariş, 3D Secure ödeme doğrulaması ve teslimatını</mark> kayıt altına alır. Alıcı, <mark class="legal-highlight">haksız ters ibraz (chargeback) girişiminde bulunmayacağını ve satıcıyı gayrikabili rücu ibra ettiğini</mark> kabul ve taahhüt etmiştir.
+      </div>
+
       <div class="actions"><button class="btn secondary" type="button" id="closeReceipt">Belgeyi Kapat</button><button class="btn" type="button" id="printReceipt">Yazdır / PDF Kaydet</button></div>`;
     receiptEl.classList.add('show');
     document.getElementById('printReceipt')?.addEventListener('click',()=>window.print());

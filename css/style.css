@@ -241,16 +241,20 @@ p, span, li, td, th, label, input, button, select, textarea {
 .gold-marquee-track {
   display: flex !important;
   gap: 32px;
-  width: max-content;
-  -webkit-animation: tickerSlide 28s linear infinite;
-  animation: tickerSlide 28s linear infinite;
+  width: max-content !important;
+  -webkit-animation: tickerSlide 26s linear infinite !important;
+  animation: tickerSlide 26s linear infinite !important;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
-.gold-marquee-track:hover {
-  -webkit-animation-play-state: paused;
-  animation-play-state: paused;
+@media (hover: hover) and (pointer: fine) {
+  .gold-marquee-track:hover {
+    -webkit-animation-play-state: paused;
+    animation-play-state: paused;
+  }
 }
 
 .gold-rates-list {
@@ -1091,38 +1095,64 @@ p, span, li, td, th, label, input, button, select, textarea {
   position: relative;
   width: 100%;
   overflow: hidden;
-  padding: 6px 2px 14px;
-  mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+  min-height: 110px;
+  padding: 8px 0 14px;
+  touch-action: pan-y;
+}
+
+@-webkit-keyframes brandAutoFlow {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    -webkit-transform: translate3d(-50%, 0, 0);
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 
 @keyframes brandAutoFlow {
   0% {
+    -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
   }
   100% {
+    -webkit-transform: translate3d(-50%, 0, 0);
     transform: translate3d(-50%, 0, 0);
   }
 }
 
 .brands-carousel-track {
-  display: flex;
-  gap: 18px;
-  width: max-content;
-  animation: brandAutoFlow 32s linear infinite;
+  display: flex !important;
+  gap: 16px;
+  width: max-content !important;
+  -webkit-animation: brandAutoFlow 26s linear infinite !important;
+  animation: brandAutoFlow 26s linear infinite !important;
   will-change: transform;
-  cursor: grab;
-}
-.brands-carousel-track:hover,
-.brands-carousel-track:active,
-.brands-carousel-wrapper:hover .brands-carousel-track {
-  animation-play-state: paused;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+  cursor: pointer;
 }
 
-/* Tek Sıra Marka Kartı - SADECE MARKA LOGOSU (Yüksek Kontrast & Standart) */
+/* YALNIZCA masaüstü fare imlecinde üzerine gelindiğinde duraklar; mobilde dokunma sebebiyle ASLA kilitlenmez */
+@media (hover: hover) and (pointer: fine) {
+  .brands-carousel-wrapper:hover .brands-carousel-track {
+    -webkit-animation-play-state: paused;
+    animation-play-state: paused;
+  }
+}
+
+/* Tek Sıra Marka Kartı - SADECE MARKA LOGOSU */
 .brand-carousel-card {
-  flex: 0 0 240px;
-  height: 110px;
+  flex: 0 0 220px !important;
+  width: 220px !important;
+  min-width: 220px !important;
+  height: 100px !important;
+  min-height: 100px !important;
   scroll-snap-align: start;
   background: #F4F4F4;
   border: 1px solid #E2E2E2;
@@ -1136,6 +1166,7 @@ p, span, li, td, th, label, input, button, select, textarea {
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  flex-shrink: 0;
 }
 .brand-carousel-card:hover {
   transform: translateY(-2px);
@@ -1148,44 +1179,33 @@ p, span, li, td, th, label, input, button, select, textarea {
   height: 100%;
   object-fit: cover;
   display: block;
+  pointer-events: none;
 }
 
 @media (max-width: 768px) {
   .brands-carousel-wrapper {
     overflow: hidden;
     scrollbar-width: none;
-    mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
-    padding: 6px 0 16px;
-    touch-action: pan-y;
+    min-height: 80px;
+    padding: 6px 0 12px;
   }
   .brands-carousel-wrapper::-webkit-scrollbar {
     display: none;
   }
   .brands-carousel-track {
-    display: flex;
-    gap: 12px;
-    padding: 0;
-    width: max-content;
-    animation: brandAutoFlow 22s linear infinite !important;
-    -webkit-animation: brandAutoFlow 22s linear infinite !important;
-    will-change: transform;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    transform: translate3d(0, 0, 0);
+    gap: 10px;
+    -webkit-animation: brandAutoFlow 20s linear infinite !important;
+    animation: brandAutoFlow 20s linear infinite !important;
+    -webkit-animation-play-state: running !important;
+    animation-play-state: running !important;
   }
   .brand-carousel-card {
-    flex: 0 0 160px;
-    height: 80px;
-    padding: 0;
+    flex: 0 0 150px !important;
+    width: 150px !important;
+    min-width: 150px !important;
+    height: 75px !important;
+    min-height: 75px !important;
     border-radius: 4px;
-    border: 1px solid #E2E2E2;
-    background: #F4F4F4;
-  }
-  .brand-carousel-logo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
   }
   .slider-arrows-nav {
     display: flex;
@@ -3758,6 +3778,38 @@ p, span, li, td, th, label, input, button, select, textarea {
 }
 
 /* ==========================================================
+   HUKUKİ VURGU & SARI FOSFORLU BANT SİSTEMİ (LEGAL HIGHLIGHTER)
+   ========================================================== */
+.legal-highlight,
+mark.legal-highlight {
+  background-color: #FEF08A !important;
+  color: #0F172A !important;
+  font-weight: 800 !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  display: inline;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.legal-notice-box {
+  background: #FFFDF0;
+  border: 2px solid #FACC15;
+  border-left: 6px solid #CA8A04;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 18px 0;
+  color: #1C1917;
+  font-size: 14.5px;
+  line-height: 1.8;
+}
+
+.legal-notice-box strong {
+  color: #854D0E;
+}
+
+/* ==========================================================
    MOBILE LUXURY EXPERIENCE (IPHONE & MAC OPTIMIZED)
    ========================================================== */
 .btn-hamburger {
@@ -5193,6 +5245,14 @@ body.page-canli-fiyatlar .footer,
 body.page-is-canli-fiyatlar .footer,
 body.page-canli-fiyatlar footer,
 body.page-canli-fiyatlar-mode footer,
+body.page-canli-fiyatlar .footer-art,
+body.page-is-canli-fiyatlar .footer-art,
+body.page-canli-fiyatlar [data-belgin-defense-layer],
+body.page-is-canli-fiyatlar [data-belgin-defense-layer],
+body.page-canli-fiyatlar #legalEvidenceIntegrityBox,
+body.page-is-canli-fiyatlar #legalEvidenceIntegrityBox,
+#page-canli-fiyatlar #legalEvidenceIntegrityBox,
+#page-ana-sayfa #legalEvidenceIntegrityBox,
 body.page-canli-fiyatlar .vip-whatsapp-float-compact,
 body.page-is-canli-fiyatlar .vip-whatsapp-float-compact,
 body.page-canli-fiyatlar-mode .vip-whatsapp-float-compact,
