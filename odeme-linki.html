@@ -7,6 +7,7 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#0A1412">
   <meta name="apple-mobile-web-app-title" content="Belgin Link">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="icon" type="image/png" href="images/link-icon-192.png">
@@ -563,7 +564,7 @@
 
   <div id="toast" class="toast">Panoya kopyalandı!</div>
 
-  <script src="/js/vip-payment.js?v=2.8.0"></script>
+  <script src="/js/vip-payment.js?v=20260830-multipos-v3"></script>
   <script>
     const form = document.getElementById('linkForm');
     const titleInput = document.getElementById('productTitle');
@@ -586,6 +587,50 @@
     const breakdown22Lines = document.getElementById('breakdown22Lines');
     let currentUrl = '';
     let currentMsg = '';
+
+    // --- POS Kart Seçim Olayları ---
+    const posCards = document.querySelectorAll('.pos-card');
+    posCards.forEach(card => {
+      card.addEventListener('click', (e) => {
+        posCards.forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        const radio = card.querySelector('input[type="radio"]');
+        if (radio) radio.checked = true;
+      });
+    });
+
+    function getSelectedProvider() {
+      const checked = document.querySelector('input[name="posProvider"]:checked');
+      return checked ? checked.value : 'AKBANK';
+    }
+
+    // --- URL Parametreleri ile Otomatik Doldurma ---
+    try {
+      const sp = new URLSearchParams(window.location.search);
+      const paramTitle = sp.get('title') || sp.get('urun') || sp.get('baslik') || '';
+      const paramAmount = sp.get('amount') || sp.get('tutar') || sp.get('fiyat') || '';
+      const paramPos = (sp.get('posProvider') || sp.get('pos') || sp.get('provider') || '').toUpperCase();
+      
+      if (paramTitle) {
+        titleInput.value = paramTitle;
+      }
+      if (paramAmount) {
+        const cleanAmt = paramAmount.replace(/\D/g, '');
+        if (cleanAmt) {
+          amountInput.value = parseInt(cleanAmt, 10).toLocaleString('tr-TR');
+          amountInput.dataset.raw = cleanAmt;
+        }
+      }
+      if (paramPos === 'PAYTR' || paramPos === 'XPOS') {
+        posCards.forEach(c => c.classList.remove('active'));
+        const xcard = document.getElementById('posCardXpos');
+        if (xcard) {
+          xcard.classList.add('active');
+          const r = xcard.querySelector('input[type="radio"]');
+          if (r) r.checked = true;
+        }
+      }
+    } catch (_) {}
 
     // --- /22 Tag & Preview Kontrolü ---
     function checkTag22() {
@@ -653,43 +698,6 @@
       amountShell.classList.remove('error');
       titleError.classList.remove('show');
       amountError.classList.remove('show');
-    }
-
-    function handleGenerate() {
-      clearErrors();
-      const title = titleInput.value.trim();
-      const amount = parseInt(amountInput.dataset.raw || '0', 10);
-
-      let hasError = false;
-      if (!title) {
-        titleShell.classList.add('error');
-        titleError.classList.add('show');
-        hasError = true;
-      }
-      if (!amount || amount < 100) {
-        amountShell.classList.add('error');
-        amountError.classList.add('show');
-        hasError = true;
-      }
-      if (hasError) {
-        (title ? amountInput : titleInput).focus();
-        return;
-      }
-
-    // --- POS Kart Seçim Olayları ---
-    const posCards = document.querySelectorAll('.pos-card');
-    posCards.forEach(card => {
-      card.addEventListener('click', () => {
-        posCards.forEach(c => c.classList.remove('active'));
-        card.classList.add('active');
-        const radio = card.querySelector('input[type="radio"]');
-        if (radio) radio.checked = true;
-      });
-    });
-
-    function getSelectedProvider() {
-      const checked = document.querySelector('input[name="posProvider"]:checked');
-      return checked ? checked.value : 'AKBANK';
     }
 
     function handleGenerate() {
