@@ -328,12 +328,20 @@ const AdminApp = {
 
   showAuthGate() {
     const gate = document.getElementById('adminAuthGate');
-    if (gate) gate.style.display = 'flex';
+    if (gate) gate.style.setProperty('display', 'flex', 'important');
+    const nav = document.querySelector('.admin-navbar');
+    if (nav) nav.style.setProperty('display', 'none', 'important');
+    const main = document.querySelector('.admin-container');
+    if (main) main.style.setProperty('display', 'none', 'important');
   },
 
   hideAuthGate() {
     const gate = document.getElementById('adminAuthGate');
-    if (gate) gate.style.display = 'none';
+    if (gate) gate.style.setProperty('display', 'none', 'important');
+    const nav = document.querySelector('.admin-navbar');
+    if (nav) nav.style.setProperty('display', 'flex', 'important');
+    const main = document.querySelector('.admin-container');
+    if (main) main.style.setProperty('display', 'block', 'important');
   },
 
   verifyPin() {
