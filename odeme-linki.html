@@ -298,6 +298,42 @@
     .btn-submit.loading .btn-label { opacity: 0.75; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    .form-actions-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    @media (max-width: 400px) {
+      .form-actions-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .btn-clear {
+      background: rgba(226,104,90,0.12);
+      border: 1.5px solid rgba(226,104,90,0.35);
+      color: #F87171;
+      padding: 15px 18px;
+      border-radius: var(--radius-md);
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all .15s ease;
+      white-space: nowrap;
+    }
+    .btn-clear:hover {
+      background: rgba(226,104,90,0.22);
+      border-color: rgba(226,104,90,0.6);
+      color: #FFA39E;
+    }
+    .btn-clear:active {
+      transform: scale(0.97);
+    }
+
     /* RESULT */
     .result-section {
       display: none;
@@ -531,10 +567,16 @@
           <div id="breakdown22Lines" style="color:var(--text); line-height:1.6;"></div>
         </div>
 
-        <button type="submit" id="btnSubmit" class="btn-submit">
-          <span class="spinner"></span>
-          <span class="btn-label">Ödeme Linkini Oluştur</span>
-        </button>
+        <div class="form-actions-grid">
+          <button type="submit" id="btnSubmit" class="btn-submit">
+            <span class="spinner"></span>
+            <span class="btn-label">Ödeme Linkini Oluştur</span>
+          </button>
+          <button type="button" id="btnClearForm" class="btn-clear" title="Formdaki tüm alanları temizle">
+            <span>🗑️</span>
+            <span>Temizle</span>
+          </button>
+        </div>
       </form>
 
       <div id="resultSection" class="result-section">
@@ -550,7 +592,7 @@
           </a>
           <button type="button" id="btnCopy" class="btn-copy" style="grid-column: 1 / -1;">🔗 Linki Kopyala</button>
           <a id="btnTestLink" href="#" target="_blank" class="btn-test">👁️ Müşteri Ödeme Ekranını Önizle</a>
-          <button type="button" id="btnReset" class="btn-reset">Yeni link oluştur</button>
+          <button type="button" id="btnReset" class="btn-reset">🔄 Formu Temizle / Yeni Link Oluştur</button>
         </div>
       </div>
 
@@ -757,11 +799,43 @@
       handleGenerate();
     });
 
-    btnReset.addEventListener('click', () => {
+    function resetAndClearAll() {
       form.reset();
-      resultSection.style.display = 'none';
+      titleInput.value = '';
+      amountInput.value = '';
+      amountInput.dataset.raw = '';
       clearErrors();
+      checkTag22();
+      if (breakdown22Preview) breakdown22Preview.style.display = 'none';
+      if (resultSection) resultSection.style.display = 'none';
+
+      // Reset POS selector back to Akbank
+      posCards.forEach(c => c.classList.remove('active'));
+      const akCard = document.getElementById('posCardAkbank');
+      if (akCard) {
+        akCard.classList.add('active');
+        const r = akCard.querySelector('input[type="radio"]');
+        if (r) r.checked = true;
+      }
+
+      // Clean browser address bar query parameters (remove ?posProvider=... etc.)
+      try {
+        if (window.history && window.history.replaceState) {
+          window.history.replaceState({}, document.title, window.location.pathname);
+        }
+      } catch (_) {}
+
       titleInput.focus();
+      showToast('Form ve alanlar temizlendi!');
+    }
+
+    const btnClearForm = document.getElementById('btnClearForm');
+    if (btnClearForm) {
+      btnClearForm.addEventListener('click', resetAndClearAll);
+    }
+
+    btnReset.addEventListener('click', () => {
+      resetAndClearAll();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
