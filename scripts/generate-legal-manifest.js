@@ -21,7 +21,7 @@ const DOCUMENT_META = {
   'kvkk-acik-riza.html': { code: '10', version: '10_v2.1 (25.08.2026)', title: 'KVKK Açık Rıza Metni' },
   'garanti-ve-satis-sonrasi.html': { code: '11', version: '11_v2.1 (25.08.2026)', title: 'Garanti ve Satış Sonrası Hizmetler' },
   'musteri-tanima-ve-islem-guvenligi.html': { code: '12', version: '12_v2.1 (25.08.2026)', title: 'Müşteri Tanıma ve İşlem Güvenliği Politikası' },
-  'magaza-teslim-tesellum-formu.html': { code: '13', version: '13_v2.1 (25.08.2026)', title: 'Mağaza Teslim-Tesellüm ve Ürün Kimliklendirme Formu' },
+  'magaza-teslim-tesellum-formu.html': { code: '13', version: '13_v3.0 (28.08.2026)', title: 'Teslim, Kontrol ve Ödeme İşlemi Teyit ve İbra Beyanı' },
   'iade-degisim-cayma.html': { code: '14', version: '14_v2.1 (25.08.2026)', title: 'İade, Değişim ve Cayma Hakkı Rehberi' },
   'iade-degisim.html': { code: '14', version: '14_v2.1 (25.08.2026)', title: 'İade ve Değişim Koşulları' },
   'guvenli-odeme-ve-3d-secure.html': { code: '15', version: '15_v2.1 (25.08.2026)', title: 'Güvenli Ödeme ve 3D Secure' },

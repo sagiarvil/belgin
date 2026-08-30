@@ -19,6 +19,7 @@ const pages = [
   'guvenli-odeme-ve-3d-secure.html',
   'iade-degisim-cayma.html',
   'iade-degisim.html',
+  'magaza-teslim-tesellum-formu.html',
   'hukuki-delil-ve-kayit-politikasi.html',
   'iletisim.html',
   'canli-fiyatlar/index.html'

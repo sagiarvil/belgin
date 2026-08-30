@@ -21,7 +21,7 @@
     'kvkk-acik-riza.html': '10_v2.1 (25.08.2026)',
     'garanti-ve-satis-sonrasi.html': '11_v2.1 (25.08.2026)',
     'musteri-tanima-ve-islem-guvenligi.html': '12_v2.1 (25.08.2026)',
-    'magaza-teslim-tesellum-formu.html': '13_v2.1 (25.08.2026)',
+    'magaza-teslim-tesellum-formu.html': '13_v3.0 (28.08.2026)',
     'iade-degisim-cayma.html': '14_v2.1 (25.08.2026)',
     'iade-degisim.html': '14_v2.1 (25.08.2026)',
     'guvenli-odeme-ve-3d-secure.html': '15_v2.1 (25.08.2026)',

@@ -1,9 +1,9 @@
 {
   "schema": "belgin-legal-evidence-manifest-v3",
   "version": "2026-08-25-v3.1",
-  "generatedAt": "2026-08-30T07:57:40.557Z",
+  "generatedAt": "2026-08-30T08:11:10.833Z",
   "algorithm": "SHA-256",
-  "manifestRootSha256": "5b0ef2ff3d9fca2748c3625f89c073ac3a47d00bbc19d298a7273939fb2f73b5",
+  "manifestRootSha256": "dd2495c2379eec594f5de988e1dc6a4df00b72612d15dc6c51910d54565c8ecd",
   "externalTimestampModel": "OpenTimestamps/Bitcoin auxiliary proof",
   "legalNotice": "SHA-256 ve OpenTimestamps kayıtları teknik belge bütünlüğü ve zaman ispatı katmanıdır; tek başına 5070 sayılı Kanun kapsamında nitelikli elektronik imza veya ESHS zaman damgası olarak sunulmaz.",
   "documents": {
@@ -93,10 +93,10 @@
     },
     "magaza-teslim-tesellum-formu.html": {
       "code": "13",
-      "version": "13_v2.1 (25.08.2026)",
-      "title": "Mağaza Teslim-Tesellüm ve Ürün Kimliklendirme Formu",
-      "sha256": "d2ad101747be33ab6b4a253d2ad8b64f8df03447924b563b156873f496a0c786",
-      "bytes": 4041
+      "version": "13_v3.0 (28.08.2026)",
+      "title": "Teslim, Kontrol ve Ödeme İşlemi Teyit ve İbra Beyanı",
+      "sha256": "b54ef575b0fb50440d99289579207447a6f2b785d1763b2c4eb3fd5ffe1723ac",
+      "bytes": 19923
     },
     "mesafeli-satis-sozlesmesi.html": {
       "code": "01",
