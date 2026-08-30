@@ -4,7 +4,7 @@ const path = require('path');
 const file = path.join(__dirname, '..', 'index.html');
 let html = fs.readFileSync(file, 'utf8');
 
-const SCRIPT = '<script src="js/hero-motion-v2.js?v=2026.08.30.0855"></script>';
+const SCRIPT = '<script src="js/hero-motion-v2.js?v=2026.08.30.0948"></script>';
 
 // Idempotent: remove any previous v2 loader before inserting the canonical one.
 html = html.replace(/\n?<script src="js\/hero-motion-v2\.js\?v=[^"]+"><\/script>/g, '');
