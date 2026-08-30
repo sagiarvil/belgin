@@ -5828,56 +5828,87 @@ body.page-canli-fiyatlar-mode .gold-ticker-strip,
 }
 
 /* ==========================================================
-   SADECE CANLI FİYATLAR SAYFASINA ÖZEL KOMPAKT HEADER
-   (Alttan ve Üstten Yarı Yarıya Kısaltılmış İnce Header)
+   CANLI FİYATLAR SAYFASINA ÖZEL ROLEX YEŞİLİ MERKEZİ HEADER
+   (Rolex Yeşili Zemin, Sadece Ortalanmış Belgin Logosu, Menü ve Butonlar Gizli)
    ========================================================== */
 body.page-canli-fiyatlar .header,
 body.page-is-canli-fiyatlar .header,
 body.page-canli-fiyatlar-mode .header,
 .header-compact-live {
-  padding-top: 3px !important;
-  padding-bottom: 3px !important;
-  min-height: 42px !important;
+  background: #006039 !important; /* Official Rolex Signature Green */
+  border-bottom: 1px solid rgba(194, 167, 104, 0.42) !important;
+  box-shadow: 0 4px 20px rgba(0, 48, 28, 0.45) !important;
+  padding: 14px 0 !important;
+  min-height: 64px !important;
+  display: block !important;
 }
 
 body.page-canli-fiyatlar .header .header-grid,
 body.page-is-canli-fiyatlar .header .header-grid,
 body.page-canli-fiyatlar-mode .header .header-grid,
 .header-compact-live .header-grid {
-  padding-top: 2px !important;
-  padding-bottom: 2px !important;
-  min-height: 42px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+  padding: 0 !important;
+  min-height: auto !important;
+  width: 100% !important;
+}
+
+body.page-canli-fiyatlar .header .brand-logo-link,
+body.page-is-canli-fiyatlar .header .brand-logo-link,
+body.page-canli-fiyatlar-mode .header .brand-logo-link,
+.header-compact-live .brand-logo-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 auto !important;
+  width: auto !important;
+  flex: 0 0 auto !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  transition: transform 0.25s ease, opacity 0.25s ease !important;
+}
+
+body.page-canli-fiyatlar .header .brand-logo-link:hover,
+body.page-is-canli-fiyatlar .header .brand-logo-link:hover,
+.header-compact-live .brand-logo-link:hover {
+  transform: scale(1.02);
+  opacity: 0.96;
 }
 
 body.page-canli-fiyatlar .brand-logo-header,
 body.page-is-canli-fiyatlar .brand-logo-header,
 body.page-canli-fiyatlar-mode .brand-logo-header,
 .header-compact-live .brand-logo-header {
-  max-height: 28px !important;
-  width: auto !important;
+  width: 180px !important;
+  max-height: 52px !important;
+  height: auto !important;
+  display: block !important;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4)) !important;
 }
 
-body.page-canli-fiyatlar .nav-desktop ul,
-body.page-is-canli-fiyatlar .nav-desktop ul,
-body.page-canli-fiyatlar-mode .nav-desktop ul {
-  gap: 12px !important;
-}
-
-body.page-canli-fiyatlar .nav-desktop ul li a,
-body.page-is-canli-fiyatlar .nav-desktop ul li a,
-body.page-canli-fiyatlar-mode .nav-desktop ul li a {
-  padding: 4px 6px !important;
-  font-size: 13px !important;
-}
-
-body.page-canli-fiyatlar .btn-hamburger,
-body.page-is-canli-fiyatlar .btn-hamburger,
+/* Header üzerindeki tüm yan menü, buton ve öğeleri canlı fiyatlar sayfasında gizle */
+body.page-canli-fiyatlar .header .btn-hamburger,
+body.page-is-canli-fiyatlar .header .btn-hamburger,
+body.page-canli-fiyatlar-mode .header .btn-hamburger,
 .header-compact-live .btn-hamburger,
-body.page-canli-fiyatlar .header-icon-btn,
-body.page-is-canli-fiyatlar .header-icon-btn,
-.header-compact-live .header-icon-btn {
-  width: 32px !important;
-  height: 32px !important;
+body.page-canli-fiyatlar .header .nav-desktop,
+body.page-is-canli-fiyatlar .header .nav-desktop,
+body.page-canli-fiyatlar-mode .header .nav-desktop,
+.header-compact-live .nav-desktop,
+body.page-canli-fiyatlar .header .header-actions,
+body.page-is-canli-fiyatlar .header .header-actions,
+body.page-canli-fiyatlar-mode .header .header-actions,
+.header-compact-live .header-actions,
+body.page-canli-fiyatlar .header .header-icon-btn,
+body.page-is-canli-fiyatlar .header .header-icon-btn,
+.header-compact-live .header-icon-btn,
+body.page-canli-fiyatlar .header .btn-action-vip,
+body.page-is-canli-fiyatlar .header .btn-action-vip,
+.header-compact-live .btn-action-vip {
+  display: none !important;
 }
 
 .live-table-container {
