@@ -958,10 +958,20 @@ const AdminApp = {
 
   handleDeclarationUpload(event) {
     const file = event.target?.files?.[0];
+    if (file) this.processDeclarationFile(file);
+    if (event.target) event.target.value = '';
+  },
+
+  handleDeclarationDrop(event) {
+    const file = event.dataTransfer?.files?.[0];
+    if (file) this.processDeclarationFile(file);
+  },
+
+  processDeclarationFile(file) {
     if (!file || !this.activeDeclarationOrderId) return;
 
-    if (file.size > 10 * 1024 * 1024) {
-      alert('⚠️ Dosya boyutu 10MB sınırını aşamaz.');
+    if (file.size > 15 * 1024 * 1024) {
+      alert('⚠️ Dosya boyutu 15MB sınırını aşamaz.');
       return;
     }
 
@@ -970,7 +980,7 @@ const AdminApp = {
       const dataUrl = e.target.result;
       const declData = {
         docUrl: dataUrl,
-        docType: file.type,
+        docType: file.type || 'image/jpeg',
         docName: file.name,
         uploadedAt: new Date().toISOString()
       };
@@ -980,16 +990,16 @@ const AdminApp = {
       } catch (_) {}
 
       // Sipariş objesini güncelle
-      const order = this.orders.find(o => o.orderId === this.activeDeclarationOrderId);
+      const order = this.orders && this.orders.find(o => o.orderId === this.activeDeclarationOrderId);
       if (order) {
         order.declarationDoc = dataUrl;
-        order.declarationType = file.type;
+        order.declarationType = file.type || 'image/jpeg';
         order.declarationName = file.name;
       }
 
       this.filterTable();
       this.openDeclarationModal(this.activeDeclarationOrderId);
-      alert('✅ Islak imzalı müşteri beyanı başarıyla eklendi! Yasal delil dosyasında (8. TÜM BELGELER) otomatik gösterilecek ve yazdırılabilecektir.');
+      alert('✅ Islak imzalı müşteri beyanı başarıyla eklendi! Yasal delil dosyasında (8. Islak İmzalı Beyan & Kimlik) otomatik gösterilecek ve yazdırılabilecektir.');
     };
 
     reader.readAsDataURL(file);

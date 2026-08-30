@@ -2856,17 +2856,17 @@
     </div>
 
 <!-- MÜŞTERİ ISLAK İMZALI BEYAN VE BELGE YÜKLEME MODALI -->
-<div id="declarationModal" class="admin-modal-overlay" onclick="if(event.target===this) AdminApp.closeDeclarationModal();" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.65); z-index:9999; align-items:center; justify-content:center; padding:16px;">
-  <div class="admin-modal-card" style="background:#FFF; border-radius:12px; max-width:680px; width:100%; box-shadow:0 25px 50px -12px rgba(0,0,0,0.3); overflow:hidden; display:flex; flex-direction:column; max-height:90vh;">
+<div class="admin-modal-overlay" id="declarationModal" onclick="if(event.target===this) AdminApp.closeDeclarationModal();">
+  <div class="admin-modal-box" style="max-width:680px; padding:0; overflow:hidden; border-radius:14px;">
     <div style="background:linear-gradient(135deg, #042926 0%, #084C47 100%); color:#FFF; padding:16px 20px; display:flex; justify-content:space-between; align-items:center;">
       <h3 style="margin:0; font-size:16px; font-weight:800; display:flex; align-items:center; gap:8px;">
         <span>📑</span>
         <span>Müşteri Islak İmzalı Beyanı & Kimlik/Kart İbrazı</span>
       </h3>
-      <button type="button" style="background:none; border:none; color:#FFF; font-size:20px; cursor:pointer; line-height:1;" onclick="AdminApp.closeDeclarationModal()">✕</button>
+      <button type="button" style="background:none; border:none; color:#FFF; font-size:22px; cursor:pointer; line-height:1;" onclick="AdminApp.closeDeclarationModal()">✕</button>
     </div>
 
-    <div style="padding:20px; overflow-y:auto; flex:1;" id="declarationModalBody">
+    <div style="padding:20px; max-height:75vh; overflow-y:auto;" id="declarationModalBody">
       <div id="declarationOrderInfo" style="background:#F0FDF4; border:1px solid #BBF7D0; border-radius:8px; padding:12px; margin-bottom:16px; font-size:12.5px; color:#166534;">
         Yükleniyor...
       </div>
@@ -2888,21 +2888,22 @@
       </div>
 
       <!-- Dosya Yükleme Alanı -->
-      <div style="background:#FFFDF7; border:1.5px dashed #CA8A04; border-radius:8px; padding:16px; text-align:center;">
-        <label style="font-weight:800; font-size:12.5px; color:#854D0E; display:block; margin-bottom:6px; cursor:pointer;">
-          📁 Yeni / Güncel Beyan Belgesi Yükle (PNG, JPG, PDF)
-        </label>
+      <div id="declarationDropZone" style="background:#FFFDF7; border:2px dashed #CA8A04; border-radius:10px; padding:20px; text-align:center; cursor:pointer; transition:background 0.2s;" onclick="document.getElementById('declarationFileInput').click()" ondragover="event.preventDefault(); this.style.background='#FEF3C7';" ondragleave="this.style.background='#FFFDF7';" ondrop="event.preventDefault(); this.style.background='#FFFDF7'; AdminApp.handleDeclarationDrop(event);">
         <input type="file" id="declarationFileInput" accept="image/png, image/jpeg, image/jpg, application/pdf" style="display:none;" onchange="AdminApp.handleDeclarationUpload(event)">
-        <button type="button" class="btn-admin-primary" style="background:#C2A768; color:#042926; border-color:#DFBA67; font-weight:800; padding:8px 18px; font-size:12px; cursor:pointer;" onclick="document.getElementById('declarationFileInput').click()">
-          📂 Bilgisayardan Dosya Seç
+        <div style="font-size:28px; margin-bottom:4px;">📥</div>
+        <div style="font-weight:800; font-size:13.5px; color:#854D0E; margin-bottom:4px;">
+          📁 Yeni / Güncel Beyan Belgesi Yükle (PNG, JPG, PDF)
+        </div>
+        <button type="button" class="btn-admin-primary" style="background:#C2A768; color:#042926; border-color:#DFBA67; font-weight:800; padding:8px 20px; font-size:12.5px; cursor:pointer; margin-top:6px;" onclick="event.stopPropagation(); document.getElementById('declarationFileInput').click();">
+          📂 Bilgisayardan Dosya Seç veya Sürükle Bırak
         </button>
-        <div style="font-size:11px; color:#78350F; margin-top:6px;">
+        <div style="font-size:11px; color:#78350F; margin-top:8px;">
           Maksimum 10MB · Yüklenen belge doğrudan yasal delil kitapçığına (8. TÜM BELGELER) eklenir ve yazdırılabilir.
         </div>
       </div>
     </div>
 
-    <div style="background:#F8FAFC; border-top:1px solid #E2E8F0; padding:12px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+    <div style="background:#F8FAFC; border-top:1px solid #E2E8F0; padding:14px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
       <div>
         <button type="button" class="btn-admin-secondary" id="btnDeleteDeclaration" style="color:#DC2626; border-color:#FCA5A5; background:#FEF2F2; font-size:11.5px; display:none;" onclick="AdminApp.removeDeclaration()">
           🗑️ Beyanı Kaldır
@@ -2921,6 +2922,6 @@
 </div>
 
 <script src="js/vip-payment.js?v=2.8.8"></script>
-<script src="js/admin.js?v=20260830-beyan-v3"></script>
+<script src="js/admin.js?v=20260830-beyan-v4"></script>
 </body>
 </html>
