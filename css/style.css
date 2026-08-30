@@ -2135,27 +2135,74 @@ p, span, li, td, th, label, input, button, select, textarea {
   pointer-events: none;
 }
 
-/* Precision Haute Horlogerie Loupe for Desktop */
+/* ==========================================================
+   HAUTE HORLOGERIE & JEWELLERY PRECISION LOUPE (DESKTOP)
+   ========================================================== */
 .pdp-horlogerie-loupe {
   position: absolute;
-  width: 190px;
-  height: 190px;
+  width: 220px;
+  height: 220px;
   border-radius: 50%;
-  border: 2.5px solid var(--color-gold);
-  box-shadow: 0 14px 38px rgba(0, 48, 87, 0.28), inset 0 0 18px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(255, 255, 255, 0.6);
+  border: 2px solid var(--color-gold);
+  box-shadow: 0 16px 48px rgba(0, 24, 48, 0.35), inset 0 0 24px rgba(0, 0, 0, 0.28), 0 0 0 3px rgba(255, 255, 255, 0.5), 0 0 0 4.5px rgba(194, 167, 104, 0.6);
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
-  transform: translate(-50%, -50%) scale(0.85);
-  transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.2s;
+  transform: translate(-50%, -50%) scale(0.88);
+  transition: opacity 0.22s ease, transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.22s;
   background-repeat: no-repeat;
   background-color: #FFFFFF;
   z-index: 10;
+  overflow: visible;
 }
 .pdp-horlogerie-loupe.active {
   opacity: 1;
   visibility: visible;
   transform: translate(-50%, -50%) scale(1);
+}
+/* Sapphire Crystal Anti-Reflective Glare */
+.pdp-horlogerie-loupe::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0.06) 42%, rgba(56, 140, 240, 0.08) 65%, transparent 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+/* Watchmaker Optical Reticle Crosshair */
+.pdp-horlogerie-loupe::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: 
+    radial-gradient(circle at center, transparent 32px, rgba(194, 167, 104, 0.12) 33px, transparent 34px),
+    linear-gradient(to right, transparent calc(50% - 0.5px), rgba(194, 167, 104, 0.35) 50%, transparent calc(50% + 0.5px)),
+    linear-gradient(to bottom, transparent calc(50% - 0.5px), rgba(194, 167, 104, 0.35) 50%, transparent calc(50% + 0.5px));
+  background-size: 100% 100%, 100% 24px, 24px 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 3;
+}
+/* Floating Power Badge */
+.pdp-loupe-mag-badge {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  background: #02121E;
+  color: var(--color-gold);
+  border: 1px solid var(--color-gold);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  pointer-events: none;
+  z-index: 5;
+  white-space: nowrap;
 }
 
 .pdp-badge-top-left {
@@ -2191,7 +2238,7 @@ p, span, li, td, th, label, input, button, select, textarea {
   position: absolute;
   bottom: 14px;
   left: 14px;
-  background: rgba(0, 48, 87, 0.88);
+  background: rgba(2, 18, 30, 0.9);
   color: #FFFFFF;
   font-size: 11px;
   font-weight: 600;
@@ -2200,12 +2247,14 @@ p, span, li, td, th, label, input, button, select, textarea {
   border-radius: var(--radius-full);
   pointer-events: none;
   z-index: 4;
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(194, 167, 104, 0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(194, 167, 104, 0.45);
   display: flex;
   align-items: center;
   gap: 6px;
   transition: opacity 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.35);
 }
 .pdp-hint-mobile { display: none; }
 .pdp-hint-desktop { display: inline; }
@@ -2218,71 +2267,129 @@ p, span, li, td, th, label, input, button, select, textarea {
   .pdp-main-photo-box img { transform: none !important; }
 }
 
-/* Fullscreen Mobile & Studio Zoom Modal */
+/* ==========================================================
+   ULTRA-HD HAUTE INSPECTION STUDIO MODAL (FULLSCREEN)
+   ========================================================== */
 .pdp-mobile-zoom-modal {
   position: fixed;
   inset: 0;
-  background: rgba(4, 18, 28, 0.97);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(2, 10, 18, 0.98);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
   z-index: 99999;
   display: none;
   flex-direction: column;
   opacity: 0;
   transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 .pdp-mobile-zoom-modal.open {
   display: flex;
   opacity: 1;
 }
+
+/* Top Studio Bar */
 .pdp-zoom-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
-  background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 100%);
+  padding: 16px 24px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);
   color: #FFFFFF;
-  z-index: 10;
+  z-index: 15;
+  border-bottom: 1px solid rgba(194, 167, 104, 0.18);
+  gap: 16px;
 }
 .pdp-zoom-brand-info {
   display: flex;
   flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.pdp-zoom-brand-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .pdp-zoom-brand {
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 2px;
   color: var(--color-gold);
   text-transform: uppercase;
 }
+.pdp-zoom-live-pill {
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(194, 167, 104, 0.15);
+  color: var(--color-gold);
+  border: 1px solid rgba(194, 167, 104, 0.35);
+  padding: 2px 7px;
+  border-radius: 10px;
+}
 .pdp-zoom-title {
   font-size: 14px;
   font-weight: 600;
-  color: #FFFFFF;
+  color: #F5F7FA;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 240px;
+  max-width: 480px;
 }
+
+/* Preset Hotspot Pills in Header */
+.pdp-zoom-presets-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pdp-zoom-preset-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.pdp-zoom-preset-btn:hover,
+.pdp-zoom-preset-btn.active {
+  background: var(--color-gold);
+  color: #02121E;
+  border-color: var(--color-gold);
+  box-shadow: 0 0 12px rgba(194, 167, 104, 0.4);
+}
+
 .pdp-zoom-close-btn {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.25);
   color: #FFFFFF;
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
+  font-size: 20px;
   cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+.pdp-zoom-close-btn:hover {
+  background: rgba(239, 68, 68, 0.85);
+  border-color: rgba(239, 68, 68, 1);
+  transform: scale(1.05);
 }
 .pdp-zoom-close-btn:active {
   transform: scale(0.92);
-  background: rgba(255, 255, 255, 0.25);
 }
+
+/* Stage Area */
 .pdp-zoom-stage {
   flex: 1;
   position: relative;
@@ -2292,6 +2399,10 @@ p, span, li, td, th, label, input, button, select, textarea {
   justify-content: center;
   width: 100%;
   height: 100%;
+  cursor: grab;
+}
+.pdp-zoom-stage.dragging {
+  cursor: grabbing;
 }
 .pdp-zoom-image-wrap {
   width: 100%;
@@ -2303,27 +2414,82 @@ p, span, li, td, th, label, input, button, select, textarea {
   will-change: transform;
 }
 .pdp-zoom-image-wrap img {
-  max-width: 90%;
+  max-width: 85%;
   max-height: 75vh;
   object-fit: contain;
   pointer-events: none;
-  filter: drop-shadow(0 15px 35px rgba(0,0,0,0.5));
+  filter: drop-shadow(0 20px 50px rgba(0,0,0,0.75));
 }
+
+/* Mini-Map Navigation Radar (Viewport Radar) */
+.pdp-zoom-radar-container {
+  position: absolute;
+  bottom: 84px;
+  right: 24px;
+  width: 110px;
+  height: 110px;
+  background: rgba(2, 12, 20, 0.85);
+  border: 1.5px solid rgba(194, 167, 104, 0.45);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), inset 0 0 12px rgba(0,0,0,0.5);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  pointer-events: auto;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.pdp-zoom-radar-container:hover {
+  border-color: var(--color-gold);
+  transform: scale(1.03);
+}
+.pdp-zoom-radar-thumb {
+  max-width: 82%;
+  max-height: 82%;
+  object-fit: contain;
+  opacity: 0.65;
+  pointer-events: none;
+}
+.pdp-zoom-radar-viewfinder {
+  position: absolute;
+  border: 1.5px solid var(--color-gold);
+  background: rgba(194, 167, 104, 0.22);
+  box-shadow: 0 0 10px rgba(194, 167, 104, 0.45), inset 0 0 6px rgba(194, 167, 104, 0.3);
+  pointer-events: none;
+  border-radius: 3px;
+  transition: all 0.08s ease-out;
+}
+
+/* Studio Bottom Controls */
 .pdp-zoom-footer-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 20px calc(14px + env(safe-area-inset-bottom, 12px));
-  background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, transparent 100%);
-  z-index: 10;
-  gap: 12px;
+  padding: 16px 24px calc(16px + env(safe-area-inset-bottom, 14px));
+  background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+  border-top: 1px solid rgba(194, 167, 104, 0.15);
+  z-index: 15;
+  gap: 16px;
 }
 .pdp-zoom-instructions {
-  font-size: 11.5px;
-  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
+}
+.pdp-zoom-readout-badge {
+  background: rgba(194, 167, 104, 0.18);
+  color: var(--color-gold);
+  border: 1px solid rgba(194, 167, 104, 0.45);
+  padding: 3px 9px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 11px;
 }
 .pdp-zoom-controls-group {
   display: flex;
@@ -2331,21 +2497,37 @@ p, span, li, td, th, label, input, button, select, textarea {
   gap: 8px;
 }
 .pdp-zoom-ctrl-btn {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(194, 167, 104, 0.4);
   color: #FFFFFF;
-  padding: 6px 14px;
+  padding: 7px 16px;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 700;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s ease;
+}
+.pdp-zoom-ctrl-btn:hover {
+  background: rgba(194, 167, 104, 0.25);
+  border-color: var(--color-gold);
 }
 .pdp-zoom-ctrl-btn:active {
-  background: rgba(194, 167, 104, 0.35);
+  transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+  .pdp-zoom-header { padding: 12px 16px; }
+  .pdp-zoom-presets-row { display: none; }
+  .pdp-zoom-radar-container {
+    width: 80px;
+    height: 80px;
+    bottom: 74px;
+    right: 16px;
+  }
+  .pdp-zoom-footer-bar { padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 12px)); }
 }
 
 /* Right: Buy Box */
@@ -4331,13 +4513,14 @@ mark.legal-highlight {
   object-position: left center;
 }
 .brand-logo-header {
-  width: 168px;
+  width: 176px;
   height: auto;
-  max-height: 74px;
+  max-height: 76px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.04));
 }
 .header .brand-logo-link {
-  width: 168px;
-  flex: 0 0 168px;
+  width: 176px;
+  flex: 0 0 176px;
 }
 .brand-logo-mobile-surface {
   width: 176px;
@@ -4369,16 +4552,16 @@ mark.legal-highlight {
   height: auto;
 }
 @media (max-width: 1180px) {
-  .brand-logo-header { width: 148px; }
-  .header .brand-logo-link { width: 148px; flex-basis: 148px; }
+  .brand-logo-header { width: 156px; }
+  .header .brand-logo-link { width: 156px; flex-basis: 156px; }
 }
 @media (max-width: 1024px) {
-  .brand-logo-header { width: 138px; }
-  .header .brand-logo-link { width: 138px; flex-basis: 138px; }
+  .brand-logo-header { width: 144px; }
+  .header .brand-logo-link { width: 144px; flex-basis: 144px; }
 }
 @media (max-width: 640px) {
-  .brand-logo-header { width: 128px; }
-  .header .brand-logo-link { width: 128px; flex-basis: 128px; }
+  .brand-logo-header { width: 134px; }
+  .header .brand-logo-link { width: 134px; flex-basis: 134px; }
   .brand-logo-mobile-surface { width: 164px; min-height: 60px; }
   .brand-logo-mobile { width: 146px; }
   .footer-brand-logo-wrap { width: 172px; }
