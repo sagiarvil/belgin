@@ -316,8 +316,12 @@
             titleEl.textContent = currentPayload.title || 'Özel Showroom Siparişi';
           }
         }
+        const isPaytr = currentPayload.provider === 'PAYTR';
         if (amountEl) amountEl.textContent = '₺' + Number(currentPayload.amount || 0).toLocaleString('tr-TR');
-        if (btn) btn.disabled = false;
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = isPaytr ? '<span>🔒</span> PayTR ile Güvenli Öde' : '<span>🔒</span> Akbank ile Güvenli Öde';
+        }
         
         syncDraft();
       } catch (err) {
@@ -331,6 +335,7 @@
       const identity = document.getElementById('custIdentity')?.value?.trim() || '';
       const address = document.getElementById('custAddress')?.value?.trim() || '';
       const amt = Number(currentPayload?.amount || 0);
+      const isPaytr = currentPayload?.provider === 'PAYTR';
 
       const draft = {
         orderId: currentPayload?.orderId,
@@ -341,7 +346,7 @@
         totalAmount: amt > 0 ? amt : 100,
         formattedAmount: '₺' + (amt > 0 ? amt : 100).toLocaleString('tr-TR'),
         termsAcceptedAt: new Date().toISOString(),
-        paymentMethod: 'Akbank Sanal POS 256-Bit SSL 3D Secure / Kredi Kartı'
+        paymentMethod: isPaytr ? 'PayTR 256-Bit SSL 3D Secure / Kredi Kartı' : 'Akbank Sanal POS 256-Bit SSL 3D Secure / Kredi Kartı'
       };
       sessionStorage.setItem('belgin_checkout_draft', JSON.stringify(draft));
       localStorage.setItem('belgin_checkout_draft', JSON.stringify(draft));
@@ -372,11 +377,14 @@
 
       syncDraft();
 
+      const provider = (currentPayload?.provider || 'AKBANK').toUpperCase();
       const btn = document.getElementById('btnCompletePayment');
       const originalHtml = btn ? btn.innerHTML : '';
       if (btn) {
         btn.disabled = true;
-        btn.innerHTML = '<span>🔒</span> Akbank Güvenli Ödeme Ekranına Geçiliyor...';
+        btn.innerHTML = provider === 'AKBANK' 
+          ? '<span>🔒</span> Akbank Güvenli Ödeme Ekranına Geçiliyor...'
+          : '<span>🔒</span> Güvenli 3D Ödeme Ekranına Geçiliyor...';
       }
 
       try {
@@ -399,7 +407,7 @@
         ];
 
         const orderPayload = {
-          provider: 'AKBANK',
+          provider: provider,
           isVipPayment: true,
           isVip22: is22,
           vipToken: token,
@@ -429,11 +437,21 @@
         try { data = await response.json(); } catch (_) { data = {}; }
 
         if (!response.ok || !data.success) {
-          throw new Error(data.message || 'Akbank Sanal POS bağlantısı kurulamadı.');
+          throw new Error(data.message || `${provider} Sanal POS bağlantısı kurulamadı.`);
+        }
+
+        if (data.iframeUrl) {
+          window.location.href = data.iframeUrl;
+          return;
+        }
+
+        if (data.token && provider === 'PAYTR') {
+          window.location.href = `https://www.paytr.com/odeme/guvenli/${data.token}`;
+          return;
         }
 
         if (data.gatewayUrl && data.postParams) {
-          // DOĞRUDAN RESMİ AKBANK 256-BIT SSL PAY HOSTING KAPISINA GÖNDERİM
+          // DOĞRUDAN RESMİ 256-BIT SSL PAY HOSTING KAPISINA GÖNDERİM
           const form = document.createElement('form');
           form.method = 'POST';
           form.action = data.gatewayUrl;
