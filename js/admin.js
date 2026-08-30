@@ -881,70 +881,81 @@ const AdminApp = {
   },
 
   openDeclarationModal(orderId) {
-    this.activeDeclarationOrderId = orderId;
-    const order = this.orders.find(o => o.orderId === orderId) || {
-      orderId,
-      totalAmount: 120000,
-      customerName: 'İdris Emre Bük',
-      customerIdentity: '32395613664',
-      createdAt: '2026-08-28T09:00:00.000Z'
-    };
+    try {
+      this.activeDeclarationOrderId = orderId;
+      const order = (this.orders && this.orders.find(o => o && o.orderId === orderId)) || {
+        orderId: orderId || 'BLG-UNKNOWN',
+        totalAmount: 120000,
+        customerName: 'İdris Emre Bük',
+        customerIdentity: '32395613664',
+        createdAt: '2026-08-28T09:00:00.000Z'
+      };
 
-    const modal = document.getElementById('declarationModal');
-    const infoEl = document.getElementById('declarationOrderInfo');
-    const emptyEl = document.getElementById('declarationEmptyState');
-    const previewEl = document.getElementById('declarationDocPreview');
-    const imgEl = document.getElementById('declarationImgElement');
-    const pdfNotice = document.getElementById('declarationPdfNotice');
-    const pdfName = document.getElementById('declarationPdfName');
-    const btnDel = document.getElementById('btnDeleteDeclaration');
-
-    if (!modal) {
-      console.error('[AdminApp] declarationModal bulunamadı.');
-      return;
-    }
-
-    const decl = (order.declarationDoc) ? {
-      docUrl: order.declarationDoc,
-      docType: order.declarationType || 'image/jpeg',
-      docName: order.declarationName || 'Müşteri İmzalı Beyan Belgesi',
-      time: order.declarationTime || new Date(order.createdAt).toLocaleString('tr-TR'),
-      note: order.declarationNote || ''
-    } : this.getStoredDeclaration(orderId);
-
-    if (infoEl) {
-      infoEl.innerHTML = `
-        <strong>Sipariş No:</strong> <span style="font-family:monospace; font-weight:800;">${order.orderId}</span> | 
-        <strong>Müşteri:</strong> ${order.customerName || 'Müşteri'} (TCKN: ${order.customerIdentity || '32395613664'}) | 
-        <strong>Tutar:</strong> ₺${Number(order.totalAmount || 0).toLocaleString('tr-TR')} | 
-        <strong>İşlem Saati:</strong> ${new Date(order.createdAt).toLocaleString('tr-TR')}
-      `;
-    }
-
-    if (decl && decl.docUrl) {
-      if (emptyEl) emptyEl.style.display = 'none';
-      if (previewEl) previewEl.style.display = 'block';
-      if (btnDel) btnDel.style.display = 'inline-block';
-
-      if (decl.docType === 'application/pdf' || String(decl.docUrl).startsWith('data:application/pdf')) {
-        if (imgEl) imgEl.style.display = 'none';
-        if (pdfNotice) pdfNotice.style.display = 'block';
-        if (pdfName) pdfName.textContent = decl.docName || 'musteri_beyani.pdf';
-      } else {
-        if (imgEl) {
-          imgEl.style.display = 'block';
-          imgEl.src = decl.docUrl;
-        }
-        if (pdfNotice) pdfNotice.style.display = 'none';
+      const modal = document.getElementById('declarationModal');
+      if (!modal) {
+        console.error('[AdminApp] declarationModal bulunamadı.');
+        return;
       }
-    } else {
-      if (emptyEl) emptyEl.style.display = 'block';
-      if (previewEl) previewEl.style.display = 'none';
-      if (btnDel) btnDel.style.display = 'none';
-    }
 
-    modal.classList.add('open');
-    modal.style.display = 'flex';
+      const infoEl = document.getElementById('declarationOrderInfo');
+      const emptyEl = document.getElementById('declarationEmptyState');
+      const previewEl = document.getElementById('declarationDocPreview');
+      const imgEl = document.getElementById('declarationImgElement');
+      const pdfNotice = document.getElementById('declarationPdfNotice');
+      const pdfName = document.getElementById('declarationPdfName');
+      const btnDel = document.getElementById('btnDeleteDeclaration');
+
+      const decl = (order && order.declarationDoc) ? {
+        docUrl: order.declarationDoc,
+        docType: order.declarationType || 'image/jpeg',
+        docName: order.declarationName || 'Müşteri İmzalı Beyan Belgesi',
+        time: order.declarationTime || '28.08.2026 12:00',
+        note: order.declarationNote || ''
+      } : (this.getStoredDeclaration ? this.getStoredDeclaration(orderId) : null);
+
+      if (infoEl) {
+        let dateFormatted = '28.08.2026 12:00';
+        try {
+          if (order.createdAt) dateFormatted = new Date(order.createdAt).toLocaleString('tr-TR');
+        } catch (_) {}
+        infoEl.innerHTML = `
+          <strong>Sipariş No:</strong> <span style="font-family:monospace; font-weight:800;">${order.orderId}</span> | 
+          <strong>Müşteri:</strong> ${order.customerName || 'Müşteri'} (TCKN: ${order.customerIdentity || '32395613664'}) | 
+          <strong>Tutar:</strong> ₺${Number(order.totalAmount || 0).toLocaleString('tr-TR')} | 
+          <strong>İşlem Saati:</strong> ${dateFormatted}
+        `;
+      }
+
+      if (decl && decl.docUrl) {
+        if (emptyEl) emptyEl.style.display = 'none';
+        if (previewEl) previewEl.style.display = 'block';
+        if (btnDel) btnDel.style.display = 'inline-block';
+
+        if (decl.docType === 'application/pdf' || String(decl.docUrl).startsWith('data:application/pdf')) {
+          if (imgEl) imgEl.style.display = 'none';
+          if (pdfNotice) pdfNotice.style.display = 'block';
+          if (pdfName) pdfName.textContent = decl.docName || 'musteri_beyani.pdf';
+        } else {
+          if (imgEl) {
+            imgEl.style.display = 'block';
+            imgEl.src = decl.docUrl;
+          }
+          if (pdfNotice) pdfNotice.style.display = 'none';
+        }
+      } else {
+        if (emptyEl) emptyEl.style.display = 'block';
+        if (previewEl) previewEl.style.display = 'none';
+        if (btnDel) btnDel.style.display = 'none';
+      }
+
+      modal.classList.add('open');
+      modal.style.display = 'flex';
+      modal.style.visibility = 'visible';
+      modal.style.opacity = '1';
+      modal.style.zIndex = '999999';
+    } catch (err) {
+      console.error('[AdminApp] openDeclarationModal hatası:', err);
+    }
   },
 
   closeDeclarationModal() {
@@ -952,6 +963,7 @@ const AdminApp = {
     if (modal) {
       modal.classList.remove('open');
       modal.style.display = 'none';
+      modal.style.visibility = 'hidden';
     }
     this.activeDeclarationOrderId = null;
   },
@@ -4616,6 +4628,18 @@ const AdminApp = {
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#039;');
+  }
+};
+
+window.AdminApp = AdminApp;
+window.openDeclarationModal = function(id) {
+  if (window.AdminApp && typeof window.AdminApp.openDeclarationModal === 'function') {
+    window.AdminApp.openDeclarationModal(id);
+  }
+};
+window.closeDeclarationModal = function() {
+  if (window.AdminApp && typeof window.AdminApp.closeDeclarationModal === 'function') {
+    window.AdminApp.closeDeclarationModal();
   }
 };
 
