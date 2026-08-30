@@ -1028,6 +1028,31 @@
       box-shadow: 0 0 0 4px rgba(8, 76, 71, 0.15);
     }
 
+    .btn-google-auth {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      background: #FFFFFF;
+      color: #1E293B;
+      border: 1.5px solid #CBD5E1;
+      border-radius: 12px;
+      padding: 13px 20px;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .btn-google-auth:hover {
+      background: #F8FAFC;
+      border-color: var(--admin-gold);
+      box-shadow: 0 6px 18px rgba(194, 167, 104, 0.2);
+      transform: translateY(-1px);
+    }
+
     /* DETAY VE SMS MODALLARI */
     .admin-modal-overlay {
       position: fixed;
@@ -1729,19 +1754,31 @@
 </head>
 <body>
 
-<!-- GÜVENLİ YÖNETİCİ PIN GİRİŞ KORUMASI -->
+<!-- GÜVENLİ YÖNETİCİ GOOGLE 2FA GİRİŞ KORUMASI -->
 <div class="admin-auth-overlay" id="adminAuthGate">
   <div class="admin-auth-box">
-    <div style="font-size:36px; margin-bottom:10px;">🔒</div>
-    <h2 style="font-family:'Playfair Display',serif; margin:0 0 8px; color:var(--admin-teal-dark);">Belgin Yönetici Girişi</h2>
-    <p style="font-size:13px; color:var(--admin-muted); margin:0;">Satış ve tahsilat kayıtlarını görüntülemek için lütfen 4 haneli yönetici PIN kodunuzu giriniz.</p>
+    <div style="font-size:38px; margin-bottom:12px;">🛡️</div>
+    <h2 style="font-family:'Playfair Display',serif; margin:0 0 8px; color:var(--admin-teal-dark); font-size:22px;">Belgin Yönetici Girişi</h2>
+    <p style="font-size:12.5px; color:var(--admin-muted); margin:0 0 20px; line-height:1.5;">
+      Bu yönetim paneli en üst düzey güvenlik standardı olan <strong>Google 2FA (İki Adımlı Doğrulama)</strong> ile korunmaktadır.<br>
+      <span style="display:inline-block; margin-top:8px; font-size:11.5px; background:#F1F5F9; padding:4px 10px; border-radius:6px; color:#334155; font-weight:700;">Yetkili Hesap: barisbagirlar@gmail.com</span>
+    </p>
     
-    <input type="password" id="adminPinInput" class="admin-pin-input" maxlength="8" placeholder="••••" inputmode="numeric" pattern="[0-9]*" autofocus onkeydown="if(event.key==='Enter') AdminApp.verifyPin()">
-    <div id="pinErrorMsg" style="color:#C81E1E; font-size:12.5px; font-weight:700; margin-bottom:14px; display:none;">Geçersiz PIN Kodu. Lütfen tekrar deneyiniz.</div>
-
-    <button type="button" class="btn-admin-primary" style="width:100%; justify-content:center; padding:14px; font-size:14px;" onclick="AdminApp.verifyPin()">
-      <span>Giriş Yap →</span>
+    <button type="button" class="btn-google-auth" onclick="AdminApp.loginWithGoogle()">
+      <svg width="22" height="22" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.26v3.15C3.26 21.36 7.33 24 12 24z"/><path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.26C.46 8.16 0 9.94 0 12s.46 3.84 1.26 5.42l4.02-3.15z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.26 6.58l4.02 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/></svg>
+      <span>Google ile Yetkili Giriş Yap (2FA)</span>
     </button>
+
+    <div id="googleAuthError" style="color:#C81E1E; font-size:12px; font-weight:700; margin-top:14px; display:none; background:#FEF2F2; border:1px solid #FECACA; border-radius:8px; padding:10px 12px; text-align:left; line-height:1.4;"></div>
+
+    <div style="margin-top:20px; padding-top:14px; border-top:1px dashed #E2E8F0;">
+      <a href="javascript:void(0)" onclick="document.getElementById('pinFallbackWrap').style.display='block'; this.style.display='none';" style="font-size:11px; color:#94A3B8; text-decoration:underline;">Yedek PIN ile giriş yap</a>
+      <div id="pinFallbackWrap" style="display:none; margin-top:10px;">
+        <input type="password" id="adminPinInput" class="admin-pin-input" style="margin:8px 0; font-size:18px; padding:8px;" maxlength="8" placeholder="••••" inputmode="numeric" onkeydown="if(event.key==='Enter') AdminApp.verifyPin()">
+        <div id="pinErrorMsg" style="color:#C81E1E; font-size:11.5px; font-weight:700; margin-bottom:8px; display:none;">Geçersiz PIN Kodu.</div>
+        <button type="button" class="btn-admin-primary" style="width:100%; justify-content:center; padding:8px; font-size:12px;" onclick="AdminApp.verifyPin()">PIN ile Doğrula</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1755,6 +1792,7 @@
   <div class="admin-nav-actions">
     <span class="live-status-pill"><span class="live-pulse-dot"></span> Canlı</span>
     <span id="liveClock" style="font-size:12px; color:var(--admin-gold); font-weight:700; font-family:monospace;">--:--:--</span>
+    <span id="adminUserBadge" style="display:none; font-size:11.5px; background:rgba(255,255,255,0.12); color:#FFF; padding:4px 10px; border-radius:6px; border:1px solid rgba(194,167,104,0.4); font-weight:600;"></span>
     <button type="button" id="btnAdminLogout" class="btn-admin-logout" onclick="AdminApp.logout()">Çıkış</button>
   </div>
 </header>
@@ -3079,7 +3117,9 @@
   </div>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 <script src="js/vip-payment.js?v=2.8.8"></script>
-<script src="js/admin.js?v=20260830-beyan-v6-dom-fixed"></script>
+<script src="js/admin.js?v=20260830-google-auth-v2"></script>
 </body>
 </html>

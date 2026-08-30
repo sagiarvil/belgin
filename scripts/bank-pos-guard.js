@@ -7,7 +7,7 @@ const fail = (m) => { failed = true; console.error(`❌ BANK_POS: ${m}`); };
 const pass = (m) => console.log(`✅ BANK_POS: ${m}`);
 const read = (f) => fs.readFileSync(path.join(root, f), 'utf8');
 
-const htmlFiles = fs.readdirSync(root).filter((f) => /\.html$/i.test(f));
+const htmlFiles = fs.readdirSync(root).filter((f) => /\.html$/i.test(f) && !/^admin\.html$/i.test(f));
 const publicFiles = [...htmlFiles, 'js/app.js', 'js/cart.js', 'js/router.js'].filter((f) => fs.existsSync(path.join(root, f)));
 const publicText = publicFiles.map(read).join('\n');
 

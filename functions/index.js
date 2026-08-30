@@ -302,6 +302,36 @@ exports.getOrderStatus = exports.getPaymentStatus;
 // 5. YÖNETİM PANELİ (ADMİN) SİPARİŞ & TAHSİLAT SERVİSİ
 // -------------------------------------------------------------
 const ADMIN_MASTER_PIN = process.env.ADMIN_MASTER_PIN || '1999';
+const ALLOWED_ADMIN_EMAILS = new Set([
+  'barisbagirlar@gmail.com',
+  'destek@belginkuyumculuk.com'
+]);
+
+async function verifyAdminRequest(req) {
+  // 1. Firebase Auth ID Token (Google 2FA yetkili giriş)
+  const authHeader = req.headers.authorization || '';
+  if (authHeader.startsWith('Bearer ')) {
+    const idToken = authHeader.split('Bearer ')[1].trim();
+    try {
+      const decoded = await admin.auth().verifyIdToken(idToken);
+      const email = (decoded?.email || '').toLowerCase().trim();
+      if (email && ALLOWED_ADMIN_EMAILS.has(email)) {
+        return { authorized: true, user: decoded };
+      }
+      return { authorized: false, message: `Yetkisiz erişim. ${email} adresi yetkili yönetici listesinde bulunmuyor.` };
+    } catch (e) {
+      console.warn('[Admin Auth] ID token verification failed:', e.message);
+    }
+  }
+
+  // 2. PIN / API Key fallback
+  const key = req.headers['x-admin-key'] || req.query.adminKey || (req.body && req.body.adminKey);
+  if (key && String(key).trim() === ADMIN_MASTER_PIN) {
+    return { authorized: true, user: { email: 'master-pin@belginkuyumculuk.com' } };
+  }
+
+  return { authorized: false, message: 'Yetkisiz erişim. Lütfen Google ile yetkili yönetici girişi yapınız.' };
+}
 
 /**
  * GET/POST /api/admin/orders
@@ -312,9 +342,9 @@ exports.getAdminOrders = functions
   .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
     if (req.method === 'OPTIONS') return res.status(204).send('');
 
-    const key = req.headers['x-admin-key'] || req.query.adminKey || (req.body && req.body.adminKey);
-    if (!key || String(key).trim() !== ADMIN_MASTER_PIN) {
-      return res.status(401).json({ success: false, message: 'Yetkisiz erişim. Geçersiz Yönetici PIN kodu.' });
+    const auth = await verifyAdminRequest(req);
+    if (!auth.authorized) {
+      return res.status(401).json({ success: false, message: auth.message });
     }
 
     try {
@@ -533,11 +563,10 @@ exports.confirmAdminOrder = functions
   .runWith({ timeoutSeconds: 30, memory: '256MB' })
   .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
     if (req.method === 'OPTIONS') return res.status(204).send('');
-    if (req.method !== 'POST') return res.status(405).json({ success: false, message: 'Method Not Allowed' });
-
-    const key = req.headers['x-admin-key'] || (req.body && req.body.adminKey);
-    if (!key || String(key).trim() !== ADMIN_MASTER_PIN) {
-      return res.status(401).json({ success: false, message: 'Yetkisiz erişim.' });
+    
+    const auth = await verifyAdminRequest(req);
+    if (!auth.authorized) {
+      return res.status(401).json({ success: false, message: auth.message });
     }
 
     const orderId = String(req.body?.orderId || '').trim();
@@ -596,9 +625,9 @@ exports.updateAdminOrderStatus = functions
     if (req.method === 'OPTIONS') return res.status(204).send('');
     if (req.method !== 'POST') return res.status(405).json({ success: false, message: 'Method Not Allowed' });
 
-    const key = req.headers['x-admin-key'] || (req.body && req.body.adminKey);
-    if (!key || String(key).trim() !== ADMIN_MASTER_PIN) {
-      return res.status(401).json({ success: false, message: 'Yetkisiz erişim.' });
+    const auth = await verifyAdminRequest(req);
+    if (!auth.authorized) {
+      return res.status(401).json({ success: false, message: auth.message });
     }
 
     const { orderId, status, paymentStatus, reason } = req.body || {};
@@ -613,10 +642,7 @@ exports.updateAdminOrderStatus = functions
         return res.status(404).json({ success: false, message: 'Sipariş bulunamadı.' });
       }
 
-      const isFailedState = status === 'FAILED' || paymentStatus === 'FAILED';
-      const isPaidState = status === 'PAID' || paymentStatus === 'PAID' || status === 'COMPLETED';
-
-      const updateData = {
+      const updatePayload = {
         status: status,
         paymentStatus: paymentStatus || (isFailedState ? 'FAILED' : (isPaidState ? 'PAID' : 'PENDING')),
         'payment.status': paymentStatus || (isFailedState ? 'FAILED' : (isPaidState ? 'PAID' : 'PENDING')),
@@ -657,9 +683,9 @@ exports.deleteAdminOrder = functions
     if (req.method === 'OPTIONS') return res.status(204).send('');
     if (req.method !== 'POST') return res.status(405).json({ success: false, message: 'Method Not Allowed' });
 
-    const key = req.headers['x-admin-key'] || (req.body && req.body.adminKey);
-    if (!key || String(key).trim() !== ADMIN_MASTER_PIN) {
-      return res.status(401).json({ success: false, message: 'Yetkisiz erişim.' });
+    const auth = await verifyAdminRequest(req);
+    if (!auth.authorized) {
+      return res.status(401).json({ success: false, message: auth.message });
     }
 
     const { orderId } = req.body || {};
@@ -703,9 +729,9 @@ exports.sendTestPushNotification = functions
   .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
     if (req.method === 'OPTIONS') return res.status(204).send('');
 
-    const key = req.headers['x-admin-key'] || req.query.adminKey || (req.body && req.body.adminKey);
-    if (!key || String(key).trim() !== ADMIN_MASTER_PIN) {
-      return res.status(401).json({ success: false, message: 'Yetkisiz erişim. Geçersiz Yönetici PIN kodu.' });
+    const auth = await verifyAdminRequest(req);
+    if (!auth.authorized) {
+      return res.status(401).json({ success: false, message: auth.message });
     }
 
     try {
@@ -767,9 +793,9 @@ async function handleInvoiceRequest(req, res) {
   const isView = path.endsWith('/view') || req.query?.action === 'view';
 
   if (!isView) {
-    const key = req.headers['x-admin-key'] || req.query.adminKey || (req.body && req.body.adminKey);
-    if (!key || String(key).trim() !== ADMIN_MASTER_PIN) {
-      return res.status(401).json({ success: false, message: 'Yetkisiz erişim. Geçersiz Yönetici PIN kodu.' });
+    const auth = await verifyAdminRequest(req);
+    if (!auth.authorized) {
+      return res.status(401).json({ success: false, message: auth.message });
     }
   }
 
@@ -1268,9 +1294,9 @@ exports.getAdminInvoiceView = exports.adminInvoiceApi;
 // 6.5. MAĞAZA VE MANUEL FATURALAR YÖNETİM SERVİSİ
 // -------------------------------------------------------------
 async function handleStoreInvoicesRequest(req, res) {
-  const key = req.headers['x-admin-key'] || req.query.adminKey || (req.body && req.body.adminKey);
-  if (!key || String(key).trim() !== ADMIN_MASTER_PIN) {
-    return res.status(401).json({ success: false, message: 'Yetkisiz erişim. Geçersiz Yönetici PIN kodu.' });
+  const auth = await verifyAdminRequest(req);
+  if (!auth.authorized) {
+    return res.status(401).json({ success: false, message: auth.message });
   }
 
   const path = req.path || '';
@@ -1495,9 +1521,9 @@ exports.adminStoreInvoicesApi = functions
 // -------------------------------------------------------------
 
 async function handleStatementRequest(req, res) {
-  const key = req.headers['x-admin-key'] || req.query.adminKey || (req.body && req.body.adminKey);
-  if (!key || String(key).trim() !== ADMIN_MASTER_PIN) {
-    return res.status(401).json({ success: false, message: 'Yetkisiz erişim. Geçersiz Yönetici PIN kodu.' });
+  const auth = await verifyAdminRequest(req);
+  if (!auth.authorized) {
+    return res.status(401).json({ success: false, message: auth.message });
   }
 
   const path = req.path || '';

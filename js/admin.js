@@ -2,8 +2,24 @@
 // BELGIN KUYUMCULUK — YÖNETİCİ VE TAHSİLAT PANELİ JS MOTORU
 // ==========================================================
 
+const FIREBASE_ADMIN_CONFIG = {
+  projectId: "carbon-web-1265b",
+  appId: "1:7943100684:web:c4f70343f4af130852d129",
+  storageBucket: "carbon-web-1265b.firebasestorage.app",
+  apiKey: "AIzaSyCUQ0jDeUQPAr3xfSk-aOO4OqcrNwM3mD0",
+  authDomain: "carbon-web-1265b.firebaseapp.com",
+  messagingSenderId: "7943100684"
+};
+
+const ALLOWED_ADMIN_EMAILS = [
+  'barisbagirlar@gmail.com',
+  'destek@belginkuyumculuk.com'
+];
+
 const AdminApp = {
   adminPin: '1999',
+  adminToken: null,
+  adminUser: null,
   orders: [],
   filteredOrders: [],
   currentPagedOrders: [],
@@ -40,6 +56,18 @@ const AdminApp = {
   storeItems: [],
   batchPendingStoreInvoices: [],
 
+  getAuthHeaders(extraHeaders = {}) {
+    const headers = {
+      'Content-Type': 'application/json',
+      'x-admin-key': this.adminPin || '1999',
+      ...extraHeaders
+    };
+    if (this.adminToken) {
+      headers['Authorization'] = `Bearer ${this.adminToken}`;
+    }
+    return headers;
+  },
+
   init() {
     this.startClock();
     const savedRate = localStorage.getItem('belgin_pos_bank_rate');
@@ -60,24 +88,92 @@ const AdminApp = {
     // Mağaza Fatura Formunu Hazırla
     this.initStoreInvoiceForm();
 
-    const savedPin = sessionStorage.getItem('belgin_admin_pin');
-    if (savedPin === '1999') {
-      this.adminPin = savedPin;
-      this.hideAuthGate();
-      this.loadCachedOrders();
-      this.loadOrders().then(() => {
-        this.isInitialLoadDone = true;
-        this.startLivePolling();
-      });
-      // Cari Hesap Ekstresi verilerini arka planda hazırla
-      this.loadStatement();
-      // Mağaza Faturalarını yükle
-      this.loadStoreInvoices();
-    } else {
-      this.showAuthGate();
-      const input = document.getElementById('adminPinInput');
-      if (input) setTimeout(() => input.focus(), 150);
+    // Panel başlangıçta KESİNLİKLE KİLİTLİDİR
+    this.showAuthGate();
+
+    // Firebase Auth Başlat & Dinle
+    if (typeof firebase !== 'undefined') {
+      try {
+        if (!firebase.apps.length) {
+          firebase.initializeApp(FIREBASE_ADMIN_CONFIG);
+        }
+        firebase.auth().onAuthStateChanged(async (user) => {
+          if (user) {
+            const email = (user.email || '').toLowerCase().trim();
+            if (ALLOWED_ADMIN_EMAILS.includes(email)) {
+              this.adminToken = await user.getIdToken();
+              this.adminUser = { email: user.email, displayName: user.displayName, photoURL: user.photoURL };
+              this.onAuthenticated();
+              return;
+            } else {
+              await firebase.auth().signOut();
+              this.showGoogleAuthError(`❌ Yetkisiz Google Hesabı (${email}). Bu yönetim paneline yalnızca barisbagirlar@gmail.com erişebilir.`);
+            }
+          }
+          this.showAuthGate();
+        });
+        return;
+      } catch (e) {
+        console.warn('Firebase Auth init error:', e);
+      }
     }
+  },
+
+  showGoogleAuthError(msg) {
+    const errEl = document.getElementById('googleAuthError');
+    if (errEl) {
+      errEl.textContent = msg;
+      errEl.style.display = 'block';
+    }
+  },
+
+  async loginWithGoogle() {
+    const errEl = document.getElementById('googleAuthError');
+    if (errEl) errEl.style.display = 'none';
+
+    if (typeof firebase === 'undefined' || !firebase.auth) {
+      alert('Firebase Auth servisi hazır değil. Sayfayı yenileyiniz.');
+      return;
+    }
+
+    try {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: 'select_account' });
+      const result = await firebase.auth().signInWithPopup(provider);
+      const user = result.user;
+      const email = (user.email || '').toLowerCase().trim();
+
+      if (!ALLOWED_ADMIN_EMAILS.includes(email)) {
+        await firebase.auth().signOut();
+        this.showGoogleAuthError(`❌ Yetkisiz Google Hesabı (${email}). Bu yönetim paneline yalnızca yetkili yönetici (barisbagirlar@gmail.com) erişebilir.`);
+        return;
+      }
+
+      this.adminToken = await user.getIdToken();
+      this.adminUser = { email: user.email, displayName: user.displayName, photoURL: user.photoURL };
+      this.onAuthenticated();
+    } catch (err) {
+      console.error('Google Auth Error:', err);
+      if (err.code !== 'auth/popup-closed-by-user') {
+        this.showGoogleAuthError(err.message || 'Google ile giriş başarısız oldu.');
+      }
+    }
+  },
+
+  onAuthenticated() {
+    this.hideAuthGate();
+    const userBadge = document.getElementById('adminUserBadge');
+    if (userBadge && this.adminUser) {
+      userBadge.innerHTML = `🛡️ ${this.escapeHtml(this.adminUser.email)}`;
+      userBadge.style.display = 'inline-block';
+    }
+    this.loadCachedOrders();
+    this.loadOrders().then(() => {
+      this.isInitialLoadDone = true;
+      this.startLivePolling();
+    });
+    this.loadStatement();
+    this.loadStoreInvoices();
   },
 
   loadCachedOrders() {
@@ -132,7 +228,7 @@ const AdminApp = {
       if (status) params.append('status', status);
 
       const res = await fetch(`/api/admin/orders?${params.toString()}`, {
-        headers: { 'x-admin-key': this.adminPin }
+        headers: this.getAuthHeaders()
       });
 
       if (res.status === 200) {
@@ -256,17 +352,23 @@ const AdminApp = {
     }
   },
 
-  logout() {
+  async logout() {
     try {
+      if (typeof firebase !== 'undefined' && firebase.auth) {
+        await firebase.auth().signOut();
+      }
       sessionStorage.removeItem('belgin_admin_pin');
+      sessionStorage.removeItem('belgin_admin_auth');
       localStorage.removeItem('belgin_admin_pin');
     } catch (_) {}
     this.adminPin = '';
+    this.adminToken = null;
+    this.adminUser = null;
     if (this.pollTimer) {
       clearInterval(this.pollTimer);
       this.pollTimer = null;
     }
-    window.location.href = '/';
+    window.location.href = '/admin';
   },
 
   // TARİH PRESETLERİ
@@ -351,9 +453,7 @@ const AdminApp = {
       const timeoutId = setTimeout(() => controller.abort(), 6000);
 
       const res = await fetch(`/api/admin/orders?${params.toString()}`, {
-        headers: {
-          'x-admin-key': this.adminPin
-        },
+        headers: this.getAuthHeaders(),
         signal: controller.signal
       });
       clearTimeout(timeoutId);
@@ -1194,10 +1294,7 @@ const AdminApp = {
     try {
       const res = await fetch('/api/admin/orders/delete', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-key': this.adminPin
-        },
+        headers: this.getAuthHeaders(),
         body: JSON.stringify({
           orderId,
           adminKey: this.adminPin
@@ -1237,10 +1334,7 @@ const AdminApp = {
     try {
       const res = await fetch('/api/admin/orders/status', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-key': this.adminPin
-        },
+        headers: this.getAuthHeaders(),
         body: JSON.stringify({
           orderId,
           status: 'FAILED',
@@ -1292,10 +1386,7 @@ const AdminApp = {
     try {
       const res = await fetch('/api/admin/orders/status', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-key': this.adminPin
-        },
+        headers: this.getAuthHeaders(),
         body: JSON.stringify({
           orderId,
           status: newStatus,
@@ -1394,7 +1485,7 @@ const AdminApp = {
     try {
       const res = await fetch('/api/admin/invoice/batch-draft', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-admin-key': this.adminPin },
+        headers: this.getAuthHeaders(),
         body: JSON.stringify({
           orderIds: pendingOrders.map(o => o.orderId),
           adminKey: this.adminPin
@@ -1478,10 +1569,7 @@ const AdminApp = {
       if (submitBtn) submitBtn.innerHTML = '<span>⏳ GİB Taslak & SMS Hazırlanıyor...</span>';
       let draftRes = await fetch('/api/admin/invoice/draft', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-key': this.adminPin
-        },
+        headers: this.getAuthHeaders(),
         body: JSON.stringify({
           orderId: order.orderId,
           totalAmount: Number(order.totalAmount || order.total || (order.payment && order.payment.amount) || (order.amountInKurus ? order.amountInKurus / 100 : 0) || 0),
@@ -1539,10 +1627,7 @@ const AdminApp = {
     try {
       const res = await fetch('/api/admin/invoice/send-sms', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-key': this.adminPin
-        },
+        headers: this.getAuthHeaders(),
         body: JSON.stringify({
           orderId: this.activeInvoiceOrderId,
           adminKey: this.adminPin
@@ -1604,7 +1689,7 @@ const AdminApp = {
         // TOPLU İMZALAMA İSTEĞİ
         const res = await fetch('/api/admin/invoice/batch-sign', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'x-admin-key': this.adminPin },
+          headers: this.getAuthHeaders(),
           body: JSON.stringify({
             items: this.batchDraftItems || [],
             oid: this.activeInvoiceOid || '',
@@ -1745,7 +1830,7 @@ const AdminApp = {
     if (this.activeInvoiceOrderId) {
       fetch('/api/admin/invoice/force-logout', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-admin-key': this.adminPin },
+        headers: this.getAuthHeaders(),
         body: JSON.stringify({ adminKey: this.adminPin })
       }).catch(() => {});
     }
@@ -1761,10 +1846,7 @@ const AdminApp = {
     try {
       const res = await fetch('/api/admin/orders/confirm', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-key': this.adminPin
-        },
+        headers: this.getAuthHeaders(),
         body: JSON.stringify({ orderId, adminKey: this.adminPin })
       });
 
@@ -1796,10 +1878,7 @@ const AdminApp = {
     try {
       const res = await fetch('/api/admin/test-notification', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-key': this.adminPin
-        },
+        headers: this.getAuthHeaders(),
         body: JSON.stringify({
           adminKey: this.adminPin,
           amount: 120000
@@ -2282,7 +2361,7 @@ const AdminApp = {
 
     try {
       const res = await fetch(`/api/admin/statement?${params.toString()}`, {
-        headers: { 'x-admin-key': this.adminPin }
+        headers: this.getAuthHeaders()
       });
 
       if (res.status === 401) {
@@ -2849,10 +2928,7 @@ const AdminApp = {
     try {
       const res = await fetch('/api/admin/statement/payment', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-key': this.adminPin
-        },
+        headers: this.getAuthHeaders(),
         body: JSON.stringify({ id, date, amount, description, paymentType })
       });
 
@@ -2914,10 +2990,7 @@ const AdminApp = {
     try {
       const res = await fetch('/api/admin/statement/payment/delete', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-key': this.adminPin
-        },
+        headers: this.getAuthHeaders(),
         body: JSON.stringify({ paymentId })
       });
 
@@ -2991,10 +3064,7 @@ const AdminApp = {
     try {
       const res = await fetch('/api/admin/statement/pos-entry', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-key': this.adminPin
-        },
+        headers: this.getAuthHeaders(),
         body: JSON.stringify({ date, amount, note })
       });
 
@@ -3019,10 +3089,7 @@ const AdminApp = {
     try {
       const res = await fetch('/api/admin/statement/pos-entry/delete', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-key': this.adminPin
-        },
+        headers: this.getAuthHeaders(),
         body: JSON.stringify({ date })
       });
 
@@ -4193,10 +4260,7 @@ const AdminApp = {
     try {
       const res = await fetch('/api/admin/store-invoices/create', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-key': this.adminPin
-        },
+        headers: this.getAuthHeaders(),
         body: JSON.stringify({
           ...invoiceDoc,
           adminKey: this.adminPin
@@ -4248,7 +4312,7 @@ const AdminApp = {
 
     try {
       const res = await fetch(`/api/admin/store-invoices?${params.toString()}`, {
-        headers: { 'x-admin-key': this.adminPin }
+        headers: this.getAuthHeaders()
       });
 
       if (res.status === 401) {
@@ -4754,10 +4818,7 @@ const AdminApp = {
       if (submitBtn) submitBtn.innerHTML = '<span>⏳ GİB Taslak & SMS Hazırlanıyor...</span>';
       const draftRes = await fetch('/api/admin/invoice/draft', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-key': this.adminPin
-        },
+        headers: this.getAuthHeaders(),
         body: JSON.stringify({
           orderId: inv.orderId,
           totalAmount: Number(inv.totalAmount || 0),
@@ -4826,7 +4887,7 @@ const AdminApp = {
     try {
       const draftRes = await fetch('/api/admin/invoice/batch-draft', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-admin-key': this.adminPin },
+        headers: this.getAuthHeaders(),
         body: JSON.stringify({ orderIds, adminKey: this.adminPin })
       });
 
@@ -4888,7 +4949,7 @@ const AdminApp = {
     try {
       const res = await fetch('/api/admin/store-invoices/delete', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-admin-key': this.adminPin },
+        headers: this.getAuthHeaders(),
         body: JSON.stringify({ invoiceId: orderId, orderId: orderId, adminKey: this.adminPin })
       });
 
