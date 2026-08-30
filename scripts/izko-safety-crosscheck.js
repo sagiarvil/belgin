@@ -104,7 +104,7 @@ function getIzkoReferenceBase(product, izkoRates) {
 
 async function verifyAndProtectWithIzko() {
   console.log('====================================================');
-  console.log('🏛️  İZKO RESMİ KUR SAĞLAMA & OTOMATİK +%5 FİYAT GÜVENCESİ');
+  console.log('🏛️  İZKO RESMİ KUR SAĞLAMA & OTOMATİK +%1 FİYAT GÜVENCESİ');
   console.log('====================================================');
   
   let izkoRates;
@@ -113,10 +113,10 @@ async function verifyAndProtectWithIzko() {
     console.log(`✓ İZKO Resmi Kurlar Başarıyla Okundu (https://www.izko.org.tr/guncel-kur):`);
     console.log(`   • 24K Has Altın: ₺${izkoRates.has_altin_price.toLocaleString('tr-TR')}`);
     console.log(`   • 1 gr Paketli Has: ₺${(izkoRates.paketlihas || 0).toLocaleString('tr-TR')}`);
-    console.log(`   • Yeni Çeyrek: ₺${(izkoRates.yeniceyrek || 0).toLocaleString('tr-TR')} (Sağlama +%5 Hedef: ₺${Math.round(izkoRates.yeniceyrek * 1.05).toLocaleString('tr-TR')})`);
-    console.log(`   • Yeni Yarım: ₺${(izkoRates.yeniyarim || 0).toLocaleString('tr-TR')} (Sağlama +%5 Hedef: ₺${Math.round(izkoRates.yeniyarim * 1.05).toLocaleString('tr-TR')})`);
-    console.log(`   • Yeni Tam: ₺${(izkoRates.yenitam || 0).toLocaleString('tr-TR')} (Sağlama +%5 Hedef: ₺${Math.round(izkoRates.yenitam * 1.05).toLocaleString('tr-TR')})`);
-    console.log(`   • Ata Altın: ₺${(izkoRates.ata || 0).toLocaleString('tr-TR')} (Sağlama +%5 Hedef: ₺${Math.round(izkoRates.ata * 1.05).toLocaleString('tr-TR')})`);
+    console.log(`   • Yeni Çeyrek: ₺${(izkoRates.yeniceyrek || 0).toLocaleString('tr-TR')} (Sağlama +%1 Hedef: ₺${Math.round(izkoRates.yeniceyrek * 1.01).toLocaleString('tr-TR')})`);
+    console.log(`   • Yeni Yarım: ₺${(izkoRates.yeniyarim || 0).toLocaleString('tr-TR')} (Sağlama +%1 Hedef: ₺${Math.round(izkoRates.yeniyarim * 1.01).toLocaleString('tr-TR')})`);
+    console.log(`   • Yeni Tam: ₺${(izkoRates.yenitam || 0).toLocaleString('tr-TR')} (Sağlama +%1 Hedef: ₺${Math.round(izkoRates.yenitam * 1.01).toLocaleString('tr-TR')})`);
+    console.log(`   • Ata Altın: ₺${(izkoRates.ata || 0).toLocaleString('tr-TR')} (Sağlama +%1 Hedef: ₺${Math.round(izkoRates.ata * 1.01).toLocaleString('tr-TR')})`);
   } catch (err) {
     console.warn(`⚠️ İZKO API bağlantı uyarısı: ${err.message}. Yerel güvenlik eşikleri devrede.`);
     izkoRates = {
@@ -147,10 +147,10 @@ async function verifyAndProtectWithIzko() {
 
     const izkoRefBase = getIzkoReferenceBase(p, izkoRates);
     if (izkoRefBase) {
-      const minSafePrice = Math.round(izkoRefBase * 1.05); // İZKO + %5 Marjı
+      const minSafePrice = Math.round(izkoRefBase * 1.01); // İZKO + %1 Marjı
 
       if (p.price < minSafePrice) {
-        console.log(`  -> 🛡️ [İZKO +%5 GÜVENCE FİYATI UYGULANDI]: [${p.reference}] ${p.name}`);
+        console.log(`  -> 🛡️ [İZKO +%1 GÜVENCE FİYATI UYGULANDI]: [${p.reference}] ${p.name}`);
         console.log(`     Eski Fiyat: ₺${p.price.toLocaleString('tr-TR')} => Yeni Güvenli Fiyat: ₺${minSafePrice.toLocaleString('tr-TR')}`);
         p.price = minSafePrice;
         adjustedCount++;

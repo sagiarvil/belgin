@@ -6,16 +6,29 @@ const { BASE_URL } = require('./seo-routes.js');
 const { PRODUCTS: products } = require('../js/data.js');
 const { productUrl } = require('./seo-routes.js');
 
-const INDEXNOW_KEY = 'b8f1a2c3d4e5f67890123456789abcdef';
+const INDEXNOW_KEY = '9d980417475ac56c8ad72ef2c743e1e5';
 const HOST = 'www.belginkuyumculuk.com';
+
+const ENDPOINTS = [
+  'https://api.indexnow.org/indexnow',
+  'https://www.bing.com/indexnow',
+  'https://yandex.com/indexnow'
+];
 
 async function pushToIndexNow(urls) {
   const urlList = urls && urls.length > 0 ? urls : [
     `${BASE_URL}/`,
     `${BASE_URL}/saatler/`,
     `${BASE_URL}/mucevherat/`,
+    `${BASE_URL}/seckin-urunler/`,
     `${BASE_URL}/ikinci-el/`,
-    ...products.slice(0, 50).map(p => productUrl(p))
+    `${BASE_URL}/llms.txt`,
+    `${BASE_URL}/llms/saatler.md`,
+    `${BASE_URL}/llms/mucevherat.md`,
+    `${BASE_URL}/llms/seckin-urunler.md`,
+    `${BASE_URL}/iletisim.html`,
+    `${BASE_URL}/mesafeli-satis-sozlesmesi.html`,
+    ...products.slice(0, 100).map(p => productUrl(p))
   ];
 
   const payload = {
@@ -25,23 +38,31 @@ async function pushToIndexNow(urls) {
     urlList: urlList
   };
 
-  console.log(`[IndexNow] ${urlList.length} adet URL Bing, Yandex ve AI crawler motorlarına anons ediliyor...`);
+  console.log(`[IndexNow Broadcasting] ${urlList.length} adet URL küresel IndexNow & AI Hub ağlarına dağıtılıyor...`);
 
-  try {
-    const res = await fetch('https://api.indexnow.org/indexnow', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json; charset=utf-8' },
-      body: JSON.stringify(payload)
-    });
+  const results = await Promise.allSettled(
+    ENDPOINTS.map(async (endpoint) => {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json; charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      return { endpoint, status: res.status, ok: res.ok || res.status === 200 || res.status === 202 };
+    })
+  );
 
-    if (res.ok || res.status === 200 || res.status === 202) {
-      console.log(`✅ [IndexNow] ${urlList.length} URL başarıyla iletildi (HTTP ${res.status}).`);
+  results.forEach((r) => {
+    if (r.status === 'fulfilled') {
+      const { endpoint, status, ok } = r.value;
+      if (ok) {
+        console.log(`  ✅ [${new URL(endpoint).hostname}] ${urlList.length} URL kabul edildi (HTTP ${status})`);
+      } else {
+        console.warn(`  ⚠️ [${new URL(endpoint).hostname}] Yanıt: HTTP ${status}`);
+      }
     } else {
-      console.warn(`⚠️ [IndexNow] Yanıt kodu: HTTP ${res.status}`);
+      console.warn(`  ❌ Ağ Hatası: ${r.reason?.message || r.reason}`);
     }
-  } catch (err) {
-    console.warn(`⚠️ [IndexNow] Ağ uyarısı (Offline/Mock): ${err.message}`);
-  }
+  });
 }
 
 if (require.main === module) {

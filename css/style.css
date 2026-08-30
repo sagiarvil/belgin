@@ -203,11 +203,11 @@ p, span, li, td, th, label, input, button, select, textarea {
    2. TÜRKİYE KAPALIÇARŞI & İZKO CANLI ALTIN TICKER'I (CROSS-BROWSER)
    ========================================================== */
 .gold-ticker-strip {
-  background: #060908;
-  color: #E5DFC8;
-  font-size: 11.5px;
-  border-bottom: 1px solid rgba(194, 167, 104, 0.28);
-  padding: 7px 0;
+  background: #041411;
+  color: #ECE8E1;
+  font-size: 12px;
+  border-bottom: 1.5px solid rgba(194, 167, 104, 0.4);
+  padding: 8px 0;
   overflow: hidden;
   position: relative;
   width: 100%;
@@ -242,8 +242,8 @@ p, span, li, td, th, label, input, button, select, textarea {
   display: flex !important;
   gap: 32px;
   width: max-content;
-  -webkit-animation: tickerSlide 30s linear infinite;
-  animation: tickerSlide 30s linear infinite;
+  -webkit-animation: tickerSlide 28s linear infinite;
+  animation: tickerSlide 28s linear infinite;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   will-change: transform;
@@ -256,29 +256,42 @@ p, span, li, td, th, label, input, button, select, textarea {
 .gold-rates-list {
   display: inline-flex !important;
   align-items: center;
-  gap: 24px;
+  gap: 20px;
   flex-shrink: 0;
 }
 .gold-rate-item {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(194, 167, 104, 0.28);
+  padding: 4px 10px;
+  border-radius: 6px;
 }
-.gold-rate-label { color: #8E8E98; font-size: 11px; }
+.gold-rate-label { 
+  color: #C2A768; 
+  font-size: 12px; 
+  font-weight: 800;
+  letter-spacing: 0.4px;
+}
 .gold-rate-val {
   color: #FFFFFF;
-  font-weight: 700;
+  font-weight: 900;
   font-family: var(--font-sans);
   font-variant-numeric: tabular-nums;
-  font-size: 14.5px;
-  letter-spacing: -0.01em;
+  font-size: 15.5px;
+  letter-spacing: 0.2px;
+  background: rgba(194, 167, 104, 0.18);
+  border: 1px solid rgba(194, 167, 104, 0.4);
+  padding: 2px 7px;
+  border-radius: 4px;
   transition: color 0.3s ease, transform 0.3s ease;
 }
 .gold-rate-val.price-flash {
   color: #25D366 !important;
   transform: scale(1.08);
 }
-.gold-rate-change { color: #25D366; font-size: 10.5px; font-weight: 600; }
+.gold-rate-change { color: #22C55E; font-size: 11.5px; font-weight: 900; }
 
 .showroom-status-pill {
   display: inline-flex;
@@ -691,9 +704,29 @@ p, span, li, td, th, label, input, button, select, textarea {
   background: rgba(255, 255, 255, 0.12);
 }
 .btn-hamburger {
-  background: rgba(0, 0, 0, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  color: #FFFFFF;
+  display: none;
+  background: rgba(194, 167, 104, 0.12);
+  border: 1px solid rgba(194, 167, 104, 0.45);
+  color: var(--color-gold);
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  flex-shrink: 0;
+}
+.btn-hamburger:active {
+  transform: scale(0.92);
+  background: rgba(194, 167, 104, 0.25);
+  border-color: var(--color-gold);
+}
+.btn-hamburger svg {
+  stroke: var(--color-gold);
 }
 
 /* ==========================================================
@@ -889,88 +922,115 @@ p, span, li, td, th, label, input, button, select, textarea {
   }
 }
 
-/* Mobil (<= 768px): Entegre Lüks Maison Hero */
+/* Mobil (<= 768px): Haute Joaillerie & Horlogerie Hero (Model Solda, Metin ve CTA Sağda) */
 @media (max-width: 768px) {
   .hero-signature {
     position: relative;
-    min-height: 480px;
+    width: 100%;
+    min-height: 390px;
+    max-height: 460px;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
+    justify-content: flex-end;
     padding: 0;
     overflow: hidden;
-    background: #051A17;
+    background: #061815;
   }
   .hero-media {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
+    z-index: 1;
   }
   .hero-media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 25%;
-    opacity: 0.62;
+    object-position: 18% center;
+    opacity: 1 !important;
+    display: block;
   }
   .hero-gradient-overlay {
     display: block;
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(5,26,23,0.15) 0%, rgba(5,26,23,0.65) 50%, #051A17 100%);
-    z-index: 1;
+    background: linear-gradient(
+      90deg,
+      rgba(6, 24, 21, 0) 0%,
+      rgba(6, 24, 21, 0.15) 25%,
+      rgba(6, 24, 21, 0.72) 60%,
+      #061815 100%
+    );
+    pointer-events: none;
+    z-index: 2;
   }
   .hero-container {
     position: relative;
-    z-index: 2;
+    z-index: 3;
     width: 100%;
-    padding: 0 16px 28px;
-    display: block;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 16px 14px 16px 0;
   }
   .hero-content {
     background: transparent;
     padding: 0;
-    max-width: 100%;
-    text-align: left;
-    margin: 0;
+    width: 54%;
+    max-width: 225px;
+    text-align: right;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
   }
   .hero-eyebrow {
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: var(--color-gold);
-    margin-bottom: 8px;
+    display: none;
   }
   .hero-title {
-    font-size: 32px;
+    font-size: clamp(22px, 5.8vw, 26px);
     font-family: var(--font-serif);
     color: #FFFFFF;
     line-height: 1.15;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.9);
   }
   .hero-desc {
-    font-size: 13.5px;
-    color: #ECE8E1;
-    line-height: 1.55;
-    margin-bottom: 18px;
+    display: none;
   }
   .hero-actions {
     display: flex;
-    flex-direction: row;
+    justify-content: flex-end;
     width: 100%;
-    gap: 10px;
-    margin-bottom: 14px;
+    margin-bottom: 8px;
   }
-  .btn-hero-primary,
+  .btn-hero-primary {
+    width: auto;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 38px;
+    font-size: 11.5px;
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 20px;
+    background: var(--color-gold);
+    color: #052621;
+    border: none;
+    box-shadow: 0 4px 14px rgba(194, 167, 104, 0.45);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+  }
   .btn-hero-secondary {
-    flex: 1;
-    min-height: 44px;
-    font-size: 12.5px;
-    padding: 10px 14px;
+    display: none;
   }
   .hero-trust-line {
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.7);
-    text-align: center;
+    font-size: 9px;
+    color: rgba(194, 167, 104, 0.9);
+    text-align: right;
+    letter-spacing: 0.2px;
   }
 }
 
@@ -1059,122 +1119,82 @@ p, span, li, td, th, label, input, button, select, textarea {
   animation-play-state: paused;
 }
 
-/* Tek Sıra Marka Kartı */
+/* Tek Sıra Marka Kartı - SADECE MARKA LOGOSU (Yüksek Kontrast & Standart) */
 .brand-carousel-card {
-  flex: 0 0 220px;
+  flex: 0 0 240px;
+  height: 110px;
   scroll-snap-align: start;
-  background: #FFFFFF;
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  padding: 16px;
+  background: #F4F4F4;
+  border: 1px solid #E2E2E2;
+  border-radius: 6px;
+  padding: 0;
   text-decoration: none;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  text-align: center;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+  justify-content: center;
+  transition: all 0.25s ease;
   cursor: pointer;
   position: relative;
   overflow: hidden;
 }
 .brand-carousel-card:hover {
-  transform: translateY(-5px);
-  border-color: var(--color-teal);
-  box-shadow: 0 10px 24px rgba(10, 80, 70, 0.12);
+  transform: translateY(-2px);
+  border-color: #0A5046;
+  background: #FFFFFF;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
-.brand-card-thumb {
+.brand-carousel-logo {
   width: 100%;
-  height: 160px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 12px;
-  background: #FAF9F6;
-  border-radius: 8px;
-  overflow: hidden;
-  padding: 10px;
-}
-.brand-card-thumb img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  transition: transform 0.35s ease;
-}
-.brand-carousel-card:hover .brand-card-thumb img {
-  transform: scale(1.1);
-}
-.brand-card-name {
-  font-family: var(--font-sans);
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--color-ink);
-  margin-bottom: 4px;
-  letter-spacing: 0.5px;
-}
-.brand-card-origin {
-  font-size: 11px;
-  color: var(--color-muted);
-  margin-bottom: 8px;
-}
-.brand-card-count {
-  font-size: 11.5px;
-  font-weight: 700;
-  color: var(--color-teal);
-  background: var(--color-teal-soft);
-  padding: 4px 12px;
-  border-radius: 20px;
-  display: inline-block;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 @media (max-width: 768px) {
   .brands-carousel-wrapper {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
     scrollbar-width: none;
-    mask-image: none;
-    -webkit-mask-image: none;
+    mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
     padding: 6px 0 16px;
+    touch-action: pan-y;
   }
   .brands-carousel-wrapper::-webkit-scrollbar {
     display: none;
   }
   .brands-carousel-track {
-    animation: none;
+    display: flex;
     gap: 12px;
-    padding: 0 14px;
+    padding: 0;
     width: max-content;
+    animation: brandAutoFlow 22s linear infinite !important;
+    -webkit-animation: brandAutoFlow 22s linear infinite !important;
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translate3d(0, 0, 0);
   }
   .brand-carousel-card {
-    flex: 0 0 145px;
-    padding: 12px 10px 14px;
-    border-radius: 12px;
-    border: 1px solid rgba(220, 214, 202, 0.85);
-    background: #FFFFFF;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    flex: 0 0 160px;
+    height: 80px;
+    padding: 0;
+    border-radius: 4px;
+    border: 1px solid #E2E2E2;
+    background: #F4F4F4;
   }
-  .brand-card-thumb {
-    height: 105px;
-    background: radial-gradient(circle at 50% 50%, #ffffff 30%, #f7f5f0 100%);
-    border-radius: 8px;
-    padding: 8px;
-    margin-bottom: 8px;
-  }
-  .brand-card-name {
-    font-size: 13.5px;
-    font-weight: 700;
-    margin-bottom: 2px;
-  }
-  .brand-card-origin {
-    font-size: 10px;
-    margin-bottom: 6px;
-  }
-  .brand-card-count {
-    font-size: 10.5px;
-    padding: 3px 9px;
+  .brand-carousel-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
   .slider-arrows-nav {
-    display: none;
+    display: flex;
+    gap: 6px;
+  }
+  .slider-nav-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
   }
 }
 
@@ -1219,6 +1239,85 @@ p, span, li, td, th, label, input, button, select, textarea {
   }
 }
 
+/* ==========================================================
+   PREMIUM MAISON FİLTRE & MARKA SEÇİM BUTONLARI (QUIET LUXURY)
+   ========================================================== */
+.watch-filter-tabs,
+.preowned-filter-tabs,
+.jewellery-filter-tabs,
+.filter-tabs-container {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 14px 0 20px 0;
+  padding: 2px 0;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.watch-filter-tabs::-webkit-scrollbar,
+.preowned-filter-tabs::-webkit-scrollbar,
+.jewellery-filter-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.hero-tab-btn,
+.watch-brand-filter-btn,
+.preowned-filter-btn,
+.jewellery-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 18px;
+  background: #FFFFFF;
+  color: var(--color-ink, #1C1917);
+  border: 1px solid rgba(194, 167, 104, 0.45);
+  border-radius: 24px;
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  line-height: 1.2;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.hero-tab-btn:hover,
+.watch-brand-filter-btn:hover,
+.preowned-filter-btn:hover,
+.jewellery-filter-btn:hover {
+  background: #FAF8F5;
+  color: var(--color-teal, #05332F);
+  border-color: var(--color-gold, #C2A768);
+  box-shadow: 0 3px 10px rgba(194, 167, 104, 0.18);
+  transform: translateY(-1px);
+}
+
+.hero-tab-btn:active,
+.watch-brand-filter-btn:active,
+.preowned-filter-btn:active,
+.jewellery-filter-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.hero-tab-btn.active,
+.watch-brand-filter-btn.active,
+.preowned-filter-btn.active,
+.jewellery-filter-btn.active {
+  background: var(--color-teal, #05332F) !important;
+  color: #FFFFFF !important;
+  border-color: var(--color-teal, #05332F) !important;
+  box-shadow: 0 4px 14px rgba(5, 51, 47, 0.28) !important;
+  font-weight: 700;
+}
+
 .brand-tile-card {
   display: block;
   text-decoration: none;
@@ -1259,20 +1358,309 @@ p, span, li, td, th, label, input, button, select, textarea {
 }
 
 .btn-quick-gram {
-  background: #FFFFFF;
-  border: 1px solid var(--color-border);
-  padding: 4px 12px;
+  background: #FAF8F5;
+  border: 1px solid rgba(194, 167, 104, 0.45);
+  padding: 6px 14px;
   border-radius: var(--radius-full);
-  font-size: 11.5px;
-  font-weight: 600;
-  color: var(--color-ink);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-teal);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .btn-quick-gram:hover {
   background: var(--color-teal);
   color: #FFFFFF;
   border-color: var(--color-teal);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 48, 87, 0.2);
+}
+.btn-quick-gram:active {
+  transform: scale(0.95);
+}
+
+/* ULTRA-MAX PRESTIGE LUXURY BUTTONS & BANNERS */
+.btn-luxury-gold {
+  background: linear-gradient(135deg, #D4AF37 0%, #C2A768 50%, #E6CA7E 100%);
+  color: #00233D !important;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 14px 30px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+.btn-luxury-gold:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 14px 32px rgba(212, 175, 55, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  background: linear-gradient(135deg, #E6CA7E 0%, #D4AF37 50%, #F5DE98 100%);
+}
+.btn-luxury-gold:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-luxury-whatsapp {
+  background: linear-gradient(135deg, #25D366 0%, #1EBE5D 100%);
+  color: #FFFFFF !important;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  padding: 14px 28px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-luxury-whatsapp:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 14px 32px rgba(37, 211, 102, 0.5);
+  background: linear-gradient(135deg, #2EE071 0%, #22C762 100%);
+}
+.btn-luxury-whatsapp:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-luxury-outline {
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF !important;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  padding: 13px 26px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(10px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-luxury-outline:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* PRESTIGE COLLECTION ROYAL BANNER */
+.banner-prestige-luxury {
+  position: relative;
+  margin: 54px 0;
+  background: linear-gradient(135deg, #001F38 0%, #003057 50%, #05263F 100%);
+  border: 1.5px solid rgba(194, 167, 104, 0.5);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 20px 50px -10px rgba(0, 48, 87, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  padding: 64px 36px 58px;
+  text-align: center;
+  color: #FFFFFF;
+}
+.banner-prestige-luxury::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 300px;
+  background: radial-gradient(ellipse, rgba(212, 175, 55, 0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+.banner-prestige-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(212, 175, 55, 0.18);
+  border: 1px solid rgba(212, 175, 55, 0.6);
+  padding: 7px 18px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #F5E5BA;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+  backdrop-filter: blur(8px);
+}
+.banner-prestige-title {
+  font-family: var(--font-sans);
+  font-size: clamp(28px, 3.8vw, 40px);
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.2;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.3);
+}
+.banner-prestige-text {
+  font-size: 15px;
+  color: #D3E2EC;
+  line-height: 1.7;
+  max-width: 660px;
+  margin: 0 auto 28px;
+}
+.banner-prestige-pills {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+.prestige-pill-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(194, 167, 104, 0.35);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 600;
+  color: #EDE8DE;
+  backdrop-filter: blur(6px);
+}
+
+/* CANLI BORSA DEĞERLEME TERMİNALİ */
+.valuation-terminal-box {
+  background: linear-gradient(180deg, #FFFFFF 0%, #FAF8F5 100%);
+  border: 1.5px solid rgba(194, 167, 104, 0.45);
+  border-radius: var(--radius-lg);
+  padding: 36px 32px;
+  margin-top: 36px;
+  box-shadow: 0 16px 40px -10px rgba(0, 48, 87, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  position: relative;
+  overflow: hidden;
+}
+.valuation-terminal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.val-live-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-teal);
+  margin-bottom: 4px;
+}
+.val-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: pulse-emerald 2s infinite;
+}
+@keyframes pulse-emerald {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 7px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+.val-instant-badge {
+  background: linear-gradient(135deg, #0A3D2E 0%, #125540 100%);
+  color: #E2F8EE;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(194, 167, 104, 0.4);
+  box-shadow: 0 4px 14px rgba(10, 61, 46, 0.2);
+}
+.val-tab-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.btn-val-tab {
+  flex: 1;
+  padding: 14px 20px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-val-tab.active {
+  background: linear-gradient(135deg, #003057 0%, #084C61 100%) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(194, 167, 104, 0.5) !important;
+  box-shadow: 0 8px 24px rgba(0, 48, 87, 0.22);
+}
+.btn-val-tab:not(.active) {
+  background: #FFFFFF !important;
+  color: var(--color-ink) !important;
+  border: 1px solid rgba(222, 214, 198, 0.9) !important;
+}
+.btn-val-tab:not(.active):hover {
+  background: #F8F6F0 !important;
+  border-color: rgba(194, 167, 104, 0.4) !important;
+  transform: translateY(-1px);
+}
+.val-calc-body {
+  background: #FFFFFF;
+  border: 1px solid rgba(222, 214, 198, 0.9);
+  border-radius: 12px;
+  padding: 26px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+.val-result-card-luxury {
+  background: linear-gradient(135deg, #00233D 0%, #003057 50%, #073B63 100%);
+  border: 1.5px solid rgba(194, 167, 104, 0.55);
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin-top: 20px;
+  color: #FFFFFF;
+  box-shadow: 0 14px 34px rgba(0, 48, 87, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+.val-result-card-luxury::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .section-header-flex {
@@ -1705,7 +2093,7 @@ p, span, li, td, th, label, input, button, select, textarea {
 .pdp-main-photo-box {
   position: relative;
   flex: 1;
-  background: #FFFFFF;
+  background: radial-gradient(circle at 50% 50%, #ffffff 30%, #f9f8f5 100%);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   aspect-ratio: 1 / 1;
@@ -1713,17 +2101,41 @@ p, span, li, td, th, label, input, button, select, textarea {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  cursor: crosshair;
   box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: zoom-in;
 }
 .pdp-main-photo-box img {
   width: 88%;
   height: 88%;
   object-fit: contain;
-  transition: transform 0.2s ease-out;
+  transition: transform 0.25s ease-out;
+  pointer-events: none;
 }
-.pdp-main-photo-box:hover img {
-  transform: scale(2.4);
+
+/* Precision Haute Horlogerie Loupe for Desktop */
+.pdp-horlogerie-loupe {
+  position: absolute;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  border: 2.5px solid var(--color-gold);
+  box-shadow: 0 14px 38px rgba(0, 48, 87, 0.28), inset 0 0 18px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, -50%) scale(0.85);
+  transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.2s;
+  background-repeat: no-repeat;
+  background-color: #FFFFFF;
+  z-index: 10;
+}
+.pdp-horlogerie-loupe.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .pdp-badge-top-left {
@@ -1759,13 +2171,161 @@ p, span, li, td, th, label, input, button, select, textarea {
   position: absolute;
   bottom: 14px;
   left: 14px;
-  background: rgba(7, 10, 9, 0.82);
+  background: rgba(0, 48, 87, 0.88);
   color: #FFFFFF;
   font-size: 11px;
-  letter-spacing: 0.3px;
-  padding: 5px 12px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  padding: 6px 14px;
   border-radius: var(--radius-full);
   pointer-events: none;
+  z-index: 4;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(194, 167, 104, 0.35);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.pdp-hint-mobile { display: none; }
+.pdp-hint-desktop { display: inline; }
+
+@media (max-width: 1023px), (hover: none) {
+  .pdp-hint-desktop { display: none; }
+  .pdp-hint-mobile { display: inline; }
+  .pdp-horlogerie-loupe { display: none !important; }
+  .pdp-main-photo-box { cursor: pointer; }
+  .pdp-main-photo-box img { transform: none !important; }
+}
+
+/* Fullscreen Mobile & Studio Zoom Modal */
+.pdp-mobile-zoom-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 18, 28, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 99999;
+  display: none;
+  flex-direction: column;
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  touch-action: none;
+}
+.pdp-mobile-zoom-modal.open {
+  display: flex;
+  opacity: 1;
+}
+.pdp-zoom-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 100%);
+  color: #FFFFFF;
+  z-index: 10;
+}
+.pdp-zoom-brand-info {
+  display: flex;
+  flex-direction: column;
+}
+.pdp-zoom-brand {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--color-gold);
+  text-transform: uppercase;
+}
+.pdp-zoom-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #FFFFFF;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 240px;
+}
+.pdp-zoom-close-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.pdp-zoom-close-btn:active {
+  transform: scale(0.92);
+  background: rgba(255, 255, 255, 0.25);
+}
+.pdp-zoom-stage {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.pdp-zoom-image-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center center;
+  will-change: transform;
+}
+.pdp-zoom-image-wrap img {
+  max-width: 90%;
+  max-height: 75vh;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 15px 35px rgba(0,0,0,0.5));
+}
+.pdp-zoom-footer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px calc(14px + env(safe-area-inset-bottom, 12px));
+  background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, transparent 100%);
+  z-index: 10;
+  gap: 12px;
+}
+.pdp-zoom-instructions {
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pdp-zoom-controls-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pdp-zoom-ctrl-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(194, 167, 104, 0.4);
+  color: #FFFFFF;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.pdp-zoom-ctrl-btn:active {
+  background: rgba(194, 167, 104, 0.35);
 }
 
 /* Right: Buy Box */
@@ -2176,43 +2736,241 @@ p, span, li, td, th, label, input, button, select, textarea {
 }
 
 /* ==========================================================
-   7. GÜVEN & HİZMET SÜTUNLARI & 25 YILLIK MİRAS
+   7. HAUTE MAISON PRESTİJ GÜVENCE VİTRİNİ & 25 YILLIK MİRAS
    ========================================================== */
+.trust-showcase-section {
+  position: relative;
+  background: linear-gradient(180deg, #FAF8F5 0%, #F5EFE4 100%);
+  border: 1px solid rgba(194, 167, 104, 0.4);
+  border-radius: var(--radius-lg);
+  padding: 46px 36px 42px;
+  margin-top: 48px;
+  box-shadow: 0 16px 45px -12px rgba(0, 48, 87, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  overflow: hidden;
+}
+
+.trust-showcase-section::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.trust-showcase-section::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  left: -60px;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 48, 87, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.trust-showcase-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 34px;
+  position: relative;
+  z-index: 2;
+}
+
+.trust-showcase-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(194, 167, 104, 0.6);
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  color: var(--color-gold-dark);
+  box-shadow: 0 4px 14px rgba(194, 167, 104, 0.15);
+  margin-bottom: 12px;
+}
+
+.trust-showcase-badge .badge-sparkle {
+  color: #D4AF37;
+  font-size: 11px;
+}
+
+.trust-showcase-title {
+  font-family: var(--font-sans);
+  font-size: clamp(20px, 2.2vw, 26px);
+  font-weight: 800;
+  color: var(--color-ink);
+  margin-bottom: 8px;
+  letter-spacing: -0.3px;
+}
+
+.trust-showcase-subtitle {
+  font-size: 13.5px;
+  color: #666052;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* 4'lü Lüks Kart Izgarası */
 .trust-grid-art {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-  background: #FFFFFF;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 42px 32px;
-  margin-top: 40px;
+  gap: 20px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin-top: 0;
+  position: relative;
+  z-index: 2;
 }
+
 .trust-item-art {
+  background: #FFFFFF;
+  border: 1px solid rgba(222, 214, 198, 0.95);
+  border-radius: 16px;
+  padding: 28px 20px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  padding: 0 12px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 48, 87, 0.04);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+  cursor: default;
 }
+
+.trust-item-art:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 42px -8px rgba(0, 48, 87, 0.13), 0 0 0 1px rgba(194, 167, 104, 0.55);
+  border-color: rgba(194, 167, 104, 0.6);
+}
+
+/* Kart Üst Etiketi */
+.trust-card-top-tag {
+  margin-bottom: 16px;
+}
+
+.trust-pill-tag {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+  padding: 3px 9px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.trust-card-emerald .trust-pill-tag {
+  background: #E8F5E9;
+  color: #1B5E20;
+  border: 1px solid #C8E6C9;
+}
+
+.trust-card-gold .trust-pill-tag {
+  background: #FFF9E6;
+  color: #8A6D0B;
+  border: 1px solid #F7E4A8;
+}
+
+.trust-card-teal .trust-pill-tag {
+  background: #E3F2FD;
+  color: #0D47A1;
+  border: 1px solid #BBDEFB;
+}
+
+.trust-card-royal .trust-pill-tag {
+  background: #EDE7F6;
+  color: #4A148C;
+  border: 1px solid #D1C4E9;
+}
+
+/* Canlı, Parlak & Hareketli İkon Kasaları */
 .trust-icon-box {
-  width: 50px;
-  height: 50px;
-  border-radius: var(--radius-full);
-  background: var(--color-teal-soft);
-  color: var(--color-teal);
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
+  position: relative;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease;
 }
+
+.trust-item-art:hover .trust-icon-box {
+  transform: scale(1.12) rotate(3deg);
+}
+
+/* 1. Zümrüt & Platin (Ekspertiz) */
+.icon-box-emerald {
+  background: linear-gradient(135deg, #0A3D2E 0%, #1B6E53 100%);
+  color: #E2F8EE;
+  box-shadow: 0 8px 24px rgba(10, 61, 46, 0.32), 0 0 0 3px rgba(194, 167, 104, 0.25);
+}
+
+/* 2. İmparatorluk Altını (Takas & Değerleme) */
+.icon-box-gold {
+  background: linear-gradient(135deg, #8A6D0B 0%, #D4AF37 50%, #F5D77F 100%);
+  color: #FFFFFF;
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.38), 0 0 0 3px rgba(212, 175, 55, 0.3);
+}
+
+/* 3. Maison Koyu Petrol (1999 Showroom) */
+.icon-box-teal {
+  background: linear-gradient(135deg, #003057 0%, #0F5B94 100%);
+  color: #EDE8DE;
+  box-shadow: 0 8px 24px rgba(0, 48, 87, 0.32), 0 0 0 3px rgba(194, 167, 104, 0.3);
+}
+
+/* 4. Kraliyet Safiri & Lacivert (Güvenli Teslimat) */
+.icon-box-royal {
+  background: linear-gradient(135deg, #1A237E 0%, #3949AB 100%);
+  color: #FFFFFF;
+  box-shadow: 0 8px 24px rgba(26, 35, 126, 0.32), 0 0 0 3px rgba(194, 167, 104, 0.3);
+}
+
 .trust-item-art h4 {
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 15.5px;
+  font-weight: 700;
   color: var(--color-ink);
-  margin-bottom: 4px;
+  margin-bottom: 8px;
+  line-height: 1.35;
 }
+
 .trust-item-art p {
   font-size: 12.5px;
-  color: var(--color-muted);
-  line-height: 1.6;
+  color: #555044;
+  line-height: 1.65;
+  margin-bottom: 16px;
+  flex: 1;
+}
+
+/* Kart Alt Mikro Linki */
+.trust-card-footer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--color-gold-dark);
+  margin-top: auto;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.trust-item-art:hover .trust-card-footer-link {
+  color: var(--color-teal);
+}
+
+.trust-item-art:hover .trust-card-footer-link svg {
+  transform: translateX(4px);
 }
 
 .heritage-badge-card {
@@ -2379,14 +3137,14 @@ p, span, li, td, th, label, input, button, select, textarea {
 }
 
 /* ==========================================================
-   10. HAUTE MAISON FOOTER (PAHALI & PRESTİJLİ GÖRÜNÜM)
+   10. HAUTE MAISON FOOTER (PRESTİJLİ & KUSURSUZ DÜZEN)
    ========================================================== */
 .footer-art {
   background: #003057;
   color: #FFFFFF;
-  padding: 80px 0 40px;
+  padding: 70px 0 35px;
   margin-top: auto;
-  border-top: 1px solid rgba(194, 167, 104, 0.4);
+  border-top: 1px solid rgba(216, 189, 126, 0.4);
   position: relative;
 }
 .footer-art::before {
@@ -2399,123 +3157,295 @@ p, span, li, td, th, label, input, button, select, textarea {
   background: linear-gradient(90deg, transparent 0%, rgba(216, 189, 126, 0.8) 50%, transparent 100%);
 }
 
-.footer-vip-strip {
-  background: rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(194, 167, 104, 0.35);
-  border-radius: var(--radius-md);
-  padding: 24px 32px;
-  margin-bottom: 50px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
+/* 1. TRUST & VERIFICATION RIBBON */
+.footer-trust-ribbon {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 48px;
 }
-.footer-vip-left h4 {
+.footer-trust-card {
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(194, 167, 104, 0.25);
+  border-radius: 10px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
+}
+.footer-trust-card:hover {
+  border-color: rgba(216, 189, 126, 0.55);
+  background: rgba(0, 0, 0, 0.32);
+  transform: translateY(-2px);
+}
+.trust-card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: rgba(216, 189, 126, 0.12);
+  color: #D8BD7E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  border: 1px solid rgba(216, 189, 126, 0.28);
+}
+.trust-card-title {
   font-family: var(--font-sans);
-  font-size: 20px;
+  font-size: 13.5px;
   font-weight: 700;
   color: #FFFFFF;
+  margin-bottom: 2px;
   letter-spacing: -0.01em;
-  margin-bottom: 4px;
 }
-.footer-vip-left p {
-  font-family: var(--font-body);
-  font-size: 13px;
-  color: #D0DCE5;
-  font-weight: 400;
+.trust-card-desc {
+  font-size: 12px;
+  color: #B8CBD9;
+  line-height: 1.4;
+  margin: 0;
 }
 
+/* 2. MAIN 5-COLUMN GRID */
 .footer-art-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 50px;
-  margin-bottom: 50px;
+  grid-template-columns: 2.2fr 1fr 1.2fr 1.2fr 1.1fr;
+  gap: 40px;
+  margin-bottom: 44px;
 }
-.footer-art-brand, .footer-brand-title {
-  font-family: var(--font-serif);
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: 5px;
+.footer-brand-col {
+  display: flex;
+  flex-direction: column;
+}
+.footer-brand-logo-wrap {
+  display: inline-block;
   margin-bottom: 16px;
-  color: #FFFFFF;
+  text-decoration: none;
 }
-.footer-art-text, .footer-brand-desc {
+.brand-logo-footer {
+  width: 175px;
+  height: auto;
+  display: block;
+  filter: brightness(1.05);
+}
+.footer-art-text {
   font-size: 13.5px;
-  color: #D0DCE5;
-  line-height: 1.8;
+  color: #C5D5E2;
+  line-height: 1.75;
+  margin-bottom: 20px;
   max-width: 380px;
 }
-.footer-art-col h5 {
-  font-size: 13.5px;
-  font-weight: 600;
-  color: #FFFFFF;
-  margin-bottom: 20px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  font-family: var(--font-sans);
+.footer-showroom-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 12.5px;
+  color: #B2C4D2;
 }
-.footer-art-col ul { list-style: none; }
-.footer-art-col li { margin-bottom: 11px; }
+.footer-showroom-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.5;
+}
+.footer-showroom-item strong {
+  color: #FFFFFF;
+  font-weight: 600;
+}
+.footer-showroom-item a {
+  color: #D8BD7E;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-showroom-item a:hover {
+  color: #FFFFFF;
+  text-decoration: underline;
+}
+
+.footer-art-col h5 {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  position: relative;
+  padding-bottom: 10px;
+}
+.footer-art-col h5::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 22px;
+  height: 2px;
+  background: #D8BD7E;
+  border-radius: 1px;
+}
+.footer-art-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.footer-art-col li {
+  margin: 0;
+}
 .footer-art-col a {
   text-decoration: none;
-  color: #D0DCE5;
+  color: #B8CBD9;
   font-size: 13px;
-  transition: color 0.25s;
+  line-height: 1.5;
+  display: inline-block;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
-.footer-art-col a:hover { color: #D8BD7E; }
+.footer-art-col a:hover {
+  color: #D8BD7E;
+  transform: translateX(3px);
+}
 
-.footer-etbis-box,
-.footer-legal-badge-box {
-  background: rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(194, 167, 104, 0.28);
-  border-radius: var(--radius-md);
+/* 3. INTEGRATED COMPLIANCE & PAYMENT MATRIX */
+.footer-compliance-strip {
+  background: rgba(0, 0, 0, 0.26);
+  border: 1px solid rgba(194, 167, 104, 0.24);
+  border-radius: 10px;
   padding: 18px 24px;
-  margin-bottom: 34px;
+  margin-bottom: 30px;
+}
+.footer-contact-matrix {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 16px;
-  font-size: 12px;
-  color: #D0DCE5;
+  gap: 12px 18px;
+  font-size: 12.5px;
+  color: #B2C4D2;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 14px;
+  margin-bottom: 14px;
 }
-.etbis-badge-pill,
-.legal-badge-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: #FFFFFF;
-  color: #003057;
-  padding: 6px 14px;
-  border-radius: 4px;
-  font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 0.5px;
+.contact-matrix-item strong {
+  color: #FFFFFF;
+}
+.contact-matrix-item a {
+  color: #D8BD7E;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.contact-matrix-item a:hover {
+  color: #FFFFFF;
+  text-decoration: underline;
 }
 
+.footer-payment-matrix {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 12px;
+}
+.payment-matrix-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  color: #FFFFFF;
+}
+.payment-matrix-info .security-note {
+  color: #B2C4D2;
+  font-size: 12px;
+}
+.payment-badges-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.pay-badge-akbank {
+  background: #ED1C24;
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 9px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+.pay-badge-network {
+  background: #FFFFFF;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 4px;
+  line-height: 1;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.pay-badge-network.visa { color: #1A1F71; }
+.pay-badge-network.mastercard { color: #EB001B; }
+.pay-badge-network.troy { color: #005BAC; }
+
+.pay-badge-tech {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 4px;
+  line-height: 1;
+}
+.pay-badge-tech.secure {
+  background: rgba(174, 214, 241, 0.15);
+  border: 1px solid #AED6F1;
+  color: #AED6F1;
+}
+.pay-badge-tech.ssl {
+  background: rgba(163, 228, 215, 0.15);
+  border: 1px solid #A3E4D7;
+  color: #A3E4D7;
+}
+
+/* 4. BOTTOM BAR / SUB-FOOTER */
 .footer-art-bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-  padding-top: 28px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 14px;
   font-size: 12px;
+  color: #8FA4B5;
+}
+.footer-copyright {
+  font-size: 12px;
   color: #A3B8C9;
 }
 .footer-legal-links {
   display: flex;
-  gap: 16px;
+  align-items: center;
+  gap: 12px;
   flex-wrap: wrap;
 }
 .footer-legal-links a {
-  color: #D0DCE5;
+  color: #B8CBD9;
   text-decoration: none;
+  font-size: 12px;
   transition: color 0.2s;
 }
-.footer-legal-links a:hover { color: #D8BD7E; }
+.footer-legal-links a:hover {
+  color: #D8BD7E;
+}
+.footer-legal-links .sep {
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 10px;
+}
+.footer-authority-note {
+  font-size: 11.5px;
+  color: #8FA4B5;
+}
 
 /* ==========================================================
    11. KVKK ÇEREZ BANNER'I
@@ -2639,7 +3569,9 @@ p, span, li, td, th, label, input, button, select, textarea {
   .brands-grid-5 { grid-template-columns: repeat(3, 1fr); }
   .products-grid-4 { grid-template-columns: repeat(2, 1fr); }
   .trust-grid-art { grid-template-columns: repeat(2, 1fr); }
-  .footer-art-grid { grid-template-columns: 1fr 1fr; }
+  .footer-trust-ribbon { grid-template-columns: repeat(2, 1fr); }
+  .footer-art-grid { grid-template-columns: repeat(2, 1fr); gap: 36px 28px; }
+  .footer-brand-col { grid-column: 1 / -1; max-width: 600px; }
   .pd-art-wrapper { grid-template-columns: 1fr; }
   .contact-grid-wrapper { grid-template-columns: 1fr; }
   .heritage-badge-card { grid-template-columns: 1fr; text-align: center; }
@@ -3041,12 +3973,16 @@ p, span, li, td, th, label, input, button, select, textarea {
   .brands-grid-5 { grid-template-columns: repeat(3, 1fr); }
   .products-grid-4 { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .trust-grid-art { grid-template-columns: repeat(2, 1fr); }
-  .footer-art-grid { grid-template-columns: 1fr 1fr; }
+  .footer-trust-ribbon { grid-template-columns: repeat(2, 1fr); }
+  .footer-art-grid { grid-template-columns: repeat(2, 1fr); gap: 36px 28px; }
+  .footer-brand-col { grid-column: 1 / -1; max-width: 600px; }
   .pd-art-wrapper { grid-template-columns: 1fr; }
   .contact-grid-wrapper { grid-template-columns: 1fr; }
   .nav-desktop { display: none; }
   .btn-hamburger { display: inline-flex; }
-  .header-grid { padding: 10px 0; }
+  .header .btn-action-vip { display: none !important; }
+  .header-actions { gap: 8px; flex-shrink: 0; }
+  .header-grid { padding: 8px 0; gap: 10px; }
   .mobile-bottom-dock { display: flex; }
   body { padding-bottom: calc(74px + env(safe-area-inset-bottom, 12px)) !important; }
 }
@@ -3126,8 +4062,165 @@ p, span, li, td, th, label, input, button, select, textarea {
   }
 
   .brands-grid-5 { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .trust-grid-art { grid-template-columns: 1fr; gap: 12px; }
-  .footer-art-grid { grid-template-columns: 1fr; gap: 24px; }
+  .trust-showcase-section { padding: 32px 18px 28px; margin-top: 32px; }
+  .trust-showcase-header { margin-bottom: 24px; }
+  .trust-showcase-title { font-size: 19px; }
+  .trust-grid-art { grid-template-columns: 1fr; gap: 14px; }
+  
+  /* MOBİL HAUTE MAISON AKICI ULTRA-İNCE FOOTER (TEK SIRA / SLIMLINE) */
+  .footer-art { padding: 24px 0 calc(78px + env(safe-area-inset-bottom, 12px)) !important; }
+  .footer-trust-ribbon { 
+    display: flex; 
+    flex-wrap: nowrap; 
+    overflow-x: auto; 
+    -webkit-overflow-scrolling: touch; 
+    scrollbar-width: none; 
+    gap: 8px; 
+    margin-bottom: 16px; 
+    padding-bottom: 4px;
+  }
+  .footer-trust-ribbon::-webkit-scrollbar { display: none; }
+  .footer-trust-card { 
+    flex: 0 0 auto; 
+    padding: 8px 12px; 
+    gap: 8px; 
+    border-radius: 8px; 
+  }
+  .trust-card-icon { width: 28px; height: 28px; font-size: 13px; border-radius: 6px; }
+  .trust-card-title { font-size: 11.5px; white-space: nowrap; margin-bottom: 0; }
+  .trust-card-desc { display: none; }
+
+  .footer-art-grid { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 12px; 
+    margin-bottom: 16px; 
+  }
+  .footer-brand-col { 
+    grid-column: auto; 
+    max-width: 100%; 
+    align-items: center; 
+    text-align: center; 
+    margin-bottom: 8px; 
+  }
+  .brand-logo-footer { width: 125px; margin: 0 auto; }
+  .footer-art-text { 
+    font-size: 11.5px; 
+    line-height: 1.45; 
+    margin: 6px auto 10px; 
+    text-align: center; 
+    max-width: 100%; 
+    opacity: 0.85; 
+  }
+  .footer-showroom-details { 
+    display: flex; 
+    flex-direction: row; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 4px 10px; 
+    font-size: 11px; 
+    margin-bottom: 6px; 
+  }
+  .footer-showroom-item { gap: 4px; }
+
+  .footer-art-col { 
+    text-align: center; 
+    padding: 4px 0;
+    border-top: 1px solid rgba(216, 189, 126, 0.12);
+  }
+  .footer-art-col h5 { 
+    font-size: 11px; 
+    letter-spacing: 1px; 
+    margin-bottom: 6px; 
+    padding-bottom: 0; 
+    display: inline-block; 
+    color: #D8BD7E; 
+  }
+  .footer-art-col h5::after { display: none; }
+  .footer-art-col ul { 
+    display: flex; 
+    flex-direction: row; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 4px 8px; 
+  }
+  .footer-art-col li { 
+    display: inline-flex; 
+    align-items: center; 
+  }
+  .footer-art-col li:not(:last-child)::after { 
+    content: "•"; 
+    color: rgba(216, 189, 126, 0.35); 
+    margin-left: 8px; 
+    font-size: 9px; 
+  }
+  .footer-art-col a { 
+    font-size: 11px; 
+    color: #B8CBD9; 
+    line-height: 1.3; 
+  }
+
+  .footer-compliance-strip { 
+    padding: 10px 12px; 
+    margin-bottom: 12px; 
+    border-radius: 8px; 
+  }
+  .footer-contact-matrix { 
+    display: flex; 
+    flex-direction: row; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 4px 10px; 
+    font-size: 10.5px; 
+  }
+  .contact-matrix-item:not(:last-child)::after { 
+    content: "•"; 
+    color: rgba(255, 255, 255, 0.25); 
+    margin-left: 10px; 
+  }
+  .footer-payment-matrix { 
+    margin-top: 8px; 
+    padding-top: 8px; 
+    border-top: 1px solid rgba(255, 255, 255, 0.08); 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 6px; 
+    text-align: center; 
+  }
+  .payment-matrix-info { font-size: 10px; line-height: 1.3; }
+  .payment-badges-wrap { 
+    width: 100%; 
+    justify-content: center; 
+    gap: 4px; 
+    flex-wrap: wrap; 
+  }
+  .pay-badge-network, .pay-badge-tech, .pay-badge-akbank { 
+    padding: 2px 6px; 
+    font-size: 9px; 
+    border-radius: 4px; 
+  }
+
+  .footer-art-bottom { 
+    flex-direction: column; 
+    gap: 6px; 
+    text-align: center; 
+    padding-top: 10px; 
+    font-size: 10px; 
+  }
+  .footer-legal-links { 
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 4px 8px; 
+    font-size: 10px; 
+  }
+  .footer-legal-links a { 
+    color: #B8CBD9; 
+    text-decoration: none; 
+  }
+  .footer-authority-note { font-size: 9.5px; }
   
   .topbar-teal { font-size: 10.5px; }
   .topbar-contacts { display: none; }
@@ -3139,8 +4232,6 @@ p, span, li, td, th, label, input, button, select, textarea {
   .gold-rate-val { font-size: 13.5px; }
   .gold-rate-item { gap: 4px; }
 
-  .footer-vip-strip { flex-direction: column; text-align: center; }
-  .footer-art-bottom { flex-direction: column; gap: 10px; text-align: center; }
   .vip-whatsapp-float, .vip-whatsapp-float-compact { 
     bottom: calc(78px + env(safe-area-inset-bottom, 10px)); 
     right: 14px; 
@@ -4042,3 +5133,662 @@ select {
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
+
+/* ==========================================================
+   CANLI FİYATLAR & HAREM ALTIN / İZKO CANLI PİYASA STİLLERİ
+   Arka Plan: #fff200 (Özel Canlı Altın Sarısı)
+   ========================================================== */
+
+.live-dot-pulse {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: #25D366;
+  border-radius: 50%;
+  margin-right: 6px;
+  box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+  animation: liveDotPulse 1.8s infinite cubic-bezier(0.66, 0, 0, 1);
+  vertical-align: middle;
+}
+
+@keyframes liveDotPulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px rgba(37, 211, 102, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+  }
+}
+
+.nav-link-live-rates {
+  font-weight: 600 !important;
+  color: #FFFFFF !important;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-link-live-rates:hover,
+.nav-link-live-rates.active {
+  color: #D8BD7E !important;
+}
+
+/* ==========================================================
+   CANLI FİYATLAR — GÖRSELDEKİ BİREBİR DİJİTAL KUYUMCU TABELASI (#fff200)
+   (BÜYÜK HARFLER, OKUNAKLI ULTRA BOLD RAKAMLAR, ORANTILI GENİŞLİK)
+   ========================================================== */
+
+/* Canlı Fiyatlar Sayfasında Kayar Ticker'ı, Footer'ı ve WhatsApp Widget'ını Gizle */
+body.page-canli-fiyatlar .gold-ticker-strip,
+body.page-is-canli-fiyatlar .gold-ticker-strip,
+body.page-canli-fiyatlar-mode .gold-ticker-strip,
+.page-is-canli-fiyatlar .gold-ticker-strip,
+body.page-canli-fiyatlar .footer,
+body.page-is-canli-fiyatlar .footer,
+body.page-canli-fiyatlar footer,
+body.page-canli-fiyatlar-mode footer,
+body.page-canli-fiyatlar .vip-whatsapp-float-compact,
+body.page-is-canli-fiyatlar .vip-whatsapp-float-compact,
+body.page-canli-fiyatlar-mode .vip-whatsapp-float-compact,
+body.page-canli-fiyatlar .vip-whatsapp-float,
+body.page-is-canli-fiyatlar .vip-whatsapp-float,
+body.page-canli-fiyatlar-mode .vip-whatsapp-float {
+  display: none !important;
+}
+
+body.page-canli-fiyatlar,
+body.page-is-canli-fiyatlar,
+body.page-canli-fiyatlar-mode {
+  overflow: hidden !important;
+  height: 100vh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: #fff200 !important;
+}
+
+.page-canli-fiyatlar-wrapper {
+  background-color: #fff200 !important;
+  height: calc(100vh - 42px) !important;
+  max-height: calc(100vh - 42px) !important;
+  width: 100% !important;
+  padding: 8px 16px !important;
+  margin: 0 !important;
+  color: #000000;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
+.page-canli-fiyatlar-wrapper .container-art {
+  max-width: 1080px !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 auto !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+/* Dijital Pano Dış Çerçevesi (Alttan Üstten Kompakt & Orantılı) */
+.board-exact-frame {
+  background-color: #fff200;
+  border: 3px solid #000000;
+  border-radius: 4px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+  width: 100% !important;
+  max-width: 1080px !important;
+  height: auto !important;
+  max-height: calc(100vh - 60px) !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  overflow: hidden;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: stretch !important;
+  box-sizing: border-box;
+}
+
+/* Üst Kırmızı Başlık Metni */
+.board-exact-top-bar {
+  background-color: #fff200;
+  border-bottom: 2px solid #000000;
+  padding: 2px 10px;
+  text-align: center;
+  font-size: clamp(15px, 2vh, 21px);
+  font-weight: 900 !important;
+  color: #D80000;
+  letter-spacing: 0.5px;
+  text-transform: uppercase !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  flex: 0 0 auto;
+}
+
+/* Birebir Tablo */
+.board-exact-table {
+  width: 100% !important;
+  height: 100% !important;
+  flex: 1 1 auto !important;
+  border-collapse: collapse !important;
+  background-color: #fff200 !important;
+  text-align: center;
+  table-layout: fixed;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
+.board-exact-table th,
+.board-exact-table td {
+  border: 2px solid #000000 !important;
+  padding: 1px 10px;
+  vertical-align: middle;
+  background-color: #fff200 !important;
+  line-height: 1.1;
+}
+
+/* Başlıklar (ALTIN, SATIŞ, HOŞGELDİNİZ, YENİ, ESKİ) */
+.board-exact-table th {
+  font-size: clamp(23px, 3.8vh, 42px);
+  font-weight: 900 !important;
+  color: #000000;
+  letter-spacing: 1px;
+  text-transform: uppercase !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
+/* Sol Ürün Etiketleri (22 AYAR, GRAM ALTIN vb. — 1 TIK BÜYÜTÜLDÜ) */
+.board-exact-table .td-label {
+  font-size: clamp(21px, 3.5vh, 38px);
+  font-weight: 900 !important;
+  color: #000000;
+  text-align: left;
+  padding-left: clamp(14px, 2vw, 28px);
+  width: 32%;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
+/* FİYAT DEĞERLERİ — ÇOK OKUNAKLI NET ULTRA BOLD 1 TIK BÜYÜK KIRMIZI RAKAMLAR */
+.board-exact-table .td-price {
+  font-size: clamp(25px, 4.3vh, 48px);
+  font-weight: 900 !important;
+  color: #D80000 !important;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.5px;
+  text-align: center;
+  width: 34%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
+/* Sağ Hoşgeldiniz Alanı */
+.board-exact-table .td-right-message {
+  width: 34%;
+  text-align: center;
+  vertical-align: middle;
+  padding: 2px 10px;
+  background-color: #fff200;
+}
+
+.right-message-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.right-title {
+  font-size: clamp(22px, 3.6vh, 40px);
+  font-weight: 900 !important;
+  color: #000000;
+  line-height: 1.12;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
+.right-sub {
+  font-size: clamp(17px, 2.7vh, 30px);
+  font-weight: 900 !important;
+  color: #000000;
+  line-height: 1.2;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
+/* Has Altın Satırı */
+.board-exact-table .td-has-label {
+  font-size: clamp(22px, 3.6vh, 40px);
+  font-weight: 900 !important;
+  color: #000000;
+  text-align: left;
+  padding-left: clamp(14px, 2vw, 28px);
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
+.has-red-box {
+  background-color: #E60000 !important;
+  color: #FFFFFF !important;
+  font-size: clamp(25px, 4.3vh, 48px);
+  font-weight: 900 !important;
+  padding: 2px 32px;
+  display: inline-block;
+  letter-spacing: 1px;
+  font-variant-numeric: tabular-nums;
+  border-radius: 3px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
+.has-red-box .price-num,
+.has-red-box span,
+#live_has_altin {
+  color: #FFFFFF !important;
+  text-shadow: none !important;
+}
+
+/* En Alttaki Beyaz Alan Kaldırıldı */
+.board-exact-bottom-bar {
+  display: none !important;
+}
+
+.td-price {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.price-num {
+  display: inline-block;
+  transform-origin: center center;
+}
+
+/* ==========================================================
+   CANLI FİYAT DEĞİŞİM & 30 SANİYE YAYLANMA / YANIP SÖNME EFEKTİ
+   (SADECE RAKAM YAYLANIR — ÇİZGİLER/KENARLIKLAR SABİT KALIR)
+   ========================================================== */
+@keyframes priceSpringBlink {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+    color: #D80000;
+  }
+  25% {
+    transform: scale(1.14);
+    opacity: 0.85;
+    color: #b91c1c;
+  }
+  50% {
+    transform: scale(0.97);
+    opacity: 1;
+    color: #D80000;
+  }
+  75% {
+    transform: scale(1.1);
+    opacity: 0.9;
+    color: #b91c1c;
+  }
+}
+
+@keyframes priceSpringBlinkWhite {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+    color: #FFFFFF;
+  }
+  25% {
+    transform: scale(1.14);
+    opacity: 0.85;
+    color: #FFFFFF;
+  }
+  50% {
+    transform: scale(0.97);
+    opacity: 1;
+    color: #FFFFFF;
+  }
+  75% {
+    transform: scale(1.1);
+    opacity: 0.9;
+    color: #FFFFFF;
+  }
+}
+
+.price-changed-active {
+  animation: priceSpringBlink 1.4s ease-in-out infinite !important;
+  display: inline-block !important;
+  will-change: transform, opacity;
+}
+
+.has-red-box .price-changed-active,
+#live_has_altin.price-changed-active {
+  animation: priceSpringBlinkWhite 1.4s ease-in-out infinite !important;
+  color: #FFFFFF !important;
+}
+
+/* Mobil Responsive */
+@media (max-width: 768px) {
+  body.page-canli-fiyatlar,
+  body.page-is-canli-fiyatlar {
+    overflow: auto !important;
+    height: auto !important;
+  }
+  .page-canli-fiyatlar-wrapper {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+  .board-exact-frame {
+    height: auto !important;
+    max-height: none !important;
+    border-radius: 0;
+  }
+  .board-exact-table th {
+    font-size: 16px;
+    padding: 4px 2px;
+  }
+  .board-exact-table .td-label {
+    font-size: 15px;
+    padding-left: 8px;
+  }
+  .board-exact-table .td-price {
+    font-size: 17px;
+    padding: 4px 2px;
+  }
+  .right-title {
+    font-size: 14px;
+  }
+  .right-sub {
+    font-size: 11px;
+  }
+  .board-exact-table .td-has-label {
+    font-size: 15px;
+    padding-left: 8px;
+  }
+  .has-red-box {
+    font-size: 17px;
+    padding: 2px 10px;
+  }
+}
+
+/* ==========================================================
+   CANLI FİYATLAR SAYFASINA ÖZEL MİMARİ (TICKER VE BEYAZ KUTULAR KALDIRILDI)
+   ========================================================== */
+body.page-canli-fiyatlar .gold-ticker-strip,
+body.page-is-canli-fiyatlar .gold-ticker-strip,
+body.page-canli-fiyatlar-mode .gold-ticker-strip,
+.page-is-canli-fiyatlar .gold-ticker-strip {
+  display: none !important;
+}
+
+/* ==========================================================
+   SADECE CANLI FİYATLAR SAYFASINA ÖZEL KOMPAKT HEADER
+   (Alttan ve Üstten Yarı Yarıya Kısaltılmış İnce Header)
+   ========================================================== */
+body.page-canli-fiyatlar .header,
+body.page-is-canli-fiyatlar .header,
+body.page-canli-fiyatlar-mode .header,
+.header-compact-live {
+  padding-top: 3px !important;
+  padding-bottom: 3px !important;
+  min-height: 42px !important;
+}
+
+body.page-canli-fiyatlar .header .header-grid,
+body.page-is-canli-fiyatlar .header .header-grid,
+body.page-canli-fiyatlar-mode .header .header-grid,
+.header-compact-live .header-grid {
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+  min-height: 42px !important;
+}
+
+body.page-canli-fiyatlar .brand-logo-header,
+body.page-is-canli-fiyatlar .brand-logo-header,
+body.page-canli-fiyatlar-mode .brand-logo-header,
+.header-compact-live .brand-logo-header {
+  max-height: 28px !important;
+  width: auto !important;
+}
+
+body.page-canli-fiyatlar .nav-desktop ul,
+body.page-is-canli-fiyatlar .nav-desktop ul,
+body.page-canli-fiyatlar-mode .nav-desktop ul {
+  gap: 12px !important;
+}
+
+body.page-canli-fiyatlar .nav-desktop ul li a,
+body.page-is-canli-fiyatlar .nav-desktop ul li a,
+body.page-canli-fiyatlar-mode .nav-desktop ul li a {
+  padding: 4px 6px !important;
+  font-size: 13px !important;
+}
+
+body.page-canli-fiyatlar .btn-hamburger,
+body.page-is-canli-fiyatlar .btn-hamburger,
+.header-compact-live .btn-hamburger,
+body.page-canli-fiyatlar .header-icon-btn,
+body.page-is-canli-fiyatlar .header-icon-btn,
+.header-compact-live .header-icon-btn {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.live-table-container {
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(8, 76, 71, 0.15);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.live-table-header-info {
+  background: #FAF9F5;
+  padding: 14px 20px;
+  border-bottom: 1px solid #E5E2D9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.live-table-header-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #084c47;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.live-table-header-note {
+  font-size: 11.5px;
+  color: #686872;
+}
+
+.table-responsive-luxury {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-live-markets {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  min-width: 680px;
+}
+
+.table-live-markets thead th {
+  background: #F4F2EC;
+  color: #05332f;
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #E5E2D9;
+}
+
+.table-live-markets thead th.text-right,
+.table-live-markets tbody td.text-right {
+  text-align: right;
+}
+
+.table-live-markets tbody tr {
+  border-bottom: 1px solid #F0EEE6;
+  transition: background-color 0.15s ease;
+}
+
+.table-live-markets tbody tr:hover {
+  background-color: #FFFDE6;
+}
+
+.table-live-markets tbody td {
+  padding: 14px 16px;
+  font-size: 13.5px;
+  color: #111215;
+  vertical-align: middle;
+}
+
+.market-item-title {
+  font-weight: 700;
+  color: #084c47;
+  display: block;
+}
+
+.market-item-code {
+  font-size: 10.5px;
+  color: #8C6D23;
+  font-weight: 600;
+}
+
+.market-val {
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #111827;
+  font-variant-numeric: tabular-nums;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: background-color 0.5s ease, color 0.5s ease;
+  display: inline-block;
+}
+
+.market-val-sell {
+  color: #05332f;
+  font-weight: 800;
+  font-size: 15px;
+}
+
+.market-change-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 11.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.market-change-badge.up {
+  background: #EAF4EE;
+  color: #1F6B38;
+}
+
+.market-change-badge.down {
+  background: #FDF2F2;
+  color: #DC2626;
+}
+
+.btn-table-action {
+  background: #084c47;
+  color: #FFFFFF !important;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-table-action:hover {
+  background: #03201e;
+  transform: translateY(-1px);
+}
+
+/* Fiyat Değişim Parlama Efektleri (Yeşil / Kırmızı) */
+.price-rise-flash {
+  background-color: rgba(37, 211, 102, 0.3) !important;
+  color: #065F46 !important;
+}
+
+.price-fall-flash {
+  background-color: rgba(239, 68, 68, 0.3) !important;
+  color: #991B1B !important;
+}
+
+/* Güven & Showroom Bilgi Şeridi */
+.live-trust-bar {
+  background: #FFFFFF;
+  border-radius: 10px;
+  padding: 16px 20px;
+  border: 1px solid rgba(8, 76, 71, 0.12);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 12.5px;
+  color: #084c47;
+}
+
+.live-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .page-canli-fiyatlar-wrapper {
+    padding: 16px 0 50px 0;
+  }
+  .live-header-banner {
+    padding: 18px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .live-timestamp-box {
+    width: 100%;
+    text-align: left;
+  }
+  .live-timestamp-clock {
+    justify-content: flex-start;
+  }
+  .table-live-markets tbody td {
+    padding: 10px 12px;
+    font-size: 12.5px;
+  }
+}
+

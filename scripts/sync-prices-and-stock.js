@@ -3,7 +3,7 @@
  * Belgin Kuyumculuk – 5 Dakikalık Canlı Fiyat ve Stok Senkronizasyon Motoru
  * 
  * Kurallar:
- * 1. Altın / Mücevherat (AgaKulche): Canlı fiyat üzerine +%5 kâr marjı (x 1.05)
+ * 1. Altın / Mücevherat (AgaKulche): Canlı fiyat üzerine +%1 kâr marjı (x 1.01)
  * 2. Stok Kontrolü: Kaynakta tükenen ürünler "Tükendi" durumuna geçer (fail-closed)
  * 3. Akıllı Delta: Yalnızca fiyat veya stok değiştiğinde katalog dosyalarını günceller
  */
@@ -13,7 +13,7 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-const GOLD_MARGIN = 1.05; // +%5 Kâr Marjı
+const GOLD_MARGIN = 1.01; // +%1 Kâr Marjı
 
 function decodeHtmlEntities(str) {
   return str
@@ -122,19 +122,18 @@ async function syncAll() {
   console.log(`[SYNC-ENGINE] Canlı Fiyat & Stok Senkronizasyonu Başlatıldı: ${new Date().toISOString()}`);
   
   const categoryUrls = [
-    // Gram & Külçe Altın
-    'https://www.agakulche.com/gram-kulce-altin',
-    'https://www.agakulche.com/gram-kulce-altin?page=2',
-    'https://www.agakulche.com/gram-kulce-altin?page=3',
     // Ziynet & Ata Altın
     'https://www.agakulche.com/ziynet-ata-altin',
     'https://www.agakulche.com/ziynet-ata-altin?page=2',
     'https://www.agakulche.com/ziynet-ata-altin?page=3',
     'https://www.agakulche.com/ziynet-ata-altin?page=4',
+    'https://www.agakulche.com/ziynet-ata-altin?page=5',
     // Altın Bilezik
     'https://www.agakulche.com/altin-bilezik',
     'https://www.agakulche.com/altin-bilezik?page=2',
-    'https://www.agakulche.com/altin-bilezik?page=3'
+    'https://www.agakulche.com/altin-bilezik?page=3',
+    'https://www.agakulche.com/altin-bilezik?page=4',
+    'https://www.agakulche.com/altin-bilezik?page=5'
   ];
 
   const scrapedItems = [];
@@ -168,7 +167,7 @@ async function syncAll() {
 
   let updatedCount = 0;
 
-  // Altın ürünlerini tam eşleşme ile güncelle ve +%5 marj uygula
+  // Altın ürünlerini tam eşleşme ile güncelle ve +%1 marj uygula (Aga Külçe Canlı Fiyat x 1.01)
   for (const p of PRODUCTS) {
     if (p.isPreOwned || (p.category !== 'jewelry' && p.category !== 'jewellery' && !p.isGold)) continue;
 
@@ -201,11 +200,7 @@ async function syncAll() {
   fs.writeFileSync(dataJsPath, headerPart + updatedProductsBlock + footerPart, 'utf8');
   console.log(`[SYNC-ENGINE] js/data.js başarıyla güncellendi (Kalan Tekil Ürün: ${PRODUCTS.length}).`);
 
-  // İZKO Resmi Kur Çapraz Sağlama ve Güvenlik Motorunu Çalıştır
-  console.log(`[SYNC-ENGINE] 🏛️ İZKO Resmi Kur Çapraz Doğrulama Çalıştırılıyor...`);
-  execSync('node scripts/izko-safety-crosscheck.js', { stdio: 'inherit' });
-
-  // Ödeme kataloğunu ve SEO varlıklarını güncelle
+  // Ödeme kataloğunu ve SEO varlıklarını doğrudan güncelle
   console.log(`[SYNC-ENGINE] Ödeme ve SEO katalogları senkronize ediliyor...`);
   execSync('node scripts/generate-payment-catalog.js', { stdio: 'inherit' });
   execSync('node scripts/generate-seo-assets.js', { stdio: 'inherit' });

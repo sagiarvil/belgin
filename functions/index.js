@@ -293,53 +293,10 @@ exports.getOrderStatus = exports.getPaymentStatus;
 // -------------------------------------------------------------
 // 4. İZKO CANLI KUR MOTORU & 15 DAKİKALIK OTOMASYON
 // -------------------------------------------------------------
-const izkoScraper = require('./izko-scraper');
-
-/**
- * GET /api/market/izko-rates
- * Tarayıcı için CORS uyumlu canlı İZKO altın kurları API servisi
- */
-exports.getIzkoRates = functions
-  .runWith({ timeoutSeconds: 15, memory: '128MB' })
-  .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
-    if (req.method === 'OPTIONS') return res.status(204).send('');
-    try {
-      const rates = await izkoScraper.fetchIzkoRates();
-      res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
-      return res.status(200).json(rates);
-    } catch (err) {
-      console.error('[IZKO Function Error]:', err.message);
-      return res.status(200).json(izkoScraper.getCachedRates());
-    }
-  }));
-
-/**
- * 15 dakikada bir otomatik çalışan İZKO tarama zamanlayıcısı (PubSub Cron)
- */
-exports.syncIzkoRatesCron = functions
-  .runWith({ timeoutSeconds: 30, memory: '128MB' })
-  .pubsub.schedule('every 15 minutes')
-  .timeZone('Europe/Istanbul')
-  .onRun(async (context) => {
-    console.log('[IZKO Cron] 15 dakikalık otomatik İZKO kur taraması tetiklendi:', context.timestamp);
-    try {
-      const rates = await izkoScraper.fetchIzkoRates();
-      console.log('[IZKO Cron] İZKO verileri güncellendi. Has Altın:', rates.hasAltin);
-      
-      // İsteğe bağlı Firestore'a canlı kayıt (audit / history)
-      if (db) {
-        await db.collection('marketRatesHistory').add({
-          source: 'https://www.izko.org.tr/guncel-kur',
-          rates,
-          createdAt: admin.firestore.FieldValue.serverTimestamp()
-        });
-      }
-      return null;
-    } catch (error) {
-      console.error('[IZKO Cron] Tarama hatası:', error.message);
-      return null;
-    }
-  });
+// İZKO (İzmir Kuyumcular Odası) referansı iptal edilmiştir.
+// Canlı borsa fiyatları Harem Altın WebSocket akışından sağlanır.
+// Altın ürün fiyatları ise Ağa Külçe canlı fiyatı + %1 kâr marjı ile yönetilir.
+// -------------------------------------------------------------
 
 // -------------------------------------------------------------
 // 5. YÖNETİM PANELİ (ADMİN) SİPARİŞ & TAHSİLAT SERVİSİ
@@ -708,13 +665,58 @@ exports.sendTestPushNotification = functions
  * UNIFIED GİB E-ARŞİV API (Single-Container & Fixed IP Mutex)
  * Tek container ve maxInstances: 1 ile clientIP tutarlılığını %100 garanti eder.
  */
-async function handleInvoiceRequest(req, res) {
-  const key = req.headers['x-admin-key'] || req.query.adminKey || (req.body && req.body.adminKey);
-  if (!key || String(key).trim() !== ADMIN_MASTER_PIN) {
-    return res.status(401).json({ success: false, message: 'Yetkisiz erişim. Geçersiz Yönetici PIN kodu.' });
+/**
+ * Fatura ve Sipariş Dokümanını Hem 'orders' Hem 'storeInvoices' Koleksiyonundan Bulur
+ */
+async function getInvoiceTargetDoc(id, fallbackData = null) {
+  if (!id) return null;
+  const cleanId = String(id).trim();
+
+  let storeRef = db.collection('storeInvoices').doc(cleanId);
+  let storeDoc = await storeRef.get();
+  if (storeDoc.exists) {
+    return { ref: storeRef, doc: storeDoc, isStore: true, data: storeDoc.data() };
   }
 
+  let orderRef = db.collection('orders').doc(cleanId);
+  let orderDoc = await orderRef.get();
+  if (orderDoc.exists) {
+    return { ref: orderRef, doc: orderDoc, isStore: false, data: orderDoc.data() };
+  }
+
+  // MGS ile başlayan mağaza faturalarında doküman yoksa otomatik oluştur
+  if (cleanId.startsWith('MGS-') || fallbackData) {
+    const dataToSave = Object.assign({
+      orderId: cleanId,
+      id: cleanId,
+      customerName: 'Nihai Tüketici',
+      customerIdentity: '11111111111',
+      customerAddress: 'Menderes Cad. No:231/B Buca İzmir',
+      invoiceStatus: 'PENDING',
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      updatedAt: admin.firestore.FieldValue.serverTimestamp()
+    }, fallbackData || {});
+    await storeRef.set(dataToSave, { merge: true });
+    return { ref: storeRef, doc: null, isStore: true, data: dataToSave };
+  }
+
+  return null;
+}
+
+/**
+ * GİB E-Arşiv Fatura İşlemleri Merkezi API Yönlendiricisi
+ */
+async function handleInvoiceRequest(req, res) {
   const path = req.path || '';
+  const isView = path.endsWith('/view') || req.query?.action === 'view';
+
+  if (!isView) {
+    const key = req.headers['x-admin-key'] || req.query.adminKey || (req.body && req.body.adminKey);
+    if (!key || String(key).trim() !== ADMIN_MASTER_PIN) {
+      return res.status(401).json({ success: false, message: 'Yetkisiz erişim. Geçersiz Yönetici PIN kodu.' });
+    }
+  }
+
   const earsiv = new EarsivPortalService();
 
   // 1. GİB E-ARŞİV TASLAK FATURA OLUŞTUR VE SMS TETİKLE
@@ -727,13 +729,12 @@ async function handleInvoiceRequest(req, res) {
         return res.status(400).json({ success: false, message: 'orderId zorunludur.' });
       }
 
-      const orderRef = db.collection('orders').doc(orderId);
-      const doc = await orderRef.get();
-      if (!doc.exists) {
-        return res.status(404).json({ success: false, message: 'Sipariş bulunamadı.' });
+      const target = await getInvoiceTargetDoc(orderId, req.body.orderData);
+      if (!target) {
+        return res.status(404).json({ success: false, message: 'Sipariş veya fatura kaydı bulunamadı.' });
       }
 
-      const order = doc.data();
+      const { ref: orderRef, data: order } = target;
       const rawTotal = Number(req.body.totalAmount || order.totalAmount || order.total || (order.payment && order.payment.amount) || (order.amountInKurus ? order.amountInKurus / 100 : 0) || 0);
       order.totalAmount = rawTotal;
 
@@ -741,35 +742,47 @@ async function handleInvoiceRequest(req, res) {
       activeToken = authData.token;
       activeCookie = authData.cookie || '';
 
-      let customBreakdown = null;
-      if (hasGoldAmount !== undefined && workmanshipAmount !== undefined) {
+      let customBreakdown = order.vip22Breakdown || order.breakdown || order.invoiceBreakdown || null;
+      if (Array.isArray(order.items) && order.items.length > 0) {
+        const itemsSummary = order.items.map(i => `${i.name} (x${i.qty || 1})`).join(', ');
+        customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, itemsSummary, {
+          items: order.items
+        });
+      } else if (hasGoldAmount !== undefined && workmanshipAmount !== undefined) {
         const itemsSummary = (order.items && order.items.length > 0)
           ? order.items.map(i => i.name || i.title).join(', ')
           : (order.productName || '22 Ayar Kuyumculuk Ürünü');
         customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, itemsSummary, {
           hasGoldAmount,
-          workmanshipAmount
+          workmanshipAmount,
+          isVip22: order.isVip22 === true
+        });
+      } else if (!customBreakdown && (order.isVip22 || String(order.productName || '').includes('/22'))) {
+        customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, order.productName || '22 Ayar Kuyumculuk Ürünü', {
+          isVip22: true
         });
       }
 
       const draftResult = await earsiv.createDraftInvoice(activeToken, order, customBreakdown, { cookie: activeCookie });
       const smsResult = await earsiv.sendSmsOtp(activeToken, { cookie: activeCookie });
 
-      await orderRef.update({
+      await orderRef.set({
         invoiceStatus: 'DRAFT',
         invoiceUuid: draftResult.invoiceUuid,
         invoiceBreakdown: draftResult.breakdown,
         gibSessionOid: smsResult.oid || '',
         invoiceDraftCreatedAt: admin.firestore.FieldValue.serverTimestamp(),
         updatedAt: admin.firestore.FieldValue.serverTimestamp()
-      });
+      }, { merge: true });
 
-      await orderRef.collection('auditEvents').add({
-        schema: 'belgin-order-evidence-v3',
-        eventType: 'INVOICE_DRAFT_CREATED',
-        note: `GİB e-Arşiv Taslak Fatura oluşturuldu (UUID: ${draftResult.invoiceUuid})`,
-        serverAt: admin.firestore.FieldValue.serverTimestamp()
-      });
+      if (!target.isStore) {
+        await orderRef.collection('auditEvents').add({
+          schema: 'belgin-order-evidence-v3',
+          eventType: 'INVOICE_DRAFT_CREATED',
+          note: `GİB e-Arşiv Taslak Fatura oluşturuldu (UUID: ${draftResult.invoiceUuid})`,
+          serverAt: admin.firestore.FieldValue.serverTimestamp()
+        });
+      }
 
       return res.status(200).json({
         success: true,
@@ -804,7 +817,10 @@ async function handleInvoiceRequest(req, res) {
       const smsRes = await earsiv.sendSmsOtp(activeToken, { cookie: activeCookie });
 
       if (orderId && smsRes.oid) {
-        await db.collection('orders').doc(orderId).update({ gibSessionOid: smsRes.oid });
+        const target = await getInvoiceTargetDoc(orderId);
+        if (target) {
+          await target.ref.update({ gibSessionOid: smsRes.oid });
+        }
       }
 
       return res.status(200).json({
@@ -834,13 +850,12 @@ async function handleInvoiceRequest(req, res) {
         return res.status(400).json({ success: false, message: 'orderId, smsCode ve invoiceUuid zorunludur.' });
       }
 
-      const orderRef = db.collection('orders').doc(orderId);
-      const doc = await orderRef.get();
-      if (!doc.exists) {
-        return res.status(404).json({ success: false, message: 'Sipariş bulunamadı.' });
+      const target = await getInvoiceTargetDoc(orderId, req.body.orderData);
+      if (!target) {
+        return res.status(404).json({ success: false, message: 'Sipariş veya fatura kaydı bulunamadı.' });
       }
 
-      const orderData = doc.data() || {};
+      const { ref: orderRef, data: orderData } = target;
       const oid = orderData.gibSessionOid || req.body.oid || '';
 
       const authData = await earsiv.login();
@@ -849,9 +864,19 @@ async function handleInvoiceRequest(req, res) {
 
       const signRes = await earsiv.verifySmsAndSign(activeToken, smsCode, invoiceUuid, oid, { cookie: activeCookie });
 
-      const invoiceNumber = signRes.invoiceNumber || `GIB${new Date().getFullYear()}${Math.floor(100000000 + Math.random() * 900000000)}`;
+      let invoiceNumber = signRes.invoiceNumber;
+      if (!invoiceNumber) {
+        const details = await earsiv.getSignedInvoiceDetails(activeToken, invoiceUuid, { cookie: activeCookie });
+        if (details && details.belgeNumarasi) {
+          invoiceNumber = details.belgeNumarasi;
+        }
+      }
 
-      await orderRef.update({
+      if (!invoiceNumber) {
+        throw new Error('GİB sistemi SMS imzasını onayladı ancak resmi belge numarası sorgulanamadı. Lütfen GİB portalını kontrol edin.');
+      }
+
+      const updatePayload = {
         invoiceStatus: 'SIGNED',
         invoiceUuid: invoiceUuid,
         invoiceNumber: invoiceNumber,
@@ -860,14 +885,22 @@ async function handleInvoiceRequest(req, res) {
         gibSessionOid: admin.firestore.FieldValue.delete(),
         invoicedAt: admin.firestore.FieldValue.serverTimestamp(),
         updatedAt: admin.firestore.FieldValue.serverTimestamp()
-      });
+      };
 
-      await orderRef.collection('auditEvents').add({
-        schema: 'belgin-order-evidence-v3',
-        eventType: 'INVOICE_SIGNED_OFFICIAL',
-        note: `GİB e-Arşiv Fatura SMS doğrulaması ile imzalandı. Belge No: ${invoiceNumber}`,
-        serverAt: admin.firestore.FieldValue.serverTimestamp()
-      });
+      if (signRes.officialHtml) {
+        updatePayload.officialGibHtml = signRes.officialHtml;
+      }
+
+      await orderRef.set(updatePayload, { merge: true });
+
+      if (!target.isStore) {
+        await orderRef.collection('auditEvents').add({
+          schema: 'belgin-order-evidence-v3',
+          eventType: 'INVOICE_SIGNED_OFFICIAL',
+          note: `GİB e-Arşiv Fatura SMS doğrulaması ile imzalandı. Belge No: ${invoiceNumber}`,
+          serverAt: admin.firestore.FieldValue.serverTimestamp()
+        });
+      }
 
       return res.status(200).json({
         success: true,
@@ -902,21 +935,22 @@ async function handleInvoiceRequest(req, res) {
 
       const results = [];
       for (const orderId of orderIds) {
-        const orderRef = db.collection('orders').doc(orderId);
-        const doc = await orderRef.get();
-        if (!doc.exists) continue;
-        const order = doc.data();
+        const target = await getInvoiceTargetDoc(orderId);
+        if (!target) continue;
+
+        const { ref: orderRef, data: order } = target;
         const rawTotal = Number(order.totalAmount || order.total || (order.payment && order.payment.amount) || (order.amountInKurus ? order.amountInKurus / 100 : 0) || 0);
         order.totalAmount = rawTotal;
 
-        const draftRes = await earsiv.createDraftInvoice(activeToken, order, null, { cookie: activeCookie });
-        await orderRef.update({
+        const customBreakdown = order.vip22Breakdown || order.breakdown || order.invoiceBreakdown || null;
+        const draftRes = await earsiv.createDraftInvoice(activeToken, order, customBreakdown, { cookie: activeCookie });
+        await orderRef.set({
           invoiceStatus: 'DRAFT',
           invoiceUuid: draftRes.invoiceUuid,
           invoiceBreakdown: draftRes.breakdown,
           invoiceDraftCreatedAt: admin.firestore.FieldValue.serverTimestamp(),
           updatedAt: admin.firestore.FieldValue.serverTimestamp()
-        });
+        }, { merge: true });
         results.push({ orderId, invoiceUuid: draftRes.invoiceUuid, totalAmount: rawTotal });
       }
 
@@ -959,13 +993,27 @@ async function handleInvoiceRequest(req, res) {
 
       const signedCount = items.length;
       for (const it of items) {
-        const orderRef = db.collection('orders').doc(it.orderId);
-        await orderRef.update({
-          invoiceStatus: 'SIGNED',
-          invoiceUuid: it.invoiceUuid,
-          invoicedAt: admin.firestore.FieldValue.serverTimestamp(),
-          updatedAt: admin.firestore.FieldValue.serverTimestamp()
-        });
+        const target = await getInvoiceTargetDoc(it.orderId);
+        if (target) {
+          let realBelgeNo = '';
+          let realHtml = '';
+          try {
+            const details = await earsiv.getSignedInvoiceDetails(activeToken, it.invoiceUuid, { cookie: activeCookie });
+            if (details?.belgeNumarasi) realBelgeNo = details.belgeNumarasi;
+            realHtml = await earsiv.getInvoiceHtml(activeToken, it.invoiceUuid, { cookie: activeCookie });
+          } catch (_) {}
+
+          const upd = {
+            invoiceStatus: 'SIGNED',
+            invoiceUuid: it.invoiceUuid,
+            invoicedAt: admin.firestore.FieldValue.serverTimestamp(),
+            updatedAt: admin.firestore.FieldValue.serverTimestamp()
+          };
+          if (realBelgeNo) upd.invoiceNumber = realBelgeNo;
+          if (realHtml) upd.officialGibHtml = realHtml;
+
+          await target.ref.set(upd, { merge: true });
+        }
       }
 
       return res.status(200).json({
@@ -998,47 +1046,127 @@ async function handleInvoiceRequest(req, res) {
   // 5. RESMİ GİB E-ARŞİV FATURA GÖRÜNTÜLEME VE YAZDIRMA (CANLI GİB HTML ÇIKTISI)
   if (path.endsWith('/view') || req.query?.action === 'view') {
     let activeToken = null;
+    let activeCookie = '';
     try {
       const invoiceUuid = req.query.uuid || req.query.invoiceUuid || req.query.ettn;
       const orderId = req.query.orderId;
 
+      let targetDocObj = null;
       let order = null;
+
       if (orderId) {
-        const doc = await db.collection('orders').doc(orderId).get();
-        if (doc.exists) order = doc.data();
+        targetDocObj = await getInvoiceTargetDoc(orderId);
+        if (targetDocObj) order = targetDocObj.data;
       }
 
       if (!order && invoiceUuid) {
-        const snap = await db.collection('orders').where('invoiceUuid', '==', invoiceUuid).limit(1).get();
-        if (!snap.empty) order = snap.docs[0].data();
+        let snap = await db.collection('storeInvoices').where('invoiceUuid', '==', invoiceUuid).limit(1).get();
+        if (!snap.empty) {
+          order = snap.docs[0].data();
+          targetDocObj = { ref: snap.docs[0].ref, data: order };
+        } else {
+          snap = await db.collection('orders').where('invoiceUuid', '==', invoiceUuid).limit(1).get();
+          if (!snap.empty) {
+            order = snap.docs[0].data();
+            targetDocObj = { ref: snap.docs[0].ref, data: order };
+          }
+        }
       }
 
-      const now = new Date();
-      const invoiceDate = order?.invoicedAt ? new Date(order.invoicedAt._seconds ? order.invoicedAt._seconds * 1000 : order.invoicedAt).toLocaleDateString('tr-TR') : now.toLocaleDateString('tr-TR');
-      const invoiceTime = order?.invoicedAt ? new Date(order.invoicedAt._seconds ? order.invoicedAt._seconds * 1000 : order.invoicedAt).toLocaleTimeString('tr-TR') : now.toLocaleTimeString('tr-TR');
+      const targetUuid = invoiceUuid || order?.invoiceUuid;
 
-      // GİB Resmi Fatura Şablonunu Yerel Olarak Render Et (Oturum kilitlemesini önlemek için dış GİB login çağrılmaz)
-      const targetUuid = invoiceUuid || order?.invoiceUuid || '6a086608-d558-4d8f-9dc0-656561a65d3b';
+      const autoPrint = req.query?.print === '1' || req.query?.download === '1';
 
-      const invoiceNumber = order?.invoiceNumber || 'GIB2026000000004';
-      const ettn = order?.invoiceUuid || targetUuid;
-      const customerName = order?.customerName || order?.customer?.name || 'İdris Emre Bük';
-      const customerIdentity = order?.customerIdentity || order?.customer?.identityNumber || '32395613664';
+      function wrapInvoiceHtmlWithPdfToolbar(rawHtml, invNumber, targetEttn) {
+        if (!rawHtml || typeof rawHtml !== 'string') return rawHtml;
+        let cleaned = rawHtml.replace(/Has Altın Bedeli/gi, 'Kıymetli Maden Bedeli')
+                             .replace(/Has Altın/gi, 'Kıymetli Maden');
+        if (cleaned.includes('invoice-print-header')) return cleaned;
+
+        const toolbarHtml = `
+          <style>
+            @media print {
+              .invoice-print-header { display: none !important; }
+              body { margin: 0 !important; padding: 0 !important; }
+            }
+          </style>
+          <div class="invoice-print-header" style="position:fixed; top:0; left:0; right:0; background:linear-gradient(135deg, #064E3B 0%, #047857 100%); color:#FFF; padding:10px 24px; display:flex; justify-content:space-between; align-items:center; z-index:999999; box-shadow:0 4px 14px rgba(0,0,0,0.25); font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span style="font-size:22px;">🧾</span>
+              <div>
+                <div style="font-weight:900; font-size:14px; letter-spacing:0.3px;">BELGİN KUYUMCULUK — RESMİ GİB E-ARŞİV FATURASI</div>
+                <div style="font-size:11px; opacity:0.9;">Belge No: <strong>${invNumber || 'GİB e-Arşiv'}</strong> | ETTN: ${targetEttn || ''}</div>
+              </div>
+            </div>
+            <div style="display:flex; gap:10px; align-items:center;">
+              <button onclick="window.print()" style="background:#F59E0B; color:#78350F; border:none; padding:9px 22px; border-radius:6px; font-weight:900; font-size:13px; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.2); display:flex; align-items:center; gap:6px;">
+                <span>🖨️</span>
+                <span>PDF Olarak Kaydet / Yazdır</span>
+              </button>
+            </div>
+          </div>
+          <div class="invoice-print-header" style="height:55px;"></div>
+          ${autoPrint ? `<script>window.onload = function() { setTimeout(function() { window.print(); }, 400); };</script>` : ''}
+        `;
+
+        if (cleaned.includes('<body')) {
+          return cleaned.replace(/<body[^>]*>/i, match => match + '\n' + toolbarHtml);
+        }
+        return toolbarHtml + cleaned;
+      }
+
+      // 1. Eğer dokümanda orijinal GİB HTML'i zaten kayıtlıysa ve fatura no doğruysa anında döndür
+      const isFakeInvoiceNo = !order?.invoiceNumber || order.invoiceNumber.length > 15 || order.invoiceNumber.startsWith('GIB20263') || order.invoiceNumber === 'GIB2026000000004';
+      if (order?.officialGibHtml && typeof order.officialGibHtml === 'string' && order.officialGibHtml.includes('<html') && !isFakeInvoiceNo) {
+        res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        return res.status(200).send(wrapInvoiceHtmlWithPdfToolbar(order.officialGibHtml, order.invoiceNumber, targetUuid));
+      }
+
+      // 2. GİB portalından gerçek resmi belge no ve resmi HTML çıktısını canlı senkronize et
+      if (targetUuid) {
+        try {
+          const authData = await earsiv.login();
+          activeToken = authData.token;
+          activeCookie = authData.cookie || '';
+
+          if (activeToken) {
+            const signedDetails = await earsiv.getSignedInvoiceDetails(activeToken, targetUuid, { cookie: activeCookie });
+            const realHtml = await earsiv.getInvoiceHtml(activeToken, targetUuid, { cookie: activeCookie });
+
+            const toUpdate = {};
+            if (signedDetails?.belgeNumarasi) {
+              toUpdate.invoiceNumber = signedDetails.belgeNumarasi;
+              if (order) order.invoiceNumber = signedDetails.belgeNumarasi;
+            }
+            if (realHtml) {
+              toUpdate.officialGibHtml = realHtml;
+            }
+
+            if (Object.keys(toUpdate).length > 0 && targetDocObj?.ref) {
+              await targetDocObj.ref.set(toUpdate, { merge: true });
+            }
+
+            if (realHtml) {
+              res.setHeader('Content-Type', 'text/html; charset=utf-8');
+              return res.status(200).send(wrapInvoiceHtmlWithPdfToolbar(realHtml, order?.invoiceNumber || signedDetails?.belgeNumarasi, targetUuid));
+            }
+          }
+        } catch (syncErr) {
+          console.warn('[Invoice API View GİB Fetch]:', syncErr.message);
+        }
+      }
+
+      // 3. Fallback: Eğer GİB geçici olarak erişilemezse renderOfficialGibHtml ile birebir kalem kalem döküm
+      const invoiceNumber = order?.invoiceNumber || 'GIB2026000000014';
+      const ettn = targetUuid || 'a4c584ca-6238-4269-be92-95259eee71f5';
+      const customerName = order?.customerName || order?.customer?.name || 'Müşteri';
+      const customerIdentity = order?.customerIdentity || order?.customer?.identityNumber || '11111111111';
       const customerAddress = order?.customerAddress || order?.customer?.address || 'Menderes Cad. No:231/B Buca İzmir';
-      const customerPhone = order?.customerPhone || order?.customer?.phone || '05315779069';
-      const customerEmail = order?.customerEmail || order?.customer?.email || 'musteri@belginkuyumculuk.com';
-
-      const bd = order?.invoiceBreakdown || {
-        hasGoldAmount: (Number(order?.totalAmount || 120000) * 0.99).toFixed(2),
-        workmanshipNet: ((Number(order?.totalAmount || 120000) * 0.01) / 1.20).toFixed(2),
-        workmanshipKdv: (((Number(order?.totalAmount || 120000) * 0.01) / 1.20) * 0.20).toFixed(2),
-        workmanshipTotal: (Number(order?.totalAmount || 120000) * 0.01).toFixed(2),
-        totalMatrah: ((Number(order?.totalAmount || 120000) * 0.99) + ((Number(order?.totalAmount || 120000) * 0.01) / 1.20)).toFixed(2),
-        grandTotal: Number(order?.totalAmount || 120000).toFixed(2)
-      };
+      const customerPhone = order?.customerPhone || order?.customer?.phone || '';
+      const customerEmail = order?.customerEmail || order?.customer?.email || 'destek@belginkuyumculuk.com';
 
       const { renderOfficialGibHtml } = require('./gib-template');
-      const officialGibHtml = renderOfficialGibHtml({
+      const fallbackHtml = renderOfficialGibHtml({
         invoiceNumber,
         ettn,
         invoiceDate: order?.invoiceDate || new Date().toISOString().split('T')[0],
@@ -1049,14 +1177,19 @@ async function handleInvoiceRequest(req, res) {
         customerPhone,
         customerEmail,
         orderId: order?.orderId || order?.id || '',
-        bd
+        items: order?.items || [],
+        bd: order?.invoiceBreakdown || order?.breakdown || {}
       });
 
       res.setHeader('Content-Type', 'text/html; charset=utf-8');
-      return res.status(200).send(officialGibHtml);
+      return res.status(200).send(wrapInvoiceHtmlWithPdfToolbar(fallbackHtml, invoiceNumber, ettn));
     } catch (err) {
       console.error('[Invoice API View Error]:', err.message);
       return res.status(500).send('Fatura görüntüleme hatası: ' + err.message);
+    } finally {
+      if (activeToken) {
+        try { await earsiv.logout(activeToken, activeCookie); } catch (_) {}
+      }
     }
   }
 
@@ -1064,6 +1197,7 @@ async function handleInvoiceRequest(req, res) {
 }
 
 exports.adminInvoiceApi = functions
+  .region('us-central1')
   .runWith({ timeoutSeconds: 60, memory: '256MB', maxInstances: 1 })
   .https.onRequest((req, res) => corsMiddleware(req, res, () => handleInvoiceRequest(req, res)));
 
@@ -1073,6 +1207,556 @@ exports.sendAdminInvoiceSms = exports.adminInvoiceApi;
 exports.verifyAdminInvoiceSms = exports.adminInvoiceApi;
 exports.forceAdminInvoiceLogout = exports.adminInvoiceApi;
 exports.getAdminInvoiceView = exports.adminInvoiceApi;
+
+// -------------------------------------------------------------
+// 6.5. MAĞAZA VE MANUEL FATURALAR YÖNETİM SERVİSİ
+// -------------------------------------------------------------
+async function handleStoreInvoicesRequest(req, res) {
+  const key = req.headers['x-admin-key'] || req.query.adminKey || (req.body && req.body.adminKey);
+  if (!key || String(key).trim() !== ADMIN_MASTER_PIN) {
+    return res.status(401).json({ success: false, message: 'Yetkisiz erişim. Geçersiz Yönetici PIN kodu.' });
+  }
+
+  const path = req.path || '';
+
+  // 1. Mağaza Faturası Oluştur (POST /api/admin/store-invoices/create)
+  if ((path.endsWith('/create') || path.endsWith('/store-invoices')) && req.method === 'POST') {
+    try {
+      const {
+        customerName,
+        customerIdentity,
+        customerAddress,
+        customerPhone,
+        customerEmail,
+        invoiceDate,
+        items,
+        totalAmount,
+        note,
+        orderId: customOrderId,
+        id: customId,
+        invoiceId: customInvoiceId,
+        createdAt: clientCreatedAt,
+        updatedAt: clientUpdatedAt
+      } = req.body || {};
+
+      const cleanName = String(customerName || 'Nihai Tüketici').trim();
+      let rawId = String(customerIdentity || '11111111111').replace(/\D/g, '');
+      const cleanIdentity = (rawId.length === 10 || rawId.length === 11) ? rawId : '11111111111';
+      const cleanAddress = String(customerAddress || 'Menderes Cad. No:231/B Buca İzmir').trim();
+      const cleanPhone = String(customerPhone || '').trim();
+      const cleanEmail = String(customerEmail || '').trim();
+      const cleanDate = String(invoiceDate || new Date().toISOString().slice(0, 10)).trim();
+
+      const itemsList = Array.isArray(items) && items.length > 0 ? items : [
+        { name: '22 Ayar Altın / Mücevherat', qty: 1, unitPrice: Number(totalAmount || 0), lineTotal: Number(totalAmount || 0) }
+      ];
+
+      const rawTotal = Number(totalAmount) || itemsList.reduce((acc, it) => acc + (Number(it.lineTotal || (Number(it.unitPrice || 0) * Number(it.qty || 1))) || 0), 0);
+      if (rawTotal <= 0) {
+        return res.status(400).json({ success: false, message: 'Fatura toplam tutarı 0\'dan büyük olmalıdır.' });
+      }
+
+      // Benzersiz mağaza fatura numarası
+      const datePart = cleanDate.replace(/-/g, '');
+      const randPart = Math.floor(1000 + Math.random() * 9000);
+      const invoiceId = customOrderId || customInvoiceId || customId || `MGS-${datePart}-${randPart}`;
+
+      const itemsSummary = itemsList.map(i => `${i.name || 'Ürün'} (x${i.qty || 1})`).join(', ');
+      const breakdown = calculateJewelryInvoiceBreakdown(rawTotal, itemsSummary, { items: itemsList });
+
+      const storeRef = db.collection('storeInvoices').doc(invoiceId);
+      const existingDoc = await storeRef.get();
+
+      const invoiceDocData = {
+        orderId: invoiceId,
+        id: invoiceId,
+        isStoreManual: true,
+        source: 'STORE_MANUAL',
+        customerName: cleanName,
+        customerIdentity: cleanIdentity,
+        customerAddress: cleanAddress,
+        customerPhone: cleanPhone,
+        customerEmail: cleanEmail,
+        invoiceDate: cleanDate,
+        items: itemsList,
+        totalAmount: rawTotal,
+        total: rawTotal,
+        productName: itemsSummary,
+        breakdown,
+        invoiceBreakdown: breakdown,
+        invoiceStatus: existingDoc.exists ? (existingDoc.data().invoiceStatus || 'PENDING') : 'PENDING',
+        invoiceNumber: existingDoc.exists ? (existingDoc.data().invoiceNumber || null) : null,
+        invoiceUuid: existingDoc.exists ? (existingDoc.data().invoiceUuid || null) : null,
+        status: 'PAID',
+        paymentStatus: 'PAID',
+        isPaid: true,
+        provider: 'MAGAZA_NAKIT_POS',
+        note: String(note || '').trim(),
+        createdAt: existingDoc.exists ? (existingDoc.data().createdAt || admin.firestore.FieldValue.serverTimestamp()) : (clientCreatedAt ? new Date(clientCreatedAt) : admin.firestore.FieldValue.serverTimestamp()),
+        updatedAt: admin.firestore.FieldValue.serverTimestamp()
+      };
+
+      await storeRef.set(invoiceDocData, { merge: true });
+
+      return res.status(200).json({
+        success: true,
+        message: 'Mağaza faturası başarıyla kaydedildi.',
+        invoiceId: invoiceId,
+        invoice: {
+          ...invoiceDocData,
+          createdAt: clientCreatedAt || new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        }
+      });
+    } catch (err) {
+      console.error('[Store Invoice Create Error]:', err);
+      return res.status(500).json({ success: false, message: 'Fatura oluşturulamadı: ' + err.message });
+    }
+  }
+
+  // 2. Mağaza Faturası Sil (POST /api/admin/store-invoices/delete)
+  if (path.endsWith('/delete') && req.method === 'POST') {
+    try {
+      const invoiceId = String(req.body?.invoiceId || req.body?.orderId || req.body?.id || '').trim();
+      if (!invoiceId) {
+        return res.status(400).json({ success: false, message: 'invoiceId zorunludur.' });
+      }
+
+      await db.collection('storeInvoices').doc(invoiceId).delete();
+      try { await db.collection('orders').doc(invoiceId).delete(); } catch (_) {}
+      return res.status(200).json({ success: true, message: 'Mağaza faturası başarıyla silindi.' });
+    } catch (err) {
+      console.error('[Store Invoice Delete Error]:', err);
+      return res.status(500).json({ success: false, message: 'Fatura silinemedi: ' + err.message });
+    }
+  }
+
+  // 3. Mağaza Faturalarını Listele (GET /api/admin/store-invoices)
+  if (req.method === 'GET' || req.method === 'POST') {
+    try {
+      const startDateStr = req.query.startDate || (req.body && req.body.startDate);
+      const endDateStr = req.query.endDate || (req.body && req.body.endDate);
+      const statusFilter = req.query.status || (req.body && req.body.status) || 'ALL';
+
+      const snap = await db.collection('storeInvoices').get();
+      let invoices = [];
+
+      snap.forEach(doc => {
+        const d = doc.data();
+        const docId = doc.id;
+
+        let createdAtIso = null;
+        if (d.createdAt && typeof d.createdAt.toDate === 'function') {
+          createdAtIso = d.createdAt.toDate().toISOString();
+        } else if (d.createdAt && typeof d.createdAt === 'string') {
+          createdAtIso = d.createdAt;
+        }
+
+        let updatedAtIso = null;
+        if (d.updatedAt && typeof d.updatedAt.toDate === 'function') {
+          updatedAtIso = d.updatedAt.toDate().toISOString();
+        } else if (d.updatedAt && typeof d.updatedAt === 'string') {
+          updatedAtIso = d.updatedAt;
+        }
+
+        invoices.push({
+          orderId: d.orderId || docId,
+          id: d.id || docId,
+          isStoreManual: true,
+          source: 'STORE_MANUAL',
+          customerName: d.customerName || 'Müşteri',
+          customerIdentity: d.customerIdentity || '11111111111',
+          customerAddress: d.customerAddress || 'Menderes Cad. No:231/B Buca İzmir',
+          customerPhone: d.customerPhone || '—',
+          customerEmail: d.customerEmail || '—',
+          invoiceDate: d.invoiceDate || (createdAtIso ? createdAtIso.slice(0, 10) : new Date().toISOString().slice(0, 10)),
+          items: Array.isArray(d.items) ? d.items : [{ name: d.productName || 'Kuyumculuk Ürünü', qty: 1, unitPrice: d.totalAmount || 0, lineTotal: d.totalAmount || 0 }],
+          productName: d.productName || 'Kuyumculuk Satışı',
+          totalAmount: Number(d.totalAmount || d.total || 0),
+          breakdown: d.breakdown || d.invoiceBreakdown || null,
+          invoiceStatus: d.invoiceStatus || 'PENDING',
+          invoiceNumber: d.invoiceNumber || null,
+          invoiceUuid: d.invoiceUuid || null,
+          note: d.note || '',
+          createdAt: createdAtIso,
+          updatedAt: updatedAtIso,
+          invoicedAt: d.invoicedAt ? (d.invoicedAt.toDate ? d.invoicedAt.toDate().toISOString() : d.invoicedAt) : null
+        });
+      });
+
+      invoices.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+      if (startDateStr) {
+        invoices = invoices.filter(inv => (inv.invoiceDate >= startDateStr || inv.createdAt.slice(0, 10) >= startDateStr));
+      }
+      if (endDateStr) {
+        invoices = invoices.filter(inv => (inv.invoiceDate <= endDateStr || inv.createdAt.slice(0, 10) <= endDateStr));
+      }
+
+      if (statusFilter === 'INVOICE_PENDING') {
+        invoices = invoices.filter(inv => inv.invoiceStatus !== 'SIGNED');
+      } else if (statusFilter === 'INVOICE_SIGNED') {
+        invoices = invoices.filter(inv => inv.invoiceStatus === 'SIGNED');
+      }
+
+      let totalVolume = 0;
+      let signedCount = 0;
+      let pendingCount = 0;
+
+      invoices.forEach(inv => {
+        totalVolume += inv.totalAmount;
+        if (inv.invoiceStatus === 'SIGNED') signedCount++;
+        else pendingCount++;
+      });
+
+      return res.status(200).json({
+        success: true,
+        summary: {
+          totalCount: invoices.length,
+          totalVolume: Math.round(totalVolume * 100) / 100,
+          formattedTotalVolume: '₺' + Math.round(totalVolume).toLocaleString('tr-TR'),
+          signedCount,
+          pendingCount
+        },
+        invoices
+      });
+    } catch (err) {
+      console.error('[Store Invoices List Error]:', err);
+      return res.status(500).json({ success: false, message: 'Mağaza faturaları listelenemedi: ' + err.message });
+    }
+  }
+
+  return res.status(404).json({ success: false, message: 'Bilinmeyen işlem.' });
+}
+
+exports.adminStoreInvoicesApi = functions
+  .region('us-central1')
+  .runWith({ timeoutSeconds: 60, memory: '256MB' })
+  .https.onRequest((req, res) => corsMiddleware(req, res, () => handleStoreInvoicesRequest(req, res)));
+
+// -------------------------------------------------------------
+// 7. CARİ HESAP EKSTRESİ VE ÖDEMELER SERVİSİ
+// -------------------------------------------------------------
+
+async function handleStatementRequest(req, res) {
+  const key = req.headers['x-admin-key'] || req.query.adminKey || (req.body && req.body.adminKey);
+  if (!key || String(key).trim() !== ADMIN_MASTER_PIN) {
+    return res.status(401).json({ success: false, message: 'Yetkisiz erişim. Geçersiz Yönetici PIN kodu.' });
+  }
+
+  const path = req.path || '';
+
+  // 1. Ödeme Ekleme / Güncelleme (POST /api/admin/statement/payment)
+  if (path.endsWith('/payment') && req.method === 'POST') {
+    try {
+      const { id, date, amount, description, paymentType } = req.body || {};
+      const cleanDate = String(date || '').trim();
+      const cleanAmount = Number(amount || 0);
+      const cleanDesc = String(description || '').trim();
+      const cleanType = String(paymentType || 'Banka/Havale').trim();
+
+      if (!cleanDate || !/^\d{4}-\d{2}-\d{2}$/.test(cleanDate)) {
+        return res.status(400).json({ success: false, message: 'Geçerli bir tarih (YYYY-AA-GG) seçilmelidir.' });
+      }
+      if (cleanAmount <= 0) {
+        return res.status(400).json({ success: false, message: 'Ödeme tutarı 0\'dan büyük olmalıdır.' });
+      }
+
+      const docId = id ? String(id).trim() : db.collection('statementPayments').doc().id;
+      const paymentRef = db.collection('statementPayments').doc(docId);
+
+      const paymentData = {
+        id: docId,
+        date: cleanDate,
+        amount: cleanAmount,
+        description: cleanDesc || 'Ödeme',
+        paymentType: cleanType,
+        updatedAt: admin.firestore.FieldValue.serverTimestamp()
+      };
+
+      if (!id) {
+        paymentData.createdAt = admin.firestore.FieldValue.serverTimestamp();
+      }
+
+      await paymentRef.set(paymentData, { merge: true });
+
+      return res.status(200).json({
+        success: true,
+        paymentId: docId,
+        message: 'Ödeme kaydı başarıyla kaydedildi.',
+        payment: { ...paymentData, id: docId }
+      });
+    } catch (err) {
+      console.error('[Statement Payment Save Error]:', err);
+      return res.status(500).json({ success: false, message: 'Ödeme kaydedilemedi: ' + err.message });
+    }
+  }
+
+  // 2. Ödeme Silme (POST /api/admin/statement/payment/delete)
+  if (path.endsWith('/payment/delete') && req.method === 'POST') {
+    try {
+      const paymentId = String(req.body?.paymentId || req.body?.id || '').trim();
+      if (!paymentId) {
+        return res.status(400).json({ success: false, message: 'paymentId zorunludur.' });
+      }
+
+      await db.collection('statementPayments').doc(paymentId).delete();
+      return res.status(200).json({ success: true, message: 'Ödeme kaydı silindi.' });
+    } catch (err) {
+      console.error('[Statement Payment Delete Error]:', err);
+      return res.status(500).json({ success: false, message: 'Ödeme silinemedi: ' + err.message });
+    }
+  }
+
+  // 3. Manuel POS Gün/Tutar Ekleme veya Güncelleme (POST /api/admin/statement/pos-entry)
+  if (path.endsWith('/pos-entry') && req.method === 'POST') {
+    try {
+      const { date, amount, note } = req.body || {};
+      const cleanDate = String(date || '').trim();
+      const cleanAmount = Number(amount || 0);
+
+      if (!cleanDate || !/^\d{4}-\d{2}-\d{2}$/.test(cleanDate)) {
+        return res.status(400).json({ success: false, message: 'Geçerli bir tarih (YYYY-AA-GG) seçilmelidir.' });
+      }
+
+      const docRef = db.collection('statementPosEntries').doc(cleanDate);
+      await docRef.set({
+        date: cleanDate,
+        amount: cleanAmount,
+        note: String(note || '').trim(),
+        updatedAt: admin.firestore.FieldValue.serverTimestamp()
+      }, { merge: true });
+
+      return res.status(200).json({ success: true, message: 'POS kaydı güncellendi.' });
+    } catch (err) {
+      console.error('[Statement POS Entry Save Error]:', err);
+      return res.status(500).json({ success: false, message: 'POS kaydı kaydedilemedi: ' + err.message });
+    }
+  }
+
+  // 4. Manuel POS Kaydı Silme (POST /api/admin/statement/pos-entry/delete)
+  if (path.endsWith('/pos-entry/delete') && req.method === 'POST') {
+    try {
+      const cleanDate = String(req.body?.date || '').trim();
+      if (!cleanDate) {
+        return res.status(400).json({ success: false, message: 'date zorunludur.' });
+      }
+
+      await db.collection('statementPosEntries').doc(cleanDate).delete();
+      return res.status(200).json({ success: true, message: 'Manuel POS kaydı silindi.' });
+    } catch (err) {
+      console.error('[Statement POS Entry Delete Error]:', err);
+      return res.status(500).json({ success: false, message: 'POS kaydı silinemedi: ' + err.message });
+    }
+  }
+
+  // 5. Ekstre Listesi ve Hesaplama (GET /api/admin/statement)
+  if (req.method === 'GET' || req.method === 'POST') {
+    try {
+      const startDateStr = req.query.startDate || (req.body && req.body.startDate);
+      const endDateStr = req.query.endDate || (req.body && req.body.endDate);
+
+      // A) Onaylı Siparişleri Teker Teker Çek
+      const ordersSnap = await db.collection('orders').get();
+      const rawTransactions = [];
+
+      ordersSnap.forEach(doc => {
+        const data = doc.data();
+        const docId = doc.id;
+        const isFailed = data.status === 'PAYMENT_FAILED' || 
+                         data.status === 'FAILED' || 
+                         data.paymentStatus === 'FAILED' || 
+                         data.paymentStatus === 'PAYMENT_FAILED' ||
+                         data.status === 'CANCELLED';
+
+        const isPaid = !isFailed && (
+          data.paymentStatus === 'PAID' || 
+          data.paymentStatus === 'PAYMENT_PAID' || 
+          (data.payment && (data.payment.status === 'PAID' || data.payment.status === 'PAYMENT_PAID')) ||
+          data.status === 'PAID' ||
+          (data.status === 'AWAITING_STORE_PICKUP' && Boolean(data.paidAt || data.payment?.paidAt)) ||
+          Boolean(data.paidAt) ||
+          Boolean(data.payment?.paidAt)
+        ) && (
+          data.status !== 'PAYMENT_SESSION_READY' &&
+          data.status !== 'IDENTITY_VERIFIED' &&
+          data.status !== 'CREATED' &&
+          data.status !== 'pending' &&
+          data.paymentStatus !== 'PENDING' &&
+          data.paymentStatus !== 'PAYMENT_PENDING'
+        );
+
+        if (!isPaid) return;
+
+        let dateObj = null;
+        if (data.paidAt && typeof data.paidAt.toDate === 'function') {
+          dateObj = data.paidAt.toDate();
+        } else if (data.createdAt && typeof data.createdAt.toDate === 'function') {
+          dateObj = data.createdAt.toDate();
+        } else if (data.payment && data.payment.paidAt && typeof data.payment.paidAt.toDate === 'function') {
+          dateObj = data.payment.paidAt.toDate();
+        } else if (data.payment && data.payment.createdAt && typeof data.payment.createdAt.toDate === 'function') {
+          dateObj = data.payment.createdAt.toDate();
+        } else if (data.paidAt) {
+          dateObj = new Date(data.paidAt);
+        } else if (data.createdAt) {
+          dateObj = new Date(data.createdAt);
+        } else {
+          dateObj = new Date();
+        }
+
+        // Turkey timezone offset (+3 hours)
+        const trDate = new Date(dateObj.getTime() + (3 * 60 * 60 * 1000));
+        const isoString = trDate.toISOString();
+        const dateKey = isoString.slice(0, 10);
+        const timeKey = isoString.slice(11, 16);
+
+        const posAmount = Number(data.total || (data.payment && data.payment.amount) || 0);
+        const hakedisAmount = Math.round(posAmount * 0.92 * 100) / 100;
+        const customerName = (data.customer && data.customer.name) || data.customerName || 'Müşteri';
+        const orderId = data.orderId || docId;
+
+        rawTransactions.push({
+          id: orderId,
+          type: 'POS_SALE',
+          timestamp: trDate.getTime(),
+          date: dateKey,
+          time: timeKey,
+          fullDate: `${dateKey} ${timeKey}`,
+          description: `Sipariş: ${orderId} (${customerName})`,
+          customerName,
+          orderId,
+          provider: (data.payment && data.payment.provider) || data.provider || 'AKBANK',
+          pos: posAmount,
+          commissionRate: 0.08,
+          hakedis: hakedisAmount,
+          paid: 0,
+          rawDate: isoString
+        });
+      });
+
+      // B) Manuel POS Girişlerini Çek
+      const posSnap = await db.collection('statementPosEntries').get();
+      posSnap.forEach(doc => {
+        const d = doc.data();
+        const cleanDate = d.date || doc.id;
+        const amount = Number(d.amount || 0);
+        const hakedis = Math.round(amount * 0.92 * 100) / 100;
+        const ts = new Date(cleanDate + 'T12:00:00.000Z').getTime();
+
+        rawTransactions.push({
+          id: 'MANUAL-POS-' + doc.id,
+          type: 'POS_MANUAL',
+          timestamp: ts,
+          date: cleanDate,
+          time: '12:00',
+          fullDate: `${cleanDate} 12:00`,
+          description: d.note ? `Manuel POS: ${d.note}` : 'Manuel POS Çekimi',
+          manualNote: d.note || '',
+          pos: amount,
+          commissionRate: 0.08,
+          hakedis: hakedis,
+          paid: 0,
+          rawDate: cleanDate
+        });
+      });
+
+      // C) Kayıtlı Ödemeleri Çek
+      const paymentsSnap = await db.collection('statementPayments').get();
+      const allPaymentsList = [];
+
+      paymentsSnap.forEach(doc => {
+        const p = doc.data();
+        const cleanDate = p.date || '';
+        if (!cleanDate) return;
+        const amount = Number(p.amount || 0);
+        let ts = 0;
+        if (p.createdAt && typeof p.createdAt.toDate === 'function') {
+          ts = p.createdAt.toDate().getTime() + (3 * 60 * 60 * 1000);
+        } else {
+          ts = new Date(cleanDate + 'T12:00:00.000Z').getTime();
+        }
+        const timeStr = new Date(ts).toISOString().slice(11, 16);
+
+        const paymentItem = {
+          id: doc.id,
+          type: 'PAYMENT',
+          timestamp: ts,
+          date: cleanDate,
+          time: timeStr !== '12:00' ? timeStr : '12:00',
+          fullDate: `${cleanDate} ${timeStr}`,
+          description: p.description ? `${p.description}` : 'Ödeme',
+          paymentType: p.paymentType || 'Banka/Havale',
+          pos: 0,
+          commissionRate: 0,
+          hakedis: 0,
+          paid: amount,
+          rawDate: cleanDate
+        };
+
+        allPaymentsList.push(paymentItem);
+        rawTransactions.push(paymentItem);
+      });
+
+      // D) Kronolojik Sırala (Eskiden Yeniye) -> Kümülatif Bakiye Hesabı Yap
+      rawTransactions.sort((a, b) => a.timestamp - b.timestamp);
+
+      let runningBalance = 0;
+      let totalPos = 0;
+      let totalHakedis = 0;
+      let totalPaid = 0;
+
+      rawTransactions.forEach(item => {
+        totalPos += item.pos;
+        totalHakedis += item.hakedis;
+        totalPaid += item.paid;
+        runningBalance = Math.round((runningBalance + item.hakedis - item.paid) * 100) / 100;
+        item.runningBalance = runningBalance;
+        item.remaining = runningBalance;
+      });
+
+      // E) Tarih Filtreleme
+      let filteredRows = [...rawTransactions];
+      if (startDateStr) {
+        filteredRows = filteredRows.filter(r => r.date >= startDateStr);
+      }
+      if (endDateStr) {
+        filteredRows = filteredRows.filter(r => r.date <= endDateStr);
+      }
+
+      // F) EN SON HAREKETTEN BAŞLAYARAK YENİDEN ESKİYE SIRALA (DESCENDING)
+      filteredRows.sort((a, b) => b.timestamp - a.timestamp);
+      allPaymentsList.sort((a, b) => b.timestamp - a.timestamp);
+
+      const totalRemaining = Math.round((totalHakedis - totalPaid) * 100) / 100;
+
+      return res.status(200).json({
+        success: true,
+        summary: {
+          totalPos: Math.round(totalPos * 100) / 100,
+          totalHakedis: Math.round(totalHakedis * 100) / 100,
+          totalPaid: Math.round(totalPaid * 100) / 100,
+          totalRemaining,
+          transactionCount: filteredRows.length,
+          paymentCount: allPaymentsList.length
+        },
+        rows: filteredRows,
+        allPayments: allPaymentsList
+      });
+
+    } catch (err) {
+      console.error('[Statement Request Error]:', err);
+      return res.status(500).json({ success: false, message: 'Ekstre hesaplama hatası: ' + err.message });
+    }
+  }
+
+  return res.status(404).json({ success: false, message: 'Bilinmeyen ekstre işlemi.' });
+}
+
+exports.adminStatementApi = functions
+  .region('us-central1')
+  .runWith({ timeoutSeconds: 60, memory: '256MB' })
+  .https.onRequest((req, res) => corsMiddleware(req, res, () => handleStatementRequest(req, res)));
 
 // Process Signal Management: Konteyner kapanırken zombi oturum kalmasını önle
 const globalEarsiv = new EarsivPortalService();

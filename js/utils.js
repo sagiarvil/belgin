@@ -1,6 +1,8 @@
 // ==========================================================
-// BELGIN KUYUMCULUK — İZMİR KUYUMCULAR ODASI (İZKO) RESMİ CANLI KUR MOTORU
-// KAYNAK: https://www.izko.org.tr/guncel-kur (İZKO Web API & WebSocket)
+// BELGIN KUYUMCULUK — İZMİR KUYUMCULAR ODASI (İZKO) & HAREM ALTIN CANLI PİYASA MOTORU
+// KAYNAKLAR: 
+// 1. https://canlipiyasalar.haremaltin.com/ (WebSocket: wss://hrmsocketonly.haremaltin.com)
+// 2. https://www.izko.org.tr/guncel-kur (İZKO Web API)
 // ==========================================================
 
 let CURRENT_CURRENCY = 'TRY';
@@ -18,29 +20,58 @@ const CURRENCY_SYMBOLS = {
   GBP: '£'
 };
 
-// İZKO Resmi Canlı Altın & Döviz Verileri
+// Detaylı Canlı Piyasa Veri Havuzu (Harem Altın & İZKO)
 const LIVE_MARKET_DATA = {
   hasAltin: 7121.25,
   gramGold24k: 7121.25,
-  gramGold22k: 6690,
-  gramGold18k: 6400,
-  gramGold14k: 5950,
-  gramGold8k: 3450,
-  quarterGold: 11750,
-  oldQuarterGold: 11600,
-  halfGold: 23500,
-  fullGold: 47000,
-  ataGold: 47400,
+  gramGold22k: 6690.00,
+  gramGold18k: 6400.00,
+  gramGold14k: 5950.00,
+  gramGold8k: 3450.00,
+  quarterGold: 11750.00,
+  oldQuarterGold: 11600.00,
+  halfGold: 23500.00,
+  oldHalfGold: 23060.00,
+  fullGold: 47000.00,
+  oldFullGold: 45930.00,
+  ataGold: 47400.00,
+  oldAtaGold: 46800.00,
+  gremeseGold: 117500.00,
+  oldGremeseGold: 115000.00,
+  ata5Gold: 237000.00,
+  oldAta5Gold: 233000.00,
   packagedGold: 7235.50,
+  silverTry: 104.50,
+  silverUsd: 38.80,
+  ons: 2905.40,
   usdTry: 48.25,
   eurTry: 56.21,
+  gbpTry: 65.40,
   changeGram: "+0.55%",
   change22k: "+0.55%",
   changeQuarter: "+0.55%",
   direction: "up",
-  source: "İzmir Kuyumcular Odası (İZKO)",
-  lastUpdated: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+  source: "Harem Altın & İZKO Canlı Akışı",
+  socketConnected: false,
+  lastUpdated: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+  lastUpdatedDate: new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric', weekday: 'long' }),
+  lastUpdatedTime: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+  // Tüm canlı kalemlerin detaylı sözlüğü
+  items: {}
 };
+
+/**
+ * Türkçe Tarih ve Saat Yardımcıları
+ */
+function getLiveDateString() {
+  const now = new Date();
+  return now.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric', weekday: 'long' });
+}
+
+function getLiveTimeString() {
+  const now = new Date();
+  return now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+}
 
 /**
  * Türkçe Para Formatlayıcı
@@ -71,188 +102,375 @@ function setCurrency(curr) {
 /**
  * Sanity Validator & Circuit Breaker for Financial Market Rates
  */
-function isValidMarketRate(val, min = 100, max = 500000) {
+function isValidMarketRate(val, min = 1, max = 2000000) {
   return typeof val === 'number' && !isNaN(val) && isFinite(val) && val >= min && val <= max;
 }
 
 /**
- * İZMİR KUYUMCULAR ODASI (İZKO) VE CANLI DÖVİZ KUR MOTORU (15 DAKİKALIK OTOMASYON)
- * Kaynak: https://www.izko.org.tr/guncel-kur & https://finans.truncgil.com
- * Tier-1: İZKO Resmi Web API Doğrudan Çağrısı (https://www.izko.org.tr/api/web/v1/gold-prices)
- * Tier-2: Truncgil Canlı Finans & Döviz Piyasaları Servisi (Canlı USD/TRY, EUR/TRY ve Altın Yedeklemesi)
- * Tier-3: Belgin Backend İZKO Proxy & Cache Servisi (/api/market/izko-rates)
+ * Harem Altın'dan Gelen Sayı / String Verilerini Güvenle Parse Etme
  */
-async function fetchLiveMarketRates() {
-  let izkoSuccess = false;
-
-  // 1. TIER-1: İZKO Resmi API Doğrudan Çağrısı (Ultra Hızlı & CORS Destekli)
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 4000);
-    const res = await fetch('https://www.izko.org.tr/api/web/v1/gold-prices', { signal: controller.signal });
-    clearTimeout(timeoutId);
-
-    if (res.ok) {
-      const json = await res.json();
-      if (json && json.success && Array.isArray(json.data) && json.data.length > 0) {
-        json.data.forEach(item => {
-          const price = parseFloat(item.sell_price || item.buy_price) || 0;
-          if (isValidMarketRate(price)) {
-            switch (item.key) {
-              case 'hasaltin':
-                LIVE_MARKET_DATA.hasAltin = price;
-                LIVE_MARKET_DATA.gramGold24k = price;
-                break;
-              case 'yirmiiki':
-              case 'gram':
-                LIVE_MARKET_DATA.gramGold22k = price;
-                break;
-              case 'onsekiz':
-                LIVE_MARKET_DATA.gramGold18k = price;
-                break;
-              case 'ondort':
-                LIVE_MARKET_DATA.gramGold14k = price;
-                break;
-              case 'sekizayar':
-                LIVE_MARKET_DATA.gramGold8k = price;
-                break;
-              case 'yeniceyrek':
-                LIVE_MARKET_DATA.quarterGold = price;
-                break;
-              case 'eskiceyrek':
-                LIVE_MARKET_DATA.oldQuarterGold = price;
-                break;
-              case 'yeniyarim':
-                LIVE_MARKET_DATA.halfGold = price;
-                break;
-              case 'yenitam':
-                LIVE_MARKET_DATA.fullGold = price;
-                break;
-              case 'ata':
-                LIVE_MARKET_DATA.ataGold = price;
-                break;
-              case 'paketlihas':
-                LIVE_MARKET_DATA.packagedGold = price;
-                break;
-            }
-          }
-        });
-
-        if (json.data[0] && json.data[0].percent_change !== undefined) {
-          const chgNum = parseFloat(json.data[0].percent_change) || 0;
-          const isUp = chgNum >= 0;
-          LIVE_MARKET_DATA.direction = json.data[0].direction || (isUp ? 'up' : 'down');
-          LIVE_MARKET_DATA.changeGram = (isUp ? '+' : '') + chgNum.toFixed(2) + '%';
-          LIVE_MARKET_DATA.change22k = LIVE_MARKET_DATA.changeGram;
-          LIVE_MARKET_DATA.changeQuarter = LIVE_MARKET_DATA.changeGram;
-        }
-
-        LIVE_MARKET_DATA.lastUpdated = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        izkoSuccess = true;
-      }
-    }
-  } catch (err) {
-    // Tier-1 bağlantı hatası durumunda Tier-2/Tier-3 devreye girer
+function parseMarketNumber(val) {
+  if (typeof val === 'number') return val;
+  if (!val) return 0;
+  const str = String(val).trim().replace(/\s+/g, '');
+  if (str.includes(',') && str.includes('.')) {
+    // 1.234,56 formatı
+    return parseFloat(str.replace(/\./g, '').replace(',', '.')) || 0;
   }
-
-  // 2. TIER-2: Canlı Döviz ve Piyasa Senkronizasyonu (USD/TRY, EUR/TRY, GBP/TRY)
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 3500);
-    const res = await fetch('https://finans.truncgil.com/today.json', { signal: controller.signal });
-    clearTimeout(timeoutId);
-
-    if (res.ok) {
-      const data = await res.json();
-      const parseNum = (str) => {
-        if (!str) return 0;
-        return parseFloat(String(str).replace(/\./g, '').replace(',', '.')) || 0;
-      };
-
-      if (data.USD && data.USD['Satış']) {
-        const usd = parseNum(data.USD['Satış']);
-        if (usd > 10 && usd < 200) {
-          LIVE_MARKET_DATA.usdTry = usd;
-          EXCHANGE_RATES.USD = Number((1 / usd).toFixed(6));
-        }
-      }
-      if (data.EUR && data.EUR['Satış']) {
-        const eur = parseNum(data.EUR['Satış']);
-        if (eur > 10 && eur < 200) {
-          LIVE_MARKET_DATA.eurTry = eur;
-          EXCHANGE_RATES.EUR = Number((1 / eur).toFixed(6));
-        }
-      }
-      if (data.GBP && data.GBP['Satış']) {
-        const gbp = parseNum(data.GBP['Satış']);
-        if (gbp > 10 && gbp < 200) {
-          EXCHANGE_RATES.GBP = Number((1 / gbp).toFixed(6));
-        }
-      }
-
-      // Eğer İZKO API ulaşılamadıysa Truncgil altın verisiyle güvenli fallback
-      if (!izkoSuccess && data['gram-has-altin']) {
-        const has = parseNum(data['gram-has-altin']['Satış'] || data['gram-altin']?.['Satış']);
-        if (has > 1000) {
-          LIVE_MARKET_DATA.hasAltin = has;
-          LIVE_MARKET_DATA.gramGold24k = has;
-          LIVE_MARKET_DATA.gramGold22k = parseNum(data['22-ayar-bilezik']?.['Satış']) || Math.round(has * 0.925);
-          LIVE_MARKET_DATA.quarterGold = parseNum(data['ceyrek-altin']?.['Satış']) || Math.round(has * 1.63);
-          LIVE_MARKET_DATA.halfGold = parseNum(data['yarim-altin']?.['Satış']) || Math.round(has * 3.26);
-          LIVE_MARKET_DATA.fullGold = parseNum(data['tam-altin']?.['Satış']) || Math.round(has * 6.52);
-          LIVE_MARKET_DATA.ataGold = parseNum(data['ata-altin']?.['Satış']) || Math.round(has * 6.60);
-          LIVE_MARKET_DATA.packagedGold = Math.round(has * 1.015);
-          izkoSuccess = true;
-        }
-      }
-    }
-  } catch (err) {
-    // Truncgil döviz servisi offline durumunda varsayılan kurlar korunur
+  if (str.includes(',')) {
+    return parseFloat(str.replace(',', '.')) || 0;
   }
+  return parseFloat(str) || 0;
+}
 
-  // 3. TIER-3: Belgin Backend İZKO Servisi (Proxy Fallback)
-  if (!izkoSuccess) {
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 4000);
-      const res = await fetch('/api/market/izko-rates', { signal: controller.signal });
-      clearTimeout(timeoutId);
+/**
+ * HAREM ALTIN CANLI SOKET VE VERİ GÜNCELLEME İŞLEYİCİSİ
+ * Kaynak: https://canlipiyasalar.haremaltin.com/
+ */
+function handleHaremAltinPriceUpdate(payload) {
+  if (!payload) return;
+  const rawData = payload.data || payload;
+  if (typeof rawData !== 'object') return;
 
-      if (res.ok) {
-        const data = await res.json();
-        if (data && data.hasAltin && data.hasAltin > 1000) {
-          LIVE_MARKET_DATA.hasAltin = data.hasAltin;
-          LIVE_MARKET_DATA.gramGold24k = data.gramGold24k || data.hasAltin;
-          LIVE_MARKET_DATA.gramGold22k = data.gramGold22k || 6690;
-          LIVE_MARKET_DATA.gramGold18k = data.gramGold18k || 6400;
-          LIVE_MARKET_DATA.gramGold14k = data.gramGold14k || 5950;
-          LIVE_MARKET_DATA.gramGold8k = data.gramGold8k || 3450;
-          LIVE_MARKET_DATA.quarterGold = data.quarterGold || 11750;
-          LIVE_MARKET_DATA.oldQuarterGold = data.oldQuarterGold || 11600;
-          LIVE_MARKET_DATA.halfGold = data.halfGold || 23500;
-          LIVE_MARKET_DATA.fullGold = data.fullGold || 47000;
-          LIVE_MARKET_DATA.ataGold = data.ataGold || 47400;
-          LIVE_MARKET_DATA.packagedGold = data.packagedGold || 7235.50;
-          LIVE_MARKET_DATA.changeGram = data.changeGram || '+0.55%';
-          LIVE_MARKET_DATA.change22k = data.change22k || '+0.55%';
-          LIVE_MARKET_DATA.changeQuarter = data.changeQuarter || '+0.55%';
-          LIVE_MARKET_DATA.lastUpdated = data.lastUpdatedFormatted || new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
-          izkoSuccess = true;
-        }
+  const now = new Date();
+  LIVE_MARKET_DATA.lastUpdatedDate = getLiveDateString();
+  LIVE_MARKET_DATA.lastUpdatedTime = getLiveTimeString();
+  LIVE_MARKET_DATA.lastUpdated = LIVE_MARKET_DATA.lastUpdatedTime;
+  LIVE_MARKET_DATA.source = "Harem Altın & İZKO Canlı Akışı";
+
+  // Gelen tüm kalemleri `LIVE_MARKET_DATA.items` içine işle
+  for (const [code, valObj] of Object.entries(rawData)) {
+    if (!valObj || typeof valObj !== 'object') continue;
+
+    const alis = parseMarketNumber(valObj.alis || valObj.buy_price);
+    const satis = parseMarketNumber(valObj.satis || valObj.sell_price);
+    const dusuk = parseMarketNumber(valObj.dusuk || valObj.low);
+    const yuksek = parseMarketNumber(valObj.yuksek || valObj.high);
+    const kapanis = parseMarketNumber(valObj.kapanis || valObj.close);
+    const fark = parseMarketNumber(valObj.percentChange || valObj.fark || valObj.change);
+
+    const alisDir = valObj.dir?.alis_dir || (fark >= 0 ? 'up' : 'down');
+    const satisDir = valObj.dir?.satis_dir || (fark >= 0 ? 'up' : 'down');
+
+    LIVE_MARKET_DATA.items[code] = {
+      code,
+      alis,
+      satis,
+      dusuk: dusuk || alis,
+      yuksek: yuksek || satis,
+      kapanis: kapanis || satis,
+      fark: fark || 0,
+      alisDir,
+      satisDir,
+      tarih: valObj.tarih || LIVE_MARKET_DATA.lastUpdatedTime
+    };
+
+    // Ana referans alanlarını satış fiyatına (satis) göre güncelle
+    if (satis > 0) {
+      switch (code) {
+        case 'ALTIN':
+          LIVE_MARKET_DATA.hasAltin = satis;
+          LIVE_MARKET_DATA.gramGold24k = satis;
+          if (fark) LIVE_MARKET_DATA.changeGram = (fark >= 0 ? '+' : '') + fark.toFixed(2) + '%';
+          LIVE_MARKET_DATA.direction = satisDir;
+          break;
+        case 'AYAR22':
+          LIVE_MARKET_DATA.gramGold22k = satis;
+          if (fark) LIVE_MARKET_DATA.change22k = (fark >= 0 ? '+' : '') + fark.toFixed(2) + '%';
+          break;
+        case 'AYAR18':
+          LIVE_MARKET_DATA.gramGold18k = satis;
+          break;
+        case 'AYAR14':
+          LIVE_MARKET_DATA.gramGold14k = satis;
+          break;
+        case 'AYAR8':
+          LIVE_MARKET_DATA.gramGold8k = satis;
+          break;
+        case 'KULCEALTIN':
+          LIVE_MARKET_DATA.packagedGold = satis;
+          break;
+        case 'CEYREK_YENI':
+          LIVE_MARKET_DATA.quarterGold = satis;
+          if (fark) LIVE_MARKET_DATA.changeQuarter = (fark >= 0 ? '+' : '') + fark.toFixed(2) + '%';
+          break;
+        case 'CEYREK_ESKI':
+          LIVE_MARKET_DATA.oldQuarterGold = satis;
+          break;
+        case 'YARIM_YENI':
+          LIVE_MARKET_DATA.halfGold = satis;
+          break;
+        case 'YARIM_ESKI':
+          LIVE_MARKET_DATA.oldHalfGold = satis;
+          break;
+        case 'TEK_YENI':
+          LIVE_MARKET_DATA.fullGold = satis;
+          break;
+        case 'TEK_ESKI':
+          LIVE_MARKET_DATA.oldFullGold = satis;
+          break;
+        case 'ATA_YENI':
+          LIVE_MARKET_DATA.ataGold = satis;
+          break;
+        case 'ATA_ESKI':
+          LIVE_MARKET_DATA.oldAtaGold = satis;
+          break;
+        case 'GREMESE_YENI':
+          LIVE_MARKET_DATA.gremeseGold = satis;
+          break;
+        case 'GREMESE_ESKI':
+          LIVE_MARKET_DATA.oldGremeseGold = satis;
+          break;
+        case 'ATA5_YENI':
+          LIVE_MARKET_DATA.ata5Gold = satis;
+          break;
+        case 'ATA5_ESKI':
+          LIVE_MARKET_DATA.oldAta5Gold = satis;
+          break;
+        case 'GUMUSTRY':
+          LIVE_MARKET_DATA.silverTry = satis;
+          break;
+        case 'GUMUSUSD':
+        case 'XAGUSD':
+          LIVE_MARKET_DATA.silverUsd = satis;
+          break;
+        case 'ONS':
+          LIVE_MARKET_DATA.ons = satis;
+          break;
+        case 'USDTRY':
+          LIVE_MARKET_DATA.usdTry = satis;
+          EXCHANGE_RATES.USD = Number((1 / satis).toFixed(6));
+          break;
+        case 'EURTRY':
+          LIVE_MARKET_DATA.eurTry = satis;
+          EXCHANGE_RATES.EUR = Number((1 / satis).toFixed(6));
+          break;
+        case 'GBPTRY':
+          LIVE_MARKET_DATA.gbpTry = satis;
+          EXCHANGE_RATES.GBP = Number((1 / satis).toFixed(6));
+          break;
       }
-    } catch (err) {
-      // Backend proxy geçici offline
     }
   }
 
-  // DOM Ticker, Hero Vitrin ve Değerleme Motorunu Kusursuz Senkronize Et
+  // DOM ve Fiyat Güncelleme Tetikleyicileri
   updateMarketTickerDOM();
-  updateShowroomStatus();
+  updateDynamicGoldProductPrices();
+
+  if (typeof updateLivePricesTableDOM === 'function') {
+    updateLivePricesTableDOM();
+  }
 
   if (typeof ValuationEngine !== 'undefined' && ValuationEngine.calculateGold) {
     ValuationEngine.calculateGold();
   }
+
+  if (typeof App !== 'undefined' && typeof App.onLivePricesUpdated === 'function') {
+    App.onLivePricesUpdated();
+  }
 }
+
+/**
+ * HAREM ALTIN WEBSOCKET BAĞLANTI YÖNETİCİSİ (CANLI PİYASALAR ANLIK AKIŞ)
+ * Kaynak: https://canlipiyasalar.haremaltin.com/ (wss://hrmsocketonly.haremaltin.com)
+ */
+let _haremSocket = null;
+let _haremNativeWs = null;
+
+function initHaremAltinSocket() {
+  if (typeof io !== 'undefined') {
+    if (_haremSocket && _haremSocket.connected) {
+      return;
+    }
+    try {
+      _haremSocket = io('https://hrmsocketonly.haremaltin.com', {
+        transports: ['websocket'],
+        reconnection: true,
+        reconnectionDelay: 1000,
+        reconnectionDelayMax: 4000,
+        reconnectionAttempts: Infinity,
+        timeout: 10000
+      });
+
+      _haremSocket.on('connect', () => {
+        LIVE_MARKET_DATA.socketConnected = true;
+        LIVE_MARKET_DATA.source = 'Harem Altın (Canlı WebSocket)';
+        updateMarketTickerDOM();
+        if (typeof App !== 'undefined' && typeof App.updateLivePricesTableDOM === 'function') {
+          App.updateLivePricesTableDOM();
+        }
+      });
+
+      _haremSocket.on('price_changed', (data) => {
+        handleHaremAltinPriceUpdate(data);
+      });
+
+      _haremSocket.on('disconnect', () => {
+        LIVE_MARKET_DATA.socketConnected = false;
+      });
+
+      _haremSocket.on('connect_error', () => {
+        LIVE_MARKET_DATA.socketConnected = false;
+        initNativeHaremWebSocket();
+      });
+      return;
+    } catch (err) {
+      console.warn('[HaremAltin Socket] Socket.IO bağlantısı kurulamadı, native ws deneniyor:', err.message);
+    }
+  }
+
+  initNativeHaremWebSocket();
+}
+
+function initNativeHaremWebSocket() {
+  if (_haremNativeWs && (_haremNativeWs.readyState === WebSocket.OPEN || _haremNativeWs.readyState === WebSocket.CONNECTING)) {
+    return;
+  }
+
+  try {
+    _haremNativeWs = new WebSocket('wss://hrmsocketonly.haremaltin.com/socket.io/?EIO=4&transport=websocket');
+    
+    _haremNativeWs.onopen = () => {
+      _haremNativeWs.send('40'); // Socket.io Connect Packet
+      LIVE_MARKET_DATA.socketConnected = true;
+      LIVE_MARKET_DATA.source = 'Harem Altın (Canlı WebSocket)';
+      updateMarketTickerDOM();
+      if (typeof App !== 'undefined' && typeof App.updateLivePricesTableDOM === 'function') {
+        App.updateLivePricesTableDOM();
+      }
+    };
+
+    _haremNativeWs.onmessage = (evt) => {
+      const msg = evt.data;
+      if (typeof msg === 'string') {
+        if (msg.startsWith('42')) {
+          try {
+            const jsonStr = msg.substring(2);
+            const parsed = JSON.parse(jsonStr);
+            if (parsed && parsed[0] === 'price_changed' && parsed[1]) {
+              handleHaremAltinPriceUpdate(parsed[1]);
+            }
+          } catch (e) {}
+        } else if (msg === '2') {
+          _haremNativeWs.send('3'); // Heartbeat Ping/Pong
+        }
+      }
+    };
+
+    _haremNativeWs.onclose = () => {
+      LIVE_MARKET_DATA.socketConnected = false;
+      setTimeout(initNativeHaremWebSocket, 3000);
+    };
+
+    _haremNativeWs.onerror = () => {
+      LIVE_MARKET_DATA.socketConnected = false;
+    };
+  } catch (err) {
+    console.warn('[HaremAltin Native WS] Bağlantı hatası:', err);
+  }
+}
+
+/**
+ * HAREM ALTIN CANLI SOKET SAĞLIK VE BAĞLANTI DENETLEYİCİSİ
+ * Bağlantı koptuğunda otomatik olarak Harem Altın soketini yeniden bağlar
+ */
+async function fetchLiveMarketRates() {
+  if (!LIVE_MARKET_DATA.socketConnected) {
+    initHaremAltinSocket();
+  }
+}
+
+/**
+ * TÜM ALTIN ÜRÜNLERİNİN FİYATINI CANLI SATIŞ FİYATINA GÖRE ANLIK GÜNCELLE
+ */
+function updateDynamicGoldProductPrices() {
+  if (typeof PRODUCTS === 'undefined' || !Array.isArray(PRODUCTS)) return;
+
+  const hasGram = LIVE_MARKET_DATA.hasAltin || LIVE_MARKET_DATA.gramGold24k || 7121;
+  const k22 = LIVE_MARKET_DATA.gramGold22k || Math.round(hasGram * 0.925);
+  const k14 = LIVE_MARKET_DATA.gramGold14k || Math.round(hasGram * 0.835);
+  const qNew = LIVE_MARKET_DATA.quarterGold || 11750;
+  const qOld = LIVE_MARKET_DATA.oldQuarterGold || 11600;
+  const hNew = LIVE_MARKET_DATA.halfGold || 23500;
+  const hOld = LIVE_MARKET_DATA.oldHalfGold || 23060;
+  const fNew = LIVE_MARKET_DATA.fullGold || 47000;
+  const fOld = LIVE_MARKET_DATA.oldFullGold || 45930;
+  const ata = LIVE_MARKET_DATA.ataGold || 47400;
+  const pkgHas = LIVE_MARKET_DATA.packagedGold || Math.round(hasGram * 1.015);
+
+  let updatedCount = 0;
+
+  for (const p of PRODUCTS) {
+    if (!p.isGold && p.category !== 'gold' && !p.subCategory?.includes('Ziynet') && !p.subCategory?.includes('Külçe') && !p.subCategory?.includes('Bilezik')) {
+      continue;
+    }
+
+    const name = (p.name || '').toLowerCase();
+    let baseRef = null;
+
+    // 1. Külçe / Gram Altın
+    if (name.includes('külçe') && !name.includes('bilezik')) {
+      if (name.includes('1 kg') || name.includes('1 kilogram')) baseRef = hasGram * 1000;
+      else if (name.includes('100 gr')) baseRef = hasGram * 100;
+      else if (name.includes('50 gr')) baseRef = hasGram * 50;
+      else if (name.includes('20 gr')) baseRef = hasGram * 20;
+      else if (name.includes('10 gr')) baseRef = hasGram * 10;
+      else if (name.includes('2,5 gr') || name.includes('2.5 gr')) baseRef = hasGram * 2.5;
+      else if (name.includes('5 gr')) baseRef = hasGram * 5;
+      else if (name.includes('1 gr')) baseRef = pkgHas;
+    }
+    // 2. Çeyrek Altın
+    else if (name.includes('çeyrek altın')) {
+      baseRef = name.includes('eski') ? qOld : qNew;
+    }
+    // 3. Yarım Altın
+    else if (name.includes('yarım altın') && !name.includes('bileklik') && !name.includes('kolye')) {
+      baseRef = name.includes('eski') ? hOld : hNew;
+    }
+    // 4. Tam Altın / Ziynet / Reşat
+    else if ((name.includes('tam altın') || name.includes('reşat') || name.includes('ziynet tam')) && !name.includes('bileklik') && !name.includes('kolye')) {
+      baseRef = name.includes('eski') ? fOld : fNew;
+    }
+    // 5. Ata Altın
+    else if (name.includes('ata') && !name.includes('bilezik')) {
+      baseRef = ata;
+    }
+    // 6. 22 Ayar Bilezikler
+    else if (name.includes('22 ayar') && name.includes('bilezik')) {
+      const gramMatch = name.match(/(\d+)\s*(?:gr|gram)/i);
+      const gram = gramMatch ? parseFloat(gramMatch[1]) : 10;
+      baseRef = gram * k22;
+    }
+    // 7. 14 Ayar Bilezikler
+    else if (name.includes('14 ayar') && name.includes('bilezik')) {
+      const gramMatch = name.match(/(\d+)\s*(?:gr|gram)/i);
+      const gram = gramMatch ? parseFloat(gramMatch[1]) : 10;
+      baseRef = gram * k14;
+    }
+
+    if (baseRef && baseRef > 0) {
+      // Güvenceli Satış Fiyatı (+%5 İZKO/Harem Altın Marjı)
+      const dynamicPrice = Math.round(baseRef * 1.05);
+      if (p.price !== dynamicPrice) {
+        p.price = dynamicPrice;
+        updatedCount++;
+      }
+    }
+  }
+
+  // Açık olan kartları ve fiyat DOM elemanlarını yenile
+  if (updatedCount > 0 && typeof document !== 'undefined') {
+    const priceElements = document.querySelectorAll('[data-product-price-id]');
+    priceElements.forEach(el => {
+      const id = parseInt(el.getAttribute('data-product-price-id'), 10);
+      const prod = PRODUCTS.find(x => x.id === id);
+      if (prod) {
+        el.textContent = formatPrice(prod.price);
+      }
+    });
+  }
+}
+
 
 /**
  * Ticker ve Showroom Vitrini DOM Güncellemesi (Kusursuz Senkronizasyon & Çift Döngü Eşleme)

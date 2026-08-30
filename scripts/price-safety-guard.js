@@ -47,28 +47,28 @@ for (const p of goldItems) {
 
   // Gram Altın (1 gr)
   if (name.includes('1 gr') && name.includes('külçe') && !name.includes('bilezik')) {
-    if (price < 7500 || price > 12000) {
+    if (price < 6800 || price > 12000) {
       console.error(`    ⚠️ [FLOOR-BREACH]: 1 gr Külçe Altın anormal fiyatta: [${p.reference}] ${p.name} = ${price} TL`);
       floorBreaches++;
     }
   }
   // Çeyrek Altın
   if (name.includes('çeyrek altın')) {
-    if (price < 12000 || price > 18000) {
+    if (price < 11000 || price > 18000) {
       console.error(`    ⚠️ [FLOOR-BREACH]: Çeyrek Altın anormal fiyatta: [${p.reference}] ${p.name} = ${price} TL`);
       floorBreaches++;
     }
   }
   // Yarım Altın
   if (name.includes('yarım altın') && !name.includes('bileklik') && !name.includes('kolye')) {
-    if (price < 24000 || price > 35000) {
+    if (price < 22000 || price > 35000) {
       console.error(`    ⚠️ [FLOOR-BREACH]: Yarım Altın anormal fiyatta: [${p.reference}] ${p.name} = ${price} TL`);
       floorBreaches++;
     }
   }
   // Tam Altın / Ziynet Tam
   if ((name.includes('tam altın') || name.includes('reşat') || name.includes('ata tam')) && !name.includes('bileklik') && !name.includes('kolye')) {
-    if (price < 48000 || price > 70000) {
+    if (price < 44000 || price > 70000) {
       console.error(`    ⚠️ [FLOOR-BREACH]: Tam/Ata/Reşat Altın anormal fiyatta: [${p.reference}] ${p.name} = ${price} TL`);
       floorBreaches++;
     }
