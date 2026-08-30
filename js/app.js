@@ -1291,6 +1291,9 @@ const App = {
                  onmousemove="App.handleDesktopLoupe(event, this)" 
                  onwheel="App.handleDesktopLoupeWheel(event, this)"
                  onmouseleave="App.resetDesktopLoupe(this)"
+                 ontouchstart="App.handleMobileTouchLoupeStart(event, this)"
+                 ontouchmove="App.handleMobileTouchLoupeMove(event, this)"
+                 ontouchend="App.handleMobileTouchLoupeEnd(event, this)"
                  onclick="App.handlePhotoBoxClick(event)">
               ${isHighVal ? `
                 <div class="pdp-badge-top-left">
@@ -1303,7 +1306,7 @@ const App = {
               </div>
               <div class="pdp-loupe-hint">
                 <span class="pdp-hint-desktop">🔍 Optik Büyüteç İçin Gezdirin (Tekerlekle Yakınlaştır)</span>
-                <span class="pdp-hint-mobile">🔍 Ultra-HD İnceleme (Dokunun)</span>
+                <span class="pdp-hint-mobile">🔍 Canlı Dokunmatik Büyüteç (Büyütmek İçin Kaydırın)</span>
               </div>
             </div>
           </div>
@@ -1455,6 +1458,14 @@ const App = {
   // ==========================================================
   _desktopLoupeFactor: 3.5,
 
+  _touchLoupeState: {
+    startX: 0,
+    startY: 0,
+    startTime: 0,
+    hasMoved: false
+  },
+  _touchLoupeTimer: null,
+
   _zoomModalState: {
     scale: 1,
     posX: 0,
@@ -1519,6 +1530,7 @@ const App = {
     const zoomFactor = this._desktopLoupeFactor || 3.5;
     const loupeRadius = 110; // 220px / 2
 
+    loupe.classList.remove('touch-mode');
     loupe.classList.add('active');
     loupe.style.left = `${cursorX}px`;
     loupe.style.top = `${cursorY}px`;
@@ -1528,10 +1540,90 @@ const App = {
     if (hint) hint.style.opacity = '0.2';
   },
 
+  // Mobile Precision Touch Loupe (Offset above finger)
+  handleMobileTouchLoupeStart(e, container) {
+    if (e.touches.length !== 1) return;
+    const touch = e.touches[0];
+    const img = container.querySelector('#pdpMainImageTarget') || container.querySelector('img');
+    const loupe = container.querySelector('#pdpHorlogerieLoupe') || container.querySelector('.pdp-horlogerie-loupe');
+    if (!img || !loupe) return;
+
+    loupe.style.backgroundImage = `url("${img.src}")`;
+    this._updateLoupeBadge(container);
+
+    this._touchLoupeState = {
+      startX: touch.clientX,
+      startY: touch.clientY,
+      startTime: Date.now(),
+      hasMoved: false
+    };
+
+    clearTimeout(this._touchLoupeTimer);
+    this._touchLoupeTimer = setTimeout(() => {
+      this.handleMobileTouchLoupeMove(e, container);
+    }, 150);
+  },
+
+  handleMobileTouchLoupeMove(e, container) {
+    if (e.touches.length !== 1) return;
+    const touch = e.touches[0];
+    const rect = container.getBoundingClientRect();
+    const cursorX = touch.clientX - rect.left;
+    const cursorY = touch.clientY - rect.top;
+
+    const deltaX = Math.abs(touch.clientX - this._touchLoupeState.startX);
+    const deltaY = Math.abs(touch.clientY - this._touchLoupeState.startY);
+    if (deltaX > 5 || deltaY > 5) {
+      this._touchLoupeState.hasMoved = true;
+      clearTimeout(this._touchLoupeTimer);
+    }
+
+    if (cursorX < -15 || cursorY < -15 || cursorX > rect.width + 15 || cursorY > rect.height + 15) {
+      this.resetDesktopLoupe(container);
+      return;
+    }
+
+    if (this._touchLoupeState.hasMoved || Date.now() - this._touchLoupeState.startTime > 150) {
+      if (e.cancelable) e.preventDefault();
+    }
+
+    const img = container.querySelector('#pdpMainImageTarget') || container.querySelector('img');
+    const loupe = container.querySelector('#pdpHorlogerieLoupe') || container.querySelector('.pdp-horlogerie-loupe');
+    const hint = container.querySelector('.pdp-loupe-hint');
+    if (!img || !loupe) return;
+
+    const zoomFactor = this._desktopLoupeFactor || 3.5;
+    const loupeRadius = 90; // 180px / 2
+
+    loupe.classList.add('touch-mode');
+    loupe.classList.add('active');
+    loupe.style.left = `${cursorX}px`;
+    loupe.style.top = `${cursorY}px`;
+    loupe.style.backgroundSize = `${rect.width * zoomFactor}px ${rect.height * zoomFactor}px`;
+    loupe.style.backgroundPosition = `-${cursorX * zoomFactor - loupeRadius}px -${cursorY * zoomFactor - loupeRadius}px`;
+
+    if (hint) hint.style.opacity = '0.15';
+  },
+
+  handleMobileTouchLoupeEnd(e, container) {
+    clearTimeout(this._touchLoupeTimer);
+    const duration = Date.now() - this._touchLoupeState.startTime;
+    const hasMoved = this._touchLoupeState.hasMoved;
+
+    this.resetDesktopLoupe(container);
+
+    if (duration < 280 && !hasMoved) {
+      this.handlePhotoBoxClick(e);
+    }
+  },
+
   resetDesktopLoupe(container) {
     const loupe = container.querySelector('#pdpHorlogerieLoupe') || container.querySelector('.pdp-horlogerie-loupe');
     const hint = container.querySelector('.pdp-loupe-hint');
-    if (loupe) loupe.classList.remove('active');
+    if (loupe) {
+      loupe.classList.remove('active');
+      loupe.classList.remove('touch-mode');
+    }
     if (hint) hint.style.opacity = '1';
   },
 
