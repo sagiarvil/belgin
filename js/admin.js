@@ -3762,6 +3762,72 @@ const AdminApp = {
     this.showToast(isAppend ? `➕ ${itemsToAdd.length} yeni kalem faturaya eklendi.` : `⚡ Fatura satırları (₺${res.totalAmount.toLocaleString('tr-TR')}) kuruşu kuruşuna tam olarak dolduruldu.`);
   },
 
+  // Seçili Varsayılan İşçilik Oranı (%1, %1.5, %2)
+  currentStoreLaborRate: 1.0,
+
+  setStoreLaborRate(rate) {
+    this.currentStoreLaborRate = parseFloat(rate) || 1.0;
+    document.querySelectorAll('.btn-labor-rate-toggle').forEach(btn => {
+      const r = parseFloat(btn.dataset.rate);
+      if (Math.abs(r - this.currentStoreLaborRate) < 0.01) {
+        btn.classList.add('active');
+        btn.style.background = '#065F46';
+        btn.style.color = '#FFF';
+        btn.style.borderColor = '#047857';
+      } else {
+        btn.classList.remove('active');
+        btn.style.background = '#FFF';
+        btn.style.color = '#065F46';
+        btn.style.borderColor = '#A7F3D0';
+      }
+    });
+    this.showToast(`⚙️ İşçilik oranı %${this.currentStoreLaborRate} olarak seçildi.`);
+  },
+
+  // İşçilikli Altın Şablonu Uygula (Altın %0 KDV + İşçilik %20 KDV)
+  applyStoreGoldWithLaborTemplate(productName, totalSalesPrice, laborMarginPercent = null) {
+    const ratePercent = laborMarginPercent !== null ? parseFloat(laborMarginPercent) : (this.currentStoreLaborRate || 1.0);
+    const total = Number(totalSalesPrice || 0);
+    
+    if (total <= 0) return;
+
+    // İşçilik tutarı (KDV Dahil): Toplam * (ratePercent / 100)
+    const laborGross = Math.round(total * (ratePercent / 100) * 100) / 100;
+    // Özel Matrah Altın Bedeli (%0 KDV): Toplam - İşçilik
+    const goldGross = Math.round((total - laborGross) * 100) / 100;
+
+    // İşçilik KDV Tutarı (%20 KDV): laborGross - (laborGross / 1.20)
+    const laborKdv = Math.round((laborGross - (laborGross / 1.20)) * 100) / 100;
+
+    const goldRow = {
+      name: productName,
+      qty: 1,
+      unitPrice: goldGross,
+      kdvRate: 0,
+      lineTotal: goldGross,
+      kdvAmount: 0
+    };
+
+    const laborRow = {
+      name: 'İşçilik',
+      qty: 1,
+      unitPrice: laborGross,
+      kdvRate: 20,
+      lineTotal: laborGross,
+      kdvAmount: laborKdv
+    };
+
+    if (this.storeItems.length === 1 && (!this.storeItems[0].name || this.storeItems[0].unitPrice === 0)) {
+      this.storeItems = [goldRow, laborRow];
+    } else {
+      this.storeItems.push(goldRow, laborRow);
+    }
+
+    this.renderStoreInvoiceItems();
+    this.calculateStoreInvoiceLiveSummary();
+    this.showToast(`✨ ${productName} (%${ratePercent} İşçilikli) eklendi: Altın ₺${goldGross.toLocaleString('tr-TR')} + İşçilik ₺${laborGross.toLocaleString('tr-TR')}`);
+  },
+
   // Hızlı Ürün Şablonu Uygula
   applyStoreProductTemplate(name, price, kdvRate = 0) {
     const rate = Number(kdvRate);
