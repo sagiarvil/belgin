@@ -413,12 +413,129 @@
       margin-bottom: 0;
     }
 
+    /* ==========================================
+       ADLİ İNCELEME & HUKUKİ EVRAK OPTİK BÜYÜTECİ
+       ========================================== */
+    .btn-loupe-toggle {
+      background: #021816;
+      color: #C2A768;
+      border: 1px solid #C2A768;
+      padding: 7px 13px;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 11.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-loupe-toggle:hover {
+      background: #084C47;
+      color: #FFF;
+      border-color: #DFBA67;
+    }
+    .btn-loupe-toggle.active {
+      background: #C2A768;
+      color: #042926;
+      font-weight: 800;
+      border-color: #DFBA67;
+      box-shadow: 0 0 12px rgba(194, 167, 104, 0.4);
+    }
+    .loupe-status-pill {
+      font-size: 9.5px;
+      padding: 1px 6px;
+      border-radius: 10px;
+      background: rgba(0,0,0,0.3);
+      color: inherit;
+    }
+    .btn-loupe-toggle.active .loupe-status-pill {
+      background: #042926;
+      color: #C2A768;
+    }
+
+    .legal-forensic-loupe {
+      position: fixed;
+      width: 230px;
+      height: 230px;
+      border-radius: 50%;
+      border: 2.5px solid #C2A768;
+      box-shadow: 0 20px 50px rgba(0, 24, 48, 0.45), inset 0 0 24px rgba(0, 0, 0, 0.3), 0 0 0 3px rgba(255, 255, 255, 0.65), 0 0 0 5px rgba(194, 167, 104, 0.6);
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transform: translate(-50%, -50%) scale(0.85);
+      transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.2s;
+      background-repeat: no-repeat;
+      background-color: #FFFFFF;
+      z-index: 99999;
+      overflow: visible;
+    }
+    .legal-forensic-loupe.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    /* Safir Kristal Anti-Refle Yansıma Efekti */
+    .legal-forensic-loupe::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.08) 42%, rgba(56, 140, 240, 0.12) 65%, transparent 100%);
+      pointer-events: none;
+      z-index: 2;
+    }
+    /* Adli Optik İnceleme & Nişangah Ağı (Reticle Crosshair) */
+    .legal-forensic-loupe::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: 
+        radial-gradient(circle at center, transparent 36px, rgba(194, 167, 104, 0.2) 37px, transparent 38px),
+        linear-gradient(to right, transparent calc(50% - 0.5px), rgba(194, 167, 104, 0.4) 50%, transparent calc(50% + 0.5px)),
+        linear-gradient(to bottom, transparent calc(50% - 0.5px), rgba(194, 167, 104, 0.4) 50%, transparent calc(50% + 0.5px));
+      background-size: 100% 100%, 100% 30px, 30px 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      pointer-events: none;
+      z-index: 3;
+    }
+    /* Mobil Dokunmatik Modu */
+    .legal-forensic-loupe.touch-mode {
+      width: 185px;
+      height: 185px;
+      transform: translate(-50%, calc(-100% - 28px)) scale(0.85);
+    }
+    .legal-forensic-loupe.touch-mode.active {
+      transform: translate(-50%, calc(-100% - 28px)) scale(1);
+    }
+    /* Büyütme Güç Rozeti */
+    .legal-loupe-mag-badge {
+      position: absolute;
+      top: -12px;
+      right: -12px;
+      background: #02121E;
+      color: #C2A768;
+      border: 1.5px solid #C2A768;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      padding: 3px 8px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      pointer-events: none;
+      z-index: 5;
+      white-space: nowrap;
+    }
+
     @media print {
       body {
         padding: 0;
         background: #FFF;
       }
-      .top-control-panel, .document-tabs-bar {
+      .top-control-panel, .document-tabs-bar, .legal-forensic-loupe {
         display: none !important;
       }
       .page-wrapper {
@@ -447,6 +564,10 @@
       <div style="font-size:11px; opacity:0.85;" id="toolbarInfo">Resmi Hukuki Delil & Mesafeli Satış Dosyası</div>
     </div>
     <div class="btn-action-group">
+      <button class="btn-loupe-toggle" id="btnToggleLoupe" onclick="LegalApp.toggleLoupe()" title="Belgeleri, imzaları ve mühürleri optik büyüteçle yüksek çözünürlükte inceleyin">
+        <span>🔍 Adli Optik Büyüteç</span>
+        <span class="loupe-status-pill" id="loupeStatusPill">Kapalı</span>
+      </button>
       <button class="btn-print-active" onclick="window.print()" title="Şu an seçili olan belgeyi yazdırır">
         <span>🖨️ Seçili Belgeyi Yazdır</span>
       </button>
@@ -455,6 +576,11 @@
       </button>
     </div>
   </div>
+</div>
+
+<!-- ADLİ İNCELEME OPTİK BÜYÜTEÇ ELEMENTİ -->
+<div class="legal-forensic-loupe" id="legalForensicLoupe">
+  <span class="legal-loupe-mag-badge" id="legalLoupeMagBadge">3.5× ADLİ MAKRO</span>
 </div>
 
 <!-- 2. SEKME / BELGE SEÇİM ÇUBUĞU -->
@@ -604,6 +730,7 @@ const LegalApp = {
       }
 
       this.render();
+      this.initLoupe();
     } catch (e) {
       document.getElementById('documentContentContainer').innerHTML = `
         <div style="color:#C92A2A; text-align:center; padding:40px; font-weight:700;">
@@ -792,6 +919,139 @@ const LegalApp = {
     setTimeout(() => {
       window.print();
     }, 250);
+  },
+
+  // ==========================================
+  // ADLİ OPTİK İNCELEME BÜYÜTECİ MOTORU (FORENSIC LOUPE)
+  // ==========================================
+  isLoupeActive: true,
+  currentZoomFactor: 3.5,
+  loupeInitialized: false,
+
+  toggleLoupe() {
+    this.isLoupeActive = !this.isLoupeActive;
+    const btn = document.getElementById('btnToggleLoupe');
+    const pill = document.getElementById('loupeStatusPill');
+    const loupe = document.getElementById('legalForensicLoupe');
+
+    if (btn) {
+      if (this.isLoupeActive) btn.classList.add('active');
+      else btn.classList.remove('active');
+    }
+    if (pill) {
+      pill.textContent = this.isLoupeActive ? `${this.currentZoomFactor}× Açık` : 'Kapalı';
+    }
+    if (!this.isLoupeActive && loupe) {
+      loupe.classList.remove('active');
+      loupe.classList.remove('touch-mode');
+    }
+  },
+
+  cycleZoomFactor() {
+    if (this.currentZoomFactor === 2.5) this.currentZoomFactor = 3.5;
+    else if (this.currentZoomFactor === 3.5) this.currentZoomFactor = 5.0;
+    else this.currentZoomFactor = 2.5;
+
+    const badge = document.getElementById('legalLoupeMagBadge');
+    if (badge) badge.textContent = `${this.currentZoomFactor}× ADLİ MAKRO`;
+    const pill = document.getElementById('loupeStatusPill');
+    if (pill && this.isLoupeActive) pill.textContent = `${this.currentZoomFactor}× Açık`;
+  },
+
+  initLoupe() {
+    if (this.loupeInitialized) return;
+    this.loupeInitialized = true;
+
+    const loupe = document.getElementById('legalForensicLoupe');
+    const badge = document.getElementById('legalLoupeMagBadge');
+    const btn = document.getElementById('btnToggleLoupe');
+    const pill = document.getElementById('loupeStatusPill');
+
+    if (btn && this.isLoupeActive) {
+      btn.classList.add('active');
+      if (pill) pill.textContent = `${this.currentZoomFactor}× Açık`;
+    }
+
+    if (badge) {
+      badge.style.cursor = 'pointer';
+      badge.title = 'Büyütme oranını değiştirmek için tıklayın (2.5x / 3.5x / 5.0x)';
+      badge.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.cycleZoomFactor();
+      });
+    }
+
+    const container = document.getElementById('documentContentContainer');
+    if (!container || !loupe) return;
+
+    // Mouse Hareketiyle Büyüteç Kontrolü
+    container.addEventListener('mousemove', (e) => {
+      if (!this.isLoupeActive) return;
+
+      const targetImg = e.target.closest('img') || (e.target.tagName === 'IMG' ? e.target : null);
+      if (!targetImg) {
+        loupe.classList.remove('active');
+        return;
+      }
+
+      const rect = targetImg.getBoundingClientRect();
+      const cursorX = e.clientX - rect.left;
+      const cursorY = e.clientY - rect.top;
+
+      if (cursorX < 0 || cursorY < 0 || cursorX > rect.width || cursorY > rect.height) {
+        loupe.classList.remove('active');
+        return;
+      }
+
+      const loupeRadius = 115; // 230px / 2
+      loupe.classList.remove('touch-mode');
+      loupe.classList.add('active');
+      loupe.style.left = `${e.clientX}px`;
+      loupe.style.top = `${e.clientY}px`;
+      loupe.style.backgroundImage = `url("${targetImg.src}")`;
+      loupe.style.backgroundSize = `${rect.width * this.currentZoomFactor}px ${rect.height * this.currentZoomFactor}px`;
+      loupe.style.backgroundPosition = `-${cursorX * this.currentZoomFactor - loupeRadius}px -${cursorY * this.currentZoomFactor - loupeRadius}px`;
+    });
+
+    container.addEventListener('mouseleave', () => {
+      if (loupe) loupe.classList.remove('active');
+    });
+
+    // Mobil / Dokunmatik Cihazlar İçin Touch Desteği
+    container.addEventListener('touchmove', (e) => {
+      if (!this.isLoupeActive || !e.touches || e.touches.length === 0) return;
+      const touch = e.touches[0];
+      const targetImg = document.elementFromPoint(touch.clientX, touch.clientY)?.closest('img');
+      if (!targetImg) {
+        loupe.classList.remove('active');
+        return;
+      }
+
+      const rect = targetImg.getBoundingClientRect();
+      const cursorX = touch.clientX - rect.left;
+      const cursorY = touch.clientY - rect.top;
+
+      if (cursorX < 0 || cursorY < 0 || cursorX > rect.width || cursorY > rect.height) {
+        loupe.classList.remove('active');
+        return;
+      }
+
+      const loupeRadius = 92;
+      loupe.classList.add('touch-mode');
+      loupe.classList.add('active');
+      loupe.style.left = `${touch.clientX}px`;
+      loupe.style.top = `${touch.clientY}px`;
+      loupe.style.backgroundImage = `url("${targetImg.src}")`;
+      loupe.style.backgroundSize = `${rect.width * this.currentZoomFactor}px ${rect.height * this.currentZoomFactor}px`;
+      loupe.style.backgroundPosition = `-${cursorX * this.currentZoomFactor - loupeRadius}px -${cursorY * this.currentZoomFactor - loupeRadius}px`;
+    }, { passive: true });
+
+    container.addEventListener('touchend', () => {
+      if (loupe) {
+        loupe.classList.remove('active');
+        loupe.classList.remove('touch-mode');
+      }
+    });
   },
 
   formatDate(isoStr) {
