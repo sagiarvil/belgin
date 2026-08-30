@@ -8,6 +8,7 @@ on:
       - "css/**"
       - "js/**"
       - "images/**"
+      - "scripts/inject-hero-motion-v2.js"
       - ".github/workflows/deploy-hosting-production.yml"
   workflow_dispatch:
 
@@ -45,6 +46,20 @@ jobs:
       - name: Re-run production gates
         run: npm run ci
 
+      - name: Verify generated Hero Motion V2 bundle before deploy
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -Eq 'js/hero-motion-v2\.js\?v=[^" ]+' index.html || {
+            echo "::error title=Hero Motion V2 loader missing from build::index.html does not reference js/hero-motion-v2.js after production build."
+            exit 1
+          }
+          grep -q 'Signature Hero Motion v2' js/hero-motion-v2.js || {
+            echo "::error title=Hero Motion V2 runtime invalid::js/hero-motion-v2.js signature is missing."
+            exit 1
+          }
+          echo "HERO_MOTION_V2_BUILD=PASS"
+
       - name: Verify Firebase Hosting target
         shell: bash
         run: |
@@ -68,24 +83,42 @@ jobs:
       - name: Deploy Firebase Hosting only
         run: npx -y firebase-tools@latest deploy --project "$FIREBASE_PROJECT_ID" --only hosting --non-interactive --token "$FIREBASE_TOKEN"
 
-      - name: Verify live hero micro-expression asset
+      - name: Verify Hero Motion V2 on Firebase and custom domain
         shell: bash
         run: |
           set -euo pipefail
-          curl --fail --silent --show-error --location --max-time 30 \
-            https://www.belginkuyumculuk.com/js/legal-overrides.js \
-            -o /tmp/legal-overrides.js
-          grep -q "installHeroMicroExpression" /tmp/legal-overrides.js
-          echo "HERO_MICRO_EXPRESSION_LIVE=PASS"
+          BUST="${GITHUB_SHA}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          for BASE in "https://belgin.web.app" "https://www.belginkuyumculuk.com"; do
+            echo "Checking $BASE"
+            curl --fail --silent --show-error --location --max-time 30 \
+              -H 'Cache-Control: no-cache' \
+              "${BASE}/?build=${BUST}" \
+              -o /tmp/index-live.html
+
+            grep -Eq 'js/hero-motion-v2\.js\?v=[^" ]+' /tmp/index-live.html || {
+              echo "::error title=Hero Motion V2 loader missing on live domain::${BASE} is serving HTML without the V2 loader."
+              exit 1
+            }
+
+            curl --fail --silent --show-error --location --max-time 30 \
+              -H 'Cache-Control: no-cache' \
+              "${BASE}/js/hero-motion-v2.js?build=${BUST}" \
+              -o /tmp/hero-motion-v2.js
+
+            grep -q 'Signature Hero Motion v2' /tmp/hero-motion-v2.js || {
+              echo "::error title=Hero Motion V2 asset missing on live domain::${BASE} is not serving the V2 runtime."
+              exit 1
+            }
+
+            echo "${BASE} index_sha256=$(sha256sum /tmp/index-live.html | awk '{print $1}')"
+            echo "${BASE} hero_v2_sha256=$(sha256sum /tmp/hero-motion-v2.js | awk '{print $1}')"
+          done
+          echo "HERO_MOTION_V2_LIVE=PASS"
 
       - name: Live homepage smoke
         shell: bash
         run: |
           set -euo pipefail
-          curl --fail --silent --show-error --location --max-time 30 \
-            https://www.belginkuyumculuk.com/ \
-            -o /tmp/index.html
-          grep -qi "Belgin Kuyumculuk" /tmp/index.html
           curl --fail --silent --show-error --head --max-time 30 \
             https://www.belginkuyumculuk.com/ \
             | grep -i "strict-transport-security:"
