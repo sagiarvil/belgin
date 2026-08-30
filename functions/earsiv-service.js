@@ -928,8 +928,11 @@ class EarsivPortalService {
         });
 
         const dataObj = res.data?.data;
+        const rawResponseStr = JSON.stringify(res.data || '');
         const msgText = String(dataObj || res.data?.messages?.[0]?.text || '');
-        if (msgText.includes('başarıyla') || msgText.includes('imzalanmıştır') || (dataObj && (dataObj.sonuc === '1' || dataObj.sonuc === 1))) {
+        const isAlreadySigned = rawResponseStr.includes('Onaylı faturalar tekrar onaylanamaz') || msgText.includes('Onaylı faturalar');
+
+        if (msgText.includes('başarıyla') || msgText.includes('imzalanmıştır') || isAlreadySigned || (dataObj && (dataObj.sonuc === '1' || dataObj.sonuc === 1))) {
           let realBelgeNo = '';
           let officialHtml = '';
 
@@ -951,7 +954,9 @@ class EarsivPortalService {
             officialHtml: officialHtml || null,
             signedAt: new Date().toISOString(),
             data: dataObj,
-            message: `Fatura GİB e-Arşiv Portalında resmi olarak imzalandı. Belge No: ${realBelgeNo || 'Onaylandı'}`
+            message: isAlreadySigned 
+              ? `Fatura daha önce GİB Portalında resmi olarak onaylanmıştır. Belge No: ${realBelgeNo || 'Onaylı Belge'}`
+              : `Fatura GİB e-Arşiv Portalında resmi olarak imzalandı. Belge No: ${realBelgeNo || 'Onaylandı'}`
           };
         }
 
