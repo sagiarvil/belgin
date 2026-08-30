@@ -899,7 +899,10 @@ const AdminApp = {
     const pdfName = document.getElementById('declarationPdfName');
     const btnDel = document.getElementById('btnDeleteDeclaration');
 
-    if (!modal) return;
+    if (!modal) {
+      console.error('[AdminApp] declarationModal bulunamadı.');
+      return;
+    }
 
     const decl = (order.declarationDoc) ? {
       docUrl: order.declarationDoc,
@@ -940,12 +943,16 @@ const AdminApp = {
       if (btnDel) btnDel.style.display = 'none';
     }
 
+    modal.classList.add('open');
     modal.style.display = 'flex';
   },
 
   closeDeclarationModal() {
     const modal = document.getElementById('declarationModal');
-    if (modal) modal.style.display = 'none';
+    if (modal) {
+      modal.classList.remove('open');
+      modal.style.display = 'none';
+    }
     this.activeDeclarationOrderId = null;
   },
 

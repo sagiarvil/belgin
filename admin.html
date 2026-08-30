@@ -2856,7 +2856,7 @@
     </div>
 
 <!-- MÜŞTERİ ISLAK İMZALI BEYAN VE BELGE YÜKLEME MODALI -->
-<div id="declarationModal" class="admin-modal-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.65); z-index:9999; align-items:center; justify-content:center; padding:16px;">
+<div id="declarationModal" class="admin-modal-overlay" onclick="if(event.target===this) AdminApp.closeDeclarationModal();" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.65); z-index:9999; align-items:center; justify-content:center; padding:16px;">
   <div class="admin-modal-card" style="background:#FFF; border-radius:12px; max-width:680px; width:100%; box-shadow:0 25px 50px -12px rgba(0,0,0,0.3); overflow:hidden; display:flex; flex-direction:column; max-height:90vh;">
     <div style="background:linear-gradient(135deg, #042926 0%, #084C47 100%); color:#FFF; padding:16px 20px; display:flex; justify-content:space-between; align-items:center;">
       <h3 style="margin:0; font-size:16px; font-weight:800; display:flex; align-items:center; gap:8px;">
@@ -2921,6 +2921,6 @@
 </div>
 
 <script src="js/vip-payment.js?v=2.8.8"></script>
-<script src="js/admin.js?v=20260829-statement"></script>
+<script src="js/admin.js?v=20260830-beyan-v3"></script>
 </body>
 </html>
