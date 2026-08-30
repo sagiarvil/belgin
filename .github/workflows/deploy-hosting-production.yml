@@ -1,0 +1,92 @@
+name: deploy-hosting-production
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "index.html"
+      - "css/**"
+      - "js/**"
+      - "images/**"
+      - ".github/workflows/deploy-hosting-production.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: belgin-hosting-production
+  cancel-in-progress: false
+
+jobs:
+  deploy-hosting:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      FIREBASE_PROJECT_ID: carbon-web-1265b
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+    steps:
+      - name: Checkout audited main
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: functions/package-lock.json
+
+      - name: Install functions dependencies
+        run: npm ci --prefix functions
+
+      - name: Re-run production gates
+        run: npm run ci
+
+      - name: Verify Firebase Hosting target
+        shell: bash
+        run: |
+          set -euo pipefail
+          node - <<'NODE'
+          const cfg = require('./firebase.json');
+          if (cfg.hosting?.site !== 'belgin') {
+            throw new Error(`Unexpected Firebase Hosting target: ${cfg.hosting?.site || 'missing'}`);
+          }
+          NODE
+
+      - name: Require Firebase deployment credential
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${FIREBASE_TOKEN:-}" ]; then
+            echo "::error title=Firebase deployment credential missing::FIREBASE_TOKEN is not configured."
+            exit 1
+          fi
+
+      - name: Deploy Firebase Hosting only
+        run: npx -y firebase-tools@latest deploy --project "$FIREBASE_PROJECT_ID" --only hosting --non-interactive --token "$FIREBASE_TOKEN"
+
+      - name: Verify live hero micro-expression asset
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location --max-time 30 \
+            https://www.belginkuyumculuk.com/js/legal-overrides.js \
+            -o /tmp/legal-overrides.js
+          grep -q "installHeroMicroExpression" /tmp/legal-overrides.js
+          echo "HERO_MICRO_EXPRESSION_LIVE=PASS"
+
+      - name: Live homepage smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location --max-time 30 \
+            https://www.belginkuyumculuk.com/ \
+            -o /tmp/index.html
+          grep -qi "Belgin Kuyumculuk" /tmp/index.html
+          curl --fail --silent --show-error --head --max-time 30 \
+            https://www.belginkuyumculuk.com/ \
+            | grep -i "strict-transport-security:"
+          echo "LIVE_HOSTING_SMOKE=PASS"
