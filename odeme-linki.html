@@ -402,9 +402,20 @@
 
       <form id="linkForm" novalidate>
         <div class="field">
-          <label class="field-label" for="productTitle">Ürün / Model Adı <span class="req">*</span></label>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:7px;">
+            <label class="field-label" for="productTitle" style="margin-bottom:0;">Ürün / Model Adı <span class="req">*</span></label>
+            <button type="button" id="btnShortcut22" style="background:rgba(212,175,55,0.15); border:1px solid rgba(212,175,55,0.4); color:var(--gold-light); font-size:11px; padding:2px 8px; border-radius:6px; cursor:pointer; font-weight:700;">⚡ /22 Kısayolu Ekle</button>
+          </div>
           <div class="input-shell" id="titleShell">
-            <input type="text" id="productTitle" class="form-input" placeholder="Örn: Rolex Submariner 41mm Date" autocomplete="off">
+            <input type="text" id="productTitle" class="form-input" placeholder="Örn: Rolex Submariner veya /22" autocomplete="off">
+          </div>
+          <div id="tag22Badge" style="display:none; margin-top:8px; background:linear-gradient(135deg, rgba(23,131,112,0.2) 0%, rgba(212,175,55,0.15) 100%); border:1px solid var(--gold-dim); border-radius:8px; padding:8px 12px; font-size:12px; color:var(--gold-light);">
+            <div style="font-weight:700; display:flex; align-items:center; gap:6px;">
+              <span>🏷️ 22 Ayar Otomatik Ayrıştırma Aktif</span>
+            </div>
+            <div style="font-size:11px; color:var(--text-muted); margin-top:3px; line-height:1.4;">
+              5 adet 22 ayar altın ürün linkinden tutara göre otomatik adet ve %1.5 işçilik (%20 KDV) fatura satırları hesaplanacaktır.
+            </div>
           </div>
           <div class="field-error" id="titleError">⚠ Lütfen ürün veya model adını giriniz.</div>
         </div>
@@ -416,6 +427,11 @@
             <input type="text" inputmode="numeric" id="productAmount" class="form-input amount-input" placeholder="45.000">
           </div>
           <div class="field-error" id="amountError">⚠ Lütfen geçerli bir satış tutarı giriniz (min. ₺100).</div>
+        </div>
+
+        <div id="breakdown22Preview" style="display:none; margin-bottom:16px; background:#0B1917; border:1px solid #1E3835; border-radius:10px; padding:12px; font-size:12px;">
+          <div style="font-weight:700; color:var(--gold); margin-bottom:6px; font-size:12px;">📊 Önizleme: Fatura & Admin Panel Kalemleri</div>
+          <div id="breakdown22Lines" style="color:var(--text); line-height:1.6;"></div>
         </div>
 
         <button type="submit" id="btnSubmit" class="btn-submit">
@@ -468,8 +484,50 @@
     const btnTestLink = document.getElementById('btnTestLink');
     const btnReset = document.getElementById('btnReset');
     const toast = document.getElementById('toast');
+    const btnShortcut22 = document.getElementById('btnShortcut22');
+    const tag22Badge = document.getElementById('tag22Badge');
+    const breakdown22Preview = document.getElementById('breakdown22Preview');
+    const breakdown22Lines = document.getElementById('breakdown22Lines');
     let currentUrl = '';
     let currentMsg = '';
+
+    // --- /22 Tag & Preview Kontrolü ---
+    function checkTag22() {
+      const val = (titleInput.value || '').trim();
+      const is22 = typeof VipEngine !== 'undefined' && VipEngine.isVip22Tag ? VipEngine.isVip22Tag(val) : (val === '/22' || val.includes('/22'));
+      if (tag22Badge) tag22Badge.style.display = is22 ? 'block' : 'none';
+
+      const amount = parseInt(amountInput.dataset.raw || '0', 10);
+      if (is22 && amount >= 100 && typeof VipEngine !== 'undefined' && VipEngine.calculateVip22Breakdown) {
+        const bd = VipEngine.calculateVip22Breakdown(amount);
+        if (bd && bd.items) {
+          breakdown22Lines.innerHTML = bd.items.map(it => `
+            <div style="display:flex; justify-content:space-between; padding:3px 0; border-bottom:1px dashed #1A322E;">
+              <span>• <strong>${it.name}</strong> (x${it.qty || 1})</span>
+              <span style="font-weight:700; color:var(--gold-light);">₺${Number(it.lineTotal || it.fiyat || 0).toLocaleString('tr-TR')} ${it.kdvRate ? '(+%20 KDV)' : '(%0 KDV Özel Matrah)'}</span>
+            </div>
+          `).join('') + `
+            <div style="display:flex; justify-content:space-between; margin-top:6px; font-weight:800; color:var(--gold);">
+              <span>Toplam:</span>
+              <span>₺${Number(bd.grandTotal).toLocaleString('tr-TR')}</span>
+            </div>
+          `;
+          breakdown22Preview.style.display = 'block';
+          return;
+        }
+      }
+      if (breakdown22Preview) breakdown22Preview.style.display = 'none';
+    }
+
+    if (btnShortcut22) {
+      btnShortcut22.addEventListener('click', () => {
+        titleInput.value = '/22';
+        titleInput.focus();
+        checkTag22();
+      });
+    }
+
+    titleInput.addEventListener('input', checkTag22);
 
     // --- focus/blur görsel geri bildirim ---
     function bindShell(input, shell) {
@@ -485,10 +543,12 @@
       amountInput.dataset.raw = digitsOnly;
       if (!digitsOnly) {
         amountInput.value = '';
+        checkTag22();
         return;
       }
       const num = parseInt(digitsOnly, 10);
       amountInput.value = num.toLocaleString('tr-TR');
+      checkTag22();
     }
     amountInput.addEventListener('input', formatAmountInput);
 
@@ -524,10 +584,12 @@
       btnSubmit.disabled = true;
 
       setTimeout(() => {
+        const is22 = typeof VipEngine !== 'undefined' && VipEngine.isVip22Tag ? VipEngine.isVip22Tag(title) : (title === '/22' || title.includes('/22'));
         const payload = {
           orderId: 'VIP-' + Math.floor(100000 + Math.random() * 900000),
           title,
           amount,
+          isVip22: is22,
           createdAt: new Date().toISOString()
         };
 

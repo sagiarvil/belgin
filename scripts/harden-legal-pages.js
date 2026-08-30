@@ -19,7 +19,9 @@ const pages = [
   'guvenli-odeme-ve-3d-secure.html',
   'iade-degisim-cayma.html',
   'iade-degisim.html',
-  'hukuki-delil-ve-kayit-politikasi.html'
+  'hukuki-delil-ve-kayit-politikasi.html',
+  'iletisim.html',
+  'canli-fiyatlar/index.html'
 ];
 
 const marker = 'data-belgin-defense-layer="v2"';
@@ -44,6 +46,30 @@ for (const file of pages) {
     html = html.replace('</body>', '<script src="js/legal-stamp.js?v=2026.08.25.2600"></script>\n</body>');
   } else {
     html = html.replace(/js\/legal-stamp\.js\?v=[^"']+/g, 'js/legal-stamp.js?v=2026.08.25.2600');
+  }
+
+  const legalLinksHtml = `<div class="footer-legal-links">
+        <a href="kvkk-aydinlatma-metni.html">KVKK</a>
+        <span class="sep">•</span>
+        <a href="mesafeli-satis-sozlesmesi.html">Mesafeli Satış</a>
+        <span class="sep">•</span>
+        <a href="on-bilgilendirme-formu.html">Ön Bilgilendirme</a>
+        <span class="sep">•</span>
+        <a href="yuksek-degerli-urun-teslimi.html">Yüksek Değerli Teslimat</a>
+        <span class="sep">•</span>
+        <a href="iade-degisim-cayma.html">İade & Cayma</a>
+        <span class="sep">•</span>
+        <a href="musteri-tanima-ve-islem-guvenligi.html">MASAK Yasal Metni</a>
+        <span class="sep">•</span>
+        <a href="magaza-teslim-tesellum-formu.html">Ürün Teslim Beyanı</a>
+        <span class="sep">•</span>
+        <a href="gizlilik-politikasi.html">Gizlilik</a>
+        <span class="sep">•</span>
+        <a href="cerez-politikasi.html">Çerezler</a>
+      </div>`;
+
+  if (html.includes('<div class="footer-legal-links">')) {
+    html = html.replace(/<div class="footer-legal-links">[\s\S]*?<\/div>/, legalLinksHtml);
   }
 
   const prohibited = ['generateSimulatedHash', 'SHA256-TS-', 'Elektronik Olarak İmzalandı & Onaylandı'];

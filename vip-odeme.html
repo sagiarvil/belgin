@@ -307,7 +307,15 @@
         const btn = document.getElementById('btnCompletePayment');
 
         if (orderIdEl) orderIdEl.textContent = currentPayload.orderId || 'BLG-VIP';
-        if (titleEl) titleEl.textContent = currentPayload.title || 'Lüks Koleksiyon Ürünü';
+        
+        const is22 = currentPayload.isVip22 || (typeof VipEngine !== 'undefined' && VipEngine.isVip22Tag && VipEngine.isVip22Tag(currentPayload.title));
+        if (titleEl) {
+          if (is22 || !currentPayload.title || currentPayload.title.includes('/22')) {
+            titleEl.textContent = 'Özel Showroom Siparişi';
+          } else {
+            titleEl.textContent = currentPayload.title || 'Özel Showroom Siparişi';
+          }
+        }
         if (amountEl) amountEl.textContent = '₺' + Number(currentPayload.amount || 0).toLocaleString('tr-TR');
         if (btn) btn.disabled = false;
         
@@ -374,9 +382,26 @@
       try {
         const cleanPhone = phone.replace(/\D/g, '');
         const token = currentPayload.rawToken || (typeof VipEngine !== 'undefined' ? VipEngine.encodeCompact(currentPayload) : null);
+        const is22 = Boolean(currentPayload.isVip22 || (typeof VipEngine !== 'undefined' && VipEngine.isVip22Tag && VipEngine.isVip22Tag(currentPayload.title)));
+        const totalAmt = Number(currentPayload.amount || 100);
+
+        let orderItems = [
+          {
+            id: currentPayload.orderId || `VIP-${Date.now()}`,
+            name: currentPayload.title || 'Lüks Showroom Siparişi',
+            price: totalAmt,
+            qty: 1,
+            isVipCustom: true,
+            vipToken: token,
+            brand: 'Belgin Kuyumculuk',
+            category: 'luxury'
+          }
+        ];
+
         const orderPayload = {
           provider: 'AKBANK',
           isVipPayment: true,
+          isVip22: is22,
           vipToken: token,
           user_name: name,
           user_phone: phone,
@@ -391,18 +416,7 @@
           highValueDeliveryAccepted: true,
           deliveryStatementAccepted: true,
           marketingConsent: true,
-          items: [
-            {
-              id: currentPayload.orderId || `VIP-${Date.now()}`,
-              name: currentPayload.title || 'Lüks Showroom Siparişi',
-              price: Number(currentPayload.amount || 100),
-              qty: 1,
-              isVipCustom: true,
-              vipToken: token,
-              brand: 'Belgin Kuyumculuk',
-              category: 'luxury'
-            }
-          ]
+          items: orderItems
         };
 
         const response = await fetch('/api/payment/create', {

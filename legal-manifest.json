@@ -1,9 +1,9 @@
 {
   "schema": "belgin-legal-evidence-manifest-v3",
   "version": "2026-08-25-v3.1",
-  "generatedAt": "2026-08-29T09:52:56.503Z",
+  "generatedAt": "2026-08-30T07:57:40.557Z",
   "algorithm": "SHA-256",
-  "manifestRootSha256": "4b3499baa7fdbd1434d8dbed046f85425b7debf20cdf366273dd29333d510548",
+  "manifestRootSha256": "5b0ef2ff3d9fca2748c3625f89c073ac3a47d00bbc19d298a7273939fb2f73b5",
   "externalTimestampModel": "OpenTimestamps/Bitcoin auxiliary proof",
   "legalNotice": "SHA-256 ve OpenTimestamps kayıtları teknik belge bütünlüğü ve zaman ispatı katmanıdır; tek başına 5070 sayılı Kanun kapsamında nitelikli elektronik imza veya ESHS zaman damgası olarak sunulmaz.",
   "documents": {
@@ -11,29 +11,29 @@
       "code": "08",
       "version": "08_v2.1 (25.08.2026)",
       "title": "Çerez Politikası",
-      "sha256": "32628f5d3954170f1e80ef8142eb5c1a0d6879dcaaf7527c412c2ca9c01f4fd1",
-      "bytes": 26990
+      "sha256": "7bdde87bd1af54985561f1d483b1923c0bb11d5f725b541845ddd33061d97f3b",
+      "bytes": 32656
     },
     "garanti-ve-satis-sonrasi.html": {
       "code": "11",
       "version": "11_v2.1 (25.08.2026)",
       "title": "Garanti ve Satış Sonrası Hizmetler",
-      "sha256": "5694c1bd175e2d63122e8fa12904824b8365383f9c6486e3933f18a524a07710",
-      "bytes": 27118
+      "sha256": "fe8d79db2a97d0ffaf85510f45d98133bf204263d1b4e3a42880b28c9e064b4d",
+      "bytes": 32784
     },
     "gizlilik-politikasi.html": {
       "code": "07",
       "version": "07_v2.1 (25.08.2026)",
       "title": "Gizlilik Politikası",
-      "sha256": "4880fbcb44cbf99213e76f9d4b9bd7d3722b8c361a80dbff8a3aa6b81f2aff32",
-      "bytes": 27607
+      "sha256": "8528477bf69b86fa5ca23f963549cc22f6a6ca71cf08641b00a625f64ed6bc54",
+      "bytes": 33273
     },
     "guvenli-odeme-ve-3d-secure.html": {
       "code": "15",
       "version": "15_v2.1 (25.08.2026)",
       "title": "Güvenli Ödeme ve 3D Secure",
-      "sha256": "7ef7b6539d507c24ba8165d82fb5bbe89da1075f1c586313394bc4d18b7787ef",
-      "bytes": 31292
+      "sha256": "ce0e98d987bbeb21132e7e1be1c7d4911c456b2dd4841fcf120c9afe22768858",
+      "bytes": 35914
     },
     "hukuki-delil-ve-kayit-politikasi.html": {
       "code": "16",
@@ -46,29 +46,29 @@
       "code": "14",
       "version": "14_v2.1 (25.08.2026)",
       "title": "İade, Değişim ve Cayma Hakkı Rehberi",
-      "sha256": "36234f5e1af8173d7d54c5f692913fc9d5d37ce6093112fbf8bf95107099f96d",
-      "bytes": 30838
+      "sha256": "15ae398263be3c42fa15b6aea94283a9a55a97ff46102897a8e615c2a6553948",
+      "bytes": 36504
     },
     "iade-degisim.html": {
       "code": "14",
       "version": "14_v2.1 (25.08.2026)",
       "title": "İade ve Değişim Koşulları",
-      "sha256": "1bf1299b28fd3dc4edfbd8e555c20f611214c8c1db0ed66c8ec507b55fac0235",
-      "bytes": 28260
+      "sha256": "98d86bae424910b61c1d799d1385a3a4752d2f49261dba78c47e4a5ade143f22",
+      "bytes": 33926
     },
     "kullanim-kosullari.html": {
       "code": "04",
       "version": "04_v2.1 (25.08.2026)",
       "title": "Kullanım Koşulları",
-      "sha256": "22451f6d2411972f4eff6d717d1e9600c02ef6d0000a61cb6ce46c2b3093394d",
-      "bytes": 27389
+      "sha256": "74e3bd8d267b13b30c272cd7d77815ce0841a217a21351432782a262daec9c92",
+      "bytes": 33055
     },
     "kvkk-acik-riza.html": {
       "code": "10",
       "version": "10_v2.1 (25.08.2026)",
       "title": "KVKK Açık Rıza Metni",
-      "sha256": "3df732033d76dd73ff64c5f0a4083a1d54cf4ac0d44e404517fc0d826e6d59d9",
-      "bytes": 27111
+      "sha256": "a1e7a8b74230e70b3c0114f4c6918b0fbd89be0682d519430425a39a5e666256",
+      "bytes": 32777
     },
     "kvkk-aydinlatma-metni.html": {
       "code": "05",
@@ -123,8 +123,8 @@
       "code": "09",
       "version": "09_v2.1 (25.08.2026)",
       "title": "Ticari Elektronik İleti Onay Metni",
-      "sha256": "bbb01cd0677684b9bce2c17035c7ba2709cbbf2eddc6aa2aedd9fa798b2c9c44",
-      "bytes": 26883
+      "sha256": "9df65665063241eea38e6891e39df29f519ccddc35b8e069c8be1545e4566b84",
+      "bytes": 32544
     },
     "ticari-elektronik-ileti.html": {
       "code": "09",
