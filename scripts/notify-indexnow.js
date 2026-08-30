@@ -25,7 +25,11 @@ async function pushToIndexNow(urls) {
     `${BASE_URL}/llms.txt`,
     `${BASE_URL}/llms/saatler.md`,
     `${BASE_URL}/llms/mucevherat.md`,
+    `${BASE_URL}/llms/ikinci-el.md`,
     `${BASE_URL}/llms/seckin-urunler.md`,
+    `${BASE_URL}/llms/altin-yatirim-ve-ozel-matrah.md`,
+    `${BASE_URL}/llms/hukuki-delil-ve-guvenlik.md`,
+    `${BASE_URL}/llms/kurumsal-kimlik-ve-iletisim.md`,
     `${BASE_URL}/iletisim.html`,
     `${BASE_URL}/mesafeli-satis-sozlesmesi.html`,
     ...products.slice(0, 100).map(p => productUrl(p))
