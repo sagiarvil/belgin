@@ -3762,45 +3762,80 @@ const AdminApp = {
     this.showToast(isAppend ? `➕ ${itemsToAdd.length} yeni kalem faturaya eklendi.` : `⚡ Fatura satırları (₺${res.totalAmount.toLocaleString('tr-TR')}) kuruşu kuruşuna tam olarak dolduruldu.`);
   },
 
-  // İşçilik Kalemi Ekle (Açıklama: 'İşçilik', KDV: %1, %1.5, %2)
+  // İşçilik Kalemi Ekle (Altın Tutarı İçinden Otomatik Düşerek Toplamı Sabit Tutar)
   addStoreLaborRow(laborPercent = 1) {
     const rate = parseFloat(laborPercent) || 1;
     
-    // Eğer faturada daha önce girilmiş bir altın satırı varsa, onun tutarı üzerinden akıllı hesapla
-    let calculatedAmount = 0;
-    const goldItems = (this.storeItems || []).filter(it => (it.name || '').trim() && Number(it.unitPrice || 0) > 0 && it.name.trim() !== 'İşçilik');
-    if (goldItems.length > 0) {
-      const lastGold = goldItems[goldItems.length - 1];
-      const goldTot = Number(lastGold.lineTotal || lastGold.unitPrice || 0);
-      if (goldTot > 0) {
-        calculatedAmount = Math.round(goldTot * (rate / 100) * 100) / 100;
+    // Faturadaki altın satırını ve varsa mevcut işçilik satırını tespit et
+    const goldItemIdx = (this.storeItems || []).findIndex(it => (it.name || '').trim() && it.name.trim() !== 'İşçilik');
+    const existingLaborIdx = (this.storeItems || []).findIndex(it => (it.name || '').trim() === 'İşçilik');
+
+    if (goldItemIdx === -1) {
+      // Eğer henüz altın satırı girilmemişse boş bir işçilik satırı ekle
+      const newLaborItem = {
+        name: 'İşçilik',
+        qty: 1,
+        unitPrice: 0,
+        kdvRate: rate,
+        lineTotal: 0,
+        kdvAmount: 0
+      };
+      if (this.storeItems.length === 1 && (!this.storeItems[0].name || this.storeItems[0].unitPrice === 0)) {
+        this.storeItems = [newLaborItem];
+      } else {
+        this.storeItems.push(newLaborItem);
       }
+      this.renderStoreInvoiceItems();
+      this.calculateStoreInvoiceLiveSummary();
+      this.showToast(`➕ "İşçilik" (%${rate} KDV) satırı eklendi.`);
+      return;
     }
 
-    const lineTot = calculatedAmount;
-    let kdvAmt = 0;
-    if (rate > 0 && lineTot > 0) {
-      kdvAmt = Math.round((lineTot - (lineTot / (1 + (rate / 100)))) * 100) / 100;
+    const goldItem = this.storeItems[goldItemIdx];
+    const existingLaborItem = existingLaborIdx !== -1 ? this.storeItems[existingLaborIdx] : null;
+
+    // Toplam Fatura Satış Tutarı (Mevcut Altın + Varsa Mevcut İşçilik)
+    const baseTotal = Math.round((Number(goldItem.lineTotal || goldItem.unitPrice || 0) + (existingLaborItem ? Number(existingLaborItem.lineTotal || existingLaborItem.unitPrice || 0) : 0)) * 100) / 100;
+
+    if (baseTotal <= 0) {
+      this.showToast('⚠️ Lütfen önce geçerli bir altın tutarı giriniz.');
+      return;
     }
 
-    const newLaborItem = {
+    // İşçilik Tutarı: Toplam Tutarın %1'i, %1.5'i veya %2'si (Toplamın İçinde)
+    const laborGross = Math.round(baseTotal * (rate / 100) * 100) / 100;
+    // Özel Matrah Altın Tutarı: Toplam Tutar - İşçilik Tutarı
+    const goldGross = Math.round((baseTotal - laborGross) * 100) / 100;
+
+    // İşçilik KDV Tutarı
+    const laborKdv = Math.round((laborGross - (laborGross / (1 + (rate / 100)))) * 100) / 100;
+
+    // 1. Altın Satırını Güncelle (%0 KDV Özel Matrah)
+    const goldQty = Math.max(1, Number(goldItem.qty || 1));
+    this.storeItems[goldItemIdx].unitPrice = Math.round((goldGross / goldQty) * 100) / 100;
+    this.storeItems[goldItemIdx].lineTotal = goldGross;
+    this.storeItems[goldItemIdx].kdvRate = 0;
+    this.storeItems[goldItemIdx].kdvAmount = 0;
+
+    // 2. İşçilik Satırını Güncelle veya Ekle
+    const laborObj = {
       name: 'İşçilik',
       qty: 1,
-      unitPrice: calculatedAmount || '',
+      unitPrice: laborGross,
       kdvRate: rate,
-      lineTotal: lineTot,
-      kdvAmount: kdvAmt
+      lineTotal: laborGross,
+      kdvAmount: laborKdv
     };
 
-    if (this.storeItems.length === 1 && (!this.storeItems[0].name || this.storeItems[0].unitPrice === 0)) {
-      this.storeItems = [newLaborItem];
+    if (existingLaborIdx !== -1) {
+      this.storeItems[existingLaborIdx] = laborObj;
     } else {
-      this.storeItems.push(newLaborItem);
+      this.storeItems.splice(goldItemIdx + 1, 0, laborObj);
     }
 
     this.renderStoreInvoiceItems();
     this.calculateStoreInvoiceLiveSummary();
-    this.showToast(`➕ "İşçilik" (%${rate} KDV) satırı faturaya eklendi${calculatedAmount > 0 ? ` (Tutar: ₺${calculatedAmount.toLocaleString('tr-TR')})` : ''}.`);
+    this.showToast(`✨ Toplam ₺${baseTotal.toLocaleString('tr-TR')} sabit tutuldu: Altın ₺${goldGross.toLocaleString('tr-TR')} + İşçilik ₺${laborGross.toLocaleString('tr-TR')} (%${rate} KDV)`);
   },
 
   // Hızlı Ürün Şablonu Uygula
@@ -3847,6 +3882,17 @@ const AdminApp = {
   },
 
   removeStoreInvoiceItemRow(idx) {
+    const deletedItem = this.storeItems[idx];
+    if (deletedItem && deletedItem.name === 'İşçilik' && Number(deletedItem.lineTotal || 0) > 0) {
+      const goldItemIdx = (this.storeItems || []).findIndex((it, i) => i !== idx && (it.name || '').trim() && it.name.trim() !== 'İşçilik');
+      if (goldItemIdx !== -1) {
+        const restoredTotal = Math.round((Number(this.storeItems[goldItemIdx].lineTotal || 0) + Number(deletedItem.lineTotal || 0)) * 100) / 100;
+        const q = Math.max(1, Number(this.storeItems[goldItemIdx].qty || 1));
+        this.storeItems[goldItemIdx].unitPrice = Math.round((restoredTotal / q) * 100) / 100;
+        this.storeItems[goldItemIdx].lineTotal = restoredTotal;
+      }
+    }
+
     if (this.storeItems.length <= 1) {
       this.storeItems = [{ name: '', qty: 1, unitPrice: 0, kdvRate: 0, lineTotal: 0, kdvAmount: 0 }];
     } else {
