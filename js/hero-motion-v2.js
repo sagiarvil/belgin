@@ -123,7 +123,9 @@
       }
 
       vec2 src_uv = clamp(sample_p / u_image_size, vec2(0.0), vec2(1.0));
-      gl_FragColor = texture2D(u_image, vec2(src_uv.x, 1.0 - src_uv.y));
+      // DOM image uploads use top-origin row order with UNPACK_FLIP_Y_WEBGL=false.
+      // src_uv is already top-origin, so sampling must not apply a second Y flip.
+      gl_FragColor = texture2D(u_image, src_uv);
     }
   `;
 
