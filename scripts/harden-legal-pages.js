@@ -20,8 +20,7 @@ const pages = [
   'iade-degisim-cayma.html',
   'iade-degisim.html',
   'magaza-teslim-tesellum-formu.html',
-  'hukuki-delil-ve-kayit-politikasi.html',
-  'iletisim.html'
+  'hukuki-delil-ve-kayit-politikasi.html'
 ];
 
 const marker = 'data-belgin-defense-layer="v2"';
