@@ -614,9 +614,16 @@
 
 <script>
 const LegalApp = {
-  sha256(ascii) {
+  sha256(input) {
     function rightRotate(value, amount) {
       return (value >>> amount) | (value << (32 - amount));
+    }
+    var str = String(input || '');
+    var ascii = '';
+    try {
+      ascii = unescape(encodeURIComponent(str));
+    } catch (e) {
+      ascii = str;
     }
     var mathPow = Math.pow;
     var maxWord = mathPow(2, 32);
@@ -904,8 +911,7 @@ const LegalApp = {
           authTimestamp: isSecondTx ? '2026-08-28T09:12:05.000Z' : '2026-08-28T09:01:05.000Z',
           clearingTimestamp: '2026-08-29T03:30:00.000Z',
           authSource: 'Akbank VPAS / Core Gateway 3DS Authorization Log',
-          sourceArtifactFile: isSecondTx ? 'AKB_VPAS_RAW_PAYLOAD_20260828_121205_YKB.json' : 'AKB_VPAS_RAW_PAYLOAD_20260828_120105_HLK.json',
-          sourceFileHash: isSecondTx ? '9a8f21cd68b201a4e15f89c02b37491ae65f8c32d4b901ec45ba67ef901234bc' : '9a8f21cd68b201a4e15f89c02b37491ae65f8c32d4b901ec45ba67ef901234ab'
+          sourceArtifactFile: isSecondTx ? 'AKB_VPAS_RAW_PAYLOAD_20260828_121205_YKB.json' : 'AKB_VPAS_RAW_PAYLOAD_20260828_120105_HLK.json'
         },
         deliveryMethod: 'showroom',
         deliveryStatus: 'DELIVERED',
