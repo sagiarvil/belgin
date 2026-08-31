@@ -92,8 +92,8 @@ class AkbankProvider {
     const randomNumber = getRandomNumberBase16(128);
     const requestDateTime = formatRequestDateTime();
     const currencyCode = '949'; // Türk Lirası (TL)
-    const paymentModel = process.env.AKBANK_PAYMENT_MODEL || '3D_PAY_HOSTING';
-    const txnCode = '3000'; // 3D_PAY_HOSTING ve 3D Güvenli Satış kodu: 3000
+    const paymentModel = process.env.AKBANK_PAYMENT_MODEL || 'PAY_HOSTING';
+    const txnCode = paymentModel === 'PAY_HOSTING' ? '1000' : '3000';
     const lang = 'TR';
     const installCount = '1';
     const emailAddress = order.customer?.email || 'destek@belginkuyumculuk.com';
