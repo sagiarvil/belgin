@@ -1711,6 +1711,19 @@ const AdminApp = {
       this.activeInvoiceOid = draftData.oid || '';
       if (submitBtn) submitBtn.innerHTML = '<span>✅ Doğrula & Faturayı İmzala</span>';
 
+      if (summaryBox) {
+        const previewUrl = `/api/admin/invoice/view?orderId=${encodeURIComponent(order.orderId)}&uuid=${encodeURIComponent(draftData.invoiceUuid)}&adminKey=${encodeURIComponent(this.adminPin)}`;
+        summaryBox.innerHTML += `
+          <div style="margin-top:10px; padding-top:8px; border-top:1px dashed #CBD5E1; text-align:center;">
+            <a href="${previewUrl}" target="_blank" style="display:inline-flex; align-items:center; justify-content:center; gap:6px; background:#064E3B; color:#FFF; padding:7px 14px; border-radius:6px; font-weight:800; font-size:12px; text-decoration:none; box-shadow:0 2px 6px rgba(0,0,0,0.15);">
+              <span>🔍</span>
+              <span>Resmi GİB Taslak Faturasını Canlı Önizle (Yeni Sekme)</span>
+            </a>
+            <div style="font-size:10.5px; color:#64748B; margin-top:4px;">İmzalamadan önce faturayı açıp tüm kalemleri kontrol edebilirsiniz.</div>
+          </div>
+        `;
+      }
+
       // SMS Modalını Aç
       const smsModal = document.getElementById('invoiceSmsModal');
       if (smsModal) smsModal.classList.add('open');
@@ -5030,6 +5043,19 @@ const AdminApp = {
       this.activeInvoiceUuid = draftData.invoiceUuid;
       this.activeInvoiceOid = draftData.oid || '';
       if (submitBtn) submitBtn.innerHTML = '<span>✅ Doğrula & Faturayı İmzala</span>';
+
+      if (summaryBox) {
+        const previewUrl = `/api/admin/invoice/view?orderId=${encodeURIComponent(inv.orderId)}&uuid=${encodeURIComponent(draftData.invoiceUuid)}&adminKey=${encodeURIComponent(this.adminPin)}`;
+        summaryBox.innerHTML += `
+          <div style="margin-top:10px; padding-top:8px; border-top:1px dashed #CBD5E1; text-align:center;">
+            <a href="${previewUrl}" target="_blank" style="display:inline-flex; align-items:center; justify-content:center; gap:6px; background:#064E3B; color:#FFF; padding:7px 14px; border-radius:6px; font-weight:800; font-size:12px; text-decoration:none; box-shadow:0 2px 6px rgba(0,0,0,0.15);">
+              <span>🔍</span>
+              <span>Resmi GİB Taslak Faturasını Canlı Önizle (Yeni Sekme)</span>
+            </a>
+            <div style="font-size:10.5px; color:#64748B; margin-top:4px;">İmzalamadan önce faturayı açıp tüm kalemleri kontrol edebilirsiniz.</div>
+          </div>
+        `;
+      }
 
       const smsModal = document.getElementById('invoiceSmsModal');
       if (smsModal) smsModal.classList.add('open');
