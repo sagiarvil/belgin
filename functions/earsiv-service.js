@@ -99,11 +99,12 @@ function calculateVip22Breakdown(totalAmount) {
     throw new Error('Geçersiz fatura tutarı');
   }
 
-  // %1.5 İşçilik ve %20 KDV Dahil
-  const workmanshipTotal = Math.round(total * 0.015 * 100) / 100;
+  // %1.25 İşçilik ve %20 KDV Dahil
+  const workmanshipTotal = Math.max(1, Math.round(total * 0.0125 * 100) / 100);
   const workmanshipNet = Math.round((workmanshipTotal / 1.20) * 100) / 100;
   const workmanshipKdv = Math.round((workmanshipTotal - workmanshipNet) * 100) / 100;
-  const goldNetPool = Math.round((total - workmanshipTotal) * 100) / 100;
+  const exactWorkmanshipGross = Math.round((workmanshipNet + workmanshipKdv) * 100) / 100;
+  const goldNetPool = Math.round((total - exactWorkmanshipGross) * 100) / 100;
 
   // 8 Temel Ürünü Fiyat Kategorilerine Göre Dinamik Olarak Karıştır
   const bigs = VIP_22_CATALOG.filter(p => p.basePrice >= 100000).sort(() => 0.5 - Math.random());
@@ -119,7 +120,7 @@ function calculateVip22Breakdown(totalAmount) {
     const q1 = Math.max(1, Math.round(goldNetPool / s1.basePrice));
     rawBasket.push({ prod: s1, qty: q1, unitPrice: s1.basePrice });
   } else if (goldNetPool < 100000) {
-    // 2. BAREM (30.000 - 100.000 TL): 1 orta boy ürün (7gr Ajda veya 10gr Burma veya Ata Tam) + Çeyrek/Yarım
+    // 2. BAREM (30.000 - 100.000 TL): 1 orta boy ürün + Çeyrek/Yarım
     const m1 = meds[0];
     const qM = Math.max(1, Math.floor((goldNetPool - 12000) / m1.basePrice));
     rawBasket.push({ prod: m1, qty: qM, unitPrice: m1.basePrice });
@@ -168,7 +169,7 @@ function calculateVip22Breakdown(totalAmount) {
     const qS = Math.max(1, Math.round(remainingPool / s1.basePrice));
     rawBasket.push({ prod: s1, qty: qS, unitPrice: s1.basePrice });
   } else {
-    // 4. BAREM (>= 250.000 TL, Örn: 485.000 TL, 1.000.000 TL): 8 Ürünlük Havuzdan Zengin ve Çeşitlendirilmiş Sepet
+    // 4. BAREM (>= 250.000 TL): 8 Ürünlük Havuzdan Zengin ve Çeşitlendirilmiş Sepet
     const availableBigs = [...bigs];
     const availableMeds = [...meds];
     const availableSmalls = [...smalls];
@@ -184,7 +185,7 @@ function calculateVip22Breakdown(totalAmount) {
       }
     }
 
-    const medPickCount = Math.floor(Math.random() * 2) + 2; // 2 veya 3 farklı orta kalem
+    const medPickCount = Math.floor(Math.random() * 2) + 2;
     for (let i = 0; i < medPickCount && i < availableMeds.length; i++) {
       const m = availableMeds[i];
       const targetAmt = remainingPool * 0.45;
@@ -209,47 +210,125 @@ function calculateVip22Breakdown(totalAmount) {
     rawBasket.push({ prod: finalSmall, qty: qFinal, unitPrice: finalSmall.basePrice });
   }
 
-  // Ara Toplam ve Kalan Farkı Hesapla
-  let sum = 0;
-  for (let i = 0; i < rawBasket.length - 1; i++) {
-    sum += rawBasket[i].qty * rawBasket[i].unitPrice;
-  }
-  const lastItem = rawBasket[rawBasket.length - 1];
-  const lastLineTotal = Math.round((goldNetPool - sum) * 100) / 100;
-  lastItem.unitPrice = Math.round((lastLineTotal / lastItem.qty) * 100) / 100;
-  lastItem.lineTotal = lastLineTotal;
-
-  // Satırları GİB e-Arşiv Standartlarına Göre Oluştur
+  // Satırları GİB e-Arşiv Standartlarına Göre Oluştur (Tüm farkı son ürüne mikro yedirerek %100 eşitlik sağla)
   const items = [];
   let calculatedGoldTotal = 0;
 
-  rawBasket.forEach((bItem, idx) => {
-    const lineTotal = (idx === rawBasket.length - 1)
-      ? Math.round((goldNetPool - calculatedGoldTotal) * 100) / 100
-      : Math.round(bItem.qty * bItem.unitPrice * 100) / 100;
-    
-    calculatedGoldTotal = Math.round((calculatedGoldTotal + lineTotal) * 100) / 100;
-    const finalUnitPrice = Math.round((lineTotal / bItem.qty) * 100) / 100;
+  for (let idx = 0; idx < rawBasket.length; idx++) {
+    const bItem = rawBasket[idx];
+    const isLast = idx === rawBasket.length - 1;
 
-    items.push({
-      malHizmet: `${bItem.prod.name} (Kıymetli Maden Bedeli - Özel Matrah)`,
-      miktar: bItem.qty,
-      birim: 'C62',
-      birimFiyat: finalUnitPrice.toFixed(2),
-      fiyat: lineTotal.toFixed(2),
-      iskontoArttirim: 'İskonto',
-      iskontoOrani: 0,
-      iskontoTutari: '0.00',
-      iskontoNedeni: '',
-      malHizmetTutari: lineTotal.toFixed(2),
-      kdvOrani: 0,
-      kdvTutari: '0.00',
-      vergiOrani: 0,
-      ozelMatrahNedeni: '351',
-      ozelMatrahTutari: lineTotal.toFixed(2),
-      tevkifatKodu: 0
-    });
-  });
+    if (!isLast) {
+      const lineTotal = Math.round(bItem.qty * bItem.unitPrice * 100) / 100;
+      calculatedGoldTotal = Math.round((calculatedGoldTotal + lineTotal) * 100) / 100;
+      items.push({
+        malHizmet: `${bItem.prod.name} (Kıymetli Maden Bedeli - Özel Matrah)`,
+        miktar: bItem.qty,
+        birim: 'C62',
+        birimFiyat: bItem.unitPrice.toFixed(2),
+        fiyat: lineTotal.toFixed(2),
+        iskontoArttirim: 'İskonto',
+        iskontoOrani: 0,
+        iskontoTutari: '0.00',
+        iskontoNedeni: '',
+        malHizmetTutari: lineTotal.toFixed(2),
+        kdvOrani: 0,
+        kdvTutari: '0.00',
+        vergiOrani: 0,
+        ozelMatrahNedeni: '351',
+        ozelMatrahTutari: lineTotal.toFixed(2),
+        tevkifatKodu: 0
+      });
+    } else {
+      // Son ürün: Kalan tam farkı al
+      const lastLineTotal = Math.round((goldNetPool - calculatedGoldTotal) * 100) / 100;
+      const candidateUnit = Math.round((lastLineTotal / bItem.qty) * 100) / 100;
+      const displayName = `${bItem.prod.name} (Kıymetli Maden Bedeli - Özel Matrah)`;
+
+      if (Math.round(candidateUnit * bItem.qty * 100) === Math.round(lastLineTotal * 100)) {
+        items.push({
+          malHizmet: displayName,
+          miktar: bItem.qty,
+          birim: 'C62',
+          birimFiyat: candidateUnit.toFixed(2),
+          fiyat: lastLineTotal.toFixed(2),
+          iskontoArttirim: 'İskonto',
+          iskontoOrani: 0,
+          iskontoTutari: '0.00',
+          iskontoNedeni: '',
+          malHizmetTutari: lastLineTotal.toFixed(2),
+          kdvOrani: 0,
+          kdvTutari: '0.00',
+          vergiOrani: 0,
+          ozelMatrahNedeni: '351',
+          ozelMatrahTutari: lastLineTotal.toFixed(2),
+          tevkifatKodu: 0
+        });
+      } else if (bItem.qty > 1) {
+        const baseQty = bItem.qty - 1;
+        const baseUnit = Math.floor((lastLineTotal / bItem.qty) * 100) / 100;
+        const baseTotal = Math.round(baseQty * baseUnit * 100) / 100;
+        const remTotal = Math.round((lastLineTotal - baseTotal) * 100) / 100;
+
+        items.push({
+          malHizmet: displayName,
+          miktar: baseQty,
+          birim: 'C62',
+          birimFiyat: baseUnit.toFixed(2),
+          fiyat: baseTotal.toFixed(2),
+          iskontoArttirim: 'İskonto',
+          iskontoOrani: 0,
+          iskontoTutari: '0.00',
+          iskontoNedeni: '',
+          malHizmetTutari: baseTotal.toFixed(2),
+          kdvOrani: 0,
+          kdvTutari: '0.00',
+          vergiOrani: 0,
+          ozelMatrahNedeni: '351',
+          ozelMatrahTutari: baseTotal.toFixed(2),
+          tevkifatKodu: 0
+        });
+
+        items.push({
+          malHizmet: displayName,
+          miktar: 1,
+          birim: 'C62',
+          birimFiyat: remTotal.toFixed(2),
+          fiyat: remTotal.toFixed(2),
+          iskontoArttirim: 'İskonto',
+          iskontoOrani: 0,
+          iskontoTutari: '0.00',
+          iskontoNedeni: '',
+          malHizmetTutari: remTotal.toFixed(2),
+          kdvOrani: 0,
+          kdvTutari: '0.00',
+          vergiOrani: 0,
+          ozelMatrahNedeni: '351',
+          ozelMatrahTutari: remTotal.toFixed(2),
+          tevkifatKodu: 0
+        });
+      } else {
+        items.push({
+          malHizmet: displayName,
+          miktar: 1,
+          birim: 'C62',
+          birimFiyat: lastLineTotal.toFixed(2),
+          fiyat: lastLineTotal.toFixed(2),
+          iskontoArttirim: 'İskonto',
+          iskontoOrani: 0,
+          iskontoTutari: '0.00',
+          iskontoNedeni: '',
+          malHizmetTutari: lastLineTotal.toFixed(2),
+          kdvOrani: 0,
+          kdvTutari: '0.00',
+          vergiOrani: 0,
+          ozelMatrahNedeni: '351',
+          ozelMatrahTutari: lastLineTotal.toFixed(2),
+          tevkifatKodu: 0
+        });
+      }
+    }
+  }
 
   // İşçilik Bedeli Satırı (%20 KDV dahil)
   items.push({
@@ -272,6 +351,7 @@ function calculateVip22Breakdown(totalAmount) {
   });
 
   const totalMatrah = Math.round((goldNetPool + workmanshipNet) * 100) / 100;
+  const finalGrandTotal = Math.round((totalMatrah + workmanshipKdv) * 100) / 100;
 
   return {
     isVip22: true,
@@ -279,10 +359,10 @@ function calculateVip22Breakdown(totalAmount) {
     hasGoldAmount: goldNetPool.toFixed(2),
     workmanshipNet: workmanshipNet.toFixed(2),
     workmanshipKdv: workmanshipKdv.toFixed(2),
-    workmanshipTotal: workmanshipTotal.toFixed(2),
+    workmanshipTotal: exactWorkmanshipGross.toFixed(2),
     totalMatrah: totalMatrah.toFixed(2),
     totalKdv: workmanshipKdv.toFixed(2),
-    grandTotal: total.toFixed(2),
+    grandTotal: finalGrandTotal.toFixed(2),
     items: items
   };
 }
@@ -290,6 +370,7 @@ function calculateVip22Breakdown(totalAmount) {
 /**
  * Kuyumculuk Özel Matrah Ayrıştırma Motoru
  * Toplam tutarı Kıymetli Maden Bedeli (%0 KDV) ve İşçilik Bedeli (%20 KDV Dahil) olarak böler.
+ * Faturada kuruş artıklarını ürüne yedirerek Fatura Tutarı = Sipariş Tutarı %100 eşitliğini garanti eder.
  */
 function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk Ürünü', options = {}) {
   const total = Number(totalAmount) || 0;
@@ -304,19 +385,18 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
     return calculateVip22Breakdown(total);
   }
 
-  // Çoklu Kalem Desteği (Örn: Mağaza Faturasında Saat, İşçilik ve/veya Altın Kalemleri)
+  // Çoklu Kalem Desteği (Mağaza ve Sepet Kalemleri)
   if (Array.isArray(options.items) && options.items.length > 0) {
-    const gibItems = [];
-    let totalHasGold = 0;
     let totalTaxableNet = 0;
     let totalKdv = 0;
-    let computedGrandTotal = 0;
+    const taxableItems = [];
+    const goldItems = [];
 
     options.items.forEach(it => {
-      const itQty = Math.max(1, Number(it.qty || 1));
-      const itPrice = Number(it.unitPrice || 0);
-      const itTotal = Math.round(Number(it.lineTotal || (itQty * itPrice)) * 100) / 100;
-      const itName = String(it.name || 'Satış Kalemi').trim();
+      const itQty = Math.max(1, Number(it.qty || it.miktar || 1));
+      const itPrice = Number(it.unitPrice || it.birimFiyat || 0);
+      const itTotal = Math.round(Number(it.lineTotal || it.fiyat || it.malHizmetTutari || (itQty * itPrice)) * 100) / 100;
+      const itName = String(it.name || it.malHizmet || it.title || 'Satış Kalemi').trim();
       
       const isWatch = (
         it.taxType === 'SAAT_STANDART' ||
@@ -338,54 +418,28 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
         itName.toLowerCase().includes('longines')
       );
 
-      // Kullanıcı manuel KDV oranı girdiyse doğrudan kullan (Saatler hariç; saatlerde yasal olarak 20 zorunludur)
       let kdvRate = 0;
       if (isWatch) {
-        kdvRate = 20; // 3065 Sayılı KDV Kanunu gereğince saat satışlarında %20 KDV yasal zorunluluktur.
+        kdvRate = 20;
       } else if (it.kdvRate !== undefined && it.kdvRate !== null && !isNaN(Number(it.kdvRate))) {
         kdvRate = Number(it.kdvRate);
+      } else if (it.kdvOrani !== undefined && it.kdvOrani !== null && !isNaN(Number(it.kdvOrani))) {
+        kdvRate = Number(it.kdvOrani);
       } else {
         kdvRate = (itName.toLowerCase().includes('işçilik')) ? 20 : 0;
       }
 
       if (kdvRate === 0) {
-        // %0 KDV Kıymetli Maden Bedeli (Özel Matrah - KDV Kanunu 23/f)
-        totalHasGold += itTotal;
-        computedGrandTotal += itTotal;
-
-        const displayName = itName.includes('Özel Matrah') ? itName : `${itName} (Kıymetli Maden Bedeli - Özel Matrah)`;
-        const unitMatrah = Math.round((itTotal / itQty) * 100) / 100;
-
-        gibItems.push({
-          malHizmet: displayName,
-          miktar: itQty,
-          birim: 'C62',
-          birimFiyat: unitMatrah.toFixed(2),
-          fiyat: itTotal.toFixed(2),
-          iskontoArttirim: 'İskonto',
-          iskontoOrani: 0,
-          iskontoTutari: '0.00',
-          iskontoNedeni: '',
-          malHizmetTutari: itTotal.toFixed(2),
-          kdvOrani: 0,
-          kdvTutari: '0.00',
-          vergiOrani: 0,
-          ozelMatrahNedeni: '351',
-          ozelMatrahTutari: itTotal.toFixed(2),
-          tevkifatKodu: 0
-        });
+        goldItems.push({ name: itName, qty: itQty, unitPrice: itPrice, lineTotal: itTotal });
       } else {
-        // KDV'ye Tabi Ürün (Saat, İşçilik, Pırlanta vb.)
         const netMatrah = Math.round((itTotal / (1 + (kdvRate / 100))) * 100) / 100;
         const kdvAmount = Math.round((itTotal - netMatrah) * 100) / 100;
         const unitNet = Math.round((netMatrah / itQty) * 100) / 100;
+        totalTaxableNet = Math.round((totalTaxableNet + netMatrah) * 100) / 100;
+        totalKdv = Math.round((totalKdv + kdvAmount) * 100) / 100;
 
-        totalTaxableNet += netMatrah;
-        totalKdv += kdvAmount;
-        computedGrandTotal += itTotal;
-
-        gibItems.push({
-          malHizmet: itName,
+        taxableItems.push({
+          malHizmet: itName.toLowerCase().includes('işçilik') ? 'İşçilik' : itName,
           miktar: itQty,
           birim: 'C62',
           birimFiyat: unitNet.toFixed(2),
@@ -405,15 +459,170 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
       }
     });
 
-    const totalMatrah = Math.round((totalHasGold + totalTaxableNet) * 100) / 100;
+    // Eğer sipariş kuyumculuk ise ve hiç KDV'li işçilik satırı yoksa, standart %1.25 işçilik üret
+    if (taxableItems.length === 0 && goldItems.length > 0) {
+      const workmanshipTotal = Math.max(1, Math.round(total * 0.0125 * 100) / 100);
+      const workmanshipNet = Math.round((workmanshipTotal / 1.20) * 100) / 100;
+      const workmanshipKdv = Math.round((workmanshipTotal - workmanshipNet) * 100) / 100;
+      totalTaxableNet = workmanshipNet;
+      totalKdv = workmanshipKdv;
+
+      taxableItems.push({
+        malHizmet: 'İşçilik',
+        miktar: 1,
+        birim: 'C62',
+        birimFiyat: workmanshipNet.toFixed(2),
+        fiyat: workmanshipNet.toFixed(2),
+        iskontoArttirim: 'İskonto',
+        iskontoOrani: 0,
+        iskontoTutari: '0.00',
+        iskontoNedeni: '',
+        malHizmetTutari: workmanshipNet.toFixed(2),
+        kdvOrani: 20,
+        kdvTutari: workmanshipKdv.toFixed(2),
+        vergiOrani: 0,
+        ozelMatrahNedeni: '',
+        ozelMatrahTutari: 0,
+        tevkifatKodu: 0
+      });
+    }
+
+    const taxableGross = Math.round((totalTaxableNet + totalKdv) * 100) / 100;
+    const requiredGoldTotal = Math.max(0, Math.round((total - taxableGross) * 100) / 100);
+
+    const gibItems = [];
+    let currentGoldSum = 0;
+
+    if (goldItems.length > 0) {
+      // İlk n-1 ürünü kendi fiyatıyla koy
+      for (let i = 0; i < goldItems.length - 1; i++) {
+        const gIt = goldItems[i];
+        const lTotal = Math.round(gIt.qty * gIt.unitPrice * 100) / 100;
+        currentGoldSum = Math.round((currentGoldSum + lTotal) * 100) / 100;
+        const displayName = gIt.name.includes('Özel Matrah') ? gIt.name : `${gIt.name} (Kıymetli Maden Bedeli - Özel Matrah)`;
+
+        gibItems.push({
+          malHizmet: displayName,
+          miktar: gIt.qty,
+          birim: 'C62',
+          birimFiyat: gIt.unitPrice.toFixed(2),
+          fiyat: lTotal.toFixed(2),
+          iskontoArttirim: 'İskonto',
+          iskontoOrani: 0,
+          iskontoTutari: '0.00',
+          iskontoNedeni: '',
+          malHizmetTutari: lTotal.toFixed(2),
+          kdvOrani: 0,
+          kdvTutari: '0.00',
+          vergiOrani: 0,
+          ozelMatrahNedeni: '351',
+          ozelMatrahTutari: lTotal.toFixed(2),
+          tevkifatKodu: 0
+        });
+      }
+
+      // Son altın ürünü: Kalan tüm farkı (%100 eşit olacak şekilde) bu ürüne yedir
+      const lastGold = goldItems[goldItems.length - 1];
+      const lastLineTotal = Math.round((requiredGoldTotal - currentGoldSum) * 100) / 100;
+      const displayName = lastGold.name.includes('Özel Matrah') ? lastGold.name : `${lastGold.name} (Kıymetli Maden Bedeli - Özel Matrah)`;
+
+      const candidateUnit = Math.round((lastLineTotal / lastGold.qty) * 100) / 100;
+      if (Math.round(candidateUnit * lastGold.qty * 100) === Math.round(lastLineTotal * 100)) {
+        gibItems.push({
+          malHizmet: displayName,
+          miktar: lastGold.qty,
+          birim: 'C62',
+          birimFiyat: candidateUnit.toFixed(2),
+          fiyat: lastLineTotal.toFixed(2),
+          iskontoArttirim: 'İskonto',
+          iskontoOrani: 0,
+          iskontoTutari: '0.00',
+          iskontoNedeni: '',
+          malHizmetTutari: lastLineTotal.toFixed(2),
+          kdvOrani: 0,
+          kdvTutari: '0.00',
+          vergiOrani: 0,
+          ozelMatrahNedeni: '351',
+          ozelMatrahTutari: lastLineTotal.toFixed(2),
+          tevkifatKodu: 0
+        });
+      } else if (lastGold.qty > 1) {
+        const baseQty = lastGold.qty - 1;
+        const baseUnit = Math.floor((lastLineTotal / lastGold.qty) * 100) / 100;
+        const baseTotal = Math.round(baseQty * baseUnit * 100) / 100;
+        const remTotal = Math.round((lastLineTotal - baseTotal) * 100) / 100;
+
+        items.push({
+          malHizmet: displayName,
+          miktar: baseQty,
+          birim: 'C62',
+          birimFiyat: baseUnit.toFixed(2),
+          fiyat: baseTotal.toFixed(2),
+          iskontoArttirim: 'İskonto',
+          iskontoOrani: 0,
+          iskontoTutari: '0.00',
+          iskontoNedeni: '',
+          malHizmetTutari: baseTotal.toFixed(2),
+          kdvOrani: 0,
+          kdvTutari: '0.00',
+          vergiOrani: 0,
+          ozelMatrahNedeni: '351',
+          ozelMatrahTutari: baseTotal.toFixed(2),
+          tevkifatKodu: 0
+        });
+
+        items.push({
+          malHizmet: displayName,
+          miktar: 1,
+          birim: 'C62',
+          birimFiyat: remTotal.toFixed(2),
+          fiyat: remTotal.toFixed(2),
+          iskontoArttirim: 'İskonto',
+          iskontoOrani: 0,
+          iskontoTutari: '0.00',
+          iskontoNedeni: '',
+          malHizmetTutari: remTotal.toFixed(2),
+          kdvOrani: 0,
+          kdvTutari: '0.00',
+          vergiOrani: 0,
+          ozelMatrahNedeni: '351',
+          ozelMatrahTutari: remTotal.toFixed(2),
+          tevkifatKodu: 0
+        });
+      } else {
+        gibItems.push({
+          malHizmet: displayName,
+          miktar: 1,
+          birim: 'C62',
+          birimFiyat: lastLineTotal.toFixed(2),
+          fiyat: lastLineTotal.toFixed(2),
+          iskontoArttirim: 'İskonto',
+          iskontoOrani: 0,
+          iskontoTutari: '0.00',
+          iskontoNedeni: '',
+          malHizmetTutari: lastLineTotal.toFixed(2),
+          kdvOrani: 0,
+          kdvTutari: '0.00',
+          vergiOrani: 0,
+          ozelMatrahNedeni: '351',
+          ozelMatrahTutari: lastLineTotal.toFixed(2),
+          tevkifatKodu: 0
+        });
+      }
+    }
+
+    // KDV'li satırları ekle
+    taxableItems.forEach(tIt => gibItems.push(tIt));
+
+    const totalMatrah = Math.round((requiredGoldTotal + totalTaxableNet) * 100) / 100;
     const finalGrandTotal = Math.round((totalMatrah + totalKdv) * 100) / 100;
 
     return {
       productName: resolvedProductName,
-      hasGoldAmount: totalHasGold.toFixed(2),
+      hasGoldAmount: requiredGoldTotal.toFixed(2),
       workmanshipNet: totalTaxableNet.toFixed(2),
       workmanshipKdv: totalKdv.toFixed(2),
-      workmanshipTotal: (totalTaxableNet + totalKdv).toFixed(2),
+      workmanshipTotal: taxableGross.toFixed(2),
       totalMatrah: totalMatrah.toFixed(2),
       totalKdv: totalKdv.toFixed(2),
       grandTotal: finalGrandTotal.toFixed(2),
@@ -428,26 +637,28 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
     hasGoldAmount = Number(options.hasGoldAmount) || 0;
     workmanshipTotal = Number(options.workmanshipAmount) || 0;
   } else {
-    // Standart: %1 İşçilik, %99 Kıymetli Maden
-    workmanshipTotal = Math.max(1, Math.round(total * 0.01 * 100) / 100);
+    // Standart: %1.25 İşçilik, Kalan %98.75 Kıymetli Maden
+    workmanshipTotal = Math.max(1, Math.round(total * 0.0125 * 100) / 100);
     hasGoldAmount = Math.round((total - workmanshipTotal) * 100) / 100;
   }
 
   // İşçilik KDV Ayrıştırması (%20 KDV)
   const workmanshipNet = Math.round((workmanshipTotal / 1.20) * 100) / 100;
   const workmanshipKdv = Math.round((workmanshipTotal - workmanshipNet) * 100) / 100;
+  const exactWorkmanshipTotal = Math.round((workmanshipNet + workmanshipKdv) * 100) / 100;
+  hasGoldAmount = Math.round((total - exactWorkmanshipTotal) * 100) / 100;
 
   // Toplam Matrah = Kıymetli Maden Bedeli (%0) + İşçilik Net Matrahı
   const totalMatrah = Math.round((hasGoldAmount + workmanshipNet) * 100) / 100;
   const totalKdv = workmanshipKdv;
-  const grandTotal = Math.round((hasGoldAmount + workmanshipTotal) * 100) / 100;
+  const grandTotal = Math.round((totalMatrah + totalKdv) * 100) / 100;
 
   return {
     productName: resolvedProductName,
     hasGoldAmount: hasGoldAmount.toFixed(2),
     workmanshipNet: workmanshipNet.toFixed(2),
     workmanshipKdv: workmanshipKdv.toFixed(2),
-    workmanshipTotal: workmanshipTotal.toFixed(2),
+    workmanshipTotal: exactWorkmanshipTotal.toFixed(2),
     totalMatrah: totalMatrah.toFixed(2),
     totalKdv: totalKdv.toFixed(2),
     grandTotal: grandTotal.toFixed(2),

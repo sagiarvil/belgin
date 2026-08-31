@@ -81,55 +81,111 @@ function renderOfficialGibHtml(data) {
   let totalKdv0Matrah = 0;
   let totalKdv20Matrah = 0;
   let totalKdv20Amount = 0;
-  let grandTotal = 0;
+  let grandTotal = Number(data.totalAmount || bd.grandTotal || 0);
 
   if (items && items.length > 0) {
-    displayLines = items.map((item, idx) => {
+    // Toplam tutar verildiyse, son altın ürününe kuruş farkını yedirerek %100 eşitliği garanti et
+    const resolvedTargetTotal = grandTotal > 0 ? grandTotal : items.reduce((acc, it) => acc + Number(it.lineTotal || (it.qty * it.unitPrice) || 0), 0);
+    grandTotal = resolvedTargetTotal;
+
+    // KDV'ye tabi olanlar ve %0 KDV olanları grupla
+    let taxableNetSum = 0;
+    let taxableVatSum = 0;
+    const itemRows = [];
+
+    items.forEach((item) => {
       const grossLine = Number(item.lineTotal || (Number(item.unitPrice || 0) * Number(item.qty || 1)) || 0);
-      const qty = Math.max(1, Number(item.qty || item.quantity || 1));
-      const vatRate = item.kdvRate !== undefined ? Number(item.kdvRate) : (item.vatRate !== undefined ? Number(item.vatRate) : 20);
+      const qty = Math.max(1, Number(item.qty || item.quantity || item.miktar || 1));
+      const vatRate = item.kdvRate !== undefined ? Number(item.kdvRate) : (item.kdvOrani !== undefined ? Number(item.kdvOrani) : (item.vatRate !== undefined ? Number(item.vatRate) : (item.name?.toLowerCase().includes('işçilik') ? 20 : 0)));
 
       let netLine = grossLine;
       let vatAmt = 0;
       if (vatRate > 0) {
         netLine = Math.round((grossLine / (1 + (vatRate / 100))) * 100) / 100;
         vatAmt = Math.round((grossLine - netLine) * 100) / 100;
-      }
-      const unitNet = Math.round((netLine / qty) * 100) / 100;
-
-      goodsServicesTotal += netLine;
-
-      if (vatRate === 0) {
-        hasKdv0 = true;
-        totalKdv0Matrah += netLine;
-      } else if (vatRate === 20) {
-        hasKdv20 = true;
-        totalKdv20Matrah += netLine;
-        totalKdv20Amount += vatAmt;
-      } else {
-        totalKdv20Amount += vatAmt;
+        taxableNetSum = Math.round((taxableNetSum + netLine) * 100) / 100;
+        taxableVatSum = Math.round((taxableVatSum + vatAmt) * 100) / 100;
       }
 
-      let desc = item.name || item.title || 'Kuyumculuk Ürünü';
-      if (vatRate === 0 && !desc.includes('Özel Matrah')) {
+      itemRows.push({
+        rawItem: item,
+        name: item.name || item.malHizmet || item.title || 'Kuyumculuk Ürünü',
+        qty,
+        vatRate,
+        grossLine,
+        netLine,
+        vatAmt
+      });
+    });
+
+    const totalTaxableGross = Math.round((taxableNetSum + taxableVatSum) * 100) / 100;
+    const requiredGoldPool = Math.max(0, Math.round((grandTotal - totalTaxableGross) * 100) / 100);
+
+    const goldRows = itemRows.filter(r => r.vatRate === 0);
+    const taxableRows = itemRows.filter(r => r.vatRate > 0);
+
+    let runningGoldSum = 0;
+    displayLines = [];
+
+    // 0% KDV Satırlarını oluştur
+    goldRows.forEach((r, gIdx) => {
+      hasKdv0 = true;
+      const isLastGold = gIdx === goldRows.length - 1;
+      let finalLineTotal = r.grossLine;
+      if (isLastGold) {
+        finalLineTotal = Math.round((requiredGoldPool - runningGoldSum) * 100) / 100;
+      }
+      runningGoldSum = Math.round((runningGoldSum + finalLineTotal) * 100) / 100;
+      totalKdv0Matrah = Math.round((totalKdv0Matrah + finalLineTotal) * 100) / 100;
+      goodsServicesTotal = Math.round((goodsServicesTotal + finalLineTotal) * 100) / 100;
+
+      const unitNet = Math.round((finalLineTotal / r.qty) * 100) / 100;
+      let desc = r.name;
+      if (!desc.includes('Özel Matrah')) {
         desc += ' (Kıymetli Maden Bedeli - Özel Matrah)';
       }
 
-      return {
-        seq: idx + 1,
+      displayLines.push({
+        seq: displayLines.length + 1,
         description: desc,
-        quantityDisplay: qty + ' Adet',
+        quantityDisplay: r.qty + ' Adet',
         unitPriceDisplay: formatMoney(unitNet),
         discountRateDisplay: '%0,00',
         discountAmountDisplay: '0,00 TL',
         discountReason: 'İskonto -',
-        vatRateDisplay: '%' + vatRate + ',00',
-        vatAmountDisplay: formatMoney(vatAmt),
+        vatRateDisplay: '%0,00',
+        vatAmountDisplay: '0,00 TL',
         otherTaxesDisplay: '',
-        lineTotalDisplay: formatMoney(netLine)
-      };
+        lineTotalDisplay: formatMoney(finalLineTotal)
+      });
     });
-    grandTotal = goodsServicesTotal + totalKdv20Amount;
+
+    // KDV'ye tabi (İşçilik/Saat) Satırlarını oluştur
+    taxableRows.forEach((r) => {
+      hasKdv20 = true;
+      totalKdv20Matrah = Math.round((totalKdv20Matrah + r.netLine) * 100) / 100;
+      totalKdv20Amount = Math.round((totalKdv20Amount + r.vatAmt) * 100) / 100;
+      goodsServicesTotal = Math.round((goodsServicesTotal + r.netLine) * 100) / 100;
+
+      const unitNet = Math.round((r.netLine / r.qty) * 100) / 100;
+      let desc = r.name.toLowerCase().includes('işçilik') ? 'İşçilik' : r.name;
+
+      displayLines.push({
+        seq: displayLines.length + 1,
+        description: desc,
+        quantityDisplay: r.qty + ' Adet',
+        unitPriceDisplay: formatMoney(unitNet),
+        discountRateDisplay: '%0,00',
+        discountAmountDisplay: '0,00 TL',
+        discountReason: 'İskonto -',
+        vatRateDisplay: '%' + r.vatRate + ',00',
+        vatAmountDisplay: formatMoney(r.vatAmt),
+        otherTaxesDisplay: '',
+        lineTotalDisplay: formatMoney(r.netLine)
+      });
+    });
+
+    grandTotal = Math.round((goodsServicesTotal + totalKdv20Amount) * 100) / 100;
   } else {
     // Özel Matrah Kuyumculuk Satışı
     const hasGold = Number(bd.hasGoldAmount || 0);

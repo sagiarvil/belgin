@@ -1047,16 +1047,17 @@ const AdminApp = {
       }
     }
 
-    const workmanshipTotal = Math.max(1, Math.round(total * 0.01 * 100) / 100);
-    const hasGoldAmount = Math.round((total - workmanshipTotal) * 100) / 100;
+    const workmanshipTotal = Math.max(1, Math.round(total * 0.0125 * 100) / 100);
     const workmanshipNet = Math.round((workmanshipTotal / 1.20) * 100) / 100;
     const workmanshipKdv = Math.round((workmanshipTotal - workmanshipNet) * 100) / 100;
+    const exactWorkmanshipGross = Math.round((workmanshipNet + workmanshipKdv) * 100) / 100;
+    const hasGoldAmount = Math.round((total - exactWorkmanshipGross) * 100) / 100;
     return {
       isVip22: false,
       hasGoldAmount,
       workmanshipNet,
       workmanshipKdv,
-      workmanshipTotal,
+      workmanshipTotal: exactWorkmanshipGross,
       grandTotal: total
     };
   },
