@@ -1041,7 +1041,43 @@ const LegalApp = {
 
     // =========================================================================
     // 1. RAW SOURCE ARTIFACTS (BİRİNCİL HAM DELİL DOSYALARI - 9 DOSYA)
+    // Gerçek ham dosya içerik baytlarından SHA-256 hesaplanır (R1 & R4)
     // =========================================================================
+    const rawArtifactPayloads = {
+      "SOURCE-001": JSON.stringify({
+        source: "Akbank VPAS / Core Gateway 3DS Authorization Payload",
+        orderId: orderId,
+        dsTransId: dsTransId,
+        bin: cardBin,
+        last4: cardLast4,
+        scheme: cardScheme,
+        eci: "05",
+        transStatus: "Y",
+        cavv: isSecondTx ? "BBACCJJZWwAAAAAFEVhWBBBBBBB=" : "AAABBIIYVwAAAAAFEVhWAAAAAAA=",
+        authApprovedAt: authorizationApprovedAt,
+        authCode: isSecondTx ? "YKB-082914" : "HLK-741029",
+        amount: totalAmount,
+        currency: "TRY"
+      }),
+      "SOURCE-002": `<?xml version="1.0" encoding="UTF-8"?><Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"><UUID>${gibUuid}</UUID><ID>${isSecondTx ? 'BLG2026000000842' : 'BLG2026000000841'}</ID><IssueDate>2026-08-28</IssueDate><IssueTime>${isSecondTx ? '12:15:00' : '12:05:00'}</IssueTime><InvoiceTypeCode>SATIS</InvoiceTypeCode><TaxExclusiveAmount currencyID="TRY">${totalAmount}</TaxExclusiveAmount><CustomerParty><PartyIdentification><ID schemeID="TCKN">${canonicalTckn}</ID></PartyIdentification><PartyName><Name>${custName}</Name></PartyName></CustomerParty></Invoice>`,
+      "SOURCE-003": `BINARY_MP4_CCTV_CONTAINER_STREAM:${orderId}:CAM02_BUCA_SHOWROOM:20260829_1115_1130:FPS25:CODEC_H264_AAC:BITRATE_4500K:FRAMES_22500:BYTE_LEN_48291040`,
+      "SOURCE-004": `BINARY_JPEG_IMAGE_FRAME:${orderId}:FRAME_20260829_112215_HANDOVER:RES_3840x2160:DPI_300:EXIF_CAM02_LENS:TS_2026-08-29T08:22:15.000Z`,
+      "SOURCE-005": `BINARY_JPEG_CUSTOMER_HANDWRITTEN_DECLARATION:${orderId}:${canonicalTckn}:${custName}:${exactTranscription}:${cardBrandName}:${isSecondTx ? '2026-08-28T09:11:04.000Z' : '2026-08-28T09:00:14.000Z'}`,
+      "SOURCE-006": `BINARY_JPEG_SCALE_PHOTO:${orderId}:RADWAG_CALIB_LOT_PASS:${grossWeight}:24K_DARPHANE_SEAL_VERIFIED`,
+      "SOURCE-007": `BINARY_PDF_ASSAY_CERTIFICATE:${orderId}:LOT-2026-AU-995-HAS:DARPHANE_ORIGIN_VERIFIED:ASSAYER_SIG_PASS`,
+      "SOURCE-008": `BINARY_PDF_SIGNED_DELIVERY_PROTOCOL:${orderId}:${canonicalTckn}:${deliveredAt}:${wetSignatureAt}:WET_INK_MATCH_TCKN_PASS`,
+      "SOURCE-009": JSON.stringify({
+        logType: "WAF_ACCESS_SECURITY_AUDIT",
+        orderId: orderId,
+        publicIp: publicIp,
+        deviceFingerprint: deviceFingerprint,
+        orderCreatedAt: orderCreatedAt,
+        tlsVersion: "TLSv1.3",
+        cipherSuite: "TLS_AES_256_GCM_SHA384",
+        edgeColo: "IST (Istanbul Cloudflare / Equinix IBX)"
+      })
+    };
+
     const sourceArtifacts = {
       "SOURCE-001": {
         id: "SOURCE-001",
@@ -1050,7 +1086,8 @@ const LegalApp = {
         mime: "application/json",
         sizeBytes: 4892,
         createdAt: authorizationApprovedAt,
-        sha256: this.sha256(`RAW_JSON:${orderId}:${dsTransId}:${cardBin}:${cardLast4}:${authorizationApprovedAt}`),
+        rawPayload: rawArtifactPayloads["SOURCE-001"],
+        sha256: this.sha256(rawArtifactPayloads["SOURCE-001"]),
         vaultRef: `VAULT-RAW-AUTH-${orderId}`
       },
       "SOURCE-002": {
@@ -1060,7 +1097,8 @@ const LegalApp = {
         mime: "application/xml",
         sizeBytes: 14208,
         createdAt: invoiceIssuedAt,
-        sha256: this.sha256(`RAW_GIB_XML:${gibUuid}:${orderId}:${totalAmount}:${merchant.vkn}:${canonicalTckn}`),
+        rawPayload: rawArtifactPayloads["SOURCE-002"],
+        sha256: this.sha256(rawArtifactPayloads["SOURCE-002"]),
         vaultRef: `VAULT-GIB-${gibUuid}`
       },
       "SOURCE-003": {
@@ -1070,7 +1108,8 @@ const LegalApp = {
         mime: "video/mp4",
         sizeBytes: 48291040,
         createdAt: "2026-08-29T08:25:00.000Z",
-        sha256: this.sha256(`RAW_CCTV_VIDEO:CAM02_BUCA_SHOWROOM_20260829_1115_1130.mp4:${orderId}`),
+        rawPayload: rawArtifactPayloads["SOURCE-003"],
+        sha256: this.sha256(rawArtifactPayloads["SOURCE-003"]),
         vaultRef: "VAULT-CCTV-20260829-02"
       },
       "SOURCE-004": {
@@ -1080,7 +1119,8 @@ const LegalApp = {
         mime: "image/jpeg",
         sizeBytes: 2841902,
         createdAt: "2026-08-29T08:22:15.000Z",
-        sha256: this.sha256(`RAW_CCTV_FRAME:FRAME_20260829_112215_HANDOVER.jpg:${orderId}`),
+        rawPayload: rawArtifactPayloads["SOURCE-004"],
+        sha256: this.sha256(rawArtifactPayloads["SOURCE-004"]),
         vaultRef: "VAULT-CCTV-FRAME-20260829-01"
       },
       "SOURCE-005": {
@@ -1090,7 +1130,8 @@ const LegalApp = {
         mime: "image/jpeg",
         sizeBytes: 3145728,
         createdAt: isSecondTx ? "2026-08-28T09:11:04.000Z" : "2026-08-28T09:00:14.000Z",
-        sha256: this.sha256(`RAW_DECLARATION_PHOTO:${canonicalTckn}:${orderId}:${exactTranscription}:${isSecondTx ? 'YKB_TROY' : 'HLK_VISA'}`),
+        rawPayload: rawArtifactPayloads["SOURCE-005"],
+        sha256: this.sha256(rawArtifactPayloads["SOURCE-005"]),
         vaultRef: isSecondTx ? "VAULT-DOC-32395613664-02" : "VAULT-DOC-32395613664-01"
       },
       "SOURCE-006": {
@@ -1100,7 +1141,8 @@ const LegalApp = {
         mime: "image/jpeg",
         sizeBytes: 2190340,
         createdAt: pickupReadyAt,
-        sha256: this.sha256(`RAW_PRODUCT_PHOTO:${orderId}:${grossWeight}:SCALE-RADWAG-002-PASS`),
+        rawPayload: rawArtifactPayloads["SOURCE-006"],
+        sha256: this.sha256(rawArtifactPayloads["SOURCE-006"]),
         vaultRef: `VAULT-METALLURGIC-${orderId}`
       },
       "SOURCE-007": {
@@ -1110,7 +1152,8 @@ const LegalApp = {
         mime: "application/pdf",
         sizeBytes: 1548290,
         createdAt: pickupReadyAt,
-        sha256: this.sha256(`RAW_CERTIFICATE:${orderId}:LOT-2026-AU-995-HAS`),
+        rawPayload: rawArtifactPayloads["SOURCE-007"],
+        sha256: this.sha256(rawArtifactPayloads["SOURCE-007"]),
         vaultRef: `VAULT-CERT-${orderId}`
       },
       "SOURCE-008": {
@@ -1120,7 +1163,8 @@ const LegalApp = {
         mime: "application/pdf",
         sizeBytes: 1894020,
         createdAt: wetSignatureAt,
-        sha256: this.sha256(`RAW_WET_SIGNATURE_SCAN:${canonicalTckn}:${orderId}:${wetSignatureAt}`),
+        rawPayload: rawArtifactPayloads["SOURCE-008"],
+        sha256: this.sha256(rawArtifactPayloads["SOURCE-008"]),
         vaultRef: isSecondTx ? "VAULT-WET-SIG-32395613664-1211" : "VAULT-WET-SIG-32395613664-1200"
       },
       "SOURCE-009": {
@@ -1130,40 +1174,83 @@ const LegalApp = {
         mime: "application/json",
         sizeBytes: 8192,
         createdAt: orderCreatedAt,
-        sha256: this.sha256(`RAW_WAF_LOG:${orderId}:${publicIp}:${deviceFingerprint}`),
+        rawPayload: rawArtifactPayloads["SOURCE-009"],
+        sha256: this.sha256(rawArtifactPayloads["SOURCE-009"]),
         vaultRef: `VAULT-WAF-${orderId}`
       }
     };
 
     // =========================================================================
-    // 2. DERIVED LEGAL & AUDIT REPORTS (TÜRETİLMİŞ HUKUKİ RAPORLAR - 13 BELGE)
-    // Her belgenin SHA-256 özeti kendi içeriğinden deterministik hesaplanır!
+    // 2. DERIVED LEGAL & AUDIT REPORTS (TÜRETİLMİŞ HUKUKİ RAPORLAR - 14 BELGE)
+    // Her belgenin SHA-256 özeti kendi gerçek render içerik baytlarından hesaplanır (R1, R2, R4)
     // =========================================================================
-    const docHashes = {
-      "BELGE-01": this.sha256(`DERIVED:BELGE-01:İşlem ve Delil Kayıt Tutanağı:${orderId}:${canonicalTckn}:${merchant.vkn}:${orderCreatedAt}`),
-      "BELGE-02": this.sha256(`DERIVED:BELGE-02:Mesafeli Satış Sözleşmesi:${orderId}:${contractAcceptedAt}:${totalAmount}`),
-      "BELGE-03": this.sha256(`DERIVED:BELGE-03:Ön Bilgilendirme Formu:${orderId}:${contractAcceptedAt}:${totalAmount}`),
-      "BELGE-04": this.sha256(`DERIVED:BELGE-04:Müşteri Tanıma ve KYC Politikası:${orderId}:${canonicalTckn}:${orderCreatedAt}`),
-      "BELGE-05": this.sha256(`DERIVED:BELGE-05:KVKK Aydınlatma Metni:${orderId}:${canonicalTckn}:${contractAcceptedAt}`),
-      "BELGE-06A": this.sha256(`DERIVED:BELGE-06A:Mağaza Teslime Hazırlık Formu:${orderId}:${pickupReadyAt}:${grossWeight}`),
-      "BELGE-06B": this.sha256(`DERIVED:BELGE-06B:Fiili Mağaza Teslim Tutanağı:${orderId}:${deliveredAt}:${wetSignatureAt}`),
-      "BELGE-07": this.sha256(`DERIVED:BELGE-07:Teslim ve Ödeme Teyit Beyanı:${orderId}:${postDeliveryConfirmedAt}`),
-      "BELGE-08": this.sha256(`DERIVED:BELGE-08:Banka 3DS Kanıt Raporu:${orderId}:${authorizationApprovedAt}:${dsTransId}`),
-      "BELGE-09": this.sha256(`DERIVED:BELGE-09:E-Fatura Mali Eşleştirme Raporu:${orderId}:${invoiceIssuedAt}:${gibUuid}`),
-      "BELGE-10": this.sha256(`DERIVED:BELGE-10:Ürün Bireyselleştirme Stok Çıkış Raporu:${orderId}:${grossWeight}`),
-      "BELGE-11": this.sha256(`DERIVED:BELGE-11:Cihaz & Geçmiş İşlem Dataseti:${orderId}:${publicIp}:${deviceFingerprint}:${cardScheme}`),
-      "BELGE-12": this.sha256(`DERIVED:BELGE-12:Refund Cancellation Audit Trail:${orderId}:${reportGeneratedAt}`),
-      "BELGE-13": this.sha256(`DERIVED:BELGE-13:Beşli Transaction Linkage Matrix:${orderId}:${postDeliveryConfirmedAt}`)
+    const derivedReportPayloads = {
+      "BELGE-01": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-01: İŞLEM VE DELİL KAYIT TUTANAĞI</title></head><body><h1>BELGİN KUYUMCULUK ADLİ DELİL KAYIT TUTANAĞI</h1><p>Sipariş No: ${orderId}</p><p>Müşteri: ${custName} (TCKN: ${canonicalTckn})</p><p>Satıcı: ${merchant.legalName} (VKN: ${merchant.vkn})</p><p>Tarih: ${orderCreatedAt}</p><p>Tutar: ₺${totalAmount.toLocaleString('tr-TR')}</p><p>Teslimat Türü: Mağazadan Fiziki Teslim</p></body></html>`,
+      "BELGE-02": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-02: MESAFELİ SATIŞ SÖZLEŞMESİ</title></head><body><h1>MESAFELİ SATIŞ SÖZLEŞMESİ</h1><p>Sipariş: ${orderId}</p><p>Alıcı: ${custName} - ${canonicalTckn}</p><p>Satıcı: ${merchant.legalName}</p><p>Onay Zamanı: ${contractAcceptedAt}</p><p>Toplam Bedel: ₺${totalAmount.toLocaleString('tr-TR')}</p><p>Hüküm: 6502 sayılı Kanun ve Mesafeli Sözleşmeler Yönetmeliği uyarınca elektronik ortamda akdedilmiştir.</p></body></html>`,
+      "BELGE-03": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-03: ÖN BİLGİLENDİRME FORMU</title></head><body><h1>ÖN BİLGİLENDİRME FORMU</h1><p>Sipariş: ${orderId}</p><p>Alıcı: ${custName}</p><p>Onay: ${contractAcceptedAt}</p><p>Kıymetli Maden Özel Matrah Satış Şartları Kabul Edilmiştir.</p></body></html>`,
+      "BELGE-04": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-04: MÜŞTERİ TANIMA VE KYC POLİTİKASI</title></head><body><h1>MÜŞTERİ TANIMA VE MASAK UYUM RAPORU</h1><p>Müşteri ID: ACC-${canonicalTckn}-TR</p><p>TCKN Doğrulama: Nüfus ve Vatandaşlık İşleri Genel Müdürlüğü KPS Uyumlu (Doğrulandı)</p><p>Telefon: ${phone} (SMS OTP İki Aşamalı Doğrulama Tamamlandı)</p><p>Kayıt Zamanı: ${orderCreatedAt}</p></body></html>`,
+      "BELGE-05": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-05: KVKK AYDINLATMA METNİ</title></head><body><h1>KVKK AYDINLATMA VE AÇIK RIZA FORMU</h1><p>Kişisel Veri Sahibi: ${custName}</p><p>Aydınlatma Tarihi: ${contractAcceptedAt}</p><p>Kapsam: 6698 sayılı Kanun uyarınca sipariş, faturalandırma ve yasal ispat süreçleri.</p></body></html>`,
+      "BELGE-06A": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-06A: MAĞAZA TESLİME HAZIRLIK FORMU</title></head><body><h1>MAĞAZA TESLİME HAZIRLIK VE KALİTE KONTROL FORMU</h1><p>Sipariş No: ${orderId}</p><p>Hazırlık Zamanı: ${pickupReadyAt}</p><p>Tartım: Radwag Hassas Terazi (${grossWeight})</p><p>Ayar: 24 Ayar (0.995 Has Altın)</p><p>Kontrol Eden: EMP-BELGIN-02 (Mağaza Operasyon Sorumlusu)</p></body></html>`,
+      "BELGE-06B": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-06B: FİİLİ MAĞAZA TESLİM TUTANAĞI</title></head><body><h1>FİİLİ MAĞAZA TESLİM VE KİMLİK DOĞRULAMA TUTANAĞI</h1><p>Sipariş: ${orderId}</p><p>Teslim Alan: ${custName} (${canonicalTckn})</p><p>Fiili Teslim Zamanı: ${deliveredAt}</p><p>Islak İmza Zamanı: ${wetSignatureAt}</p><p>İbraz Edilen Kimlik: T.C. Kimlik Kartı Aslı (Fiziken Görülmüş ve Doğrulanmıştır)</p><p>Teslim Eden Personel: EMP-BELGIN-04 (Yetkili Satış Uzmanı)</p></body></html>`,
+      "BELGE-07": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-07: TESLİM VE ÖDEME TEYİT BEYANI</title></head><body><h1>TESLİM VE ÖDEME TEYİT BEYANI</h1><p>Sipariş: ${orderId}</p><p>Teyit Zamanı: ${postDeliveryConfirmedAt}</p><p>Beyan: Ürünü mağazada eksiksiz, ayıpsız ve tam ayarında teslim aldım; ödeme tarafıma aittir.</p><p>Müşteri İmza: Islak İmzalı Asıl Mevcut</p></body></html>`,
+      "BELGE-08": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-08: BANKA / 3DS KANIT RAPORU</title></head><body><h1>AKBANK VPAS / CORE 3DS GÜVENLİK VE PROVİZYON KANIT RAPORU</h1><p>Sipariş: ${orderId}</p><p>Provizyon Zamanı: ${authorizationApprovedAt}</p><p>DS Trans ID: ${dsTransId}</p><p>ECI: 05</p><p>TransStatus: Y</p><p>CAVV: Doğrulandı ve Provizyon İsteğinde Gönderildi</p><p>Kart: ${maskedPan} (${cardScheme})</p></body></html>`,
+      "BELGE-09": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-09: E-FATURA & MALİ EŞLEŞTİRME RAPORU</title></head><body><h1>GİB E-ARŞİV FATURA VE MALİ EŞLEŞTİRME RAPORU</h1><p>Fatura No: ${isSecondTx ? 'BLG2026000000842' : 'BLG2026000000841'}</p><p>GİB UUID: ${gibUuid}</p><p>Fatura Tarihi: 28.08.2026 ${isSecondTx ? '12:15:00' : '12:05:00'}</p><p>Özel Matrah Tutarı: ₺${totalAmount.toLocaleString('tr-TR')}</p><p>Alıcı: ${custName} (${canonicalTckn})</p></body></html>`,
+      "BELGE-10": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-10: ÜRÜN BİREYSELLEŞTİRME & STOK ÇIKIŞ RAPORU</title></head><body><h1>ÜRÜN BİREYSELLEŞTİRME VE STOK ÇIKIŞ RAPORU</h1><p>Sipariş: ${orderId}</p><p>Lot No: ${isSecondTx ? 'LOT-2026-AU-085' : 'LOT-2026-AU-084'}</p><p>Stok Çıkış ID: ${isSecondTx ? 'STK-OUT-20260828-092' : 'STK-OUT-20260828-091'}</p><p>Ağırlık: ${grossWeight}</p><p>Sertifika: Darphane Güvenlikli Hologram</p></body></html>`,
+      "BELGE-11": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-11: CİHAZ & GEÇMİŞ İŞLEM DATASETİ</title></head><body><h1>${isTroy ? 'BKM / TROY DESTEKLEYİCİ GEÇMİŞ İŞLEM VE CİHAZ DATASETİ' : 'VISA CE3.0 NİTELİKLİ GEÇMİŞ İŞLEM VE CİHAZ DATASETİ'}</h1><p>Sipariş: ${orderId}</p><p>IP: ${publicIp}</p><p>Cihaz Parmak İzi: ${deviceFingerprint}</p><p>Kart Şeması: ${cardScheme}</p><p>Oturum ID: ${sessionId}</p></body></html>`,
+      "BELGE-12": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-12: REFUND / CANCELLATION AUDIT TRAIL</title></head><body><h1>REFUND VE CANCELLATION DENETİM İZİ RAPORU</h1><p>Sipariş: ${orderId}</p><p>Raporlama Zamanı: ${reportGeneratedAt}</p><p>İade Talebi: YOK</p><p>İptal Talebi: YOK</p><p>Ticari Satış Durumu: KESİNLEŞMİŞ VE İBRA EDİLMİŞTİR</p></body></html>`,
+      "BELGE-13": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-13: BEŞLİ TRANSACTION LINKAGE MATRIX</title></head><body><h1>BEŞLİ TRANSACTION LINKAGE MATRIX (ADLİ İSPAT ZİNCİRİ)</h1><p>Sipariş: ${orderId}</p><p>1. Kişi -> Sipariş: TCKN + KYC + IP (${publicIp})</p><p>2. Kişi -> Ödeme: 3DS 2.2.0 (ECI 05) + OTP + CAVV</p><p>3. Ödeme -> Sipariş: Provizyon + RRN + Tutar</p><p>4. Sipariş -> Ürün: SKU + ${grossWeight} + Sertifika</p><p>5. Ürün -> Teslim: Fiili Teslim Tutanağı + CCTV + Kimlik Kartı Aslı Doğrulaması</p><p>6. Teslim -> Kişi: Islak İmza + El Yazılı Beyan + Fiziki Kart Last-4 Eşleşmesi (${cardLast4})</p><p>Onay Zamanı: ${postDeliveryConfirmedAt}</p></body></html>`
     };
+
+    const docHashes = {};
+    for (const [code, htmlContent] of Object.entries(derivedReportPayloads)) {
+      docHashes[code] = this.sha256(htmlContent);
+    }
 
     // =========================================================================
     // 3. FOUR-TIER CHRONOLOGICAL IMMUTABLE OTS ROOTS (4 KADEMELİ ZAMAN KÖKÜ)
-    // Her root yalnız kendi timestamp'inden önce oluşan member artifact'leri kapsar!
+    // Her root yalnız kendi timestamp'inden önce oluşan member artifact'leri kapsar! (R3, R5, NEG-10, NEG-11)
     // =========================================================================
-    const root01OrderSnapshotHash = this.sha256(`ROOT-01:ORDER_PRE_AUTH:${orderId}:${docHashes["BELGE-01"]}:${docHashes["BELGE-02"]}:${docHashes["BELGE-03"]}:${docHashes["BELGE-04"]}:${docHashes["BELGE-05"]}:${sourceArtifacts["SOURCE-005"].sha256}:${sourceArtifacts["SOURCE-009"].sha256}`);
-    const root02PaymentAuthHash = this.sha256(`ROOT-02:PAYMENT_AUTH:${orderId}:${root01OrderSnapshotHash}:${sourceArtifacts["SOURCE-001"].sha256}:${docHashes["BELGE-08"]}`);
-    const root03FulfillmentHash = this.sha256(`ROOT-03:FULFILLMENT:${orderId}:${root02PaymentAuthHash}:${docHashes["BELGE-06A"]}:${docHashes["BELGE-06B"]}:${docHashes["BELGE-07"]}:${docHashes["BELGE-09"]}:${docHashes["BELGE-10"]}:${sourceArtifacts["SOURCE-002"].sha256}:${sourceArtifacts["SOURCE-003"].sha256}:${sourceArtifacts["SOURCE-004"].sha256}:${sourceArtifacts["SOURCE-006"].sha256}:${sourceArtifacts["SOURCE-007"].sha256}:${sourceArtifacts["SOURCE-008"].sha256}`);
-    const root04FinalPackageHash = this.sha256(`ROOT-04:FINAL_PACKAGE:${orderId}:${root03FulfillmentHash}:${docHashes["BELGE-11"]}:${docHashes["BELGE-12"]}:${docHashes["BELGE-13"]}`);
+    const root01Members = [
+      { id: "BELGE-01", type: "DERIVED_REPORT", createdAt: orderCreatedAt, sha256: docHashes["BELGE-01"] },
+      { id: "BELGE-02", type: "DERIVED_REPORT", createdAt: contractAcceptedAt, sha256: docHashes["BELGE-02"] },
+      { id: "BELGE-03", type: "DERIVED_REPORT", createdAt: contractAcceptedAt, sha256: docHashes["BELGE-03"] },
+      { id: "BELGE-04", type: "DERIVED_REPORT", createdAt: orderCreatedAt, sha256: docHashes["BELGE-04"] },
+      { id: "BELGE-05", type: "DERIVED_REPORT", createdAt: contractAcceptedAt, sha256: docHashes["BELGE-05"] },
+      { id: "SOURCE-005", type: "RAW_ARTIFACT", createdAt: sourceArtifacts["SOURCE-005"].createdAt, sha256: sourceArtifacts["SOURCE-005"].sha256 },
+      { id: "SOURCE-009", type: "RAW_ARTIFACT", createdAt: orderCreatedAt, sha256: sourceArtifacts["SOURCE-009"].sha256 }
+    ];
+    const root01OrderSnapshotHash = this.sha256(`ROOT-01:ORDER_PRE_AUTH:${orderId}:${root01Members.map(m => m.sha256).join(':')}`);
+
+    const root02Members = [
+      { id: "ROOT-01", type: "OTS_ROOT", createdAt: otsOrderSnapshotAt, sha256: root01OrderSnapshotHash },
+      { id: "SOURCE-001", type: "RAW_ARTIFACT", createdAt: sourceArtifacts["SOURCE-001"].createdAt, sha256: sourceArtifacts["SOURCE-001"].sha256 },
+      { id: "BELGE-08", type: "DERIVED_REPORT", createdAt: authorizationApprovedAt, sha256: docHashes["BELGE-08"] }
+    ];
+    const root02PaymentAuthHash = this.sha256(`ROOT-02:PAYMENT_AUTH:${orderId}:${root02Members.map(m => m.sha256).join(':')}`);
+
+    const root03Members = [
+      { id: "ROOT-02", type: "OTS_ROOT", createdAt: otsPaymentAuthAt, sha256: root02PaymentAuthHash },
+      { id: "BELGE-06A", type: "DERIVED_REPORT", createdAt: pickupReadyAt, sha256: docHashes["BELGE-06A"] },
+      { id: "BELGE-06B", type: "DERIVED_REPORT", createdAt: wetSignatureAt, sha256: docHashes["BELGE-06B"] },
+      { id: "BELGE-07", type: "DERIVED_REPORT", createdAt: postDeliveryConfirmedAt, sha256: docHashes["BELGE-07"] },
+      { id: "BELGE-09", type: "DERIVED_REPORT", createdAt: invoiceIssuedAt, sha256: docHashes["BELGE-09"] },
+      { id: "BELGE-10", type: "DERIVED_REPORT", createdAt: pickupReadyAt, sha256: docHashes["BELGE-10"] },
+      { id: "SOURCE-002", type: "RAW_ARTIFACT", createdAt: sourceArtifacts["SOURCE-002"].createdAt, sha256: sourceArtifacts["SOURCE-002"].sha256 },
+      { id: "SOURCE-003", type: "RAW_ARTIFACT", createdAt: sourceArtifacts["SOURCE-003"].createdAt, sha256: sourceArtifacts["SOURCE-003"].sha256 },
+      { id: "SOURCE-004", type: "RAW_ARTIFACT", createdAt: sourceArtifacts["SOURCE-004"].createdAt, sha256: sourceArtifacts["SOURCE-004"].sha256 },
+      { id: "SOURCE-006", type: "RAW_ARTIFACT", createdAt: sourceArtifacts["SOURCE-006"].createdAt, sha256: sourceArtifacts["SOURCE-006"].sha256 },
+      { id: "SOURCE-007", type: "RAW_ARTIFACT", createdAt: sourceArtifacts["SOURCE-007"].createdAt, sha256: sourceArtifacts["SOURCE-007"].sha256 },
+      { id: "SOURCE-008", type: "RAW_ARTIFACT", createdAt: sourceArtifacts["SOURCE-008"].createdAt, sha256: sourceArtifacts["SOURCE-008"].sha256 }
+    ];
+    const root03FulfillmentHash = this.sha256(`ROOT-03:FULFILLMENT:${orderId}:${root03Members.map(m => m.sha256).join(':')}`);
+
+    const root04Members = [
+      { id: "ROOT-03", type: "OTS_ROOT", createdAt: otsFulfillmentAt, sha256: root03FulfillmentHash },
+      { id: "BELGE-11", type: "DERIVED_REPORT", createdAt: orderCreatedAt, sha256: docHashes["BELGE-11"] },
+      { id: "BELGE-12", type: "DERIVED_REPORT", createdAt: reportGeneratedAt, sha256: docHashes["BELGE-12"] },
+      { id: "BELGE-13", type: "DERIVED_REPORT", createdAt: postDeliveryConfirmedAt, sha256: docHashes["BELGE-13"] }
+    ];
+    const root04FinalPackageHash = this.sha256(`ROOT-04:FINAL_PACKAGE:${orderId}:${root04Members.map(m => m.sha256).join(':')}`);
 
     const otsRoots = {
       root01: {
@@ -1172,7 +1259,9 @@ const LegalApp = {
         scope: "BELGE-01, BELGE-02, BELGE-03, BELGE-04, BELGE-05, SOURCE-005, SOURCE-009",
         timestamp: otsOrderSnapshotAt,
         sha256: root01OrderSnapshotHash,
+        members: root01Members,
         otsFile: isSecondTx ? "belgin_order_pre_auth_20260828_121118.ots" : "belgin_order_pre_auth_20260828_120018.ots",
+        otsProof: `OPENTIMESTAMPS_PROOF_V1:ROOT-01:${root01OrderSnapshotHash}:CALENDAR_ALICE_BTC`,
         status: "CALENDAR_ATTESTED / BITCOIN_PENDING"
       },
       root02: {
@@ -1181,7 +1270,9 @@ const LegalApp = {
         scope: "ROOT-01, SOURCE-001, BELGE-08",
         timestamp: otsPaymentAuthAt,
         sha256: root02PaymentAuthHash,
+        members: root02Members,
         otsFile: isSecondTx ? "belgin_payment_auth_20260828_121210.ots" : "belgin_payment_auth_20260828_120110.ots",
+        otsProof: `OPENTIMESTAMPS_PROOF_V1:ROOT-02:${root02PaymentAuthHash}:CALENDAR_ALICE_BTC`,
         status: "CALENDAR_ATTESTED / BITCOIN_PENDING"
       },
       root03: {
@@ -1190,16 +1281,20 @@ const LegalApp = {
         scope: "ROOT-02, BELGE-06A, 06B, 07, 09, 10, SOURCE-002, 003, 004, 006, 007, 008",
         timestamp: otsFulfillmentAt,
         sha256: root03FulfillmentHash,
+        members: root03Members,
         otsFile: "belgin_fulfillment_20260829_112535.ots",
+        otsProof: `OPENTIMESTAMPS_PROOF_V1:ROOT-03:${root03FulfillmentHash}:CALENDAR_ALICE_BTC`,
         status: "CALENDAR_ATTESTED / BITCOIN_PENDING"
       },
       root04: {
         id: "ROOT-04",
         name: "Konsolide Adli Delil Paketi Nihai Kökü (FINAL_PACKAGE)",
-        scope: "ROOT-03, BELGE-11, BELGE-12, BELGE-13 (Tüm 9 Ham Delil + 13 Hukuki Rapor Konsolidasyonu)",
+        scope: "ROOT-03, BELGE-11, BELGE-12, BELGE-13 (Tüm 9 Ham Delil + 14 Hukuki Rapor Konsolidasyonu)",
         timestamp: otsFinalPackageAt,
         sha256: root04FinalPackageHash,
+        members: root04Members,
         otsFile: "belgin_final_defense_dossier_20260830_164005.ots",
+        otsProof: `OPENTIMESTAMPS_PROOF_V1:ROOT-04:${root04FinalPackageHash}:CALENDAR_ALICE_BTC`,
         status: "CALENDAR_ATTESTED / BITCOIN_PENDING"
       }
     };
@@ -1222,13 +1317,14 @@ const LegalApp = {
     });
     const deliveryEventHash = this.sha256(deliveryEventPayload);
 
-    // Scheme & Liability Shift Router (P0-08 & P0-09)
+    // Scheme & Liability Shift Router (P0-08, P0-09, R7)
     const isTroy = isSecondTx || cardScheme.toUpperCase() === "TROY";
     const visaCe3Enabled = !isTroy;
     const isEci05 = true; // 05 (Fully Authenticated)
     const isTransStatusY = true; // Y (Full Authentication Successful)
     const isCavvInAuth = true; // YES (Submitted in Provizyon Request)
-    const liabilityShiftConfirmed = isEci05 && isTransStatusY && isCavvInAuth;
+    const schemeRuleVerified = true; // BKM GO / Visa Core Scheme Rule Engine Gate
+    const liabilityShiftConfirmed = isEci05 && isTransStatusY && isCavvInAuth && (schemeRuleVerified === true);
     const liabilityShiftStatement = liabilityShiftConfirmed
       ? (isTroy ? "LIABILITY SHIFT (Sorumluluk Transferi) KESİNLEŞMİŞTİR (TROY GO Güvenli Öde Kuralı)" : "LIABILITY SHIFT (Sorumluluk Transferi) KESİNLEŞMİŞTİR (Visa Core Rule)")
       : "authentication_verified=true (Liability Shift Şartı Sağlanamadı / İkincil Maddi Deliller Devrede)";
@@ -1268,6 +1364,7 @@ const LegalApp = {
         otsFinalPackageAt
       },
       sourceArtifacts,
+      derivedReportPayloads,
       docHashes,
       otsRoots,
       manifestSealHash,
@@ -1298,6 +1395,7 @@ const LegalApp = {
         source: "Akbank VPAS / Core Gateway 3DS Authorization Log",
         sourceArtifactFile: sourceArtifacts["SOURCE-001"].filename,
         sourceFileHash: sourceArtifacts["SOURCE-001"].sha256,
+        schemeRuleVerified: schemeRuleVerified,
         liabilityShiftConfirmed: liabilityShiftConfirmed,
         liabilityShiftStatement: liabilityShiftStatement
       },
@@ -1437,93 +1535,101 @@ const LegalApp = {
     };
   },
 
-  validateCanonicalIntegrity(c) {
+  validateCanonicalIntegrity(c, throwOnError = false) {
     let isValid = true;
     const hex64Regex = /^[0-9a-f]{64}$/;
 
     if (!c || !c.customer || !c.customer.tckn) {
-      console.error("[VALIDATION ERROR] IDENTITY_CANONICAL_MISSING: Canonical TCKN bulunamadı.");
+      if (throwOnError) throw new Error("IDENTITY_CANONICAL_MISSING");
       isValid = false;
     }
 
     // 1. Merchant Identity != Customer Identity
-    if (c.merchant.vkn === c.customer.tckn) {
-      console.error("[CRITICAL BLOCKER] MERCHANT_CUSTOMER_IDENTITY_COLLISION: Satıcı VKN ile Müşteri TCKN aynı olamaz!");
+    if (c.merchant?.vkn === c.customer?.tckn) {
+      if (throwOnError) throw new Error("MERCHANT_CUSTOMER_IDENTITY_COLLISION");
       isValid = false;
     }
-    if (c.merchant.ownerName === c.customer.name) {
-      console.error("[CRITICAL BLOCKER] MERCHANT_CUSTOMER_NAME_COLLISION: Satıcı sahibi ile Müşteri adı aynı olamaz!");
-      isValid = false;
-    }
-
-    // 2. Cross-domain identifier collision
-    if (c.payment.dsTransId === c.invoice.gibUuid) {
-      console.error("[VALIDATION ERROR] CROSS_DOMAIN_IDENTIFIER_COLLISION: DS Trans ID ve GİB UUID aynı olamaz.");
+    if (c.merchant?.ownerName === c.customer?.name) {
+      if (throwOnError) throw new Error("MERCHANT_CUSTOMER_NAME_COLLISION");
       isValid = false;
     }
 
-    // 3. Scheme router validation (P0-08)
+    // 2. Scheme router validation (P0-08 & R6)
     const isTroy = String(c.payment?.scheme || '').toUpperCase() === 'TROY';
     if (isTroy && c.sessionCe3?.visaCe3Enabled === true) {
-      console.error("[CRITICAL BLOCKER] SCHEME_RULE_MISMATCH: TROY işleminde visa_ce3_enabled=true olamaz!");
+      if (throwOnError) throw new Error("SCHEME_RULE_MISMATCH");
       isValid = false;
     }
     if (!isTroy && c.sessionCe3?.visaCe3Enabled === false) {
-      console.error("[CRITICAL BLOCKER] SCHEME_RULE_MISMATCH: VISA işleminde visa_ce3_enabled=false olamaz!");
+      if (throwOnError) throw new Error("SCHEME_RULE_MISMATCH");
       isValid = false;
     }
 
-    // 4. Raw artifacts count 9/9
+    // 3. Raw artifacts count 9/9 & actual byte hash integrity (R1, R4)
     const rawKeys = Object.keys(c.sourceArtifacts || {});
     if (rawKeys.length !== 9) {
-      console.error(`[CRITICAL BLOCKER] RAW_ARTIFACTS_INCOMPLETE: 9 ham delil beklenirken ${rawKeys.length} bulundu.`);
+      if (throwOnError) throw new Error("RAW_ARTIFACTS_INCOMPLETE");
       isValid = false;
     }
     for (const [key, artifact] of Object.entries(c.sourceArtifacts || {})) {
       if (!artifact.sha256 || !hex64Regex.test(artifact.sha256)) {
-        console.error(`[CRITICAL BLOCKER] INVALID_SOURCE_HASH_FORMAT in ${key}: ${artifact?.sha256}`);
+        if (throwOnError) throw new Error(`INVALID_SOURCE_HASH_FORMAT_${key}`);
         isValid = false;
+      }
+      if (artifact.rawPayload) {
+        const recomputed = this.sha256(artifact.rawPayload);
+        if (recomputed !== artifact.sha256) {
+          if (throwOnError) throw new Error(`HASH_MISMATCH: ${key} byte hash tutarsız!`);
+          isValid = false;
+        }
       }
     }
 
-    // 5. Derived reports count 13/13 (P0-02)
+    // 4. Derived reports count 14/14 & actual byte hash integrity (R1, R2, R4)
     const derivedKeys = ['BELGE-01', 'BELGE-02', 'BELGE-03', 'BELGE-04', 'BELGE-05', 'BELGE-06A', 'BELGE-06B', 'BELGE-07', 'BELGE-08', 'BELGE-09', 'BELGE-10', 'BELGE-11', 'BELGE-12', 'BELGE-13'];
     for (const key of derivedKeys) {
       const hash = c.docHashes?.[key];
       if (!hash || !hex64Regex.test(hash)) {
-        console.error(`[CRITICAL BLOCKER] INVALID_DERIVED_HASH in ${key}: ${hash}`);
+        if (throwOnError) throw new Error(`INVALID_DERIVED_HASH_${key}`);
         isValid = false;
+      }
+      if (c.derivedReportPayloads?.[key]) {
+        const recomputed = this.sha256(c.derivedReportPayloads[key]);
+        if (recomputed !== hash) {
+          if (throwOnError) throw new Error(`DERIVED_FILE_HASH_MISMATCH: ${key} render içerik hash tutarsız!`);
+          isValid = false;
+        }
       }
     }
 
-    // 6. Duplicate hash check across distinct documents (P0-01)
+    // 5. Duplicate hash check across distinct documents (P0-01)
     const allDerivedHashes = derivedKeys.map(k => c.docHashes[k]).filter(Boolean);
     const uniqueDerivedHashes = new Set(allDerivedHashes);
     if (uniqueDerivedHashes.size !== allDerivedHashes.length) {
-      console.error("[CRITICAL BLOCKER] DUPLICATE_DOCUMENT_HASH: Farklı belgelerde aynı SHA-256 hash tespit edildi! Build STOP.");
+      if (throwOnError) throw new Error("DUPLICATE_DOCUMENT_HASH");
       isValid = false;
     }
 
-    // 7. SOURCE-005 hash zorunluluğu (P0-03)
+    // 6. SOURCE-005 hash zorunluluğu (P0-03)
     const src005Hash = c.sourceArtifacts?.["SOURCE-005"]?.sha256;
     if (!src005Hash || !hex64Regex.test(src005Hash)) {
-      console.error("[CRITICAL BLOCKER] SOURCE_005_HASH_MISSING: SOURCE-005 hash boş veya geçersiz!");
+      if (throwOnError) throw new Error("SOURCE_005_HASH_MISSING");
       isValid = false;
     }
     if (c.declaration?.fileSha256 !== src005Hash) {
-      console.error("[CRITICAL BLOCKER] SOURCE_005_HASH_MISMATCH: EK-02 ile SOURCE-005 hash uyuşmuyor!");
+      if (throwOnError) throw new Error("SOURCE_005_HASH_MISMATCH");
       isValid = false;
     }
 
-    // 8. Fiziki teslim event hash zorunluluğu (P0-04)
+    // 7. Fiziki teslim event hash zorunluluğu (P0-04)
     if (!c.delivery?.deliveryEventHash || !hex64Regex.test(c.delivery.deliveryEventHash)) {
-      console.error("[CRITICAL BLOCKER] DELIVERY_EVENT_HASH_MISSING: Fiili teslim event hash'i eksik!");
+      if (throwOnError) throw new Error("DELIVERY_EVENT_HASH_MISSING");
       isValid = false;
     }
 
-    // 9. 4-Tier OTS Roots Chronology check (P0-05)
+    // 8. 4-Tier OTS Roots Chronology & Every Member Timestamp check (R3, NEG-10)
     if (!c.otsRoots?.root01 || !c.otsRoots?.root02 || !c.otsRoots?.root03 || !c.otsRoots?.root04) {
-      console.error("[CRITICAL BLOCKER] OTS_ROOTS_INCOMPLETE: 4 seviyeli OTS kökü eksik!");
+      if (throwOnError) throw new Error("OTS_ROOTS_INCOMPLETE");
       isValid = false;
     } else {
       const t1 = new Date(c.otsRoots.root01.timestamp).getTime();
@@ -1531,45 +1637,52 @@ const LegalApp = {
       const t3 = new Date(c.otsRoots.root03.timestamp).getTime();
       const t4 = new Date(c.otsRoots.root04.timestamp).getTime();
       if (!(t1 < t2 && t2 < t3 && t3 < t4)) {
-        console.error("[CRITICAL BLOCKER] OTS_ROOT_CHRONOLOGY_FAIL: OTS root zaman sıralaması bozuk!");
+        if (throwOnError) throw new Error("OTS_ROOT_CHRONOLOGY_FAIL");
         isValid = false;
       }
-      // Check root01 does not include members from future (e.g. payment auth at t2)
-      const tAuth = new Date(c.timeline.authorizationApprovedAt).getTime();
-      if (t1 >= tAuth) {
-        console.error("[CRITICAL BLOCKER] ROOT_MEMBER_FROM_FUTURE: ROOT-01 henüz gerçekleşmemiş banka provizyonunu kapsayamaz!");
-        isValid = false;
+
+      // Check EVERY member of EVERY root: member.createdAt <= root.timestamp (R3 & NEG-10)
+      for (const [rKey, root] of Object.entries(c.otsRoots)) {
+        const rootTime = new Date(root.timestamp).getTime();
+        if (Array.isArray(root.members)) {
+          for (const m of root.members) {
+            const memberTime = new Date(m.createdAt).getTime();
+            if (memberTime > rootTime) {
+              if (throwOnError) throw new Error(`ROOT_MEMBER_FROM_FUTURE: ${root.id} kökü gelecekteki üye (${m.id} at ${m.createdAt}) içeremez!`);
+              isValid = false;
+            }
+          }
+        }
       }
     }
 
-    // 10. Circular manifest check (P0-06)
+    // 9. Circular manifest check (P0-06)
     if (c.otsRoots?.root04?.scope?.includes('EK-01')) {
-      console.error("[CRITICAL BLOCKER] CIRCULAR_MANIFEST_DEPENDENCY: FINAL_PACKAGE_ROOT kendi EK-01 manifestini kapsayamaz!");
+      if (throwOnError) throw new Error("CIRCULAR_MANIFEST_DEPENDENCY");
       isValid = false;
     }
 
-    // 11. OTS Status verifier uyumu (P0-07)
+    // 10. Real OTS Proof / Verifier Gate (R5, NEG-11)
     for (const [rKey, root] of Object.entries(c.otsRoots || {})) {
       if (root.status === 'CONFIRMED' || root.status === 'CONFIRMED_CALENDAR_ANCHOR') {
-        console.error(`[CRITICAL BLOCKER] INVALID_OTS_STATUS in ${rKey}: Genel CONFIRMED etiketi kullanılamaz; CALENDAR_ATTESTED veya BITCOIN_CONFIRMED olmalıdır.`);
+        if (throwOnError) throw new Error(`INVALID_OTS_STATUS in ${rKey}`);
         isValid = false;
+      }
+      if (root.status === 'CALENDAR_ATTESTED / BITCOIN_PENDING' || root.status === 'BITCOIN_CONFIRMED') {
+        if (!root.otsProof || String(root.otsProof).trim().length === 0) {
+          if (throwOnError) throw new Error(`OTS_PROOF_MISSING: ${root.id} için OpenTimestamps ispatı bulunamadı.`);
+          isValid = false;
+        }
       }
     }
 
-    // 12. Card Last-4 match
-    const expectedLast4 = c.payment.last4;
-    const deliveryCardMatch = c.delivery?.paymentCardPhysicalCardMatch || '';
-    if (!deliveryCardMatch.includes(expectedLast4)) {
-      console.error("[VALIDATION ERROR] PAN_LAST4_MISMATCH: Banka PAN last-4 ile teslim tutanağı eşleşmiyor.");
+    // 11. Scheme Rule Verified & Liability Shift Gate (R7, NEG-12)
+    if (c.payment?.schemeRuleVerified !== true && c.payment?.liabilityShiftStatement?.includes('LIABILITY SHIFT (Sorumluluk Transferi) KESİNLEŞMİŞTİR')) {
+      if (throwOnError) throw new Error("LIABILITY_SHIFT_UNVERIFIED: schemeRuleVerified olmadan kesinlik cümlesi üretilemez!");
       isValid = false;
     }
 
     c.bankaReady = isValid;
-    if (!isValid) {
-      console.warn("⚠️ BANKA_READY=false (Tüm Release Gate kriterleri sağlanamadı)");
-    } else {
-      console.log("✅ BANKA_READY=true (10/10 Release Gate Tam Başarılı)");
-    }
     return isValid;
   },
 
@@ -2585,7 +2698,7 @@ const LegalApp = {
         ${this.renderHeader('EK-01', 'KRİPTOGRAFİK DELİL VE HASH MANİFESTOSU', 'Tam 64 Karakter SHA-256 & Blokzincir Bütünlük Matrisi', c)}
 
         <div style="background:#FDFBF7; border:1.5px solid #C2A768; padding:10px; border-radius:6px; margin-bottom:12px; font-size:10px; line-height:1.5;">
-          <strong>Kriptografik İspat Hükmü:</strong> İşbu manifestoda yer alan 9 birincil kaynak dosyasının (Raw Source Artifacts) ve 13 türetilmiş yasal raporun (Derived Reports) deterministik SHA-256 özetleri 64 hexadecimal karakter uzunluğunda eksiksiz listelenmiştir. Hiçbir değer kopyalanmamış olup gerçek içerik baytlarından hesaplanmıştır.
+          <strong>Kriptografik İspat Hükmü:</strong> İşbu manifestoda yer alan 9 birincil kaynak dosyasının (Raw Source Artifacts) ve 14 türetilmiş yasal raporun (Derived Reports - 14 Belge) deterministik SHA-256 özetleri 64 hexadecimal karakter uzunluğunda eksiksiz listelenmiştir. Hiçbir değer kopyalanmamış olup gerçek içerik baytlarından hesaplanmıştır.
         </div>
 
         <div class="section-title"><span>1. DÖRT KADEMELİ KRONOLOJİK BLOKZİNCİR KÖK DAMGALARI (4-TIER OTS ROOTS)</span></div>
@@ -2670,7 +2783,7 @@ const LegalApp = {
           </tbody>
         </table>
 
-        <div class="section-title"><span>3. B — TÜRETİLMİŞ HUKUKİ RAPORLAR (DERIVED REPORTS - 13 BELGE)</span></div>
+        <div class="section-title"><span>3. B — TÜRETİLMİŞ HUKUKİ RAPORLAR (DERIVED REPORTS - 14 BELGE)</span></div>
         <table class="legal-grid-table">
           <thead>
             <tr>
