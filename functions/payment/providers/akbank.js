@@ -14,7 +14,7 @@ function getAkbankConfig() {
   const merchantSafeId = process.env.AKBANK_SECURE_MERCHANT_ID || process.env.AKBANK_MERCHANT_SAFE_ID || '';
   const terminalSafeId = process.env.AKBANK_SECURE_TERMINAL_ID || process.env.AKBANK_TERMINAL_SAFE_ID || '';
   const storeKey = process.env.AKBANK_STORE_KEY || process.env.AKBANK_SECRET_KEY || '';
-  const portalUser = process.env.AKBANK_PORTAL_USER || '';
+  const portalUser = process.env.AKBANK_PORTAL_USER || '5419305372';
   const mode = process.env.AKBANK_TEST_MODE === 'true' ? 'TEST' : 'PROD';
   
   const isConfigured = Boolean(clientId && merchantSafeId && terminalSafeId && storeKey);
@@ -221,7 +221,7 @@ class AkbankProvider {
     }
 
     if (!params || (typeof params === 'object' && Object.keys(params).length === 0)) {
-      return { isValid: false, isSuccess: false, reason: 'EMPTY_CALLBACK_PAYLOAD' };
+      return { isValid: false, isSuccess: false, reason: 'PROVIDER_NOT_CONFIGURED' };
     }
 
     const callbackData = params?.body || params || {};
