@@ -175,8 +175,8 @@ function renderOfficialGibHtml(data) {
     ];
   }
 
-  // 20 satırlık standart GİB gridi
-  while (displayLines.length < 20) {
+  // Kompakt GİB tablosu (Tek sayfaya A4 sığdırma)
+  while (displayLines.length < Math.max(displayLines.length, 5)) {
     displayLines.push({
       seq: '',
       description: '',
