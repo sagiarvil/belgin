@@ -935,14 +935,14 @@ const LegalApp = {
       const qty = Number(it.qty || it.quantity || 1);
       const price = Number(it.price || it.total || (it.unitPrice ? it.unitPrice * qty : 0) || 0);
       const unitPrice = Number(it.unitPrice || (qty > 0 ? price / qty : price) || 0);
-      const sku = it.sku || it.id || `BLG-PRD-${String(idx + 1).padStart(3, '0')}`;
-      const name = it.name || it.title || 'Kayıtlı Sipariş Kalemi';
-      const karat = it.karat || (name.includes('22') ? '22 Ayar' : (name.includes('14') ? '14 Ayar' : (name.includes('24') ? '24 Ayar' : '22 Ayar')));
-      const fineness = it.fineness || (karat.includes('22') ? '916.0 Milyem (0.916 Saflık)' : (karat.includes('24') ? '995.0 Milyem' : '585.0 Milyem'));
+      const sku = it.sku || it.id || '[Kayıtsız SKU]';
+      const name = it.name || it.title || '[İsimsiz Ürün]';
+      const karat = it.karat || '[Ayar Bilgisi Yok]';
+      const fineness = it.fineness || '[Saflık/Milyem Bilgisi Yok]';
       const unitWeight = parseFloat(it.unitWeight || it.weight || '0') || 0;
-      const totalWeight = it.totalWeight || (unitWeight > 0 ? (unitWeight * qty).toFixed(2) + ' gr' : 'Belirtilmedi');
-      const certificateNo = it.certificateNo || `CERT-BLG-2026-${String(idx + 881).padStart(4, '0')}`;
-      const productId = it.productId || it.sku || `PROD-${String(idx + 1).padStart(3, '0')}`;
+      const totalWeight = it.totalWeight || (unitWeight > 0 ? (unitWeight * qty).toFixed(2) + ' gr' : '[Ağırlık Kaydı Yok]');
+      const certificateNo = it.certificateNo || '[Sertifika Kaydı Yok]';
+      const productId = it.productId || it.sku || '[ID Yok]';
 
       return {
         ...it,
@@ -1555,7 +1555,7 @@ const LegalApp = {
       isValid = false;
     }
 
-    // 2. Scheme router validation (P0-08 & R6)
+    // 2. Scheme router & Provider validation (P0-08, R6, R7, CHK-15)
     const isTroy = String(c.payment?.scheme || '').toUpperCase() === 'TROY';
     if (isTroy && c.sessionCe3?.visaCe3Enabled === true) {
       if (throwOnError) throw new Error("SCHEME_RULE_MISMATCH");
@@ -1564,6 +1564,12 @@ const LegalApp = {
     if (!isTroy && c.sessionCe3?.visaCe3Enabled === false) {
       if (throwOnError) throw new Error("SCHEME_RULE_MISMATCH");
       isValid = false;
+    }
+    if (isTroy || String(c.payment?.provider || '').toUpperCase() === 'YAPIKREDI') {
+      if (c.payment?.schemeRuleVerified !== true) {
+        if (throwOnError) throw new Error("UNCONFIGURED_TROY_PROVIDER: Yapı Kredi / TROY entegrasyonu tamamlanana kadar BANKA_READY verilemez.");
+        isValid = false;
+      }
     }
 
     // 3. Raw artifacts count 9/9 & actual byte hash integrity (R1, R4)
