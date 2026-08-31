@@ -411,6 +411,8 @@ const AdminApp = {
     if (nav) nav.style.setProperty('display', 'none', 'important');
     const main = document.querySelector('.admin-container');
     if (main) main.style.setProperty('display', 'none', 'important');
+    const bNav = document.getElementById('adminMobileBottomNav');
+    if (bNav) bNav.style.setProperty('display', 'none', 'important');
   },
 
   hideAuthGate() {
@@ -420,6 +422,8 @@ const AdminApp = {
     if (nav) nav.style.setProperty('display', 'flex', 'important');
     const main = document.querySelector('.admin-container');
     if (main) main.style.setProperty('display', 'block', 'important');
+    const bNav = document.getElementById('adminMobileBottomNav');
+    if (bNav) bNav.style.setProperty('display', 'flex', 'important');
   },
 
   verifyPin() {
@@ -2362,6 +2366,9 @@ const AdminApp = {
     const tabBtnOrders = document.getElementById('tabBtnOrders');
     const tabBtnStmt = document.getElementById('tabBtnStatement');
     const tabBtnStore = document.getElementById('tabBtnStoreInvoices');
+    const mNavOrders = document.getElementById('mNavOrders');
+    const mNavStmt = document.getElementById('mNavStatement');
+    const mNavStore = document.getElementById('mNavStoreInvoices');
     const ordersContent = document.getElementById('ordersTabContent');
     const stmtContent = document.getElementById('statementTabContent');
     const storeContent = document.getElementById('storeInvoicesTabContent');
@@ -2369,6 +2376,9 @@ const AdminApp = {
     if (tabBtnOrders) tabBtnOrders.classList.remove('active');
     if (tabBtnStmt) tabBtnStmt.classList.remove('active');
     if (tabBtnStore) tabBtnStore.classList.remove('active');
+    if (mNavOrders) mNavOrders.classList.remove('active');
+    if (mNavStmt) mNavStmt.classList.remove('active');
+    if (mNavStore) mNavStore.classList.remove('active');
 
     if (ordersContent) ordersContent.style.display = 'none';
     if (stmtContent) stmtContent.style.display = 'none';
@@ -2376,14 +2386,17 @@ const AdminApp = {
 
     if (tab === 'statement') {
       if (tabBtnStmt) tabBtnStmt.classList.add('active');
+      if (mNavStmt) mNavStmt.classList.add('active');
       if (stmtContent) stmtContent.style.display = 'block';
       this.loadStatement();
     } else if (tab === 'storeInvoices') {
       if (tabBtnStore) tabBtnStore.classList.add('active');
+      if (mNavStore) mNavStore.classList.add('active');
       if (storeContent) storeContent.style.display = 'block';
       this.loadStoreInvoices();
     } else {
       if (tabBtnOrders) tabBtnOrders.classList.add('active');
+      if (mNavOrders) mNavOrders.classList.add('active');
       if (ordersContent) ordersContent.style.display = 'block';
       this.loadOrders();
     }
