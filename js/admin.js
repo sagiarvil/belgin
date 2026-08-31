@@ -2,22 +2,13 @@
 // BELGIN KUYUMCULUK — YÖNETİCİ VE TAHSİLAT PANELİ JS MOTORU
 // ==========================================================
 
-// Same-Origin AuthDomain: Safari ITP & Cross-Origin Redirect engeline takılmamak için
 const getFirebaseAdminConfig = () => {
-  let domain = "carbon-web-1265b.firebaseapp.com";
-  try {
-    const host = window.location.hostname;
-    if (host && (host.endsWith('web.app') || host.endsWith('firebaseapp.com') || host.includes('belgin'))) {
-      domain = host;
-    }
-  } catch (_) {}
-
   return {
     projectId: "carbon-web-1265b",
     appId: "1:7943100684:web:c4f70343f4af130852d129",
     storageBucket: "carbon-web-1265b.firebasestorage.app",
     apiKey: "AIzaSyCUQ0jDeUQPAr3xfSk-aOO4OqcrNwM3mD0",
-    authDomain: domain,
+    authDomain: "carbon-web-1265b.firebaseapp.com",
     messagingSenderId: "7943100684"
   };
 };
