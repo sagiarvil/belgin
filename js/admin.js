@@ -102,6 +102,16 @@ const AdminApp = {
           firebase.initializeApp(FIREBASE_ADMIN_CONFIG);
         }
 
+        // Yerel Oturum Kalıcılığı (Safari & iPhone sekme yenilemelerinde oturum korunur)
+        if (firebase.auth && typeof firebase.auth().setPersistence === 'function') {
+          firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch((err) => {
+            console.warn('[Admin Auth] setPersistence warn:', err.message);
+          });
+        }
+        if (firebase.auth && typeof firebase.auth().useDeviceLanguage === 'function') {
+          firebase.auth().useDeviceLanguage();
+        }
+
         // 1. Mobile / iOS Safari Redirect Sonucu Yakalama
         firebase.auth().getRedirectResult().then(async (result) => {
           if (result && result.user) {
@@ -120,8 +130,8 @@ const AdminApp = {
             }
           }
         }).catch((err) => {
-          console.error('getRedirectResult error:', err);
-          if (err.code && err.code !== 'auth/popup-closed-by-user') {
+          console.error('[Admin Auth] getRedirectResult error:', err);
+          if (err.code && err.code !== 'auth/popup-closed-by-user' && err.code !== 'auth/redirect-cancelled-by-user') {
             this.showGoogleAuthError(err.message || 'Giriş yönlendirmesi başarısız oldu.');
           }
         });
@@ -176,7 +186,7 @@ const AdminApp = {
     if (btn) {
       btn.disabled = true;
       btn.style.opacity = '0.7';
-      btn.innerHTML = '<span>⏳ Giriş yapılıyor, lütfen bekleyiniz...</span>';
+      btn.innerHTML = '<span>⏳ Google ile giriş yapılıyor, lütfen bekleyiniz...</span>';
     }
 
     if (typeof firebase === 'undefined' || !firebase.auth) {
@@ -187,26 +197,48 @@ const AdminApp = {
     }
 
     const provider = new firebase.auth.GoogleAuthProvider();
+    provider.addScope('email');
+    provider.addScope('profile');
     provider.setCustomParameters({ prompt: 'select_account' });
 
-    // iOS Safari & Mobil Cihaz Tespiti
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1);
+    // iOS Safari, Chrome Mobile, Android & Dokunmatik Cihaz Tespiti
+    const isIos = /iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const isMobile = isIos || /Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 860);
 
     if (isMobile) {
       try {
-        // iPhone / iOS Safari ve mobil tarayıcılarda popup engeline takılmamak için kesin çözüm signInWithRedirect
+        // iPhone ve mobil cihazlarda Safari popup engelleyicisine takılmamak için doğrudan redirect kullanılır
         await firebase.auth().signInWithRedirect(provider);
         return;
       } catch (err) {
         console.error('Mobile Redirect Auth Error:', err);
-        this.isAuthenticating = false;
-        if (btn) { btn.disabled = false; btn.style.opacity = '1'; btn.innerHTML = originalBtnHtml; }
-        this.showGoogleAuthError(err.message || 'Google ile giriş yönlendirmesi başarısız oldu.');
+        // Redirect engellenirse popup fallback dene
+        try {
+          const result = await firebase.auth().signInWithPopup(provider);
+          const user = result.user;
+          const email = (user.email || '').toLowerCase().trim();
+          if (!ALLOWED_ADMIN_EMAILS.includes(email)) {
+            await firebase.auth().signOut();
+            this.showGoogleAuthError(`❌ Yetkisiz Google Hesabı (${email}). Bu yönetim paneline yalnızca yetkilendirilmiş yönetici hesabı erişebilir.`);
+            return;
+          }
+          this.adminToken = await user.getIdToken();
+          this.adminUser = { email: user.email, displayName: user.displayName, photoURL: user.photoURL };
+          this.adminPin = '1999';
+          this.onAuthenticated();
+          return;
+        } catch (popupErr) {
+          console.error('Mobile Popup Fallback Error:', popupErr);
+          this.showGoogleAuthError(err.message || popupErr.message || 'Google ile giriş yönlendirmesi başarısız oldu.');
+        } finally {
+          this.isAuthenticating = false;
+          if (btn) { btn.disabled = false; btn.style.opacity = '1'; btn.innerHTML = originalBtnHtml; }
+        }
         return;
       }
     }
 
-    // Masaüstü Tarayıcılar: Popup dene, popup engellenirse otomatik olarak redirect e geç
+    // Masaüstü Tarayıcılar: Önce Popup dene, popup engellenirse şeffaf şekilde redirect e geç
     try {
       const result = await firebase.auth().signInWithPopup(provider);
       const user = result.user;
@@ -220,6 +252,7 @@ const AdminApp = {
 
       this.adminToken = await user.getIdToken();
       this.adminUser = { email: user.email, displayName: user.displayName, photoURL: user.photoURL };
+      this.adminPin = '1999';
       this.onAuthenticated();
     } catch (err) {
       console.error('Google Auth Error:', err);

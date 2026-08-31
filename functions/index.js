@@ -644,6 +644,9 @@ exports.updateAdminOrderStatus = functions
         return res.status(404).json({ success: false, message: 'Sipariş bulunamadı.' });
       }
 
+      const isFailedState = (status === 'FAILED' || paymentStatus === 'FAILED');
+      const isPaidState = (status === 'PAID' || paymentStatus === 'PAID');
+
       const updatePayload = {
         status: status,
         paymentStatus: paymentStatus || (isFailedState ? 'FAILED' : (isPaidState ? 'PAID' : 'PENDING')),
@@ -652,11 +655,11 @@ exports.updateAdminOrderStatus = functions
       };
 
       if (isFailedState) {
-        updateData.failReason = reason || 'Yönetici tarafından başarısız/ödenmedi olarak işaretlendi';
-        updateData['payment.failedAt'] = admin.firestore.FieldValue.serverTimestamp();
+        updatePayload.failReason = reason || 'Yönetici tarafından başarısız/ödenmedi olarak işaretlendi';
+        updatePayload['payment.failedAt'] = admin.firestore.FieldValue.serverTimestamp();
       }
 
-      await orderRef.update(updateData);
+      await orderRef.update(updatePayload);
 
       await orderRef.collection('auditEvents').add({
         schema: 'belgin-order-evidence-v3',

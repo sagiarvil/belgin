@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Rounded Luxury Dark/Teal Container or Clean Gold Emblem -->
+  <rect width="32" height="32" rx="7" fill="#0A1412"/>
+  <rect x="1" y="1" width="30" height="30" rx="6" fill="none" stroke="#D4AF37" stroke-width="1.2" opacity="0.6"/>
+  
+  <!-- Solid Bold Gold Lion / Crown Silhouette -->
+  <!-- Mane -->
+  <path d="M16 4.5 C10 4.5 5.5 9 5.5 15 C5.5 19.5 8 23.5 12 25.5 L12 28 L20 28 L20 25.5 C24 23.5 26.5 19.5 26.5 15 C26.5 9 22 4.5 16 4.5 Z" fill="#E7C34F"/>
+  
+  <!-- Crown / Top Mane Tufts -->
+  <path d="M13 3.5 L16 6 L19 3.5 L20.5 6 L22.5 4 L21 8 L11 8 L9.5 4 L11.5 6 Z" fill="#F3D77B"/>
+
+  <!-- Face Cutouts in Dark #0A1412 for extreme contrast -->
+  <!-- Eyes -->
+  <polygon points="11,13 14,14 11,15.5" fill="#0A1412"/>
+  <polygon points="21,13 18,14 21,15.5" fill="#0A1412"/>
+  
+  <!-- Nose & Muzzle -->
+  <polygon points="16,16 14,18.5 18,18.5" fill="#0A1412"/>
+  <path d="M13.5 19.5 C14.5 21 15.5 21 16 20.5 C16.5 21 17.5 21 18.5 19.5 L19.5 20.5 C18 22.5 16.8 23 16 23 C15.2 23 14 22.5 12.5 20.5 Z" fill="#0A1412"/>
+
+  <!-- Chin Beard -->
+  <polygon points="16,25 14.5,23.5 17.5,23.5" fill="#0A1412"/>
+</svg>

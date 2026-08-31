@@ -1472,15 +1472,9 @@
     }
 
     /* ========================================================
-       9. RESPONSIVE MEDYA KURALLARI (MOBİL DÜNYA STANDARDI)
+       9. RESPONSIVE MEDYA KURALLARI (TEK VE KESİN MOBİL SÜİTİ)
        ======================================================== */
     @media (max-width: 992px) {
-      .admin-kpi-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .admin-filter-row {
-        grid-template-columns: 1fr 1fr;
-      }
       .form-grid-3 {
         grid-template-columns: 1fr 1fr;
       }
@@ -1492,322 +1486,439 @@
       }
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 880px) {
+      html, body {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        box-sizing: border-box !important;
+      }
+
+      body {
+        padding-bottom: calc(85px + env(safe-area-inset-bottom, 0px)) !important;
+      }
+
       /* 1. ÜST HEADER & LOGO */
       .admin-navbar {
-        padding: 10px 14px;
-        position: sticky;
-        top: 0;
-        z-index: 1000;
+        padding: 8px 12px !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 1000 !important;
       }
       .admin-brand img {
-        height: 26px;
+        height: 22px !important;
       }
       .admin-title-badge {
-        display: none;
+        display: none !important;
+      }
+      .admin-nav-actions {
+        display: flex !important;
+        align-items: center !important;
+        gap: 6px !important;
       }
       .live-status-pill {
-        font-size: 11px;
-        padding: 3px 8px;
+        font-size: 10px !important;
+        padding: 2px 6px !important;
+        gap: 4px !important;
       }
       #liveClock {
-        font-size: 11.5px !important;
+        font-size: 11px !important;
+      }
+      #adminUserBadge {
+        display: none !important;
       }
       .btn-admin-logout {
-        padding: 5px 10px;
-        font-size: 11.5px;
-        font-weight: 800;
+        padding: 5px 10px !important;
+        font-size: 11px !important;
+        font-weight: 800 !important;
+        min-height: 30px !important;
+        border-radius: 6px !important;
       }
 
       /* 2. ANA KONTEYNER & SEKME YÖNETİMİ */
       .admin-container {
-        padding: 0 10px;
-        margin: 10px auto 30px;
+        padding: 8px !important;
+        margin: 8px auto 30px !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
       }
 
+      /* Üst Tab Nav'ı Mobilde Gizle / Alt Sabit Thumb-Nav Devralır */
       .admin-tab-nav {
-        width: 100%;
-        display: flex;
-        border-radius: 14px;
-        padding: 4px;
-        gap: 4px;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-      }
-      .admin-tab-btn {
-        flex: 1 1 auto;
-        padding: 9px 10px;
-        font-size: 12px;
-        border-radius: 10px;
-        justify-content: center;
-        gap: 5px;
-      }
-      .tab-btn-badge, .tab-btn-badge-gold {
-        padding: 1px 6px;
-        font-size: 10px;
+        display: none !important;
       }
 
-      /* 3. HERO & CARİ MUTABAKAT BANNERI */
+      /* 3. HERO & CARİ MUTABAKAT BANNERLARI */
       .statement-header-banner {
-        flex-direction: column;
-        align-items: stretch;
-        padding: 16px;
-        gap: 14px;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        padding: 14px 12px !important;
+        gap: 12px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        border-radius: 14px !important;
       }
       .statement-main-title {
-        font-size: 20px !important;
+        font-size: 18px !important;
+        line-height: 1.25 !important;
       }
+      .statement-header-banner > div:first-child {
+        width: 100% !important;
+      }
+      .statement-header-banner > div:last-child {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        width: 100% !important;
+        gap: 8px !important;
+      }
+      .statement-header-banner > div:last-child button {
+        width: 100% !important;
+        min-height: 44px !important;
+        font-size: 12px !important;
+        justify-content: center !important;
+        padding: 8px 10px !important;
+      }
+
       .statement-hero-remaining-box {
-        align-items: center;
-        text-align: center;
-        padding: 14px 18px !important;
+        align-items: center !important;
+        text-align: center !important;
+        padding: 14px 16px !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
       }
       .statement-hero-val {
-        font-size: 26px !important;
+        font-size: 24px !important;
+      }
+      .statement-quick-actions {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .statement-quick-actions button:first-child {
+        grid-column: span 2 !important;
+        min-height: 46px !important;
       }
 
       /* 4. FİLTRE VE ARAMA PANELİ */
       .admin-filter-panel {
-        padding: 14px;
-        border-radius: 14px;
-        margin-bottom: 14px;
+        padding: 12px 10px !important;
+        border-radius: 14px !important;
+        margin-bottom: 14px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
       }
       .admin-presets {
-        gap: 5px;
-        margin-bottom: 12px;
-        padding-bottom: 4px;
+        display: flex !important;
+        gap: 6px !important;
+        margin-bottom: 10px !important;
+        padding-bottom: 6px !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
       }
       .btn-preset {
-        padding: 6px 12px;
-        font-size: 11.5px;
+        padding: 6px 12px !important;
+        font-size: 11.5px !important;
+        min-height: 34px !important;
       }
       .admin-filter-row {
-        grid-template-columns: 1fr;
-        gap: 10px;
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 10px !important;
+        box-sizing: border-box !important;
       }
       .date-input-wrap {
-        display: grid;
-        grid-template-columns: 85px 1fr;
-        align-items: center;
+        display: grid !important;
+        grid-template-columns: 85px 1fr !important;
+        align-items: center !important;
+        gap: 8px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
       }
       .date-input-wrap input[type="date"] {
-        width: 100%;
-        font-size: 16px !important; /* iOS Zoom Önleme */
-        padding: 10px 12px;
+        width: 100% !important;
+        font-size: 16px !important; /* iOS Otomatik Zoom Önleme */
+        padding: 10px 12px !important;
+        min-height: 44px !important;
+        box-sizing: border-box !important;
       }
 
       .pos-rate-box {
-        width: 100%;
-        justify-content: space-between;
-        height: 46px !important;
+        width: 100% !important;
+        justify-content: space-between !important;
+        min-height: 46px !important;
+        box-sizing: border-box !important;
       }
 
       .admin-search-input {
-        font-size: 16px !important; /* iOS Zoom Önleme */
-        padding: 12px 14px;
+        width: 100% !important;
+        font-size: 16px !important; /* iOS Otomatik Zoom Önleme */
+        padding: 11px 12px !important;
+        min-height: 44px !important;
+        box-sizing: border-box !important;
       }
       .admin-select {
-        width: 100%;
-        font-size: 14px;
-        padding: 12px 14px;
-        min-height: 46px;
+        width: 100% !important;
+        font-size: 14.5px !important;
+        padding: 11px 12px !important;
+        min-height: 44px !important;
+        box-sizing: border-box !important;
       }
 
       .admin-action-btn-group {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-        width: 100%;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        grid-column: unset !important;
       }
       .admin-action-btn-group button {
-        width: 100%;
-        min-height: 46px;
-        font-size: 13px;
-        border-radius: 10px;
+        width: 100% !important;
+        min-height: 44px !important;
+        font-size: 12.5px !important;
+        border-radius: 8px !important;
+        justify-content: center !important;
+      }
+      .admin-action-btn-group button:last-child {
+        grid-column: span 2 !important;
       }
 
       /* 5. METRİK KPI KARTLARI */
       .admin-kpi-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-        margin-bottom: 14px;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+        margin-bottom: 12px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
       }
       .admin-kpi-card {
-        padding: 14px;
-        border-radius: 12px;
+        padding: 12px 10px !important;
+        border-radius: 12px !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
       }
-      .admin-kpi-card:nth-child(5) {
-        grid-column: span 2;
+      .admin-kpi-card:nth-child(3),
+      .admin-kpi-card:nth-child(5),
+      .admin-kpi-card.kpi-indigo {
+        grid-column: span 2 !important;
       }
       .kpi-label {
-        font-size: 10px;
+        font-size: 10px !important;
+        line-height: 1.2 !important;
+        white-space: normal !important;
       }
       .kpi-value {
-        font-size: 19px;
+        font-size: 18px !important;
+        letter-spacing: -0.3px !important;
+        line-height: 1.2 !important;
+        margin: 4px 0 2px !important;
       }
       .kpi-subtext {
-        font-size: 10.5px;
+        font-size: 10px !important;
       }
 
-      /* 6. MASAÜSTÜ TABLOSUNU GİZLE, MOBİL KARTLARI GÖSTER */
+      /* 6. MASAÜSTÜ TABLOLARINI GİZLE, MOBİL KARTLARI GÖSTER */
+      .admin-table-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        border-radius: 12px !important;
+      }
       .admin-table-wrapper {
         display: none !important;
       }
-      .admin-orders-mobile-list {
+      .admin-orders-mobile-list, #statementMobileList {
         display: flex !important;
-        padding: 12px 8px;
-        gap: 12px;
+        flex-direction: column !important;
+        padding: 10px 4px !important;
+        gap: 10px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
       }
 
       .admin-mobile-card {
-        padding: 16px;
-        border-radius: 16px;
-        border: 1.5px solid #CBD5E1;
-        box-shadow: 0 4px 16px rgba(8, 76, 71, 0.06);
+        padding: 14px 12px !important;
+        border-radius: 12px !important;
+        border: 1.5px solid #CBD5E1 !important;
+        box-shadow: 0 2px 10px rgba(8, 76, 71, 0.05) !important;
+        background: #FFFFFF !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
       }
 
-      /* 7. MAĞAZA FATURASI SİHİRBAZI */
+      .mobile-financial-row {
+        padding: 8px 10px !important;
+      }
+      .mobile-actions-grid-bottom {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr 1.2fr !important;
+        gap: 6px !important;
+      }
+
+      /* 7. MAĞAZA FATURASI SİHİRBAZI & AKILLI HESAP ASİSTANI */
       .store-wizard-grid {
-        grid-template-columns: 1fr !important;
-        gap: 14px;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 14px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
       }
       .store-wizard-grid > div:last-child {
         position: static !important;
+        width: 100% !important;
       }
       .store-invoice-card {
-        padding: 14px;
-        border-radius: 14px;
+        padding: 12px 10px !important;
+        border-radius: 12px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
       }
       .form-grid-3, .form-grid-2 {
-        grid-template-columns: 1fr;
-        gap: 10px;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
       }
       .form-field-input {
-        font-size: 16px !important; /* iOS Zoom Önleme */
-        padding: 11px 12px;
+        font-size: 16px !important; /* iOS Otomatik Zoom Önleme */
+        padding: 11px 12px !important;
+        min-height: 44px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
       }
       .btn-template-chip {
-        padding: 7px 12px;
-        font-size: 12px;
+        padding: 6px 10px !important;
+        font-size: 11.5px !important;
+        min-height: 32px !important;
+      }
+
+      /* Akıllı Hesaplama Asistanı Mobilde Tek Kolon */
+      #smartInvoiceCalculatorCard {
+        width: 100% !important;
+        box-sizing: border-box !important;
+        padding: 12px 10px !important;
+      }
+      #smartInvoiceCalculatorCard > div:nth-child(2) {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+        width: 100% !important;
+      }
+      #smartInvoiceCalculatorCard > div:last-child {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px !important;
+        width: 100% !important;
+      }
+      #smartInvoiceCalculatorCard > div:last-child > div:first-child {
+        flex-direction: column !important;
+        gap: 8px !important;
+        width: 100% !important;
+      }
+      #smartInvoiceCalculatorCard > div:last-child > div:first-child > div {
+        border-left: none !important;
+        padding-left: 0 !important;
+        border-bottom: 1px dashed #CBD5E1 !important;
+        padding-bottom: 6px !important;
+      }
+      #smartInvoiceCalculatorCard > div:last-child > div:last-child {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 8px !important;
+      }
+      #smartInvoiceCalculatorCard > div:last-child > div:last-child button {
+        width: 100% !important;
+        min-height: 46px !important;
+        justify-content: center !important;
       }
 
       /* 8. SAYFALAMA */
       .admin-pagination-bar {
-        flex-direction: column;
-        align-items: center;
-        gap: 12px;
-        padding: 16px 12px;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 12px !important;
+        padding: 14px 10px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
       }
 
-      /* 9. MODALLAR (BOTTOM SHEET ERGONOMİSİ) */
+      /* 9. MODALLAR (IOS BOTTOM SHEET ERGONOMİSİ) */
       .admin-modal-overlay {
-        padding: 0;
-        align-items: flex-end;
+        padding: 0 !important;
+        align-items: flex-end !important;
       }
       .admin-modal-box {
-        padding: 22px 18px calc(22px + env(safe-area-inset-bottom, 0px));
-        max-height: 88vh;
-        border-radius: 20px 20px 0 0;
-        width: 100%;
-        border-bottom: none;
+        padding: 18px 14px calc(24px + env(safe-area-inset-bottom, 0px)) !important;
+        max-height: 88vh !important;
+        border-radius: 20px 20px 0 0 !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        border-bottom: none !important;
+        box-sizing: border-box !important;
       }
 
       .modal-footer-actions {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 8px;
-        width: 100%;
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+        width: 100% !important;
       }
       .modal-footer-actions button {
-        width: 100%;
-        min-height: 48px;
-        justify-content: center;
-        font-size: 14px;
-        border-radius: 10px;
-      }
-    }
-
-    /* ==========================================================
-       MOBILE TOUCH-FIRST SUITE (max-width: 820px)
-       ========================================================== */
-    @media (max-width: 820px) {
-      body {
-        padding-bottom: calc(85px + env(safe-area-inset-bottom, 0px)) !important;
-      }
-      
-      .admin-container {
-        padding: 12px 10px !important;
-        max-width: 100% !important;
+        width: 100% !important;
+        min-height: 48px !important;
+        justify-content: center !important;
+        font-size: 14px !important;
+        border-radius: 10px !important;
       }
 
-      /* Üst Tab Nav'ı Mobilde Gizle / Alt Nav'a Devret */
-      .admin-tab-nav {
-        display: none !important;
-      }
-
-      /* 5'li KPI Kartlarını Swipeable Yatay Karusel Yap */
-      .admin-kpi-grid {
-        display: flex !important;
-        flex-direction: row !important;
-        gap: 10px !important;
-        overflow-x: auto !important;
-        scroll-snap-type: x mandatory !important;
-        -webkit-overflow-scrolling: touch !important;
-        scrollbar-width: none !important;
-        padding-bottom: 6px !important;
-        margin-bottom: 12px !important;
-      }
-      .admin-kpi-grid::-webkit-scrollbar {
-        display: none !important;
-      }
-      .admin-kpi-card {
-        flex: 0 0 160px !important;
-        scroll-snap-align: start !important;
-        padding: 14px 12px !important;
-        border-radius: 14px !important;
-      }
-      .admin-kpi-card .kpi-label {
-        font-size: 11px !important;
-        line-height: 1.2 !important;
-        height: 26px !important;
-      }
-      .admin-kpi-card .kpi-value {
-        font-size: 18px !important;
-        margin: 4px 0 2px !important;
-      }
-
-      /* Filtre ve Arama Alanını Kompakt Yap */
-      .filter-toolbar {
-        padding: 12px 10px !important;
-        gap: 8px !important;
-      }
-      .search-box-input {
-        font-size: 13px !important;
-        padding: 10px 12px 10px 34px !important;
-      }
-
-      /* Alt Sabit Thumb-Zone Bar */
+      /* 10. ALT SABİT THUMB-ZONE BAR (IOS NATIVE DOKUNMATİK TAB BAR) */
       .admin-mobile-bottom-nav {
         position: fixed !important;
         bottom: 0 !important;
         left: 0 !important;
         right: 0 !important;
+        width: 100vw !important;
+        max-width: 100vw !important;
+        box-sizing: border-box !important;
         background: rgba(255, 255, 255, 0.98) !important;
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
-        border-top: 1px solid var(--admin-border) !important;
+        backdrop-filter: blur(24px) !important;
+        -webkit-backdrop-filter: blur(24px) !important;
+        border-top: 1.5px solid #CBD5E1 !important;
         display: flex !important;
         justify-content: space-around !important;
         align-items: center !important;
-        padding: 8px 6px calc(8px + env(safe-area-inset-bottom, 0px)) !important;
-        z-index: 9999 !important;
-        box-shadow: 0 -4px 20px rgba(0,0,0,0.06) !important;
+        padding: 6px 4px calc(6px + env(safe-area-inset-bottom, 0px)) !important;
+        z-index: 99999 !important;
+        box-shadow: 0 -4px 20px rgba(8, 76, 71, 0.08) !important;
       }
       .admin-mobile-nav-item {
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
-        gap: 3px !important;
+        justify-content: center !important;
+        gap: 2px !important;
         background: none !important;
         border: none !important;
         color: var(--admin-muted) !important;
@@ -1816,25 +1927,29 @@
         cursor: pointer !important;
         flex: 1 !important;
         padding: 4px 0 !important;
-        transition: color 0.2s !important;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        user-select: none !important;
+        touch-action: manipulation !important;
       }
       .admin-mobile-nav-item.active {
         color: var(--admin-teal) !important;
+        font-weight: 800 !important;
       }
       .admin-mobile-nav-item.active .m-nav-bubble {
-        background: var(--admin-teal-light, #E8F4F2) !important;
-        color: var(--admin-teal) !important;
+        background: linear-gradient(135deg, #084C47 0%, #0D6962 100%) !important;
+        color: #FFFFFF !important;
         transform: scale(1.06) !important;
+        box-shadow: 0 2px 8px rgba(8, 76, 71, 0.25) !important;
       }
       .m-nav-bubble {
-        width: 40px !important;
+        width: 42px !important;
         height: 26px !important;
         border-radius: 13px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        font-size: 16px !important;
-        transition: all 0.2s !important;
+        font-size: 15px !important;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
       }
     }
   </style>
@@ -1864,8 +1979,8 @@
     </div>
 
     <form onsubmit="event.preventDefault(); AdminApp.verifyPin();" style="display:flex; flex-direction:column; gap:10px;">
-      <input type="password" id="adminPinInput" placeholder="Yönetici PIN Kodu" maxlength="10" autocomplete="current-password" style="width:100%; padding:12px; border:1.5px solid #CBD5E1; border-radius:8px; font-size:15px; text-align:center; letter-spacing:4px; font-weight:bold; box-sizing:border-box; background:#FFF;">
-      <button type="submit" style="width:100%; padding:12px; background:var(--admin-teal-dark, #084C47); color:#FFF; border:none; border-radius:8px; font-size:14px; font-weight:bold; cursor:pointer; transition:all 0.2s; box-shadow:0 2px 8px rgba(8,76,71,0.2);">
+      <input type="password" id="adminPinInput" placeholder="Yönetici PIN Kodu" maxlength="10" inputmode="numeric" pattern="[0-9]*" autocomplete="current-password" style="width:100%; padding:13px; border:1.5px solid #CBD5E1; border-radius:10px; font-size:18px; text-align:center; letter-spacing:6px; font-weight:800; box-sizing:border-box; background:#FFF; min-height:48px;">
+      <button type="submit" style="width:100%; min-height:48px; padding:12px; background:var(--admin-teal-dark, #084C47); color:#FFF; border:none; border-radius:10px; font-size:14.5px; font-weight:800; cursor:pointer; transition:all 0.2s; box-shadow:0 2px 8px rgba(8,76,71,0.25);">
         🔒 PIN ile Giriş Yap
       </button>
       <div id="pinErrorMsg" style="color:#C81E1E; font-size:12px; font-weight:700; display:none; background:#FEF2F2; border:1px solid #FECACA; border-radius:8px; padding:8px 12px; line-height:1.4;">
@@ -1917,10 +2032,10 @@
   <div id="ordersTabContent">
 
     <!-- 1. ÜST HERO & HIZLI İŞLEM PANELİ (STRIPE EXECUTIVE ORDER BANNER) -->
-    <div class="statement-header-banner" style="background:linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 40%, #FFFDF5 100%); border:2px solid #86EFAC; box-shadow:0 8px 30px rgba(16, 185, 129, 0.08); padding:18px 22px; border-radius:16px; margin-bottom:16px;">
+    <div class="statement-header-banner" style="background:linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 40%, #FFFDF5 100%); border:2px solid #86EFAC; box-shadow:0 8px 30px rgba(16, 185, 129, 0.08);">
       
       <!-- Üst Başlık & Hızlı Rozet -->
-      <div class="statement-title-block" style="flex:1;">
+      <div class="statement-title-block">
         <div style="display:inline-flex; align-items:center; gap:6px; background:#DCFCE7; color:#15803D; border:1px solid #86EFAC; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:0.8px; width:fit-content; margin-bottom:8px;">
           <span>⚡</span> CANLI TAHSİLAT PORTALI
         </div>
@@ -1934,11 +2049,11 @@
       </div>
 
       <!-- SAĞ HIZLI İŞLEM PANELİ -->
-      <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
-        <button type="button" class="btn-admin-primary" style="background:linear-gradient(135deg, #059669 0%, #10B981 100%); border-color:#059669; color:#FFF; font-weight:800; font-size:13.5px; min-height:46px; border-radius:10px; box-shadow:0 4px 14px rgba(16,185,129,0.25);" onclick="AdminApp.startBatchInvoiceSigning()" title="Ödemesi alınmış faturası eksik tüm siparişleri tek bir SMS ile topluca mühürle">
+      <div>
+        <button type="button" class="btn-admin-primary" style="background:linear-gradient(135deg, #059669 0%, #10B981 100%); border-color:#059669; color:#FFF; font-weight:800; font-size:13px; min-height:44px; border-radius:10px; box-shadow:0 4px 14px rgba(16,185,129,0.25);" onclick="AdminApp.startBatchInvoiceSigning()" title="Ödemesi alınmış faturası eksik tüm siparişleri tek bir SMS ile topluca mühürle">
           <span>🧾 Toplu Fatura Kes (SMS)</span>
         </button>
-        <button type="button" class="btn-admin-primary btn-accounting-wa" style="background:linear-gradient(135deg, #047857 0%, #065F46 100%); min-height:46px; border-radius:10px; font-size:13px; font-weight:800;" onclick="AdminApp.openAccountingModal()" title="İmzalı faturaları WhatsApp üzerinden Muhasebeye (+90 541 930 53 72) gönder">
+        <button type="button" class="btn-admin-primary btn-accounting-wa" style="background:linear-gradient(135deg, #047857 0%, #065F46 100%); min-height:44px; border-radius:10px; font-size:13px; font-weight:800;" onclick="AdminApp.openAccountingModal()" title="İmzalı faturaları WhatsApp üzerinden Muhasebeye (+90 541 930 53 72) gönder">
           <span>📲 Muhasebeye Gönder</span>
           <span class="badge-accounting-count" id="accountingSelectedBadge" style="display:none;">0</span>
         </button>
@@ -1947,10 +2062,10 @@
     </div>
 
     <!-- 2. FİLTRE VE TARİH SEÇİM ÇUBUĞU -->
-    <section class="admin-filter-panel" style="border:1.5px solid #CBD5E1; border-radius:14px; padding:14px; margin-bottom:16px;">
+    <section class="admin-filter-panel">
       
       <!-- Hızlı Tarih Seçim Butonları -->
-      <div class="admin-presets" style="display:flex; gap:6px; overflow-x:auto; padding-bottom:6px; -webkit-overflow-scrolling:touch;">
+      <div class="admin-presets">
         <button class="btn-preset active" data-preset="all" onclick="AdminApp.selectPreset('all', this)">Tüm Zamanlar</button>
         <button class="btn-preset" data-preset="today" onclick="AdminApp.selectPreset('today', this)">Bugün</button>
         <button class="btn-preset" data-preset="yesterday" onclick="AdminApp.selectPreset('yesterday', this)">Dün</button>
@@ -1959,23 +2074,23 @@
         <button class="btn-preset" data-preset="last30" onclick="AdminApp.selectPreset('last30', this)">Son 30 Gün</button>
       </div>
 
-      <div class="admin-filter-row" style="align-items:center; gap:10px;">
+      <div class="admin-filter-row">
         <div class="date-input-wrap">
-          <label for="startDate" style="color:#0F172A; font-weight:800; font-size:12.5px;">Başlangıç:</label>
-          <input type="date" id="startDate" onchange="AdminApp.onCustomDateChange()" style="font-size:16px; padding:8px 10px; border-radius:8px; border:1px solid #CBD5E1;">
+          <label for="startDate">Başlangıç:</label>
+          <input type="date" id="startDate" onchange="AdminApp.onCustomDateChange()">
         </div>
 
         <div class="date-input-wrap">
-          <label for="endDate" style="color:#0F172A; font-weight:800; font-size:12.5px;">Bitiş:</label>
-          <input type="date" id="endDate" onchange="AdminApp.onCustomDateChange()" style="font-size:16px; padding:8px 10px; border-radius:8px; border:1px solid #CBD5E1;">
+          <label for="endDate">Bitiş:</label>
+          <input type="date" id="endDate" onchange="AdminApp.onCustomDateChange()">
         </div>
 
         <div>
-          <input type="text" id="searchInput" class="admin-search-input" placeholder="🔍 Sipariş no, müşteri adı veya telefon ara..." oninput="AdminApp.filterTable()" style="font-size:16px; min-height:46px;">
+          <input type="text" id="searchInput" class="admin-search-input" placeholder="🔍 Sipariş no, müşteri adı veya telefon ara..." oninput="AdminApp.filterTable()">
         </div>
 
         <div>
-          <select id="statusFilter" class="admin-select" onchange="AdminApp.onStatusSelectChange(this.value)" style="font-size:14px; min-height:46px; border-radius:8px; border:1.5px solid #CBD5E1; font-weight:700;">
+          <select id="statusFilter" class="admin-select" onchange="AdminApp.onStatusSelectChange(this.value)">
             <option value="PAID" selected>✅ Tüm Onaylanan İşlemler</option>
             <option value="INVOICE_PENDING">⚠️ Fatura Kesilecekler (Faturası Eksik Olanlar)</option>
             <option value="INVOICE_SIGNED">🧾 Faturası Kesilenler (İmzalanmış)</option>
@@ -1985,14 +2100,14 @@
           </select>
         </div>
 
-        <div class="admin-action-btn-group" style="grid-column: span 2; display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
-          <button class="btn-admin-secondary" style="font-weight:700; color:#064E3B; min-height:42px;" onclick="AdminApp.sendTestPush(event)" title="Telefona ntfy test bildirimi gönder">
+        <div class="admin-action-btn-group">
+          <button class="btn-admin-secondary" onclick="AdminApp.sendTestPush(event)" title="Telefona ntfy test bildirimi gönder">
             <span>📱 Test Bildirimi</span>
           </button>
-          <button class="btn-admin-secondary" style="font-weight:700; color:#064E3B; min-height:42px;" onclick="AdminApp.exportToExcel()" title="Muhasebe için Formatlı Excel (.xls) Raporu İndir">
+          <button class="btn-admin-secondary" onclick="AdminApp.exportToExcel()" title="Muhasebe için Formatlı Excel (.xls) Raporu İndir">
             <span>📊 Excel İndir</span>
           </button>
-          <button class="btn-admin-primary" style="min-height:42px;" onclick="AdminApp.loadOrders()" title="Kayıtları Canlı Yenile">
+          <button class="btn-admin-primary" onclick="AdminApp.loadOrders()" title="Kayıtları Canlı Yenile">
             <span>🔄 Yenile</span>
           </button>
         </div>
@@ -2095,10 +2210,10 @@
   <div id="statementTabContent" style="display:none;">
 
     <!-- 1. ÜST HERO & GÜNCEL ÖDENECEK TUTAR BANNERI (FINTECH MOBILE HERO COCKPIT) -->
-    <div class="statement-header-banner" style="background:linear-gradient(135deg, #FFF5F5 0%, #FED7D7 40%, #FFFDF5 100%); border:2px solid #FEB2B2; box-shadow:0 8px 30px rgba(220, 38, 38, 0.08); padding:18px 22px; border-radius:16px; margin-bottom:16px;">
+    <div class="statement-header-banner" style="background:linear-gradient(135deg, #FFF5F5 0%, #FED7D7 40%, #FFFDF5 100%); border:2px solid #FEB2B2; box-shadow:0 8px 30px rgba(220, 38, 38, 0.08);">
       
       <!-- Üst Başlık & Hızlı Rozet -->
-      <div class="statement-title-block" style="flex:1;">
+      <div class="statement-title-block">
         <div style="display:inline-flex; align-items:center; gap:6px; background:#FEE2E2; color:#991B1B; border:1px solid #FECACA; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:0.8px; width:fit-content; margin-bottom:8px;">
           <span>🏛️</span> CARİ HESAP & MUTABAKAT PORTALI
         </div>
@@ -2112,7 +2227,7 @@
       </div>
       
       <!-- SAĞ / ÜST KIRMIZI KALAN TOPLAM TUTAR KUTUSU -->
-      <div class="statement-hero-remaining-box" style="background:linear-gradient(135deg, #7F1D1D 0%, #B91C1C 60%, #991B1B 100%); border:2px solid #FCA5A5; box-shadow:0 8px 25px rgba(185, 28, 28, 0.35); padding:16px 24px; border-radius:14px; text-align:center; min-width:260px;">
+      <div class="statement-hero-remaining-box" style="background:linear-gradient(135deg, #7F1D1D 0%, #B91C1C 60%, #991B1B 100%); border:2px solid #FCA5A5; box-shadow:0 8px 25px rgba(185, 28, 28, 0.35); padding:16px 24px; border-radius:14px; text-align:center;">
         <span class="statement-hero-label" style="color:#FEE2E2; font-size:11px; font-weight:800; letter-spacing:1.5px; display:block; margin-bottom:4px;">GÜNCEL ÖDENECEK BAKİYE</span>
         <span class="statement-hero-val" id="stmtHeroRemaining" style="font-size:32px; font-weight:800; color:#FFFFFF; letter-spacing:-0.5px; display:block; line-height:1.1;">₺0</span>
         <span class="statement-hero-sub" style="color:#FECACA; font-size:11px; font-weight:600; display:block; margin-top:4px;">Hakediş — Ödenen Net Tutar</span>
@@ -2121,23 +2236,23 @@
     </div>
 
     <!-- 1.1 MOBİL BİRİNCİL HIZLI İŞLEM BUTONLARI (INSTANT MOBILE ACTION BAR) -->
-    <div class="statement-quick-actions" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:10px; margin-bottom:16px;">
-      <button type="button" class="btn-admin-primary" style="background:linear-gradient(135deg, #059669 0%, #10B981 100%); border-color:#059669; color:#FFF; font-weight:800; font-size:14px; min-height:48px; border-radius:12px; box-shadow:0 4px 14px rgba(16,185,129,0.25);" onclick="AdminApp.openPaymentModal()" title="Yeni Ödeme / Tahsilat Kaydı Ekle">
+    <div class="statement-quick-actions">
+      <button type="button" class="btn-admin-primary" style="background:linear-gradient(135deg, #059669 0%, #10B981 100%); border-color:#059669; color:#FFF; font-weight:800; font-size:13.5px; min-height:46px; border-radius:12px; box-shadow:0 4px 14px rgba(16,185,129,0.25);" onclick="AdminApp.openPaymentModal()" title="Yeni Ödeme / Tahsilat Kaydı Ekle">
         <span>💳 + Yeni Ödeme Ekle</span>
       </button>
-      <button type="button" class="btn-admin-secondary" style="background:#FFFDF7; border:1.5px solid #D4AF37; color:#92400E; font-weight:800; font-size:13.5px; min-height:48px; border-radius:12px;" onclick="AdminApp.openManualPosModal()" title="Belirli bir güne manuel POS cirosu ekle veya güncelle">
+      <button type="button" class="btn-admin-secondary" style="background:#FFFDF7; border:1.5px solid #D4AF37; color:#92400E; font-weight:800; font-size:13px; min-height:46px; border-radius:12px;" onclick="AdminApp.openManualPosModal()" title="Belirli bir güne manuel POS cirosu ekle veya güncelle">
         <span>➕ Manuel POS Ekle</span>
       </button>
-      <button type="button" class="btn-admin-secondary" style="background:#FFFFFF; border:1.5px solid #CBD5E1; color:#064E3B; font-weight:800; font-size:13px; min-height:48px; border-radius:12px;" onclick="AdminApp.openAllPaymentsModal()" title="Kayıtlı Tüm Ödemeleri Listele ve Yönet">
+      <button type="button" class="btn-admin-secondary" style="background:#FFFFFF; border:1.5px solid #CBD5E1; color:#064E3B; font-weight:800; font-size:12.5px; min-height:46px; border-radius:12px;" onclick="AdminApp.openAllPaymentsModal()" title="Kayıtlı Tüm Ödemeleri Listele ve Yönet">
         <span>📑 Ödeme Geçmişi (<span id="stmtTotalPaymentsBadge">0</span>)</span>
       </button>
     </div>
 
     <!-- 2. EKSTRE FİLTRE VE EYLEM ÇUBUĞU -->
-    <section class="admin-filter-panel" style="border:1.5px solid #CBD5E1; border-radius:14px; padding:14px; margin-bottom:16px;">
+    <section class="admin-filter-panel">
       
       <!-- Hızlı Dönem Seçiciler (Yatay Kaydırılabilir Haplar) -->
-      <div class="admin-presets" style="display:flex; gap:6px; overflow-x:auto; padding-bottom:6px; -webkit-overflow-scrolling:touch;">
+      <div class="admin-presets">
         <button class="btn-preset active" data-stmt-preset="all" onclick="AdminApp.selectStmtPreset('all', this)">Tüm Zamanlar</button>
         <button class="btn-preset" data-stmt-preset="thisMonth" onclick="AdminApp.selectStmtPreset('thisMonth', this)">Bu Ay</button>
         <button class="btn-preset" data-stmt-preset="last30" onclick="AdminApp.selectStmtPreset('last30', this)">Son 30 Gün</button>
@@ -2146,15 +2261,15 @@
         <button class="btn-preset" data-stmt-preset="last7" onclick="AdminApp.selectStmtPreset('last7', this)">Son 7 Gün</button>
       </div>
 
-      <div class="admin-filter-row" style="align-items: center; gap:10px;">
+      <div class="admin-filter-row">
         <div class="date-input-wrap">
-          <label for="stmtStartDate" style="color:#0F172A; font-weight:800; font-size:12.5px;">Başlangıç:</label>
-          <input type="date" id="stmtStartDate" onchange="AdminApp.onStmtCustomDateChange()" style="font-size:16px; padding:8px 10px; border-radius:8px; border:1px solid #CBD5E1;">
+          <label for="stmtStartDate">Başlangıç:</label>
+          <input type="date" id="stmtStartDate" onchange="AdminApp.onStmtCustomDateChange()">
         </div>
 
         <div class="date-input-wrap">
-          <label for="stmtEndDate" style="color:#0F172A; font-weight:800; font-size:12.5px;">Bitiş:</label>
-          <input type="date" id="stmtEndDate" onchange="AdminApp.onStmtCustomDateChange()" style="font-size:16px; padding:8px 10px; border-radius:8px; border:1px solid #CBD5E1;">
+          <label for="stmtEndDate">Bitiş:</label>
+          <input type="date" id="stmtEndDate" onchange="AdminApp.onStmtCustomDateChange()">
         </div>
 
         <!-- POS KOMİSYON ORANI AYARI (VARSAYILAN: 3.74) -->
@@ -2167,17 +2282,17 @@
         </div>
 
         <div>
-          <input type="text" id="stmtSearchInput" class="admin-search-input" placeholder="🔍 İşlem, sipariş no veya açıklama ara..." oninput="AdminApp.filterStatementTable()" style="font-size:16px; min-height:46px;">
+          <input type="text" id="stmtSearchInput" class="admin-search-input" placeholder="🔍 İşlem, sipariş no veya açıklama ara..." oninput="AdminApp.filterStatementTable()">
         </div>
 
-        <div class="admin-action-btn-group" style="grid-column: span 2; display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
-          <button class="btn-admin-secondary" style="font-weight:700; color:#064E3B; min-height:42px;" onclick="AdminApp.exportStatementPdf()" title="Cari Hesap Ekstresini Kâr Bilgisi Olmadan Resmi PDF Formatında Al / Yazdır">
+        <div class="admin-action-btn-group">
+          <button class="btn-admin-secondary" onclick="AdminApp.exportStatementPdf()" title="Cari Hesap Ekstresini Kâr Bilgisi Olmadan Resmi PDF Formatında Al / Yazdır">
             <span>📄 PDF Al</span>
           </button>
-          <button class="btn-admin-secondary" style="font-weight:700; color:#064E3B; min-height:42px;" onclick="AdminApp.exportStatementExcel()" title="Excel Şablonuna Birebir Uygun .xls Formatında İndir">
+          <button class="btn-admin-secondary" onclick="AdminApp.exportStatementExcel()" title="Excel Şablonuna Birebir Uygun .xls Formatında İndir">
             <span>📊 Excel İndir</span>
           </button>
-          <button class="btn-admin-primary" style="min-height:42px;" onclick="AdminApp.loadStatement()" title="Ekstre Verilerini Canlı Yenile">
+          <button class="btn-admin-primary" onclick="AdminApp.loadStatement()" title="Ekstre Verilerini Canlı Yenile">
             <span>🔄 Yenile</span>
           </button>
         </div>
@@ -2185,7 +2300,7 @@
     </section>
 
     <!-- 3. EKSTRE 5'Lİ KPI ÖZET KARTLARI (STRIPE FINANCIAL METRIC CARDS) -->
-    <section class="admin-kpi-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:12px; margin-bottom:16px;">
+    <section class="admin-kpi-grid">
       
       <!-- 1. POS CİROSU -->
       <div class="admin-kpi-card kpi-indigo" style="border:1.5px solid #312E81;">
@@ -3208,6 +3323,8 @@
       </div>
     </div>
   </div>
+</div>
+
 <!-- MOBİL BAŞPARMAK SABİT MENÜSÜ -->
 <nav class="admin-mobile-bottom-nav" id="adminMobileBottomNav" style="display:none;">
   <button type="button" class="admin-mobile-nav-item active" id="mNavOrders" onclick="AdminApp.switchTab('orders')">
@@ -3227,6 +3344,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 <script src="js/vip-payment.js?v=2.8.8"></script>
-<script src="js/admin.js?v=20260830-google-auth-v8"></script>
+<script src="js/admin.js?v=20260831-mobile-auth-v9"></script>
 </body>
 </html>
