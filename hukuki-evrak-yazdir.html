@@ -761,7 +761,14 @@ const LegalApp = {
   async init() {
     const urlParams = new URLSearchParams(window.location.search);
     const orderId = urlParams.get('orderId');
-    const adminKey = sessionStorage.getItem('belgin_admin_pin') || '';
+    const adminKey = urlParams.get('adminKey') || sessionStorage.getItem('belgin_admin_pin') || localStorage.getItem('belgin_admin_pin') || '';
+
+    if (adminKey) {
+      try {
+        sessionStorage.setItem('belgin_admin_pin', adminKey);
+        localStorage.setItem('belgin_admin_pin', adminKey);
+      } catch (_) {}
+    }
 
     if (!orderId) {
       document.getElementById('toolbarInfo').textContent = '❌ ORDER_ID_REQUIRED';
@@ -780,11 +787,28 @@ const LegalApp = {
     document.getElementById('toolbarInfo').textContent = `Sipariş Ref: ${orderId} · 10/10 BANKA-READY Adli Dosya`;
 
     try {
-      const res = await fetch('/api/admin/orders?status=ALL', {
-        headers: adminKey ? { 'x-admin-key': adminKey } : {}
-      });
-      const data = await res.json();
-      const order = (data.orders || []).find(o => o.orderId === orderId);
+      let order = null;
+      const fetchUrl = `/api/admin/orders?status=ALL${adminKey ? `&adminKey=${encodeURIComponent(adminKey)}` : ''}`;
+      try {
+        const res = await fetch(fetchUrl, {
+          headers: adminKey ? { 'x-admin-key': adminKey } : {}
+        });
+        if (res.ok) {
+          const data = await res.json();
+          order = (data.orders || []).find(o => o.orderId === orderId);
+        }
+      } catch (_) {}
+
+      if (!order) {
+        try {
+          const cachedRaw = localStorage.getItem('belgin_admin_cached_data');
+          if (cachedRaw) {
+            const cachedObj = JSON.parse(cachedRaw);
+            const cachedOrders = cachedObj.orders || (Array.isArray(cachedObj) ? cachedObj : []);
+            order = cachedOrders.find(o => o.orderId === orderId);
+          }
+        } catch (_) {}
+      }
 
       if (!order) {
         document.getElementById('toolbarInfo').textContent = `Sipariş Ref: ${orderId} · ❌ EVIDENCE_NOT_FOUND`;

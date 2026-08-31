@@ -1064,20 +1064,22 @@ const AdminApp = {
 
   // HUKUKİ DELİL & SÖZLEŞME ÇIKTISI AÇ (10/10 BANKA-READY)
   printLegalDocument(orderId, tab = null) {
-    const url = tab 
-      ? `/hukuki-evrak-yazdir.html?orderId=${encodeURIComponent(orderId)}&tab=${encodeURIComponent(tab)}`
-      : `/hukuki-evrak-yazdir.html?orderId=${encodeURIComponent(orderId)}`;
+    const adminKey = this.adminPin || sessionStorage.getItem('belgin_admin_pin') || localStorage.getItem('belgin_admin_pin') || '1999';
+    let url = `/hukuki-evrak-yazdir.html?orderId=${encodeURIComponent(orderId)}&adminKey=${encodeURIComponent(adminKey)}`;
+    if (tab) url += `&tab=${encodeURIComponent(tab)}`;
     window.open(url, '_blank');
   },
 
   // CHARGEBACK SAVUNMA PAKETİ ÇIKTISI AÇ (10.4 veya 13.1)
   printChargebackPack(orderId, reasonCode = '10.4') {
-    window.open(`/hukuki-evrak-yazdir.html?orderId=${encodeURIComponent(orderId)}&reasonPack=${encodeURIComponent(reasonCode)}`, '_blank');
+    const adminKey = this.adminPin || sessionStorage.getItem('belgin_admin_pin') || localStorage.getItem('belgin_admin_pin') || '1999';
+    window.open(`/hukuki-evrak-yazdir.html?orderId=${encodeURIComponent(orderId)}&reasonPack=${encodeURIComponent(reasonCode)}&adminKey=${encodeURIComponent(adminKey)}`, '_blank');
   },
 
   // ÜRÜN TESLİM, KONTROL VE ÖDEME İŞLEMİ TEYİT BEYANI AÇ
   printDeliveryStatement(orderId) {
-    window.open(`/hukuki-evrak-yazdir.html?orderId=${encodeURIComponent(orderId)}&tab=delivery-statement`, '_blank');
+    const adminKey = this.adminPin || sessionStorage.getItem('belgin_admin_pin') || localStorage.getItem('belgin_admin_pin') || '1999';
+    window.open(`/hukuki-evrak-yazdir.html?orderId=${encodeURIComponent(orderId)}&tab=delivery-statement&adminKey=${encodeURIComponent(adminKey)}`, '_blank');
   },
 
   // MÜŞTERİ ISLAK İMZALI BEYAN YÖNETİMİ
@@ -1268,7 +1270,8 @@ const AdminApp = {
 
   openDeclarationInLegalApp() {
     if (!this.activeDeclarationOrderId) return;
-    window.open(`/hukuki-evrak-yazdir.html?orderId=${encodeURIComponent(this.activeDeclarationOrderId)}&tab=declaration`, '_blank');
+    const adminKey = this.adminPin || sessionStorage.getItem('belgin_admin_pin') || localStorage.getItem('belgin_admin_pin') || '1999';
+    window.open(`/hukuki-evrak-yazdir.html?orderId=${encodeURIComponent(this.activeDeclarationOrderId)}&tab=declaration&adminKey=${encodeURIComponent(adminKey)}`, '_blank');
   },
 
   // SİPARİŞ DETAY MODALI
