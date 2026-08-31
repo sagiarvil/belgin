@@ -533,7 +533,7 @@
         <span>🔍 Adli Büyüteç</span>
         <span class="loupe-status-pill" id="loupeStatusPill">3.5× Açık</span>
       </button>
-      <button class="btn-print-active" onclick="window.print()" title="Şu an seçili olan belgeyi yazdırır">
+      <button class="btn-print-active" onclick="LegalApp.printActiveDocument()" title="Şu an seçili olan belgeyi yazdırır">
         <span>🖨️ Sayfayı Yazdır</span>
       </button>
       <button class="btn-print-all" onclick="LegalApp.printAllDocuments()" title="Tüm yasal belgeleri tek tıkla kitapçık olarak yazdırır">
@@ -846,6 +846,7 @@ const LegalApp = {
       }
 
       this.render();
+      document.title = this.getPrintFileName(this.activeTab);
       this.initLoupe();
     } catch (e) {
       document.getElementById('documentContentContainer').innerHTML = `
@@ -1687,10 +1688,52 @@ const LegalApp = {
     return isValid;
   },
 
+  getShortGibNumber() {
+    const inv = this.canonical?.invoice?.invoiceNumber || this.currentOrder?.invoiceNumber || '';
+    if (inv && typeof inv === 'string') {
+      const digits = inv.replace(/\D/g, '');
+      if (digits.length >= 5) {
+        return digits.slice(-5);
+      }
+      if (inv.length >= 5) return inv.slice(-5);
+    }
+    const oid = String(this.currentOrder?.orderId || this.canonical?.orderId || '').replace(/\D/g, '');
+    return oid.length >= 5 ? oid.slice(-5) : '00021';
+  },
+
+  getPrintFileName(tab = null) {
+    const shortGib = this.getShortGibNumber();
+    const targetTab = tab || this.activeTab;
+    if (!targetTab || targetTab === 'all') {
+      return `GIB${shortGib}_TUM_DELIL_DOSYASI`;
+    }
+    const tabNameMap = {
+      'summary': 'BELGE-01_Siparis_Tutanagi',
+      'contract': 'BELGE-02_Satis_Sozlesmesi',
+      'preinfo': 'BELGE-03_On_Bilgilendirme',
+      'kyc': 'BELGE-04_KYC_MASAK',
+      'kvkk': 'BELGE-05_KVKK_Aydinlatma',
+      'prep-check': 'BELGE-06A_Magaza_Hazirlik',
+      'delivery-receipt': 'BELGE-06B_Fiili_Teslim_Tutanagi',
+      'delivery-statement': 'BELGE-07_Odeme_Teslim_Teyidi',
+      'bank-raw': 'BELGE-08_Banka_3DS_Kanit',
+      'invoice-match': 'BELGE-09_EFatura_Mali_Eslesme',
+      'product-stock': 'BELGE-10_Urun_Stok_Cikis',
+      'session-ce3': 'BELGE-11_Cihaz_Gecmis_Dataset',
+      'refund-audit': 'BELGE-12_Refund_Cancellation_Audit',
+      'linkage-matrix': 'BELGE-13_Linkage_Matrix',
+      'manifest': 'EK-01_Kriptografik_Manifesto',
+      'declaration': 'BELGE-14_Islak_Imzali_Beyan'
+    };
+    const suffix = tabNameMap[targetTab] || 'Delil_Evraki';
+    return `GIB${shortGib}_${suffix}`;
+  },
+
   switchTab(tabId, el) {
     this.activeTab = tabId;
     document.querySelectorAll('.doc-tab-btn').forEach(b => b.classList.remove('active'));
     if (el) el.classList.add('active');
+    document.title = this.getPrintFileName(tabId);
     this.render();
   },
 
@@ -1708,8 +1751,18 @@ const LegalApp = {
     this.switchTab('all', document.querySelector('[data-tab="all"]'));
   },
 
+  printActiveDocument() {
+    const fileName = this.getPrintFileName(this.activeTab);
+    document.title = fileName;
+    setTimeout(() => {
+      window.print();
+    }, 100);
+  },
+
   printAllDocuments() {
     this.switchTab('all', document.querySelector('[data-tab="all"]'));
+    const fileName = this.getPrintFileName('all');
+    document.title = fileName;
     setTimeout(() => {
       window.print();
     }, 300);
