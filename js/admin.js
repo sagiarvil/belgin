@@ -100,6 +100,30 @@ const AdminApp = {
         if (!firebase.apps.length) {
           firebase.initializeApp(FIREBASE_ADMIN_CONFIG);
         }
+
+        // 1. Mobile / iOS Safari Redirect Sonucu Yakalama
+        firebase.auth().getRedirectResult().then(async (result) => {
+          if (result && result.user && !isExplicitlyLoggedOut) {
+            const user = result.user;
+            const email = (user.email || '').toLowerCase().trim();
+            if (ALLOWED_ADMIN_EMAILS.includes(email)) {
+              this.adminToken = await user.getIdToken();
+              this.adminUser = { email: user.email, displayName: user.displayName, photoURL: user.photoURL };
+              this.onAuthenticated();
+              return;
+            } else {
+              await firebase.auth().signOut();
+              this.showGoogleAuthError(`❌ Yetkisiz Google Hesabı (${email}). Bu yönetim paneline yalnızca yetkilendirilmiş yönetici hesabı erişebilir.`);
+            }
+          }
+        }).catch((err) => {
+          console.error('getRedirectResult error:', err);
+          if (err.code && err.code !== 'auth/popup-closed-by-user') {
+            this.showGoogleAuthError(err.message || 'Giriş yönlendirmesi başarısız oldu.');
+          }
+        });
+
+        // 2. Aktif Oturum Durumu Dinleyicisi
         firebase.auth().onAuthStateChanged(async (user) => {
           if (user && !isExplicitlyLoggedOut) {
             const email = (user.email || '').toLowerCase().trim();
@@ -131,18 +155,50 @@ const AdminApp = {
   },
 
   async loginWithGoogle() {
+    if (this.isAuthenticating) return;
+    this.isAuthenticating = true;
+
     sessionStorage.removeItem('belgin_admin_logged_out');
     const errEl = document.getElementById('googleAuthError');
     if (errEl) errEl.style.display = 'none';
 
+    const btn = document.querySelector('.btn-google-auth') || document.getElementById('btnGoogleAuth');
+    const originalBtnHtml = btn ? btn.innerHTML : '';
+    if (btn) {
+      btn.disabled = true;
+      btn.style.opacity = '0.7';
+      btn.innerHTML = '<span>⏳ Giriş yapılıyor, lütfen bekleyiniz...</span>';
+    }
+
     if (typeof firebase === 'undefined' || !firebase.auth) {
+      this.isAuthenticating = false;
+      if (btn) { btn.disabled = false; btn.style.opacity = '1'; btn.innerHTML = originalBtnHtml; }
       alert('Firebase Auth servisi hazır değil. Sayfayı yenileyiniz.');
       return;
     }
 
+    const provider = new firebase.auth.GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+
+    // iOS Safari & Mobil Cihaz Tespiti
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1);
+
+    if (isMobile) {
+      try {
+        // iPhone / iOS Safari ve mobil tarayıcılarda popup engeline takılmamak için kesin çözüm signInWithRedirect
+        await firebase.auth().signInWithRedirect(provider);
+        return;
+      } catch (err) {
+        console.error('Mobile Redirect Auth Error:', err);
+        this.isAuthenticating = false;
+        if (btn) { btn.disabled = false; btn.style.opacity = '1'; btn.innerHTML = originalBtnHtml; }
+        this.showGoogleAuthError(err.message || 'Google ile giriş yönlendirmesi başarısız oldu.');
+        return;
+      }
+    }
+
+    // Masaüstü Tarayıcılar: Popup dene, popup engellenirse otomatik olarak redirect e geç
     try {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      provider.setCustomParameters({ prompt: 'select_account' });
       const result = await firebase.auth().signInWithPopup(provider);
       const user = result.user;
       const email = (user.email || '').toLowerCase().trim();
@@ -158,8 +214,21 @@ const AdminApp = {
       this.onAuthenticated();
     } catch (err) {
       console.error('Google Auth Error:', err);
-      if (err.code !== 'auth/popup-closed-by-user') {
-        this.showGoogleAuthError(err.message || 'Google ile giriş başarısız oldu.');
+      if (err.code === 'auth/popup-blocked' || err.code === 'auth/cancelled-popup-request' || err.code === 'auth/popup-closed-by-user') {
+        try {
+          await firebase.auth().signInWithRedirect(provider);
+          return;
+        } catch (redirectErr) {
+          console.error('Fallback Redirect Error:', redirectErr);
+        }
+      }
+      this.showGoogleAuthError(err.message || 'Google ile giriş başarısız oldu.');
+    } finally {
+      this.isAuthenticating = false;
+      if (btn) {
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        btn.innerHTML = originalBtnHtml;
       }
     }
   },
