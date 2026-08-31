@@ -7,9 +7,7 @@ const FIREBASE_ADMIN_CONFIG = {
   appId: "1:7943100684:web:c4f70343f4af130852d129",
   storageBucket: "carbon-web-1265b.firebasestorage.app",
   apiKey: "AIzaSyCUQ0jDeUQPAr3xfSk-aOO4OqcrNwM3mD0",
-  authDomain: (typeof window !== 'undefined' && window.location.hostname.includes('belginkuyumculuk.com'))
-    ? window.location.hostname
-    : 'carbon-web-1265b.firebaseapp.com',
+  authDomain: "carbon-web-1265b.firebaseapp.com",
   messagingSenderId: "7943100684"
 };
 
