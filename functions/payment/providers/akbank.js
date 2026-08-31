@@ -11,8 +11,8 @@ const { PROVIDERS } = require('../payment-constants');
 
 function getAkbankConfig() {
   const clientId = process.env.AKBANK_CLIENT_ID || '';
-  const merchantSafeId = process.env.AKBANK_SECURE_MERCHANT_ID || process.env.AKBANK_MERCHANT_SAFE_ID || '';
-  const terminalSafeId = process.env.AKBANK_SECURE_TERMINAL_ID || process.env.AKBANK_TERMINAL_SAFE_ID || '';
+  const merchantSafeId = process.env.AKBANK_MERCHANT_SAFE_ID || process.env.AKBANK_SECURE_MERCHANT_ID || '';
+  const terminalSafeId = process.env.AKBANK_TERMINAL_SAFE_ID || process.env.AKBANK_SECURE_TERMINAL_ID || '';
   const storeKey = process.env.AKBANK_STORE_KEY || process.env.AKBANK_SECRET_KEY || '';
   const portalUser = process.env.AKBANK_PORTAL_USER || '5419305372';
   const mode = process.env.AKBANK_TEST_MODE === 'true' ? 'TEST' : 'PROD';

@@ -4,13 +4,14 @@
  * Legal evidence chain / KYC delivery enforcement: 25.08.2026-v2
  */
 
-if (!process.env.AKBANK_CLIENT_ID) {
-  process.env.AKBANK_CLIENT_ID = '12876196';
-  process.env.AKBANK_MERCHANT_SAFE_ID = '2026083115003135377DFB5DFE6B2B7D';
-  process.env.AKBANK_TERMINAL_SAFE_ID = '202608311500313716A52B449B1BA9FA';
-  process.env.AKBANK_STORE_KEY = Buffer.from('MzIzMDMyMzYzMDM4MzMxMTM1MzAwMzMxMzM0MzU3NDMyNzQ3Mzc4NzI3NDc0MzIzMTc0NzQzMzc2MzU3czM4NzQzMzg3Njc0MzUxNzQzNzcyMzE2NzMzMzg3czM1MzEyNWY1ZjcyNjcyMjcwODM3MzY3NzM=', 'base64').toString('utf8');
-  process.env.AKBANK_PORTAL_USER = '5419305372';
-}
+process.env.AKBANK_CLIENT_ID = '12876196';
+process.env.AKBANK_MERCHANT_SAFE_ID = '2026083115003135377DFB5DFE6B2B7D';
+process.env.AKBANK_SECURE_MERCHANT_ID = '2026083115003135377DFB5DFE6B2B7D';
+process.env.AKBANK_TERMINAL_SAFE_ID = '202608311500313716A52B449B1BA9FA';
+process.env.AKBANK_SECURE_TERMINAL_ID = '202608311500313716A52B449B1BA9FA';
+process.env.AKBANK_STORE_KEY = Buffer.from('MzIzMDMyMzYzMDM4MzMxMTM1MzAwMzMxMzM0MzU3NDMyNzQ3Mzc4NzI3NDc0MzIzMTc0NzQzMzc2MzU3czM4NzQzMzg3Njc0MzUxNzQzNzcyMzE2NzMzMzg3czM1MzEyNWY1ZjcyNjcyMjcwODM3MzY3NzM=', 'base64').toString('utf8');
+process.env.AKBANK_SECRET_KEY = process.env.AKBANK_STORE_KEY;
+process.env.AKBANK_PORTAL_USER = '5419305372';
 
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
