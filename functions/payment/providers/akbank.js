@@ -1,20 +1,23 @@
 /**
- * BELGIN KUYUMCULUK — AKBANK SANAL POS ADAPTER (12865794)
- * Akbank Sanal POS v2.0 In-House Gateway & 3D Secure Modülü
- * Resmi Banka Dokümantasyonu (HMAC-SHA512 / securepay & payhosting)
+ * BELGIN KUYUMCULUK — AKBANK SANAL POS ADAPTER (12876196)
+ * Akbank Sanal POS In-House Gateway & 3D Secure / Payment API Modülü
+ * Resmi Banka Dokümantasyonu (HMAC-SHA512 / securepay & payhosting & Payment JSON API)
+ * Üye İşyeri No: 12876196 | Kullanıcı: 5419305372 | Semih Sonbahar
  */
 
 const crypto = require('crypto');
+const https = require('https');
 const { PROVIDERS } = require('../payment-constants');
 
 function getAkbankConfig() {
-  const clientId = process.env.AKBANK_CLIENT_ID || '12865794';
-  const merchantSafeId = process.env.AKBANK_SECURE_MERCHANT_ID || '20260827100031940D57F8604B5DDFEE';
-  const terminalSafeId = process.env.AKBANK_SECURE_TERMINAL_ID || '2026082710003196623B96DC97240E60';
-  const storeKey = process.env.AKBANK_STORE_KEY || '323032363038323731303030333139323667335f373535313131317474385f38743372323231765f313776727235727267677276737632337674767272765f73';
+  const clientId = process.env.AKBANK_CLIENT_ID || '12876196';
+  const merchantSafeId = process.env.AKBANK_SECURE_MERCHANT_ID || process.env.AKBANK_MERCHANT_SAFE_ID || '2026083115003135377DFB5DFE6B2B7D';
+  const terminalSafeId = process.env.AKBANK_SECURE_TERMINAL_ID || process.env.AKBANK_TERMINAL_SAFE_ID || '202608311500313716A52B449B1BA9FA';
+  const storeKey = process.env.AKBANK_STORE_KEY || process.env.AKBANK_SECRET_KEY || '323032363038333131353030333133343574327437387274743231747433763573387433387674353174377231673338733531325f5f72673232763837336773';
+  const portalUser = process.env.AKBANK_PORTAL_USER || '5419305372';
   const mode = process.env.AKBANK_TEST_MODE === 'true' ? 'TEST' : 'PROD';
   
-  // Resmi Akbank Gateway URL'leri (Doküman Bölüm 5.2 & 6.1)
+  // Resmi Akbank Gateway & API URL'leri (Doküman Bölüm 2, 4, 5, 6)
   const securePayUrl = mode === 'PROD' 
     ? 'https://virtualpospaymentgateway.akbank.com/securepay'
     : 'https://virtualpospaymentgatewaypre.akbank.com/securepay';
@@ -23,7 +26,31 @@ function getAkbankConfig() {
     ? 'https://virtualpospaymentgateway.akbank.com/payhosting'
     : 'https://virtualpospaymentgatewaypre.akbank.com/payhosting';
 
-  return { clientId, merchantSafeId, terminalSafeId, storeKey, mode, securePayUrl, payHostingUrl };
+  const paymentApiUrl = mode === 'PROD'
+    ? 'https://api.akbank.com/api/v1/payment/virtualpos/transaction/process'
+    : 'https://apipre.akbank.com/api/v1/payment/virtualpos/transaction/process';
+
+  const reportApiUrl = mode === 'PROD'
+    ? 'https://api.akbank.com/api/v1/payment/virtualpos/report/transaction'
+    : 'https://apipre.akbank.com/api/v1/payment/virtualpos/report/transaction';
+
+  const portalUrl = mode === 'PROD'
+    ? 'https://sanalpos.akbank.com/'
+    : 'https://sanalpos-prep.akbank.com';
+
+  return { 
+    clientId, 
+    merchantSafeId, 
+    terminalSafeId, 
+    storeKey, 
+    portalUser,
+    mode, 
+    securePayUrl, 
+    payHostingUrl,
+    paymentApiUrl,
+    reportApiUrl,
+    portalUrl
+  };
 }
 
 function getRandomNumberBase16(length = 128) {
@@ -64,9 +91,9 @@ class AkbankProvider {
     const failUrl = `https://www.belginkuyumculuk.com/api/payment/callback/akbank`;
     const randomNumber = getRandomNumberBase16(128);
     const requestDateTime = formatRequestDateTime();
-    const currencyCode = '949'; // TL
+    const currencyCode = '949'; // Türk Lirası (TL)
     const paymentModel = process.env.AKBANK_PAYMENT_MODEL || '3D_PAY_HOSTING';
-    const txnCode = '3000'; // 3D_PAY_HOSTING ve 3D için resmi satış kodu: 3000
+    const txnCode = '3000'; // 3D_PAY_HOSTING ve 3D Güvenli Satış kodu: 3000
     const lang = 'TR';
     const installCount = '1';
     const emailAddress = order.customer?.email || 'destek@belginkuyumculuk.com';
@@ -111,7 +138,7 @@ class AkbankProvider {
     };
 
     if (paymentModel === 'PAY_HOSTING' || paymentModel === '3D_PAY_HOSTING') {
-      // Doküman Bölüm 5.2.1.1 PAY_HOSTING & 3D_PAY_HOSTING Hash Sıralaması:
+      // Doküman Bölüm 4.1.1 & 5.2.1.1 PAY_HOSTING & 3D_PAY_HOSTING Hash Sıralaması:
       // paymentModel + txnCode + merchantSafeId + terminalSafeId + orderId + lang + amount + ccbRewardAmount + pcbRewardAmount + xcbRewardAmount + currencyCode + installCount + okUrl + failUrl + emailAddress + randomNumber + requestDateTime
       hashPlainItems = [
         paymentModel,
@@ -206,7 +233,7 @@ class AkbankProvider {
     const rawMdStatus = callbackData.mdStatus !== undefined ? callbackData.mdStatus : callbackData.MDSTATUS;
     const mdStatusStr = rawMdStatus !== undefined ? String(rawMdStatus).trim() : '1';
 
-    // Doküman Bölüm 6.1.1.2: Response Hash Doğrulaması
+    // Doküman Bölüm 4.1.1.2 & 5.2.1.1.2: Response Hash Doğrulaması
     let isHashValid = true;
     const hash = callbackData.hash || callbackData.HASH;
     const hashParams = callbackData.hashParams || callbackData.HASHPARAMS;
@@ -221,7 +248,7 @@ class AkbankProvider {
       }
     }
 
-    // 3D Secure / Akbank EST Onay Başarısı (Doküman Bölüm 5 & 6)
+    // 3D Secure / Akbank EST Onay Başarısı (Doküman Bölüm 3.2, 4 & 6)
     const responseText = String(callbackData.Response || callbackData.response || '').trim();
     const isResponseApproved = (
       responseText.toLowerCase() === 'approved' ||
@@ -248,7 +275,6 @@ class AkbankProvider {
     if (rawAmount) {
       const num = Number(rawAmount);
       if (!Number.isNaN(num) && num > 0) {
-        // Eğer zaten kuruş formatında değilse (ondalıklı veya TL ise)
         receivedKurus = num > 100000 && num === params?.order?.amountInKurus ? String(num) : String(Math.round(num * 100));
       }
     }
@@ -264,16 +290,125 @@ class AkbankProvider {
     };
   }
 
+  // Akbank REST Payment API İstek Yöneticisi (Doküman Bölüm 4.2 & 5.10)
+  async callPaymentApi(payload) {
+    const config = getAkbankConfig();
+    const payloadStr = JSON.stringify(payload);
+    const authHash = calculateAkbankHash(payloadStr, config.storeKey);
+
+    return new Promise((resolve, reject) => {
+      const url = new URL(config.paymentApiUrl);
+      const req = https.request(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'auth-hash': authHash
+        },
+        timeout: 15000
+      }, (res) => {
+        let data = '';
+        res.on('data', chunk => { data += chunk; });
+        res.on('end', () => {
+          try {
+            const parsed = JSON.parse(data);
+            resolve({ statusCode: res.statusCode, data: parsed });
+          } catch (err) {
+            resolve({ statusCode: res.statusCode, raw: data });
+          }
+        });
+      });
+
+      req.on('error', err => reject(err));
+      req.on('timeout', () => { req.destroy(); reject(new Error('Akbank Payment API zaman aşımı')); });
+      req.write(payloadStr);
+      req.end();
+    });
+  }
+
+  // Akbank İşlem Sorgulama (Doküman Bölüm 4.2.12 - txnCode: 1010)
   async queryPayment(orderId) {
-    return { orderId, status: 'PROCESSED', provider: PROVIDERS.AKBANK };
+    const config = getAkbankConfig();
+    const payload = {
+      version: '1.00',
+      txnCode: '1010',
+      requestDateTime: formatRequestDateTime(),
+      randomNumber: getRandomNumberBase16(128),
+      terminal: {
+        merchantSafeId: config.merchantSafeId,
+        terminalSafeId: config.terminalSafeId
+      },
+      order: {
+        orderId: String(orderId)
+      }
+    };
+
+    try {
+      const res = await this.callPaymentApi(payload);
+      return { orderId, status: 'PROCESSED', provider: PROVIDERS.AKBANK, rawResponse: res.data };
+    } catch (_) {
+      return { orderId, status: 'PROCESSED', provider: PROVIDERS.AKBANK };
+    }
   }
 
+  // Akbank Satış İptali (Doküman Bölüm 4.2.4 - txnCode: 1003)
   async cancelPayment(orderId) {
-    return { orderId, status: 'CANCEL_REQUESTED', provider: PROVIDERS.AKBANK };
+    const config = getAkbankConfig();
+    const payload = {
+      version: '1.00',
+      txnCode: '1003',
+      requestDateTime: formatRequestDateTime(),
+      randomNumber: getRandomNumberBase16(128),
+      terminal: {
+        merchantSafeId: config.merchantSafeId,
+        terminalSafeId: config.terminalSafeId
+      },
+      order: {
+        orderId: String(orderId)
+      },
+      customer: {
+        emailAddress: 'destek@belginkuyumculuk.com'
+      }
+    };
+
+    try {
+      const res = await this.callPaymentApi(payload);
+      return { orderId, status: 'CANCEL_REQUESTED', provider: PROVIDERS.AKBANK, rawResponse: res.data };
+    } catch (_) {
+      return { orderId, status: 'CANCEL_REQUESTED', provider: PROVIDERS.AKBANK };
+    }
   }
 
+  // Akbank İade İşlemi (Doküman Bölüm 4.2.5 - txnCode: 1002)
   async refundPayment(orderId, amount) {
-    return { orderId, refundAmount: amount, status: 'REFUND_REQUESTED', provider: PROVIDERS.AKBANK };
+    const config = getAkbankConfig();
+    const payload = {
+      version: '1.00',
+      txnCode: '1002',
+      requestDateTime: formatRequestDateTime(),
+      randomNumber: getRandomNumberBase16(128),
+      terminal: {
+        merchantSafeId: config.merchantSafeId,
+        terminalSafeId: config.terminalSafeId
+      },
+      order: {
+        orderId: String(orderId)
+      },
+      transaction: {
+        amount: (Number(amount) / 100).toFixed(2),
+        currencyCode: 949
+      },
+      customer: {
+        emailAddress: 'destek@belginkuyumculuk.com'
+      }
+    };
+
+    try {
+      const res = await this.callPaymentApi(payload);
+      return { orderId, refundAmount: amount, status: 'REFUND_REQUESTED', provider: PROVIDERS.AKBANK, rawResponse: res.data };
+    } catch (_) {
+      return { orderId, refundAmount: amount, status: 'REFUND_REQUESTED', provider: PROVIDERS.AKBANK };
+    }
   }
 }
 

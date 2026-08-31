@@ -3163,7 +3163,7 @@ const App = {
         totalAmount: cartTotal > 0 ? cartTotal : 14960,
         formattedAmount: '₺' + (cartTotal > 0 ? cartTotal : 14960).toLocaleString('tr-TR'),
         termsAcceptedAt: new Date().toISOString(),
-        paymentMethod: 'Akbank 256-Bit EV SSL & 3D Secure Sanal POS (12865794)'
+        paymentMethod: 'Akbank 256-Bit EV SSL & 3D Secure Sanal POS (12876196)'
       };
       localStorage.setItem('belgin_checkout_draft', JSON.stringify(draft));
       sessionStorage.setItem('belgin_checkout_draft', JSON.stringify(draft));

@@ -217,14 +217,14 @@ const mockLegalSnapshot = () => ({
 
   // 6. Reverse Engineering: Timing-Safe SHA-512 Hash Generation (Akbank 3D Pay)
   test('6. Tersine Mühendislik: Akbank 3D Pay SHA-512 imza üretimi ve timing attack koruması', () => {
-    const clientId = '12865794';
+    const clientId = '12876196';
     const oid = 'BLG-TEST-123';
     const amount = '15000.00';
     const okUrl = 'https://www.belginkuyumculuk.com/api/payment/callback/akbank';
     const failUrl = 'https://www.belginkuyumculuk.com/api/payment/callback/akbank';
     const storetype = '3d_pay';
     const rnd = '1724760000000';
-    const storeKey = 'BELGIN_AKBANK_STOREKEY_12865794';
+    const storeKey = '323032363038333131353030333133343574327437387274743231747433763573387433387674353174377231673338733531325f5f72673232763837336773';
 
     const hashStr = [clientId, oid, amount, okUrl, failUrl, storetype, rnd, storeKey].join('');
     const hash = crypto.createHash('sha512').update(hashStr, 'utf8').digest('base64');

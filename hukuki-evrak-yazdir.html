@@ -949,6 +949,9 @@ const LegalApp = {
 
   extractCanonicalData(o) {
     const isSecondTx = String(o.orderId).includes("1211") || String(o.orderId).includes("9cd26") || String(o.orderId).includes("03da073a") || String(o.orderId).includes("1787906878142");
+    const cardScheme = o.cardScheme || o.payment?.scheme || o.scheme || (isSecondTx ? "Troy" : "VISA");
+    const isTroy = isSecondTx || String(cardScheme).toUpperCase() === "TROY";
+    const visaCe3Enabled = !isTroy;
 
     // CANONICAL CUSTOMER IDENTITY (MÜŞTERİ KİMLİK VERİSİ)
     const custName = o.customerName || o.customer?.name || o.customer?.fullName || "İdris Emre Bük";
@@ -1026,7 +1029,6 @@ const LegalApp = {
     const cardLast4 = isSecondTx ? "2278" : "2841";
     const maskedPan = isSecondTx ? "6573 66** **** 2278" : "4355 08** **** 2841";
     const cardBin = isSecondTx ? "657366" : "435508";
-    const cardScheme = isSecondTx ? "Troy" : "VISA";
     const cardBrandName = isSecondTx ? "YapıKredi TLcard Troy (6573 66** **** 2278)" : "Halkbank Paraf VISA (4355 08** **** 2841)";
 
     const dsTransId = isSecondTx ? "f90d2845-890b-5d34-0932-cd8f904231bc" : "a81f3490-1823-4c23-9821-bc7f893120ab";
@@ -1181,8 +1183,6 @@ const LegalApp = {
     // 2. DERIVED LEGAL & AUDIT REPORTS (TÜRETİLMİŞ HUKUKİ RAPORLAR - 14 BELGE)
     // Her belgenin SHA-256 özeti kendi gerçek render içerik baytlarından hesaplanır (R1, R2, R4)
     // =========================================================================
-    const isTroy = isSecondTx || cardScheme.toUpperCase() === "TROY";
-    const visaCe3Enabled = !isTroy;
     const derivedReportPayloads = {
       "BELGE-01": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-01: İŞLEM VE DELİL KAYIT TUTANAĞI</title></head><body><h1>BELGİN KUYUMCULUK ADLİ DELİL KAYIT TUTANAĞI</h1><p>Sipariş No: ${orderId}</p><p>Müşteri: ${custName} (TCKN: ${canonicalTckn})</p><p>Satıcı: ${merchant.legalName} (VKN: ${merchant.vkn})</p><p>Tarih: ${orderCreatedAt}</p><p>Tutar: ₺${totalAmount.toLocaleString('tr-TR')}</p><p>Teslimat Türü: Mağazadan Fiziki Teslim</p></body></html>`,
       "BELGE-02": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-02: MESAFELİ SATIŞ SÖZLEŞMESİ</title></head><body><h1>MESAFELİ SATIŞ SÖZLEŞMESİ</h1><p>Sipariş: ${orderId}</p><p>Alıcı: ${custName} - ${canonicalTckn}</p><p>Satıcı: ${merchant.legalName}</p><p>Onay Zamanı: ${contractAcceptedAt}</p><p>Toplam Bedel: ₺${totalAmount.toLocaleString('tr-TR')}</p><p>Hüküm: 6502 sayılı Kanun ve Mesafeli Sözleşmeler Yönetmeliği uyarınca elektronik ortamda akdedilmiştir.</p></body></html>`,
@@ -3038,6 +3038,8 @@ const docTitleMap = {
   'BELGE-13': 'Beşli Transaction Linkage Matrix (14_v2.1)',
   'EK-01': 'Kriptografik Delil ve Hash Manifestosu'
 };
+
+window.LegalApp = LegalApp;
 
 const sourceDatasetMap = {
   'BELGE-06A': 'Mağaza İçi Kasa Çıkış & Kalibre Terazi Günlüğü',
