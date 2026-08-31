@@ -927,21 +927,20 @@ const LegalApp = {
     const otsFinalPackageAt = "2026-08-30T16:40:05.000Z";
 
     const totalAmount = Number(o.totalAmount || o.payment?.amount || 0);
-    const rawItems = Array.isArray(o.items) && o.items.length > 0 ? o.items : (o.productName ? [{ name: o.productName, price: totalAmount, qty: 1 }] : null);
-    if (!rawItems) {
-      throw new Error("EVIDENCE_ITEMS_MISSING: Gerçek sipariş ürün kalemleri (order.items) veritabanında bulunamadı! Tutar üzerinden ürün tahmini YASAKTIR.");
+    if (!Array.isArray(o.items) || o.items.length === 0) {
+      throw new Error("EVIDENCE_ITEMS_MISSING: Gerçek sipariş ürün kalemleri (order.items) veritabanında bulunamadı! Tutar üzerinden veya ürün adından sentetik türetim YASAKTIR.");
     }
 
-    const items = rawItems.map((it, idx) => {
+    const items = o.items.map((it, idx) => {
       const qty = Number(it.qty || it.quantity || 1);
-      const price = Number(it.price || it.total || (it.unitPrice ? it.unitPrice * qty : totalAmount) || totalAmount);
-      const unitPrice = Number(it.unitPrice || (qty > 0 ? price / qty : price) || price);
+      const price = Number(it.price || it.total || (it.unitPrice ? it.unitPrice * qty : 0) || 0);
+      const unitPrice = Number(it.unitPrice || (qty > 0 ? price / qty : price) || 0);
       const sku = it.sku || it.id || `BLG-PRD-${String(idx + 1).padStart(3, '0')}`;
-      const name = it.name || it.title || o.productName || '22 Ayar Altın / Mücevherat';
-      const karat = it.karat || (name.includes('22') ? '22 Ayar' : (name.includes('14') ? '14 Ayar' : (name.includes('24') ? '24 Ayar Has' : '22 Ayar')));
+      const name = it.name || it.title || 'Kayıtlı Sipariş Kalemi';
+      const karat = it.karat || (name.includes('22') ? '22 Ayar' : (name.includes('14') ? '14 Ayar' : (name.includes('24') ? '24 Ayar' : '22 Ayar')));
       const fineness = it.fineness || (karat.includes('22') ? '916.0 Milyem (0.916 Saflık)' : (karat.includes('24') ? '995.0 Milyem' : '585.0 Milyem'));
-      const unitWeight = parseFloat(it.unitWeight || it.weight || '7.00') || 7.00;
-      const totalWeight = it.totalWeight || ((unitWeight * qty).toFixed(2) + ' gr');
+      const unitWeight = parseFloat(it.unitWeight || it.weight || '0') || 0;
+      const totalWeight = it.totalWeight || (unitWeight > 0 ? (unitWeight * qty).toFixed(2) + ' gr' : 'Belirtilmedi');
       const certificateNo = it.certificateNo || `CERT-BLG-2026-${String(idx + 881).padStart(4, '0')}`;
       const productId = it.productId || it.sku || `PROD-${String(idx + 1).padStart(3, '0')}`;
 
@@ -1510,13 +1509,13 @@ const LegalApp = {
         customerCommunicationRef: "WhatsApp Sipariş ve Randevu Yazışmaları (+90 531 577 90 69)"
       },
       otsProof: {
-        otsStatus: "CALENDAR_ATTESTED / BITCOIN_PENDING",
-        otsProofFile: otsRoots.root01.otsFile,
-        otsProofSha256: otsRoots.root01.sha256,
+        otsStatus: otsRoots.root01?.otsProof ? "BITCOIN_CONFIRMED" : "BITCOIN_PENDING",
+        otsProofFile: otsRoots.root01?.otsFile || "belgin_order_snapshot.ots",
+        otsProofSha256: otsRoots.root01?.sha256 || "",
         calendarAttestation: "https://alice.btc.calendar.opentimestamps.org",
         calendarTimestamp: otsOrderSnapshotAt,
         verifierVersion: "opentimestamps-client v0.7.1",
-        verificationResult: "BAŞARILI (Merkle Ağacı Takvim Sunucusunda Kilitlendi)"
+        verificationResult: otsRoots.root01?.otsProof ? "BAŞARILI (Bitcoin Blokzincirinde Doğrulandı)" : "BEKLEMEDE (Bitcoin Blokzincir Onayı Bekleniyor)"
       },
       declaration: {
         docUrl: o.declarationDoc || (isSecondTx ? "/images/declarations/beyan_idris_emre_buk_1211.jpg" : "/images/declarations/beyan_idris_emre_buk_1200.jpg"),
@@ -1533,7 +1532,7 @@ const LegalApp = {
         legalEvidentiaryStatement: "İşlem sahipliği, müşteri katılımı ve olay kronolojisini destekleyen bağımsız fiziki delil olarak muhafaza edilmektedir."
       },
       items,
-      bankaReady: true
+      bankaReady: schemeRuleVerified && !isUnconfiguredProvider
     };
   },
 
