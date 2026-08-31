@@ -2838,14 +2838,15 @@
       </div>
 
       <div class="admin-filter-row">
-        <div class="date-input-wrap">
-          <label for="storeStartDate" style="color:#0F172A; font-weight:800;">Başlangıç:</label>
-          <input type="date" id="storeStartDate" onchange="AdminApp.onStoreCustomDateChange()">
-        </div>
-
-        <div class="date-input-wrap">
-          <label for="storeEndDate" style="color:#0F172A; font-weight:800;">Bitiş:</label>
-          <input type="date" id="storeEndDate" onchange="AdminApp.onStoreCustomDateChange()">
+        <div class="date-inputs-group">
+          <div class="date-input-box">
+            <label for="storeStartDate">📅 Başlangıç Tarihi</label>
+            <input type="date" id="storeStartDate" onchange="AdminApp.onStoreCustomDateChange()">
+          </div>
+          <div class="date-input-box">
+            <label for="storeEndDate">📅 Bitiş Tarihi</label>
+            <input type="date" id="storeEndDate" onchange="AdminApp.onStoreCustomDateChange()">
+          </div>
         </div>
 
         <div>
