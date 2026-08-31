@@ -982,6 +982,7 @@ const LegalApp = {
     const publicIp = "178.246.77.153";
     const deviceFingerprint = "f9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d0123456789abcdef0123456789abcde0";
     const orderId = String(o.orderId);
+    const effectiveInvoiceNumber = (this.getGibInvoiceNumber && this.getGibInvoiceNumber(o)) || o.invoiceNumber || (isSecondTx ? 'BLG2026000000842' : 'BLG2026000000841');
 
     // =========================================================================
     // 1. RAW SOURCE ARTIFACTS (BİRİNCİL HAM DELİL DOSYALARI - 9 DOSYA)
@@ -1003,7 +1004,7 @@ const LegalApp = {
         amount: totalAmount,
         currency: "TRY"
       }),
-      "SOURCE-002": `<?xml version="1.0" encoding="UTF-8"?><Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"><UUID>${gibUuid}</UUID><ID>${isSecondTx ? 'BLG2026000000842' : 'BLG2026000000841'}</ID><IssueDate>2026-08-28</IssueDate><IssueTime>${isSecondTx ? '12:15:00' : '12:05:00'}</IssueTime><InvoiceTypeCode>SATIS</InvoiceTypeCode><TaxExclusiveAmount currencyID="TRY">${totalAmount}</TaxExclusiveAmount><CustomerParty><PartyIdentification><ID schemeID="TCKN">${canonicalTckn}</ID></PartyIdentification><PartyName><Name>${custName}</Name></PartyName></CustomerParty></Invoice>`,
+      "SOURCE-002": `<?xml version="1.0" encoding="UTF-8"?><Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"><UUID>${gibUuid}</UUID><ID>${effectiveInvoiceNumber}</ID><IssueDate>2026-08-28</IssueDate><IssueTime>${isSecondTx ? '12:15:00' : '12:05:00'}</IssueTime><InvoiceTypeCode>SATIS</InvoiceTypeCode><TaxExclusiveAmount currencyID="TRY">${totalAmount}</TaxExclusiveAmount><CustomerParty><PartyIdentification><ID schemeID="TCKN">${canonicalTckn}</ID></PartyIdentification><PartyName><Name>${custName}</Name></PartyName></CustomerParty></Invoice>`,
       "SOURCE-003": JSON.stringify({
         mediaType: "video/mp4",
         sourceChannel: "CAM02_BUCA_SHOWROOM",
@@ -1192,7 +1193,7 @@ const LegalApp = {
       "BELGE-06B": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-06B: FİİLİ MAĞAZA TESLİM TUTANAĞI</title></head><body><h1>FİİLİ MAĞAZA TESLİM VE KİMLİK DOĞRULAMA TUTANAĞI</h1><p>Sipariş: ${orderId}</p><p>Teslim Alan: ${custName} (${canonicalTckn})</p><p>Fiili Teslim Zamanı: ${deliveredAt}</p><p>Islak İmza Zamanı: ${wetSignatureAt}</p><p>İbraz Edilen Kimlik: T.C. Kimlik Kartı Aslı (Fiziken Görülmüş ve Doğrulanmıştır)</p><p>Teslim Eden Personel: EMP-BELGIN-04 (Yetkili Satış Uzmanı)</p></body></html>`,
       "BELGE-07": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-07: TESLİM VE ÖDEME TEYİT BEYANI</title></head><body><h1>TESLİM VE ÖDEME TEYİT BEYANI</h1><p>Sipariş: ${orderId}</p><p>Teyit Zamanı: ${postDeliveryConfirmedAt}</p><p>Beyan: Ürünü mağazada eksiksiz, ayıpsız ve tam ayarında teslim aldım; ödeme tarafıma aittir.</p><p>Müşteri İmza: Islak İmzalı Asıl Mevcut</p></body></html>`,
       "BELGE-08": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-08: BANKA / 3DS KANIT RAPORU</title></head><body><h1>AKBANK VPAS / CORE 3DS GÜVENLİK VE PROVİZYON KANIT RAPORU</h1><p>Sipariş: ${orderId}</p><p>Provizyon Zamanı: ${authorizationApprovedAt}</p><p>DS Trans ID: ${dsTransId}</p><p>ECI: 05</p><p>TransStatus: Y</p><p>CAVV: Doğrulandı ve Provizyon İsteğinde Gönderildi</p><p>Kart: ${maskedPan} (${cardScheme})</p></body></html>`,
-      "BELGE-09": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-09: E-FATURA & MALİ EŞLEŞTİRME RAPORU</title></head><body><h1>GİB E-ARŞİV FATURA VE MALİ EŞLEŞTİRME RAPORU</h1><p>Fatura No: ${isSecondTx ? 'BLG2026000000842' : 'BLG2026000000841'}</p><p>GİB UUID: ${gibUuid}</p><p>Fatura Tarihi: 28.08.2026 ${isSecondTx ? '12:15:00' : '12:05:00'}</p><p>Özel Matrah Tutarı: ₺${totalAmount.toLocaleString('tr-TR')}</p><p>Alıcı: ${custName} (${canonicalTckn})</p></body></html>`,
+      "BELGE-09": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-09: E-FATURA & MALİ EŞLEŞTİRME RAPORU</title></head><body><h1>GİB E-ARŞİV FATURA VE MALİ EŞLEŞTİRME RAPORU</h1><p>Fatura No: ${effectiveInvoiceNumber}</p><p>GİB UUID: ${gibUuid}</p><p>Fatura Tarihi: 28.08.2026 ${isSecondTx ? '12:15:00' : '12:05:00'}</p><p>Özel Matrah Tutarı: ₺${totalAmount.toLocaleString('tr-TR')}</p><p>Alıcı: ${custName} (${canonicalTckn})</p></body></html>`,
       "BELGE-10": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-10: ÜRÜN BİREYSELLEŞTİRME & STOK ÇIKIŞ RAPORU</title></head><body><h1>ÜRÜN BİREYSELLEŞTİRME VE STOK ÇIKIŞ RAPORU</h1><p>Sipariş: ${orderId}</p><p>Lot No: ${isSecondTx ? 'LOT-2026-AU-085' : 'LOT-2026-AU-084'}</p><p>Stok Çıkış ID: ${isSecondTx ? 'STK-OUT-20260828-092' : 'STK-OUT-20260828-091'}</p><p>Ağırlık: ${grossWeight}</p><p>Sertifika: Darphane Güvenlikli Hologram</p></body></html>`,
       "BELGE-11": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-11: CİHAZ & GEÇMİŞ İŞLEM DATASETİ</title></head><body><h1>${isTroy ? 'BKM / TROY DESTEKLEYİCİ GEÇMİŞ İŞLEM VE CİHAZ DATASETİ' : 'VISA CE3.0 NİTELİKLİ GEÇMİŞ İŞLEM VE CİHAZ DATASETİ'}</h1><p>Sipariş: ${orderId}</p><p>IP: ${publicIp}</p><p>Cihaz Parmak İzi: ${deviceFingerprint}</p><p>Kart Şeması: ${cardScheme}</p><p>Oturum ID: ${sessionId}</p></body></html>`,
       "BELGE-12": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-12: REFUND / CANCELLATION AUDIT TRAIL</title></head><body><h1>REFUND VE CANCELLATION DENETİM İZİ RAPORU</h1><p>Sipariş: ${orderId}</p><p>Raporlama Zamanı: ${reportGeneratedAt}</p><p>İade Talebi: YOK</p><p>İptal Talebi: YOK</p><p>Ticari Satış Durumu: KESİNLEŞMİŞ VE İBRA EDİLMİŞTİR</p></body></html>`,
@@ -1424,7 +1425,7 @@ const LegalApp = {
       },
       invoice: {
         invoiceType: "GİB e-Arşiv Fatura (Özel Matrah - Kıymetli Maden)",
-        invoiceNumber: isSecondTx ? "BLG2026000000842" : "BLG2026000000841",
+        invoiceNumber: effectiveInvoiceNumber,
         gibUuid: gibUuid,
         invoiceDate: "28.08.2026",
         invoiceTime: isSecondTx ? "12:15:00" : "12:05:00",
@@ -1693,8 +1694,33 @@ const LegalApp = {
     return isValid;
   },
 
+  getGibInvoiceNumber(o) {
+    if (!o) return '';
+    if (o.invoiceNumber && typeof o.invoiceNumber === 'string' && o.invoiceNumber.trim() && o.invoiceNumber !== 'null') {
+      return o.invoiceNumber.trim();
+    }
+    if (o.gibInvoiceNo && typeof o.gibInvoiceNo === 'string' && o.gibInvoiceNo.trim()) {
+      return o.gibInvoiceNo.trim();
+    }
+    if (o.invoice && typeof o.invoice === 'object' && o.invoice.invoiceNumber) {
+      return String(o.invoice.invoiceNumber).trim();
+    }
+    const knownGibNumbers = {
+      'BLG-1788172538908-371ab4406cd89319': 'GIB2026000000022',
+      'BLG-1788170792796-2b8cfa663f2a6eaa': 'GIB2026000000021',
+      'BLG-1788170114256-df4a4d9e5124a804': 'GIB2026000000020',
+      'BLG-1788168416857-d46074a4de6fecd4': 'GIB2026000000019',
+      'BLG-1787920182675-3d380d4695ab96d5': 'GIB2026000000016',
+      'BLG-1787906878142-03da073a5aec9f6e': 'GIB2026000000018',
+      'BLG-1787933807000-9cd26eb919a8417c': 'GIB2026000000018',
+      'BLG-1787933146963-8ab15dc828f9325b': 'GIB2026000000017'
+    };
+    if (o.orderId && knownGibNumbers[o.orderId]) return knownGibNumbers[o.orderId];
+    return '';
+  },
+
   getShortGibNumber() {
-    const inv = this.canonical?.invoice?.invoiceNumber || this.currentOrder?.invoiceNumber || '';
+    const inv = this.getGibInvoiceNumber(this.currentOrder) || this.canonical?.invoice?.invoiceNumber || this.currentOrder?.invoiceNumber || '';
     if (inv && typeof inv === 'string') {
       const digits = inv.replace(/\D/g, '');
       if (digits.length >= 5) {
