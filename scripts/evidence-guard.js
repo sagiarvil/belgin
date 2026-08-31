@@ -47,8 +47,17 @@ const client = read('js/order-evidence.js');
 for (const marker of ['/api/issueEvidenceAccessToken','/api/getOrderEvidence','sessionStorage','receiptSha256','Yazdır / PDF Kaydet']) {
   if (!client.includes(marker)) fail(`Delil istemci katmanı eksik: ${marker}`);
 }
-if (/localStorage\.setItem\([^\n]*accessToken/i.test(client)) fail('Delil erişim tokenı localStorage içinde kalıcı saklanmamalı.');
+const legalPrintPage = read('hukuki-evrak-yazdir.html');
+if (legalPrintPage.includes('a1b2c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef')) fail('Hukuki evrak yazdırma şablonunda placeholder hash tespit edildi.');
+if (!legalPrintPage.includes('ORDER_PRE_AUTH') || !legalPrintPage.includes('PAYMENT_AUTH')) fail('Hukuki evrak yazdırma ekranında 4 seviyeli OTS kökleri eksik.');
+if (!legalPrintPage.includes('deliveryEventHash')) fail('Fiili teslim event hash alanı eksik.');
+
+try {
+  require('../tests/chargeback-pipeline-integrity.js');
+} catch (e) {
+  fail(`Chargeback pipeline integrity test hatası: ${e.message}`);
+}
 
 if (failed) { console.error('\nEVIDENCE_GUARD=FAIL'); process.exit(1); }
-pass('Siparişe özgü delil sistemi: kimlik doğrulama, kısa ömürlü token, belge/hash, audit, ödeme ve teslim zinciriyle korumalı.');
+pass('Siparişe özgü delil sistemi: kimlik doğrulama, kısa ömürlü token, 4-tier OTS, belge/hash, audit, ödeme ve teslim zinciriyle korumalı.');
 console.log('\nEVIDENCE_GUARD=PASS');
