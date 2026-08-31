@@ -242,7 +242,9 @@ class AkbankProvider {
         const paramKeys = hashParams.split('+');
         const hashBuilder = paramKeys.map(k => callbackData[k] !== undefined ? callbackData[k] : '').join('');
         const expectedHash = calculateAkbankHash(hashBuilder, config.storeKey);
-        isHashValid = (hash === expectedHash) || testMode;
+        const bufA = Buffer.from(String(hash), 'utf8');
+        const bufB = Buffer.from(String(expectedHash), 'utf8');
+        isHashValid = (bufA.length === bufB.length && crypto.timingSafeEqual(bufA, bufB)) || testMode;
       } catch (_) {
         isHashValid = testMode;
       }
