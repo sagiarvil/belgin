@@ -801,10 +801,13 @@ const AdminApp = {
           : '<span class="badge-status badge-status-pending">⏳ Beklemede</span>';
 
         const invoiceBadge = isSigned
-          ? '<div style="font-size:11px; margin-top:3px;"><span style="background:#E8F5E9; color:#1B5E20; padding:2px 6px; border-radius:4px; font-weight:700; border:1px solid #A5D6A7;">🧾 Fatura: İmzalandı</span></div>'
+          ? `<div style="font-size:11px; margin-top:3px; text-align:center;">
+               <span style="background:#E8F5E9; color:#1B5E20; padding:2px 6px; border-radius:4px; font-weight:700; border:1px solid #A5D6A7; display:inline-block;">🧾 Fatura: İmzalandı</span>
+               ${o.invoiceNumber ? `<div style="font-size:10.5px; font-weight:800; font-family:monospace; color:#047857; margin-top:2px; letter-spacing:0.2px;">📄 ${o.invoiceNumber}</div>` : ''}
+             </div>`
           : (o.invoiceStatus === 'DRAFT'
-          ? '<div style="font-size:11px; margin-top:3px;"><span style="background:#FFF8E1; color:#F57F17; padding:2px 6px; border-radius:4px; font-weight:700; border:1px solid #FFE082;">🧾 Fatura: Taslak</span></div>'
-          : '<div style="font-size:11px; margin-top:3px;"><span style="background:#FEF2F2; color:#B91C1C; padding:2px 6px; border-radius:4px; font-weight:700; border:1px solid #FECACA;">⚠️ Fatura: Kesilmedi</span></div>');
+          ? '<div style="font-size:11px; margin-top:3px; text-align:center;"><span style="background:#FFF8E1; color:#F57F17; padding:2px 6px; border-radius:4px; font-weight:700; border:1px solid #FFE082; display:inline-block;">🧾 Fatura: Taslak</span></div>'
+          : '<div style="font-size:11px; margin-top:3px; text-align:center;"><span style="background:#FEF2F2; color:#B91C1C; padding:2px 6px; border-radius:4px; font-weight:700; border:1px solid #FECACA; display:inline-block;">⚠️ Fatura: Kesilmedi</span></div>');
 
         const dateFormatted = new Date(o.createdAt).toLocaleString('tr-TR', {
           day: '2-digit', month: '2-digit', year: 'numeric',
@@ -1850,6 +1853,9 @@ const AdminApp = {
           this.closeSmsModal();
           this.filterTable();
           this.filterStoreTable();
+          // Sunucudan en güncel fatura numaralarıyla otomatik senkronize et
+          this.loadOrders().catch(() => {});
+          this.loadStoreInvoices().catch(() => {});
         } else {
           if (errDiv) {
             errDiv.style.display = 'block';
@@ -1902,6 +1908,10 @@ const AdminApp = {
           this.closeSmsModal();
           this.filterTable();
           this.filterStoreTable();
+          // Sunucudan en güncel kayıtları hemen ana ekrana yansıt
+          this.loadOrders().catch(() => {});
+          this.loadStoreInvoices().catch(() => {});
+
           if (this.activeInvoiceOrderId && targetOrder) {
             this.showDetail(this.activeInvoiceOrderId);
           }
@@ -4698,7 +4708,10 @@ const AdminApp = {
         const isSelected = this.selectedStoreInvoiceIds.has(inv.orderId);
 
         const invoiceBadge = isSigned
-          ? '<span style="background:#DCFCE7; color:#15803D; padding:4px 9px; border-radius:6px; font-weight:800; border:1px solid #86EFAC;">🧾 İmzalandı</span>'
+          ? `<div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
+               <span style="background:#DCFCE7; color:#15803D; padding:4px 9px; border-radius:6px; font-weight:800; border:1px solid #86EFAC;">🧾 İmzalandı</span>
+               ${inv.invoiceNumber ? `<span style="font-size:10.5px; font-weight:800; font-family:monospace; color:#047857; margin-top:1px; letter-spacing:0.2px;">📄 ${inv.invoiceNumber}</span>` : ''}
+             </div>`
           : (inv.invoiceStatus === 'DRAFT'
           ? '<span style="background:#FEF3C7; color:#92400E; padding:4px 9px; border-radius:6px; font-weight:800; border:1px solid #FCD34D;">🧾 Taslak</span>'
           : '<span style="background:#FEE2E2; color:#991B1B; padding:4px 9px; border-radius:6px; font-weight:800; border:1px solid #FCA5A5;">⚠️ Kesilmedi</span>');
@@ -4778,7 +4791,10 @@ const AdminApp = {
         const updatedTime = this.formatTimeTr(inv.updatedAt);
 
         const invoiceBadge = isSigned
-          ? '<span style="background:#DCFCE7; color:#15803D; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #86EFAC; font-size:11px;">🧾 İmzalandı</span>'
+          ? `<div style="display:inline-flex; flex-direction:column; align-items:center; gap:2px;">
+               <span style="background:#DCFCE7; color:#15803D; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #86EFAC; font-size:11px;">🧾 İmzalandı</span>
+               ${inv.invoiceNumber ? `<span style="font-size:10.5px; font-weight:800; font-family:monospace; color:#047857; margin-top:1px; letter-spacing:0.2px;">📄 ${inv.invoiceNumber}</span>` : ''}
+             </div>`
           : (inv.invoiceStatus === 'DRAFT'
           ? '<span style="background:#FEF3C7; color:#92400E; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #FCD34D; font-size:11px;">🧾 Taslak</span>'
           : '<span style="background:#FEE2E2; color:#991B1B; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #FCA5A5; font-size:11px;">⚠️ Kesilmedi</span>');
