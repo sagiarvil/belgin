@@ -7,12 +7,16 @@ const FIREBASE_ADMIN_CONFIG = {
   appId: "1:7943100684:web:c4f70343f4af130852d129",
   storageBucket: "carbon-web-1265b.firebasestorage.app",
   apiKey: "AIzaSyCUQ0jDeUQPAr3xfSk-aOO4OqcrNwM3mD0",
-  authDomain: "carbon-web-1265b.firebaseapp.com",
+  authDomain: (typeof window !== 'undefined' && window.location.hostname.includes('belginkuyumculuk.com'))
+    ? window.location.hostname
+    : 'carbon-web-1265b.firebaseapp.com',
   messagingSenderId: "7943100684"
 };
 
 const ALLOWED_ADMIN_EMAILS = [
   'barisbagirlar@gmail.com',
+  'teb232@gmail.com',
+  'info@cimetricaone.com',
   'destek@belginkuyumculuk.com'
 ];
 
@@ -94,11 +98,28 @@ const AdminApp = {
     // Eğer kullanıcı daha önce açıkça çıkış yaptıysa otomatik açma
     const isExplicitlyLoggedOut = sessionStorage.getItem('belgin_admin_logged_out') === 'true';
 
+    // PIN ile daha önceden oturum açılmışsa ve açıkça çıkış yapılmadıysa
+    const savedPin = sessionStorage.getItem('belgin_admin_pin');
+    if (savedPin === '1999' && !isExplicitlyLoggedOut) {
+      this.adminPin = '1999';
+      const userBadge = document.getElementById('adminUserBadge');
+      if (userBadge) {
+        userBadge.innerHTML = '🛡️ Yönetici (PIN Onaylı)';
+        userBadge.style.display = 'inline-block';
+      }
+      this.onAuthenticated();
+      return;
+    }
+
     // Firebase Auth Başlat & Dinle
     if (typeof firebase !== 'undefined') {
       try {
         if (!firebase.apps.length) {
           firebase.initializeApp(FIREBASE_ADMIN_CONFIG);
+        }
+
+        if (firebase.auth && firebase.auth.Auth && firebase.auth.Auth.Persistence) {
+          firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(console.warn);
         }
 
         // 1. Mobile / iOS Safari Redirect Sonucu Yakalama
@@ -113,7 +134,7 @@ const AdminApp = {
               return;
             } else {
               await firebase.auth().signOut();
-              this.showGoogleAuthError(`❌ Yetkisiz Google Hesabı (${email}). Bu yönetim paneline yalnızca yetkilendirilmiş yönetici hesabı erişebilir.`);
+              this.showGoogleAuthError(`❌ Yetkisiz Google Hesabı (${email}). Lütfen yetkili yönetici hesabınız ile giriş yapınız veya PIN kodunuzu giriniz.`);
             }
           }
         }).catch((err) => {
@@ -134,10 +155,12 @@ const AdminApp = {
               return;
             } else {
               await firebase.auth().signOut();
-              this.showGoogleAuthError(`❌ Yetkisiz Google Hesabı (${email}). Bu yönetim paneline yalnızca yetkilendirilmiş yönetici hesabı erişebilir.`);
+              this.showGoogleAuthError(`❌ Yetkisiz Google Hesabı (${email}). Lütfen yetkili yönetici hesabınız ile giriş yapınız veya PIN kodunuzu giriniz.`);
             }
           }
-          this.showAuthGate();
+          if (!sessionStorage.getItem('belgin_admin_pin')) {
+            this.showAuthGate();
+          }
         });
         return;
       } catch (e) {
@@ -421,9 +444,14 @@ const AdminApp = {
     if (val === '1999') {
       this.adminPin = val;
       sessionStorage.setItem('belgin_admin_pin', val);
+      sessionStorage.removeItem('belgin_admin_logged_out');
       if (err) err.style.display = 'none';
-      this.hideAuthGate();
-      this.loadOrders().then(() => this.startLivePolling());
+      const userBadge = document.getElementById('adminUserBadge');
+      if (userBadge) {
+        userBadge.innerHTML = '🛡️ Yönetici (PIN Onaylı)';
+        userBadge.style.display = 'inline-block';
+      }
+      this.onAuthenticated();
     } else {
       if (err) err.style.display = 'block';
       if (input) {

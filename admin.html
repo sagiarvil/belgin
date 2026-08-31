@@ -1758,14 +1758,13 @@
 </head>
 <body>
 
-<!-- GÜVENLİ YÖNETİCİ GOOGLE 2FA GİRİŞ KORUMASI -->
+<!-- GÜVENLİ YÖNETİCİ GOOGLE 2FA & PIN GİRİŞ KORUMASI -->
 <div class="admin-auth-overlay" id="adminAuthGate">
   <div class="admin-auth-box">
     <div style="font-size:38px; margin-bottom:12px;">🛡️</div>
     <h2 style="font-family:'Playfair Display',serif; margin:0 0 8px; color:var(--admin-teal-dark); font-size:22px;">Belgin Yönetici Girişi</h2>
-    <p style="font-size:13px; color:var(--admin-muted); margin:0 0 24px; line-height:1.5;">
-      Bu yönetim paneli en üst düzey güvenlik standardı olan <strong>Google 2FA (İki Adımlı Doğrulama)</strong> ile korunmaktadır.<br>
-      Lütfen yetkili yönetici hesabınız ile giriş yapınız.
+    <p style="font-size:13px; color:var(--admin-muted); margin:0 0 20px; line-height:1.5;">
+      Bu yönetim paneli en üst düzey güvenlik standardı olan <strong>Google 2FA</strong> ve <strong>Yönetici PIN Doğrulaması</strong> ile korunmaktadır.
     </p>
     
     <button type="button" id="btnGoogleAuth" class="btn-google-auth" onclick="AdminApp.loginWithGoogle()">
@@ -1774,6 +1773,22 @@
     </button>
 
     <div id="googleAuthError" style="color:#C81E1E; font-size:12px; font-weight:700; margin-top:14px; display:none; background:#FEF2F2; border:1px solid #FECACA; border-radius:8px; padding:10px 12px; text-align:left; line-height:1.4;"></div>
+
+    <div style="display:flex; align-items:center; margin:22px 0 16px; color:#94A3B8; font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">
+      <div style="flex:1; height:1px; background:#E2E8F0;"></div>
+      <span style="padding:0 12px;">VEYA YÖNETİCİ PIN KODU</span>
+      <div style="flex:1; height:1px; background:#E2E8F0;"></div>
+    </div>
+
+    <form onsubmit="event.preventDefault(); AdminApp.verifyPin();" style="display:flex; flex-direction:column; gap:10px;">
+      <input type="password" id="adminPinInput" placeholder="Yönetici PIN Kodu" maxlength="10" autocomplete="current-password" style="width:100%; padding:12px; border:1.5px solid #CBD5E1; border-radius:8px; font-size:15px; text-align:center; letter-spacing:4px; font-weight:bold; box-sizing:border-box; background:#FFF;">
+      <button type="submit" style="width:100%; padding:12px; background:var(--admin-teal-dark, #084C47); color:#FFF; border:none; border-radius:8px; font-size:14px; font-weight:bold; cursor:pointer; transition:all 0.2s; box-shadow:0 2px 8px rgba(8,76,71,0.2);">
+        🔒 PIN ile Giriş Yap
+      </button>
+      <div id="pinErrorMsg" style="color:#C81E1E; font-size:12px; font-weight:700; display:none; background:#FEF2F2; border:1px solid #FECACA; border-radius:8px; padding:8px 12px; line-height:1.4;">
+        ❌ Geçersiz PIN kodu. Lütfen tekrar deneyiniz.
+      </div>
+    </form>
   </div>
 </div>
 

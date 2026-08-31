@@ -304,6 +304,8 @@ exports.getOrderStatus = exports.getPaymentStatus;
 const ADMIN_MASTER_PIN = process.env.ADMIN_MASTER_PIN || '1999';
 const ALLOWED_ADMIN_EMAILS = new Set([
   'barisbagirlar@gmail.com',
+  'teb232@gmail.com',
+  'info@cimetricaone.com',
   'destek@belginkuyumculuk.com'
 ]);
 
