@@ -11,14 +11,14 @@ const crypto = require('crypto');
 const GIB_PROD_URL = 'https://earsivportal.efatura.gov.tr/earsiv-services';
 const GIB_TEST_URL = 'https://earsivportaltest.efatura.gov.tr/earsiv-services';
 
-// 5 ADET 22 AYAR ALTIN SABİT ÜRÜN KATALOĞU VE LİNKLERİ
+// 8 ADET 22 AYAR ALTIN SABİT ÜRÜN KATALOĞU VE LİNKLERİ
 const VIP_22_CATALOG = Object.freeze([
   {
     id: '2734',
     name: '7 Gram 22 Ayar Ajda Altın Bilezik',
     reference: 'BLG-BLZ-110',
     url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-110-2734/',
-    basePrice: 51853,
+    basePrice: 45570,
     weight: 7.0,
     karat: 22
   },
@@ -27,7 +27,7 @@ const VIP_22_CATALOG = Object.freeze([
     name: 'Ata Tam Yeni 22 ayar',
     reference: 'BLG-ZYN-045',
     url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-045-2669/',
-    basePrice: 47400,
+    basePrice: 46107,
     weight: 7.216,
     karat: 22
   },
@@ -36,7 +36,7 @@ const VIP_22_CATALOG = Object.freeze([
     name: 'Ziynet Çeyrek Altın',
     reference: 'BLG-ZYN-043',
     url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-043-2667/',
-    basePrice: 11750,
+    basePrice: 11070,
     weight: 1.754,
     karat: 22
   },
@@ -45,7 +45,7 @@ const VIP_22_CATALOG = Object.freeze([
     name: 'Yarım Altın',
     reference: 'BLG-ZYN-046',
     url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-046-2670/',
-    basePrice: 23500,
+    basePrice: 22322,
     weight: 3.508,
     karat: 22
   },
@@ -54,16 +54,44 @@ const VIP_22_CATALOG = Object.freeze([
     name: 'Çeyrek Altın',
     reference: 'BLG-ZYN-044',
     url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-044-2668/',
-    basePrice: 11750,
+    basePrice: 11070,
     weight: 1.754,
+    karat: 22
+  },
+  {
+    id: '2741',
+    name: '10 gr 22 Ayar Burma Altın Bilezik',
+    reference: 'BLG-BLZ-117',
+    url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-117-2741/',
+    basePrice: 65240,
+    weight: 10.0,
+    karat: 22
+  },
+  {
+    id: '2748',
+    name: '20 gr 22 Ayar Burma Altın Bilezik',
+    reference: 'BLG-BLZ-124',
+    url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-124-2748/',
+    basePrice: 130480,
+    weight: 20.0,
+    karat: 22
+  },
+  {
+    id: '2753',
+    name: '3\'lü Burma 25 gr 22 Ayar Altın Bilezik',
+    reference: 'BLG-BLZ-129',
+    url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-129-2753/',
+    basePrice: 163100,
+    weight: 25.0,
     karat: 22
   }
 ]);
 
 /**
- * /22 Kısayolu ve Otomatik 22 Ayar Özel Matrah Ayrıştırma Motoru
- * Toplam fiyata %1.5 işçilik (%20 KDV dahil) ekler, kalanı 5 üründen 1 veya 2 ürüne paylaştırır.
- * Fatura tutarı tam olarak sipariş tutarına eşittir.
+ * /22 Kısayolu ve Akıllı Baremli 22 Ayar Özel Matrah Ayrıştırma Motoru
+ * Web sitesindeki gerçek ürün fiyatlarına sadık kalır.
+ * Fatura tutarı arttıkça katalogdaki 8 temel 22 ayar ürünümüzden (Ajda, Burma, Ata, Yarım, Çeyrek)
+ * her seferinde dinamik ve çeşitli gerçek kuyumcu sepetleri oluşturur; kuruş farkını son üründe mikro fiyata yedirir.
  */
 function calculateVip22Breakdown(totalAmount) {
   const total = Number(totalAmount) || 0;
@@ -77,90 +105,151 @@ function calculateVip22Breakdown(totalAmount) {
   const workmanshipKdv = Math.round((workmanshipTotal - workmanshipNet) * 100) / 100;
   const goldNetPool = Math.round((total - workmanshipTotal) * 100) / 100;
 
-  const items = [];
-  const catalog = [...VIP_22_CATALOG];
-  const shuffled = catalog.sort(() => 0.5 - Math.random());
+  // 8 Temel Ürünü Fiyat Kategorilerine Göre Dinamik Olarak Karıştır
+  const bigs = VIP_22_CATALOG.filter(p => p.basePrice >= 100000).sort(() => 0.5 - Math.random());
+  const meds = VIP_22_CATALOG.filter(p => p.basePrice >= 40000 && p.basePrice < 100000).sort(() => 0.5 - Math.random());
+  const smalls = VIP_22_CATALOG.filter(p => p.basePrice < 40000).sort(() => 0.5 - Math.random());
 
-  if (total <= 200000) {
-    // DURUM A: <= 200.000 TL -> Tek 22 Ayar Ürün
-    const p1 = shuffled[0];
-    const p1Price = p1.basePrice || 35000;
-    const qty1 = Math.max(1, Math.round(goldNetPool / p1Price));
-    const unitPrice1 = Math.round((goldNetPool / qty1) * 100) / 100;
+  let rawBasket = [];
+  let remainingPool = goldNetPool;
 
-    items.push({
-      malHizmet: `${p1.name} (Kıymetli Maden Bedeli - Özel Matrah)`,
-      miktar: qty1,
-      birim: 'C62',
-      birimFiyat: unitPrice1.toFixed(2),
-      fiyat: goldNetPool.toFixed(2),
-      iskontoArttirim: 'İskonto',
-      iskontoOrani: 0,
-      iskontoTutari: '0.00',
-      iskontoNedeni: '',
-      malHizmetTutari: goldNetPool.toFixed(2),
-      kdvOrani: 0,
-      kdvTutari: '0.00',
-      vergiOrani: 0,
-      ozelMatrahNedeni: '351',
-      ozelMatrahTutari: goldNetPool.toFixed(2),
-      tevkifatKodu: 0
-    });
+  if (goldNetPool < 30000) {
+    // 1. BAREM (< 30.000 TL): 1 veya 2 adet küçük kalem (Çeyrek veya Yarım)
+    const s1 = smalls[0];
+    const q1 = Math.max(1, Math.round(goldNetPool / s1.basePrice));
+    rawBasket.push({ prod: s1, qty: q1, unitPrice: s1.basePrice });
+  } else if (goldNetPool < 100000) {
+    // 2. BAREM (30.000 - 100.000 TL): 1 orta boy ürün (7gr Ajda veya 10gr Burma veya Ata Tam) + Çeyrek/Yarım
+    const m1 = meds[0];
+    const qM = Math.max(1, Math.floor((goldNetPool - 12000) / m1.basePrice));
+    rawBasket.push({ prod: m1, qty: qM, unitPrice: m1.basePrice });
+    remainingPool -= qM * m1.basePrice;
+
+    if (remainingPool >= 20000 && Math.random() > 0.5) {
+      const yarim = smalls.find(s => s.basePrice >= 20000);
+      if (yarim && yarim.basePrice < remainingPool - 5000) {
+        rawBasket.push({ prod: yarim, qty: 1, unitPrice: yarim.basePrice });
+        remainingPool -= yarim.basePrice;
+      }
+    }
+
+    const s1 = smalls.find(s => s.basePrice < 20000) || smalls[0];
+    const qS = Math.max(1, Math.round(remainingPool / s1.basePrice));
+    rawBasket.push({ prod: s1, qty: qS, unitPrice: s1.basePrice });
+  } else if (goldNetPool < 250000) {
+    // 3. BAREM (100.000 - 250.000 TL): Dinamik Karma (20gr Burma veya 1-2 Orta Boy + Yarım/Çeyrek)
+    const useBig = Math.random() > 0.5 && bigs.some(b => b.basePrice <= goldNetPool * 0.65);
+    if (useBig) {
+      const b1 = bigs.find(b => b.basePrice <= goldNetPool * 0.65) || bigs[0];
+      rawBasket.push({ prod: b1, qty: 1, unitPrice: b1.basePrice });
+      remainingPool -= b1.basePrice;
+    }
+
+    const medCount = useBig ? 1 : (Math.random() > 0.5 ? 2 : 3);
+    for (let i = 0; i < medCount && i < meds.length; i++) {
+      const m = meds[i];
+      const targetAmt = remainingPool * (i === 0 && !useBig ? 0.50 : 0.60);
+      const q = Math.max(1, Math.floor(targetAmt / m.basePrice));
+      if (q > 0 && q * m.basePrice < remainingPool - 5000) {
+        rawBasket.push({ prod: m, qty: q, unitPrice: m.basePrice });
+        remainingPool -= q * m.basePrice;
+      }
+    }
+
+    if (remainingPool >= 20000 && Math.random() > 0.4) {
+      const yarim = smalls.find(s => s.basePrice >= 20000);
+      if (yarim && yarim.basePrice < remainingPool - 5000) {
+        rawBasket.push({ prod: yarim, qty: 1, unitPrice: yarim.basePrice });
+        remainingPool -= yarim.basePrice;
+      }
+    }
+
+    const s1 = smalls.find(s => s.basePrice < 20000) || smalls[0];
+    const qS = Math.max(1, Math.round(remainingPool / s1.basePrice));
+    rawBasket.push({ prod: s1, qty: qS, unitPrice: s1.basePrice });
   } else {
-    // DURUM B: > 200.000 TL -> 2 Farklı 22 Ayar Ürün
-    const p1 = shuffled[0];
-    const p2 = shuffled[1];
+    // 4. BAREM (>= 250.000 TL, Örn: 485.000 TL, 1.000.000 TL): 8 Ürünlük Havuzdan Zengin ve Çeşitlendirilmiş Sepet
+    const availableBigs = [...bigs];
+    const availableMeds = [...meds];
+    const availableSmalls = [...smalls];
 
-    const ratio1 = (Math.floor(Math.random() * 16) + 55) / 100; // 0.55 .. 0.70
-    const pool1 = Math.round(goldNetPool * ratio1 * 100) / 100;
-    const pool2 = Math.round((goldNetPool - pool1) * 100) / 100;
+    const bigPickCount = goldNetPool >= 500000 ? 2 : (Math.random() > 0.3 ? 2 : 1);
+    for (let i = 0; i < bigPickCount && availableBigs.length > 0; i++) {
+      const b = availableBigs[i];
+      const targetAmt = goldNetPool * (i === 0 ? 0.35 : 0.25);
+      const q = Math.max(1, Math.floor(targetAmt / b.basePrice));
+      if (q > 0 && q * b.basePrice < remainingPool - 30000) {
+        rawBasket.push({ prod: b, qty: q, unitPrice: b.basePrice });
+        remainingPool -= q * b.basePrice;
+      }
+    }
 
-    const p1Price = p1.basePrice || 35000;
-    const qty1 = Math.max(1, Math.round(pool1 / p1Price));
-    const unitPrice1 = Math.round((pool1 / qty1) * 100) / 100;
+    const medPickCount = Math.floor(Math.random() * 2) + 2; // 2 veya 3 farklı orta kalem
+    for (let i = 0; i < medPickCount && i < availableMeds.length; i++) {
+      const m = availableMeds[i];
+      const targetAmt = remainingPool * 0.45;
+      const q = Math.max(1, Math.floor(targetAmt / m.basePrice));
+      if (q > 0 && q * m.basePrice < remainingPool - 8000) {
+        rawBasket.push({ prod: m, qty: q, unitPrice: m.basePrice });
+        remainingPool -= q * m.basePrice;
+      }
+    }
 
-    const p2Price = p2.basePrice || 35000;
-    const qty2 = Math.max(1, Math.round(pool2 / p2Price));
-    const unitPrice2 = Math.round((pool2 / qty2) * 100) / 100;
+    if (remainingPool >= 25000 && availableSmalls.some(s => s.basePrice >= 20000)) {
+      const yarim = availableSmalls.find(s => s.basePrice >= 20000);
+      const qY = Math.max(1, Math.floor((remainingPool - 10000) / yarim.basePrice));
+      if (qY > 0) {
+        rawBasket.push({ prod: yarim, qty: qY, unitPrice: yarim.basePrice });
+        remainingPool -= qY * yarim.basePrice;
+      }
+    }
 
-    items.push({
-      malHizmet: `${p1.name} (Kıymetli Maden Bedeli - Özel Matrah)`,
-      miktar: qty1,
-      birim: 'C62',
-      birimFiyat: unitPrice1.toFixed(2),
-      fiyat: pool1.toFixed(2),
-      iskontoArttirim: 'İskonto',
-      iskontoOrani: 0,
-      iskontoTutari: '0.00',
-      iskontoNedeni: '',
-      malHizmetTutari: pool1.toFixed(2),
-      kdvOrani: 0,
-      kdvTutari: '0.00',
-      vergiOrani: 0,
-      ozelMatrahNedeni: '351',
-      ozelMatrahTutari: pool1.toFixed(2),
-      tevkifatKodu: 0
-    });
-
-    items.push({
-      malHizmet: `${p2.name} (Kıymetli Maden Bedeli - Özel Matrah)`,
-      miktar: qty2,
-      birim: 'C62',
-      birimFiyat: unitPrice2.toFixed(2),
-      fiyat: pool2.toFixed(2),
-      iskontoArttirim: 'İskonto',
-      iskontoOrani: 0,
-      iskontoTutari: '0.00',
-      iskontoNedeni: '',
-      malHizmetTutari: pool2.toFixed(2),
-      kdvOrani: 0,
-      kdvTutari: '0.00',
-      vergiOrani: 0,
-      ozelMatrahNedeni: '351',
-      ozelMatrahTutari: pool2.toFixed(2),
-      tevkifatKodu: 0
-    });
+    const finalSmall = availableSmalls.find(s => s.basePrice < 20000) || availableSmalls[0];
+    const qFinal = Math.max(1, Math.round(remainingPool / finalSmall.basePrice));
+    rawBasket.push({ prod: finalSmall, qty: qFinal, unitPrice: finalSmall.basePrice });
   }
+
+  // Ara Toplam ve Kalan Farkı Hesapla
+  let sum = 0;
+  for (let i = 0; i < rawBasket.length - 1; i++) {
+    sum += rawBasket[i].qty * rawBasket[i].unitPrice;
+  }
+  const lastItem = rawBasket[rawBasket.length - 1];
+  const lastLineTotal = Math.round((goldNetPool - sum) * 100) / 100;
+  lastItem.unitPrice = Math.round((lastLineTotal / lastItem.qty) * 100) / 100;
+  lastItem.lineTotal = lastLineTotal;
+
+  // Satırları GİB e-Arşiv Standartlarına Göre Oluştur
+  const items = [];
+  let calculatedGoldTotal = 0;
+
+  rawBasket.forEach((bItem, idx) => {
+    const lineTotal = (idx === rawBasket.length - 1)
+      ? Math.round((goldNetPool - calculatedGoldTotal) * 100) / 100
+      : Math.round(bItem.qty * bItem.unitPrice * 100) / 100;
+    
+    calculatedGoldTotal = Math.round((calculatedGoldTotal + lineTotal) * 100) / 100;
+    const finalUnitPrice = Math.round((lineTotal / bItem.qty) * 100) / 100;
+
+    items.push({
+      malHizmet: `${bItem.prod.name} (Kıymetli Maden Bedeli - Özel Matrah)`,
+      miktar: bItem.qty,
+      birim: 'C62',
+      birimFiyat: finalUnitPrice.toFixed(2),
+      fiyat: lineTotal.toFixed(2),
+      iskontoArttirim: 'İskonto',
+      iskontoOrani: 0,
+      iskontoTutari: '0.00',
+      iskontoNedeni: '',
+      malHizmetTutari: lineTotal.toFixed(2),
+      kdvOrani: 0,
+      kdvTutari: '0.00',
+      vergiOrani: 0,
+      ozelMatrahNedeni: '351',
+      ozelMatrahTutari: lineTotal.toFixed(2),
+      tevkifatKodu: 0
+    });
+  });
 
   // İşçilik Bedeli Satırı (%20 KDV dahil)
   items.push({

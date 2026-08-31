@@ -2,20 +2,33 @@
 // BELGIN KUYUMCULUK — YÖNETİCİ VE TAHSİLAT PANELİ JS MOTORU
 // ==========================================================
 
-const FIREBASE_ADMIN_CONFIG = {
-  projectId: "carbon-web-1265b",
-  appId: "1:7943100684:web:c4f70343f4af130852d129",
-  storageBucket: "carbon-web-1265b.firebasestorage.app",
-  apiKey: "AIzaSyCUQ0jDeUQPAr3xfSk-aOO4OqcrNwM3mD0",
-  authDomain: "carbon-web-1265b.firebaseapp.com",
-  messagingSenderId: "7943100684"
+// Same-Origin AuthDomain: Safari ITP & Cross-Origin Redirect engeline takılmamak için
+const getFirebaseAdminConfig = () => {
+  let domain = "carbon-web-1265b.firebaseapp.com";
+  try {
+    const host = window.location.hostname;
+    if (host && (host.endsWith('web.app') || host.endsWith('firebaseapp.com') || host.includes('belgin'))) {
+      domain = host;
+    }
+  } catch (_) {}
+
+  return {
+    projectId: "carbon-web-1265b",
+    appId: "1:7943100684:web:c4f70343f4af130852d129",
+    storageBucket: "carbon-web-1265b.firebasestorage.app",
+    apiKey: "AIzaSyCUQ0jDeUQPAr3xfSk-aOO4OqcrNwM3mD0",
+    authDomain: domain,
+    messagingSenderId: "7943100684"
+  };
 };
 
 const ALLOWED_ADMIN_EMAILS = [
   'barisbagirlar@gmail.com',
   'teb232@gmail.com',
   'info@cimetricaone.com',
-  'destek@belginkuyumculuk.com'
+  'destek@belginkuyumculuk.com',
+  'yonetim@belginkuyumculuk.com',
+  'belginkuyumculuk@gmail.com'
 ];
 
 const AdminApp = {
@@ -99,7 +112,7 @@ const AdminApp = {
     if (typeof firebase !== 'undefined') {
       try {
         if (!firebase.apps.length) {
-          firebase.initializeApp(FIREBASE_ADMIN_CONFIG);
+          firebase.initializeApp(getFirebaseAdminConfig());
         }
 
         // Yerel Oturum Kalıcılığı (Safari & iPhone sekme yenilemelerinde oturum korunur)
@@ -112,7 +125,7 @@ const AdminApp = {
           firebase.auth().useDeviceLanguage();
         }
 
-        // 1. Mobile / iOS Safari Redirect Sonucu Yakalama
+        // 1. Mobile / Safari Redirect Sonucu Yakalama
         firebase.auth().getRedirectResult().then(async (result) => {
           if (result && result.user) {
             const user = result.user;
@@ -126,7 +139,7 @@ const AdminApp = {
             } else {
               await firebase.auth().signOut();
               this.showAuthGate();
-              this.showGoogleAuthError(`❌ Yetkisiz Google Hesabı (${email}). Lütfen yetkili yönetici hesabınız ile giriş yapınız veya PIN kodunuzu giriniz.`);
+              this.showGoogleAuthError(`❌ Yetkisiz Google Hesabı (${email}). Lütfen yetkili yönetici hesabınız ile giriş yapınız veya 1999 PIN kodu ile giriniz.`);
             }
           }
         }).catch((err) => {
@@ -149,11 +162,14 @@ const AdminApp = {
             } else {
               await firebase.auth().signOut();
               this.showAuthGate();
-              this.showGoogleAuthError(`❌ Yetkisiz Google Hesabı (${email}). Lütfen yetkili yönetici hesabınız ile giriş yapınız veya PIN kodunuzu giriniz.`);
+              this.showGoogleAuthError(`❌ Yetkisiz Google Hesabı (${email}). Lütfen yetkili yönetici hesabınız ile giriş yapınız veya 1999 PIN kodu ile giriniz.`);
               return;
             }
           }
-          this.showAuthGate();
+          // Oturum yoksa gate açık kalsın
+          if (!this.adminPin) {
+            this.showAuthGate();
+          }
         });
         return;
       } catch (e) {
@@ -186,7 +202,7 @@ const AdminApp = {
     if (btn) {
       btn.disabled = true;
       btn.style.opacity = '0.7';
-      btn.innerHTML = '<span>⏳ Google ile giriş yapılıyor, lütfen bekleyiniz...</span>';
+      btn.innerHTML = '<span>⏳ Google ile giriş yapılıyor...</span>';
     }
 
     if (typeof firebase === 'undefined' || !firebase.auth) {
@@ -201,44 +217,7 @@ const AdminApp = {
     provider.addScope('profile');
     provider.setCustomParameters({ prompt: 'select_account' });
 
-    // iOS Safari, Chrome Mobile, Android & Dokunmatik Cihaz Tespiti
-    const isIos = /iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    const isMobile = isIos || /Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 860);
-
-    if (isMobile) {
-      try {
-        // iPhone ve mobil cihazlarda Safari popup engelleyicisine takılmamak için doğrudan redirect kullanılır
-        await firebase.auth().signInWithRedirect(provider);
-        return;
-      } catch (err) {
-        console.error('Mobile Redirect Auth Error:', err);
-        // Redirect engellenirse popup fallback dene
-        try {
-          const result = await firebase.auth().signInWithPopup(provider);
-          const user = result.user;
-          const email = (user.email || '').toLowerCase().trim();
-          if (!ALLOWED_ADMIN_EMAILS.includes(email)) {
-            await firebase.auth().signOut();
-            this.showGoogleAuthError(`❌ Yetkisiz Google Hesabı (${email}). Bu yönetim paneline yalnızca yetkilendirilmiş yönetici hesabı erişebilir.`);
-            return;
-          }
-          this.adminToken = await user.getIdToken();
-          this.adminUser = { email: user.email, displayName: user.displayName, photoURL: user.photoURL };
-          this.adminPin = '1999';
-          this.onAuthenticated();
-          return;
-        } catch (popupErr) {
-          console.error('Mobile Popup Fallback Error:', popupErr);
-          this.showGoogleAuthError(err.message || popupErr.message || 'Google ile giriş yönlendirmesi başarısız oldu.');
-        } finally {
-          this.isAuthenticating = false;
-          if (btn) { btn.disabled = false; btn.style.opacity = '1'; btn.innerHTML = originalBtnHtml; }
-        }
-        return;
-      }
-    }
-
-    // Masaüstü Tarayıcılar: Önce Popup dene, popup engellenirse şeffaf şekilde redirect e geç
+    // Hem Masaüstü hem Mobil / iPhone için doğrudan Popup denenir (User gesture / touch anında Safari popup'a izin verir)
     try {
       const result = await firebase.auth().signInWithPopup(provider);
       const user = result.user;
@@ -246,7 +225,7 @@ const AdminApp = {
 
       if (!ALLOWED_ADMIN_EMAILS.includes(email)) {
         await firebase.auth().signOut();
-        this.showGoogleAuthError(`❌ Yetkisiz Google Hesabı (${email}). Bu yönetim paneline yalnızca yetkilendirilmiş yönetici hesabı erişebilir.`);
+        this.showGoogleAuthError(`❌ Yetkisiz Google Hesabı (${email}). Lütfen yetkili yönetici hesabınız ile giriş yapınız veya 1999 PIN kodu ile giriniz.`);
         return;
       }
 
@@ -255,16 +234,20 @@ const AdminApp = {
       this.adminPin = '1999';
       this.onAuthenticated();
     } catch (err) {
-      console.error('Google Auth Error:', err);
-      if (err.code === 'auth/popup-blocked' || err.code === 'auth/cancelled-popup-request' || err.code === 'auth/popup-closed-by-user') {
+      console.warn('Google Popup Auth Notice:', err);
+      // Popup engellendiyse veya mobil redirect gerekiyorsa
+      if (err.code === 'auth/popup-blocked' || err.code === 'auth/cancelled-popup-request') {
         try {
+          if (btn) btn.innerHTML = '<span>⏳ Güvenli yönlendirme yapılıyor...</span>';
           await firebase.auth().signInWithRedirect(provider);
           return;
         } catch (redirectErr) {
           console.error('Fallback Redirect Error:', redirectErr);
+          this.showGoogleAuthError(redirectErr.message || 'Giriş yönlendirmesi başarısız oldu.');
         }
+      } else if (err.code !== 'auth/popup-closed-by-user') {
+        this.showGoogleAuthError(err.message || 'Google ile giriş başarısız oldu.');
       }
-      this.showGoogleAuthError(err.message || 'Google ile giriş başarısız oldu.');
     } finally {
       this.isAuthenticating = false;
       if (btn) {
@@ -3974,6 +3957,65 @@ const AdminApp = {
     this.calculateStoreInvoiceLiveSummary();
 
     this.showToast(isAppend ? `➕ ${itemsToAdd.length} yeni kalem faturaya eklendi.` : `⚡ Fatura satırları (₺${res.totalAmount.toLocaleString('tr-TR')}) kuruşu kuruşuna tam olarak dolduruldu.`);
+  },
+
+  // 🌟 AKILLI 5 PARÇALI GERÇEK FİYATLI SEPET ORGANİZATÖRÜ (30.000 TL Üzeri Baremli Dağıtım)
+  applySmartVip22BasketToInvoice(isAppend = false) {
+    const totalInput = document.getElementById('smartCalcTotalAmount');
+    const totalAmount = this.parseSmartCalcAmount(totalInput?.value || 0);
+
+    if (!totalAmount || totalAmount <= 0) {
+      alert('⚠️ Lütfen önce geçerli bir Fatura Toplam Tutarı giriniz (Örn: 100.000 TL veya 485.000 TL).');
+      if (totalInput) totalInput.focus();
+      return;
+    }
+
+    if (typeof VipEngine === 'undefined' || !VipEngine.calculateVip22Breakdown) {
+      alert('⚠️ Akıllı VIP 22 Ayar hesaplama motoru yüklenemedi.');
+      return;
+    }
+
+    const v22 = VipEngine.calculateVip22Breakdown(totalAmount);
+    if (!v22 || !Array.isArray(v22.items) || v22.items.length === 0) {
+      alert('⚠️ Akıllı sepet oluşturulamadı.');
+      return;
+    }
+
+    const itemsToAdd = v22.items.map(it => {
+      const isLabor = (it.name === 'İşçilik' || it.malHizmet === 'İşçilik' || it.id === 'WORKMANSHIP-22K');
+      if (isLabor) {
+        return {
+          name: 'İşçilik',
+          qty: 1,
+          unitPrice: Number(it.unitPrice || it.birimFiyat || 0),
+          kdvRate: 20,
+          lineTotal: Number(it.lineTotal || it.fiyat || 0),
+          kdvAmount: Number(it.kdvTutari || 0)
+        };
+      }
+      return {
+        name: it.malHizmet || `${it.name} (Kıymetli Maden Bedeli - Özel Matrah)`,
+        qty: Number(it.qty || it.miktar || 1),
+        unitPrice: Number(it.unitPrice || it.birimFiyat || 0),
+        kdvRate: 0,
+        lineTotal: Number(it.lineTotal || it.fiyat || 0),
+        kdvAmount: 0
+      };
+    });
+
+    if (!isAppend) {
+      this.storeItems = itemsToAdd;
+    } else {
+      if (this.storeItems.length === 1 && (!this.storeItems[0].name || this.storeItems[0].unitPrice === 0)) {
+        this.storeItems = itemsToAdd;
+      } else {
+        this.storeItems.push(...itemsToAdd);
+      }
+    }
+
+    this.renderStoreInvoiceItems();
+    this.calculateStoreInvoiceLiveSummary();
+    this.showToast(`⚡ ${itemsToAdd.length} kalemli gerçek fiyatlı akıllı sepet (₺${totalAmount.toLocaleString('tr-TR')}) başarıyla faturaya aktarıldı.`);
   },
 
   // İşçilik Kalemi Ekle (Altın Tutarı İçinden Otomatik Düşerek Toplamı Sabit Tutar)

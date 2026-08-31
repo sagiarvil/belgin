@@ -332,27 +332,32 @@
 
     .admin-filter-row {
       display: grid;
-      grid-template-columns: auto auto 1fr auto auto;
+      grid-template-columns: auto 1fr auto auto;
       gap: 12px;
       align-items: center;
     }
 
-    .date-input-wrap {
+    .date-inputs-group {
       display: flex;
-      align-items: center;
       gap: 8px;
+      align-items: center;
     }
-    .date-input-wrap label {
-      font-size: 11px;
+
+    .date-input-box {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .date-input-box label {
+      font-size: 10px;
       font-weight: 800;
-      color: var(--admin-muted);
+      color: #475569;
       text-transform: uppercase;
-      letter-spacing: 0.6px;
-      white-space: nowrap;
+      letter-spacing: 0.5px;
     }
-    .date-input-wrap input[type="date"] {
+    .date-input-box input[type="date"] {
       border: 1.5px solid #CBD5E1;
-      padding: 8px 12px;
+      padding: 7px 10px;
       border-radius: 8px;
       font-size: 13px;
       font-family: inherit;
@@ -361,7 +366,7 @@
       color: #0F172A;
       transition: all 0.15s;
     }
-    .date-input-wrap input[type="date"]:focus {
+    .date-input-box input[type="date"]:focus {
       outline: none;
       border-color: var(--admin-teal);
       box-shadow: 0 0 0 3px rgba(8, 76, 71, 0.12);
@@ -1495,12 +1500,12 @@
       }
 
       body {
-        padding-bottom: calc(85px + env(safe-area-inset-bottom, 0px)) !important;
+        padding-bottom: calc(105px + env(safe-area-inset-bottom, 0px)) !important;
       }
 
       /* 1. ÜST HEADER & LOGO */
       .admin-navbar {
-        padding: 8px 12px !important;
+        padding: 10px 14px !important;
         width: 100% !important;
         max-width: 100vw !important;
         box-sizing: border-box !important;
@@ -1513,7 +1518,7 @@
         z-index: 1000 !important;
       }
       .admin-brand img {
-        height: 22px !important;
+        height: 24px !important;
       }
       .admin-title-badge {
         display: none !important;
@@ -1524,27 +1529,27 @@
         gap: 6px !important;
       }
       .live-status-pill {
-        font-size: 10px !important;
-        padding: 2px 6px !important;
+        font-size: 10.5px !important;
+        padding: 3px 8px !important;
         gap: 4px !important;
       }
       #liveClock {
-        font-size: 11px !important;
+        font-size: 11.5px !important;
       }
       #adminUserBadge {
         display: none !important;
       }
       .btn-admin-logout {
-        padding: 5px 10px !important;
-        font-size: 11px !important;
+        padding: 6px 12px !important;
+        font-size: 11.5px !important;
         font-weight: 800 !important;
-        min-height: 30px !important;
+        min-height: 32px !important;
         border-radius: 6px !important;
       }
 
       /* 2. ANA KONTEYNER & SEKME YÖNETİMİ */
       .admin-container {
-        padding: 8px !important;
+        padding: 10px 8px !important;
         margin: 8px auto 30px !important;
         width: 100% !important;
         max-width: 100vw !important;
@@ -1562,15 +1567,15 @@
         display: flex !important;
         flex-direction: column !important;
         align-items: stretch !important;
-        padding: 14px 12px !important;
+        padding: 16px 14px !important;
         gap: 12px !important;
         width: 100% !important;
         max-width: 100% !important;
         box-sizing: border-box !important;
-        border-radius: 14px !important;
+        border-radius: 16px !important;
       }
       .statement-main-title {
-        font-size: 18px !important;
+        font-size: 19px !important;
         line-height: 1.25 !important;
       }
       .statement-header-banner > div:first-child {
@@ -1584,22 +1589,24 @@
       }
       .statement-header-banner > div:last-child button {
         width: 100% !important;
-        min-height: 44px !important;
-        font-size: 12px !important;
+        min-height: 46px !important;
+        font-size: 12.5px !important;
         justify-content: center !important;
         padding: 8px 10px !important;
+        border-radius: 10px !important;
       }
 
       .statement-hero-remaining-box {
         align-items: center !important;
         text-align: center !important;
-        padding: 14px 16px !important;
+        padding: 16px 18px !important;
         width: 100% !important;
         min-width: 0 !important;
         box-sizing: border-box !important;
+        border-radius: 14px !important;
       }
       .statement-hero-val {
-        font-size: 24px !important;
+        font-size: 26px !important;
       }
       .statement-quick-actions {
         display: grid !important;
@@ -1610,12 +1617,13 @@
       }
       .statement-quick-actions button:first-child {
         grid-column: span 2 !important;
-        min-height: 46px !important;
+        min-height: 48px !important;
+        font-size: 14px !important;
       }
 
       /* 4. FİLTRE VE ARAMA PANELİ */
       .admin-filter-panel {
-        padding: 12px 10px !important;
+        padding: 14px 12px !important;
         border-radius: 14px !important;
         margin-bottom: 14px !important;
         width: 100% !important;
@@ -1625,7 +1633,7 @@
       .admin-presets {
         display: flex !important;
         gap: 6px !important;
-        margin-bottom: 10px !important;
+        margin-bottom: 12px !important;
         padding-bottom: 6px !important;
         overflow-x: auto !important;
         -webkit-overflow-scrolling: touch !important;
@@ -1633,8 +1641,8 @@
         box-sizing: border-box !important;
       }
       .btn-preset {
-        padding: 6px 12px !important;
-        font-size: 11.5px !important;
+        padding: 7px 13px !important;
+        font-size: 12px !important;
         min-height: 34px !important;
       }
       .admin-filter-row {
@@ -1644,41 +1652,59 @@
         gap: 10px !important;
         box-sizing: border-box !important;
       }
-      .date-input-wrap {
+      
+      .date-inputs-group {
         display: grid !important;
-        grid-template-columns: 85px 1fr !important;
-        align-items: center !important;
+        grid-template-columns: 1fr 1fr !important;
         gap: 8px !important;
         width: 100% !important;
         box-sizing: border-box !important;
       }
-      .date-input-wrap input[type="date"] {
+      .date-input-box {
         width: 100% !important;
-        font-size: 16px !important; /* iOS Otomatik Zoom Önleme */
-        padding: 10px 12px !important;
-        min-height: 44px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 3px !important;
+      }
+      .date-input-box label {
+        font-size: 11px !important;
+        font-weight: 800 !important;
+        color: #334155 !important;
+      }
+      .date-input-box input[type="date"] {
+        width: 100% !important;
+        font-size: 15px !important; /* iOS Zoom Önleme */
+        padding: 11px 10px !important;
+        min-height: 46px !important;
+        border-radius: 10px !important;
+        border: 1.5px solid #CBD5E1 !important;
         box-sizing: border-box !important;
+        background: #FFFFFF !important;
       }
 
       .pos-rate-box {
         width: 100% !important;
         justify-content: space-between !important;
-        min-height: 46px !important;
+        min-height: 48px !important;
         box-sizing: border-box !important;
+        padding: 8px 12px !important;
+        border-radius: 10px !important;
       }
 
       .admin-search-input {
         width: 100% !important;
-        font-size: 16px !important; /* iOS Otomatik Zoom Önleme */
-        padding: 11px 12px !important;
-        min-height: 44px !important;
+        font-size: 15px !important; /* iOS Zoom Önleme */
+        padding: 12px 14px !important;
+        min-height: 46px !important;
+        border-radius: 10px !important;
         box-sizing: border-box !important;
       }
       .admin-select {
         width: 100% !important;
         font-size: 14.5px !important;
-        padding: 11px 12px !important;
-        min-height: 44px !important;
+        padding: 12px 14px !important;
+        min-height: 46px !important;
+        border-radius: 10px !important;
         box-sizing: border-box !important;
       }
 
@@ -1692,27 +1718,27 @@
       }
       .admin-action-btn-group button {
         width: 100% !important;
-        min-height: 44px !important;
-        font-size: 12.5px !important;
-        border-radius: 8px !important;
+        min-height: 46px !important;
+        font-size: 13px !important;
+        border-radius: 10px !important;
         justify-content: center !important;
       }
       .admin-action-btn-group button:last-child {
         grid-column: span 2 !important;
       }
 
-      /* 5. METRİK KPI KARTLARI */
+      /* 5. METRİK KPI KARTLARI (2 KOLONLU EXCLUSIVE FINTECH GRID) */
       .admin-kpi-grid {
         display: grid !important;
         grid-template-columns: 1fr 1fr !important;
         gap: 8px !important;
-        margin-bottom: 12px !important;
+        margin-bottom: 14px !important;
         width: 100% !important;
         box-sizing: border-box !important;
       }
       .admin-kpi-card {
-        padding: 12px 10px !important;
-        border-radius: 12px !important;
+        padding: 14px 12px !important;
+        border-radius: 14px !important;
         width: 100% !important;
         min-width: 0 !important;
         box-sizing: border-box !important;
@@ -1723,12 +1749,12 @@
         grid-column: span 2 !important;
       }
       .kpi-label {
-        font-size: 10px !important;
-        line-height: 1.2 !important;
+        font-size: 10.5px !important;
+        line-height: 1.25 !important;
         white-space: normal !important;
       }
       .kpi-value {
-        font-size: 18px !important;
+        font-size: 19px !important;
         letter-spacing: -0.3px !important;
         line-height: 1.2 !important;
         margin: 4px 0 2px !important;
@@ -2075,14 +2101,15 @@
       </div>
 
       <div class="admin-filter-row">
-        <div class="date-input-wrap">
-          <label for="startDate">Başlangıç:</label>
-          <input type="date" id="startDate" onchange="AdminApp.onCustomDateChange()">
-        </div>
-
-        <div class="date-input-wrap">
-          <label for="endDate">Bitiş:</label>
-          <input type="date" id="endDate" onchange="AdminApp.onCustomDateChange()">
+        <div class="date-inputs-group">
+          <div class="date-input-box">
+            <label for="startDate">📅 Başlangıç Tarihi</label>
+            <input type="date" id="startDate" onchange="AdminApp.onCustomDateChange()">
+          </div>
+          <div class="date-input-box">
+            <label for="endDate">📅 Bitiş Tarihi</label>
+            <input type="date" id="endDate" onchange="AdminApp.onCustomDateChange()">
+          </div>
         </div>
 
         <div>
@@ -2262,14 +2289,15 @@
       </div>
 
       <div class="admin-filter-row">
-        <div class="date-input-wrap">
-          <label for="stmtStartDate">Başlangıç:</label>
-          <input type="date" id="stmtStartDate" onchange="AdminApp.onStmtCustomDateChange()">
-        </div>
-
-        <div class="date-input-wrap">
-          <label for="stmtEndDate">Bitiş:</label>
-          <input type="date" id="stmtEndDate" onchange="AdminApp.onStmtCustomDateChange()">
+        <div class="date-inputs-group">
+          <div class="date-input-box">
+            <label for="stmtStartDate">📅 Başlangıç Tarihi</label>
+            <input type="date" id="stmtStartDate" onchange="AdminApp.onStmtCustomDateChange()">
+          </div>
+          <div class="date-input-box">
+            <label for="stmtEndDate">📅 Bitiş Tarihi</label>
+            <input type="date" id="stmtEndDate" onchange="AdminApp.onStmtCustomDateChange()">
+          </div>
         </div>
 
         <!-- POS KOMİSYON ORANI AYARI (VARSAYILAN: 3.74) -->
@@ -2549,26 +2577,32 @@
                 <!-- Kayıtlı Perakende Altın Ürünleri Hızlı Seçim Butonları -->
                 <div style="margin-bottom:12px; padding:8px 10px; background:rgba(255,255,255,0.85); border:1px dashed #CBD5E1; border-radius:8px;">
                   <div style="font-size:10.5px; font-weight:800; color:#475569; margin-bottom:6px; text-transform:uppercase;">
-                    💎 Kayıtlı Perakende Altın Ürünlerinden Hızlı Seç:
+                    💎 Kayıtlı Perakende 22 Ayar Ürünlerinden Hızlı Seç:
                   </div>
                   <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; font-weight:700; color:#042926;" onclick="AdminApp.selectSmartCalcProduct('7 Gram 22 Ayar Ajda Altın Bilezik', 32620)">
-                      <span>✨ 7gr 22A Ajda Bilezik (₺32.620)</span>
+                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; font-weight:700; color:#042926;" onclick="AdminApp.selectSmartCalcProduct('7 Gram 22 Ayar Ajda Altın Bilezik', 45570)">
+                      <span>✨ 7gr 22A Ajda Bilezik (₺45.570)</span>
                     </button>
-                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; font-weight:700; color:#042926;" onclick="AdminApp.selectSmartCalcProduct('Ata Tam Yeni 22 Ayar Altın', 46107)">
+                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; font-weight:700; color:#042926;" onclick="AdminApp.selectSmartCalcProduct('10 gr 22 Ayar Burma Altın Bilezik', 65240)">
+                      <span>✨ 10gr 22A Burma (₺65.240)</span>
+                    </button>
+                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; font-weight:700; color:#042926;" onclick="AdminApp.selectSmartCalcProduct('20 gr 22 Ayar Burma Altın Bilezik', 130480)">
+                      <span>✨ 20gr 22A Burma (₺130.480)</span>
+                    </button>
+                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; font-weight:700; color:#042926;" onclick="AdminApp.selectSmartCalcProduct('3\'lü Burma 25 gr 22 Ayar Altın Bilezik', 163100)">
+                      <span>✨ 25gr 3'lü Burma (₺163.100)</span>
+                    </button>
+                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; font-weight:700; color:#042926;" onclick="AdminApp.selectSmartCalcProduct('Ata Tam Yeni 22 ayar', 46107)">
                       <span>🪙 Ata Tam Yeni 22A (₺46.107)</span>
                     </button>
-                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; font-weight:700; color:#042926;" onclick="AdminApp.selectSmartCalcProduct('Yeni Kulplu Ziynet Çeyrek Altın', 11070)">
-                      <span>🪙 Yeni Çeyrek (₺11.070)</span>
-                    </button>
-                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; font-weight:700; color:#042926;" onclick="AdminApp.selectSmartCalcProduct('Eski Kulplu Ziynet Çeyrek Altın', 11179)">
-                      <span>🪙 Eski Çeyrek (₺11.179)</span>
-                    </button>
-                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; font-weight:700; color:#042926;" onclick="AdminApp.selectSmartCalcProduct('Eski Kulplu Ziynet Yarım Altın', 22322)">
+                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; font-weight:700; color:#042926;" onclick="AdminApp.selectSmartCalcProduct('Yarım Altın', 22322)">
                       <span>🪙 Yarım Altın (₺22.322)</span>
                     </button>
-                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; font-weight:700; color:#042926;" onclick="AdminApp.selectSmartCalcProduct('24 Ayar Gram Altın (0.995 Saflık)', 5000)">
-                      <span>📦 24A Gram Altın (₺5.000)</span>
+                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; font-weight:700; color:#042926;" onclick="AdminApp.selectSmartCalcProduct('Çeyrek Altın', 11070)">
+                      <span>🪙 Çeyrek Altın (₺11.070)</span>
+                    </button>
+                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; font-weight:700; color:#042926;" onclick="AdminApp.selectSmartCalcProduct('Ziynet Çeyrek Altın', 11070)">
+                      <span>🪙 Ziynet Çeyrek (₺11.070)</span>
                     </button>
                   </div>
                 </div>
@@ -2590,14 +2624,18 @@
                     </div>
                   </div>
 
-                  <div style="display:flex; gap:8px; align-items:center;">
-                    <!-- Aktar / Satırları Doldur Butonu -->
-                    <button type="button" class="btn-admin-primary" style="background:linear-gradient(135deg, #059669 0%, #10B981 100%); border-color:#059669; color:#FFF; font-weight:800; font-size:12.5px; padding:9px 16px; border-radius:8px; box-shadow:0 2px 8px rgba(16,185,129,0.3); display:inline-flex; align-items:center; gap:6px; cursor:pointer;" onclick="AdminApp.applySmartCalcToInvoice(false)">
-                      <span>⚡ Faturaya Aktar (Satırları Doldur)</span>
+                  <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                    <!-- 🌟 YENİ: Otomatik Çoklu Gerçek Fiyatlı Sepet Butonu -->
+                    <button type="button" class="btn-admin-primary" style="background:linear-gradient(135deg, #042C28 0%, #064E3B 100%); border-color:#042C28; color:#FDE68A; font-weight:800; font-size:12.5px; padding:9px 16px; border-radius:8px; box-shadow:0 2px 8px rgba(4,44,40,0.3); display:inline-flex; align-items:center; gap:6px; cursor:pointer;" onclick="AdminApp.applySmartVip22BasketToInvoice(false)" title="Girilen toplam tutara göre 5 parça üründen (Bilezik, Ata, Yarım, Çeyrek) gerçek fiyatlı dengeli sepet doldurur">
+                      <span>⚡ 5 Parçalı Gerçek Fiyatlı Sepet Doldur</span>
+                    </button>
+                    <!-- Tek Ürün Aktar / Satırları Doldur Butonu -->
+                    <button type="button" class="btn-admin-primary" style="background:linear-gradient(135deg, #059669 0%, #10B981 100%); border-color:#059669; color:#FFF; font-weight:800; font-size:12px; padding:9px 14px; border-radius:8px; box-shadow:0 2px 8px rgba(16,185,129,0.3); display:inline-flex; align-items:center; gap:6px; cursor:pointer;" onclick="AdminApp.applySmartCalcToInvoice(false)" title="Yukarıda seçilen tek ürünü faturaya aktarır">
+                      <span>⚡ Tek Kalem Aktar</span>
                     </button>
                     <!-- Ek Kalem Olarak Ekle Butonu -->
-                    <button type="button" class="btn-admin-secondary" style="background:#FFF; border:1.5px solid #084C47; color:#084C47; font-weight:800; font-size:12px; padding:9px 14px; border-radius:8px; display:inline-flex; align-items:center; gap:5px; cursor:pointer;" onclick="AdminApp.applySmartCalcToInvoice(true)" title="Mevcut satırları silmeden faturaya ek kalem olarak ilave eder">
-                      <span>➕ Ek Kalem Olarak Ekle</span>
+                    <button type="button" class="btn-admin-secondary" style="background:#FFF; border:1.5px solid #084C47; color:#084C47; font-weight:800; font-size:12px; padding:9px 12px; border-radius:8px; display:inline-flex; align-items:center; gap:5px; cursor:pointer;" onclick="AdminApp.applySmartCalcToInvoice(true)" title="Mevcut satırları silmeden faturaya ek kalem olarak ilave eder">
+                      <span>➕ Ek Kalem</span>
                     </button>
                   </div>
                 </div>
@@ -2630,17 +2668,17 @@
                   <!-- Altın (%0 KDV - Net Maden) -->
                   <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                     <span style="font-size:11px; font-weight:800; color:#92400E; background:#FEF3C7; padding:4px 9px; border-radius:6px; border:1px solid #FCD34D;">💍 Altın (%0 KDV):</span>
-                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; color:#0F172A; font-weight:700;" onclick="AdminApp.applyStoreProductTemplate('7 Gram 22 Ayar Ajda Altın Bilezik', 51850, 0)">
-                      <span>22 Ayar Ajda Bilezik (₺51.850)</span>
+                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; color:#0F172A; font-weight:700;" onclick="AdminApp.applyStoreProductTemplate('7 Gram 22 Ayar Ajda Altın Bilezik', 45570, 0)">
+                      <span>7gr 22 Ayar Ajda Bilezik (₺45.570)</span>
                     </button>
-                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; color:#0F172A; font-weight:700;" onclick="AdminApp.applyStoreProductTemplate('Yeni Tarihli Ziynet Çeyrek Altın', 11750, 0)">
-                      <span>Çeyrek Altın (₺11.750)</span>
+                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; color:#0F172A; font-weight:700;" onclick="AdminApp.applyStoreProductTemplate('Ata Tam Yeni 22 Ayar Altın', 46107, 0)">
+                      <span>Ata Tam Yeni 22A (₺46.107)</span>
                     </button>
-                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; color:#0F172A; font-weight:700;" onclick="AdminApp.applyStoreProductTemplate('Yeni Tarihli Ziynet Yarım Altın', 23500, 0)">
-                      <span>Yarım Altın (₺23.500)</span>
+                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; color:#0F172A; font-weight:700;" onclick="AdminApp.applyStoreProductTemplate('Eski Kulplu Ziynet Yarım Altın', 22322, 0)">
+                      <span>Yarım Altın (₺22.322)</span>
                     </button>
-                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; color:#0F172A; font-weight:700;" onclick="AdminApp.applyStoreProductTemplate('Ata Lira / Tam Altın 22 Ayar', 47400, 0)">
-                      <span>Ata / Tam Altın (₺47.400)</span>
+                    <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; color:#0F172A; font-weight:700;" onclick="AdminApp.applyStoreProductTemplate('Yeni Kulplu Ziynet Çeyrek Altın', 11070, 0)">
+                      <span>Çeyrek Altın (₺11.070)</span>
                     </button>
                     <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#CBD5E1; color:#0F172A; font-weight:700;" onclick="AdminApp.applyStoreProductTemplate('0.40 Karat Pırlanta Tektaş Yüzük', 45000, 20)">
                       <span>💎 Pırlanta Tektaş (₺45.000, %20)</span>
@@ -3344,6 +3382,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 <script src="js/vip-payment.js?v=2.8.8"></script>
-<script src="js/admin.js?v=20260831-mobile-auth-v9"></script>
+<script src="js/admin.js?v=20260831-auth-instant-v10"></script>
 </body>
 </html>
