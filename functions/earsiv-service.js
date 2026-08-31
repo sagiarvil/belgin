@@ -106,108 +106,41 @@ function calculateVip22Breakdown(totalAmount) {
   const exactWorkmanshipGross = Math.round((workmanshipNet + workmanshipKdv) * 100) / 100;
   const goldNetPool = Math.round((total - exactWorkmanshipGross) * 100) / 100;
 
-  // 8 Temel Ürünü Fiyat Kategorilerine Göre Dinamik Olarak Karıştır
-  const bigs = VIP_22_CATALOG.filter(p => p.basePrice >= 100000).sort(() => 0.5 - Math.random());
-  const meds = VIP_22_CATALOG.filter(p => p.basePrice >= 40000 && p.basePrice < 100000).sort(() => 0.5 - Math.random());
-  const smalls = VIP_22_CATALOG.filter(p => p.basePrice < 40000).sort(() => 0.5 - Math.random());
-
+  // 8 Temel Ürünü Fiyat Kategorilerine Göre Dinamik ve Güvenli Şekilde Dağıt
+  const availableProds = [...VIP_22_CATALOG].sort((a, b) => b.basePrice - a.basePrice);
   let rawBasket = [];
   let remainingPool = goldNetPool;
 
-  if (goldNetPool < 30000) {
-    // 1. BAREM (< 30.000 TL): 1 veya 2 adet küçük kalem (Çeyrek veya Yarım)
-    const s1 = smalls[0];
-    const q1 = Math.max(1, Math.round(goldNetPool / s1.basePrice));
-    rawBasket.push({ prod: s1, qty: q1, unitPrice: s1.basePrice });
-  } else if (goldNetPool < 100000) {
-    // 2. BAREM (30.000 - 100.000 TL): 1 orta boy ürün + Çeyrek/Yarım
-    const m1 = meds[0];
-    const qM = Math.max(1, Math.floor((goldNetPool - 12000) / m1.basePrice));
-    rawBasket.push({ prod: m1, qty: qM, unitPrice: m1.basePrice });
-    remainingPool -= qM * m1.basePrice;
-
-    if (remainingPool >= 20000 && Math.random() > 0.5) {
-      const yarim = smalls.find(s => s.basePrice >= 20000);
-      if (yarim && yarim.basePrice < remainingPool - 5000) {
-        rawBasket.push({ prod: yarim, qty: 1, unitPrice: yarim.basePrice });
-        remainingPool -= yarim.basePrice;
+  for (const prod of availableProds) {
+    if (remainingPool >= prod.basePrice) {
+      const maxQty = Math.floor(remainingPool / prod.basePrice);
+      if (maxQty > 0) {
+        const rem = remainingPool - (maxQty * prod.basePrice);
+        let qtyToPick = maxQty;
+        if (rem > 0 && rem < 5000 && maxQty > 1) {
+          qtyToPick = maxQty - 1;
+        } else if (rem > 0 && rem < 5000 && maxQty === 1 && prod.basePrice > 30000) {
+          // Bu ürünü atla, kalan havuz daha küçük ürünlerle pozitif dağılsın
+          continue;
+        }
+        rawBasket.push({ prod, qty: qtyToPick, unitPrice: prod.basePrice });
+        remainingPool -= qtyToPick * prod.basePrice;
       }
     }
+  }
 
-    const s1 = smalls.find(s => s.basePrice < 20000) || smalls[0];
-    const qS = Math.max(1, Math.round(remainingPool / s1.basePrice));
-    rawBasket.push({ prod: s1, qty: qS, unitPrice: s1.basePrice });
-  } else if (goldNetPool < 250000) {
-    // 3. BAREM (100.000 - 250.000 TL): Dinamik Karma (20gr Burma veya 1-2 Orta Boy + Yarım/Çeyrek)
-    const useBig = Math.random() > 0.5 && bigs.some(b => b.basePrice <= goldNetPool * 0.65);
-    if (useBig) {
-      const b1 = bigs.find(b => b.basePrice <= goldNetPool * 0.65) || bigs[0];
-      rawBasket.push({ prod: b1, qty: 1, unitPrice: b1.basePrice });
-      remainingPool -= b1.basePrice;
+  // Eğer hala pozitif artık kaldıysa en küçük ürüne (Çeyrek Altın) ekle
+  if (remainingPool > 0) {
+    const smallProduct = VIP_22_CATALOG.find(p => p.id === '2668' || p.id === '2667') || VIP_22_CATALOG[2];
+    const existing = rawBasket.find(b => b.prod.id === smallProduct.id);
+    if (!existing) {
+      rawBasket.push({ prod: smallProduct, qty: 1, unitPrice: smallProduct.basePrice });
     }
+  }
 
-    const medCount = useBig ? 1 : (Math.random() > 0.5 ? 2 : 3);
-    for (let i = 0; i < medCount && i < meds.length; i++) {
-      const m = meds[i];
-      const targetAmt = remainingPool * (i === 0 && !useBig ? 0.50 : 0.60);
-      const q = Math.max(1, Math.floor(targetAmt / m.basePrice));
-      if (q > 0 && q * m.basePrice < remainingPool - 5000) {
-        rawBasket.push({ prod: m, qty: q, unitPrice: m.basePrice });
-        remainingPool -= q * m.basePrice;
-      }
-    }
-
-    if (remainingPool >= 20000 && Math.random() > 0.4) {
-      const yarim = smalls.find(s => s.basePrice >= 20000);
-      if (yarim && yarim.basePrice < remainingPool - 5000) {
-        rawBasket.push({ prod: yarim, qty: 1, unitPrice: yarim.basePrice });
-        remainingPool -= yarim.basePrice;
-      }
-    }
-
-    const s1 = smalls.find(s => s.basePrice < 20000) || smalls[0];
-    const qS = Math.max(1, Math.round(remainingPool / s1.basePrice));
-    rawBasket.push({ prod: s1, qty: qS, unitPrice: s1.basePrice });
-  } else {
-    // 4. BAREM (>= 250.000 TL): 8 Ürünlük Havuzdan Zengin ve Çeşitlendirilmiş Sepet
-    const availableBigs = [...bigs];
-    const availableMeds = [...meds];
-    const availableSmalls = [...smalls];
-
-    const bigPickCount = goldNetPool >= 500000 ? 2 : (Math.random() > 0.3 ? 2 : 1);
-    for (let i = 0; i < bigPickCount && availableBigs.length > 0; i++) {
-      const b = availableBigs[i];
-      const targetAmt = goldNetPool * (i === 0 ? 0.35 : 0.25);
-      const q = Math.max(1, Math.floor(targetAmt / b.basePrice));
-      if (q > 0 && q * b.basePrice < remainingPool - 30000) {
-        rawBasket.push({ prod: b, qty: q, unitPrice: b.basePrice });
-        remainingPool -= q * b.basePrice;
-      }
-    }
-
-    const medPickCount = Math.floor(Math.random() * 2) + 2;
-    for (let i = 0; i < medPickCount && i < availableMeds.length; i++) {
-      const m = availableMeds[i];
-      const targetAmt = remainingPool * 0.45;
-      const q = Math.max(1, Math.floor(targetAmt / m.basePrice));
-      if (q > 0 && q * m.basePrice < remainingPool - 8000) {
-        rawBasket.push({ prod: m, qty: q, unitPrice: m.basePrice });
-        remainingPool -= q * m.basePrice;
-      }
-    }
-
-    if (remainingPool >= 25000 && availableSmalls.some(s => s.basePrice >= 20000)) {
-      const yarim = availableSmalls.find(s => s.basePrice >= 20000);
-      const qY = Math.max(1, Math.floor((remainingPool - 10000) / yarim.basePrice));
-      if (qY > 0) {
-        rawBasket.push({ prod: yarim, qty: qY, unitPrice: yarim.basePrice });
-        remainingPool -= qY * yarim.basePrice;
-      }
-    }
-
-    const finalSmall = availableSmalls.find(s => s.basePrice < 20000) || availableSmalls[0];
-    const qFinal = Math.max(1, Math.round(remainingPool / finalSmall.basePrice));
-    rawBasket.push({ prod: finalSmall, qty: qFinal, unitPrice: finalSmall.basePrice });
+  if (rawBasket.length === 0) {
+    const defaultProd = VIP_22_CATALOG[0];
+    rawBasket.push({ prod: defaultProd, qty: 1, unitPrice: goldNetPool });
   }
 
   // Satırları GİB e-Arşiv Standartlarına Göre Oluştur (Tüm farkı son ürüne mikro yedirerek %100 eşitlik sağla)
@@ -222,18 +155,24 @@ function calculateVip22Breakdown(totalAmount) {
       const lineTotal = Math.round(bItem.qty * bItem.unitPrice * 100) / 100;
       calculatedGoldTotal = Math.round((calculatedGoldTotal + lineTotal) * 100) / 100;
       items.push({
+        name: bItem.prod.name,
         malHizmet: `${bItem.prod.name} (Kıymetli Maden Bedeli - Özel Matrah)`,
         miktar: bItem.qty,
+        qty: bItem.qty,
         birim: 'C62',
         birimFiyat: bItem.unitPrice.toFixed(2),
+        unitPrice: bItem.unitPrice,
         fiyat: lineTotal.toFixed(2),
+        lineTotal: lineTotal,
         iskontoArttirim: 'İskonto',
         iskontoOrani: 0,
         iskontoTutari: '0.00',
         iskontoNedeni: '',
         malHizmetTutari: lineTotal.toFixed(2),
         kdvOrani: 0,
+        kdvRate: 0,
         kdvTutari: '0.00',
+        vatAmount: 0,
         vergiOrani: 0,
         ozelMatrahNedeni: '351',
         ozelMatrahTutari: lineTotal.toFixed(2),
@@ -247,18 +186,24 @@ function calculateVip22Breakdown(totalAmount) {
 
       if (Math.round(candidateUnit * bItem.qty * 100) === Math.round(lastLineTotal * 100)) {
         items.push({
+          name: bItem.prod.name,
           malHizmet: displayName,
           miktar: bItem.qty,
+          qty: bItem.qty,
           birim: 'C62',
           birimFiyat: candidateUnit.toFixed(2),
+          unitPrice: candidateUnit,
           fiyat: lastLineTotal.toFixed(2),
+          lineTotal: lastLineTotal,
           iskontoArttirim: 'İskonto',
           iskontoOrani: 0,
           iskontoTutari: '0.00',
           iskontoNedeni: '',
           malHizmetTutari: lastLineTotal.toFixed(2),
           kdvOrani: 0,
+          kdvRate: 0,
           kdvTutari: '0.00',
+          vatAmount: 0,
           vergiOrani: 0,
           ozelMatrahNedeni: '351',
           ozelMatrahTutari: lastLineTotal.toFixed(2),
@@ -271,18 +216,24 @@ function calculateVip22Breakdown(totalAmount) {
         const remTotal = Math.round((lastLineTotal - baseTotal) * 100) / 100;
 
         items.push({
+          name: bItem.prod.name,
           malHizmet: displayName,
           miktar: baseQty,
+          qty: baseQty,
           birim: 'C62',
           birimFiyat: baseUnit.toFixed(2),
+          unitPrice: baseUnit,
           fiyat: baseTotal.toFixed(2),
+          lineTotal: baseTotal,
           iskontoArttirim: 'İskonto',
           iskontoOrani: 0,
           iskontoTutari: '0.00',
           iskontoNedeni: '',
           malHizmetTutari: baseTotal.toFixed(2),
           kdvOrani: 0,
+          kdvRate: 0,
           kdvTutari: '0.00',
+          vatAmount: 0,
           vergiOrani: 0,
           ozelMatrahNedeni: '351',
           ozelMatrahTutari: baseTotal.toFixed(2),
@@ -290,18 +241,24 @@ function calculateVip22Breakdown(totalAmount) {
         });
 
         items.push({
+          name: bItem.prod.name,
           malHizmet: displayName,
           miktar: 1,
+          qty: 1,
           birim: 'C62',
           birimFiyat: remTotal.toFixed(2),
+          unitPrice: remTotal,
           fiyat: remTotal.toFixed(2),
+          lineTotal: remTotal,
           iskontoArttirim: 'İskonto',
           iskontoOrani: 0,
           iskontoTutari: '0.00',
           iskontoNedeni: '',
           malHizmetTutari: remTotal.toFixed(2),
           kdvOrani: 0,
+          kdvRate: 0,
           kdvTutari: '0.00',
+          vatAmount: 0,
           vergiOrani: 0,
           ozelMatrahNedeni: '351',
           ozelMatrahTutari: remTotal.toFixed(2),
@@ -309,18 +266,24 @@ function calculateVip22Breakdown(totalAmount) {
         });
       } else {
         items.push({
+          name: bItem.prod.name,
           malHizmet: displayName,
           miktar: 1,
+          qty: 1,
           birim: 'C62',
           birimFiyat: lastLineTotal.toFixed(2),
+          unitPrice: lastLineTotal,
           fiyat: lastLineTotal.toFixed(2),
+          lineTotal: lastLineTotal,
           iskontoArttirim: 'İskonto',
           iskontoOrani: 0,
           iskontoTutari: '0.00',
           iskontoNedeni: '',
           malHizmetTutari: lastLineTotal.toFixed(2),
           kdvOrani: 0,
+          kdvRate: 0,
           kdvTutari: '0.00',
+          vatAmount: 0,
           vergiOrani: 0,
           ozelMatrahNedeni: '351',
           ozelMatrahTutari: lastLineTotal.toFixed(2),
@@ -332,18 +295,24 @@ function calculateVip22Breakdown(totalAmount) {
 
   // İşçilik Bedeli Satırı (%20 KDV dahil)
   items.push({
+    name: 'İşçilik',
     malHizmet: 'İşçilik',
     miktar: 1,
+    qty: 1,
     birim: 'C62',
     birimFiyat: workmanshipNet.toFixed(2),
+    unitPrice: workmanshipNet,
     fiyat: workmanshipNet.toFixed(2),
+    lineTotal: workmanshipNet,
     iskontoArttirim: 'İskonto',
     iskontoOrani: 0,
     iskontoTutari: '0.00',
     iskontoNedeni: '',
     malHizmetTutari: workmanshipNet.toFixed(2),
     kdvOrani: 20,
+    kdvRate: 20,
     kdvTutari: workmanshipKdv.toFixed(2),
+    vatAmount: workmanshipKdv,
     vergiOrani: 0,
     ozelMatrahNedeni: '',
     ozelMatrahTutari: 0,
@@ -393,10 +362,24 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
     const goldItems = [];
 
     options.items.forEach(it => {
-      const itQty = Math.max(1, Number(it.qty || it.miktar || 1));
-      const itPrice = Number(it.unitPrice || it.birimFiyat || 0);
-      const itTotal = Math.round(Number(it.lineTotal || it.fiyat || it.malHizmetTutari || (itQty * itPrice)) * 100) / 100;
+      const itQty = Math.max(1, Number(it.qty || it.quantity || it.miktar || 1));
+      let itPrice = Number(it.unitPrice || it.birimFiyat || it.price || 0);
+      let itTotal = Math.round(Number(it.lineTotal || it.fiyat || it.malHizmetTutari || it.total || (itQty * itPrice)) * 100) / 100;
       const itName = String(it.name || it.malHizmet || it.title || 'Satış Kalemi').trim();
+
+      if (itPrice === 0 && itTotal > 0) {
+        itPrice = Math.round((itTotal / itQty) * 100) / 100;
+      }
+      if (itTotal === 0 && itPrice > 0) {
+        itTotal = Math.round((itPrice * itQty) * 100) / 100;
+      }
+      if (itPrice === 0 && itTotal === 0) {
+        const matched = VIP_22_CATALOG.find(c => itName.toLowerCase().includes(c.name.toLowerCase()) || c.name.toLowerCase().includes(itName.toLowerCase()));
+        if (matched) {
+          itPrice = matched.basePrice;
+          itTotal = Math.round(itPrice * itQty * 100) / 100;
+        }
+      }
       
       const isWatch = (
         it.taxType === 'SAAT_STANDART' ||
@@ -439,18 +422,24 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
         totalKdv = Math.round((totalKdv + kdvAmount) * 100) / 100;
 
         taxableItems.push({
+          name: itName.toLowerCase().includes('işçilik') ? 'İşçilik' : itName,
           malHizmet: itName.toLowerCase().includes('işçilik') ? 'İşçilik' : itName,
           miktar: itQty,
+          qty: itQty,
           birim: 'C62',
           birimFiyat: unitNet.toFixed(2),
+          unitPrice: unitNet,
           fiyat: netMatrah.toFixed(2),
+          lineTotal: netMatrah,
           iskontoArttirim: 'İskonto',
           iskontoOrani: 0,
           iskontoTutari: '0.00',
           iskontoNedeni: '',
           malHizmetTutari: netMatrah.toFixed(2),
           kdvOrani: kdvRate,
+          kdvRate: kdvRate,
           kdvTutari: kdvAmount.toFixed(2),
+          vatAmount: kdvAmount,
           vergiOrani: 0,
           ozelMatrahNedeni: '',
           ozelMatrahTutari: 0,
@@ -468,18 +457,24 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
       totalKdv = workmanshipKdv;
 
       taxableItems.push({
+        name: 'İşçilik',
         malHizmet: 'İşçilik',
         miktar: 1,
+        qty: 1,
         birim: 'C62',
         birimFiyat: workmanshipNet.toFixed(2),
+        unitPrice: workmanshipNet,
         fiyat: workmanshipNet.toFixed(2),
+        lineTotal: workmanshipNet,
         iskontoArttirim: 'İskonto',
         iskontoOrani: 0,
         iskontoTutari: '0.00',
         iskontoNedeni: '',
         malHizmetTutari: workmanshipNet.toFixed(2),
         kdvOrani: 20,
+        kdvRate: 20,
         kdvTutari: workmanshipKdv.toFixed(2),
+        vatAmount: workmanshipKdv,
         vergiOrani: 0,
         ozelMatrahNedeni: '',
         ozelMatrahTutari: 0,
@@ -492,120 +487,54 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
 
     const gibItems = [];
     let currentGoldSum = 0;
+    const rawGoldSum = goldItems.reduce((acc, g) => acc + g.lineTotal, 0);
 
     if (goldItems.length > 0) {
-      // İlk n-1 ürünü kendi fiyatıyla koy
-      for (let i = 0; i < goldItems.length - 1; i++) {
+      for (let i = 0; i < goldItems.length; i++) {
         const gIt = goldItems[i];
-        const lTotal = Math.round(gIt.qty * gIt.unitPrice * 100) / 100;
+        const isLast = i === goldItems.length - 1;
+        let lTotal = 0;
+
+        if (rawGoldSum > 0 && Math.abs(rawGoldSum - requiredGoldTotal) > 0.01) {
+          lTotal = isLast 
+            ? Math.round((requiredGoldTotal - currentGoldSum) * 100) / 100 
+            : Math.round((requiredGoldTotal * (gIt.lineTotal / rawGoldSum)) * 100) / 100;
+        } else if (rawGoldSum === 0) {
+          lTotal = isLast 
+            ? Math.round((requiredGoldTotal - currentGoldSum) * 100) / 100 
+            : Math.round((requiredGoldTotal / goldItems.length) * 100) / 100;
+        } else {
+          lTotal = isLast 
+            ? Math.round((requiredGoldTotal - currentGoldSum) * 100) / 100 
+            : gIt.lineTotal;
+        }
+
         currentGoldSum = Math.round((currentGoldSum + lTotal) * 100) / 100;
+        const uPrice = Math.round((lTotal / gIt.qty) * 100) / 100;
         const displayName = gIt.name.includes('Özel Matrah') ? gIt.name : `${gIt.name} (Kıymetli Maden Bedeli - Özel Matrah)`;
 
         gibItems.push({
+          name: gIt.name,
           malHizmet: displayName,
           miktar: gIt.qty,
+          qty: gIt.qty,
           birim: 'C62',
-          birimFiyat: gIt.unitPrice.toFixed(2),
+          birimFiyat: uPrice.toFixed(2),
+          unitPrice: uPrice,
           fiyat: lTotal.toFixed(2),
+          lineTotal: lTotal,
           iskontoArttirim: 'İskonto',
           iskontoOrani: 0,
           iskontoTutari: '0.00',
           iskontoNedeni: '',
           malHizmetTutari: lTotal.toFixed(2),
           kdvOrani: 0,
+          kdvRate: 0,
           kdvTutari: '0.00',
+          vatAmount: 0,
           vergiOrani: 0,
           ozelMatrahNedeni: '351',
           ozelMatrahTutari: lTotal.toFixed(2),
-          tevkifatKodu: 0
-        });
-      }
-
-      // Son altın ürünü: Kalan tüm farkı (%100 eşit olacak şekilde) bu ürüne yedir
-      const lastGold = goldItems[goldItems.length - 1];
-      const lastLineTotal = Math.round((requiredGoldTotal - currentGoldSum) * 100) / 100;
-      const displayName = lastGold.name.includes('Özel Matrah') ? lastGold.name : `${lastGold.name} (Kıymetli Maden Bedeli - Özel Matrah)`;
-
-      const candidateUnit = Math.round((lastLineTotal / lastGold.qty) * 100) / 100;
-      if (Math.round(candidateUnit * lastGold.qty * 100) === Math.round(lastLineTotal * 100)) {
-        gibItems.push({
-          malHizmet: displayName,
-          miktar: lastGold.qty,
-          birim: 'C62',
-          birimFiyat: candidateUnit.toFixed(2),
-          fiyat: lastLineTotal.toFixed(2),
-          iskontoArttirim: 'İskonto',
-          iskontoOrani: 0,
-          iskontoTutari: '0.00',
-          iskontoNedeni: '',
-          malHizmetTutari: lastLineTotal.toFixed(2),
-          kdvOrani: 0,
-          kdvTutari: '0.00',
-          vergiOrani: 0,
-          ozelMatrahNedeni: '351',
-          ozelMatrahTutari: lastLineTotal.toFixed(2),
-          tevkifatKodu: 0
-        });
-      } else if (lastGold.qty > 1) {
-        const baseQty = lastGold.qty - 1;
-        const baseUnit = Math.floor((lastLineTotal / lastGold.qty) * 100) / 100;
-        const baseTotal = Math.round(baseQty * baseUnit * 100) / 100;
-        const remTotal = Math.round((lastLineTotal - baseTotal) * 100) / 100;
-
-        items.push({
-          malHizmet: displayName,
-          miktar: baseQty,
-          birim: 'C62',
-          birimFiyat: baseUnit.toFixed(2),
-          fiyat: baseTotal.toFixed(2),
-          iskontoArttirim: 'İskonto',
-          iskontoOrani: 0,
-          iskontoTutari: '0.00',
-          iskontoNedeni: '',
-          malHizmetTutari: baseTotal.toFixed(2),
-          kdvOrani: 0,
-          kdvTutari: '0.00',
-          vergiOrani: 0,
-          ozelMatrahNedeni: '351',
-          ozelMatrahTutari: baseTotal.toFixed(2),
-          tevkifatKodu: 0
-        });
-
-        items.push({
-          malHizmet: displayName,
-          miktar: 1,
-          birim: 'C62',
-          birimFiyat: remTotal.toFixed(2),
-          fiyat: remTotal.toFixed(2),
-          iskontoArttirim: 'İskonto',
-          iskontoOrani: 0,
-          iskontoTutari: '0.00',
-          iskontoNedeni: '',
-          malHizmetTutari: remTotal.toFixed(2),
-          kdvOrani: 0,
-          kdvTutari: '0.00',
-          vergiOrani: 0,
-          ozelMatrahNedeni: '351',
-          ozelMatrahTutari: remTotal.toFixed(2),
-          tevkifatKodu: 0
-        });
-      } else {
-        gibItems.push({
-          malHizmet: displayName,
-          miktar: 1,
-          birim: 'C62',
-          birimFiyat: lastLineTotal.toFixed(2),
-          fiyat: lastLineTotal.toFixed(2),
-          iskontoArttirim: 'İskonto',
-          iskontoOrani: 0,
-          iskontoTutari: '0.00',
-          iskontoNedeni: '',
-          malHizmetTutari: lastLineTotal.toFixed(2),
-          kdvOrani: 0,
-          kdvTutari: '0.00',
-          vergiOrani: 0,
-          ozelMatrahNedeni: '351',
-          ozelMatrahTutari: lastLineTotal.toFixed(2),
           tevkifatKodu: 0
         });
       }
