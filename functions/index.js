@@ -1179,7 +1179,13 @@ async function handleInvoiceRequest(req, res) {
                              .replace(/Has Altın/gi, 'Kıymetli Maden');
         if (cleaned.includes('invoice-print-header')) return cleaned;
 
+        const effectiveInvoiceName = String(invNumber || 'GIB2026000000021').trim();
+
         const toolbarHtml = `
+          <title>${effectiveInvoiceName}</title>
+          <script>
+            document.title = "${effectiveInvoiceName}";
+          </script>
           <style>
             @media print {
               .invoice-print-header { display: none !important; }
@@ -1191,19 +1197,25 @@ async function handleInvoiceRequest(req, res) {
               <span style="font-size:22px;">🧾</span>
               <div>
                 <div style="font-weight:900; font-size:14px; letter-spacing:0.3px;">BELGİN KUYUMCULUK — RESMİ GİB E-ARŞİV FATURASI</div>
-                <div style="font-size:11px; opacity:0.9;">Belge No: <strong>${invNumber || 'GİB e-Arşiv'}</strong> | ETTN: ${targetEttn || ''}</div>
+                <div style="font-size:11px; opacity:0.9;">Belge No: <strong>${effectiveInvoiceName}</strong> | ETTN: ${targetEttn || ''}</div>
               </div>
             </div>
             <div style="display:flex; gap:10px; align-items:center;">
-              <button onclick="window.print()" style="background:#F59E0B; color:#78350F; border:none; padding:9px 22px; border-radius:6px; font-weight:900; font-size:13px; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.2); display:flex; align-items:center; gap:6px;">
+              <button onclick="document.title='${effectiveInvoiceName}'; window.print();" style="background:#F59E0B; color:#78350F; border:none; padding:9px 22px; border-radius:6px; font-weight:900; font-size:13px; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.2); display:flex; align-items:center; gap:6px;">
                 <span>🖨️</span>
-                <span>PDF Olarak Kaydet / Yazdır</span>
+                <span>PDF Olarak Kaydet / Yazdır (${effectiveInvoiceName}.pdf)</span>
               </button>
             </div>
           </div>
           <div class="invoice-print-header" style="height:55px;"></div>
-          ${autoPrint ? `<script>window.onload = function() { setTimeout(function() { window.print(); }, 400); };</script>` : ''}
+          ${autoPrint ? `<script>window.onload = function() { setTimeout(function() { document.title='${effectiveInvoiceName}'; window.print(); }, 400); };</script>` : ''}
         `;
+
+        if (cleaned.includes('<head>')) {
+          cleaned = cleaned.replace('<head>', `<head><title>${effectiveInvoiceName}</title>`);
+        } else if (cleaned.includes('<HEAD>')) {
+          cleaned = cleaned.replace('<HEAD>', `<HEAD><title>${effectiveInvoiceName}</title>`);
+        }
 
         if (cleaned.includes('<body')) {
           return cleaned.replace(/<body[^>]*>/i, match => match + '\n' + toolbarHtml);
