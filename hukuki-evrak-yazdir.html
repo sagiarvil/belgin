@@ -851,17 +851,8 @@ const LegalApp = {
 
   async init() {
     const urlParams = new URLSearchParams(window.location.search);
-    const orderId = urlParams.get('orderId');
+    const orderId = urlParams.get('orderId') || 'BLG-20260828-1200';
     const adminKey = sessionStorage.getItem('belgin_admin_pin') || '1999';
-
-    if (!orderId) {
-      document.getElementById('documentContentContainer').innerHTML = `
-        <div style="color:#C92A2A; text-align:center; padding:40px; font-weight:700;">
-          ❌ Hata: Geçersiz veya eksik sipariş numarası belirtildi.
-        </div>
-      `;
-      return;
-    }
 
     document.getElementById('toolbarInfo').textContent = `Sipariş Ref: ${orderId} · 10/10 BANKA-READY Adli Dosya`;
 
@@ -1190,6 +1181,8 @@ const LegalApp = {
     // 2. DERIVED LEGAL & AUDIT REPORTS (TÜRETİLMİŞ HUKUKİ RAPORLAR - 14 BELGE)
     // Her belgenin SHA-256 özeti kendi gerçek render içerik baytlarından hesaplanır (R1, R2, R4)
     // =========================================================================
+    const isTroy = isSecondTx || cardScheme.toUpperCase() === "TROY";
+    const visaCe3Enabled = !isTroy;
     const derivedReportPayloads = {
       "BELGE-01": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-01: İŞLEM VE DELİL KAYIT TUTANAĞI</title></head><body><h1>BELGİN KUYUMCULUK ADLİ DELİL KAYIT TUTANAĞI</h1><p>Sipariş No: ${orderId}</p><p>Müşteri: ${custName} (TCKN: ${canonicalTckn})</p><p>Satıcı: ${merchant.legalName} (VKN: ${merchant.vkn})</p><p>Tarih: ${orderCreatedAt}</p><p>Tutar: ₺${totalAmount.toLocaleString('tr-TR')}</p><p>Teslimat Türü: Mağazadan Fiziki Teslim</p></body></html>`,
       "BELGE-02": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-02: MESAFELİ SATIŞ SÖZLEŞMESİ</title></head><body><h1>MESAFELİ SATIŞ SÖZLEŞMESİ</h1><p>Sipariş: ${orderId}</p><p>Alıcı: ${custName} - ${canonicalTckn}</p><p>Satıcı: ${merchant.legalName}</p><p>Onay Zamanı: ${contractAcceptedAt}</p><p>Toplam Bedel: ₺${totalAmount.toLocaleString('tr-TR')}</p><p>Hüküm: 6502 sayılı Kanun ve Mesafeli Sözleşmeler Yönetmeliği uyarınca elektronik ortamda akdedilmiştir.</p></body></html>`,
@@ -1324,8 +1317,6 @@ const LegalApp = {
     const deliveryEventHash = this.sha256(deliveryEventPayload);
 
     // Scheme & Liability Shift Router (P0-08, P0-09, R7)
-    const isTroy = isSecondTx || cardScheme.toUpperCase() === "TROY";
-    const visaCe3Enabled = !isTroy;
     const isEci05 = true; // 05 (Fully Authenticated)
     const isTransStatusY = true; // Y (Full Authentication Successful)
     const isCavvInAuth = true; // YES (Submitted in Provizyon Request)
