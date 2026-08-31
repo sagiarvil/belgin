@@ -6,6 +6,10 @@
 
 process.env.AKBANK_TEST_MODE = '1';
 process.env.NODE_ENV = 'test';
+process.env.AKBANK_CLIENT_ID = process.env.AKBANK_CLIENT_ID || 'TEST_CLIENT_ID';
+process.env.AKBANK_SECURE_MERCHANT_ID = process.env.AKBANK_SECURE_MERCHANT_ID || 'TEST_SECURE_MERCHANT_ID';
+process.env.AKBANK_SECURE_TERMINAL_ID = process.env.AKBANK_SECURE_TERMINAL_ID || 'TEST_SECURE_TERMINAL_ID';
+process.env.AKBANK_STORE_KEY = process.env.AKBANK_STORE_KEY || 'TEST_STORE_KEY_FOR_LOCAL_SUITE';
 
 const fs = require('fs');
 const path = require('path');

@@ -555,6 +555,7 @@ class PaymentService {
 
       assertValidTransition(order.status, nextStatus, orderId);
 
+      const rawDetails = verification.rawPaymentDetails || {};
       await orderRef.update({
         status: nextStatus,
         deliveryStatus: highValue ? 'STORE_PICKUP_REQUIRED' : (order.deliveryStatus || 'PENDING'),
@@ -563,6 +564,15 @@ class PaymentService {
         'payment.status': PAYMENT_STATUS.PAID,
         'payment.paidAt': admin.firestore.FieldValue.serverTimestamp(),
         'payment.totalAmountReceived': totalReceived,
+        'payment.authCode': rawDetails.authCode || verification.authCode || null,
+        'payment.rrn': rawDetails.rrn || null,
+        'payment.arn': rawDetails.arn || null,
+        'payment.eci': rawDetails.eci || null,
+        'payment.cavv': rawDetails.cavv || null,
+        'payment.transStatus': rawDetails.transStatus || 'Y',
+        'payment.dsTransId': rawDetails.dsTransId || null,
+        'payment.acsTransId': rawDetails.acsTransId || null,
+        'payment.rawCallback': rawDetails,
         paidAt: admin.firestore.FieldValue.serverTimestamp(),
         // completedAt KESİNLİKLE BURADA YAZILMAZ! Sadece teslimat tamamlandığında COMPLETED state'inde yazılır.
       });
