@@ -21,7 +21,7 @@ const ALLOWED_ADMIN_EMAILS = [
 ];
 
 const AdminApp = {
-  adminPin: '1999',
+  adminPin: null,
   adminToken: null,
   adminUser: null,
   orders: [],
@@ -63,9 +63,11 @@ const AdminApp = {
   getAuthHeaders(extraHeaders = {}) {
     const headers = {
       'Content-Type': 'application/json',
-      'x-admin-key': this.adminPin || '1999',
       ...extraHeaders
     };
+    if (this.adminPin) {
+      headers['x-admin-key'] = this.adminPin;
+    }
     if (this.adminToken) {
       headers['Authorization'] = `Bearer ${this.adminToken}`;
     }
@@ -92,24 +94,8 @@ const AdminApp = {
     // Mağaza Fatura Formunu Hazırla
     this.initStoreInvoiceForm();
 
-    // Panel başlangıçta KESİNLİKLE KİLİTLİDİR
+    // Panel başlangıçta KESİNLİKLE KİLİTLİDİR (Fail-Closed)
     this.showAuthGate();
-
-    // Eğer kullanıcı daha önce açıkça çıkış yaptıysa otomatik açma
-    const isExplicitlyLoggedOut = sessionStorage.getItem('belgin_admin_logged_out') === 'true';
-
-    // PIN ile daha önceden oturum açılmışsa ve açıkça çıkış yapılmadıysa
-    const savedPin = sessionStorage.getItem('belgin_admin_pin');
-    if (savedPin === '1999' && !isExplicitlyLoggedOut) {
-      this.adminPin = '1999';
-      const userBadge = document.getElementById('adminUserBadge');
-      if (userBadge) {
-        userBadge.innerHTML = '🛡️ Yönetici (PIN Onaylı)';
-        userBadge.style.display = 'inline-block';
-      }
-      this.onAuthenticated();
-      return;
-    }
 
     // Firebase Auth Başlat & Dinle
     if (typeof firebase !== 'undefined') {
@@ -118,22 +104,20 @@ const AdminApp = {
           firebase.initializeApp(FIREBASE_ADMIN_CONFIG);
         }
 
-        if (firebase.auth && firebase.auth.Auth && firebase.auth.Auth.Persistence) {
-          firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(console.warn);
-        }
-
         // 1. Mobile / iOS Safari Redirect Sonucu Yakalama
         firebase.auth().getRedirectResult().then(async (result) => {
-          if (result && result.user && !isExplicitlyLoggedOut) {
+          if (result && result.user) {
             const user = result.user;
             const email = (user.email || '').toLowerCase().trim();
             if (ALLOWED_ADMIN_EMAILS.includes(email)) {
               this.adminToken = await user.getIdToken();
               this.adminUser = { email: user.email, displayName: user.displayName, photoURL: user.photoURL };
+              this.adminPin = '1999';
               this.onAuthenticated();
               return;
             } else {
               await firebase.auth().signOut();
+              this.showAuthGate();
               this.showGoogleAuthError(`❌ Yetkisiz Google Hesabı (${email}). Lütfen yetkili yönetici hesabınız ile giriş yapınız veya PIN kodunuzu giriniz.`);
             }
           }
@@ -146,26 +130,30 @@ const AdminApp = {
 
         // 2. Aktif Oturum Durumu Dinleyicisi
         firebase.auth().onAuthStateChanged(async (user) => {
-          if (user && !isExplicitlyLoggedOut) {
+          if (user) {
             const email = (user.email || '').toLowerCase().trim();
             if (ALLOWED_ADMIN_EMAILS.includes(email)) {
               this.adminToken = await user.getIdToken();
               this.adminUser = { email: user.email, displayName: user.displayName, photoURL: user.photoURL };
+              this.adminPin = '1999';
               this.onAuthenticated();
               return;
             } else {
               await firebase.auth().signOut();
+              this.showAuthGate();
               this.showGoogleAuthError(`❌ Yetkisiz Google Hesabı (${email}). Lütfen yetkili yönetici hesabınız ile giriş yapınız veya PIN kodunuzu giriniz.`);
+              return;
             }
           }
-          if (!sessionStorage.getItem('belgin_admin_pin')) {
-            this.showAuthGate();
-          }
+          this.showAuthGate();
         });
         return;
       } catch (e) {
         console.warn('Firebase Auth init error:', e);
+        this.showAuthGate();
       }
+    } else {
+      this.showAuthGate();
     }
   },
 
@@ -442,9 +430,7 @@ const AdminApp = {
     const err = document.getElementById('pinErrorMsg');
 
     if (val === '1999') {
-      this.adminPin = val;
-      sessionStorage.setItem('belgin_admin_pin', val);
-      sessionStorage.removeItem('belgin_admin_logged_out');
+      this.adminPin = '1999';
       if (err) err.style.display = 'none';
       const userBadge = document.getElementById('adminUserBadge');
       if (userBadge) {
@@ -453,28 +439,24 @@ const AdminApp = {
       }
       this.onAuthenticated();
     } else {
+      this.adminPin = null;
       if (err) err.style.display = 'block';
       if (input) {
         input.value = '';
         input.focus();
       }
+      this.showAuthGate();
     }
   },
 
   async logout() {
-    sessionStorage.setItem('belgin_admin_logged_out', 'true');
-    sessionStorage.removeItem('belgin_admin_pin');
-    sessionStorage.removeItem('belgin_admin_auth');
-    localStorage.removeItem('belgin_admin_pin');
-    localStorage.removeItem('belgin_admin_cached_data');
-
     try {
       if (typeof firebase !== 'undefined' && firebase.auth) {
         await firebase.auth().signOut();
       }
     } catch (_) {}
 
-    this.adminPin = '';
+    this.adminPin = null;
     this.adminToken = null;
     this.adminUser = null;
     if (this.pollTimer) {
