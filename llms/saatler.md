@@ -8,9 +8,9 @@
 Belgin Kuyumculuk Saat Koleksiyonu; İsviçre ve İtalyan lüks saatçiliğinin seçkin modellerini (Versace, Philipp Plein, Salvatore Ferragamo vb.) %100 orijinal distribütör garantisiyle sunar:
 - **Erkek Kol Saatleri:** Otomatik mekanizma, safir kristal cam, kronograf ve paslanmaz çelik/altın kaplama modeller.
 - **Kadın Kol Saatleri:** Pırlanta/taşlı bezel, sedef kadran, zarif bilezik ve İsviçre kuvars mekanizmalı modeller.
-- **Ekspertizli Lüks Saatler:** 12 nokta teknik ekspertizden geçmiş, mekanizma sapması sıfırlanmış garantili saatler.
+- **Ekspertizli Lüks Saatler:** kondisyon ve kontrol bilgileri ürün bazında açıklanan saatler.
 
-## 2. 12 Nokta Mekanik ve Kozmetik Ekspertiz Protokolü
+## 2. ürün bazında Mekanik ve Kozmetik Ekspertiz Protokolü
 1. Zaman Tutma & Sapma Testi (Timegrapher kalibrasyonu)
 2. Su Geçirmezlik & Basınç Testi (Barometrik test)
 3. Kasa, Bezel ve Arka Kapak Orijinallik Kontrolü
