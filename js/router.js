@@ -40,6 +40,8 @@ const Router = {
     if (path.startsWith('/urun/')) {
       const match = Object.entries(window.SEO_ROUTE_MAP || {}).find(([,route]) => route.replace(/\/+$/, '') === path);
       if (match) return { page: 'urun', productId: Number(match[0]) };
+      const idMatch = path.match(/-(\d+)\/?$/);
+      if (idMatch) return { page: 'urun', productId: Number(idMatch[1]) };
     }
     return { page: 'ana-sayfa' };
   },
@@ -97,12 +99,13 @@ const Router = {
       if (productLink) {
         e.preventDefault();
         const id = Number(productLink.dataset.productId);
-        const route = this.routeForProduct(id);
+        const route = this.routeForProduct(id) || productLink.getAttribute('href');
         this.navigate('urun', false);
         if (typeof App !== 'undefined' && App.openProduct) {
           App.openProduct(id, { skipHistory: true });
         }
         if (route) history.pushState({ page: 'urun', productId: id }, '', route);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
       }
 
