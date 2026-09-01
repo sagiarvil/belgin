@@ -117,7 +117,7 @@ const premiumContactHtml = `  <!-- 6. İLETİŞİM & SHOWROOM RANDEVU SAYFASI (U
                   <option>Lüks Saat Koleksiyonu İnceleme</option>
                   <option>Masif Altın / Külçe & Sarrafiye Alımı</option>
                   <option>Özel Tasarım Mücevher & Pırlanta</option>
-                  <option>12 Nokta Ekspertiz & Değerleme Talebi</option>
+                  <option>Ürün Bazında Kontrol & Değerleme Talebi</option>
                   <option>Showroom Sipariş Teslimatı</option>
                 </select>
               </div>
