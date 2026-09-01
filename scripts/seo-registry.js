@@ -77,7 +77,7 @@ const SEO_REGISTRY = [
     indexDirective: 'index',
     title: 'İkinci El Lüks Saat Ekspertiz & Orijinallik Rehberi | Belgin Kuyumculuk',
     metaDescription: 'Rolex, Patek Philippe, Audemars Piguet, TAG Heuer saatlerde mekanizma doğrulaması, kasa seri numarası analizi, zaman tutma testi ve ekspertiz raporu rehberi.',
-    h1: 'İkinci El Lüks Saat Alımında 12 Nokta Ekspertiz ve Orijinallik Kontrolü',
+    h1: 'İkinci El Lüks Saat Alımında Ürün Bazında Kontrol ve Orijinallik Kontrolü',
     priority: '0.9',
     changefreq: 'weekly'
   },
