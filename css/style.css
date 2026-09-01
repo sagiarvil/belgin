@@ -6230,8 +6230,6 @@ body.page-is-canli-fiyatlar .header .btn-action-vip,
 }
 
 /* 2. Masaüstü Header & Navigasyon */
-.nav-desktop li:has(a[href*="mucevherat"]),
-.nav-desktop li:has(a[data-page="mucevherat"]),
 .nav-desktop a[data-page="mucevherat"],
 .nav-desktop a[href="/mucevherat/"],
 .nav-desktop a[href*="canli-fiyatlar"],
@@ -6244,7 +6242,6 @@ body.page-is-canli-fiyatlar .header .btn-action-vip,
 /* 3. Mobil Çekmece Menü (Mobile Drawer) */
 .mobile-drawer-nav a[data-page="canli-fiyatlar"],
 .mobile-drawer-nav a[href*="canli-fiyatlar"],
-.mobile-drawer-nav div:has(a[data-page="mucevherat"]),
 .mobile-drawer-nav a[data-page="mucevherat"],
 .mobile-drawer-nav a[data-filter="jewelry"] {
   display: none !important;
@@ -6256,15 +6253,17 @@ body.page-is-canli-fiyatlar .header .btn-action-vip,
   display: none !important;
 }
 
-/* 5. Ana Sayfa & Vitrin Bölümleri (Mücevher Markaları, Yeni Eklenen Mücevherler, Kasa Mücevherleri) */
+/* 5. Ana Sayfa & Vitrin Bölümleri (Mücevher Markaları & Yeni Eklenen Mücevherler) */
 #secHomeJewelry,
 #jewelryBrandsGrid,
-.section-art:has(#jewelryBrandsGrid),
-.section-art:has(#secHomeJewelry),
-.product-art-card:has(img[src*="jewelry-definition"]),
 #page-mucevherat,
 #page-canli-fiyatlar {
   display: none !important;
+}
+
+/* Ana Sayfa Görünürlük Güvencesi */
+#page-ana-sayfa.active {
+  display: block !important;
 }
 
 /* 6. Alt Bilgi (Footer) Kuyumculuk & Altın Rehber Bağlantıları */
