@@ -83,7 +83,10 @@ const baseReplacements = [
   [/İkinci El Saat & Mücevherat Koleksiyonu/gi, 'Seçkin Saat & Mücevherat Koleksiyonu'],
   [/İkinci El Saatler/gi, 'Seçkin Saatler'],
   [/İkinci El Mücevherler/gi, 'Seçkin Mücevherler'],
-  [/İkinci El/gi, 'Seçkin Ürünler']
+  [/İkinci El/gi, 'Seçkin Ürünler'],
+  [/15-30\s*Mn\s*₺/gi, 'Yüksek Likidite'],
+  [/15-30\s*Milyon\s*TL\s*Beklenen\s*Satış\s*Hacmi/gi, 'Yüksek Likidite ve Anında Karşılık Güvencesi'],
+  [/Aylık İşlem Hacmi/gi, 'Anında Karşılık & Güven']
 ];
 
 for (const file of textFiles) {

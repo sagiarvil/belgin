@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <title>Belgin Saat Kurumsal Profil - Sayfa 10</title>
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    --gold: #d4af37;
+    --gold-bright: #f3e5ab;
+    --gold-dark: #aa820a;
+    --navy-deep: #071118;
+    --navy-card: #0d1e29;
+    --ink: #111a24;
+    --text-muted: #5a6b7c;
+    --paper: #ffffff;
+    --cream: #faf8f5;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--ink);
+    background: #eef2f5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page-container {
+    width: 1240px;
+    height: 1754px;
+    padding: 60px 70px;
+    background: var(--paper);
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* DARK LUXURY COVER */
+  .dark-cover {
+    background: radial-gradient(circle at center, #0f2432 0%, #060e14 100%);
+    color: #fff;
+  }
+
+  .cover-gold-border {
+    border: 2px solid rgba(212, 175, 55, 0.4);
+    height: 100%;
+    padding: 40px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .cover-header { text-align: center; }
+  .brand-crest { font-size: 38px; margin-bottom: 8px; filter: drop-shadow(0 2px 8px rgba(212,175,55,0.4)); }
+  .brand-title { font-family: 'Cinzel', serif; font-size: 34px; font-weight: 800; letter-spacing: 4px; color: #fff; }
+  .brand-subtitle { font-size: 11px; font-weight: 700; letter-spacing: 3px; color: var(--gold); margin-top: 6px; }
+
+  .cover-hero-img-wrap {
+    width: 100%;
+    height: 640px;
+    margin: 20px 0;
+    position: relative;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+  }
+  .cover-hero-img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+  .cover-hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(6,14,20,0.85) 0%, transparent 50%, rgba(6,14,20,0.5) 100%);
+  }
+
+  .cover-content { text-align: center; padding: 0 30px; }
+  .cover-badge {
+    display: inline-block;
+    padding: 6px 18px;
+    background: rgba(212,175,55,0.15);
+    border: 1px solid var(--gold);
+    color: var(--gold-bright);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    border-radius: 50px;
+    margin-bottom: 14px;
+  }
+  .cover-heading {
+    font-family: 'Cinzel', serif;
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: #fff;
+    margin-bottom: 14px;
+  }
+  .gold-text { color: var(--gold); }
+  .cover-desc {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #b0c4de;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .cover-footer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(212, 175, 55, 0.3);
+    text-align: center;
+  }
+  .cover-meta-item .lbl { display: block; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: var(--gold); text-transform: uppercase; }
+  .cover-meta-item .val { display: block; font-size: 12px; font-weight: 600; color: #fff; margin-top: 4px; }
+
+  /* PAGE HEADER */
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 18px;
+    border-bottom: 2px solid #e2e8f0;
+  }
+  .sec-tag { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; color: var(--gold-dark); text-transform: uppercase; }
+  .sec-title { font-family: 'Cinzel', serif; font-size: 26px; font-weight: 700; color: var(--ink); margin-top: 4px; }
+  .page-num { font-family: 'Cinzel', serif; font-size: 28px; font-weight: 800; color: #cbd5e1; }
+
+  .page-grid-2col {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 40px;
+    align-items: center;
+    flex: 1;
+  }
+  .lead-p { font-size: 16px; font-weight: 500; line-height: 1.7; color: var(--ink); margin-bottom: 16px; }
+  p { font-size: 14px; line-height: 1.7; color: #475569; margin-bottom: 14px; }
+
+  .quote-card {
+    background: var(--cream);
+    border-left: 4px solid var(--gold);
+    padding: 20px 24px;
+    border-radius: 0 8px 8px 0;
+    margin: 20px 0;
+    position: relative;
+  }
+  .quote-mark { font-family: 'Cinzel', serif; font-size: 48px; color: var(--gold); position: absolute; top: -10px; right: 16px; opacity: 0.3; }
+  .quote-card p { font-style: italic; font-size: 14px; line-height: 1.65; color: #334155; margin: 0; }
+
+  .visual-img-card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    border: 1px solid #e2e8f0;
+    background: #fff;
+  }
+  .visual-img { width: 100%; height: 520px; object-fit: cover; display: block; }
+  .img-caption { padding: 12px 16px; font-size: 11.5px; color: #64748b; background: #f8fafc; text-align: center; border-top: 1px solid #f1f5f9; }
+
+  .three-pillars-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid #e2e8f0;
+  }
+  .pillar-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+  }
+  .pillar-icon { font-size: 26px; margin-bottom: 8px; display: block; }
+  .pillar-box h4 { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+  .pillar-box p { font-size: 12px; color: #64748b; line-height: 1.5; margin: 0; }
+
+  /* FEATURE ITEMS */
+  .feature-item {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+  .feat-icon { font-size: 24px; line-height: 1; margin-top: 2px; }
+  .feature-item h5 { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .feature-item p { font-size: 13px; color: #64748b; line-height: 1.55; margin: 0; }
+
+  .banner-gold-box {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: linear-gradient(135deg, #fbf7ee 0%, #f5ecd8 100%);
+    border: 1px solid rgba(212,175,55,0.4);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-top: 20px;
+  }
+  .gold-icon { font-size: 28px; }
+  .gold-text-wrap { font-size: 13px; line-height: 1.6; color: #614805; }
+
+  .stats-row-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+  }
+  .stat-mini {
+    background: #0f1d27;
+    color: #fff;
+    padding: 16px;
+    border-radius: 8px;
+    text-align: center;
+    border-bottom: 3px solid var(--gold);
+  }
+  .stat-mini .s-num { display: block; font-family: 'Cinzel', serif; font-size: 24px; font-weight: 800; color: var(--gold-bright); }
+  .stat-mini .s-lbl { display: block; font-size: 11px; font-weight: 600; color: #cbd5e1; margin-top: 4px; }
+
+  .vip-benefit-card {
+    background: #f1f5f9;
+    border-left: 3px solid #0f1d27;
+    padding: 16px;
+    border-radius: 0 6px 6px 0;
+    margin-top: 16px;
+  }
+  .vip-badge { font-size: 11px; font-weight: 800; letter-spacing: 1px; color: var(--navy-deep); margin-bottom: 4px; }
+  .vip-benefit-card p { font-size: 12.5px; color: #475569; margin: 0; line-height: 1.55; }
+
+  /* BRAND SHOWCASE */
+  .brand-showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .brand-card-item {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 14px 18px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .brand-card-item strong { font-size: 14px; color: var(--ink); }
+  .brand-card-item span { font-size: 11.5px; color: #64748b; }
+
+  .split-gallery-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 10px;
+  }
+  .gal-img-wrap {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    border: 1px solid #e2e8f0;
+    background: #fff;
+  }
+  .gal-img-wrap img { width: 100%; height: 260px; object-fit: cover; display: block; }
+  .gal-img-wrap span { display: block; padding: 10px; font-size: 11.5px; text-align: center; color: #475569; background: #f8fafc; font-weight: 600; }
+
+  /* PROTOCOL STEPS */
+  .protocol-steps-list { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; }
+  .proto-step {
+    display: flex;
+    gap: 20px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px 24px;
+    align-items: center;
+  }
+  .proto-badge {
+    width: 46px;
+    height: 46px;
+    background: #0f1d27;
+    color: var(--gold-bright);
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    font-weight: 800;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 2px solid var(--gold);
+  }
+  .proto-body h4 { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .proto-body p { font-size: 13px; color: #64748b; line-height: 1.55; margin: 0; }
+
+  /* LIQUIDITY CARDS */
+  .liq-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid var(--gold);
+    padding: 16px 20px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 14px;
+  }
+  .liq-card h4 { font-size: 14.5px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .liq-card p { font-size: 13px; color: #64748b; line-height: 1.55; margin: 0; }
+
+  /* COMPLIANCE GRID */
+  .compliance-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 24px 0;
+  }
+  .comp-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 24px 20px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  .comp-icon { font-size: 32px; margin-bottom: 12px; display: block; }
+  .comp-box h4 { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+  .comp-box p { font-size: 12.5px; color: #64748b; line-height: 1.6; margin: 0; }
+
+  .compliance-quote {
+    background: #eef7ee;
+    border: 1px solid #c2e2c2;
+    padding: 20px 24px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    color: #1b5e20;
+    line-height: 1.65;
+  }
+
+  /* CONTACT PAGE */
+  .contact-card-box {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(212,175,55,0.3);
+    border-radius: 10px;
+    padding: 40px;
+    margin: 30px auto;
+    max-width: 900px;
+  }
+  .contact-info-list { display: flex; flex-direction: column; gap: 20px; }
+  .c-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    font-size: 14.5px;
+    color: #e2e8f0;
+  }
+  .c-icon { font-size: 24px; }
+  .c-row strong { color: var(--gold-bright); }
+</style>
+</head>
+<body style="background:#fff; margin:0; padding:0;">
+  
+      <div class="page-container dark-cover" style="padding-top:40px;">
+        <div class="cover-gold-border" style="display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div class="cover-header" style="margin-bottom:20px;">
+              <div class="brand-crest">👑</div>
+              <div class="brand-title" style="font-size:24px;">BELGİN SAAT</div>
+              <div class="brand-subtitle">HAUTE HORLOGERIE &bull; İZMİR BUCA &bull; EST. 1999</div>
+            </div>
+
+            <div class="contact-card-box">
+              <h2 style="font-family:'Cinzel', serif; font-size:24px; color:var(--gold); margin:0 0 10px 0; text-align:center;">İzmir Buca VIP Showroom</h2>
+              <p style="text-align:center; font-size:13.5px; color:#ccc; line-height:1.6; margin-bottom:24px;">
+                Sizi ve koleksiyonunuzu, yüksek güvenlikli ve konforlu VIP ağırlama salonumuzda kahve eşliğinde ağırlamaktan onur duyarız.
+              </p>
+
+              <div class="contact-info-list">
+                <div class="c-row">
+                  <span class="c-icon">📍</span>
+                  <div><strong>Showroom Adresi:</strong> Menderes Caddesi No:41/A Buca / İzmir (Kendi Mülkümüz)</div>
+                </div>
+                <div class="c-row">
+                  <span class="c-icon">📞</span>
+                  <div><strong>Telefon &amp; WhatsApp VIP:</strong> +90 532 230 95 53</div>
+                </div>
+                <div class="c-row">
+                  <span class="c-icon">✉️</span>
+                  <div><strong>Kurumsal E-Posta:</strong> iletisim@belginkuyumculuk.com &bull; destek@belginkuyumculuk.com</div>
+                </div>
+                <div class="c-row">
+                  <span class="c-icon">🌐</span>
+                  <div><strong>Resmî Web Platformu:</strong> https://www.belginkuyumculuk.com</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="text-align:center; padding:20px 0 10px 0; border-top:1px solid rgba(212,175,55,0.3);">
+            <p style="font-size:12px; color:var(--gold); letter-spacing:1px; margin:0; text-transform:uppercase;">
+              “Zaman Geçer, Gerçek Değer ve Asil Miras Kalır.”
+            </p>
+            <p style="font-size:10.5px; color:#888; margin:6px 0 0 0;">
+              &copy; 2026 Belgin Saat &bull; Semih Sonbahar &bull; Tüm Hakları Saklıdır.
+            </p>
+          </div>
+        </div>
+      </div>
+    
+</body>
+</html>
