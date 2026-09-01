@@ -183,7 +183,7 @@ const newOpenProduct = `  openProduct(id) {
           <span class="pdp-trust-item-icon">⚖️</span>
           <div class="pdp-trust-item-text">
             <strong>Ekspertiz & Takas Güvencesi</strong>
-            <span>Sertifikalı & 12 Nokta Ekspertiz Güvencesi</span>
+            <span>Sertifikalı & Ürün Bazında Kontrol Güvencesi</span>
           </div>
         </div>
       </div>
