@@ -24,7 +24,7 @@ const SeoManager = {
       },
       'saatler': {
         title: "Lüks Saatler & Yüksek Saatçilik | Belgin Saat",
-        desc: "Ekspertizli ikinci el ve sıfır Rolex, Patek Philippe, Audemars Piguet, TAG Heuer, Longines ve Rado lüks saat modelleri. 12 nokta mekanizma garantisi.",
+        desc: "Ekspertizli ikinci el ve sıfır Rolex, Patek Philippe, Audemars Piguet, TAG Heuer, Longines ve Rado lüks saat modelleri. ürün bazında kontrol bilgisi.",
         keywords: "ikinci el rolex, tag heuer carrera, longines hydroconquest, rado captain cook, izmir lüks saat, ekspertizli saat, patek philippe izmir",
         breadcrumb: "Lüks Saatler"
       },
@@ -36,7 +36,7 @@ const SeoManager = {
       },
       'ikinci-el': {
         title: "Ekspertizli Seçkin Saatler | Belgin Saat",
-        desc: "12 nokta teknik ekspertiz raporlu lüks saat modellerinde en iyi fiyat güvencesi ve takas imkanı.",
+        desc: "ürün bazında kontrol bilgisi sunulan lüks saat modellerinde şeffaf fiyat bilgisi ve takas imkanı.",
         keywords: "ikinci el saat, saat takas, fast ile ödeme, sertifikalı saat, ikinci el saat alım satım",
         breadcrumb: "Seçkin Saatler"
       },
@@ -66,7 +66,7 @@ const SeoManager = {
       },
       'sertifika': {
         title: "Sertifika Doğrulama & Ekspertiz Sorgulama | Belgin Saat",
-        desc: "Satın aldığınız ürünlerin 12 nokta teknik ekspertiz raporunu ve orijinallik tescil belgesini online sorgulama altyapısı.",
+        desc: "Satın aldığınız ürünlerin ürüne ait mevcut kontrol ve belge bilgisini online sorgulama altyapısı.",
         keywords: "sertifika doğrulama, ekspertiz sorgula, saat orijinallik kontrolü",
         breadcrumb: "Sertifika Sorgulama"
       }
