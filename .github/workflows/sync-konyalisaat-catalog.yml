@@ -1,0 +1,68 @@
+name: KonyalıSaat Swiss & Casio Live Sync (Daily at 01:00)
+
+on:
+  schedule:
+    # 22:00 UTC = 01:00 Turkey Time (TRT / UTC+3) every day
+    - cron: "0 22 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: sync-konyalisaat
+  cancel-in-progress: true
+
+jobs:
+  sync-and-deploy:
+    name: Sync KonyalıSaat (+40% Margin) & Deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: pip install curl_cffi beautifulsoup4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "npm"
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Run KonyalıSaat Daily Sync Engine
+        run: python scripts/daily-konyalisaat-sync.py
+
+      - name: Rebuild Static Pages & Assets
+        run: npm run build
+
+      - name: Run Quality Gate & Compliance Tests
+        run: npm test
+
+      - name: Commit updated catalog & prices
+        run: |
+          git config --global user.name "Belgin Sync Bot"
+          git config --global user.email "bot@belginkuyumculuk.com"
+          git add js/data.js paytr_products.json sitemap.xml llms.txt robots.txt
+          if ! git diff --staged --quiet; then
+            git commit -m "chore(sync): automated daily KonyalıSaat stock & price update (+40% margin)"
+            git push origin HEAD:${{ github.ref }}
+          else
+            echo "No catalog or price changes detected."
+          fi
+
+      - name: Deploy to Firebase Hosting
+        if: env.FIREBASE_TOKEN != ""
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: |
+          npx firebase-tools deploy --project carbon-web-1265b --only hosting:belgin --token "${{ secrets.FIREBASE_TOKEN }}"

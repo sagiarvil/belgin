@@ -105,12 +105,44 @@
           <div class="nav-dropdown-menu nav-dropdown-mega">
             <div class="nav-dropdown-header">
               <span>LÜKS SAAT KOLEKSİYONU (12.000 TL+)</span>
-              <a href="/saatler/" data-page="saatler" data-filter="all" onclick="App.filterWatchesByBrand('all', this)">Tüm Saatleri Gör (1.464) →</a>
+              <a href="/saatler/" data-page="saatler" data-filter="all" onclick="App.filterWatchesByBrand('all', this)">Tüm Saatleri Gör (1.925) →</a>
             </div>
             <div class="nav-dropdown-grid">
               <a href="/saatler/" data-page="saatler" data-filter="all" onclick="App.filterWatchesByBrand('all', this)" class="nav-sub-brand-item nav-all-item">
                 <span class="nav-sub-brand-name">⭐ TÜMÜ</span>
-                <span class="nav-sub-brand-tag">Tüm Modeller (1.464)</span>
+                <span class="nav-sub-brand-tag">Tüm Modeller (1.925)</span>
+              </a>
+              <a href="/saatler/" data-page="saatler" data-filter="Tissot" onclick="App.filterWatchesByBrand('Tissot', this)" class="nav-sub-brand-item">
+                <span class="nav-sub-brand-name">Tissot</span>
+                <span class="nav-sub-brand-tag">PRX, Seastar, Le Locle</span>
+              </a>
+              <a href="/saatler/" data-page="saatler" data-filter="Longines" onclick="App.filterWatchesByBrand('Longines', this)" class="nav-sub-brand-item">
+                <span class="nav-sub-brand-name">Longines</span>
+                <span class="nav-sub-brand-tag">HydroConquest, Master</span>
+              </a>
+              <a href="/saatler/" data-page="saatler" data-filter="Frederique Constant" onclick="App.filterWatchesByBrand('Frederique Constant', this)" class="nav-sub-brand-item">
+                <span class="nav-sub-brand-name">Frederique Constant</span>
+                <span class="nav-sub-brand-tag">Highlife, Classics</span>
+              </a>
+              <a href="/saatler/" data-page="saatler" data-filter="Rado" onclick="App.filterWatchesByBrand('Rado', this)" class="nav-sub-brand-item">
+                <span class="nav-sub-brand-name">Rado</span>
+                <span class="nav-sub-brand-tag">Captain Cook, True Square</span>
+              </a>
+              <a href="/saatler/" data-page="saatler" data-filter="Alpina" onclick="App.filterWatchesByBrand('Alpina', this)" class="nav-sub-brand-item">
+                <span class="nav-sub-brand-name">Alpina</span>
+                <span class="nav-sub-brand-tag">Seastrong, Alpiner Extreme</span>
+              </a>
+              <a href="/saatler/" data-page="saatler" data-filter="Bell & Ross" onclick="App.filterWatchesByBrand('Bell & Ross', this)" class="nav-sub-brand-item">
+                <span class="nav-sub-brand-name">Bell & Ross</span>
+                <span class="nav-sub-brand-tag">BR 03, BR 05</span>
+              </a>
+              <a href="/saatler/" data-page="saatler" data-filter="Swatch" onclick="App.filterWatchesByBrand('Swatch', this)" class="nav-sub-brand-item">
+                <span class="nav-sub-brand-name">Swatch</span>
+                <span class="nav-sub-brand-tag">Irony, Bioceramic</span>
+              </a>
+              <a href="/saatler/" data-page="saatler" data-filter="Casio" onclick="App.filterWatchesByBrand('Casio', this)" class="nav-sub-brand-item">
+                <span class="nav-sub-brand-name">Casio G-Shock</span>
+                <span class="nav-sub-brand-tag">MT-G & Mudmaster</span>
               </a>
               <a href="/saatler/" data-page="saatler" data-filter="Carren" onclick="App.filterWatchesByBrand('Carren', this)" class="nav-sub-brand-item">
                 <span class="nav-sub-brand-name">Carren</span>
@@ -291,11 +323,19 @@
       <!-- 1. Saatler Akordeon (EN BAŞTA) -->
       <div style="margin-bottom:8px;">
         <button class="mobile-nav-accordion-header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.acc-arr').textContent = this.nextElementSibling.classList.contains('open') ? '▴' : '▾';">
-          <span>⌚ Lüks Saatler (1.464)</span>
+          <span>⌚ Lüks Saatler (1.925)</span>
           <span class="acc-arr">▾</span>
         </button>
         <div class="mobile-nav-accordion-sub">
-          <a href="/saatler/" data-page="saatler" data-filter="all" onclick="App.toggleMobileDrawer(false); App.filterWatchesByBrand('all', null);" class="mobile-nav-sub-link">⭐ TÜMÜ (Tüm Saatler - 1.464)</a>
+          <a href="/saatler/" data-page="saatler" data-filter="all" onclick="App.toggleMobileDrawer(false); App.filterWatchesByBrand('all', null);" class="mobile-nav-sub-link">⭐ TÜMÜ (Tüm Saatler - 1.925)</a>
+          <a href="/saatler/" data-page="saatler" data-filter="Tissot" onclick="App.toggleMobileDrawer(false); App.filterWatchesByBrand('Tissot', null);" class="mobile-nav-sub-link">Tissot Koleksiyonu</a>
+          <a href="/saatler/" data-page="saatler" data-filter="Longines" onclick="App.toggleMobileDrawer(false); App.filterWatchesByBrand('Longines', null);" class="mobile-nav-sub-link">Longines Koleksiyonu</a>
+          <a href="/saatler/" data-page="saatler" data-filter="Frederique Constant" onclick="App.toggleMobileDrawer(false); App.filterWatchesByBrand('Frederique Constant', null);" class="mobile-nav-sub-link">Frederique Constant</a>
+          <a href="/saatler/" data-page="saatler" data-filter="Rado" onclick="App.toggleMobileDrawer(false); App.filterWatchesByBrand('Rado', null);" class="mobile-nav-sub-link">Rado Koleksiyonu</a>
+          <a href="/saatler/" data-page="saatler" data-filter="Alpina" onclick="App.toggleMobileDrawer(false); App.filterWatchesByBrand('Alpina', null);" class="mobile-nav-sub-link">Alpina Koleksiyonu</a>
+          <a href="/saatler/" data-page="saatler" data-filter="Bell & Ross" onclick="App.toggleMobileDrawer(false); App.filterWatchesByBrand('Bell & Ross', null);" class="mobile-nav-sub-link">Bell & Ross Koleksiyonu</a>
+          <a href="/saatler/" data-page="saatler" data-filter="Swatch" onclick="App.toggleMobileDrawer(false); App.filterWatchesByBrand('Swatch', null);" class="mobile-nav-sub-link">Swatch Koleksiyonu</a>
+          <a href="/saatler/" data-page="saatler" data-filter="Casio" onclick="App.toggleMobileDrawer(false); App.filterWatchesByBrand('Casio', null);" class="mobile-nav-sub-link">Casio G-Shock & MT-G</a>
           <a href="/saatler/" data-page="saatler" data-filter="Carren" onclick="App.toggleMobileDrawer(false); App.filterWatchesByBrand('Carren', null);" class="mobile-nav-sub-link">Carren Saat Koleksiyonu</a>
           <a href="/saatler/" data-page="saatler" data-filter="Versace" onclick="App.toggleMobileDrawer(false); App.filterWatchesByBrand('Versace', null);" class="mobile-nav-sub-link">Versace Modelleri</a>
           <a href="/saatler/" data-page="saatler" data-filter="Calvin Klein" onclick="App.toggleMobileDrawer(false); App.filterWatchesByBrand('Calvin Klein', null);" class="mobile-nav-sub-link">Calvin Klein Modelleri</a>
@@ -1209,10 +1249,18 @@
       <div class="section-header-flex" style="flex-wrap:wrap; gap:16px; margin-bottom:24px;">
         <div>
           <h2>Lüks Saat Koleksiyonu</h2>
-          <p style="color:var(--color-muted); font-size:13.5px; margin-top:4px;">Carren, Versace, Calvin Klein, Michael Kors, Gc, Guess ve Welder modelleri</p>
+          <p style="color:var(--color-muted); font-size:13.5px; margin-top:4px;">Tissot, Longines, Frederique Constant, Rado, Alpina, Bell & Ross, Swatch, Casio, Carren, Versace, Calvin Klein, Michael Kors, Gc, Guess ve Welder modelleri</p>
         </div>
         <div class="watch-filter-tabs">
-          <button class="hero-tab-btn watch-brand-filter-btn active" onclick="App.filterWatchesByBrand('all', this)">Tümü</button>
+          <button class="hero-tab-btn watch-brand-filter-btn active" onclick="App.filterWatchesByBrand('all', this)">Tümü (1.925)</button>
+          <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Tissot', this)">Tissot</button>
+          <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Longines', this)">Longines</button>
+          <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Frederique Constant', this)">Frederique Constant</button>
+          <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Rado', this)">Rado</button>
+          <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Alpina', this)">Alpina</button>
+          <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Bell & Ross', this)">Bell & Ross</button>
+          <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Swatch', this)">Swatch</button>
+          <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Casio', this)">Casio G-Shock</button>
           <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Carren', this)">Carren</button>
           <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Versace', this)">Versace</button>
           <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Calvin Klein', this)">Calvin Klein</button>
