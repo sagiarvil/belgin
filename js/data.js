@@ -1,7 +1,7 @@
 // ==========================================================
 // BELGİN SAAT — MASTER ÜRÜN VE KOLEKSİYON VERİTABANI
-// Sürüm: 2026-09-01.elite-studio-images-sync
-// Toplam Yayın Ürünü: 2068 (200 Elit Saat + 1868 Saat Kataloğu)
+// Sürüm: 2026-09-01.elite-and-watches
+// Toplam Yayın Ürünü: 2057 (200 Elit Saat + 1857 Saat Kataloğu)
 // ==========================================================
 
 const ELITE_WATCH_BRANDS = [
@@ -193,6 +193,9 @@ const WATCH_BRANDS = [
 ];
 
 const JEWELRY_BRANDS = [];
+
+const PRE_OWNED_ITEMS = [];
+const PRE_OWNED_GOLD = [];
 
 const PRODUCTS = [
   {
@@ -90734,350 +90737,32 @@ const PRODUCTS = [
       "Garanti": "2 Yıl Distribütör Garantili",
       "Teslimat": "Sigortalı Hızlı Kargo ile Adresinize Gönderim"
     }
-  },
-  {
-    "id": 101,
-    "brand": "TAG Heuer",
-    "name": "Carrera Date Twin-Time GMT",
-    "reference": "WDA2114.BA0043 · 41mm",
-    "category": "watch",
-    "statusBadge": "Stokta",
-    "conditionBadge": "İkinci El",
-    "isPreOwned": true,
-    "isGold": false,
-    "price": 409500,
-    "metal": "Paslanmaz Çelik 316L",
-    "dial": "Güneş Işını Teal Yeşili Kadran & Çift Zaman GMT",
-    "year": "2024",
-    "boxPapers": "Orijinal Kutu & Uluslararası Garanti Kartı",
-    "desc": "TAG Heuer Carrera Date Twin-Time WDA2114.BA0043; 41mm çelik kasa, teal yeşil kadran, otomatik manufacture Calibre TH31-03, GMT, 80 saat güç rezervi ve 100m su geçirmezlik.",
-    "image": "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dw4cc3dbd9/TAG_Heuer_Carrera/WDA2114.BA0043/WDA2114.BA0043_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600",
-    "hoverImage": "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dw4cc3dbd9/TAG_Heuer_Carrera/WDA2114.BA0043/WDA2114.BA0043_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600",
-    "sourceUrl": "https://www.tagheuer.com/int/en/timepieces/collections/tag-heuer-carrera/41-mm-th31-03/WDA2114.BA0043.html",
-    "amplitude": "290° (Swiss Chronometer)",
-    "rateAccuracy": "+1.2 sn/gün",
-    "waterTest": "10 Bar (100 Metre) Geçti",
-    "inStock": true,
-    "buyPrice": 409000,
-    "images": [
-      "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dw4cc3dbd9/TAG_Heuer_Carrera/WDA2114.BA0043/WDA2114.BA0043_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600"
-    ]
-  },
-  {
-    "id": 102,
-    "brand": "TAG Heuer",
-    "name": "Carrera Chronograph Otomatik",
-    "reference": "CBN2A1AA.FT6228 · 44mm",
-    "category": "watch",
-    "statusBadge": "Stokta",
-    "conditionBadge": "İkinci El",
-    "isPreOwned": true,
-    "isGold": false,
-    "price": 357000,
-    "metal": "Paslanmaz Çelik & Seramik Takimetre Bezel",
-    "dial": "Siyah Kadran & Kırmızı Kronograf İbreleri",
-    "year": "2023",
-    "boxPapers": "Orijinal Kutu & Garanti Belgesi",
-    "desc": "TAG Heuer Carrera Chronograph CBN2A1AA.FT6228; 44mm çelik kasa, siyah kadran, siyah seramik bezel, Calibre 16 otomatik kronograf, siyah perfore kauçuk kayış ve 100m su geçirmezlik.",
-    "image": "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dw6eb05ae1/TAG_Heuer_Carrera/CBN2A1AA.FT6228/CBN2A1AA.FT6228_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600",
-    "hoverImage": "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dw6eb05ae1/TAG_Heuer_Carrera/CBN2A1AA.FT6228/CBN2A1AA.FT6228_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600",
-    "sourceUrl": "https://www.tagheuer.com/us/en/timepieces/collections/tag-heuer-carrera/44-mm-calibre-16-automatic/CBN2A1AA.FT6228.html",
-    "amplitude": "288° (Heuer Kalibrasyonu)",
-    "rateAccuracy": "+1.5 sn/gün",
-    "waterTest": "10 Bar (100 Metre) Geçti",
-    "inStock": true,
-    "buyPrice": 356500,
-    "images": [
-      "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dw6eb05ae1/TAG_Heuer_Carrera/CBN2A1AA.FT6228/CBN2A1AA.FT6228_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600"
-    ]
-  },
-  {
-    "id": 103,
-    "brand": "TAG Heuer",
-    "name": "Formula 1 Chronograph Gulf Edition",
-    "reference": "CAZ101N.FC8243 · 43mm",
-    "category": "watch",
-    "statusBadge": "Stokta",
-    "conditionBadge": "İkinci El",
-    "isPreOwned": true,
-    "isGold": false,
-    "price": 189000,
-    "metal": "Paslanmaz Çelik & Mavi Alüminyum Takimetre Bezel",
-    "dial": "Gulf Yarış Şeritli Güneş Işını Mavi Kadran",
-    "year": "2023",
-    "boxPapers": "Gulf Özel Seri Kutu & Garanti Kartı",
-    "desc": "TAG Heuer Formula 1 Gulf Special Edition CAZ101N.FC8243; 43mm çelik kasa, Gulf mavi-turuncu kadran, quartz kronograf, mavi deri kayış ve 200m su geçirmezlik.",
-    "image": "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dwfa2a241b/TAG_Heuer_Formula_1/CAZ101N.FC8243/CAZ101N.FC8243_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600",
-    "hoverImage": "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dwfa2a241b/TAG_Heuer_Formula_1/CAZ101N.FC8243/CAZ101N.FC8243_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600",
-    "sourceUrl": "https://www.tagheuer.com/us/en/timepieces/collections/tag-heuer-formula-1/43-mm-quartz/CAZ101N.FC8243.html",
-    "amplitude": "Quartz 32.768 Hz Hassasiyet",
-    "rateAccuracy": "+0.1 sn/ay",
-    "waterTest": "20 Bar (200 Metre) Geçti",
-    "inStock": true,
-    "buyPrice": 188500,
-    "images": [
-      "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dwfa2a241b/TAG_Heuer_Formula_1/CAZ101N.FC8243/CAZ101N.FC8243_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600"
-    ]
-  },
-  {
-    "id": 104,
-    "brand": "TAG Heuer",
-    "name": "Formula 1 Date Siyah 41mm",
-    "reference": "WAZ1110.FT8023 · 41mm",
-    "category": "watch",
-    "statusBadge": "Stokta",
-    "conditionBadge": "İkinci El",
-    "isPreOwned": true,
-    "isGold": false,
-    "price": 147000,
-    "metal": "İnce Fırçalanmış Çelik & Titanyum Karbür Bezel",
-    "dial": "Opalin Siyah Kadran & Luminesan İndeksler",
-    "year": "2024",
-    "boxPapers": "Orijinal Kutu ve Evrakları Eksiksiz",
-    "desc": "TAG Heuer Formula 1 ref. WAZ1110; 41mm çelik kasa, tek yönlü döner titanyum karbür kaplama siyah bezel, dayanıklı kauçuk kayış ve 200m dalgıç sınıfı su geçirmezlik.",
-    "image": "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dw3d6718cf/TAG_Heuer_Formula_1/WAZ1110.FT8023/WAZ1110.FT8023_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600",
-    "hoverImage": "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dw3d6718cf/TAG_Heuer_Formula_1/WAZ1110.FT8023/WAZ1110.FT8023_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600",
-    "sourceUrl": "https://www.tagheuer.com/int/en/timepieces/collections/tag-heuer-formula-1/41-mm-quartz/WAZ1110.FT8023.html",
-    "amplitude": "İsviçre Hassas Kuvars",
-    "rateAccuracy": "+0.2 sn/ay",
-    "waterTest": "20 Bar (200 Metre) Geçti",
-    "inStock": true,
-    "buyPrice": 146500,
-    "images": [
-      "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dw3d6718cf/TAG_Heuer_Formula_1/WAZ1110.FT8023/WAZ1110.FT8023_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600"
-    ]
-  },
-  {
-    "id": 105,
-    "brand": "Longines",
-    "name": "HydroConquest Otomatik Seramik",
-    "reference": "L3.781.4.56.6 · 41mm",
-    "category": "watch",
-    "statusBadge": "Stokta",
-    "conditionBadge": "İkinci El",
-    "isPreOwned": true,
-    "isGold": false,
-    "price": 109900,
-    "metal": "Paslanmaz Çelik & Çizilmez Siyah Seramik Bezel",
-    "dial": "Güneş Işını Siyah Kadran",
-    "year": "2023",
-    "boxPapers": "Longines Ahşap Kutu & Uluslararası Garanti Kartı",
-    "desc": "Longines HydroConquest L3.781.4.56.6; 41mm çelik kasa, tek yönlü döner siyah seramik bezel, otomatik kalibre L888 (72 saat güç rezervi, silikon denge yayı) ve 300m profesyonel dalgıç dayanıklılığı.",
-    "image": "https://api.ecom.longines.com/media/catalog/product/w/a/watch-collection-hydroconquest-l3-781-4-56-6-d65499-hero.png?w=2560",
-    "hoverImage": "https://api.ecom.longines.com/media/catalog/product/w/a/watch-collection-hydroconquest-l3-781-4-56-6-d65499-hero.png?w=2560",
-    "sourceUrl": "https://www.longines.com/p/watch-hydroconquest-l3-781-4-56-6",
-    "amplitude": "292° (Kalibre L888 Standartı)",
-    "rateAccuracy": "+1.1 sn/gün",
-    "waterTest": "30 Bar (300 Metre) Geçti",
-    "inStock": true,
-    "buyPrice": 109400,
-    "images": [
-      "https://api.ecom.longines.com/media/catalog/product/w/a/watch-collection-hydroconquest-l3-781-4-56-6-d65499-hero.png?w=2560"
-    ]
-  },
-  {
-    "id": 106,
-    "brand": "Longines",
-    "name": "Master Collection Moonphase Ay Fazı",
-    "reference": "L2.909.4.78.3 · 40mm",
-    "category": "watch",
-    "statusBadge": "Stokta",
-    "conditionBadge": "İkinci El",
-    "isPreOwned": true,
-    "isGold": false,
-    "price": 212800,
-    "metal": "Paslanmaz Çelik & Kahverengi Timsah Deri Kayış",
-    "dial": "Gümüş Arpa Tanesi Kadran & Mavileştirilmiş Çelik Kollar",
-    "year": "2024",
-    "boxPapers": "Longines Özel Kutu & Ay Fazı Garanti Belgesi",
-    "desc": "The Longines Master Collection L2.909; klasik gümüş arpa deseni kadran, saat 6 konumunda ay fazı ve tarih göstergesi, safir arka kapak ve 72 saat rezervli otomatik kalibre L899.",
-    "image": "https://api.ecom.longines.com/media/catalog/product/w/a/watch-collection-longines-master-collection-moonphase-l2-909-4-78-3-8f8b4a-hero.png?w=2560",
-    "hoverImage": "https://api.ecom.longines.com/media/catalog/product/w/a/watch-collection-longines-master-collection-moonphase-l2-909-4-78-3-8f8b4a-hero.png?w=2560",
-    "sourceUrl": "https://www.longines.com/p/watch-longines-master-collection-moonphase-l2-909-4-78-3",
-    "amplitude": "296° (İsviçre Üst Segment)",
-    "rateAccuracy": "+0.7 sn/gün",
-    "waterTest": "3 Bar (30 Metre) Geçti",
-    "inStock": true,
-    "buyPrice": 212300,
-    "images": [
-      "https://api.ecom.longines.com/media/catalog/product/w/a/watch-collection-longines-master-collection-moonphase-l2-909-4-78-3-8f8b4a-hero.png?w=2560"
-    ]
-  },
-  {
-    "id": 107,
-    "brand": "Rado",
-    "name": "Captain Cook Otomatik Kırmızı-Siyah",
-    "reference": "R32105353 · 42mm",
-    "category": "watch",
-    "statusBadge": "Stokta",
-    "conditionBadge": "İkinci El",
-    "isPreOwned": true,
-    "isGold": false,
-    "price": 200900,
-    "metal": "Paslanmaz Çelik & Yüksek Teknoloji Yeşil Seramik Bezel",
-    "dial": "Kırmızıdan Siyaha Geçişli Kadran & Hareketli Çapa",
-    "year": "2024",
-    "boxPapers": "Rado Deri Seyahat Çantası & Kutu / Evrak",
-    "desc": "Rado Captain Cook R32105353; 42mm paslanmaz çelik kasa ve bilezik, siyah yüksek teknoloji seramik bezel, kırmızıdan siyaha geçişli kadran ve 300m su geçirmezlik.",
-    "image": "https://www.rado.com/media/sgecom_contentsystem/Campaigns/Valentines_Day/captain-cook-red.jpg?im=Resize%3D%281024%2C682%29%2Caspect%3Dfill%3BCrop%3D%280%2C0%2C1024%2C682%29%2Cgravity%3DCenter",
-    "hoverImage": "https://www.rado.com/media/sgecom_contentsystem/Campaigns/Valentines_Day/captain-cook-red.jpg?im=Resize%3D%281024%2C682%29%2Caspect%3Dfill%3BCrop%3D%280%2C0%2C1024%2C682%29%2Cgravity%3DCenter",
-    "sourceUrl": "https://www.rado.com/captain-cook-automatic-r32105353.html",
-    "amplitude": "294° (Nivachron™ Anti-Manyetik)",
-    "rateAccuracy": "+0.9 sn/gün",
-    "waterTest": "30 Bar (300 Metre) Geçti",
-    "inStock": true,
-    "buyPrice": 200400,
-    "images": [
-      "https://www.rado.com/media/sgecom_contentsystem/Campaigns/Valentines_Day/captain-cook-red.jpg?im=Resize%3D%281024%2C682%29%2Caspect%3Dfill%3BCrop%3D%280%2C0%2C1024%2C682%29%2Cgravity%3DCenter"
-    ]
-  },
-  {
-    "id": 108,
-    "brand": "Rado",
-    "name": "True Square Automatic Open Heart Siyah Seramik",
-    "reference": "R27086162 · 38mm",
-    "category": "watch",
-    "statusBadge": "Stokta",
-    "conditionBadge": "İkinci El",
-    "isPreOwned": true,
-    "isGold": false,
-    "price": 193200,
-    "metal": "Monoblok Yüksek Teknoloji Parlak Siyah Seramik",
-    "dial": "Açık Mekanizma İskelet Kadran & Altın Detaylar",
-    "year": "2023",
-    "boxPapers": "Rado Orijinal Kutu & Garanti Kartı",
-    "desc": "Rado True Square Automatic Open Heart R27086162; 38mm monoblok siyah yüksek teknoloji seramik kasa ve bilezik, açık kalp kadran ve otomatik R734 mekanizma.",
-    "image": "https://www.rado.com/media/sgecom_contentsystem/PDP_Images/true-square-black-carousel-a.jpg?im=Resize%3D%281024%2C682%29%2Caspect%3Dfill%3BCrop%3D%280%2C0%2C1024%2C682%29%2Cgravity%3DCenter",
-    "hoverImage": "https://www.rado.com/media/sgecom_contentsystem/PDP_Images/true-square-black-carousel-a.jpg?im=Resize%3D%281024%2C682%29%2Caspect%3Dfill%3BCrop%3D%280%2C0%2C1024%2C682%29%2Cgravity%3DCenter",
-    "sourceUrl": "https://www.rado.com/true-square-automatic-open-heart-r27086162.html",
-    "amplitude": "289° (Rado Kalibre R734)",
-    "rateAccuracy": "+1.4 sn/gün",
-    "waterTest": "5 Bar (50 Metre) Geçti",
-    "inStock": true,
-    "buyPrice": 192700,
-    "images": [
-      "https://www.rado.com/media/sgecom_contentsystem/PDP_Images/true-square-black-carousel-a.jpg?im=Resize%3D%281024%2C682%29%2Caspect%3Dfill%3BCrop%3D%280%2C0%2C1024%2C682%29%2Cgravity%3DCenter"
-    ]
-  },
-  {
-    "id": 3,
-    "brand": "Cartier",
-    "name": "Love Bilezik Klasik Rose Altın",
-    "reference": "B6067417 · 17",
-    "category": "jewelry",
-    "statusBadge": "Stokta",
-    "conditionBadge": "İkinci El",
-    "isPreOwned": true,
-    "isGold": true,
-    "price": 525000,
-    "metal": "18K Rose Altın (Au750)",
-    "dial": "Klasik Vida Motifleri",
-    "year": "2024",
-    "boxPapers": "Orijinal Tornavida & Cartier Kutu",
-    "desc": "Cartier LOVE B6067417 klasik model; 18 ayar rose altın, 6,1mm genişlik, iki işlevsel vidalı orijinal kapama sistemi ve tornavida.",
-    "image": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "hoverImage": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw5412be7e/images/large/26af9aba6c6c5bee84d47741ebaadfd6.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "sourceUrl": "https://www.cartier.com/en-ie/jewellery/bracelets/love/-love-bracelet-classic-model-CRB6067417",
-    "hallmark": "Au750 • 17 • CRD99218",
-    "inStock": true,
-    "buyPrice": 524500,
-    "images": [
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw5412be7e/images/large/26af9aba6c6c5bee84d47741ebaadfd6.png?sfrm=png&sh=750&sm=fit&sw=750",
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw8559ada9/images/large/b27f59a64cfc59f6a99202b0c6164ad9.png?sfrm=png&sh=750&sm=fit&sw=750"
-    ]
-  },
-  {
-    "id": 5,
-    "brand": "Cartier",
-    "name": "Love Yüzük Küçük Sarı Altın",
-    "reference": "B4085000 · 56",
-    "category": "jewelry",
-    "statusBadge": "Stokta",
-    "conditionBadge": "İkinci El",
-    "isPreOwned": true,
-    "isGold": true,
-    "price": 133000,
-    "metal": "18K Sarı Altın (Au750)",
-    "dial": "Vida Motifli Küçük Boy",
-    "year": "2024",
-    "boxPapers": "Cartier Kutu & Garanti Belgesi",
-    "desc": "Cartier Love küçük model yüzük; 18 ayar sarı altın, 3.6mm genişlik.",
-    "image": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw47516a74/images/large/509efad81d12569981abebf66c433720.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "hoverImage": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dwc27b40c7/images/large/5c4da398fe195e5fa36ea2b5d4ce0071.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "sourceUrl": "https://www.cartier.com/en-tr/jewellery/rings/love/love-ring-small-model-CRB4085000.html",
-    "hallmark": "Au750 • 56",
-    "inStock": true,
-    "buyPrice": 132500,
-    "images": [
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw47516a74/images/large/509efad81d12569981abebf66c433720.png?sfrm=png&sh=750&sm=fit&sw=750",
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dwc27b40c7/images/large/5c4da398fe195e5fa36ea2b5d4ce0071.png?sfrm=png&sh=750&sm=fit&sw=750"
-    ]
-  },
-  {
-    "id": 6,
-    "brand": "Cartier",
-    "name": "Juste un Clou Klasik Sarı Altın",
-    "reference": "B6048217 · 16",
-    "category": "jewelry",
-    "statusBadge": "Stokta",
-    "conditionBadge": "İkinci El",
-    "isPreOwned": true,
-    "isGold": true,
-    "price": 430000,
-    "buyPrice": 429500,
-    "metal": "18K Sarı Altın (Au750)",
-    "dial": "Pırlantasız Klasik Model",
-    "year": "2024",
-    "boxPapers": "Cartier Kutusunda & Sertifikalı",
-    "desc": "Cartier Juste un Clou B6048217 klasik model; 18 ayar sarı altın, pırlantasız ikonik çivi formu ve 3,5mm genişlik.",
-    "image": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dwecbecd81/images/large/0628c1ecff495255b019bdc9c03b10e4.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "hoverImage": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dwecbecd81/images/large/0628c1ecff495255b019bdc9c03b10e4.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "sourceUrl": "https://www.cartier.com/en-tr/jewellery/bracelets/juste-un-clou/juste-un-clou-bracelet-classic-model-CRB6048217.html",
-    "hallmark": "Au750 • 16",
-    "inStock": true,
-    "images": [
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dwecbecd81/images/large/0628c1ecff495255b019bdc9c03b10e4.png?sfrm=png&sh=750&sm=fit&sw=750"
-    ]
   }
 ];
 
-const ELITE_WATCHES = PRODUCTS.filter(p => p.isElite || p.category === 'elit-saatler');
-
-const WATCHES = PRODUCTS.filter(p => (p.category === 'saat' || p.category === 'watch') && !p.isPreOwned && !p.isElite);
-
-const JEWELLERY = PRODUCTS.filter(p => (p.category === 'jewelry' || p.category === 'jewellery') && !p.isPreOwned);
-
-const PRE_OWNED_ITEMS = PRODUCTS.filter(p => p.isPreOwned === true);
-
-const PRE_OWNED_GOLD = PRE_OWNED_ITEMS.filter(p => p.isGold === true);
-
-const ALL_PRODUCTS = PRODUCTS;
+const WATCHES = PRODUCTS.filter(p => (p.category === 'saat' || p.category === 'watch' || p.isElite));
+const JEWELLERY = [];
 
 if (typeof window !== 'undefined') {
   window.ELITE_WATCH_BRANDS = ELITE_WATCH_BRANDS;
   window.WATCH_BRANDS = WATCH_BRANDS;
   window.JEWELRY_BRANDS = JEWELRY_BRANDS;
-  window.PRODUCTS = PRODUCTS;
-  window.ELITE_WATCHES = ELITE_WATCHES;
-  window.WATCHES = WATCHES;
-  window.JEWELLERY = JEWELLERY;
   window.PRE_OWNED_ITEMS = PRE_OWNED_ITEMS;
   window.PRE_OWNED_GOLD = PRE_OWNED_GOLD;
-  window.ALL_PRODUCTS = ALL_PRODUCTS;
+  window.PRODUCTS = PRODUCTS;
+  window.WATCHES = WATCHES;
+  window.JEWELLERY = JEWELLERY;
 }
 
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
+    PRODUCTS,
     ELITE_WATCH_BRANDS,
     WATCH_BRANDS,
     JEWELRY_BRANDS,
-    PRODUCTS,
-    ELITE_WATCHES,
-    WATCHES,
-    JEWELLERY,
     PRE_OWNED_ITEMS,
     PRE_OWNED_GOLD,
-    ALL_PRODUCTS
+    WATCHES,
+    JEWELLERY
   };
 }

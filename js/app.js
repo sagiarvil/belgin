@@ -315,9 +315,7 @@ const App = {
         break;
       case 'seckin-urunler':
       case 'ikinci-el':
-        const preOwnedFilter = (options.filter !== undefined && options.filter !== null) ? options.filter : (this.currentPreOwnedCategory || 'all');
-        this.currentPreOwnedCategory = preOwnedFilter;
-        this.renderPreOwned(preOwnedFilter, 1);
+        Router.navigate('elit-kategori', true, { filter: options.filter || 'all' });
         break;
       case 'sepet':
         this.renderCart();
@@ -336,7 +334,6 @@ const App = {
     this.renderEliteWatches();
     this.renderWatches();
     this.renderJewellery();
-    this.renderPreOwned();
     if (Router.currentPage === 'canli-fiyatlar') this.renderLivePricesPage();
     if (Router.currentPage === 'sepet') this.renderCart();
   },
@@ -393,13 +390,6 @@ const App = {
 
     // Canlı Fiyatlar Tabelası DOM Güncellemesi
     this.updateLivePricesTableDOM();
-
-    // İkinci El Altın & Saat Bölümü (8'li)
-    const homePreOwnedEl = document.getElementById('homePreOwnedGrid');
-    if (homePreOwnedEl) {
-      const preOwnedPicks = PRE_OWNED_ITEMS.slice(0, 8);
-      homePreOwnedEl.innerHTML = preOwnedPicks.map(p => this.renderProductCard(p)).join('');
-    }
 
     // Mücevher Markaları (5'li)
     const jBrandsEl = document.getElementById('jewelryBrandsGrid');
@@ -726,89 +716,23 @@ const App = {
     return html;
   },
 
-  // 3. İKİNCİ EL ALTIN & SAAT SAYFASI
-  PRE_OWNED_PAGE_SIZE: 24,
-  allPreOwnedPage: 1,
-
+  // 3. SEÇKİN ÜRÜNLER (ELİT KATEGORİYE YÖNLENDİRİLDİ)
   renderPreOwned(filter = 'all', page = 1) {
-    this.currentPreOwnedCategory = filter;
-    this.allPreOwnedPage = page;
-    const el = document.getElementById('allPreOwnedGrid');
-    const pagEl = document.getElementById('allPreOwnedPagination');
-    if (!el) return;
-
-    let items = (typeof PRE_OWNED_ITEMS !== 'undefined' ? PRE_OWNED_ITEMS : (typeof PRODUCTS !== 'undefined' ? PRODUCTS.filter(p => p.isPreOwned) : []));
-    const f = String(filter || 'all').toLowerCase().trim();
-
-    if (f === 'jewelry' || f === 'mucevher' || f === 'cartier') {
-      items = items.filter(p => p.category === 'jewelry' || p.category === 'jewellery' || (p.brand && p.brand.toLowerCase().includes('cartier')));
-    } else if (f === 'rolex') {
-      items = items.filter(p => (p.brand && p.brand.toLowerCase() === 'rolex') || (p.subCategory && p.subCategory.toLowerCase() === 'rolex'));
-    } else if (f === 'watch' || f === 'saat' || f === 'prestij') {
-      items = items.filter(p => p.category === 'watch' || p.category === 'saat');
-    } else if (f !== 'all' && f !== '') {
-      items = items.filter(p =>
-        (p.brand && p.brand.toLowerCase().includes(f)) ||
-        (p.subCategory && p.subCategory.toLowerCase().includes(f)) ||
-        (p.category && p.category.toLowerCase() === f) ||
-        (p.name && p.name.toLowerCase().includes(f))
-      );
-    }
-
-    const total = items.length;
-    const pageSize = this.PRE_OWNED_PAGE_SIZE || 24;
-    const start = (page - 1) * pageSize;
-    const end = start + pageSize;
-    const pageItems = items.slice(start, end);
-
-    el.innerHTML = pageItems.map(p => this.renderProductCard(p)).join('');
-
-    if (pagEl) {
-      pagEl.innerHTML = this.buildPaginationHtml(page, total, pageSize, 'App.changeAllPreOwnedPage');
-    }
-
-    // Update filter pill UI
-    document.querySelectorAll('.preowned-filter-btn').forEach(b => {
-      b.classList.remove('active');
-      const txt = b.textContent.trim().toLowerCase();
-      if ((f === 'all' || !f) && txt.includes('tümü')) b.classList.add('active');
-      else if (f === 'rolex' && txt.includes('rolex')) b.classList.add('active');
-      else if ((f === 'jewelry' || f === 'cartier') && (txt.includes('mücevher') || txt.includes('cartier'))) b.classList.add('active');
-      else if ((f === 'watch' || f === 'prestij') && txt.includes('prestij')) b.classList.add('active');
-      else if (f && txt.includes(f)) b.classList.add('active');
-    });
+    this.renderEliteWatches(filter === 'rolex' ? 'Rolex' : (filter === 'watch' ? 'all' : filter), page);
   },
 
   changeAllPreOwnedPage(newPage) {
-    this.renderPreOwned(this.currentPreOwnedCategory || 'all', newPage);
-    setTimeout(() => {
-      const target = document.querySelector('#page-ikinci-el .section-header-flex') || document.querySelector('#page-seckin-urunler .section-header-flex') || document.getElementById('allPreOwnedGrid');
-      if (target && typeof Router !== 'undefined' && Router.scrollToTarget) {
-        Router.scrollToTarget(target);
-      }
-    }, 40);
+    this.changeAllEliteWatchPage(newPage);
   },
 
   filterPreOwnedCategory(cat = 'all', btn = null) {
-    this.closeNavDropdowns();
-    this.currentPreOwnedCategory = cat;
-    this.allPreOwnedPage = 1;
-    this.renderPreOwned(cat, 1);
-
-    if (Router.currentPage !== 'seckin-urunler' && Router.currentPage !== 'ikinci-el') {
-      Router.navigate('seckin-urunler', true, { filter: cat });
-    }
-
-    if (btn) {
-      document.querySelectorAll('.preowned-filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    }
-    setTimeout(() => {
-      const target = document.querySelector('#page-ikinci-el .section-header-flex') || document.querySelector('#page-seckin-urunler .section-header-flex') || document.getElementById('allPreOwnedGrid');
-      if (target && typeof Router !== 'undefined' && Router.scrollToTarget) {
-        Router.scrollToTarget(target);
-      }
-    }, 60);
+    const brandMap = {
+      'rolex': 'Rolex',
+      'patek': 'Patek Philippe',
+      'cartier': 'Cartier',
+      'all': 'all'
+    };
+    this.filterEliteWatchesByBrand(brandMap[cat.toLowerCase()] || 'all', btn);
   },
 
   // 4. TÜM MÜCEVHERLER VE ALTIN SAYFASI

@@ -7,9 +7,7 @@ const CATEGORY_ROUTES = Object.freeze({
   'elit-kategori': '/elit-kategori/',
   'elit-saatler': '/elit-kategori/',
   'saatler': '/saatler/',
-  'mucevherat': '/mucevherat/',
-  'seckin-urunler': '/seckin-urunler/',
-  'ikinci-el': '/seckin-urunler/'
+  'mucevherat': '/mucevherat/'
 });
 
 function slugify(value) {

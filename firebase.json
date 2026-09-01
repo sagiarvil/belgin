@@ -324,10 +324,6 @@
         "destination": "/odeme-linki.html"
       },
       {
-        "source": "/seckin-urunler{,/**}",
-        "destination": "/index.html"
-      },
-      {
         "source": "/api/createPayTRToken",
         "function": "createPayTRToken"
       },
@@ -354,13 +350,23 @@
     ],
     "redirects": [
       {
+        "source": "/seckin-urunler",
+        "destination": "/elit-kategori/",
+        "type": 301
+      },
+      {
+        "source": "/seckin-urunler/**",
+        "destination": "/elit-kategori/",
+        "type": 301
+      },
+      {
         "source": "/ikinci-el",
-        "destination": "/seckin-urunler/",
+        "destination": "/elit-kategori/",
         "type": 301
       },
       {
         "source": "/ikinci-el/**",
-        "destination": "/seckin-urunler/",
+        "destination": "/elit-kategori/",
         "type": 301
       }
     ]

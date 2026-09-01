@@ -8,8 +8,6 @@ const PAGE_TITLES = {
   'elit-saatler': "Elit Kategori — Lüks Saat Evleri (Haute Horlogerie) | Belgin Saat",
   'mucevherat': "Koleksiyon | Belgin Saat",
   'saatler': "Lüks Saatler & Yüksek Saatçilik | Belgin Saat",
-  'seckin-urunler': "Seçkin Saatler & Prestij Koleksiyonu | Belgin Saat",
-  'ikinci-el': "Seçkin Saatler & Prestij Koleksiyonu | Belgin Saat",
   'hikayemiz': "Hikayemiz & Mirasımız | Belgin Saat",
   'koleksiyonlar': "Özel Saat Koleksiyonları | Belgin Saat",
   'urun': "Ürün Detayı | Belgin Saat",
@@ -37,7 +35,7 @@ const Router = {
     if (path === '/canli-fiyatlar' || path === '/canlipiyasalar') return { page: 'ana-sayfa' };
     if (path === '/mucevherat') return { page: 'ana-sayfa' };
     if (path === '/saatler') return { page: 'saatler' };
-    if (path === '/seckin-urunler' || path === '/ikinci-el') return { page: 'seckin-urunler' };
+    if (path === '/seckin-urunler' || path === '/ikinci-el') return { page: 'elit-kategori', filter: 'all' };
     if (path === '/sepet' || path === '/cart') return { page: 'sepet' };
     if (path === '/odeme' || path === '/checkout') return { page: 'odeme' };
     if (path.startsWith('/urun/')) {
@@ -82,9 +80,9 @@ const Router = {
       'watches': '/saatler/',
       'mucevherat': '/',
       'jewellery': '/',
-      'seckin-urunler': '/seckin-urunler/',
-      'ikinci-el': '/seckin-urunler/',
-      'preowned': '/seckin-urunler/',
+      'seckin-urunler': '/elit-kategori/',
+      'ikinci-el': '/elit-kategori/',
+      'preowned': '/elit-kategori/',
       'odeme': '#odeme',
       'sepet': '#sepet'
     };
@@ -164,7 +162,8 @@ const Router = {
       'watches': 'saatler',
       'jewellery': 'mucevherat',
       'preowned': 'seckin-urunler',
-      'ikinci-el': 'seckin-urunler',
+      'ikinci-el': 'elit-kategori',
+      'seckin-urunler': 'elit-kategori',
       'story': 'hikayemiz',
       'cart': 'sepet',
       'checkout': 'odeme',
@@ -189,9 +188,6 @@ const Router = {
     // 1. Sayfa Görünürlüğü
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     let target = document.getElementById('page-' + page);
-    if (!target && page === 'seckin-urunler') {
-      target = document.getElementById('page-ikinci-el') || document.getElementById('page-seckin-urunler');
-    }
     if (!target && page === 'iletisim') {
       target = document.getElementById('page-contact');
     }

@@ -148,7 +148,7 @@ function runQualityGates() {
   }
 
   // G6: Kategori Sayfaları Raw Product Href Kapsamı (%100 Coverage)
-  const categoryKeys = ['saatler', 'mucevherat', 'ikinci-el'];
+  const categoryKeys = ['elit-kategori', 'saatler', 'mucevherat'];
   for (const catKey of categoryKeys) {
     const catRoute = CATEGORY_ROUTES[catKey];
     const catHtmlPath = path.join(ROOT_DIR, catRoute.replace(/^\/+|\/+$/g, ''), 'index.html');

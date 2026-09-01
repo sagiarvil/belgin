@@ -1,15 +1,4 @@
 window.SEO_ROUTE_MAP = Object.freeze({
-  "3": "/urun/cartier-b6067417-17-3/",
-  "5": "/urun/cartier-b4085000-56-5/",
-  "6": "/urun/cartier-b6048217-16-6/",
-  "101": "/urun/tag-heuer-wda2114-ba0043-41mm-101/",
-  "102": "/urun/tag-heuer-cbn2a1aa-ft6228-44mm-102/",
-  "103": "/urun/tag-heuer-caz101n-fc8243-43mm-103/",
-  "104": "/urun/tag-heuer-waz1110-ft8023-41mm-104/",
-  "105": "/urun/longines-l3-781-4-56-6-41mm-105/",
-  "106": "/urun/longines-l2-909-4-78-3-40mm-106/",
-  "107": "/urun/rado-r32105353-42mm-107/",
-  "108": "/urun/rado-r27086162-38mm-108/",
   "1000": "/urun/versace-vrscve6k00523-1000/",
   "1001": "/urun/versace-vrscve6k00423-1001/",
   "1002": "/urun/versace-vrscve6k00123-1002/",
@@ -2073,7 +2062,5 @@ window.SEO_CATEGORY_ROUTES = Object.freeze({
   "elit-kategori": "/elit-kategori/",
   "elit-saatler": "/elit-kategori/",
   "saatler": "/saatler/",
-  "mucevherat": "/mucevherat/",
-  "seckin-urunler": "/seckin-urunler/",
-  "ikinci-el": "/seckin-urunler/"
+  "mucevherat": "/mucevherat/"
 });
