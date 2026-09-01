@@ -301,7 +301,7 @@ const ValuationEngine = {
           
           <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(194, 167, 104, 0.3); padding-bottom:14px; margin-bottom:16px; flex-wrap:wrap; gap:10px; position:relative; z-index:2;">
             <div>
-              <span style="font-size:11px; letter-spacing:1.5px; text-transform:uppercase; font-weight:800; color:var(--color-gold); display:block; margin-bottom:2px;">✦ 12 Nokta Ekspertiz Tahmini Piyasa Değeri ✦</span>
+              <span style="font-size:11px; letter-spacing:1.5px; text-transform:uppercase; font-weight:800; color:var(--color-gold); display:block; margin-bottom:2px;">✦ Ürün Bazında Kontrol Tahmini Piyasa Değeri ✦</span>
               <strong style="font-size:17px; color:#FFFFFF; font-weight:700;">${brandData.name} — ${model.name}</strong>
             </div>
             <span class="val-instant-badge">15 Dakikada Ekspertiz</span>
