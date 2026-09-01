@@ -120,10 +120,13 @@ def scrape_single_article(url):
         if json_ld and json_ld.get("headline"):
             raw_title = json_ld.get("headline")
         if not raw_title:
-            h1 = soup.find("h1")
-            raw_title = h1.get_text().strip() if h1 else ""
-        if not raw_title:
             return None
+
+        # 🛡️ GÜVENLİK FİLTRESİ: Personel profilleri, çalışan röportajları ve logo filigranlı içerikleri engelle
+        if re.search(r"(?i)favorite\s*watches|staff\s*picks|steiert|gehrlein|team\s*member|employee|interviews?|chrono24\s*team", raw_title + " " + url):
+            print(f"[SYNC ATLA] 3. taraf personel/logo makalesi reddedildi: {url}")
+            return None
+
         title = clean_and_translate_text(raw_title)
         slug = slugify(title)
         
