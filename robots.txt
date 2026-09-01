@@ -11,7 +11,6 @@ Disallow: /rehber/pirlanta-ve-gemoloji-degerleme-rehberi/
 Disallow: /rehber/izmir-kuyumculuk-ve-guvenli-teslimat/
 Disallow: /urun/belgin-kuyumculuk-blg-*
 
-# LLM & AI Agents (Açık ve erişilebilir)
 User-agent: GPTBot
 Allow: /
 

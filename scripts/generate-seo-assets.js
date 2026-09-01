@@ -66,13 +66,13 @@ function urlset(items, withImages = false) {
 }
 
 function buildSitemaps() {
-  const pages = SEO_REGISTRY.filter(p => p.indexDirective === 'index' && !String(p.route).includes('#')).map(p => ({
+  const pages = SEO_REGISTRY.filter(p => p.indexDirective === 'index' && !String(p.route).includes('#') && !p.route.includes('altin') && !p.route.includes('pirlanta') && !p.route.includes('izmir-kuyumculuk')).map(p => ({
     loc: `${BASE_URL}${p.route}`
   }));
-  const categories = ['saatler', 'mucevherat', 'ikinci-el'].map(k => ({
+  const categories = ['saatler', 'ikinci-el'].map(k => ({
     loc: `${BASE_URL}${CATEGORY_ROUTES[k]}`
   }));
-  const productItems = products.map(p => ({
+  const productItems = products.filter(p => p.brand !== 'Belgin Kuyumculuk' && !p.isGold && p.category !== 'gold').map(p => ({
     loc: productUrl(p),
     lastmod: lastmod(p),
     image: imageUrl(p) ? { loc: imageUrl(p), title: `${p.brand || ''} ${p.name || ''}`.trim() } : null
@@ -101,7 +101,6 @@ function buildLlms() {
     '- (Belgin Kuyumculuk) -[fiziki showroom]-> (Menderes Caddesi No:231/B, Buca / İzmir)',
     '- (Belgin Kuyumculuk) -[kuruluş yılı]-> (1999)',
     '- (Belgin Kuyumculuk) -[sunar]-> (1.618+ Orijinal Distribütör Garantili Lüks Saat)',
-    '- (Belgin Kuyumculuk) -[fiyatlama güvencesi]-> (İZKO İzmir Kuyumcular Odası Resmi Kurları + %5 Kâr Marjı)',
     '- (Belgin Kuyumculuk) -[saat marjı]-> (Saat&Saat Distribütör Fiyatı + %40 Kâr Marjı)',
     '- (Yüksek Değerli Teslimat) -[güvenlik eşiği]-> (12.000 TL Üzeri Kimlikli ve İmzalı Mağaza Teslimi)',
     '- (Hukuki Bütünlük) -[delil zinciri]-> (Deterministik SHA-256 Kök Özeti ve OpenTimestamps Bitcoin Dış Zaman İspatı)'
@@ -112,7 +111,7 @@ function buildLlms() {
 }
 
 function buildRobots() {
-  write('robots.txt', `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /node_modules/\n\nUser-agent: GPTBot\nAllow: /\n\nUser-agent: ChatGPT-User\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nSitemap: ${BASE_URL}/sitemap.xml\n`);
+  write('robots.txt', `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /node_modules/\nDisallow: /mucevherat/\nDisallow: /canli-fiyatlar/\nDisallow: /canlipiyasalar/\nDisallow: /rehber/altin-yatirimi-ve-ozel-matrah-rehberi/\nDisallow: /rehber/pirlanta-ve-gemoloji-degerleme-rehberi/\nDisallow: /rehber/izmir-kuyumculuk-ve-guvenli-teslimat/\nDisallow: /urun/belgin-kuyumculuk-blg-*\n\nUser-agent: GPTBot\nAllow: /\n\nUser-agent: ChatGPT-User\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: anthropic-ai\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nUser-agent: Applebot-Extended\nAllow: /\n\nUser-agent: Amazonbot\nAllow: /\n\nUser-agent: cohere-ai\nAllow: /\n\nSitemap: ${BASE_URL}/sitemap.xml\n`);
 }
 
 function main() {
