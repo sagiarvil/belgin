@@ -203,16 +203,13 @@ p, span, li, td, th, label, input, button, select, textarea {
    2. TÜRKİYE KAPALIÇARŞI & İZKO CANLI ALTIN TICKER'I (CROSS-BROWSER)
    ========================================================== */
 .gold-ticker-strip {
-  background: #041411;
-  color: #ECE8E1;
-  font-size: 12px;
-  border-bottom: 1.5px solid rgba(194, 167, 104, 0.4);
-  padding: 8px 0;
-  overflow: hidden;
-  position: relative;
-  width: 100%;
-  -webkit-user-select: none;
-  user-select: none;
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  overflow: hidden !important;
 }
 .gold-ticker-inner {
   display: flex;
