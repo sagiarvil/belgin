@@ -51,8 +51,65 @@ function decodeEntities(str) {
     .trim();
 }
 
-function cleanTextHtml(title, rawHtml) {
+const ARTICLE_QUOTES = {
+  "mag-181302": "Dalış saatlerinde efsanelerin ardındaki gerçek güç, suyun altında sunduğu güvenilirlik ve bilekte bıraktığı ikonik silüettir.",
+  "mag-180772": "Ay görevlerinden yarış pistlerine uzanan Speedmaster, insanlığın bilinmeze meydan okuyan maceracı ruhunu bileğe taşır.",
+  "mag-180505": "Rolex piyasasında doğru koleksiyon seçimi, anlık spekülasyonlardan sıyrılıp zamansız mühendisliğe yatırım yapmaktır.",
+  "mag-178583": "Entegre bilezik mimarisi ve sekizgen çerçevenin geometrik dengesi, 1970'lerden günümüze taşınan saf bir tasarım zaferidir.",
+  "mag-180358": "Zamanının ötesinde olan tasarımlar önce yadırganır, ardından koleksiyonerlerin en çok arzuladığı nadir başyapıtlara dönüşür.",
+  "mag-178206": "Kıtalar arası yolculuklarda bileğinizdeki ikinci zaman dilimi, ardınızda bıraktığınız evi ve önünüzdeki ufku aynı anda fısıldar.",
+  "mag-177174": "Kutsal Üçlü'nün asırlık üyesi Vacheron Constantin, geçici trendlerin ötesinde sessiz bir servet ve zarafet koruyucusudur.",
+  "mag-177989": "Sporun zirvesindeki zafer anları, saniyenin onda birini ölçen yüksek saatçilik kronograflarında ölümsüzleşir.",
+  "mag-177772": "İdeal bir saat koleksiyonu yalnızca modellerin toplamı değil; sahibinin yaşam tarzını ve estetik vizyonunu anlatan bir kürasyondur.",
+  "mag-177781": "Kusursuz bir saat, kadranındaki estetik büyü ile mekanizmasındaki matematiksel dehanın kusursuz evliliğidir.",
+  "mag-177645": "Pistteki hız ve telemetri hassasiyeti, mekanik kronografların çarklarında saf bir tutkuya ve adrenalin senfonisine dönüşür.",
+  "mag-177255": "Modern kadın koleksiyonerler, yüksek komplikasyonlu mekanik saatçiliğin estetik sınırlarını yeniden çiziyor.",
+  "mag-176676": "Doğru seçilmiş bir kayış, saatin karakterini mevsime ve bileğin konforuna göre yeniden tanımlayan sihirli bir dokunuştur.",
+  "mag-177019": "Yıldız sporcuların bileğindeki lüks saatler, saha dışındaki küresel stil ve başarı göstergesinin en güçlü imzasıdır.",
+  "mag-176771": "Canlı kadran renkleri ve avangart çizgiler, klasik İsviçre saatçiliğine neşeli ve cesur bir nefes katıyor.",
+  "mag-176428": "Resmi davetlerde manşetin altından süzülen yalın bir elbise saati, bağırmayan gerçek lüksün en zarif kanıtıdır.",
+  "mag-175798": "Yüksek saatçilik ile popüler kültürün beklenmedik kesişimi, horoloji dünyasının kurallarını sarsmaya devam ediyor.",
+  "mag-175672": "Finans dünyasında zaman yalnızca para değildir; bileğinizdeki saat kurumsal güvenilirliğin ve disiplinin sessiz kartvizitidir.",
+  "mag-174683": "Vintage bir saatin kadranındaki patina, geçen yılların ve yaşanmış hikayelerin benzersiz bir parmak izidir.",
+  "mag-173755": "Tarihi bir saate sahip olmak, geçmişin usta zanaatkarlarının ellerinden çıkmış bir zaman kapsülünü geleceğe taşımaktır.",
+  "mag-173834": "Kırmızı-mavi çift renkli bezel tasarımı, havacılık tarihinin en tanınabilir ve tutku uyandıran renk kodudur.",
+  "mag-172356": "Hayatın yeni bir evresine başlarken hediye edilen mekanik bir saat, ömür boyu hatırlanacak sarsılmaz bir pusuladır.",
+  "mag-170705": "Tarihi kurumların özel damgalarını taşıyan çift logolu kadranlar, koleksiyoner dünyasının en nadir hazineleridir.",
+  "mag-169726": "Jorg Hysek'in cesur çizgileri, saat kasasını sadece bir muhafaza değil; heykelsi bir modern sanat formuna dönüştürdü.",
+  "mag-168917": "Yüzyıllara meydan okuyan manüfaktürler, mekanik saatçilik sanatını insanlığın ortak kültürel mirası olarak yaşatıyor.",
+  "mag-169875": "Sinema tarihindeki karizmatik karakterler, güçlerini ve sofistike zevklerini bileklerindeki seçkin saatlerle taçlandırır.",
+  "mag-168504": "Yılın en çok aranan modelleri, güvenilirlik, yüksek mühendislik ve zamansız stilin ortak paydasında buluşuyor.",
+  "mag-167571": "Kitlelerin radarından uzak, bağımsız ustaların elinden çıkan niş modeller gerçek saat tutkunlarının gizli sığınağıdır.",
+  "mag-168290": "Royal Oak Offshore'un cesur babası Emmanuel Gueit, lüks saatçilikte büyük boyut ve sportif maskülenliğin öncüsü oldu.",
+  "mag-167506": "Minute Repeater gonglarının kristal tınısı, mekanik saatçiliğin göze değil kulağa hitap eden en yüce şarkısıdır.",
+  "mag-166765": "Emaye, sedef ve guilloché işçiliğiyle bezenen kadranlar, mikromekanik sanatın tuvali olarak parıldar.",
+  "mag-164136": "Sessiz lüks, gösterişten uzak sadelikte; kusursuz finisaj ve dokunulduğunda hissedilen ağırlıkta gizlidir.",
+  "mag-163331": "Yaz mevsiminin enerjisi, suya dayanıklı şık kasalar ve pastel kadranlarla mükemmel bir zarafet sergiler.",
+  "mag-163280": "Rolex dalış saatleri yalnızca okyanusun derinliklerinde değil; günlük yaşamda da sarsılmaz bir prestij ve yatırım değeri sunar.",
+  "mag-162528": "Bir Patek Philippe'e asla tamamen sahip olamazsınız; ona yalnızca gelecek nesiller için göz kulak olursunuz.",
+  "mag-160884": "Doğru saat ölçüsü milimetrelerle değil; kasanın boynuz yapısının bileğin anatomisiyle kurduğu kusursuz uyumla ölçülür.",
+  "mag-160816": "Küresel pazar eğilimleri, ikonik spor çelik modeller ile klasik altın kasalar arasındaki dengeli talebi yansıtıyor.",
+  "mag-150187": "Her yeni model yılı, saat evlerinin köklü geçmişlerine saygı duruşunda bulunarak geleceğin kalibrelerini inşa ettiği bir bayramdır.",
+  "mag-149200": "Çift zaman dilimi komplikasyonu, hem gökyüzünün fatihleri hem de küresel iş insanları için vazgeçilmez bir mekanik refakatçidir.",
+  "mag-148376": "Piyasada spekülasyonlar gelip geçer; fakat köklü geçmişe, orijinal parçalara ve kusursuz kondisyona sahip saatler daima kazanır.",
+  "mag-147711": "Yerçekimine meydan okuyan dönen kafesiyle Tourbillon, mekanik dehanın kinetik bir heykeli olarak büyülemeye devam eder.",
+  "mag-146630": "Saatçilik dünyası, küçük bir kasanın içine sığdırılmış asırlık sırlar ve büyüleyici keşiflerle doludur.",
+  "mag-139898": "İtalyan tasarım tutkusu ile İsviçre mekanik titizliğinin birleşimi, ultra ince kalibrelerde yeni bir çağ başlattı.",
+  "mag-140324": "Bağımsız saatçiliğin yükselen yıldızı Czapek, mikro-rotorlu mekanizma mimarisi ve ayna kadranıyla haute horlogerie'yi yeniden tanımlıyor.",
+  "mag-110011": "İdeal kasa oranlarına sahip modern dalış saatleri, cinsiyet kalıplarını aşarak her bilekte karizmatik bir duruş sergiler.",
+  "mag-95730": "Güneşin, denizin ve açık havanın tadını çıkarırken bileğinizdeki saat hem suya meydan okumalı hem de yaz stilinizi tamamlamalıdır.",
+  "mag-51132": "Gilt, Maxi veya Serif kadranlar; Rolex dünyasında küçük bir yazı tipi farkının bile devasa koleksiyon değeri yarattığının kanıtıdır.",
+  "mag-20847": "Haute Horlogerie; mekanik bir aleti zamanı gösteren bir araç olmaktan çıkarıp insan elinin ulaşabileceği en yüksek zanaat mertebesine yükseltmektir.",
+  "mag-10486": "Derinliklerin karanlığında parlayan indeksler, profesyonel bir dalgıç saatini hayati bir yol arkadaşına dönüştürür.",
+  "mag-7916": "Akan akrep yerine aniden sıçrayan dijital saat penceresi, zamanın akışına teatral ve büyüleyici bir ritim katar."
+};
+
+function cleanTextHtml(art) {
+  const title = art.title;
+  let rawHtml = art.content_html;
   if (!rawHtml) return '';
+
+  const uniqueQuote = ARTICLE_QUOTES[art.id] || "Mekanik saatçilikte değer, saatin taşıdığı köklü miras ve zamandaki kalıcılığında saklıdır.";
 
   let text = rawHtml
     .replace(/<div class="mag-quote-box">[\s\S]*?<\/div>/gi, '###QUOTE###')
@@ -66,6 +123,10 @@ function cleanTextHtml(title, rawHtml) {
   if (text.startsWith(cleanTitle)) {
     text = text.substring(cleanTitle.length).trim();
   }
+
+  text = text.replace(/Tarihsel Kökenler ve Mekanik Mükemmellik/g, '');
+  text = text.replace(/İkincil Piyasa Dinamikleri ve Değerleme Analizi/g, '');
+  text = text.replace(/Koleksiyon Değeri ve Alıcı Rehberi/g, '');
 
   text = text.replace(/““/g, '“').replace(/””/g, '”');
 
@@ -113,6 +174,14 @@ function cleanTextHtml(title, rawHtml) {
     paragraphs.push(currentPara.join(' '));
   }
 
+  if (!paragraphs.includes('###QUOTE###')) {
+    if (paragraphs.length >= 2) {
+      paragraphs.splice(2, 0, '###QUOTE###');
+    } else {
+      paragraphs.push('###QUOTE###');
+    }
+  }
+
   let finalHtml = '';
   let paraIndex = 0;
 
@@ -121,7 +190,7 @@ function cleanTextHtml(title, rawHtml) {
     if (!p) continue;
 
     if (p === '###QUOTE###') {
-      finalHtml += `\n<div class="mag-quote-box"><blockquote>“Saatçilikte değer, yalnızca mekanizmanın kusursuzluğunda değil; onun taşıdığı köklü miras ve zamandaki kalıcılığında saklıdır.”</blockquote></div>\n`;
+      finalHtml += `\n<div class="mag-quote-box"><blockquote>“${uniqueQuote}”</blockquote></div>\n`;
       continue;
     }
 
@@ -196,7 +265,7 @@ function cleanArticle(art) {
 <p>Piyasa dinamikleri açısından ref. 5711 Nautilus ve ref. 5167A Aquanaut, dünya çapında en yüksek talep gören ve liste fiyatlarının çok üzerinde primle el değiştiren ikonlar olarak değerini kanıtlamıştır.</p>
     `.trim();
   } else {
-    content = cleanTextHtml(title, content);
+    content = cleanTextHtml(art);
   }
 
   // Final validation of image
