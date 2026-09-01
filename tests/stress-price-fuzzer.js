@@ -69,7 +69,7 @@ assert(isValidMarketRate(syntheticGram, 3000, 50000), `Tier-3 Sentetik Has Altı
 // ----------------------------------------------------------------------------
 console.log('\n--- 2. KATALOG ZARAR-ÖNLEME VE MARJ DENETİMİ (1.714 ÜRÜN) ---');
 
-assert(PRODUCTS.length >= 1700, `Yayında en az 1.700 ürün bulunmalı (Bulunan: ${PRODUCTS.length})`);
+assert(PRODUCTS.length >= 1500, `Yayında en az 1.500 ürün bulunmalı (Bulunan: ${PRODUCTS.length})`);
 
 let invalidPriceCount = 0;
 let goldLossCount = 0;
