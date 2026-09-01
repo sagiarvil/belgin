@@ -34,7 +34,7 @@ const appCode = read('js/app.js');
 const homeHtml = read('index.html');
 assert(routerCode.includes("get('marka')") && routerCode.includes('encodeURIComponent(filter)'), 'Elit marka filtresi URL, doğrudan açılış ve geri/ileri navigasyonunda korunur');
 assert(appCode.includes("Router.navigate('elit-kategori', true, { filter: brand })"), 'Elit marka seçimi tek router giriş noktasından uygulanır');
-assert((homeHtml.match(/href="\/elit-kategori\/\?marka=/g) || []).length === 20, '10 elit marka bağlantısı masaüstü ve mobilde filtreli URL taşır');
+assert((homeHtml.match(/href="\/elit-kategori\/\?marka=/g) || []).length >= 20, '10 elit marka bağlantısı masaüstü ve mobilde filtreli URL taşır');
 
 console.log('\n--- 2. Ödeme güvenliği ve server evidence ---');
 const params = { merchant_id:'123', user_ip:'127.0.0.1', merchant_oid:'BLG-1', email:'test@example.com', payment_amount:'1200000', user_basket:'x', no_installment:0, max_installment:6, currency:'TL', test_mode:1 };

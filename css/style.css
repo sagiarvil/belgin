@@ -778,6 +778,215 @@ p, span, li, td, th, label, input, button, select, textarea {
   margin-top: 1px;
 }
 
+/* ==========================================================
+   ✨ MARKALAR DROPDOWN — PRESTİJ TYPOGRAPHIC DIRECTORY
+   ========================================================== */
+.nav-dropdown-markalar {
+  left: 50% !important;
+  transform: translateX(-50%) translateY(4px) !important;
+  min-width: 820px !important;
+  max-width: 880px !important;
+  padding: 20px 24px !important;
+  background: #FFFFFF !important;
+  border: 1px solid rgba(194, 167, 104, 0.45) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 24px 50px rgba(5, 51, 47, 0.16), 0 4px 16px rgba(194, 167, 104, 0.12) !important;
+}
+.nav-has-dropdown:hover .nav-dropdown-markalar,
+.nav-has-dropdown:focus-within .nav-dropdown-markalar {
+  transform: translateX(-50%) translateY(0) !important;
+}
+.brand-dir-columns {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr 1fr;
+  gap: 18px 22px;
+}
+.brand-dir-col {
+  display: flex;
+  flex-direction: column;
+}
+.brand-dir-col-title {
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--color-teal);
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1.5px solid rgba(194, 167, 104, 0.35);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.brand-dir-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.brand-dir-link {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 4.5px 8px !important;
+  border-radius: 6px;
+  color: var(--color-ink) !important;
+  text-decoration: none !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  transition: all 0.18s ease !important;
+  border: 1px solid transparent;
+}
+.brand-dir-link:hover {
+  background: #FAF6EE !important;
+  color: var(--color-gold-dark) !important;
+  border-color: rgba(194, 167, 104, 0.3) !important;
+  transform: translateX(3px);
+}
+.brand-dir-link .b-name {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.brand-dir-link .b-count {
+  font-size: 10px;
+  color: #777;
+  font-weight: 600;
+  background: #F3EFE6;
+  padding: 1px 6px;
+  border-radius: 10px;
+  transition: all 0.18s ease;
+}
+.brand-dir-link:hover .b-count {
+  background: var(--color-gold-light);
+  color: var(--color-ink);
+}
+.brand-dir-footer {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #ECE7DC;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11.5px;
+}
+.brand-dir-footer a {
+  color: var(--color-teal) !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px;
+  padding: 5px 10px !important;
+  border-radius: 6px;
+  background: #F7F5F0 !important;
+  border: 1px solid #E5E0D5 !important;
+  font-size: 11.5px !important;
+  transition: all 0.2s ease !important;
+}
+.brand-dir-footer a:hover {
+  background: var(--color-teal) !important;
+  color: #FFFFFF !important;
+  border-color: var(--color-teal) !important;
+}
+
+/* ==========================================================
+   🏛️ MARKALAR SAYFASI (PAGE-MARKALAR) GRID & KARTLARI
+   ========================================================== */
+.brand-page-directory-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+@media (max-width: 991px) {
+  .brand-page-directory-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+.brand-page-card {
+  background: #FFFFFF;
+  border: 1px solid #EBE6DC;
+  border-radius: 12px;
+  padding: 24px 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+}
+.brand-page-card-header {
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1.5px solid #F0ECE1;
+}
+.brand-page-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--color-gold-dark);
+  background: #FAF6EE;
+  border: 1px solid rgba(194, 167, 104, 0.35);
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+.brand-page-card-header h3 {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-ink);
+  margin: 0 0 4px 0;
+}
+.brand-page-card-header p {
+  font-size: 12.5px;
+  color: var(--color-muted);
+  margin: 0;
+}
+.brand-page-item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.brand-page-item {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 10px 12px !important;
+  background: #FDFCFA !important;
+  border: 1px solid #F0ECE1 !important;
+  border-radius: 8px !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
+}
+.brand-page-item:hover {
+  background: #FAF5EB !important;
+  border-color: var(--color-gold) !important;
+  transform: translateX(4px);
+}
+.bp-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.bp-info strong {
+  font-size: 14px;
+  color: var(--color-ink);
+  font-weight: 700;
+}
+.bp-info span {
+  font-size: 11.5px;
+  color: var(--color-muted);
+}
+.bp-arrow {
+  color: var(--color-gold-dark);
+  font-weight: 700;
+  font-size: 14px;
+  transition: transform 0.2s ease;
+}
+.brand-page-item:hover .bp-arrow {
+  transform: translateX(3px);
+}
+
 /* MOBILE DRAWER ACCORDION (HAUTE MAISON STANDARDI) */
 .mobile-nav-accordion-header {
   display: flex;

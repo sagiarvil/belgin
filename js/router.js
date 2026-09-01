@@ -6,6 +6,7 @@ const PAGE_TITLES = {
   'ana-sayfa': "Belgin Saat | Lüks Saat & Prestij Koleksiyonu",
   'elit-kategori': "Elit Kategori — Lüks Saat Evleri (Haute Horlogerie) | Belgin Saat",
   'elit-saatler': "Elit Kategori — Lüks Saat Evleri (Haute Horlogerie) | Belgin Saat",
+  'markalar': "Saat Markaları Dizini — Tüm Markalar | Belgin Saat",
   'mucevherat': "Koleksiyon | Belgin Saat",
   'saatler': "Lüks Saatler & Yüksek Saatçilik | Belgin Saat",
   'hikayemiz': "Hikayemiz & Mirasımız | Belgin Saat",
@@ -32,6 +33,7 @@ const Router = {
       const brand = new URLSearchParams(location.search).get('marka');
       return { page: 'elit-kategori', filter: brand || 'all' };
     }
+    if (path === '/markalar' || path === '/saat-markalari') return { page: 'markalar' };
     if (path === '/canli-fiyatlar' || path === '/canlipiyasalar') return { page: 'ana-sayfa' };
     if (path === '/mucevherat') return { page: 'ana-sayfa' };
     if (path === '/saatler') return { page: 'saatler' };
@@ -83,6 +85,7 @@ const Router = {
       'seckin-urunler': '/elit-kategori/',
       'ikinci-el': '/elit-kategori/',
       'preowned': '/elit-kategori/',
+      'markalar': '/markalar/',
       'odeme': '#odeme',
       'sepet': '#sepet'
     };

@@ -2129,6 +2129,7 @@ window.SEO_CATEGORY_ROUTES = Object.freeze({
   "ana-sayfa": "/",
   "elit-kategori": "/elit-kategori/",
   "elit-saatler": "/elit-kategori/",
+  "markalar": "/markalar/",
   "saatler": "/saatler/",
   "mucevherat": "/mucevherat/"
 });
