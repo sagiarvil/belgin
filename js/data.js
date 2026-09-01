@@ -1,6 +1,6 @@
 // ==========================================================
 // BELGİN SAAT — MASTER ÜRÜN VE KOLEKSİYON VERİTABANI
-// Sürüm: 2026-09-01.konyali-sync
+// Sürüm: 2026-09-01.elite-usd-80margin-sync
 // Toplam Yayın Ürünü: 2125 (200 Elit Saat + 1925 Saat Kataloğu)
 // ==========================================================
 
@@ -286,7 +286,6 @@ const WATCH_BRANDS = [
 const JEWELRY_BRANDS = [];
 
 const PRE_OWNED_ITEMS = [];
-const PRE_OWNED_GOLD = [];
 
 const PRODUCTS = [
   {
@@ -295,9 +294,9 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126610LN",
     "reference": "126610LN",
-    "price": 791700,
+    "price": 1260061,
     "usdRefPrice": 14500,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Oystersteel 904L Çelik",
@@ -334,7 +333,8 @@ const PRODUCTS = [
       "Orijinallik": "Uluslararası Tescilli & Seri No Doğrulamalı",
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5002,
@@ -342,9 +342,9 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126500LN",
     "reference": "126500LN",
-    "price": 1719900,
+    "price": 2737374,
     "usdRefPrice": 31500,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Oystersteel 904L Çelik",
@@ -381,7 +381,8 @@ const PRODUCTS = [
       "Orijinallik": "Uluslararası Tescilli & Seri No Doğrulamalı",
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5003,
@@ -389,9 +390,9 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126710BLRO",
     "reference": "126710BLRO",
-    "price": 1173900,
+    "price": 1868366,
     "usdRefPrice": 21500,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Oystersteel 904L Çelik",
@@ -428,7 +429,8 @@ const PRODUCTS = [
       "Orijinallik": "Uluslararası Tescilli & Seri No Doğrulamalı",
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5004,
@@ -436,9 +438,9 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126710BLNR",
     "reference": "126710BLNR",
-    "price": 939120,
+    "price": 1494693,
     "usdRefPrice": 17200,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Oystersteel 904L Çelik",
@@ -475,7 +477,8 @@ const PRODUCTS = [
       "Orijinallik": "Uluslararası Tescilli & Seri No Doğrulamalı",
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5005,
@@ -483,9 +486,9 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126720VTNR",
     "reference": "126720VTNR",
-    "price": 1010100,
+    "price": 1607664,
     "usdRefPrice": 18500,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Oystersteel 904L Çelik",
@@ -522,7 +525,8 @@ const PRODUCTS = [
       "Orijinallik": "Uluslararası Tescilli & Seri No Doğrulamalı",
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5006,
@@ -530,9 +534,9 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126334-0002",
     "reference": "126334-0002",
-    "price": 753480,
+    "price": 1199230,
     "usdRefPrice": 13800,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Rolesor (Oystersteel & 18K Beyaz Altın Bezel)",
@@ -569,7 +573,8 @@ const PRODUCTS = [
       "Orijinallik": "Uluslararası Tescilli & Seri No Doğrulamalı",
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5007,
@@ -577,9 +582,9 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126334-0014",
     "reference": "126334-0014",
-    "price": 775320,
+    "price": 1233991,
     "usdRefPrice": 14200,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Rolesor (Çelik & 18K Beyaz Altın)",
@@ -616,7 +621,8 @@ const PRODUCTS = [
       "Orijinallik": "Uluslararası Tescilli & Seri No Doğrulamalı",
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5008,
@@ -624,9 +630,9 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126234-0050",
     "reference": "126234-0050",
-    "price": 737100,
+    "price": 1173160,
     "usdRefPrice": 13500,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Rolesor Çelik & 18K Beyaz Altın",
@@ -663,7 +669,8 @@ const PRODUCTS = [
       "Orijinallik": "Uluslararası Tescilli & Seri No Doğrulamalı",
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5009,
@@ -671,9 +678,9 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "228238-0006",
     "reference": "228238-0006",
-    "price": 2402400,
+    "price": 3823633,
     "usdRefPrice": 44000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Masif 18K Sarı Altın",
@@ -710,7 +717,8 @@ const PRODUCTS = [
       "Orijinallik": "Uluslararası Tescilli & Seri No Doğrulamalı",
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5010,
@@ -718,9 +726,9 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "228236-0010",
     "reference": "228236-0010",
-    "price": 3931200,
+    "price": 6256855,
     "usdRefPrice": 72000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Rolex Koleksiyonu",
     "metal": "950 Masif Platin",
@@ -757,7 +765,8 @@ const PRODUCTS = [
       "Orijinallik": "Uluslararası Tescilli & Seri No Doğrulamalı",
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5011,
@@ -765,9 +774,9 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "124060",
     "reference": "124060",
-    "price": 698880,
+    "price": 1112330,
     "usdRefPrice": 12800,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Oystersteel 904L Çelik",
@@ -804,7 +813,8 @@ const PRODUCTS = [
       "Orijinallik": "Uluslararası Tescilli & Seri No Doğrulamalı",
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5012,
@@ -812,9 +822,9 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126610LV",
     "reference": "126610LV",
-    "price": 884520,
+    "price": 1407792,
     "usdRefPrice": 16200,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Oystersteel Çelik",
@@ -851,7 +861,8 @@ const PRODUCTS = [
       "Orijinallik": "Uluslararası Tescilli & Seri No Doğrulamalı",
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5013,
@@ -859,9 +870,9 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126515LN",
     "reference": "126515LN",
-    "price": 2293200,
+    "price": 3649832,
     "usdRefPrice": 42000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Rolex Koleksiyonu",
     "metal": "18K Everose Pembe Altın",
@@ -898,7 +909,8 @@ const PRODUCTS = [
       "Orijinallik": "Uluslararası Tescilli & Seri No Doğrulamalı",
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5014,
@@ -906,9 +918,9 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "124270",
     "reference": "124270",
-    "price": 485940,
+    "price": 773417,
     "usdRefPrice": 8900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Oystersteel 904L Çelik",
@@ -945,7 +957,8 @@ const PRODUCTS = [
       "Orijinallik": "Uluslararası Tescilli & Seri No Doğrulamalı",
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5015,
@@ -953,9 +966,9 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "226570-0001",
     "reference": "226570-0001",
-    "price": 649740,
+    "price": 1034119,
     "usdRefPrice": 11900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Oystersteel 904L Çelik",
@@ -992,7 +1005,8 @@ const PRODUCTS = [
       "Orijinallik": "Uluslararası Tescilli & Seri No Doğrulamalı",
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5016,
@@ -1000,9 +1014,9 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126655",
     "reference": "126655",
-    "price": 1610700,
+    "price": 2563572,
     "usdRefPrice": 29500,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Rolex Koleksiyonu",
     "metal": "18K Everose Pembe Altın",
@@ -1039,7 +1053,8 @@ const PRODUCTS = [
       "Orijinallik": "Uluslararası Tescilli & Seri No Doğrulamalı",
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5017,
@@ -1047,9 +1062,9 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "226627",
     "reference": "226627",
-    "price": 1692600,
+    "price": 2693924,
     "usdRefPrice": 31000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Rolex Koleksiyonu",
     "metal": "RLX Titanyum 5. Seviye",
@@ -1086,7 +1101,8 @@ const PRODUCTS = [
       "Orijinallik": "Uluslararası Tescilli & Seri No Doğrulamalı",
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5018,
@@ -1094,9 +1110,9 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "124300-0006",
     "reference": "124300-0006",
-    "price": 846300,
+    "price": 1346962,
     "usdRefPrice": 15500,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Oystersteel 904L Çelik",
@@ -1133,7 +1149,8 @@ const PRODUCTS = [
       "Orijinallik": "Uluslararası Tescilli & Seri No Doğrulamalı",
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5019,
@@ -1141,9 +1158,9 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126000-0014",
     "reference": "126000-0014",
-    "price": 917280,
+    "price": 1459933,
     "usdRefPrice": 16800,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Oystersteel 904L Çelik",
@@ -1180,7 +1197,8 @@ const PRODUCTS = [
       "Orijinallik": "Uluslararası Tescilli & Seri No Doğrulamalı",
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5020,
@@ -1188,9 +1206,9 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126600",
     "reference": "126600",
-    "price": 808080,
+    "price": 1286131,
     "usdRefPrice": 14800,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Oystersteel & Helyum Tahliye Valfi",
@@ -1227,7 +1245,8 @@ const PRODUCTS = [
       "Orijinallik": "Uluslararası Tescilli & Seri No Doğrulamalı",
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5021,
@@ -1235,9 +1254,9 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "310.30.42.50.01.002",
     "reference": "310.30.42.50.01.002",
-    "price": 425880,
+    "price": 677826,
     "usdRefPrice": 7800,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Paslanmaz Çelik",
@@ -1274,7 +1293,8 @@ const PRODUCTS = [
       "Orijinallik": "Uluslararası Tescilli & Seri No Doğrulamalı",
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5022,
@@ -1282,9 +1302,9 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "210.30.42.20.01.001",
     "reference": "210.30.42.20.01.001",
-    "price": 305760,
+    "price": 486644,
     "usdRefPrice": 5600,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Paslanmaz Çelik & Seramik Dalga Desenli Kadran",
@@ -1321,7 +1341,8 @@ const PRODUCTS = [
       "Orijinallik": "Uluslararası Tescilli & Seri No Doğrulamalı",
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5023,
@@ -1329,9 +1350,9 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "210.90.42.20.01.001",
     "reference": "210.90.42.20.01.001",
-    "price": 513240,
+    "price": 816867,
     "usdRefPrice": 9400,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "2. Sınıf Titanyum",
@@ -1368,7 +1389,8 @@ const PRODUCTS = [
       "Orijinallik": "Uluslararası Tescilli & Seri No Doğrulamalı",
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5024,
@@ -1376,9 +1398,9 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "215.30.44.21.01.001",
     "reference": "215.30.44.21.01.001",
-    "price": 376740,
+    "price": 599615,
     "usdRefPrice": 6900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Paslanmaz Çelik & Siyah Seramik Bezel",
@@ -1414,7 +1436,8 @@ const PRODUCTS = [
       "Orijinallik": "Uluslararası Tescilli & Seri No Doğrulamalı",
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5025,
@@ -1422,9 +1445,9 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "220.10.41.21.10.001",
     "reference": "220.10.41.21.10.001",
-    "price": 338520,
+    "price": 538785,
     "usdRefPrice": 6200,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -1461,7 +1484,8 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5026,
@@ -1469,9 +1493,9 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "311.92.44.51.01.003",
     "reference": "311.92.44.51.01.003",
-    "price": 682500,
+    "price": 1086260,
     "usdRefPrice": 12500,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Tek Blok Masif Zirkonyum Oksit Siyah Seramik",
@@ -1506,7 +1530,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5027,
@@ -1514,9 +1539,9 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "131.20.41.21.02.001",
     "reference": "131.20.41.21.02.001",
-    "price": 589680,
+    "price": 938528,
     "usdRefPrice": 10800,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -1553,7 +1578,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5028,
@@ -1561,9 +1587,9 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "310.32.42.50.02.001",
     "reference": "310.32.42.50.02.001",
-    "price": 955500,
+    "price": 1520763,
     "usdRefPrice": 17500,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -1599,7 +1625,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5029,
@@ -1607,9 +1634,9 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "220.10.43.22.03.001",
     "reference": "220.10.43.22.03.001",
-    "price": 502320,
+    "price": 799487,
     "usdRefPrice": 9200,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -1644,7 +1671,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5030,
@@ -1652,9 +1680,9 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "234.30.41.21.01.001",
     "reference": "234.30.41.21.01.001",
-    "price": 371280,
+    "price": 590925,
     "usdRefPrice": 6800,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -1689,7 +1717,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5031,
@@ -1697,9 +1726,9 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "329.30.43.51.02.001",
     "reference": "329.30.43.51.02.001",
-    "price": 480480,
+    "price": 764727,
     "usdRefPrice": 8800,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -1734,7 +1763,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5032,
@@ -1742,9 +1772,9 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "215.92.46.21.01.001",
     "reference": "215.92.46.21.01.001",
-    "price": 704340,
+    "price": 1121020,
     "usdRefPrice": 12900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -1778,7 +1808,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5033,
@@ -1786,9 +1817,9 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "435.53.40.21.02.001",
     "reference": "435.53.40.21.02.001",
-    "price": 775320,
+    "price": 1233991,
     "usdRefPrice": 14200,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "18K Masif Sarı Altın",
@@ -1824,7 +1855,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "18K Masif Sarı Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5034,
@@ -1832,9 +1864,9 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "329.30.44.51.01.001",
     "reference": "329.30.44.51.01.001",
-    "price": 485940,
+    "price": 773417,
     "usdRefPrice": 8900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -1869,7 +1901,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5035,
@@ -1877,9 +1910,9 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "220.10.38.20.03.003",
     "reference": "220.10.38.20.03.003",
-    "price": 349440,
+    "price": 556165,
     "usdRefPrice": 6400,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -1914,7 +1947,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5036,
@@ -1922,9 +1956,9 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "304.30.44.52.03.001",
     "reference": "304.30.44.52.03.001",
-    "price": 611520,
+    "price": 973289,
     "usdRefPrice": 11200,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -1959,7 +1993,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5037,
@@ -1967,9 +2002,9 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "210.20.44.51.01.001",
     "reference": "210.20.44.51.01.001",
-    "price": 649740,
+    "price": 1034119,
     "usdRefPrice": 11900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Çelik & 18K Sedna Altın Butonlar/Bezel",
@@ -2003,7 +2038,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5038,
@@ -2011,9 +2047,9 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "131.53.39.20.02.001",
     "reference": "131.53.39.20.02.001",
-    "price": 1081080,
+    "price": 1720635,
     "usdRefPrice": 19800,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Masif 18K Sarı Altın",
@@ -2047,7 +2083,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5039,
@@ -2055,9 +2092,9 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "311.32.40.30.01.001",
     "reference": "311.32.40.30.01.001",
-    "price": 354900,
+    "price": 564855,
     "usdRefPrice": 6500,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -2092,7 +2129,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5040,
@@ -2100,9 +2138,9 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "232.92.44.22.03.001",
     "reference": "232.92.44.22.03.001",
-    "price": 458640,
+    "price": 729966,
     "usdRefPrice": 8400,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "5. Sınıf Titanyum",
@@ -2136,7 +2174,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5041,
@@ -2144,9 +2183,9 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5711/1A-010",
     "reference": "5711/1A-010",
-    "price": 6442800,
+    "price": 10254290,
     "usdRefPrice": 118000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -2181,7 +2220,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5042,
@@ -2189,9 +2229,9 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5712/1A-001",
     "reference": "5712/1A-001",
-    "price": 5733000,
+    "price": 9124580,
     "usdRefPrice": 105000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -2226,7 +2266,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5043,
@@ -2234,9 +2275,9 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5726/1A-014",
     "reference": "5726/1A-014",
-    "price": 5350800,
+    "price": 8516274,
     "usdRefPrice": 98000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -2270,7 +2311,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5044,
@@ -2278,9 +2320,9 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5980/1R-001",
     "reference": "5980/1R-001",
-    "price": 9555000,
+    "price": 15207633,
     "usdRefPrice": 175000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Masif 18K Gül Altın (Rose Gold)",
@@ -2314,7 +2356,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5045,
@@ -2322,9 +2365,9 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5167A-001",
     "reference": "5167A-001",
-    "price": 3166800,
+    "price": 5040244,
     "usdRefPrice": 58000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -2359,7 +2402,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5046,
@@ -2367,9 +2411,9 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5168G-001",
     "reference": "5168G-001",
-    "price": 3931200,
+    "price": 6256855,
     "usdRefPrice": 72000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Masif 18K Beyaz Altın",
@@ -2403,7 +2447,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5047,
@@ -2411,9 +2456,9 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5968A-001",
     "reference": "5968A-001",
-    "price": 6988800,
+    "price": 11123297,
     "usdRefPrice": 128000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -2448,7 +2493,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5048,
@@ -2456,9 +2502,9 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "6119G-001",
     "reference": "6119G-001",
-    "price": 1692600,
+    "price": 2693924,
     "usdRefPrice": 31000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -2494,7 +2540,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5049,
@@ -2502,9 +2549,9 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5227J-001",
     "reference": "5227J-001",
-    "price": 1965600,
+    "price": 3128427,
     "usdRefPrice": 36000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -2539,7 +2586,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5050,
@@ -2547,9 +2595,9 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5327G-001",
     "reference": "5327G-001",
-    "price": 5132400,
+    "price": 8168671,
     "usdRefPrice": 94000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -2584,7 +2632,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5051,
@@ -2592,9 +2641,9 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5270P-001",
     "reference": "5270P-001",
-    "price": 10647000,
+    "price": 16945648,
     "usdRefPrice": 195000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "950 Masif Platin",
@@ -2628,7 +2677,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5052,
@@ -2636,9 +2686,9 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5267/200R-001",
     "reference": "5267/200R-001",
-    "price": 3385200,
+    "price": 5387847,
     "usdRefPrice": 62000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -2673,7 +2723,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5053,
@@ -2681,9 +2732,9 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5231G-001",
     "reference": "5231G-001",
-    "price": 6006000,
+    "price": 9559084,
     "usdRefPrice": 110000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -2718,7 +2769,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5054,
@@ -2726,9 +2778,9 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5396G-011",
     "reference": "5396G-011",
-    "price": 2948400,
+    "price": 4692641,
     "usdRefPrice": 54000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -2762,7 +2814,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5055,
@@ -2770,9 +2823,9 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5172G-001",
     "reference": "5172G-001",
-    "price": 4258800,
+    "price": 6778259,
     "usdRefPrice": 78000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -2806,7 +2859,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5056,
@@ -2814,9 +2868,9 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5524G-001",
     "reference": "5524G-001",
-    "price": 2839200,
+    "price": 4518840,
     "usdRefPrice": 52000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -2850,7 +2904,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5057,
@@ -2858,9 +2913,9 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5738R-001",
     "reference": "5738R-001",
-    "price": 1911000,
+    "price": 3041527,
     "usdRefPrice": 35000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -2895,7 +2950,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5058,
@@ -2903,9 +2959,9 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5078R-001",
     "reference": "5078R-001",
-    "price": 21294000,
+    "price": 33891296,
     "usdRefPrice": 390000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -2939,7 +2995,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5059,
@@ -2947,9 +3004,9 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "7118/1200R-001",
     "reference": "7118/1200R-001",
-    "price": 4095000,
+    "price": 6517557,
     "usdRefPrice": 75000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -2984,7 +3041,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5060,
@@ -2992,9 +3050,9 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "7300/1200A-001",
     "reference": "7300/1200A-001",
-    "price": 1556100,
+    "price": 2476672,
     "usdRefPrice": 28500,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -3029,7 +3087,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5061,
@@ -3037,9 +3096,9 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "16202ST.OO.1240ST.01",
     "reference": "16202ST.OO.1240ST.01",
-    "price": 4258800,
+    "price": 6778259,
     "usdRefPrice": 78000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -3074,7 +3133,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5062,
@@ -3082,9 +3142,9 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "15510ST.OO.1320ST.07",
     "reference": "15510ST.OO.1320ST.07",
-    "price": 2511600,
+    "price": 3997435,
     "usdRefPrice": 46000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -3119,7 +3179,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5063,
@@ -3127,9 +3188,9 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26240ST.OO.1320ST.05",
     "reference": "26240ST.OO.1320ST.05",
-    "price": 3385200,
+    "price": 5387847,
     "usdRefPrice": 62000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -3163,7 +3224,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5064,
@@ -3171,9 +3233,9 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "15407ST.OO.1220ST.01",
     "reference": "15407ST.OO.1220ST.01",
-    "price": 6825000,
+    "price": 10862595,
     "usdRefPrice": 125000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -3207,7 +3269,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5065,
@@ -3215,9 +3278,9 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26420TI.OO.A027CA.01",
     "reference": "26420TI.OO.A027CA.01",
-    "price": 2293200,
+    "price": 3649832,
     "usdRefPrice": 42000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -3251,7 +3314,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5066,
@@ -3259,9 +3323,9 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "15720ST.OO.A052CA.01",
     "reference": "15720ST.OO.A052CA.01",
-    "price": 1747200,
+    "price": 2780824,
     "usdRefPrice": 32000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -3295,7 +3359,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5067,
@@ -3303,9 +3368,9 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "15510OR.OO.1320OR.04",
     "reference": "15510OR.OO.1320OR.04",
-    "price": 4804800,
+    "price": 7647267,
     "usdRefPrice": 88000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Masif 18K Pembe Altın",
@@ -3339,7 +3404,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5068,
@@ -3347,9 +3413,9 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26715ST.OO.1356ST.02",
     "reference": "26715ST.OO.1356ST.02",
-    "price": 2620800,
+    "price": 4171236,
     "usdRefPrice": 48000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -3383,7 +3449,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5069,
@@ -3391,9 +3458,9 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26574ST.OO.1220ST.03",
     "reference": "26574ST.OO.1220ST.03",
-    "price": 6279000,
+    "price": 9993587,
     "usdRefPrice": 115000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -3427,7 +3494,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5070,
@@ -3435,9 +3503,9 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26405CE.OO.A002CA.02",
     "reference": "26405CE.OO.A002CA.02",
-    "price": 2675400,
+    "price": 4258137,
     "usdRefPrice": 49000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Monoblok Yüksek Teknoloji Siyah Seramik",
@@ -3471,7 +3539,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5071,
@@ -3479,9 +3548,9 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26393NB.OO.A002KB.01",
     "reference": "26393NB.OO.A002KB.01",
-    "price": 2129400,
+    "price": 3389130,
     "usdRefPrice": 39000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "18K Beyaz Altın & Siyah Seramik",
@@ -3515,7 +3584,8 @@ const PRODUCTS = [
       "Cam Tipi": "Çizilmeye Dayanıklı Safir Kristal (Yansıma Önleyici Kaplama)",
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5072,
@@ -3523,9 +3593,9 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "15454BC.GG.1259BC.01",
     "reference": "15454BC.GG.1259BC.01",
-    "price": 3712800,
+    "price": 5909252,
     "usdRefPrice": 68000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Floransa El Dövmesi Frosted 18K Beyaz Altın",
@@ -3559,7 +3629,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5073,
@@ -3567,9 +3638,9 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26730ST.OO.1320ST.01",
     "reference": "26730ST.OO.1320ST.01",
-    "price": 10647000,
+    "price": 16945648,
     "usdRefPrice": 195000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -3604,7 +3675,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5074,
@@ -3612,9 +3684,9 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "77600TI.OO.A343CA.01",
     "reference": "77600TI.OO.A343CA.01",
-    "price": 2074800,
+    "price": 3302229,
     "usdRefPrice": 38000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -3649,7 +3721,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5075,
@@ -3657,9 +3730,9 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "77350CE.OO.1266CE.01",
     "reference": "77350CE.OO.1266CE.01",
-    "price": 2948400,
+    "price": 4692641,
     "usdRefPrice": 54000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Siyah Seramik & 18K Pembe Altın Vidalar",
@@ -3693,7 +3766,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5076,
@@ -3701,9 +3775,9 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "15710ST.OO.A010CA.01",
     "reference": "15710ST.OO.A010CA.01",
-    "price": 1528800,
+    "price": 2433221,
     "usdRefPrice": 28000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -3737,7 +3811,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5077,
@@ -3745,9 +3820,9 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26331ST.OO.1220ST.03",
     "reference": "26331ST.OO.1220ST.03",
-    "price": 3057600,
+    "price": 4866443,
     "usdRefPrice": 56000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -3782,7 +3857,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5078,
@@ -3790,9 +3866,9 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "15210CR.OO.A009KB.01",
     "reference": "15210CR.OO.A009KB.01",
-    "price": 1801800,
+    "price": 2867725,
     "usdRefPrice": 33000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "18K Beyaz Altın ve 18K Pembe Altın Çift Renk Kasa",
@@ -3826,7 +3902,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5079,
@@ -3834,9 +3911,9 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26589IO.OO.D002CA.01",
     "reference": "26589IO.OO.D002CA.01",
-    "price": 13377000,
+    "price": 21290686,
     "usdRefPrice": 245000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -3872,7 +3949,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5080,
@@ -3880,9 +3958,9 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "67651OR.ZZ.1261OR.01",
     "reference": "67651OR.ZZ.1261OR.01",
-    "price": 2457000,
+    "price": 3910534,
     "usdRefPrice": 45000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -3917,7 +3995,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5081,
@@ -3925,9 +4004,9 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB0138211B1A1",
     "reference": "AB0138211B1A1",
-    "price": 518700,
+    "price": 825557,
     "usdRefPrice": 9500,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -3963,7 +4042,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5082,
@@ -3971,9 +4051,9 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB0137211C1P1",
     "reference": "AB0137211C1P1",
-    "price": 502320,
+    "price": 799487,
     "usdRefPrice": 9200,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -4008,7 +4088,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5083,
@@ -4016,9 +4097,9 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB0134101G1A1",
     "reference": "AB0134101G1A1",
-    "price": 485940,
+    "price": 773417,
     "usdRefPrice": 8900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -4053,7 +4134,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "200 Metre",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5084,
@@ -4061,9 +4143,9 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB2010121L1A1",
     "reference": "AB2010121L1A1",
-    "price": 294840,
+    "price": 469264,
     "usdRefPrice": 5400,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -4098,7 +4180,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5085,
@@ -4106,9 +4189,9 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "A17376211B1S1",
     "reference": "A17376211B1S1",
-    "price": 267540,
+    "price": 425814,
     "usdRefPrice": 4900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -4143,7 +4226,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5086,
@@ -4151,9 +4235,9 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB0145371L1P1",
     "reference": "AB0145371L1P1",
-    "price": 496860,
+    "price": 790797,
     "usdRefPrice": 9100,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -4188,7 +4272,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5087,
@@ -4196,9 +4281,9 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "V13317101L1X1",
     "reference": "V13317101L1X1",
-    "price": 338520,
+    "price": 538785,
     "usdRefPrice": 6200,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Siyah DLC Kaplama Titanyum",
@@ -4233,7 +4318,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Kasa Materyali": "Siyah DLC Kaplama Titanyum",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5088,
@@ -4241,9 +4327,9 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB01763A1C1X1",
     "reference": "AB01763A1C1X1",
-    "price": 447720,
+    "price": 712586,
     "usdRefPrice": 8200,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -4278,7 +4364,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5089,
@@ -4286,9 +4373,9 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB01762A1L1X1",
     "reference": "AB01762A1L1X1",
-    "price": 447720,
+    "price": 712586,
     "usdRefPrice": 8200,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -4323,7 +4410,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5090,
@@ -4331,9 +4419,9 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB01761A1K1X1",
     "reference": "AB01761A1K1X1",
-    "price": 447720,
+    "price": 712586,
     "usdRefPrice": 8200,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -4368,7 +4456,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5091,
@@ -4376,9 +4465,9 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "RB0139211G1P1",
     "reference": "RB0139211G1P1",
-    "price": 1064700,
+    "price": 1694565,
     "usdRefPrice": 19500,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "18K Kırmızı Altın",
@@ -4414,7 +4503,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "18K Kırmızı Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5092,
@@ -4422,9 +4512,9 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "A32398101B1A1",
     "reference": "A32398101B1A1",
-    "price": 322140,
+    "price": 512714,
     "usdRefPrice": 5900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -4458,7 +4548,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5093,
@@ -4466,9 +4557,9 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "A10340161C1X1",
     "reference": "A10340161C1X1",
-    "price": 262080,
+    "price": 417124,
     "usdRefPrice": 4800,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -4503,7 +4594,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5094,
@@ -4511,9 +4603,9 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "A17328101B1A1",
     "reference": "A17328101B1A1",
-    "price": 251160,
+    "price": 399743,
     "usdRefPrice": 4600,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -4547,7 +4639,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5095,
@@ -4555,9 +4648,9 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "X82310A41B1S1",
     "reference": "X82310A41B1S1",
-    "price": 185640,
+    "price": 295463,
     "usdRefPrice": 3400,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Breitlight® Karbon Alaşım",
@@ -4592,7 +4685,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Breitlight® Karbon Alaşım",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5096,
@@ -4600,9 +4694,9 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB0930D41L1P1",
     "reference": "AB0930D41L1P1",
-    "price": 469560,
+    "price": 747347,
     "usdRefPrice": 8600,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -4637,7 +4731,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5097,
@@ -4645,9 +4740,9 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB0136251B1A2",
     "reference": "AB0136251B1A2",
-    "price": 589680,
+    "price": 938528,
     "usdRefPrice": 10800,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -4682,7 +4777,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5098,
@@ -4690,9 +4786,9 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "A17395161C1A1",
     "reference": "A17395161C1A1",
-    "price": 267540,
+    "price": 425814,
     "usdRefPrice": 4900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -4727,7 +4823,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5099,
@@ -4735,9 +4832,9 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "A17377211A1S1",
     "reference": "A17377211A1S1",
-    "price": 256620,
+    "price": 408434,
     "usdRefPrice": 4700,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -4771,7 +4868,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5100,
@@ -4779,9 +4877,9 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "EB70101A1O1E1",
     "reference": "EB70101A1O1E1",
-    "price": 267540,
+    "price": 425814,
     "usdRefPrice": 4900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -4816,7 +4914,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5101,
@@ -4824,9 +4923,9 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSSA0018",
     "reference": "WSSA0018",
-    "price": 431340,
+    "price": 686516,
     "usdRefPrice": 7900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -4861,7 +4960,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5102,
@@ -4869,9 +4969,9 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSSA0029",
     "reference": "WSSA0029",
-    "price": 393120,
+    "price": 625685,
     "usdRefPrice": 7200,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -4905,7 +5005,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5103,
@@ -4913,9 +5014,9 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WHSA0008",
     "reference": "WHSA0008",
-    "price": 1856400,
+    "price": 2954626,
     "usdRefPrice": 34000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Masif 18K Pembe Altın",
@@ -4951,7 +5052,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Masif 18K Pembe Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5104,
@@ -4959,9 +5061,9 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSTA0041",
     "reference": "WSTA0041",
-    "price": 191100,
+    "price": 304153,
     "usdRefPrice": 3500,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -4996,7 +5098,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5105,
@@ -5004,9 +5107,9 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSTA0040",
     "reference": "WSTA0040",
-    "price": 267540,
+    "price": 425814,
     "usdRefPrice": 4900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -5040,7 +5143,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5106,
@@ -5048,9 +5152,9 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WGTA0010",
     "reference": "WGTA0010",
-    "price": 611520,
+    "price": 973289,
     "usdRefPrice": 11200,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Cartier Koleksiyonu",
     "metal": "18K Masif Sarı Altın",
@@ -5085,7 +5189,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "18K Masif Sarı Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5107,
@@ -5093,9 +5198,9 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSTA0065",
     "reference": "WSTA0065",
-    "price": 262080,
+    "price": 417124,
     "usdRefPrice": 4800,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -5130,7 +5235,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5108,
@@ -5138,9 +5244,9 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSBB0025",
     "reference": "WSBB0025",
-    "price": 404040,
+    "price": 643066,
     "usdRefPrice": 7400,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -5175,7 +5281,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5109,
@@ -5183,9 +5290,9 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "W3BB0024",
     "reference": "W3BB0024",
-    "price": 698880,
+    "price": 1112330,
     "usdRefPrice": 12800,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -5220,7 +5327,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5110,
@@ -5228,9 +5336,9 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "W2PN0007",
     "reference": "W2PN0007",
-    "price": 524160,
+    "price": 834247,
     "usdRefPrice": 9600,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -5265,7 +5373,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5111,
@@ -5273,9 +5382,9 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSPA0009",
     "reference": "WSPA0009",
-    "price": 398580,
+    "price": 634376,
     "usdRefPrice": 7300,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -5310,7 +5419,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5112,
@@ -5318,9 +5428,9 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WGSA0032",
     "reference": "WGSA0032",
-    "price": 737100,
+    "price": 1173160,
     "usdRefPrice": 13500,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Masif 18K Gül Altın",
@@ -5355,7 +5465,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Masif 18K Gül Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5113,
@@ -5363,9 +5474,9 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSTA0083",
     "reference": "WSTA0083",
-    "price": 365820,
+    "price": 582235,
     "usdRefPrice": 6700,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -5399,7 +5510,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5114,
@@ -5407,9 +5519,9 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSRN0032",
     "reference": "WSRN0032",
-    "price": 240240,
+    "price": 382363,
     "usdRefPrice": 4400,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -5444,7 +5556,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5115,
@@ -5452,9 +5565,9 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSSA0017",
     "reference": "WSSA0017",
-    "price": 535080,
+    "price": 851627,
     "usdRefPrice": 9800,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -5489,7 +5602,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5116,
@@ -5497,9 +5611,9 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WGBB0030",
     "reference": "WGBB0030",
-    "price": 808080,
+    "price": 1286131,
     "usdRefPrice": 14800,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Cartier Koleksiyonu",
     "metal": "18K Pembe Altın",
@@ -5534,7 +5648,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "18K Pembe Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5117,
@@ -5542,9 +5657,9 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WGBA0007",
     "reference": "WGBA0007",
-    "price": 649740,
+    "price": 1034119,
     "usdRefPrice": 11900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Cartier Koleksiyonu",
     "metal": "18K Sarı Altın (Kusursuz Oval Form)",
@@ -5579,7 +5694,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "18K Sarı Altın (Kusursuz Oval Form)",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5118,
@@ -5587,9 +5703,9 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "W2SA0016",
     "reference": "W2SA0016",
-    "price": 622440,
+    "price": 990669,
     "usdRefPrice": 11400,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -5624,7 +5740,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5119,
@@ -5632,9 +5749,9 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WGTA0057",
     "reference": "WGTA0057",
-    "price": 1528800,
+    "price": 2433221,
     "usdRefPrice": 28000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -5669,7 +5786,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5120,
@@ -5677,9 +5795,9 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSPA0027",
     "reference": "WSPA0027",
-    "price": 485940,
+    "price": 773417,
     "usdRefPrice": 8900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -5714,7 +5832,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5121,
@@ -5722,9 +5841,9 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79030N-0001",
     "reference": "M79030N-0001",
-    "price": 223860,
+    "price": 356293,
     "usdRefPrice": 4100,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -5759,7 +5878,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5122,
@@ -5767,9 +5887,9 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79000N-0001",
     "reference": "M79000N-0001",
-    "price": 215670,
+    "price": 343258,
     "usdRefPrice": 3950,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -5803,7 +5923,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5123,
@@ -5811,9 +5932,9 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79470-0001",
     "reference": "M79470-0001",
-    "price": 234780,
+    "price": 373673,
     "usdRefPrice": 4300,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -5847,7 +5968,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5124,
@@ -5855,9 +5977,9 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M25407N-0001",
     "reference": "M25407N-0001",
-    "price": 256620,
+    "price": 408434,
     "usdRefPrice": 4700,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "2. Sınıf Saten Titanyum",
@@ -5892,7 +6014,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "2. Sınıf Saten Titanyum",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5125,
@@ -5900,9 +6023,9 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M25707B/24-0001",
     "reference": "M25707B/24-0001",
-    "price": 229320,
+    "price": 364983,
     "usdRefPrice": 4200,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Sabit Askılı Monoblok Titanyum",
@@ -5937,7 +6060,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Sabit Askılı Monoblok Titanyum",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5126,
@@ -5945,9 +6069,9 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79360N-0002",
     "reference": "M79360N-0002",
-    "price": 300300,
+    "price": 477954,
     "usdRefPrice": 5500,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -5981,7 +6105,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5127,
@@ -5989,9 +6114,9 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79830RB-0001",
     "reference": "M79830RB-0001",
-    "price": 240240,
+    "price": 382363,
     "usdRefPrice": 4400,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -6026,7 +6151,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5128,
@@ -6034,9 +6160,9 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M25600TN-0001",
     "reference": "M25600TN-0001",
-    "price": 267540,
+    "price": 425814,
     "usdRefPrice": 4900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -6070,7 +6196,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5129,
@@ -6078,9 +6205,9 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M28603-0003",
     "reference": "M28603-0003",
-    "price": 207480,
+    "price": 330223,
     "usdRefPrice": 3800,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -6115,7 +6242,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5130,
@@ -6123,9 +6251,9 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79210CNU-0001",
     "reference": "M79210CNU-0001",
-    "price": 278460,
+    "price": 443194,
     "usdRefPrice": 5100,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -6160,7 +6288,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5131,
@@ -6168,9 +6297,9 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79010SG-0001",
     "reference": "M79010SG-0001",
-    "price": 251160,
+    "price": 399743,
     "usdRefPrice": 4600,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Masif 925 Ayar Gümüş",
@@ -6205,7 +6334,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Masif 925 Ayar Gümüş",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5132,
@@ -6213,9 +6343,9 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79018V-0001",
     "reference": "M79018V-0001",
-    "price": 971880,
+    "price": 1546834,
     "usdRefPrice": 17800,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Masif 18K Sarı Altın",
@@ -6250,7 +6380,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Masif 18K Sarı Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5133,
@@ -6258,9 +6389,9 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M28300-0007",
     "reference": "M28300-0007",
-    "price": 174720,
+    "price": 278082,
     "usdRefPrice": 3200,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -6295,7 +6426,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5134,
@@ -6303,9 +6435,9 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M7941A1A0RU-0003",
     "reference": "M7941A1A0RU-0003",
-    "price": 248430,
+    "price": 395398,
     "usdRefPrice": 4550,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -6340,7 +6472,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5135,
@@ -6348,9 +6481,9 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79950-0001",
     "reference": "M79950-0001",
-    "price": 180180,
+    "price": 286773,
     "usdRefPrice": 3300,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -6385,7 +6518,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5136,
@@ -6393,9 +6527,9 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M25807KN-0001",
     "reference": "M25807KN-0001",
-    "price": 289380,
+    "price": 460574,
     "usdRefPrice": 5300,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Mat Siyah Karbon Kompozit & Titanyum Bezel",
@@ -6430,7 +6564,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Mat Siyah Karbon Kompozit & Titanyum Bezel",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5137,
@@ -6438,9 +6573,9 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79360N-0019",
     "reference": "M79360N-0019",
-    "price": 431340,
+    "price": 686516,
     "usdRefPrice": 7900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -6475,7 +6610,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5138,
@@ -6483,9 +6619,9 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M91551-0001",
     "reference": "M91551-0001",
-    "price": 185640,
+    "price": 295463,
     "usdRefPrice": 3400,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -6520,7 +6656,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5139,
@@ -6528,9 +6665,9 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79250BA-0001",
     "reference": "M79250BA-0001",
-    "price": 245700,
+    "price": 391053,
     "usdRefPrice": 4500,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Alüminyum Bronz Alaşım",
@@ -6565,7 +6702,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Alüminyum Bronz Alaşım",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5140,
@@ -6573,9 +6711,9 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M35500-0004",
     "reference": "M35500-0004",
-    "price": 158340,
+    "price": 252012,
     "usdRefPrice": 2900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -6610,7 +6748,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5141,
@@ -6618,9 +6757,9 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CBS2210.FC6534",
     "reference": "CBS2210.FC6534",
-    "price": 365820,
+    "price": 582235,
     "usdRefPrice": 6700,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -6654,7 +6793,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5142,
@@ -6662,9 +6802,9 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CAW211P.FC6356",
     "reference": "CAW211P.FC6356",
-    "price": 442260,
+    "price": 703896,
     "usdRefPrice": 8100,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -6698,7 +6838,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5143,
@@ -6706,9 +6847,9 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CBS2011.FC6529",
     "reference": "CBS2011.FC6529",
-    "price": 513240,
+    "price": 816867,
     "usdRefPrice": 9400,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -6742,7 +6883,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5144,
@@ -6750,9 +6892,9 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "WBP5110.BA0013",
     "reference": "WBP5110.BA0013",
-    "price": 207480,
+    "price": 330223,
     "usdRefPrice": 3800,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -6786,7 +6928,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5145,
@@ -6794,9 +6937,9 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "WBN2313.BA0001",
     "reference": "WBN2313.BA0001",
-    "price": 185640,
+    "price": 295463,
     "usdRefPrice": 3400,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -6831,7 +6974,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5146,
@@ -6839,9 +6983,9 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CBL2181.FC6515",
     "reference": "CBL2181.FC6515",
-    "price": 540540,
+    "price": 860318,
     "usdRefPrice": 9900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -6876,7 +7020,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5147,
@@ -6884,9 +7029,9 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "WBP1180.BF0000",
     "reference": "WBP1180.BF0000",
-    "price": 174720,
+    "price": 278082,
     "usdRefPrice": 3200,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Kumlanmış 2. Sınıf Titanyum",
@@ -6921,7 +7066,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Kumlanmış 2. Sınıf Titanyum",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5148,
@@ -6929,9 +7075,9 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CBS5010.FC6543",
     "reference": "CBS5010.FC6543",
-    "price": 1337700,
+    "price": 2129069,
     "usdRefPrice": 24500,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -6966,7 +7112,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5149,
@@ -6974,9 +7121,9 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CBE511A.FC8279",
     "reference": "CBE511A.FC8279",
-    "price": 387660,
+    "price": 616995,
     "usdRefPrice": 7100,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -7010,7 +7157,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5150,
@@ -7018,9 +7166,9 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CAZ201D.BA0876",
     "reference": "CAZ201D.BA0876",
-    "price": 223860,
+    "price": 356293,
     "usdRefPrice": 4100,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -7055,7 +7203,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5151,
@@ -7063,9 +7212,9 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "WBN201A.BA0640",
     "reference": "WBN201A.BA0640",
-    "price": 202020,
+    "price": 321533,
     "usdRefPrice": 3700,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -7099,7 +7248,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5152,
@@ -7107,9 +7257,9 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CBL2182.FT6235",
     "reference": "CBL2182.FT6235",
-    "price": 611520,
+    "price": 973289,
     "usdRefPrice": 11200,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Kumlanmış Titanyum & Mavi İskelet Kadran",
@@ -7144,7 +7294,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Kumlanmış Titanyum & Mavi İskelet Kadran",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5153,
@@ -7152,9 +7303,9 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "WBP2010.BA0632",
     "reference": "WBP2010.BA0632",
-    "price": 229320,
+    "price": 364983,
     "usdRefPrice": 4200,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -7189,7 +7340,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5154,
@@ -7197,9 +7349,9 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CBN2A10.BA0643",
     "reference": "CBN2A10.BA0643",
-    "price": 349440,
+    "price": 556165,
     "usdRefPrice": 6400,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -7234,7 +7386,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5155,
@@ -7242,9 +7395,9 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CAZ101N.FC8243",
     "reference": "CAZ101N.FC8243",
-    "price": 152880,
+    "price": 243322,
     "usdRefPrice": 2800,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -7279,7 +7432,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5156,
@@ -7287,9 +7441,9 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "WBN2111.BA0639",
     "reference": "WBN2111.BA0639",
-    "price": 174720,
+    "price": 278082,
     "usdRefPrice": 3200,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -7323,7 +7477,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5157,
@@ -7331,9 +7486,9 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "WBP2111.BA0627",
     "reference": "WBP2111.BA0627",
-    "price": 161070,
+    "price": 256357,
     "usdRefPrice": 2950,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -7368,7 +7523,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5158,
@@ -7376,9 +7532,9 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CAW218C.FC6548",
     "reference": "CAW218C.FC6548",
-    "price": 524160,
+    "price": 834247,
     "usdRefPrice": 9600,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "2. Sınıf Titanyum",
@@ -7413,7 +7569,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "2. Sınıf Titanyum",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5159,
@@ -7421,9 +7578,9 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CBS2213.FN6535",
     "reference": "CBS2213.FN6535",
-    "price": 379470,
+    "price": 603960,
     "usdRefPrice": 6950,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -7457,7 +7614,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5160,
@@ -7465,9 +7623,9 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "SBR8A80.BT6261",
     "reference": "SBR8A80.BT6261",
-    "price": 141960,
+    "price": 225942,
     "usdRefPrice": 2600,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Siyah DLC Titanyum & Seramik Bezel",
@@ -7502,7 +7660,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Siyah DLC Titanyum & Seramik Bezel",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5161,
@@ -7510,9 +7669,9 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW329301",
     "reference": "IW329301",
-    "price": 485940,
+    "price": 773417,
     "usdRefPrice": 8900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -7546,7 +7705,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5162,
@@ -7554,9 +7714,9 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW371606",
     "reference": "IW371606",
-    "price": 458640,
+    "price": 729966,
     "usdRefPrice": 8400,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -7590,7 +7750,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5163,
@@ -7598,9 +7759,9 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW388104",
     "reference": "IW388104",
-    "price": 447720,
+    "price": 712586,
     "usdRefPrice": 8200,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -7635,7 +7796,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5164,
@@ -7643,9 +7805,9 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW500704",
     "reference": "IW500704",
-    "price": 720720,
+    "price": 1147090,
     "usdRefPrice": 13200,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -7680,7 +7842,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5165,
@@ -7688,9 +7851,9 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW328203",
     "reference": "IW328203",
-    "price": 305760,
+    "price": 486644,
     "usdRefPrice": 5600,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -7725,7 +7888,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5166,
@@ -7733,9 +7897,9 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW503605",
     "reference": "IW503605",
-    "price": 1801800,
+    "price": 2867725,
     "usdRefPrice": 33000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -7770,7 +7934,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5167,
@@ -7778,9 +7943,9 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW389101",
     "reference": "IW389101",
-    "price": 540540,
+    "price": 860318,
     "usdRefPrice": 9900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Mat Siyah Zirkonyum Oksit Seramik",
@@ -7815,7 +7980,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Mat Siyah Zirkonyum Oksit Seramik",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5168,
@@ -7823,9 +7989,9 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW389404",
     "reference": "IW389404",
-    "price": 677040,
+    "price": 1077569,
     "usdRefPrice": 12400,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Pantone® 'Oceana' Mavi Seramik",
@@ -7860,7 +8026,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Pantone® 'Oceana' Mavi Seramik",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5169,
@@ -7868,9 +8035,9 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW503302",
     "reference": "IW503302",
-    "price": 2293200,
+    "price": 3649832,
     "usdRefPrice": 42000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "18K Armor Gold®",
@@ -7905,7 +8072,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "18K Armor Gold®",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5170,
@@ -7913,9 +8081,9 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW356501",
     "reference": "IW356501",
-    "price": 294840,
+    "price": 469264,
     "usdRefPrice": 5400,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -7950,7 +8118,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5171,
@@ -7958,9 +8127,9 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW391405",
     "reference": "IW391405",
-    "price": 365820,
+    "price": 582235,
     "usdRefPrice": 6700,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -7995,7 +8164,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5172,
@@ -8003,9 +8173,9 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW395601",
     "reference": "IW395601",
-    "price": 1010100,
+    "price": 1607664,
     "usdRefPrice": 18500,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -8040,7 +8210,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5173,
@@ -8048,9 +8219,9 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW328903",
     "reference": "IW328903",
-    "price": 698880,
+    "price": 1112330,
     "usdRefPrice": 12800,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -8085,7 +8256,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5174,
@@ -8093,9 +8265,9 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW329001",
     "reference": "IW329001",
-    "price": 333060,
+    "price": 530095,
     "usdRefPrice": 6100,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -8129,7 +8301,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5175,
@@ -8137,9 +8310,9 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW377714",
     "reference": "IW377714",
-    "price": 376740,
+    "price": 599615,
     "usdRefPrice": 6900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -8174,7 +8347,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5176,
@@ -8182,9 +8356,9 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW390701",
     "reference": "IW390701",
-    "price": 753480,
+    "price": 1199230,
     "usdRefPrice": 13800,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -8218,7 +8392,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5177,
@@ -8226,9 +8401,9 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW501015",
     "reference": "IW501015",
-    "price": 900900,
+    "price": 1433863,
     "usdRefPrice": 16500,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lake Tahoe Kar Beyazı Seramik",
@@ -8263,7 +8438,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lake Tahoe Kar Beyazı Seramik",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5178,
@@ -8271,9 +8447,9 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW344602",
     "reference": "IW344602",
-    "price": 1856400,
+    "price": 2954626,
     "usdRefPrice": 34000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Masif 18K 5N Pembe Altın",
@@ -8308,7 +8484,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Masif 18K 5N Pembe Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5179,
@@ -8316,9 +8493,9 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW324007",
     "reference": "IW324007",
-    "price": 256620,
+    "price": 408434,
     "usdRefPrice": 4700,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -8353,7 +8530,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5180,
@@ -8361,9 +8539,9 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW510301",
     "reference": "IW510301",
-    "price": 791700,
+    "price": 1260061,
     "usdRefPrice": 14500,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -8398,7 +8576,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5181,
@@ -8406,9 +8585,9 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01312",
     "reference": "PAM01312",
-    "price": 480480,
+    "price": 764727,
     "usdRefPrice": 8800,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -8443,7 +8622,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5182,
@@ -8451,9 +8631,9 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01314",
     "reference": "PAM01314",
-    "price": 480480,
+    "price": 764727,
     "usdRefPrice": 8800,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -8488,7 +8668,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5183,
@@ -8496,9 +8677,9 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01218",
     "reference": "PAM01218",
-    "price": 540540,
+    "price": 860318,
     "usdRefPrice": 9900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Paslanmaz Çelik & Sol Taraf Butonlar",
@@ -8533,7 +8714,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Paslanmaz Çelik & Sol Taraf Butonlar",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5184,
@@ -8541,9 +8723,9 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM00799",
     "reference": "PAM00799",
-    "price": 884520,
+    "price": 1407792,
     "usdRefPrice": 16200,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "BMG-TECH™ Dökme Metalik Cam Alaşım",
@@ -8578,7 +8760,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "BMG-TECH™ Dökme Metalik Cam Alaşım",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5185,
@@ -8586,9 +8769,9 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM02683",
     "reference": "PAM02683",
-    "price": 595140,
+    "price": 947218,
     "usdRefPrice": 10900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -8623,7 +8806,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "300 Metre",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5186,
@@ -8631,9 +8815,9 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01348",
     "reference": "PAM01348",
-    "price": 404040,
+    "price": 643066,
     "usdRefPrice": 7400,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Brunito eSteel™ Eskitilmiş Vintage Çelik",
@@ -8668,7 +8852,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Brunito eSteel™ Eskitilmiş Vintage Çelik",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5187,
@@ -8676,9 +8861,9 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01026",
     "reference": "PAM01026",
-    "price": 917280,
+    "price": 1459933,
     "usdRefPrice": 16800,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Masif 18K Goldtech™ Kırmızı Altın",
@@ -8713,7 +8898,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Masif 18K Goldtech™ Kırmızı Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5188,
@@ -8721,9 +8907,9 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01249",
     "reference": "PAM01249",
-    "price": 393120,
+    "price": 625685,
     "usdRefPrice": 7200,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -8758,7 +8944,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5189,
@@ -8766,9 +8953,9 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01616",
     "reference": "PAM01616",
-    "price": 1081080,
+    "price": 1720635,
     "usdRefPrice": 19800,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Karbon Fiber Kompozit Carbotech™",
@@ -8803,7 +8990,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Karbon Fiber Kompozit Carbotech™",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5190,
@@ -8811,9 +8999,9 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01361",
     "reference": "PAM01361",
-    "price": 567840,
+    "price": 903768,
     "usdRefPrice": 10400,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -8847,7 +9035,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5191,
@@ -8855,9 +9044,9 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01347",
     "reference": "PAM01347",
-    "price": 540540,
+    "price": 860318,
     "usdRefPrice": 9900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -8892,7 +9081,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5192,
@@ -8900,9 +9090,9 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01157",
     "reference": "PAM01157",
-    "price": 502320,
+    "price": 799487,
     "usdRefPrice": 9200,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "eSteel™ (%95 Geri Dönüştürülmüş Çelik)",
@@ -8937,7 +9127,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "eSteel™ (%95 Geri Dönüştürülmüş Çelik)",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5193,
@@ -8945,9 +9136,9 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01229",
     "reference": "PAM01229",
-    "price": 524160,
+    "price": 834247,
     "usdRefPrice": 9600,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -8981,7 +9172,8 @@ const PRODUCTS = [
       "Cam Tipi": "Safir Kristal Cam",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5194,
@@ -8989,9 +9181,9 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01181",
     "reference": "PAM01181",
-    "price": 1173900,
+    "price": 1868366,
     "usdRefPrice": 21500,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Masif 18K Goldtech™ & 24K Masif Altın Ay Diski",
@@ -9026,7 +9218,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Masif 18K Goldtech™ & 24K Masif Altın Ay Diski",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5195,
@@ -9034,9 +9227,9 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM00424",
     "reference": "PAM00424",
-    "price": 458640,
+    "price": 729966,
     "usdRefPrice": 8400,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -9071,7 +9264,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5196,
@@ -9079,9 +9273,9 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM00982",
     "reference": "PAM00982",
-    "price": 1086540,
+    "price": 1729325,
     "usdRefPrice": 19900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -9115,7 +9309,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5197,
@@ -9123,9 +9318,9 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM00767",
     "reference": "PAM00767",
-    "price": 8080800,
+    "price": 12861312,
     "usdRefPrice": 148000,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -9160,7 +9355,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5198,
@@ -9168,9 +9364,9 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM00514",
     "reference": "PAM00514",
-    "price": 431340,
+    "price": 686516,
     "usdRefPrice": 7900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "1940 Masif Kulaklı Paslanmaz Çelik",
@@ -9205,7 +9401,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "1940 Masif Kulaklı Paslanmaz Çelik",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5199,
@@ -9213,9 +9410,9 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01372",
     "reference": "PAM01372",
-    "price": 485940,
+    "price": 773417,
     "usdRefPrice": 8900,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
@@ -9250,7 +9447,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 5200,
@@ -9258,9 +9456,9 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM00979",
     "reference": "PAM00979",
-    "price": 1119300,
+    "price": 1781466,
     "usdRefPrice": 20500,
-    "marketMarkup": "+40%",
+    "marketMarkup": "+80%",
     "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Carbotech™ & Donanma Komando Gravürü",
@@ -9295,7 +9493,8 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Kasa Materyali": "Carbotech™ & Donanma Komando Gravürü",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
-    }
+    },
+    "usdSellingRate": 48.2782
   },
   {
     "id": 1000,
@@ -89578,18 +89777,20 @@ const PRODUCTS = [
   }
 ];
 
-if (typeof window !== "undefined") {
-  window.PRODUCTS = PRODUCTS;
-  window.WATCH_BRANDS = WATCH_BRANDS;
-}
-
-if (typeof module !== "undefined" && module.exports) {
+if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     PRODUCTS,
+    ELITE_WATCH_BRANDS,
     WATCH_BRANDS,
     JEWELRY_BRANDS,
-    PRE_OWNED_ITEMS,
-    PRE_OWNED_GOLD
+    PRE_OWNED_ITEMS
   };
 }
 
+if (typeof window !== 'undefined') {
+  window.PRODUCTS = PRODUCTS;
+  window.ELITE_WATCH_BRANDS = ELITE_WATCH_BRANDS;
+  window.WATCH_BRANDS = WATCH_BRANDS;
+  window.JEWELRY_BRANDS = JEWELRY_BRANDS;
+  window.PRE_OWNED_ITEMS = PRE_OWNED_ITEMS;
+}

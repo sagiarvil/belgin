@@ -16,8 +16,8 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const dataJsPath = path.join(ROOT, 'js', 'data.js');
 
-const USD_TRY_RATE = 39.0; // Serbest piyasa USD/TRY referans kuru
-const MARKET_MARKUP = 1.40; // Zorunlu +%40 kâr marjı
+const USD_TRY_RATE = 48.279; // Serbest piyasa USD/TRY referans kuru (doviz.com)
+const MARKET_MARKUP = 1.80; // Zorunlu +%80 kâr marjı
 
 const REQUIRED_BRANDS = [
   "Rolex",
@@ -34,7 +34,7 @@ const REQUIRED_BRANDS = [
 
 function runSync() {
   console.log(`[Piyasa Sync - 03:00] Başlatılıyor: ${new Date().toISOString()}`);
-  console.log(`[Piyasa Sync] Referans Kur: 1 USD = ${USD_TRY_RATE} TL | Kâr Marjı: +%40 (x${MARKET_MARKUP})`);
+  console.log(`[Piyasa Sync] Referans Kur: 1 USD = ${USD_TRY_RATE} TL | Kâr Marjı: +%80 (x${MARKET_MARKUP})`);
 
   const { PRODUCTS, ELITE_WATCH_BRANDS, WATCH_BRANDS, PRE_OWNED_ITEMS } = require(dataJsPath);
 
@@ -49,14 +49,14 @@ function runSync() {
         brandProductCounts[brand]++;
       }
 
-      // Re-calculate price with +40% Piyasa formula
+      // Re-calculate price with +80% Doviz.com USD formula
       const baseUsd = Number(p.usdRefPrice) || Math.round(p.price / (MARKET_MARKUP * USD_TRY_RATE));
       const targetTry = Math.round(baseUsd * MARKET_MARKUP * USD_TRY_RATE);
 
       if (targetTry !== p.price) {
         p.price = targetTry;
         p.usdRefPrice = baseUsd;
-        p.marketMarkup = "+40%";
+        p.marketMarkup = "+80%";
         updatedCount++;
       }
       p.inStock = true;

@@ -121,6 +121,50 @@ if (fs.existsSync(paymentCatalogPath)) {
   console.warn('  ⚠️ functions/product-catalog.json bulunamadı.');
 }
 
+// 6. Elit Kategori (+%80 Marj & USD Kur Sağlama Güvenlik Kilidi)
+console.log('\n--- 6. ELİT KATEGORİ (+%80 MARJ & USD KUR SAĞLAMA VE GÜVENLİK KİLİDİ) ---');
+const eliteWatches = PRODUCTS.filter(p => p.isElite || p.category === 'elit-saatler');
+assert(eliteWatches.length === 200, `Elit Kategori'de tam 200 adet lüks saat bulunmalıdır (Mevcut: ${eliteWatches.length})`);
+
+const ELITE_BRANDS = [
+  "Rolex", "Omega", "Patek Philippe", "Audemars Piguet", "Breitling",
+  "Cartier", "Tudor", "TAG Heuer", "IWC Schaffhausen", "Panerai"
+];
+const eliteBrandCounts = {};
+ELITE_BRANDS.forEach(b => eliteBrandCounts[b] = 0);
+
+let elitePriceBreaches = 0;
+for (const ew of eliteWatches) {
+  if (eliteBrandCounts[ew.brand] !== undefined) {
+    eliteBrandCounts[ew.brand]++;
+  }
+
+  const usdRef = Number(ew.usdRefPrice);
+  if (!usdRef || usdRef <= 0) {
+    console.error(`    ⚠️ [ELITE-USD-REF-MISSING]: [${ew.reference}] ${ew.brand} ${ew.name} USD referans fiyatı eksik!`);
+    elitePriceBreaches++;
+    continue;
+  }
+
+  // Güvenlik Kilidi: Fiyat USD_REF * 40 TL * 1.80 tabanının altında olamaz (Emniyet devre kesici)
+  const minFloorTry = Math.round(usdRef * 40.0 * 1.80);
+  if (ew.price < minFloorTry) {
+    console.error(`    ⚠️ [ELITE-PRICE-UNDER-MARGIN]: [${ew.reference}] ${ew.brand} ${ew.name} taban fiyatın altında! Mevcut: ${ew.price} TL < Minimum Taban: ${minFloorTry} TL (USD: $${usdRef})`);
+    elitePriceBreaches++;
+  }
+}
+
+assert(elitePriceBreaches === 0, `Tüm 200 Elit Saat +%80 kâr marjı ve USD kuru emniyet kilidine uymalıdır (İhlal: ${elitePriceBreaches})`);
+
+let brandDistributionValid = true;
+ELITE_BRANDS.forEach(b => {
+  if (eliteBrandCounts[b] !== 20) {
+    console.error(`    ⚠️ [ELITE-BRAND-COUNT-MISMATCH]: ${b} markasında ${eliteBrandCounts[b]} ürün var, tam 20 olmalıdır.`);
+    brandDistributionValid = false;
+  }
+});
+assert(brandDistributionValid, `10 Lüks Saat Evinin her birinde tam 20'şer aktif ürün bulunmalıdır.`);
+
 console.log('\n====================================================');
 if (failureCount === 0) {
   console.log('✅ TÜM FİYAT GÜVENLİK KAPILARI VE DEVRE KESİCİLER BAŞARIYLA GEÇİLDİ.');
