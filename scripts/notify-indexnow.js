@@ -18,15 +18,12 @@ const ENDPOINTS = [
 async function pushToIndexNow(urls) {
   const urlList = urls && urls.length > 0 ? urls : [
     `${BASE_URL}/`,
+    `${BASE_URL}/elit-kategori/`,
     `${BASE_URL}/saatler/`,
     `${BASE_URL}/mucevherat/`,
-    `${BASE_URL}/seckin-urunler/`,
-    `${BASE_URL}/ikinci-el/`,
     `${BASE_URL}/llms.txt`,
     `${BASE_URL}/llms/saatler.md`,
     `${BASE_URL}/llms/mucevherat.md`,
-    `${BASE_URL}/llms/ikinci-el.md`,
-    `${BASE_URL}/llms/seckin-urunler.md`,
     `${BASE_URL}/llms/altin-yatirim-ve-ozel-matrah.md`,
     `${BASE_URL}/llms/hukuki-delil-ve-guvenlik.md`,
     `${BASE_URL}/llms/kurumsal-kimlik-ve-iletisim.md`,
