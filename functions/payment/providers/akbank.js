@@ -1,8 +1,8 @@
 /**
- * BELGIN KUYUMCULUK — AKBANK SANAL POS ADAPTER (12876196)
+ * BELGIN KUYUMCULUK — AKBANK SANAL POS ADAPTER (12877995)
  * Akbank Sanal POS In-House Gateway & 3D Secure / Payment API Modülü
  * Resmi Banka Dokümantasyonu (HMAC-SHA512 / securepay & payhosting & Payment JSON API)
- * Üye İşyeri No: 12876196 | Kullanıcı: 5419305372 | Semih Sonbahar
+ * Üye İşyeri No: 12877995 | Kullanıcı: 5419305372 | Semih Sonbahar
  */
 
 const crypto = require('crypto');

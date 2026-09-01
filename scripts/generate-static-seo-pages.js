@@ -380,11 +380,7 @@ function renderProductPage(p, indexHtml) {
     'JSON-LD Schema'
   );
 
-  if (p.brand === 'Belgin Kuyumculuk' || catKey === 'mucevherat' || p.isGold || p.category === 'gold') {
-    if (!pageHtml.includes('name="robots"')) {
-      pageHtml = pageHtml.replace('<head>', '<head>\n  <meta name="robots" content="noindex, nofollow">');
-    }
-  }
+
 
   return pageHtml;
 }
@@ -515,11 +511,7 @@ function renderCategoryPage(key, list, indexHtml) {
     `${meta.gridId} product grid`
   );
 
-  if (key === 'mucevherat') {
-    if (!pageHtml.includes('name="robots"')) {
-      pageHtml = pageHtml.replace('<head>', '<head>\n  <meta name="robots" content="noindex, nofollow">\n  <script>window.location.replace("/");</script>');
-    }
-  }
+
 
   return pageHtml;
 }

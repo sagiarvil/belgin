@@ -66,13 +66,13 @@ function urlset(items, withImages = false) {
 }
 
 function buildSitemaps() {
-  const pages = SEO_REGISTRY.filter(p => p.indexDirective === 'index' && !String(p.route).includes('#') && !p.route.includes('altin') && !p.route.includes('pirlanta') && !p.route.includes('izmir-kuyumculuk')).map(p => ({
+  const pages = SEO_REGISTRY.filter(p => p.indexDirective === 'index' && !String(p.route).includes('#')).map(p => ({
     loc: `${BASE_URL}${p.route}`
   }));
-  const categories = ['saatler', 'ikinci-el'].map(k => ({
+  const categories = Object.keys(CATEGORY_ROUTES).map(k => ({
     loc: `${BASE_URL}${CATEGORY_ROUTES[k]}`
   }));
-  const productItems = products.filter(p => p.brand !== 'Belgin Kuyumculuk' && !p.isGold && p.category !== 'gold').map(p => ({
+  const productItems = products.map(p => ({
     loc: productUrl(p),
     lastmod: lastmod(p),
     image: imageUrl(p) ? { loc: imageUrl(p), title: `${p.brand || ''} ${p.name || ''}`.trim() } : null
