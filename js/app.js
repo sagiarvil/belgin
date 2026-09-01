@@ -3313,10 +3313,12 @@ const App = {
         <article class="magazine-card" onclick="App.openMagazineArticle('${art.id}')" data-article-id="${art.id}">
           <div class="mag-card-media">
             <img src="${imgSrc}" alt="${typeof escapeHtml === 'function' ? escapeHtml(art.title) : art.title}" loading="lazy" decoding="async" onerror="this.src='/images/hero/hero-rolex-lineup.jpg'">
-            <span class="mag-card-badge">${typeof escapeHtml === 'function' ? escapeHtml(art.category) : art.category}</span>
-            <span class="mag-card-time-pill">⏱️ ${typeof escapeHtml === 'function' ? escapeHtml(readTime) : readTime}</span>
           </div>
           <div class="mag-card-body">
+            <div class="mag-card-meta-top" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <span class="mag-tag-pill">${typeof escapeHtml === 'function' ? escapeHtml(art.category) : art.category}</span>
+              <span class="mag-read-time">⏱️ ${typeof escapeHtml === 'function' ? escapeHtml(readTime) : readTime}</span>
+            </div>
             <h3 class="mag-card-title">${typeof escapeHtml === 'function' ? escapeHtml(art.title) : art.title}</h3>
             <p class="mag-card-excerpt">${typeof escapeHtml === 'function' ? escapeHtml(art.summary) : art.summary}</p>
             <div class="mag-card-meta">

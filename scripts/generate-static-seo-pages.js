@@ -245,10 +245,12 @@ function renderSeoMagazineCard(art) {
     <article class="magazine-card" onclick="App.openMagazineArticle('${esc(art.id)}')" data-article-id="${esc(art.id)}">
       <div class="mag-card-media">
         <img src="/${esc(imgSrc)}" alt="${esc(art.title)}" loading="lazy" decoding="async" onerror="this.src='/images/hero/hero-rolex-lineup.jpg'">
-        <span class="mag-card-badge">${esc(art.category)}</span>
-        <span class="mag-card-time-pill">⏱️ ${esc(readTime)}</span>
       </div>
       <div class="mag-card-body">
+        <div class="mag-card-meta-top" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <span class="mag-tag-pill">${esc(art.category)}</span>
+          <span class="mag-read-time">⏱️ ${esc(readTime)}</span>
+        </div>
         <h3 class="mag-card-title">${esc(art.title)}</h3>
         <p class="mag-card-excerpt">${esc(art.summary)}</p>
         <div class="mag-card-meta">
