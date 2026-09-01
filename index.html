@@ -718,19 +718,19 @@
       <!-- 5-Slide Ambient Luxury Watch Rotator -->
       <div class="hero-slides-wrapper" id="heroSlidesWrapper">
         <div class="hero-slide active" data-slide="0">
-          <img src="/images/hero/hero-rolex-lineup.jpg" alt="Rolex İkonik Saat Koleksiyonu" fetchpriority="high" loading="eager" decoding="async">
+          <img src="/images/hero/hero-geneva-sunset.jpg" alt="İsviçre Cenevre Saatçilik Mirası" fetchpriority="high" loading="eager" decoding="async">
         </div>
         <div class="hero-slide" data-slide="1">
-          <img src="/images/hero/hero-rolex-green-gold.jpg" alt="18K Sarı Altın & Zümrüt Kadran Daytona" loading="lazy" decoding="async">
+          <img src="/images/hero/hero-rolex-lineup.jpg" alt="Rolex İkonik Saat Koleksiyonu" loading="lazy" decoding="async">
         </div>
         <div class="hero-slide" data-slide="2">
-          <img src="/images/hero/hero-rolex-batman.jpg" alt="Rolex GMT-Master II Batman" loading="lazy" decoding="async">
+          <img src="/images/hero/hero-rolex-green-gold.jpg" alt="18K Sarı Altın & Zümrüt Kadran Daytona" loading="lazy" decoding="async">
         </div>
         <div class="hero-slide" data-slide="3">
-          <img src="/images/hero/hero-rolex-report.jpg" alt="2026 Saat Piyasası & Değer Analizleri" loading="lazy" decoding="async">
+          <img src="/images/hero/hero-rolex-batman.jpg" alt="Rolex GMT-Master II Batman" loading="lazy" decoding="async">
         </div>
         <div class="hero-slide" data-slide="4">
-          <img src="/images/hero/hero-luxury-gala.webp" alt="Belgin Saat Lüks Yaşam & Prestij" loading="lazy" decoding="async">
+          <img src="/images/hero/hero-rolex-report.jpg" alt="2026 Saat Piyasası & Değer Analizleri" loading="lazy" decoding="async">
         </div>
       </div>
 
@@ -738,32 +738,105 @@
 
       <div class="container-art hero-container">
         <div class="hero-content">
-          <span class="hero-eyebrow">BELGİN SAAT • EST. 1999 • İZMİR</span>
-          
-          <h1 class="hero-title">Lüks Saat &amp; Prestij Koleksiyonu</h1>
-
-          <div class="hero-actions">
-            <a href="/saatler/" class="btn-hero-primary" onclick="Router.navigate('saatler'); return false;">
-              Koleksiyonu Keşfet →
-            </a>
-            <a href="/magazin/" class="btn btn-secondary" onclick="Router.navigate('magazin'); return false;" style="border-color:rgba(194,167,104,0.6); color:#FFF; padding:13px 22px; font-size:13.5px; border-radius:8px;">
-              📰 Magazin &amp; Piyasa Raporları
-            </a>
+          <!-- Slide 0: Cenevre & İsviçre Mirası -->
+          <div class="hero-content-slide active" data-content-slide="0">
+            <span class="hero-eyebrow">🏛️ İSVİÇRE SAATÇİLİK MİRASI • CENEVRE &amp; İZMİR</span>
+            <h1 class="hero-title">Zamanın Başkenti Cenevre'den İzmir'e Asırlık Lüks</h1>
+            <p class="hero-subtext">Rolex, Patek Philippe, Audemars Piguet ve dünyanın en seçkin saat evleri, 1999'dan beri süren Belgin Saat güvencesiyle.</p>
+            <div class="hero-actions">
+              <a href="/elit-kategori/" class="btn-hero-primary" onclick="Router.navigate('elit-kategori'); return false;">
+                👑 Elit Koleksiyonu Keşfet (200 Model) →
+              </a>
+              <button type="button" class="btn btn-secondary" onclick="App.openVipModal();" style="border-color:rgba(194,167,104,0.6); color:#FFF; padding:13px 22px; font-size:13.5px; border-radius:8px; cursor:pointer;">
+                📍 VIP Showroom Randevusu
+              </button>
+            </div>
+            <div class="hero-trust-line">
+              Cenevre &bull; Le Locle &bull; La Chaux-de-Fonds &bull; İzmir Buca VIP Showroom
+            </div>
           </div>
 
-          <div class="hero-trust-line">
-            Ekspertiz • Lüks Saat &amp; Prestij • Güvenli Teslimat
+          <!-- Slide 1: Lüks Saat Koleksiyonu & Prestij -->
+          <div class="hero-content-slide" data-content-slide="1">
+            <span class="hero-eyebrow">BELGİN SAAT • EST. 1999 • İZMİR</span>
+            <h1 class="hero-title">Lüks Saat &amp; Prestij Koleksiyonu</h1>
+            <p class="hero-subtext">10 prestij saat evinden 2.000'i aşkın doğrulanmış model, şeffaf fiyatlar ve kurumsal teslimat güvencesi.</p>
+            <div class="hero-actions">
+              <a href="/saatler/" class="btn-hero-primary" onclick="Router.navigate('saatler'); return false;">
+                ⌚ Tüm Koleksiyonu Keşfet (1.925 Model) →
+              </a>
+              <a href="/magazin/" class="btn btn-secondary" onclick="Router.navigate('magazin'); return false;" style="border-color:rgba(194,167,104,0.6); color:#FFF; padding:13px 22px; font-size:13.5px; border-radius:8px;">
+                📰 Magazin &amp; Piyasa Raporları
+              </a>
+            </div>
+            <div class="hero-trust-line">
+              Ekspertiz • Lüks Saat &amp; Prestij • Güvenli Teslimat
+            </div>
+          </div>
+
+          <!-- Slide 2: 18K Altın & Zümrüt Daytona -->
+          <div class="hero-content-slide" data-content-slide="2">
+            <span class="hero-eyebrow">HAUTE HORLOGERIE • ALTIN &amp; ZÜMRÜT KADRAN</span>
+            <h1 class="hero-title">Yüksek Saatçiliğin Zirvesi: İkonik Kronograflar</h1>
+            <p class="hero-subtext">18K masif altın kasalar, yeşil kadranlı Daytona ve zamansız yatırım modelleri tek çatı altında.</p>
+            <div class="hero-actions">
+              <a href="/elit-kategori/?marka=Rolex" class="btn-hero-primary" onclick="App.filterEliteWatchesByBrand('Rolex', null); Router.navigate('elit-kategori'); return false;">
+                👑 Rolex Koleksiyonunu İncele →
+              </a>
+              <a href="#" onclick="App.openTradeInModal(); return false;" class="btn btn-secondary" style="border-color:rgba(194,167,104,0.6); color:#FFF; padding:13px 22px; font-size:13.5px; border-radius:8px;">
+                ⌚ Saat Takası &amp; Değerleme
+              </a>
+            </div>
+            <div class="hero-trust-line">
+              Sertifikalı Orijinallik • Islak İmzalı Teslim Beyanı
+            </div>
+          </div>
+
+          <!-- Slide 3: Batman & Sanatsal Mekanizma -->
+          <div class="hero-content-slide" data-content-slide="3">
+            <span class="hero-eyebrow">SANAT &amp; MEKANİZMA • GMT-MASTER II</span>
+            <h1 class="hero-title">Bir Sanat Eseri ile Günlük Kullanımın Uyumu</h1>
+            <p class="hero-subtext">Çift renkli seramik Cerachrom bezeller, safir kristal cam ve çift zaman dilimli kalibreler.</p>
+            <div class="hero-actions">
+              <a href="/elit-kategori/" class="btn-hero-primary" onclick="Router.navigate('elit-kategori'); return false;">
+                ✨ İkonik Modelleri Keşfet →
+              </a>
+              <a href="/magazin/" class="btn btn-secondary" onclick="Router.navigate('magazin'); return false;" style="border-color:rgba(194,167,104,0.6); color:#FFF; padding:13px 22px; font-size:13.5px; border-radius:8px;">
+                📰 Saat Makalelerini Oku
+              </a>
+            </div>
+            <div class="hero-trust-line">
+              2 Yıl Uluslararası Mekanizma Garantisi • VIP Danışmanlık
+            </div>
+          </div>
+
+          <!-- Slide 4: Küresel Piyasa Raporu -->
+          <div class="hero-content-slide" data-content-slide="4">
+            <span class="hero-eyebrow">EDİTORYAL SAAT DÜNYASI • PİYASA ANALİZLERİ</span>
+            <h1 class="hero-title">2026 Saat Piyasası &amp; Değer Trendleri</h1>
+            <p class="hero-subtext">En çok tercih edilen lüks modeller, fiyat grafikleri ve koleksiyoner alıcı rehberleri Belgin Saat Magazin'de.</p>
+            <div class="hero-actions">
+              <a href="/magazin/" class="btn-hero-primary" onclick="Router.navigate('magazin'); return false;">
+                📰 Magazini Oku (50 Makale) →
+              </a>
+              <a href="/markalar/" class="btn btn-secondary" onclick="Router.navigate('markalar'); return false;" style="border-color:rgba(194,167,104,0.6); color:#FFF; padding:13px 22px; font-size:13.5px; border-radius:8px;">
+                🏷️ Tüm Saat Markaları Dizini
+              </a>
+            </div>
+            <div class="hero-trust-line">
+              Güncel Piyasa Analizleri • Uzman Koleksiyoner Rehberi
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Hero Slide Dots Navigation -->
       <div class="hero-dots-nav" id="heroDotsNav">
-        <button class="hero-dot active" onclick="App.setHeroSlide(0)" aria-label="Slayt 1"></button>
-        <button class="hero-dot" onclick="App.setHeroSlide(1)" aria-label="Slayt 2"></button>
-        <button class="hero-dot" onclick="App.setHeroSlide(2)" aria-label="Slayt 3"></button>
-        <button class="hero-dot" onclick="App.setHeroSlide(3)" aria-label="Slayt 4"></button>
-        <button class="hero-dot" onclick="App.setHeroSlide(4)" aria-label="Slayt 5"></button>
+        <button class="hero-dot active" onclick="App.setHeroSlide(0)" aria-label="Slayt 1: Cenevre Mirası"></button>
+        <button class="hero-dot" onclick="App.setHeroSlide(1)" aria-label="Slayt 2: Lüks Koleksiyon"></button>
+        <button class="hero-dot" onclick="App.setHeroSlide(2)" aria-label="Slayt 3: Altın & Zümrüt"></button>
+        <button class="hero-dot" onclick="App.setHeroSlide(3)" aria-label="Slayt 4: GMT Batman"></button>
+        <button class="hero-dot" onclick="App.setHeroSlide(4)" aria-label="Slayt 5: Piyasa Raporu"></button>
       </div>
     </section>
 

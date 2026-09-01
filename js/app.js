@@ -3238,11 +3238,15 @@ const App = {
 
   setHeroSlide(index) {
     const slides = document.querySelectorAll('.hero-slide');
+    const contentSlides = document.querySelectorAll('.hero-content-slide');
     const dots = document.querySelectorAll('.hero-dot');
     if (!slides || slides.length === 0) return;
     this.currentHeroSlide = (index + slides.length) % slides.length;
     slides.forEach((s, idx) => {
       s.classList.toggle('active', idx === this.currentHeroSlide);
+    });
+    contentSlides.forEach((cs, idx) => {
+      cs.classList.toggle('active', idx === this.currentHeroSlide);
     });
     dots.forEach((d, idx) => {
       d.classList.toggle('active', idx === this.currentHeroSlide);
