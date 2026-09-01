@@ -1,6 +1,6 @@
 // ==========================================================
 // BELGİN SAAT — MASTER ÜRÜN VE KOLEKSİYON VERİTABANI
-// Sürüm: 2026-09-01.elite-real-images-sync
+// Sürüm: 2026-09-01.elite-studio-images-sync
 // Toplam Yayın Ürünü: 2068 (200 Elit Saat + 1868 Saat Kataloğu)
 // ==========================================================
 
@@ -208,10 +208,10 @@ const PRODUCTS = [
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Oystersteel 904L Çelik",
     "origin": "İsviçre (Cenevre)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/rolex-126610ln-5001.jpg",
+    "hoverImage": "images/products/elite/rolex-126610ln-5001.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/rolex-126610ln-5001.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Rolex%20126610LN",
     "statusBadge": "Chrono24 Tescilli",
@@ -254,10 +254,10 @@ const PRODUCTS = [
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Oystersteel 904L Çelik",
     "origin": "İsviçre (Cenevre)",
-    "image": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/rolex-126500ln-5002.jpg",
+    "hoverImage": "images/products/elite/rolex-126500ln-5002.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/rolex-126500ln-5002.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Rolex%20126500LN",
     "statusBadge": "Chrono24 Tescilli",
@@ -300,10 +300,10 @@ const PRODUCTS = [
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Oystersteel 904L Çelik",
     "origin": "İsviçre (Cenevre)",
-    "image": "https://images.unsplash.com/photo-1547996160-71dfabbce5d7?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1547996160-71dfabbce5d7?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/rolex-126710blro-5003.jpg",
+    "hoverImage": "images/products/elite/rolex-126710blro-5003.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1547996160-71dfabbce5d7?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/rolex-126710blro-5003.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Rolex%20126710BLRO",
     "statusBadge": "Chrono24 Tescilli",
@@ -346,10 +346,10 @@ const PRODUCTS = [
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Oystersteel 904L Çelik",
     "origin": "İsviçre (Cenevre)",
-    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/rolex-126710blnr-5004.jpg",
+    "hoverImage": "images/products/elite/rolex-126710blnr-5004.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/rolex-126710blnr-5004.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Rolex%20126710BLNR",
     "statusBadge": "Chrono24 Tescilli",
@@ -392,10 +392,10 @@ const PRODUCTS = [
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Oystersteel 904L Çelik",
     "origin": "İsviçre (Cenevre)",
-    "image": "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/rolex-126720vtnr-5005.jpg",
+    "hoverImage": "images/products/elite/rolex-126720vtnr-5005.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/rolex-126720vtnr-5005.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Rolex%20126720VTNR",
     "statusBadge": "Chrono24 Tescilli",
@@ -438,10 +438,10 @@ const PRODUCTS = [
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Rolesor (Oystersteel & 18K Beyaz Altın Bezel)",
     "origin": "İsviçre (Cenevre)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/rolex-126334-0002-5006.jpg",
+    "hoverImage": "images/products/elite/rolex-126334-0002-5006.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/rolex-126334-0002-5006.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Rolex%20126334-0002",
     "statusBadge": "Chrono24 Tescilli",
@@ -484,10 +484,10 @@ const PRODUCTS = [
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Rolesor (Çelik & 18K Beyaz Altın)",
     "origin": "İsviçre (Cenevre)",
-    "image": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/rolex-126334-0014-5007.jpg",
+    "hoverImage": "images/products/elite/rolex-126334-0014-5007.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/rolex-126334-0014-5007.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Rolex%20126334-0014",
     "statusBadge": "Chrono24 Tescilli",
@@ -530,10 +530,10 @@ const PRODUCTS = [
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Rolesor Çelik & 18K Beyaz Altın",
     "origin": "İsviçre (Cenevre)",
-    "image": "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/rolex-126234-0050-5008.jpg",
+    "hoverImage": "images/products/elite/rolex-126234-0050-5008.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/rolex-126234-0050-5008.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Rolex%20126234-0050",
     "statusBadge": "Chrono24 Tescilli",
@@ -576,10 +576,10 @@ const PRODUCTS = [
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Masif 18K Sarı Altın",
     "origin": "İsviçre (Cenevre)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/rolex-228238-0006-5009.jpg",
+    "hoverImage": "images/products/elite/rolex-228238-0006-5009.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/rolex-228238-0006-5009.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Rolex%20228238-0006",
     "statusBadge": "Chrono24 Tescilli",
@@ -622,10 +622,10 @@ const PRODUCTS = [
     "subCategory": "Rolex Koleksiyonu",
     "metal": "950 Masif Platin",
     "origin": "İsviçre (Cenevre)",
-    "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1539185441755-769473a23570?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/rolex-228236-0010-5010.jpg",
+    "hoverImage": "images/products/elite/rolex-228236-0010-5010.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1539185441755-769473a23570?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/rolex-228236-0010-5010.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Rolex%20228236-0010",
     "statusBadge": "Chrono24 Tescilli",
@@ -668,10 +668,10 @@ const PRODUCTS = [
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Oystersteel 904L Çelik",
     "origin": "İsviçre (Cenevre)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/rolex-124060-5011.jpg",
+    "hoverImage": "images/products/elite/rolex-124060-5011.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/rolex-124060-5011.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Rolex%20124060",
     "statusBadge": "Chrono24 Tescilli",
@@ -714,10 +714,10 @@ const PRODUCTS = [
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Oystersteel Çelik",
     "origin": "İsviçre (Cenevre)",
-    "image": "https://images.unsplash.com/photo-1547996160-71dfabbce5d7?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1547996160-71dfabbce5d7?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/rolex-126610lv-5012.jpg",
+    "hoverImage": "images/products/elite/rolex-126610lv-5012.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1547996160-71dfabbce5d7?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/rolex-126610lv-5012.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Rolex%20126610LV",
     "statusBadge": "Chrono24 Tescilli",
@@ -760,10 +760,10 @@ const PRODUCTS = [
     "subCategory": "Rolex Koleksiyonu",
     "metal": "18K Everose Pembe Altın",
     "origin": "İsviçre (Cenevre)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/rolex-126515ln-5013.jpg",
+    "hoverImage": "images/products/elite/rolex-126515ln-5013.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/rolex-126515ln-5013.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Rolex%20126515LN",
     "statusBadge": "Chrono24 Tescilli",
@@ -806,10 +806,10 @@ const PRODUCTS = [
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Oystersteel 904L Çelik",
     "origin": "İsviçre (Cenevre)",
-    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/rolex-124270-5014.jpg",
+    "hoverImage": "images/products/elite/rolex-124270-5014.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/rolex-124270-5014.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Rolex%20124270",
     "statusBadge": "Chrono24 Tescilli",
@@ -852,10 +852,10 @@ const PRODUCTS = [
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Oystersteel 904L Çelik",
     "origin": "İsviçre (Cenevre)",
-    "image": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/rolex-226570-0001-5015.jpg",
+    "hoverImage": "images/products/elite/rolex-226570-0001-5015.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/rolex-226570-0001-5015.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Rolex%20226570-0001",
     "statusBadge": "Chrono24 Tescilli",
@@ -898,10 +898,10 @@ const PRODUCTS = [
     "subCategory": "Rolex Koleksiyonu",
     "metal": "18K Everose Pembe Altın",
     "origin": "İsviçre (Cenevre)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/rolex-126655-5016.jpg",
+    "hoverImage": "images/products/elite/rolex-126655-5016.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/rolex-126655-5016.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Rolex%20126655",
     "statusBadge": "Chrono24 Tescilli",
@@ -944,10 +944,10 @@ const PRODUCTS = [
     "subCategory": "Rolex Koleksiyonu",
     "metal": "RLX Titanyum 5. Seviye",
     "origin": "İsviçre (Cenevre)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/rolex-226627-5017.jpg",
+    "hoverImage": "images/products/elite/rolex-226627-5017.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/rolex-226627-5017.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Rolex%20226627",
     "statusBadge": "Chrono24 Tescilli",
@@ -990,10 +990,10 @@ const PRODUCTS = [
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Oystersteel 904L Çelik",
     "origin": "İsviçre (Cenevre)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/rolex-124300-0006-5018.jpg",
+    "hoverImage": "images/products/elite/rolex-124300-0006-5018.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/rolex-124300-0006-5018.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Rolex%20124300-0006",
     "statusBadge": "Chrono24 Tescilli",
@@ -1036,10 +1036,10 @@ const PRODUCTS = [
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Oystersteel 904L Çelik",
     "origin": "İsviçre (Cenevre)",
-    "image": "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/rolex-126000-0014-5019.jpg",
+    "hoverImage": "images/products/elite/rolex-126000-0014-5019.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/rolex-126000-0014-5019.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Rolex%20126000-0014",
     "statusBadge": "Chrono24 Tescilli",
@@ -1082,10 +1082,10 @@ const PRODUCTS = [
     "subCategory": "Rolex Koleksiyonu",
     "metal": "Oystersteel & Helyum Tahliye Valfi",
     "origin": "İsviçre (Cenevre)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/rolex-126600-5020.jpg",
+    "hoverImage": "images/products/elite/rolex-126600-5020.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/rolex-126600-5020.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Rolex%20126600",
     "statusBadge": "Chrono24 Tescilli",
@@ -1128,10 +1128,10 @@ const PRODUCTS = [
     "subCategory": "Omega Koleksiyonu",
     "metal": "Paslanmaz Çelik",
     "origin": "İsviçre (Biel/Bienne)",
-    "image": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/omega-310-30-42-50-01-002-5021.jpg",
+    "hoverImage": "images/products/elite/omega-310-30-42-50-01-002-5021.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/omega-310-30-42-50-01-002-5021.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Omega%20310.30.42.50.01.002",
     "statusBadge": "Chrono24 Tescilli",
@@ -1174,10 +1174,10 @@ const PRODUCTS = [
     "subCategory": "Omega Koleksiyonu",
     "metal": "Paslanmaz Çelik & Seramik Dalga Desenli Kadran",
     "origin": "İsviçre (Biel/Bienne)",
-    "image": "https://images.unsplash.com/photo-1547996160-71dfabbce5d7?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1547996160-71dfabbce5d7?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/omega-210-30-42-20-01-001-5022.jpg",
+    "hoverImage": "images/products/elite/omega-210-30-42-20-01-001-5022.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1547996160-71dfabbce5d7?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/omega-210-30-42-20-01-001-5022.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Omega%20210.30.42.20.01.001",
     "statusBadge": "Chrono24 Tescilli",
@@ -1220,10 +1220,10 @@ const PRODUCTS = [
     "subCategory": "Omega Koleksiyonu",
     "metal": "2. Sınıf Titanyum",
     "origin": "İsviçre (Biel/Bienne)",
-    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/omega-210-90-42-20-01-001-5023.jpg",
+    "hoverImage": "images/products/elite/omega-210-90-42-20-01-001-5023.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/omega-210-90-42-20-01-001-5023.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Omega%20210.90.42.20.01.001",
     "statusBadge": "Chrono24 Tescilli",
@@ -1266,10 +1266,10 @@ const PRODUCTS = [
     "subCategory": "Omega Koleksiyonu",
     "metal": "Paslanmaz Çelik & Siyah Seramik Bezel",
     "origin": "İsviçre (Biel/Bienne)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/omega-215-30-44-21-01-001-5024.jpg",
+    "hoverImage": "images/products/elite/omega-215-30-44-21-01-001-5024.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/omega-215-30-44-21-01-001-5024.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Omega%20215.30.44.21.01.001",
     "statusBadge": "Chrono24 Tescilli",
@@ -1311,10 +1311,10 @@ const PRODUCTS = [
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Biel/Bienne)",
-    "image": "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/omega-220-10-41-21-10-001-5025.jpg",
+    "hoverImage": "images/products/elite/omega-220-10-41-21-10-001-5025.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/omega-220-10-41-21-10-001-5025.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Omega%20220.10.41.21.10.001",
     "statusBadge": "Chrono24 Tescilli",
@@ -1356,10 +1356,10 @@ const PRODUCTS = [
     "subCategory": "Omega Koleksiyonu",
     "metal": "Tek Blok Masif Zirkonyum Oksit Siyah Seramik",
     "origin": "İsviçre (Biel/Bienne)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/omega-311-92-44-51-01-003-5026.jpg",
+    "hoverImage": "images/products/elite/omega-311-92-44-51-01-003-5026.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/omega-311-92-44-51-01-003-5026.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Omega%20311.92.44.51.01.003",
     "statusBadge": "Chrono24 Tescilli",
@@ -1398,10 +1398,10 @@ const PRODUCTS = [
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Biel/Bienne)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/omega-131-20-41-21-02-001-5027.jpg",
+    "hoverImage": "images/products/elite/omega-131-20-41-21-02-001-5027.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/omega-131-20-41-21-02-001-5027.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Omega%20131.20.41.21.02.001",
     "statusBadge": "Chrono24 Tescilli",
@@ -1441,10 +1441,10 @@ const PRODUCTS = [
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Biel/Bienne)",
-    "image": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/omega-310-32-42-50-02-001-5028.jpg",
+    "hoverImage": "images/products/elite/omega-310-32-42-50-02-001-5028.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/omega-310-32-42-50-02-001-5028.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Omega%20310.32.42.50.02.001",
     "statusBadge": "Chrono24 Tescilli",
@@ -1483,10 +1483,10 @@ const PRODUCTS = [
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Biel/Bienne)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/omega-220-10-43-22-03-001-5029.jpg",
+    "hoverImage": "images/products/elite/omega-220-10-43-22-03-001-5029.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/omega-220-10-43-22-03-001-5029.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Omega%20220.10.43.22.03.001",
     "statusBadge": "Chrono24 Tescilli",
@@ -1524,10 +1524,10 @@ const PRODUCTS = [
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Biel/Bienne)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/omega-234-30-41-21-01-001-5030.jpg",
+    "hoverImage": "images/products/elite/omega-234-30-41-21-01-001-5030.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/omega-234-30-41-21-01-001-5030.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Omega%20234.30.41.21.01.001",
     "statusBadge": "Chrono24 Tescilli",
@@ -1565,10 +1565,10 @@ const PRODUCTS = [
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Biel/Bienne)",
-    "image": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/omega-329-30-43-51-02-001-5031.jpg",
+    "hoverImage": "images/products/elite/omega-329-30-43-51-02-001-5031.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/omega-329-30-43-51-02-001-5031.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Omega%20329.30.43.51.02.001",
     "statusBadge": "Chrono24 Tescilli",
@@ -1606,10 +1606,10 @@ const PRODUCTS = [
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Biel/Bienne)",
-    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/omega-215-92-46-21-01-001-5032.jpg",
+    "hoverImage": "images/products/elite/omega-215-92-46-21-01-001-5032.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/omega-215-92-46-21-01-001-5032.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Omega%20215.92.46.21.01.001",
     "statusBadge": "Chrono24 Tescilli",
@@ -1647,10 +1647,10 @@ const PRODUCTS = [
     "subCategory": "Omega Koleksiyonu",
     "metal": "18K Masif Sarı Altın",
     "origin": "İsviçre (Biel/Bienne)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/omega-435-53-40-21-02-001-5033.jpg",
+    "hoverImage": "images/products/elite/omega-435-53-40-21-02-001-5033.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/omega-435-53-40-21-02-001-5033.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Omega%20435.53.40.21.02.001",
     "statusBadge": "Chrono24 Tescilli",
@@ -1689,10 +1689,10 @@ const PRODUCTS = [
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Biel/Bienne)",
-    "image": "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/omega-329-30-44-51-01-001-5034.jpg",
+    "hoverImage": "images/products/elite/omega-329-30-44-51-01-001-5034.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/omega-329-30-44-51-01-001-5034.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Omega%20329.30.44.51.01.001",
     "statusBadge": "Chrono24 Tescilli",
@@ -1730,10 +1730,10 @@ const PRODUCTS = [
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Biel/Bienne)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/omega-220-10-38-20-03-003-5035.jpg",
+    "hoverImage": "images/products/elite/omega-220-10-38-20-03-003-5035.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/omega-220-10-38-20-03-003-5035.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Omega%20220.10.38.20.03.003",
     "statusBadge": "Chrono24 Tescilli",
@@ -1771,10 +1771,10 @@ const PRODUCTS = [
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Biel/Bienne)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/omega-304-30-44-52-03-001-5036.jpg",
+    "hoverImage": "images/products/elite/omega-304-30-44-52-03-001-5036.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/omega-304-30-44-52-03-001-5036.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Omega%20304.30.44.52.03.001",
     "statusBadge": "Chrono24 Tescilli",
@@ -1812,10 +1812,10 @@ const PRODUCTS = [
     "subCategory": "Omega Koleksiyonu",
     "metal": "Çelik & 18K Sedna Altın Butonlar/Bezel",
     "origin": "İsviçre (Biel/Bienne)",
-    "image": "https://images.unsplash.com/photo-1547996160-71dfabbce5d7?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1547996160-71dfabbce5d7?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/omega-210-20-44-51-01-001-5037.jpg",
+    "hoverImage": "images/products/elite/omega-210-20-44-51-01-001-5037.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1547996160-71dfabbce5d7?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/omega-210-20-44-51-01-001-5037.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Omega%20210.20.44.51.01.001",
     "statusBadge": "Chrono24 Tescilli",
@@ -1853,10 +1853,10 @@ const PRODUCTS = [
     "subCategory": "Omega Koleksiyonu",
     "metal": "Masif 18K Sarı Altın",
     "origin": "İsviçre (Biel/Bienne)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/omega-131-53-39-20-02-001-5038.jpg",
+    "hoverImage": "images/products/elite/omega-131-53-39-20-02-001-5038.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/omega-131-53-39-20-02-001-5038.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Omega%20131.53.39.20.02.001",
     "statusBadge": "Chrono24 Tescilli",
@@ -1894,10 +1894,10 @@ const PRODUCTS = [
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Biel/Bienne)",
-    "image": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/omega-311-32-40-30-01-001-5039.jpg",
+    "hoverImage": "images/products/elite/omega-311-32-40-30-01-001-5039.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/omega-311-32-40-30-01-001-5039.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Omega%20311.32.40.30.01.001",
     "statusBadge": "Chrono24 Tescilli",
@@ -1935,10 +1935,10 @@ const PRODUCTS = [
     "subCategory": "Omega Koleksiyonu",
     "metal": "5. Sınıf Titanyum",
     "origin": "İsviçre (Biel/Bienne)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/omega-232-92-44-22-03-001-5040.jpg",
+    "hoverImage": "images/products/elite/omega-232-92-44-22-03-001-5040.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/omega-232-92-44-22-03-001-5040.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Omega%20232.92.44.22.03.001",
     "statusBadge": "Chrono24 Tescilli",
@@ -1976,10 +1976,10 @@ const PRODUCTS = [
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
-    "image": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/patek-philippe-5711-1a-010-5041.jpg",
+    "hoverImage": "images/products/elite/patek-philippe-5711-1a-010-5041.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/patek-philippe-5711-1a-010-5041.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Patek%20Philippe%205711%2F1A-010",
     "statusBadge": "Chrono24 Tescilli",
@@ -2018,10 +2018,10 @@ const PRODUCTS = [
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/patek-philippe-5712-1a-001-5042.jpg",
+    "hoverImage": "images/products/elite/patek-philippe-5712-1a-001-5042.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/patek-philippe-5712-1a-001-5042.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Patek%20Philippe%205712%2F1A-001",
     "statusBadge": "Chrono24 Tescilli",
@@ -2059,10 +2059,10 @@ const PRODUCTS = [
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/patek-philippe-5726-1a-014-5043.jpg",
+    "hoverImage": "images/products/elite/patek-philippe-5726-1a-014-5043.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/patek-philippe-5726-1a-014-5043.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Patek%20Philippe%205726%2F1A-014",
     "statusBadge": "Chrono24 Tescilli",
@@ -2100,10 +2100,10 @@ const PRODUCTS = [
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Masif 18K Gül Altın (Rose Gold)",
     "origin": "İsviçre (Cenevre / 1839)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/patek-philippe-5980-1r-001-5044.jpg",
+    "hoverImage": "images/products/elite/patek-philippe-5980-1r-001-5044.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/patek-philippe-5980-1r-001-5044.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Patek%20Philippe%205980%2F1R-001",
     "statusBadge": "Chrono24 Tescilli",
@@ -2141,10 +2141,10 @@ const PRODUCTS = [
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/patek-philippe-5167a-001-5045.jpg",
+    "hoverImage": "images/products/elite/patek-philippe-5167a-001-5045.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/patek-philippe-5167a-001-5045.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Patek%20Philippe%205167A-001",
     "statusBadge": "Chrono24 Tescilli",
@@ -2182,10 +2182,10 @@ const PRODUCTS = [
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Masif 18K Beyaz Altın",
     "origin": "İsviçre (Cenevre / 1839)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/patek-philippe-5168g-001-5046.jpg",
+    "hoverImage": "images/products/elite/patek-philippe-5168g-001-5046.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/patek-philippe-5168g-001-5046.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Patek%20Philippe%205168G-001",
     "statusBadge": "Chrono24 Tescilli",
@@ -2223,10 +2223,10 @@ const PRODUCTS = [
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
-    "image": "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/patek-philippe-5968a-001-5047.jpg",
+    "hoverImage": "images/products/elite/patek-philippe-5968a-001-5047.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/patek-philippe-5968a-001-5047.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Patek%20Philippe%205968A-001",
     "statusBadge": "Chrono24 Tescilli",
@@ -2264,10 +2264,10 @@ const PRODUCTS = [
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
-    "image": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/patek-philippe-6119g-001-5048.jpg",
+    "hoverImage": "images/products/elite/patek-philippe-6119g-001-5048.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/patek-philippe-6119g-001-5048.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Patek%20Philippe%206119G-001",
     "statusBadge": "Chrono24 Tescilli",
@@ -2306,10 +2306,10 @@ const PRODUCTS = [
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/patek-philippe-5227j-001-5049.jpg",
+    "hoverImage": "images/products/elite/patek-philippe-5227j-001-5049.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/patek-philippe-5227j-001-5049.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Patek%20Philippe%205227J-001",
     "statusBadge": "Chrono24 Tescilli",
@@ -2347,10 +2347,10 @@ const PRODUCTS = [
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/patek-philippe-5327g-001-5050.jpg",
+    "hoverImage": "images/products/elite/patek-philippe-5327g-001-5050.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/patek-philippe-5327g-001-5050.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Patek%20Philippe%205327G-001",
     "statusBadge": "Chrono24 Tescilli",
@@ -2388,10 +2388,10 @@ const PRODUCTS = [
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "950 Masif Platin",
     "origin": "İsviçre (Cenevre / 1839)",
-    "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1539185441755-769473a23570?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/patek-philippe-5270p-001-5051.jpg",
+    "hoverImage": "images/products/elite/patek-philippe-5270p-001-5051.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1539185441755-769473a23570?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/patek-philippe-5270p-001-5051.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Patek%20Philippe%205270P-001",
     "statusBadge": "Chrono24 Tescilli",
@@ -2429,10 +2429,10 @@ const PRODUCTS = [
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/patek-philippe-5267-200r-001-5052.jpg",
+    "hoverImage": "images/products/elite/patek-philippe-5267-200r-001-5052.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/patek-philippe-5267-200r-001-5052.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Patek%20Philippe%205267%2F200R-001",
     "statusBadge": "Chrono24 Tescilli",
@@ -2469,10 +2469,10 @@ const PRODUCTS = [
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/patek-philippe-5231g-001-5053.jpg",
+    "hoverImage": "images/products/elite/patek-philippe-5231g-001-5053.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/patek-philippe-5231g-001-5053.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Patek%20Philippe%205231G-001",
     "statusBadge": "Chrono24 Tescilli",
@@ -2510,10 +2510,10 @@ const PRODUCTS = [
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
-    "image": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/patek-philippe-5396g-011-5054.jpg",
+    "hoverImage": "images/products/elite/patek-philippe-5396g-011-5054.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/patek-philippe-5396g-011-5054.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Patek%20Philippe%205396G-011",
     "statusBadge": "Chrono24 Tescilli",
@@ -2550,10 +2550,10 @@ const PRODUCTS = [
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/patek-philippe-5172g-001-5055.jpg",
+    "hoverImage": "images/products/elite/patek-philippe-5172g-001-5055.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/patek-philippe-5172g-001-5055.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Patek%20Philippe%205172G-001",
     "statusBadge": "Chrono24 Tescilli",
@@ -2590,10 +2590,10 @@ const PRODUCTS = [
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
-    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/patek-philippe-5524g-001-5056.jpg",
+    "hoverImage": "images/products/elite/patek-philippe-5524g-001-5056.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/patek-philippe-5524g-001-5056.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Patek%20Philippe%205524G-001",
     "statusBadge": "Chrono24 Tescilli",
@@ -2630,10 +2630,10 @@ const PRODUCTS = [
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/patek-philippe-5738r-001-5057.jpg",
+    "hoverImage": "images/products/elite/patek-philippe-5738r-001-5057.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/patek-philippe-5738r-001-5057.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Patek%20Philippe%205738R-001",
     "statusBadge": "Chrono24 Tescilli",
@@ -2671,10 +2671,10 @@ const PRODUCTS = [
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/patek-philippe-5078r-001-5058.jpg",
+    "hoverImage": "images/products/elite/patek-philippe-5078r-001-5058.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/patek-philippe-5078r-001-5058.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Patek%20Philippe%205078R-001",
     "statusBadge": "Chrono24 Tescilli",
@@ -2711,10 +2711,10 @@ const PRODUCTS = [
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/patek-philippe-7118-1200r-001-5059.jpg",
+    "hoverImage": "images/products/elite/patek-philippe-7118-1200r-001-5059.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/patek-philippe-7118-1200r-001-5059.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Patek%20Philippe%207118%2F1200R-001",
     "statusBadge": "Chrono24 Tescilli",
@@ -2751,10 +2751,10 @@ const PRODUCTS = [
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/patek-philippe-7300-1200a-001-5060.jpg",
+    "hoverImage": "images/products/elite/patek-philippe-7300-1200a-001-5060.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/patek-philippe-7300-1200a-001-5060.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Patek%20Philippe%207300%2F1200A-001",
     "statusBadge": "Chrono24 Tescilli",
@@ -2791,10 +2791,10 @@ const PRODUCTS = [
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
-    "image": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/audemars-piguet-16202st-oo-1240st-01-5061.jpg",
+    "hoverImage": "images/products/elite/audemars-piguet-16202st-oo-1240st-01-5061.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/audemars-piguet-16202st-oo-1240st-01-5061.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Audemars%20Piguet%2016202ST.OO.1240ST.01",
     "statusBadge": "Chrono24 Tescilli",
@@ -2832,10 +2832,10 @@ const PRODUCTS = [
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/audemars-piguet-15510st-oo-1320st-07-5062.jpg",
+    "hoverImage": "images/products/elite/audemars-piguet-15510st-oo-1320st-07-5062.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/audemars-piguet-15510st-oo-1320st-07-5062.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Audemars%20Piguet%2015510ST.OO.1320ST.07",
     "statusBadge": "Chrono24 Tescilli",
@@ -2873,10 +2873,10 @@ const PRODUCTS = [
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/audemars-piguet-26240st-oo-1320st-05-5063.jpg",
+    "hoverImage": "images/products/elite/audemars-piguet-26240st-oo-1320st-05-5063.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/audemars-piguet-26240st-oo-1320st-05-5063.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Audemars%20Piguet%2026240ST.OO.1320ST.05",
     "statusBadge": "Chrono24 Tescilli",
@@ -2913,10 +2913,10 @@ const PRODUCTS = [
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
-    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/audemars-piguet-15407st-oo-1220st-01-5064.jpg",
+    "hoverImage": "images/products/elite/audemars-piguet-15407st-oo-1220st-01-5064.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/audemars-piguet-15407st-oo-1220st-01-5064.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Audemars%20Piguet%2015407ST.OO.1220ST.01",
     "statusBadge": "Chrono24 Tescilli",
@@ -2953,10 +2953,10 @@ const PRODUCTS = [
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/audemars-piguet-26420ti-oo-a027ca-01-5065.jpg",
+    "hoverImage": "images/products/elite/audemars-piguet-26420ti-oo-a027ca-01-5065.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/audemars-piguet-26420ti-oo-a027ca-01-5065.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Audemars%20Piguet%2026420TI.OO.A027CA.01",
     "statusBadge": "Chrono24 Tescilli",
@@ -2993,10 +2993,10 @@ const PRODUCTS = [
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
-    "image": "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/audemars-piguet-15720st-oo-a052ca-01-5066.jpg",
+    "hoverImage": "images/products/elite/audemars-piguet-15720st-oo-a052ca-01-5066.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/audemars-piguet-15720st-oo-a052ca-01-5066.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Audemars%20Piguet%2015720ST.OO.A052CA.01",
     "statusBadge": "Chrono24 Tescilli",
@@ -3034,10 +3034,10 @@ const PRODUCTS = [
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Masif 18K Pembe Altın",
     "origin": "İsviçre (Le Brassus / 1875)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/audemars-piguet-15510or-oo-1320or-04-5067.jpg",
+    "hoverImage": "images/products/elite/audemars-piguet-15510or-oo-1320or-04-5067.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/audemars-piguet-15510or-oo-1320or-04-5067.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Audemars%20Piguet%2015510OR.OO.1320OR.04",
     "statusBadge": "Chrono24 Tescilli",
@@ -3074,10 +3074,10 @@ const PRODUCTS = [
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
-    "image": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/audemars-piguet-26715st-oo-1356st-02-5068.jpg",
+    "hoverImage": "images/products/elite/audemars-piguet-26715st-oo-1356st-02-5068.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/audemars-piguet-26715st-oo-1356st-02-5068.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Audemars%20Piguet%2026715ST.OO.1356ST.02",
     "statusBadge": "Chrono24 Tescilli",
@@ -3114,10 +3114,10 @@ const PRODUCTS = [
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/audemars-piguet-26574st-oo-1220st-03-5069.jpg",
+    "hoverImage": "images/products/elite/audemars-piguet-26574st-oo-1220st-03-5069.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/audemars-piguet-26574st-oo-1220st-03-5069.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Audemars%20Piguet%2026574ST.OO.1220ST.03",
     "statusBadge": "Chrono24 Tescilli",
@@ -3154,10 +3154,10 @@ const PRODUCTS = [
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Monoblok Yüksek Teknoloji Siyah Seramik",
     "origin": "İsviçre (Le Brassus / 1875)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/audemars-piguet-26405ce-oo-a002ca-02-5070.jpg",
+    "hoverImage": "images/products/elite/audemars-piguet-26405ce-oo-a002ca-02-5070.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/audemars-piguet-26405ce-oo-a002ca-02-5070.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Audemars%20Piguet%2026405CE.OO.A002CA.02",
     "statusBadge": "Chrono24 Tescilli",
@@ -3194,10 +3194,10 @@ const PRODUCTS = [
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "18K Beyaz Altın & Siyah Seramik",
     "origin": "İsviçre (Le Brassus / 1875)",
-    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/audemars-piguet-26393nb-oo-a002kb-01-5071.jpg",
+    "hoverImage": "images/products/elite/audemars-piguet-26393nb-oo-a002kb-01-5071.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/audemars-piguet-26393nb-oo-a002kb-01-5071.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Audemars%20Piguet%2026393NB.OO.A002KB.01",
     "statusBadge": "Chrono24 Tescilli",
@@ -3234,10 +3234,10 @@ const PRODUCTS = [
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Floransa El Dövmesi Frosted 18K Beyaz Altın",
     "origin": "İsviçre (Le Brassus / 1875)",
-    "image": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/audemars-piguet-15454bc-gg-1259bc-01-5072.jpg",
+    "hoverImage": "images/products/elite/audemars-piguet-15454bc-gg-1259bc-01-5072.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/audemars-piguet-15454bc-gg-1259bc-01-5072.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Audemars%20Piguet%2015454BC.GG.1259BC.01",
     "statusBadge": "Chrono24 Tescilli",
@@ -3274,10 +3274,10 @@ const PRODUCTS = [
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
-    "image": "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/audemars-piguet-26730st-oo-1320st-01-5073.jpg",
+    "hoverImage": "images/products/elite/audemars-piguet-26730st-oo-1320st-01-5073.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/audemars-piguet-26730st-oo-1320st-01-5073.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Audemars%20Piguet%2026730ST.OO.1320ST.01",
     "statusBadge": "Chrono24 Tescilli",
@@ -3314,10 +3314,10 @@ const PRODUCTS = [
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
-    "image": "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/audemars-piguet-77600ti-oo-a343ca-01-5074.jpg",
+    "hoverImage": "images/products/elite/audemars-piguet-77600ti-oo-a343ca-01-5074.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/audemars-piguet-77600ti-oo-a343ca-01-5074.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Audemars%20Piguet%2077600TI.OO.A343CA.01",
     "statusBadge": "Chrono24 Tescilli",
@@ -3354,10 +3354,10 @@ const PRODUCTS = [
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Siyah Seramik & 18K Pembe Altın Vidalar",
     "origin": "İsviçre (Le Brassus / 1875)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/audemars-piguet-77350ce-oo-1266ce-01-5075.jpg",
+    "hoverImage": "images/products/elite/audemars-piguet-77350ce-oo-1266ce-01-5075.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/audemars-piguet-77350ce-oo-1266ce-01-5075.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Audemars%20Piguet%2077350CE.OO.1266CE.01",
     "statusBadge": "Chrono24 Tescilli",
@@ -3394,10 +3394,10 @@ const PRODUCTS = [
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/audemars-piguet-15710st-oo-a010ca-01-5076.jpg",
+    "hoverImage": "images/products/elite/audemars-piguet-15710st-oo-a010ca-01-5076.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/audemars-piguet-15710st-oo-a010ca-01-5076.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Audemars%20Piguet%2015710ST.OO.A010CA.01",
     "statusBadge": "Chrono24 Tescilli",
@@ -3434,10 +3434,10 @@ const PRODUCTS = [
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
-    "image": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/audemars-piguet-26331st-oo-1220st-03-5077.jpg",
+    "hoverImage": "images/products/elite/audemars-piguet-26331st-oo-1220st-03-5077.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/audemars-piguet-26331st-oo-1220st-03-5077.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Audemars%20Piguet%2026331ST.OO.1220ST.03",
     "statusBadge": "Chrono24 Tescilli",
@@ -3474,10 +3474,10 @@ const PRODUCTS = [
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "18K Beyaz Altın ve 18K Pembe Altın Çift Renk Kasa",
     "origin": "İsviçre (Le Brassus / 1875)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/audemars-piguet-15210cr-oo-a009kb-01-5078.jpg",
+    "hoverImage": "images/products/elite/audemars-piguet-15210cr-oo-a009kb-01-5078.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/audemars-piguet-15210cr-oo-a009kb-01-5078.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Audemars%20Piguet%2015210CR.OO.A009KB.01",
     "statusBadge": "Chrono24 Tescilli",
@@ -3514,10 +3514,10 @@ const PRODUCTS = [
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
-    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/audemars-piguet-26589io-oo-d002ca-01-5079.jpg",
+    "hoverImage": "images/products/elite/audemars-piguet-26589io-oo-d002ca-01-5079.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/audemars-piguet-26589io-oo-d002ca-01-5079.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Audemars%20Piguet%2026589IO.OO.D002CA.01",
     "statusBadge": "Chrono24 Tescilli",
@@ -3555,10 +3555,10 @@ const PRODUCTS = [
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/audemars-piguet-67651or-zz-1261or-01-5080.jpg",
+    "hoverImage": "images/products/elite/audemars-piguet-67651or-zz-1261or-01-5080.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/audemars-piguet-67651or-zz-1261or-01-5080.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Audemars%20Piguet%2067651OR.ZZ.1261OR.01",
     "statusBadge": "Chrono24 Tescilli",
@@ -3595,10 +3595,10 @@ const PRODUCTS = [
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
-    "image": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/breitling-ab0138211b1a1-5081.jpg",
+    "hoverImage": "images/products/elite/breitling-ab0138211b1a1-5081.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/breitling-ab0138211b1a1-5081.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Breitling%20AB0138211B1A1",
     "statusBadge": "Chrono24 Tescilli",
@@ -3637,10 +3637,10 @@ const PRODUCTS = [
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/breitling-ab0137211c1p1-5082.jpg",
+    "hoverImage": "images/products/elite/breitling-ab0137211c1p1-5082.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/breitling-ab0137211c1p1-5082.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Breitling%20AB0137211C1P1",
     "statusBadge": "Chrono24 Tescilli",
@@ -3678,10 +3678,10 @@ const PRODUCTS = [
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
-    "image": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/breitling-ab0134101g1a1-5083.jpg",
+    "hoverImage": "images/products/elite/breitling-ab0134101g1a1-5083.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/breitling-ab0134101g1a1-5083.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Breitling%20AB0134101G1A1",
     "statusBadge": "Chrono24 Tescilli",
@@ -3719,10 +3719,10 @@ const PRODUCTS = [
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
-    "image": "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/breitling-ab2010121l1a1-5084.jpg",
+    "hoverImage": "images/products/elite/breitling-ab2010121l1a1-5084.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/breitling-ab2010121l1a1-5084.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Breitling%20AB2010121L1A1",
     "statusBadge": "Chrono24 Tescilli",
@@ -3760,10 +3760,10 @@ const PRODUCTS = [
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/breitling-a17376211b1s1-5085.jpg",
+    "hoverImage": "images/products/elite/breitling-a17376211b1s1-5085.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/breitling-a17376211b1s1-5085.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Breitling%20A17376211B1S1",
     "statusBadge": "Chrono24 Tescilli",
@@ -3801,10 +3801,10 @@ const PRODUCTS = [
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
-    "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1539185441755-769473a23570?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/breitling-ab0145371l1p1-5086.jpg",
+    "hoverImage": "images/products/elite/breitling-ab0145371l1p1-5086.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1539185441755-769473a23570?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/breitling-ab0145371l1p1-5086.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Breitling%20AB0145371L1P1",
     "statusBadge": "Chrono24 Tescilli",
@@ -3842,10 +3842,10 @@ const PRODUCTS = [
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Siyah DLC Kaplama Titanyum",
     "origin": "İsviçre (Grenchen / 1884)",
-    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/breitling-v13317101l1x1-5087.jpg",
+    "hoverImage": "images/products/elite/breitling-v13317101l1x1-5087.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/breitling-v13317101l1x1-5087.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Breitling%20V13317101L1X1",
     "statusBadge": "Chrono24 Tescilli",
@@ -3883,10 +3883,10 @@ const PRODUCTS = [
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/breitling-ab01763a1c1x1-5088.jpg",
+    "hoverImage": "images/products/elite/breitling-ab01763a1c1x1-5088.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/breitling-ab01763a1c1x1-5088.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Breitling%20AB01763A1C1X1",
     "statusBadge": "Chrono24 Tescilli",
@@ -3923,10 +3923,10 @@ const PRODUCTS = [
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
-    "image": "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/breitling-ab01762a1l1x1-5089.jpg",
+    "hoverImage": "images/products/elite/breitling-ab01762a1l1x1-5089.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/breitling-ab01762a1l1x1-5089.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Breitling%20AB01762A1L1X1",
     "statusBadge": "Chrono24 Tescilli",
@@ -3963,10 +3963,10 @@ const PRODUCTS = [
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
-    "image": "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/breitling-ab01761a1k1x1-5090.jpg",
+    "hoverImage": "images/products/elite/breitling-ab01761a1k1x1-5090.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/breitling-ab01761a1k1x1-5090.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Breitling%20AB01761A1K1X1",
     "statusBadge": "Chrono24 Tescilli",
@@ -4003,10 +4003,10 @@ const PRODUCTS = [
     "subCategory": "Breitling Koleksiyonu",
     "metal": "18K Kırmızı Altın",
     "origin": "İsviçre (Grenchen / 1884)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/breitling-rb0139211g1p1-5091.jpg",
+    "hoverImage": "images/products/elite/breitling-rb0139211g1p1-5091.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/breitling-rb0139211g1p1-5091.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Breitling%20RB0139211G1P1",
     "statusBadge": "Chrono24 Tescilli",
@@ -4044,10 +4044,10 @@ const PRODUCTS = [
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
-    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/breitling-a32398101b1a1-5092.jpg",
+    "hoverImage": "images/products/elite/breitling-a32398101b1a1-5092.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/breitling-a32398101b1a1-5092.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Breitling%20A32398101B1A1",
     "statusBadge": "Chrono24 Tescilli",
@@ -4085,10 +4085,10 @@ const PRODUCTS = [
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/breitling-a10340161c1x1-5093.jpg",
+    "hoverImage": "images/products/elite/breitling-a10340161c1x1-5093.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/breitling-a10340161c1x1-5093.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Breitling%20A10340161C1X1",
     "statusBadge": "Chrono24 Tescilli",
@@ -4125,10 +4125,10 @@ const PRODUCTS = [
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/breitling-a17328101b1a1-5094.jpg",
+    "hoverImage": "images/products/elite/breitling-a17328101b1a1-5094.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/breitling-a17328101b1a1-5094.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Breitling%20A17328101B1A1",
     "statusBadge": "Chrono24 Tescilli",
@@ -4165,10 +4165,10 @@ const PRODUCTS = [
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Breitlight® Karbon Alaşım",
     "origin": "İsviçre (Grenchen / 1884)",
-    "image": "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/breitling-x82310a41b1s1-5095.jpg",
+    "hoverImage": "images/products/elite/breitling-x82310a41b1s1-5095.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/breitling-x82310a41b1s1-5095.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Breitling%20X82310A41B1S1",
     "statusBadge": "Chrono24 Tescilli",
@@ -4205,10 +4205,10 @@ const PRODUCTS = [
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
-    "image": "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/breitling-ab0930d41l1p1-5096.jpg",
+    "hoverImage": "images/products/elite/breitling-ab0930d41l1p1-5096.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/breitling-ab0930d41l1p1-5096.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Breitling%20AB0930D41L1P1",
     "statusBadge": "Chrono24 Tescilli",
@@ -4245,10 +4245,10 @@ const PRODUCTS = [
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
-    "image": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/breitling-ab0136251b1a2-5097.jpg",
+    "hoverImage": "images/products/elite/breitling-ab0136251b1a2-5097.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/breitling-ab0136251b1a2-5097.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Breitling%20AB0136251B1A2",
     "statusBadge": "Chrono24 Tescilli",
@@ -4285,10 +4285,10 @@ const PRODUCTS = [
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/breitling-a17395161c1a1-5098.jpg",
+    "hoverImage": "images/products/elite/breitling-a17395161c1a1-5098.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/breitling-a17395161c1a1-5098.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Breitling%20A17395161C1A1",
     "statusBadge": "Chrono24 Tescilli",
@@ -4325,10 +4325,10 @@ const PRODUCTS = [
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/breitling-a17377211a1s1-5099.jpg",
+    "hoverImage": "images/products/elite/breitling-a17377211a1s1-5099.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/breitling-a17377211a1s1-5099.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Breitling%20A17377211A1S1",
     "statusBadge": "Chrono24 Tescilli",
@@ -4365,10 +4365,10 @@ const PRODUCTS = [
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
-    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/breitling-eb70101a1o1e1-5100.jpg",
+    "hoverImage": "images/products/elite/breitling-eb70101a1o1e1-5100.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/breitling-eb70101a1o1e1-5100.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Breitling%20EB70101A1O1E1",
     "statusBadge": "Chrono24 Tescilli",
@@ -4405,10 +4405,10 @@ const PRODUCTS = [
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "Fransa / İsviçre (Paris / La Chaux-de-Fonds)",
-    "image": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "hoverImage": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
+    "image": "images/products/elite/cartier-wssa0018-5101.jpg",
+    "hoverImage": "images/products/elite/cartier-wssa0018-5101.jpg",
     "images": [
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750"
+      "images/products/elite/cartier-wssa0018-5101.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Cartier%20WSSA0018",
     "statusBadge": "Chrono24 Tescilli",
@@ -4446,10 +4446,10 @@ const PRODUCTS = [
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "Fransa / İsviçre (Paris / La Chaux-de-Fonds)",
-    "image": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "hoverImage": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
+    "image": "images/products/elite/cartier-wssa0029-5102.jpg",
+    "hoverImage": "images/products/elite/cartier-wssa0029-5102.jpg",
     "images": [
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750"
+      "images/products/elite/cartier-wssa0029-5102.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Cartier%20WSSA0029",
     "statusBadge": "Chrono24 Tescilli",
@@ -4486,10 +4486,10 @@ const PRODUCTS = [
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Masif 18K Pembe Altın",
     "origin": "Fransa / İsviçre (Paris / La Chaux-de-Fonds)",
-    "image": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw8559ada9/images/large/b27f59a64cfc59f6a99202b0c6164ad9.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "hoverImage": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw8559ada9/images/large/b27f59a64cfc59f6a99202b0c6164ad9.png?sfrm=png&sh=750&sm=fit&sw=750",
+    "image": "images/products/elite/cartier-whsa0008-5103.jpg",
+    "hoverImage": "images/products/elite/cartier-whsa0008-5103.jpg",
     "images": [
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw8559ada9/images/large/b27f59a64cfc59f6a99202b0c6164ad9.png?sfrm=png&sh=750&sm=fit&sw=750"
+      "images/products/elite/cartier-whsa0008-5103.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Cartier%20WHSA0008",
     "statusBadge": "Chrono24 Tescilli",
@@ -4527,10 +4527,10 @@ const PRODUCTS = [
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "Fransa / İsviçre (Paris / La Chaux-de-Fonds)",
-    "image": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "hoverImage": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
+    "image": "images/products/elite/cartier-wsta0041-5104.jpg",
+    "hoverImage": "images/products/elite/cartier-wsta0041-5104.jpg",
     "images": [
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750"
+      "images/products/elite/cartier-wsta0041-5104.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Cartier%20WSTA0041",
     "statusBadge": "Chrono24 Tescilli",
@@ -4567,10 +4567,10 @@ const PRODUCTS = [
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "Fransa / İsviçre (Paris / La Chaux-de-Fonds)",
-    "image": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "hoverImage": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
+    "image": "images/products/elite/cartier-wsta0040-5105.jpg",
+    "hoverImage": "images/products/elite/cartier-wsta0040-5105.jpg",
     "images": [
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750"
+      "images/products/elite/cartier-wsta0040-5105.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Cartier%20WSTA0040",
     "statusBadge": "Chrono24 Tescilli",
@@ -4607,10 +4607,10 @@ const PRODUCTS = [
     "subCategory": "Cartier Koleksiyonu",
     "metal": "18K Masif Sarı Altın",
     "origin": "Fransa / İsviçre (Paris / La Chaux-de-Fonds)",
-    "image": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw47516a74/images/large/509efad81d12569981abebf66c433720.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "hoverImage": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw47516a74/images/large/509efad81d12569981abebf66c433720.png?sfrm=png&sh=750&sm=fit&sw=750",
+    "image": "images/products/elite/cartier-wgta0010-5106.jpg",
+    "hoverImage": "images/products/elite/cartier-wgta0010-5106.jpg",
     "images": [
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw47516a74/images/large/509efad81d12569981abebf66c433720.png?sfrm=png&sh=750&sm=fit&sw=750"
+      "images/products/elite/cartier-wgta0010-5106.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Cartier%20WGTA0010",
     "statusBadge": "Chrono24 Tescilli",
@@ -4647,10 +4647,10 @@ const PRODUCTS = [
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "Fransa / İsviçre (Paris / La Chaux-de-Fonds)",
-    "image": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "hoverImage": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
+    "image": "images/products/elite/cartier-wsta0065-5107.jpg",
+    "hoverImage": "images/products/elite/cartier-wsta0065-5107.jpg",
     "images": [
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750"
+      "images/products/elite/cartier-wsta0065-5107.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Cartier%20WSTA0065",
     "statusBadge": "Chrono24 Tescilli",
@@ -4687,10 +4687,10 @@ const PRODUCTS = [
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "Fransa / İsviçre (Paris / La Chaux-de-Fonds)",
-    "image": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "hoverImage": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
+    "image": "images/products/elite/cartier-wsbb0025-5108.jpg",
+    "hoverImage": "images/products/elite/cartier-wsbb0025-5108.jpg",
     "images": [
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750"
+      "images/products/elite/cartier-wsbb0025-5108.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Cartier%20WSBB0025",
     "statusBadge": "Chrono24 Tescilli",
@@ -4728,10 +4728,10 @@ const PRODUCTS = [
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "Fransa / İsviçre (Paris / La Chaux-de-Fonds)",
-    "image": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw47516a74/images/large/509efad81d12569981abebf66c433720.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "hoverImage": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw47516a74/images/large/509efad81d12569981abebf66c433720.png?sfrm=png&sh=750&sm=fit&sw=750",
+    "image": "images/products/elite/cartier-w3bb0024-5109.jpg",
+    "hoverImage": "images/products/elite/cartier-w3bb0024-5109.jpg",
     "images": [
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw47516a74/images/large/509efad81d12569981abebf66c433720.png?sfrm=png&sh=750&sm=fit&sw=750"
+      "images/products/elite/cartier-w3bb0024-5109.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Cartier%20W3BB0024",
     "statusBadge": "Chrono24 Tescilli",
@@ -4768,10 +4768,10 @@ const PRODUCTS = [
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "Fransa / İsviçre (Paris / La Chaux-de-Fonds)",
-    "image": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw47516a74/images/large/509efad81d12569981abebf66c433720.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "hoverImage": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw47516a74/images/large/509efad81d12569981abebf66c433720.png?sfrm=png&sh=750&sm=fit&sw=750",
+    "image": "images/products/elite/cartier-w2pn0007-5110.jpg",
+    "hoverImage": "images/products/elite/cartier-w2pn0007-5110.jpg",
     "images": [
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw47516a74/images/large/509efad81d12569981abebf66c433720.png?sfrm=png&sh=750&sm=fit&sw=750"
+      "images/products/elite/cartier-w2pn0007-5110.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Cartier%20W2PN0007",
     "statusBadge": "Chrono24 Tescilli",
@@ -4808,10 +4808,10 @@ const PRODUCTS = [
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "Fransa / İsviçre (Paris / La Chaux-de-Fonds)",
-    "image": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "hoverImage": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
+    "image": "images/products/elite/cartier-wspa0009-5111.jpg",
+    "hoverImage": "images/products/elite/cartier-wspa0009-5111.jpg",
     "images": [
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750"
+      "images/products/elite/cartier-wspa0009-5111.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Cartier%20WSPA0009",
     "statusBadge": "Chrono24 Tescilli",
@@ -4848,10 +4848,10 @@ const PRODUCTS = [
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Masif 18K Gül Altın",
     "origin": "Fransa / İsviçre (Paris / La Chaux-de-Fonds)",
-    "image": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw8559ada9/images/large/b27f59a64cfc59f6a99202b0c6164ad9.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "hoverImage": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw8559ada9/images/large/b27f59a64cfc59f6a99202b0c6164ad9.png?sfrm=png&sh=750&sm=fit&sw=750",
+    "image": "images/products/elite/cartier-wgsa0032-5112.jpg",
+    "hoverImage": "images/products/elite/cartier-wgsa0032-5112.jpg",
     "images": [
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw8559ada9/images/large/b27f59a64cfc59f6a99202b0c6164ad9.png?sfrm=png&sh=750&sm=fit&sw=750"
+      "images/products/elite/cartier-wgsa0032-5112.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Cartier%20WGSA0032",
     "statusBadge": "Chrono24 Tescilli",
@@ -4888,10 +4888,10 @@ const PRODUCTS = [
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "Fransa / İsviçre (Paris / La Chaux-de-Fonds)",
-    "image": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "hoverImage": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
+    "image": "images/products/elite/cartier-wsta0083-5113.jpg",
+    "hoverImage": "images/products/elite/cartier-wsta0083-5113.jpg",
     "images": [
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750"
+      "images/products/elite/cartier-wsta0083-5113.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Cartier%20WSTA0083",
     "statusBadge": "Chrono24 Tescilli",
@@ -4928,10 +4928,10 @@ const PRODUCTS = [
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "Fransa / İsviçre (Paris / La Chaux-de-Fonds)",
-    "image": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "hoverImage": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
+    "image": "images/products/elite/cartier-wsrn0032-5114.jpg",
+    "hoverImage": "images/products/elite/cartier-wsrn0032-5114.jpg",
     "images": [
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750"
+      "images/products/elite/cartier-wsrn0032-5114.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Cartier%20WSRN0032",
     "statusBadge": "Chrono24 Tescilli",
@@ -4968,10 +4968,10 @@ const PRODUCTS = [
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "Fransa / İsviçre (Paris / La Chaux-de-Fonds)",
-    "image": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "hoverImage": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
+    "image": "images/products/elite/cartier-wssa0017-5115.jpg",
+    "hoverImage": "images/products/elite/cartier-wssa0017-5115.jpg",
     "images": [
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750"
+      "images/products/elite/cartier-wssa0017-5115.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Cartier%20WSSA0017",
     "statusBadge": "Chrono24 Tescilli",
@@ -5008,10 +5008,10 @@ const PRODUCTS = [
     "subCategory": "Cartier Koleksiyonu",
     "metal": "18K Pembe Altın",
     "origin": "Fransa / İsviçre (Paris / La Chaux-de-Fonds)",
-    "image": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw47516a74/images/large/509efad81d12569981abebf66c433720.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "hoverImage": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw47516a74/images/large/509efad81d12569981abebf66c433720.png?sfrm=png&sh=750&sm=fit&sw=750",
+    "image": "images/products/elite/cartier-wgbb0030-5116.jpg",
+    "hoverImage": "images/products/elite/cartier-wgbb0030-5116.jpg",
     "images": [
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw47516a74/images/large/509efad81d12569981abebf66c433720.png?sfrm=png&sh=750&sm=fit&sw=750"
+      "images/products/elite/cartier-wgbb0030-5116.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Cartier%20WGBB0030",
     "statusBadge": "Chrono24 Tescilli",
@@ -5048,10 +5048,10 @@ const PRODUCTS = [
     "subCategory": "Cartier Koleksiyonu",
     "metal": "18K Sarı Altın (Kusursuz Oval Form)",
     "origin": "Fransa / İsviçre (Paris / La Chaux-de-Fonds)",
-    "image": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw47516a74/images/large/509efad81d12569981abebf66c433720.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "hoverImage": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw47516a74/images/large/509efad81d12569981abebf66c433720.png?sfrm=png&sh=750&sm=fit&sw=750",
+    "image": "images/products/elite/cartier-wgba0007-5117.jpg",
+    "hoverImage": "images/products/elite/cartier-wgba0007-5117.jpg",
     "images": [
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw47516a74/images/large/509efad81d12569981abebf66c433720.png?sfrm=png&sh=750&sm=fit&sw=750"
+      "images/products/elite/cartier-wgba0007-5117.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Cartier%20WGBA0007",
     "statusBadge": "Chrono24 Tescilli",
@@ -5088,10 +5088,10 @@ const PRODUCTS = [
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "Fransa / İsviçre (Paris / La Chaux-de-Fonds)",
-    "image": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw47516a74/images/large/509efad81d12569981abebf66c433720.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "hoverImage": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw47516a74/images/large/509efad81d12569981abebf66c433720.png?sfrm=png&sh=750&sm=fit&sw=750",
+    "image": "images/products/elite/cartier-w2sa0016-5118.jpg",
+    "hoverImage": "images/products/elite/cartier-w2sa0016-5118.jpg",
     "images": [
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw47516a74/images/large/509efad81d12569981abebf66c433720.png?sfrm=png&sh=750&sm=fit&sw=750"
+      "images/products/elite/cartier-w2sa0016-5118.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Cartier%20W2SA0016",
     "statusBadge": "Chrono24 Tescilli",
@@ -5128,10 +5128,10 @@ const PRODUCTS = [
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "Fransa / İsviçre (Paris / La Chaux-de-Fonds)",
-    "image": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw47516a74/images/large/509efad81d12569981abebf66c433720.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "hoverImage": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw47516a74/images/large/509efad81d12569981abebf66c433720.png?sfrm=png&sh=750&sm=fit&sw=750",
+    "image": "images/products/elite/cartier-wgta0057-5119.jpg",
+    "hoverImage": "images/products/elite/cartier-wgta0057-5119.jpg",
     "images": [
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw47516a74/images/large/509efad81d12569981abebf66c433720.png?sfrm=png&sh=750&sm=fit&sw=750"
+      "images/products/elite/cartier-wgta0057-5119.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Cartier%20WGTA0057",
     "statusBadge": "Chrono24 Tescilli",
@@ -5168,10 +5168,10 @@ const PRODUCTS = [
     "subCategory": "Cartier Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "Fransa / İsviçre (Paris / La Chaux-de-Fonds)",
-    "image": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
-    "hoverImage": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750",
+    "image": "images/products/elite/cartier-wspa0027-5120.jpg",
+    "hoverImage": "images/products/elite/cartier-wspa0027-5120.jpg",
     "images": [
-      "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw18f116e7/images/large/8c77aa1d2fb75ca19a78bd8393c44394.png?sfrm=png&sh=750&sm=fit&sw=750"
+      "images/products/elite/cartier-wspa0027-5120.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Cartier%20WSPA0027",
     "statusBadge": "Chrono24 Tescilli",
@@ -5208,10 +5208,10 @@ const PRODUCTS = [
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tudor-m79030n-0001-5121.jpg",
+    "hoverImage": "images/products/elite/tudor-m79030n-0001-5121.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tudor-m79030n-0001-5121.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Tudor%20M79030N-0001",
     "statusBadge": "Chrono24 Tescilli",
@@ -5249,10 +5249,10 @@ const PRODUCTS = [
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tudor-m79000n-0001-5122.jpg",
+    "hoverImage": "images/products/elite/tudor-m79000n-0001-5122.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tudor-m79000n-0001-5122.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Tudor%20M79000N-0001",
     "statusBadge": "Chrono24 Tescilli",
@@ -5289,10 +5289,10 @@ const PRODUCTS = [
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
-    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tudor-m79470-0001-5123.jpg",
+    "hoverImage": "images/products/elite/tudor-m79470-0001-5123.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tudor-m79470-0001-5123.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Tudor%20M79470-0001",
     "statusBadge": "Chrono24 Tescilli",
@@ -5329,10 +5329,10 @@ const PRODUCTS = [
     "subCategory": "Tudor Koleksiyonu",
     "metal": "2. Sınıf Saten Titanyum",
     "origin": "İsviçre (Cenevre / 1926)",
-    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tudor-m25407n-0001-5124.jpg",
+    "hoverImage": "images/products/elite/tudor-m25407n-0001-5124.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tudor-m25407n-0001-5124.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Tudor%20M25407N-0001",
     "statusBadge": "Chrono24 Tescilli",
@@ -5369,10 +5369,10 @@ const PRODUCTS = [
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Sabit Askılı Monoblok Titanyum",
     "origin": "İsviçre (Cenevre / 1926)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tudor-m25707b-24-0001-5125.jpg",
+    "hoverImage": "images/products/elite/tudor-m25707b-24-0001-5125.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tudor-m25707b-24-0001-5125.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Tudor%20M25707B%2F24-0001",
     "statusBadge": "Chrono24 Tescilli",
@@ -5409,10 +5409,10 @@ const PRODUCTS = [
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
-    "image": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tudor-m79360n-0002-5126.jpg",
+    "hoverImage": "images/products/elite/tudor-m79360n-0002-5126.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tudor-m79360n-0002-5126.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Tudor%20M79360N-0002",
     "statusBadge": "Chrono24 Tescilli",
@@ -5449,10 +5449,10 @@ const PRODUCTS = [
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
-    "image": "https://images.unsplash.com/photo-1547996160-71dfabbce5d7?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1547996160-71dfabbce5d7?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tudor-m79830rb-0001-5127.jpg",
+    "hoverImage": "images/products/elite/tudor-m79830rb-0001-5127.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1547996160-71dfabbce5d7?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tudor-m79830rb-0001-5127.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Tudor%20M79830RB-0001",
     "statusBadge": "Chrono24 Tescilli",
@@ -5489,10 +5489,10 @@ const PRODUCTS = [
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tudor-m25600tn-0001-5128.jpg",
+    "hoverImage": "images/products/elite/tudor-m25600tn-0001-5128.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tudor-m25600tn-0001-5128.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Tudor%20M25600TN-0001",
     "statusBadge": "Chrono24 Tescilli",
@@ -5529,10 +5529,10 @@ const PRODUCTS = [
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tudor-m28603-0003-5129.jpg",
+    "hoverImage": "images/products/elite/tudor-m28603-0003-5129.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tudor-m28603-0003-5129.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Tudor%20M28603-0003",
     "statusBadge": "Chrono24 Tescilli",
@@ -5569,10 +5569,10 @@ const PRODUCTS = [
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tudor-m79210cnu-0001-5130.jpg",
+    "hoverImage": "images/products/elite/tudor-m79210cnu-0001-5130.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tudor-m79210cnu-0001-5130.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Tudor%20M79210CNU-0001",
     "statusBadge": "Chrono24 Tescilli",
@@ -5609,10 +5609,10 @@ const PRODUCTS = [
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Masif 925 Ayar Gümüş",
     "origin": "İsviçre (Cenevre / 1926)",
-    "image": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tudor-m79010sg-0001-5131.jpg",
+    "hoverImage": "images/products/elite/tudor-m79010sg-0001-5131.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tudor-m79010sg-0001-5131.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Tudor%20M79010SG-0001",
     "statusBadge": "Chrono24 Tescilli",
@@ -5649,10 +5649,10 @@ const PRODUCTS = [
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Masif 18K Sarı Altın",
     "origin": "İsviçre (Cenevre / 1926)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tudor-m79018v-0001-5132.jpg",
+    "hoverImage": "images/products/elite/tudor-m79018v-0001-5132.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tudor-m79018v-0001-5132.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Tudor%20M79018V-0001",
     "statusBadge": "Chrono24 Tescilli",
@@ -5689,10 +5689,10 @@ const PRODUCTS = [
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
-    "image": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tudor-m28300-0007-5133.jpg",
+    "hoverImage": "images/products/elite/tudor-m28300-0007-5133.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tudor-m28300-0007-5133.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Tudor%20M28300-0007",
     "statusBadge": "Chrono24 Tescilli",
@@ -5729,10 +5729,10 @@ const PRODUCTS = [
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
-    "image": "https://images.unsplash.com/photo-1547996160-71dfabbce5d7?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1547996160-71dfabbce5d7?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tudor-m7941a1a0ru-0003-5134.jpg",
+    "hoverImage": "images/products/elite/tudor-m7941a1a0ru-0003-5134.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1547996160-71dfabbce5d7?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tudor-m7941a1a0ru-0003-5134.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Tudor%20M7941A1A0RU-0003",
     "statusBadge": "Chrono24 Tescilli",
@@ -5769,10 +5769,10 @@ const PRODUCTS = [
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
-    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tudor-m79950-0001-5135.jpg",
+    "hoverImage": "images/products/elite/tudor-m79950-0001-5135.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tudor-m79950-0001-5135.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Tudor%20M79950-0001",
     "statusBadge": "Chrono24 Tescilli",
@@ -5809,10 +5809,10 @@ const PRODUCTS = [
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Mat Siyah Karbon Kompozit & Titanyum Bezel",
     "origin": "İsviçre (Cenevre / 1926)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tudor-m25807kn-0001-5136.jpg",
+    "hoverImage": "images/products/elite/tudor-m25807kn-0001-5136.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tudor-m25807kn-0001-5136.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Tudor%20M25807KN-0001",
     "statusBadge": "Chrono24 Tescilli",
@@ -5849,10 +5849,10 @@ const PRODUCTS = [
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
-    "image": "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tudor-m79360n-0019-5137.jpg",
+    "hoverImage": "images/products/elite/tudor-m79360n-0019-5137.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tudor-m79360n-0019-5137.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Tudor%20M79360N-0019",
     "statusBadge": "Chrono24 Tescilli",
@@ -5889,10 +5889,10 @@ const PRODUCTS = [
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tudor-m91551-0001-5138.jpg",
+    "hoverImage": "images/products/elite/tudor-m91551-0001-5138.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tudor-m91551-0001-5138.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Tudor%20M91551-0001",
     "statusBadge": "Chrono24 Tescilli",
@@ -5929,10 +5929,10 @@ const PRODUCTS = [
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Alüminyum Bronz Alaşım",
     "origin": "İsviçre (Cenevre / 1926)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tudor-m79250ba-0001-5139.jpg",
+    "hoverImage": "images/products/elite/tudor-m79250ba-0001-5139.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tudor-m79250ba-0001-5139.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Tudor%20M79250BA-0001",
     "statusBadge": "Chrono24 Tescilli",
@@ -5969,10 +5969,10 @@ const PRODUCTS = [
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tudor-m35500-0004-5140.jpg",
+    "hoverImage": "images/products/elite/tudor-m35500-0004-5140.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tudor-m35500-0004-5140.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Tudor%20M35500-0004",
     "statusBadge": "Chrono24 Tescilli",
@@ -6009,10 +6009,10 @@ const PRODUCTS = [
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (La Chaux-de-Fonds / 1860)",
-    "image": "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dw4cc3dbd9/TAG_Heuer_Carrera/WDA2114.BA0043/WDA2114.BA0043_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600",
-    "hoverImage": "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dw4cc3dbd9/TAG_Heuer_Carrera/WDA2114.BA0043/WDA2114.BA0043_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600",
+    "image": "images/products/elite/tag-heuer-cbs2210-fc6534-5141.jpg",
+    "hoverImage": "images/products/elite/tag-heuer-cbs2210-fc6534-5141.jpg",
     "images": [
-      "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dw4cc3dbd9/TAG_Heuer_Carrera/WDA2114.BA0043/WDA2114.BA0043_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600"
+      "images/products/elite/tag-heuer-cbs2210-fc6534-5141.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=TAG%20Heuer%20CBS2210.FC6534",
     "statusBadge": "Chrono24 Tescilli",
@@ -6049,10 +6049,10 @@ const PRODUCTS = [
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (La Chaux-de-Fonds / 1860)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tag-heuer-caw211p-fc6356-5142.jpg",
+    "hoverImage": "images/products/elite/tag-heuer-caw211p-fc6356-5142.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tag-heuer-caw211p-fc6356-5142.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=TAG%20Heuer%20CAW211P.FC6356",
     "statusBadge": "Chrono24 Tescilli",
@@ -6089,10 +6089,10 @@ const PRODUCTS = [
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (La Chaux-de-Fonds / 1860)",
-    "image": "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dw6eb05ae1/TAG_Heuer_Carrera/CBN2A1AA.FT6228/CBN2A1AA.FT6228_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600",
-    "hoverImage": "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dw6eb05ae1/TAG_Heuer_Carrera/CBN2A1AA.FT6228/CBN2A1AA.FT6228_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600",
+    "image": "images/products/elite/tag-heuer-cbs2011-fc6529-5143.jpg",
+    "hoverImage": "images/products/elite/tag-heuer-cbs2011-fc6529-5143.jpg",
     "images": [
-      "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dw6eb05ae1/TAG_Heuer_Carrera/CBN2A1AA.FT6228/CBN2A1AA.FT6228_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600"
+      "images/products/elite/tag-heuer-cbs2011-fc6529-5143.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=TAG%20Heuer%20CBS2011.FC6529",
     "statusBadge": "Chrono24 Tescilli",
@@ -6129,10 +6129,10 @@ const PRODUCTS = [
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (La Chaux-de-Fonds / 1860)",
-    "image": "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dw3d6718cf/TAG_Heuer_Formula_1/WAZ1110.FT8023/WAZ1110.FT8023_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600",
-    "hoverImage": "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dw3d6718cf/TAG_Heuer_Formula_1/WAZ1110.FT8023/WAZ1110.FT8023_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600",
+    "image": "images/products/elite/tag-heuer-wbp5110-ba0013-5144.jpg",
+    "hoverImage": "images/products/elite/tag-heuer-wbp5110-ba0013-5144.jpg",
     "images": [
-      "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dw3d6718cf/TAG_Heuer_Formula_1/WAZ1110.FT8023/WAZ1110.FT8023_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600"
+      "images/products/elite/tag-heuer-wbp5110-ba0013-5144.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=TAG%20Heuer%20WBP5110.BA0013",
     "statusBadge": "Chrono24 Tescilli",
@@ -6169,10 +6169,10 @@ const PRODUCTS = [
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (La Chaux-de-Fonds / 1860)",
-    "image": "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tag-heuer-wbn2313-ba0001-5145.jpg",
+    "hoverImage": "images/products/elite/tag-heuer-wbn2313-ba0001-5145.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tag-heuer-wbn2313-ba0001-5145.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=TAG%20Heuer%20WBN2313.BA0001",
     "statusBadge": "Chrono24 Tescilli",
@@ -6209,10 +6209,10 @@ const PRODUCTS = [
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (La Chaux-de-Fonds / 1860)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tag-heuer-cbl2181-fc6515-5146.jpg",
+    "hoverImage": "images/products/elite/tag-heuer-cbl2181-fc6515-5146.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tag-heuer-cbl2181-fc6515-5146.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=TAG%20Heuer%20CBL2181.FC6515",
     "statusBadge": "Chrono24 Tescilli",
@@ -6249,10 +6249,10 @@ const PRODUCTS = [
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Kumlanmış 2. Sınıf Titanyum",
     "origin": "İsviçre (La Chaux-de-Fonds / 1860)",
-    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tag-heuer-wbp1180-bf0000-5147.jpg",
+    "hoverImage": "images/products/elite/tag-heuer-wbp1180-bf0000-5147.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tag-heuer-wbp1180-bf0000-5147.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=TAG%20Heuer%20WBP1180.BF0000",
     "statusBadge": "Chrono24 Tescilli",
@@ -6289,10 +6289,10 @@ const PRODUCTS = [
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (La Chaux-de-Fonds / 1860)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tag-heuer-cbs5010-fc6543-5148.jpg",
+    "hoverImage": "images/products/elite/tag-heuer-cbs5010-fc6543-5148.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tag-heuer-cbs5010-fc6543-5148.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=TAG%20Heuer%20CBS5010.FC6543",
     "statusBadge": "Chrono24 Tescilli",
@@ -6329,10 +6329,10 @@ const PRODUCTS = [
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (La Chaux-de-Fonds / 1860)",
-    "image": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tag-heuer-cbe511a-fc8279-5149.jpg",
+    "hoverImage": "images/products/elite/tag-heuer-cbe511a-fc8279-5149.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tag-heuer-cbe511a-fc8279-5149.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=TAG%20Heuer%20CBE511A.FC8279",
     "statusBadge": "Chrono24 Tescilli",
@@ -6369,10 +6369,10 @@ const PRODUCTS = [
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (La Chaux-de-Fonds / 1860)",
-    "image": "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tag-heuer-caz201d-ba0876-5150.jpg",
+    "hoverImage": "images/products/elite/tag-heuer-caz201d-ba0876-5150.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tag-heuer-caz201d-ba0876-5150.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=TAG%20Heuer%20CAZ201D.BA0876",
     "statusBadge": "Chrono24 Tescilli",
@@ -6409,10 +6409,10 @@ const PRODUCTS = [
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (La Chaux-de-Fonds / 1860)",
-    "image": "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dw4cc3dbd9/TAG_Heuer_Carrera/WDA2114.BA0043/WDA2114.BA0043_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600",
-    "hoverImage": "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dw4cc3dbd9/TAG_Heuer_Carrera/WDA2114.BA0043/WDA2114.BA0043_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600",
+    "image": "images/products/elite/tag-heuer-wbn201a-ba0640-5151.jpg",
+    "hoverImage": "images/products/elite/tag-heuer-wbn201a-ba0640-5151.jpg",
     "images": [
-      "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dw4cc3dbd9/TAG_Heuer_Carrera/WDA2114.BA0043/WDA2114.BA0043_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600"
+      "images/products/elite/tag-heuer-wbn201a-ba0640-5151.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=TAG%20Heuer%20WBN201A.BA0640",
     "statusBadge": "Chrono24 Tescilli",
@@ -6449,10 +6449,10 @@ const PRODUCTS = [
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Kumlanmış Titanyum & Mavi İskelet Kadran",
     "origin": "İsviçre (La Chaux-de-Fonds / 1860)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tag-heuer-cbl2182-ft6235-5152.jpg",
+    "hoverImage": "images/products/elite/tag-heuer-cbl2182-ft6235-5152.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tag-heuer-cbl2182-ft6235-5152.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=TAG%20Heuer%20CBL2182.FT6235",
     "statusBadge": "Chrono24 Tescilli",
@@ -6489,10 +6489,10 @@ const PRODUCTS = [
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (La Chaux-de-Fonds / 1860)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tag-heuer-wbp2010-ba0632-5153.jpg",
+    "hoverImage": "images/products/elite/tag-heuer-wbp2010-ba0632-5153.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tag-heuer-wbp2010-ba0632-5153.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=TAG%20Heuer%20WBP2010.BA0632",
     "statusBadge": "Chrono24 Tescilli",
@@ -6529,10 +6529,10 @@ const PRODUCTS = [
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (La Chaux-de-Fonds / 1860)",
-    "image": "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tag-heuer-cbn2a10-ba0643-5154.jpg",
+    "hoverImage": "images/products/elite/tag-heuer-cbn2a10-ba0643-5154.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tag-heuer-cbn2a10-ba0643-5154.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=TAG%20Heuer%20CBN2A10.BA0643",
     "statusBadge": "Chrono24 Tescilli",
@@ -6569,10 +6569,10 @@ const PRODUCTS = [
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (La Chaux-de-Fonds / 1860)",
-    "image": "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dwfa2a241b/TAG_Heuer_Formula_1/CAZ101N.FC8243/CAZ101N.FC8243_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600",
-    "hoverImage": "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dwfa2a241b/TAG_Heuer_Formula_1/CAZ101N.FC8243/CAZ101N.FC8243_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600",
+    "image": "images/products/elite/tag-heuer-caz101n-fc8243-5155.jpg",
+    "hoverImage": "images/products/elite/tag-heuer-caz101n-fc8243-5155.jpg",
     "images": [
-      "https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dwfa2a241b/TAG_Heuer_Formula_1/CAZ101N.FC8243/CAZ101N.FC8243_Soldier.png?expansion=true&impolicy=TrimRatioResize&ratioHeight=5&ratioWidth=4&width=1600"
+      "images/products/elite/tag-heuer-caz101n-fc8243-5155.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=TAG%20Heuer%20CAZ101N.FC8243",
     "statusBadge": "Chrono24 Tescilli",
@@ -6609,10 +6609,10 @@ const PRODUCTS = [
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (La Chaux-de-Fonds / 1860)",
-    "image": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tag-heuer-wbn2111-ba0639-5156.jpg",
+    "hoverImage": "images/products/elite/tag-heuer-wbn2111-ba0639-5156.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tag-heuer-wbn2111-ba0639-5156.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=TAG%20Heuer%20WBN2111.BA0639",
     "statusBadge": "Chrono24 Tescilli",
@@ -6649,10 +6649,10 @@ const PRODUCTS = [
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (La Chaux-de-Fonds / 1860)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tag-heuer-wbp2111-ba0627-5157.jpg",
+    "hoverImage": "images/products/elite/tag-heuer-wbp2111-ba0627-5157.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tag-heuer-wbp2111-ba0627-5157.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=TAG%20Heuer%20WBP2111.BA0627",
     "statusBadge": "Chrono24 Tescilli",
@@ -6689,10 +6689,10 @@ const PRODUCTS = [
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "2. Sınıf Titanyum",
     "origin": "İsviçre (La Chaux-de-Fonds / 1860)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tag-heuer-caw218c-fc6548-5158.jpg",
+    "hoverImage": "images/products/elite/tag-heuer-caw218c-fc6548-5158.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tag-heuer-caw218c-fc6548-5158.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=TAG%20Heuer%20CAW218C.FC6548",
     "statusBadge": "Chrono24 Tescilli",
@@ -6729,10 +6729,10 @@ const PRODUCTS = [
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (La Chaux-de-Fonds / 1860)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tag-heuer-cbs2213-fn6535-5159.jpg",
+    "hoverImage": "images/products/elite/tag-heuer-cbs2213-fn6535-5159.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tag-heuer-cbs2213-fn6535-5159.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=TAG%20Heuer%20CBS2213.FN6535",
     "statusBadge": "Chrono24 Tescilli",
@@ -6769,10 +6769,10 @@ const PRODUCTS = [
     "subCategory": "TAG Heuer Koleksiyonu",
     "metal": "Siyah DLC Titanyum & Seramik Bezel",
     "origin": "İsviçre (La Chaux-de-Fonds / 1860)",
-    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/tag-heuer-sbr8a80-bt6261-5160.jpg",
+    "hoverImage": "images/products/elite/tag-heuer-sbr8a80-bt6261-5160.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/tag-heuer-sbr8a80-bt6261-5160.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=TAG%20Heuer%20SBR8A80.BT6261",
     "statusBadge": "Chrono24 Tescilli",
@@ -6809,10 +6809,10 @@ const PRODUCTS = [
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/iwc-schaffhausen-iw329301-5161.jpg",
+    "hoverImage": "images/products/elite/iwc-schaffhausen-iw329301-5161.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/iwc-schaffhausen-iw329301-5161.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=IWC%20Schaffhausen%20IW329301",
     "statusBadge": "Chrono24 Tescilli",
@@ -6849,10 +6849,10 @@ const PRODUCTS = [
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/iwc-schaffhausen-iw371606-5162.jpg",
+    "hoverImage": "images/products/elite/iwc-schaffhausen-iw371606-5162.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/iwc-schaffhausen-iw371606-5162.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=IWC%20Schaffhausen%20IW371606",
     "statusBadge": "Chrono24 Tescilli",
@@ -6889,10 +6889,10 @@ const PRODUCTS = [
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
-    "image": "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/iwc-schaffhausen-iw388104-5163.jpg",
+    "hoverImage": "images/products/elite/iwc-schaffhausen-iw388104-5163.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/iwc-schaffhausen-iw388104-5163.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=IWC%20Schaffhausen%20IW388104",
     "statusBadge": "Chrono24 Tescilli",
@@ -6929,10 +6929,10 @@ const PRODUCTS = [
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/iwc-schaffhausen-iw500704-5164.jpg",
+    "hoverImage": "images/products/elite/iwc-schaffhausen-iw500704-5164.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/iwc-schaffhausen-iw500704-5164.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=IWC%20Schaffhausen%20IW500704",
     "statusBadge": "Chrono24 Tescilli",
@@ -6969,10 +6969,10 @@ const PRODUCTS = [
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/iwc-schaffhausen-iw328203-5165.jpg",
+    "hoverImage": "images/products/elite/iwc-schaffhausen-iw328203-5165.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/iwc-schaffhausen-iw328203-5165.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=IWC%20Schaffhausen%20IW328203",
     "statusBadge": "Chrono24 Tescilli",
@@ -7009,10 +7009,10 @@ const PRODUCTS = [
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/iwc-schaffhausen-iw503605-5166.jpg",
+    "hoverImage": "images/products/elite/iwc-schaffhausen-iw503605-5166.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/iwc-schaffhausen-iw503605-5166.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=IWC%20Schaffhausen%20IW503605",
     "statusBadge": "Chrono24 Tescilli",
@@ -7049,10 +7049,10 @@ const PRODUCTS = [
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Mat Siyah Zirkonyum Oksit Seramik",
     "origin": "İsviçre (Schaffhausen / 1868)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/iwc-schaffhausen-iw389101-5167.jpg",
+    "hoverImage": "images/products/elite/iwc-schaffhausen-iw389101-5167.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/iwc-schaffhausen-iw389101-5167.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=IWC%20Schaffhausen%20IW389101",
     "statusBadge": "Chrono24 Tescilli",
@@ -7089,10 +7089,10 @@ const PRODUCTS = [
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Pantone® 'Oceana' Mavi Seramik",
     "origin": "İsviçre (Schaffhausen / 1868)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/iwc-schaffhausen-iw389404-5168.jpg",
+    "hoverImage": "images/products/elite/iwc-schaffhausen-iw389404-5168.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/iwc-schaffhausen-iw389404-5168.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=IWC%20Schaffhausen%20IW389404",
     "statusBadge": "Chrono24 Tescilli",
@@ -7129,10 +7129,10 @@ const PRODUCTS = [
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "18K Armor Gold®",
     "origin": "İsviçre (Schaffhausen / 1868)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/iwc-schaffhausen-iw503302-5169.jpg",
+    "hoverImage": "images/products/elite/iwc-schaffhausen-iw503302-5169.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/iwc-schaffhausen-iw503302-5169.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=IWC%20Schaffhausen%20IW503302",
     "statusBadge": "Chrono24 Tescilli",
@@ -7169,10 +7169,10 @@ const PRODUCTS = [
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
-    "image": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/iwc-schaffhausen-iw356501-5170.jpg",
+    "hoverImage": "images/products/elite/iwc-schaffhausen-iw356501-5170.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/iwc-schaffhausen-iw356501-5170.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=IWC%20Schaffhausen%20IW356501",
     "statusBadge": "Chrono24 Tescilli",
@@ -7209,10 +7209,10 @@ const PRODUCTS = [
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
-    "image": "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/iwc-schaffhausen-iw391405-5171.jpg",
+    "hoverImage": "images/products/elite/iwc-schaffhausen-iw391405-5171.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/iwc-schaffhausen-iw391405-5171.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=IWC%20Schaffhausen%20IW391405",
     "statusBadge": "Chrono24 Tescilli",
@@ -7249,10 +7249,10 @@ const PRODUCTS = [
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
-    "image": "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/iwc-schaffhausen-iw395601-5172.jpg",
+    "hoverImage": "images/products/elite/iwc-schaffhausen-iw395601-5172.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/iwc-schaffhausen-iw395601-5172.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=IWC%20Schaffhausen%20IW395601",
     "statusBadge": "Chrono24 Tescilli",
@@ -7289,10 +7289,10 @@ const PRODUCTS = [
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/iwc-schaffhausen-iw328903-5173.jpg",
+    "hoverImage": "images/products/elite/iwc-schaffhausen-iw328903-5173.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/iwc-schaffhausen-iw328903-5173.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=IWC%20Schaffhausen%20IW328903",
     "statusBadge": "Chrono24 Tescilli",
@@ -7329,10 +7329,10 @@ const PRODUCTS = [
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/iwc-schaffhausen-iw329001-5174.jpg",
+    "hoverImage": "images/products/elite/iwc-schaffhausen-iw329001-5174.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/iwc-schaffhausen-iw329001-5174.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=IWC%20Schaffhausen%20IW329001",
     "statusBadge": "Chrono24 Tescilli",
@@ -7369,10 +7369,10 @@ const PRODUCTS = [
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/iwc-schaffhausen-iw377714-5175.jpg",
+    "hoverImage": "images/products/elite/iwc-schaffhausen-iw377714-5175.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/iwc-schaffhausen-iw377714-5175.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=IWC%20Schaffhausen%20IW377714",
     "statusBadge": "Chrono24 Tescilli",
@@ -7409,10 +7409,10 @@ const PRODUCTS = [
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/iwc-schaffhausen-iw390701-5176.jpg",
+    "hoverImage": "images/products/elite/iwc-schaffhausen-iw390701-5176.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/iwc-schaffhausen-iw390701-5176.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=IWC%20Schaffhausen%20IW390701",
     "statusBadge": "Chrono24 Tescilli",
@@ -7449,10 +7449,10 @@ const PRODUCTS = [
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lake Tahoe Kar Beyazı Seramik",
     "origin": "İsviçre (Schaffhausen / 1868)",
-    "image": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/iwc-schaffhausen-iw501015-5177.jpg",
+    "hoverImage": "images/products/elite/iwc-schaffhausen-iw501015-5177.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/iwc-schaffhausen-iw501015-5177.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=IWC%20Schaffhausen%20IW501015",
     "statusBadge": "Chrono24 Tescilli",
@@ -7489,10 +7489,10 @@ const PRODUCTS = [
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Masif 18K 5N Pembe Altın",
     "origin": "İsviçre (Schaffhausen / 1868)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/iwc-schaffhausen-iw344602-5178.jpg",
+    "hoverImage": "images/products/elite/iwc-schaffhausen-iw344602-5178.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/iwc-schaffhausen-iw344602-5178.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=IWC%20Schaffhausen%20IW344602",
     "statusBadge": "Chrono24 Tescilli",
@@ -7529,10 +7529,10 @@ const PRODUCTS = [
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
-    "image": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/iwc-schaffhausen-iw324007-5179.jpg",
+    "hoverImage": "images/products/elite/iwc-schaffhausen-iw324007-5179.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/iwc-schaffhausen-iw324007-5179.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=IWC%20Schaffhausen%20IW324007",
     "statusBadge": "Chrono24 Tescilli",
@@ -7569,10 +7569,10 @@ const PRODUCTS = [
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
-    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/iwc-schaffhausen-iw510301-5180.jpg",
+    "hoverImage": "images/products/elite/iwc-schaffhausen-iw510301-5180.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/iwc-schaffhausen-iw510301-5180.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=IWC%20Schaffhausen%20IW510301",
     "statusBadge": "Chrono24 Tescilli",
@@ -7609,10 +7609,10 @@ const PRODUCTS = [
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/panerai-pam01312-5181.jpg",
+    "hoverImage": "images/products/elite/panerai-pam01312-5181.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/panerai-pam01312-5181.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Panerai%20PAM01312",
     "statusBadge": "Chrono24 Tescilli",
@@ -7651,10 +7651,10 @@ const PRODUCTS = [
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
-    "image": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/panerai-pam01314-5182.jpg",
+    "hoverImage": "images/products/elite/panerai-pam01314-5182.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/panerai-pam01314-5182.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Panerai%20PAM01314",
     "statusBadge": "Chrono24 Tescilli",
@@ -7691,10 +7691,10 @@ const PRODUCTS = [
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Paslanmaz Çelik & Sol Taraf Butonlar",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/panerai-pam01218-5183.jpg",
+    "hoverImage": "images/products/elite/panerai-pam01218-5183.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/panerai-pam01218-5183.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Panerai%20PAM01218",
     "statusBadge": "Chrono24 Tescilli",
@@ -7731,10 +7731,10 @@ const PRODUCTS = [
     "subCategory": "Panerai Koleksiyonu",
     "metal": "BMG-TECH™ Dökme Metalik Cam Alaşım",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/panerai-pam00799-5184.jpg",
+    "hoverImage": "images/products/elite/panerai-pam00799-5184.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/panerai-pam00799-5184.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Panerai%20PAM00799",
     "statusBadge": "Chrono24 Tescilli",
@@ -7771,10 +7771,10 @@ const PRODUCTS = [
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/panerai-pam02683-5185.jpg",
+    "hoverImage": "images/products/elite/panerai-pam02683-5185.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/panerai-pam02683-5185.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Panerai%20PAM02683",
     "statusBadge": "Chrono24 Tescilli",
@@ -7811,10 +7811,10 @@ const PRODUCTS = [
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Brunito eSteel™ Eskitilmiş Vintage Çelik",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/panerai-pam01348-5186.jpg",
+    "hoverImage": "images/products/elite/panerai-pam01348-5186.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/panerai-pam01348-5186.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Panerai%20PAM01348",
     "statusBadge": "Chrono24 Tescilli",
@@ -7851,10 +7851,10 @@ const PRODUCTS = [
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Masif 18K Goldtech™ Kırmızı Altın",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/panerai-pam01026-5187.jpg",
+    "hoverImage": "images/products/elite/panerai-pam01026-5187.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/panerai-pam01026-5187.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Panerai%20PAM01026",
     "statusBadge": "Chrono24 Tescilli",
@@ -7891,10 +7891,10 @@ const PRODUCTS = [
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
-    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/panerai-pam01249-5188.jpg",
+    "hoverImage": "images/products/elite/panerai-pam01249-5188.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/panerai-pam01249-5188.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Panerai%20PAM01249",
     "statusBadge": "Chrono24 Tescilli",
@@ -7931,10 +7931,10 @@ const PRODUCTS = [
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Karbon Fiber Kompozit Carbotech™",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/panerai-pam01616-5189.jpg",
+    "hoverImage": "images/products/elite/panerai-pam01616-5189.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/panerai-pam01616-5189.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Panerai%20PAM01616",
     "statusBadge": "Chrono24 Tescilli",
@@ -7971,10 +7971,10 @@ const PRODUCTS = [
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/panerai-pam01361-5190.jpg",
+    "hoverImage": "images/products/elite/panerai-pam01361-5190.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/panerai-pam01361-5190.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Panerai%20PAM01361",
     "statusBadge": "Chrono24 Tescilli",
@@ -8011,10 +8011,10 @@ const PRODUCTS = [
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
-    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/panerai-pam01347-5191.jpg",
+    "hoverImage": "images/products/elite/panerai-pam01347-5191.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/panerai-pam01347-5191.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Panerai%20PAM01347",
     "statusBadge": "Chrono24 Tescilli",
@@ -8051,10 +8051,10 @@ const PRODUCTS = [
     "subCategory": "Panerai Koleksiyonu",
     "metal": "eSteel™ (%95 Geri Dönüştürülmüş Çelik)",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
-    "image": "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/panerai-pam01157-5192.jpg",
+    "hoverImage": "images/products/elite/panerai-pam01157-5192.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1594576722512-582bcd46fba3?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/panerai-pam01157-5192.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Panerai%20PAM01157",
     "statusBadge": "Chrono24 Tescilli",
@@ -8091,10 +8091,10 @@ const PRODUCTS = [
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/panerai-pam01229-5193.jpg",
+    "hoverImage": "images/products/elite/panerai-pam01229-5193.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/panerai-pam01229-5193.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Panerai%20PAM01229",
     "statusBadge": "Chrono24 Tescilli",
@@ -8131,10 +8131,10 @@ const PRODUCTS = [
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Masif 18K Goldtech™ & 24K Masif Altın Ay Diski",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/panerai-pam01181-5194.jpg",
+    "hoverImage": "images/products/elite/panerai-pam01181-5194.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/panerai-pam01181-5194.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Panerai%20PAM01181",
     "statusBadge": "Chrono24 Tescilli",
@@ -8171,10 +8171,10 @@ const PRODUCTS = [
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
-    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/panerai-pam00424-5195.jpg",
+    "hoverImage": "images/products/elite/panerai-pam00424-5195.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/panerai-pam00424-5195.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Panerai%20PAM00424",
     "statusBadge": "Chrono24 Tescilli",
@@ -8211,10 +8211,10 @@ const PRODUCTS = [
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/panerai-pam00982-5196.jpg",
+    "hoverImage": "images/products/elite/panerai-pam00982-5196.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/panerai-pam00982-5196.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Panerai%20PAM00982",
     "statusBadge": "Chrono24 Tescilli",
@@ -8251,10 +8251,10 @@ const PRODUCTS = [
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
-    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/panerai-pam00767-5197.jpg",
+    "hoverImage": "images/products/elite/panerai-pam00767-5197.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/panerai-pam00767-5197.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Panerai%20PAM00767",
     "statusBadge": "Chrono24 Tescilli",
@@ -8291,10 +8291,10 @@ const PRODUCTS = [
     "subCategory": "Panerai Koleksiyonu",
     "metal": "1940 Masif Kulaklı Paslanmaz Çelik",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/panerai-pam00514-5198.jpg",
+    "hoverImage": "images/products/elite/panerai-pam00514-5198.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/panerai-pam00514-5198.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Panerai%20PAM00514",
     "statusBadge": "Chrono24 Tescilli",
@@ -8331,10 +8331,10 @@ const PRODUCTS = [
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/panerai-pam01372-5199.jpg",
+    "hoverImage": "images/products/elite/panerai-pam01372-5199.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/panerai-pam01372-5199.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Panerai%20PAM01372",
     "statusBadge": "Chrono24 Tescilli",
@@ -8371,10 +8371,10 @@ const PRODUCTS = [
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Carbotech™ & Donanma Komando Gravürü",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
-    "hoverImage": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90",
+    "image": "images/products/elite/panerai-pam00979-5200.jpg",
+    "hoverImage": "images/products/elite/panerai-pam00979-5200.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1000&auto=format&fit=crop&q=90"
+      "images/products/elite/panerai-pam00979-5200.jpg"
     ],
     "sourceUrl": "https://www.chrono24.com/search/index.htm?query=Panerai%20PAM00979",
     "statusBadge": "Chrono24 Tescilli",
