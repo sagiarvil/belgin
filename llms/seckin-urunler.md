@@ -14,5 +14,5 @@ Belgin Kuyumculuk Seçkin Ürünler kategorisi; yüksek yatırım değerine sahi
 
 ## 3. Semantik İlişkiler (Knowledge Graph Triples)
 - (Seçkin Ürünler) -[güvenlik standardı]-> (12.000 TL Üzeri Kimlik Doğrulamalı Teslimat)
-- (Ekspertizli İkinci El) -[orijinallik]-> (12 Nokta Mekanik Muayene ve Sicil Kontrolü)
+- (Ekspertizli İkinci El) -[orijinallik]-> (ürün bazında Mekanik Muayene ve Sicil Kontrolü)
 - (Mücevherat Eksperi) -[yetkili]-> (Semih Sonbahar — Baş Mücevher/Saat Eksperi)
