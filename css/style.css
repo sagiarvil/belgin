@@ -1017,9 +1017,9 @@ p, span, li, td, th, label, input, button, select, textarea {
   height: 100%;
   object-fit: cover;
   object-position: center center;
-  filter: contrast(1.05) saturate(1.08) brightness(0.88);
+  filter: brightness(0.72) contrast(1.15) saturate(1.10);
   transform: scale(1.04);
-  transition: transform 7s ease-out;
+  transition: transform 7s ease-out, filter 1.4s ease;
 }
 .hero-slide.active img {
   transform: scale(1.0);
@@ -1896,21 +1896,23 @@ p, span, li, td, th, label, input, button, select, textarea {
   will-change: transform, filter;
 }
 
-/* Haute Joaillerie Sinematik Işık, Sol Işık Yumuşatıcı & Chiaroscuro Katmanı */
+/* Haute Joaillerie Sinematik Işık, Koyu Film Filtresi & Chiaroscuro Katmanı */
 .hero-gradient-overlay {
   position: absolute;
   inset: 0;
   z-index: 2;
   pointer-events: none;
   background: 
-    /* 1. Sol Işık Patlamasını Engelleyen İpeksi Stüdyo Gölgelemesi (Highlight Roll-off) */
-    linear-gradient(90deg, rgba(2, 7, 6, 0.52) 0%, rgba(2, 7, 6, 0.26) 18%, rgba(2, 7, 6, 0.04) 38%, rgba(2, 7, 6, 0.0) 50%),
-    /* 2. Anamorfik Sinematik Mercek Vignette (Üst/Alt & Köşe Derinliği) */
-    radial-gradient(ellipse 85% 75% at 36% 46%, rgba(0, 0, 0, 0) 30%, rgba(3, 10, 8, 0.30) 70%, rgba(2, 8, 6, 0.78) 100%),
-    /* 3. Lüks Zümrüt & Sıcak Altın Tonlama (Maison Teal-Gold Atmosphere) */
-    linear-gradient(135deg, rgba(4, 32, 26, 0.16) 0%, rgba(194, 167, 104, 0.04) 40%, rgba(2, 8, 6, 0.35) 100%),
-    /* 4. Sağ Metin & Buton Zemin Kontrastı */
-    linear-gradient(90deg, rgba(2, 7, 6, 0.0) 30%, rgba(2, 7, 6, 0.28) 50%, rgba(2, 7, 6, 0.68) 72%, rgba(2, 7, 6, 0.88) 100%);
+    /* 1. Global Sinematik Koyu Film Filtresi (Mood & Tone) */
+    linear-gradient(180deg, rgba(4, 9, 7, 0.40) 0%, rgba(2, 6, 5, 0.28) 40%, rgba(2, 6, 5, 0.55) 100%),
+    /* 2. Anamorfik Sinematik Mercek Vignette (Üst/Alt & 360 Köşe Derinliği) */
+    radial-gradient(ellipse 90% 80% at 50% 50%, rgba(0, 0, 0, 0.08) 15%, rgba(3, 10, 8, 0.42) 65%, rgba(2, 7, 5, 0.88) 100%),
+    /* 3. Sol & Sağ Metin/Işık Dengeleme Katmanı */
+    linear-gradient(90deg, rgba(2, 7, 6, 0.60) 0%, rgba(2, 7, 6, 0.22) 25%, rgba(2, 7, 6, 0.18) 50%, rgba(2, 7, 6, 0.72) 78%, rgba(2, 7, 6, 0.94) 100%),
+    /* 4. Lüks Zümrüt & Sıcak Altın Atmosfer Filtresi */
+    linear-gradient(135deg, rgba(4, 28, 22, 0.20) 0%, rgba(194, 167, 104, 0.04) 45%, rgba(2, 8, 6, 0.40) 100%),
+    /* 5. Alt Taban Kesintisiz Sayfa Birleşimi */
+    linear-gradient(0deg, #070A09 0%, rgba(7, 10, 9, 0.45) 10%, transparent 25%);
 }
 
 .hero-container {
