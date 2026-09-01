@@ -2024,6 +2024,7 @@
   </a>
 
   <div class="admin-nav-actions">
+    <a href="/odeme-linki.html" target="_blank" style="font-size:12px; font-weight:700; color:#F3E5AB; background:rgba(212,175,55,0.2); border:1px solid rgba(212,175,55,0.5); padding:5px 12px; border-radius:6px; text-decoration:none; display:inline-flex; align-items:center; gap:5px;" title="VIP Ödeme Linki Oluşturucu"><span>🔗 VIP Link Paneli</span></a>
     <span class="live-status-pill"><span class="live-pulse-dot"></span> Canlı</span>
     <span id="liveClock" style="font-size:12px; color:var(--admin-gold); font-weight:700; font-family:monospace;">--:--:--</span>
     <span id="adminUserBadge" style="display:none; font-size:11.5px; background:rgba(255,255,255,0.12); color:#FFF; padding:4px 10px; border-radius:6px; border:1px solid rgba(194,167,104,0.4); font-weight:600;"></span>
@@ -2075,7 +2076,10 @@
       </div>
 
       <!-- SAĞ HIZLI İŞLEM PANELİ -->
-      <div>
+      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+        <a href="/odeme-linki.html" target="_blank" class="btn-admin-primary" style="background:linear-gradient(135deg, #B45309 0%, #D97706 100%); border-color:#B45309; color:#FFF; font-weight:800; font-size:13px; min-height:44px; border-radius:10px; text-decoration:none; display:inline-flex; align-items:center; gap:6px; box-shadow:0 4px 14px rgba(217,119,6,0.25);" title="Müşteriye özel WhatsApp VIP ödeme linki oluştur">
+          <span>🔗 VIP Ödeme Linki</span>
+        </a>
         <button type="button" class="btn-admin-primary" style="background:linear-gradient(135deg, #059669 0%, #10B981 100%); border-color:#059669; color:#FFF; font-weight:800; font-size:13px; min-height:44px; border-radius:10px; box-shadow:0 4px 14px rgba(16,185,129,0.25);" onclick="AdminApp.startBatchInvoiceSigning()" title="Ödemesi alınmış faturası eksik tüm siparişleri tek bir SMS ile topluca mühürle">
           <span>🧾 Toplu Fatura Kes (SMS)</span>
         </button>
