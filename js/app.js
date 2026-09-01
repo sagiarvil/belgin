@@ -208,6 +208,8 @@ const App = {
     this.renderWatches();
     this.renderJewellery();
     this.renderPreOwned();
+    this.renderMagazineGrid('all', 1);
+    this.initHeroRotator();
     this.updateHeaderCartCount();
     this.checkCookieBanner();
 
@@ -3217,6 +3219,157 @@ const App = {
       inp.addEventListener('input', updateDraft);
       inp.addEventListener('change', updateDraft);
     });
+  },
+
+  // ==========================================================
+  // 📸 HERO MULTI-SLIDE AMBIENT ROTATOR
+  // ==========================================================
+  currentHeroSlide: 0,
+  heroRotatorTimer: null,
+
+  initHeroRotator() {
+    const slides = document.querySelectorAll('.hero-slide');
+    if (!slides || slides.length <= 1) return;
+    if (this.heroRotatorTimer) clearInterval(this.heroRotatorTimer);
+    this.heroRotatorTimer = setInterval(() => {
+      this.nextHeroSlide();
+    }, 5500);
+  },
+
+  setHeroSlide(index) {
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots = document.querySelectorAll('.hero-dot');
+    if (!slides || slides.length === 0) return;
+    this.currentHeroSlide = (index + slides.length) % slides.length;
+    slides.forEach((s, idx) => {
+      s.classList.toggle('active', idx === this.currentHeroSlide);
+    });
+    dots.forEach((d, idx) => {
+      d.classList.toggle('active', idx === this.currentHeroSlide);
+    });
+  },
+
+  nextHeroSlide() {
+    this.setHeroSlide(this.currentHeroSlide + 1);
+  },
+
+  // ==========================================================
+  // 📰 BELGİN SAAT MAGAZİN — EDİTORYAL DERGİ & PİYASA YAYINLARI
+  // ==========================================================
+  currentMagazineFilter: 'all',
+  currentMagazinePage: 1,
+  magazinePageSize: 9,
+
+  filterMagazineCategory(category, btn) {
+    this.currentMagazineFilter = category;
+    this.currentMagazinePage = 1;
+    if (btn) {
+      document.querySelectorAll('.mag-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+    this.renderMagazineGrid(category, 1);
+  },
+
+  renderMagazineGrid(category = 'all', page = 1) {
+    const grid = document.getElementById('magazineArticlesGrid');
+    const pagination = document.getElementById('magazinePagination');
+    if (!grid) return;
+
+    const articles = (typeof window.MAGAZINE_ARTICLES !== 'undefined') ? window.MAGAZINE_ARTICLES : [];
+    if (!articles || articles.length === 0) {
+      grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--color-muted);">Henüz magazin içeriği yüklenmedi.</div>';
+      return;
+    }
+
+    let filtered = articles;
+    if (category && category !== 'all') {
+      filtered = articles.filter(a => a.category === category || (a.title && a.title.toLowerCase().includes(category.toLowerCase())));
+    }
+
+    const total = filtered.length;
+    const totalPages = Math.ceil(total / this.magazinePageSize) || 1;
+    this.currentMagazinePage = Math.min(Math.max(1, page), totalPages);
+
+    const start = (this.currentMagazinePage - 1) * this.magazinePageSize;
+    const pageArticles = filtered.slice(start, start + this.magazinePageSize);
+
+    grid.innerHTML = pageArticles.map(art => `
+      <article class="magazine-card" onclick="App.openMagazineArticle('${art.id}')" data-article-id="${art.id}">
+        <div class="mag-card-media">
+          <img src="${art.image}" alt="${typeof escapeHtml === 'function' ? escapeHtml(art.title) : art.title}" loading="lazy" decoding="async" onerror="this.src='/images/hero/hero-rolex-lineup.jpg'">
+          <span class="mag-card-badge">${typeof escapeHtml === 'function' ? escapeHtml(art.category) : art.category}</span>
+        </div>
+        <div class="mag-card-body">
+          <h3 class="mag-card-title">${typeof escapeHtml === 'function' ? escapeHtml(art.title) : art.title}</h3>
+          <p class="mag-card-excerpt">${typeof escapeHtml === 'function' ? escapeHtml(art.summary) : art.summary}</p>
+          <div class="mag-card-meta">
+            <span class="mag-card-date">📅 ${typeof escapeHtml === 'function' ? escapeHtml(art.publish_date) : art.publish_date}</span>
+            <span class="mag-read-link">Devamını Oku →</span>
+          </div>
+        </div>
+      </article>
+    `).join('');
+
+    // Sayfalama
+    if (pagination) {
+      if (totalPages <= 1) {
+        pagination.innerHTML = '';
+      } else {
+        let pagHtml = `<div style="display:flex; justify-content:center; align-items:center; gap:8px; flex-wrap:wrap;">`;
+        for (let p = 1; p <= totalPages; p++) {
+          pagHtml += `<button class="pdp-pag-btn ${p === this.currentMagazinePage ? 'active' : ''}" onclick="App.renderMagazineGrid('${this.currentMagazineFilter}', ${p})">${p}</button>`;
+        }
+        pagHtml += `</div>`;
+        pagination.innerHTML = pagHtml;
+      }
+    }
+  },
+
+  openMagazineArticle(articleId) {
+    const articles = (typeof window.MAGAZINE_ARTICLES !== 'undefined') ? window.MAGAZINE_ARTICLES : [];
+    const art = articles.find(a => a.id === articleId || a.slug === articleId);
+    if (!art) return;
+
+    const modal = document.getElementById('magazineArticleModal');
+    const content = document.getElementById('magazineModalContent');
+    if (!modal || !content) return;
+
+    content.innerHTML = `
+      <div class="mag-modal-hero">
+        <img src="${art.image}" alt="${typeof escapeHtml === 'function' ? escapeHtml(art.title) : art.title}" onerror="this.src='/images/hero/hero-rolex-lineup.jpg'">
+      </div>
+      <div class="mag-modal-content-wrap">
+        <span class="mag-modal-badge">${typeof escapeHtml === 'function' ? escapeHtml(art.category) : art.category}</span>
+        <h1 class="mag-modal-title">${typeof escapeHtml === 'function' ? escapeHtml(art.title) : art.title}</h1>
+        <div class="mag-modal-meta-row">
+          <span>📅 ${typeof escapeHtml === 'function' ? escapeHtml(art.publish_date) : art.publish_date}</span>
+          <span>✍️ ${typeof escapeHtml === 'function' ? escapeHtml(art.author) : art.author}</span>
+          <span>⏱️ ${typeof escapeHtml === 'function' ? escapeHtml(art.read_time) : art.read_time}</span>
+        </div>
+        <div class="mag-modal-body">
+          ${art.content_html}
+        </div>
+        <div class="mag-modal-footer-cta">
+          <div>
+            <div style="font-weight:700; color:var(--color-ink); font-size:14px;">Belgin Saat Koleksiyonunu İnceleyin</div>
+            <div style="font-size:12px; color:var(--color-muted);">Tüm modeller İzmir Buca showroomumuzda ve online vitrinimizde.</div>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <a href="/elit-kategori/" onclick="App.closeMagazineModal(); Router.navigate('elit-kategori'); return false;" class="btn btn-secondary" style="padding:8px 14px; font-size:12px;">👑 Elit Saatler</a>
+            <a href="/saatler/" onclick="App.closeMagazineModal(); Router.navigate('saatler'); return false;" class="btn btn-primary" style="padding:8px 14px; font-size:12px;">⌚ Tüm Koleksiyon</a>
+          </div>
+        </div>
+      </div>
+    `;
+
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  },
+
+  closeMagazineModal() {
+    const modal = document.getElementById('magazineArticleModal');
+    if (modal) modal.style.display = 'none';
+    document.body.style.overflow = '';
   }
 };
 

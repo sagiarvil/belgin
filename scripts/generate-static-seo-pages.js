@@ -69,6 +69,7 @@ function categoryLabel(key) {
   const labels = {
     'elit-kategori': 'Elit Kategori — Lüks Saat Evleri',
     'markalar': 'Saat Markaları Dizini',
+    'magazin': 'Belgin Saat Magazin — Editoryal Saat Dünyası',
     'saatler': 'Lüks Saatler',
     'mucevherat': 'Mücevherat ve Altın'
   };
@@ -400,6 +401,12 @@ function renderCategoryPage(key, list, indexHtml) {
       h1: 'Saat Markaları',
       gridId: 'allWatchesGrid'
     },
+    magazin: {
+      title: 'Belgin Saat Magazin — Saat Dünyası & Piyasa Analizleri | Belgin Saat',
+      description: 'Lüks saat dünyasından en son haberler, piyasa değer raporları, Rolex, Patek Philippe ve Omega analizleri, koleksiyoner alıcı rehberleri.',
+      h1: 'Belgin Saat Magazin',
+      gridId: 'magazineArticlesGrid'
+    },
     saatler: {
       title: 'Lüks Saatler & Yüksek Saatçilik | Belgin Saat İzmir Buca',
       description: 'Belgin Saat İzmir Buca lüks saat koleksiyonu. Marka, referans, fiyat ve stok bilgileriyle ürünleri inceleyin.',
@@ -512,17 +519,26 @@ function renderCategoryPage(key, list, indexHtml) {
     'category JSON-LD'
   );
 
-  const emptyGrid = new RegExp(
-    `<div class="products-grid-4" id="${meta.gridId}">[\\s\\S]*?<\\/div>`,
-    'i'
-  );
-
-  pageHtml = replaceFirst(
-    pageHtml,
-    emptyGrid,
-    `<div class="products-grid-4" id="${meta.gridId}">${staticCards}</div>`,
-    `${meta.gridId} product grid`
-  );
+  if (meta.gridId === 'magazineArticlesGrid') {
+    const magRegex = /<div class="magazine-grid" id="magazineArticlesGrid">[\s\S]*?<\/div>/i;
+    pageHtml = replaceFirst(
+      pageHtml,
+      magRegex,
+      `<div class="magazine-grid" id="magazineArticlesGrid"></div>`,
+      `${meta.gridId} magazine grid`
+    );
+  } else if (meta.gridId && meta.gridId !== 'allWatchesGrid' || key !== 'markalar') {
+    const emptyGrid = new RegExp(
+      `<div class="products-grid-4" id="${meta.gridId}">[\\s\\S]*?<\\/div>`,
+      'i'
+    );
+    pageHtml = replaceFirst(
+      pageHtml,
+      emptyGrid,
+      `<div class="products-grid-4" id="${meta.gridId}">${staticCards}</div>`,
+      `${meta.gridId} product grid`
+    );
+  }
 
 
 
@@ -538,7 +554,7 @@ function buildRouteMap() {
 
 function main() {
   if (!Array.isArray(products) || products.length === 0) throw new Error('[seo-static] PRODUCTS boş.');
-  ['urun','elit-kategori','markalar','saatler','mucevherat'].forEach(ensureGeneratedDir);
+  ['urun','elit-kategori','markalar','magazin','saatler','mucevherat'].forEach(ensureGeneratedDir);
   
   const indexHtmlPath = path.join(ROOT, 'index.html');
   const indexHtml = fs.readFileSync(indexHtmlPath, 'utf8');
@@ -550,7 +566,7 @@ function main() {
     seen.add(route);
     writeRoute(route, renderProductPage(p, indexHtml));
   }
-  for (const key of ['elit-kategori','markalar','saatler','mucevherat']) {
+  for (const key of ['elit-kategori','markalar','magazin','saatler','mucevherat']) {
     writeRoute(CATEGORY_ROUTES[key], renderCategoryPage(key, products.filter(p => categoryKey(p) === key), indexHtml));
   }
   buildRouteMap();
