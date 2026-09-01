@@ -1,0 +1,1402 @@
+[
+  {
+    "id": 5001,
+    "brand": "Rolex",
+    "name": "Submariner Date 41mm Siyah Kadran & Cerachrom Bezel",
+    "reference": "126610LN",
+    "current_image": "images/products/elite/rolex-126610ln-5001.jpg"
+  },
+  {
+    "id": 5002,
+    "brand": "Rolex",
+    "name": "Cosmograph Daytona 40mm Beyaz 'Panda' Kadran",
+    "reference": "126500LN",
+    "current_image": "images/products/elite/rolex-126500ln-5002.jpg"
+  },
+  {
+    "id": 5003,
+    "brand": "Rolex",
+    "name": "GMT-Master II 40mm 'Pepsi' Jubilee Bilezik",
+    "reference": "126710BLRO",
+    "current_image": "images/products/elite/rolex-126710blro-5003.jpg"
+  },
+  {
+    "id": 5004,
+    "brand": "Rolex",
+    "name": "GMT-Master II 40mm 'Batman' Oyster Bilezik",
+    "reference": "126710BLNR",
+    "current_image": "images/products/elite/rolex-126710blnr-5004.jpg"
+  },
+  {
+    "id": 5005,
+    "brand": "Rolex",
+    "name": "GMT-Master II 'Sprite' Sol Tepe Yeşil/Siyah",
+    "reference": "126720VTNR",
+    "current_image": "images/products/elite/rolex-126720vtnr-5005.jpg"
+  },
+  {
+    "id": 5006,
+    "brand": "Rolex",
+    "name": "Datejust 41mm Yivli Bezel & Mavi Kadran Jubilee",
+    "reference": "126334-0002",
+    "current_image": "images/products/elite/rolex-126334-0002-5006.jpg"
+  },
+  {
+    "id": 5007,
+    "brand": "Rolex",
+    "name": "Datejust 41mm Wimbledon Yeşil Romen Rakamlı",
+    "reference": "126334-0014",
+    "current_image": "images/products/elite/rolex-126334-0014-5007.jpg"
+  },
+  {
+    "id": 5008,
+    "brand": "Rolex",
+    "name": "Datejust 36mm Palm Motiv Yeşil Kadran",
+    "reference": "126234-0050",
+    "current_image": "images/products/elite/rolex-126234-0050-5008.jpg"
+  },
+  {
+    "id": 5009,
+    "brand": "Rolex",
+    "name": "Day-Date 40mm 18K Sarı Altın Şampanya Kadran President",
+    "reference": "228238-0006",
+    "current_image": "images/products/elite/rolex-228238-0006-5009.jpg"
+  },
+  {
+    "id": 5010,
+    "brand": "Rolex",
+    "name": "Day-Date 40mm Platin Buz Mavisi Kadran Yivli Bezel",
+    "reference": "228236-0010",
+    "current_image": "images/products/elite/rolex-228236-0010-5010.jpg"
+  },
+  {
+    "id": 5011,
+    "brand": "Rolex",
+    "name": "Submariner No-Date 41mm Oystersteel",
+    "reference": "124060",
+    "current_image": "images/products/elite/rolex-124060-5011.jpg"
+  },
+  {
+    "id": 5012,
+    "brand": "Rolex",
+    "name": "Submariner Date 41mm 'Kermit / Starbucks' Yeşil Bezel",
+    "reference": "126610LV",
+    "current_image": "images/products/elite/rolex-126610lv-5012.jpg"
+  },
+  {
+    "id": 5013,
+    "brand": "Rolex",
+    "name": "Cosmograph Daytona 18K Everose Altın & Oysterflex",
+    "reference": "126515LN",
+    "current_image": "images/products/elite/rolex-126515ln-5013.jpg"
+  },
+  {
+    "id": 5014,
+    "brand": "Rolex",
+    "name": "Explorer 36mm Oystersteel Siyah Kadran",
+    "reference": "124270",
+    "current_image": "images/products/elite/rolex-124270-5014.jpg"
+  },
+  {
+    "id": 5015,
+    "brand": "Rolex",
+    "name": "Explorer II 42mm Beyaz 'Polar' Kadran",
+    "reference": "226570-0001",
+    "current_image": "images/products/elite/rolex-226570-0001-5015.jpg"
+  },
+  {
+    "id": 5016,
+    "brand": "Rolex",
+    "name": "Yacht-Master 40mm 18K Everose Altın & Siyah Cerachrom",
+    "reference": "126655",
+    "current_image": "images/products/elite/rolex-126655-5016.jpg"
+  },
+  {
+    "id": 5017,
+    "brand": "Rolex",
+    "name": "Yacht-Master 42mm Titanyum RLX",
+    "reference": "226627",
+    "current_image": "images/products/elite/rolex-226627-5017.jpg"
+  },
+  {
+    "id": 5018,
+    "brand": "Rolex",
+    "name": "Oyster Perpetual 41mm Turkuaz Mavi 'Tiffany' Kadran",
+    "reference": "124300-0006",
+    "current_image": "images/products/elite/rolex-124300-0006-5018.jpg"
+  },
+  {
+    "id": 5019,
+    "brand": "Rolex",
+    "name": "Oyster Perpetual 36mm Kutlama 'Celebration' Kadran",
+    "reference": "126000-0014",
+    "current_image": "images/products/elite/rolex-126000-0014-5019.jpg"
+  },
+  {
+    "id": 5020,
+    "brand": "Rolex",
+    "name": "Sea-Dweller 43mm Oystersteel & Siyah Kadran Kırmızı Yazı",
+    "reference": "126600",
+    "current_image": "images/products/elite/rolex-126600-5020.jpg"
+  },
+  {
+    "id": 5021,
+    "brand": "Omega",
+    "name": "Speedmaster Professional Moonwatch Co-Axial Master Chronometer",
+    "reference": "310.30.42.50.01.002",
+    "current_image": "images/products/elite/omega-310-30-42-50-01-002-5021.jpg"
+  },
+  {
+    "id": 5022,
+    "brand": "Omega",
+    "name": "Seamaster Diver 300M Co-Axial 42mm Siyah Kadran",
+    "reference": "210.30.42.20.01.001",
+    "current_image": "images/products/elite/omega-210-30-42-20-01-001-5022.jpg"
+  },
+  {
+    "id": 5023,
+    "brand": "Omega",
+    "name": "Seamaster Diver 300M '007 Edition No Time To Die' Titanyum",
+    "reference": "210.90.42.20.01.001",
+    "current_image": "images/products/elite/omega-210-90-42-20-01-001-5023.jpg"
+  },
+  {
+    "id": 5024,
+    "brand": "Omega",
+    "name": "Seamaster Planet Ocean 600M Co-Axial Master 43.5mm",
+    "reference": "215.30.44.21.01.001",
+    "current_image": "images/products/elite/omega-215-30-44-21-01-001-5024.jpg"
+  },
+  {
+    "id": 5025,
+    "brand": "Omega",
+    "name": "Seamaster Aqua Terra 150M 41mm Yeşil Kadran Teak Desenli",
+    "reference": "220.10.41.21.10.001",
+    "current_image": "images/products/elite/omega-220-10-41-21-10-001-5025.jpg"
+  },
+  {
+    "id": 5026,
+    "brand": "Omega",
+    "name": "Speedmaster 'Dark Side of the Moon' Siyah Seramik Kronograf",
+    "reference": "311.92.44.51.01.003",
+    "current_image": "images/products/elite/omega-311-92-44-51-01-003-5026.jpg"
+  },
+  {
+    "id": 5027,
+    "brand": "Omega",
+    "name": "Constellation Co-Axial Master Chronometer 41mm Sedna Altın & Çelik",
+    "reference": "131.20.41.21.02.001",
+    "current_image": "images/products/elite/omega-131-20-41-21-02-001-5027.jpg"
+  },
+  {
+    "id": 5028,
+    "brand": "Omega",
+    "name": "Speedmaster 'Silver Snoopy Award' 50th Anniversary",
+    "reference": "310.32.42.50.02.001",
+    "current_image": "images/products/elite/omega-310-32-42-50-02-001-5028.jpg"
+  },
+  {
+    "id": 5029,
+    "brand": "Omega",
+    "name": "Seamaster Aqua Terra 150M Worldtimer 43mm Çelik",
+    "reference": "220.10.43.22.03.001",
+    "current_image": "images/products/elite/omega-220-10-43-22-03-001-5029.jpg"
+  },
+  {
+    "id": 5030,
+    "brand": "Omega",
+    "name": "Seamaster 300 Heritage Co-Axial Master 41mm Vintage Siyah",
+    "reference": "234.30.41.21.01.001",
+    "current_image": "images/products/elite/omega-234-30-41-21-01-001-5030.jpg"
+  },
+  {
+    "id": 5031,
+    "brand": "Omega",
+    "name": "Speedmaster Chronoscope Co-Axial Master 43mm Panda Kadran",
+    "reference": "329.30.43.51.02.001",
+    "current_image": "images/products/elite/omega-329-30-43-51-02-001-5031.jpg"
+  },
+  {
+    "id": 5032,
+    "brand": "Omega",
+    "name": "Seamaster Planet Ocean 600M Ultra Deep 6000M Titanyum",
+    "reference": "215.92.46.21.01.001",
+    "current_image": "images/products/elite/omega-215-92-46-21-01-001-5032.jpg"
+  },
+  {
+    "id": 5033,
+    "brand": "Omega",
+    "name": "De Ville Trésor Co-Axial Master 40mm 18K Sarı Altın",
+    "reference": "435.53.40.21.02.001",
+    "current_image": "images/products/elite/omega-435-53-40-21-02-001-5033.jpg"
+  },
+  {
+    "id": 5034,
+    "brand": "Omega",
+    "name": "Speedmaster Racing Co-Axial Master Chronograph 44.25mm",
+    "reference": "329.30.44.51.01.001",
+    "current_image": "images/products/elite/omega-329-30-44-51-01-001-5034.jpg"
+  },
+  {
+    "id": 5035,
+    "brand": "Omega",
+    "name": "Seamaster Aqua Terra 150M 'Shades' 38mm Atlantik Mavisi",
+    "reference": "220.10.38.20.03.003",
+    "current_image": "images/products/elite/omega-220-10-38-20-03-003-5035.jpg"
+  },
+  {
+    "id": 5036,
+    "brand": "Omega",
+    "name": "Speedmaster Professional Moonphase Co-Axial 44.25mm Mavi Kadran",
+    "reference": "304.30.44.52.03.001",
+    "current_image": "images/products/elite/omega-304-30-44-52-03-001-5036.jpg"
+  },
+  {
+    "id": 5037,
+    "brand": "Omega",
+    "name": "Seamaster Diver 300M Chronograph 44mm Siyah Seramik & Sedna Altın",
+    "reference": "210.20.44.51.01.001",
+    "current_image": "images/products/elite/omega-210-20-44-51-01-001-5037.jpg"
+  },
+  {
+    "id": 5038,
+    "brand": "Omega",
+    "name": "Constellation Co-Axial Master 39mm 18K Sarı Altın & Gümüş Kadran",
+    "reference": "131.53.39.20.02.001",
+    "current_image": "images/products/elite/omega-131-53-39-20-02-001-5038.jpg"
+  },
+  {
+    "id": 5039,
+    "brand": "Omega",
+    "name": "Speedmaster 'First Omega in Space' Hesalite Chronograph",
+    "reference": "311.32.40.30.01.001",
+    "current_image": "images/products/elite/omega-311-32-40-30-01-001-5039.jpg"
+  },
+  {
+    "id": 5040,
+    "brand": "Omega",
+    "name": "Seamaster Planet Ocean 600M GMT 'GoodPlanet' 43.5mm Titanyum",
+    "reference": "232.92.44.22.03.001",
+    "current_image": "images/products/elite/omega-232-92-44-22-03-001-5040.jpg"
+  },
+  {
+    "id": 5041,
+    "brand": "Patek Philippe",
+    "name": "Nautilus Paslanmaz Çelik Mavi Kadran",
+    "reference": "5711/1A-010",
+    "current_image": "images/products/elite/patek-philippe-5711-1a-010-5041.jpg"
+  },
+  {
+    "id": 5042,
+    "brand": "Patek Philippe",
+    "name": "Nautilus Moonphase & Güç Rezervi Paslanmaz Çelik",
+    "reference": "5712/1A-001",
+    "current_image": "images/products/elite/patek-philippe-5712-1a-001-5042.jpg"
+  },
+  {
+    "id": 5043,
+    "brand": "Patek Philippe",
+    "name": "Nautilus Yıllık Takvim & Ay Fazı Çelik Mavi Kadran",
+    "reference": "5726/1A-014",
+    "current_image": "images/products/elite/patek-philippe-5726-1a-014-5043.jpg"
+  },
+  {
+    "id": 5044,
+    "brand": "Patek Philippe",
+    "name": "Nautilus Kronograf 18K Gül Altın Siyah Kadran",
+    "reference": "5980/1R-001",
+    "current_image": "images/products/elite/patek-philippe-5980-1r-001-5044.jpg"
+  },
+  {
+    "id": 5045,
+    "brand": "Patek Philippe",
+    "name": "Aquanaut Paslanmaz Çelik Siyah Kadran & Kompozit Kayış",
+    "reference": "5167A-001",
+    "current_image": "images/products/elite/patek-philippe-5167a-001-5045.jpg"
+  },
+  {
+    "id": 5046,
+    "brand": "Patek Philippe",
+    "name": "Aquanaut 18K Beyaz Altın Gece Mavisi 'Jumbo' Kadran",
+    "reference": "5168G-001",
+    "current_image": "images/products/elite/patek-philippe-5168g-001-5046.jpg"
+  },
+  {
+    "id": 5047,
+    "brand": "Patek Philippe",
+    "name": "Aquanaut Kronograf Paslanmaz Çelik Turuncu Vurgulu",
+    "reference": "5968A-001",
+    "current_image": "images/products/elite/patek-philippe-5968a-001-5047.jpg"
+  },
+  {
+    "id": 5048,
+    "brand": "Patek Philippe",
+    "name": "Calatrava 18K Beyaz Altın Clous de Paris Guilloché Bezel",
+    "reference": "6119G-001",
+    "current_image": "images/products/elite/patek-philippe-6119g-001-5048.jpg"
+  },
+  {
+    "id": 5049,
+    "brand": "Patek Philippe",
+    "name": "Calatrava Sub-Second 18K Sarı Altın Fildişi Kadran",
+    "reference": "5227J-001",
+    "current_image": "images/products/elite/patek-philippe-5227j-001-5049.jpg"
+  },
+  {
+    "id": 5050,
+    "brand": "Patek Philippe",
+    "name": "Grand Complications Perpetual Calendar 18K Beyaz Altın",
+    "reference": "5327G-001",
+    "current_image": "images/products/elite/patek-philippe-5327g-001-5050.jpg"
+  },
+  {
+    "id": 5051,
+    "brand": "Patek Philippe",
+    "name": "Grand Complications Chronograph Perpetual Calendar Platin",
+    "reference": "5270P-001",
+    "current_image": "images/products/elite/patek-philippe-5270p-001-5051.jpg"
+  },
+  {
+    "id": 5052,
+    "brand": "Patek Philippe",
+    "name": "Aquanaut Luce Kadın Otomatik 18K Gül Altın Pırlantalı Bezel",
+    "reference": "5267/200R-001",
+    "current_image": "images/products/elite/patek-philippe-5267-200r-001-5052.jpg"
+  },
+  {
+    "id": 5053,
+    "brand": "Patek Philippe",
+    "name": "Complications World Time 18K Beyaz Altın Cloisonné Emaye",
+    "reference": "5231G-001",
+    "current_image": "images/products/elite/patek-philippe-5231g-001-5053.jpg"
+  },
+  {
+    "id": 5054,
+    "brand": "Patek Philippe",
+    "name": "Complications Annual Calendar 18K Beyaz Altın Mavi Kadran",
+    "reference": "5396G-011",
+    "current_image": "images/products/elite/patek-philippe-5396g-011-5054.jpg"
+  },
+  {
+    "id": 5055,
+    "brand": "Patek Philippe",
+    "name": "Complications Chronograph 18K Sarı Altın Vintage Kadran",
+    "reference": "5172G-001",
+    "current_image": "images/products/elite/patek-philippe-5172g-001-5055.jpg"
+  },
+  {
+    "id": 5056,
+    "brand": "Patek Philippe",
+    "name": "Calatrava Pilot Travel Time 18K Beyaz Altın 42mm",
+    "reference": "5524G-001",
+    "current_image": "images/products/elite/patek-philippe-5524g-001-5056.jpg"
+  },
+  {
+    "id": 5057,
+    "brand": "Patek Philippe",
+    "name": "Golden Ellipse 18K Gül Altın Siyah Abanoz Kadran",
+    "reference": "5738R-001",
+    "current_image": "images/products/elite/patek-philippe-5738r-001-5057.jpg"
+  },
+  {
+    "id": 5058,
+    "brand": "Patek Philippe",
+    "name": "Complications Minute Repeater 18K Gül Altın Grand Feu Kadran",
+    "reference": "5078R-001",
+    "current_image": "images/products/elite/patek-philippe-5078r-001-5058.jpg"
+  },
+  {
+    "id": 5059,
+    "brand": "Patek Philippe",
+    "name": "Nautilus Kadın Otomatik 18K Gül Altın Pırlantalı Bezel",
+    "reference": "7118/1200R-001",
+    "current_image": "images/products/elite/patek-philippe-7118-1200r-001-5059.jpg"
+  },
+  {
+    "id": 5060,
+    "brand": "Patek Philippe",
+    "name": "Twenty~4 Otomatik 36mm Paslanmaz Çelik Mavi Sunburst",
+    "reference": "7300/1200A-001",
+    "current_image": "images/products/elite/patek-philippe-7300-1200a-001-5060.jpg"
+  },
+  {
+    "id": 5061,
+    "brand": "Audemars Piguet",
+    "name": "Royal Oak 'Jumbo' Extra-Thin 39mm Bleu Nuit Kadran",
+    "reference": "16202ST.OO.1240ST.01",
+    "current_image": "images/products/elite/audemars-piguet-16202st-oo-1240st-01-5061.jpg"
+  },
+  {
+    "id": 5062,
+    "brand": "Audemars Piguet",
+    "name": "Royal Oak Selfwinding 41mm Siyah Grande Tapisserie Kadran",
+    "reference": "15510ST.OO.1320ST.07",
+    "current_image": "images/products/elite/audemars-piguet-15510st-oo-1320st-07-5062.jpg"
+  },
+  {
+    "id": 5063,
+    "brand": "Audemars Piguet",
+    "name": "Royal Oak Selfwinding Chronograph 41mm Mavi Kadran",
+    "reference": "26240ST.OO.1320ST.05",
+    "current_image": "images/products/elite/audemars-piguet-26240st-oo-1320st-05-5063.jpg"
+  },
+  {
+    "id": 5064,
+    "brand": "Audemars Piguet",
+    "name": "Royal Oak Double Balance Wheel Openworked 41mm Çelik",
+    "reference": "15407ST.OO.1220ST.01",
+    "current_image": "images/products/elite/audemars-piguet-15407st-oo-1220st-01-5064.jpg"
+  },
+  {
+    "id": 5065,
+    "brand": "Audemars Piguet",
+    "name": "Royal Oak Offshore Chronograph 43mm Titanyum & Seramik",
+    "reference": "26420TI.OO.A027CA.01",
+    "current_image": "images/products/elite/audemars-piguet-26420ti-oo-a027ca-01-5065.jpg"
+  },
+  {
+    "id": 5066,
+    "brand": "Audemars Piguet",
+    "name": "Royal Oak Offshore Diver 42mm Haki Yeşil Kadran",
+    "reference": "15720ST.OO.A052CA.01",
+    "current_image": "images/products/elite/audemars-piguet-15720st-oo-a052ca-01-5066.jpg"
+  },
+  {
+    "id": 5067,
+    "brand": "Audemars Piguet",
+    "name": "Royal Oak Selfwinding 18K Pembe Altın & Mavi Tapisserie",
+    "reference": "15510OR.OO.1320OR.04",
+    "current_image": "images/products/elite/audemars-piguet-15510or-oo-1320or-04-5067.jpg"
+  },
+  {
+    "id": 5068,
+    "brand": "Audemars Piguet",
+    "name": "Royal Oak Chronograph 38mm Gümüş Kadran Çelik",
+    "reference": "26715ST.OO.1356ST.02",
+    "current_image": "images/products/elite/audemars-piguet-26715st-oo-1356st-02-5068.jpg"
+  },
+  {
+    "id": 5069,
+    "brand": "Audemars Piguet",
+    "name": "Royal Oak Perpetual Calendar 41mm Paslanmaz Çelik",
+    "reference": "26574ST.OO.1220ST.03",
+    "current_image": "images/products/elite/audemars-piguet-26574st-oo-1220st-03-5069.jpg"
+  },
+  {
+    "id": 5070,
+    "brand": "Audemars Piguet",
+    "name": "Royal Oak Offshore Selfwinding Chronograph 42mm Siyah Seramik",
+    "reference": "26405CE.OO.A002CA.02",
+    "current_image": "images/products/elite/audemars-piguet-26405ce-oo-a002ca-02-5070.jpg"
+  },
+  {
+    "id": 5071,
+    "brand": "Audemars Piguet",
+    "name": "Code 11.59 by Audemars Piguet Chronograph 41mm 18K Beyaz Altın & Seramik",
+    "reference": "26393NB.OO.A002KB.01",
+    "current_image": "images/products/elite/audemars-piguet-26393nb-oo-a002kb-01-5071.jpg"
+  },
+  {
+    "id": 5072,
+    "brand": "Audemars Piguet",
+    "name": "Royal Oak Frosted Gold 37mm 18K Beyaz Altın Carolina Bucci",
+    "reference": "15454BC.GG.1259BC.01",
+    "current_image": "images/products/elite/audemars-piguet-15454bc-gg-1259bc-01-5072.jpg"
+  },
+  {
+    "id": 5073,
+    "brand": "Audemars Piguet",
+    "name": "Royal Oak Flying Tourbillon 41mm Paslanmaz Çelik Yeşil Kadran",
+    "reference": "26730ST.OO.1320ST.01",
+    "current_image": "images/products/elite/audemars-piguet-26730st-oo-1320st-01-5073.jpg"
+  },
+  {
+    "id": 5074,
+    "brand": "Audemars Piguet",
+    "name": "Royal Oak Offshore 'Music Edition' 43mm Titanyum Ekolayzır Kadran",
+    "reference": "77600TI.OO.A343CA.01",
+    "current_image": "images/products/elite/audemars-piguet-77600ti-oo-a343ca-01-5074.jpg"
+  },
+  {
+    "id": 5075,
+    "brand": "Audemars Piguet",
+    "name": "Royal Oak Selfwinding 34mm Siyah Seramik & Pembe Altın Vidalar",
+    "reference": "77350CE.OO.1266CE.01",
+    "current_image": "images/products/elite/audemars-piguet-77350ce-oo-1266ce-01-5075.jpg"
+  },
+  {
+    "id": 5076,
+    "brand": "Audemars Piguet",
+    "name": "Royal Oak Offshore Diver 42mm Beyaz Kadran Mavi Bezel Çelik",
+    "reference": "15710ST.OO.A010CA.01",
+    "current_image": "images/products/elite/audemars-piguet-15710st-oo-a010ca-01-5076.jpg"
+  },
+  {
+    "id": 5077,
+    "brand": "Audemars Piguet",
+    "name": "Royal Oak Chronograph 41mm 'Panda' Kadran Çelik",
+    "reference": "26331ST.OO.1220ST.03",
+    "current_image": "images/products/elite/audemars-piguet-26331st-oo-1220st-03-5077.jpg"
+  },
+  {
+    "id": 5078,
+    "brand": "Audemars Piguet",
+    "name": "Code 11.59 by Audemars Piguet Selfwinding 41mm Dumanlı Mor Kadran",
+    "reference": "15210CR.OO.A009KB.01",
+    "current_image": "images/products/elite/audemars-piguet-15210cr-oo-a009kb-01-5078.jpg"
+  },
+  {
+    "id": 5079,
+    "brand": "Audemars Piguet",
+    "name": "Royal Oak Concept Flying Tourbillon GMT 44mm Titanyum",
+    "reference": "26589IO.OO.D002CA.01",
+    "current_image": "images/products/elite/audemars-piguet-26589io-oo-d002ca-01-5079.jpg"
+  },
+  {
+    "id": 5080,
+    "brand": "Audemars Piguet",
+    "name": "Royal Oak Quartz 33mm 18K Pembe Altın Pırlantalı Bezel",
+    "reference": "67651OR.ZZ.1261OR.01",
+    "current_image": "images/products/elite/audemars-piguet-67651or-zz-1261or-01-5080.jpg"
+  },
+  {
+    "id": 5081,
+    "brand": "Breitling",
+    "name": "Navitimer B01 Chronograph 43mm Siyah Kadran Çelik",
+    "reference": "AB0138211B1A1",
+    "current_image": "images/products/elite/breitling-ab0138211b1a1-5081.jpg"
+  },
+  {
+    "id": 5082,
+    "brand": "Breitling",
+    "name": "Navitimer B01 Chronograph 46mm Mavi Kadran & Timsah Derisi",
+    "reference": "AB0137211C1P1",
+    "current_image": "images/products/elite/breitling-ab0137211c1p1-5082.jpg"
+  },
+  {
+    "id": 5083,
+    "brand": "Breitling",
+    "name": "Chronomat B01 42mm Gümüş Kadran Rouleaux Bilezik",
+    "reference": "AB0134101G1A1",
+    "current_image": "images/products/elite/breitling-ab0134101g1a1-5083.jpg"
+  },
+  {
+    "id": 5084,
+    "brand": "Breitling",
+    "name": "Superocean Heritage B20 Automatic 42mm Yeşil Kadran Hasır Bilezik",
+    "reference": "AB2010121L1A1",
+    "current_image": "images/products/elite/breitling-ab2010121l1a1-5084.jpg"
+  },
+  {
+    "id": 5085,
+    "brand": "Breitling",
+    "name": "Superocean Automatic 44mm Siyah Kadran Kauçuk Kayış",
+    "reference": "A17376211B1S1",
+    "current_image": "images/products/elite/breitling-a17376211b1s1-5085.jpg"
+  },
+  {
+    "id": 5086,
+    "brand": "Breitling",
+    "name": "Premier B01 Chronograph 42mm Somon Kadran Deri Kayış",
+    "reference": "AB0145371L1P1",
+    "current_image": "images/products/elite/breitling-ab0145371l1p1-5086.jpg"
+  },
+  {
+    "id": 5087,
+    "brand": "Breitling",
+    "name": "Avenger Chronograph 45mm Night Mission DLC Titanyum",
+    "reference": "V13317101L1X1",
+    "current_image": "images/products/elite/breitling-v13317101l1x1-5087.jpg"
+  },
+  {
+    "id": 5088,
+    "brand": "Breitling",
+    "name": "Top Time B01 'Shelby Cobra' Chronograph 41mm",
+    "reference": "AB01763A1C1X1",
+    "current_image": "images/products/elite/breitling-ab01763a1c1x1-5088.jpg"
+  },
+  {
+    "id": 5089,
+    "brand": "Breitling",
+    "name": "Top Time B01 'Ford Mustang' Chronograph 41mm Yeşil",
+    "reference": "AB01762A1L1X1",
+    "current_image": "images/products/elite/breitling-ab01762a1l1x1-5089.jpg"
+  },
+  {
+    "id": 5090,
+    "brand": "Breitling",
+    "name": "Top Time B01 'Chevrolet Corvette' Chronograph 41mm Kırmızı",
+    "reference": "AB01761A1K1X1",
+    "current_image": "images/products/elite/breitling-ab01761a1k1x1-5090.jpg"
+  },
+  {
+    "id": 5091,
+    "brand": "Breitling",
+    "name": "Navitimer B01 Chronograph 41mm 18K Kırmızı Altın Gümüş Kadran",
+    "reference": "RB0139211G1P1",
+    "current_image": "images/products/elite/breitling-rb0139211g1p1-5091.jpg"
+  },
+  {
+    "id": 5092,
+    "brand": "Breitling",
+    "name": "Chronomat Automatic GMT 40mm Antrasit Kadran Çelik",
+    "reference": "A32398101B1A1",
+    "current_image": "images/products/elite/breitling-a32398101b1a1-5092.jpg"
+  },
+  {
+    "id": 5093,
+    "brand": "Breitling",
+    "name": "Superocean Heritage '57 Pastel Paradise 38mm Mavi",
+    "reference": "A10340161C1X1",
+    "current_image": "images/products/elite/breitling-a10340161c1x1-5093.jpg"
+  },
+  {
+    "id": 5094,
+    "brand": "Breitling",
+    "name": "Avenger Automatic 42mm Siyah Kadran Çelik Bilezik",
+    "reference": "A17328101B1A1",
+    "current_image": "images/products/elite/breitling-a17328101b1a1-5094.jpg"
+  },
+  {
+    "id": 5095,
+    "brand": "Breitling",
+    "name": "Endurance Pro 44mm Breitlight® Ultra Hafif Kuvars Sarı",
+    "reference": "X82310A41B1S1",
+    "current_image": "images/products/elite/breitling-x82310a41b1s1-5095.jpg"
+  },
+  {
+    "id": 5096,
+    "brand": "Breitling",
+    "name": "Premier B09 Chronograph 40mm Pistachio Yeşil Kadran Çelik",
+    "reference": "AB0930D41L1P1",
+    "current_image": "images/products/elite/breitling-ab0930d41l1p1-5096.jpg"
+  },
+  {
+    "id": 5097,
+    "brand": "Breitling",
+    "name": "Chronomat B01 44mm Super Chronomat Dört Mevsim UTC Modüllü",
+    "reference": "AB0136251B1A2",
+    "current_image": "images/products/elite/breitling-ab0136251b1a2-5097.jpg"
+  },
+  {
+    "id": 5098,
+    "brand": "Breitling",
+    "name": "Navitimer Automatic 38mm Mavi Kadran Boncuklu Bezel",
+    "reference": "A17395161C1A1",
+    "current_image": "images/products/elite/breitling-a17395161c1a1-5098.jpg"
+  },
+  {
+    "id": 5099,
+    "brand": "Breitling",
+    "name": "Superocean Automatic 36mm Turkuaz Kadran Beyaz Kauçuk",
+    "reference": "A17377211A1S1",
+    "current_image": "images/products/elite/breitling-a17377211a1s1-5099.jpg"
+  },
+  {
+    "id": 5100,
+    "brand": "Breitling",
+    "name": "Professional Aerospace B70 Orbiter Titanyum & Hibrit Ekran",
+    "reference": "EB70101A1O1E1",
+    "current_image": "images/products/elite/breitling-eb70101a1o1e1-5100.jpg"
+  },
+  {
+    "id": 5101,
+    "brand": "Cartier",
+    "name": "Santos de Cartier Large Model Çelik Gümüş Kadran",
+    "reference": "WSSA0018",
+    "current_image": "images/products/elite/cartier-wssa0018-5101.jpg"
+  },
+  {
+    "id": 5102,
+    "brand": "Cartier",
+    "name": "Santos de Cartier Medium Model Çelik Otomatik",
+    "reference": "WSSA0029",
+    "current_image": "images/products/elite/cartier-wssa0029-5102.jpg"
+  },
+  {
+    "id": 5103,
+    "brand": "Cartier",
+    "name": "Santos de Cartier Skeleton 18K Pembe Altın İskelet",
+    "reference": "WHSA0008",
+    "current_image": "images/products/elite/cartier-whsa0008-5103.jpg"
+  },
+  {
+    "id": 5104,
+    "brand": "Cartier",
+    "name": "Tank Must Large Model Paslanmaz Çelik Kuvars",
+    "reference": "WSTA0041",
+    "current_image": "images/products/elite/cartier-wsta0041-5104.jpg"
+  },
+  {
+    "id": 5105,
+    "brand": "Cartier",
+    "name": "Tank Must Extra-Large Otomatik Guilloché Kadran Çelik",
+    "reference": "WSTA0040",
+    "current_image": "images/products/elite/cartier-wsta0040-5105.jpg"
+  },
+  {
+    "id": 5106,
+    "brand": "Cartier",
+    "name": "Tank Louis Cartier 18K Sarı Altın Küçük Boy",
+    "reference": "WGTA0010",
+    "current_image": "images/products/elite/cartier-wgta0010-5106.jpg"
+  },
+  {
+    "id": 5107,
+    "brand": "Cartier",
+    "name": "Tank Française Medium Model Paslanmaz Çelik Bilezik",
+    "reference": "WSTA0065",
+    "current_image": "images/products/elite/cartier-wsta0065-5107.jpg"
+  },
+  {
+    "id": 5108,
+    "brand": "Cartier",
+    "name": "Ballon Bleu de Cartier 42mm Otomatik Çelik Mavi Kadran",
+    "reference": "WSBB0025",
+    "current_image": "images/products/elite/cartier-wsbb0025-5108.jpg"
+  },
+  {
+    "id": 5109,
+    "brand": "Cartier",
+    "name": "Ballon Bleu de Cartier 36mm 18K Pembe Altın ve Çelik Pırlantalı",
+    "reference": "W3BB0024",
+    "current_image": "images/products/elite/cartier-w3bb0024-5109.jpg"
+  },
+  {
+    "id": 5110,
+    "brand": "Cartier",
+    "name": "Panthère de Cartier Medium Model 18K Sarı Altın & Çelik",
+    "reference": "W2PN0007",
+    "current_image": "images/products/elite/cartier-w2pn0007-5110.jpg"
+  },
+  {
+    "id": 5111,
+    "brand": "Cartier",
+    "name": "Pasha de Cartier 41mm Otomatik Çelik & Mavi Kordon",
+    "reference": "WSPA0009",
+    "current_image": "images/products/elite/cartier-wspa0009-5111.jpg"
+  },
+  {
+    "id": 5112,
+    "brand": "Cartier",
+    "name": "Santos-Dumont Large Model 18K Gül Altın & Gümüş Kadran",
+    "reference": "WGSA0032",
+    "current_image": "images/products/elite/cartier-wgsa0032-5112.jpg"
+  },
+  {
+    "id": 5113,
+    "brand": "Cartier",
+    "name": "Tank Américaine Large Model Otomatik Paslanmaz Çelik",
+    "reference": "WSTA0083",
+    "current_image": "images/products/elite/cartier-wsta0083-5113.jpg"
+  },
+  {
+    "id": 5114,
+    "brand": "Cartier",
+    "name": "Ronde Must de Cartier 40mm Otomatik Çelik Kumral Deri",
+    "reference": "WSRN0032",
+    "current_image": "images/products/elite/cartier-wsrn0032-5114.jpg"
+  },
+  {
+    "id": 5115,
+    "brand": "Cartier",
+    "name": "Santos de Cartier Chronograph XL Çelik & ADLC Siyah Bezel",
+    "reference": "WSSA0017",
+    "current_image": "images/products/elite/cartier-wssa0017-5115.jpg"
+  },
+  {
+    "id": 5116,
+    "brand": "Cartier",
+    "name": "Ballon Bleu de Cartier 33mm Otomatik 18K Pembe Altın Gümüş Kadran",
+    "reference": "WGBB0030",
+    "current_image": "images/products/elite/cartier-wgbb0030-5116.jpg"
+  },
+  {
+    "id": 5117,
+    "brand": "Cartier",
+    "name": "Baignoire Small Model 18K Sarı Altın & Siyah Rugan Deri",
+    "reference": "WGBA0007",
+    "current_image": "images/products/elite/cartier-wgba0007-5117.jpg"
+  },
+  {
+    "id": 5118,
+    "brand": "Cartier",
+    "name": "Santos de Cartier 18K Sarı Altın & Çelik İki Tonlu Medium",
+    "reference": "W2SA0016",
+    "current_image": "images/products/elite/cartier-w2sa0016-5118.jpg"
+  },
+  {
+    "id": 5119,
+    "brand": "Cartier",
+    "name": "Tank Cintrée 100th Anniversary 18K Sarı Altın Sınırlı Üretim",
+    "reference": "WGTA0057",
+    "current_image": "images/products/elite/cartier-wgta0057-5119.jpg"
+  },
+  {
+    "id": 5120,
+    "brand": "Cartier",
+    "name": "Pasha de Cartier Grille 41mm Çıkarılabilir Izgaralı Çelik",
+    "reference": "WSPA0027",
+    "current_image": "images/products/elite/cartier-wspa0027-5120.jpg"
+  },
+  {
+    "id": 5121,
+    "brand": "Tudor",
+    "name": "Black Bay 58 39mm Siyah Kadran & Altın Vurgulu Çelik",
+    "reference": "M79030N-0001",
+    "current_image": "images/products/elite/tudor-m79030n-0001-5121.jpg"
+  },
+  {
+    "id": 5122,
+    "brand": "Tudor",
+    "name": "Black Bay 54 37mm Paslanmaz Çelik Vintage Dalgıç",
+    "reference": "M79000N-0001",
+    "current_image": "images/products/elite/tudor-m79000n-0001-5122.jpg"
+  },
+  {
+    "id": 5123,
+    "brand": "Tudor",
+    "name": "Black Bay Pro 39mm GMT Sabit Çelik Bezel",
+    "reference": "M79470-0001",
+    "current_image": "images/products/elite/tudor-m79470-0001-5123.jpg"
+  },
+  {
+    "id": 5124,
+    "brand": "Tudor",
+    "name": "Pelagos 39mm Titanyum Dalgıç Güneş Işını Siyah Kadran",
+    "reference": "M25407N-0001",
+    "current_image": "images/products/elite/tudor-m25407n-0001-5124.jpg"
+  },
+  {
+    "id": 5125,
+    "brand": "Tudor",
+    "name": "Pelagos FXD 'Marine Nationale' Fransız Donanması Titanyum",
+    "reference": "M25707B/24-0001",
+    "current_image": "images/products/elite/tudor-m25707b-24-0001-5125.jpg"
+  },
+  {
+    "id": 5126,
+    "brand": "Tudor",
+    "name": "Black Bay Chrono 41mm Beyaz 'Panda' Kadran Çelik",
+    "reference": "M79360N-0002",
+    "current_image": "images/products/elite/tudor-m79360n-0002-5126.jpg"
+  },
+  {
+    "id": 5127,
+    "brand": "Tudor",
+    "name": "Black Bay GMT 41mm 'Pepsi' Bezel Çelik Bilezik",
+    "reference": "M79830RB-0001",
+    "current_image": "images/products/elite/tudor-m79830rb-0001-5127.jpg"
+  },
+  {
+    "id": 5128,
+    "brand": "Tudor",
+    "name": "Pelagos 42mm Siyah Kadran Helyum Tahliye Valfli Titanyum 500M",
+    "reference": "M25600TN-0001",
+    "current_image": "images/products/elite/tudor-m25600tn-0001-5128.jpg"
+  },
+  {
+    "id": 5129,
+    "brand": "Tudor",
+    "name": "Tudor Royal 41mm Çelik & 18K Sarı Altın Şampanya Kadran",
+    "reference": "M28603-0003",
+    "current_image": "images/products/elite/tudor-m28603-0003-5129.jpg"
+  },
+  {
+    "id": 5130,
+    "brand": "Tudor",
+    "name": "Black Bay Ceramic 41mm Master Chronometer Siyah Seramik",
+    "reference": "M79210CNU-0001",
+    "current_image": "images/products/elite/tudor-m79210cnu-0001-5130.jpg"
+  },
+  {
+    "id": 5131,
+    "brand": "Tudor",
+    "name": "Black Bay 58 925 Masif 925 Ayar Gümüş Kasa Gri Kadran",
+    "reference": "M79010SG-0001",
+    "current_image": "images/products/elite/tudor-m79010sg-0001-5131.jpg"
+  },
+  {
+    "id": 5132,
+    "brand": "Tudor",
+    "name": "Black Bay 58 18K Masif 18 Ayar Sarı Altın Yeşil Kadran",
+    "reference": "M79018V-0001",
+    "current_image": "images/products/elite/tudor-m79018v-0001-5132.jpg"
+  },
+  {
+    "id": 5133,
+    "brand": "Tudor",
+    "name": "Tudor Royal 28mm Kadın Çelik & Pırlantalı Sedef Kadran",
+    "reference": "M28300-0007",
+    "current_image": "images/products/elite/tudor-m28300-0007-5133.jpg"
+  },
+  {
+    "id": 5134,
+    "brand": "Tudor",
+    "name": "Black Bay 41mm Bordo Bezel 'Monochrome' Master Chronometer",
+    "reference": "M7941A1A0RU-0003",
+    "current_image": "images/products/elite/tudor-m7941a1a0ru-0003-5134.jpg"
+  },
+  {
+    "id": 5135,
+    "brand": "Tudor",
+    "name": "Ranger 39mm Macera Saati Çelik Siyah Kadran",
+    "reference": "M79950-0001",
+    "current_image": "images/products/elite/tudor-m79950-0001-5135.jpg"
+  },
+  {
+    "id": 5136,
+    "brand": "Tudor",
+    "name": "Pelagos FXD Chrono 'Alinghi Red Bull Racing' Karbon Kompozit",
+    "reference": "M25807KN-0001",
+    "current_image": "images/products/elite/tudor-m25807kn-0001-5136.jpg"
+  },
+  {
+    "id": 5137,
+    "brand": "Tudor",
+    "name": "Black Bay Chrono 'Flamingo Pink' Pembe Kadran Sınırlı",
+    "reference": "M79360N-0019",
+    "current_image": "images/products/elite/tudor-m79360n-0019-5137.jpg"
+  },
+  {
+    "id": 5138,
+    "brand": "Tudor",
+    "name": "1926 39mm Gümüş Kabartma Kadran Çelik & Gül Altın",
+    "reference": "M91551-0001",
+    "current_image": "images/products/elite/tudor-m91551-0001-5138.jpg"
+  },
+  {
+    "id": 5139,
+    "brand": "Tudor",
+    "name": "Black Bay Bronze 43mm Arduvaz Grisi Kadran Bronz Kasa",
+    "reference": "M79250BA-0001",
+    "current_image": "images/products/elite/tudor-m79250ba-0001-5139.jpg"
+  },
+  {
+    "id": 5140,
+    "brand": "Tudor",
+    "name": "Clair de Rose 34mm Çelik Mavi Ispanak Kaboşonlu",
+    "reference": "M35500-0004",
+    "current_image": "images/products/elite/tudor-m35500-0004-5140.jpg"
+  },
+  {
+    "id": 5141,
+    "brand": "TAG Heuer",
+    "name": "Carrera Chronograph 'Glassbox' 39mm Mavi Kadran",
+    "reference": "CBS2210.FC6534",
+    "current_image": "images/products/elite/tag-heuer-cbs2210-fc6534-5141.jpg"
+  },
+  {
+    "id": 5142,
+    "brand": "TAG Heuer",
+    "name": "Monaco Calibre 11 'Steve McQueen' 39mm Otomatik Kronograf",
+    "reference": "CAW211P.FC6356",
+    "current_image": "images/products/elite/tag-heuer-caw211p-fc6356-5142.jpg"
+  },
+  {
+    "id": 5143,
+    "brand": "TAG Heuer",
+    "name": "Carrera Chronosprint x Porsche 42mm Çelik & Özel İbre Hızı",
+    "reference": "CBS2011.FC6529",
+    "current_image": "images/products/elite/tag-heuer-cbs2011-fc6529-5143.jpg"
+  },
+  {
+    "id": 5144,
+    "brand": "TAG Heuer",
+    "name": "Aquaracer Professional 300 42mm Siyah Kadran & Seramik Bezel",
+    "reference": "WBP5110.BA0013",
+    "current_image": "images/products/elite/tag-heuer-wbp5110-ba0013-5144.jpg"
+  },
+  {
+    "id": 5145,
+    "brand": "TAG Heuer",
+    "name": "Carrera Date 36mm Pembe Kadran Çelik Bilezik",
+    "reference": "WBN2313.BA0001",
+    "current_image": "images/products/elite/tag-heuer-wbn2313-ba0001-5145.jpg"
+  },
+  {
+    "id": 5146,
+    "brand": "TAG Heuer",
+    "name": "Monaco Chronograph Night Driver Titanyum DLC Tam Fosforlu Kadran",
+    "reference": "CBL2181.FC6515",
+    "current_image": "images/products/elite/tag-heuer-cbl2181-fc6515-5146.jpg"
+  },
+  {
+    "id": 5147,
+    "brand": "TAG Heuer",
+    "name": "Aquaracer Professional 200 Solargraph Güneş Enerjili Titanyum",
+    "reference": "WBP1180.BF0000",
+    "current_image": "images/products/elite/tag-heuer-wbp1180-bf0000-5147.jpg"
+  },
+  {
+    "id": 5148,
+    "brand": "TAG Heuer",
+    "name": "Carrera Tourbillon 'Glassbox' 42mm Mavi Kadran",
+    "reference": "CBS5010.FC6543",
+    "current_image": "images/products/elite/tag-heuer-cbs5010-fc6543-5148.jpg"
+  },
+  {
+    "id": 5149,
+    "brand": "TAG Heuer",
+    "name": "Autavia Chronometer Flyback Chronograph 42mm Seramik",
+    "reference": "CBE511A.FC8279",
+    "current_image": "images/products/elite/tag-heuer-cbe511a-fc8279-5149.jpg"
+  },
+  {
+    "id": 5150,
+    "brand": "TAG Heuer",
+    "name": "Formula 1 Senna Special Edition 44mm Otomatik Kronograf",
+    "reference": "CAZ201D.BA0876",
+    "current_image": "images/products/elite/tag-heuer-caz201d-ba0876-5150.jpg"
+  },
+  {
+    "id": 5151,
+    "brand": "TAG Heuer",
+    "name": "Carrera Twin-Time GMT 41mm Mavi Kadran Çelik",
+    "reference": "WBN201A.BA0640",
+    "current_image": "images/products/elite/tag-heuer-wbn201a-ba0640-5151.jpg"
+  },
+  {
+    "id": 5152,
+    "brand": "TAG Heuer",
+    "name": "Monaco Chronograph İskelet Kadran 'Original Blue' Titanyum",
+    "reference": "CBL2182.FT6235",
+    "current_image": "images/products/elite/tag-heuer-cbl2182-ft6235-5152.jpg"
+  },
+  {
+    "id": 5153,
+    "brand": "TAG Heuer",
+    "name": "Aquaracer Professional 300 GMT 43mm Mavi & Beyaz Seramik Bezel",
+    "reference": "WBP2010.BA0632",
+    "current_image": "images/products/elite/tag-heuer-wbp2010-ba0632-5153.jpg"
+  },
+  {
+    "id": 5154,
+    "brand": "TAG Heuer",
+    "name": "Carrera Chronograph 44mm Calibre Heuer 02 Yeşil Kadran",
+    "reference": "CBN2A10.BA0643",
+    "current_image": "images/products/elite/tag-heuer-cbn2a10-ba0643-5154.jpg"
+  },
+  {
+    "id": 5155,
+    "brand": "TAG Heuer",
+    "name": "Formula 1 Chronograph Gulf Edition 43mm Çelik",
+    "reference": "CAZ101N.FC8243",
+    "current_image": "images/products/elite/tag-heuer-caz101n-fc8243-5155.jpg"
+  },
+  {
+    "id": 5156,
+    "brand": "TAG Heuer",
+    "name": "Carrera Date 39mm Gümüş Kadran & Pembe Altın İndeksler",
+    "reference": "WBN2111.BA0639",
+    "current_image": "images/products/elite/tag-heuer-wbn2111-ba0639-5156.jpg"
+  },
+  {
+    "id": 5157,
+    "brand": "TAG Heuer",
+    "name": "Aquaracer Professional 200 40mm Mavi Kadran Çelik",
+    "reference": "WBP2111.BA0627",
+    "current_image": "images/products/elite/tag-heuer-wbp2111-ba0627-5157.jpg"
+  },
+  {
+    "id": 5158,
+    "brand": "TAG Heuer",
+    "name": "Monaco Chronograph Racing Blue Sınırlı Üretim Gümüş/Mavi",
+    "reference": "CAW218C.FC6548",
+    "current_image": "images/products/elite/tag-heuer-caw218c-fc6548-5158.jpg"
+  },
+  {
+    "id": 5159,
+    "brand": "TAG Heuer",
+    "name": "Carrera Chronograph 'Skipper' 39mm Yelken Regatta Kadranı",
+    "reference": "CBS2213.FN6535",
+    "current_image": "images/products/elite/tag-heuer-cbs2213-fn6535-5159.jpg"
+  },
+  {
+    "id": 5160,
+    "brand": "TAG Heuer",
+    "name": "Connected Calibre E4 45mm Titanyum Lüks Akıllı Saat",
+    "reference": "SBR8A80.BT6261",
+    "current_image": "images/products/elite/tag-heuer-sbr8a80-bt6261-5160.jpg"
+  },
+  {
+    "id": 5161,
+    "brand": "IWC Schaffhausen",
+    "name": "Big Pilot's Watch 43mm Siyah Kadran Çelik",
+    "reference": "IW329301",
+    "current_image": "images/products/elite/iwc-schaffhausen-iw329301-5161.jpg"
+  },
+  {
+    "id": 5162,
+    "brand": "IWC Schaffhausen",
+    "name": "Portugieser Chronograph 41mm Mavi Kadran Çelik",
+    "reference": "IW371606",
+    "current_image": "images/products/elite/iwc-schaffhausen-iw371606-5162.jpg"
+  },
+  {
+    "id": 5163,
+    "brand": "IWC Schaffhausen",
+    "name": "Pilot's Watch Chronograph 41mm Yeşil Kadran Çelik Bilezik",
+    "reference": "IW388104",
+    "current_image": "images/products/elite/iwc-schaffhausen-iw388104-5163.jpg"
+  },
+  {
+    "id": 5164,
+    "brand": "IWC Schaffhausen",
+    "name": "Portugieser Automatic 7-Days 42.3mm Gümüş Kadran & Altın İndeksler",
+    "reference": "IW500704",
+    "current_image": "images/products/elite/iwc-schaffhausen-iw500704-5164.jpg"
+  },
+  {
+    "id": 5165,
+    "brand": "IWC Schaffhausen",
+    "name": "Pilot's Watch Mark XX 40mm Mavi Kadran Çelik",
+    "reference": "IW328203",
+    "current_image": "images/products/elite/iwc-schaffhausen-iw328203-5165.jpg"
+  },
+  {
+    "id": 5166,
+    "brand": "IWC Schaffhausen",
+    "name": "Big Pilot's Watch Perpetual Calendar 46.2mm Mavi Kadran Çelik",
+    "reference": "IW503605",
+    "current_image": "images/products/elite/iwc-schaffhausen-iw503605-5166.jpg"
+  },
+  {
+    "id": 5167,
+    "brand": "IWC Schaffhausen",
+    "name": "Pilot's Watch Chronograph 'TOP GUN' 44.5mm Siyah Zirkonyum Seramik",
+    "reference": "IW389101",
+    "current_image": "images/products/elite/iwc-schaffhausen-iw389101-5167.jpg"
+  },
+  {
+    "id": 5168,
+    "brand": "IWC Schaffhausen",
+    "name": "Pilot's Watch Chronograph 41 TOP GUN 'Oceana' Mavi Seramik",
+    "reference": "IW389404",
+    "current_image": "images/products/elite/iwc-schaffhausen-iw389404-5168.jpg"
+  },
+  {
+    "id": 5169,
+    "brand": "IWC Schaffhausen",
+    "name": "Portugieser Perpetual Calendar 44.2mm 18K Armor Gold® Gümüş Kadran",
+    "reference": "IW503302",
+    "current_image": "images/products/elite/iwc-schaffhausen-iw503302-5169.jpg"
+  },
+  {
+    "id": 5170,
+    "brand": "IWC Schaffhausen",
+    "name": "Portofino Automatic 40mm Gümüş Kadran Altın İndeksler Çelik",
+    "reference": "IW356501",
+    "current_image": "images/products/elite/iwc-schaffhausen-iw356501-5170.jpg"
+  },
+  {
+    "id": 5171,
+    "brand": "IWC Schaffhausen",
+    "name": "Portofino Chronograph 39mm Yeşil Kadran Çelik",
+    "reference": "IW391405",
+    "current_image": "images/products/elite/iwc-schaffhausen-iw391405-5171.jpg"
+  },
+  {
+    "id": 5172,
+    "brand": "IWC Schaffhausen",
+    "name": "Pilot's Watch Timezoner TOP GUN 'Woodland' Koyu Yeşil Seramik",
+    "reference": "IW395601",
+    "current_image": "images/products/elite/iwc-schaffhausen-iw395601-5172.jpg"
+  },
+  {
+    "id": 5173,
+    "brand": "IWC Schaffhausen",
+    "name": "Ingenieur Automatic 40mm Su Yeşili (Aqua) Kadran Çelik Gérald Genta",
+    "reference": "IW328903",
+    "current_image": "images/products/elite/iwc-schaffhausen-iw328903-5173.jpg"
+  },
+  {
+    "id": 5174,
+    "brand": "IWC Schaffhausen",
+    "name": "Aquatimer Automatic 2000 42mm Siyah Kadran Dalgıç 2000M",
+    "reference": "IW329001",
+    "current_image": "images/products/elite/iwc-schaffhausen-iw329001-5174.jpg"
+  },
+  {
+    "id": 5175,
+    "brand": "IWC Schaffhausen",
+    "name": "Pilot's Watch 'Le Petit Prince' Chronograph 43mm Gece Mavisi",
+    "reference": "IW377714",
+    "current_image": "images/products/elite/iwc-schaffhausen-iw377714-5175.jpg"
+  },
+  {
+    "id": 5176,
+    "brand": "IWC Schaffhausen",
+    "name": "Portugieser Yacht Club Chronograph 44.6mm Çelik Mavi Kadran",
+    "reference": "IW390701",
+    "current_image": "images/products/elite/iwc-schaffhausen-iw390701-5176.jpg"
+  },
+  {
+    "id": 5177,
+    "brand": "IWC Schaffhausen",
+    "name": "Big Pilot's Watch 'TOP GUN Lake Tahoe' Beyaz Seramik 46.5mm",
+    "reference": "IW501015",
+    "current_image": "images/products/elite/iwc-schaffhausen-iw501015-5177.jpg"
+  },
+  {
+    "id": 5178,
+    "brand": "IWC Schaffhausen",
+    "name": "Portofino Perpetual Calendar 40mm 18K Pembe Altın Gümüş Kadran",
+    "reference": "IW344602",
+    "current_image": "images/products/elite/iwc-schaffhausen-iw344602-5178.jpg"
+  },
+  {
+    "id": 5179,
+    "brand": "IWC Schaffhausen",
+    "name": "Pilot's Watch Automatic 36mm Gümüş Kadran Kahverengi Santoni Deri",
+    "reference": "IW324007",
+    "current_image": "images/products/elite/iwc-schaffhausen-iw324007-5179.jpg"
+  },
+  {
+    "id": 5180,
+    "brand": "IWC Schaffhausen",
+    "name": "Big Pilot's Watch Heritage 48mm Titanyum 8 Günlük Kurmalı",
+    "reference": "IW510301",
+    "current_image": "images/products/elite/iwc-schaffhausen-iw510301-5180.jpg"
+  },
+  {
+    "id": 5181,
+    "brand": "Panerai",
+    "name": "Luminor Marina 44mm Otomatik Siyah Sandviç Kadran Çelik",
+    "reference": "PAM01312",
+    "current_image": "images/products/elite/panerai-pam01312-5181.jpg"
+  },
+  {
+    "id": 5182,
+    "brand": "Panerai",
+    "name": "Luminor Marina 44mm Beyaz Kadran Paslanmaz Çelik",
+    "reference": "PAM01314",
+    "current_image": "images/products/elite/panerai-pam01314-5182.jpg"
+  },
+  {
+    "id": 5183,
+    "brand": "Panerai",
+    "name": "Luminor Chrono 44mm Mavi Kadran Çelik Kronograf",
+    "reference": "PAM01218",
+    "current_image": "images/products/elite/panerai-pam01218-5183.jpg"
+  },
+  {
+    "id": 5184,
+    "brand": "Panerai",
+    "name": "Submersible 44mm BMG-TECH™ & Karbon Bezel Dalgıç",
+    "reference": "PAM00799",
+    "current_image": "images/products/elite/panerai-pam00799-5184.jpg"
+  },
+  {
+    "id": 5185,
+    "brand": "Panerai",
+    "name": "Submersible 42mm Siyah Kadran Seramik Bezel Çelik",
+    "reference": "PAM02683",
+    "current_image": "images/products/elite/panerai-pam02683-5185.jpg"
+  },
+  {
+    "id": 5186,
+    "brand": "Panerai",
+    "name": "Radiomir Tre Giorni 45mm Degrade Kahverengi Sandviç Kadran",
+    "reference": "PAM01348",
+    "current_image": "images/products/elite/panerai-pam01348-5186.jpg"
+  },
+  {
+    "id": 5187,
+    "brand": "Panerai",
+    "name": "Radiomir Quaranta 40mm 18K Goldtech™ Beyaz Kadran",
+    "reference": "PAM01026",
+    "current_image": "images/products/elite/panerai-pam01026-5187.jpg"
+  },
+  {
+    "id": 5188,
+    "brand": "Panerai",
+    "name": "Luminor Due 42mm Antrasit Güneş Işını Kadran Çelik",
+    "reference": "PAM01249",
+    "current_image": "images/products/elite/panerai-pam01249-5188.jpg"
+  },
+  {
+    "id": 5189,
+    "brand": "Panerai",
+    "name": "Submersible Carbotech™ 47mm Karbon Fiber Dalgıç",
+    "reference": "PAM01616",
+    "current_image": "images/products/elite/panerai-pam01616-5189.jpg"
+  },
+  {
+    "id": 5190,
+    "brand": "Panerai",
+    "name": "Luminor BiTempo GMT 44mm Mavi Kadran Çelik",
+    "reference": "PAM01361",
+    "current_image": "images/products/elite/panerai-pam01361-5190.jpg"
+  },
+  {
+    "id": 5191,
+    "brand": "Panerai",
+    "name": "Radiomir Otto Giorni 45mm 8 Günlük Kurmalı Degrade Füme Kadran",
+    "reference": "PAM01347",
+    "current_image": "images/products/elite/panerai-pam01347-5191.jpg"
+  },
+  {
+    "id": 5192,
+    "brand": "Panerai",
+    "name": "Luminor Marina eSteel™ 44mm Zümrüt Yeşili Kadran Geri Dönüştürülmüş",
+    "reference": "PAM01157",
+    "current_image": "images/products/elite/panerai-pam01157-5192.jpg"
+  },
+  {
+    "id": 5193,
+    "brand": "Panerai",
+    "name": "Submersible QuarantaQuattro 44mm Çelik Siyah Kadran",
+    "reference": "PAM01229",
+    "current_image": "images/products/elite/panerai-pam01229-5193.jpg"
+  },
+  {
+    "id": 5194,
+    "brand": "Panerai",
+    "name": "Luminor Due Luna 38mm 18K Goldtech™ Ay Fazı Kadın",
+    "reference": "PAM01181",
+    "current_image": "images/products/elite/panerai-pam01181-5194.jpg"
+  },
+  {
+    "id": 5195,
+    "brand": "Panerai",
+    "name": "Radiomir California 47mm Roma & Arap Karma Kadran",
+    "reference": "PAM00424",
+    "current_image": "images/products/elite/panerai-pam00424-5195.jpg"
+  },
+  {
+    "id": 5196,
+    "brand": "Panerai",
+    "name": "Submersible Chrono Guillaume Néry Edition 47mm Titanyum 300M",
+    "reference": "PAM00982",
+    "current_image": "images/products/elite/panerai-pam00982-5196.jpg"
+  },
+  {
+    "id": 5197,
+    "brand": "Panerai",
+    "name": "Luminor Tourbillon GMT 47mm Titanyum İskelet Dikine Dönen Tourbillon",
+    "reference": "PAM00767",
+    "current_image": "images/products/elite/panerai-pam00767-5197.jpg"
+  },
+  {
+    "id": 5198,
+    "brand": "Panerai",
+    "name": "Radiomir 1940 3 Days 47mm Paslanmaz Çelik Siyah Kadran",
+    "reference": "PAM00514",
+    "current_image": "images/products/elite/panerai-pam00514-5198.jpg"
+  },
+  {
+    "id": 5199,
+    "brand": "Panerai",
+    "name": "Luminor Marina 40mm Çelik Bilezik Mavi Kadran",
+    "reference": "PAM01372",
+    "current_image": "images/products/elite/panerai-pam01372-5199.jpg"
+  },
+  {
+    "id": 5200,
+    "brand": "Panerai",
+    "name": "Submersible Marina Militare Carbotech™ 47mm Askeri Siyah",
+    "reference": "PAM00979",
+    "current_image": "images/products/elite/panerai-pam00979-5200.jpg"
+  }
+]

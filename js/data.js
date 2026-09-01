@@ -1,6 +1,6 @@
 // ==========================================================
 // BELGİN SAAT — MASTER ÜRÜN VE KOLEKSİYON VERİTABANI
-// Sürüm: 2026-09-01.elite-usd-80margin-sync
+// Sürüm: 2026-09-01.elite-exact-images-sync
 // Toplam Yayın Ürünü: 2125 (200 Elit Saat + 1925 Saat Kataloğu)
 // ==========================================================
 
@@ -89785,12 +89785,4 @@ if (typeof module !== 'undefined' && module.exports) {
     JEWELRY_BRANDS,
     PRE_OWNED_ITEMS
   };
-}
-
-if (typeof window !== 'undefined') {
-  window.PRODUCTS = PRODUCTS;
-  window.ELITE_WATCH_BRANDS = ELITE_WATCH_BRANDS;
-  window.WATCH_BRANDS = WATCH_BRANDS;
-  window.JEWELRY_BRANDS = JEWELRY_BRANDS;
-  window.PRE_OWNED_ITEMS = PRE_OWNED_ITEMS;
 }
