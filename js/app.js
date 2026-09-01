@@ -3277,7 +3277,7 @@ const App = {
     this.currentMagazineFilter = category;
     this.currentMagazinePage = 1;
     if (btn) {
-      document.querySelectorAll('.mag-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.mag-filter-pill, .mag-tab-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
     }
     this.renderMagazineGrid(category, 1);
@@ -3306,22 +3306,33 @@ const App = {
     const start = (this.currentMagazinePage - 1) * this.magazinePageSize;
     const pageArticles = filtered.slice(start, start + this.magazinePageSize);
 
-    grid.innerHTML = pageArticles.map(art => `
-      <article class="magazine-card" onclick="App.openMagazineArticle('${art.id}')" data-article-id="${art.id}">
-        <div class="mag-card-media">
-          <img src="${art.image}" alt="${typeof escapeHtml === 'function' ? escapeHtml(art.title) : art.title}" loading="lazy" decoding="async" onerror="this.src='/images/hero/hero-rolex-lineup.jpg'">
-          <span class="mag-card-badge">${typeof escapeHtml === 'function' ? escapeHtml(art.category) : art.category}</span>
-        </div>
-        <div class="mag-card-body">
-          <h3 class="mag-card-title">${typeof escapeHtml === 'function' ? escapeHtml(art.title) : art.title}</h3>
-          <p class="mag-card-excerpt">${typeof escapeHtml === 'function' ? escapeHtml(art.summary) : art.summary}</p>
-          <div class="mag-card-meta">
-            <span class="mag-card-date">📅 ${typeof escapeHtml === 'function' ? escapeHtml(art.publish_date) : art.publish_date}</span>
-            <span class="mag-read-link">Devamını Oku →</span>
+    grid.innerHTML = pageArticles.map(art => {
+      const readTime = art.read_time || '8 dk okuma';
+      const imgSrc = art.image || '/images/hero/hero-rolex-lineup.jpg';
+      return `
+        <article class="magazine-card" onclick="App.openMagazineArticle('${art.id}')" data-article-id="${art.id}">
+          <div class="mag-card-media">
+            <img src="${imgSrc}" alt="${typeof escapeHtml === 'function' ? escapeHtml(art.title) : art.title}" loading="lazy" decoding="async" onerror="this.src='/images/hero/hero-rolex-lineup.jpg'">
+            <span class="mag-card-badge">${typeof escapeHtml === 'function' ? escapeHtml(art.category) : art.category}</span>
+            <span class="mag-card-time-pill">⏱️ ${typeof escapeHtml === 'function' ? escapeHtml(readTime) : readTime}</span>
           </div>
-        </div>
-      </article>
-    `).join('');
+          <div class="mag-card-body">
+            <h3 class="mag-card-title">${typeof escapeHtml === 'function' ? escapeHtml(art.title) : art.title}</h3>
+            <p class="mag-card-excerpt">${typeof escapeHtml === 'function' ? escapeHtml(art.summary) : art.summary}</p>
+            <div class="mag-card-meta">
+              <div class="mag-card-author-row">
+                <span class="mag-author-icon">✍️</span>
+                <span class="mag-author-name">Belgin Saat Editoryal</span>
+              </div>
+              <span class="mag-card-date">📅 ${typeof escapeHtml === 'function' ? escapeHtml(art.publish_date) : art.publish_date}</span>
+            </div>
+            <div class="mag-card-action-bar">
+              <span class="mag-read-link">Makaleyi Oku →</span>
+            </div>
+          </div>
+        </article>
+      `;
+    }).join('');
 
     // Sayfalama
     if (pagination) {
@@ -3355,8 +3366,9 @@ const App = {
         <span class="mag-modal-badge">${typeof escapeHtml === 'function' ? escapeHtml(art.category) : art.category}</span>
         <h1 class="mag-modal-title">${typeof escapeHtml === 'function' ? escapeHtml(art.title) : art.title}</h1>
         <div class="mag-modal-meta-row">
+          <span>✍️ Belgin Saat Editoryal Masası</span>
           <span>📅 ${typeof escapeHtml === 'function' ? escapeHtml(art.publish_date) : art.publish_date}</span>
-          <span>⏱️ ${typeof escapeHtml === 'function' ? escapeHtml(art.read_time || '5 dk okuma') : (art.read_time || '5 dk okuma')}</span>
+          <span>⏱️ ${typeof escapeHtml === 'function' ? escapeHtml(art.read_time || '8 dk okuma') : (art.read_time || '8 dk okuma')}</span>
         </div>
         <div class="mag-modal-body">
           ${art.content_html}

@@ -2014,39 +2014,65 @@
 
   <!-- 2.8 MAGAZİN SAYFASI (EDİTORYAL SAAT DÜNYASI & PİYASA) -->
   <section id="page-magazin" class="page">
-    <div class="container-art section-art">
-      <div class="section-header-flex" style="flex-wrap:wrap; gap:16px; margin-bottom:28px;">
-        <div>
-          <div class="hero-eyebrow" style="margin-bottom:6px;">EDİTORYAL SAAT DÜNYASI &amp; KÜRESEL PİYASA</div>
-          <h1 style="font-family:var(--font-heading); font-size:clamp(24px, 3.5vw, 36px); font-weight:700; color:var(--color-ink); margin:0;">
-            Belgin Saat Magazin
-          </h1>
-          <p style="color:var(--color-muted); font-size:14px; margin-top:6px; max-width:680px;">
-            Lüks saat dünyasından en son haberler, piyasa değer raporları, ikonik modellerin tarihçesi ve koleksiyoner alıcı rehberleri.
+    <div class="container-art section-art" style="max-width:1200px; margin:0 auto; padding-top:20px;">
+      
+      <!-- 1. EDİTORYAL DERGİ BAŞLIĞI -->
+      <div class="mag-journal-header">
+        <div class="mag-journal-badge">
+          <span style="color:var(--color-gold-bright); font-size:12px;">●</span>
+          <span>BELGİN SAAT JOURNAL &bull; HAUTE HORLOGERIE &bull; EST. 1999</span>
+        </div>
+        <h1 class="mag-journal-title">Editoryal Saat Dünyası &amp; Küresel Piyasa</h1>
+        <p class="mag-journal-desc">
+          Lüks saat dünyasından en güncel piyasa değer raporları, Rolex, Patek Philippe ve Omega koleksiyon analizleri, ikonik modellerin tarihçesi ve koleksiyoner alıcı rehberleri.
+        </p>
+      </div>
+
+      <!-- 2. ÖNE ÇIKAN BAŞYAZI / KAPAK KONUSU (FEATURED HERO STORY) -->
+      <div class="mag-featured-card" onclick="App.openMagazineArticle('mag-180505')">
+        <div class="mag-featured-thumb">
+          <img src="/images/magazine/rolex-report-2026-en-cok-tercih-edilen-rolex-.jpg" alt="Rolex Report 2026: En Çok Tercih Edilen Rolex Koleksiyonları" loading="eager" fetchpriority="high">
+          <span class="mag-featured-badge">👑 KAPAK KONUSU &bull; ROLEX &amp; PİYASA</span>
+        </div>
+        <div class="mag-featured-body">
+          <div class="mag-featured-meta-top">
+            <span class="mag-tag-pill">Piyasa Raporu</span>
+            <span class="mag-read-time">⏱️ 9 dk okuma</span>
+            <span class="mag-date-pill">📅 17 Ağustos 2026</span>
+          </div>
+          <h2 class="mag-featured-title">Rolex Report 2026: En Çok Tercih Edilen Rolex Koleksiyonları ve Piyasa Trendleri</h2>
+          <p class="mag-featured-excerpt">
+            Rolex ikincil saat pazarının tartışmasız lideri olmaya devam ediyor. 2026 güncel işlem hacimleri, Daytona, GMT-Master II ve Datejust modellerinin değer endeksleri ve genç koleksiyonerlerin değişen tercihleri üzerine kapsamlı piyasa analizi.
           </p>
-        </div>
-        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-          <a href="/elit-kategori/" data-page="elit-kategori" class="btn btn-secondary" style="padding:9px 16px; font-size:12.5px;">👑 200 Elit Model</a>
-          <a href="/saatler/" data-page="saatler" class="btn btn-primary" style="padding:9px 16px; font-size:12.5px;">⌚ Tüm Saatler</a>
+          <div class="mag-featured-footer">
+            <div class="mag-author-chip">
+              <span class="author-avatar">🏛️</span>
+              <div>
+                <strong style="color:var(--color-ink); font-size:13px; display:block;">Belgin Saat Editoryal Kurulu</strong>
+                <span style="font-size:11.5px; color:var(--color-muted);">Saat Piyasası &amp; Değerleme Masası</span>
+              </div>
+            </div>
+            <span class="btn-mag-read">Kapak Makalesini Oku →</span>
+          </div>
         </div>
       </div>
 
-      <!-- Magazin Kategori Filtre Butonları -->
-      <div class="watch-filter-tabs" id="magazineFilterTabs" style="margin-bottom:28px;">
-        <button class="hero-tab-btn mag-tab-btn active" onclick="App.filterMagazineCategory('all', this)">⭐ Tümü (50)</button>
-        <button class="hero-tab-btn mag-tab-btn" onclick="App.filterMagazineCategory('Rolex & Piyasa', this)">👑 Rolex &amp; Piyasa</button>
-        <button class="hero-tab-btn mag-tab-btn" onclick="App.filterMagazineCategory('Omega & Koleksiyon', this)">Omega &amp; Koleksiyon</button>
-        <button class="hero-tab-btn mag-tab-btn" onclick="App.filterMagazineCategory('Haute Horlogerie', this)">Haute Horlogerie</button>
-        <button class="hero-tab-btn mag-tab-btn" onclick="App.filterMagazineCategory('İsviçre Saatçiliği', this)">İsviçre Saatçiliği</button>
-        <button class="hero-tab-btn mag-tab-btn" onclick="App.filterMagazineCategory('Alıcı Rehberi', this)">Alıcı Rehberi</button>
-        <button class="hero-tab-btn mag-tab-btn" onclick="App.filterMagazineCategory('Piyasa & Değer Trendi', this)">Piyasa &amp; Değer Trendi</button>
+      <!-- 3. KATEGORİ FİLTRE PİLLERİ -->
+      <div class="mag-category-bar" id="magazineFilterTabs">
+        <button class="mag-filter-pill active" onclick="App.filterMagazineCategory('all', this)">⭐ Tümü (50)</button>
+        <button class="mag-filter-pill" onclick="App.filterMagazineCategory('Rolex & Piyasa', this)">👑 Rolex &amp; Piyasa</button>
+        <button class="mag-filter-pill" onclick="App.filterMagazineCategory('Omega & Koleksiyon', this)">Omega &amp; Koleksiyon</button>
+        <button class="mag-filter-pill" onclick="App.filterMagazineCategory('Haute Horlogerie', this)">Haute Horlogerie</button>
+        <button class="mag-filter-pill" onclick="App.filterMagazineCategory('İsviçre Saatçiliği', this)">İsviçre Saatçiliği</button>
+        <button class="mag-filter-pill" onclick="App.filterMagazineCategory('Alıcı Rehberi', this)">Alıcı Rehberi</button>
+        <button class="mag-filter-pill" onclick="App.filterMagazineCategory('Piyasa & Değer Trendi', this)">Piyasa &amp; Değer Trendi</button>
       </div>
 
-      <!-- Magazin Kart Grid -->
+      <!-- 4. MAGAZİN KART GRİDİ -->
       <div class="magazine-grid" id="magazineArticlesGrid"></div>
       
-      <!-- Magazin Sayfalama -->
-      <div id="magazinePagination" class="pdp-pagination-wrap" style="margin-top:32px;"></div>
+      <!-- 5. SAYFALAMA -->
+      <div id="magazinePagination" class="pdp-pagination-wrap" style="margin-top:40px;"></div>
     </div>
   </section>
 

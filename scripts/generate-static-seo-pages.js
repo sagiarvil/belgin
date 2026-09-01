@@ -240,18 +240,26 @@ function renderSeoProductCard(p) {
 
 function renderSeoMagazineCard(art) {
   const imgSrc = (art.image || '/images/hero/hero-rolex-lineup.jpg').replace(/^\//, '');
+  const readTime = art.read_time || '8 dk okuma';
   return `
     <article class="magazine-card" onclick="App.openMagazineArticle('${esc(art.id)}')" data-article-id="${esc(art.id)}">
       <div class="mag-card-media">
         <img src="/${esc(imgSrc)}" alt="${esc(art.title)}" loading="lazy" decoding="async" onerror="this.src='/images/hero/hero-rolex-lineup.jpg'">
         <span class="mag-card-badge">${esc(art.category)}</span>
+        <span class="mag-card-time-pill">⏱️ ${esc(readTime)}</span>
       </div>
       <div class="mag-card-body">
         <h3 class="mag-card-title">${esc(art.title)}</h3>
         <p class="mag-card-excerpt">${esc(art.summary)}</p>
         <div class="mag-card-meta">
+          <div class="mag-card-author-row">
+            <span class="mag-author-icon">✍️</span>
+            <span class="mag-author-name">Belgin Saat Editoryal</span>
+          </div>
           <span class="mag-card-date">📅 ${esc(art.publish_date)}</span>
-          <span class="mag-read-link">Devamını Oku →</span>
+        </div>
+        <div class="mag-card-action-bar">
+          <span class="mag-read-link">Makaleyi Oku →</span>
         </div>
       </div>
     </article>
@@ -522,25 +530,97 @@ function renderCategoryPage(key, list, indexHtml) {
     .replace('id="page-ana-sayfa" class="page active"', 'id="page-ana-sayfa" class="page"')
     .replace(`id="page-${key}" class="page"`, `id="page-${key}" class="page active"`);
 
-  const categorySchema = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'CollectionPage',
-        '@id': `${canonical}#webpage`,
-        url: canonical,
-        name: meta.title,
-        description: meta.description,
-        breadcrumb: {
-          '@type': 'BreadcrumbList',
-          itemListElement: [
-            { '@type': 'ListItem', position: 1, name: 'Ana Sayfa', item: `${BASE_URL}/` },
-            { '@type': 'ListItem', position: 2, name: meta.h1, item: canonical }
-          ]
+  let categorySchema;
+
+  if (key === 'magazin') {
+    let magArticles = [];
+    try {
+      const magModule = require('../js/magazine_data.js');
+      magArticles = magModule.MAGAZINE_ARTICLES || [];
+    } catch (e) {}
+
+    categorySchema = {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'CollectionPage',
+          '@id': `${canonical}#webpage`,
+          url: canonical,
+          name: meta.title,
+          description: meta.description,
+          publisher: {
+            '@type': 'Organization',
+            name: 'Belgin Saat & Kuyumculuk',
+            url: `${BASE_URL}/`,
+            logo: {
+              '@type': 'ImageObject',
+              url: `${BASE_URL}/images/belgin-logo.png`
+            }
+          },
+          breadcrumb: {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Ana Sayfa', item: `${BASE_URL}/` },
+              { '@type': 'ListItem', position: 2, name: meta.h1, item: canonical }
+            ]
+          }
+        },
+        {
+          '@type': 'Blog',
+          '@id': `${canonical}#blog`,
+          name: 'Belgin Saat Magazin',
+          description: meta.description,
+          publisher: {
+            '@type': 'Organization',
+            name: 'Belgin Saat & Kuyumculuk',
+            url: `${BASE_URL}/`
+          },
+          blogPost: magArticles.map(art => {
+            const artImg = art.image ? (art.image.startsWith('http') ? art.image : `${BASE_URL}/${art.image.replace(/^\//, '')}`) : `${BASE_URL}/images/belgin-logo.png`;
+            return {
+              '@type': 'BlogPosting',
+              headline: art.title,
+              description: art.summary,
+              image: artImg,
+              datePublished: art.raw_date || '2026-08-01',
+              dateModified: art.raw_date || '2026-08-01',
+              author: {
+                '@type': 'Organization',
+                name: 'Belgin Saat Editoryal Kurulu',
+                url: `${BASE_URL}/biz-kimiz/`
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: 'Belgin Saat & Kuyumculuk',
+                url: `${BASE_URL}/`
+              },
+              mainEntityOfPage: `${BASE_URL}/magazin/#${art.id}`
+            };
+          })
         }
-      }
-    ]
-  };
+      ]
+    };
+  } else {
+    categorySchema = {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'CollectionPage',
+          '@id': `${canonical}#webpage`,
+          url: canonical,
+          name: meta.title,
+          description: meta.description,
+          breadcrumb: {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Ana Sayfa', item: `${BASE_URL}/` },
+              { '@type': 'ListItem', position: 2, name: meta.h1, item: canonical }
+            ]
+          }
+        }
+      ]
+    };
+  }
 
   pageHtml = replaceFirst(
     pageHtml,
