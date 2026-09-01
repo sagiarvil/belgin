@@ -2034,6 +2034,146 @@ p, span, li, td, th, label, input, button, select, textarea {
 }
 
 /* ==========================================================
+   📖 PREMİUM MAGAZİN SAYFALAMA (HAUTE PAGINATION)
+   ========================================================== */
+.mag-pagination-outer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin: 48px auto 20px;
+}
+
+.mag-pagination-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFFFFF;
+  padding: 8px 12px;
+  border-radius: 50px;
+  border: 1px solid rgba(194, 167, 104, 0.35);
+  box-shadow: 0 10px 30px rgba(5, 51, 47, 0.06), 0 2px 8px rgba(0, 0, 0, 0.03);
+  backdrop-filter: blur(12px);
+}
+
+.mag-pag-numbers {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mag-pag-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #FAF8F5;
+  color: var(--color-ink);
+  border: 1px solid rgba(5, 51, 47, 0.08);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.mag-pag-btn:hover {
+  background: #FFFFFF;
+  color: var(--color-teal);
+  border-color: var(--color-gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(194, 167, 104, 0.25);
+}
+
+.mag-pag-btn.active {
+  background: var(--color-teal);
+  color: #FFFFFF;
+  border-color: var(--color-teal);
+  font-weight: 800;
+  box-shadow: 0 6px 18px rgba(5, 51, 47, 0.28);
+  transform: scale(1.08);
+  position: relative;
+}
+
+.mag-pag-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-gold-bright);
+}
+
+.mag-pag-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 42px;
+  padding: 0 16px;
+  border-radius: 50px;
+  background: #FAF8F5;
+  color: var(--color-teal);
+  border: 1px solid rgba(5, 51, 47, 0.08);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.mag-pag-nav-btn:hover:not(:disabled) {
+  background: var(--color-teal);
+  color: #FFFFFF;
+  border-color: var(--color-teal);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(5, 51, 47, 0.2);
+}
+
+.mag-pag-nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  background: #F3F1EC;
+  color: var(--color-muted);
+  border-color: transparent;
+}
+
+.mag-pag-info-text {
+  font-size: 12.5px;
+  color: var(--color-muted);
+  letter-spacing: 0.3px;
+}
+
+.mag-pag-info-text strong {
+  color: var(--color-teal);
+}
+
+@media (max-width: 540px) {
+  .mag-pag-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 13px;
+  }
+  .mag-pag-nav-btn {
+    height: 36px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+  .mag-pag-nav-btn span {
+    display: none;
+  }
+  .mag-pagination-pill {
+    padding: 6px 8px;
+    gap: 4px;
+  }
+}
+
+/* ==========================================================
    📖 MAGAZİN MAKALE DETAY OKUMA MODALI (HAUTE READ)
    ========================================================== */
 .magazine-modal-dialog {

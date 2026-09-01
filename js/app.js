@@ -3336,17 +3336,54 @@ const App = {
       `;
     }).join('');
 
-    // Sayfalama
+    // Sayfalama (Premium Maison Pagination)
     if (pagination) {
       if (totalPages <= 1) {
         pagination.innerHTML = '';
       } else {
-        let pagHtml = `<div style="display:flex; justify-content:center; align-items:center; gap:8px; flex-wrap:wrap;">`;
+        const cur = this.currentMagazinePage;
+        const prevDisabled = cur <= 1 ? 'disabled' : '';
+        const nextDisabled = cur >= totalPages ? 'disabled' : '';
+        
+        let pagesHtml = '';
         for (let p = 1; p <= totalPages; p++) {
-          pagHtml += `<button class="pdp-pag-btn ${p === this.currentMagazinePage ? 'active' : ''}" onclick="App.renderMagazineGrid('${this.currentMagazineFilter}', ${p})">${p}</button>`;
+          const isActive = p === cur;
+          pagesHtml += `
+            <button class="mag-pag-btn ${isActive ? 'active' : ''}" 
+                    onclick="App.renderMagazineGrid('${this.currentMagazineFilter}', ${p}); document.getElementById('page-magazin')?.scrollIntoView({behavior:'smooth', block:'start'});"
+                    aria-label="Sayfa ${p}" 
+                    ${isActive ? 'aria-current="page"' : ''}>
+              ${p}
+            </button>
+          `;
         }
-        pagHtml += `</div>`;
-        pagination.innerHTML = pagHtml;
+
+        pagination.innerHTML = `
+          <div class="mag-pagination-outer">
+            <div class="mag-pagination-pill">
+              <button class="mag-pag-nav-btn mag-pag-prev" ${prevDisabled} 
+                      onclick="App.renderMagazineGrid('${this.currentMagazineFilter}', ${cur - 1}); document.getElementById('page-magazin')?.scrollIntoView({behavior:'smooth', block:'start'});"
+                      aria-label="Önceki Sayfa">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                <span>Önceki</span>
+              </button>
+              
+              <div class="mag-pag-numbers">
+                ${pagesHtml}
+              </div>
+
+              <button class="mag-pag-nav-btn mag-pag-next" ${nextDisabled} 
+                      onclick="App.renderMagazineGrid('${this.currentMagazineFilter}', ${cur + 1}); document.getElementById('page-magazin')?.scrollIntoView({behavior:'smooth', block:'start'});"
+                      aria-label="Sonraki Sayfa">
+                <span>Sonraki</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+            </div>
+            <div class="mag-pag-info-text">
+              Sayfa <strong>${cur}</strong> / <strong>${totalPages}</strong> &bull; Toplam <strong>${total}</strong> Makale
+            </div>
+          </div>
+        `;
       }
     }
   },
