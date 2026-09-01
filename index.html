@@ -202,6 +202,65 @@
     <!-- Orta Menü (Mega Dropdown & Hareketli Marka Menüleri) -->
     <nav class="nav-desktop" role="navigation">
       <ul>
+        <!-- 0. ELİT KATEGORİ DROPDOWN (HAUTE HORLOGERIE & LÜKS SAAT EVLERİ) -->
+        <li class="nav-has-dropdown">
+          <a href="/elit-kategori/" data-page="elit-kategori" class="nav-link-main" style="color:var(--color-gold-dark); font-weight:800; letter-spacing:0.5px;">
+            👑 ELİT KATEGORİ <span class="nav-arrow">▾</span>
+          </a>
+          <div class="nav-dropdown-menu nav-dropdown-mega">
+            <div class="nav-dropdown-header" style="background:linear-gradient(90deg, #111413 0%, #1A2120 100%); color:#FFFFFF; border-bottom:1px solid rgba(194, 167, 104, 0.3);">
+              <span>👑 HAUTE HORLOGERIE • 10 SAAT EVİ (CHRONO24 ENDEKSLİ 200 ÜRÜN)</span>
+              <a href="/elit-kategori/" data-page="elit-kategori" data-filter="all" onclick="App.filterEliteWatchesByBrand('all', this)" style="color:var(--color-gold);">Tüm Elit Saatleri Gör (200) →</a>
+            </div>
+            <div class="nav-dropdown-grid">
+              <a href="/elit-kategori/" data-page="elit-kategori" data-filter="all" onclick="App.filterEliteWatchesByBrand('all', this)" class="nav-sub-brand-item nav-all-item" style="border-color:var(--color-gold);">
+                <span class="nav-sub-brand-name">⭐ TÜM ELİT SAATLER</span>
+                <span class="nav-sub-brand-tag">10 Marka &bull; 200 İkonik Model</span>
+              </a>
+              <a href="/elit-kategori/" data-page="elit-kategori" data-filter="Rolex" onclick="App.filterEliteWatchesByBrand('Rolex', this)" class="nav-sub-brand-item">
+                <span class="nav-sub-brand-name">👑 Rolex</span>
+                <span class="nav-sub-brand-tag">Submariner, Daytona, GMT (20)</span>
+              </a>
+              <a href="/elit-kategori/" data-page="elit-kategori" data-filter="Omega" onclick="App.filterEliteWatchesByBrand('Omega', this)" class="nav-sub-brand-item">
+                <span class="nav-sub-brand-name">Omega</span>
+                <span class="nav-sub-brand-tag">Speedmaster, Seamaster (20)</span>
+              </a>
+              <a href="/elit-kategori/" data-page="elit-kategori" data-filter="Patek Philippe" onclick="App.filterEliteWatchesByBrand('Patek Philippe', this)" class="nav-sub-brand-item">
+                <span class="nav-sub-brand-name">Patek Philippe</span>
+                <span class="nav-sub-brand-tag">Nautilus, Aquanaut, Calatrava (20)</span>
+              </a>
+              <a href="/elit-kategori/" data-page="elit-kategori" data-filter="Audemars Piguet" onclick="App.filterEliteWatchesByBrand('Audemars Piguet', this)" class="nav-sub-brand-item">
+                <span class="nav-sub-brand-name">Audemars Piguet</span>
+                <span class="nav-sub-brand-tag">Royal Oak, Offshore (20)</span>
+              </a>
+              <a href="/elit-kategori/" data-page="elit-kategori" data-filter="Breitling" onclick="App.filterEliteWatchesByBrand('Breitling', this)" class="nav-sub-brand-item">
+                <span class="nav-sub-brand-name">Breitling</span>
+                <span class="nav-sub-brand-tag">Navitimer B01, Chronomat (20)</span>
+              </a>
+              <a href="/elit-kategori/" data-page="elit-kategori" data-filter="Cartier" onclick="App.filterEliteWatchesByBrand('Cartier', this)" class="nav-sub-brand-item">
+                <span class="nav-sub-brand-name">Cartier</span>
+                <span class="nav-sub-brand-tag">Santos, Tank, Ballon Bleu (20)</span>
+              </a>
+              <a href="/elit-kategori/" data-page="elit-kategori" data-filter="Tudor" onclick="App.filterEliteWatchesByBrand('Tudor', this)" class="nav-sub-brand-item">
+                <span class="nav-sub-brand-name">Tudor</span>
+                <span class="nav-sub-brand-tag">Black Bay 58, Pelagos (20)</span>
+              </a>
+              <a href="/elit-kategori/" data-page="elit-kategori" data-filter="TAG Heuer" onclick="App.filterEliteWatchesByBrand('TAG Heuer', this)" class="nav-sub-brand-item">
+                <span class="nav-sub-brand-name">TAG Heuer</span>
+                <span class="nav-sub-brand-tag">Carrera Glassbox, Monaco (20)</span>
+              </a>
+              <a href="/elit-kategori/" data-page="elit-kategori" data-filter="IWC Schaffhausen" onclick="App.filterEliteWatchesByBrand('IWC Schaffhausen', this)" class="nav-sub-brand-item">
+                <span class="nav-sub-brand-name">IWC Schaffhausen</span>
+                <span class="nav-sub-brand-tag">Big Pilot, Portugieser (20)</span>
+              </a>
+              <a href="/elit-kategori/" data-page="elit-kategori" data-filter="Panerai" onclick="App.filterEliteWatchesByBrand('Panerai', this)" class="nav-sub-brand-item">
+                <span class="nav-sub-brand-name">Panerai</span>
+                <span class="nav-sub-brand-tag">Luminor Marina, Radiomir (20)</span>
+              </a>
+            </div>
+          </div>
+        </li>
+
         <!-- 1. SAATLER DROPDOWN -->
         <li class="nav-has-dropdown">
           <a href="/saatler/" data-page="saatler" class="nav-link-main">
@@ -388,6 +447,27 @@
         <span>📈 Canlı Fiyatlar (Altın & Döviz)</span>
         <span class="live-dot-pulse"></span>
       </a>
+      <!-- 0. Elit Kategori Akordeon (HAUTE HORLOGERIE 200 MODEL) -->
+      <div style="margin-bottom:8px;">
+        <button class="mobile-nav-accordion-header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.acc-arr').textContent = this.nextElementSibling.classList.contains('open') ? '▴' : '▾';" style="background:#111413; color:#E6D2A8; border:1px solid rgba(194,167,104,0.4); font-weight:800;">
+          <span>👑 ELİT KATEGORİ (200)</span>
+          <span class="acc-arr">▾</span>
+        </button>
+        <div class="mobile-nav-accordion-sub">
+          <a href="/elit-kategori/" data-page="elit-kategori" data-filter="all" onclick="App.toggleMobileDrawer(false); App.filterEliteWatchesByBrand('all', null);" class="mobile-nav-sub-link" style="color:var(--color-gold); font-weight:700;">⭐ TÜMÜ (10 Marka &bull; 200 Model)</a>
+          <a href="/elit-kategori/" data-page="elit-kategori" data-filter="Rolex" onclick="App.toggleMobileDrawer(false); App.filterEliteWatchesByBrand('Rolex', null);" class="mobile-nav-sub-link">👑 Rolex (20 Model)</a>
+          <a href="/elit-kategori/" data-page="elit-kategori" data-filter="Omega" onclick="App.toggleMobileDrawer(false); App.filterEliteWatchesByBrand('Omega', null);" class="mobile-nav-sub-link">Omega (20 Model)</a>
+          <a href="/elit-kategori/" data-page="elit-kategori" data-filter="Patek Philippe" onclick="App.toggleMobileDrawer(false); App.filterEliteWatchesByBrand('Patek Philippe', null);" class="mobile-nav-sub-link">Patek Philippe (20 Model)</a>
+          <a href="/elit-kategori/" data-page="elit-kategori" data-filter="Audemars Piguet" onclick="App.toggleMobileDrawer(false); App.filterEliteWatchesByBrand('Audemars Piguet', null);" class="mobile-nav-sub-link">Audemars Piguet (20 Model)</a>
+          <a href="/elit-kategori/" data-page="elit-kategori" data-filter="Breitling" onclick="App.toggleMobileDrawer(false); App.filterEliteWatchesByBrand('Breitling', null);" class="mobile-nav-sub-link">Breitling (20 Model)</a>
+          <a href="/elit-kategori/" data-page="elit-kategori" data-filter="Cartier" onclick="App.toggleMobileDrawer(false); App.filterEliteWatchesByBrand('Cartier', null);" class="mobile-nav-sub-link">Cartier (20 Model)</a>
+          <a href="/elit-kategori/" data-page="elit-kategori" data-filter="Tudor" onclick="App.toggleMobileDrawer(false); App.filterEliteWatchesByBrand('Tudor', null);" class="mobile-nav-sub-link">Tudor (20 Model)</a>
+          <a href="/elit-kategori/" data-page="elit-kategori" data-filter="TAG Heuer" onclick="App.toggleMobileDrawer(false); App.filterEliteWatchesByBrand('TAG Heuer', null);" class="mobile-nav-sub-link">TAG Heuer (20 Model)</a>
+          <a href="/elit-kategori/" data-page="elit-kategori" data-filter="IWC Schaffhausen" onclick="App.toggleMobileDrawer(false); App.filterEliteWatchesByBrand('IWC Schaffhausen', null);" class="mobile-nav-sub-link">IWC Schaffhausen (20 Model)</a>
+          <a href="/elit-kategori/" data-page="elit-kategori" data-filter="Panerai" onclick="App.toggleMobileDrawer(false); App.filterEliteWatchesByBrand('Panerai', null);" class="mobile-nav-sub-link">Panerai (20 Model)</a>
+        </div>
+      </div>
+
       <!-- 1. Saatler Akordeon -->
       <div>
         <button class="mobile-nav-accordion-header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.acc-arr').textContent = this.nextElementSibling.classList.contains('open') ? '▴' : '▾';">
@@ -567,400 +647,400 @@
 
     <a
       class="product-art-card seo-prerender-card"
-      href="/urun/versace-vrscve6k00523-1000/"
-      data-product-id="1000"
+      href="/urun/rolex-126610ln-5001/"
+      data-product-id="5001"
       style="text-decoration:none;color:inherit"
     >
       <div class="product-art-thumb">
         
         <img
           class="img-primary"
-          src="https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/8/281835ca0f67c8b08a47e1aed9e789fbd61464adcbcb5f22c19d368c8045cb56.jpeg"
-          alt="Versace VRSCVE6K00523 Erkek Kol Saati"
+          src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&amp;auto=format&amp;fit=crop&amp;q=80"
+          alt="Rolex Submariner Date 41mm Siyah Kadran &amp; Cerachrom Bezel"
           loading="lazy"
         >
       </div>
 
       <div class="product-art-info">
-        <h3 class="prod-brand-name">Versace</h3>
-        <p class="prod-model-name">VRSCVE6K00523 Erkek Kol Saati</p>
-        <p class="prod-ref-size">VRSCVE6K00523</p>
-        <div class="prod-price-tag">₺98.980</div>
+        <h3 class="prod-brand-name">Rolex</h3>
+        <p class="prod-model-name">Submariner Date 41mm Siyah Kadran &amp; Cerachrom Bezel</p>
+        <p class="prod-ref-size">126610LN</p>
+        <div class="prod-price-tag">₺791.700</div>
       </div>
     </a>
   
 
     <a
       class="product-art-card seo-prerender-card"
-      href="/urun/versace-vrscve6k00423-1001/"
-      data-product-id="1001"
+      href="/urun/rolex-126500ln-5002/"
+      data-product-id="5002"
       style="text-decoration:none;color:inherit"
     >
       <div class="product-art-thumb">
         
         <img
           class="img-primary"
-          src="https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/7/277abc35f004df079be9283b69845cbc7aa6994128bd97823012977e2966f376.jpeg"
-          alt="Versace VRSCVE6K00423 Erkek Kol Saati"
+          src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&amp;auto=format&amp;fit=crop&amp;q=80"
+          alt="Rolex Cosmograph Daytona 40mm Beyaz &#39;Panda&#39; Kadran"
           loading="lazy"
         >
       </div>
 
       <div class="product-art-info">
-        <h3 class="prod-brand-name">Versace</h3>
-        <p class="prod-model-name">VRSCVE6K00423 Erkek Kol Saati</p>
-        <p class="prod-ref-size">VRSCVE6K00423</p>
-        <div class="prod-price-tag">₺134.400</div>
+        <h3 class="prod-brand-name">Rolex</h3>
+        <p class="prod-model-name">Cosmograph Daytona 40mm Beyaz &#39;Panda&#39; Kadran</p>
+        <p class="prod-ref-size">126500LN</p>
+        <div class="prod-price-tag">₺1.719.900</div>
       </div>
     </a>
   
 
     <a
       class="product-art-card seo-prerender-card"
-      href="/urun/versace-vrscve6k00123-1002/"
-      data-product-id="1002"
+      href="/urun/rolex-126710blro-5003/"
+      data-product-id="5003"
       style="text-decoration:none;color:inherit"
     >
       <div class="product-art-thumb">
         
         <img
           class="img-primary"
-          src="https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/b/eb16aeeb4dec6f23902f675a47e2c9ee5890b93bf0a048a32cbd46dfd02859c8.jpeg"
-          alt="Versace VRSCVE6K00123 Erkek Kol Saati"
+          src="https://images.unsplash.com/photo-1547996160-71dfabbce5d7?w=800&amp;auto=format&amp;fit=crop&amp;q=80"
+          alt="Rolex GMT-Master II 40mm &#39;Pepsi&#39; Jubilee Bilezik"
           loading="lazy"
         >
       </div>
 
       <div class="product-art-info">
-        <h3 class="prod-brand-name">Versace</h3>
-        <p class="prod-model-name">VRSCVE6K00123 Erkek Kol Saati</p>
-        <p class="prod-ref-size">VRSCVE6K00123</p>
-        <div class="prod-price-tag">₺76.020</div>
+        <h3 class="prod-brand-name">Rolex</h3>
+        <p class="prod-model-name">GMT-Master II 40mm &#39;Pepsi&#39; Jubilee Bilezik</p>
+        <p class="prod-ref-size">126710BLRO</p>
+        <div class="prod-price-tag">₺1.173.900</div>
       </div>
     </a>
   
 
     <a
       class="product-art-card seo-prerender-card"
-      href="/urun/versace-vrscve6g00223-1003/"
-      data-product-id="1003"
+      href="/urun/rolex-126710blnr-5004/"
+      data-product-id="5004"
       style="text-decoration:none;color:inherit"
     >
       <div class="product-art-thumb">
         
         <img
           class="img-primary"
-          src="https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/7/5/756ad2d61b55fb2b2a961e723ef19b1e703a72d29046d0f6bf205d3dfc13c134.jpeg"
-          alt="Versace VRSCVE6G00223 Kadın Kol Saati"
+          src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&amp;auto=format&amp;fit=crop&amp;q=80"
+          alt="Rolex GMT-Master II 40mm &#39;Batman&#39; Oyster Bilezik"
           loading="lazy"
         >
       </div>
 
       <div class="product-art-info">
-        <h3 class="prod-brand-name">Versace</h3>
-        <p class="prod-model-name">VRSCVE6G00223 Kadın Kol Saati</p>
-        <p class="prod-ref-size">VRSCVE6G00223</p>
-        <div class="prod-price-tag">₺28.560</div>
+        <h3 class="prod-brand-name">Rolex</h3>
+        <p class="prod-model-name">GMT-Master II 40mm &#39;Batman&#39; Oyster Bilezik</p>
+        <p class="prod-ref-size">126710BLNR</p>
+        <div class="prod-price-tag">₺939.120</div>
       </div>
     </a>
   
 
     <a
       class="product-art-card seo-prerender-card"
-      href="/urun/versace-vrscve6f00523-1004/"
-      data-product-id="1004"
+      href="/urun/rolex-126720vtnr-5005/"
+      data-product-id="5005"
       style="text-decoration:none;color:inherit"
     >
       <div class="product-art-thumb">
         
         <img
           class="img-primary"
-          src="https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/d/4/d4bee0079dd719539b3310df78234f5bfa2bb4957f7682689c790ced2569aaa5.jpeg"
-          alt="Versace VRSCVE6F00523 Kadın Kol Saati"
+          src="https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=800&amp;auto=format&amp;fit=crop&amp;q=80"
+          alt="Rolex GMT-Master II &#39;Sprite&#39; Sol Tepe Yeşil/Siyah"
           loading="lazy"
         >
       </div>
 
       <div class="product-art-info">
-        <h3 class="prod-brand-name">Versace</h3>
-        <p class="prod-model-name">VRSCVE6F00523 Kadın Kol Saati</p>
-        <p class="prod-ref-size">VRSCVE6F00523</p>
-        <div class="prod-price-tag">₺70.762</div>
+        <h3 class="prod-brand-name">Rolex</h3>
+        <p class="prod-model-name">GMT-Master II &#39;Sprite&#39; Sol Tepe Yeşil/Siyah</p>
+        <p class="prod-ref-size">126720VTNR</p>
+        <div class="prod-price-tag">₺1.010.100</div>
       </div>
     </a>
   
 
     <a
       class="product-art-card seo-prerender-card"
-      href="/urun/versace-vrscve6c00423-1005/"
-      data-product-id="1005"
+      href="/urun/rolex-126334-0002-5006/"
+      data-product-id="5006"
       style="text-decoration:none;color:inherit"
     >
       <div class="product-art-thumb">
         
         <img
           class="img-primary"
-          src="https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/0/4/04e52393a3e5fc470094acc861e0a4df798a25f47c3596e4d0cdbddcfd199b70.jpeg"
-          alt="Versace VRSCVE6C00423 Kadın Kol Saati"
+          src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&amp;auto=format&amp;fit=crop&amp;q=80"
+          alt="Rolex Datejust 41mm Yivli Bezel &amp; Mavi Kadran Jubilee"
           loading="lazy"
         >
       </div>
 
       <div class="product-art-info">
-        <h3 class="prod-brand-name">Versace</h3>
-        <p class="prod-model-name">VRSCVE6C00423 Kadın Kol Saati</p>
-        <p class="prod-ref-size">VRSCVE6C00423</p>
-        <div class="prod-price-tag">₺92.400</div>
+        <h3 class="prod-brand-name">Rolex</h3>
+        <p class="prod-model-name">Datejust 41mm Yivli Bezel &amp; Mavi Kadran Jubilee</p>
+        <p class="prod-ref-size">126334-0002</p>
+        <div class="prod-price-tag">₺753.480</div>
       </div>
     </a>
   
 
     <a
       class="product-art-card seo-prerender-card"
-      href="/urun/versace-vrscve3m00422-1006/"
-      data-product-id="1006"
+      href="/urun/rolex-126334-0014-5007/"
+      data-product-id="5007"
       style="text-decoration:none;color:inherit"
     >
       <div class="product-art-thumb">
         
         <img
           class="img-primary"
-          src="https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/2/3/23a7e47c774494ee347320da8d7eda18247c82eefd992d5e824cace222a45611.jpeg"
-          alt="Versace VRSCVE3M00422 Kadın Kol Saati"
+          src="https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=800&amp;auto=format&amp;fit=crop&amp;q=80"
+          alt="Rolex Datejust 41mm Wimbledon Yeşil Romen Rakamlı"
           loading="lazy"
         >
       </div>
 
       <div class="product-art-info">
-        <h3 class="prod-brand-name">Versace</h3>
-        <p class="prod-model-name">VRSCVE3M00422 Kadın Kol Saati</p>
-        <p class="prod-ref-size">VRSCVE3M00422</p>
-        <div class="prod-price-tag">₺50.470</div>
+        <h3 class="prod-brand-name">Rolex</h3>
+        <p class="prod-model-name">Datejust 41mm Wimbledon Yeşil Romen Rakamlı</p>
+        <p class="prod-ref-size">126334-0014</p>
+        <div class="prod-price-tag">₺775.320</div>
       </div>
     </a>
   
 
     <a
       class="product-art-card seo-prerender-card"
-      href="/urun/versace-vrscve3d00522-1007/"
-      data-product-id="1007"
+      href="/urun/rolex-126234-0050-5008/"
+      data-product-id="5008"
       style="text-decoration:none;color:inherit"
     >
       <div class="product-art-thumb">
         
         <img
           class="img-primary"
-          src="https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/4/c/4c2009f932d7207997dd9292813de554c98da5c0a3592d401c58ea66217249b4.jpeg"
-          alt="Versace VRSCVE3D00522 Kadın Kol Saati"
+          src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&amp;auto=format&amp;fit=crop&amp;q=80"
+          alt="Rolex Datejust 36mm Palm Motiv Yeşil Kadran"
           loading="lazy"
         >
       </div>
 
       <div class="product-art-info">
-        <h3 class="prod-brand-name">Versace</h3>
-        <p class="prod-model-name">VRSCVE3D00522 Kadın Kol Saati</p>
-        <p class="prod-ref-size">VRSCVE3D00522</p>
-        <div class="prod-price-tag">₺80.360</div>
+        <h3 class="prod-brand-name">Rolex</h3>
+        <p class="prod-model-name">Datejust 36mm Palm Motiv Yeşil Kadran</p>
+        <p class="prod-ref-size">126234-0050</p>
+        <div class="prod-price-tag">₺737.100</div>
       </div>
     </a>
   
 
     <a
       class="product-art-card seo-prerender-card"
-      href="/urun/versace-vrscve3c00222-1008/"
-      data-product-id="1008"
+      href="/urun/rolex-228238-0006-5009/"
+      data-product-id="5009"
       style="text-decoration:none;color:inherit"
     >
       <div class="product-art-thumb">
         
         <img
           class="img-primary"
-          src="https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/5/d/5d35c1a501df3fd017d474937d3f0ee23375d13156cadf56ddc1907a22816912.jpeg"
-          alt="Versace VRSCVE3C00222 Kadın Kol Saati"
+          src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&amp;auto=format&amp;fit=crop&amp;q=80"
+          alt="Rolex Day-Date 40mm 18K Sarı Altın Şampanya Kadran President"
           loading="lazy"
         >
       </div>
 
       <div class="product-art-info">
-        <h3 class="prod-brand-name">Versace</h3>
-        <p class="prod-model-name">VRSCVE3C00222 Kadın Kol Saati</p>
-        <p class="prod-ref-size">VRSCVE3C00222</p>
-        <div class="prod-price-tag">₺126.700</div>
+        <h3 class="prod-brand-name">Rolex</h3>
+        <p class="prod-model-name">Day-Date 40mm 18K Sarı Altın Şampanya Kadran President</p>
+        <p class="prod-ref-size">228238-0006</p>
+        <div class="prod-price-tag">₺2.402.400</div>
       </div>
     </a>
   
 
     <a
       class="product-art-card seo-prerender-card"
-      href="/urun/versace-vrscve1c00722-1009/"
-      data-product-id="1009"
+      href="/urun/rolex-228236-0010-5010/"
+      data-product-id="5010"
       style="text-decoration:none;color:inherit"
     >
       <div class="product-art-thumb">
         
         <img
           class="img-primary"
-          src="https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/f/6/f69133d5a53aa46a0f0072a9bc885a10dc08aeccddf1ffb32b7a3fa051e8bc0f.jpeg"
-          alt="Versace VRSCVE1C00722 Kadın Kol Saati"
+          src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&amp;auto=format&amp;fit=crop&amp;q=80"
+          alt="Rolex Day-Date 40mm Platin Buz Mavisi Kadran Yivli Bezel"
           loading="lazy"
         >
       </div>
 
       <div class="product-art-info">
-        <h3 class="prod-brand-name">Versace</h3>
-        <p class="prod-model-name">VRSCVE1C00722 Kadın Kol Saati</p>
-        <p class="prod-ref-size">VRSCVE1C00722</p>
-        <div class="prod-price-tag">₺44.226</div>
+        <h3 class="prod-brand-name">Rolex</h3>
+        <p class="prod-model-name">Day-Date 40mm Platin Buz Mavisi Kadran Yivli Bezel</p>
+        <p class="prod-ref-size">228236-0010</p>
+        <div class="prod-price-tag">₺3.931.200</div>
       </div>
     </a>
   
 
     <a
       class="product-art-card seo-prerender-card"
-      href="/urun/versace-vrscve2e00821-1010/"
-      data-product-id="1010"
+      href="/urun/rolex-124060-5011/"
+      data-product-id="5011"
       style="text-decoration:none;color:inherit"
     >
       <div class="product-art-thumb">
         
         <img
           class="img-primary"
-          src="https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/9/0/90ed91aaf6caecd641c82c73585df5764ac427b9cdf99bff1656dd51e88119a8.jpeg"
-          alt="Versace VRSCVE2E00821 Erkek Kol Saati"
+          src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&amp;auto=format&amp;fit=crop&amp;q=80"
+          alt="Rolex Submariner No-Date 41mm Oystersteel"
           loading="lazy"
         >
       </div>
 
       <div class="product-art-info">
-        <h3 class="prod-brand-name">Versace</h3>
-        <p class="prod-model-name">VRSCVE2E00821 Erkek Kol Saati</p>
-        <p class="prod-ref-size">VRSCVE2E00821</p>
-        <div class="prod-price-tag">₺44.881</div>
+        <h3 class="prod-brand-name">Rolex</h3>
+        <p class="prod-model-name">Submariner No-Date 41mm Oystersteel</p>
+        <p class="prod-ref-size">124060</p>
+        <div class="prod-price-tag">₺698.880</div>
       </div>
     </a>
   
 
     <a
       class="product-art-card seo-prerender-card"
-      href="/urun/versace-vrscve2e00721-1011/"
-      data-product-id="1011"
+      href="/urun/rolex-126610lv-5012/"
+      data-product-id="5012"
       style="text-decoration:none;color:inherit"
     >
       <div class="product-art-thumb">
         
         <img
           class="img-primary"
-          src="https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/c/2/c299df02b8bc4d85fb385e5f3e843ee722561e5bc186bb77a878beb58aac1870.jpeg"
-          alt="Versace VRSCVE2E00721 Erkek Kol Saati"
+          src="https://images.unsplash.com/photo-1547996160-71dfabbce5d7?w=800&amp;auto=format&amp;fit=crop&amp;q=80"
+          alt="Rolex Submariner Date 41mm &#39;Kermit / Starbucks&#39; Yeşil Bezel"
           loading="lazy"
         >
       </div>
 
       <div class="product-art-info">
-        <h3 class="prod-brand-name">Versace</h3>
-        <p class="prod-model-name">VRSCVE2E00721 Erkek Kol Saati</p>
-        <p class="prod-ref-size">VRSCVE2E00721</p>
-        <div class="prod-price-tag">₺44.881</div>
+        <h3 class="prod-brand-name">Rolex</h3>
+        <p class="prod-model-name">Submariner Date 41mm &#39;Kermit / Starbucks&#39; Yeşil Bezel</p>
+        <p class="prod-ref-size">126610LV</p>
+        <div class="prod-price-tag">₺884.520</div>
       </div>
     </a>
   
 
     <a
       class="product-art-card seo-prerender-card"
-      href="/urun/versace-vrscve2r00322-1012/"
-      data-product-id="1012"
+      href="/urun/rolex-126515ln-5013/"
+      data-product-id="5013"
       style="text-decoration:none;color:inherit"
     >
       <div class="product-art-thumb">
         
         <img
           class="img-primary"
-          src="https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/1/9/19cedc36767f19667ef9126df6ef935fd5f6a34d0a9ed8c1a9dea8142ffbbef1.jpeg"
-          alt="Versace VRSCVE2R00322 Kol Saati"
+          src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&amp;auto=format&amp;fit=crop&amp;q=80"
+          alt="Rolex Cosmograph Daytona 18K Everose Altın &amp; Oysterflex"
           loading="lazy"
         >
       </div>
 
       <div class="product-art-info">
-        <h3 class="prod-brand-name">Versace</h3>
-        <p class="prod-model-name">VRSCVE2R00322 Kol Saati</p>
-        <p class="prod-ref-size">VRSCVE2R00322</p>
-        <div class="prod-price-tag">₺142.800</div>
+        <h3 class="prod-brand-name">Rolex</h3>
+        <p class="prod-model-name">Cosmograph Daytona 18K Everose Altın &amp; Oysterflex</p>
+        <p class="prod-ref-size">126515LN</p>
+        <div class="prod-price-tag">₺2.293.200</div>
       </div>
     </a>
   
 
     <a
       class="product-art-card seo-prerender-card"
-      href="/urun/versace-vrscve2t00422-1013/"
-      data-product-id="1013"
+      href="/urun/rolex-124270-5014/"
+      data-product-id="5014"
       style="text-decoration:none;color:inherit"
     >
       <div class="product-art-thumb">
         
         <img
           class="img-primary"
-          src="https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/0/4/04d7080893b1951d9659518f31a8a83a07667410c7b84e14d096776514660360.jpeg"
-          alt="Versace VRSCVE2T00422 Erkek Kol Saati"
+          src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&amp;auto=format&amp;fit=crop&amp;q=80"
+          alt="Rolex Explorer 36mm Oystersteel Siyah Kadran"
           loading="lazy"
         >
       </div>
 
       <div class="product-art-info">
-        <h3 class="prod-brand-name">Versace</h3>
-        <p class="prod-model-name">VRSCVE2T00422 Erkek Kol Saati</p>
-        <p class="prod-ref-size">VRSCVE2T00422</p>
-        <div class="prod-price-tag">₺63.210</div>
+        <h3 class="prod-brand-name">Rolex</h3>
+        <p class="prod-model-name">Explorer 36mm Oystersteel Siyah Kadran</p>
+        <p class="prod-ref-size">124270</p>
+        <div class="prod-price-tag">₺485.940</div>
       </div>
     </a>
   
 
     <a
       class="product-art-card seo-prerender-card"
-      href="/urun/versace-vrscve2p00522-1014/"
-      data-product-id="1014"
+      href="/urun/rolex-226570-0001-5015/"
+      data-product-id="5015"
       style="text-decoration:none;color:inherit"
     >
       <div class="product-art-thumb">
         
         <img
           class="img-primary"
-          src="https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/0/e0718abb4c9cf9f43b0d336cef913cdc99d8e8628fe9f08ebd405df4cc5ac821.jpeg"
-          alt="Versace VRSCVE2P00522 Kadın Kol Saati"
+          src="https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=800&amp;auto=format&amp;fit=crop&amp;q=80"
+          alt="Rolex Explorer II 42mm Beyaz &#39;Polar&#39; Kadran"
           loading="lazy"
         >
       </div>
 
       <div class="product-art-info">
-        <h3 class="prod-brand-name">Versace</h3>
-        <p class="prod-model-name">VRSCVE2P00522 Kadın Kol Saati</p>
-        <p class="prod-ref-size">VRSCVE2P00522</p>
-        <div class="prod-price-tag">₺107.800</div>
+        <h3 class="prod-brand-name">Rolex</h3>
+        <p class="prod-model-name">Explorer II 42mm Beyaz &#39;Polar&#39; Kadran</p>
+        <p class="prod-ref-size">226570-0001</p>
+        <div class="prod-price-tag">₺649.740</div>
       </div>
     </a>
   
 
     <a
       class="product-art-card seo-prerender-card"
-      href="/urun/versace-vrscvez500321-1015/"
-      data-product-id="1015"
+      href="/urun/rolex-126655-5016/"
+      data-product-id="5016"
       style="text-decoration:none;color:inherit"
     >
       <div class="product-art-thumb">
         
         <img
           class="img-primary"
-          src="https://cdn.saatvesaat.com.tr/mnresize/800/-/media/catalog/product/e/c/ecbc144af4a0e08125acdda46baffbd5558a11f376e67d6057a48ab0e1df5215.jpeg"
-          alt="Versace VRSCVEZ500321 Kadın Kol Saati"
+          src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&amp;auto=format&amp;fit=crop&amp;q=80"
+          alt="Rolex Yacht-Master 40mm 18K Everose Altın &amp; Siyah Cerachrom"
           loading="lazy"
         >
       </div>
 
       <div class="product-art-info">
-        <h3 class="prod-brand-name">Versace</h3>
-        <p class="prod-model-name">VRSCVEZ500321 Kadın Kol Saati</p>
-        <p class="prod-ref-size">VRSCVEZ500321</p>
-        <div class="prod-price-tag">₺70.560</div>
+        <h3 class="prod-brand-name">Rolex</h3>
+        <p class="prod-model-name">Yacht-Master 40mm 18K Everose Altın &amp; Siyah Cerachrom</p>
+        <p class="prod-ref-size">126655</p>
+        <div class="prod-price-tag">₺1.610.700</div>
       </div>
     </a>
   
@@ -1427,6 +1507,44 @@
         </div>
       </section>
 
+    </div>
+  </section>
+
+  <!-- 0. ELİT KATEGORİ SAYFASI (HAUTE HORLOGERIE 200 MODEL) -->
+  <section id="page-elit-kategori" class="page">
+    <div class="container-art section-art">
+      <div class="page-category-hero" style="background:linear-gradient(135deg, #111413 0%, #1A2120 100%); color:#FFFFFF; border-radius:var(--radius-lg); padding:40px 32px; margin:0 0 32px; border:1px solid rgba(194, 167, 104, 0.4); text-align:center;">
+        <span class="hero-eyebrow" style="color:var(--color-gold); font-size:12px; letter-spacing:3px; font-weight:700;">HAUTE HORLOGERIE • CHRONO24 PİYASA BAZLI +%40 GÜVENCE FORMÜLÜ</span>
+        <h1 style="font-size:clamp(26px, 3.8vw, 38px); margin:12px 0 8px; font-family:var(--font-sans); font-weight:800; color:#FFFFFF;">Elit Kategori Lüks Saat Evleri</h1>
+        <p style="color:#C8C8D0; font-size:14.5px; max-width:760px; margin:0 auto 16px;">Rolex, Omega, Patek Philippe, Audemars Piguet, Breitling, Cartier, Tudor, TAG Heuer, IWC ve Panerai marka 200 ikonik saat modeli. 12 nokta bağımsız mekanizma testli ve uluslararası tescilli olarak Belgin Saat güvencesindedir.</p>
+        <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap; font-size:12px; color:var(--color-gold);">
+          <span>✦ 10 Prestij Marka &bull; 200 Doğrulanmış Model</span>
+          <span>✦ Chrono24 Global Serbest Piyasa +%40 Güvencesi</span>
+          <span>✦ İzmir Buca VIP Showroom Randevu &amp; Islak İmzalı Teslimat</span>
+        </div>
+      </div>
+
+      <div class="section-header-flex" style="flex-wrap:wrap; gap:16px; margin-bottom:24px;">
+        <div>
+          <h2 style="font-size:22px; font-weight:800;">Elit Koleksiyon Ürünleri</h2>
+          <p style="color:var(--color-muted); font-size:13.5px; margin-top:4px;" id="eliteWatchesSubHeader">10 prestij saat evinden seçilmiş en iyi 200 model</p>
+        </div>
+        <div class="watch-filter-tabs" id="eliteBrandFilterTabs">
+          <button class="hero-tab-btn elite-brand-filter-btn active" onclick="App.filterEliteWatchesByBrand('all', this)">⭐ Tümü (200)</button>
+          <button class="hero-tab-btn elite-brand-filter-btn" onclick="App.filterEliteWatchesByBrand('Rolex', this)">Rolex (20)</button>
+          <button class="hero-tab-btn elite-brand-filter-btn" onclick="App.filterEliteWatchesByBrand('Omega', this)">Omega (20)</button>
+          <button class="hero-tab-btn elite-brand-filter-btn" onclick="App.filterEliteWatchesByBrand('Patek Philippe', this)">Patek Philippe (20)</button>
+          <button class="hero-tab-btn elite-brand-filter-btn" onclick="App.filterEliteWatchesByBrand('Audemars Piguet', this)">Audemars Piguet (20)</button>
+          <button class="hero-tab-btn elite-brand-filter-btn" onclick="App.filterEliteWatchesByBrand('Breitling', this)">Breitling (20)</button>
+          <button class="hero-tab-btn elite-brand-filter-btn" onclick="App.filterEliteWatchesByBrand('Cartier', this)">Cartier (20)</button>
+          <button class="hero-tab-btn elite-brand-filter-btn" onclick="App.filterEliteWatchesByBrand('Tudor', this)">Tudor (20)</button>
+          <button class="hero-tab-btn elite-brand-filter-btn" onclick="App.filterEliteWatchesByBrand('TAG Heuer', this)">TAG Heuer (20)</button>
+          <button class="hero-tab-btn elite-brand-filter-btn" onclick="App.filterEliteWatchesByBrand('IWC Schaffhausen', this)">IWC (20)</button>
+          <button class="hero-tab-btn elite-brand-filter-btn" onclick="App.filterEliteWatchesByBrand('Panerai', this)">Panerai (20)</button>
+        </div>
+      </div>
+      <div class="products-grid-4" id="allEliteWatchesGrid"></div>
+      <div id="allEliteWatchesPagination" class="pdp-pagination-wrap"></div>
     </div>
   </section>
 

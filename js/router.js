@@ -3,23 +3,25 @@
 // ==========================================================
 
 const PAGE_TITLES = {
-  'ana-sayfa': "Belgin Kuyumculuk & Saat | Lüks Saat & Prestij Koleksiyonu",
-  'mucevherat': "Koleksiyon | Belgin Kuyumculuk & Saat",
-  'saatler': "Lüks Saatler & Yüksek Saatçilik | Belgin Kuyumculuk & Saat",
-  'seckin-urunler': "Seçkin Saatler & Prestij Koleksiyonu | Belgin Kuyumculuk & Saat",
-  'ikinci-el': "Seçkin Saatler & Prestij Koleksiyonu | Belgin Kuyumculuk & Saat",
-  'hikayemiz': "Hikayemiz & Mirasımız | Belgin Kuyumculuk & Saat",
-  'koleksiyonlar': "Özel Saat Koleksiyonları | Belgin Kuyumculuk & Saat",
-  'urun': "Ürün Detayı | Belgin Kuyumculuk & Saat",
-  'sepet': "Alışveriş Sepetim | Belgin Kuyumculuk & Saat",
-  'odeme': "Güvenli Ödeme | Belgin Kuyumculuk & Saat",
-  'favoriler': "İstek Listem & Favoriler | Belgin Kuyumculuk & Saat",
-  'hesabim': "VIP Müşteri Hesabı | Belgin Kuyumculuk & Saat",
-  'iletisim': "İletişim & Buca Showroom | Belgin Kuyumculuk & Saat",
-  'canli-fiyatlar': "Piyasa Bilgileri | Belgin Kuyumculuk & Saat",
-  'sertifika': "Sertifika Doğrulama | Belgin Kuyumculuk & Saat",
-  'basarili-odeme': "Sipariş Onayı | Belgin Kuyumculuk & Saat",
-  'basarisiz-odeme': "Ödeme Bildirimi | Belgin Kuyumculuk & Saat"
+  'ana-sayfa': "Belgin Saat | Lüks Saat & Prestij Koleksiyonu",
+  'elit-kategori': "Elit Kategori — Lüks Saat Evleri (Haute Horlogerie) | Belgin Saat",
+  'elit-saatler': "Elit Kategori — Lüks Saat Evleri (Haute Horlogerie) | Belgin Saat",
+  'mucevherat': "Koleksiyon | Belgin Saat",
+  'saatler': "Lüks Saatler & Yüksek Saatçilik | Belgin Saat",
+  'seckin-urunler': "Seçkin Saatler & Prestij Koleksiyonu | Belgin Saat",
+  'ikinci-el': "Seçkin Saatler & Prestij Koleksiyonu | Belgin Saat",
+  'hikayemiz': "Hikayemiz & Mirasımız | Belgin Saat",
+  'koleksiyonlar': "Özel Saat Koleksiyonları | Belgin Saat",
+  'urun': "Ürün Detayı | Belgin Saat",
+  'sepet': "Alışveriş Sepetim | Belgin Saat",
+  'odeme': "Güvenli Ödeme | Belgin Saat",
+  'favoriler': "İstek Listem & Favoriler | Belgin Saat",
+  'hesabim': "VIP Müşteri Hesabı | Belgin Saat",
+  'iletisim': "İletişim & Buca Showroom | Belgin Saat",
+  'canli-fiyatlar': "Piyasa Bilgileri | Belgin Saat",
+  'sertifika': "Sertifika Doğrulama | Belgin Saat",
+  'basarili-odeme': "Sipariş Onayı | Belgin Saat",
+  'basarisiz-odeme': "Ödeme Bildirimi | Belgin Saat"
 };
 
 const Router = {
@@ -28,6 +30,7 @@ const Router = {
   resolveLocation() {
     const path = location.pathname.replace(/\/+$/, '') || '/';
     if (path === '/') return { page: 'ana-sayfa' };
+    if (path === '/elit-kategori' || path === '/elit-saatler') return { page: 'elit-kategori' };
     if (path === '/canli-fiyatlar' || path === '/canlipiyasalar') return { page: 'ana-sayfa' };
     if (path === '/mucevherat') return { page: 'ana-sayfa' };
     if (path === '/saatler') return { page: 'saatler' };

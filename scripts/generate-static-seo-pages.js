@@ -58,15 +58,17 @@ function isUsed(p) {
 }
 
 function categoryKey(p) {
+  if (p.isElite || p.category === 'elit-saatler') return 'elit-kategori';
   if (isUsed(p)) return 'ikinci-el';
   const c = String(p.category || '').toLowerCase();
   if (/watch|saat/.test(c)) return 'saatler';
   if (/jewel|mucev|mücev|gold|altin|altın/.test(c) || p.isGold) return 'mucevherat';
-  return 'mucevherat';
+  return 'saatler';
 }
 
 function categoryLabel(key) {
   const labels = {
+    'elit-kategori': 'Elit Kategori — Lüks Saat Evleri',
     'saatler': 'Lüks Saatler',
     'mucevherat': 'Mücevherat ve Altın',
     'ikinci-el': 'Ekspertizli İkinci El'
@@ -387,9 +389,15 @@ function renderProductPage(p, indexHtml) {
 
 function renderCategoryPage(key, list, indexHtml) {
   const meta = {
+    'elit-kategori': {
+      title: 'Elit Kategori — Lüks Saat Evleri (Haute Horlogerie) | Belgin Saat',
+      description: 'Rolex, Omega, Patek Philippe, Audemars Piguet, Breitling, Cartier, Tudor, TAG Heuer, IWC, Panerai Chrono24 endeksli 200 ikonik lüks saat modeli.',
+      h1: 'Elit Kategori Lüks Saatler',
+      gridId: 'allEliteWatchesGrid'
+    },
     saatler: {
-      title: 'Lüks Saatler & Yüksek Saatçilik | Belgin Kuyumculuk İzmir Buca',
-      description: 'Belgin Kuyumculuk İzmir Buca lüks saat koleksiyonu. Marka, referans, fiyat ve stok bilgileriyle ürünleri inceleyin.',
+      title: 'Lüks Saatler & Yüksek Saatçilik | Belgin Saat İzmir Buca',
+      description: 'Belgin Saat İzmir Buca lüks saat koleksiyonu. Marka, referans, fiyat ve stok bilgileriyle ürünleri inceleyin.',
       h1: 'Lüks Saatler',
       gridId: 'allWatchesGrid'
     },
@@ -525,7 +533,7 @@ function buildRouteMap() {
 
 function main() {
   if (!Array.isArray(products) || products.length === 0) throw new Error('[seo-static] PRODUCTS boş.');
-  ['urun','saatler','mucevherat','ikinci-el'].forEach(ensureGeneratedDir);
+  ['urun','elit-kategori','saatler','mucevherat','ikinci-el'].forEach(ensureGeneratedDir);
   
   const indexHtmlPath = path.join(ROOT, 'index.html');
   const indexHtml = fs.readFileSync(indexHtmlPath, 'utf8');
@@ -537,7 +545,7 @@ function main() {
     seen.add(route);
     writeRoute(route, renderProductPage(p, indexHtml));
   }
-  for (const key of ['saatler','mucevherat','ikinci-el']) {
+  for (const key of ['elit-kategori','saatler','mucevherat','ikinci-el']) {
     writeRoute(CATEGORY_ROUTES[key], renderCategoryPage(key, products.filter(p => categoryKey(p) === key), indexHtml));
   }
   buildRouteMap();

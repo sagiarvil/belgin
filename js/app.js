@@ -204,6 +204,7 @@ const App = {
     Router.init();
 
     this.renderHome();
+    this.renderEliteWatches();
     this.renderWatches();
     this.renderJewellery();
     this.renderPreOwned();
@@ -282,6 +283,8 @@ const App = {
     showToast('Çerez tercihleriniz kaydedildi.', 'info');
   },
 
+  currentEliteBrand: 'all',
+  allEliteWatchPage: 1,
   currentWatchBrand: 'all',
   currentPreOwnedCategory: 'all',
   currentLiveRatesCategory: 'all',
@@ -290,6 +293,12 @@ const App = {
     switch (page) {
       case 'ana-sayfa':
         this.renderHome();
+        break;
+      case 'elit-kategori':
+      case 'elit-saatler':
+        const eliteFilter = (options.filter !== undefined && options.filter !== null) ? options.filter : (this.currentEliteBrand || 'all');
+        this.currentEliteBrand = eliteFilter;
+        this.renderEliteWatches(eliteFilter, 1);
         break;
       case 'canli-fiyatlar':
         this.renderLivePricesPage();
@@ -324,6 +333,7 @@ const App = {
 
   refreshViews() {
     this.renderHome();
+    this.renderEliteWatches();
     this.renderWatches();
     this.renderJewellery();
     this.renderPreOwned();
@@ -486,6 +496,82 @@ const App = {
         Router.scrollToTarget(target);
       }
     }, 40);
+  },
+
+  // 0. ELİT KATEGORİ SAYFASI (10 Prestij Marka & 200 Doğrulanmış Model)
+  renderEliteWatches(brandFilter = 'all', page = 1) {
+    this.currentEliteBrand = brandFilter;
+    this.allEliteWatchPage = page;
+    const el = document.getElementById('allEliteWatchesGrid');
+    const pagEl = document.getElementById('allEliteWatchesPagination');
+    if (!el) return;
+
+    let list = (typeof ELITE_WATCHES !== 'undefined' ? ELITE_WATCHES : PRODUCTS.filter(p => p.isElite || p.category === 'elit-saatler'));
+    if (brandFilter && brandFilter !== 'all') {
+      list = list.filter(p => p.brand.trim().toLowerCase() === brandFilter.trim().toLowerCase());
+    }
+
+    const total = list.length;
+    const start = (page - 1) * this.PAGE_SIZE;
+    const end = start + this.PAGE_SIZE;
+    const pageItems = list.slice(start, end);
+
+    el.innerHTML = pageItems.map(p => this.renderProductCard(p)).join('');
+
+    if (pagEl) {
+      pagEl.innerHTML = this.buildPaginationHtml(page, total, this.PAGE_SIZE, 'App.changeAllEliteWatchPage');
+    }
+
+    const subHeader = document.getElementById('eliteWatchesSubHeader');
+    if (subHeader) {
+      if (brandFilter && brandFilter !== 'all') {
+        subHeader.textContent = `${brandFilter} koleksiyonundan ${total} adet Chrono24 endeksli saat listeleniyor.`;
+      } else {
+        subHeader.textContent = `10 prestij saat evinden seçilmiş en iyi 200 model`;
+      }
+    }
+
+    // Update filter buttons UI
+    document.querySelectorAll('.elite-brand-filter-btn, .mobile-filter-pill').forEach(b => {
+      b.classList.remove('active');
+      const txt = b.textContent.trim().toLowerCase();
+      if ((brandFilter === 'all' || !brandFilter) && (txt.includes('tümü') || txt.includes('tüm elit'))) {
+        b.classList.add('active');
+      } else if (brandFilter && (txt === brandFilter.toLowerCase() || txt.startsWith(brandFilter.toLowerCase()))) {
+        b.classList.add('active');
+      }
+    });
+  },
+
+  changeAllEliteWatchPage(newPage) {
+    this.renderEliteWatches(this.currentEliteBrand || 'all', newPage);
+    setTimeout(() => {
+      const target = document.querySelector('#page-elit-kategori .section-header-flex') || document.getElementById('allEliteWatchesGrid');
+      if (target && typeof Router !== 'undefined' && Router.scrollToTarget) {
+        Router.scrollToTarget(target);
+      }
+    }, 40);
+  },
+
+  filterEliteWatchesByBrand(brand = 'all', btn = null) {
+    this.closeNavDropdowns();
+    this.currentEliteBrand = brand;
+    this.allEliteWatchPage = 1;
+    if (Router.currentPage !== 'elit-kategori') {
+      Router.navigate('elit-kategori', true, { filter: brand });
+    } else {
+      this.renderEliteWatches(brand, 1);
+    }
+    if (btn) {
+      document.querySelectorAll('.elite-brand-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+    setTimeout(() => {
+      const target = document.querySelector('#page-elit-kategori .section-header-flex') || document.getElementById('allEliteWatchesGrid');
+      if (target && typeof Router !== 'undefined' && Router.scrollToTarget) {
+        Router.scrollToTarget(target);
+      }
+    }, 60);
   },
 
   // 2. TÜM SAATLER SAYFASI (12.000 TL ve Üzeri Saat Modelleri - 24 Ürün / 6 Tam Sıra Sayfalama)

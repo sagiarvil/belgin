@@ -4,6 +4,8 @@ const { BASE_URL } = require('./seo-registry.js');
 
 const CATEGORY_ROUTES = Object.freeze({
   'ana-sayfa': '/',
+  'elit-kategori': '/elit-kategori/',
+  'elit-saatler': '/elit-kategori/',
   'saatler': '/saatler/',
   'mucevherat': '/mucevherat/',
   'seckin-urunler': '/seckin-urunler/',
