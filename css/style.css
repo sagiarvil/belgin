@@ -1209,6 +1209,197 @@ p, span, li, td, th, label, input, button, select, textarea {
 }
 
 /* ==========================================================
+   📖 BİZ KİMİZ — LUXURY FLIPBOOK & FOLIO VIEWER
+   ========================================================== */
+.biz-kimiz-hero {
+  background: radial-gradient(circle at 50% 20%, #1A2220 0%, #0D1211 100%);
+  border-radius: 16px;
+  padding: 48px 32px 40px;
+  text-align: center;
+  color: #FFF;
+  margin-bottom: 36px;
+  border: 1px solid rgba(194, 167, 104, 0.35);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+.biz-kimiz-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 32px;
+  max-width: 920px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.biz-kimiz-stat-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(194, 167, 104, 0.25);
+  border-radius: 10px;
+  padding: 16px 12px;
+  backdrop-filter: blur(8px);
+}
+.biz-kimiz-stat-val {
+  font-family: var(--font-heading);
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--color-gold-bright);
+}
+.biz-kimiz-stat-label {
+  font-size: 11.5px;
+  color: #CCC;
+  margin-top: 4px;
+}
+@media (max-width: 768px) {
+  .biz-kimiz-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Flipbook Stage */
+.flipbook-container {
+  background: #141A18;
+  border: 1px solid rgba(194, 167, 104, 0.3);
+  border-radius: 16px;
+  padding: 28px 24px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  margin-bottom: 48px;
+}
+.flipbook-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 16px;
+}
+.flipbook-tab-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(194, 167, 104, 0.3);
+  color: #E2DFD6;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.flipbook-tab-btn.active,
+.flipbook-tab-btn:hover {
+  background: var(--color-teal);
+  color: #FFF;
+  border-color: var(--color-teal);
+}
+.flipbook-stage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-height: 540px;
+  padding: 10px 0;
+}
+.flipbook-page-wrap {
+  display: flex;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(194, 167, 104, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+  max-width: 900px;
+  background: #FFF;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.flipbook-page-img {
+  width: 100%;
+  max-width: 580px;
+  height: auto;
+  display: block;
+  user-select: none;
+}
+.flipbook-stage.spread .flipbook-page-img {
+  max-width: 440px;
+}
+.flipbook-nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(26, 34, 32, 0.9);
+  border: 1px solid rgba(194, 167, 104, 0.5);
+  color: #FFF;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+.flipbook-nav-arrow:hover {
+  background: var(--color-teal);
+  border-color: var(--color-teal);
+  transform: translateY(-50%) scale(1.08);
+}
+.flipbook-nav-arrow.prev { left: 8px; }
+.flipbook-nav-arrow.next { right: 8px; }
+.flipbook-thumbs-strip {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 16px 4px 4px;
+  margin-top: 20px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(194,167,104,0.4) transparent;
+}
+.flipbook-thumb-item {
+  flex: 0 0 68px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+  opacity: 0.65;
+  transition: all 0.2s ease;
+  background: #222;
+}
+.flipbook-thumb-item:hover,
+.flipbook-thumb-item.active {
+  opacity: 1;
+  border-color: var(--color-gold);
+  transform: translateY(-2px);
+}
+.flipbook-thumb-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Chapters Narrative Grid */
+.biz-kimiz-chapters-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-bottom: 48px;
+}
+.biz-kimiz-chapter-card {
+  background: #FFF;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.biz-kimiz-chapter-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-gold);
+}
+@media (max-width: 768px) {
+  .biz-kimiz-chapters-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================
    📰 MAGAZİN MODÜLÜ — KARTLAR, GRİD VE EDİTORYAL TİPOGRAFİ
    ========================================================== */
 .magazine-grid {

@@ -7,6 +7,7 @@ const PAGE_TITLES = {
   'elit-kategori': "Elit Kategori — Lüks Saat Evleri (Haute Horlogerie) | Belgin Saat",
   'elit-saatler': "Elit Kategori — Lüks Saat Evleri (Haute Horlogerie) | Belgin Saat",
   'markalar': "Saat Markaları Dizini — Tüm Markalar | Belgin Saat",
+  'biz-kimiz': "Biz Kimiz — Kurumsal Profil & Ticaret Hafızası | Belgin Saat",
   'magazin': "Belgin Saat Magazin — Saat Dünyası & Piyasa Analizleri | Belgin Saat",
   'mucevherat': "Koleksiyon | Belgin Saat",
   'saatler': "Lüks Saatler & Yüksek Saatçilik | Belgin Saat",
@@ -35,6 +36,7 @@ const Router = {
       return { page: 'elit-kategori', filter: brand || 'all' };
     }
     if (path === '/markalar' || path === '/saat-markalari') return { page: 'markalar' };
+    if (path === '/biz-kimiz' || path === '/kurumsal-profil' || path === '/hakkimizda') return { page: 'biz-kimiz' };
     if (path === '/magazin' || path === '/magazine' || path === '/saat-magazin') return { page: 'magazin' };
     if (path === '/canli-fiyatlar' || path === '/canlipiyasalar') return { page: 'ana-sayfa' };
     if (path === '/mucevherat') return { page: 'ana-sayfa' };
@@ -88,6 +90,8 @@ const Router = {
       'ikinci-el': '/elit-kategori/',
       'preowned': '/elit-kategori/',
       'markalar': '/markalar/',
+      'biz-kimiz': '/biz-kimiz/',
+      'kurumsal-profil': '/biz-kimiz/',
       'magazin': '/magazin/',
       'magazine': '/magazin/',
       'odeme': '#odeme',

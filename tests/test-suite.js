@@ -15,6 +15,7 @@ function read(file) { return fs.readFileSync(path.join(__dirname, '..', file), '
 
 const dataContent = read('js/data.js');
 vm.runInThisContext(dataContent);
+const WATCHES = PRODUCTS.filter(p => p.category === 'saat' || p.category === 'elit-saatler' || p.isWatch || p.isElite);
 
 console.log('\n========================================');
 console.log('BELGIN KUYUMCULUK TEST RUNNER');

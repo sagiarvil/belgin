@@ -401,6 +401,12 @@ function renderCategoryPage(key, list, indexHtml) {
       h1: 'Saat Markaları',
       gridId: 'allWatchesGrid'
     },
+    'biz-kimiz': {
+      title: 'Biz Kimiz — Kurumsal Profil & Ticaret Hafızası | Belgin Saat',
+      description: '20 yılı aşan ticaret hafızası, You Watch ile kanıtlanmış marka kurma deneyimi ve seçkin müşteri çevresi bugün yüksek değerli saat ticaretine odaklanmaktadır.',
+      h1: 'Biz Kimiz — Kurumsal Profil',
+      gridId: 'flipbookStage'
+    },
     magazin: {
       title: 'Belgin Saat Magazin — Saat Dünyası & Piyasa Analizleri | Belgin Saat',
       description: 'Lüks saat dünyasından en son haberler, piyasa değer raporları, Rolex, Patek Philippe ve Omega analizleri, koleksiyoner alıcı rehberleri.',
@@ -519,7 +525,9 @@ function renderCategoryPage(key, list, indexHtml) {
     'category JSON-LD'
   );
 
-  if (meta.gridId === 'magazineArticlesGrid') {
+  if (key === 'biz-kimiz') {
+    // Biz Kimiz has full interactive folio and editorial chapters pre-rendered in HTML
+  } else if (meta.gridId === 'magazineArticlesGrid') {
     const magRegex = /<div class="magazine-grid" id="magazineArticlesGrid">[\s\S]*?<\/div>/i;
     pageHtml = replaceFirst(
       pageHtml,
@@ -527,7 +535,7 @@ function renderCategoryPage(key, list, indexHtml) {
       `<div class="magazine-grid" id="magazineArticlesGrid"></div>`,
       `${meta.gridId} magazine grid`
     );
-  } else if (meta.gridId && meta.gridId !== 'allWatchesGrid' || key !== 'markalar') {
+  } else if (meta.gridId && (meta.gridId !== 'allWatchesGrid' || key !== 'markalar')) {
     const emptyGrid = new RegExp(
       `<div class="products-grid-4" id="${meta.gridId}">[\\s\\S]*?<\\/div>`,
       'i'
@@ -554,7 +562,7 @@ function buildRouteMap() {
 
 function main() {
   if (!Array.isArray(products) || products.length === 0) throw new Error('[seo-static] PRODUCTS boş.');
-  ['urun','elit-kategori','markalar','magazin','saatler','mucevherat'].forEach(ensureGeneratedDir);
+  ['urun','elit-kategori','markalar','biz-kimiz','magazin','saatler','mucevherat'].forEach(ensureGeneratedDir);
   
   const indexHtmlPath = path.join(ROOT, 'index.html');
   const indexHtml = fs.readFileSync(indexHtmlPath, 'utf8');
@@ -566,7 +574,7 @@ function main() {
     seen.add(route);
     writeRoute(route, renderProductPage(p, indexHtml));
   }
-  for (const key of ['elit-kategori','markalar','magazin','saatler','mucevherat']) {
+  for (const key of ['elit-kategori','markalar','biz-kimiz','magazin','saatler','mucevherat']) {
     writeRoute(CATEGORY_ROUTES[key], renderCategoryPage(key, products.filter(p => categoryKey(p) === key), indexHtml));
   }
   buildRouteMap();

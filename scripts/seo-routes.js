@@ -7,6 +7,7 @@ const CATEGORY_ROUTES = Object.freeze({
   'elit-kategori': '/elit-kategori/',
   'elit-saatler': '/elit-kategori/',
   'markalar': '/markalar/',
+  'biz-kimiz': '/biz-kimiz/',
   'magazin': '/magazin/',
   'saatler': '/saatler/',
   'mucevherat': '/mucevherat/'

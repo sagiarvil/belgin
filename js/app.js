@@ -209,6 +209,7 @@ const App = {
     this.renderJewellery();
     this.renderPreOwned();
     this.renderMagazineGrid('all', 1);
+    this.renderFlipbook();
     this.initHeroRotator();
     this.updateHeaderCartCount();
     this.checkCookieBanner();
@@ -3374,6 +3375,69 @@ const App = {
     const modal = document.getElementById('magazineArticleModal');
     if (modal) modal.style.display = 'none';
     document.body.style.overflow = '';
+  },
+
+  // ==========================================================
+  // 📖 BİZ KİMİZ — LUXURY FLIPBOOK & FOLIO ENGINE
+  // ==========================================================
+  currentFlipbookPage: 1,
+  totalFlipbookPages: 10,
+  flipbookSpreadMode: false,
+
+  setFlipbookPage(page) {
+    if (page < 1) page = 1;
+    if (page > this.totalFlipbookPages) page = this.totalFlipbookPages;
+    this.currentFlipbookPage = page;
+    this.renderFlipbook();
+  },
+
+  nextFlipbookPage() {
+    const step = this.flipbookSpreadMode ? 2 : 1;
+    this.setFlipbookPage(this.currentFlipbookPage + step);
+  },
+
+  prevFlipbookPage() {
+    const step = this.flipbookSpreadMode ? 2 : 1;
+    this.setFlipbookPage(this.currentFlipbookPage - step);
+  },
+
+  setFlipbookMode(isSpread) {
+    this.flipbookSpreadMode = isSpread;
+    document.querySelectorAll('.flipbook-tab-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.mode === (isSpread ? 'spread' : 'single'));
+    });
+    this.renderFlipbook();
+  },
+
+  renderFlipbook() {
+    const wrap = document.getElementById('flipbookPageWrap');
+    const stage = document.getElementById('flipbookStage');
+    const counter = document.getElementById('flipbookCounter');
+    const thumbs = document.querySelectorAll('.flipbook-thumb-item');
+    if (!wrap || !stage) return;
+
+    stage.classList.toggle('spread', this.flipbookSpreadMode);
+
+    if (this.flipbookSpreadMode) {
+      const leftPage = this.currentFlipbookPage % 2 === 0 ? this.currentFlipbookPage - 1 : this.currentFlipbookPage;
+      const rightPage = leftPage + 1;
+      
+      let html = `<img src="/images/biz-kimiz/page-${leftPage}.jpg" class="flipbook-page-img" alt="Sayfa ${leftPage}">`;
+      if (rightPage <= this.totalFlipbookPages) {
+        html += `<img src="/images/biz-kimiz/page-${rightPage}.jpg" class="flipbook-page-img" alt="Sayfa ${rightPage}">`;
+      }
+      wrap.innerHTML = html;
+      if (counter) counter.textContent = `Sayfa ${leftPage}${rightPage <= this.totalFlipbookPages ? '-' + rightPage : ''} / ${this.totalFlipbookPages}`;
+    } else {
+      wrap.innerHTML = `<img src="/images/biz-kimiz/page-${this.currentFlipbookPage}.jpg" class="flipbook-page-img" alt="Sayfa ${this.currentFlipbookPage}">`;
+      if (counter) counter.textContent = `Sayfa ${this.currentFlipbookPage} / ${this.totalFlipbookPages}`;
+    }
+
+    // Update active thumb
+    thumbs.forEach((t, idx) => {
+      const pNum = idx + 1;
+      t.classList.toggle('active', pNum === this.currentFlipbookPage || (this.flipbookSpreadMode && (pNum === this.currentFlipbookPage || pNum === this.currentFlipbookPage + 1)));
+    });
   }
 };
 
