@@ -1316,8 +1316,7 @@ const App = {
           <h3 style="font-size:16px; font-weight:700; color:var(--color-ink); margin:24px 0 10px;">Kutu İçeriği:</h3>
           <ul style="padding-left:20px; margin-bottom:16px; display:flex; flex-direction:column; gap:6px;">
             <li>Orijinal ${p.brand} Lüks Saat Kutusu ve Koruma Ambalajı</li>
-            <li>Ürüne ait garanti belgesi ve satış faturası</li>
-            <li>Türkçe Kullanım Kılavuzu ve Mekanizma Bakım Kartı</li>
+            <li>Ürüne ait resmi garanti belgesi ve seri numaralı sertifikası</li>
             <li>Belgin Kuyumculuk Satış Faturası ve Yetkili Belgesi</li>
           </ul>
         </div>
