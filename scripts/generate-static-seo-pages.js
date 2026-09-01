@@ -238,6 +238,26 @@ function renderSeoProductCard(p) {
   `;
 }
 
+function renderSeoMagazineCard(art) {
+  const imgSrc = (art.image || '/images/hero/hero-rolex-lineup.jpg').replace(/^\//, '');
+  return `
+    <article class="magazine-card" onclick="App.openMagazineArticle('${esc(art.id)}')" data-article-id="${esc(art.id)}">
+      <div class="mag-card-media">
+        <img src="/${esc(imgSrc)}" alt="${esc(art.title)}" loading="lazy" decoding="async" onerror="this.src='/images/hero/hero-rolex-lineup.jpg'">
+        <span class="mag-card-badge">${esc(art.category)}</span>
+      </div>
+      <div class="mag-card-body">
+        <h3 class="mag-card-title">${esc(art.title)}</h3>
+        <p class="mag-card-excerpt">${esc(art.summary)}</p>
+        <div class="mag-card-meta">
+          <span class="mag-card-date">📅 ${esc(art.publish_date)}</span>
+          <span class="mag-read-link">Devamını Oku →</span>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
 function prerenderPdpContent(p) {
   const ref = p.reference || p.ref || p.id;
   const image = productImage(p);
@@ -528,11 +548,17 @@ function renderCategoryPage(key, list, indexHtml) {
   if (key === 'biz-kimiz') {
     // Biz Kimiz has full interactive folio and editorial chapters pre-rendered in HTML
   } else if (meta.gridId === 'magazineArticlesGrid') {
+    let magArticles = [];
+    try {
+      const magModule = require('../js/magazine_data.js');
+      magArticles = magModule.MAGAZINE_ARTICLES || [];
+    } catch (e) {}
+    const magCards = magArticles.map(renderSeoMagazineCard).join('\n');
     const magRegex = /<div class="magazine-grid" id="magazineArticlesGrid">[\s\S]*?<\/div>/i;
     pageHtml = replaceFirst(
       pageHtml,
       magRegex,
-      `<div class="magazine-grid" id="magazineArticlesGrid"></div>`,
+      `<div class="magazine-grid" id="magazineArticlesGrid">${magCards}</div>`,
       `${meta.gridId} magazine grid`
     );
   } else if (meta.gridId && (meta.gridId !== 'allWatchesGrid' || key !== 'markalar')) {

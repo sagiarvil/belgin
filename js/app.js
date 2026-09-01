@@ -3348,8 +3348,7 @@ const App = {
         <h1 class="mag-modal-title">${typeof escapeHtml === 'function' ? escapeHtml(art.title) : art.title}</h1>
         <div class="mag-modal-meta-row">
           <span>📅 ${typeof escapeHtml === 'function' ? escapeHtml(art.publish_date) : art.publish_date}</span>
-          <span>✍️ ${typeof escapeHtml === 'function' ? escapeHtml(art.author) : art.author}</span>
-          <span>⏱️ ${typeof escapeHtml === 'function' ? escapeHtml(art.read_time) : art.read_time}</span>
+          <span>⏱️ ${typeof escapeHtml === 'function' ? escapeHtml(art.read_time || '5 dk okuma') : (art.read_time || '5 dk okuma')}</span>
         </div>
         <div class="mag-modal-body">
           ${art.content_html}
