@@ -4,9 +4,9 @@
 // ==========================================================
 
 const SeoManager = {
-  defaultTitle: "Belgin Kuyumculuk | Lüks Saat, İkinci El & Mücevherat (Est. 1999)",
-  defaultDesc: "İzmir Buca Menderes Caddesinde 1999'dan beri ekspertizli Rolex, Patek Philippe, Cartier saatler, 24K has altın ve elmas mücevherat. Alım, satım ve takas.",
-  defaultKeywords: "izmir buca kuyumcu, ikinci el lüks saat, altın bilezik, rolex izmir, cartier izmir, pırlanta tektaş, güvenilir saat ekspertiz, buca kuyumcuları",
+  defaultTitle: "Belgin Kuyumculuk & Saat | Lüks Saat & Prestij Koleksiyonu (Est. 1999)",
+  defaultDesc: "İzmir Buca Menderes Caddesinde 1999'dan beri ekspertizli Rolex, Patek Philippe, Cartier ve lüks saat modelleri. Alım, satım ve takas.",
+  defaultKeywords: "izmir buca lüks saat, ikinci el lüks saat, rolex izmir, cartier izmir, güvenilir saat ekspertiz, buca saat modelleri",
   baseUrl: "https://www.belginkuyumculuk.com",
 
   init() {
@@ -17,44 +17,44 @@ const SeoManager = {
     // 1. Gelişmiş Meta Tanımları
     const pageMeta = {
       'ana-sayfa': {
-        title: "Belgin Kuyumculuk | Lüks Saat, İkinci El & Mücevherat (Est. 1999)",
-        desc: "İzmir Buca Menderes Caddesinde 1999'dan beri ekspertizli Rolex, Patek Philippe, Cartier saatler, 24K has altın ve elmas mücevherat. Alım, satım ve takas.",
-        keywords: "izmir buca kuyumcu, ikinci el lüks saat, altın bilezik, rolex izmir, cartier izmir, pırlanta tektaş, güvenilir saat ekspertiz, buca kuyumcuları",
+        title: "Belgin Kuyumculuk & Saat | Lüks Saat & Prestij Koleksiyonu (Est. 1999)",
+        desc: "İzmir Buca Menderes Caddesinde 1999'dan beri ekspertizli Rolex, Patek Philippe, Cartier ve lüks saat modelleri. Alım, satım ve takas.",
+        keywords: "izmir buca lüks saat, ikinci el lüks saat, rolex izmir, cartier izmir, güvenilir saat ekspertiz, buca saat modelleri",
         breadcrumb: "Ana Sayfa"
       },
       'saatler': {
-        title: "Lüks Saatler & Yüksek Saatçilik | Belgin Kuyumculuk",
+        title: "Lüks Saatler & Yüksek Saatçilik | Belgin Kuyumculuk & Saat",
         desc: "Ekspertizli ikinci el ve sıfır Rolex, Patek Philippe, Audemars Piguet, TAG Heuer, Longines ve Rado lüks saat modelleri. 12 nokta mekanizma garantisi.",
         keywords: "ikinci el rolex, tag heuer carrera, longines hydroconquest, rado captain cook, izmir lüks saat, ekspertizli saat, patek philippe izmir",
         breadcrumb: "Lüks Saatler"
       },
       'mucevherat': {
-        title: "Tasarım Mücevher Koleksiyonu & Altın | Belgin Kuyumculuk",
-        desc: "İkonik Cartier Juste un Clou bilezikler, kolyeler, pırlanta tektaş yüzükler ve 18K masif altın kelepçeler. Orijinallik ve gemoloji raporu onaylı.",
-        keywords: "cartier juste un clou, cartier bilezik, altın kolye, pırlanta gerdanlık, 18k altın, elmas yüzük, izmir mücevherat",
-        breadcrumb: "Mücevherat"
+        title: "Özel Koleksiyon | Belgin Kuyumculuk & Saat",
+        desc: "Lüks ve seçkin prestij parçaları.",
+        keywords: "lüks saat, seçkin koleksiyon, izmir",
+        breadcrumb: "Koleksiyon"
       },
       'ikinci-el': {
-        title: "Ekspertizli İkinci El Altın & Saat | Belgin Kuyumculuk",
-        desc: "Darphane damgalı masif 18K/22K altın kelepçeler, kolyeler ve ekspertiz raporlu lüks saat modellerinde en iyi fiyat garantisi ve takas imkanı.",
-        keywords: "ikinci el altın, altın takas, fast ile ödeme, darphane damgalı altın, 22 ayar altın, ikinci el saat alım satım",
-        breadcrumb: "İkinci El"
+        title: "Ekspertizli Seçkin Saatler | Belgin Kuyumculuk & Saat",
+        desc: "12 nokta teknik ekspertiz raporlu lüks saat modellerinde en iyi fiyat güvencesi ve takas imkanı.",
+        keywords: "ikinci el saat, saat takas, fast ile ödeme, sertifikalı saat, ikinci el saat alım satım",
+        breadcrumb: "Seçkin Saatler"
       },
       'hikayemiz': {
-        title: "Hikayemiz & 1999'dan Beri Güven Mirası | Belgin Kuyumculuk",
+        title: "Hikayemiz & 1999'dan Beri Güven Mirası | Belgin Kuyumculuk & Saat",
         desc: "1999 yılından bu yana İzmir Buca'da değişmeyen adresimizde dürüstlük, şeffaf ekspertiz ve sarsılmaz müşteri memnuniyeti ilkeleriyle hizmet veriyoruz.",
-        keywords: "belgin kuyumculuk hakkında, buca en eski kuyumcu, 1999 kuyumcu izmir, güvenilir sarraf izmir",
+        keywords: "belgin kuyumculuk hakkında, buca en eski saat mağazası, 1999 lüks saat izmir, güvenilir saat ekspertiz",
         breadcrumb: "Hikayemiz"
       },
       'iletisim': {
-        title: "İletişim & Buca Showroom VIP Randevu | Belgin Kuyumculuk",
+        title: "İletişim & Buca Showroom VIP Randevu | Belgin Kuyumculuk & Saat",
         desc: "Menderes Caddesi No:231/B Buca İzmir showroom adresimiz, telefon numaralarımız ve VIP WhatsApp randevu alma kanallarımız.",
-        keywords: "belgin kuyumculuk adres, buca kuyumcu telefon, vip randevu kuyumcu, yol tarifi buca kuyumcu",
+        keywords: "belgin kuyumculuk adres, buca telefon, vip randevu, yol tarifi buca showroom",
         breadcrumb: "İletişim"
       },
       'sepet': {
-        title: "Mücevher Kasası & Alışveriş Sepetim | Belgin Kuyumculuk",
-        desc: "Sepetinizdeki seçkin saat ve mücevher parçalarını görüntüleyin. BDDK lisanslı PayTR 3D Secure ile güvenli ödemeye geçin.",
+        title: "Alışveriş Sepetim | Belgin Kuyumculuk & Saat",
+        desc: "Sepetinizdeki seçkin saat parçalarını görüntüleyin. BDDK lisanslı PayTR 3D Secure ile güvenli ödemeye geçin.",
         keywords: "sepetim, güvenli kasa, lüks ödeme, paytr sepet",
         breadcrumb: "Sepetim"
       },

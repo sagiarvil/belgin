@@ -3,23 +3,23 @@
 // ==========================================================
 
 const PAGE_TITLES = {
-  'ana-sayfa': "Belgin Kuyumculuk | Lüks Mücevher, Pırlanta & Saat",
-  'mucevherat': "Mücevher Koleksiyonu | Belgin Kuyumculuk",
-  'saatler': "Lüks Saatler & Yüksek Saatçilik | Belgin Kuyumculuk",
-  'seckin-urunler': "Seçkin Ürünler & Altın | Belgin Kuyumculuk",
-  'ikinci-el': "Seçkin Ürünler & Altın | Belgin Kuyumculuk",
-  'hikayemiz': "Hikayemiz & Tarihçe | Belgin Kuyumculuk",
-  'koleksiyonlar': "Özel Koleksiyonlar & Haute Joaillerie | Belgin Kuyumculuk",
-  'urun': "Ürün Detayı | Belgin Kuyumculuk",
-  'sepet': "Mücevher Kasası & Sepetim | Belgin Kuyumculuk",
-  'odeme': "Güvenli Ödeme | Belgin Kuyumculuk",
-  'favoriler': "İstek Listem & Favoriler | Belgin Kuyumculuk",
-  'hesabim': "VIP Müşteri Hesabı | Belgin Kuyumculuk",
-  'iletisim': "İletişim & Buca Showroom Mağazamız | Belgin Kuyumculuk",
-  'canli-fiyatlar': "Canlı Altın & Piyasa Fiyatları | Belgin Kuyumculuk",
-  'sertifika': "Sertifika Doğrulama | Belgin Kuyumculuk",
-  'basarili-odeme': "Sipariş Onayı | Belgin Kuyumculuk",
-  'basarisiz-odeme': "Ödeme Bildirimi | Belgin Kuyumculuk"
+  'ana-sayfa': "Belgin Kuyumculuk & Saat | Lüks Saat & Prestij Koleksiyonu",
+  'mucevherat': "Koleksiyon | Belgin Kuyumculuk & Saat",
+  'saatler': "Lüks Saatler & Yüksek Saatçilik | Belgin Kuyumculuk & Saat",
+  'seckin-urunler': "Seçkin Saatler & Prestij Koleksiyonu | Belgin Kuyumculuk & Saat",
+  'ikinci-el': "Seçkin Saatler & Prestij Koleksiyonu | Belgin Kuyumculuk & Saat",
+  'hikayemiz': "Hikayemiz & Mirasımız | Belgin Kuyumculuk & Saat",
+  'koleksiyonlar': "Özel Saat Koleksiyonları | Belgin Kuyumculuk & Saat",
+  'urun': "Ürün Detayı | Belgin Kuyumculuk & Saat",
+  'sepet': "Alışveriş Sepetim | Belgin Kuyumculuk & Saat",
+  'odeme': "Güvenli Ödeme | Belgin Kuyumculuk & Saat",
+  'favoriler': "İstek Listem & Favoriler | Belgin Kuyumculuk & Saat",
+  'hesabim': "VIP Müşteri Hesabı | Belgin Kuyumculuk & Saat",
+  'iletisim': "İletişim & Buca Showroom | Belgin Kuyumculuk & Saat",
+  'canli-fiyatlar': "Piyasa Bilgileri | Belgin Kuyumculuk & Saat",
+  'sertifika': "Sertifika Doğrulama | Belgin Kuyumculuk & Saat",
+  'basarili-odeme': "Sipariş Onayı | Belgin Kuyumculuk & Saat",
+  'basarisiz-odeme': "Ödeme Bildirimi | Belgin Kuyumculuk & Saat"
 };
 
 const Router = {
