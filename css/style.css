@@ -103,7 +103,7 @@ p, span, li, td, th, label, input, button, select, textarea {
 }
 
 /* SPA Sayfa İzolasyonu */
-.page { display: none !important; }
+.page { display: none; }
 .page.active { display: block !important; animation: pageFade 0.3s var(--ease-silk); }
 @keyframes pageFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
