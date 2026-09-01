@@ -500,7 +500,7 @@ function renderCategoryPage(key, list, indexHtml) {
   );
 
   const emptyGrid = new RegExp(
-    `<div class="products-grid-4" id="${meta.gridId}"></div>`,
+    `<div class="products-grid-4" id="${meta.gridId}">[\\s\\S]*?<\\/div>`,
     'i'
   );
 
