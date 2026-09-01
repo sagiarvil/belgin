@@ -3574,18 +3574,23 @@ p, span, li, td, th, label, input, button, select, textarea {
   border-bottom: 1px solid rgba(240, 236, 228, 0.85);
   overflow: hidden;
 }
-.img-primary, .img-hover {
+.img-primary {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain !important;
   padding: 14px;
-  transition: opacity 0.5s var(--ease-silk), transform 0.6s var(--ease-silk);
+  opacity: 1 !important;
+  transition: transform 0.5s var(--ease-silk);
 }
-.img-hover { opacity: 0; }
-.product-art-card:hover .img-primary { opacity: 0; transform: scale(1.06); }
-.product-art-card:hover .img-hover { opacity: 1; transform: scale(1.06); }
+.img-hover {
+  display: none !important;
+}
+.product-art-card:hover .img-primary {
+  opacity: 1 !important;
+  transform: scale(1.05);
+}
 
 .badge-stock-teal {
   position: absolute;

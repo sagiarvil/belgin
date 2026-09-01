@@ -849,7 +849,6 @@ const App = {
           ${isPreOwned ? '<span class="badge-cond-gold">İkinci El</span>' : ''}
           ${p.brand === 'Carren' ? '<span class="badge-shipping-pill" style="position:absolute; top:10px; left:10px; background:rgba(0,48,87,0.92); color:#FFFFFF; padding:4px 8px; border-radius:4px; font-size:10px; font-weight:700; letter-spacing:0.5px; z-index:2; backdrop-filter:blur(4px); border:1px solid rgba(255,255,255,0.2);">📦 Kargo ile Teslimat</span>' : ''}
           <img class="img-primary" src="${p.image}" alt="${p.brand} ${p.name}" loading="lazy">
-          <img class="img-hover" src="${hoverImg}" alt="${p.brand} ${p.name}" loading="lazy">
         </div>
         <div class="product-art-info">
           <h3 class="prod-brand-name">${p.brand}</h3>
