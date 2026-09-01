@@ -61,155 +61,68 @@ const ValuationEngine = {
     }
   },
 
-  // Simülatör Arayüzünü Güncelle (Altın vs Saat Tab Seçimi)
+  // Simülatör Arayüzünü Güncelle (Yalnızca Lüks Saat Ekspertiz & Değerleme)
   renderSimulator() {
     const container = document.getElementById('valuationSimulatorBox');
     if (!container) return;
 
-    const mode = this.currentMode || 'watch';
+    this.currentMode = 'watch';
 
-    if (mode === 'gold') {
-      const hasGramPrice = (typeof LIVE_MARKET_DATA !== 'undefined' && LIVE_MARKET_DATA.gramGold24k ? LIVE_MARKET_DATA.gramGold24k : 7111);
-      
-      container.innerHTML = `
-        <div class="val-tab-bar" style="display:none;">
-          <button class="btn-val-tab active" onclick="ValuationEngine.switchMode('gold')">
-            <span>🪙</span>
-            <span>Masif Altın & Ziynet Değerleme</span>
-          </button>
-          <button class="btn-val-tab" onclick="ValuationEngine.switchMode('watch')">
-            <span>⌚</span>
-            <span>Lüks Saat Ekspertiz & Değerleme</span>
-          </button>
+    container.innerHTML = `
+      <div class="val-calc-body">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+          <div>
+            <label style="font-size:12px; font-weight:700; color:var(--color-teal); display:block; margin-bottom:6px;">Saat Markası</label>
+            <select id="watchBrandSelect" onchange="ValuationEngine.onWatchBrandChange()" style="width:100%; padding:11px 14px; border:1px solid rgba(194,167,104,0.4); border-radius:8px; font-size:13.5px; font-weight:600; background:#fff; color:var(--color-ink);">
+              <option value="rolex">Rolex</option>
+              <option value="patek">Patek Philippe</option>
+              <option value="ap">Audemars Piguet</option>
+              <option value="cartier">Cartier</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:12px; font-weight:700; color:var(--color-teal); display:block; margin-bottom:6px;">Model / Seri</label>
+            <select id="watchModelSelect" onchange="ValuationEngine.calculateWatch()" style="width:100%; padding:11px 14px; border:1px solid rgba(194,167,104,0.4); border-radius:8px; font-size:13.5px; font-weight:600; background:#fff; color:var(--color-ink);"></select>
+          </div>
         </div>
 
-        <div class="val-calc-body">
-          <div style="display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:16px; margin-bottom:20px;">
-            
-            <!-- 1. Altın Kategorisi & Ayar -->
-            <div>
-              <label style="font-size:12px; font-weight:700; color:var(--color-teal); display:block; margin-bottom:6px;">Altın Türü & Ayarı</label>
-              <select id="goldPuritySelect" onchange="ValuationEngine.onPurityChange()" style="width:100%; padding:11px 14px; border:1px solid rgba(194,167,104,0.4); border-radius:8px; font-size:13.5px; font-weight:600; background:#fff; color:var(--color-ink);">
-                <optgroup label="Masif & Hurda Altın">
-                  <option value="24k">24 Ayar Külçe / Has Altın (%99.5)</option>
-                  <option value="22k" selected>22 Ayar Burma / Ajda Bilezik (%91.6)</option>
-                  <option value="18k">18 Ayar Mücevher Altını (%75.0)</option>
-                  <option value="14k">14 Ayar Takı Altını (%58.5)</option>
-                  <option value="8k">8 Ayar Takı Altını (%33.3)</option>
-                </optgroup>
-                <optgroup label="Sarrafiye / Darphane Altınları">
-                  <option value="ceyrek">Çeyrek Altın (1.75 gr • 22K)</option>
-                  <option value="yarim">Yarım Altın (3.50 gr • 22K)</option>
-                  <option value="tam">Tam / Ziynet Altın (7.00 gr • 22K)</option>
-                  <option value="ata">Ata / Cumhuriyet Altını (7.21 gr • 22K)</option>
-                  <option value="gremse">Gremse Altın (17.54 gr • 22K)</option>
-                </optgroup>
-              </select>
-            </div>
-
-            <!-- 2. Gram Ağırlığı veya Adet -->
-            <div>
-              <label id="goldAmountLabel" style="font-size:12px; font-weight:700; color:var(--color-teal); display:block; margin-bottom:6px;">Net Ağırlık (Gram)</label>
-              <input type="number" id="goldWeightInput" value="25.00" step="0.5" min="0.5" oninput="ValuationEngine.calculateGold()" style="width:100%; padding:11px 14px; border:1px solid rgba(194,167,104,0.4); border-radius:8px; font-size:14px; font-weight:700; background:#fff; color:var(--color-teal);">
-            </div>
-
-            <!-- 3. Taş & Fire Durumu -->
-            <div>
-              <label style="font-size:12px; font-weight:700; color:var(--color-teal); display:block; margin-bottom:6px;">Taş / Fire Düşümü</label>
-              <select id="goldStoneLoss" onchange="ValuationEngine.calculateGold()" style="width:100%; padding:11px 14px; border:1px solid rgba(194,167,104,0.4); border-radius:8px; font-size:13.5px; font-weight:600; background:#fff; color:var(--color-ink);">
-                <option value="0">Taşsız / Masif (%0 Fire)</option>
-                <option value="0.02">Hafif Taşlı (%2 Taş Düşümü)</option>
-                <option value="0.05">Yoğun Taşlı / Zirkon (%5 Taş Düşümü)</option>
-              </select>
-            </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:20px;">
+          <div>
+            <label style="font-size:12px; font-weight:700; color:var(--color-teal); display:block; margin-bottom:6px;">Kasa Materyali</label>
+            <select id="watchMetalSelect" onchange="ValuationEngine.calculateWatch()" style="width:100%; padding:11px 14px; border:1px solid rgba(194,167,104,0.4); border-radius:8px; font-size:13px; font-weight:600; background:#fff; color:var(--color-ink);">
+              <option value="steel">Paslanmaz Çelik</option>
+              <option value="rolesor">Çelik-Altın (Rolesor)</option>
+              <option value="gold">18K Masif Altın (Sarı/Rose/Beyaz)</option>
+            </select>
           </div>
-
-          <!-- Hızlı Gram Butonları -->
-          <div id="quickGramsBar" style="display:flex; align-items:center; gap:8px; margin-bottom:20px; flex-wrap:wrap;">
-            <span style="font-size:11.5px; font-weight:700; color:var(--color-gold-dark);">Hızlı Seçim:</span>
-            <button onclick="ValuationEngine.setWeight(5)" class="btn-quick-gram">5 gr</button>
-            <button onclick="ValuationEngine.setWeight(10)" class="btn-quick-gram">10 gr</button>
-            <button onclick="ValuationEngine.setWeight(20)" class="btn-quick-gram">20 gr</button>
-            <button onclick="ValuationEngine.setWeight(50)" class="btn-quick-gram">50 gr</button>
-            <button onclick="ValuationEngine.setWeight(100)" class="btn-quick-gram">100 gr</button>
-            <button onclick="ValuationEngine.setWeight(250)" class="btn-quick-gram">250 gr</button>
+          <div>
+            <label style="font-size:12px; font-weight:700; color:var(--color-teal); display:block; margin-bottom:6px;">Kutu & Belge Durumu</label>
+            <select id="watchBoxSelect" onchange="ValuationEngine.calculateWatch()" style="width:100%; padding:11px 14px; border:1px solid rgba(194,167,104,0.4); border-radius:8px; font-size:13px; font-weight:600; background:#fff; color:var(--color-ink);">
+              <option value="full">Tam Set (Kutu + Garanti Kartı)</option>
+              <option value="papers">Sadece Garanti Kartı Var</option>
+              <option value="watch">Sadece Saat (Belgesiz)</option>
+            </select>
           </div>
-
-          <!-- Hesaplama Sonuç Kartı -->
-          <div id="goldResultCard"></div>
-        </div>
-      `;
-
-      this.calculateGold();
-    } else {
-      // Saat Modu
-      container.innerHTML = `
-        <div class="val-tab-bar" style="display:none;">
-          <button class="btn-val-tab" onclick="ValuationEngine.switchMode('gold')">
-            <span>🪙</span>
-            <span>Masif Altın & Ziynet Değerleme</span>
-          </button>
-          <button class="btn-val-tab active" onclick="ValuationEngine.switchMode('watch')">
-            <span>⌚</span>
-            <span>Lüks Saat Ekspertiz & Değerleme</span>
-          </button>
+          <div>
+            <label style="font-size:12px; font-weight:700; color:var(--color-teal); display:block; margin-bottom:6px;">Kondisyon</label>
+            <select id="watchCondSelect" onchange="ValuationEngine.calculateWatch()" style="width:100%; padding:11px 14px; border:1px solid rgba(194,167,104,0.4); border-radius:8px; font-size:13px; font-weight:600; background:#fff; color:var(--color-ink);">
+              <option value="mint">Sıfır Ayarında / Koleksiyonluk</option>
+              <option value="good">Çok Temiz / Orijinal Polisajsız</option>
+              <option value="used">Kullanılmış / Polisaj Gerekli</option>
+            </select>
+          </div>
         </div>
 
-        <div class="val-calc-body">
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
-            <div>
-              <label style="font-size:12px; font-weight:700; color:var(--color-teal); display:block; margin-bottom:6px;">Saat Markası</label>
-              <select id="watchBrandSelect" onchange="ValuationEngine.onWatchBrandChange()" style="width:100%; padding:11px 14px; border:1px solid rgba(194,167,104,0.4); border-radius:8px; font-size:13.5px; font-weight:600; background:#fff; color:var(--color-ink);">
-                <option value="rolex">Rolex</option>
-                <option value="patek">Patek Philippe</option>
-                <option value="ap">Audemars Piguet</option>
-                <option value="cartier">Cartier</option>
-              </select>
-            </div>
-            <div>
-              <label style="font-size:12px; font-weight:700; color:var(--color-teal); display:block; margin-bottom:6px;">Model / Seri</label>
-              <select id="watchModelSelect" onchange="ValuationEngine.calculateWatch()" style="width:100%; padding:11px 14px; border:1px solid rgba(194,167,104,0.4); border-radius:8px; font-size:13.5px; font-weight:600; background:#fff; color:var(--color-ink);"></select>
-            </div>
-          </div>
+        <!-- Saat Sonuç Kartı -->
+        <div id="watchResultCard"></div>
+      </div>
+    `;
 
-          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:20px;">
-            <div>
-              <label style="font-size:12px; font-weight:700; color:var(--color-teal); display:block; margin-bottom:6px;">Kasa Materyali</label>
-              <select id="watchMetalSelect" onchange="ValuationEngine.calculateWatch()" style="width:100%; padding:11px 14px; border:1px solid rgba(194,167,104,0.4); border-radius:8px; font-size:13px; font-weight:600; background:#fff; color:var(--color-ink);">
-                <option value="steel">Paslanmaz Çelik</option>
-                <option value="rolesor">Çelik-Altın (Rolesor)</option>
-                <option value="gold">18K Masif Altın (Sarı/Rose/Beyaz)</option>
-              </select>
-            </div>
-            <div>
-              <label style="font-size:12px; font-weight:700; color:var(--color-teal); display:block; margin-bottom:6px;">Kutu & Belge Durumu</label>
-              <select id="watchBoxSelect" onchange="ValuationEngine.calculateWatch()" style="width:100%; padding:11px 14px; border:1px solid rgba(194,167,104,0.4); border-radius:8px; font-size:13px; font-weight:600; background:#fff; color:var(--color-ink);">
-                <option value="full">Tam Set (Kutu + Garanti Kartı)</option>
-                <option value="papers">Sadece Garanti Kartı Var</option>
-                <option value="watch">Sadece Saat (Belgesiz)</option>
-              </select>
-            </div>
-            <div>
-              <label style="font-size:12px; font-weight:700; color:var(--color-teal); display:block; margin-bottom:6px;">Kondisyon</label>
-              <select id="watchCondSelect" onchange="ValuationEngine.calculateWatch()" style="width:100%; padding:11px 14px; border:1px solid rgba(194,167,104,0.4); border-radius:8px; font-size:13px; font-weight:600; background:#fff; color:var(--color-ink);">
-                <option value="mint">Sıfır Ayarında / Koleksiyonluk</option>
-                <option value="good">Çok Temiz / Orijinal Polisajsız</option>
-                <option value="used">Kullanılmış / Polisaj Gerekli</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Saat Sonuç Kartı -->
-          <div id="watchResultCard"></div>
-        </div>
-      `;
-
-      this.onWatchBrandChange();
-    }
+    this.onWatchBrandChange();
   },
 
   switchMode(mode) {
-    this.currentMode = mode;
+    this.currentMode = 'watch';
     this.renderSimulator();
   },
 

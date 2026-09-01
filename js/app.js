@@ -2112,29 +2112,32 @@ const App = {
   openTradeInModal() {
     this.openModal(`
       <div class="modal-dialog-header">
-        <h3>Saatinizi / Altınınızı Değerlendirin</h3>
+        <h3>Lüks Saatinizi Değerlendirin</h3>
         <button class="modal-dialog-close" onclick="App.closeModal()">×</button>
       </div>
-      <form onsubmit="event.preventDefault(); showToast('Değerleme talebiniz uzmanımıza iletildi. 15 dk içinde dönüş yapılacaktır.', 'success'); App.closeModal();">
+      <form onsubmit="event.preventDefault(); showToast('Değerleme talebiniz uzman saat ekspertiz ekibimize iletildi. 15 dk içinde dönüş yapılacaktır.', 'success'); App.closeModal();">
         <div style="margin-bottom:14px;">
-          <label style="font-size:12px; font-weight:600; display:block; margin-bottom:4px;">Kategori *</label>
+          <label style="font-size:12px; font-weight:600; display:block; margin-bottom:4px;">Marka & Kategori *</label>
           <select required style="width:100%; padding:10px; border:1px solid var(--color-border); border-radius:4px;">
             <option value="">Seçiniz</option>
-            <option>Lüks Saat (Rolex, Patek, AP, Cartier)</option>
-            <option>İkinci El Altın (18K / 22K Masif Altın)</option>
-            <option>Pırlanta & Değerli Mücevher</option>
+            <option>Rolex</option>
+            <option>Patek Philippe</option>
+            <option>Audemars Piguet</option>
+            <option>Cartier</option>
+            <option>Omega & TAG Heuer</option>
+            <option>Diğer Lüks & Prestij Saatler</option>
           </select>
         </div>
         <div style="margin-bottom:14px;">
-          <label style="font-size:12px; font-weight:600; display:block; margin-bottom:4px;">Model, Gramaj & Referans Numarası</label>
-          <input type="text" placeholder="Örn: Submariner 16610LV veya 32gr 18K Altın Kelepçe" required style="width:100%; padding:10px; border:1px solid var(--color-border); border-radius:4px;">
+          <label style="font-size:12px; font-weight:600; display:block; margin-bottom:4px;">Model & Referans Numarası *</label>
+          <input type="text" placeholder="Örn: Submariner 16610LV veya Royal Oak 15500ST" required style="width:100%; padding:10px; border:1px solid var(--color-border); border-radius:4px;">
         </div>
         <div style="margin-bottom:14px;">
           <label style="font-size:12px; font-weight:600; display:block; margin-bottom:4px;">Kutu & Sertifika Durumu</label>
           <select style="width:100%; padding:10px; border:1px solid var(--color-border); border-radius:4px;">
             <option>Kutu ve Sertifika Tam Set</option>
-            <option>Yalnızca Saat / Altın</option>
-            <option>Yalnızca Sertifika / Fatura Var</option>
+            <option>Yalnızca Saat (Belgesiz)</option>
+            <option>Yalnızca Sertifika / Garanti Kartı Var</option>
           </select>
         </div>
         <div style="margin-bottom:20px;">
@@ -2175,7 +2178,7 @@ const App = {
         </div>
         <div style="margin-bottom:16px;">
           <label style="font-size:12px; font-weight:600; display:block; margin-bottom:4px;">İncelemek İstediğiniz Model / Referans</label>
-          <input type="text" placeholder="Örn: Rolex Kermit, Cartier Altın Kelepçe veya AP Royal Oak" style="width:100%; padding:10px; border:1px solid var(--color-border); border-radius:4px;">
+          <input type="text" placeholder="Örn: Rolex Kermit, Cartier Tank veya AP Royal Oak" style="width:100%; padding:10px; border:1px solid var(--color-border); border-radius:4px;">
         </div>
         <button type="submit" class="btn-art-buy" style="width:100%;">VİP RANDEVUYU ONAYLA</button>
       </form>
@@ -3163,7 +3166,7 @@ const App = {
         totalAmount: cartTotal > 0 ? cartTotal : 14960,
         formattedAmount: '₺' + (cartTotal > 0 ? cartTotal : 14960).toLocaleString('tr-TR'),
         termsAcceptedAt: new Date().toISOString(),
-        paymentMethod: 'Akbank 256-Bit EV SSL & 3D Secure Sanal POS (12876196)'
+        paymentMethod: 'Akbank 256-Bit EV SSL & 3D Secure Sanal POS (12877995)'
       };
       localStorage.setItem('belgin_checkout_draft', JSON.stringify(draft));
       sessionStorage.setItem('belgin_checkout_draft', JSON.stringify(draft));
