@@ -30,7 +30,10 @@ const Router = {
   resolveLocation() {
     const path = location.pathname.replace(/\/+$/, '') || '/';
     if (path === '/') return { page: 'ana-sayfa' };
-    if (path === '/elit-kategori' || path === '/elit-saatler') return { page: 'elit-kategori' };
+    if (path === '/elit-kategori' || path === '/elit-saatler') {
+      const brand = new URLSearchParams(location.search).get('marka');
+      return { page: 'elit-kategori', filter: brand || 'all' };
+    }
     if (path === '/canli-fiyatlar' || path === '/canlipiyasalar') return { page: 'ana-sayfa' };
     if (path === '/mucevherat') return { page: 'ana-sayfa' };
     if (path === '/saatler') return { page: 'saatler' };
@@ -135,7 +138,7 @@ const Router = {
         }
         return;
       }
-      this.navigate(state.page, false);
+      this.navigate(state.page, false, { filter: state.filter });
     });
   },
 
@@ -246,7 +249,11 @@ const Router = {
     if (pushState && page !== 'urun') {
       const categoryRoute = (window.SEO_CATEGORY_ROUTES || {})[page];
       if (categoryRoute) {
-        history.pushState({ page }, '', categoryRoute);
+        const filter = options.filter && options.filter !== 'all' ? String(options.filter) : null;
+        const route = page === 'elit-kategori' && filter
+          ? `${categoryRoute}?marka=${encodeURIComponent(filter)}`
+          : categoryRoute;
+        history.pushState({ page, filter: filter || 'all' }, '', route);
       } else if (page === 'ana-sayfa') {
         history.pushState({ page }, '', '/');
       } else {
