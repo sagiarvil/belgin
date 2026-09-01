@@ -3410,10 +3410,26 @@ const App = {
 
   setFlipbookMode(isSpread) {
     this.flipbookSpreadMode = isSpread;
-    document.querySelectorAll('.flipbook-tab-btn').forEach(btn => {
+    document.querySelectorAll('.folio-pill-btn, .flipbook-tab-btn').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.mode === (isSpread ? 'spread' : 'single'));
     });
     this.renderFlipbook();
+  },
+
+  toggleFlipbookFullscreen() {
+    const card = document.getElementById('bizKimizFolioCard') || document.querySelector('.flipbook-container');
+    if (!card) return;
+    if (!document.fullscreenElement) {
+      if (card.requestFullscreen) {
+        card.requestFullscreen();
+      } else if (card.webkitRequestFullscreen) {
+        card.webkitRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
   },
 
   renderFlipbook() {

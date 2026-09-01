@@ -1793,101 +1793,109 @@
 
   <!-- 2.7 BİZ KİMİZ SAYFASI (KURUMSAL PROFİL & LUXURY FLIPBOOK FOLIO) -->
   <section id="page-biz-kimiz" class="page">
-    <div class="container-art section-art" style="max-width:1180px; margin:0 auto; padding-top:24px;">
+    <div class="biz-kimiz-master-wrap">
       
-      <!-- HERO HEADER -->
-      <div class="biz-kimiz-hero">
-        <span class="hero-eyebrow" style="color:var(--color-gold-bright); margin-bottom:8px; display:inline-block;">
-          🏛️ BELGİN SAAT &bull; KURUMSAL PROFİL &bull; EST. 1999
-        </span>
-        <h1 style="font-family:var(--font-heading); font-size:clamp(26px, 3.8vw, 38px); font-weight:800; color:#FFF; margin:0 0 12px 0; line-height:1.25;">
-          Lüks Saate Odaklanan Seçkin Ticaret Profili
-        </h1>
-        <p style="font-size:15px; color:#E0DFD5; max-width:760px; margin:0 auto 20px; line-height:1.65;">
-          20 yılı aşan ticaret hafızası, You Watch ile kanıtlanmış marka kurma deneyimi ve seçkin müşteri çevresi bugün yüksek değerli saat ticaretine odaklanmaktadır.
-        </p>
+      <!-- 1. SLIM LUXURY TOP HEADER -->
+      <header class="biz-kimiz-top-header">
+        <div class="biz-kimiz-header-left">
+          <div class="biz-kimiz-badge-pill">
+            <span style="color:var(--color-gold-bright); font-size:12px;">●</span>
+            <span>BELGİN SAAT &bull; KURUMSAL PROFİL FOLİOSU &bull; EST. 1999</span>
+          </div>
+          <h1 class="biz-kimiz-title">Lüks Saate Odaklanan Seçkin Ticaret Profili</h1>
+          <p class="biz-kimiz-subtitle">
+            20 yılı aşan ticaret hafızası, You Watch ile kanıtlanmış marka kurma deneyimi ve seçkin müşteri portföyü.
+          </p>
+        </div>
 
-        <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-bottom:12px;">
-          <a href="/docs/belgin-saat-kurumsal-profil-2026.pdf" target="_blank" download class="btn btn-primary" style="padding:11px 22px; font-size:13.5px; border-radius:8px; display:inline-flex; align-items:center; gap:6px;">
-            <span>📥 Orijinal PDF Dokümanını İndir (7 MB)</span>
+        <div class="biz-kimiz-header-actions">
+          <a href="/docs/belgin-saat-kurumsal-profil-2026.pdf" target="_blank" download class="btn-biz-download" title="Orijinal 10 Sayfalık PDF Dokümanını İndir">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>Orijinal PDF (7 MB)</span>
           </a>
-          <button type="button" class="btn btn-secondary" onclick="App.openVipModal();" style="border-color:rgba(194,167,104,0.6); color:#FFF; padding:11px 22px; font-size:13.5px; border-radius:8px; cursor:pointer;">
-            <span>📍 VIP Showroom Randevusu</span>
+          <button type="button" class="btn-biz-fullscreen" onclick="App.toggleFlipbookFullscreen()" title="Tam Ekran Okuma Modu">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+            <span>Tam Ekran</span>
+          </button>
+          <button type="button" class="btn-biz-vip" onclick="App.openVipModal();" title="İzmir Buca VIP Showroom Randevusu">
+            <span>📍 VIP Randevu</span>
           </button>
         </div>
+      </header>
 
-        <!-- 4'lü Temel Metrikler -->
-        <div class="biz-kimiz-stats-row">
-          <div class="biz-kimiz-stat-card">
-            <div class="biz-kimiz-stat-val">20+ Yıl</div>
-            <div class="biz-kimiz-stat-label">Ticaret Hafızası</div>
-          </div>
-          <div class="biz-kimiz-stat-card">
-            <div class="biz-kimiz-stat-val">~600</div>
-            <div class="biz-kimiz-stat-label">Geçmiş Satış Noktası</div>
-          </div>
-          <div class="biz-kimiz-stat-card">
-            <div class="biz-kimiz-stat-val">15-30 Mn TL</div>
-            <div class="biz-kimiz-stat-label">Aylık İşlem Hacmi</div>
-          </div>
-          <div class="biz-kimiz-stat-card">
-            <div class="biz-kimiz-stat-val">1999</div>
-            <div class="biz-kimiz-stat-label">İzmir Buca Mirası</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- INTERACTIVE FLIPBOOK / FOLIO VIEWER -->
-      <div class="flipbook-container">
-        <div class="flipbook-toolbar">
-          <div style="display:flex; align-items:center; gap:12px;">
-            <span style="font-size:18px;">📖</span>
-            <div>
-              <strong style="color:#FFF; font-size:14px; display:block;">İnteraktif Kurumsal Sunum Foliosu</strong>
-              <span style="font-size:11.5px; color:#A0A0A8;">10 Sayfalık Prestij Dergisi / Defter Sayfası Görünümü</span>
+      <!-- 2. PROMINENT FIRST-SCREEN PDF / FLIPBOOK VIEWER -->
+      <div class="biz-kimiz-folio-card" id="bizKimizFolioCard">
+        <!-- Toolbar -->
+        <div class="folio-toolbar">
+          <div class="folio-toolbar-left">
+            <div class="folio-mode-pills">
+              <button class="folio-pill-btn active" data-mode="single" onclick="App.setFlipbookMode(false)">Tek Sayfa</button>
+              <button class="folio-pill-btn" data-mode="spread" onclick="App.setFlipbookMode(true)">Çift Sayfa (Dergi Yayılımı)</button>
             </div>
+            <span id="flipbookCounter" class="folio-counter-pill">Sayfa 1 / 10</span>
           </div>
 
-          <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
-            <!-- Görünüm Modu Switcher -->
-            <div class="flipbook-view-mode-tabs">
-              <button class="flipbook-tab-btn active" data-mode="single" onclick="App.setFlipbookMode(false)">Tek Sayfa</button>
-              <button class="flipbook-tab-btn" data-mode="spread" onclick="App.setFlipbookMode(true)">Çift Sayfa (Dergi Yayılımı)</button>
-            </div>
-            <!-- Sayfa Sayacı -->
-            <span id="flipbookCounter" style="background:rgba(255,255,255,0.08); border:1px solid rgba(194,167,104,0.3); color:#E6D2A8; font-weight:700; padding:6px 12px; border-radius:6px; font-size:12px;">
-              Sayfa 1 / 10
-            </span>
+          <div class="folio-toolbar-right">
+            <button class="folio-page-btn" onclick="App.prevFlipbookPage()">‹ Önceki Sayfa</button>
+            <button class="folio-page-btn" onclick="App.nextFlipbookPage()">Sonraki Sayfa ›</button>
           </div>
         </div>
 
-        <!-- Flipbook Sahnesi (Stage) -->
-        <div class="flipbook-stage" id="flipbookStage">
-          <button class="flipbook-nav-arrow prev" onclick="App.prevFlipbookPage()" aria-label="Önceki Sayfa">‹</button>
+        <!-- Stage (Sahne) -->
+        <div class="folio-stage" id="flipbookStage">
+          <button class="folio-nav-arrow prev" onclick="App.prevFlipbookPage()" aria-label="Önceki Sayfa">‹</button>
           
-          <div class="flipbook-page-wrap" id="flipbookPageWrap">
+          <div class="folio-book-wrapper" id="flipbookPageWrap" onclick="App.nextFlipbookPage()" title="Sonraki sayfaya geçmek için tıklayın">
             <img src="/images/biz-kimiz/page-1.jpg" class="flipbook-page-img" alt="Belgin Saat Kurumsal Profil Sayfa 1">
           </div>
 
-          <button class="flipbook-nav-arrow next" onclick="App.nextFlipbookPage()" aria-label="Sonraki Sayfa">›</button>
+          <button class="folio-nav-arrow next" onclick="App.nextFlipbookPage()" aria-label="Sonraki Sayfa">›</button>
         </div>
 
-        <!-- Thumbnail Strip (Hızlı Sayfa Atlama) -->
-        <div class="flipbook-thumbs-strip">
-          <div class="flipbook-thumb-item active" onclick="App.setFlipbookPage(1)" title="Sayfa 1"><img src="/images/biz-kimiz/page-1.jpg" alt="Sayfa 1"></div>
-          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(2)" title="Sayfa 2"><img src="/images/biz-kimiz/page-2.jpg" alt="Sayfa 2"></div>
-          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(3)" title="Sayfa 3"><img src="/images/biz-kimiz/page-3.jpg" alt="Sayfa 3"></div>
-          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(4)" title="Sayfa 4"><img src="/images/biz-kimiz/page-4.jpg" alt="Sayfa 4"></div>
-          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(5)" title="Sayfa 5"><img src="/images/biz-kimiz/page-5.jpg" alt="Sayfa 5"></div>
-          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(6)" title="Sayfa 6"><img src="/images/biz-kimiz/page-6.jpg" alt="Sayfa 6"></div>
-          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(7)" title="Sayfa 7"><img src="/images/biz-kimiz/page-7.jpg" alt="Sayfa 7"></div>
-          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(8)" title="Sayfa 8"><img src="/images/biz-kimiz/page-8.jpg" alt="Sayfa 8"></div>
-          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(9)" title="Sayfa 9"><img src="/images/biz-kimiz/page-9.jpg" alt="Sayfa 9"></div>
-          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(10)" title="Sayfa 10"><img src="/images/biz-kimiz/page-10.jpg" alt="Sayfa 10"></div>
+        <!-- Thumbnail Carousel Rail -->
+        <div class="folio-thumb-strip">
+          <div class="flipbook-thumb-item active" onclick="App.setFlipbookPage(1)" title="Sayfa 1: Kapak"><img src="/images/biz-kimiz/page-1.jpg" alt="Sayfa 1"><span class="thumb-lbl">01</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(2)" title="Sayfa 2: İçindekiler &amp; Özet"><img src="/images/biz-kimiz/page-2.jpg" alt="Sayfa 2"><span class="thumb-lbl">02</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(3)" title="Sayfa 3: Ticaret Hafızası"><img src="/images/biz-kimiz/page-3.jpg" alt="Sayfa 3"><span class="thumb-lbl">03</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(4)" title="Sayfa 4: Marka Kurma Gücü"><img src="/images/biz-kimiz/page-4.jpg" alt="Sayfa 4"><span class="thumb-lbl">04</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(5)" title="Sayfa 5: Seçkin Müşteri Ağı"><img src="/images/biz-kimiz/page-5.jpg" alt="Sayfa 5"><span class="thumb-lbl">05</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(6)" title="Sayfa 6: Güvenli İşlem Modeli"><img src="/images/biz-kimiz/page-6.jpg" alt="Sayfa 6"><span class="thumb-lbl">06</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(7)" title="Sayfa 7: Ekspertiz &amp; Sertifikasyon"><img src="/images/biz-kimiz/page-7.jpg" alt="Sayfa 7"><span class="thumb-lbl">07</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(8)" title="Sayfa 8: Fiziksel Showroom"><img src="/images/biz-kimiz/page-8.jpg" alt="Sayfa 8"><span class="thumb-lbl">08</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(9)" title="Sayfa 9: Finansal Uyum &amp; Şeffaflık"><img src="/images/biz-kimiz/page-9.jpg" alt="Sayfa 9"><span class="thumb-lbl">09</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(10)" title="Sayfa 10: İletişim &amp; Randevu"><img src="/images/biz-kimiz/page-10.jpg" alt="Sayfa 10"><span class="thumb-lbl">10</span></div>
         </div>
       </div>
 
-      <!-- EDITORIAL KURUMSAL BÖLÜMLER (10 BÖLÜM METİN VE ANALİZLERİ) -->
+      <!-- 3. 4 CORE METRICS (TİCARİ DEĞERLER) -->
+      <div class="biz-kimiz-metrics-strip">
+        <div class="metric-card-lux">
+          <span class="metric-icon">🏛️</span>
+          <div class="metric-number">20+ Yıl</div>
+          <div class="metric-title">Ticaret Hafızası</div>
+          <p class="metric-sub">Kuyumculuk ve lüks saat sektöründe çeyrek asra yaklaşan kurumsal birikim.</p>
+        </div>
+        <div class="metric-card-lux">
+          <span class="metric-icon">🌐</span>
+          <div class="metric-number">~600</div>
+          <div class="metric-title">Geçmiş Satış Noktası</div>
+          <p class="metric-sub">You Watch ile Türkiye genelinde 81 ilde kurulan devasa dağıtım ve perakende tecrübesi.</p>
+        </div>
+        <div class="metric-card-lux">
+          <span class="metric-icon">💎</span>
+          <div class="metric-number">15-30 Mn ₺</div>
+          <div class="metric-title">Aylık İşlem Hacmi</div>
+          <p class="metric-sub">Yüksek değerli saat ve kuyum ticaretinde güçlü sermaye ve anında nakit likiditesi.</p>
+        </div>
+        <div class="metric-card-lux">
+          <span class="metric-icon">📍</span>
+          <div class="metric-number">1999</div>
+          <div class="metric-title">İzmir Buca Showroom</div>
+          <p class="metric-sub">Menderes Caddesi'ndeki kendi mülkü fiziksel showroom ile randevulu VIP hizmet.</p>
+        </div>
+      </div>
+
+      <!-- 4. EDITORIAL KURUMSAL BÖLÜMLER (10 BÖLÜM METİN VE ANALİZLERİ) -->
       <div class="section-header-flex" style="margin-bottom:24px;">
         <div>
           <span class="hero-eyebrow" style="color:var(--color-gold-dark);">KURUMSAL TİCARET VE DEĞER İLKELERİ</span>
