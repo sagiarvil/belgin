@@ -241,17 +241,24 @@ function renderSeoProductCard(p) {
 function renderSeoMagazineCard(art) {
   const imgSrc = (art.image || '/images/hero/hero-rolex-lineup.jpg').replace(/^\//, '');
   const readTime = art.read_time || '8 dk okuma';
+  const articleUrl = `/magazin/${esc(art.slug)}/`;
   return `
     <article class="magazine-card" onclick="App.openMagazineArticle('${esc(art.id)}')" data-article-id="${esc(art.id)}">
       <div class="mag-card-media">
-        <img src="/${esc(imgSrc)}" alt="${esc(art.title)}" loading="lazy" decoding="async" onerror="this.src='/images/hero/hero-rolex-lineup.jpg'">
+        <a href="${articleUrl}" onclick="if(!event.ctrlKey&&!event.metaKey){event.preventDefault();App.openMagazineArticle('${esc(art.id)}');}">
+          <img src="/${esc(imgSrc)}" alt="${esc(art.title)}" loading="lazy" decoding="async" onerror="this.src='/images/hero/hero-rolex-lineup.jpg'">
+        </a>
       </div>
       <div class="mag-card-body">
         <div class="mag-card-meta-top" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
           <span class="mag-tag-pill">${esc(art.category)}</span>
           <span class="mag-read-time">⏱️ ${esc(readTime)}</span>
         </div>
-        <h3 class="mag-card-title">${esc(art.title)}</h3>
+        <h3 class="mag-card-title">
+          <a href="${articleUrl}" style="color:inherit; text-decoration:none;" onclick="if(!event.ctrlKey&&!event.metaKey){event.preventDefault();App.openMagazineArticle('${esc(art.id)}');}">
+            ${esc(art.title)}
+          </a>
+        </h3>
         <p class="mag-card-excerpt">${esc(art.summary)}</p>
         <div class="mag-card-meta">
           <div class="mag-card-author-row">
@@ -261,11 +268,125 @@ function renderSeoMagazineCard(art) {
           <span class="mag-card-date">📅 ${esc(art.publish_date)}</span>
         </div>
         <div class="mag-card-action-bar">
-          <span class="mag-read-link">Makaleyi Oku →</span>
+          <a href="${articleUrl}" class="mag-read-link" onclick="if(!event.ctrlKey&&!event.metaKey){event.preventDefault();App.openMagazineArticle('${esc(art.id)}');}">Makaleyi Oku →</a>
         </div>
       </div>
     </article>
   `;
+}
+
+function renderMagazineArticlePage(art, indexHtml) {
+  const canonical = `${BASE_URL}/magazin/${art.slug}/`;
+  const imgSrc = (art.image || 'images/hero/hero-rolex-lineup.jpg').replace(/^\//, '');
+  const absImg = `${BASE_URL}/${imgSrc}`;
+  const readTime = art.read_time || '8 dk okuma';
+
+  const schema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BlogPosting',
+        '@id': `${canonical}#article`,
+        'isPartOf': {
+          '@type': 'Blog',
+          '@id': `${BASE_URL}/magazin/#blog`,
+          'name': 'Belgin Saat Magazin'
+        },
+        'headline': art.title,
+        'description': art.summary,
+        'image': absImg,
+        'datePublished': art.raw_date || '2026-08-01',
+        'dateModified': art.raw_date || '2026-08-01',
+        'author': {
+          '@type': 'Organization',
+          'name': 'Belgin Saat Editoryal Masası',
+          'url': `${BASE_URL}/biz-kimiz/`
+        },
+        'publisher': {
+          '@type': 'Organization',
+          'name': 'Belgin Saat & Kuyumculuk',
+          'url': `${BASE_URL}/`,
+          'logo': {
+            '@type': 'ImageObject',
+            'url': `${BASE_URL}/images/belgin-logo.png`
+          }
+        },
+        'mainEntityOfPage': canonical
+      },
+      {
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+          { '@type': 'ListItem', 'position': 1, 'name': 'Ana Sayfa', 'item': `${BASE_URL}/` },
+          { '@type': 'ListItem', 'position': 2, 'name': 'Magazin', 'item': `${BASE_URL}/magazin/` },
+          { '@type': 'ListItem', 'position': 3, 'name': art.title, 'item': canonical }
+        ]
+      }
+    ]
+  };
+
+  let pageHtml = indexHtml;
+  pageHtml = replaceFirst(pageHtml, /<title>[\s\S]*?<\/title>/i, `<title>${esc(art.title)} | Belgin Saat Magazin</title>`, 'article title');
+  pageHtml = replaceFirst(pageHtml, /<meta\s+name="description"\s+content="[^"]*"/i, `<meta name="description" content="${esc(art.summary)}"`, 'article description');
+  pageHtml = replaceFirst(pageHtml, /<link\s+rel="canonical"\s+href="[^"]*"/i, `<link rel="canonical" href="${canonical}"`, 'article canonical');
+
+  pageHtml = replaceFirst(pageHtml, /<meta property="og:url" content="[^"]*">/i, `<meta property="og:url" content="${canonical}">`, 'og:url');
+  pageHtml = replaceFirst(pageHtml, /<meta property="og:title" content="[^"]*">/i, `<meta property="og:title" content="${esc(art.title)} | Belgin Saat">`, 'og:title');
+  pageHtml = replaceFirst(pageHtml, /<meta property="og:description" content="[^"]*">/i, `<meta property="og:description" content="${esc(art.summary)}">`, 'og:description');
+  pageHtml = replaceFirst(pageHtml, /<meta property="og:image" content="[^"]*">/i, `<meta property="og:image" content="${esc(absImg)}">`, 'og:image');
+  pageHtml = replaceFirst(pageHtml, /<meta property="og:type" content="[^"]*">/i, `<meta property="og:type" content="article">`, 'og:type');
+
+  pageHtml = replaceFirst(
+    pageHtml,
+    /<script type="application\/ld\+json">[\s\S]*?<\/script>/i,
+    `<script type="application/ld+json">${safeJson(schema)}</script>`,
+    'article JSON-LD'
+  );
+
+  pageHtml = pageHtml
+    .replace('id="page-ana-sayfa" class="page active"', 'id="page-ana-sayfa" class="page"');
+
+  const articleContentHtml = `
+    <article class="mag-standalone-article" style="max-width: 900px; margin: 0 auto; padding: 40px 20px 80px;">
+      <nav class="breadcrumb-nav" style="margin-bottom: 24px; font-size: 13px; color: var(--color-muted);">
+        <a href="/" style="color: var(--color-teal); text-decoration: none;">Ana Sayfa</a> /
+        <a href="/magazin/" style="color: var(--color-teal); text-decoration: none;">Magazin</a> /
+        <span style="color: var(--color-ink);">${esc(art.title)}</span>
+      </nav>
+
+      <div class="mag-article-header" style="margin-bottom: 32px;">
+        <span class="mag-tag-pill" style="margin-bottom: 14px; display: inline-block;">${esc(art.category)}</span>
+        <h1 style="font-family: var(--font-heading); font-size: clamp(26px, 4vw, 40px); font-weight: 800; color: var(--color-ink); line-height: 1.25; margin: 0 0 16px 0;">${esc(art.title)}</h1>
+        <div class="mag-article-meta-bar" style="display: flex; gap: 20px; align-items: center; border-bottom: 1px solid #ECE7DC; padding-bottom: 16px; color: var(--color-muted); font-size: 13px; flex-wrap: wrap;">
+          <span>✍️ <strong>Belgin Saat Editoryal Masası</strong></span>
+          <span>📅 ${esc(art.publish_date)}</span>
+          <span>⏱️ ${esc(readTime)}</span>
+        </div>
+      </div>
+
+      <div class="mag-article-hero" style="border-radius: 12px; overflow: hidden; margin-bottom: 36px; box-shadow: 0 12px 30px rgba(0,0,0,0.08);">
+        <img src="/${esc(imgSrc)}" alt="${esc(art.title)}" style="width: 100%; max-height: 520px; object-fit: cover; display: block;" loading="eager" fetchpriority="high">
+      </div>
+
+      <div class="mag-article-body" style="font-size: 16px; line-height: 1.85; color: #334155;">
+        ${art.content_html}
+      </div>
+
+      <div class="mag-article-footer-cta" style="margin-top: 48px; padding: 32px; background: #FAF7F0; border-radius: 12px; border: 1px solid rgba(194, 167, 104, 0.4); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+        <div>
+          <h3 style="font-family: var(--font-heading); margin: 0 0 6px 0; color: var(--color-ink); font-size: 18px;">Belgin Saat Prestij Koleksiyonu</h3>
+          <p style="margin: 0; font-size: 13px; color: var(--color-muted);">İncelediğiniz nadir modeller İzmir Buca showroomumuzda ve VIP güvencesiyle sizleri bekliyor.</p>
+        </div>
+        <div style="display: flex; gap: 12px;">
+          <a href="/elit-kategori/" class="btn btn-secondary" style="padding: 10px 18px; font-size: 13px;">👑 200 Elit Model</a>
+          <a href="/saatler/" class="btn btn-primary" style="padding: 10px 18px; font-size: 13px;">⌚ Tüm Koleksiyon</a>
+        </div>
+      </div>
+    </article>
+  `;
+
+  pageHtml = pageHtml.replace('<main id="main">', `<main id="main">\n<section id="page-magazin-detail" class="page active">\n${articleContentHtml}\n</section>`);
+
+  return pageHtml;
 }
 
 function prerenderPdpContent(p) {
@@ -689,8 +810,21 @@ function main() {
   for (const key of ['elit-kategori','markalar','biz-kimiz','magazin','saatler','mucevherat']) {
     writeRoute(CATEGORY_ROUTES[key], renderCategoryPage(key, products.filter(p => categoryKey(p) === key), indexHtml));
   }
+
+  let magArticles = [];
+  try {
+    const magModule = require('../js/magazine_data.js');
+    magArticles = magModule.MAGAZINE_ARTICLES || [];
+  } catch (e) {}
+
+  for (const art of magArticles) {
+    if (art.slug) {
+      writeRoute(`/magazin/${art.slug}`, renderMagazineArticlePage(art, indexHtml));
+    }
+  }
+
   buildRouteMap();
-  console.log(`[seo-static] ${products.length} ürün sayfası ve kategori sayfaları üretildi.`);
+  console.log(`[seo-static] ${products.length} ürün sayfası, 6 kategori sayfası ve ${magArticles.length} magazin makalesi sayfası üretildi.`);
 }
 
 if (require.main === module) {

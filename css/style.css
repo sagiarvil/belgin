@@ -2138,26 +2138,62 @@ p, span, li, td, th, label, input, button, select, textarea {
   color: var(--color-muted);
 }
 
-.mag-modal-body {
+.mag-modal-body,
+.mag-article-body {
   font-size: 16px;
-  line-height: 1.8;
-  color: #333333;
+  line-height: 1.85;
+  color: #2D3748;
 }
 
-.mag-modal-body p {
+.mag-lead-para {
+  font-size: 18px !important;
+  line-height: 1.85 !important;
+  font-weight: 500 !important;
+  color: #1A202C !important;
+  margin-bottom: 24px !important;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed rgba(194, 167, 104, 0.4);
+}
+
+.mag-subheading {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-ink);
+  margin: 32px 0 16px 0;
+  border-left: 3px solid var(--color-gold);
+  padding-left: 12px;
+  line-height: 1.35;
+}
+
+.mag-subheading-h3 {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-teal);
+  margin: 28px 0 14px 0;
+  line-height: 1.4;
+}
+
+.mag-modal-body p,
+.mag-article-body p {
   margin-bottom: 18px;
+  line-height: 1.85;
+  font-size: 15.5px;
+  color: #374151;
+  letter-spacing: 0.15px;
 }
 
 .mag-quote-box {
   background: #FAF7F0;
   border-left: 4px solid var(--color-gold);
   padding: 20px 24px;
-  margin: 24px 0;
+  margin: 28px 0;
   border-radius: 0 8px 8px 0;
   font-style: italic;
   font-size: 16.5px;
   color: var(--color-ink);
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 .mag-quote-box blockquote {

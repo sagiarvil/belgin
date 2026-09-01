@@ -26,7 +26,8 @@ const CORE_URLS = [
   `https://${HOST}/sitemap.xml`,
   `https://${HOST}/sitemap-pages.xml`,
   `https://${HOST}/sitemap-categories.xml`,
-  `https://${HOST}/sitemap-products.xml`
+  `https://${HOST}/sitemap-products.xml`,
+  `https://${HOST}/sitemap-magazine.xml`
 ];
 
 // Add 50 magazine articles
@@ -34,7 +35,9 @@ try {
   const mag = require('../js/magazine_data.js');
   if (mag && mag.MAGAZINE_ARTICLES) {
     mag.MAGAZINE_ARTICLES.forEach(a => {
-      CORE_URLS.push(`https://${HOST}/magazin/#${a.id}`);
+      if (a.slug) {
+        CORE_URLS.push(`https://${HOST}/magazin/${a.slug}/`);
+      }
     });
   }
 } catch (_) {}

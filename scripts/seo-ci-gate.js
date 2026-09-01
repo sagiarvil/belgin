@@ -28,6 +28,7 @@ function runQualityGates() {
     'sitemap-pages.xml',
     'sitemap-categories.xml',
     'sitemap-products.xml',
+    'sitemap-magazine.xml',
     'js/seo-route-map.js',
     'scripts/live-seo-smoke.js',
     'scripts/seo-claims-registry.js',
@@ -45,16 +46,17 @@ function runQualityGates() {
   const sitemapPages = path.join(ROOT_DIR, 'sitemap-pages.xml');
   const sitemapCategories = path.join(ROOT_DIR, 'sitemap-categories.xml');
   const sitemapProducts = path.join(ROOT_DIR, 'sitemap-products.xml');
+  const sitemapMagazine = path.join(ROOT_DIR, 'sitemap-magazine.xml');
 
   if (fs.existsSync(sitemapIndex)) {
     const idxContent = fs.readFileSync(sitemapIndex, 'utf8');
-    if (!idxContent.includes('sitemap-pages.xml') || !idxContent.includes('sitemap-categories.xml') || !idxContent.includes('sitemap-products.xml')) {
+    if (!idxContent.includes('sitemap-pages.xml') || !idxContent.includes('sitemap-categories.xml') || !idxContent.includes('sitemap-products.xml') || !idxContent.includes('sitemap-magazine.xml')) {
       errors.push('[G1 SITEMAP INDEX] sitemap.xml tüm alt sitemapleri içermeli.');
     }
   }
 
   // G2: Sitemap URL'lerinde Fragment (#) ve Host Kontrolü
-  const allSitemaps = [sitemapPages, sitemapCategories, sitemapProducts];
+  const allSitemaps = [sitemapPages, sitemapCategories, sitemapProducts, sitemapMagazine];
   for (const sm of allSitemaps) {
     if (fs.existsSync(sm)) {
       const xml = fs.readFileSync(sm, 'utf8');

@@ -78,10 +78,23 @@ function buildSitemaps() {
     image: imageUrl(p) ? { loc: imageUrl(p), title: `${p.brand || ''} ${p.name || ''}`.trim() } : null
   }));
 
+  let magArticles = [];
+  try {
+    const magModule = require('../js/magazine_data.js');
+    magArticles = magModule.MAGAZINE_ARTICLES || [];
+  } catch (e) {}
+
+  const magazineItems = magArticles.map(a => ({
+    loc: `${BASE_URL}/magazin/${a.slug}/`,
+    lastmod: a.raw_date || '2026-08-01',
+    image: a.image ? { loc: (a.image.startsWith('http') ? a.image : `${BASE_URL}/${a.image.replace(/^\/+/, '')}`), title: a.title } : null
+  }));
+
   write('sitemap-pages.xml', urlset(pages));
   write('sitemap-categories.xml', urlset(categories));
   write('sitemap-products.xml', urlset(productItems, true));
-  write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <sitemap><loc>${BASE_URL}/sitemap-pages.xml</loc></sitemap>\n  <sitemap><loc>${BASE_URL}/sitemap-categories.xml</loc></sitemap>\n  <sitemap><loc>${BASE_URL}/sitemap-products.xml</loc></sitemap>\n</sitemapindex>\n`);
+  write('sitemap-magazine.xml', urlset(magazineItems, true));
+  write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <sitemap><loc>${BASE_URL}/sitemap-pages.xml</loc></sitemap>\n  <sitemap><loc>${BASE_URL}/sitemap-categories.xml</loc></sitemap>\n  <sitemap><loc>${BASE_URL}/sitemap-products.xml</loc></sitemap>\n  <sitemap><loc>${BASE_URL}/sitemap-magazine.xml</loc></sitemap>\n</sitemapindex>\n`);
 }
 
 function buildLlms() {
