@@ -568,9 +568,7 @@
       <a href="/magazin/" data-page="magazin" onclick="App.toggleMobileDrawer(false)">📰 Belgin Saat Magazin (50 İçerik)</a>
       <a href="#" onclick="App.toggleMobileDrawer(false); App.openTradeInModal();" style="color:var(--color-gold);">⌚ Saat Takası & Değerleme</a>
     </nav>
-
-    <div class="mobile-drawer-footer">
-      <div style="font-size:11.5px; color:#A0A0A8; margin-bottom:12px;">
+              <div style="font-size:11.5px; color:#A0A0A8; margin-bottom:12px;">
         <p>📍 Menderes Cad. No:231/B Buca / İzmir</p>
         <p style="margin-top:4px;">⏱️ Pzt - Cmt: 09:00 - 19:00 (Pazar Kapalı)</p>
       </div>
@@ -591,22 +589,25 @@
     
     <!-- BELGIN SIGNATURE MAISON HERO -->
     <section class="hero-signature" aria-label="Belgin Saat Ana Vitrin" id="heroSignatureSection">
-      <!-- 5-Slide Ambient Luxury Watch Rotator -->
+      <!-- 6-Slide Ambient Luxury Watch Rotator -->
       <div class="hero-slides-wrapper" id="heroSlidesWrapper">
         <div class="hero-slide active" data-slide="0">
           <img src="/images/hero/hero-geneva-sunset.jpg" alt="İsviçre Cenevre Saatçilik Mirası" fetchpriority="high" loading="eager" decoding="async">
         </div>
         <div class="hero-slide" data-slide="1">
-          <img src="/images/hero/hero-rolex-lineup.jpg" alt="Rolex İkonik Saat Koleksiyonu" loading="lazy" decoding="async">
+          <img src="/images/showcase/rolex-daytona-platinum-ice-blue.jpg" alt="Rolex Daytona 950 Platin & Buz Mavisi Kadran" loading="lazy" decoding="async">
         </div>
         <div class="hero-slide" data-slide="2">
-          <img src="/images/hero/hero-rolex-green-gold.jpg" alt="18K Sarı Altın & Zümrüt Kadran Daytona" loading="lazy" decoding="async">
+          <img src="/images/showcase/patek-nautilus-tiffany-daytona.jpg" alt="Patek Philippe Nautilus Tiffany & Vintage Daytona" loading="lazy" decoding="async">
         </div>
         <div class="hero-slide" data-slide="3">
-          <img src="/images/hero/hero-rolex-batman.jpg" alt="Rolex GMT-Master II Batman" loading="lazy" decoding="async">
+          <img src="/images/showcase/cartier-santos-wrist.jpg" alt="Cartier Santos de Cartier Zarafeti" loading="lazy" decoding="async">
         </div>
         <div class="hero-slide" data-slide="4">
-          <img src="/images/hero/hero-rolex-report.jpg" alt="2026 Saat Piyasası & Değer Analizleri" loading="lazy" decoding="async">
+          <img src="/images/hero/hero-rolex-lineup.jpg" alt="Rolex İkonik Saat Koleksiyonu" loading="lazy" decoding="async">
+        </div>
+        <div class="hero-slide" data-slide="5">
+          <img src="/images/hero/hero-rolex-green-gold.jpg" alt="18K Sarı Altın & Zümrüt Kadran Daytona" loading="lazy" decoding="async">
         </div>
       </div>
 
@@ -632,8 +633,62 @@
             </div>
           </div>
 
-          <!-- Slide 1: Lüks Saat Koleksiyonu & Prestij -->
+          <!-- Slide 1: 950 Platin Daytona Buz Mavisi -->
           <div class="hero-content-slide" data-content-slide="1">
+            <span class="hero-eyebrow">950 PLATİN • BUZ MAVİSİ KADRAN</span>
+            <h1 class="hero-title">Kusursuz Platin İşçiliği &amp; Buz Mavisi Zarafet</h1>
+            <p class="hero-subtext">Yalnızca platin modellere özgü güneş ışını desenli buz mavisi kadran ve kestane kahvesi Cerachrom seramik bezel.</p>
+            <div class="hero-actions">
+              <a href="/elit-kategori/?marka=Rolex" class="btn-hero-primary" onclick="App.filterEliteWatchesByBrand('Rolex', null); Router.navigate('elit-kategori'); return false;">
+                👑 Rolex Daytona Koleksiyonu →
+              </a>
+              <a href="/magazin/" class="btn btn-secondary" onclick="Router.navigate('magazin'); return false;" style="border-color:rgba(194,167,104,0.6); color:#FFF; padding:13px 22px; font-size:13.5px; border-radius:8px;">
+                📰 Daytona İncelemesini Oku
+              </a>
+            </div>
+            <div class="hero-trust-line">
+              Superlative Chronometer • Resmî Ekspertiz Raporu
+            </div>
+          </div>
+
+          <!-- Slide 2: Patek Nautilus & Holy Grail İkonları -->
+          <div class="hero-content-slide" data-content-slide="2">
+            <span class="hero-eyebrow">HAUTE HORLOGERIE • KUTSAL ÜÇLÜ</span>
+            <h1 class="hero-title">Patek Philippe Nautilus &amp; Nadir İkonlar</h1>
+            <p class="hero-subtext">Koleksiyon dünyasının zirvesi: Tiffany &amp; Co. tescilli kadranlar, rose gold kronograflar ve asırlık Cenevre mühürleri.</p>
+            <div class="hero-actions">
+              <a href="/elit-kategori/?marka=Patek+Philippe" class="btn-hero-primary" onclick="App.filterEliteWatchesByBrand('Patek Philippe', null); Router.navigate('elit-kategori'); return false;">
+                👑 Patek Philippe Vitrini →
+              </a>
+              <a href="#" onclick="App.openTradeInModal(); return false;" class="btn btn-secondary" style="border-color:rgba(194,167,104,0.6); color:#FFF; padding:13px 22px; font-size:13.5px; border-radius:8px;">
+                ⌚ Saat Takası &amp; Değerleme
+              </a>
+            </div>
+            <div class="hero-trust-line">
+              Haute Horlogerie • Uluslararası Orijinallik Belgesi
+            </div>
+          </div>
+
+          <!-- Slide 3: Cartier Santos Zarafeti -->
+          <div class="hero-content-slide" data-content-slide="3">
+            <span class="hero-eyebrow">1904 PARİS ZARAFETİ • SANTOS DE CARTIER</span>
+            <h1 class="hero-title">Asırlık Zarafet ve Havacılık Tarihinin İlk Saati</h1>
+            <p class="hero-subtext">Geometrik kare form, görünür vidalı bezel tasarımı ve SmartLink entegre çelik bilezik konforu.</p>
+            <div class="hero-actions">
+              <a href="/elit-kategori/?marka=Cartier" class="btn-hero-primary" onclick="App.filterEliteWatchesByBrand('Cartier', null); Router.navigate('elit-kategori'); return false;">
+                💎 Cartier Koleksiyonunu Keşfet →
+              </a>
+              <button type="button" class="btn btn-secondary" onclick="App.openVipModal();" style="border-color:rgba(194,167,104,0.6); color:#FFF; padding:13px 22px; font-size:13.5px; border-radius:8px; cursor:pointer;">
+                📍 VIP Showroom Randevusu
+              </button>
+            </div>
+            <div class="hero-trust-line">
+              Kusursuz Ergonomi • 100 Metre Su Geçirmezlik
+            </div>
+          </div>
+
+          <!-- Slide 4: Lüks Saat Koleksiyonu & Prestij -->
+          <div class="hero-content-slide" data-content-slide="4">
             <span class="hero-eyebrow">BELGİN SAAT • EST. 1999 • İZMİR</span>
             <h1 class="hero-title">Lüks Saat &amp; Prestij Koleksiyonu</h1>
             <p class="hero-subtext">10 prestij saat evinden 2.000'i aşkın doğrulanmış model, şeffaf fiyatlar ve kurumsal teslimat güvencesi.</p>
@@ -641,8 +696,8 @@
               <a href="/saatler/" class="btn-hero-primary" onclick="Router.navigate('saatler'); return false;">
                 ⌚ Tüm Koleksiyonu Keşfet (1.925 Model) →
               </a>
-              <a href="/magazin/" class="btn btn-secondary" onclick="Router.navigate('magazin'); return false;" style="border-color:rgba(194,167,104,0.6); color:#FFF; padding:13px 22px; font-size:13.5px; border-radius:8px;">
-                📰 Magazin &amp; Piyasa Raporları
+              <a href="/markalar/" class="btn btn-secondary" onclick="Router.navigate('markalar'); return false;" style="border-color:rgba(194,167,104,0.6); color:#FFF; padding:13px 22px; font-size:13.5px; border-radius:8px;">
+                🏷️ Saat Markaları Dizini
               </a>
             </div>
             <div class="hero-trust-line">
@@ -650,8 +705,8 @@
             </div>
           </div>
 
-          <!-- Slide 2: 18K Altın & Zümrüt Daytona -->
-          <div class="hero-content-slide" data-content-slide="2">
+          <!-- Slide 5: 18K Altın & Zümrüt Daytona -->
+          <div class="hero-content-slide" data-content-slide="5">
             <span class="hero-eyebrow">HAUTE HORLOGERIE • ALTIN &amp; ZÜMRÜT KADRAN</span>
             <h1 class="hero-title">Yüksek Saatçiliğin Zirvesi: İkonik Kronograflar</h1>
             <p class="hero-subtext">18K masif altın kasalar, yeşil kadranlı Daytona ve zamansız yatırım modelleri tek çatı altında.</p>
@@ -659,48 +714,12 @@
               <a href="/elit-kategori/?marka=Rolex" class="btn-hero-primary" onclick="App.filterEliteWatchesByBrand('Rolex', null); Router.navigate('elit-kategori'); return false;">
                 👑 Rolex Koleksiyonunu İncele →
               </a>
-              <a href="#" onclick="App.openTradeInModal(); return false;" class="btn btn-secondary" style="border-color:rgba(194,167,104,0.6); color:#FFF; padding:13px 22px; font-size:13.5px; border-radius:8px;">
-                ⌚ Saat Takası &amp; Değerleme
+              <a href="/magazin/" class="btn btn-secondary" onclick="Router.navigate('magazin'); return false;" style="border-color:rgba(194,167,104,0.6); color:#FFF; padding:13px 22px; font-size:13.5px; border-radius:8px;">
+                📰 2026 Saat Raporu
               </a>
             </div>
             <div class="hero-trust-line">
               Sertifikalı Orijinallik • Islak İmzalı Teslim Beyanı
-            </div>
-          </div>
-
-          <!-- Slide 3: Batman & Sanatsal Mekanizma -->
-          <div class="hero-content-slide" data-content-slide="3">
-            <span class="hero-eyebrow">SANAT &amp; MEKANİZMA • GMT-MASTER II</span>
-            <h1 class="hero-title">Bir Sanat Eseri ile Günlük Kullanımın Uyumu</h1>
-            <p class="hero-subtext">Çift renkli seramik Cerachrom bezeller, safir kristal cam ve çift zaman dilimli kalibreler.</p>
-            <div class="hero-actions">
-              <a href="/elit-kategori/" class="btn-hero-primary" onclick="Router.navigate('elit-kategori'); return false;">
-                ✨ İkonik Modelleri Keşfet →
-              </a>
-              <a href="/magazin/" class="btn btn-secondary" onclick="Router.navigate('magazin'); return false;" style="border-color:rgba(194,167,104,0.6); color:#FFF; padding:13px 22px; font-size:13.5px; border-radius:8px;">
-                📰 Saat Makalelerini Oku
-              </a>
-            </div>
-            <div class="hero-trust-line">
-              2 Yıl Uluslararası Mekanizma Garantisi • VIP Danışmanlık
-            </div>
-          </div>
-
-          <!-- Slide 4: Küresel Piyasa Raporu -->
-          <div class="hero-content-slide" data-content-slide="4">
-            <span class="hero-eyebrow">EDİTORYAL SAAT DÜNYASI • PİYASA ANALİZLERİ</span>
-            <h1 class="hero-title">2026 Saat Piyasası &amp; Değer Trendleri</h1>
-            <p class="hero-subtext">En çok tercih edilen lüks modeller, fiyat grafikleri ve koleksiyoner alıcı rehberleri Belgin Saat Magazin'de.</p>
-            <div class="hero-actions">
-              <a href="/magazin/" class="btn-hero-primary" onclick="Router.navigate('magazin'); return false;">
-                📰 Magazini Oku (50 Makale) →
-              </a>
-              <a href="/markalar/" class="btn btn-secondary" onclick="Router.navigate('markalar'); return false;" style="border-color:rgba(194,167,104,0.6); color:#FFF; padding:13px 22px; font-size:13.5px; border-radius:8px;">
-                🏷️ Tüm Saat Markaları Dizini
-              </a>
-            </div>
-            <div class="hero-trust-line">
-              Güncel Piyasa Analizleri • Uzman Koleksiyoner Rehberi
             </div>
           </div>
         </div>
@@ -709,10 +728,11 @@
       <!-- Hero Slide Dots Navigation -->
       <div class="hero-dots-nav" id="heroDotsNav">
         <button class="hero-dot active" onclick="App.setHeroSlide(0)" aria-label="Slayt 1: Cenevre Mirası"></button>
-        <button class="hero-dot" onclick="App.setHeroSlide(1)" aria-label="Slayt 2: Lüks Koleksiyon"></button>
-        <button class="hero-dot" onclick="App.setHeroSlide(2)" aria-label="Slayt 3: Altın & Zümrüt"></button>
-        <button class="hero-dot" onclick="App.setHeroSlide(3)" aria-label="Slayt 4: GMT Batman"></button>
-        <button class="hero-dot" onclick="App.setHeroSlide(4)" aria-label="Slayt 5: Piyasa Raporu"></button>
+        <button class="hero-dot" onclick="App.setHeroSlide(1)" aria-label="Slayt 2: Platin Daytona"></button>
+        <button class="hero-dot" onclick="App.setHeroSlide(2)" aria-label="Slayt 3: Patek Nautilus"></button>
+        <button class="hero-dot" onclick="App.setHeroSlide(3)" aria-label="Slayt 4: Cartier Santos"></button>
+        <button class="hero-dot" onclick="App.setHeroSlide(4)" aria-label="Slayt 5: Rolex Kadrosu"></button>
+        <button class="hero-dot" onclick="App.setHeroSlide(5)" aria-label="Slayt 6: Altın & Zümrüt"></button>
       </div>
     </section>
 
@@ -746,19 +766,6 @@
             <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Fossil', null)" title="Fossil Saat Modelleri"><img src="images/markalar/fossil.png" alt="Fossil" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
             <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Calvin Klein', null)" title="Calvin Klein Saat Modelleri"><img src="images/markalar/calvin-klein.png" alt="Calvin Klein" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
             <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Diesel', null)" title="Diesel Saat Modelleri"><img src="images/markalar/diesel.png" alt="Diesel" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
-            <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Rolex', null)" title="Rolex Saat Modelleri"><img src="images/markalar/rolex.png" alt="Rolex" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
-            <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Cartier', null)" title="Cartier Saat Modelleri"><img src="images/markalar/cartier.png" alt="Cartier" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
-            <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('TAG Heuer', null)" title="TAG Heuer Saat Modelleri"><img src="images/markalar/tag-heuer.png" alt="TAG Heuer" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
-            <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Vacheron Constantin', null)" title="Vacheron Constantin Saat Modelleri"><img src="images/markalar/vacheron-constantin.png" alt="Vacheron Constantin" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
-            <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Longines', null)" title="Longines Saat Modelleri"><img src="images/markalar/longines.png" alt="Longines" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
-            <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Rado', null)" title="Rado Saat Modelleri"><img src="images/markalar/rado.png" alt="Rado" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
-            <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Versace', null)" title="Versace Saat Modelleri"><img src="images/markalar/versace.png" alt="Versace" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
-            <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Seiko', null)" title="Seiko Saat Modelleri"><img src="images/markalar/seiko.png" alt="Seiko" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
-            <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Gc', null)" title="Gc Saat Modelleri"><img src="images/markalar/gc.png" alt="Gc" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
-            <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Michael Kors', null)" title="Michael Kors Saat Modelleri"><img src="images/markalar/michael-kors.png" alt="Michael Kors" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
-            <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Guess', null)" title="Guess Saat Modelleri"><img src="images/markalar/guess.png" alt="Guess" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
-            <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Fossil', null)" title="Fossil Saat Modelleri"><img src="images/markalar/fossil.png" alt="Fossil" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
-            <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Calvin Klein', null)" title="Calvin Klein Saat Modelleri"><img src="images/markalar/calvin-klein.png" alt="Calvin Klein" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
             <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Diesel', null)" title="Diesel Saat Modelleri"><img src="images/markalar/diesel.png" alt="Diesel" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
           </div>
         </div>
@@ -791,6 +798,85 @@
         </div>
 
         <div class="products-grid-4" id="homeEliteWatchesGrid"></div>
+      </section>
+
+      <!-- BÖLÜM 1.7: 🔬 MİKROMEKANİK USTALIK & HAUTE HORLOGERIE BENTO VİTRİNİ -->
+      <section class="craft-bento-section">
+        <div class="craft-bento-header">
+          <div>
+            <span class="hero-eyebrow" style="color:var(--color-gold-dark); font-size:11px; letter-spacing:2px; font-weight:800; display:block; margin-bottom:4px;">
+              🔬 HAUTE HORLOGERIE • MİKROMEKANİK USTALIK
+            </span>
+            <h2 style="font-family:var(--font-heading); font-size:clamp(22px, 3vw, 28px); font-weight:800; color:var(--color-ink); margin:0;">
+              İkonik Tasarımlar &amp; Usta İşçilik Detayları
+            </h2>
+          </div>
+          <a href="/elit-kategori/" onclick="Router.navigate('elit-kategori'); return false;" class="link-see-all" style="font-weight:700; color:var(--color-teal);">
+            Elit Saat Koleksiyonunu İncele (200 Ürün) →
+          </a>
+        </div>
+
+        <div class="craft-bento-grid">
+          <!-- 1. Bento Kart: 950 Platin Daytona Buz Mavisi (Span 7) -->
+          <div class="craft-bento-card craft-card-span-7" onclick="App.filterEliteWatchesByBrand('Rolex', null); Router.navigate('elit-kategori');">
+            <img src="/images/showcase/rolex-daytona-platinum-ice-blue.jpg" alt="Rolex Daytona Cosmograph 950 Platin Buz Mavisi" class="craft-bento-bg" loading="lazy">
+            <div class="craft-bento-overlay"></div>
+            <div class="craft-bento-content">
+              <span class="craft-bento-badge">950 PLATİN &amp; CERACHROM BEZEL</span>
+              <h3 class="craft-bento-title">Rolex Daytona Cosmograph Buz Mavisi Kadran</h3>
+              <p class="craft-bento-desc">Yalnızca 950 platin modellere özel güneş ışını motifli buz mavisi kadran ve kestane kahvesi monoblok seramik takimetre takımı.</p>
+              <span class="craft-bento-link">Rolex Modellerini İncele →</span>
+            </div>
+          </div>
+
+          <!-- 2. Bento Kart: Patek Philippe Nautilus Tiffany (Span 5) -->
+          <div class="craft-bento-card craft-card-span-5" onclick="App.filterEliteWatchesByBrand('Patek Philippe', null); Router.navigate('elit-kategori');">
+            <img src="/images/showcase/patek-nautilus-tiffany-daytona.jpg" alt="Patek Philippe Nautilus & Vintage Daytona" class="craft-bento-bg" loading="lazy">
+            <div class="craft-bento-overlay"></div>
+            <div class="craft-bento-content">
+              <span class="craft-bento-badge">HAUTE HORLOGERIE &bull; KUTSAL ÜÇLÜ</span>
+              <h3 class="craft-bento-title">Patek Philippe Nautilus &amp; Nadir İkonlar</h3>
+              <p class="craft-bento-desc">Gérald Genta'nın sekizgen lumboz formu ve saatçilik tarihinin en yüksek değere ulaşan kadranları.</p>
+              <span class="craft-bento-link">Patek Philippe Koleksiyonu →</span>
+            </div>
+          </div>
+
+          <!-- 3. Bento Kart: Zenith El Primero Kalibre (Span 4) -->
+          <div class="craft-bento-card craft-card-span-4" onclick="Router.navigate('saatler');">
+            <img src="/images/showcase/zenith-el-primero-macro.webp" alt="Zenith El Primero Kronograf" class="craft-bento-bg" loading="lazy">
+            <div class="craft-bento-overlay"></div>
+            <div class="craft-bento-content">
+              <span class="craft-bento-badge">1/10 SANİYE KRONOGRAF</span>
+              <h3 class="craft-bento-title">Zenith Chronomaster &amp; Yıldızlı Tepe</h3>
+              <p class="craft-bento-desc">36.000 VpH yüksek frekanslı entegre mekanik kronograf mimarisi ve mikron işçilikli butonlar.</p>
+              <span class="craft-bento-link">İsviçre Mekanizmaları Gör →</span>
+            </div>
+          </div>
+
+          <!-- 4. Bento Kart: Daytona Subdial Makro Hassasiyeti (Span 4) -->
+          <div class="craft-bento-card craft-card-span-4" onclick="App.filterEliteWatchesByBrand('Rolex', null); Router.navigate('elit-kategori');">
+            <img src="/images/showcase/rolex-daytona-macro-subdials.jpg" alt="Rolex Daytona Konsantrik Alt Kadranlar" class="craft-bento-bg" loading="lazy">
+            <div class="craft-bento-overlay"></div>
+            <div class="craft-bento-content">
+              <span class="craft-bento-badge">MİKROMETRİK HASSASİYET</span>
+              <h3 class="craft-bento-title">Konsantrik Güneş Işını Alt Kadranlar</h3>
+              <p class="craft-bento-desc">1/8 saniye hassasiyetli kronograf ölçümleri ve el işçiliği 18K altın ibreler.</p>
+              <span class="craft-bento-link">Ekspertizli Modelleri Gör →</span>
+            </div>
+          </div>
+
+          <!-- 5. Bento Kart: Cartier Santos Bilek Zarafeti (Span 4) -->
+          <div class="craft-bento-card craft-card-span-4" onclick="App.filterEliteWatchesByBrand('Cartier', null); Router.navigate('elit-kategori');">
+            <img src="/images/showcase/cartier-santos-wrist.jpg" alt="Cartier Santos de Cartier" class="craft-bento-bg" loading="lazy">
+            <div class="craft-bento-overlay"></div>
+            <div class="craft-bento-content">
+              <span class="craft-bento-badge">1904 PARİS TASARIMI</span>
+              <h3 class="craft-bento-title">Cartier Santos de Cartier</h3>
+              <p class="craft-bento-desc">Kavisli ergonomik kasa, Romen rakamlı kadran ve SmartLink hızlı değiştirilebilir çelik bilezik.</p>
+              <span class="craft-bento-link">Cartier Modellerini İncele →</span>
+            </div>
+          </div>
+        </div>
       </section>
 
       <!-- BÖLÜM 2: YENİ EKLENEN SAATLER (Sayfa Başına 30 Ürün) -->

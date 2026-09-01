@@ -1068,6 +1068,147 @@ p, span, li, td, th, label, input, button, select, textarea {
 }
 
 /* ==========================================================
+   🔬 MİKROMEKANİK USTALIK & HAUTE HORLOGERIE BENTO VİTRİNİ
+   ========================================================== */
+.craft-bento-section {
+  padding: 32px 0 24px 0;
+}
+.craft-bento-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.craft-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 18px;
+}
+.craft-bento-card {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #111413;
+  border: 1px solid rgba(194, 167, 104, 0.24);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px;
+  min-height: 290px;
+  cursor: pointer;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.35s ease;
+}
+.craft-bento-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(194, 167, 104, 0.65);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.38);
+}
+.craft-bento-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+  filter: brightness(0.85) contrast(1.05);
+}
+.craft-bento-card:hover .craft-bento-bg {
+  transform: scale(1.05);
+  filter: brightness(0.95) contrast(1.08);
+}
+.craft-bento-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(8, 12, 11, 0.08) 0%, rgba(8, 12, 11, 0.55) 45%, rgba(8, 12, 11, 0.94) 100%);
+  z-index: 2;
+}
+.craft-bento-content {
+  position: relative;
+  z-index: 3;
+  color: #FFF;
+}
+.craft-bento-badge {
+  display: inline-block;
+  background: rgba(194, 167, 104, 0.24);
+  border: 1px solid rgba(194, 167, 104, 0.45);
+  color: #E6D2A8;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  backdrop-filter: blur(4px);
+}
+.craft-bento-title {
+  font-family: var(--font-heading);
+  font-size: 18.5px;
+  font-weight: 700;
+  color: #FFF;
+  margin: 0 0 6px 0;
+  line-height: 1.3;
+}
+.craft-bento-desc {
+  font-size: 12.5px;
+  color: #D4D4DC;
+  line-height: 1.45;
+  margin: 0 0 12px 0;
+  max-width: 96%;
+}
+.craft-bento-link {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-gold-bright);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: transform 0.2s ease;
+}
+.craft-bento-card:hover .craft-bento-link {
+  transform: translateX(3px);
+  color: #FFF;
+}
+
+/* Grid spans */
+.craft-card-span-7 {
+  grid-column: span 7;
+}
+.craft-card-span-5 {
+  grid-column: span 5;
+}
+.craft-card-span-4 {
+  grid-column: span 4;
+}
+
+@media (max-width: 991px) {
+  .craft-card-span-7,
+  .craft-card-span-5,
+  .craft-card-span-4 {
+    grid-column: span 6;
+  }
+}
+@media (max-width: 640px) {
+  .craft-card-span-7,
+  .craft-card-span-5,
+  .craft-card-span-4 {
+    grid-column: span 12;
+  }
+  .craft-bento-card {
+    min-height: 240px;
+    padding: 18px;
+  }
+}
+
+/* ==========================================================
    📰 MAGAZİN MODÜLÜ — KARTLAR, GRİD VE EDİTORYAL TİPOGRAFİ
    ========================================================== */
 .magazine-grid {
