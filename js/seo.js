@@ -4,7 +4,7 @@
 // ==========================================================
 
 const SeoManager = {
-  defaultTitle: "Belgin Kuyumculuk & Saat | Lüks Saat & Prestij Koleksiyonu (Est. 1999)",
+  defaultTitle: "Belgin Saat | Lüks Saat & Prestij Koleksiyonu (Est. 1999)",
   defaultDesc: "İzmir Buca Menderes Caddesinde 1999'dan beri ekspertizli Rolex, Patek Philippe, Cartier ve lüks saat modelleri. Alım, satım ve takas.",
   defaultKeywords: "izmir buca lüks saat, ikinci el lüks saat, rolex izmir, cartier izmir, güvenilir saat ekspertiz, buca saat modelleri",
   baseUrl: "https://www.belginkuyumculuk.com",
@@ -17,55 +17,55 @@ const SeoManager = {
     // 1. Gelişmiş Meta Tanımları
     const pageMeta = {
       'ana-sayfa': {
-        title: "Belgin Kuyumculuk & Saat | Lüks Saat & Prestij Koleksiyonu (Est. 1999)",
+        title: "Belgin Saat | Lüks Saat & Prestij Koleksiyonu (Est. 1999)",
         desc: "İzmir Buca Menderes Caddesinde 1999'dan beri ekspertizli Rolex, Patek Philippe, Cartier ve lüks saat modelleri. Alım, satım ve takas.",
         keywords: "izmir buca lüks saat, ikinci el lüks saat, rolex izmir, cartier izmir, güvenilir saat ekspertiz, buca saat modelleri",
         breadcrumb: "Ana Sayfa"
       },
       'saatler': {
-        title: "Lüks Saatler & Yüksek Saatçilik | Belgin Kuyumculuk & Saat",
+        title: "Lüks Saatler & Yüksek Saatçilik | Belgin Saat",
         desc: "Ekspertizli ikinci el ve sıfır Rolex, Patek Philippe, Audemars Piguet, TAG Heuer, Longines ve Rado lüks saat modelleri. 12 nokta mekanizma garantisi.",
         keywords: "ikinci el rolex, tag heuer carrera, longines hydroconquest, rado captain cook, izmir lüks saat, ekspertizli saat, patek philippe izmir",
         breadcrumb: "Lüks Saatler"
       },
       'mucevherat': {
-        title: "Özel Koleksiyon | Belgin Kuyumculuk & Saat",
+        title: "Özel Koleksiyon | Belgin Saat",
         desc: "Lüks ve seçkin prestij parçaları.",
         keywords: "lüks saat, seçkin koleksiyon, izmir",
         breadcrumb: "Koleksiyon"
       },
       'ikinci-el': {
-        title: "Ekspertizli Seçkin Saatler | Belgin Kuyumculuk & Saat",
+        title: "Ekspertizli Seçkin Saatler | Belgin Saat",
         desc: "12 nokta teknik ekspertiz raporlu lüks saat modellerinde en iyi fiyat güvencesi ve takas imkanı.",
         keywords: "ikinci el saat, saat takas, fast ile ödeme, sertifikalı saat, ikinci el saat alım satım",
         breadcrumb: "Seçkin Saatler"
       },
       'hikayemiz': {
-        title: "Hikayemiz & 1999'dan Beri Güven Mirası | Belgin Kuyumculuk & Saat",
+        title: "Hikayemiz & 1999'dan Beri Güven Mirası | Belgin Saat",
         desc: "1999 yılından bu yana İzmir Buca'da değişmeyen adresimizde dürüstlük, şeffaf ekspertiz ve sarsılmaz müşteri memnuniyeti ilkeleriyle hizmet veriyoruz.",
-        keywords: "belgin kuyumculuk hakkında, buca en eski saat mağazası, 1999 lüks saat izmir, güvenilir saat ekspertiz",
+        keywords: "belgin saat hakkında, buca en eski saat mağazası, 1999 lüks saat izmir, güvenilir saat ekspertiz",
         breadcrumb: "Hikayemiz"
       },
       'iletisim': {
-        title: "İletişim & Buca Showroom VIP Randevu | Belgin Kuyumculuk & Saat",
+        title: "İletişim & Buca Showroom VIP Randevu | Belgin Saat",
         desc: "Menderes Caddesi No:231/B Buca İzmir showroom adresimiz, telefon numaralarımız ve VIP WhatsApp randevu alma kanallarımız.",
-        keywords: "belgin kuyumculuk adres, buca telefon, vip randevu, yol tarifi buca showroom",
+        keywords: "belgin saat adres, buca telefon, vip randevu, yol tarifi buca showroom",
         breadcrumb: "İletişim"
       },
       'sepet': {
-        title: "Alışveriş Sepetim | Belgin Kuyumculuk & Saat",
+        title: "Alışveriş Sepetim | Belgin Saat",
         desc: "Sepetinizdeki seçkin saat parçalarını görüntüleyin. BDDK lisanslı PayTR 3D Secure ile güvenli ödemeye geçin.",
         keywords: "sepetim, güvenli kasa, lüks ödeme, paytr sepet",
         breadcrumb: "Sepetim"
       },
       'odeme': {
-        title: "Güvenli Ödeme & VIP Teslimat | Belgin Kuyumculuk",
+        title: "Güvenli Ödeme & VIP Teslimat | Belgin Saat",
         desc: "BDDK lisanslı PayTR 256-bit SSL korumalı 3D Secure tek çekim ve banka havalesi seçeneği. Mağazadan güvenli teslimat bilgileri.",
         keywords: "paytr ödeme, mağazadan güvenli teslimat",
         breadcrumb: "Güvenli Ödeme"
       },
       'sertifika': {
-        title: "Sertifika Doğrulama & Ekspertiz Sorgulama | Belgin Kuyumculuk",
+        title: "Sertifika Doğrulama & Ekspertiz Sorgulama | Belgin Saat",
         desc: "Satın aldığınız ürünlerin 12 nokta teknik ekspertiz raporunu ve orijinallik tescil belgesini online sorgulama altyapısı.",
         keywords: "sertifika doğrulama, ekspertiz sorgula, saat orijinallik kontrolü",
         breadcrumb: "Sertifika Sorgulama"
