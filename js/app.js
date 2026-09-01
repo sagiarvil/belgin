@@ -385,6 +385,9 @@ const App = {
       `).join('');
     }
 
+    // Elit Kategori — Haute Horlogerie Vitrini (10 Marka & 200 Model)
+    this.renderHomeEliteWatches('all');
+
     // Yeni Eklenen Saatler (Sayfa Başına 16 Ürün)
     this.renderHomeWatches(1);
 
@@ -437,6 +440,29 @@ const App = {
       track.style.transform = '';
       track.style.animationPlayState = 'running';
     }, 1200);
+  },
+
+  // ANA SAYFA ELİT KATEGORİ VİTRİNİ (8'li veya 12'li Seçkin Vitrin)
+  renderHomeEliteWatches(brandFilter = 'all') {
+    const el = document.getElementById('homeEliteWatchesGrid');
+    if (!el) return;
+
+    let list = (typeof ELITE_WATCHES !== 'undefined' ? ELITE_WATCHES : PRODUCTS.filter(p => p.isElite || p.category === 'elit-saatler'));
+    if (brandFilter && brandFilter !== 'all') {
+      list = list.filter(p => p.brand.trim().toLowerCase() === brandFilter.trim().toLowerCase());
+    }
+
+    const picks = list.slice(0, 12);
+    el.innerHTML = picks.map(p => this.renderProductCard(p)).join('');
+  },
+
+  filterHomeEliteWatches(brand = 'all', btn = null) {
+    this.renderHomeEliteWatches(brand);
+    if (btn) {
+      const parent = btn.closest('.mobile-quick-filter-bar') || document;
+      parent.querySelectorAll('.mobile-filter-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
   },
 
   // ANA SAYFA SAAT SAYFALAMA (EN FAZLA 4 SIRA = 16 SAAT)
