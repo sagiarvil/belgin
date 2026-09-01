@@ -1363,9 +1363,18 @@ const App = {
             <div class="pdp-meta-row">
               <span>Ürün Kodu: <strong class="pdp-meta-sku">${p.ref || p.reference}</strong></span>
               <span>•</span>
-              <span class="pdp-meta-stock">● Stokta Var (Hemen Teslim)</span>
+              <span class="pdp-meta-stock">📦 Özel Sipariş ile Temin Edilir</span>
               <span>•</span>
               <span>Kategori: <strong>${p.subCategory || (isGoldProduct ? 'Altın & Mücevherat' : 'Lüks Saat')}</strong></span>
+            </div>
+
+            <!-- Özel Sipariş Temin Bilgisi -->
+            <div class="pdp-special-procure-notice" style="display:flex; align-items:flex-start; gap:12px; background:rgba(194, 167, 104, 0.08); border:1px solid rgba(194, 167, 104, 0.35); border-radius:8px; padding:12px 16px; margin:14px 0 18px; font-size:13.5px; line-height:1.55; color:var(--color-ink);">
+              <span style="font-size:20px; line-height:1; flex-shrink:0;">📦</span>
+              <div>
+                <strong style="color:var(--color-gold-dark); display:block; margin-bottom:3px; font-size:14px; font-weight:700;">Özel Sipariş ile Temin Edilir</strong>
+                <span style="color:#555; display:block;">Ürün, talebiniz üzerine özel olarak temin edilir. Güncel temin süresi için bizimle iletişime geçebilirsiniz.</span>
+              </div>
             </div>
 
             <!-- Fiyat Kutusu -->
