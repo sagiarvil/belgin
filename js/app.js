@@ -250,7 +250,7 @@ const App = {
       Router.navigate('urun', false);
       this.openProduct(state.productId, { skipHistory: true });
     } else {
-      Router.navigate(state.page, false);
+      Router.navigate(state.page, false, { filter: state.filter });
     }
   },
 
@@ -526,13 +526,21 @@ const App = {
 
   // 0. ELİT KATEGORİ SAYFASI (10 Prestij Marka & 200 Doğrulanmış Model)
   renderEliteWatches(brandFilter = 'all', page = 1) {
+    const eliteSource = (typeof ELITE_WATCHES !== 'undefined'
+      ? ELITE_WATCHES
+      : PRODUCTS.filter(p => p.isElite || p.category === 'elit-saatler'));
+    const requestedBrand = String(brandFilter || 'all').trim();
+    const matchedBrand = eliteSource.find(p =>
+      String(p.brand || '').trim().toLocaleLowerCase('tr-TR') === requestedBrand.toLocaleLowerCase('tr-TR')
+    )?.brand;
+    brandFilter = requestedBrand.toLowerCase() === 'all' ? 'all' : (matchedBrand || 'all');
     this.currentEliteBrand = brandFilter;
     this.allEliteWatchPage = page;
     const el = document.getElementById('allEliteWatchesGrid');
     const pagEl = document.getElementById('allEliteWatchesPagination');
     if (!el) return;
 
-    let list = (typeof ELITE_WATCHES !== 'undefined' ? ELITE_WATCHES : PRODUCTS.filter(p => p.isElite || p.category === 'elit-saatler'));
+    let list = eliteSource;
     if (brandFilter && brandFilter !== 'all') {
       list = list.filter(p => p.brand.trim().toLowerCase() === brandFilter.trim().toLowerCase());
     }
@@ -551,7 +559,7 @@ const App = {
     const subHeader = document.getElementById('eliteWatchesSubHeader');
     if (subHeader) {
       if (brandFilter && brandFilter !== 'all') {
-        subHeader.textContent = `${brandFilter} koleksiyonundan ${total} adet Chrono24 endeksli saat listeleniyor.`;
+        subHeader.textContent = `${brandFilter} koleksiyonundan ${total} adet seçilmiş saat listeleniyor.`;
       } else {
         subHeader.textContent = `10 prestij saat evinden seçilmiş en iyi 200 model`;
       }
@@ -583,11 +591,8 @@ const App = {
     this.closeNavDropdowns();
     this.currentEliteBrand = brand;
     this.allEliteWatchPage = 1;
-    if (Router.currentPage !== 'elit-kategori') {
-      Router.navigate('elit-kategori', true, { filter: brand });
-    } else {
-      this.renderEliteWatches(brand, 1);
-    }
+    // Tek giriş noktası: render, URL ve geri/ileri state'i aynı marka filtresini taşır.
+    Router.navigate('elit-kategori', true, { filter: brand });
     if (btn) {
       document.querySelectorAll('.elite-brand-filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
@@ -1179,7 +1184,7 @@ const App = {
           <span class="pdp-trust-item-icon">⚖️</span>
           <div class="pdp-trust-item-text">
             <strong>Ekspertiz & Takas Güvencesi</strong>
-            <span>Sertifikalı & 12 Nokta Ekspertiz Güvencesi</span>
+            <span>Sertifikalı & Ürün Bazında Kontrol Güvencesi</span>
           </div>
         </div>
       </div>
