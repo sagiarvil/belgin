@@ -66,13 +66,13 @@ const ValuationEngine = {
     const container = document.getElementById('valuationSimulatorBox');
     if (!container) return;
 
-    const mode = this.currentMode || 'gold';
+    const mode = this.currentMode || 'watch';
 
     if (mode === 'gold') {
       const hasGramPrice = (typeof LIVE_MARKET_DATA !== 'undefined' && LIVE_MARKET_DATA.gramGold24k ? LIVE_MARKET_DATA.gramGold24k : 7111);
       
       container.innerHTML = `
-        <div class="val-tab-bar">
+        <div class="val-tab-bar" style="display:none;">
           <button class="btn-val-tab active" onclick="ValuationEngine.switchMode('gold')">
             <span>🪙</span>
             <span>Masif Altın & Ziynet Değerleme</span>
@@ -144,7 +144,7 @@ const ValuationEngine = {
     } else {
       // Saat Modu
       container.innerHTML = `
-        <div class="val-tab-bar">
+        <div class="val-tab-bar" style="display:none;">
           <button class="btn-val-tab" onclick="ValuationEngine.switchMode('gold')">
             <span>🪙</span>
             <span>Masif Altın & Ziynet Değerleme</span>
