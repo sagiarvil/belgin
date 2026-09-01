@@ -68,6 +68,7 @@ function categoryKey(p) {
 function categoryLabel(key) {
   const labels = {
     'elit-kategori': 'Elit Kategori — Lüks Saat Evleri',
+    'markalar': 'Saat Markaları Dizini',
     'saatler': 'Lüks Saatler',
     'mucevherat': 'Mücevherat ve Altın'
   };
@@ -393,6 +394,12 @@ function renderCategoryPage(key, list, indexHtml) {
       h1: 'Elit Kategori Lüks Saatler',
       gridId: 'allEliteWatchesGrid'
     },
+    markalar: {
+      title: 'Saat Markaları Dizini — Tüm Prestij Saat Evleri | Belgin Saat',
+      description: 'Rolex, Omega, Patek Philippe, Tissot, Longines, Frederique Constant, Rado, Alpina ve tüm seçkin saat markaları dizini.',
+      h1: 'Saat Markaları',
+      gridId: 'allWatchesGrid'
+    },
     saatler: {
       title: 'Lüks Saatler & Yüksek Saatçilik | Belgin Saat İzmir Buca',
       description: 'Belgin Saat İzmir Buca lüks saat koleksiyonu. Marka, referans, fiyat ve stok bilgileriyle ürünleri inceleyin.',
@@ -531,7 +538,7 @@ function buildRouteMap() {
 
 function main() {
   if (!Array.isArray(products) || products.length === 0) throw new Error('[seo-static] PRODUCTS boş.');
-  ['urun','elit-kategori','saatler','mucevherat'].forEach(ensureGeneratedDir);
+  ['urun','elit-kategori','markalar','saatler','mucevherat'].forEach(ensureGeneratedDir);
   
   const indexHtmlPath = path.join(ROOT, 'index.html');
   const indexHtml = fs.readFileSync(indexHtmlPath, 'utf8');
@@ -543,7 +550,7 @@ function main() {
     seen.add(route);
     writeRoute(route, renderProductPage(p, indexHtml));
   }
-  for (const key of ['elit-kategori','saatler','mucevherat']) {
+  for (const key of ['elit-kategori','markalar','saatler','mucevherat']) {
     writeRoute(CATEGORY_ROUTES[key], renderCategoryPage(key, products.filter(p => categoryKey(p) === key), indexHtml));
   }
   buildRouteMap();
