@@ -6259,8 +6259,8 @@ body.page-is-canli-fiyatlar .header .btn-action-vip,
 /* 5. Ana Sayfa & Vitrin Bölümleri (Mücevher Markaları, Yeni Eklenen Mücevherler, Kasa Mücevherleri) */
 #secHomeJewelry,
 #jewelryBrandsGrid,
-section:has(#jewelryBrandsGrid),
-section:has(#secHomeJewelry),
+.section-art:has(#jewelryBrandsGrid),
+.section-art:has(#secHomeJewelry),
 .product-art-card:has(img[src*="jewelry-definition"]),
 #page-mucevherat,
 #page-canli-fiyatlar {
