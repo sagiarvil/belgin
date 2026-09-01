@@ -465,9 +465,6 @@ p, span, li, td, th, label, input, button, select, textarea {
   right: 0;
   height: 12px;
 }
-.nav-dropdown-mega {
-  min-width: 540px;
-}
 .nav-has-dropdown:hover .nav-dropdown-menu,
 .nav-has-dropdown:focus-within .nav-dropdown-menu {
   opacity: 1;
@@ -475,12 +472,95 @@ p, span, li, td, th, label, input, button, select, textarea {
   pointer-events: auto;
   transform: translateX(-50%) translateY(0);
 }
+/* Sol kenara dayanan ilk menü elemanları için sola hizalama ve taşma engeli */
+.nav-desktop > ul > li:first-child .nav-dropdown-menu {
+  left: 0 !important;
+  transform: translateX(0) translateY(4px);
+}
+.nav-desktop > ul > li:first-child:hover .nav-dropdown-menu,
+.nav-desktop > ul > li:first-child:focus-within .nav-dropdown-menu {
+  transform: translateX(0) translateY(0);
+}
 .nav-has-dropdown.dropdown-force-closed .nav-dropdown-menu,
 .nav-dropdown-menu.dropdown-menu-hidden {
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
   transform: translateX(-50%) translateY(8px) !important;
+}
+
+/* 👑 ELİT KATEGORİ ÖZEL MEGA MENÜ POZİSYONLAMA & LÜKS TASARIM */
+.nav-dropdown-elite {
+  left: 0 !important;
+  transform: translateX(0) translateY(4px) !important;
+  min-width: 620px !important;
+  max-width: 680px !important;
+  padding: 18px 22px !important;
+  background: #FFFFFF !important;
+  border: 1px solid rgba(194, 167, 104, 0.45) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.18), 0 4px 16px rgba(194, 167, 104, 0.1) !important;
+}
+.nav-has-dropdown:hover .nav-dropdown-elite,
+.nav-has-dropdown:focus-within .nav-dropdown-elite {
+  transform: translateX(0) translateY(0) !important;
+}
+.nav-dropdown-elite .nav-dropdown-header {
+  background: linear-gradient(135deg, #111413 0%, #1A2120 100%) !important;
+  color: #FFFFFF !important;
+  padding: 12px 16px !important;
+  border-radius: 8px !important;
+  margin-bottom: 14px !important;
+  border: 1px solid rgba(194, 167, 104, 0.35) !important;
+  font-size: 11px !important;
+  letter-spacing: 1px !important;
+}
+.nav-dropdown-elite .nav-dropdown-header a {
+  color: #D8BD7E !important;
+  font-weight: 700 !important;
+  font-size: 11.5px !important;
+  background: rgba(194, 167, 104, 0.15) !important;
+  padding: 4px 10px !important;
+  border-radius: 4px !important;
+  border: 1px solid rgba(194, 167, 104, 0.4) !important;
+}
+.nav-dropdown-elite .nav-dropdown-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 10px 12px !important;
+}
+.nav-dropdown-elite .nav-sub-brand-item {
+  background: #FDFCFA !important;
+  border: 1px solid #EBE6DC !important;
+  padding: 10px 12px !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease !important;
+}
+.nav-dropdown-elite .nav-sub-brand-item:hover {
+  background: #F5EFE4 !important;
+  border-color: var(--color-gold) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06) !important;
+}
+.nav-dropdown-elite .nav-sub-brand-item.nav-all-item {
+  grid-column: 1 / -1 !important;
+  background: linear-gradient(90deg, #FAF6EE 0%, #F5EFE2 100%) !important;
+  border: 1px solid rgba(194, 167, 104, 0.6) !important;
+  padding: 12px 14px !important;
+}
+.nav-dropdown-elite .nav-sub-brand-name {
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  color: #111413 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+.nav-dropdown-elite .nav-sub-brand-tag {
+  font-size: 11px !important;
+  color: #555555 !important;
+  margin-top: 3px !important;
+  font-weight: 500 !important;
 }
 .nav-dropdown-header {
   display: flex;
