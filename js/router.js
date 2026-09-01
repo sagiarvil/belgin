@@ -175,7 +175,8 @@ const Router = {
       'preowned': 'seckin-urunler',
       'ikinci-el': 'elit-kategori',
       'seckin-urunler': 'elit-kategori',
-      'story': 'hikayemiz',
+      'story': 'biz-kimiz',
+      'hikayemiz': 'biz-kimiz',
       'cart': 'sepet',
       'checkout': 'odeme',
       'wishlist': 'favoriler',
@@ -187,6 +188,9 @@ const Router = {
     };
     if (pageMapping[page]) {
       page = pageMapping[page];
+    }
+    if (page === 'hikayemiz') {
+      page = 'biz-kimiz';
     }
     if (page === 'canli-fiyatlar' || page === 'canlipiyasalar' || page === 'mucevherat') {
       page = 'ana-sayfa';

@@ -425,7 +425,6 @@
         </li>
 
         <li><a href="/biz-kimiz/" data-page="biz-kimiz" class="nav-link-main">Biz Kimiz</a></li>
-        <li><a href="/#hikayemiz" data-page="hikayemiz" class="nav-link-main">Mirasımız</a></li>
         <li><a href="/#iletisim" data-page="iletisim" class="nav-link-main">İletişim</a></li>
         <li><a href="/magazin/" data-page="magazin" class="nav-link-main">Magazin</a></li>
         <li><a href="#" onclick="App.openTradeInModal()" class="nav-link-main" style="color:var(--color-gold-dark);">Takas & Değerleme</a></li>
@@ -565,7 +564,6 @@
       </div>
 
       <a href="/biz-kimiz/" data-page="biz-kimiz" onclick="App.toggleMobileDrawer(false); Router.navigate('biz-kimiz'); return false;" style="color:var(--color-gold-dark); font-weight:700;">📖 Biz Kimiz (Kurumsal Profil)</a>
-      <a href="#" data-page="hikayemiz" onclick="App.toggleMobileDrawer(false)">🏛️ 1999'dan beri süren Mirasımız</a>
       <a href="#" data-page="iletisim" onclick="App.toggleMobileDrawer(false)">📍 Buca Showroom & İletişim</a>
       <a href="/magazin/" data-page="magazin" onclick="App.toggleMobileDrawer(false)">📰 Belgin Saat Magazin (50 İçerik)</a>
       <a href="#" onclick="App.toggleMobileDrawer(false); App.openTradeInModal();" style="color:var(--color-gold);">⌚ Saat Takası & Değerleme</a>
@@ -7097,8 +7095,8 @@
     <!-- App.renderLivePricesPage() tarafından dinamik basılacak -->
   </section>
 
-  <!-- 5. 1999'DAN BERİ SÜREN MİRAS & HAKKIMIZDA SAYFASI -->
-  <section id="page-hikayemiz" class="page">
+  <!-- 5. 1999'DAN BERİ SÜREN MİRAS & HAKKIMIZDA SAYFASI (GİZLİ — BİZ KİMİZ KULLANILIR) -->
+  <section id="page-hikayemiz" class="page" style="display:none !important;">
     <div class="container-art section-art" style="max-width:960px;">
       
       <!-- 1999 Kuruluş Özel Mühür Kartı -->
