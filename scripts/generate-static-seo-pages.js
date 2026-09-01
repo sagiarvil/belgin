@@ -391,7 +391,7 @@ function renderCategoryPage(key, list, indexHtml) {
   const meta = {
     'elit-kategori': {
       title: 'Elit Kategori — Lüks Saat Evleri (Haute Horlogerie) | Belgin Saat',
-      description: 'Rolex, Omega, Patek Philippe, Audemars Piguet, Breitling, Cartier, Tudor, TAG Heuer, IWC, Panerai Chrono24 endeksli 200 ikonik lüks saat modeli.',
+      description: 'Rolex, Omega, Patek Philippe, Audemars Piguet, Breitling, Cartier, Tudor, TAG Heuer, IWC, Panerai seçilmiş 200 ikonik lüks saat modeli.',
       h1: 'Elit Kategori Lüks Saatler',
       gridId: 'allEliteWatchesGrid'
     },
