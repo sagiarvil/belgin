@@ -28,9 +28,9 @@ const Router = {
   resolveLocation() {
     const path = location.pathname.replace(/\/+$/, '') || '/';
     if (path === '/') return { page: 'ana-sayfa' };
-    if (path === '/canli-fiyatlar' || path === '/canlipiyasalar') return { page: 'canli-fiyatlar' };
+    if (path === '/canli-fiyatlar' || path === '/canlipiyasalar') return { page: 'ana-sayfa' };
+    if (path === '/mucevherat') return { page: 'ana-sayfa' };
     if (path === '/saatler') return { page: 'saatler' };
-    if (path === '/mucevherat') return { page: 'mucevherat' };
     if (path === '/seckin-urunler' || path === '/ikinci-el') return { page: 'seckin-urunler' };
     if (path === '/sepet' || path === '/cart') return { page: 'sepet' };
     if (path === '/odeme' || path === '/checkout') return { page: 'odeme' };
@@ -52,7 +52,10 @@ const Router = {
   migrateLegacyHash() {
     const hash = location.hash.replace(/^#/, '');
     if (!hash) return null;
-    if (hash === 'canli-fiyatlar' || hash === 'canlipiyasalar') return { page: 'canli-fiyatlar' };
+    if (hash === 'canli-fiyatlar' || hash === 'canlipiyasalar' || hash === 'mucevherat') {
+      history.replaceState({page:'ana-sayfa'}, '', '/');
+      return { page: 'ana-sayfa' };
+    }
     if (hash === 'odeme' || hash === 'checkout') return { page: 'odeme' };
     if (hash === 'sepet' || hash === 'cart') return { page: 'sepet' };
     const m = hash.match(/^(?:urun|product)-(\d+)$/);
@@ -65,12 +68,12 @@ const Router = {
       }
     }
     const old = {
-      'canli-fiyatlar': '/canli-fiyatlar/',
-      'canlipiyasalar': '/canli-fiyatlar/',
+      'canli-fiyatlar': '/',
+      'canlipiyasalar': '/',
       'saatler': '/saatler/',
       'watches': '/saatler/',
-      'mucevherat': '/mucevherat/',
-      'jewellery': '/mucevherat/',
+      'mucevherat': '/',
+      'jewellery': '/',
       'seckin-urunler': '/seckin-urunler/',
       'ikinci-el': '/seckin-urunler/',
       'preowned': '/seckin-urunler/',
@@ -166,10 +169,13 @@ const Router = {
     if (pageMapping[page]) {
       page = pageMapping[page];
     }
+    if (page === 'canli-fiyatlar' || page === 'canlipiyasalar' || page === 'mucevherat') {
+      page = 'ana-sayfa';
+    }
 
     this.currentPage = page;
-    document.body.classList.toggle('page-canli-fiyatlar', page === 'canli-fiyatlar');
-    document.body.classList.toggle('page-is-canli-fiyatlar', page === 'canli-fiyatlar');
+    document.body.classList.toggle('page-canli-fiyatlar', false);
+    document.body.classList.toggle('page-is-canli-fiyatlar', false);
 
     // 1. Sayfa Görünürlüğü
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
