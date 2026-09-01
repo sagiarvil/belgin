@@ -516,63 +516,255 @@ const App = {
     }, 40);
   },
 
-  // 0. ELİT KATEGORİ SAYFASI (10 Prestij Marka & 200 Doğrulanmış Model)
-  renderEliteWatches(brandFilter = 'all', page = 1) {
-    const eliteSource = (typeof ELITE_WATCHES !== 'undefined'
-      ? ELITE_WATCHES
-      : PRODUCTS.filter(p => p.isElite || p.category === 'elit-saatler'));
-    const requestedBrand = String(brandFilter || 'all').trim();
-    const matchedBrand = eliteSource.find(p =>
-      String(p.brand || '').trim().toLocaleLowerCase('tr-TR') === requestedBrand.toLocaleLowerCase('tr-TR')
-    )?.brand;
-    brandFilter = requestedBrand.toLowerCase() === 'all' ? 'all' : (matchedBrand || 'all');
-    this.currentEliteBrand = brandFilter;
-    this.allEliteWatchPage = page;
-    const el = document.getElementById('allEliteWatchesGrid');
-    const pagEl = document.getElementById('allEliteWatchesPagination');
-    if (!el) return;
+  // EVRENSEL SAAT FİLTRELEME & ARAMA MOTORU (UNIVERSAL FILTER ENGINE)
+  universalFilterState: {
+    elite: { query: '', brand: 'all', priceRange: 'all', sortBy: 'default', page: 1 },
+    watches: { query: '', brand: 'all', priceRange: 'all', sortBy: 'default', page: 1 }
+  },
 
-    let list = eliteSource;
-    if (brandFilter && brandFilter !== 'all') {
-      list = list.filter(p => p.brand.trim().toLowerCase() === brandFilter.trim().toLowerCase());
+  getAllWatchList() {
+    if (typeof PRODUCTS !== 'undefined' && Array.isArray(PRODUCTS)) {
+      return PRODUCTS.filter(p => p.isWatch || p.isElite || p.category === 'saat' || p.category === 'elit-saatler' || p.category === 'watch');
+    }
+    return typeof WATCHES !== 'undefined' ? WATCHES : [];
+  },
+
+  getEliteWatchList() {
+    if (typeof ELITE_WATCHES !== 'undefined' && Array.isArray(ELITE_WATCHES)) {
+      return ELITE_WATCHES;
+    }
+    if (typeof PRODUCTS !== 'undefined' && Array.isArray(PRODUCTS)) {
+      return PRODUCTS.filter(p => p.isElite || p.category === 'elit-saatler');
+    }
+    return [];
+  },
+
+  getFilteredWatches(context = 'elite') {
+    const isElite = context === 'elite';
+    let list = isElite ? this.getEliteWatchList() : this.getAllWatchList();
+    const st = this.universalFilterState[context] || { query: '', brand: 'all', priceRange: 'all', sortBy: 'default' };
+
+    // 1. Arama Metni Filtresi (Model, Marka, Referans, Açıklama)
+    if (st.query && st.query.trim()) {
+      const q = st.query.trim().toLocaleLowerCase('tr-TR');
+      list = list.filter(p => {
+        const name = (p.name || '').toLocaleLowerCase('tr-TR');
+        const brand = (p.brand || '').toLocaleLowerCase('tr-TR');
+        const ref = (p.reference || '').toLocaleLowerCase('tr-TR');
+        const desc = (p.description || p.desc || '').toLocaleLowerCase('tr-TR');
+        return name.includes(q) || brand.includes(q) || ref.includes(q) || desc.includes(q);
+      });
     }
 
-    const total = list.length;
-    const start = (page - 1) * this.PAGE_SIZE;
-    const end = start + this.PAGE_SIZE;
-    const pageItems = list.slice(start, end);
-
-    el.innerHTML = pageItems.map(p => this.renderProductCard(p)).join('');
-
-    if (pagEl) {
-      pagEl.innerHTML = this.buildPaginationHtml(page, total, this.PAGE_SIZE, 'App.changeAllEliteWatchPage');
+    // 2. Marka Filtresi
+    if (st.brand && st.brand !== 'all') {
+      list = list.filter(p => (p.brand || '').trim().toLocaleLowerCase('tr-TR') === st.brand.trim().toLocaleLowerCase('tr-TR'));
     }
 
-    const subHeader = document.getElementById('eliteWatchesSubHeader');
-    if (subHeader) {
-      if (brandFilter && brandFilter !== 'all') {
-        subHeader.textContent = `${brandFilter} koleksiyonundan ${total} adet seçilmiş saat listeleniyor.`;
-      } else {
-        subHeader.textContent = `10 prestij saat evinden seçilmiş en iyi 200 model`;
+    // 3. Fiyat Aralığı Filtresi
+    if (st.priceRange && st.priceRange !== 'all') {
+      if (st.priceRange === 'under50k') {
+        list = list.filter(p => (p.price || 0) < 50000);
+      } else if (st.priceRange === '50k-100k') {
+        list = list.filter(p => (p.price || 0) >= 50000 && (p.price || 0) < 100000);
+      } else if (st.priceRange === '100k-250k') {
+        list = list.filter(p => (p.price || 0) >= 100000 && (p.price || 0) < 250000);
+      } else if (st.priceRange === 'under250k') {
+        list = list.filter(p => (p.price || 0) < 250000);
+      } else if (st.priceRange === 'under500k') {
+        list = list.filter(p => (p.price || 0) < 500000);
+      } else if (st.priceRange === '250k-500k' || st.priceRange === '500k-1m') {
+        if (st.priceRange === '250k-500k') list = list.filter(p => (p.price || 0) >= 250000 && (p.price || 0) < 500000);
+        else list = list.filter(p => (p.price || 0) >= 500000 && (p.price || 0) < 1000000);
+      } else if (st.priceRange === '1m-2m') {
+        list = list.filter(p => (p.price || 0) >= 1000000 && (p.price || 0) < 2000000);
+      } else if (st.priceRange === 'over250k') {
+        list = list.filter(p => (p.price || 0) >= 250000);
+      } else if (st.priceRange === 'over1m' || st.priceRange === 'over2m') {
+        if (st.priceRange === 'over1m') list = list.filter(p => (p.price || 0) >= 1000000);
+        else list = list.filter(p => (p.price || 0) >= 2000000);
       }
     }
 
-    // Update filter buttons UI
-    document.querySelectorAll('.elite-brand-filter-btn, .mobile-filter-pill').forEach(b => {
-      b.classList.remove('active');
-      const txt = b.textContent.trim().toLowerCase();
-      if ((brandFilter === 'all' || !brandFilter) && (txt.includes('tümü') || txt.includes('tüm elit'))) {
-        b.classList.add('active');
-      } else if (brandFilter && (txt === brandFilter.toLowerCase() || txt.startsWith(brandFilter.toLowerCase()))) {
-        b.classList.add('active');
+    // 4. Sıralama
+    if (st.sortBy === 'price-asc') {
+      list = [...list].sort((a, b) => (a.price || 0) - (b.price || 0));
+    } else if (st.sortBy === 'price-desc') {
+      list = [...list].sort((a, b) => (b.price || 0) - (a.price || 0));
+    } else if (st.sortBy === 'name-asc') {
+      list = [...list].sort((a, b) => (a.name || '').localeCompare(b.name || '', 'tr'));
+    }
+
+    return list;
+  },
+
+  onUniversalSearchInput(val, context = 'elite') {
+    if (!this.universalFilterState[context]) this.universalFilterState[context] = {};
+    this.universalFilterState[context].query = val;
+    this.universalFilterState[context].page = 1;
+
+    // Toggle clear button
+    const clearBtnId = context === 'elite' ? 'uvSearchClearElite' : 'uvSearchClearWatches';
+    const clearBtn = document.getElementById(clearBtnId);
+    if (clearBtn) clearBtn.style.display = val.trim().length > 0 ? 'flex' : 'none';
+
+    clearTimeout(this._uvSearchTimer);
+    this._uvSearchTimer = setTimeout(() => {
+      this.renderUniversalWatches(context, 1);
+    }, 180);
+  },
+
+  clearUniversalSearch(context = 'elite') {
+    const inputId = context === 'elite' ? 'uvSearchInputElite' : 'uvSearchInputWatches';
+    const input = document.getElementById(inputId);
+    if (input) input.value = '';
+    this.onUniversalSearchInput('', context);
+  },
+
+  onUniversalBrandChange(brand, context = 'elite') {
+    if (!this.universalFilterState[context]) this.universalFilterState[context] = {};
+    this.universalFilterState[context].brand = brand;
+    this.universalFilterState[context].page = 1;
+    this.syncUniversalPills(brand, context);
+    this.renderUniversalWatches(context, 1);
+  },
+
+  onUniversalPriceChange(priceRange, context = 'elite') {
+    if (!this.universalFilterState[context]) this.universalFilterState[context] = {};
+    this.universalFilterState[context].priceRange = priceRange;
+    this.universalFilterState[context].page = 1;
+    this.renderUniversalWatches(context, 1);
+  },
+
+  onUniversalSortChange(sortBy, context = 'elite') {
+    if (!this.universalFilterState[context]) this.universalFilterState[context] = {};
+    this.universalFilterState[context].sortBy = sortBy;
+    this.universalFilterState[context].page = 1;
+    this.renderUniversalWatches(context, 1);
+  },
+
+  setUniversalPillBrand(brand, context = 'elite', btn = null) {
+    if (!this.universalFilterState[context]) this.universalFilterState[context] = {};
+    this.universalFilterState[context].brand = brand;
+    this.universalFilterState[context].page = 1;
+
+    // Sync select dropdown
+    const selectId = context === 'elite' ? 'uvBrandSelectElite' : 'uvBrandSelectWatches';
+    const select = document.getElementById(selectId);
+    if (select) select.value = brand;
+
+    this.syncUniversalPills(brand, context);
+    this.renderUniversalWatches(context, 1);
+  },
+
+  syncUniversalPills(brand, context = 'elite') {
+    const rowId = context === 'elite' ? 'uvPillsRowElite' : 'uvPillsRowWatches';
+    const row = document.getElementById(rowId);
+    if (!row) return;
+
+    row.querySelectorAll('.uv-pill-btn').forEach(btn => {
+      btn.classList.remove('active');
+      const pBrand = btn.getAttribute('data-pill-brand');
+      if (pBrand && pBrand.toLowerCase() === brand.toLowerCase()) {
+        btn.classList.add('active');
       }
     });
   },
 
+  resetUniversalFilters(context = 'elite') {
+    this.universalFilterState[context] = { query: '', brand: 'all', priceRange: 'all', sortBy: 'default', page: 1 };
+
+    const searchInput = document.getElementById(context === 'elite' ? 'uvSearchInputElite' : 'uvSearchInputWatches');
+    if (searchInput) searchInput.value = '';
+
+    const clearBtn = document.getElementById(context === 'elite' ? 'uvSearchClearElite' : 'uvSearchClearWatches');
+    if (clearBtn) clearBtn.style.display = 'none';
+
+    const brandSelect = document.getElementById(context === 'elite' ? 'uvBrandSelectElite' : 'uvBrandSelectWatches');
+    if (brandSelect) brandSelect.value = 'all';
+
+    const priceSelect = document.getElementById(context === 'elite' ? 'uvPriceSelectElite' : 'uvPriceSelectWatches');
+    if (priceSelect) priceSelect.value = 'all';
+
+    const sortSelect = document.getElementById(context === 'elite' ? 'uvSortSelectElite' : 'uvSortSelectWatches');
+    if (sortSelect) sortSelect.value = 'default';
+
+    this.syncUniversalPills('all', context);
+    this.renderUniversalWatches(context, 1);
+  },
+
+  renderUniversalWatches(context = 'elite', page = 1) {
+    const isElite = context === 'elite';
+    const gridId = isElite ? 'allEliteWatchesGrid' : 'allWatchesGrid';
+    const pagId = isElite ? 'allEliteWatchesPagination' : 'allWatchesPagination';
+    const countBadgeId = isElite ? 'eliteWatchesCountBadge' : 'watchesCountBadge';
+    const resetBtnId = isElite ? 'uvResetBtnElite' : 'uvResetBtnWatches';
+
+    const grid = document.getElementById(gridId);
+    const pagEl = document.getElementById(pagId);
+    if (!grid) return;
+
+    const filtered = this.getFilteredWatches(context);
+    const total = filtered.length;
+    const pageSize = this.PAGE_SIZE || 24;
+    const totalPages = Math.ceil(total / pageSize) || 1;
+    const curPage = Math.min(Math.max(1, page), totalPages);
+
+    if (!this.universalFilterState[context]) this.universalFilterState[context] = {};
+    this.universalFilterState[context].page = curPage;
+
+    const start = (curPage - 1) * pageSize;
+    const pageItems = filtered.slice(start, start + pageSize);
+
+    if (total === 0) {
+      grid.innerHTML = `
+        <div style="grid-column:1/-1; text-align:center; padding:60px 20px; background:#FAF8F5; border:1px solid rgba(194,167,104,0.3); border-radius:12px;">
+          <div style="font-size:36px; margin-bottom:12px;">🔍</div>
+          <h3 style="font-family:var(--font-sans); font-size:18px; font-weight:700; color:var(--color-ink); margin-bottom:6px;">Aramanıza Uygun Saat Bulunamadı</h3>
+          <p style="color:var(--color-muted); font-size:13.5px; max-width:440px; margin:0 auto 16px;">Farklı bir marka, model veya fiyat aralığı seçerek tekrar deneyebilirsiniz.</p>
+          <button class="btn btn-secondary" onclick="App.resetUniversalFilters('${context}')" style="padding:8px 20px; font-size:13px;">Filtreleri Sıfırla ✕</button>
+        </div>
+      `;
+    } else {
+      grid.innerHTML = pageItems.map(p => this.renderProductCard(p)).join('');
+    }
+
+    if (pagEl) {
+      const callbackName = isElite ? 'App.changeAllEliteWatchPage' : 'App.changeAllWatchPage';
+      pagEl.innerHTML = this.buildPaginationHtml(curPage, total, pageSize, callbackName);
+    }
+
+    // Update count badge
+    const countBadge = document.getElementById(countBadgeId);
+    if (countBadge) {
+      countBadge.innerHTML = `⏱️ <strong>${total.toLocaleString('tr-TR')}</strong> Model Listeleniyor`;
+    }
+
+    // Update reset button visibility
+    const st = this.universalFilterState[context];
+    const isFiltered = (st.query && st.query.trim().length > 0) || (st.brand && st.brand !== 'all') || (st.priceRange && st.priceRange !== 'all') || (st.sortBy && st.sortBy !== 'default');
+    const resetBtn = document.getElementById(resetBtnId);
+    if (resetBtn) {
+      resetBtn.style.display = isFiltered ? 'inline-flex' : 'none';
+    }
+  },
+
+  // 0. ELİT KATEGORİ SAYFASI (10 Prestij Marka & 200 Doğrulanmış Model)
+  renderEliteWatches(brandFilter = 'all', page = 1) {
+    if (!this.universalFilterState.elite) this.universalFilterState.elite = {};
+    if (brandFilter && brandFilter !== 'all') {
+      this.universalFilterState.elite.brand = brandFilter;
+      const select = document.getElementById('uvBrandSelectElite');
+      if (select) select.value = brandFilter;
+      this.syncUniversalPills(brandFilter, 'elite');
+    }
+    this.renderUniversalWatches('elite', page);
+  },
+
   changeAllEliteWatchPage(newPage) {
-    this.renderEliteWatches(this.currentEliteBrand || 'all', newPage);
+    this.renderUniversalWatches('elite', newPage);
     setTimeout(() => {
-      const target = document.querySelector('#page-elit-kategori .section-header-flex') || document.getElementById('allEliteWatchesGrid');
+      const target = document.getElementById('universalFilterElite') || document.getElementById('allEliteWatchesGrid');
       if (target && typeof Router !== 'undefined' && Router.scrollToTarget) {
         Router.scrollToTarget(target);
       }
@@ -581,62 +773,35 @@ const App = {
 
   filterEliteWatchesByBrand(brand = 'all', btn = null) {
     this.closeNavDropdowns();
-    this.currentEliteBrand = brand;
-    this.allEliteWatchPage = 1;
-    // Tek giriş noktası: render, URL ve geri/ileri state'i aynı marka filtresini taşır.
+    if (!this.universalFilterState.elite) this.universalFilterState.elite = {};
+    this.universalFilterState.elite.brand = brand;
+    this.universalFilterState.elite.page = 1;
     Router.navigate('elit-kategori', true, { filter: brand });
-    if (btn) {
-      document.querySelectorAll('.elite-brand-filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    }
+    this.setUniversalPillBrand(brand, 'elite', btn);
     setTimeout(() => {
-      const target = document.querySelector('#page-elit-kategori .section-header-flex') || document.getElementById('allEliteWatchesGrid');
+      const target = document.getElementById('universalFilterElite') || document.getElementById('allEliteWatchesGrid');
       if (target && typeof Router !== 'undefined' && Router.scrollToTarget) {
         Router.scrollToTarget(target);
       }
     }, 60);
   },
 
-  // 2. TÜM SAATLER SAYFASI (12.000 TL ve Üzeri Saat Modelleri - 24 Ürün / 6 Tam Sıra Sayfalama)
+  // 2. TÜM SAATLER SAYFASI (1.925 Saat Modeli)
   renderWatches(brandFilter = 'all', page = 1) {
-    this.currentWatchBrand = brandFilter;
-    this.allWatchPage = page;
-    const el = document.getElementById('allWatchesGrid');
-    const pagEl = document.getElementById('allWatchesPagination');
-    if (!el) return;
-
-    let list = WATCHES;
+    if (!this.universalFilterState.watches) this.universalFilterState.watches = {};
     if (brandFilter && brandFilter !== 'all') {
-      list = WATCHES.filter(p => p.brand.trim().toLowerCase() === brandFilter.trim().toLowerCase());
+      this.universalFilterState.watches.brand = brandFilter;
+      const select = document.getElementById('uvBrandSelectWatches');
+      if (select) select.value = brandFilter;
+      this.syncUniversalPills(brandFilter, 'watches');
     }
-
-    const total = list.length;
-    const start = (page - 1) * this.PAGE_SIZE;
-    const end = start + this.PAGE_SIZE;
-    const pageItems = list.slice(start, end);
-
-    el.innerHTML = pageItems.map(p => this.renderProductCard(p)).join('');
-
-    if (pagEl) {
-      pagEl.innerHTML = this.buildPaginationHtml(page, total, this.PAGE_SIZE, 'App.changeAllWatchPage');
-    }
-
-    // Update filter pill UI
-    document.querySelectorAll('.watch-brand-filter-btn').forEach(b => {
-      b.classList.remove('active');
-      const txt = b.textContent.trim().toLowerCase();
-      if ((brandFilter === 'all' || !brandFilter) && txt.includes('tümü')) {
-        b.classList.add('active');
-      } else if (brandFilter && (txt === brandFilter.toLowerCase() || txt.startsWith(brandFilter.toLowerCase()))) {
-        b.classList.add('active');
-      }
-    });
+    this.renderUniversalWatches('watches', page);
   },
 
   changeAllWatchPage(newPage) {
-    this.renderWatches(this.currentWatchBrand || 'all', newPage);
+    this.renderUniversalWatches('watches', newPage);
     setTimeout(() => {
-      const target = document.querySelector('#page-saatler .section-header-flex') || document.getElementById('allWatchesGrid');
+      const target = document.getElementById('universalFilterWatches') || document.getElementById('allWatchesGrid');
       if (target && typeof Router !== 'undefined' && Router.scrollToTarget) {
         Router.scrollToTarget(target);
       }
@@ -645,19 +810,16 @@ const App = {
 
   filterWatchesByBrand(brand = 'all', btn = null) {
     this.closeNavDropdowns();
-    this.currentWatchBrand = brand;
-    this.allWatchPage = 1;
+    if (!this.universalFilterState.watches) this.universalFilterState.watches = {};
+    this.universalFilterState.watches.brand = brand;
+    this.universalFilterState.watches.page = 1;
     if (Router.currentPage !== 'saatler') {
       Router.navigate('saatler', true, { filter: brand });
     } else {
-      this.renderWatches(brand, 1);
-    }
-    if (btn) {
-      document.querySelectorAll('.watch-brand-filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+      this.setUniversalPillBrand(brand, 'watches', btn);
     }
     setTimeout(() => {
-      const target = document.querySelector('#page-saatler .section-header-flex') || document.getElementById('allWatchesGrid');
+      const target = document.getElementById('universalFilterWatches') || document.getElementById('allWatchesGrid');
       if (target && typeof Router !== 'undefined' && Router.scrollToTarget) {
         Router.scrollToTarget(target);
       }

@@ -448,8 +448,8 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
       }
     });
 
-    // Eğer sipariş kuyumculuk ise ve hiç KDV'li işçilik satırı yoksa, standart %1.25 işçilik üret
-    if (taxableItems.length === 0 && goldItems.length > 0) {
+    // Eğer sipariş e-ticaret kuyumculuk ise ve hiç KDV'li işçilik satırı yoksa, standart %1.25 işçilik üret (Mağaza ve serbest faturalarda kullanıcının belirlediği kalemler aynen korunur)
+    if (!options.isStoreManual && !options.exactItems && !options.skipAutoLabor && taxableItems.length === 0 && goldItems.length > 0) {
       const workmanshipTotal = Math.max(1, Math.round(total * 0.0125 * 100) / 100);
       const workmanshipNet = Math.round((workmanshipTotal / 1.20) * 100) / 100;
       const workmanshipKdv = Math.round((workmanshipTotal - workmanshipNet) * 100) / 100;

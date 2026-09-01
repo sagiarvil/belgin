@@ -833,7 +833,8 @@ async function handleInvoiceRequest(req, res) {
       if (Array.isArray(order.items) && order.items.length > 0) {
         const itemsSummary = order.items.map(i => `${i.name} (x${i.qty || 1})`).join(', ');
         customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, itemsSummary, {
-          items: order.items
+          items: order.items,
+          isStoreManual: Boolean(target.isStore || order.isStoreManual || order.source === 'STORE_MANUAL')
         });
       } else if (hasGoldAmount !== undefined && workmanshipAmount !== undefined) {
         const itemsSummary = (order.items && order.items.length > 0)
@@ -1368,7 +1369,7 @@ async function handleStoreInvoicesRequest(req, res) {
       const invoiceId = customOrderId || customInvoiceId || customId || `MGS-${datePart}-${randPart}`;
 
       const itemsSummary = itemsList.map(i => `${i.name || 'Ürün'} (x${i.qty || 1})`).join(', ');
-      const breakdown = calculateJewelryInvoiceBreakdown(rawTotal, itemsSummary, { items: itemsList });
+      const breakdown = calculateJewelryInvoiceBreakdown(rawTotal, itemsSummary, { items: itemsList, isStoreManual: true });
 
       const storeRef = db.collection('storeInvoices').doc(invoiceId);
       const existingDoc = await storeRef.get();

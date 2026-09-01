@@ -3637,6 +3637,10 @@ const AdminApp = {
     if (dateInput && !dateInput.value) {
       dateInput.value = new Date().toISOString().slice(0, 10);
     }
+    const addrInput = document.getElementById('storeCustAddress');
+    if (addrInput && !addrInput.value) {
+      addrInput.value = 'Menderes Cad. No:231/B Buca İzmir';
+    }
     if (!this.storeItems || this.storeItems.length === 0) {
       this.storeItems = [
         { name: '7 Gram 22 Ayar Ajda Altın Bilezik', qty: 1, unitPrice: 10000, kdvRate: 0, lineTotal: 10000, kdvAmount: 0 },
@@ -3645,6 +3649,7 @@ const AdminApp = {
     }
     this.renderStoreInvoiceItems();
     this.calculateStoreInvoiceLiveSummary();
+    this.handleFreeItemChange();
   },
 
   editStoreInvoice(orderId) {
@@ -3684,6 +3689,19 @@ const AdminApp = {
 
     this.renderStoreInvoiceItems();
     this.calculateStoreInvoiceLiveSummary();
+
+    if (this.storeItems && this.storeItems.length > 0) {
+      const firstItem = this.storeItems[0];
+      const freeNameEl = document.getElementById('freeItemName');
+      const freeQtyEl = document.getElementById('freeItemQty');
+      const freePriceEl = document.getElementById('freeItemPrice');
+      const freeKdvEl = document.getElementById('freeItemKdvRate');
+      if (freeNameEl && firstItem.name) freeNameEl.value = firstItem.name;
+      if (freeQtyEl && firstItem.qty) freeQtyEl.value = firstItem.qty;
+      if (freePriceEl && firstItem.lineTotal) freePriceEl.value = Number(firstItem.lineTotal).toLocaleString('tr-TR');
+      if (freeKdvEl && firstItem.kdvRate !== undefined) freeKdvEl.value = String(firstItem.kdvRate);
+      this.handleFreeItemChange();
+    }
 
     const banner = document.getElementById('storeEditModeBanner');
     const textEl = document.getElementById('storeEditInvoiceIdText');
@@ -3734,6 +3752,16 @@ const AdminApp = {
     if (noteEl) noteEl.value = '';
     if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
 
+    const freeNameEl = document.getElementById('freeItemName');
+    const freeQtyEl = document.getElementById('freeItemQty');
+    const freePriceEl = document.getElementById('freeItemPrice');
+    const freeKdvEl = document.getElementById('freeItemKdvRate');
+    if (freeNameEl) freeNameEl.value = '22 Ayar Altın / Mücevherat';
+    if (freeQtyEl) freeQtyEl.value = '1';
+    if (freePriceEl) freePriceEl.value = '';
+    if (freeKdvEl) freeKdvEl.value = '0';
+    this.handleFreeItemChange();
+
     // Formu tamamen sıfırla - boş başlangıç kalemi
     this.storeItems = [
       { name: '', qty: 1, unitPrice: 0, kdvRate: 0, lineTotal: 0, kdvAmount: 0 }
@@ -3744,6 +3772,116 @@ const AdminApp = {
     if (showFeedback) {
       this.showToast('🧹 Fatura formu temizlendi.');
     }
+  },
+
+  // ==========================================
+  // SERBEST FATURA & MANUEL KALEM OLUŞTURUCU METODLARI
+  // ==========================================
+  setFreeItemAmount(amount) {
+    const el = document.getElementById('freeItemPrice');
+    if (el) {
+      el.value = Number(amount).toLocaleString('tr-TR');
+    }
+    this.handleFreeItemChange();
+  },
+
+  setFreeItemKdv(rate) {
+    const el = document.getElementById('freeItemKdvRate');
+    if (el) {
+      el.value = String(rate);
+    }
+    this.handleFreeItemChange();
+  },
+
+  handleFreeItemChange() {
+    const nameEl = document.getElementById('freeItemName');
+    const qtyEl = document.getElementById('freeItemQty');
+    const priceEl = document.getElementById('freeItemPrice');
+    const kdvEl = document.getElementById('freeItemKdvRate');
+
+    const name = (nameEl?.value || '22 Ayar Altın / Mücevherat').trim();
+    const qty = Math.max(1, parseInt(qtyEl?.value, 10) || 1);
+    const totalAmount = this.parseSmartCalcAmount(priceEl?.value || 0);
+    let rate = parseFloat(kdvEl?.value) || 0;
+
+    // Saat kontrolü (3065 sayılı KDV Kanunu koruması)
+    if (this.isWatchProduct(name) && rate < 20) {
+      rate = 20;
+      if (kdvEl) kdvEl.value = '20';
+      this.showToast(`⚠️ "${name}" saat ürünü olduğu için KDV oranı yasal zorunluluk olarak %20 yapıldı.`);
+    }
+
+    let netMatrah = totalAmount;
+    let kdvAmount = 0;
+
+    if (rate > 0 && totalAmount > 0) {
+      netMatrah = Math.round((totalAmount / (1 + (rate / 100))) * 100) / 100;
+      kdvAmount = Math.round((totalAmount - netMatrah) * 100) / 100;
+    }
+
+    const netEl = document.getElementById('freeItemLiveNetText');
+    const kdvTextEl = document.getElementById('freeItemLiveKdvText');
+    const totalEl = document.getElementById('freeItemLiveTotalText');
+
+    if (netEl) netEl.textContent = '₺' + netMatrah.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (kdvTextEl) kdvTextEl.textContent = `₺${kdvAmount.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} (%${rate})`;
+    if (totalEl) totalEl.textContent = '₺' + totalAmount.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    return {
+      name,
+      qty,
+      totalAmount,
+      unitPrice: Math.round((totalAmount / qty) * 100) / 100,
+      kdvRate: rate,
+      netMatrah,
+      kdvAmount
+    };
+  },
+
+  applyFreeItemToInvoice(isAppend = false) {
+    const data = this.handleFreeItemChange();
+    if (!data.totalAmount || data.totalAmount <= 0) {
+      alert('⚠️ Lütfen geçerli bir Fatura Tutarı giriniz (Örn: 96.000 TL).');
+      const priceEl = document.getElementById('freeItemPrice');
+      if (priceEl) priceEl.focus();
+      return;
+    }
+
+    // Adet başına birim fiyat ve satır toplamı hesapla (toplam kuruşu kuruşuna tam data.totalAmount olmalı)
+    const unitPrice = Math.round((data.totalAmount / data.qty) * 100) / 100;
+    const lineTotal = data.totalAmount; // Satır toplamı her halükarda girilen tutardır (KDV fiyata dahildir)
+    let kdvAmt = 0;
+    if (data.kdvRate > 0) {
+      kdvAmt = Math.round((lineTotal - (lineTotal / (1 + (data.kdvRate / 100)))) * 100) / 100;
+    }
+
+    const newItem = {
+      name: data.name || 'Satış Kalemi',
+      qty: data.qty,
+      unitPrice: unitPrice,
+      kdvRate: data.kdvRate,
+      lineTotal: lineTotal,
+      kdvAmount: kdvAmt
+    };
+
+    if (!isAppend) {
+      // Tek satır olarak faturayı bu kalemle oluştur
+      this.storeItems = [newItem];
+    } else {
+      // Satır olarak mevcutlara ekle
+      if (this.storeItems.length === 1 && (!this.storeItems[0].name || this.storeItems[0].unitPrice === 0)) {
+        this.storeItems = [newItem];
+      } else {
+        this.storeItems.push(newItem);
+      }
+    }
+
+    this.renderStoreInvoiceItems();
+    this.calculateStoreInvoiceLiveSummary();
+
+    this.showToast(isAppend 
+      ? `➕ "${newItem.name}" (₺${lineTotal.toLocaleString('tr-TR')}, %${data.kdvRate} KDV) faturaya eklendi.` 
+      : `⚡ Fatura tek kalem olarak (₺${lineTotal.toLocaleString('tr-TR')}, %${data.kdvRate} KDV) oluşturuldu.`);
   },
 
   // ==========================================

@@ -1569,23 +1569,77 @@
         </div>
       </div>
 
-      <div class="section-header-flex" style="flex-wrap:wrap; gap:16px; margin-bottom:24px;">
-        <div>
-          <h2 style="font-size:22px; font-weight:800;">Elit Koleksiyon Ürünleri</h2>
-          <p style="color:var(--color-muted); font-size:13.5px; margin-top:4px;" id="eliteWatchesSubHeader">10 prestij saat evinden seçilmiş en iyi 200 model</p>
+      <!-- EVRENSEL LÜKS SAAT FİLTRELEME ALANI (ELİT KATEGORİ) -->
+      <div class="universal-watch-filter-suite" id="universalFilterElite" data-context="elite">
+        <div class="uv-filter-top-bar">
+          <div class="uv-search-box">
+            <svg class="uv-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" class="uv-search-input" id="uvSearchInputElite" placeholder="Model, referans kodu (örn: Daytona, Speedmaster, 116500LN) ara..." oninput="App.onUniversalSearchInput(this.value, 'elite')">
+            <button class="uv-search-clear" id="uvSearchClearElite" onclick="App.clearUniversalSearch('elite')" style="display:none;" aria-label="Aramayı Temizle">✕</button>
+          </div>
+
+          <div class="uv-controls-group">
+            <div class="uv-select-wrapper">
+              <label class="uv-select-label">Marka:</label>
+              <select class="uv-select" id="uvBrandSelectElite" onchange="App.onUniversalBrandChange(this.value, 'elite')">
+                <option value="all">⭐ Tüm Markalar (200)</option>
+                <option value="Rolex">👑 Rolex (20)</option>
+                <option value="Omega">Omega (20)</option>
+                <option value="Patek Philippe">Patek Philippe (20)</option>
+                <option value="Audemars Piguet">Audemars Piguet (20)</option>
+                <option value="Breitling">Breitling (20)</option>
+                <option value="Cartier">Cartier (20)</option>
+                <option value="Tudor">Tudor (20)</option>
+                <option value="TAG Heuer">TAG Heuer (20)</option>
+                <option value="IWC Schaffhausen">IWC (20)</option>
+                <option value="Panerai">Panerai (20)</option>
+              </select>
+            </div>
+
+            <div class="uv-select-wrapper">
+              <label class="uv-select-label">Fiyat:</label>
+              <select class="uv-select" id="uvPriceSelectElite" onchange="App.onUniversalPriceChange(this.value, 'elite')">
+                <option value="all">Tüm Fiyatlar</option>
+                <option value="under500k">500.000 TL Altı</option>
+                <option value="500k-1m">500.000 TL – 1.000.000 TL</option>
+                <option value="1m-2m">1.000.000 TL – 2.000.000 TL</option>
+                <option value="over2m">2.000.000 TL ve Üzeri (VIP)</option>
+              </select>
+            </div>
+
+            <div class="uv-select-wrapper">
+              <label class="uv-select-label">Sıralama:</label>
+              <select class="uv-select" id="uvSortSelectElite" onchange="App.onUniversalSortChange(this.value, 'elite')">
+                <option value="default">Öne Çıkanlar</option>
+                <option value="price-asc">Fiyat: Düşükten Yükseğe</option>
+                <option value="price-desc">Fiyat: Yüksekten Düşüğe</option>
+                <option value="name-asc">Model Adı: A → Z</option>
+              </select>
+            </div>
+          </div>
         </div>
-        <div class="watch-filter-tabs" id="eliteBrandFilterTabs">
-          <button class="hero-tab-btn elite-brand-filter-btn active" onclick="App.filterEliteWatchesByBrand('all', this)">⭐ Tümü (200)</button>
-          <button class="hero-tab-btn elite-brand-filter-btn" onclick="App.filterEliteWatchesByBrand('Rolex', this)">Rolex (20)</button>
-          <button class="hero-tab-btn elite-brand-filter-btn" onclick="App.filterEliteWatchesByBrand('Omega', this)">Omega (20)</button>
-          <button class="hero-tab-btn elite-brand-filter-btn" onclick="App.filterEliteWatchesByBrand('Patek Philippe', this)">Patek Philippe (20)</button>
-          <button class="hero-tab-btn elite-brand-filter-btn" onclick="App.filterEliteWatchesByBrand('Audemars Piguet', this)">Audemars Piguet (20)</button>
-          <button class="hero-tab-btn elite-brand-filter-btn" onclick="App.filterEliteWatchesByBrand('Breitling', this)">Breitling (20)</button>
-          <button class="hero-tab-btn elite-brand-filter-btn" onclick="App.filterEliteWatchesByBrand('Cartier', this)">Cartier (20)</button>
-          <button class="hero-tab-btn elite-brand-filter-btn" onclick="App.filterEliteWatchesByBrand('Tudor', this)">Tudor (20)</button>
-          <button class="hero-tab-btn elite-brand-filter-btn" onclick="App.filterEliteWatchesByBrand('TAG Heuer', this)">TAG Heuer (20)</button>
-          <button class="hero-tab-btn elite-brand-filter-btn" onclick="App.filterEliteWatchesByBrand('IWC Schaffhausen', this)">IWC (20)</button>
-          <button class="hero-tab-btn elite-brand-filter-btn" onclick="App.filterEliteWatchesByBrand('Panerai', this)">Panerai (20)</button>
+
+        <div class="uv-pills-row" id="uvPillsRowElite">
+          <button class="uv-pill-btn active" data-pill-brand="all" onclick="App.setUniversalPillBrand('all', 'elite', this)">⭐ Tümü (200)</button>
+          <button class="uv-pill-btn" data-pill-brand="Rolex" onclick="App.setUniversalPillBrand('Rolex', 'elite', this)">👑 Rolex</button>
+          <button class="uv-pill-btn" data-pill-brand="Omega" onclick="App.setUniversalPillBrand('Omega', 'elite', this)">Omega</button>
+          <button class="uv-pill-btn" data-pill-brand="Patek Philippe" onclick="App.setUniversalPillBrand('Patek Philippe', 'elite', this)">Patek Philippe</button>
+          <button class="uv-pill-btn" data-pill-brand="Audemars Piguet" onclick="App.setUniversalPillBrand('Audemars Piguet', 'elite', this)">Audemars Piguet</button>
+          <button class="uv-pill-btn" data-pill-brand="Breitling" onclick="App.setUniversalPillBrand('Breitling', 'elite', this)">Breitling</button>
+          <button class="uv-pill-btn" data-pill-brand="Cartier" onclick="App.setUniversalPillBrand('Cartier', 'elite', this)">Cartier</button>
+          <button class="uv-pill-btn" data-pill-brand="Tudor" onclick="App.setUniversalPillBrand('Tudor', 'elite', this)">Tudor</button>
+          <button class="uv-pill-btn" data-pill-brand="TAG Heuer" onclick="App.setUniversalPillBrand('TAG Heuer', 'elite', this)">TAG Heuer</button>
+          <button class="uv-pill-btn" data-pill-brand="IWC Schaffhausen" onclick="App.setUniversalPillBrand('IWC Schaffhausen', 'elite', this)">IWC</button>
+          <button class="uv-pill-btn" data-pill-brand="Panerai" onclick="App.setUniversalPillBrand('Panerai', 'elite', this)">Panerai</button>
+        </div>
+
+        <div class="uv-status-bar">
+          <div class="uv-count-info">
+            <span class="uv-count-badge" id="eliteWatchesCountBadge">⏱️ 200 Model Listeleniyor</span>
+          </div>
+          <button class="uv-reset-all-btn" id="uvResetBtnElite" onclick="App.resetUniversalFilters('elite')" style="display:none;">
+            Filtreleri Temizle ✕
+          </button>
         </div>
       </div>
       <div class="products-grid-4" id="allEliteWatchesGrid"></div>
@@ -1601,23 +1655,93 @@
           <h2>Lüks Saat Koleksiyonu</h2>
           <p style="color:var(--color-muted); font-size:13.5px; margin-top:4px;">Tissot, Longines, Frederique Constant, Rado, Alpina, Bell & Ross, Swatch, Casio, Carren, Versace, Calvin Klein, Michael Kors, Gc, Guess ve Welder modelleri</p>
         </div>
-        <div class="watch-filter-tabs">
-          <button class="hero-tab-btn watch-brand-filter-btn active" onclick="App.filterWatchesByBrand('all', this)">Tümü (1.925)</button>
-          <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Tissot', this)">Tissot</button>
-          <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Longines', this)">Longines</button>
-          <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Frederique Constant', this)">Frederique Constant</button>
-          <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Rado', this)">Rado</button>
-          <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Alpina', this)">Alpina</button>
-          <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Bell & Ross', this)">Bell & Ross</button>
-          <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Swatch', this)">Swatch</button>
-          <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Casio', this)">Casio G-Shock</button>
-          <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Carren', this)">Carren</button>
-          <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Versace', this)">Versace</button>
-          <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Calvin Klein', this)">Calvin Klein</button>
-          <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Michael Kors', this)">Michael Kors</button>
-          <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Gc', this)">Gc</button>
-          <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Guess', this)">Guess</button>
-          <button class="hero-tab-btn watch-brand-filter-btn" onclick="App.filterWatchesByBrand('Welder', this)">Welder</button>
+      </div>
+
+      <!-- EVRENSEL LÜKS SAAT FİLTRELEME ALANI (TÜM SAATLER) -->
+      <div class="universal-watch-filter-suite" id="universalFilterWatches" data-context="watches">
+        <div class="uv-filter-top-bar">
+          <div class="uv-search-box">
+            <svg class="uv-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" class="uv-search-input" id="uvSearchInputWatches" placeholder="Model, marka, referans kodu (örn: PRX, Conquest, HydroConquest, G-Shock) ara..." oninput="App.onUniversalSearchInput(this.value, 'watches')">
+            <button class="uv-search-clear" id="uvSearchClearWatches" onclick="App.clearUniversalSearch('watches')" style="display:none;" aria-label="Aramayı Temizle">✕</button>
+          </div>
+
+          <div class="uv-controls-group">
+            <div class="uv-select-wrapper">
+              <label class="uv-select-label">Marka:</label>
+              <select class="uv-select" id="uvBrandSelectWatches" onchange="App.onUniversalBrandChange(this.value, 'watches')">
+                <option value="all">⭐ Tüm Markalar (1.925)</option>
+                <optgroup label="İsviçre &amp; Lüks Saat Evleri">
+                  <option value="Tissot">Tissot</option>
+                  <option value="Longines">Longines</option>
+                  <option value="Frederique Constant">Frederique Constant</option>
+                  <option value="Rado">Rado</option>
+                  <option value="Alpina">Alpina</option>
+                  <option value="Bell &amp; Ross">Bell &amp; Ross</option>
+                </optgroup>
+                <optgroup label="Moda, Spor &amp; Çağdaş Koleksiyon">
+                  <option value="Carren">📦 Carren (Kargo Teslimat)</option>
+                  <option value="Swatch">Swatch</option>
+                  <option value="Casio">Casio G-Shock</option>
+                  <option value="Versace">Versace</option>
+                  <option value="Calvin Klein">Calvin Klein</option>
+                  <option value="Michael Kors">Michael Kors</option>
+                  <option value="Gc">Gc</option>
+                  <option value="Guess">Guess</option>
+                  <option value="Welder">Welder</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <div class="uv-select-wrapper">
+              <label class="uv-select-label">Fiyat:</label>
+              <select class="uv-select" id="uvPriceSelectWatches" onchange="App.onUniversalPriceChange(this.value, 'watches')">
+                <option value="all">Tüm Fiyatlar</option>
+                <option value="under50k">50.000 TL Altı</option>
+                <option value="50k-100k">50.000 TL – 100.000 TL</option>
+                <option value="100k-250k">100.000 TL – 250.000 TL</option>
+                <option value="over250k">250.000 TL ve Üzeri</option>
+              </select>
+            </div>
+
+            <div class="uv-select-wrapper">
+              <label class="uv-select-label">Sıralama:</label>
+              <select class="uv-select" id="uvSortSelectWatches" onchange="App.onUniversalSortChange(this.value, 'watches')">
+                <option value="default">Öne Çıkanlar</option>
+                <option value="price-asc">Fiyat: Düşükten Yükseğe</option>
+                <option value="price-desc">Fiyat: Yüksekten Düşüğe</option>
+                <option value="name-asc">Model Adı: A → Z</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="uv-pills-row" id="uvPillsRowWatches">
+          <button class="uv-pill-btn active" data-pill-brand="all" onclick="App.setUniversalPillBrand('all', 'watches', this)">⭐ Tümü (1.925)</button>
+          <button class="uv-pill-btn" data-pill-brand="Tissot" onclick="App.setUniversalPillBrand('Tissot', 'watches', this)">Tissot</button>
+          <button class="uv-pill-btn" data-pill-brand="Longines" onclick="App.setUniversalPillBrand('Longines', 'watches', this)">Longines</button>
+          <button class="uv-pill-btn" data-pill-brand="Frederique Constant" onclick="App.setUniversalPillBrand('Frederique Constant', 'watches', this)">Frederique Constant</button>
+          <button class="uv-pill-btn" data-pill-brand="Rado" onclick="App.setUniversalPillBrand('Rado', 'watches', this)">Rado</button>
+          <button class="uv-pill-btn" data-pill-brand="Alpina" onclick="App.setUniversalPillBrand('Alpina', 'watches', this)">Alpina</button>
+          <button class="uv-pill-btn" data-pill-brand="Bell &amp; Ross" onclick="App.setUniversalPillBrand('Bell &amp; Ross', 'watches', this)">Bell &amp; Ross</button>
+          <button class="uv-pill-btn" data-pill-brand="Carren" onclick="App.setUniversalPillBrand('Carren', 'watches', this)">📦 Carren</button>
+          <button class="uv-pill-btn" data-pill-brand="Swatch" onclick="App.setUniversalPillBrand('Swatch', 'watches', this)">Swatch</button>
+          <button class="uv-pill-btn" data-pill-brand="Casio" onclick="App.setUniversalPillBrand('Casio', 'watches', this)">Casio G-Shock</button>
+          <button class="uv-pill-btn" data-pill-brand="Versace" onclick="App.setUniversalPillBrand('Versace', 'watches', this)">Versace</button>
+          <button class="uv-pill-btn" data-pill-brand="Calvin Klein" onclick="App.setUniversalPillBrand('Calvin Klein', 'watches', this)">Calvin Klein</button>
+          <button class="uv-pill-btn" data-pill-brand="Michael Kors" onclick="App.setUniversalPillBrand('Michael Kors', 'watches', this)">Michael Kors</button>
+          <button class="uv-pill-btn" data-pill-brand="Gc" onclick="App.setUniversalPillBrand('Gc', 'watches', this)">Gc</button>
+          <button class="uv-pill-btn" data-pill-brand="Guess" onclick="App.setUniversalPillBrand('Guess', 'watches', this)">Guess</button>
+          <button class="uv-pill-btn" data-pill-brand="Welder" onclick="App.setUniversalPillBrand('Welder', 'watches', this)">Welder</button>
+        </div>
+
+        <div class="uv-status-bar">
+          <div class="uv-count-info">
+            <span class="uv-count-badge" id="watchesCountBadge">⏱️ 1.925 Model Listeleniyor</span>
+          </div>
+          <button class="uv-reset-all-btn" id="uvResetBtnWatches" onclick="App.resetUniversalFilters('watches')" style="display:none;">
+            Filtreleri Temizle ✕
+          </button>
         </div>
       </div>
       <div class="products-grid-4" id="allWatchesGrid"></div>
