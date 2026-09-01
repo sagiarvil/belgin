@@ -79,60 +79,81 @@ const ELITE_WATCH_BRANDS = [
 
 const WATCH_BRANDS = [
   {
-    "id": "carren",
-    "name": "Carren",
-    "count": 178,
-    "origin": "Türkiye / İsviçre Tasarım",
-    "image": "images/markalar/carren.png"
+    "id": "rolex",
+    "name": "Rolex",
+    "count": 20,
+    "origin": "İsviçre (Cenevre)",
+    "image": "images/markalar/rolex.png"
   },
   {
-    "id": "versace",
-    "name": "Versace",
-    "count": 241,
-    "origin": "İsviçre / İtalya",
-    "image": "images/markalar/versace.png"
+    "id": "patek-philippe",
+    "name": "Patek Philippe",
+    "count": 20,
+    "origin": "İsviçre (Cenevre)",
+    "image": "images/markalar/patek-philippe.png"
   },
   {
-    "id": "calvin-klein",
-    "name": "Calvin Klein",
-    "count": 133,
-    "origin": "ABD / İsviçre",
-    "image": "images/markalar/calvin-klein.png"
+    "id": "audemars-piguet",
+    "name": "Audemars Piguet",
+    "count": 20,
+    "origin": "İsviçre (Le Brassus)",
+    "image": "images/markalar/audemars-piguet.png"
   },
   {
-    "id": "michael-kors",
-    "name": "Michael Kors",
-    "count": 186,
-    "origin": "ABD / İsviçre",
-    "image": "images/markalar/michael-kors.png"
+    "id": "vacheron-constantin",
+    "name": "Vacheron Constantin",
+    "count": 20,
+    "origin": "İsviçre (Cenevre)",
+    "image": "images/markalar/vacheron-constantin.png"
   },
   {
-    "id": "gc",
-    "name": "Gc",
-    "count": 173,
-    "origin": "İsviçre (Swiss Made)",
-    "image": "images/markalar/gc.png"
+    "id": "omega",
+    "name": "Omega",
+    "count": 20,
+    "origin": "İsviçre (Biel/Bienne)",
+    "image": "images/markalar/omega.png"
   },
   {
-    "id": "guess",
-    "name": "Guess",
-    "count": 292,
-    "origin": "ABD",
-    "image": "images/markalar/guess.png"
+    "id": "cartier",
+    "name": "Cartier",
+    "count": 20,
+    "origin": "Fransa / İsviçre",
+    "image": "images/markalar/cartier.png"
   },
   {
-    "id": "welder",
-    "name": "Welder",
-    "count": 200,
-    "origin": "İtalya",
-    "image": "images/markalar/welder.png"
+    "id": "breitling",
+    "name": "Breitling",
+    "count": 48,
+    "origin": "İsviçre (Grenchen)",
+    "image": "images/markalar/breitling.png"
   },
   {
-    "id": "tissot",
-    "name": "Tissot",
-    "count": 53,
-    "origin": "İsviçre (Le Locle / 1853)",
-    "image": "images/markalar/tissot.png"
+    "id": "tudor",
+    "name": "Tudor",
+    "count": 20,
+    "origin": "İsviçre (Cenevre)",
+    "image": "images/markalar/tudor.png"
+  },
+  {
+    "id": "tag-heuer",
+    "name": "TAG Heuer",
+    "count": 34,
+    "origin": "İsviçre (La Chaux-de-Fonds)",
+    "image": "images/markalar/tag-heuer.png"
+  },
+  {
+    "id": "iwc",
+    "name": "IWC Schaffhausen",
+    "count": 20,
+    "origin": "İsviçre (Schaffhausen)",
+    "image": "images/markalar/iwc.png"
+  },
+  {
+    "id": "panerai",
+    "name": "Panerai",
+    "count": 20,
+    "origin": "İtalya / İsviçre",
+    "image": "images/markalar/panerai.png"
   },
   {
     "id": "longines",
@@ -142,13 +163,6 @@ const WATCH_BRANDS = [
     "image": "images/markalar/longines.png"
   },
   {
-    "id": "frederique-constant",
-    "name": "Frederique Constant",
-    "count": 94,
-    "origin": "İsviçre (Cenevre)",
-    "image": "images/markalar/frederique-constant.png"
-  },
-  {
     "id": "rado",
     "name": "Rado",
     "count": 58,
@@ -156,18 +170,18 @@ const WATCH_BRANDS = [
     "image": "images/markalar/rado.png"
   },
   {
-    "id": "swatch",
-    "name": "Swatch",
-    "count": 57,
-    "origin": "İsviçre (Biel)",
-    "image": "images/markalar/swatch.png"
+    "id": "tissot",
+    "name": "Tissot",
+    "count": 53,
+    "origin": "İsviçre (Le Locle / 1853)",
+    "image": "images/markalar/tissot.png"
   },
   {
-    "id": "alpina",
-    "name": "Alpina",
-    "count": 20,
-    "origin": "İsviçre (Cenevre / 1883)",
-    "image": "images/markalar/alpina.png"
+    "id": "frederique-constant",
+    "name": "Frederique Constant",
+    "count": 94,
+    "origin": "İsviçre (Cenevre)",
+    "image": "images/markalar/frederique-constant.png"
   },
   {
     "id": "bell-ross",
@@ -177,18 +191,25 @@ const WATCH_BRANDS = [
     "image": "images/markalar/bell-ross.png"
   },
   {
-    "id": "tag-heuer",
-    "name": "TAG Heuer",
-    "count": 14,
-    "origin": "İsviçre (La Chaux-de-Fonds)",
-    "image": "images/markalar/tag-heuer.png"
+    "id": "alpina",
+    "name": "Alpina",
+    "count": 20,
+    "origin": "İsviçre (Cenevre / 1883)",
+    "image": "images/markalar/alpina.png"
   },
   {
-    "id": "breitling",
-    "name": "Breitling",
-    "count": 28,
-    "origin": "İsviçre (Grenchen)",
-    "image": "images/markalar/breitling.png"
+    "id": "seiko",
+    "name": "Seiko",
+    "count": 18,
+    "origin": "Japonya",
+    "image": "images/markalar/seiko.png"
+  },
+  {
+    "id": "swatch",
+    "name": "Swatch",
+    "count": 57,
+    "origin": "İsviçre (Biel)",
+    "image": "images/markalar/swatch.png"
   },
   {
     "id": "casio",
@@ -196,6 +217,69 @@ const WATCH_BRANDS = [
     "count": 11,
     "origin": "Japonya (G-Shock / MT-G)",
     "image": "images/markalar/casio.png"
+  },
+  {
+    "id": "versace",
+    "name": "Versace",
+    "count": 241,
+    "origin": "İsviçre / İtalya",
+    "image": "images/markalar/versace.png"
+  },
+  {
+    "id": "gc",
+    "name": "Gc",
+    "count": 173,
+    "origin": "İsviçre (Swiss Made)",
+    "image": "images/markalar/gc.png"
+  },
+  {
+    "id": "michael-kors",
+    "name": "Michael Kors",
+    "count": 186,
+    "origin": "ABD / İsviçre",
+    "image": "images/markalar/michael-kors.png"
+  },
+  {
+    "id": "guess",
+    "name": "Guess",
+    "count": 292,
+    "origin": "ABD",
+    "image": "images/markalar/guess.png"
+  },
+  {
+    "id": "calvin-klein",
+    "name": "Calvin Klein",
+    "count": 133,
+    "origin": "ABD / İsviçre",
+    "image": "images/markalar/calvin-klein.png"
+  },
+  {
+    "id": "diesel",
+    "name": "Diesel",
+    "count": 140,
+    "origin": "İtalya",
+    "image": "images/markalar/diesel.png"
+  },
+  {
+    "id": "fossil",
+    "name": "Fossil",
+    "count": 120,
+    "origin": "ABD",
+    "image": "images/markalar/fossil.png"
+  },
+  {
+    "id": "welder",
+    "name": "Welder",
+    "count": 200,
+    "origin": "İtalya",
+    "image": "images/markalar/welder.png"
+  },
+  {
+    "id": "carren",
+    "name": "Carren",
+    "count": 178,
+    "origin": "Türkiye / İsviçre Tasarım",
+    "image": "images/markalar/carren.png"
   }
 ];
 

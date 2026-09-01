@@ -375,9 +375,8 @@ const App = {
   renderHome() {
     // Saat Markaları (Tek Sıra Kesintisiz Otomatik Kayan Marquee - Kesintisiz Stabil Döngü)
     const watchBrandsEl = document.getElementById('watchBrandsGrid');
-    if (watchBrandsEl && watchBrandsEl.children.length === 0) {
-      // 4 kez tekrar ederek mobilde ve tüm ekranlarda pürüzsüz, kesintisiz sonsuz akış sağla
-      const marqueeList = [...WATCH_BRANDS, ...WATCH_BRANDS, ...WATCH_BRANDS, ...WATCH_BRANDS];
+    if (watchBrandsEl) {
+      const marqueeList = [...WATCH_BRANDS, ...WATCH_BRANDS];
       watchBrandsEl.innerHTML = marqueeList.map(b => `
         <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('${b.name}', null)" title="${b.name} Saat Modelleri">
           <img src="${b.image}" alt="${b.name}" class="brand-carousel-logo" width="220" height="100" decoding="async">
