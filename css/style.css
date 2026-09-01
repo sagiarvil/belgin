@@ -200,6 +200,111 @@ p, span, li, td, th, label, input, button, select, textarea {
 .topbar-user a:hover { color: var(--color-gold); }
 
 /* ==========================================================
+   ÖDEME BİLGİLENDİRME BANDI
+   Header ve hero akışından bağımsız, kesintisiz CSS hareketi.
+   ========================================================== */
+.payment-notice {
+  width: 100%;
+  min-width: 0;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--color-teal);
+  color: var(--color-paper);
+  border-bottom: 1px solid var(--color-border-gold);
+  position: relative;
+  z-index: 1001;
+}
+
+.payment-notice__track {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  animation: paymentNoticeScroll 30s linear infinite;
+  will-change: transform;
+}
+
+.payment-notice__group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.payment-notice__group span {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  padding-left: 48px;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 0.055em;
+}
+
+.payment-notice__group span::after {
+  content: "\2022";
+  margin-left: 48px;
+  color: var(--color-gold-bright);
+}
+
+@keyframes paymentNoticeScroll {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .payment-notice:hover .payment-notice__track {
+    animation-play-state: paused;
+  }
+}
+
+@media (max-width: 768px) {
+  .payment-notice {
+    height: 34px;
+  }
+
+  .payment-notice__track {
+    animation-duration: 24s;
+  }
+
+  .payment-notice__group span {
+    padding-left: 36px;
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
+  }
+
+  .payment-notice__group span::after {
+    margin-left: 36px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .payment-notice {
+    justify-content: center;
+    padding-inline: 16px;
+  }
+
+  .payment-notice__track {
+    width: auto;
+    animation: none;
+  }
+
+  .payment-notice__group:first-child span:first-child {
+    padding-left: 0;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .payment-notice__group:first-child span:first-child::after,
+  .payment-notice__group:first-child span:not(:first-child),
+  .payment-notice__group:not(:first-child) {
+    display: none;
+  }
+}
+
+/* ==========================================================
    2. TÜRKİYE KAPALIÇARŞI & İZKO CANLI ALTIN TICKER'I (CROSS-BROWSER)
    ========================================================== */
 .gold-ticker-strip {
@@ -6359,4 +6464,3 @@ body.page-is-canli-fiyatlar .header .btn-action-vip,
 .search-quick-tags button:nth-child(n+5) {
   display: none !important;
 }
-
