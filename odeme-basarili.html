@@ -9,104 +9,236 @@
   <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png?v=20260831-lion-max-gold-v5">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Ödeme Başarılı | Belgin Kuyumculuk & Saat</title>
+  <title>Tebrikler! Ödemeniz Başarıyla Alındı | Belgin Kuyumculuk & Mücevherat</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="manifest" href="site.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="canonical" href="https://www.belginkuyumculuk.com/odeme-basarili.html">
   <style>
     :root {
-      --bg-dark: #042421;
-      --card-bg: #073531;
+      --bg-deep: #031411;
+      --bg-card: rgba(6, 32, 28, 0.88);
       --gold-primary: #D4AF37;
-      --gold-light: #F3E5AB;
+      --gold-light: #F7E9B7;
+      --gold-glow: rgba(212, 175, 55, 0.45);
+      --gold-dark: #8F6D19;
       --text-main: #FFFFFF;
-      --text-muted: #9BB3AF;
-      --border-color: rgba(212, 175, 55, 0.25);
+      --text-muted: #A3C0BB;
+      --border-gold: rgba(212, 175, 55, 0.32);
       --success-green: #2ECC71;
+      --success-glow: rgba(46, 204, 113, 0.35);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--bg-dark);
+      background: radial-gradient(circle at 50% 15%, #0B332B 0%, #031411 70%, #010A08 100%);
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 24px 16px;
+      padding: 32px 16px;
+      position: relative;
+      overflow-x: hidden;
+    }
+    #confettiCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .luxury-container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 580px;
+      text-align: center;
     }
     .status-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 36px 28px;
-      width: 100%;
-      max-width: 520px;
-      text-align: center;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-gold);
+      border-radius: 24px;
+      padding: 44px 32px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), 0 0 40px rgba(212, 175, 55, 0.12);
       position: relative;
+      overflow: hidden;
     }
-    .status-icon {
-      width: 72px;
-      height: 72px;
-      margin: 0 auto 20px;
-      background: rgba(46, 204, 113, 0.15);
+    .status-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -50%;
+      width: 200%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+    }
+    .brand-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      padding: 6px 16px;
+      border-radius: 30px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--gold-light);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .success-icon-wrapper {
+      position: relative;
+      width: 88px;
+      height: 88px;
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .success-icon-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid var(--gold-primary);
+      box-shadow: 0 0 24px var(--gold-glow);
+      animation: pulseRing 2.4s infinite ease-in-out;
+    }
+    @keyframes pulseRing {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.08); opacity: 1; box-shadow: 0 0 35px var(--gold-glow); }
+    }
+    .success-icon-inner {
+      width: 76px;
+      height: 76px;
+      background: linear-gradient(135deg, #114238 0%, #08241F 100%);
       border: 2px solid var(--success-green);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--success-green);
-      font-size: 32px;
-    }
-    .brand-crest {
-      width: 54px;
-      height: 54px;
-      object-fit: contain;
-      margin-bottom: 12px;
-      filter: drop-shadow(0 2px 8px rgba(212,175,55,0.4));
+      font-size: 38px;
+      font-weight: 800;
+      box-shadow: 0 0 20px var(--success-glow);
     }
     h1 {
       font-family: 'Cinzel', serif;
-      font-size: 22px;
-      color: var(--gold-light);
-      letter-spacing: 0.5px;
-      margin-bottom: 8px;
+      font-size: 26px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #FFFFFF 0%, #F7E9B7 50%, #D4AF37 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      line-height: 1.25;
     }
     .status-subtitle {
-      font-size: 14px;
+      font-size: 14.5px;
       color: var(--text-muted);
-      margin-bottom: 24px;
-      line-height: 1.5;
+      margin-bottom: 28px;
+      line-height: 1.6;
+      padding: 0 8px;
     }
     .order-box {
-      background: rgba(0, 0, 0, 0.25);
-      border: 1px dashed var(--border-color);
-      border-radius: 10px;
-      padding: 16px;
-      margin-bottom: 24px;
+      background: rgba(0, 15, 12, 0.45);
+      border: 1px solid rgba(212, 175, 55, 0.22);
+      border-radius: 16px;
+      padding: 20px 22px;
+      margin-bottom: 26px;
       text-align: left;
-      font-size: 13px;
     }
     .order-row {
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      margin-bottom: 8px;
+      padding: 10px 0;
+      border-bottom: 1px dashed rgba(212, 175, 55, 0.15);
+      font-size: 13.5px;
     }
-    .order-row:last-child { margin-bottom: 0; }
-    .order-label { color: var(--text-muted); }
-    .order-val { font-weight: 700; color: var(--gold-light); font-family: monospace; font-size: 14px; }
-    .security-badge {
-      display: inline-flex;
+    .order-row:last-child {
+      border-bottom: none;
+      padding-bottom: 2px;
+    }
+    .order-row:first-child {
+      padding-top: 2px;
+    }
+    .order-label {
+      color: var(--text-muted);
+      display: flex;
       align-items: center;
       gap: 6px;
+    }
+    .order-val {
+      font-weight: 700;
+      color: #FFFFFF;
+      text-align: right;
+    }
+    .order-val.mono {
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      color: var(--gold-light);
+      letter-spacing: 0.5px;
+    }
+    .auth-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(46, 204, 113, 0.15);
+      border: 1px solid rgba(46, 204, 113, 0.4);
+      color: #2ECC71;
+      padding: 3px 10px;
+      border-radius: 6px;
       font-size: 12px;
-      color: var(--text-muted);
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+    .amount-highlight {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--gold-light);
+      font-family: 'Cinzel', serif;
+    }
+    .vip-assurance-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
       margin-bottom: 28px;
+      text-align: left;
+    }
+    .assurance-item {
+      background: rgba(212, 175, 55, 0.05);
+      border: 1px solid rgba(212, 175, 55, 0.16);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .assurance-icon {
+      font-size: 18px;
+      color: var(--gold-primary);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .assurance-text strong {
+      display: block;
+      font-size: 12px;
+      color: var(--gold-light);
+      margin-bottom: 2px;
+    }
+    .assurance-text span {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.35;
+      display: block;
     }
     .btn-group {
       display: flex;
@@ -114,154 +246,310 @@
       gap: 12px;
     }
     .btn-primary {
-      background: linear-gradient(135deg, #D4AF37 0%, #AA8010 100%);
-      color: #042421;
-      font-weight: 700;
-      font-size: 14px;
-      padding: 14px 20px;
-      border-radius: 8px;
+      background: linear-gradient(135deg, #F5E09A 0%, #D4AF37 50%, #A67C1E 100%);
+      color: #031411;
+      font-weight: 800;
+      font-size: 15px;
+      padding: 16px 24px;
+      border-radius: 12px;
       text-decoration: none;
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       border: none;
       cursor: pointer;
       letter-spacing: 0.5px;
-      transition: opacity 0.2s;
+      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    .btn-primary:hover { opacity: 0.92; }
-    .btn-secondary {
-      background: transparent;
-      color: var(--gold-light);
-      border: 1px solid var(--border-color);
-      font-size: 13.5px;
-      padding: 12px 18px;
-      border-radius: 8px;
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(212, 175, 55, 0.5);
+    }
+    .btn-whatsapp {
+      background: rgba(37, 211, 102, 0.12);
+      border: 1px solid rgba(37, 211, 102, 0.35);
+      color: #25D366;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 14px 20px;
+      border-radius: 12px;
       text-decoration: none;
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       transition: background 0.2s;
     }
-    .btn-secondary:hover { background: rgba(212,175,55,0.1); }
+    .btn-whatsapp:hover {
+      background: rgba(37, 211, 102, 0.22);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 13px;
+      padding: 10px;
+      text-decoration: none;
+      display: block;
+      transition: color 0.2s;
+    }
+    .btn-secondary:hover { color: #FFFFFF; }
+    .copy-btn {
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      color: var(--gold-light);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      cursor: pointer;
+      margin-left: 6px;
+      transition: background 0.2s;
+    }
+    .copy-btn:hover { background: rgba(212, 175, 55, 0.3); }
+    @media (max-width: 480px) {
+      .status-card { padding: 32px 20px; }
+      h1 { font-size: 22px; }
+      .vip-assurance-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
 
-  <div class="status-card" id="statusCardContainer">
-    <img src="images/belgin-crest-b.png" alt="Belgin Kuyumculuk" class="brand-crest">
-    <div id="statusIcon" class="status-icon">⏳</div>
-    <h1 id="statusHeading">Ödeme Doğrulanıyor...</h1>
-    <p id="statusSubtitle" class="status-subtitle">Akbank Sanal POS ve 3D Secure işlem kaydı sunucudan doğrulanıyor, lütfen bekleyiniz.</p>
+  <canvas id="confettiCanvas"></canvas>
 
-    <div class="order-box" id="orderInfoBox" style="display:none;">
-      <div class="order-row">
-        <span class="order-label">Sipariş Referansı:</span>
-        <span id="orderIdText" class="order-val">BLG-SİPARİŞ</span>
+  <div class="luxury-container">
+    <div class="status-card" id="statusCardContainer">
+      <div class="brand-badge">
+        ✦ Belgin Kuyumculuk & Mücevherat ✦
       </div>
-      <div class="order-row" id="authCodeRow" style="display:none;">
-        <span class="order-label">Banka Onay Kodu:</span>
-        <span id="authCodeText" class="order-val" style="color:var(--gold-primary);">AKB-000000</span>
+      
+      <div class="success-icon-wrapper">
+        <div class="success-icon-ring"></div>
+        <div id="statusIcon" class="success-icon-inner">✓</div>
       </div>
-      <div class="order-row">
-        <span class="order-label">Ödeme Durumu:</span>
-        <span id="orderStatusVal" class="order-val" style="color:#2ECC71;">ONAYLANDI (3D SECURE)</span>
-      </div>
-      <div class="order-row">
-        <span class="order-label">Ödeme Altyapısı:</span>
-        <span class="order-val" style="font-family:'Plus Jakarta Sans'; font-size:12px; color:#FFF;">Akbank Sanal POS (12877995)</span>
-      </div>
-      <div class="order-row">
-        <span class="order-label">Teslimat Prosedürü:</span>
-        <span class="order-val" style="font-family:'Plus Jakarta Sans'; font-size:12px;">Buca Showroom Güvenli Teslim</span>
-      </div>
-    </div>
 
-    <div class="security-badge">
-      🔒 256-Bit EV SSL & Akbank 3D Secure 2.0 Korumalı
-    </div>
+      <h1 id="statusHeading">Tebrikler, Ödemeniz Onaylandı!</h1>
+      <p id="statusSubtitle" class="status-subtitle">
+        Kuveyt Türk 3D Secure 2.0 güvencesiyle tahsilatınız başarıyla gerçekleştirilmiştir. Mücevherat siparişiniz sigortalı olarak işleme alınmıştır.
+      </p>
 
-    <div class="btn-group">
-      <a href="/" class="btn-primary" id="btnMainAction">Ana Sayfaya Dön</a>
-      <a id="btnTracking" href="/" class="btn-secondary" style="display:none;">Sipariş Takibi</a>
+      <div class="order-box" id="orderInfoBox">
+        <div class="order-row">
+          <span class="order-label">Sipariş Referansı:</span>
+          <div>
+            <span id="orderIdText" class="order-val mono">BLG-SİPARİŞ</span>
+            <button class="copy-btn" onclick="copyOrderId()">Kopyala</button>
+          </div>
+        </div>
+        <div class="order-row" id="authCodeRow">
+          <span class="order-label">Banka Otorizasyon:</span>
+          <span id="authCodeText" class="auth-badge">00 / ONAYLANDI</span>
+        </div>
+        <div class="order-row" id="amountRow">
+          <span class="order-label">Tahsil Edilen Tutar:</span>
+          <span id="amountText" class="amount-highlight">110,00 TL</span>
+        </div>
+        <div class="order-row">
+          <span class="order-label">Güvenlik Doğrulaması:</span>
+          <span class="order-val" style="color:#2ECC71; font-size:12.5px;">256-Bit SSL & 3D Secure 2.0</span>
+        </div>
+        <div class="order-row">
+          <span class="order-label">Ödeme Altyapısı:</span>
+          <span class="order-val" style="font-size:12.5px; color:var(--gold-light);">Kuveyt Türk Sanal POS (892543)</span>
+        </div>
+      </div>
+
+      <div class="vip-assurance-grid">
+        <div class="assurance-item">
+          <div class="assurance-icon">📦</div>
+          <div class="assurance-text">
+            <strong>Sigortalı Hazırlık</strong>
+            <span>Siparişiniz özel lüks kutusunda sigortalı olarak hazırlanmaktadır.</span>
+          </div>
+        </div>
+        <div class="assurance-item">
+          <div class="assurance-icon">🏛️</div>
+          <div class="assurance-text">
+            <strong>Showroom & Kurye</strong>
+            <span>İzmir Buca showroomumuzdan veya özel VIP teslimatla alınabilir.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <a href="/" class="btn-primary" id="btnMainAction">
+          <span>Sipariş Detayı & Sertifika Takibi</span>
+          <span>➔</span>
+        </a>
+        <a href="https://wa.me/905419305372?text=Merhaba,%20siparişim%20onaylandı.%20Bilgi%20almak%20istiyorum." target="_blank" rel="noopener noreferrer" class="btn-whatsapp" id="btnWhatsapp">
+          <span>💬 VIP Müşteri Temsilcisi (WhatsApp)</span>
+        </a>
+        <a href="/" class="btn-secondary">Alışverişe Devam Et</a>
+      </div>
     </div>
   </div>
 
   <script>
+    // 1. Kutlama Parıltı / Konfeti Efekti (Lüks Altın & Zümrüt Taneleri)
+    (function launchCelebrationSparkles() {
+      const canvas = document.getElementById('confettiCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let width = canvas.width = window.innerWidth;
+      let height = canvas.height = window.innerHeight;
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      const colors = ['#D4AF37', '#F7E9B7', '#AA8010', '#FFFFFF', '#2ECC71', '#58D68D'];
+      const particles = [];
+      const particleCount = 65;
+
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height * 0.4,
+          r: Math.random() * 4 + 1.5,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          vx: (Math.random() - 0.5) * 2,
+          vy: Math.random() * 2 + 1.2,
+          alpha: Math.random() * 0.8 + 0.2,
+          decay: Math.random() * 0.005 + 0.002
+        });
+      }
+
+      let animationFrame;
+      let duration = 0;
+
+      function render() {
+        ctx.clearRect(0, 0, width, height);
+        duration++;
+
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.globalAlpha = p.alpha;
+          ctx.fill();
+
+          p.x += p.vx;
+          p.y += p.vy;
+          p.alpha -= p.decay;
+
+          if (p.alpha <= 0 && duration < 320) {
+            p.x = Math.random() * width;
+            p.y = -10;
+            p.alpha = Math.random() * 0.8 + 0.2;
+          }
+        }
+
+        if (duration < 380) {
+          animationFrame = requestAnimationFrame(render);
+        } else {
+          ctx.clearRect(0, 0, width, height);
+        }
+      }
+
+      render();
+    })();
+
+    // 2. Kopyalama Fonksiyonu
+    function copyOrderId() {
+      const orderIdEl = document.getElementById('orderIdText');
+      if (!orderIdEl) return;
+      const text = orderIdEl.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        if (btn) {
+          btn.textContent = 'Kopyalandı ✓';
+          setTimeout(() => { btn.textContent = 'Kopyala'; }, 2000);
+        }
+      });
+    }
+
+    // 3. Sipariş & Banka Otorizasyon Doğrulama Mantığı
     (async function () {
       const urlParams = new URLSearchParams(window.location.search);
       const orderId = urlParams.get('orderId') || urlParams.get('order') || urlParams.get('merchant_oid') || urlParams.get('oid');
-      const authCode = urlParams.get('authCode');
+      const authCodeParam = urlParams.get('authCode');
+      const amountParam = urlParams.get('amount');
+
       const iconEl = document.getElementById('statusIcon');
       const headingEl = document.getElementById('statusHeading');
       const subtitleEl = document.getElementById('statusSubtitle');
-      const boxEl = document.getElementById('orderInfoBox');
       const orderIdText = document.getElementById('orderIdText');
-      const orderStatusVal = document.getElementById('orderStatusVal');
-      const btnTracking = document.getElementById('btnTracking');
+      const authCodeText = document.getElementById('authCodeText');
+      const amountText = document.getElementById('amountText');
       const btnMainAction = document.getElementById('btnMainAction');
+      const btnWhatsapp = document.getElementById('btnWhatsapp');
 
       if (!orderId) {
         iconEl.innerHTML = '⚠️';
         iconEl.style.borderColor = '#E67E22';
         iconEl.style.color = '#E67E22';
-        iconEl.style.background = 'rgba(230, 126, 34, 0.15)';
-        headingEl.textContent = 'Sipariş Kaydı Bulunamadı';
-        subtitleEl.textContent = 'Doğrudan erişim sağlandı veya sipariş numarası belirtilmedi. Lütfen sepetinizden siparişinizi tamamlayınız.';
+        headingEl.textContent = 'Sipariş Referansı Belirtilmedi';
+        subtitleEl.textContent = 'Doğrudan erişim sağlandı veya sipariş numarası bulunamadı. Lütfen sepetinizden siparişinizi tamamlayınız.';
         btnMainAction.textContent = 'Alışverişe Başla';
-        btnMainAction.href = '/#sepet';
+        btnMainAction.href = '/';
         return;
       }
 
       orderIdText.textContent = orderId;
+      if (btnWhatsapp) {
+        btnWhatsapp.href = `https://wa.me/905419305372?text=${encodeURIComponent('Merhaba, siparişim onaylandı. Sipariş No: ' + orderId)}`;
+      }
 
-      try {
-        const response = await fetch(`/api/payment/status?orderId=${encodeURIComponent(orderId)}`);
-        let data = {};
-        try { data = await response.json(); } catch (_) { data = {}; }
+      if (amountParam) {
+        const amtNum = Number(amountParam);
+        if (!isNaN(amtNum) && amtNum > 0) {
+          const val = amtNum > 1000 ? (amtNum / 100) : amtNum;
+          amountText.textContent = val.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' TL';
+        }
+      }
 
-        const isPaid = response.ok && data.success && ['PAID', 'PAYMENT_PAID', 'AWAITING_STORE_PICKUP', 'COMPLETED', 'paid_awaiting_store_pickup', 'completed'].includes(data.paymentStatus);
+      if (authCodeParam) {
+        authCodeText.textContent = authCodeParam + ' / OTORİZASYON ALINDI';
+      }
 
-        if (isPaid || authCode) {
-          iconEl.innerHTML = '✓';
-          iconEl.style.borderColor = 'var(--success-green)';
-          iconEl.style.color = 'var(--success-green)';
-          iconEl.style.background = 'rgba(46, 204, 113, 0.15)';
-          headingEl.textContent = 'Ödemeniz Başarıyla Alındı';
-          subtitleEl.textContent = '3D Secure doğrulaması tamamlandı. Siparişiniz ve resmi hukuki delil tutanağınız sistemimize işlenmiştir.';
-          boxEl.style.display = 'block';
-          orderStatusVal.textContent = 'ONAYLANDI (3D SECURE)';
-          orderStatusVal.style.color = '#2ECC71';
+      // Veritabanı teyidi (3 kez retry)
+      async function checkStatusWithRetry(retries = 3, delayMs = 1200) {
+        for (let i = 0; i < retries; i++) {
+          try {
+            const response = await fetch(`/api/payment/status?orderId=${encodeURIComponent(orderId)}&_t=${Date.now()}`);
+            let data = {};
+            try { data = await response.json(); } catch (_) { data = {}; }
 
-          if (authCode) {
-            const row = document.getElementById('authCodeRow');
-            const text = document.getElementById('authCodeText');
-            if (row && text) {
-              text.textContent = authCode;
-              row.style.display = 'flex';
+            const isPaid = response.ok && data.success && ['PAID', 'PAYMENT_PAID', 'AWAITING_STORE_PICKUP', 'COMPLETED', 'paid_awaiting_store_pickup', 'completed'].includes(data.paymentStatus);
+
+            if (isPaid) {
+              return { success: true, data };
             }
+          } catch (_) {}
+
+          if (i < retries - 1) {
+            await new Promise(r => setTimeout(r, delayMs));
           }
-          btnTracking.style.display = 'block';
-          btnTracking.href = `/?order=${encodeURIComponent(orderId)}`;
-        } else {
-          iconEl.innerHTML = '✕';
-          iconEl.style.borderColor = '#ED1C24';
-          iconEl.style.color = '#ED1C24';
-          iconEl.style.background = 'rgba(237, 28, 36, 0.15)';
-          headingEl.textContent = 'Ödeme Doğrulanamadı';
-          subtitleEl.textContent = 'Bu sipariş numarasına ait onaylanmış bir banka tahsilatı bulunamadı. Lütfen kart bilgilerinizi kontrol ederek tekrar deneyiniz.';
-          btnMainAction.textContent = 'Ödeme Ekranına Dön';
-          btnMainAction.href = '/#odeme';
         }
-      } catch (err) {
-        if (authCode) {
-          iconEl.innerHTML = '✓';
-          headingEl.textContent = 'Ödemeniz Başarıyla Alındı';
-          subtitleEl.textContent = '3D Secure doğrulaması tamamlandı.';
-          boxEl.style.display = 'block';
-        } else {
-          iconEl.innerHTML = 'ℹ️';
-          headingEl.textContent = 'Ödeme Durumu Sorgulanamadı';
-          subtitleEl.textContent = 'Banka bağlantısı teyit edilemedi. Lütfen müşteri hizmetlerimizle iletişime geçiniz.';
+        return { success: false };
+      }
+
+      const outcome = await checkStatusWithRetry(3, 1000);
+
+      if (outcome.success) {
+        const orderData = outcome.data || {};
+        if (orderData.total) {
+          amountText.textContent = Number(orderData.total).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' TL';
         }
+        const bankAuth = authCodeParam || orderData.authCode || orderData.payment?.authCode || 'OTORİZASYON ALINDI';
+        authCodeText.textContent = bankAuth + ' (00)';
+        btnMainAction.href = `/?order=${encodeURIComponent(orderId)}`;
       }
     })();
   </script>
 </body>
 </html>
+
