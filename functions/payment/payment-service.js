@@ -640,7 +640,7 @@ class PaymentService {
 
       await pushPromise;
 
-      return { status: 200, message: 'OK', isSuccess: true, orderId };
+      return { status: 200, message: 'OK', isSuccess: true, orderId, authCode: verification.authCode || rawDetails.authCode || 'KT-AUTH' };
     } else {
       assertValidTransition(order.status, ORDER_STATUS.PAYMENT_FAILED, orderId);
 

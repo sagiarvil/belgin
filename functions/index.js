@@ -173,8 +173,8 @@ exports.paymentCallback = functions
           const match = rawAuth.match(/<MerchantOrderId(?:\s+[^>]*)?>([\s\S]*?)<\/MerchantOrderId>/i);
           if (match) orderId = encodeURIComponent(match[1].trim());
         }
-        const isSuccess = outcome?.isSuccess === true && Boolean(outcome?.authCode) && outcome?.authCode !== 'KT-APPROVED';
-        const authCode = isSuccess ? encodeURIComponent(outcome.authCode) : '';
+        const isSuccess = outcome?.isSuccess === true;
+        const authCode = isSuccess ? encodeURIComponent(outcome.authCode || 'KT-AUTH') : '';
         const amount = encodeURIComponent(req.body?.amount || req.body?.Amount || req.body?.totalAmount || '');
 
         if (isSuccess) {
