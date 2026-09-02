@@ -55,19 +55,13 @@ async function sendTelegramNotification(order, botToken = TELEGRAM_BOT_TOKEN, ch
   }
 
   const htmlMessage = [
-    `🔔 <b>BELGİN KUYUMCULUK — YENİ TAHSİLAT!</b>`,
-    ``,
+    `⏰ <b>Tarih:</b> ${timeStr}`,
+    `🔔 <b>YENİ TAHSİLAT!</b>`,
     `💰 <b>Tutar:</b> <code>${formattedAmount}</code>`,
     `👤 <b>Müşteri:</b> ${customerName}`,
     `🆔 <b>T.C. Kimlik / Pasaport:</b> <code>${customerIdentity}</code>`,
-    customerAddress ? `🏠 <b>Fatura Adresi:</b> ${customerAddress}` : '',
-    `📞 <b>Telefon:</b> ${customerPhone}`,
     `💳 <b>POS / Banka:</b> ${provider} (3D Secure)`,
-    `📦 <b>Sipariş No:</b> <code>${orderId}</code>`,
-    `📍 <b>Teslimat:</b> ${deliveryText}`,
-    `⏰ <b>Tarih:</b> ${timeStr}`,
-    itemsSummary ? `\n🛒 <b>Satın Alınan Ürünler:\n</b>${itemsSummary}` : '',
-  ].filter(Boolean).join('\n');
+  ].join('\n');
 
   const inlineKeyboard = [
     [
