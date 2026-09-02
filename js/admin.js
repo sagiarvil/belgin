@@ -3814,11 +3814,11 @@ const AdminApp = {
     const addrInput = document.getElementById('manualCustomerAddress');
     if (addrInput) addrInput.value = 'İzmir Buca Showroom Mağazadan Teslim';
 
-    const prodNameInput = document.getElementById('manualProductName');
-    if (prodNameInput) prodNameInput.value = '22 Ayar İşçilikli Altın Bilezik';
-
-    const qtyInput = document.getElementById('manualProductQty');
-    if (qtyInput) qtyInput.value = '1';
+    const listEl = document.getElementById('manualOrderItemsList');
+    if (listEl) {
+      listEl.innerHTML = '';
+      this.addManualOrderItemRow('22 Ayar İşçilikli Altın Bilezik', 1, '');
+    }
 
     const amountInput = document.getElementById('manualTotalAmount');
     if (amountInput) amountInput.value = '';
@@ -3854,7 +3854,6 @@ const AdminApp = {
 
     const goldLaborRow = document.getElementById('manualGoldLaborRow');
     const customKdvRow = document.getElementById('manualCustomKdvRow');
-    const prodNameInput = document.getElementById('manualProductName');
 
     if (btnGold) {
       btnGold.style.background = (type === 'GOLD') ? '#064E3B' : '#FFF';
@@ -3865,9 +3864,6 @@ const AdminApp = {
       btnWatch.style.background = (type === 'WATCH') ? '#0284C7' : '#FFF';
       btnWatch.style.color = (type === 'WATCH') ? '#FFF' : '#0284C7';
       btnWatch.style.borderColor = (type === 'WATCH') ? '#0284C7' : '#BAE6FD';
-      if (prodNameInput && (!prodNameInput.value || prodNameInput.value.includes('Altın'))) {
-        prodNameInput.value = 'Lüks İsviçre Kol Saati';
-      }
     }
     if (btnCustom) {
       btnCustom.style.background = (type === 'CUSTOM') ? '#334155' : '#FFF';
@@ -3875,8 +3871,13 @@ const AdminApp = {
       btnCustom.style.borderColor = (type === 'CUSTOM') ? '#334155' : '#CBD5E1';
     }
 
-    if (type === 'GOLD' && prodNameInput && (!prodNameInput.value || prodNameInput.value.includes('Saat'))) {
-      prodNameInput.value = '22 Ayar İşçilikli Altın Bilezik';
+    const listEl = document.getElementById('manualOrderItemsList');
+    if (listEl && listEl.children.length === 1) {
+      const firstRowName = listEl.querySelector('.manual-item-name');
+      if (firstRowName) {
+        if (type === 'GOLD') firstRowName.value = '22 Ayar İşçilikli Altın Bilezik';
+        else if (type === 'WATCH') firstRowName.value = 'Lüks İsviçre Kol Saati';
+      }
     }
 
     if (goldLaborRow) goldLaborRow.style.display = (type === 'GOLD') ? 'flex' : 'none';
@@ -3886,7 +3887,79 @@ const AdminApp = {
     this.updateManualClosestProducts();
   },
 
-  // 10.6 KATALOG ÜRÜN ÖNERİSİ (YAZILAN TUTARA EN YAKIN 5 ÜRÜN)
+  // 10.6 ÇOKLU ÜRÜN & ALTIN PARÇALAMA SATIRLARI
+  addManualOrderItemRow(name = '', qty = 1, price = '') {
+    const listEl = document.getElementById('manualOrderItemsList');
+    if (!listEl) return;
+
+    const type = document.getElementById('manualInvoiceType')?.value || 'GOLD';
+    const defaultName = name || (type === 'WATCH' ? 'Lüks İsviçre Kol Saati' : '22 Ayar İşçilikli Altın Bilezik');
+    const priceVal = (price !== '' && price !== undefined) ? price : '';
+
+    const rowDiv = document.createElement('div');
+    rowDiv.className = 'manual-item-row';
+    rowDiv.style.cssText = 'display:grid; grid-template-columns: 1fr 65px 120px 30px; gap:6px; align-items:center; background:#FFF; border:1px solid #CBD5E1; border-radius:6px; padding:6px 8px;';
+
+    rowDiv.innerHTML = `
+      <div>
+        <input type="text" class="manual-item-name" value="${String(defaultName).replace(/"/g, '&quot;')}" placeholder="Kalem / Gramaj Açıklaması" style="width:100%; border:1px solid #CBD5E1; padding:6px 8px; border-radius:5px; font-size:12px; font-weight:700; color:#0F172A;" oninput="AdminApp.updateManualItemSummary()">
+      </div>
+      <div>
+        <input type="number" class="manual-item-qty" min="1" value="${qty || 1}" style="width:100%; border:1px solid #CBD5E1; padding:6px 2px; border-radius:5px; font-size:12px; font-weight:800; text-align:center; color:#0F172A;" oninput="AdminApp.recalculateManualOrderTotalFromItems()">
+      </div>
+      <div>
+        <input type="number" step="0.01" min="0" class="manual-item-price" value="${priceVal}" placeholder="Tutar (₺)" style="width:100%; border:1.5px solid #10B981; padding:6px 6px; border-radius:5px; font-size:12.5px; font-weight:800; text-align:right; color:#064E3B;" oninput="AdminApp.recalculateManualOrderTotalFromItems()">
+      </div>
+      <div style="text-align:center;">
+        <button type="button" onclick="AdminApp.removeManualOrderItemRow(this)" style="background:none; border:none; color:#EF4444; font-size:15px; cursor:pointer; padding:2px;" title="Satırı Sil">🗑️</button>
+      </div>
+    `;
+
+    listEl.appendChild(rowDiv);
+    this.recalculateManualOrderTotalFromItems();
+  },
+
+  removeManualOrderItemRow(btn) {
+    const listEl = document.getElementById('manualOrderItemsList');
+    if (!listEl) return;
+    const row = btn.closest('.manual-item-row');
+    if (row) row.remove();
+    if (listEl.children.length === 0) {
+      this.addManualOrderItemRow();
+    } else {
+      this.recalculateManualOrderTotalFromItems();
+    }
+  },
+
+  recalculateManualOrderTotalFromItems() {
+    const listEl = document.getElementById('manualOrderItemsList');
+    if (!listEl) return;
+    const rows = listEl.querySelectorAll('.manual-item-row');
+    let total = 0;
+    let hasExplicitPrice = false;
+
+    rows.forEach(r => {
+      const q = parseInt(r.querySelector('.manual-item-qty')?.value || '1', 10) || 1;
+      const p = parseFloat(r.querySelector('.manual-item-price')?.value || 0);
+      if (!isNaN(p) && p > 0) {
+        total += (q * p);
+        hasExplicitPrice = true;
+      }
+    });
+
+    const totInput = document.getElementById('manualTotalAmount');
+    if (totInput && hasExplicitPrice) {
+      totInput.value = total;
+    }
+    this.updateManualOrderBreakdownPreview();
+    this.updateManualClosestProducts();
+  },
+
+  updateManualItemSummary() {
+    this.updateManualOrderBreakdownPreview();
+  },
+
+  // 10.7 KATALOG ÜRÜN ÖNERİSİ (YAZILAN TUTARA EN YAKIN 5 ÜRÜN)
   async loadCatalogProductsForSuggestions() {
     if (this.catalogProducts && this.catalogProducts.length > 0) return this.catalogProducts;
     try {
@@ -3958,7 +4031,7 @@ const AdminApp = {
       return `
         <button type="button" class="btn-closest-chip" 
           onclick="AdminApp.selectClosestProduct('${cleanName}', ${p.price})"
-          title="${cleanName} (${priceFmt} ₺)"
+          title="${cleanName} (${priceFmt} ₺) — Parçalama satırı olarak ekle"
           style="display:inline-flex; align-items:center; gap:5px; padding:4px 8px; font-size:11px; font-weight:700; background:#FFF; border:1px solid #CBD5E1; border-radius:6px; color:#0F172A; cursor:pointer; transition:all 0.15s ease;"
           onmouseover="this.style.borderColor='#10B981'; this.style.background='#F0FDF4';"
           onmouseout="this.style.borderColor='#CBD5E1'; this.style.background='#FFF';">
@@ -3973,9 +4046,28 @@ const AdminApp = {
   },
 
   selectClosestProduct(name, price) {
-    const prodInput = document.getElementById('manualProductName');
-    if (prodInput) prodInput.value = name;
-    this.updateManualOrderBreakdownPreview();
+    const listEl = document.getElementById('manualOrderItemsList');
+    if (!listEl) return;
+    const rows = listEl.querySelectorAll('.manual-item-row');
+    
+    // Eğer henüz tutar girilmemiş boş bir satır varsa onu doldur
+    let targetRow = null;
+    for (const r of rows) {
+      const p = parseFloat(r.querySelector('.manual-item-price')?.value || 0);
+      if (!p || isNaN(p) || p <= 0) {
+        targetRow = r;
+        break;
+      }
+    }
+
+    if (targetRow) {
+      targetRow.querySelector('.manual-item-name').value = name;
+      targetRow.querySelector('.manual-item-price').value = price;
+      this.recalculateManualOrderTotalFromItems();
+    } else {
+      // Doluysa yeni bir satır olarak ekle
+      this.addManualOrderItemRow(name, 1, price);
+    }
   },
 
   setManualLaborRate(rate) {
@@ -4066,16 +4158,49 @@ const AdminApp = {
     const customerAddress = document.getElementById('manualCustomerAddress')?.value?.trim() || 'İzmir Buca Showroom Mağazadan Teslim';
 
     const invoiceType = document.getElementById('manualInvoiceType')?.value || 'GOLD';
-    const productName = document.getElementById('manualProductName')?.value?.trim() || (invoiceType === 'WATCH' ? 'Lüks İsviçre Kol Saati' : '22 Ayar İşçilikli Altın Bilezik');
-    const qty = parseInt(document.getElementById('manualProductQty')?.value || '1', 10) || 1;
-    const totalAmount = parseFloat(document.getElementById('manualTotalAmount')?.value || 0);
     const laborRate = parseFloat(document.getElementById('manualLaborRateInput')?.value || 1.25) || 0;
     const note = document.getElementById('manualOrderNote')?.value?.trim() || '';
+
+    // Çoklu satırları topla
+    const listEl = document.getElementById('manualOrderItemsList');
+    const rows = listEl ? listEl.querySelectorAll('.manual-item-row') : [];
+    const items = [];
+
+    rows.forEach(r => {
+      const iName = r.querySelector('.manual-item-name')?.value?.trim() || (invoiceType === 'WATCH' ? 'Lüks Kol Saati' : '22 Ayar İşçilikli Altın Bilezik');
+      const iQty = parseInt(r.querySelector('.manual-item-qty')?.value || '1', 10) || 1;
+      const iPrice = parseFloat(r.querySelector('.manual-item-price')?.value || 0) || 0;
+      if (iName) {
+        items.push({
+          name: iName,
+          qty: iQty,
+          unitPrice: iPrice,
+          price: iPrice > 0 ? (iPrice * iQty) : 0
+        });
+      }
+    });
+
+    let totalAmount = parseFloat(document.getElementById('manualTotalAmount')?.value || 0);
+
+    // Eğer satırların tutarı toplamından farklıysa veya satırlarda fiyat girildiyse satır toplamını baz al
+    const sumRows = items.reduce((acc, it) => acc + (it.price || 0), 0);
+    if (sumRows > 0) {
+      totalAmount = sumRows;
+    }
 
     // Validasyonlar: Yalnızca tahsilat tutarı zorunludur; müşteri bilgileri boşsa akıllı varsayılanlar atanır
     if (isNaN(totalAmount) || totalAmount <= 0) {
       if (errDiv) { errDiv.textContent = 'Lütfen geçerli bir tahsilat tutarı girin (0 ₺\'den büyük olmalıdır).'; errDiv.style.display = 'block'; }
       return;
+    }
+
+    if (items.length === 0) {
+      items.push({
+        name: invoiceType === 'WATCH' ? 'Lüks İsviçre Kol Saati' : '22 Ayar İşçilikli Altın Bilezik',
+        qty: 1,
+        unitPrice: totalAmount,
+        price: totalAmount
+      });
     }
 
     const effectiveCustomerName = customerName || 'Bireysel Mağaza Müşterisi';
@@ -4102,7 +4227,8 @@ const AdminApp = {
       invoiceType,
       laborRate,
       productName,
-      qty,
+      qty: items.reduce((acc, it) => acc + (it.qty || 1), 0),
+      items,
       totalAmount,
       note
     };
