@@ -864,8 +864,8 @@ const LegalApp = {
     const visaCe3Enabled = !isTroy;
 
     // CANONICAL CUSTOMER IDENTITY (MÜŞTERİ KİMLİK VERİSİ)
-    const custName = o.customerName || o.customer?.name || o.customer?.fullName || '';
-    const canonicalTckn = String(
+    const custName = (o.customerName || o.customer?.name || o.customer?.fullName || '').trim() || 'Bireysel Mağaza Müşterisi';
+    const rawTckn = String(
       o.customer?.identityNumber ||
       o.customerIdentity ||
       o.customer?.tckn ||
@@ -874,15 +874,24 @@ const LegalApp = {
       ''
     ).trim();
 
-    if (!custName || !canonicalTckn) {
-      throw new Error("EVIDENCE_IDENTITY_MISSING: Müşteri kimlik (ad/soyad ve TCKN) verisi eksik!");
-    }
+    const isTcknValid = rawTckn && rawTckn !== '—' && !rawTckn.includes('Yok') && rawTckn !== '11111111111' && rawTckn !== 'Showroom';
+    const canonicalTckn = isTcknValid ? rawTckn : '';
+    const maskedTckn = canonicalTckn ? (canonicalTckn.length === 11 ? `${canonicalTckn.substring(0, 7)}****` : canonicalTckn) : '';
 
-    const maskedTckn = canonicalTckn.length === 11 
-      ? `${canonicalTckn.substring(0, 7)}****` 
-      : canonicalTckn;
+    const rawPhone = String(o.customerPhone || o.customer?.phone || '').trim();
+    const isPhoneValid = rawPhone && rawPhone !== '—' && !rawPhone.includes('Yok') && rawPhone.length >= 7;
+    const canonicalPhone = isPhoneValid ? rawPhone : '';
 
-    const phone = o.customerPhone || o.customer?.phone || "05315779069";
+    const rawEmail = String(o.customerEmail || o.customer?.email || '').trim();
+    const isEmailValid = rawEmail && rawEmail !== '—' && !rawEmail.includes('Yok') && !rawEmail.includes('Alınmadı') && rawEmail.includes('@');
+    const canonicalEmail = isEmailValid ? rawEmail : '';
+
+    const rawAddress = String(o.customerAddress || o.customer?.address || o.address || '').trim();
+    const isAddressValid = rawAddress && rawAddress !== '—' && !rawAddress.includes('Yok');
+    const canonicalAddress = isAddressValid ? rawAddress : '';
+
+    const notProvidedRedHtml = '<span style="color:#DC2626; font-weight:700;">Müşteri tarafından verilmek istenmemiştir</span>';
+    const notProvidedText = 'Müşteri tarafından verilmek istenmemiştir';
 
     const providerStr = String(o.provider || o.payment?.provider || '').toUpperCase();
     const isTosla = providerStr.includes('TOSLA');
@@ -1357,13 +1366,19 @@ const LegalApp = {
       items: items,
       customer: {
         name: custName,
-        tckn: canonicalTckn,
-        maskedTckn,
-        phone,
-        declaredEmail: "[Müşteri E-Postası Alınmadı - Eksik Veri]",
-        address: "Belgin Kuyumculuk — Menderes Caddesi No:231/B Buca / İzmir — Mağazadan Teslim",
-        accountId: `ACC-${canonicalTckn}-TR`,
-        loginId: "IDR-BUK-1997"
+        tckn: canonicalTckn || notProvidedText,
+        tcknDisplay: canonicalTckn ? `<span class="mono-val">${canonicalTckn}</span>` : notProvidedRedHtml,
+        maskedTckn: maskedTckn || notProvidedText,
+        maskedTcknDisplay: maskedTckn ? `<span class="mono-val">${maskedTckn}</span>` : notProvidedRedHtml,
+        phone: canonicalPhone || notProvidedText,
+        phoneDisplay: canonicalPhone ? canonicalPhone : notProvidedRedHtml,
+        email: canonicalEmail || notProvidedText,
+        declaredEmail: canonicalEmail || notProvidedText,
+        emailDisplay: canonicalEmail ? canonicalEmail : notProvidedRedHtml,
+        address: canonicalAddress || notProvidedText,
+        addressDisplay: canonicalAddress ? `${canonicalAddress} — Mağazadan Teslim (Kimlik Kontrolü ile yapılmıştır)` : `${notProvidedRedHtml} — Mağazadan Teslim (Kimlik Kontrolü ile yapılmıştır)`,
+        accountId: canonicalTckn ? `ACC-${canonicalTckn}-TR` : `ACC-${o.orderId || 'GEN'}-TR`,
+        loginId: canonicalTckn ? `IDR-${canonicalTckn.substring(0, 6)}` : `USR-01`
       },
       merchant: merchant,
       timeline: {
@@ -1964,7 +1979,7 @@ const LegalApp = {
           </div>
           <div class="sig-customer-name">${c.customer.name}</div>
           <div style="font-size:10px; line-height:1.45; color:#166534;">
-            <strong>İmzalayan / T.C. No:</strong> ${c.customer.name} (T.C. No: <span style="font-family:monospace; font-weight:800;">${c.customer.tckn}</span>)<br>
+            <strong>İmzalayan / T.C. No:</strong> ${c.customer.name} (T.C. No: ${c.customer.tcknDisplay})<br>
             <strong>İşlem & Onay Zamanı:</strong> ${timeStr} (TSİ)<br>
             <strong>Onay Yöntemi:</strong> ${approvalType}<br>
             <strong>İlişkili Ödeme Auth Ref:</strong> <span class="mono-val">${c.payment.authCode}</span> (${this.formatDate(c.timeline.authorizationApprovedAt)} TSİ)<br>
@@ -2028,8 +2043,8 @@ const LegalApp = {
           <tr><td class="label-col">Sipariş Referans Numarası:</td><td class="mono-val"><strong>${c.orderId}</strong></td></tr>
           <tr><td class="label-col">Hukuki Delil Kimliği (Evidence ID):</td><td class="mono-val">${c.evidenceId}</td></tr>
           <tr><td class="label-col">İşlem Tarihi & Zaman Damgası:</td><td>${this.formatDate(c.timeline.orderCreatedAt)} (TSİ)</td></tr>
-          <tr><td class="label-col">Alıcı / Müşteri Bilgisi:</td><td><strong>${c.customer.name}</strong> · T.C. No: <span class="mono-val">${c.customer.tckn}</span> · Tel: ${c.customer.phone} · E-Posta: <span class="missing-badge">${c.customer.declaredEmail}</span></td></tr>
-          <tr><td class="label-col">Teslimat Yöntemi & Adresi:</td><td>${c.customer.address} — Mağazadan Teslim (Kimlik Kontrolü ile yapılmıştır)</td></tr>
+          <tr><td class="label-col">Alıcı / Müşteri Bilgisi:</td><td><strong>${c.customer.name}</strong> · T.C. No: ${c.customer.tcknDisplay} · Tel: ${c.customer.phoneDisplay} · E-Posta: ${c.customer.emailDisplay}</td></tr>
+          <tr><td class="label-col">Teslimat Yöntemi & Adresi:</td><td>${c.customer.addressDisplay}</td></tr>
           <tr><td class="label-col">Ödeme Altyapısı & Kart Şeması:</td><td>${c.merchant.acquirer} Sanal POS 256-Bit SSL (${c.payment.scheme} / Tam Tahsilat)</td></tr>
           <tr><td class="label-col">Tahsilat Durumu & Toplam Tutar:</td><td><strong>₺${c.totalAmount.toLocaleString('tr-TR')}</strong> (KDV Dahil) — <span class="pass-badge">✅ TAHSİL EDİLDİ / ONAYLANDI</span></td></tr>
         </table>
@@ -2110,7 +2125,7 @@ const LegalApp = {
 
           <div class="section-title"><span>MADDE 1 — TARAFLAR VE SATICI BİLGİLERİ</span></div>
           <p><strong>SATICI (Hizmet Sağlayıcı):</strong> ${c.merchant.legalName} · Adres: ${c.merchant.address} · Tel: ${c.merchant.phone} · E-Posta: ${c.merchant.email} · MERSİS: ${c.merchant.mersisNo} · VKN: ${c.merchant.vkn} (${c.merchant.taxOffice})</p>
-          <p><strong>ALICI (Tüketici):</strong> ${c.customer.name} · T.C. Kimlik No: <span class="mono-val">${c.customer.tckn}</span> · Tel: ${c.customer.phone} · E-Posta: <span class="missing-badge">${c.customer.declaredEmail}</span> · Adres: ${c.customer.address}</p>
+          <p><strong>ALICI (Tüketici):</strong> ${c.customer.name} · T.C. Kimlik No: ${c.customer.tcknDisplay} · Tel: ${c.customer.phoneDisplay} · E-Posta: ${c.customer.emailDisplay} · Adres: ${c.customer.addressDisplay}</p>
 
           <div class="section-title"><span>MADDE 2 — SÖZLEŞMENİN KONUSU VE KURULUŞU</span></div>
           <p>Sözleşmenin konusu, ALICI'nın SATICI'ya ait belginkuyumculuk.com internet sitesinden elektronik ortamda siparişini verdiği perakende altın ve ziynet ürünlerinin satışı ve mağazadan teslimidir. Zorunlu kabul kutuları ALICI tarafından bizzat onaylanmıştır.</p>
@@ -2155,7 +2170,7 @@ const LegalApp = {
         <div style="font-size:10.5px; line-height:1.55;">
           <div class="section-title"><span>1. SATICI VE SİPARİŞ BİLGİLERİ</span></div>
           <p><strong>Satıcı:</strong> ${c.merchant.legalName} · Adres: ${c.merchant.address} · Tel: ${c.merchant.phone} · E-Posta: ${c.merchant.email}</p>
-          <p><strong>Alıcı:</strong> ${c.customer.name} (T.C. Kimlik No: <span class="mono-val">${c.customer.tckn}</span>) · Tel: ${c.customer.phone} · E-Posta: <span class="missing-badge">${c.customer.declaredEmail}</span></p>
+          <p><strong>Alıcı:</strong> ${c.customer.name} (T.C. Kimlik No: ${c.customer.tcknDisplay}) · Tel: ${c.customer.phoneDisplay} · E-Posta: ${c.customer.emailDisplay}</p>
 
           <div class="section-title"><span>2. MALIN TEMEL NİTELİKLERİ VE HESAPLAMA</span></div>
           <table class="legal-grid-table">
@@ -2209,8 +2224,8 @@ const LegalApp = {
         <div class="section-title"><span>MÜŞTERİ TANIMA & İŞLEM DOĞRULAMA VERİ TABLOSU</span></div>
         <table class="legal-grid-table">
           <tr><td class="label-col">Müşteri Adı Soyadı:</td><td><strong>${c.customer.name}</strong></td></tr>
-          <tr><td class="label-col">T.C. Kimlik Numarası:</td><td><span class="mono-val"><strong>${c.customer.tckn}</strong></span> <span class="pass-badge">Merkezi Kaynaktan Doğrulandı</span></td></tr>
-          <tr><td class="label-col">İletişim & Telefon:</td><td>Tel: ${c.customer.phone} · E-Posta: <span class="missing-badge">${c.customer.declaredEmail}</span></td></tr>
+          <tr><td class="label-col">T.C. Kimlik Numarası:</td><td>${c.customer.tcknDisplay}</td></tr>
+          <tr><td class="label-col">İletişim & Telefon:</td><td>Tel: ${c.customer.phoneDisplay} · E-Posta: ${c.customer.emailDisplay}</td></tr>
           <tr><td class="label-col">İşlem Tutarı & Güvenlik Statüsü:</td><td><strong>₺${c.totalAmount.toLocaleString('tr-TR')}</strong> — 12.000 TL İç Standart Eşiğini Aşan Yüksek Değerli İşlem</td></tr>
           <tr><td class="label-col">Ödeme Altyapısı:</td><td>${c.merchant.acquirer} Sanal POS (${c.payment.scheme}) — Auth Ref: <span class="mono-val">${c.payment.authCode}</span></td></tr>
           <tr><td class="label-col">Gerçek Faydalanıcı Beyanı:</td><td><strong>EVET</strong> — İşlem kendi adıma ve hesabıma yapılmaktadır (5549 s. Kanun m.15 uyarınca başkası hesabına hareket edilmemektedir).</td></tr>
@@ -2232,7 +2247,7 @@ const LegalApp = {
 
         <div class="section-title"><span>1. VERİ SORUMLUSUNUN KİMLİĞİ & KATEGORİLER</span></div>
         <table class="legal-grid-table">
-          <tr><td class="label-col">Kimlik Verileri:</td><td>Ad Soyad: <strong>${c.customer.name}</strong>, T.C. Kimlik No: <span class="mono-val">${c.customer.tckn}</span>, İmza ve Kimlik Belgesi Bilgileri.</td></tr>
+          <tr><td class="label-col">Kimlik Verileri:</td><td>Ad Soyad: <strong>${c.customer.name}</strong>, T.C. Kimlik No: ${c.customer.tcknDisplay}, İmza ve Kimlik Belgesi Bilgileri.</td></tr>
           <tr><td class="label-col">Finans & Ödeme Verileri:</td><td>Ödeme Tutarı (₺${c.totalAmount.toLocaleString('tr-TR')}), Banka Provizyon Kodu, Maskeli Kart No (${c.payment.maskedPan}). <em>CVV verisi kesinlikle saklanmaz.</em></td></tr>
           <tr><td class="label-col">İşlem Güvenliği ve Delil:</td><td>Müşteri IP (${c.sessionCe3.publicIp}), Cihaz Parmak İzi, 3D Secure / GO Güvenli Öde Doğrulama Kaydı, SHA-256 Özetleri ve OpenTimestamps Blokzincir Zaman İspatları.</td></tr>
         </table>
@@ -2310,7 +2325,7 @@ const LegalApp = {
         <table class="legal-grid-table">
           <tr><td class="label-col">Teslimat Durumu (Status):</td><td><span class="pass-badge">DELIVERED (FİİLEN TESLİM EDİLDİ)</span></td></tr>
           <tr><td class="label-col">Fiili Teslim Zamanı (Delivered At):</td><td><strong>${this.formatDate(c.timeline.deliveredAt)}</strong> (TSİ)</td></tr>
-          <tr><td class="label-col">Teslim Alan (Receiver Name):</td><td><strong>${c.customer.name}</strong> (T.C. No: <span class="mono-val">${c.customer.maskedTckn}</span>)</td></tr>
+          <tr><td class="label-col">Teslim Alan (Receiver Name):</td><td><strong>${c.customer.name}</strong> (T.C. No: ${c.customer.maskedTcknDisplay})</td></tr>
           <tr><td class="label-col">İbraz Edilen Kimlik Türü:</td><td>${c.delivery.identityDocType}</td></tr>
           <tr><td class="label-col">Kimlik Doğrulama Zamanı & Yetkili:</td><td>${this.formatDate(c.timeline.identityVerifiedAt)} · ${c.delivery.verifierEmployeeId}</td></tr>
           <tr><td class="label-col">Sipariş Sahibi / Kart Hamili Eşleşmesi:</td><td>${c.delivery.orderHolderMatch} · ${c.delivery.cardholderMatch}</td></tr>
@@ -2350,7 +2365,7 @@ const LegalApp = {
           <div style="display:flex; justify-content:space-between; align-items:flex-end; border-top:1px solid #CBD5E1; padding-top:8px;">
             <div>
               <div style="font-weight:700; font-size:10.5px;">Teslim Alan (Alıcı): ${c.customer.name}</div>
-              <div style="font-size:9.5px; color:#666;">T.C. No: ${c.customer.tckn} · Tarih: ${this.formatDate(c.timeline.wetSignatureAt)}</div>
+              <div style="font-size:9.5px; color:#666;">T.C. No: ${c.customer.tcknDisplay} · Tarih: ${this.formatDate(c.timeline.wetSignatureAt)}</div>
               <div style="font-size:9.5px; color:#084C47; font-weight:700; margin-top:2px;">Islak İmza Ref: ${c.delivery.wetSignatureId}</div>
             </div>
             <div style="text-align:right;">
@@ -2374,7 +2389,7 @@ const LegalApp = {
         <div class="section-title"><span>1. TARAFLAR VE İLİŞKİLİ İŞLEM BİLGİSİ</span></div>
         <table class="legal-grid-table">
           <tr><td class="label-col">Satıcı (Ticari Unvan):</td><td><strong>${c.merchant.legalName}</strong></td></tr>
-          <tr><td class="label-col">Alıcı (Müşteri):</td><td><strong>${c.customer.name}</strong> (T.C. Kimlik No: <span class="mono-val">${c.customer.tckn}</span>) · Tel: ${c.customer.phone}</td></tr>
+          <tr><td class="label-col">Alıcı (Müşteri):</td><td><strong>${c.customer.name}</strong> (T.C. Kimlik No: ${c.customer.tcknDisplay}) · Tel: ${c.customer.phoneDisplay}</td></tr>
           <tr><td class="label-col">İlişkili Sipariş No:</td><td class="mono-val"><strong>${c.orderId}</strong></td></tr>
           <tr><td class="label-col">Satın Alınan Ürünler:</td><td>${c.items.map(it => `${it.name} (x${it.qty})`).join(', ')} (Toplam ${c.productMetallurgic.grossWeight})</td></tr>
           <tr><td class="label-col">Toplam Tahsilat Tutarı:</td><td><strong>₺${c.totalAmount.toLocaleString('tr-TR')}</strong> (${c.merchant.acquirer} Sanal POS ile Kesinleşti)</td></tr>
@@ -2518,7 +2533,7 @@ const LegalApp = {
           <tr><td class="label-col">Fatura Numarası:</td><td><span class="mono-val"><strong>${c.invoice.invoiceNumber}</strong></span></td></tr>
           <tr><td class="label-col">GİB Evrensel Benzersiz ID (UUID):</td><td><span class="mono-val"><strong>${c.invoice.gibUuid}</strong></span></td></tr>
           <tr><td class="label-col">Fatura Düzenleme Tarihi / Saati:</td><td>${c.invoice.invoiceDate} · ${c.invoice.invoiceTime} (TSİ)</td></tr>
-          <tr><td class="label-col">Fatura Alıcısı & TCKN:</td><td><strong>${c.customer.name}</strong> (TCKN: <span class="mono-val">${c.customer.tckn}</span>)</td></tr>
+          <tr><td class="label-col">Fatura Alıcısı & TCKN:</td><td><strong>${c.customer.name}</strong> (TCKN: ${c.customer.tcknDisplay})</td></tr>
           <tr><td class="label-col">Faturalandırılan Ürünler:</td><td>${c.items.map(it => `${it.name} (x${it.qty})`).join(', ')} (Toplam: ${c.productMetallurgic.grossWeight})</td></tr>
         </table>
 
@@ -2620,7 +2635,7 @@ const LegalApp = {
         <div class="section-title"><span>1. OTURUM VE CİHAZ TEKNİK VERİLERİ</span></div>
         <table class="legal-grid-table">
           <tr><td class="label-col">Müşteri Hesap ID / Login ID:</td><td><span class="mono-val">${c.customer.accountId} / ${c.customer.loginId}</span></td></tr>
-          <tr><td class="label-col">Müşteri Doğrulanmış Telefon:</td><td>${c.customer.phone}</td></tr>
+          <tr><td class="label-col">Müşteri Doğrulanmış Telefon:</td><td>${c.customer.phoneDisplay}</td></tr>
           <tr><td class="label-col">Public IP & Kaynak:</td><td><span class="mono-val"><strong>${c.sessionCe3.publicIp}</strong></span> (${c.sessionCe3.ipType})</td></tr>
           <tr><td class="label-col">Cihaz Parmak İzi (Fingerprint):</td><td><span class="mono-val">${c.sessionCe3.deviceFingerprint}</span></td></tr>
           <tr><td class="label-col">Parmak İzi Algoritması:</td><td>${c.sessionCe3.fingerprintAlgorithm}</td></tr>
@@ -2939,7 +2954,7 @@ const LegalApp = {
             <td class="label-col">Alıcı (Müşteri) Adı:</td>
             <td><strong>${c.customer.name}</strong></td>
             <td class="label-col">T.C. Kimlik No:</td>
-            <td><span class="mono-val"><strong>${c.customer.tckn}</strong></span> (Merkezi Doğrulanmış)</td>
+            <td>${c.customer.tcknDisplay}</td>
           </tr>
           <tr>
             <td class="label-col">İşlem / Beyan Saati:</td>

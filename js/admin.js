@@ -818,8 +818,8 @@ const AdminApp = {
                 <span>${o.customerName || 'Müşteri'}</span>
                 <button type="button" onclick="AdminApp.openEditCustomerModal('${o.orderId}')" title="Fatura & Müşteri Bilgilerini Düzenle" style="background:none; border:none; cursor:pointer; font-size:12px; padding:0; color:#D97706;">✏️</button>
               </div>
-              <div style="font-size:11.5px; color:#475569; font-weight:600;">${o.customerPhone || '—'}</div>
-              <div style="font-size:11px; color:#92400E; font-weight:800;">🆔 <span style="font-family:monospace;">${o.customerIdentity && o.customerIdentity !== '—' ? o.customerIdentity : 'Showroom'}</span></div>
+              <div style="font-size:11.5px; color:#475569; font-weight:600;">${o.customerPhone && o.customerPhone !== '—' && !o.customerPhone.includes('Yok') ? o.customerPhone : '<span style="color:#DC2626; font-weight:700;">Müşteri tarafından verilmek istenmemiştir</span>'}</div>
+              <div style="font-size:11px; color:#92400E; font-weight:800;">🆔 <span style="font-family:monospace;">${o.customerIdentity && o.customerIdentity !== '—' && !o.customerIdentity.includes('Yok') && o.customerIdentity !== '11111111111' ? o.customerIdentity : '<span style="color:#DC2626; font-weight:700;">Müşteri tarafından verilmek istenmemiştir</span>'}</span></div>
             </td>
             <td style="font-weight:800; font-size:13.5px; color:#047857; white-space:nowrap;">
               ₺${Number(o.totalAmount || 0).toLocaleString('tr-TR')}
@@ -940,8 +940,8 @@ const AdminApp = {
               <div class="mobile-customer-info">
                 <div class="mobile-customer-name" style="font-size:15px; font-weight:800; color:#0F172A;">${o.customerName || 'Müşteri'}</div>
                 <div class="mobile-customer-meta" style="margin-top:6px;">
-                  <span style="color:#64748B; font-size:11.5px; font-weight:600;">Tel: ${o.customerPhone || '—'}</span>
-                  <span class="mobile-meta-tckn">🆔 ${o.customerIdentity && o.customerIdentity !== '—' ? o.customerIdentity : 'Showroom'}</span>
+                  <span style="color:#64748B; font-size:11.5px; font-weight:600;">Tel: ${o.customerPhone && o.customerPhone !== '—' && !o.customerPhone.includes('Yok') ? o.customerPhone : '<span style="color:#DC2626; font-weight:700;">Müşteri tarafından verilmek istenmemiştir</span>'}</span>
+                  <span class="mobile-meta-tckn">🆔 ${o.customerIdentity && o.customerIdentity !== '—' && !o.customerIdentity.includes('Yok') && o.customerIdentity !== '11111111111' ? o.customerIdentity : '<span style="color:#DC2626; font-weight:700;">Müşteri tarafından verilmek istenmemiştir</span>'}</span>
                 </div>
               </div>
 
@@ -1371,12 +1371,12 @@ const AdminApp = {
         </button>
       </div>
       <div style="font-size:13px; line-height:1.7; margin-bottom:16px;">
-        <div><strong>Ad Soyad:</strong> ${order.customerName || '—'}</div>
-        <div><strong>T.C. Kimlik / Pasaport:</strong> <span style="font-family:monospace; font-weight:800; color:#084C47; background:#F0F7F5; padding:2px 8px; border-radius:4px; border:1px solid #D3E4E0;">${order.customerIdentity || 'Showroomda İbraz Edilecek'}</span></div>
-        <div><strong>Fatura Adresi:</strong> <span>${order.customerAddress || 'Showroom / Mağazadan Teslim'}</span></div>
-        <div><strong>Telefon:</strong> ${order.customerPhone || '—'}</div>
-        <div><strong>E-Posta:</strong> ${order.customerEmail || '—'}</div>
-        <div><strong>Teslimat Şekli:</strong> ${order.deliveryMethod === 'showroom' ? 'İzmir Buca Showroom Mağazadan Teslim' : 'Kargo Teslimatı'}</div>
+        <div><strong>Ad Soyad:</strong> ${order.customerName || '<span style="color:#DC2626; font-weight:700;">Müşteri tarafından verilmek istenmemiştir</span>'}</div>
+        <div><strong>T.C. Kimlik / Pasaport:</strong> ${order.customerIdentity && order.customerIdentity !== '—' && !order.customerIdentity.includes('Yok') && order.customerIdentity !== '11111111111' ? `<span style="font-family:monospace; font-weight:800; color:#084C47; background:#F0F7F5; padding:2px 8px; border-radius:4px; border:1px solid #D3E4E0;">${order.customerIdentity}</span>` : '<span style="color:#DC2626; font-weight:700;">Müşteri tarafından verilmek istenmemiştir</span>'}</div>
+        <div><strong>Fatura Adresi:</strong> <span>${order.customerAddress && order.customerAddress !== '—' && !order.customerAddress.includes('Yok') ? order.customerAddress : '<span style="color:#DC2626; font-weight:700;">Müşteri tarafından verilmek istenmemiştir</span>'}</span></div>
+        <div><strong>Telefon:</strong> ${order.customerPhone && order.customerPhone !== '—' && !order.customerPhone.includes('Yok') ? order.customerPhone : '<span style="color:#DC2626; font-weight:700;">Müşteri tarafından verilmek istenmemiştir</span>'}</div>
+        <div><strong>E-Posta:</strong> ${order.customerEmail && order.customerEmail !== '—' && !order.customerEmail.includes('Yok') && order.customerEmail.includes('@') ? order.customerEmail : '<span style="color:#DC2626; font-weight:700;">Müşteri tarafından verilmek istenmemiştir</span>'}</div>
+        <div><strong>Teslimat Şekli:</strong> ${order.deliveryMethod === 'showroom' ? 'İzmir Buca Showroom Mağazadan Teslim (Kimlik Kontrolü ile yapılmıştır)' : 'İzmir Buca Showroom Mağazadan Teslim (Kimlik Kontrolü ile yapılmıştır)'}</div>
       </div>
 
       <h4 style="margin:14px 0 8px; font-size:14px; color:var(--admin-teal-dark);">Tahsilat & POS Bilgileri</h4>
@@ -2991,9 +2991,9 @@ const AdminApp = {
       listEl.innerHTML = selectedOrders.map((o, idx) => `
         <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 8px; border-bottom:1px solid #E2E8F0; font-size:12px; background:${idx % 2 === 0 ? '#FFF' : '#F8FAFC'};">
           <div>
-            <div style="font-weight:800; color:#0F172A;">${idx + 1}. ${o.customerName || 'Müşteri'}</div>
+            <div style="font-weight:800; color:#0F172A;">${o.customerName || 'Müşteri'}</div>
             <div style="font-size:11px; color:#64748B;">
-              TCKN: <span style="font-family:monospace; color:#B45309; font-weight:700;">${o.customerIdentity || 'Showroom'}</span> • 
+              TCKN: <span style="font-family:monospace; color:#B45309; font-weight:700;">${o.customerIdentity && o.customerIdentity !== '—' && !o.customerIdentity.includes('Yok') && o.customerIdentity !== '11111111111' ? o.customerIdentity : '<span style="color:#DC2626; font-weight:700;">Müşteri tarafından verilmek istenmemiştir</span>'}</span> • 
               Belge No: <span style="font-family:monospace; color:#084C47; font-weight:700;">${o.invoiceNumber || o.orderId}</span>
             </div>
             <div style="font-size:11px; color:#059669; font-weight:600;">${o.productName || 'Kuyumculuk Ürünü'} (Özel Matrah)</div>
@@ -6726,8 +6726,8 @@ const AdminApp = {
             </td>
             <td>
               <div style="font-weight:800; font-size:13px; color:#0F172A;">${this.escapeHtml(inv.customerName || 'Müşteri')}</div>
-              <div style="font-size:11.5px; color:#475569; font-weight:600;">${inv.customerPhone || '—'}</div>
-              <div style="font-size:11px; color:#92400E; font-weight:800;">🆔 <span style="font-family:monospace;">${inv.customerIdentity || '11111111111'}</span></div>
+              <div style="font-size:11.5px; color:#475569; font-weight:600;">${inv.customerPhone && inv.customerPhone !== '—' && !inv.customerPhone.includes('Yok') ? inv.customerPhone : '<span style="color:#DC2626; font-weight:700;">Müşteri tarafından verilmek istenmemiştir</span>'}</div>
+              <div style="font-size:11px; color:#92400E; font-weight:800;">🆔 <span style="font-family:monospace;">${inv.customerIdentity && inv.customerIdentity !== '—' && !inv.customerIdentity.includes('Yok') && inv.customerIdentity !== '11111111111' ? inv.customerIdentity : '<span style="color:#DC2626; font-weight:700;">Müşteri tarafından verilmek istenmemiştir</span>'}</span></div>
             </td>
             <td style="font-size:12px; color:#1E293B; line-height:1.4;">${itemsDisplay}</td>
             <td style="font-weight:800; font-size:14px; color:${isCancelled ? '#991B1B' : '#047857'}; text-align:right; white-space:nowrap;">
@@ -6819,8 +6819,8 @@ const AdminApp = {
               <div class="mobile-customer-info">
                 <div class="mobile-customer-name" style="font-size:15px; font-weight:800; color:#0F172A;">${this.escapeHtml(inv.customerName || 'Müşteri')}</div>
                 <div class="mobile-customer-meta" style="margin-top:6px;">
-                  <span style="color:#64748B; font-size:11.5px; font-weight:600;">Tel: ${inv.customerPhone || '—'}</span>
-                  <span class="mobile-meta-tckn">🆔 ${inv.customerIdentity || '11111111111'}</span>
+                  <span style="color:#64748B; font-size:11.5px; font-weight:600;">Tel: ${inv.customerPhone && inv.customerPhone !== '—' && !inv.customerPhone.includes('Yok') ? inv.customerPhone : '<span style="color:#DC2626; font-weight:700;">Müşteri tarafından verilmek istenmemiştir</span>'}</span>
+                  <span class="mobile-meta-tckn">🆔 ${inv.customerIdentity && inv.customerIdentity !== '—' && !inv.customerIdentity.includes('Yok') && inv.customerIdentity !== '11111111111' ? inv.customerIdentity : '<span style="color:#DC2626; font-weight:700;">Müşteri tarafından verilmek istenmemiştir</span>'}</span>
                 </div>
                 <div style="font-size:12px; color:#1E293B; font-weight:600; margin-top:6px; background:#F1F5F4; padding:6px 10px; border-radius:6px;">📦 ${itemsDisplay}</div>
               </div>
@@ -7203,8 +7203,8 @@ const AdminApp = {
           <td style="text-align:center;">${inv.orderId}</td>
           <td style="text-align:center;">${this.formatDateTr(inv.invoiceDate)}</td>
           <td>${this.escapeHtml(inv.customerName || 'Müşteri')}</td>
-          <td style="text-align:center;">${inv.customerIdentity || '11111111111'}</td>
-          <td>${this.escapeHtml(inv.customerPhone || '—')}</td>
+          <td style="text-align:center;">${inv.customerIdentity && inv.customerIdentity !== '—' && !inv.customerIdentity.includes('Yok') && inv.customerIdentity !== '11111111111' ? inv.customerIdentity : '<span style="color:#DC2626; font-weight:700;">Müşteri tarafından verilmek istenmemiştir</span>'}</td>
+          <td>${inv.customerPhone && inv.customerPhone !== '—' && !inv.customerPhone.includes('Yok') ? this.escapeHtml(inv.customerPhone) : '<span style="color:#DC2626; font-weight:700;">Müşteri tarafından verilmek istenmemiştir</span>'}</td>
           <td>${this.escapeHtml(itemsStr || '')}</td>
           <td style="text-align:right;">${fmt(inv.totalAmount)} ₺</td>
           <td style="text-align:center;">${inv.invoiceStatus === 'SIGNED' ? 'İmzalandı' : 'Taslak/Bekliyor'}</td>
