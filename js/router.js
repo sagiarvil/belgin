@@ -40,7 +40,10 @@ const Router = {
     if (path === '/magazin' || path === '/magazine' || path === '/saat-magazin') return { page: 'magazin' };
     if (path === '/canli-fiyatlar' || path === '/canlipiyasalar') return { page: 'ana-sayfa' };
     if (path === '/mucevherat') return { page: 'ana-sayfa' };
-    if (path === '/saatler') return { page: 'saatler' };
+    if (path === '/saatler') {
+      const brand = new URLSearchParams(location.search).get('marka');
+      return { page: 'saatler', filter: brand || 'all' };
+    }
     if (path === '/seckin-urunler' || path === '/ikinci-el') return { page: 'elit-kategori', filter: 'all' };
     if (path === '/sepet' || path === '/cart') return { page: 'sepet' };
     if (path === '/odeme' || path === '/checkout') return { page: 'odeme' };
@@ -111,12 +114,9 @@ const Router = {
       if (productLink) {
         e.preventDefault();
         const id = Number(productLink.dataset.productId);
-        const route = this.routeForProduct(id) || productLink.getAttribute('href');
-        this.navigate('urun', false);
-        if (typeof App !== 'undefined' && App.openProduct) {
-          App.openProduct(id, { skipHistory: true });
+        if (id && typeof App !== 'undefined' && App.openProduct) {
+          App.openProduct(id, { skipHistory: false });
         }
-        if (route) history.pushState({ page: 'urun', productId: id }, '', route);
         window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
       }

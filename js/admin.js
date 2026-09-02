@@ -3979,23 +3979,15 @@ const AdminApp = {
     const laborRate = parseFloat(document.getElementById('manualLaborRateInput')?.value || 1.25) || 0;
     const note = document.getElementById('manualOrderNote')?.value?.trim() || '';
 
-    // Validasyonlar
-    if (!customerName) {
-      if (errDiv) { errDiv.textContent = 'Lütfen müşteri ad ve soyadını girin.'; errDiv.style.display = 'block'; }
-      return;
-    }
-    if (!customerIdentity || customerIdentity.length < 10) {
-      if (errDiv) { errDiv.textContent = 'Lütfen geçerli bir T.C. Kimlik No veya VKN/Pasaport girin (en az 10-11 hane).'; errDiv.style.display = 'block'; }
-      return;
-    }
-    if (!customerPhone || customerPhone.length < 10) {
-      if (errDiv) { errDiv.textContent = 'Lütfen geçerli bir müşteri telefon numarası girin.'; errDiv.style.display = 'block'; }
-      return;
-    }
+    // Validasyonlar: Yalnızca tahsilat tutarı zorunludur; müşteri bilgileri boşsa akıllı varsayılanlar atanır
     if (isNaN(totalAmount) || totalAmount <= 0) {
       if (errDiv) { errDiv.textContent = 'Lütfen geçerli bir tahsilat tutarı girin (0 ₺\'den büyük olmalıdır).'; errDiv.style.display = 'block'; }
       return;
     }
+
+    const effectiveCustomerName = customerName || 'Bireysel Mağaza Müşterisi';
+    const effectiveCustomerIdentity = customerIdentity || '11111111111';
+    const effectiveCustomerPhone = customerPhone || '05000000000';
 
     let transactionDate = new Date();
     if (dateTimeVal) {
@@ -4009,9 +4001,9 @@ const AdminApp = {
       authCode,
       rrn,
       cardLast4,
-      customerName,
-      customerIdentity,
-      customerPhone,
+      customerName: effectiveCustomerName,
+      customerIdentity: effectiveCustomerIdentity,
+      customerPhone: effectiveCustomerPhone,
       customerEmail,
       customerAddress,
       invoiceType,

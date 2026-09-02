@@ -11,13 +11,13 @@
     _messageHandler: null,
 
     async createSession(orderPayload, options = {}) {
-      const provider = options.provider || 'AKBANK';
+      const provider = options.provider || 'KUVEYTTURK';
       const submitBtn = options.submitBtn || document.getElementById('checkoutSubmit') || document.getElementById('btnCompletePayment') || document.getElementById('checkoutSubmitBtn');
       const originalHtml = submitBtn ? submitBtn.innerHTML : '';
 
       try {
         if (submitBtn) {
-          submitBtn.innerHTML = '<span class="spinner-inline"></span> 🔒 3D Secure Bağlantısı Kuruluyor...';
+          submitBtn.innerHTML = '<span class="spinner-inline"></span> 🔒 Kuveyt Türk 3D Secure Bağlantısı Kuruluyor...';
           submitBtn.disabled = true;
         }
 
@@ -44,14 +44,54 @@
           throw new Error(data.message || `Ödeme servisi yanıt vermedi (${response.status}).`);
         }
 
-        // 1. IFRAME FLOW (PayTR vb.)
+        // 1. KUVEYT TÜRK 3D DIRECT HTML FORM FLOW (Banka SMS Şifresi Ekranı)
+        if (data.formData && data.gatewayUrl) {
+          const form = document.createElement('form');
+          form.method = 'POST';
+          form.action = data.gatewayUrl;
+          form.style.display = 'none';
+          for (const [k, v] of Object.entries(data.formData)) {
+            if (v !== undefined && v !== null) {
+              const input = document.createElement('input');
+              input.type = 'hidden';
+              input.name = k;
+              input.value = String(v);
+              form.appendChild(input);
+            }
+          }
+          document.body.appendChild(form);
+          form.submit();
+          return data;
+        }
+
+        if (data.formHtml || data.paymentType === 'HTML_FORM') {
+          const rawHtml = data.formHtml || '';
+          document.open();
+          document.write(rawHtml);
+          document.close();
+
+          setTimeout(() => {
+            try {
+              if (document.downloadForm && typeof document.downloadForm.submit === 'function') {
+                document.downloadForm.submit();
+              } else if (document.getElementById('kt3dForm')) {
+                document.getElementById('kt3dForm').submit();
+              } else if (document.forms && document.forms.length > 0) {
+                document.forms[0].submit();
+              }
+            } catch (_) {}
+          }, 40);
+          return data;
+        }
+
+        // 2. IFRAME FLOW (PayTR vb.)
         if (data.paymentType === 'IFRAME' && data.iframeUrl) {
           this.loadIframe(data.iframeUrl, options);
           if (submitBtn) submitBtn.style.display = 'none';
         }
-        // 2. REDIRECT / 3D SECURE HOSTED FLOW (QNB, Akbank, Yapı Kredi vb.)
-        else if (data.paymentType === 'REDIRECT' && data.redirectUrl) {
-          window.location.href = data.redirectUrl;
+        // 3. REDIRECT / 3D SECURE HOSTED FLOW (QNB, Kuveyt Türk vb.)
+        else if (data.paymentType === 'REDIRECT' && (data.redirectUrl || data.gatewayUrl)) {
+          window.location.href = data.redirectUrl || data.gatewayUrl;
         }
 
         window._activeOrderId = data.merchant_oid;

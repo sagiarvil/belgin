@@ -599,25 +599,20 @@ exports.createAdminOrder = functions
 
     try {
       const body = req.body || {};
-      const customerName = String(body.customerName || body.name || '').trim();
-      const customerIdentity = String(body.customerIdentity || body.identity || body.tckn || body.vkn || '').trim();
-      const customerPhone = String(body.customerPhone || body.phone || '').trim();
+      let customerName = String(body.customerName || body.name || '').trim();
+      let customerIdentity = String(body.customerIdentity || body.identity || body.tckn || body.vkn || '').trim();
+      let customerPhone = String(body.customerPhone || body.phone || '').trim();
       const customerAddress = String(body.customerAddress || body.address || 'İzmir Buca Showroom Mağazadan Teslim').trim();
       const customerEmail = String(body.customerEmail || body.email || '').trim() || null;
       
       const totalAmount = Number(body.totalAmount || body.amount || body.total || 0);
-      if (!customerName) {
-        return res.status(400).json({ success: false, message: 'Müşteri Adı ve Soyadı zorunludur.' });
-      }
-      if (!customerIdentity) {
-        return res.status(400).json({ success: false, message: 'T.C. Kimlik No / VKN / Pasaport zorunludur.' });
-      }
-      if (!customerPhone) {
-        return res.status(400).json({ success: false, message: 'Müşteri Telefon Numarası zorunludur.' });
-      }
       if (isNaN(totalAmount) || totalAmount <= 0) {
         return res.status(400).json({ success: false, message: 'Geçerli bir tahsilat tutarı girilmelidir.' });
       }
+
+      if (!customerName) customerName = 'Bireysel Mağaza Müşterisi';
+      if (!customerIdentity) customerIdentity = '11111111111';
+      if (!customerPhone) customerPhone = '05000000000';
 
       const provider = String(body.provider || 'TOSLA_ISIM').toUpperCase();
       const authCode = String(body.authCode || body.posAuthCode || body.posRef || `TSL-${Math.floor(100000 + Math.random() * 900000)}`).trim();

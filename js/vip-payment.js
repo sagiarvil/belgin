@@ -425,8 +425,8 @@
         const orderId = String(payload.orderId || '').trim();
         const title = String(payload.title || '').trim();
         const amount = String(payload.amount || '').trim();
-        const provider = (payload.provider || 'AKBANK').toUpperCase();
-        const compactStr = provider !== 'AKBANK' 
+        const provider = (payload.provider || 'KUVEYTTURK').toUpperCase();
+        const compactStr = provider !== 'KUVEYTTURK' 
           ? `${orderId}|${title}|${amount}|${provider}`
           : `${orderId}|${title}|${amount}`;
         return toBase64Url(compactStr);
@@ -446,7 +446,7 @@
           const orderId = parts[0];
           const title = parts[1];
           const amount = Number(parts[2]) || 0;
-          const provider = (parts[3] || 'AKBANK').toUpperCase();
+          const provider = (parts[3] || 'KUVEYTTURK').toUpperCase();
           const is22 = isVip22Tag(title);
           return {
             orderId,
@@ -530,7 +530,7 @@
             const rawTitle = sp.get('title') || sp.get('baslik') || sp.get('urun') || sp.get('name') || 'Lüks Özel Sipariş';
             const orderId = sp.get('orderId') || sp.get('oid') || ('VIP-' + Math.floor(100000 + Math.random() * 900000));
             const is22 = isVip22Tag(rawTitle) || sp.get('tag') === '22';
-            const provider = (sp.get('provider') || sp.get('pos') || 'AKBANK').toUpperCase();
+            const provider = (sp.get('provider') || sp.get('pos') || 'KUVEYTTURK').toUpperCase();
             const payload = {
               orderId,
               title: rawTitle,
