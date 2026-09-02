@@ -814,7 +814,10 @@ const AdminApp = {
             </td>
             <td style="font-size:12px; color:#334155; font-weight:600; white-space:nowrap;">${dateFormatted}</td>
             <td>
-              <div style="font-weight:800; font-size:13px; color:#0F172A;">${o.customerName || 'Müşteri'}</div>
+              <div style="font-weight:800; font-size:13px; color:#0F172A; display:flex; align-items:center; gap:4px;">
+                <span>${o.customerName || 'Müşteri'}</span>
+                <button type="button" onclick="AdminApp.openEditCustomerModal('${o.orderId}')" title="Fatura & Müşteri Bilgilerini Düzenle" style="background:none; border:none; cursor:pointer; font-size:12px; padding:0; color:#D97706;">✏️</button>
+              </div>
               <div style="font-size:11.5px; color:#475569; font-weight:600;">${o.customerPhone || '—'}</div>
               <div style="font-size:11px; color:#92400E; font-weight:800;">🆔 <span style="font-family:monospace;">${o.customerIdentity && o.customerIdentity !== '—' ? o.customerIdentity : 'Showroom'}</span></div>
             </td>
@@ -845,6 +848,9 @@ const AdminApp = {
             </td>
             <td style="display:flex; gap:4px; flex-wrap:wrap; align-items:center;">
               ${!isPaid ? `<button class="btn-admin-primary" style="padding:3px 7px; font-size:11px; background:#15803D; border-color:#15803D;" onclick="AdminApp.confirmOrder('${o.orderId}')" title="Tahsilatı Onayla">✅ Onayla</button>` : ''}
+              <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#FFFBEB; border-color:#F59E0B; color:#92400E; font-weight:800;" onclick="AdminApp.openEditCustomerModal('${o.orderId}')" title="Müşteri ve Fatura Alıcı Bilgilerini Güncelle">
+                ✏️ Düzenle
+              </button>
               <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#F0F9FF; border-color:#0284C7; color:#0369A1; font-weight:700;" onclick="AdminApp.showDetail('${o.orderId}')">
                 Detay
               </button>
@@ -984,6 +990,9 @@ const AdminApp = {
               `)}
 
               <div class="mobile-actions-grid-bottom">
+                <button type="button" class="btn-mobile-subaction" style="background:#FFFBEB; border-color:#F59E0B; color:#92400E; font-weight:800;" onclick="AdminApp.openEditCustomerModal('${o.orderId}')" title="Müşteri & Fatura Bilgilerini Düzenle">
+                  <span>✏️ Düzenle</span>
+                </button>
                 <button type="button" class="btn-mobile-subaction" onclick="AdminApp.showDetail('${o.orderId}')">
                   <span>🔍 Detay</span>
                 </button>
@@ -1355,7 +1364,12 @@ const AdminApp = {
         </div>
       </div>
 
-      <h4 style="margin:14px 0 8px; font-size:14px; color:var(--admin-teal-dark);">Müşteri & Fatura Kimlik Bilgileri</h4>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin:14px 0 8px;">
+        <h4 style="margin:0; font-size:14px; color:var(--admin-teal-dark);">Müşteri & Fatura Kimlik Bilgileri</h4>
+        <button type="button" class="btn-admin-secondary" style="padding:4px 10px; font-size:11.5px; background:#FFFBEB; border-color:#F59E0B; color:#92400E; font-weight:800; border-radius:6px; cursor:pointer;" onclick="AdminApp.openEditCustomerModal('${order.orderId}')">
+          ✏️ Bilgileri Düzenle
+        </button>
+      </div>
       <div style="font-size:13px; line-height:1.7; margin-bottom:16px;">
         <div><strong>Ad Soyad:</strong> ${order.customerName || '—'}</div>
         <div><strong>T.C. Kimlik / Pasaport:</strong> <span style="font-family:monospace; font-weight:800; color:#084C47; background:#F0F7F5; padding:2px 8px; border-radius:4px; border:1px solid #D3E4E0;">${order.customerIdentity || 'Showroomda İbraz Edilecek'}</span></div>
@@ -4317,6 +4331,183 @@ const AdminApp = {
       if (btnSubmit) {
         btnSubmit.disabled = false;
         btnSubmit.innerHTML = '<span>✅ Siparişi & Hukuki Dosyayı Oluştur</span>';
+      }
+    }
+  },
+
+  // 10.8 FATURA & MÜŞTERİ BİLGİLERİNİ GÜNCELLEME (EDIT CUSTOMER & INVOICE RECIPIENT)
+  openEditCustomerModal(orderId) {
+    const order = (this.orders || []).find(o => o.orderId === orderId);
+    if (!order) {
+      alert('Sipariş bulunamadı.');
+      return;
+    }
+
+    const modal = document.getElementById('editCustomerModal');
+    if (!modal) return;
+
+    const idInput = document.getElementById('editCustomerOrderId');
+    const subTitle = document.getElementById('editCustomerModalSubtitle');
+    const nameInput = document.getElementById('editCustomerName');
+    const identityInput = document.getElementById('editCustomerIdentity');
+    const phoneInput = document.getElementById('editCustomerPhone');
+    const emailInput = document.getElementById('editCustomerEmail');
+    const companyInput = document.getElementById('editCustomerCompanyName');
+    const taxOfficeInput = document.getElementById('editCustomerTaxOffice');
+    const addrInput = document.getElementById('editCustomerAddress');
+    const errDiv = document.getElementById('editCustomerErrorMsg');
+
+    if (errDiv) { errDiv.style.display = 'none'; errDiv.textContent = ''; }
+
+    const cust = order.customer || {};
+    if (idInput) idInput.value = order.orderId;
+    if (subTitle) subTitle.textContent = `Sipariş No: ${order.orderId} (${this.formatCurrency(order.totalAmount || 0)})`;
+
+    if (nameInput) nameInput.value = order.customerName || cust.name || '';
+    if (identityInput) identityInput.value = order.customerIdentity || cust.identityNumber || cust.identity || '';
+    if (phoneInput) phoneInput.value = order.customerPhone || cust.phone || '';
+    if (emailInput) emailInput.value = order.customerEmail || cust.email || '';
+    if (companyInput) companyInput.value = cust.companyName || '';
+    if (taxOfficeInput) taxOfficeInput.value = cust.taxOffice || '';
+    if (addrInput) addrInput.value = order.customerAddress || cust.address || 'İzmir Buca Showroom Mağazadan Teslim';
+
+    modal.style.display = 'flex';
+    setTimeout(() => {
+      if (nameInput) nameInput.focus();
+    }, 150);
+  },
+
+  closeEditCustomerModal() {
+    const modal = document.getElementById('editCustomerModal');
+    if (modal) modal.style.display = 'none';
+  },
+
+  async submitEditCustomer() {
+    const errDiv = document.getElementById('editCustomerErrorMsg');
+    const btnSubmit = document.getElementById('btnSubmitEditCustomer');
+    if (errDiv) { errDiv.style.display = 'none'; errDiv.textContent = ''; }
+
+    const orderId = document.getElementById('editCustomerOrderId')?.value?.trim();
+    const customerName = document.getElementById('editCustomerName')?.value?.trim();
+    const customerIdentity = document.getElementById('editCustomerIdentity')?.value?.trim();
+    const customerPhone = document.getElementById('editCustomerPhone')?.value?.trim();
+    const customerEmail = document.getElementById('editCustomerEmail')?.value?.trim() || null;
+    const companyName = document.getElementById('editCustomerCompanyName')?.value?.trim() || null;
+    const taxOffice = document.getElementById('editCustomerTaxOffice')?.value?.trim() || null;
+    const customerAddress = document.getElementById('editCustomerAddress')?.value?.trim() || 'İzmir Buca Showroom Mağazadan Teslim';
+
+    if (!orderId) {
+      if (errDiv) { errDiv.textContent = 'Sipariş ID bulunamadı.'; errDiv.style.display = 'block'; }
+      return;
+    }
+
+    if (!customerName) {
+      if (errDiv) { errDiv.textContent = 'Lütfen alıcı müşteri adı ve soyadını giriniz.'; errDiv.style.display = 'block'; }
+      return;
+    }
+
+    if (!customerIdentity || customerIdentity.length < 10) {
+      if (errDiv) { errDiv.textContent = 'Lütfen geçerli bir T.C. Kimlik / VKN veya Pasaport No giriniz (en az 10-11 hane).'; errDiv.style.display = 'block'; }
+      return;
+    }
+
+    if (btnSubmit) {
+      btnSubmit.disabled = true;
+      btnSubmit.innerHTML = '<span>⏳ Güncelleniyor...</span>';
+    }
+
+    try {
+      const payload = {
+        orderId,
+        customerName,
+        customerIdentity,
+        customerPhone,
+        customerEmail,
+        companyName,
+        taxOffice,
+        customerAddress
+      };
+
+      const res = await fetch('/api/admin/orders/update-customer', {
+        method: 'POST',
+        headers: this.getAuthHeaders(),
+        body: JSON.stringify(payload)
+      });
+
+      if (res.status === 401) {
+        this.showAuthGate();
+        return;
+      }
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || 'Fatura bilgileri güncellenemedi.');
+      }
+
+      // Mevcut orders dizisini ve önbelleği güncelle
+      const updatedCust = data.customer || {
+        name: customerName,
+        identity: customerIdentity,
+        identityNumber: customerIdentity,
+        phone: customerPhone,
+        email: customerEmail,
+        address: customerAddress,
+        companyName,
+        taxOffice
+      };
+
+      if (Array.isArray(this.orders)) {
+        const target = this.orders.find(o => o.orderId === orderId);
+        if (target) {
+          target.customerName = customerName;
+          target.customerIdentity = customerIdentity;
+          target.customerPhone = customerPhone;
+          target.customerEmail = customerEmail;
+          target.customerAddress = customerAddress;
+          target.customer = { ...(target.customer || {}), ...updatedCust };
+        }
+      }
+
+      try {
+        const cached = localStorage.getItem('belgin_admin_cached_data');
+        if (cached) {
+          let cData = JSON.parse(cached);
+          if (cData && Array.isArray(cData.orders)) {
+            const cTarget = cData.orders.find(o => o.orderId === orderId);
+            if (cTarget) {
+              cTarget.customerName = customerName;
+              cTarget.customerIdentity = customerIdentity;
+              cTarget.customerPhone = customerPhone;
+              cTarget.customerEmail = customerEmail;
+              cTarget.customerAddress = customerAddress;
+              cTarget.customer = { ...(cTarget.customer || {}), ...updatedCust };
+              localStorage.setItem('belgin_admin_cached_data', JSON.stringify(cData));
+            }
+          }
+        }
+      } catch (_) {}
+
+      this.closeEditCustomerModal();
+      this.filterTable();
+
+      // Eğer detay modalı açıksa onu da tazele
+      const detailModal = document.getElementById('orderDetailModal');
+      if (detailModal && detailModal.style.display !== 'none') {
+        this.showDetail(orderId);
+      }
+
+      this.showToast(`✅ Sipariş (${orderId}) fatura ve alıcı bilgileri güncellendi!`);
+
+    } catch (err) {
+      console.error('[AdminApp] submitEditCustomer error:', err);
+      if (errDiv) {
+        errDiv.textContent = 'Hata: ' + err.message;
+        errDiv.style.display = 'block';
+      }
+    } finally {
+      if (btnSubmit) {
+        btnSubmit.disabled = false;
+        btnSubmit.innerHTML = '<span>💾 Bilgileri Güncelle & Kaydet</span>';
       }
     }
   },

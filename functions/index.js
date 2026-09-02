@@ -887,6 +887,92 @@ exports.updateAdminOrderStatus = functions
   }));
 
 /**
+ * POST /api/admin/orders/update-customer
+ * Yönetici tarafından siparişin fatura/müşteri/alıcı bilgilerini güncelleme
+ */
+exports.updateAdminOrderCustomer = functions
+  .runWith({ timeoutSeconds: 30, memory: '256MB' })
+  .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
+    if (req.method === 'OPTIONS') return res.status(204).send('');
+    if (req.method !== 'POST') return res.status(405).json({ success: false, message: 'Method Not Allowed' });
+
+    const auth = await verifyAdminRequest(req);
+    if (!auth.authorized) {
+      return res.status(401).json({ success: false, message: auth.message });
+    }
+
+    const body = req.body || {};
+    const orderId = String(body.orderId || '').trim();
+    if (!orderId) {
+      return res.status(400).json({ success: false, message: 'orderId zorunludur.' });
+    }
+
+    const customerName = String(body.customerName || body.name || '').trim();
+    const customerIdentity = String(body.customerIdentity || body.identityNumber || body.identity || '').trim();
+    const customerPhone = String(body.customerPhone || body.phone || '').trim();
+    const customerEmail = String(body.customerEmail || body.email || '').trim() || null;
+    const customerAddress = String(body.customerAddress || body.address || '').trim();
+    const taxOffice = String(body.taxOffice || '').trim() || null;
+    const companyName = String(body.companyName || '').trim() || null;
+    const note = String(body.note || '').trim() || null;
+
+    try {
+      const orderRef = db.collection('orders').doc(orderId);
+      const doc = await orderRef.get();
+      if (!doc.exists) {
+        return res.status(404).json({ success: false, message: 'Sipariş bulunamadı.' });
+      }
+
+      const existingData = doc.data() || {};
+      const updatedCustomer = {
+        ...(existingData.customer || {}),
+        name: customerName || existingData.customer?.name || existingData.customerName || 'Bireysel Müşteri',
+        identity: customerIdentity || existingData.customer?.identity || existingData.customerIdentity || '',
+        identityNumber: customerIdentity || existingData.customer?.identityNumber || existingData.customerIdentity || '',
+        phone: customerPhone || existingData.customer?.phone || existingData.customerPhone || '',
+        email: customerEmail !== null ? customerEmail : (existingData.customer?.email || null),
+        address: customerAddress || existingData.customer?.address || existingData.customerAddress || 'İzmir Buca Showroom Mağazadan Teslim'
+      };
+
+      if (taxOffice) updatedCustomer.taxOffice = taxOffice;
+      if (companyName) updatedCustomer.companyName = companyName;
+
+      const updatePayload = {
+        customer: updatedCustomer,
+        customerName: updatedCustomer.name,
+        customerIdentity: updatedCustomer.identityNumber,
+        customerPhone: updatedCustomer.phone,
+        customerEmail: updatedCustomer.email,
+        customerAddress: updatedCustomer.address,
+        updatedAt: admin.firestore.FieldValue.serverTimestamp()
+      };
+
+      if (note) updatePayload.adminEditNote = note;
+
+      await orderRef.update(updatePayload);
+
+      await orderRef.collection('auditEvents').add({
+        schema: 'belgin-order-evidence-v3',
+        eventType: 'CUSTOMER_INFO_UPDATED_BY_ADMIN',
+        previousCustomer: existingData.customer || null,
+        newCustomer: updatedCustomer,
+        updatedFields: { customerName, customerIdentity, customerPhone, customerEmail, customerAddress },
+        serverAt: admin.firestore.FieldValue.serverTimestamp()
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: 'Fatura alıcı bilgileri başarıyla güncellendi.',
+        orderId,
+        customer: updatedCustomer
+      });
+    } catch (err) {
+      console.error('[Admin] updateAdminOrderCustomer error:', err);
+      return res.status(500).json({ success: false, message: 'Fatura bilgileri güncellenirken sunucu hatası oluştu: ' + err.message });
+    }
+  }));
+
+/**
  * POST /api/admin/orders/delete
  * Yönetici tarafından test/mükerrer siparişi veritabanından kalıcı olarak silme
  */

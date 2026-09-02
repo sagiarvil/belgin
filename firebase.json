@@ -266,6 +266,11 @@
         "region": "us-central1"
       },
       {
+        "source": "/api/admin/orders/update-customer",
+        "function": "updateAdminOrderCustomer",
+        "region": "us-central1"
+      },
+      {
         "source": "/api/admin/orders/delete",
         "function": "deleteAdminOrder",
         "region": "us-central1"
