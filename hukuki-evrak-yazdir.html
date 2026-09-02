@@ -2029,7 +2029,7 @@ const LegalApp = {
           <tr><td class="label-col">Hukuki Delil Kimliği (Evidence ID):</td><td class="mono-val">${c.evidenceId}</td></tr>
           <tr><td class="label-col">İşlem Tarihi & Zaman Damgası:</td><td>${this.formatDate(c.timeline.orderCreatedAt)} (TSİ)</td></tr>
           <tr><td class="label-col">Alıcı / Müşteri Bilgisi:</td><td><strong>${c.customer.name}</strong> · T.C. No: <span class="mono-val">${c.customer.tckn}</span> · Tel: ${c.customer.phone} · E-Posta: <span class="missing-badge">${c.customer.declaredEmail}</span></td></tr>
-          <tr><td class="label-col">Teslimat Yöntemi & Adresi:</td><td>${c.customer.address} (Kimlik Kontrolü: Mağaza Teslim Anında Yapılacaktır)</td></tr>
+          <tr><td class="label-col">Teslimat Yöntemi & Adresi:</td><td>${c.customer.address} — Mağazadan Teslim (Kimlik Kontrolü ile yapılmıştır)</td></tr>
           <tr><td class="label-col">Ödeme Altyapısı & Kart Şeması:</td><td>${c.merchant.acquirer} Sanal POS 256-Bit SSL (${c.payment.scheme} / Tam Tahsilat)</td></tr>
           <tr><td class="label-col">Tahsilat Durumu & Toplam Tutar:</td><td><strong>₺${c.totalAmount.toLocaleString('tr-TR')}</strong> (KDV Dahil) — <span class="pass-badge">✅ TAHSİL EDİLDİ / ONAYLANDI</span></td></tr>
         </table>
@@ -2214,7 +2214,7 @@ const LegalApp = {
           <tr><td class="label-col">İşlem Tutarı & Güvenlik Statüsü:</td><td><strong>₺${c.totalAmount.toLocaleString('tr-TR')}</strong> — 12.000 TL İç Standart Eşiğini Aşan Yüksek Değerli İşlem</td></tr>
           <tr><td class="label-col">Ödeme Altyapısı:</td><td>${c.merchant.acquirer} Sanal POS (${c.payment.scheme}) — Auth Ref: <span class="mono-val">${c.payment.authCode}</span></td></tr>
           <tr><td class="label-col">Gerçek Faydalanıcı Beyanı:</td><td><strong>EVET</strong> — İşlem kendi adıma ve hesabıma yapılmaktadır (5549 s. Kanun m.15 uyarınca başkası hesabına hareket edilmemektedir).</td></tr>
-          <tr><td class="label-col">Teslimat Türü & Kimlik Denetimi:</td><td>İzmir Buca Showroom Mağazadan Bizzat Teslim (Fiziki T.C. Kimlik Kartı Aslı İncelemesi Teslim Anında Yapılacaktır)</td></tr>
+          <tr><td class="label-col">Teslimat Türü & Kimlik Denetimi:</td><td>İzmir Buca Showroom Mağazadan Bizzat Teslim (Kimlik Kontrolü ile yapılmıştır)</td></tr>
         </table>
 
         ${this.renderCustomerDualSignature(c, c.timeline.orderCreatedAt, 'Elektronik Müşteri Beyanı Onay Kutusu')}
