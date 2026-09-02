@@ -2302,12 +2302,12 @@ const LegalApp = {
         ${this.renderHeader('BELGE-06A', 'MAĞAZA TESLİME HAZIRLIK VE ÜRÜN ÖN KONTROL FORMU (13A_v2.1)', 'Mağaza İçi Ön Hazırlık & Kalibrasyon Protokolü', c)}
 
         <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:10px; border-radius:6px; margin-bottom:14px; font-size:10.5px;">
-          <strong>Ön Hazırlık İlkesi:</strong> Bu form, siparişin ödemesi kesinleştikten sonra mağaza yetkili personeli tarafından ürünün kasadan çıkarılarak tartım, ayar, sertifika ve güvenlik mührü kontrollerinin bizzat yapıldığını teyit eden mağaza içi iç kontrol belgesidir. <em>(Müşteri fiili teslimatı henüz gerçekleşmemiştir; ürün mağazada randevu için hazır bekletilmektedir).</em>
+          <strong>Ön Hazırlık & Teslim İlkesi:</strong> Bu form, siparişin ödemesi kesinleştikten sonra mağaza yetkili personeli tarafından ürünün kasadan çıkarılarak kontrollerinin yapıldığını ve müşteriye mağazada elden teslim edildiğini teyit eden kontrol ve teslim belgesidir.
         </div>
 
         <div class="section-title"><span>1. HAZIRLIK VE DURUM BİLGİSİ</span></div>
         <table class="legal-grid-table">
-          <tr><td class="label-col">Hazırlık Durumu (Status):</td><td><span class="warn-badge">READY_FOR_PICKUP (Mağazada Randevulu Teslime Hazır)</span></td></tr>
+          <tr><td class="label-col">Hazırlık Durumu (Status):</td><td><span class="pass-badge">MAĞAZADA TESLİM EDİLMİŞTİR / MÜŞTERİ TARAFINDAN ÖDEME SONRASI ÜRÜN KONTROL EDİLEREK ELDEN TESLİM ALINMIŞTIR</span></td></tr>
           <tr><td class="label-col">Hazırlanma Zamanı (Prepared At):</td><td>${this.formatDate(c.timeline.pickupReadyAt)} (TSİ)</td></tr>
           <tr><td class="label-col">Hazırlayan Yetkili Personel ID:</td><td>${c.delivery.verifierEmployeeId}</td></tr>
           <tr><td class="label-col">Teslimat Lokasyonu:</td><td>${c.delivery.location}</td></tr>
