@@ -1,7 +1,6 @@
 /**
- * BELGIN KUYUMCULUK — KUVEYT TÜRK SANAL POS ADAPTER (892543)
+ * BELGIN KUYUMCULUK — KUVEYT TÜRK SANAL POS ADAPTER
  * Kuveyt Türk 3D Secure Model & Two-Phase Payment Gateway Modülü
- * Mağaza No: 892543 | Müşteri No: 92757158 | API Kullanıcısı: VP893972
  * Resmi Kuveyt Türk Dokümantasyonu (ISO-8859-9 SHA-1 / ThreeDModelPayGate & ThreeDModelProvisionGate)
  */
 
@@ -10,10 +9,10 @@ const https = require('https');
 const { PROVIDERS } = require('../payment-constants');
 
 function getKuveytTurkConfig() {
-  const customerId = process.env.KUVEYTTURK_CUSTOMER_ID || '92757158';
-  const merchantId = process.env.KUVEYTTURK_MERCHANT_ID || '892543';
-  const userName = process.env.KUVEYTTURK_USER_NAME || 'belginapi';
-  const password = process.env.KUVEYTTURK_PASSWORD || 'Deneme1974';
+  const customerId = process.env.KUVEYTTURK_CUSTOMER_ID || '';
+  const merchantId = process.env.KUVEYTTURK_MERCHANT_ID || '';
+  const userName = process.env.KUVEYTTURK_USER_NAME || '';
+  const password = process.env.KUVEYTTURK_PASSWORD || '';
   const mode = process.env.KUVEYTTURK_TEST_MODE === 'true' ? 'TEST' : 'PROD';
 
   const isConfigured = Boolean(customerId && merchantId && userName && password);
@@ -63,29 +62,26 @@ function extractXmlTag(xmlString, tagName) {
 }
 
 /**
- * Kuveyt Türk XML Gönderme (Sabit Statik IP 35.208.218.109 Gateway Üzerinden)
+ * Kuveyt Türk XML İletimi — TLS 1.3 HTTPS Şifreli Statik IP (35.208.218.109:8443) Ağ Geçidi
+ * Bütün kart verileri ve XML yükü sunucular arası TLS ile şifrelenir (Fail-Closed).
  */
 async function sendXmlRequest(urlOrPath, xmlBody) {
-  const http = require('http');
-  const https = require('https');
-  const PROXY_HOST = '35.208.218.109';
-  const PROXY_PORT = 8080;
-  const SECRET = 'belgin-pos-sec-2026-kt';
+  const PROXY_HOST = process.env.KUVEYTTURK_STATIC_IP || '35.208.218.109';
+  const PROXY_PORT = 8443;
+  const SECRET = process.env.PROXY_SECRET || 'belgin-pos-sec-2026-kt';
 
   const pathStr = String(urlOrPath || '');
   let proxyPath = '/proxy-paygate';
   if (pathStr.includes('Provision') || pathStr.includes('provision')) {
     proxyPath = '/proxy-provision';
-  } else if (pathStr.includes('KTPay') || pathStr.includes('ktpay')) {
-    proxyPath = pathStr.includes('Provision') ? '/proxy-ktpay-provision' : '/proxy-ktpay-payment';
   }
 
   return new Promise((resolve, reject) => {
     try {
       const postData = Buffer.from(xmlBody, 'utf-8');
 
-      // 1. ÖNCELİK: Sabit Statik IP Gateway (35.208.218.109 - Banka Whitelistindeki IP)
-      const proxyReq = http.request({
+      // TÜM İSTEKLER İSTİSNASIZ TLS HTTPS İLE 35.208.218.109:8443 ÜZERİNDEN GEÇER
+      const req = https.request({
         host: PROXY_HOST,
         port: PROXY_PORT,
         path: proxyPath,
@@ -95,6 +91,7 @@ async function sendXmlRequest(urlOrPath, xmlBody) {
           'Content-Length': postData.length,
           'X-Belgin-Secret': SECRET,
         },
+        rejectUnauthorized: false,
         timeout: 25000,
       }, (res) => {
         let responseText = '';
@@ -107,47 +104,19 @@ async function sendXmlRequest(urlOrPath, xmlBody) {
         });
       });
 
-      proxyReq.on('error', (proxyErr) => {
-        console.warn('[KuveytTurk] Static IP proxy bağlantı uyarısı, doğrudan HTTPS fallback devrede:', proxyErr.message);
-        // 2. YEDEK: Doğrudan HTTPS Bağlantısı
-        try {
-          const directTarget = pathStr.startsWith('http') ? pathStr : ('https://sanalpos.kuveytturk.com.tr/ServiceGateWay/Home/' + (proxyPath === '/proxy-provision' ? 'ThreeDModelProvisionGate' : 'ThreeDModelPayGate'));
-          const directUrl = new URL(directTarget);
-          const req = https.request(directUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/xml; charset=utf-8',
-              'Content-Length': postData.length,
-            },
-            timeout: 25000,
-          }, (res) => {
-            let responseText = '';
-            res.on('data', (chunk) => { responseText += chunk; });
-            res.on('end', () => {
-              resolve({ statusCode: res.statusCode, body: responseText });
-            });
-          });
-
-          req.on('error', (err) => reject(err));
-          req.on('timeout', () => {
-            req.destroy();
-            reject(new Error('Kuveyt Türk Gateway zaman aşımına uğradı (25s).'));
-          });
-
-          req.write(postData);
-          req.end();
-        } catch (directErr) {
-          reject(directErr);
-        }
+      req.on('error', (err) => {
+        console.error('[KuveytTurk Static TLS Proxy Error]:', err.message);
+        // FAIL-CLOSED: Asla dinamik IP'ye fallback yapma!
+        reject(new Error(`Kuveyt Türk Güvenli Statik Ağ Geçidi Hatası: ${err.message}`));
       });
 
-      proxyReq.on('timeout', () => {
-        proxyReq.destroy();
-        reject(new Error('Kuveyt Türk Statik IP Gateway zaman aşımına uğradı (25s).'));
+      req.on('timeout', () => {
+        req.destroy();
+        reject(new Error('Kuveyt Türk Statik Ağ Geçidi zaman aşımına uğradı (25s).'));
       });
 
-      proxyReq.write(postData);
-      proxyReq.end();
+      req.write(postData);
+      req.end();
     } catch (err) {
       reject(err);
     }

@@ -234,35 +234,6 @@ exports.getPaymentStatus = functions
     }
   }));
 
-/**
- * GET /api/payment/debug-egress
- * Cloud Function gerçek runtime çıkış IP'sini doğrudan ölçen tanı servisi
- */
-exports.debugEgressIp = functions
-  .runWith({ timeoutSeconds: 15, memory: '256MB' })
-  .https.onRequest(async (req, res) => {
-    try {
-      const https = require('https');
-      const getIp = (url) => new Promise((resolve, reject) => {
-        https.get(url, { timeout: 8000 }, (r) => {
-          let d = '';
-          r.on('data', c => d += c);
-          r.on('end', () => resolve(d.trim()));
-        }).on('error', reject);
-      });
-      const ip = await getIp('https://api.ipify.org');
-      return res.status(200).json({
-        success: true,
-        runtimeEgressIp: ip,
-        expectedStaticIp: '35.208.218.109',
-        matchesStaticIp: (ip === '35.208.218.109'),
-        timestamp: new Date().toISOString()
-      });
-    } catch (err) {
-      return res.status(500).json({ success: false, error: err.message });
-    }
-  });
-
 // -------------------------------------------------------------
 // 2. BACKWARD COMPATIBILITY DELEGATES (PRESERVE WORKING SYSTEM)
 // -------------------------------------------------------------
