@@ -176,14 +176,31 @@ exports.paymentCallback = functions
         const isSuccess = outcome?.isSuccess === true;
         const authCode = isSuccess ? encodeURIComponent(outcome.authCode || 'KT-AUTH') : '';
         const amount = encodeURIComponent(req.body?.amount || req.body?.Amount || req.body?.totalAmount || '');
+        const targetUrl = isSuccess
+          ? `https://www.belginkuyumculuk.com/odeme-basarili.html?orderId=${orderId}&authCode=${authCode}&amount=${amount}`
+          : `https://www.belginkuyumculuk.com/odeme-basarisiz.html?orderId=${orderId}&code=${encodeURIComponent(outcome?.failReasonCode || req.body?.responseCode || 'PROVISION_FAILED')}&reason=${encodeURIComponent(outcome?.failReasonMsg || req.body?.responseMessage || 'Banka onayı alınamadı.')}`;
 
-        if (isSuccess) {
-          return res.redirect(303, `https://www.belginkuyumculuk.com/odeme-basarili.html?orderId=${orderId}&authCode=${authCode}&amount=${amount}`);
-        } else {
-          const reason = encodeURIComponent(outcome?.failReasonMsg || req.body?.responseMessage || req.body?.ResponseMessage || outcome?.message || 'Banka provizyon onayı alınamadı (İşlem tamamlanmadı).');
-          const code = encodeURIComponent(outcome?.failReasonCode || req.body?.responseCode || req.body?.ResponseCode || 'PROVISION_FAILED');
-          return res.redirect(303, `https://www.belginkuyumculuk.com/odeme-basarisiz.html?orderId=${orderId}&code=${code}&reason=${reason}`);
-        }
+        const htmlRedirect = `<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <title>Yönlendiriliyorsunuz...</title>
+  <meta http-equiv="refresh" content="0;url=${targetUrl}">
+  <style>
+    body { background: #031411; color: #D4AF37; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+    .loader { width: 42px; height: 42px; border: 3px solid rgba(212,175,55,0.2); border-top-color: #D4AF37; border-radius: 50%; animation: spin 0.7s linear infinite; margin-bottom: 16px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="loader"></div>
+  <div style="font-size:14px; font-weight:700; letter-spacing:1px; color:#F7E9B7;">ÖDEME DOĞRULANDI, AKTARILIYOR...</div>
+  <script>window.location.replace("${targetUrl}");</script>
+</body>
+</html>`;
+
+        res.set('Location', targetUrl);
+        return res.status(200).send(htmlRedirect);
       }
 
       return res.status(outcome?.status || 200).send(outcome?.message || 'OK');

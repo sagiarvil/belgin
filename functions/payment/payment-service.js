@@ -593,7 +593,7 @@ class PaymentService {
         status: nextStatus,
       }, admin);
 
-      // 1. MOBİL ANLIK PUSH BİLDİRİMİ (iPhone / Android Telegram & NTFY) — SIFIR GECİKME
+      // 1. MOBİL ANLIK PUSH BİLDİRİMİ (iPhone / Android Telegram & NTFY) — Arka planda asenkron çalışsın (0 gecikme)
       const updatedOrderData = {
         ...order,
         status: nextStatus,
@@ -602,7 +602,7 @@ class PaymentService {
         paidAt: new Date(),
       };
       
-      const pushPromise = notifier.sendPaymentPushNotification(updatedOrderData).catch((pushErr) => {
+      notifier.sendPaymentPushNotification(updatedOrderData).catch((pushErr) => {
         console.error('[Notifier] Push bildirim hatası:', pushErr.message);
       });
 
@@ -614,8 +614,6 @@ class PaymentService {
           });
         }).catch(() => {});
       }
-
-      await pushPromise;
 
       return { status: 200, message: 'OK', isSuccess: true, orderId, authCode: verification.authCode || rawDetails.authCode || 'KT-AUTH' };
     } else {
