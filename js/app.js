@@ -238,7 +238,9 @@ const App = {
     });
 
     const legacy = Router.migrateLegacyHash();
-    const queryProductId = Number(new URLSearchParams(location.search).get('urun'));
+    const rawQueryId = new URLSearchParams(location.search).get('urun');
+    const numQueryId = parseInt(rawQueryId, 10);
+    const queryProductId = (rawQueryId && !isNaN(numQueryId) && String(numQueryId) === rawQueryId) ? numQueryId : rawQueryId;
 
     if (queryProductId && findProduct(queryProductId)) {
       Router.navigate('urun', false);
@@ -1116,10 +1118,10 @@ const App = {
       `}
 
       <div style="display:flex; flex-direction:column; gap:10px; margin-top:auto;">
-        <button class="btn-art-buy" onclick="Cart.add(${p.id}); App.updateHeaderCartCount(); App.closeQuickDrawer(); Router.navigate('cart');">
+        <button class="btn-art-buy" onclick="Cart.add('${p.id}'); App.updateHeaderCartCount(); App.closeQuickDrawer(); Router.navigate('cart');">
           Sepete Ekle & Satın Al
         </button>
-        <button class="btn-hero-outline" style="text-align:center; padding:12px;" onclick="App.closeQuickDrawer(); App.openProduct(${p.id});">
+        <button class="btn-hero-outline" style="text-align:center; padding:12px;" onclick="App.closeQuickDrawer(); App.openProduct('${p.id}');">
           Detaylı Ekspertiz Sayfası & Şartlar (10x Loupe)
         </button>
       </div>
@@ -1596,11 +1598,11 @@ const App = {
 
             <!-- Aksiyon Butonları -->
             <div class="pdp-actions-row">
-              <button class="pdp-btn-cart" onclick="Cart.add(${p.id}); App.updateHeaderCartCount(); Router.navigate('sepet');">
+              <button class="pdp-btn-cart" onclick="Cart.add('${p.id}'); App.updateHeaderCartCount(); Router.navigate('sepet');">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                 <span>Sepete Ekle</span>
               </button>
-              <button class="pdp-btn-fast" onclick="Cart.add(${p.id}); App.updateHeaderCartCount(); Router.navigate('odeme');">
+              <button class="pdp-btn-fast" onclick="Cart.add('${p.id}'); App.updateHeaderCartCount(); Router.navigate('odeme');">
                 <span>Hemen Satın Al</span>
               </button>
               <a class="pdp-btn-whatsapp" href="https://wa.me/905419305372?text=Merhaba,%20${encodeURIComponent(p.brand + ' ' + p.name)}%20(${p.ref || p.reference})%20modeli%20hakkinda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener" aria-label="WhatsApp Satış Danışmanı">
@@ -2583,7 +2585,7 @@ const App = {
       const ref = p.reference || p.ref || p.metal || (p.category === "gold" ? "Sertifikalı Külçe/Ziynet" : "Özel Koleksiyon");
       const priceFormatted = (typeof formatPrice === "function") ? formatPrice(p.price) : ("₺" + Number(p.price).toLocaleString("tr-TR"));
 
-      return "<div class=\"search-result-item\" onclick=\"App.closeSearchModal(); App.openProduct(" + p.id + ");\">" +
+      return "<div class=\"search-result-item\" onclick=\"App.closeSearchModal(); App.openProduct('" + p.id + "');\">" +
         "<img src=\"" + img + "\" alt=\"" + title + "\" class=\"search-result-thumb\" loading=\"lazy\">" +
         "<div class=\"search-result-info\">" +
         "<span class=\"search-result-brand\">" + brand + "</span>" +

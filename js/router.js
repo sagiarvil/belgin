@@ -49,9 +49,16 @@ const Router = {
     if (path === '/odeme' || path === '/checkout') return { page: 'odeme' };
     if (path.startsWith('/urun/')) {
       const match = Object.entries(window.SEO_ROUTE_MAP || {}).find(([,route]) => route.replace(/\/+$/, '') === path);
-      if (match) return { page: 'urun', productId: Number(match[0]) };
+      if (match) {
+        const rawId = match[0];
+        const numId = parseInt(rawId, 10);
+        const productId = (!isNaN(numId) && String(numId) === rawId) ? numId : rawId;
+        return { page: 'urun', productId };
+      }
       const idMatch = path.match(/-(\d+)\/?$/);
       if (idMatch) return { page: 'urun', productId: Number(idMatch[1]) };
+      const slugMatch = path.replace(/^\/urun\//, '').replace(/\/$/, '');
+      if (slugMatch) return { page: 'urun', productId: slugMatch };
     }
     return { page: 'ana-sayfa' };
   },
@@ -73,9 +80,11 @@ const Router = {
     }
     if (hash === 'odeme' || hash === 'checkout') return { page: 'odeme' };
     if (hash === 'sepet' || hash === 'cart') return { page: 'sepet' };
-    const m = hash.match(/^(?:urun|product)-(\d+)$/);
+    const m = hash.match(/^(?:urun|product)-(.+)$/);
     if (m) {
-      const id = Number(m[1]);
+      const rawId = m[1];
+      const numId = parseInt(rawId, 10);
+      const id = (!isNaN(numId) && String(numId) === rawId) ? numId : rawId;
       const route = this.routeForProduct(id);
       if (route) {
         history.replaceState({page:'urun', productId:id}, '', route);
@@ -113,7 +122,9 @@ const Router = {
       const productLink = e.target.closest('a[data-product-id]');
       if (productLink) {
         e.preventDefault();
-        const id = Number(productLink.dataset.productId);
+        const rawId = productLink.dataset.productId || productLink.getAttribute('data-product-id');
+        const numId = parseInt(rawId, 10);
+        const id = (rawId && !isNaN(numId) && String(numId) === rawId) ? numId : rawId;
         if (id && typeof App !== 'undefined' && App.openProduct) {
           App.openProduct(id, { skipHistory: false });
         }
@@ -159,7 +170,9 @@ const Router = {
     }
 
     if (page.startsWith('urun-') || page.startsWith('product-')) {
-      const id = parseInt(page.replace('urun-', '').replace('product-', ''));
+      const rawId = page.replace('urun-', '').replace('product-', '');
+      const numId = parseInt(rawId, 10);
+      const id = (!isNaN(numId) && String(numId) === rawId) ? numId : rawId;
       if (typeof App !== 'undefined' && App.openProduct) {
         this.navigate('urun', false);
         App.openProduct(id, { skipHistory: !pushState });

@@ -25,16 +25,19 @@ const Wishlist = {
   },
 
   toggle(id) {
-    const numId = Number(id);
-    const idx = this.ids.indexOf(numId);
-    const prod = findProduct(numId);
+    if (id === undefined || id === null || id === '') return;
+    const strId = String(id);
+    const numId = parseInt(strId, 10);
+    const key = (!isNaN(numId) && String(numId) === strId) ? numId : strId;
+    const idx = this.ids.findIndex(item => String(item) === strId);
+    const prod = findProduct(id);
     const name = prod ? prod.name : 'Ürün';
 
     if (idx > -1) {
       this.ids.splice(idx, 1);
       showToast(`${name} istek listenizden çıkarıldı.`, 'info');
     } else {
-      this.ids.push(numId);
+      this.ids.push(key);
       showToast(`${name} istek listenize eklendi.`, 'success');
     }
     this.save();
@@ -44,11 +47,13 @@ const Wishlist = {
   },
 
   has(id) {
-    return this.ids.includes(Number(id));
+    if (id === undefined || id === null || id === '') return false;
+    const strId = String(id);
+    return this.ids.some(item => String(item) === strId);
   },
 
   getItems() {
-    return getAllProducts().filter(p => this.ids.includes(p.id));
+    return getAllProducts().filter(p => this.has(p.id));
   },
 
   getCount() {
