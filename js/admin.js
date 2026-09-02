@@ -2659,16 +2659,19 @@ const AdminApp = {
 
     let totalQtySum = 0;
     let totalAmountSum = 0;
+    let totalOrderAmountSum = 0;
     let rowsHtml = '';
     let rowCount = 0;
 
     matchedOrders.forEach((o, orderIdx) => {
       const orderAmount = Number(o.totalAmount || 0);
+      totalOrderAmountSum += orderAmount;
       const dateStr = new Date(o.createdAt).toLocaleString('tr-TR', {
         day: '2-digit', month: '2-digit', year: 'numeric',
         hour: '2-digit', minute: '2-digit', second: '2-digit'
       });
 
+      const invNo = this.getGibInvoiceNumber ? this.getGibInvoiceNumber(o) : (o.invoiceNumber || o.belgeNo || o.orderId);
       const escapedCustomer = String(o.customerName || 'Bireysel Mağaza Müşterisi').replace(/</g, '&lt;').replace(/>/g, '&gt;');
       const providerText = String(o.provider || (o.payment && o.payment.provider) || 'KUVEYTTURK');
 
@@ -2740,6 +2743,8 @@ const AdminApp = {
         });
       }
 
+      const isMultiItem = itemsList.length > 1;
+
       itemsList.forEach((it, itIdx) => {
         rowCount++;
         const itName = String(it.name || it.malHizmet || it.title || '22 Ayar Altın / Mücevherat').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -2749,19 +2754,41 @@ const AdminApp = {
         totalQtySum += itQty;
         totalAmountSum += itPrice;
 
-        const bgColor = rowCount % 2 === 0 ? '#FFFFFF' : '#F9FBFB';
+        // Çoklu faturada satır rengi ve belirteç
+        const itemDisplayName = isMultiItem ? `[Kalem ${itIdx + 1}/${itemsList.length}] ${itName}` : itName;
+        const rowBg = isMultiItem ? (orderIdx % 2 === 0 ? '#F0FDF4' : '#ECFDF5') : (orderIdx % 2 === 0 ? '#FFFFFF' : '#F9FBFB');
+        const leftBorder = isMultiItem ? 'border-left: 3px solid #059669;' : '';
 
         rowsHtml += `
-          <tr style="background-color: ${bgColor};">
+          <tr style="background-color: ${rowBg};">
+            <td class="text-cell" style="font-weight:700; font-family:monospace; color:#047857; ${leftBorder}">${invNo}</td>
             <td class="text-cell" style="font-size:10.5pt; color:#334155;">${dateStr}</td>
             <td style="font-weight:700; color:#0F172A; font-size:10.5pt;">${escapedCustomer}</td>
-            <td style="font-weight:600; color:#064E3B; font-size:10.5pt;">${itName}</td>
+            <td style="font-weight:600; color:#064E3B; font-size:10.5pt;">${itemDisplayName}</td>
             <td class="qty-cell" style="text-align:center; font-weight:700; font-size:10.5pt;">${itQty}</td>
             <td class="num-cell" style="font-weight:800; color:#042926; font-size:11pt;">${itPrice.toFixed(2)}</td>
+            <td class="num-cell" style="font-weight:700; color:#475569; font-size:10.5pt;">${(isMultiItem ? (itIdx === 0 ? orderAmount.toFixed(2) : '') : orderAmount.toFixed(2))}</td>
             <td class="text-cell" style="text-align:center; font-weight:700; color:#334155; font-size:10.5pt;">${providerText}</td>
           </tr>
         `;
       });
+
+      // Çok satırlı fatura için belirgin ARA TOPLAM satırı
+      if (isMultiItem) {
+        const totalItemsQty = itemsList.reduce((acc, it) => acc + (parseInt(it.qty, 10) || 1), 0);
+        rowsHtml += `
+          <tr style="background-color: #DCFCE7; border-top: 1.5px dashed #059669; border-bottom: 2px solid #059669;">
+            <td class="text-cell" style="font-weight:800; font-family:monospace; color:#166534; border-left: 3px solid #059669;">${invNo}</td>
+            <td class="text-cell" style="font-size:10pt; color:#166534; font-weight:700;">${dateStr}</td>
+            <td style="font-weight:800; color:#166534; font-size:10.5pt;">${escapedCustomer}</td>
+            <td style="font-weight:800; color:#166534; font-size:10.5pt;">↳ [${invNo}] Fatura Toplamı (${itemsList.length} Kalem)</td>
+            <td class="qty-cell" style="text-align:center; font-weight:800; color:#166534; font-size:10.5pt;">${totalItemsQty}</td>
+            <td class="num-cell" style="font-weight:800; color:#166534; font-size:11pt;">${orderAmount.toFixed(2)}</td>
+            <td class="num-cell" style="font-weight:900; color:#064E3B; font-size:11.5pt; background-color:#BBF7D0;">${orderAmount.toFixed(2)}</td>
+            <td class="text-cell" style="text-align:center; font-weight:800; color:#166534; font-size:10pt;">${providerText} (Toplu Fatura)</td>
+          </tr>
+        `;
+      }
     });
 
     const excelHtml = `
@@ -2797,34 +2824,36 @@ const AdminApp = {
       <body>
         <table>
           <tr>
-            <td colspan="6" style="border:none; font-size: 16pt; font-weight: bold; color: #042926; padding-bottom: 4px;">BELGİN KUYUMCULUK & MÜCEVHERAT</td>
+            <td colspan="8" style="border:none; font-size: 16pt; font-weight: bold; color: #042926; padding-bottom: 4px;">BELGİN KUYUMCULUK & MÜCEVHERAT</td>
           </tr>
           <tr>
-            <td colspan="6" style="border:none; font-size: 12pt; font-weight: bold; color: #B68A32; padding-bottom: 4px;">Tahsilat ve Fatura Satış Kalemleri Raporu</td>
+            <td colspan="8" style="border:none; font-size: 12pt; font-weight: bold; color: #B68A32; padding-bottom: 4px;">Fatura Satış Kalemleri ve Tahsilat Raporu</td>
           </tr>
           <tr>
-            <td colspan="6" style="border:none; font-size: 10pt; color: #4B5563; padding-bottom: 12px;"><strong>Rapor Dönemi:</strong> ${periodText} | <strong>Toplam İşlem:</strong> ${matchedOrders.length} Adet | <strong>Oluşturulma:</strong> ${new Date().toLocaleString('tr-TR')}</td>
+            <td colspan="8" style="border:none; font-size: 10pt; color: #4B5563; padding-bottom: 12px;"><strong>Rapor Dönemi:</strong> ${periodText} | <strong>Toplam İşlem:</strong> ${matchedOrders.length} Adet (${rowCount} Kalem Satırı) | <strong>Oluşturulma:</strong> ${new Date().toLocaleString('tr-TR')}</td>
           </tr>
           <tr></tr>
           <thead>
             <tr>
-              <th style="width: 180px; background-color: #042926; color: #FFF;">İşlem Tarihi</th>
+              <th style="width: 170px; background-color: #042926; color: #FFF;">Fatura / Sipariş No</th>
+              <th style="width: 160px; background-color: #042926; color: #FFF;">İşlem Tarihi</th>
               <th style="width: 220px; background-color: #042926; color: #FFF;">Müşteri Adı Soyadı</th>
-              <th style="width: 320px; background-color: #042926; color: #FFF;">Ürün Adı</th>
+              <th style="width: 320px; background-color: #042926; color: #FFF;">Fatura Kalemi / Ürün Adı</th>
               <th style="width: 80px; text-align: center; background-color: #042926; color: #FFF;">Adet</th>
-              <th style="width: 160px; text-align: right; background-color: #042926; color: #FFF;">Tutar (TL)</th>
+              <th style="width: 150px; text-align: right; background-color: #042926; color: #FFF;">Kalem Tutarı (TL)</th>
+              <th style="width: 160px; text-align: right; background-color: #064E3B; color: #FFF;">Fatura Toplamı (TL)</th>
               <th style="width: 140px; text-align: center; background-color: #042926; color: #FFF;">POS / Banka</th>
             </tr>
           </thead>
           <tbody>
             ${rowsHtml}
-            <tr style="height: 12px;"><td colspan="6" style="border:none;"></td></tr>
+            <tr style="height: 12px;"><td colspan="8" style="border:none;"></td></tr>
             <tr class="total-row">
-              <td class="text-cell" style="font-size: 11pt; color: #137333;">GENEL TOPLAM</td>
-              <td style="color: #137333;">Toplam ${matchedOrders.length} Adet İşlem</td>
-              <td style="color: #137333; font-weight: 600;">Toplam ${rowCount} Kalem Satırı</td>
+              <td class="text-cell" style="font-size: 11pt; color: #137333;" colspan="3">GENEL TOPLAM</td>
+              <td style="color: #137333; font-weight: 700;">Toplam ${matchedOrders.length} Fatura (${rowCount} Kalem Satırı)</td>
               <td class="qty-cell" style="color: #137333; font-size: 11pt;">${totalQtySum}</td>
               <td class="total-amount">${totalAmountSum.toFixed(2)}</td>
+              <td class="total-amount" style="font-size: 12.5pt; color: #064E3B; background-color: #BBF7D0;">${totalOrderAmountSum.toFixed(2)}</td>
               <td class="text-cell" style="text-align: center; color: #137333; font-size: 10pt;">Onaylı Banka Kayıtları</td>
             </tr>
           </tbody>
@@ -2837,13 +2866,13 @@ const AdminApp = {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.setAttribute('href', url);
-    link.setAttribute('download', `Belgin_Kuyumculuk_Tahsilat_Raporu${dateSuffix}.xls`);
+    link.setAttribute('download', `Belgin_Kuyumculuk_Fatura_Kalemleri_Raporu${dateSuffix}.xls`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
 
     this.closeExcelExportModal();
-    this.showToast(`✅ ${matchedOrders.length} işlem (${rowCount} kalem) içeren Excel raporu indirildi!`);
+    this.showToast(`✅ ${matchedOrders.length} fatura (${rowCount} kalem) içeren Excel raporu indirildi!`);
   },
 
   // FATURA SEÇİMİNİ DEĞİŞTİR (CHECKBOX)
