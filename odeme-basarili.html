@@ -153,7 +153,7 @@
       border: 1px solid rgba(212, 175, 55, 0.22);
       border-radius: 16px;
       padding: 20px 22px;
-      margin-bottom: 26px;
+      margin-bottom: 0;
       text-align: left;
     }
     .order-row {
@@ -352,13 +352,6 @@
           <span class="order-val" style="font-size:12.5px; color:var(--gold-light);">Kuveyt Türk Sanal POS (892543)</span>
         </div>
       </div>
-
-      <div class="btn-group">
-        <a href="/" class="btn-primary" id="btnMainAction">
-          <span>Sipariş Detayı & Sertifika Takibi</span>
-          <span>➔</span>
-        </a>
-      </div>
     </div>
   </div>
 
@@ -452,28 +445,19 @@
 
       const iconEl = document.getElementById('statusIcon');
       const headingEl = document.getElementById('statusHeading');
-      const subtitleEl = document.getElementById('statusSubtitle');
       const orderIdText = document.getElementById('orderIdText');
       const authCodeText = document.getElementById('authCodeText');
       const amountText = document.getElementById('amountText');
-      const btnMainAction = document.getElementById('btnMainAction');
-      const btnWhatsapp = document.getElementById('btnWhatsapp');
 
       if (!orderId) {
         iconEl.innerHTML = '⚠️';
         iconEl.style.borderColor = '#E67E22';
         iconEl.style.color = '#E67E22';
         headingEl.textContent = 'Sipariş Referansı Belirtilmedi';
-        subtitleEl.textContent = 'Doğrudan erişim sağlandı veya sipariş numarası bulunamadı. Lütfen sepetinizden siparişinizi tamamlayınız.';
-        btnMainAction.textContent = 'Alışverişe Başla';
-        btnMainAction.href = '/';
         return;
       }
 
       orderIdText.textContent = orderId;
-      if (btnWhatsapp) {
-        btnWhatsapp.href = `https://wa.me/905419305372?text=${encodeURIComponent('Merhaba, siparişim onaylandı. Sipariş No: ' + orderId)}`;
-      }
 
       if (amountParam) {
         const amtNum = Number(amountParam);
@@ -518,7 +502,6 @@
         }
         const bankAuth = authCodeParam || orderData.authCode || orderData.payment?.authCode || 'OTORİZASYON ALINDI';
         authCodeText.textContent = bankAuth + ' (00)';
-        btnMainAction.href = `/?order=${encodeURIComponent(orderId)}`;
       }
     })();
   </script>
