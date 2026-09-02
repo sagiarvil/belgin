@@ -874,24 +874,60 @@ const LegalApp = {
       ''
     ).trim();
 
-    const isTcknValid = rawTckn && rawTckn !== '—' && !rawTckn.includes('Yok') && rawTckn !== '11111111111' && rawTckn !== 'Showroom';
-    const canonicalTckn = isTcknValid ? rawTckn : '';
-    const maskedTckn = canonicalTckn ? (canonicalTckn.length === 11 ? `${canonicalTckn.substring(0, 7)}****` : canonicalTckn) : '';
+    const notProvidedRedHtml = '<span style="color:#DC2626; font-weight:700;">Müşteri tarafından bilgi verilmek istenmediğinden alınamamıştır</span>';
+    const notProvidedText = 'Müşteri tarafından bilgi verilmek istenmediğinden alınamamıştır';
 
-    const rawPhone = String(o.customerPhone || o.customer?.phone || '').trim();
-    const isPhoneValid = rawPhone && rawPhone !== '—' && !rawPhone.includes('Yok') && rawPhone.length >= 7;
+    const dummyTckns = ['11111111111', '00000000000', '99999999999', '22222222222', '32395613664', '98765432109', 'Showroom', 'showroom'];
+    const isTcknValid = rawTckn && 
+      rawTckn !== '—' && 
+      rawTckn !== '-' &&
+      !rawTckn.includes('Yok') && 
+      !rawTckn.includes('Eksik') &&
+      !dummyTckns.includes(rawTckn) && 
+      rawTckn.length === 11 && 
+      /^\d{11}$/.test(rawTckn) &&
+      !/^(\d)\1{10}$/.test(rawTckn);
+    const canonicalTckn = isTcknValid ? rawTckn : '';
+    const maskedTckn = canonicalTckn ? `${canonicalTckn.substring(0, 7)}****` : '';
+
+    const cleanPhoneDigits = rawPhone.replace(/\D/g, '');
+    const isPhoneValid = rawPhone && 
+      rawPhone !== '—' && 
+      rawPhone !== '-' && 
+      !rawPhone.includes('Yok') && 
+      !rawPhone.includes('Eksik') && 
+      !rawPhone.includes('05000000000') && 
+      !rawPhone.includes('05315779069') && 
+      !rawPhone.includes('05555555555') && 
+      cleanPhoneDigits.length >= 10 &&
+      !/^0?5000000000$/.test(cleanPhoneDigits) &&
+      !/^0?5555555555$/.test(cleanPhoneDigits) &&
+      !/^(\d)\1+$/.test(cleanPhoneDigits);
     const canonicalPhone = isPhoneValid ? rawPhone : '';
 
     const rawEmail = String(o.customerEmail || o.customer?.email || '').trim();
-    const isEmailValid = rawEmail && rawEmail !== '—' && !rawEmail.includes('Yok') && !rawEmail.includes('Alınmadı') && rawEmail.includes('@');
+    const isEmailValid = rawEmail && 
+      rawEmail !== '—' && 
+      rawEmail !== '-' && 
+      !rawEmail.includes('Yok') && 
+      !rawEmail.includes('Alınmadı') && 
+      !rawEmail.includes('Eksik') && 
+      !rawEmail.includes('BEYAN_EDILMEDI') && 
+      !rawEmail.includes('test@') &&
+      !rawEmail.includes('example.com') &&
+      rawEmail.includes('@') &&
+      rawEmail.includes('.');
     const canonicalEmail = isEmailValid ? rawEmail : '';
 
     const rawAddress = String(o.customerAddress || o.customer?.address || o.address || '').trim();
-    const isAddressValid = rawAddress && rawAddress !== '—' && !rawAddress.includes('Yok');
+    const isAddressValid = rawAddress && 
+      rawAddress !== '—' && 
+      rawAddress !== '-' && 
+      !rawAddress.includes('Yok') && 
+      !rawAddress.includes('Eksik') && 
+      !rawAddress.includes('Alınmadı') &&
+      rawAddress.length > 5;
     const canonicalAddress = isAddressValid ? rawAddress : '';
-
-    const notProvidedRedHtml = '<span style="color:#DC2626; font-weight:700;">Müşteri tarafından verilmek istenmemiştir</span>';
-    const notProvidedText = 'Müşteri tarafından verilmek istenmemiştir';
 
     const providerStr = String(o.provider || o.payment?.provider || '').toUpperCase();
     const isTosla = providerStr.includes('TOSLA');
@@ -2391,7 +2427,7 @@ const LegalApp = {
           <tr><td class="label-col">Satıcı (Ticari Unvan):</td><td><strong>${c.merchant.legalName}</strong></td></tr>
           <tr><td class="label-col">Alıcı (Müşteri):</td><td><strong>${c.customer.name}</strong> (T.C. Kimlik No: ${c.customer.tcknDisplay}) · Tel: ${c.customer.phoneDisplay}</td></tr>
           <tr><td class="label-col">İlişkili Sipariş No:</td><td class="mono-val"><strong>${c.orderId}</strong></td></tr>
-          <tr><td class="label-col">Satın Alınan Ürünler:</td><td>${c.items.map(it => `${it.name} (x${it.qty})`).join(', ')} (Toplam ${c.productMetallurgic.grossWeight})</td></tr>
+          <tr><td class="label-col">Satın Alınan Ürünler:</td><td>${c.items.map(it => `${it.name} (x${it.qty})`).join(', ')}</td></tr>
           <tr><td class="label-col">Toplam Tahsilat Tutarı:</td><td><strong>₺${c.totalAmount.toLocaleString('tr-TR')}</strong> (${c.merchant.acquirer} Sanal POS ile Kesinleşti)</td></tr>
         </table>
 
@@ -2534,7 +2570,7 @@ const LegalApp = {
           <tr><td class="label-col">GİB Evrensel Benzersiz ID (UUID):</td><td><span class="mono-val"><strong>${c.invoice.gibUuid}</strong></span></td></tr>
           <tr><td class="label-col">Fatura Düzenleme Tarihi / Saati:</td><td>${c.invoice.invoiceDate} · ${c.invoice.invoiceTime} (TSİ)</td></tr>
           <tr><td class="label-col">Fatura Alıcısı & TCKN:</td><td><strong>${c.customer.name}</strong> (TCKN: ${c.customer.tcknDisplay})</td></tr>
-          <tr><td class="label-col">Faturalandırılan Ürünler:</td><td>${c.items.map(it => `${it.name} (x${it.qty})`).join(', ')} (Toplam: ${c.productMetallurgic.grossWeight})</td></tr>
+          <tr><td class="label-col">Faturalandırılan Ürünler:</td><td>${c.items.map(it => `${it.name} (x${it.qty})`).join(', ')}</td></tr>
         </table>
 
         <div class="section-title"><span>2. MALİ EŞLEŞTİRME VE MUTABAKAT TABLOSU</span></div>
@@ -2597,8 +2633,6 @@ const LegalApp = {
 
         <table class="legal-grid-table">
           <tr><td class="label-col">Envanter Lot Numarası:</td><td><span class="mono-val">${c.productMetallurgic.inventoryLotId}</span></td></tr>
-          <tr><td class="label-col">Toplam Brüt & Net Tartım:</td><td><strong>Brüt: ${c.productMetallurgic.grossWeight} · Net: ${c.productMetallurgic.netWeight}</strong></td></tr>
-          <tr><td class="label-col">Kalibre Hassas Terazi ID:</td><td>${c.productMetallurgic.scaleMeasurementId}</td></tr>
           <tr><td class="label-col">Stoktan Çıkış / Kasa Çıkış Ref:</td><td><span class="mono-val">${c.productMetallurgic.stockExitId}</span></td></tr>
           <tr><td class="label-col">Ürün Fotoğrafı SHA-256 Hash:</td><td><span class="mono-val">${c.productMetallurgic.productPhotoHash}</span></td></tr>
           <tr><td class="label-col">Orijinallik Sertifikası SHA-256:</td><td><span class="mono-val">${c.productMetallurgic.certificateScanHash}</span></td></tr>
@@ -2766,7 +2800,7 @@ const LegalApp = {
             </tr>
             <tr>
               <td><strong>4. Sipariş → Ürün</strong></td>
-              <td>${c.items.map(it => it.sku).join(', ')} + Toplam ${c.productMetallurgic.grossWeight} + Sertifikalar + Stok Çıkış ID</td>
+              <td>${c.items.map(it => it.sku).join(', ')} + Sertifikalar + Stok Çıkış ID</td>
               <td style="text-align:center;"><span class="pass-badge">PASSED</span></td>
             </tr>
             <tr>
