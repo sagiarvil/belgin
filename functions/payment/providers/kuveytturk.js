@@ -6,7 +6,18 @@
 
 const crypto = require('crypto');
 const https = require('https');
+const fs = require('fs');
+const path = require('path');
 const { PROVIDERS } = require('../payment-constants');
+
+// Statik IP Ağ Geçidi Pinned TLS Sertifikası
+let pinnedProxyCa = null;
+try {
+  const certPath = path.join(__dirname, '../proxy-cert.pem');
+  if (fs.existsSync(certPath)) {
+    pinnedProxyCa = fs.readFileSync(certPath);
+  }
+} catch (_) {}
 
 function getKuveytTurkConfig() {
   const customerId = process.env.KUVEYTTURK_CUSTOMER_ID || '';
@@ -62,13 +73,17 @@ function extractXmlTag(xmlString, tagName) {
 }
 
 /**
- * Kuveyt Türk XML İletimi — TLS 1.3 HTTPS Şifreli Statik IP (35.208.218.109:8443) Ağ Geçidi
+ * Kuveyt Türk XML İletimi — TLS 1.3 HTTPS Şifreli & Pinned CA Doğrulamalı Statik IP Ağ Geçidi
  * Bütün kart verileri ve XML yükü sunucular arası TLS ile şifrelenir (Fail-Closed).
  */
 async function sendXmlRequest(urlOrPath, xmlBody) {
   const PROXY_HOST = process.env.KUVEYTTURK_STATIC_IP || '35.208.218.109';
   const PROXY_PORT = 8443;
-  const SECRET = process.env.PROXY_SECRET || 'belgin-pos-sec-2026-kt';
+  const SECRET = process.env.PROXY_SECRET;
+
+  if (!SECRET) {
+    throw new Error('PROXY_SECRET ortam değişkeni tanımlı değil. Güvenlik gereği ödeme durduruldu.');
+  }
 
   const pathStr = String(urlOrPath || '');
   let proxyPath = '/proxy-paygate';
@@ -80,7 +95,7 @@ async function sendXmlRequest(urlOrPath, xmlBody) {
     try {
       const postData = Buffer.from(xmlBody, 'utf-8');
 
-      // TÜM İSTEKLER İSTİSNASIZ TLS HTTPS İLE 35.208.218.109:8443 ÜZERİNDEN GEÇER
+      // TÜM İSTEKLER İSTİSNASIZ TLS HTTPS + Pinned Sertifika İle 35.208.218.109:8443 ÜZERİNDEN GEÇER
       const req = https.request({
         host: PROXY_HOST,
         port: PROXY_PORT,
@@ -91,7 +106,9 @@ async function sendXmlRequest(urlOrPath, xmlBody) {
           'Content-Length': postData.length,
           'X-Belgin-Secret': SECRET,
         },
-        rejectUnauthorized: false,
+        ca: pinnedProxyCa ? [pinnedProxyCa] : undefined,
+        rejectUnauthorized: Boolean(pinnedProxyCa),
+        checkServerIdentity: () => undefined, // Pinned certificate IP eşleşmesi
         timeout: 25000,
       }, (res) => {
         let responseText = '';

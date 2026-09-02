@@ -528,58 +528,41 @@ class PaymentService {
 
     const orderRef = db.collection('orders').doc(orderId);
     const orderDoc = await orderRef.get();
-    const isNewOrder = !orderDoc.exists;
-    const order = isNewOrder ? {
-      orderId,
-      id: orderId,
-      provider: providerName || 'KUVEYTTURK',
-      createdAt: new Date().toISOString(),
-      isPaid: false,
-      paymentStatus: 'PENDING',
-      status: ORDER_STATUS.PAYMENT_SESSION_READY,
-      totalAmount: 105,
-      amountInKurus: 10500,
-      customerName: 'Test Müşteri',
-      items: [{ name: 'Test Ödeme', qty: 1, price: 105 }]
-    } : orderDoc.data();
+    if (!orderDoc.exists) {
+      console.error(`[Payment Security] Callback reddedildi: Sipariş veritabanında bulunamadı (${orderId})`);
+      return { status: 404, message: 'Siparis bulunamadi', isValid: false, isSuccess: false };
+    }
 
+    const order = orderDoc.data();
     const orderProvider = String(order.payment?.provider || order.provider || 'KUVEYTTURK').toUpperCase();
     const effectiveProviderName = orderProvider || String(providerName || DEFAULT_PROVIDER).toUpperCase();
     const provider = paymentRouter.getProvider(effectiveProviderName);
 
     // Atomic Idempotency Kontrolü: Zaten PAID ise hemen 200 OK dön
-    if (!isNewOrder && (['PAID', 'PAYMENT_PAID'].includes(order.paymentStatus) || [ORDER_STATUS.PAID, ORDER_STATUS.AWAITING_STORE_PICKUP, ORDER_STATUS.COMPLETED].includes(order.status))) {
-      return { status: 200, message: 'OK', isSuccess: true, orderId };
+    if (['PAID', 'PAYMENT_PAID'].includes(order.paymentStatus) || [ORDER_STATUS.PAID, ORDER_STATUS.AWAITING_STORE_PICKUP, ORDER_STATUS.COMPLETED].includes(order.status)) {
+      return { status: 200, message: 'OK', isSuccess: true, orderId, authCode: order.payment?.authCode || 'KT-AUTH' };
     }
 
     const verification = await provider.verifyCallback({ body, order });
 
     if (!verification.isValid) {
       console.error(`[Payment Security] ${provider.name} Callback doğrulama başarısız:`, orderId, verification.reason);
-      if (!isNewOrder) {
-        await appendAuditEvent(orderRef, 'CALLBACK_VERIFICATION_FAILED', {
-          provider: provider.name,
-          reason: verification.reason,
-        }, admin);
-      }
-      return { status: 400, message: `Callback verification failed: ${verification.reason}` };
+      await appendAuditEvent(orderRef, 'CALLBACK_VERIFICATION_FAILED', {
+        provider: provider.name,
+        reason: verification.reason,
+      }, admin);
+      return { status: 400, message: `Callback verification failed: ${verification.reason}`, isValid: false, isSuccess: false };
     }
 
     if (verification.isSuccess) {
       const highValue = order.highValueSecureDelivery === true;
-      const totalReceived = verification.totalAmountReceived || String(order.amountInKurus || 10500);
+      const totalReceived = verification.totalAmountReceived || String(order.amountInKurus);
       const nextStatus = highValue ? ORDER_STATUS.AWAITING_STORE_PICKUP : ORDER_STATUS.PAID;
 
-      if (!isNewOrder) {
-        try {
-          assertValidTransition(order.status, nextStatus, orderId);
-        } catch (_) {}
-      }
+      assertValidTransition(order.status, nextStatus, orderId);
 
       const rawDetails = verification.rawPaymentDetails || {};
       const paidUpdate = {
-        orderId,
-        id: orderId,
         status: nextStatus,
         deliveryStatus: highValue ? 'STORE_PICKUP_REQUIRED' : (order.deliveryStatus || 'PENDING'),
         totalAmountReceived: totalReceived,
@@ -601,13 +584,7 @@ class PaymentService {
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
       };
 
-      if (isNewOrder) {
-        paidUpdate.createdAt = admin.firestore.FieldValue.serverTimestamp();
-        paidUpdate.customerName = order.customerName || 'Banka Müşterisi';
-        await orderRef.set(paidUpdate, { merge: true });
-      } else {
-        await orderRef.update(paidUpdate);
-      }
+      await orderRef.update(paidUpdate);
 
       await appendAuditEvent(orderRef, 'PAYMENT_CONFIRMED', {
         provider: provider.name,
