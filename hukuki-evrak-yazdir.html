@@ -2265,7 +2265,7 @@ const LegalApp = {
           <tr><td class="label-col">İşlem Tutarı & Güvenlik Statüsü:</td><td><strong>₺${c.totalAmount.toLocaleString('tr-TR')}</strong> — 12.000 TL İç Standart Eşiğini Aşan Yüksek Değerli İşlem</td></tr>
           <tr><td class="label-col">Ödeme Altyapısı:</td><td>${c.merchant.acquirer} Sanal POS (${c.payment.scheme}) — Auth Ref: <span class="mono-val">${c.payment.authCode}</span></td></tr>
           <tr><td class="label-col">Gerçek Faydalanıcı Beyanı:</td><td><strong>EVET</strong> — İşlem kendi adıma ve hesabıma yapılmaktadır (5549 s. Kanun m.15 uyarınca başkası hesabına hareket edilmemektedir).</td></tr>
-          <tr><td class="label-col">Teslimat Türü & Kimlik Denetimi:</td><td>İzmir Buca Showroom Mağazadan Bizzat Teslim (Kimlik Kontrolü ile yapılmıştır)</td></tr>
+          <tr><td class="label-col">Teslimat Türü & Kimlik Denetimi:</td><td>İzmir Buca Showroom Mağazadan Bizzat Teslim (Fiziki T.C. Kimlik Kartı Aslı İncelemesi Teslim Anında yapılmaktadır)</td></tr>
         </table>
 
         ${this.renderCustomerDualSignature(c, c.timeline.orderCreatedAt, 'Elektronik Müşteri Beyanı Onay Kutusu')}
