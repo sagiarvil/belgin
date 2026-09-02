@@ -71,6 +71,18 @@ const Cart = {
     showToast(`${product.name} lüks mücevher kasanıza eklendi.`, 'success');
   },
 
+  addItem(productId, qty = 1, options = {}) {
+    this.add(productId, qty, options);
+    if (typeof App !== 'undefined' && App.updateHeaderCartCount) {
+      App.updateHeaderCartCount();
+    }
+    if (typeof Router !== 'undefined' && Router.navigate) {
+      Router.navigate('odeme');
+    } else {
+      window.location.href = '/#odeme';
+    }
+  },
+
   remove(itemKeyOrId) {
     this.items = this.items.filter(item => item.itemKey !== String(itemKeyOrId) && item.id !== Number(itemKeyOrId));
     this.save();

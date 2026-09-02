@@ -3391,16 +3391,20 @@ const App = {
 
         setTimeout(() => {
           try {
-            if (document.threeDSServerWebFlowStartForm && typeof document.threeDSServerWebFlowStartForm.submit === 'function') {
-              document.threeDSServerWebFlowStartForm.submit();
-            } else if (document.downloadForm && typeof document.downloadForm.submit === 'function') {
-              document.downloadForm.submit();
-            } else if (document.getElementById('threeDSServerWebFlowStartForm')) {
-              document.getElementById('threeDSServerWebFlowStartForm').submit();
-            } else if (document.forms && document.forms.length > 0) {
-              document.forms[0].submit();
+            const targetForm = document.threeDSServerWebFlowStartForm ||
+                               document.downloadForm ||
+                               document.getElementById('threeDSServerWebFlowStartForm') ||
+                               document.getElementById('kt3dForm') ||
+                               (document.forms && document.forms[0]);
+            if (targetForm) {
+              HTMLFormElement.prototype.submit.call(targetForm);
             }
-          } catch (_) {}
+          } catch (_) {
+            try {
+              const subBtn = document.querySelector('input[type="submit"], button[type="submit"]');
+              if (subBtn && typeof subBtn.click === 'function') subBtn.click();
+            } catch (__) {}
+          }
         }, 50);
         return;
       }

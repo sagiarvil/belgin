@@ -687,8 +687,16 @@ function getAllProducts() {
 }
 
 function findProduct(id) {
-  const numId = parseInt(id, 10);
-  return getAllProducts().find(p => p.id === numId);
+  if (id === undefined || id === null || id === '') return undefined;
+  const strId = String(id).trim();
+  const numId = parseInt(strId, 10);
+  const prods = getAllProducts();
+  return prods.find(p =>
+    String(p.id) === strId ||
+    (!isNaN(numId) && p.id === numId) ||
+    p.slug === strId ||
+    (p.reference && String(p.reference).toLowerCase() === strId.toLowerCase())
+  );
 }
 
 function debounce(fn, ms = 250) {
