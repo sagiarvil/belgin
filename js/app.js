@@ -522,9 +522,19 @@ const App = {
     watches: { query: '', brand: 'all', priceRange: 'all', sortBy: 'default', page: 1 }
   },
 
+  isEliteBrand(brand) {
+    if (!brand) return false;
+    const b = brand.trim().toLowerCase();
+    const eliteBrands = [
+      'rolex', 'omega', 'patek philippe', 'patek', 'audemars piguet', 'ap',
+      'breitling', 'cartier', 'tudor', 'tag heuer', 'iwc', 'iwc schaffhausen', 'panerai'
+    ];
+    return eliteBrands.includes(b);
+  },
+
   getAllWatchList() {
     if (typeof PRODUCTS !== 'undefined' && Array.isArray(PRODUCTS)) {
-      return PRODUCTS.filter(p => p.isWatch || p.isElite || p.category === 'saat' || p.category === 'elit-saatler' || p.category === 'watch');
+      return PRODUCTS.filter(p => !p.isElite && p.category !== 'elit-saatler' && (p.isWatch || p.category === 'saat' || p.category === 'watch'));
     }
     return typeof WATCHES !== 'undefined' ? WATCHES : [];
   },
@@ -773,11 +783,20 @@ const App = {
 
   filterEliteWatchesByBrand(brand = 'all', btn = null) {
     this.closeNavDropdowns();
+    if (brand && brand !== 'all' && !this.isEliteBrand(brand)) {
+      return this.filterWatchesByBrand(brand, btn);
+    }
     if (!this.universalFilterState.elite) this.universalFilterState.elite = {};
     this.universalFilterState.elite.brand = brand;
     this.universalFilterState.elite.page = 1;
-    Router.navigate('elit-kategori', true, { filter: brand });
-    this.setUniversalPillBrand(brand, 'elite', btn);
+    if (Router.currentPage !== 'elit-kategori') {
+      Router.navigate('elit-kategori', true, { filter: brand });
+    } else {
+      this.setUniversalPillBrand(brand, 'elite', btn);
+      const select = document.getElementById('uvBrandSelectElite');
+      if (select) select.value = brand;
+      this.renderUniversalWatches('elite', 1);
+    }
     setTimeout(() => {
       const target = document.getElementById('universalFilterElite') || document.getElementById('allEliteWatchesGrid');
       if (target && typeof Router !== 'undefined' && Router.scrollToTarget) {
@@ -810,6 +829,9 @@ const App = {
 
   filterWatchesByBrand(brand = 'all', btn = null) {
     this.closeNavDropdowns();
+    if (brand && brand !== 'all' && this.isEliteBrand(brand)) {
+      return this.filterEliteWatchesByBrand(brand, btn);
+    }
     if (!this.universalFilterState.watches) this.universalFilterState.watches = {};
     this.universalFilterState.watches.brand = brand;
     this.universalFilterState.watches.page = 1;
@@ -817,6 +839,9 @@ const App = {
       Router.navigate('saatler', true, { filter: brand });
     } else {
       this.setUniversalPillBrand(brand, 'watches', btn);
+      const select = document.getElementById('uvBrandSelectWatches');
+      if (select) select.value = brand;
+      this.renderUniversalWatches('watches', 1);
     }
     setTimeout(() => {
       const target = document.getElementById('universalFilterWatches') || document.getElementById('allWatchesGrid');
@@ -1461,10 +1486,12 @@ const App = {
 
     // İlgili Ürünler
     const allProds = typeof getAllProducts === 'function' ? getAllProducts() : (typeof PRODUCTS !== 'undefined' ? PRODUCTS : []);
-    const relatedProducts = allProds.filter(x => x.id !== p.id && (x.brand === p.brand || x.category === p.category)).slice(0, 4);
+    const isEliteWatch = (p.isElite || p.category === 'elit-saatler');
+    const relatedProducts = allProds.filter(x => x.id !== p.id && (isEliteWatch ? (x.isElite || x.category === 'elit-saatler') : (!x.isElite && x.category !== 'elit-saatler')) && (x.brand === p.brand || x.category === p.category)).slice(0, 4);
 
-    const breadcrumbCategory = isGoldProduct ? 'Mücevherat & Altın' : 'Lüks Saatler';
-    const breadcrumbPage = isGoldProduct ? 'mucevherat' : 'saatler';
+    const breadcrumbCategory = isGoldProduct ? 'Mücevherat & Altın' : (isEliteWatch ? '👑 Elit Kategori' : 'Lüks Saatler');
+    const breadcrumbPage = isGoldProduct ? 'ana-sayfa' : (isEliteWatch ? 'elit-kategori' : 'saatler');
+    const brandFilterCall = isEliteWatch ? `App.filterEliteWatchesByBrand('${p.brand}', null)` : `App.filterWatchesByBrand('${p.brand}', null)`;
 
     container.innerHTML = `
       <div class="pdp-page-container">
@@ -1475,7 +1502,7 @@ const App = {
           <span class="pdp-separator">/</span>
           <a href="#" data-page="${breadcrumbPage}">${breadcrumbCategory}</a>
           <span class="pdp-separator">/</span>
-          <a href="#" onclick="App.filterWatchesByBrand('${p.brand}', null)">${p.brand}</a>
+          <a href="#" onclick="${brandFilterCall}; return false;">${p.brand}</a>
           <span class="pdp-separator">/</span>
           <span class="pdp-current">${p.name}</span>
         </nav>
@@ -1516,7 +1543,7 @@ const App = {
 
           <!-- SAĞ: Satın Alma & Özellikler Paneli (Buy Box) -->
           <div class="pdp-buy-box">
-            <a href="#" onclick="App.filterWatchesByBrand('${p.brand}', null)" class="pdp-brand-title">${p.brand}</a>
+            <a href="#" onclick="${brandFilterCall}; return false;" class="pdp-brand-title">${p.brand}</a>
             <h1 class="pdp-product-title">${p.name}</h1>
             
             <div class="pdp-meta-row">
@@ -3291,20 +3318,50 @@ const App = {
 
     const customerFullName = `${fn} ${ln}`;
 
+    const rawCardNum = (document.getElementById('checkoutCardNumber')?.value || '').replace(/\D/g, '');
+    const rawCardExp = (document.getElementById('checkoutCardExpiry')?.value || '').trim();
+    const rawCardCvc = (document.getElementById('checkoutCardCvc')?.value || '').replace(/\D/g, '');
+    const cardHolder = (document.getElementById('checkoutCardHolder')?.value || customerFullName).trim().toLocaleUpperCase('tr-TR');
+
+    if (document.getElementById('checkoutCardNumber')) {
+      if (!rawCardNum || rawCardNum.length < 15) {
+        if (typeof showToast === 'function') showToast('Lütfen geçerli 16 haneli kart numaranızı giriniz.', 'error');
+        else alert('Lütfen geçerli 16 haneli kart numaranızı giriniz.');
+        document.getElementById('checkoutCardNumber')?.focus();
+        return;
+      }
+      if (!rawCardExp.includes('/') || rawCardExp.length < 4) {
+        if (typeof showToast === 'function') showToast('Lütfen kartınızın son kullanma tarihini AA/YY formatında giriniz (Örn: 08/28).', 'error');
+        else alert('Lütfen kartınızın son kullanma tarihini AA/YY formatında giriniz (Örn: 08/28).');
+        document.getElementById('checkoutCardExpiry')?.focus();
+        return;
+      }
+      if (!rawCardCvc || rawCardCvc.length < 3) {
+        if (typeof showToast === 'function') showToast('Lütfen kartınızın arkasındaki 3 haneli güvenlik kodunu (CVV) giriniz.', 'error');
+        else alert('Lütfen kartınızın arkasındaki 3 haneli güvenlik kodunu (CVV) giriniz.');
+        document.getElementById('checkoutCardCvc')?.focus();
+        return;
+      }
+    }
+
     const btn = document.getElementById('checkoutSubmitBtn') || document.getElementById('btnSubmitOrder');
     const originalBtnHtml = btn ? btn.innerHTML : '';
     if (btn) {
       btn.disabled = true;
-      btn.innerHTML = '<span style="font-size:20px;">🔒</span> <span>Akbank 3D Secure Kapısına Yönlendiriliyorsunuz...</span>';
+      btn.innerHTML = '<span style="font-size:20px;">🔒</span> <span>Kuveyt Türk 3D Secure Kapısına Yönlendiriliyorsunuz...</span>';
     }
 
     const orderPayload = {
-      provider: 'AKBANK',
+      provider: 'KUVEYTTURK',
       user_name: customerFullName,
       user_phone: phone,
       email: email,
       customerIdentity: identity || '',
       customerAddress: customerAddress,
+      cardHolder: cardHolder,
+      cardNumber: rawCardNum,
+      cardExpiry: rawCardExp,
+      cardCvc: rawCardCvc,
       items: items.map(i => ({ id: i.id, qty: i.qty })),
       deliveryMethod: selectedMethod === 'showroom' ? 'showroom' : 'carrier',
       termsAccepted: true,
@@ -3322,11 +3379,34 @@ const App = {
     .then(r => r.json())
     .then(data => {
       if (!data.success) {
-        throw new Error(data.message || 'Akbank Sanal POS oturumu açılamadı.');
+        throw new Error(data.message || 'Kuveyt Türk Sanal POS oturumu açılamadı.');
+      }
+
+      // 1. KUVEYT TÜRK 3D SECURE SMS AKIŞI (Banka SMS Şifresi Ekranı)
+      if (data.formHtml || data.paymentType === 'HTML_FORM') {
+        const rawHtml = data.formHtml || '';
+        document.open();
+        document.write(rawHtml);
+        document.close();
+
+        setTimeout(() => {
+          try {
+            if (document.threeDSServerWebFlowStartForm && typeof document.threeDSServerWebFlowStartForm.submit === 'function') {
+              document.threeDSServerWebFlowStartForm.submit();
+            } else if (document.downloadForm && typeof document.downloadForm.submit === 'function') {
+              document.downloadForm.submit();
+            } else if (document.getElementById('threeDSServerWebFlowStartForm')) {
+              document.getElementById('threeDSServerWebFlowStartForm').submit();
+            } else if (document.forms && document.forms.length > 0) {
+              document.forms[0].submit();
+            }
+          } catch (_) {}
+        }, 50);
+        return;
       }
 
       if (data.gatewayUrl && data.postParams) {
-        // DOĞRUDAN RESMİ AKBANK EST 3D SECURE / PAYHOSTING KAPISINA GÖNDERİM
+        // DOĞRUDAN RESMİ KUVEYT TÜRK 3D SECURE KAPISINA GÖNDERİM
         const form = document.createElement('form');
         form.method = 'POST';
         form.action = data.gatewayUrl;
@@ -3343,7 +3423,7 @@ const App = {
           }
         }
         document.body.appendChild(form);
-        form.submit();
+        HTMLFormElement.prototype.submit.call(form);
       } else if (data.redirectUrl) {
         window.location.href = data.redirectUrl;
       } else {
@@ -3351,7 +3431,7 @@ const App = {
       }
     })
     .catch(err => {
-      console.error('Akbank Ödeme Başlatma Hatası:', err);
+      console.error('Kuveyt Türk Ödeme Başlatma Hatası:', err);
       if (typeof showToast === 'function') showToast(`Ödeme başlatılamadı: ${err.message}`, 'error');
       else alert(`Ödeme başlatılamadı: ${err.message}`);
       if (btn) {
@@ -3366,11 +3446,49 @@ const App = {
     this.renderCheckoutDeliveryOptions();
     const form = document.getElementById('checkoutForm') || document.querySelector('#page-odeme form');
     if (!form) return;
+
+    // Kart Girdi Formatlayıcıları
+    const cardNum = document.getElementById('checkoutCardNumber');
+    const cardExp = document.getElementById('checkoutCardExpiry');
+    const cardCvc = document.getElementById('checkoutCardCvc');
+    const cardHolder = document.getElementById('checkoutCardHolder');
+
+    if (cardNum && !cardNum.dataset.bound) {
+      cardNum.dataset.bound = 'true';
+      cardNum.addEventListener('input', (e) => {
+        let v = e.target.value.replace(/\D/g, '').slice(0, 16);
+        let formatted = v.match(/.{1,4}/g)?.join(' ') || v;
+        e.target.value = formatted;
+      });
+    }
+
+    if (cardExp && !cardExp.dataset.bound) {
+      cardExp.dataset.bound = 'true';
+      cardExp.addEventListener('input', (e) => {
+        let v = e.target.value.replace(/\D/g, '').slice(0, 4);
+        if (v.length >= 2) {
+          e.target.value = v.slice(0, 2) + '/' + v.slice(2);
+        } else {
+          e.target.value = v;
+        }
+      });
+    }
+
+    if (cardCvc && !cardCvc.dataset.bound) {
+      cardCvc.dataset.bound = 'true';
+      cardCvc.addEventListener('input', (e) => {
+        e.target.value = e.target.value.replace(/\D/g, '').slice(0, 4);
+      });
+    }
+
     const updateDraft = () => {
       const fn = document.getElementById('checkoutFirstName')?.value || '';
       const ln = document.getElementById('checkoutLastName')?.value || '';
       const phone = document.getElementById('checkoutPhone')?.value || '';
       const fullName = (fn + ' ' + ln).trim();
+      if (cardHolder && !cardHolder.dataset.manual && fullName) {
+        cardHolder.value = fullName.toLocaleUpperCase('tr-TR');
+      }
       const cartTotal = typeof Cart !== 'undefined' ? Cart.getTotal() : 0;
       const draft = {
         customerName: fullName || 'Müşteri (Sipariş Sahibi)',
@@ -3378,7 +3496,7 @@ const App = {
         totalAmount: cartTotal > 0 ? cartTotal : 14960,
         formattedAmount: '₺' + (cartTotal > 0 ? cartTotal : 14960).toLocaleString('tr-TR'),
         termsAcceptedAt: new Date().toISOString(),
-        paymentMethod: 'Akbank 256-Bit EV SSL & 3D Secure Sanal POS (12877995)'
+        paymentMethod: 'Kuveyt Türk 256-Bit EV SSL & 3D Secure Sanal POS (892543)'
       };
       localStorage.setItem('belgin_checkout_draft', JSON.stringify(draft));
       sessionStorage.setItem('belgin_checkout_draft', JSON.stringify(draft));
@@ -3625,6 +3743,31 @@ const App = {
       btn.classList.toggle('active', btn.dataset.mode === (isSpread ? 'spread' : 'single'));
     });
     this.renderFlipbook();
+  },
+
+  flipbookZoomed: false,
+  toggleFlipbookZoom() {
+    this.flipbookZoomed = !this.flipbookZoomed;
+    const stage = document.getElementById('flipbookStage');
+    const card = document.getElementById('bizKimizFolioCard');
+    const btn = document.getElementById('flipbookZoomBtn');
+    const btnTop = document.getElementById('flipbookZoomBtnTop');
+    const btnTopText = document.getElementById('flipbookZoomBtnTopText');
+
+    if (stage) stage.classList.toggle('zoom-large', this.flipbookZoomed);
+    if (card) card.classList.toggle('zoom-expanded', this.flipbookZoomed);
+    if (btnTop) btnTop.classList.toggle('active', this.flipbookZoomed);
+
+    if (btn) {
+      btn.textContent = this.flipbookZoomed ? '↩️ Geri Dön (İlk Görünüm)' : '🔍 Genişlet (%130)';
+    }
+    if (btnTopText) {
+      btnTopText.textContent = this.flipbookZoomed ? 'Geri Dön (İlk Görünüm)' : 'Genişlet (%130)';
+    }
+
+    if (!this.flipbookZoomed && card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
   },
 
   toggleFlipbookFullscreen() {

@@ -298,6 +298,10 @@
         "function": "getPaymentStatus"
       },
       {
+        "source": "/api/payment/debug-egress",
+        "function": "debugEgressIp"
+      },
+      {
         "source": "/api/payment/callback/paytr",
         "function": "paymentCallback"
       },

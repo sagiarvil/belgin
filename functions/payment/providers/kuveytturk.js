@@ -63,21 +63,39 @@ function extractXmlTag(xmlString, tagName) {
 }
 
 /**
- * Kuveyt Türk XML Gönderme (Resmi Güvenli HTTPS Bağlantısı)
+ * Kuveyt Türk XML Gönderme (Sabit Statik IP 35.208.218.109 Gateway Üzerinden)
  */
-async function sendXmlRequest(urlStr, xmlBody) {
+async function sendXmlRequest(urlOrPath, xmlBody) {
+  const http = require('http');
+  const https = require('https');
+  const PROXY_HOST = '35.208.218.109';
+  const PROXY_PORT = 8080;
+  const SECRET = 'belgin-pos-sec-2026-kt';
+
+  const pathStr = String(urlOrPath || '');
+  let proxyPath = '/proxy-paygate';
+  if (pathStr.includes('Provision') || pathStr.includes('provision')) {
+    proxyPath = '/proxy-provision';
+  } else if (pathStr.includes('KTPay') || pathStr.includes('ktpay')) {
+    proxyPath = pathStr.includes('Provision') ? '/proxy-ktpay-provision' : '/proxy-ktpay-payment';
+  }
+
   return new Promise((resolve, reject) => {
     try {
-      const directUrl = new URL(urlStr);
       const postData = Buffer.from(xmlBody, 'utf-8');
 
-      const req = https.request(directUrl, {
+      // 1. ÖNCELİK: Sabit Statik IP Gateway (35.208.218.109 - Banka Whitelistindeki IP)
+      const proxyReq = http.request({
+        host: PROXY_HOST,
+        port: PROXY_PORT,
+        path: proxyPath,
         method: 'POST',
         headers: {
           'Content-Type': 'application/xml; charset=utf-8',
           'Content-Length': postData.length,
+          'X-Belgin-Secret': SECRET,
         },
-        timeout: 20000,
+        timeout: 25000,
       }, (res) => {
         let responseText = '';
         res.on('data', (chunk) => { responseText += chunk; });
@@ -89,18 +107,47 @@ async function sendXmlRequest(urlStr, xmlBody) {
         });
       });
 
-      req.on('error', (err) => {
-        console.error('[KuveytTurk] Direct HTTPS Error:', err.message);
-        reject(err);
+      proxyReq.on('error', (proxyErr) => {
+        console.warn('[KuveytTurk] Static IP proxy bağlantı uyarısı, doğrudan HTTPS fallback devrede:', proxyErr.message);
+        // 2. YEDEK: Doğrudan HTTPS Bağlantısı
+        try {
+          const directTarget = pathStr.startsWith('http') ? pathStr : ('https://sanalpos.kuveytturk.com.tr/ServiceGateWay/Home/' + (proxyPath === '/proxy-provision' ? 'ThreeDModelProvisionGate' : 'ThreeDModelPayGate'));
+          const directUrl = new URL(directTarget);
+          const req = https.request(directUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/xml; charset=utf-8',
+              'Content-Length': postData.length,
+            },
+            timeout: 25000,
+          }, (res) => {
+            let responseText = '';
+            res.on('data', (chunk) => { responseText += chunk; });
+            res.on('end', () => {
+              resolve({ statusCode: res.statusCode, body: responseText });
+            });
+          });
+
+          req.on('error', (err) => reject(err));
+          req.on('timeout', () => {
+            req.destroy();
+            reject(new Error('Kuveyt Türk Gateway zaman aşımına uğradı (25s).'));
+          });
+
+          req.write(postData);
+          req.end();
+        } catch (directErr) {
+          reject(directErr);
+        }
       });
 
-      req.on('timeout', () => {
-        req.destroy();
-        reject(new Error('Kuveyt Türk Gateway zaman aşımına uğradı (20s).'));
+      proxyReq.on('timeout', () => {
+        proxyReq.destroy();
+        reject(new Error('Kuveyt Türk Statik IP Gateway zaman aşımına uğradı (25s).'));
       });
 
-      req.write(postData);
-      req.end();
+      proxyReq.write(postData);
+      proxyReq.end();
     } catch (err) {
       reject(err);
     }
@@ -113,7 +160,7 @@ class KuveytTurkProvider {
   }
 
   /**
-   * 1. AŞAMA: 3D Secure Ödeme Oturumu Başlatma (ThreeDModelPayGate)
+   * 1. AŞAMA: 3D Secure Ödeme Oturumu Başlatma (ThreeDModelPayGate - Statik IP 35.208.218.109 üzerinden)
    */
   async createPayment(params, req) {
     const order = params?.order || params;
@@ -170,72 +217,60 @@ class KuveytTurkProvider {
     }
 
     const cardHolderName = String(order.cardHolder || params?.cardHolder || order.customer?.name || 'BELGIN DEGERLI MUSTERI').slice(0, 50).toLocaleUpperCase('tr-TR');
-    const clientIp = params?.clientIp || '127.0.0.1';
-    const email = String(order.customer?.email || 'destek@belginkuyumculuk.com').slice(0, 100);
     let cardType = 'MasterCard';
     if (cardNumber.startsWith('4')) cardType = 'Visa';
     else if (cardNumber.startsWith('9792')) cardType = 'Troy';
 
-    const formFields = {
-      APIVersion: '1.0.0',
-      OkUrl: okUrl,
-      FailUrl: failUrl,
-      HashData: hashData,
-      MerchantId: config.merchantId,
-      CustomerId: config.customerId,
-      UserName: config.userName,
-      CardNumber: cardNumber,
-      CardExpireDateYear: cardExpireYear,
-      CardExpireDateMonth: cardExpireMonth,
-      CardCVV2: cardCvv2,
-      CardHolderName: cardHolderName,
-      CardType: cardType,
-      BatchID: '0',
-      TransactionType: 'Sale',
-      InstallmentCount: '0',
-      Amount: amount,
-      DisplayAmount: amount,
-      CurrencyCode: '0949',
-      MerchantOrderId: merchantOrderId,
-      TransactionSecurity: '3'
-    };
+    const payGateXml = `<KuveytTurkVPosMessage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <APIVersion>1.0.0</APIVersion>
+  <OkUrl>${okUrl}</OkUrl>
+  <FailUrl>${failUrl}</FailUrl>
+  <HashData>${hashData}</HashData>
+  <MerchantId>${config.merchantId}</MerchantId>
+  <CustomerId>${config.customerId}</CustomerId>
+  <UserName>${config.userName}</UserName>
+  <CardNumber>${cardNumber}</CardNumber>
+  <CardExpireDateYear>${cardExpireYear}</CardExpireDateYear>
+  <CardExpireDateMonth>${cardExpireMonth}</CardExpireDateMonth>
+  <CardCVV2>${cardCvv2}</CardCVV2>
+  <CardHolderName>${cardHolderName}</CardHolderName>
+  <CardType>${cardType}</CardType>
+  <BatchID>0</BatchID>
+  <TransactionType>Sale</TransactionType>
+  <InstallmentCount>0</InstallmentCount>
+  <Amount>${amount}</Amount>
+  <DisplayAmount>${amount}</DisplayAmount>
+  <CurrencyCode>0949</CurrencyCode>
+  <MerchantOrderId>${merchantOrderId}</MerchantOrderId>
+  <TransactionSecurity>3</TransactionSecurity>
+</KuveytTurkVPosMessage>`;
 
-    const formHtml = `<!DOCTYPE html>
-<html lang="tr">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kuveyt Türk 3D Secure Yönlendirme</title>
-</head>
-<body onload="document.getElementById('kt3dForm').submit();" style="background:#0A1412;color:#F0F4F3;display:flex;align-items:center;justify-content:center;height:100vh;font-family:'Plus Jakarta Sans',sans-serif;margin:0;">
-  <div style="text-align:center;padding:24px;">
-    <div style="font-size:18px;font-weight:700;margin-bottom:12px;color:#D4AF37;">Kuveyt Türk 3D Secure SMS Ekranına Bağlanılıyor...</div>
-    <div style="font-size:14px;color:#8EAAA5;">Lütfen bekleyiniz, güvenli banka onay sayfasına aktarılıyorsunuz.</div>
-  </div>
-  <form id="kt3dForm" method="POST" action="${config.payGateUrl}">
-    ${Object.entries(formFields).map(([k, v]) => `<input type="hidden" name="${k}" value="${String(v).replace(/"/g, '&quot;')}">`).join('\n    ')}
-    <noscript><button type="submit" style="padding:12px 24px;margin-top:20px;background:#D4AF37;color:#000;border:none;border-radius:6px;font-weight:700;cursor:pointer;">Doğrulamaya Devam Et ➔</button></noscript>
-  </form>
-  <script>
     try {
-      document.getElementById('kt3dForm').submit();
-    } catch(e) {
-      console.log('Form submit auto-triggering');
-    }
-  </script>
-</body>
-</html>`;
+      // 1. AŞAMA İSTEĞİ SUNUCUDAN STATİK IP (35.208.218.109) İLE KUVEYT TÜRK'E GÖNDERİLİR
+      const payGateResponse = await sendXmlRequest(config.payGateUrl, payGateXml);
+      const resBody = payGateResponse.body || '';
 
-    return {
-      success: true,
-      paymentType: 'HTML_FORM',
-      provider: PROVIDERS.KUVEYTTURK,
-      merchant_oid: merchantOrderId,
-      gatewayUrl: config.payGateUrl,
-      token: `KT-3DS-${Date.now()}`,
-      formHtml: formHtml,
-      formData: formFields
-    };
+      // Eğer banka doğrudan hata döndüyse
+      if (resBody.includes('PosMerchantIPError') || resBody.includes('Hata Detayı') || resBody.includes('ErrorCode')) {
+        const errDesc = extractXmlTag(resBody, 'ResponseMessage') || 'Kuveyt Türk 3D oturumu açılamadı.';
+        const errCode = extractXmlTag(resBody, 'ResponseCode') || 'GATEWAY_ERROR';
+        console.error('[KuveytTurk PayGate Error]:', errCode, errDesc);
+        throw new Error(`${errDesc} (${errCode})`);
+      }
+
+      return {
+        success: true,
+        paymentType: 'HTML_FORM',
+        provider: PROVIDERS.KUVEYTTURK,
+        merchant_oid: merchantOrderId,
+        gatewayUrl: config.payGateUrl,
+        token: `KT-3DS-${Date.now()}`,
+        formHtml: resBody,
+      };
+    } catch (err) {
+      console.error('[KuveytTurk PayGate Exception]:', err.message);
+      throw err;
+    }
   }
 
   /**
