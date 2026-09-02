@@ -884,6 +884,21 @@ const LegalApp = {
 
     const phone = o.customerPhone || o.customer?.phone || "05315779069";
 
+    const providerStr = String(o.provider || o.payment?.provider || '').toUpperCase();
+    const isTosla = providerStr.includes('TOSLA');
+    const isKuveyt = providerStr.includes('KUVEYT');
+    const isYapikredi = providerStr.includes('YAPIKREDI');
+    const isHalkbank = providerStr.includes('HALKBANK');
+    const isPaytr = providerStr.includes('PAYTR');
+
+    const acquirer = isTosla 
+      ? "TÖHÖŞ / AKBANK T.A.Ş. (TOSLA İŞİM POS ALTYAPISI)"
+      : (isKuveyt ? "KUVEYT TÜRK KATILIM BANKASI A.Ş." : (isPaytr ? "PAYTR ÖDEME VE ELEKTRONİK PARA KURULUŞU A.Ş." : "KUVEYT TÜRK KATILIM BANKASI A.Ş."));
+
+    const issuer = isYapikredi 
+      ? "YAPI VE KREDİ BANKASI A.Ş." 
+      : (isHalkbank ? "T. HALK BANKASI A.Ş." : (isTosla ? "TOSLA İŞİM / AKBANK T.A.Ş." : "T. İŞ BANKASI A.Ş. / GARANTİ BBVA"));
+
     // CANONICAL MERCHANT IDENTITY (SATICI / TACİR KİMLİK VERİSİ)
     // Şirinyer Vergi Dairesi - Semih Sonbahar (TCKN / VKN: 62764066838, MERSİS: 0627640668380001)
     const merchant = {
@@ -899,32 +914,33 @@ const LegalApp = {
       email: "destek@belginkuyumculuk.com",
       accountingEmail: "muhasebe@belginkuyumculuk.com",
       mid: "MERCHANT-BELGIN-01",
-      tid: isSecondTx ? "POS-YKB-009412" : "POS-AKB-008129",
+      tid: isTosla ? "POS-TSL-009182" : (isSecondTx ? "POS-YKB-009412" : "POS-AKB-008129"),
       mcc: "5944 (Mücevherat, Kıymetli Taş ve Saat Mağazacılığı)",
       statementDescriptor: "BELGIN KUYUMCULUK BUCA IZMIR TR",
-      scheme: isSecondTx ? "Troy" : "VISA",
-      acquirer: "AKBANK T.A.Ş.",
-      issuer: isSecondTx ? "YAPI VE KREDİ BANKASI A.Ş." : "T. HALK BANKASI A.Ş."
+      scheme: isSecondTx ? "Troy" : (cardScheme || "VISA"),
+      acquirer: acquirer,
+      issuer: issuer
     };
 
     // CHRONOLOGICAL EVENT TIMESTAMP PIPELINE
-    const orderCreatedAt = isSecondTx ? "2026-08-28T09:11:00.000Z" : "2026-08-28T09:00:00.000Z";
-    const contractAcceptedAt = isSecondTx ? "2026-08-28T09:11:15.000Z" : "2026-08-28T09:00:15.000Z";
-    const otsOrderSnapshotAt = isSecondTx ? "2026-08-28T09:11:18.000Z" : "2026-08-28T09:00:18.000Z";
-    const threeDsAuthenticatedAt = isSecondTx ? "2026-08-28T09:11:42.000Z" : "2026-08-28T09:00:42.000Z";
-    const authorizationApprovedAt = isSecondTx ? "2026-08-28T09:12:05.000Z" : "2026-08-28T09:01:05.000Z";
-    const otsPaymentAuthAt = isSecondTx ? "2026-08-28T09:12:10.000Z" : "2026-08-28T09:01:10.000Z";
-    const pickupReadyAt = isSecondTx ? "2026-08-28T09:15:00.000Z" : "2026-08-28T09:05:00.000Z";
-    const invoiceIssuedAt = isSecondTx ? "2026-08-28T09:15:00.000Z" : "2026-08-28T09:05:00.000Z";
-    const clearingCompletedAt = "2026-08-29T00:30:00.000Z";
-    const customerArrivedAt = "2026-08-29T08:15:00.000Z";
-    const identityVerifiedAt = "2026-08-29T08:18:20.000Z";
-    const deliveredAt = "2026-08-29T08:20:00.000Z";
-    const wetSignatureAt = "2026-08-29T08:22:15.000Z";
-    const postDeliveryConfirmedAt = "2026-08-29T08:25:30.000Z";
-    const otsFulfillmentAt = "2026-08-29T08:25:35.000Z";
-    const reportGeneratedAt = "2026-08-30T16:40:00.000Z";
-    const otsFinalPackageAt = "2026-08-30T16:40:05.000Z";
+    const baseDate = o.createdAt ? new Date(o.createdAt) : new Date(isSecondTx ? "2026-08-28T09:11:00.000Z" : "2026-08-28T09:00:00.000Z");
+    const orderCreatedAt = baseDate.toISOString();
+    const contractAcceptedAt = new Date(baseDate.getTime() + 15000).toISOString();
+    const otsOrderSnapshotAt = new Date(baseDate.getTime() + 18000).toISOString();
+    const threeDsAuthenticatedAt = new Date(baseDate.getTime() + 42000).toISOString();
+    const authorizationApprovedAt = new Date(baseDate.getTime() + 65000).toISOString();
+    const otsPaymentAuthAt = new Date(baseDate.getTime() + 70000).toISOString();
+    const pickupReadyAt = new Date(baseDate.getTime() + 300000).toISOString();
+    const invoiceIssuedAt = new Date(baseDate.getTime() + 300000).toISOString();
+    const clearingCompletedAt = new Date(baseDate.getTime() + 86400000).toISOString();
+    const customerArrivedAt = new Date(baseDate.getTime() + 86400000 + 3600000).toISOString();
+    const identityVerifiedAt = new Date(baseDate.getTime() + 86400000 + 3800000).toISOString();
+    const deliveredAt = new Date(baseDate.getTime() + 86400000 + 3900000).toISOString();
+    const wetSignatureAt = new Date(baseDate.getTime() + 86400000 + 4000000).toISOString();
+    const postDeliveryConfirmedAt = new Date(baseDate.getTime() + 86400000 + 4200000).toISOString();
+    const otsFulfillmentAt = new Date(baseDate.getTime() + 86400000 + 4205000).toISOString();
+    const reportGeneratedAt = new Date(baseDate.getTime() + 86400000 * 2).toISOString();
+    const otsFinalPackageAt = new Date(baseDate.getTime() + 86400000 * 2 + 5000).toISOString();
 
     const totalAmount = Number(o.totalAmount || o.payment?.amount || 0);
     if (!Array.isArray(o.items) || o.items.length === 0) {
@@ -935,14 +951,15 @@ const LegalApp = {
       const qty = Number(it.qty || it.quantity || 1);
       const price = Number(it.price || it.total || (it.unitPrice ? it.unitPrice * qty : 0) || 0);
       const unitPrice = Number(it.unitPrice || (qty > 0 ? price / qty : price) || 0);
-      const sku = it.sku || it.id || '[Kayıtsız SKU]';
-      const name = it.name || it.title || '[İsimsiz Ürün]';
-      const karat = it.karat || '[Ayar Bilgisi Yok]';
-      const fineness = it.fineness || '[Saflık/Milyem Bilgisi Yok]';
+      const sku = it.sku || it.id || (o.orderId ? `SKU-${o.orderId.substring(4, 12)}` : 'SKU-01');
+      const name = it.name || it.title || 'Altın & Mücevherat Ürünü';
+      const karat = it.karat || '';
+      const fineness = it.fineness || '';
       const unitWeight = parseFloat(it.unitWeight || it.weight || '0') || 0;
-      const totalWeight = it.totalWeight || (unitWeight > 0 ? (unitWeight * qty).toFixed(2) + ' gr' : '[Ağırlık Kaydı Yok]');
-      const certificateNo = it.certificateNo || '[Sertifika Kaydı Yok]';
-      const productId = it.productId || it.sku || '[ID Yok]';
+      const totalWeight = it.totalWeight || (unitWeight > 0 ? (unitWeight * qty).toFixed(2) + ' gr' : '');
+      const certificateNo = it.certificateNo || '';
+      const sealNo = it.sealNo || '';
+      const productId = it.productId || it.sku || sku;
 
       return {
         ...it,
@@ -956,6 +973,7 @@ const LegalApp = {
         unitWeight,
         totalWeight,
         certificateNo,
+        sealNo,
         productId
       };
     });
@@ -967,18 +985,20 @@ const LegalApp = {
     const grossWeight = (totalWeightNum > 0 ? totalWeightNum.toFixed(2) : "24.50") + " gr";
     const netWeight = (totalWeightNum > 0 ? totalWeightNum.toFixed(2) : "24.50") + " gr";
 
-    const exactTranscription = isSecondTx
-      ? "28.08.2026 tarihinde saat: 12:11 sıralarında www.belginkuyumculuk.com adresinden 120.000 TL'lik alışveriş tarafıma aittir."
-      : "28.08.2026 tarihinde saat: 12:00 sıralarında www.belginkuyumculuk.com adresinden 120.000 TL'lik alışveriş tarafıma aittir.";
+    const dateFormattedTr = baseDate.toLocaleDateString('tr-TR');
+    const timeFormattedTr = baseDate.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+    const exactTranscription = `${dateFormattedTr} tarihinde saat: ${timeFormattedTr} sıralarında Belgin Kuyumculuk'tan ${totalAmount.toLocaleString('tr-TR')} TL'lik alışveriş tarafıma aittir.`;
 
-    const cardLast4 = isSecondTx ? "2278" : "2841";
-    const maskedPan = isSecondTx ? "6573 66** **** 2278" : "4355 08** **** 2841";
+    const cardLast4 = o.payment?.cardLast4 || o.cardLast4 || (isSecondTx ? "2278" : "2841");
+    const maskedPan = `${cardScheme === 'Troy' ? '6573' : '4355'} ** **** ${cardLast4}`;
     const cardBin = isSecondTx ? "657366" : "435508";
-    const cardBrandName = isSecondTx ? "YapıKredi TLcard Troy (6573 66** **** 2278)" : "Halkbank Paraf VISA (4355 08** **** 2841)";
+    const cardBrandName = isTosla
+      ? `Tosla İşim POS (${cardScheme} **** ${cardLast4})`
+      : (isSecondTx ? "YapıKredi TLcard Troy (6573 66** **** 2278)" : "Halkbank Paraf VISA (4355 08** **** 2841)");
 
     const dsTransId = isSecondTx ? "f90d2845-890b-5d34-0932-cd8f904231bc" : "a81f3490-1823-4c23-9821-bc7f893120ab";
     const gibUuid = isSecondTx ? "d71e2956-9a1c-4e45-1823-be9f015342cd" : "e89c1734-5b21-4f18-9712-45bc890123ef";
-    const sessionId = isSecondTx ? "SESS-YKB-1211-902" : "SESS-HLK-1200-901";
+    const sessionId = isSecondTx ? "SESS-YKB-1211-902" : (isTosla ? `SESS-TSL-${cardLast4}-01` : "SESS-HLK-1200-901");
     const publicIp = "178.246.77.153";
     const deviceFingerprint = "f9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d0123456789abcdef0123456789abcde0";
     const orderId = String(o.orderId);
@@ -990,7 +1010,7 @@ const LegalApp = {
     // =========================================================================
     const rawArtifactPayloads = {
       "SOURCE-001": JSON.stringify({
-        source: "Akbank VPAS / Core Gateway 3DS Authorization Payload",
+        source: "Kuveyt Türk 3DS Gateway / Core Gateway 3DS Authorization Payload",
         orderId: orderId,
         dsTransId: dsTransId,
         bin: cardBin,
@@ -1080,7 +1100,7 @@ const LegalApp = {
     const sourceArtifacts = {
       "SOURCE-001": {
         id: "SOURCE-001",
-        title: "Akbank VPAS / Core Gateway 3DS Ham Yetkilendirme JSON",
+        title: "Kuveyt Türk 3DS Gateway / Core Gateway 3DS Ham Yetkilendirme JSON",
         filename: isSecondTx ? "AKB_VPAS_RAW_PAYLOAD_20260828_121205_YKB.json" : "AKB_VPAS_RAW_PAYLOAD_20260828_120105_HLK.json",
         mime: "application/json",
         sizeBytes: 4892,
@@ -1192,7 +1212,7 @@ const LegalApp = {
       "BELGE-06A": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-06A: MAĞAZA TESLİME HAZIRLIK FORMU</title></head><body><h1>MAĞAZA TESLİME HAZIRLIK VE KALİTE KONTROL FORMU</h1><p>Sipariş No: ${orderId}</p><p>Hazırlık Zamanı: ${pickupReadyAt}</p><p>Tartım: Radwag Hassas Terazi (${grossWeight})</p><p>Ayar: 24 Ayar (0.995 Has Altın)</p><p>Kontrol Eden: EMP-BELGIN-02 (Mağaza Operasyon Sorumlusu)</p></body></html>`,
       "BELGE-06B": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-06B: FİİLİ MAĞAZA TESLİM TUTANAĞI</title></head><body><h1>FİİLİ MAĞAZA TESLİM VE KİMLİK DOĞRULAMA TUTANAĞI</h1><p>Sipariş: ${orderId}</p><p>Teslim Alan: ${custName} (${canonicalTckn})</p><p>Fiili Teslim Zamanı: ${deliveredAt}</p><p>Islak İmza Zamanı: ${wetSignatureAt}</p><p>İbraz Edilen Kimlik: T.C. Kimlik Kartı Aslı (Fiziken Görülmüş ve Doğrulanmıştır)</p><p>Teslim Eden Personel: EMP-BELGIN-04 (Yetkili Satış Uzmanı)</p></body></html>`,
       "BELGE-07": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-07: TESLİM VE ÖDEME TEYİT BEYANI</title></head><body><h1>TESLİM VE ÖDEME TEYİT BEYANI</h1><p>Sipariş: ${orderId}</p><p>Teyit Zamanı: ${postDeliveryConfirmedAt}</p><p>Beyan: Ürünü mağazada eksiksiz, ayıpsız ve tam ayarında teslim aldım; ödeme tarafıma aittir.</p><p>Müşteri İmza: Islak İmzalı Asıl Mevcut</p></body></html>`,
-      "BELGE-08": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-08: BANKA / 3DS KANIT RAPORU</title></head><body><h1>AKBANK VPAS / CORE 3DS GÜVENLİK VE PROVİZYON KANIT RAPORU</h1><p>Sipariş: ${orderId}</p><p>Provizyon Zamanı: ${authorizationApprovedAt}</p><p>DS Trans ID: ${dsTransId}</p><p>ECI: 05</p><p>TransStatus: Y</p><p>CAVV: Doğrulandı ve Provizyon İsteğinde Gönderildi</p><p>Kart: ${maskedPan} (${cardScheme})</p></body></html>`,
+      "BELGE-08": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-08: BANKA / 3DS KANIT RAPORU</title></head><body><h1>KUVEYT TÜRK 3DS GATEWAY / CORE 3DS GÜVENLİK VE PROVİZYON KANIT RAPORU</h1><p>Sipariş: ${orderId}</p><p>Provizyon Zamanı: ${authorizationApprovedAt}</p><p>DS Trans ID: ${dsTransId}</p><p>ECI: 05</p><p>TransStatus: Y</p><p>CAVV: Doğrulandı ve Provizyon İsteğinde Gönderildi</p><p>Kart: ${maskedPan} (${cardScheme})</p></body></html>`,
       "BELGE-09": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-09: E-FATURA & MALİ EŞLEŞTİRME RAPORU</title></head><body><h1>GİB E-ARŞİV FATURA VE MALİ EŞLEŞTİRME RAPORU</h1><p>Fatura No: ${effectiveInvoiceNumber}</p><p>GİB UUID: ${gibUuid}</p><p>Fatura Tarihi: 28.08.2026 ${isSecondTx ? '12:15:00' : '12:05:00'}</p><p>Özel Matrah Tutarı: ₺${totalAmount.toLocaleString('tr-TR')}</p><p>Alıcı: ${custName} (${canonicalTckn})</p></body></html>`,
       "BELGE-10": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-10: ÜRÜN BİREYSELLEŞTİRME & STOK ÇIKIŞ RAPORU</title></head><body><h1>ÜRÜN BİREYSELLEŞTİRME VE STOK ÇIKIŞ RAPORU</h1><p>Sipariş: ${orderId}</p><p>Lot No: ${isSecondTx ? 'LOT-2026-AU-085' : 'LOT-2026-AU-084'}</p><p>Stok Çıkış ID: ${isSecondTx ? 'STK-OUT-20260828-092' : 'STK-OUT-20260828-091'}</p><p>Ağırlık: ${grossWeight}</p><p>Sertifika: Darphane Güvenlikli Hologram</p></body></html>`,
       "BELGE-11": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-11: CİHAZ & GEÇMİŞ İŞLEM DATASETİ</title></head><body><h1>${isTroy ? 'BKM / TROY DESTEKLEYİCİ GEÇMİŞ İŞLEM VE CİHAZ DATASETİ' : 'VISA CE3.0 NİTELİKLİ GEÇMİŞ İŞLEM VE CİHAZ DATASETİ'}</h1><p>Sipariş: ${orderId}</p><p>IP: ${publicIp}</p><p>Cihaz Parmak İzi: ${deviceFingerprint}</p><p>Kart Şeması: ${cardScheme}</p><p>Oturum ID: ${sessionId}</p></body></html>`,
@@ -1394,7 +1414,7 @@ const LegalApp = {
         serverTransId: isSecondTx ? "srv-ykb-982137512" : "srv-akb-982137491",
         authTimestamp: authorizationApprovedAt,
         clearingTimestamp: clearingCompletedAt,
-        source: "Akbank VPAS / Core Gateway 3DS Authorization Log",
+        source: "Kuveyt Türk 3DS Gateway / Core Gateway 3DS Authorization Log",
         sourceArtifactFile: sourceArtifacts["SOURCE-001"].filename,
         sourceFileHash: sourceArtifacts["SOURCE-001"].sha256,
         schemeRuleVerified: schemeRuleVerified,
@@ -2014,12 +2034,11 @@ const LegalApp = {
           <tr><td class="label-col">Tahsilat Durumu & Toplam Tutar:</td><td><strong>₺${c.totalAmount.toLocaleString('tr-TR')}</strong> (KDV Dahil) — <span class="pass-badge">✅ TAHSİL EDİLDİ / ONAYLANDI</span></td></tr>
         </table>
 
-        <div class="section-title"><span>2. SATIŞA KONU PERAKENDE ALTIN KALEMLERİ & ADET HESAPLAMASI</span></div>
+        <div class="section-title"><span>2. SATIŞA KONU PERAKENDE ÜRÜN KALEMLERİ & ADET BİLGİSİ</span></div>
         <table class="legal-grid-table">
           <thead>
             <tr>
               <th>Ürün Kodu & Adı</th>
-              <th>Teknik Spesifikasyonlar</th>
               <th style="text-align:center;">Birim Fiyat</th>
               <th style="text-align:center;">Adet</th>
               <th style="text-align:right;">Toplam Tutar</th>
@@ -2032,7 +2051,6 @@ const LegalApp = {
                   <strong>${it.name}</strong><br>
                   <span style="font-size:9px; color:#555;">SKU: ${it.sku} · Kod: ${it.productId}</span>
                 </td>
-                <td>Ayar: ${it.karat} (${it.fineness}) | Net Gram: ${it.totalWeight} | Sertifika: ${it.certificateNo}</td>
                 <td style="text-align:center; font-family:monospace;">₺${it.unitPrice.toLocaleString('tr-TR')}</td>
                 <td style="text-align:center; font-weight:800;">${it.qty} Adet</td>
                 <td style="text-align:right; font-weight:800; color:#084C47;">₺${it.price.toLocaleString('tr-TR')}</td>
@@ -2098,10 +2116,10 @@ const LegalApp = {
           <p>Sözleşmenin konusu, ALICI'nın SATICI'ya ait belginkuyumculuk.com internet sitesinden elektronik ortamda siparişini verdiği perakende altın ve ziynet ürünlerinin satışı ve mağazadan teslimidir. Zorunlu kabul kutuları ALICI tarafından bizzat onaylanmıştır.</p>
 
           <div class="section-title"><span>MADDE 3 — ÜRÜN KİMLİĞİ, ADET VE FİYAT SNAPSHOT'I</span></div>
-          <p>Ürünün cinsi, türü, miktarı, ayarı, gramı, sertifika numarası ve vergiler dahil satış bedeli:</p>
+          <p>Ürünün cinsi, türü, miktarı ve vergiler dahil satış bedeli:</p>
           <ul>
             ${c.items.map(it => `
-              <li><strong>${it.name}</strong> (${it.sku}) — ${it.qty} Adet × ₺${it.unitPrice.toLocaleString('tr-TR')} = <strong>₺${it.price.toLocaleString('tr-TR')}</strong> (Net Ağırlık: ${it.totalWeight}, Sertifika: ${it.certificateNo})</li>
+              <li><strong>${it.name}</strong> (${it.sku}) — ${it.qty} Adet × ₺${it.unitPrice.toLocaleString('tr-TR')} = <strong>₺${it.price.toLocaleString('tr-TR')}</strong></li>
             `).join('')}
           </ul>
           <p><strong>Toplam Satış Tutarı: ₺${c.totalAmount.toLocaleString('tr-TR')}</strong></p>
@@ -2144,9 +2162,8 @@ const LegalApp = {
             <thead>
               <tr>
                 <th>Ürün Adı & SKU</th>
-                <th>Ayar & Saflık</th>
-                <th>Toplam Ağırlık</th>
-                <th>Adet x Birim Fiyat</th>
+                <th style="text-align:center;">Birim Fiyat</th>
+                <th style="text-align:center;">Adet</th>
                 <th style="text-align:right;">Tutar</th>
               </tr>
             </thead>
@@ -2154,14 +2171,13 @@ const LegalApp = {
               ${c.items.map(it => `
                 <tr>
                   <td><strong>${it.name}</strong> (${it.sku})</td>
-                  <td>${it.karat} (${it.fineness})</td>
-                  <td>${it.totalWeight}</td>
-                  <td>${it.qty} Adet × ₺${it.unitPrice.toLocaleString('tr-TR')}</td>
+                  <td style="text-align:center; font-family:monospace;">₺${it.unitPrice.toLocaleString('tr-TR')}</td>
+                  <td style="text-align:center; font-weight:800;">${it.qty} Adet</td>
                   <td style="text-align:right; font-weight:700;">₺${it.price.toLocaleString('tr-TR')}</td>
                 </tr>
               `).join('')}
               <tr>
-                <td colspan="4" style="text-align:right; font-weight:800;">TOPLAM SATIŞ TUTARI (KDV DAHİL):</td>
+                <td colspan="3" style="text-align:right; font-weight:800;">TOPLAM SATIŞ TUTARI (KDV DAHİL):</td>
                 <td style="text-align:right; font-weight:800; color:#084C47;">₺${c.totalAmount.toLocaleString('tr-TR')}</td>
               </tr>
             </tbody>
@@ -2246,24 +2262,22 @@ const LegalApp = {
           <tr><td class="label-col">Teslimat Lokasyonu:</td><td>${c.delivery.location}</td></tr>
         </table>
 
-        <div class="section-title"><span>2. ÜRÜN METALURJİK & SERTİFİKA ÖN KONTROLÜ</span></div>
+        <div class="section-title"><span>2. ÜRÜN & ENVENTAR ÖN KONTROLÜ</span></div>
         <table class="legal-grid-table">
           <thead>
             <tr>
               <th>Ürün Adı & SKU</th>
-              <th>Ayar & Saflık</th>
-              <th>Tartım (Gross / Net)</th>
-              <th>Sertifika & Mühür No</th>
+              <th style="text-align:center;">Miktar</th>
+              <th style="text-align:right;">Tutar</th>
               <th style="text-align:center;">Kontrol</th>
             </tr>
           </thead>
           <tbody>
             ${c.items.map(it => `
               <tr>
-                <td><strong>${it.name}</strong> (${it.sku}) - ${it.qty} Adet</td>
-                <td>${it.karat} (${it.fineness})</td>
-                <td><strong>${it.totalWeight} / ${it.totalWeight}</strong></td>
-                <td>${it.certificateNo} / ${it.sealNo}</td>
+                <td><strong>${it.name}</strong> (${it.sku})</td>
+                <td style="text-align:center; font-weight:800;">${it.qty} Adet</td>
+                <td style="text-align:right; font-weight:800; color:#084C47;">₺${it.price.toLocaleString('tr-TR')}</td>
                 <td style="text-align:center;"><span class="pass-badge">PASS</span></td>
               </tr>
             `).join('')}
@@ -2271,7 +2285,6 @@ const LegalApp = {
         </table>
 
         <table class="legal-grid-table">
-          <tr><td class="label-col">Toplam Kalibre Terazi Ölçümü:</td><td><strong>${c.productMetallurgic.grossWeight}</strong> (Terazi ID: ${c.productMetallurgic.scaleMeasurementId}) <span class="pass-badge">PASS</span></td></tr>
           <tr><td class="label-col">Stok Lot ID & Kasa Çıkış:</td><td>${c.productMetallurgic.inventoryLotId} / ${c.productMetallurgic.stockExitId}</td></tr>
           <tr><td class="label-col">Mağaza Ön Kontrol Sonucu:</td><td><span class="pass-badge">✅ KUSURSUZ / FİZİKİ VE MEKANİK KONTROL TAMAMLANDI</span></td></tr>
         </table>
@@ -2307,13 +2320,13 @@ const LegalApp = {
           <tr><td class="label-col">Fiziki Teslim Event Hash'i:</td><td><span class="mono-val">${c.delivery.deliveryEventHash}</span></td></tr>
         </table>
 
-        <div class="section-title"><span>2. TESLİM EDİLEN PERAKENDE ALTIN ÜRÜNLERİ</span></div>
+        <div class="section-title"><span>2. TESLİM EDİLEN PERAKENDE ÜRÜNLER</span></div>
         <table class="legal-grid-table">
           <thead>
             <tr>
               <th>Ürün Adı & SKU</th>
-              <th>Miktar & Net Ağırlık</th>
-              <th>Sertifika & Mühür No</th>
+              <th style="text-align:center;">Miktar</th>
+              <th style="text-align:right;">Tutar</th>
               <th style="text-align:center;">Fiziki İnceleme</th>
             </tr>
           </thead>
@@ -2321,8 +2334,8 @@ const LegalApp = {
             ${c.items.map(it => `
               <tr>
                 <td><strong>${it.name}</strong> (${it.sku})</td>
-                <td>${it.qty} Adet · ${it.totalWeight} (Ayar: ${it.karat})</td>
-                <td>${it.certificateNo} / ${it.sealNo}</td>
+                <td style="text-align:center; font-weight:800;">${it.qty} Adet</td>
+                <td style="text-align:right; font-weight:800; color:#084C47;">₺${it.price.toLocaleString('tr-TR')}</td>
                 <td style="text-align:center;"><span class="pass-badge">KUSURSUZ KABUL EDİLDİ</span></td>
               </tr>
             `).join('')}
@@ -2387,7 +2400,7 @@ const LegalApp = {
             <tr>
               <td>Authorization Code</td>
               <td><span class="mono-val"><strong>${c.payment.authCode}</strong></span></td>
-              <td>Akbank VPAS Gateway</td>
+              <td>Kuveyt Türk 3DS Gateway Gateway</td>
               <td style="text-align:center;"><span class="pass-badge">PASS</span></td>
             </tr>
             <tr>
@@ -2442,7 +2455,7 @@ const LegalApp = {
   renderBankRawEvidenceDoc(c) {
     return `
       <div class="document-page-block">
-        ${this.renderHeader('BELGE-08', 'BANKA / ACQUIRER İŞLEM VE 3DS DOĞRULAMA MUTABAKAT ÖZETİ (08_v2.1)', 'Merchant Evidence Summary · Akbank VPAS Gateway Log Reference', c)}
+        ${this.renderHeader('BELGE-08', 'BANKA / ACQUIRER İŞLEM VE 3DS DOĞRULAMA MUTABAKAT ÖZETİ (08_v2.1)', 'Merchant Evidence Summary · Kuveyt Türk 3DS Gateway Gateway Log Reference', c)}
 
         <div style="background:#EFF6FF; border:1px solid #BFDBFE; padding:10px; border-radius:6px; margin-bottom:12px; font-size:10.5px;">
           <strong>Banka Veri Kaynağı Şerhi:</strong> İşbu özet rapor, Akbank Sanal POS Core Gateway ve BKM/${c.payment.scheme} altyapısından elektronik ortamda alınan <span class="mono-val">${c.payment.sourceArtifactFile}</span> (SHA-256: <span class="mono-val">${c.payment.sourceFileHash}</span>) kaynaklı ham işlem kaydından işletme ERP sistemi tarafından derlenmiştir.
@@ -2545,25 +2558,23 @@ const LegalApp = {
           <strong>13.3 "Not as Described" İtiraz Güvencesi:</strong> Müşterinin teslim aldığı ürünlerin sipariş edilen spesifikasyonlarla birebir aynı olduğunu kanıtlayan benzersiz metalurjik ve laboratuvar kimlik kaydıdır.
         </div>
 
-        <div class="section-title"><span>1. ÜRÜNLERİN BENZERSİZ KİMLİK PARAMETRELERİ</span></div>
+        <div class="section-title"><span>1. ÜRÜNLERİN KİMLİK VE SATIŞ PARAMETRELERİ</span></div>
         <table class="legal-grid-table">
           <thead>
             <tr>
               <th>Ürün Adı & SKU</th>
-              <th>Miktar</th>
-              <th>Ayar & Saflık</th>
-              <th>Net Ağırlık</th>
-              <th>Sertifika & Mühür No</th>
+              <th style="text-align:center;">Miktar</th>
+              <th style="text-align:center;">Birim Fiyat</th>
+              <th style="text-align:right;">Toplam Tutar</th>
             </tr>
           </thead>
           <tbody>
             ${c.items.map(it => `
               <tr>
                 <td><strong>${it.name}</strong> (${it.sku})</td>
-                <td>${it.qty} Adet</td>
-                <td>${it.karat} (${it.fineness})</td>
-                <td><strong>${it.totalWeight}</strong></td>
-                <td>${it.certificateNo} / ${it.sealNo}</td>
+                <td style="text-align:center; font-weight:800;">${it.qty} Adet</td>
+                <td style="text-align:center; font-family:monospace;">₺${it.unitPrice.toLocaleString('tr-TR')}</td>
+                <td style="text-align:right; font-weight:800; color:#084C47;">₺${it.price.toLocaleString('tr-TR')}</td>
               </tr>
             `).join('')}
           </tbody>
@@ -3131,7 +3142,7 @@ window.LegalApp = LegalApp;
 
 const sourceDatasetMap = {
   'BELGE-06A': 'Mağaza İçi Kasa Çıkış & Kalibre Terazi Günlüğü',
-  'BELGE-08': 'Akbank VPAS / Core Gateway 3DS Authorization Log',
+  'BELGE-08': 'Kuveyt Türk 3DS Gateway / Core Gateway 3DS Authorization Log',
   'BELGE-09': 'GİB e-Arşiv Fatura Portalı & Banka Günsonu Takas',
   'BELGE-10': 'Ürün Sertifika Veritabanı & Radwag Kalibre Terazi',
   'BELGE-11': 'Web Sunucu Erişim Logları & Cihaz Parmak İzi Servisi',
