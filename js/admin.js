@@ -4086,6 +4086,14 @@ const AdminApp = {
 
     if (prevTot) prevTot.textContent = '₺' + total.toLocaleString('tr-TR', { minimumFractionDigits: 2 });
 
+    const rows = document.querySelectorAll('#manualOrderItemsList .manual-item-row');
+    if (rows.length === 1) {
+      const singlePriceInput = rows[0].querySelector('.manual-item-price');
+      if (singlePriceInput && document.activeElement === document.getElementById('manualTotalAmount')) {
+        singlePriceInput.value = total > 0 ? total : '';
+      }
+    }
+
     if (type === 'GOLD') {
       if (previewHeader) previewHeader.textContent = '⚖️ e-Arşiv Fatura Özel Matrah Dökümü (Altın):';
       const laborRate = parseFloat(document.getElementById('manualLaborRateInput')?.value || 1.25) || 0;
@@ -4182,9 +4190,13 @@ const AdminApp = {
 
     let totalAmount = parseFloat(document.getElementById('manualTotalAmount')?.value || 0);
 
-    // Eğer satırların tutarı toplamından farklıysa veya satırlarda fiyat girildiyse satır toplamını baz al
     const sumRows = items.reduce((acc, it) => acc + (it.price || 0), 0);
-    if (sumRows > 0) {
+    if (sumRows > 0 && (!totalAmount || isNaN(totalAmount) || totalAmount <= 0)) {
+      totalAmount = sumRows;
+    } else if (totalAmount > 0 && items.length === 1) {
+      items[0].price = totalAmount;
+      items[0].unitPrice = Math.round((totalAmount / (items[0].qty || 1)) * 100) / 100;
+    } else if (sumRows > 0) {
       totalAmount = sumRows;
     }
 
@@ -4212,6 +4224,8 @@ const AdminApp = {
       const parsed = new Date(dateTimeVal);
       if (!isNaN(parsed.getTime())) transactionDate = parsed;
     }
+
+    const productName = items.map(it => `${it.qty > 1 ? it.qty + 'x ' : ''}${it.name}`).join(' + ');
 
     const payload = {
       provider,
