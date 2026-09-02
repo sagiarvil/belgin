@@ -565,6 +565,9 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
   if (options.hasGoldAmount !== undefined && options.workmanshipAmount !== undefined) {
     hasGoldAmount = Number(options.hasGoldAmount) || 0;
     workmanshipTotal = Number(options.workmanshipAmount) || 0;
+  } else if (options.isStoreManual || options.exactItems || options.skipAutoLabor) {
+    hasGoldAmount = total;
+    workmanshipTotal = 0;
   } else {
     // Standart: %1.25 İşçilik, Kalan %98.75 Kıymetli Maden
     workmanshipTotal = Math.max(1, Math.round(total * 0.0125 * 100) / 100);
@@ -582,6 +585,48 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
   const totalKdv = workmanshipKdv;
   const grandTotal = Math.round((totalMatrah + totalKdv) * 100) / 100;
 
+  const resItems = [
+    {
+      malHizmet: `${resolvedProductName} (Kıymetli Maden Bedeli - Özel Matrah)`,
+      miktar: 1,
+      birim: 'C62', // Adet
+      birimFiyat: hasGoldAmount.toFixed(2),
+      fiyat: hasGoldAmount.toFixed(2),
+      iskontoArttirim: 'İskonto',
+      iskontoOrani: 0,
+      iskontoTutari: '0.00',
+      iskontoNedeni: '',
+      malHizmetTutari: hasGoldAmount.toFixed(2),
+      kdvOrani: 0,
+      kdvTutari: '0.00',
+      vergiOrani: 0,
+      ozelMatrahNedeni: '351', // Altından mamul eşya teslimleri (3065 sayılı KDV Kanunu 23/f)
+      ozelMatrahTutari: hasGoldAmount.toFixed(2),
+      tevkifatKodu: 0
+    }
+  ];
+
+  if (workmanshipTotal > 0) {
+    resItems.push({
+      malHizmet: 'İşçilik',
+      miktar: 1,
+      birim: 'C62', // Adet
+      birimFiyat: workmanshipNet.toFixed(2),
+      fiyat: workmanshipNet.toFixed(2),
+      iskontoArttirim: 'İskonto',
+      iskontoOrani: 0,
+      iskontoTutari: '0.00',
+      iskontoNedeni: '',
+      malHizmetTutari: workmanshipNet.toFixed(2),
+      kdvOrani: 20,
+      kdvTutari: workmanshipKdv.toFixed(2),
+      vergiOrani: 0,
+      ozelMatrahNedeni: '',
+      ozelMatrahTutari: 0,
+      tevkifatKodu: 0
+    });
+  }
+
   return {
     productName: resolvedProductName,
     hasGoldAmount: hasGoldAmount.toFixed(2),
@@ -591,44 +636,7 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
     totalMatrah: totalMatrah.toFixed(2),
     totalKdv: totalKdv.toFixed(2),
     grandTotal: grandTotal.toFixed(2),
-    items: [
-      {
-        malHizmet: `${resolvedProductName} (Kıymetli Maden Bedeli - Özel Matrah)`,
-        miktar: 1,
-        birim: 'C62', // Adet
-        birimFiyat: hasGoldAmount.toFixed(2),
-        fiyat: hasGoldAmount.toFixed(2),
-        iskontoArttirim: 'İskonto',
-        iskontoOrani: 0,
-        iskontoTutari: '0.00',
-        iskontoNedeni: '',
-        malHizmetTutari: hasGoldAmount.toFixed(2),
-        kdvOrani: 0,
-        kdvTutari: '0.00',
-        vergiOrani: 0,
-        ozelMatrahNedeni: '351', // Altından mamul eşya teslimleri (3065 sayılı KDV Kanunu 23/f)
-        ozelMatrahTutari: hasGoldAmount.toFixed(2),
-        tevkifatKodu: 0
-      },
-      {
-        malHizmet: 'İşçilik',
-        miktar: 1,
-        birim: 'C62', // Adet
-        birimFiyat: workmanshipNet.toFixed(2),
-        fiyat: workmanshipNet.toFixed(2),
-        iskontoArttirim: 'İskonto',
-        iskontoOrani: 0,
-        iskontoTutari: '0.00',
-        iskontoNedeni: '',
-        malHizmetTutari: workmanshipNet.toFixed(2),
-        kdvOrani: 20,
-        kdvTutari: workmanshipKdv.toFixed(2),
-        vergiOrani: 0,
-        ozelMatrahNedeni: '',
-        ozelMatrahTutari: 0,
-        tevkifatKodu: 0
-      }
-    ]
+    items: resItems
   };
 }
 
@@ -832,9 +840,13 @@ class EarsivPortalService {
     const nameParts = rawCustName.split(/\s+/);
     const aliciSoyadi = nameParts.length > 1 ? nameParts.pop() : '';
     const aliciAdi = nameParts.join(' ') || 'Sayın Müşteri';
-    const customerAddress = orderData.customerAddress || customerObj.address || 'Menderes Cad. No:231/B Buca İzmir';
+    const customerAddress = orderData.customerAddress || customerObj.address || '';
     const customerPhone = orderData.customerPhone || customerObj.phone || '';
-    const customerEmail = orderData.customerEmail || customerObj.email || 'musteri@belginkuyumculuk.com';
+    const customerEmail = orderData.customerEmail || customerObj.email || '';
+    let customerWebsite = String(orderData.customerWebsite || customerObj.website || '').trim();
+    if (customerWebsite.toLowerCase().includes('belginkuyumculuk.com')) {
+      customerWebsite = '';
+    }
 
     const invoicePayload = {
       belgeNumarasi: '',
@@ -861,7 +873,7 @@ class EarsivPortalService {
       tel: customerPhone,
       fax: '',
       eposta: customerEmail,
-      websitesi: 'https://www.belginkuyumculuk.com',
+      websitesi: customerWebsite,
       iadeTable: [],
       ozelMatrahTutari: Number(breakdown.hasGoldAmount) || 0,
       vergiCesidi: 'SIFIR',
@@ -1329,6 +1341,87 @@ class EarsivPortalService {
       console.warn('[EarsivService] View HTML Error:', err.message);
       return null;
     }
+  }
+
+  /**
+   * GİB e-Arşiv Portalından Faturayı İptal Et / Sil
+   */
+  async cancelInvoice(token, { invoiceUuid, invoiceNumber = '', reason = 'Hatalı Fatura / İptal Talebi', options = {} }) {
+    if (!token) throw new Error('Oturum tokenı zorunludur.');
+    if (!invoiceUuid) throw new Error('İptal edilecek fatura UUID (ETTN) zorunludur.');
+    if (!reason || String(reason).trim().length === 0) throw new Error('İptal gerekçesi yazılması zorunludur.');
+
+    if (token.startsWith('MOCK_GIB_TOKEN')) {
+      return {
+        success: true,
+        message: 'Mock GİB ortamında fatura başarıyla iptal edildi.',
+        invoiceUuid,
+        invoiceNumber,
+        reason
+      };
+    }
+
+    const cookie = options.cookie || cachedCookie;
+    const reqHeaders = {
+      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+      'Referer': `${this.baseUrl}/index.jsp`
+    };
+    if (cookie) reqHeaders['Cookie'] = cookie;
+
+    let gibResponse = null;
+
+    // 1. Düzenlenen / İmzalanan Belgeler için İptal Talebi Gönder
+    try {
+      const cancelCall = await axios.post(`${this.baseUrl}/dispatch`, qs.stringify({
+        cmd: 'EARSIV_PORTAL_IPTAL_TALEBI_OLUSTUR',
+        callid: crypto.randomUUID(),
+        pageName: 'RG_IPTALTALEPLERI',
+        token: token,
+        jp: JSON.stringify({
+          faturano: invoiceNumber || '',
+          ettin: invoiceUuid,
+          gerekce: String(reason).trim(),
+          aciklama: String(reason).trim()
+        })
+      }), {
+        httpsAgent: this.agent,
+        headers: reqHeaders,
+        timeout: 15000
+      });
+      gibResponse = cancelCall.data;
+    } catch (e1) {
+      console.warn('[EarsivService] İptal Talebi call warn:', e1.message);
+    }
+
+    // 2. Taslak silme / temizleme komutu gönder (EARSIV_PORTAL_FATURA_SIL)
+    try {
+      const deleteCall = await axios.post(`${this.baseUrl}/dispatch`, qs.stringify({
+        cmd: 'EARSIV_PORTAL_FATURA_SIL',
+        callid: crypto.randomUUID(),
+        pageName: 'RG_TASLAKLAR',
+        token: token,
+        jp: JSON.stringify({
+          silinecekler: [invoiceUuid],
+          aciklama: String(reason).trim()
+        })
+      }), {
+        httpsAgent: this.agent,
+        headers: reqHeaders,
+        timeout: 15000
+      });
+      if (!gibResponse) gibResponse = deleteCall.data;
+    } catch (e2) {
+      console.warn('[EarsivService] Taslak Silme call warn:', e2.message);
+    }
+
+    return {
+      success: true,
+      message: 'Fatura iptal talebi GİB e-Arşiv sistemine iletildi.',
+      invoiceUuid,
+      invoiceNumber,
+      reason: String(reason).trim(),
+      gibData: gibResponse?.data || null
+    };
   }
 }
 

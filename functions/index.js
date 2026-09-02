@@ -4,6 +4,7 @@
  * Legal evidence chain / KYC delivery enforcement: 25.08.2026-v2
  */
 
+const crypto = require('crypto');
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const cors = require('cors');
@@ -140,9 +141,16 @@ exports.paymentCallback = functions
   .https.onRequest(async (req, res) => {
     if (req.method !== 'POST') return res.status(405).send('Method Not Allowed');
 
-    const providerParam = String(req.query.provider || req.path.split('/').filter(Boolean).pop() || 'AKBANK').toUpperCase();
+    const fullUrl = String(req.originalUrl || req.url || req.path || '').toLowerCase();
+    let providerParam = 'KUVEYTTURK';
+    if (fullUrl.includes('paytr')) providerParam = 'PAYTR';
+    else if (fullUrl.includes('qnb')) providerParam = 'QNB';
+    else if (fullUrl.includes('yapikredi')) providerParam = 'YAPIKREDI';
+    else if (fullUrl.includes('akbank')) providerParam = 'AKBANK';
+    else if (fullUrl.includes('kuveytturk')) providerParam = 'KUVEYTTURK';
+    else if (req.query.provider) providerParam = String(req.query.provider).toUpperCase();
 
-    console.log(`[Payment Callback] Provider: ${providerParam}, Body:`, JSON.stringify(req.body || {}), 'Query:', JSON.stringify(req.query || {}));
+    console.log(`[Payment Callback] Detected Provider: ${providerParam}, URL: ${fullUrl}`);
 
     try {
       const outcome = await paymentService.handleCallback({
@@ -153,20 +161,27 @@ exports.paymentCallback = functions
         mailer,
       });
 
-      // AKBANK EST 3D Gate veya Browser POST durumunda tarayıcıyı doğrudan sonuç sayfasına yönlendir
-      const isBrowserCallback = providerParam === 'AKBANK' || req.headers['accept']?.includes('text/html') || Boolean(req.body?.mdStatus !== undefined || req.body?.oid || req.body?.orderId || req.body?.responseCode);
+      // KUVEYTTURK 3D Gate veya Browser POST durumunda tarayıcıyı doğrudan sonuç sayfasına yönlendir
+      const isBrowserCallback = providerParam === 'KUVEYTTURK' || providerParam === 'AKBANK' || req.headers['accept']?.includes('text/html') || Boolean(req.body?.AuthenticationResponse || req.body?.mdStatus !== undefined || req.body?.oid || req.body?.orderId || req.body?.responseCode);
       if (isBrowserCallback) {
-        const orderId = encodeURIComponent(req.body?.orderId || req.body?.oid || req.query?.oid || outcome?.orderId || '');
-        const authCode = encodeURIComponent(req.body?.authCode || req.body?.AuthCode || 'AKB-APPROVED');
-        const amount = encodeURIComponent(req.body?.amount || req.body?.totalAmount || '');
-        const isBankApproved = req.body?.responseCode === 'VPS-0000' || req.body?.Response === 'Approved' || req.body?.ProcReturnCode === '00';
-        const isSuccess = outcome?.isSuccess === true || isBankApproved;
+        let orderId = encodeURIComponent(outcome?.orderId || req.body?.orderId || req.body?.oid || req.body?.MerchantOrderId || req.query?.oid || '');
+        if (!orderId && req.body?.AuthenticationResponse) {
+          let rawAuth = String(req.body.AuthenticationResponse);
+          try {
+            if (rawAuth.includes('%')) rawAuth = decodeURIComponent(rawAuth.replace(/\+/g, '%20'));
+          } catch (_) {}
+          const match = rawAuth.match(/<MerchantOrderId(?:\s+[^>]*)?>([\s\S]*?)<\/MerchantOrderId>/i);
+          if (match) orderId = encodeURIComponent(match[1].trim());
+        }
+        const isSuccess = outcome?.isSuccess === true && Boolean(outcome?.authCode) && outcome?.authCode !== 'KT-APPROVED';
+        const authCode = isSuccess ? encodeURIComponent(outcome.authCode) : '';
+        const amount = encodeURIComponent(req.body?.amount || req.body?.Amount || req.body?.totalAmount || '');
 
         if (isSuccess) {
           return res.redirect(303, `https://www.belginkuyumculuk.com/odeme-basarili.html?orderId=${orderId}&authCode=${authCode}&amount=${amount}`);
         } else {
-          const reason = encodeURIComponent(req.body?.responseMessage || req.body?.ErrMsg || req.body?.mdErrorMsg || outcome?.failReasonMsg || 'Kart limiti yetersiz veya işlem banka tarafından onaylanmadı.');
-          const code = encodeURIComponent(req.body?.responseCode || req.body?.ProcReturnCode || req.body?.mdStatus || outcome?.failReasonCode || 'FAIL');
+          const reason = encodeURIComponent(outcome?.failReasonMsg || req.body?.responseMessage || req.body?.ResponseMessage || outcome?.message || 'Banka provizyon onayı alınamadı (İşlem tamamlanmadı).');
+          const code = encodeURIComponent(outcome?.failReasonCode || req.body?.responseCode || req.body?.ResponseCode || 'PROVISION_FAILED');
           return res.redirect(303, `https://www.belginkuyumculuk.com/odeme-basarisiz.html?orderId=${orderId}&code=${code}&reason=${reason}`);
         }
       }
@@ -174,16 +189,9 @@ exports.paymentCallback = functions
       return res.status(outcome?.status || 200).send(outcome?.message || 'OK');
     } catch (error) {
       console.error(`[Payment API] paymentCallback Error (${providerParam}):`, error.message);
-      if (providerParam === 'AKBANK') {
-        const isBankApproved = req.body?.responseCode === 'VPS-0000' || req.body?.Response === 'Approved' || req.body?.ProcReturnCode === '00';
-        const orderId = encodeURIComponent(req.body?.orderId || req.body?.oid || '');
-        const authCode = encodeURIComponent(req.body?.authCode || req.body?.AuthCode || 'AKB-APPROVED');
-        const amount = encodeURIComponent(req.body?.amount || req.body?.totalAmount || '');
-
-        if (isBankApproved) {
-          return res.redirect(303, `https://www.belginkuyumculuk.com/odeme-basarili.html?orderId=${orderId}&authCode=${authCode}&amount=${amount}`);
-        }
-        return res.redirect(303, `https://www.belginkuyumculuk.com/odeme-basarisiz.html?code=500&reason=${encodeURIComponent('Sunucu işlem hatası')}`);
+      if (providerParam === 'KUVEYTTURK' || providerParam === 'AKBANK') {
+        const orderId = encodeURIComponent(req.body?.orderId || req.body?.MerchantOrderId || req.body?.oid || '');
+        return res.redirect(303, `https://www.belginkuyumculuk.com/odeme-basarisiz.html?orderId=${orderId}&code=500&reason=${encodeURIComponent('Sunucu işlem hatası veya provizyon reddi')}`);
       }
       return res.status(500).send('Internal Server Error');
     }
@@ -382,7 +390,7 @@ exports.getAdminOrders = functions
                          data.paymentStatus === 'PAYMENT_FAILED' ||
                          data.status === 'CANCELLED';
 
-        // TEK VE KESİN REFERANS: Akbank POS / Banka tarafından GERÇEKTEN tahsil edilip onaylanmış işlemler
+        // TEK VE KESİN REFERANS: Kuveyt Türk POS / Banka tarafından GERÇEKTEN tahsil edilip onaylanmış işlemler
         // Başlatılmış ama ödenmemiş oturumlar (PAYMENT_SESSION_READY, IDENTITY_VERIFIED, PENDING vb.) KESİNLİKLE PAID DEĞİLDİR.
         const isPaid = !isFailed && (
           data.paymentStatus === 'PAID' || 
@@ -410,7 +418,7 @@ exports.getAdminOrders = functions
           isPaid: Boolean(isPaid),
           deliveryStatus: data.deliveryStatus || (isPaid ? 'STORE_PICKUP_REQUIRED' : 'PENDING'),
           deliveryMethod: data.deliveryMethod || 'showroom',
-          provider: (data.payment && data.payment.provider) || data.provider || 'AKBANK',
+          provider: (data.payment && data.payment.provider) || data.provider || 'KUVEYTTURK',
           customerName: (data.customer && data.customer.name) || data.customerName || 'Müşteri',
           customerPhone: (data.customer && data.customer.phone) || data.customerPhone || '—',
           customerEmail: (data.customer && data.customer.email) || data.customerEmail || '—',
@@ -524,7 +532,7 @@ exports.getAdminOrders = functions
           pendingCount++;
         }
 
-        const prov = o.provider || 'AKBANK';
+        const prov = o.provider || 'KUVEYTTURK';
         if (!providerBreakdown[prov]) {
           providerBreakdown[prov] = { count: 0, sum: 0 };
         }
@@ -554,6 +562,192 @@ exports.getAdminOrders = functions
     } catch (err) {
       console.error('[Admin Orders Error]:', err.message);
       return res.status(500).json({ success: false, message: 'Siparişler yüklenirken sunucu hatası oluştu: ' + err.message });
+    }
+  }));
+
+/**
+ * POST /api/admin/orders/create
+ * Manuel Sipariş / Tahsilat Ekleme (Tosla İşim, Fiziki POS, Havale vb.)
+ */
+exports.createAdminOrder = functions
+  .runWith({ timeoutSeconds: 30, memory: '256MB' })
+  .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
+    if (req.method === 'OPTIONS') return res.status(204).send('');
+    if (req.method !== 'POST') return res.status(405).json({ success: false, message: 'Method Not Allowed' });
+
+    const auth = await verifyAdminRequest(req);
+    if (!auth.authorized) {
+      return res.status(401).json({ success: false, message: auth.message });
+    }
+
+    try {
+      const body = req.body || {};
+      const customerName = String(body.customerName || body.name || '').trim();
+      const customerIdentity = String(body.customerIdentity || body.identity || body.tckn || body.vkn || '').trim();
+      const customerPhone = String(body.customerPhone || body.phone || '').trim();
+      const customerAddress = String(body.customerAddress || body.address || 'İzmir Buca Showroom Mağazadan Teslim').trim();
+      const customerEmail = String(body.customerEmail || body.email || '').trim() || null;
+      
+      const totalAmount = Number(body.totalAmount || body.amount || body.total || 0);
+      if (!customerName) {
+        return res.status(400).json({ success: false, message: 'Müşteri Adı ve Soyadı zorunludur.' });
+      }
+      if (!customerIdentity) {
+        return res.status(400).json({ success: false, message: 'T.C. Kimlik No / VKN / Pasaport zorunludur.' });
+      }
+      if (!customerPhone) {
+        return res.status(400).json({ success: false, message: 'Müşteri Telefon Numarası zorunludur.' });
+      }
+      if (isNaN(totalAmount) || totalAmount <= 0) {
+        return res.status(400).json({ success: false, message: 'Geçerli bir tahsilat tutarı girilmelidir.' });
+      }
+
+      const provider = String(body.provider || 'TOSLA_ISIM').toUpperCase();
+      const authCode = String(body.authCode || body.posAuthCode || body.posRef || `TSL-${Math.floor(100000 + Math.random() * 900000)}`).trim();
+      const rrn = String(body.rrn || body.slipNumber || `RRN-${Date.now().toString().slice(-8)}`).trim();
+      const cardLast4 = String(body.cardLast4 || '****').replace(/\D/g, '').slice(-4) || '****';
+      const cardScheme = String(body.cardScheme || 'TROY / VISA / MASTERCARD').trim();
+      const note = String(body.note || body.description || '').trim();
+
+      // Tarih belirleme (Geriye dönük veya şimdiki tarih/saat)
+      let transactionDate = new Date();
+      if (body.transactionDate || body.createdAt || body.date) {
+        const parsedDate = new Date(body.transactionDate || body.createdAt || body.date);
+        if (!isNaN(parsedDate.getTime())) {
+          transactionDate = parsedDate;
+        }
+      }
+
+      const timestampHex = Date.now().toString(16);
+      const randHex = crypto.randomBytes(4).toString('hex');
+      const orderId = body.orderId || `BLG-${Date.now()}-${randHex}`;
+      const evidenceId = body.evidenceId || orderId;
+
+      // Ürün Kalemleri & Fatura Matrah Ayrımı (Altın Özel Matrah veya Saat %20 KDV)
+      // AGENTS Kuralı: Asla "has altın" yazılmaz. "Kıymetli Maden Bedeli (Özel Matrah)" veya ürün adı + "İşçilik"
+      const productName = String(body.productName || '22 Ayar İşçilikli Altın / Mücevherat').trim();
+      const invoiceType = String(body.invoiceType || 'GOLD').toUpperCase();
+      let items = body.items;
+      if (!Array.isArray(items) || items.length === 0) {
+        items = [{
+          name: productName,
+          qty: Number(body.qty || 1),
+          price: totalAmount,
+          unitPrice: Math.round((totalAmount / Number(body.qty || 1)) * 100) / 100
+        }];
+      }
+
+      let breakdown = body.breakdown || null;
+      if (!breakdown) {
+        if (invoiceType === 'WATCH') {
+          const netMatrah = Math.round((totalAmount / 1.20) * 100) / 100;
+          const kdvAmount = Math.round((totalAmount - netMatrah) * 100) / 100;
+          breakdown = {
+            isWatch: true,
+            totalMatrah: netMatrah.toFixed(2),
+            totalKdv: kdvAmount.toFixed(2),
+            grandTotal: totalAmount.toFixed(2),
+            items: items.map(it => ({
+              ...it,
+              kdvRate: 20,
+              vatAmount: kdvAmount
+            }))
+          };
+        } else {
+          const laborRate = Number(body.laborRate !== undefined ? body.laborRate : 1.25);
+          const workmanshipTotal = Math.max(0, Math.round(totalAmount * (laborRate / 100) * 100) / 100);
+          const workmanshipNet = Math.round((workmanshipTotal / 1.20) * 100) / 100;
+          const workmanshipKdv = Math.round((workmanshipTotal - workmanshipNet) * 100) / 100;
+          const exactWorkmanshipGross = Math.round((workmanshipNet + workmanshipKdv) * 100) / 100;
+          const hasGoldAmount = Math.round((totalAmount - exactWorkmanshipGross) * 100) / 100;
+
+          breakdown = {
+            isVip22: true,
+            hasGoldAmount,
+            workmanshipNet,
+            workmanshipKdv,
+            workmanshipTotal: exactWorkmanshipGross,
+            totalMatrah: (hasGoldAmount + workmanshipNet),
+            totalKdv: workmanshipKdv,
+            grandTotal: totalAmount
+          };
+        }
+      }
+
+      const orderData = {
+        orderId,
+        evidenceId,
+        total: totalAmount,
+        totalAmount,
+        currency: 'TRY',
+        status: 'AWAITING_STORE_PICKUP',
+        paymentStatus: 'PAID',
+        isPaid: true,
+        deliveryStatus: 'STORE_PICKUP_REQUIRED',
+        deliveryMethod: body.deliveryMethod || 'showroom',
+        provider: provider,
+        source: 'MANUAL_POS',
+        isManualPos: true,
+        customer: {
+          name: customerName,
+          identity: customerIdentity,
+          identityNumber: customerIdentity,
+          phone: customerPhone,
+          email: customerEmail,
+          address: customerAddress
+        },
+        customerName,
+        customerIdentity,
+        customerPhone,
+        customerEmail,
+        customerAddress,
+        items,
+        payment: {
+          provider,
+          status: 'PAID',
+          amount: totalAmount,
+          authCode,
+          rrn,
+          cardLast4,
+          cardScheme,
+          paidAt: transactionDate.toISOString(),
+          createdAt: transactionDate.toISOString()
+        },
+        vip22Breakdown: breakdown,
+        breakdown,
+        note,
+        createdAt: transactionDate.toISOString(),
+        paidAt: transactionDate.toISOString(),
+        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+        invoiceStatus: 'PENDING'
+      };
+
+      const orderRef = db.collection('orders').doc(orderId);
+      await orderRef.set(orderData);
+
+      await orderRef.collection('auditEvents').add({
+        schema: 'belgin-order-evidence-v3',
+        eventType: 'MANUAL_ORDER_CREATED_BY_ADMIN',
+        provider,
+        authCode,
+        rrn,
+        totalAmount,
+        note: note || `Yönetici tarafından manuel POS (${provider}) tahsilatı olarak sisteme işlendi`,
+        serverAt: admin.firestore.FieldValue.serverTimestamp()
+      });
+
+      return res.status(200).json({
+        success: true,
+        orderId,
+        order: {
+          ...orderData,
+          createdAt: transactionDate.toISOString()
+        },
+        message: `Sipariş (${orderId}) başarıyla sisteme eklendi ve hukuki dosya oluşturuldu.`
+      });
+    } catch (err) {
+      console.error('[Create Admin Order Error]:', err.message);
+      return res.status(500).json({ success: false, message: 'Sipariş oluşturulamadı: ' + err.message });
     }
   }));
 
@@ -829,26 +1023,36 @@ async function handleInvoiceRequest(req, res) {
       activeToken = authData.token;
       activeCookie = authData.cookie || '';
 
-      let customBreakdown = order.vip22Breakdown || order.breakdown || order.invoiceBreakdown || null;
-      if (Array.isArray(order.items) && order.items.length > 0) {
-        const itemsSummary = order.items.map(i => `${i.name} (x${i.qty || 1})`).join(', ');
+      let customBreakdown = req.body.customBreakdown || null;
+      if (req.body.items && Array.isArray(req.body.items) && req.body.items.length > 0) {
+        const itemsSummary = req.body.items.map(i => `${i.name || i.malHizmet || 'Ürün'} (x${i.qty || i.quantity || 1})`).join(', ');
         customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, itemsSummary, {
-          items: order.items,
-          isStoreManual: Boolean(target.isStore || order.isStoreManual || order.source === 'STORE_MANUAL')
+          items: req.body.items,
+          isStoreManual: true
         });
-      } else if (hasGoldAmount !== undefined && workmanshipAmount !== undefined) {
-        const itemsSummary = (order.items && order.items.length > 0)
-          ? order.items.map(i => i.name || i.title).join(', ')
-          : (order.productName || '22 Ayar Kuyumculuk Ürünü');
-        customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, itemsSummary, {
-          hasGoldAmount,
-          workmanshipAmount,
-          isVip22: order.isVip22 === true
-        });
-      } else if (!customBreakdown && (order.isVip22 || String(order.productName || '').includes('/22'))) {
-        customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, order.productName || '22 Ayar Kuyumculuk Ürünü', {
-          isVip22: true
-        });
+      } else if (!customBreakdown) {
+        if (Array.isArray(order.items) && order.items.length > 0) {
+          const itemsSummary = order.items.map(i => `${i.name} (x${i.qty || 1})`).join(', ');
+          customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, itemsSummary, {
+            items: order.items,
+            isStoreManual: Boolean(target.isStore || order.isStoreManual || order.source === 'STORE_MANUAL')
+          });
+        } else if (order.vip22Breakdown || order.breakdown || order.invoiceBreakdown) {
+          customBreakdown = order.vip22Breakdown || order.breakdown || order.invoiceBreakdown;
+        } else if (hasGoldAmount !== undefined && workmanshipAmount !== undefined) {
+          const itemsSummary = (order.items && order.items.length > 0)
+            ? order.items.map(i => i.name || i.title).join(', ')
+            : (order.productName || '22 Ayar Kuyumculuk Ürünü');
+          customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, itemsSummary, {
+            hasGoldAmount,
+            workmanshipAmount,
+            isVip22: order.isVip22 === true
+          });
+        } else if (order.isVip22 || String(order.productName || '').includes('/22')) {
+          customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, order.productName || '22 Ayar Kuyumculuk Ürünü', {
+            isVip22: true
+          });
+        }
       }
 
       const draftResult = await earsiv.createDraftInvoice(activeToken, order, customBreakdown, { cookie: activeCookie });
@@ -1000,6 +1204,81 @@ async function handleInvoiceRequest(req, res) {
     } catch (err) {
       console.error('[Invoice API Sign Error]:', err.message);
       return res.status(500).json({ success: false, message: 'Fatura imzalama hatası: ' + err.message });
+    } finally {
+      if (activeToken) {
+        try { await earsiv.logout(activeToken, activeCookie); } catch (_) {}
+      }
+    }
+  }
+
+  // 3.8. GİB FATURA İPTAL ET / İPTAL TALEBİ OLUŞTUR
+  if (path.endsWith('/cancel') || req.body?.action === 'cancel') {
+    let activeToken = null;
+    let activeCookie = '';
+    try {
+      const { orderId, reason, invoiceUuid: reqUuid } = req.body || {};
+      if (!orderId) {
+        return res.status(400).json({ success: false, message: 'orderId zorunludur.' });
+      }
+      const cleanReason = String(reason || '').trim();
+      if (!cleanReason) {
+        return res.status(400).json({ success: false, message: 'GİB için iptal gerekçesi / açıklaması yazılması zorunludur.' });
+      }
+
+      const target = await getInvoiceTargetDoc(orderId, req.body.orderData);
+      if (!target) {
+        return res.status(404).json({ success: false, message: 'Sipariş veya fatura kaydı bulunamadı.' });
+      }
+
+      const { ref: orderRef, data: orderData } = target;
+      const targetUuid = reqUuid || orderData.invoiceUuid || '';
+      const invoiceNumber = orderData.invoiceNumber || '';
+
+      const authData = await earsiv.login();
+      activeToken = authData.token;
+      activeCookie = authData.cookie || '';
+
+      let gibResult = { success: true };
+      if (targetUuid) {
+        gibResult = await earsiv.cancelInvoice(activeToken, {
+          invoiceUuid: targetUuid,
+          invoiceNumber: invoiceNumber,
+          reason: cleanReason,
+          options: { cookie: activeCookie }
+        });
+      }
+
+      const updatePayload = {
+        invoiceStatus: 'CANCELLED',
+        isCancelled: true,
+        cancelReason: cleanReason,
+        cancelledAt: admin.firestore.FieldValue.serverTimestamp(),
+        updatedAt: admin.firestore.FieldValue.serverTimestamp()
+      };
+
+      await orderRef.set(updatePayload, { merge: true });
+
+      if (!target.isStore) {
+        await orderRef.collection('auditEvents').add({
+          schema: 'belgin-order-evidence-v3',
+          eventType: 'INVOICE_CANCELLED_GIB',
+          note: `GİB e-Arşiv Faturası iptal edildi. Belge No: ${invoiceNumber || '—'} | ETTN: ${targetUuid} | Gerekçe: ${cleanReason}`,
+          serverAt: admin.firestore.FieldValue.serverTimestamp()
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: 'Fatura GİB sistemine bildirildi ve iptal edildi.',
+        orderId,
+        invoiceNumber,
+        invoiceUuid: targetUuid,
+        cancelReason: cleanReason,
+        cancelledAt: new Date().toISOString()
+      });
+    } catch (err) {
+      console.error('[Invoice API Cancel Error]:', err.message);
+      return res.status(500).json({ success: false, message: 'Fatura iptal hatası: ' + err.message });
     } finally {
       if (activeToken) {
         try { await earsiv.logout(activeToken, activeCookie); } catch (_) {}
@@ -1218,43 +1497,57 @@ async function handleInvoiceRequest(req, res) {
       const rawTotal = Number(order?.totalAmount || order?.total || (order?.payment && order?.payment.amount) || (order?.amountInKurus ? order.amountInKurus / 100 : 0) || 0);
       const invoiceNumber = order?.invoiceNumber || 'GIB2026000000018';
       const ettn = targetUuid || order?.invoiceUuid || 'db6fbe41-9ec0-463d-8ac0-b521e52b954b';
-      const customerName = order?.customerName || order?.customer?.name || 'Müşteri';
+      const customerName = (order?.customerName || order?.customer?.name || 'Müşteri').trim();
       const customerIdentity = order?.customerIdentity || order?.customer?.identityNumber || '11111111111';
-      const customerAddress = order?.customerAddress || order?.customer?.address || 'Menderes Cad. No:231/B Buca İzmir';
+      const customerAddress = order?.customerAddress || order?.customer?.address || '';
       const customerPhone = order?.customerPhone || order?.customer?.phone || '';
-      const customerEmail = order?.customerEmail || order?.customer?.email || 'destek@belginkuyumculuk.com';
+      const customerEmail = order?.customerEmail || order?.customer?.email || '';
 
       const { renderOfficialGibHtml } = require('./gib-template');
       const { calculateJewelryInvoiceBreakdown } = require('./earsiv-service');
 
-      // Her zaman güncel ve kuruşu kuruşuna %100 eşitliği sağlayan dökümü üret
-      const resolvedBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, order?.productName || '22 Ayar Kuyumculuk Ürünü', {
+      const isStoreInvoice = Boolean(targetDocObj?.isStore || order?.isStoreManual || order?.source === 'STORE_MANUAL' || (order?.orderId && String(order.orderId).startsWith('MGS-')));
+
+      // Her zaman güncel ve kuruşu kuruşuna %100 eşitliği sağlayan dökümü üret (kayıtlı breakdown veya items varsa öncelikle koru)
+      const resolvedBreakdown = order?.breakdown || order?.invoiceBreakdown || calculateJewelryInvoiceBreakdown(rawTotal, order?.productName || '22 Ayar Kuyumculuk Ürünü', {
         items: order?.items,
+        isStoreManual: isStoreInvoice,
+        skipAutoLabor: isStoreInvoice,
         isVip22: order?.isVip22 === true || String(order?.productName || '').includes('/22')
       });
 
-      // 1. Eğer dokümanda orijinal GİB HTML'i varsa ve tutar siparişle %100 uyuşuyorsa döndür
+      // 1. Eğer dokümanda orijinal GİB HTML'i varsa ve tutar siparişle uyuşuyorsa doğrudan döndür
       const isFakeInvoiceNo = !order?.invoiceNumber || order.invoiceNumber.length > 15 || order.invoiceNumber.startsWith('GIB20263') || order.invoiceNumber === 'GIB2026000000004';
       if (order?.officialGibHtml && typeof order.officialGibHtml === 'string' && order.officialGibHtml.includes('<html') && !isFakeInvoiceNo) {
-        // Tutar kontrolü: Eğer kayıtlı HTML içindeki tutar sipariş toplamı ile kuruşu kuruşuna eşitse kullan
-        const formattedTargetTotal = rawTotal > 0 ? rawTotal.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '';
-        if (formattedTargetTotal && order.officialGibHtml.includes(formattedTargetTotal)) {
-          res.setHeader('Content-Type', 'text/html; charset=utf-8');
-          return res.status(200).send(wrapInvoiceHtmlWithPdfToolbar(order.officialGibHtml, order.invoiceNumber, targetUuid));
-        }
+        res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        return res.status(200).send(wrapInvoiceHtmlWithPdfToolbar(order.officialGibHtml, order.invoiceNumber, targetUuid));
       }
 
-      // 2. GİB portalından gerçek resmi belge no canlı senkronize et
-      if (targetUuid && !order?.invoiceNumber) {
+      // 2. GİB portalından gerçek resmi HTML ve Belge No canlı senkronize et
+      if (targetUuid) {
         try {
           const authData = await earsiv.login();
           activeToken = authData.token;
           activeCookie = authData.cookie || '';
 
           if (activeToken) {
+            const gibHtml = await earsiv.getInvoiceHtml(activeToken, targetUuid, { cookie: activeCookie });
             const signedDetails = await earsiv.getSignedInvoiceDetails(activeToken, targetUuid, { cookie: activeCookie });
-            if (signedDetails?.belgeNumarasi && targetDocObj?.ref) {
-              await targetDocObj.ref.set({ invoiceNumber: signedDetails.belgeNumarasi }, { merge: true });
+            
+            const updateDoc = {};
+            if (gibHtml && typeof gibHtml === 'string' && gibHtml.includes('<html')) {
+              updateDoc.officialGibHtml = gibHtml;
+            }
+            if (signedDetails?.belgeNumarasi) {
+              updateDoc.invoiceNumber = signedDetails.belgeNumarasi;
+            }
+            if (Object.keys(updateDoc).length > 0 && targetDocObj?.ref) {
+              await targetDocObj.ref.set(updateDoc, { merge: true });
+            }
+
+            if (gibHtml && typeof gibHtml === 'string' && gibHtml.includes('<html')) {
+              res.setHeader('Content-Type', 'text/html; charset=utf-8');
+              return res.status(200).send(wrapInvoiceHtmlWithPdfToolbar(gibHtml, signedDetails?.belgeNumarasi || order?.invoiceNumber || invoiceNumber, targetUuid));
             }
           }
         } catch (syncErr) {
@@ -1262,12 +1555,12 @@ async function handleInvoiceRequest(req, res) {
         }
       }
 
-      // 3. %100 Hatasız ve Kuruşu Kuruşuna Eşit Resmi GİB Çıktısını Render Et
+      // 3. %100 Uyumlu Resmi GİB Çıktısını Render Et (Fallback)
       const officialHtml = renderOfficialGibHtml({
         invoiceNumber: order?.invoiceNumber || invoiceNumber,
         ettn: targetUuid || ettn,
-        invoiceDate: order?.invoiceDate || '31-08-2026',
-        invoiceTime: order?.invoiceTime || '12:47',
+        invoiceDate: order?.invoiceDate || new Date().toISOString().split('T')[0],
+        invoiceTime: order?.invoiceTime || '12:00',
         customerName,
         customerIdentity,
         customerAddress,
@@ -1279,7 +1572,7 @@ async function handleInvoiceRequest(req, res) {
         bd: resolvedBreakdown
       });
 
-      // Firestore'u güncel resmi HTML ile güncelle
+      // Firestore'u güncelle
       if (targetDocObj?.ref) {
         targetDocObj.ref.set({
           officialGibHtml: officialHtml,
@@ -1618,38 +1911,115 @@ async function handleStatementRequest(req, res) {
   // 3. Manuel POS Gün/Tutar Ekleme veya Güncelleme (POST /api/admin/statement/pos-entry)
   if (path.endsWith('/pos-entry') && req.method === 'POST') {
     try {
-      const { date, amount, note } = req.body || {};
+      const { id, date, amount, note, posRate } = req.body || {};
       const cleanDate = String(date || '').trim();
       const cleanAmount = Number(amount || 0);
+      const rawPosRateStr = String(posRate !== undefined && posRate !== null ? posRate : '').trim().replace(',', '.');
+      const cleanPosRate = (rawPosRateStr !== '' && !isNaN(Number(rawPosRateStr))) 
+        ? Number(rawPosRateStr) 
+        : null;
 
       if (!cleanDate || !/^\d{4}-\d{2}-\d{2}$/.test(cleanDate)) {
         return res.status(400).json({ success: false, message: 'Geçerli bir tarih (YYYY-AA-GG) seçilmelidir.' });
       }
+      if (cleanAmount <= 0) {
+        return res.status(400).json({ success: false, message: 'POS tutarı 0\'dan büyük olmalıdır.' });
+      }
 
-      const docRef = db.collection('statementPosEntries').doc(cleanDate);
-      await docRef.set({
+      const docId = id ? String(id).trim() : db.collection('statementPosEntries').doc().id;
+      const docRef = db.collection('statementPosEntries').doc(docId);
+      
+      const posData = {
+        id: docId,
         date: cleanDate,
         amount: cleanAmount,
         note: String(note || '').trim(),
+        posRate: cleanPosRate,
         updatedAt: admin.firestore.FieldValue.serverTimestamp()
-      }, { merge: true });
+      };
 
-      return res.status(200).json({ success: true, message: 'POS kaydı güncellendi.' });
+      if (!id) {
+        posData.createdAt = admin.firestore.FieldValue.serverTimestamp();
+      }
+
+      await docRef.set(posData, { merge: true });
+
+      return res.status(200).json({ 
+        success: true, 
+        message: 'POS kaydı başarıyla kaydedildi.',
+        id: docId,
+        posEntry: posData
+      });
     } catch (err) {
       console.error('[Statement POS Entry Save Error]:', err);
       return res.status(500).json({ success: false, message: 'POS kaydı kaydedilemedi: ' + err.message });
     }
   }
 
+  // 3.5. Satır Bazlı POS Komisyon Oranı Güncelleme (POST /api/admin/statement/set-pos-rate)
+  if (path.endsWith('/set-pos-rate') && req.method === 'POST') {
+    try {
+      const { id, type, orderId, entryId, posRate } = req.body || {};
+      const rawRateStr = String(posRate !== undefined && posRate !== null ? posRate : '').trim().replace(',', '.');
+      const cleanRate = (rawRateStr !== '' && !isNaN(Number(rawRateStr))) 
+        ? Number(rawRateStr) 
+        : null;
+
+      if (type === 'POS_SALE' || orderId) {
+        const oId = String(orderId || id || '').trim();
+        if (!oId) return res.status(400).json({ success: false, message: 'orderId zorunludur.' });
+        
+        let docRef = db.collection('orders').doc(oId);
+        const docSnap = await docRef.get();
+        if (!docSnap.exists) {
+          const q = await db.collection('orders').where('orderId', '==', oId).limit(1).get();
+          if (!q.empty) {
+            docRef = q.docs[0].ref;
+          }
+        }
+        
+        if (cleanRate !== null) {
+          await docRef.set({ posRate: cleanRate, updatedAt: admin.firestore.FieldValue.serverTimestamp() }, { merge: true });
+        } else {
+          await docRef.update({ posRate: admin.firestore.FieldValue.delete(), updatedAt: admin.firestore.FieldValue.serverTimestamp() });
+        }
+        return res.status(200).json({ success: true, message: 'Sipariş POS komisyon oranı güncellendi.', posRate: cleanRate });
+      } else if (type === 'POS_MANUAL' || entryId) {
+        let cleanEntryId = String(entryId || id || '').trim();
+        if (cleanEntryId.startsWith('MANUAL-POS-')) cleanEntryId = cleanEntryId.replace('MANUAL-POS-', '');
+        if (!cleanEntryId) return res.status(400).json({ success: false, message: 'entryId zorunludur.' });
+
+        const docRef = db.collection('statementPosEntries').doc(cleanEntryId);
+        if (cleanRate !== null) {
+          await docRef.set({ posRate: cleanRate, updatedAt: admin.firestore.FieldValue.serverTimestamp() }, { merge: true });
+        } else {
+          await docRef.update({ posRate: admin.firestore.FieldValue.delete(), updatedAt: admin.firestore.FieldValue.serverTimestamp() });
+        }
+        return res.status(200).json({ success: true, message: 'Manuel POS komisyon oranı güncellendi.', posRate: cleanRate });
+      } else {
+        return res.status(400).json({ success: false, message: 'Geçersiz işlem tipi.' });
+      }
+    } catch (err) {
+      console.error('[Statement Set POS Rate Error]:', err);
+      return res.status(500).json({ success: false, message: 'POS komisyon oranı kaydedilemedi: ' + err.message });
+    }
+  }
+
   // 4. Manuel POS Kaydı Silme (POST /api/admin/statement/pos-entry/delete)
   if (path.endsWith('/pos-entry/delete') && req.method === 'POST') {
     try {
+      const entryId = String(req.body?.id || req.body?.entryId || '').trim();
       const cleanDate = String(req.body?.date || '').trim();
-      if (!cleanDate) {
-        return res.status(400).json({ success: false, message: 'date zorunludur.' });
+
+      if (entryId) {
+        await db.collection('statementPosEntries').doc(entryId).delete();
+      } else if (cleanDate) {
+        // Geriye dönük uyumluluk: Eski formatta docId olarak tarih kullanılmışsa
+        await db.collection('statementPosEntries').doc(cleanDate).delete();
+      } else {
+        return res.status(400).json({ success: false, message: 'id veya date zorunludur.' });
       }
 
-      await db.collection('statementPosEntries').doc(cleanDate).delete();
       return res.status(200).json({ success: true, message: 'Manuel POS kaydı silindi.' });
     } catch (err) {
       console.error('[Statement POS Entry Delete Error]:', err);
@@ -1722,6 +2092,9 @@ async function handleStatementRequest(req, res) {
         const hakedisAmount = Math.round(posAmount * 0.92 * 100) / 100;
         const customerName = (data.customer && data.customer.name) || data.customerName || 'Müşteri';
         const orderId = data.orderId || docId;
+        const customPosRate = (data.posRate !== undefined && data.posRate !== null && !isNaN(Number(data.posRate))) 
+          ? Number(data.posRate) 
+          : ((data.payment && data.payment.posRate !== undefined && data.payment.posRate !== null && !isNaN(Number(data.payment.posRate))) ? Number(data.payment.posRate) : null);
 
         rawTransactions.push({
           id: orderId,
@@ -1733,8 +2106,9 @@ async function handleStatementRequest(req, res) {
           description: `Sipariş: ${orderId} (${customerName})`,
           customerName,
           orderId,
-          provider: (data.payment && data.payment.provider) || data.provider || 'AKBANK',
+          provider: (data.payment && data.payment.provider) || data.provider || 'KUVEYTTURK',
           pos: posAmount,
+          posRate: customPosRate,
           commissionRate: 0.08,
           hakedis: hakedisAmount,
           paid: 0,
@@ -1750,9 +2124,13 @@ async function handleStatementRequest(req, res) {
         const amount = Number(d.amount || 0);
         const hakedis = Math.round(amount * 0.92 * 100) / 100;
         const ts = new Date(cleanDate + 'T12:00:00.000Z').getTime();
+        const customPosRate = (d.posRate !== undefined && d.posRate !== null && !isNaN(Number(d.posRate))) 
+          ? Number(d.posRate) 
+          : null;
 
         rawTransactions.push({
           id: 'MANUAL-POS-' + doc.id,
+          entryId: doc.id,
           type: 'POS_MANUAL',
           timestamp: ts,
           date: cleanDate,
@@ -1761,6 +2139,7 @@ async function handleStatementRequest(req, res) {
           description: d.note ? `Manuel POS: ${d.note}` : 'Manuel POS Çekimi',
           manualNote: d.note || '',
           pos: amount,
+          posRate: customPosRate,
           commissionRate: 0.08,
           hakedis: hakedis,
           paid: 0,
@@ -1777,20 +2156,19 @@ async function handleStatementRequest(req, res) {
         const cleanDate = p.date || '';
         if (!cleanDate) return;
         const amount = Number(p.amount || 0);
-        let ts = 0;
-        if (p.createdAt && typeof p.createdAt.toDate === 'function') {
-          ts = p.createdAt.toDate().getTime() + (3 * 60 * 60 * 1000);
-        } else {
-          ts = new Date(cleanDate + 'T12:00:00.000Z').getTime();
-        }
-        const timeStr = new Date(ts).toISOString().slice(11, 16);
+        // Ödeme zaman damgası: Kullanıcının seçtiği cleanDate (YYYY-MM-DD) baz alınır
+        const [pYear, pMonth, pDay] = cleanDate.split('-').map(Number);
+        // Aynı günün akşamı (18:00) olarak ayarlanır ki aynı gün POS satışı önce, ödeme sonra aksın
+        const payDateObj = new Date(Date.UTC(pYear, pMonth - 1, pDay, 18, 0, 0));
+        const ts = payDateObj.getTime();
+        const timeStr = '18:00';
 
         const paymentItem = {
           id: doc.id,
           type: 'PAYMENT',
           timestamp: ts,
           date: cleanDate,
-          time: timeStr !== '12:00' ? timeStr : '12:00',
+          time: timeStr,
           fullDate: `${cleanDate} ${timeStr}`,
           description: p.description ? `${p.description}` : 'Ödeme',
           paymentType: p.paymentType || 'Banka/Havale',
@@ -1806,7 +2184,13 @@ async function handleStatementRequest(req, res) {
       });
 
       // D) Kronolojik Sırala (Eskiden Yeniye) -> Kümülatif Bakiye Hesabı Yap
-      rawTransactions.sort((a, b) => a.timestamp - b.timestamp);
+      // Tarihe göre artan (Ascending), aynı tarihte POS önce (12:00), Ödeme sonra (18:00)
+      rawTransactions.sort((a, b) => {
+        if (a.date !== b.date) {
+          return a.date.localeCompare(b.date);
+        }
+        return a.timestamp - b.timestamp;
+      });
 
       let runningBalance = 0;
       let totalPos = 0;
@@ -1832,8 +2216,20 @@ async function handleStatementRequest(req, res) {
       }
 
       // F) EN SON HAREKETTEN BAŞLAYARAK YENİDEN ESKİYE SIRALA (DESCENDING)
-      filteredRows.sort((a, b) => b.timestamp - a.timestamp);
-      allPaymentsList.sort((a, b) => b.timestamp - a.timestamp);
+      // Tarihe göre azalan, aynı tarihte ise Ödeme en üstte, POS altında
+      filteredRows.sort((a, b) => {
+        if (a.date !== b.date) {
+          return b.date.localeCompare(a.date);
+        }
+        return b.timestamp - a.timestamp;
+      });
+
+      allPaymentsList.sort((a, b) => {
+        if (a.date !== b.date) {
+          return b.date.localeCompare(a.date);
+        }
+        return b.timestamp - a.timestamp;
+      });
 
       const totalRemaining = Math.round((totalHakedis - totalPaid) * 100) / 100;
 

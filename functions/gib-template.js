@@ -34,9 +34,14 @@ function renderOfficialGibHtml(data) {
   const customerName = (data.customerName || customerObj.name || customerObj.fullName || 'Nihai Tüketici').trim();
   const rawId = String(data.customerIdentity || customerObj.identityNumber || customerObj.tckn || customerObj.vkn || customerObj.tc || customerObj.identity || '11111111111').replace(/\D/g, '');
   const customerIdentity = (rawId.length === 10 || rawId.length === 11) ? rawId : '11111111111';
-  const customerAddress = data.customerAddress || customerObj.address || 'Menderes Cad. No:231/B Buca İzmir';
-  const customerPhone = data.customerPhone || customerObj.phone || '';
-  const customerEmail = data.customerEmail || customerObj.email || 'destek@belginkuyumculuk.com';
+  const customerAddress = String(data.customerAddress || customerObj.address || '').trim();
+  const customerPhone = String(data.customerPhone || customerObj.phone || '').trim();
+  const customerEmail = String(data.customerEmail || customerObj.email || '').trim();
+  let customerWebsite = String(data.customerWebsite || customerObj.website || '').trim();
+  if (customerWebsite.toLowerCase().includes('belginkuyumculuk.com')) {
+    customerWebsite = '';
+  }
+  const customerFax = String(data.customerFax || customerObj.fax || '').trim();
 
   const seller = {
     name: 'SEMİH SONBAHAR',
@@ -56,21 +61,30 @@ function renderOfficialGibHtml(data) {
   const buyer = {
     name: customerName,
     addressLine1: customerAddress,
-    addressLine2: 'Buca/ İzmir Türkiye',
-    website: 'https://www.belginkuyumculuk.com',
+    addressLine2: '',
+    website: customerWebsite,
     email: customerEmail,
-    phone: customerPhone || '0.5419305272',
-    fax: '',
+    phone: customerPhone,
+    fax: customerFax,
     idLabel: buyerIdLabel,
     id: customerIdentity
   };
+
+  // Tarihi GG-AA-YYYY biçimine dönüştür (eğer YYYY-MM-DD geldiyse)
+  let formattedInvoiceDate = invoiceDate;
+  if (invoiceDate && invoiceDate.includes('-')) {
+    const parts = invoiceDate.split('-');
+    if (parts[0].length === 4) {
+      formattedInvoiceDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+    }
+  }
 
   const invoice = {
     customizationNo: 'TR1.2',
     scenario: 'EARSIVFATURA',
     type: 'SATIS',
     number: invoiceNumber,
-    dateDisplay: invoiceDate + ' ' + invoiceTime,
+    dateDisplay: formattedInvoiceDate + ' ' + (invoiceTime || '12:00'),
     ettn: ettn || ''
   };
 

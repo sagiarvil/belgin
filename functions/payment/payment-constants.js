@@ -1,16 +1,16 @@
 /**
  * BELGIN KUYUMCULUK — FINANCIAL PAYMENT CONSTANTS & ORDER STATE MACHINE
- * Akbank Sanal POS Odaklı Çoklu POS, Durum Modeli ve Finansal Standartlar
+ * Kuveyt Türk Sanal POS Odaklı Çoklu POS, Durum Modeli ve Finansal Standartlar
  */
 
 const PROVIDERS = Object.freeze({
-  AKBANK: 'AKBANK',
+  KUVEYTTURK: 'KUVEYTTURK',
   PAYTR: 'PAYTR',
   QNB: 'QNB',
   YAPIKREDI: 'YAPIKREDI',
 });
 
-const DEFAULT_PROVIDER = PROVIDERS.AKBANK;
+const DEFAULT_PROVIDER = PROVIDERS.KUVEYTTURK;
 
 const ORDER_STATUS = Object.freeze({
   CREATED: 'CREATED',

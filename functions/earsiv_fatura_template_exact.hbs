@@ -269,15 +269,22 @@
                 <tbody>
                     <tr><td align="left" style="width:469px; "><span style="font-weight:bold; ">SAYIN</span></td></tr>
                     <tr><td align="left" style="width:469px; ">{{buyer.name}}&nbsp;</td></tr>
+                    {{#if buyer.addressLine1}}
                     <tr>
                         <td align="left" style="width:469px; ">
-                            {{buyer.addressLine1}}&nbsp;<br>
-                            {{buyer.addressLine2}}&nbsp;
+                            {{buyer.addressLine1}}&nbsp;{{#if buyer.addressLine2}}<br>&nbsp;{{buyer.addressLine2}}&nbsp;{{/if}}
                         </td>
                     </tr>
+                    {{/if}}
+                    {{#if buyer.website}}
                     <tr align="left"><td>Web Sitesi: {{buyer.website}}</td></tr>
+                    {{/if}}
+                    {{#if buyer.email}}
                     <tr align="left"><td>E-Posta: {{buyer.email}}</td></tr>
-                    <tr align="left"><td align="left" style="width:469px; ">Tel: {{buyer.phone}} Fax: {{buyer.fax}}&nbsp;</td></tr>
+                    {{/if}}
+                    {{#if buyer.phone}}
+                    <tr align="left"><td align="left" style="width:469px; ">Tel: {{buyer.phone}}{{#if buyer.fax}} Fax: {{buyer.fax}}{{/if}}&nbsp;</td></tr>
+                    {{/if}}
                     <tr align="left"><td>{{buyer.idLabel}}: {{buyer.id}}</td></tr>
                 </tbody>
                 </table>

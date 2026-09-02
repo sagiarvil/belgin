@@ -1,6 +1,6 @@
 /**
  * BELGIN KUYUMCULUK — MOBİL PUSH BİLDİRİM MOTORU (NTFY.SH)
- * Akbank Sanal POS ve PayTR başarılı işlemlerinde iPhone / Android telefonlara
+ * Kuveyt Türk Sanal POS ve PayTR başarılı işlemlerinde iPhone / Android telefonlara
  * anında sesli ve detaylı bildirim gönderir.
  */
 
@@ -44,7 +44,7 @@ async function sendTelegramNotification(order, botToken = TELEGRAM_BOT_TOKEN, ch
   const customerIdentity = (order.customer && (order.customer.identityNumber || order.customer.identity)) || order.customerIdentity || '—';
   const customerAddress = (order.customer && order.customer.address) || order.customerAddress || order.address || '';
   const rawPhone = String(customerPhone).replace(/\D/g, '');
-  const provider = (order.payment && order.payment.provider) || order.provider || 'AKBANK';
+  const provider = (order.payment && order.payment.provider) || order.provider || 'KUVEYTTURK';
   const isShowroom = order.deliveryMethod === 'showroom' || order.highValueSecureDelivery === true;
   const deliveryText = isShowroom ? '🏛️ Showroom (Mağaza Teslim)' : '📦 Adrese Sigortalı Kargo';
   const timeStr = formatDate(order.paidAt || order.createdAt);
@@ -186,7 +186,7 @@ async function sendPaymentPushNotification(order, options = {}) {
   const formattedAmount = formatCurrency(amount);
   const customerName = (order.customer && order.customer.name) || order.customerName || 'Müşteri';
   const customerPhone = (order.customer && order.customer.phone) || order.customerPhone || '—';
-  const provider = (order.payment && order.payment.provider) || order.provider || 'AKBANK';
+  const provider = (order.payment && order.payment.provider) || order.provider || 'KUVEYTTURK';
   const isShowroom = order.deliveryMethod === 'showroom' || order.highValueSecureDelivery === true;
   const deliveryText = isShowroom ? '🏛️ Showroom (Mağaza Teslim)' : '📦 Adrese Sigortalı Kargo';
   const timeStr = formatDate(order.paidAt || order.createdAt);
@@ -259,7 +259,7 @@ async function sendTestNotification(topic = DEFAULT_NTFY_TOPIC, customAmount = 1
     orderId: 'TEST-BLG-' + Date.now().toString().slice(-6),
     totalAmount: customAmount,
     total: customAmount,
-    provider: 'AKBANK',
+    provider: 'KUVEYTTURK',
     deliveryMethod: 'showroom',
     highValueSecureDelivery: true,
     isPaid: true,

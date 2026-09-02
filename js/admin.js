@@ -691,7 +691,7 @@ const AdminApp = {
         (o.customerPhone && o.customerPhone.includes(searchVal)) ||
         (o.provider && o.provider.toLowerCase().includes(searchVal));
 
-      // TEK VE KESİN REFERANS: Akbank POS / Banka tarafından GERÇEKTEN onaylanmış ve kayda geçmiş tahsilatlar
+      // TEK VE KESİN REFERANS: Kuveyt Türk POS / Banka tarafından GERÇEKTEN onaylanmış ve kayda geçmiş tahsilatlar
       const isPaid = Boolean(o.isPaid) && (o.paymentStatus === 'PAID' || o.status === 'PAID' || o.status === 'AWAITING_STORE_PICKUP');
       const isFailed = o.status === 'FAILED' || o.paymentStatus === 'FAILED' || o.status === 'PAYMENT_FAILED';
       const isPending = !isPaid && !isFailed;
@@ -808,7 +808,10 @@ const AdminApp = {
                      ${!isSigned ? 'disabled title="Yalnızca imzalanmış faturalar seçilebilir"' : 'title="Muhasebeye iletmek için seçin"'} 
                      onchange="AdminApp.toggleInvoiceSelection('${o.orderId}', this.checked)">
             </td>
-            <td style="font-family:monospace; font-weight:800; font-size:12px; color:#064E3B;">${o.orderId}</td>
+            <td>
+              <div style="font-family:monospace; font-weight:800; font-size:12px; color:#064E3B;">${o.orderId}</div>
+              ${this.getProviderBadge(o.provider || (o.payment && o.payment.provider))}
+            </td>
             <td style="font-size:12px; color:#334155; font-weight:600; white-space:nowrap;">${dateFormatted}</td>
             <td>
               <div style="font-weight:800; font-size:13px; color:#0F172A;">${o.customerName || 'Müşteri'}</div>
@@ -845,8 +848,12 @@ const AdminApp = {
               <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#F0F9FF; border-color:#0284C7; color:#0369A1; font-weight:700;" onclick="AdminApp.showDetail('${o.orderId}')">
                 Detay
               </button>
-              ${o.invoiceStatus !== 'SIGNED' ? `
-                <button class="btn-admin-primary" style="padding:3px 7px; font-size:11px; background:#059669; border-color:#059669; color:#FFF; font-weight:700;" onclick="AdminApp.startInvoiceSigning('${o.orderId}')" title="GİB e-Arşiv Fatura Kes">
+              ${(o.invoiceStatus === 'CANCELLED' || o.isCancelled) ? `
+                <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#FFF; border-color:#CBD5E1; color:#64748B; font-weight:700;" onclick="AdminApp.viewInvoice('${o.invoiceUuid}', '${o.orderId}')" title="İptal Edilen Faturayı Aç">
+                  📄 Fatura
+                </button>
+              ` : (o.invoiceStatus !== 'SIGNED' ? `
+                <button class="btn-admin-primary" style="padding:3px 7px; font-size:11px; background:#059669; border-color:#059669; color:#FFF; font-weight:700;" onclick="AdminApp.openOrderInvoiceModal('${o.orderId}')" title="GİB e-Arşiv Faturası Kes (Altın / Saat / Serbest Seçimli)">
                   🧾 Fatura Kes
                 </button>
               ` : `
@@ -856,7 +863,10 @@ const AdminApp = {
                 <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#DCFCE7; border-color:#86EFAC; color:#166534; font-weight:800;" onclick="AdminApp.sendSingleInvoiceToAccounting('${o.orderId}')" title="Bu Faturayı Doğrudan Muhasebeye (+90 541 930 53 72) İlet">
                   📲 Muhasebe
                 </button>
-              `}
+                <button class="btn-admin-secondary" style="padding:3px 6px; font-size:11px; border-color:#FCA5A5; color:#DC2626; background:#FEF2F2; font-weight:800;" onclick="AdminApp.openCancelInvoiceModal('${o.orderId}', '${o.invoiceUuid}', '${invNo}', '${this.escapeHtml(o.customerName || '')}', ${Number(o.totalAmount || 0)})" title="GİB e-Arşiv Faturasını Gerekçeli İptal Et">
+                  🚫 GİB İptal
+                </button>
+              `)}
               <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#FFFBEB; border-color:#D97706; color:#92400E; font-weight:700;" onclick="AdminApp.printLegalDocument('${o.orderId}')" title="Zaman Damgalı Sözleşme & Delil Çıktısı">
                 📜 Yasal
               </button>
@@ -874,7 +884,8 @@ const AdminApp = {
       mobileList.innerHTML = pagedOrders.map(o => {
         const isPaid = Boolean(o.isPaid) && (o.paymentStatus === 'PAID' || o.status === 'PAID' || o.status === 'AWAITING_STORE_PICKUP');
         const isFailed = o.status === 'FAILED' || o.paymentStatus === 'FAILED' || o.status === 'PAYMENT_FAILED';
-        const isSigned = (o.invoiceStatus === 'SIGNED');
+        const isCancelled = (o.invoiceStatus === 'CANCELLED' || o.isCancelled);
+        const isSigned = (o.invoiceStatus === 'SIGNED' && !isCancelled);
         const isSelected = this.selectedInvoiceIds.has(o.orderId);
         const invNo = this.getGibInvoiceNumber ? this.getGibInvoiceNumber(o) : (o.invoiceNumber || (isSigned ? 'GIB2026000000021' : ''));
 
@@ -884,14 +895,16 @@ const AdminApp = {
           ? '<span class="badge-status badge-status-failed">❌ Başarısız</span>'
           : '<span class="badge-status badge-status-pending">⏳ Beklemede</span>';
 
-        const invoiceBadge = isSigned
+        const invoiceBadge = isCancelled
+          ? `<span style="display:inline-flex; align-items:center; gap:4px; font-size:11px; background:#FEE2E2; color:#991B1B; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #FCA5A5;">🚫 İptal Edildi</span>`
+          : (isSigned
           ? `<div style="display:inline-flex; flex-direction:column; align-items:center; gap:2px;">
                <span style="display:inline-flex; align-items:center; gap:4px; font-size:11px; background:#DCFCE7; color:#15803D; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #86EFAC;">🧾 İmzalandı</span>
                ${invNo ? `<span style="font-size:11px; font-weight:800; font-family:monospace; color:#065F46; margin-top:2px; background:#F0FDF4; padding:2px 6px; border-radius:4px; border:1px solid #BBF7D0;">📄 ${invNo}</span>` : ''}
              </div>`
           : (o.invoiceStatus === 'DRAFT'
           ? '<span style="display:inline-flex; align-items:center; gap:4px; font-size:11px; background:#FEF3C7; color:#92400E; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #FCD34D;">🧾 Taslak</span>'
-          : '<span style="display:inline-flex; align-items:center; gap:4px; font-size:11px; background:#FEE2E2; color:#991B1B; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #FCA5A5;">⚠️ Kesilmedi</span>');
+          : '<span style="display:inline-flex; align-items:center; gap:4px; font-size:11px; background:#FEE2E2; color:#991B1B; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #FCA5A5;">⚠️ Kesilmedi</span>'));
 
         const dateFormatted = new Date(o.createdAt).toLocaleString('tr-TR', {
           day: '2-digit', month: '2-digit', year: 'numeric',
@@ -912,6 +925,7 @@ const AdminApp = {
                 ` : ''}
                 <span class="mobile-order-id">${o.orderId}</span>
                 ${statusBadge}
+                ${this.getProviderBadge(o.provider || (o.payment && o.payment.provider))}
               </div>
               <time class="mobile-order-time" style="font-size:11.5px; font-weight:700; color:#334155;">${dateFormatted}</time>
             </div>
@@ -951,9 +965,15 @@ const AdminApp = {
                 </button>
               ` : ''}
 
-              ${o.invoiceStatus !== 'SIGNED' ? `
-                <button type="button" class="btn-mobile-action btn-mobile-invoice-sign" onclick="AdminApp.startInvoiceSigning('${o.orderId}')">
-                  <span>🧾 GİB e-Arşiv Fatura Kes (SMS)</span>
+              ${(o.invoiceStatus === 'CANCELLED' || o.isCancelled) ? `
+                <div class="mobile-actions-split">
+                  <button type="button" class="btn-mobile-action btn-mobile-invoice-view" onclick="AdminApp.viewInvoice('${o.invoiceUuid}', '${o.orderId}')">
+                    <span>📄 Faturayı Aç</span>
+                  </button>
+                </div>
+              ` : (o.invoiceStatus !== 'SIGNED' ? `
+                <button type="button" class="btn-mobile-action btn-mobile-invoice-sign" onclick="AdminApp.openOrderInvoiceModal('${o.orderId}')">
+                  <span>🧾 GİB e-Arşiv Fatura Kes (Altın / Saat)</span>
                 </button>
               ` : `
                 <div class="mobile-actions-split">
@@ -961,7 +981,7 @@ const AdminApp = {
                     <span>📄 Faturayı Aç / Yazdır</span>
                   </button>
                 </div>
-              `}
+              `)}
 
               <div class="mobile-actions-grid-bottom">
                 <button type="button" class="btn-mobile-subaction" onclick="AdminApp.showDetail('${o.orderId}')">
@@ -970,6 +990,9 @@ const AdminApp = {
                 ${isSigned ? `
                   <button type="button" class="btn-mobile-subaction" style="background:#DCFCE7; color:#166534; border-color:#86EFAC; font-weight:800;" onclick="AdminApp.sendSingleInvoiceToAccounting('${o.orderId}')" title="Bu Faturayı Doğrudan Muhasebeye (+90 541 930 53 72) Gönder">
                     <span>📲 Muhasebe</span>
+                  </button>
+                  <button type="button" class="btn-mobile-subaction" style="color:#DC2626; border-color:#FCA5A5; background:#FEF2F2; font-weight:800;" onclick="AdminApp.openCancelInvoiceModal('${o.orderId}', '${o.invoiceUuid}', '${invNo}', '${this.escapeHtml(o.customerName || '')}', ${Number(o.totalAmount || 0)})">
+                    <span>🚫 GİB İptal</span>
                   </button>
                 ` : `
                   <button type="button" class="btn-mobile-subaction" onclick="AdminApp.printLegalDocument('${o.orderId}')">
@@ -1013,6 +1036,29 @@ const AdminApp = {
       return 'GIB2026000000021';
     }
     return '';
+  },
+
+  getProviderBadge(provider) {
+    const p = String(provider || '').toUpperCase();
+    if (p.includes('TOSLA')) {
+      return `<div style="margin-top:3px;"><span style="background:#FEE2E2; color:#991B1B; border:1px solid #FECACA; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🔴 TOSLA İŞİM</span></div>`;
+    }
+    if (p.includes('KUVEYT')) {
+      return `<div style="margin-top:3px;"><span style="background:#DCFCE7; color:#166534; border:1px solid #86EFAC; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🟢 KUVEYT TÜRK</span></div>`;
+    }
+    if (p.includes('PAYTR')) {
+      return `<div style="margin-top:3px;"><span style="background:#E0F2FE; color:#0369A1; border:1px solid #BAE6FD; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🔵 PAYTR</span></div>`;
+    }
+    if (p.includes('HAVALE') || p.includes('EFT') || p.includes('FAST')) {
+      return `<div style="margin-top:3px;"><span style="background:#FEF3C7; color:#92400E; border:1px solid #FCD34D; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🏛️ HAVALE / EFT</span></div>`;
+    }
+    if (p.includes('YAPIKREDI')) {
+      return `<div style="margin-top:3px;"><span style="background:#EFF6FF; color:#1E40AF; border:1px solid #BFDBFE; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🏦 YAPI KREDİ</span></div>`;
+    }
+    if (p.includes('HALKBANK')) {
+      return `<div style="margin-top:3px;"><span style="background:#F0FDF4; color:#15803D; border:1px solid #BBF7D0; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🏛️ HALKBANK</span></div>`;
+    }
+    return p ? `<div style="margin-top:3px;"><span style="background:#F1F5F9; color:#475569; border:1px solid #CBD5E1; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:700;">💳 ${p}</span></div>` : '';
   },
 
   // KUYUMCULUK ÖZEL MATRAH HESAPLAMA
@@ -1321,9 +1367,19 @@ const AdminApp = {
 
       <h4 style="margin:14px 0 8px; font-size:14px; color:var(--admin-teal-dark);">Tahsilat & POS Bilgileri</h4>
       <div style="font-size:13px; line-height:1.6; margin-bottom:16px;">
-        <div><strong>POS Kanalı:</strong> ${order.provider || 'AKBANK'} Sanal POS 3D Secure</div>
-        <div><strong>Ödeme Durumu:</strong> ${order.isPaid && order.paymentStatus === 'PAID' ? '✅ Tahsil Edildi (Akbank 3D Onaylı)' : (order.status === 'FAILED' || order.paymentStatus === 'FAILED' ? '❌ Başarısız' : '⏳ Beklemede (Ödeme Tamamlanmadı)')}</div>
+        <div><strong>POS Kanalı:</strong> ${order.provider || 'KUVEYTTURK'} Sanal POS 3D Secure</div>
+        <div><strong>Ödeme Durumu:</strong> ${order.isPaid && order.paymentStatus === 'PAID' ? '✅ Tahsil Edildi (Kuveyt Türk 3D Onaylı)' : (order.status === 'FAILED' || order.paymentStatus === 'FAILED' ? '❌ Başarısız' : '⏳ Beklemede (Ödeme Tamamlanmadı)')}</div>
         <div><strong>Toplam Tutar:</strong> <span style="font-size:16px; font-weight:800; color:var(--admin-teal);">₺${Number(order.totalAmount || 0).toLocaleString('tr-TR')}</span></div>
+        <div style="display:flex; align-items:center; gap:8px; margin-top:8px; background:#FEF9E7; border:1px solid #FCD34D; padding:6px 10px; border-radius:8px;">
+          <strong style="color:#92400E; font-size:12.5px;">🏦 Banka POS Oranı:</strong>
+          <div style="display:flex; align-items:center; gap:3px;">
+            <span style="font-weight:800; color:#B45309;">%</span>
+            <input type="number" id="detailOrderPosRateInput" step="0.01" min="0" max="100" value="${(order.posRate !== undefined && order.posRate !== null) ? order.posRate : ''}" placeholder="${(this.getRateForDate((order.createdAt || '').slice(0, 10))).toFixed(2)}" style="width:64px; padding:3px 6px; border:1.5px solid #D97706; border-radius:6px; font-weight:800; font-size:13px; color:#92400E; text-align:center; background:#FFF;">
+          </div>
+          <button type="button" class="btn-admin-secondary" style="background:#FFF; border:1.5px solid #D97706; color:#92400E; padding:4px 10px; font-size:11.5px; font-weight:800; cursor:pointer;" onclick="AdminApp.saveDetailOrderPosRate('${order.orderId}')">
+            💾 Kaydet
+          </button>
+        </div>
       </div>
 
       <h4 style="margin:16px 0 8px; font-size:14px; color:var(--admin-teal-dark); display:flex; justify-content:space-between; align-items:center;">
@@ -1357,13 +1413,20 @@ const AdminApp = {
           <span>Toplam Fatura Tutarı:</span>
           <span>₺${Number(order.totalAmount || 0).toLocaleString('tr-TR', {minimumFractionDigits:2})}</span>
         </div>
-        ${(order.invoiceStatus === 'SIGNED' || order.isPaid || order.invoiceNumber) ? `
+        ${(order.invoiceStatus === 'SIGNED' || order.isPaid || order.invoiceNumber || order.invoiceStatus === 'CANCELLED') ? `
           <div style="margin-top:10px; padding-top:8px; border-top:1px solid #D1E5E1; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
             <span><strong>GİB Belge No:</strong> <span style="font-family:monospace; color:#084C47; font-weight:800;">${this.getGibInvoiceNumber(order)}</span></span>
             <div style="display:flex; gap:6px; flex-wrap:wrap;">
               <button class="btn-admin-secondary" style="padding:4px 10px; font-size:11.5px; background:#FFF; border-color:#084C47; color:#084C47; font-weight:700;" onclick="AdminApp.viewInvoice('${order.invoiceUuid}', '${order.orderId}')">
                 📄 Resmi Faturayı Aç / Yazdır
               </button>
+              ${order.invoiceStatus !== 'CANCELLED' ? `
+                <button class="btn-admin-secondary" style="padding:4px 10px; font-size:11.5px; background:#FEF2F2; border-color:#FCA5A5; color:#DC2626; font-weight:800;" onclick="AdminApp.openCancelInvoiceModal('${order.orderId}', '${order.invoiceUuid}', '${this.getGibInvoiceNumber(order)}', '${this.escapeHtml(order.customerName || '')}', ${Number(order.totalAmount || 0)})">
+                  🚫 GİB'den İptal Et
+                </button>
+              ` : `
+                <span style="background:#FEE2E2; color:#991B1B; padding:3px 8px; border-radius:6px; font-weight:800; font-size:11px; border:1px solid #FCA5A5;">🚫 İptal Edildi</span>
+              `}
             </div>
           </div>
         ` : ''}
@@ -1404,6 +1467,23 @@ const AdminApp = {
     `;
 
     modal.classList.add('open');
+  },
+
+  openOrderModal(orderId) {
+    this.showDetail(orderId);
+  },
+
+  async saveDetailOrderPosRate(orderId) {
+    const input = document.getElementById('detailOrderPosRateInput');
+    const rawVal = input?.value?.trim() || '';
+    const num = rawVal === '' ? null : parseFloat(rawVal);
+    if (rawVal !== '' && (isNaN(num) || num < 0 || num > 100)) {
+      alert('Lütfen 0 ile 100 arasında geçerli bir POS komisyon oranı (%) giriniz.');
+      return;
+    }
+    await this.saveInlinePosRate(orderId, 'POS_SALE', rawVal, orderId, null);
+    const o = (this.orders || []).find(x => x.orderId === orderId);
+    if (o) o.posRate = num;
   },
 
   // SİPARİŞİ / TEST KAYDINI VERİTABANINDAN KALICI OLARAK SİL
@@ -1640,29 +1720,301 @@ const AdminApp = {
     }
   },
 
+  // =========================================================
+  // SİPARİŞ İÇİN GİB E-ARŞİV FATURA KESİM & YAPILANDIRMA SİHİRBAZI
+  // =========================================================
+  orderInvoiceConfigType: 'GOLD',
+  activeOrderInvoiceTarget: null,
+  activeCustomInvoiceItems: null,
+  activeCustomInvoiceBreakdown: null,
+
+  openOrderInvoiceModal(orderId) {
+    const order = (this.orders || []).find(o => o.orderId === orderId);
+    if (!order) {
+      this.showToast('❌ Sipariş bulunamadı.');
+      return;
+    }
+
+    this.activeOrderInvoiceTarget = order;
+    this.activeInvoiceOrderId = orderId;
+
+    const modal = document.getElementById('orderInvoiceConfigModal');
+    if (!modal) {
+      return this.startInvoiceSigning(orderId);
+    }
+
+    // Sipariş Başlık Bilgileri
+    const oidEl = document.getElementById('cfgModalOrderId');
+    const nameEl = document.getElementById('cfgModalCustomerName');
+    const idEl = document.getElementById('cfgModalCustomerIdentity');
+    const totEl = document.getElementById('cfgModalTotalAmount');
+    const errEl = document.getElementById('cfgModalErrorMsg');
+
+    if (oidEl) oidEl.textContent = order.orderId || 'BLG-UNKNOWN';
+    if (nameEl) nameEl.textContent = order.customerName || 'Nihai Tüketici';
+    if (idEl) idEl.textContent = order.customerIdentity || '11111111111';
+    if (totEl) totEl.textContent = '₺' + Number(order.totalAmount || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2 });
+    if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
+
+    // Ürün Adını ve Tipini Otomatik Analiz Et
+    const prodName = order.productName || (Array.isArray(order.items) && order.items[0]?.name) || '';
+    const isWatch = this.isWatchProduct ? this.isWatchProduct(prodName) : (prodName.toLowerCase().includes('saat') || prodName.toLowerCase().includes('rolex') || prodName.toLowerCase().includes('omega'));
+
+    if (isWatch) {
+      const watchInput = document.getElementById('cfgWatchItemName');
+      if (watchInput) watchInput.value = prodName || 'Lüks İsviçre Kol Saati';
+      this.setOrderInvoiceConfigType('WATCH');
+    } else {
+      this.setOrderInvoiceConfigType('GOLD');
+    }
+
+    modal.style.display = 'flex';
+  },
+
+  closeOrderInvoiceModal() {
+    const modal = document.getElementById('orderInvoiceConfigModal');
+    if (modal) modal.style.display = 'none';
+  },
+
+  setOrderInvoiceConfigType(type) {
+    this.orderInvoiceConfigType = type;
+
+    const btnGold = document.getElementById('btnCfgTypeGold');
+    const btnWatch = document.getElementById('btnCfgTypeWatch');
+    const btnCustom = document.getElementById('btnCfgTypeCustom');
+
+    const blockGold = document.getElementById('cfgGoldSettingsBlock');
+    const blockWatch = document.getElementById('cfgWatchSettingsBlock');
+    const blockCustom = document.getElementById('cfgCustomSettingsBlock');
+
+    if (btnGold) {
+      btnGold.style.background = (type === 'GOLD') ? '#064E3B' : '#FFF';
+      btnGold.style.color = (type === 'GOLD') ? '#FFF' : '#064E3B';
+      btnGold.style.borderColor = (type === 'GOLD') ? '#064E3B' : '#A7F3D0';
+    }
+    if (btnWatch) {
+      btnWatch.style.background = (type === 'WATCH') ? '#0284C7' : '#FFF';
+      btnWatch.style.color = (type === 'WATCH') ? '#FFF' : '#0284C7';
+      btnWatch.style.borderColor = (type === 'WATCH') ? '#0284C7' : '#BAE6FD';
+    }
+    if (btnCustom) {
+      btnCustom.style.background = (type === 'CUSTOM') ? '#334155' : '#FFF';
+      btnCustom.style.color = (type === 'CUSTOM') ? '#FFF' : '#334155';
+      btnCustom.style.borderColor = (type === 'CUSTOM') ? '#334155' : '#CBD5E1';
+    }
+
+    if (blockGold) blockGold.style.display = (type === 'GOLD') ? 'block' : 'none';
+    if (blockWatch) blockWatch.style.display = (type === 'WATCH') ? 'block' : 'none';
+    if (blockCustom) blockCustom.style.display = (type === 'CUSTOM') ? 'block' : 'none';
+
+    this.updateOrderInvoiceLiveSummary();
+  },
+
+  setOrderInvoiceLaborRate(rate) {
+    const input = document.getElementById('cfgLaborRateInput');
+    if (input) input.value = rate;
+    this.updateOrderInvoiceLiveSummary();
+  },
+
+  updateOrderInvoiceLiveSummary() {
+    const order = this.activeOrderInvoiceTarget;
+    if (!order) return;
+
+    const total = Number(order.totalAmount || 0);
+    const type = this.orderInvoiceConfigType || 'GOLD';
+    const tbody = document.getElementById('cfgModalInvoiceItemsTbody');
+    const footKdv = document.getElementById('cfgFooterTotalKdv');
+    const footGrand = document.getElementById('cfgFooterGrandTotal');
+
+    let items = [];
+    let breakdown = null;
+
+    if (type === 'GOLD') {
+      const laborRate = parseFloat(document.getElementById('cfgLaborRateInput')?.value || 1.25) || 0;
+      let laborGross = 0;
+      let laborNet = 0;
+      let laborKdv = 0;
+      let goldGross = total;
+
+      if (laborRate > 0) {
+        laborGross = Math.round(total * (laborRate / 100) * 100) / 100;
+        goldGross = Math.round((total - laborGross) * 100) / 100;
+        laborNet = Math.round((laborGross / 1.20) * 100) / 100;
+        laborKdv = Math.round((laborGross - laborNet) * 100) / 100;
+      }
+
+      const prodName = order.productName || (Array.isArray(order.items) && order.items[0]?.name) || '22 Ayar Altın / Mücevherat';
+      
+      items.push({
+        name: prodName,
+        malHizmet: prodName,
+        qty: 1,
+        miktar: 1,
+        unitPrice: goldGross,
+        birimFiyat: goldGross.toFixed(2),
+        lineTotal: goldGross,
+        fiyat: goldGross.toFixed(2),
+        kdvRate: 0,
+        kdvOrani: 0,
+        kdvAmount: 0,
+        kdvTutari: '0.00',
+        ozelMatrahNedeni: '351',
+        ozelMatrahTutari: goldGross.toFixed(2)
+      });
+
+      if (laborGross > 0) {
+        items.push({
+          name: 'İşçilik',
+          malHizmet: 'İşçilik',
+          qty: 1,
+          miktar: 1,
+          unitPrice: laborNet,
+          birimFiyat: laborNet.toFixed(2),
+          lineTotal: laborNet,
+          fiyat: laborNet.toFixed(2),
+          kdvRate: 20,
+          kdvOrani: 20,
+          kdvAmount: laborKdv,
+          kdvTutari: laborKdv.toFixed(2)
+        });
+      }
+
+      breakdown = {
+        isVip22: true,
+        hasGoldAmount: goldGross.toFixed(2),
+        workmanshipNet: laborNet.toFixed(2),
+        workmanshipKdv: laborKdv.toFixed(2),
+        workmanshipTotal: laborGross.toFixed(2),
+        totalMatrah: (goldGross + laborNet).toFixed(2),
+        totalKdv: laborKdv.toFixed(2),
+        grandTotal: total.toFixed(2),
+        items
+      };
+
+    } else if (type === 'WATCH') {
+      const watchName = document.getElementById('cfgWatchItemName')?.value?.trim() || 'Lüks İsviçre Kol Saati';
+      const netMatrah = Math.round((total / 1.20) * 100) / 100;
+      const kdvAmount = Math.round((total - netMatrah) * 100) / 100;
+
+      items.push({
+        name: watchName,
+        malHizmet: watchName,
+        qty: 1,
+        miktar: 1,
+        unitPrice: netMatrah,
+        birimFiyat: netMatrah.toFixed(2),
+        lineTotal: netMatrah,
+        fiyat: netMatrah.toFixed(2),
+        kdvRate: 20,
+        kdvOrani: 20,
+        kdvAmount: kdvAmount,
+        kdvTutari: kdvAmount.toFixed(2)
+      });
+
+      breakdown = {
+        isWatch: true,
+        totalMatrah: netMatrah.toFixed(2),
+        totalKdv: kdvAmount.toFixed(2),
+        grandTotal: total.toFixed(2),
+        items
+      };
+
+    } else if (type === 'CUSTOM') {
+      const cName = document.getElementById('cfgCustomItemName')?.value?.trim() || 'Satış Kalemi';
+      const cQty = Math.max(1, parseInt(document.getElementById('cfgCustomQty')?.value, 10) || 1);
+      const cKdvRate = parseFloat(document.getElementById('cfgCustomKdvSelect')?.value) || 0;
+
+      let netMatrah = total;
+      let kdvAmount = 0;
+      if (cKdvRate > 0) {
+        netMatrah = Math.round((total / (1 + (cKdvRate / 100))) * 100) / 100;
+        kdvAmount = Math.round((total - netMatrah) * 100) / 100;
+      }
+
+      const unitNet = Math.round((netMatrah / cQty) * 100) / 100;
+
+      items.push({
+        name: cName,
+        malHizmet: cName,
+        qty: cQty,
+        miktar: cQty,
+        unitPrice: unitNet,
+        birimFiyat: unitNet.toFixed(2),
+        lineTotal: netMatrah,
+        fiyat: netMatrah.toFixed(2),
+        kdvRate: cKdvRate,
+        kdvOrani: cKdvRate,
+        kdvAmount: kdvAmount,
+        kdvTutari: kdvAmount.toFixed(2),
+        ozelMatrahNedeni: (cKdvRate === 0) ? '351' : '',
+        ozelMatrahTutari: (cKdvRate === 0) ? netMatrah.toFixed(2) : 0
+      });
+
+      breakdown = {
+        isCustom: true,
+        totalMatrah: netMatrah.toFixed(2),
+        totalKdv: kdvAmount.toFixed(2),
+        grandTotal: total.toFixed(2),
+        items
+      };
+    }
+
+    this.activeCustomInvoiceItems = items;
+    this.activeCustomInvoiceBreakdown = breakdown;
+
+    if (tbody) {
+      tbody.innerHTML = items.map((it, idx) => `
+        <tr style="border-bottom:1px solid #E2E8F0; ${idx % 2 === 1 ? 'background:#F8FAFC;' : ''}">
+          <td style="padding:8px 10px; font-weight:700; color:#0F172A;">${it.malHizmet || it.name}</td>
+          <td style="padding:8px 8px; text-align:center; font-weight:800;">${it.qty || it.miktar || 1}</td>
+          <td style="padding:8px 10px; text-align:right; font-family:monospace; font-weight:700;">₺${Number(it.lineTotal || it.fiyat || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</td>
+          <td style="padding:8px 8px; text-align:center; font-weight:800; color:${it.kdvRate > 0 ? '#0284C7' : '#059669'};">%${it.kdvRate || it.kdvOrani || 0}</td>
+          <td style="padding:8px 10px; text-align:right; font-family:monospace; font-weight:700; color:#0284C7;">₺${Number(it.kdvAmount || it.kdvTutari || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</td>
+          <td style="padding:8px 10px; text-align:right; font-family:monospace; font-weight:800; color:#064E3B;">₺${Number((Number(it.lineTotal || 0) + Number(it.kdvAmount || 0))).toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</td>
+        </tr>
+      `).join('');
+    }
+
+    const totalKdvSum = items.reduce((acc, i) => acc + Number(i.kdvAmount || i.kdvTutari || 0), 0);
+    if (footKdv) footKdv.textContent = '₺' + totalKdvSum.toLocaleString('tr-TR', { minimumFractionDigits: 2 });
+    if (footGrand) footGrand.textContent = '₺' + total.toLocaleString('tr-TR', { minimumFractionDigits: 2 });
+  },
+
+  proceedToGibSmsFromConfig() {
+    const orderId = this.activeInvoiceOrderId;
+    const items = this.activeCustomInvoiceItems;
+    const breakdown = this.activeCustomInvoiceBreakdown;
+
+    if (!orderId) return;
+
+    this.closeOrderInvoiceModal();
+    this.startInvoiceSigning(orderId, items, breakdown);
+  },
+
   // GİB E-ARŞİV FATURA İMZALAMA AKIŞINI BAŞLAT (TASLAK OLUŞTUR & SMS GÖNDER)
-  async startInvoiceSigning(orderId) {
+  async startInvoiceSigning(orderId, customItems = null, customBreakdown = null) {
     this.isBatchInvoice = false;
     const order = this.orders.find(o => o.orderId === orderId);
     if (!order) return;
 
     this.activeInvoiceOrderId = orderId;
-    const bd = this.calculateJewelryBreakdown(order.totalAmount, order);
+    const bd = customBreakdown || this.calculateJewelryBreakdown(order.totalAmount, order);
     this.activeInvoiceBreakdown = bd;
 
     const summaryBox = document.getElementById('smsModalOrderSummary');
     if (summaryBox) {
-      const lines = bd.items ? bd.items.map((it, idx) => `
+      const activeItems = customItems || bd.items;
+      const lines = activeItems ? activeItems.map((it, idx) => `
         <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
-          <span><strong>${idx + 1}. Kalem:</strong> ${it.name || it.malHizmet} ${it.qty ? `(x${it.qty})` : ''}</span>
-          <span>₺${Number(it.lineTotal || it.fiyat || it.totalWithKdv || 0).toLocaleString('tr-TR', {minimumFractionDigits:2})} ${it.kdvRate ? '(+%20 KDV)' : '(%0 KDV Özel Matrah)'}</span>
+          <span><strong>${idx + 1}. Kalem:</strong> ${it.name || it.malHizmet} ${it.qty || it.miktar ? `(x${it.qty || it.miktar})` : ''}</span>
+          <span>₺${Number(it.lineTotal || it.fiyat || it.totalWithKdv || 0).toLocaleString('tr-TR', {minimumFractionDigits:2})} ${it.kdvRate > 0 ? `(+%${it.kdvRate} KDV)` : '(%0 KDV Özel Matrah)'}</span>
         </div>
       `).join('') : `
         <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
-          <span><strong>1. Kalem Kıymetli Maden (%0 KDV):</strong> ₺${bd.hasGoldAmount.toLocaleString('tr-TR', {minimumFractionDigits:2})}</span>
+          <span><strong>1. Kalem Kıymetli Maden (%0 KDV):</strong> ₺${(bd.hasGoldAmount || 0).toLocaleString('tr-TR', {minimumFractionDigits:2})}</span>
         </div>
         <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
-          <span><strong>2. Kalem İşçilik (%20 KDV):</strong> ₺${bd.workmanshipTotal.toLocaleString('tr-TR', {minimumFractionDigits:2})}</span>
+          <span><strong>2. Kalem İşçilik (%20 KDV):</strong> ₺${(bd.workmanshipTotal || 0).toLocaleString('tr-TR', {minimumFractionDigits:2})}</span>
         </div>
       `;
 
@@ -1689,14 +2041,20 @@ const AdminApp = {
     // Tek İstekle GİB Taslak ve SMS Tetikleme
     try {
       if (submitBtn) submitBtn.innerHTML = '<span>⏳ GİB Taslak & SMS Hazırlanıyor...</span>';
+      
+      const payload = {
+        orderId: order.orderId,
+        totalAmount: Number(order.totalAmount || order.total || (order.payment && order.payment.amount) || (order.amountInKurus ? order.amountInKurus / 100 : 0) || 0),
+        adminKey: this.adminPin
+      };
+
+      if (customItems) payload.items = customItems;
+      if (customBreakdown) payload.customBreakdown = customBreakdown;
+
       let draftRes = await fetch('/api/admin/invoice/draft', {
         method: 'POST',
         headers: this.getAuthHeaders(),
-        body: JSON.stringify({
-          orderId: order.orderId,
-          totalAmount: Number(order.totalAmount || order.total || (order.payment && order.payment.amount) || (order.amountInKurus ? order.amountInKurus / 100 : 0) || 0),
-          adminKey: this.adminPin
-        })
+        body: JSON.stringify(payload)
       });
 
       let draftData = await draftRes.json();
@@ -1980,6 +2338,115 @@ const AdminApp = {
     this.activeInvoiceUuid = null;
   },
 
+  // ==========================================
+  // GİB E-ARŞİV FATURA İPTAL İŞLEMLERİ
+  // ==========================================
+  openCancelInvoiceModal(orderId, invoiceUuid, invoiceNumber, customerName, totalAmount) {
+    this.cancellingOrderId = orderId;
+    this.cancellingInvoiceUuid = invoiceUuid;
+    this.cancellingInvoiceNumber = invoiceNumber;
+
+    const modal = document.getElementById('invoiceCancelModal');
+    const orderIdEl = document.getElementById('cancelModalOrderId');
+    const invoiceNoEl = document.getElementById('cancelModalInvoiceNo');
+    const custNameEl = document.getElementById('cancelModalCustName');
+    const amountEl = document.getElementById('cancelModalAmount');
+    const reasonEl = document.getElementById('cancelInvoiceReason');
+    const errEl = document.getElementById('cancelInvoiceModalError');
+
+    if (orderIdEl) orderIdEl.textContent = orderId || '—';
+    if (invoiceNoEl) invoiceNoEl.textContent = invoiceNumber || (invoiceUuid ? `UUID: ${invoiceUuid.slice(0, 8)}...` : '—');
+    if (custNameEl) custNameEl.textContent = customerName || 'Müşteri';
+    if (amountEl) amountEl.textContent = '₺' + Number(totalAmount || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (reasonEl) reasonEl.value = '';
+    if (errEl) {
+      errEl.style.display = 'none';
+      errEl.textContent = '';
+    }
+
+    if (modal) modal.classList.add('open');
+    if (reasonEl) setTimeout(() => reasonEl.focus(), 200);
+  },
+
+  closeCancelInvoiceModal() {
+    const modal = document.getElementById('invoiceCancelModal');
+    if (modal) modal.classList.remove('open');
+    this.cancellingOrderId = null;
+    this.cancellingInvoiceUuid = null;
+    this.cancellingInvoiceNumber = null;
+  },
+
+  setCancelReasonTemplate(text) {
+    const el = document.getElementById('cancelInvoiceReason');
+    if (el) {
+      el.value = text;
+      el.focus();
+    }
+  },
+
+  async submitGibInvoiceCancellation() {
+    const orderId = this.cancellingOrderId;
+    const invoiceUuid = this.cancellingInvoiceUuid;
+    const reasonEl = document.getElementById('cancelInvoiceReason');
+    const errEl = document.getElementById('cancelInvoiceModalError');
+    const btn = document.getElementById('btnSubmitGibCancel');
+
+    const reason = (reasonEl?.value || '').trim();
+    if (!reason) {
+      if (errEl) {
+        errEl.textContent = '⚠️ Lütfen GİB için iptal gerekçesini / açıklamasını yazınız.';
+        errEl.style.display = 'block';
+      }
+      if (reasonEl) reasonEl.focus();
+      return;
+    }
+
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = '<span>⏳ GİB\'den İptal Ediliyor...</span>';
+    }
+    if (errEl) errEl.style.display = 'none';
+
+    try {
+      const res = await fetch('/api/admin/invoice/cancel', {
+        method: 'POST',
+        headers: this.getAuthHeaders(),
+        body: JSON.stringify({
+          adminKey: this.adminPin,
+          orderId: orderId,
+          invoiceUuid: invoiceUuid,
+          reason: reason
+        })
+      });
+
+      const data = await res.json();
+      if (!data.success) {
+        throw new Error(data.message || 'GİB iptal işlemi başarısız oldu.');
+      }
+
+      this.showToast(`✅ ${orderId} faturası GİB sistemi üzerinden başarıyla iptal edildi.`);
+      this.closeCancelInvoiceModal();
+
+      // Yerel durumları güncelle ve yeniden yükle
+      if (orderId && String(orderId).startsWith('MGS-')) {
+        await this.loadStoreInvoices();
+      } else {
+        await this.loadOrders();
+      }
+    } catch (err) {
+      console.error('[GİB Invoice Cancel Error]:', err);
+      if (errEl) {
+        errEl.textContent = '❌ İptal Hatası: ' + err.message;
+        errEl.style.display = 'block';
+      }
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = '<span>🚫 GİB\'den İptal Et</span>';
+      }
+    }
+  },
+
   async confirmOrder(orderId) {
     if (!confirm(`${orderId} numaralı siparişin bankadan tahsil edildiğini onaylıyor musunuz?\n\nBu işlem siparişi 'Tahsil Edildi' durumuna geçirir ve muhasebe@belginkuyumculuk.com adresine otomatik resmi bildirim gönderir.`)) {
       return;
@@ -2100,7 +2567,7 @@ const AdminApp = {
           <td class="text-cell">${o.customerPhone || '—'}</td>
           <td class="text-cell">${o.customerEmail || '—'}</td>
           <td class="num-cell" style="font-weight:700; color:#042926;">${amount.toFixed(2)}</td>
-          <td style="text-align:center;">${o.provider || 'AKBANK'}</td>
+          <td style="text-align:center;">${o.provider || 'KUVEYTTURK'}</td>
           <td style="text-align:center; font-weight:600; color:${o.paymentStatus === 'PAID' ? '#166534' : '#991B1B'};">${o.paymentStatus || o.status}</td>
           <td style="text-align:center;">${o.deliveryMethod === 'showroom' ? 'Showroom Teslim' : 'Kargo'}</td>
         </tr>
@@ -2539,7 +3006,7 @@ const AdminApp = {
 
   // 2.1. POS BANKA KOMİSYON ORANI DEĞİŞTİRME & DÖNEMSEL ORANLAR
   onPosCommissionRateChange(newRate) {
-    const num = parseFloat(newRate);
+    const num = parseFloat(String(newRate || '').replace(',', '.'));
     this.posBankCommissionRate = isNaN(num) ? 0 : num;
     try {
       localStorage.setItem('belgin_pos_bank_rate', this.posBankCommissionRate);
@@ -2621,7 +3088,7 @@ const AdminApp = {
   addPosRatePeriod() {
     const start = document.getElementById('ratePeriodStart')?.value?.trim();
     const end = document.getElementById('ratePeriodEnd')?.value?.trim();
-    const val = parseFloat(document.getElementById('ratePeriodValue')?.value);
+    const val = parseFloat(String(document.getElementById('ratePeriodValue')?.value || '').replace(',', '.'));
 
     if (isNaN(val) || val < 0) {
       alert('Lütfen geçerli bir POS komisyon oranı (%) giriniz.');
@@ -2694,14 +3161,11 @@ const AdminApp = {
     const kpiRem = document.getElementById('stmtKpiTotalRemaining');
     if (kpiRem) kpiRem.textContent = fmt(s.totalRemaining);
 
-    // Toplam Net Kâr Hesabı: Tarihe duyarlı (getRateForDate) hesaplama
+    // Toplam Net Kâr Hesabı: Her satırın özel POS oranına (veya tarihe duyarlı orana) göre hesaplama
     let totalProfit = 0;
     (this.statementRows || []).forEach(r => {
       if (r.pos > 0) {
-        const rate = this.getRateForDate(r.date);
-        const hakedis = Number(r.hakedis || 0);
-        const bankFee = r.pos * (rate / 100);
-        const profit = (r.pos - hakedis) - bankFee;
+        const { profit } = this.calculateRowProfit(r);
         totalProfit += profit;
       }
     });
@@ -2724,6 +3188,114 @@ const AdminApp = {
 
     const allPayTotal = document.getElementById('allPaymentsTotalBadge');
     if (allPayTotal) allPayTotal.textContent = fmt(s.totalPaid);
+  },
+
+  // 4.1. Satır Bazlı Kâr ve Komisyon Hesabı Yardımcısı
+  calculateRowProfit(r) {
+    if (!r || !r.pos || r.pos <= 0) {
+      return { profit: 0, profitRate: '0.00', effectiveRate: 0, hasCustomRate: false };
+    }
+    const hasCustomRate = (r.posRate !== undefined && r.posRate !== null && !isNaN(Number(r.posRate)) && Number(r.posRate) >= 0);
+    const effectiveRate = hasCustomRate ? Number(r.posRate) : this.getRateForDate(r.date);
+    const bankFee = r.pos * (effectiveRate / 100);
+    const hakedis = Number(r.hakedis || 0);
+    const profit = Math.round(((r.pos - hakedis) - bankFee) * 100) / 100;
+    const profitRate = (8 - effectiveRate).toFixed(2);
+    return { profit, profitRate, effectiveRate, hasCustomRate };
+  },
+
+  // 4.2. Satır İçi POS Oranı Canlı Önizleme (Yazarken Gecikmesiz Güncelleme - Nokta ve Virgül Uyumlu)
+  onInlinePosRateInput(rowId, val) {
+    const rawVal = String(val || '').trim().replace(',', '.');
+    const num = rawVal === '' ? null : parseFloat(rawVal);
+    const isValidNum = num !== null && !isNaN(num) && num >= 0 && num <= 100;
+    const fmt = val => '₺' + Number(val || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    const updateRow = (r) => {
+      if (r.id === rowId) {
+        r.posRate = isValidNum ? num : (rawVal === '' ? null : r.posRate);
+        const { profit, profitRate, effectiveRate, hasCustomRate } = this.calculateRowProfit(r);
+
+        // Masaüstü tablosundaki kâr hücrelerini güncelle
+        const profitAmtEl = document.getElementById(`stmtProfitAmount_${r.id}`);
+        if (profitAmtEl) profitAmtEl.textContent = fmt(profit);
+
+        const profitSubEl = document.getElementById(`stmtProfitSub_${r.id}`);
+        if (profitSubEl) {
+          profitSubEl.innerHTML = `Net Kâr (%${profitRate}) <span style="color:#B45309;">(%${effectiveRate.toFixed(2)})</span>`;
+        }
+
+        // Mobil karttaki kâr hücresini güncelle
+        const mProfitEl = document.getElementById(`stmtMobileProfit_${r.id}`);
+        if (mProfitEl) {
+          mProfitEl.innerHTML = `<strong style="color:#15803D; font-size:13.5px;">${fmt(profit)}</strong> <span style="font-size:10.5px; color:#166534; font-weight:700;">(%${profitRate})</span>`;
+        }
+
+        // Kutucuğun sarı/özel durum arka planını güncelle
+        const boxEl = document.getElementById(`stmtPosRateBox_${r.id}`);
+        if (boxEl) {
+          if (hasCustomRate) boxEl.classList.add('has-custom');
+          else boxEl.classList.remove('has-custom');
+        }
+
+        const mBoxEl = document.getElementById(`stmtMobilePosRateBox_${r.id}`);
+        if (mBoxEl) {
+          if (hasCustomRate) mBoxEl.style.borderColor = '#F59E0B';
+          else mBoxEl.style.borderColor = '#CBD5E1';
+        }
+      }
+    };
+
+    (this.statementRows || []).forEach(updateRow);
+    (this.filteredStatementRows || []).forEach(updateRow);
+
+    // Üst KPI kartındaki toplam kârı anında güncelle
+    this.updateStatementMetrics();
+  },
+
+  // 4.3. Satır İçi POS Oranını Kaydetme (Firestore & API - Nokta ve Virgül Uyumlu)
+  async saveInlinePosRate(rowId, rowType, val, orderId, entryId) {
+    const rawVal = String(val || '').trim().replace(',', '.');
+    const num = rawVal === '' ? null : parseFloat(rawVal);
+    
+    if (rawVal !== '' && (isNaN(num) || num < 0 || num > 100)) {
+      alert('Lütfen 0 ile 100 arasında geçerli bir POS komisyon oranı (%) giriniz.');
+      return;
+    }
+
+    try {
+      const payload = {
+        id: rowId,
+        type: rowType,
+        orderId: orderId || undefined,
+        entryId: entryId || undefined,
+        posRate: num
+      };
+
+      const res = await fetch('/api/admin/statement/set-pos-rate', {
+        method: 'POST',
+        headers: this.getAuthHeaders(),
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+      if (data && data.success) {
+        (this.statementRows || []).forEach(r => {
+          if (r.id === rowId) r.posRate = num;
+        });
+        (this.filteredStatementRows || []).forEach(r => {
+          if (r.id === rowId) r.posRate = num;
+        });
+
+        this.updateStatementMetrics();
+        this.showToast(num !== null ? `✅ POS Oranı %${num.toFixed(2)} olarak kaydedildi.` : '✅ Varsayılan POS oranına dönüldü.');
+      } else {
+        alert(data.message || 'POS oranı kaydedilemedi.');
+      }
+    } catch (err) {
+      console.error('[Save POS Rate Error]:', err);
+      alert('POS oranı kaydedilemedi: ' + err.message);
+    }
   },
 
   // 5. ARAMA VE TABLO FİLTRELEME
@@ -2762,7 +3334,7 @@ const AdminApp = {
     if (!rows || rows.length === 0) {
       const emptyHtml = `
         <tr>
-          <td colspan="7" style="text-align:center; padding:40px 16px; color:var(--admin-muted);">
+          <td colspan="9" style="text-align:center; padding:40px 16px; color:var(--admin-muted);">
             <div style="font-size:32px; margin-bottom:8px;">📊</div>
             <div style="font-weight:700; font-size:14px; color:#334155;">Bu tarih aralığında ekstre hareketi bulunamadı.</div>
           </td>
@@ -2792,7 +3364,7 @@ const AdminApp = {
 
       if (isPosSale) {
         typeBadge = `<span style="background:#E0F2FE; color:#0369A1; border:1px solid #7DD3FC; font-size:11px; font-weight:800; padding:3px 8px; border-radius:6px; display:inline-flex; align-items:center; gap:4px;">💳 POS Satış</span>`;
-        descHtml = `<strong style="color:#0F172A; font-size:13.5px;">${r.orderId}</strong> — <span style="font-weight:700; color:#1E293B;">${this.escapeHtml(r.customerName || 'Müşteri')}</span> <span style="font-size:11px; color:#475569; font-weight:600;">(${r.provider || 'AKBANK'})</span>`;
+        descHtml = `<strong style="color:#0F172A; font-size:13.5px;">${r.orderId}</strong> — <span style="font-weight:700; color:#1E293B;">${this.escapeHtml(r.customerName || 'Müşteri')}</span> <span style="font-size:11px; color:#475569; font-weight:600;">(${r.provider || 'KUVEYTTURK'})</span>`;
         mainAmountStr = `+${fmt(r.pos)}`;
         mainAmountColor = '#0369A1';
       } else if (isPayment) {
@@ -2810,23 +3382,56 @@ const AdminApp = {
       const isPositiveRemaining = (r.remaining || 0) > 0;
       const isZeroRemaining = Math.abs(r.remaining || 0) < 0.01;
 
-      // Kâr Hesabı: Tarihe göre geçerli POS komisyon oranını çek
+      // POS Oranı ve Kâr Hesabı
+      let posRateCellHtml = '';
+      let mobilePosRateHtml = '';
       let profitHtml = '';
       let profitMobileHtml = '';
+
       if (r.pos > 0) {
-        const rate = this.getRateForDate(r.date);
-        const bankFee = r.pos * (rate / 100);
-        const profit = Math.round(((r.pos - (r.hakedis || 0)) - bankFee) * 100) / 100;
-        const profitRate = (8 - rate).toFixed(2);
+        const { profit, profitRate, effectiveRate, hasCustomRate } = this.calculateRowProfit(r);
+
+        posRateCellHtml = `
+          <div class="stmt-inline-pos-box ${hasCustomRate ? 'has-custom' : ''}" id="stmtPosRateBox_${r.id}">
+            <span style="font-size:11.5px; font-weight:800; color:${hasCustomRate ? '#B45309' : '#64748B'};">%</span>
+            <input type="text" 
+                   inputmode="decimal"
+                   id="stmtInlinePosRate_${r.id}"
+                   value="${hasCustomRate ? Number(r.posRate) : ''}" 
+                   placeholder="${effectiveRate.toFixed(2)}" 
+                   title="Banka POS Komisyon Oranı (%): 3.74 veya 3,74 olarak girebilirsiniz."
+                   style="width:52px; border:none; background:transparent; font-size:12.5px; font-weight:800; color:${hasCustomRate ? '#92400E' : '#334155'}; text-align:center; outline:none; padding:1px 0;" 
+                   oninput="AdminApp.onInlinePosRateInput('${this.escapeHtml(r.id)}', this.value)" 
+                   onchange="AdminApp.saveInlinePosRate('${this.escapeHtml(r.id)}', '${r.type}', this.value, '${this.escapeHtml(r.orderId || '')}', '${this.escapeHtml(r.entryId || '')}')">
+          </div>
+        `;
+
+        mobilePosRateHtml = `
+          <div style="display:flex; align-items:center; justify-content:space-between; background:#FEF9E7; border:1px solid ${hasCustomRate ? '#F59E0B' : '#CBD5E1'}; padding:6px 10px; border-radius:8px; margin-bottom:10px;" id="stmtMobilePosRateBox_${r.id}">
+            <span style="font-size:11.5px; font-weight:800; color:#92400E;">🏦 Banka POS Oranı:</span>
+            <div style="display:flex; align-items:center; gap:4px;">
+              <span style="font-size:12px; font-weight:800; color:#B45309;">%</span>
+              <input type="text" 
+                     inputmode="decimal"
+                     value="${hasCustomRate ? Number(r.posRate) : ''}" 
+                     placeholder="${effectiveRate.toFixed(2)}" 
+                     title="3.74 veya 3,74 olarak girebilirsiniz."
+                     style="width:62px; height:32px; border:1.5px solid #D97706; border-radius:6px; font-size:13px; font-weight:800; color:#92400E; text-align:center; background:#FFF;" 
+                     oninput="AdminApp.onInlinePosRateInput('${this.escapeHtml(r.id)}', this.value)" 
+                     onchange="AdminApp.saveInlinePosRate('${this.escapeHtml(r.id)}', '${r.type}', this.value, '${this.escapeHtml(r.orderId || '')}', '${this.escapeHtml(r.entryId || '')}')">
+            </div>
+          </div>
+        `;
 
         profitHtml = `
-          <div style="font-size:14px; font-weight:800; color:#15803D;">${fmt(profit)}</div>
-          <div style="font-size:10px; color:#166534; font-weight:700;" title="Uygulanan Banka POS Oranı: %${rate}">Net Kâr (%${profitRate}) <span style="color:#B45309;">(%${rate})</span></div>
+          <div style="font-size:14px; font-weight:800; color:#15803D;" id="stmtProfitAmount_${r.id}">${fmt(profit)}</div>
+          <div style="font-size:10px; color:#166534; font-weight:700;" id="stmtProfitSub_${r.id}">Net Kâr (%${profitRate}) <span style="color:#B45309;">(%${effectiveRate.toFixed(2)})</span></div>
         `;
         profitMobileHtml = `
-          <strong style="color:#15803D; font-size:13.5px;">${fmt(profit)}</strong> <span style="font-size:10.5px; color:#166534; font-weight:700;">(%${profitRate})</span>
+          <span id="stmtMobileProfit_${r.id}"><strong style="color:#15803D; font-size:13.5px;">${fmt(profit)}</strong> <span style="font-size:10.5px; color:#166534; font-weight:700;">(%${profitRate})</span></span>
         `;
       } else {
+        posRateCellHtml = `<span style="color:#94A3B8; font-weight:600;">—</span>`;
         profitHtml = `<span style="color:#64748B; font-weight:600;">—</span>`;
         profitMobileHtml = `
           <span style="color:#64748B; font-weight:700; font-size:13px;">—</span>
@@ -2875,21 +3480,23 @@ const AdminApp = {
           </button>
         `;
       } else if (isManualPos) {
+        const entryId = r.entryId || (r.id && r.id.startsWith('MANUAL-POS-') ? r.id.replace('MANUAL-POS-', '') : r.id) || '';
+        const curRate = (r.posRate !== undefined && r.posRate !== null) ? r.posRate : '';
         actionsHtml = `
           <div style="display:flex; justify-content:center; align-items:center; gap:4px;">
-            <button type="button" class="btn-admin-secondary" style="padding:5px 9px; font-size:11.5px; font-weight:700; color:#064E3B;" onclick="AdminApp.openManualPosModal('${r.date}', ${r.pos || 0}, '${this.escapeHtml(r.manualNote || '')}')" title="Manuel POS tutarını düzenle">
+            <button type="button" class="btn-admin-secondary" style="padding:5px 9px; font-size:11.5px; font-weight:700; color:#064E3B;" onclick="AdminApp.openManualPosModal('${entryId}', '${r.date}', ${r.pos || 0}, '${this.escapeHtml(r.manualNote || '')}', '${curRate}')" title="Manuel POS tutarını ve oranını düzenle">
               ✏️ Düzenle
             </button>
-            <button type="button" style="background:#FEE2E2; border:1px solid #FCA5A5; color:#991B1B; border-radius:6px; padding:5px 9px; font-size:11.5px; font-weight:800; cursor:pointer;" onclick="AdminApp.deleteManualPos('${r.date}')" title="Manuel POS kaydını sil">
+            <button type="button" style="background:#FEE2E2; border:1px solid #FCA5A5; color:#991B1B; border-radius:6px; padding:5px 9px; font-size:11.5px; font-weight:800; cursor:pointer;" onclick="AdminApp.deleteManualPos('${entryId}', '${r.date}')" title="Manuel POS kaydını sil">
               🗑️ Sil
             </button>
           </div>
         `;
         mobileActionsHtml = `
-          <button type="button" class="btn-admin-secondary" style="width:100%; min-height:44px; justify-content:center; font-size:13px; font-weight:800; color:#064E3B; border-radius:8px;" onclick="AdminApp.openManualPosModal('${r.date}', ${r.pos || 0}, '${this.escapeHtml(r.manualNote || '')}')">
+          <button type="button" class="btn-admin-secondary" style="width:100%; min-height:44px; justify-content:center; font-size:13px; font-weight:800; color:#064E3B; border-radius:8px;" onclick="AdminApp.openManualPosModal('${entryId}', '${r.date}', ${r.pos || 0}, '${this.escapeHtml(r.manualNote || '')}', '${curRate}')">
             ✏️ Manuel POS Düzenle
           </button>
-          <button type="button" style="min-height:44px; padding:0 14px; background:#FEE2E2; border:1.5px solid #FCA5A5; color:#991B1B; border-radius:8px; font-size:13px; font-weight:800; cursor:pointer;" onclick="AdminApp.deleteManualPos('${r.date}')" title="Manuel POS Sil">
+          <button type="button" style="min-height:44px; padding:0 14px; background:#FEE2E2; border:1.5px solid #FCA5A5; color:#991B1B; border-radius:8px; font-size:13px; font-weight:800; cursor:pointer;" onclick="AdminApp.deleteManualPos('${entryId}', '${r.date}')" title="Manuel POS Sil">
             🗑️ Sil
           </button>
         `;
@@ -2908,6 +3515,9 @@ const AdminApp = {
           </td>
           <td style="text-align:right;" class="col-pos">
             ${r.pos > 0 ? `<span style="font-weight:800; font-size:13px; color:#0F172A;">${fmt(r.pos)}</span>` : '<span style="color:#64748B;">—</span>'}
+          </td>
+          <td style="text-align:center; white-space:nowrap;" class="col-pos-rate">
+            ${posRateCellHtml}
           </td>
           <td style="text-align:right;" class="col-hakedis">
             ${r.hakedis > 0 ? `<div style="font-weight:800; font-size:13.5px; color:#0369A1;">${fmt(r.hakedis)}</div><div style="font-size:10px; color:#0284C7; font-weight:700;">%92 Net</div>` : '<span style="color:#64748B;">—</span>'}
@@ -2951,6 +3561,9 @@ const AdminApp = {
               <span style="font-size:18px; font-weight:800; color:${mainAmountColor}; letter-spacing:-0.5px;">${mainAmountStr}</span>
             </div>
           </div>
+
+          <!-- 2.1. Mobil POS Komisyon Oranı Alanı -->
+          ${mobilePosRateHtml}
 
           <!-- 3. Finansal Döküm Matrisi (4 Kutu) -->
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; background:#F8FAFB; padding:10px 12px; border-radius:10px; border:1px solid #CBD5E1; margin-bottom:12px;">
@@ -3161,24 +3774,370 @@ const AdminApp = {
     }
   },
 
+  // 10.5 MANUEL TAHSİLAT & TOSLA İŞİM POS SİPARİŞİ MODALI
+  openManualOrderModal() {
+    const modal = document.getElementById('manualOrderModal');
+    if (!modal) return;
+
+    // Şu anki yerel tarih ve saati YYYY-MM-DDTHH:mm formatında hazırla
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    const nowIsoLocal = now.toISOString().slice(0, 16);
+
+    const dtInput = document.getElementById('manualOrderDateTime');
+    if (dtInput) dtInput.value = nowIsoLocal;
+
+    const providerSelect = document.getElementById('manualOrderProvider');
+    if (providerSelect) providerSelect.value = 'TOSLA_ISIM';
+
+    const authInput = document.getElementById('manualOrderAuthCode');
+    if (authInput) authInput.value = '';
+
+    const rrnInput = document.getElementById('manualOrderRrn');
+    if (rrnInput) rrnInput.value = '';
+
+    const cardLast4Input = document.getElementById('manualOrderCardLast4');
+    if (cardLast4Input) cardLast4Input.value = '';
+
+    const nameInput = document.getElementById('manualCustomerName');
+    if (nameInput) nameInput.value = '';
+
+    const identInput = document.getElementById('manualCustomerIdentity');
+    if (identInput) identInput.value = '';
+
+    const phoneInput = document.getElementById('manualCustomerPhone');
+    if (phoneInput) phoneInput.value = '';
+
+    const emailInput = document.getElementById('manualCustomerEmail');
+    if (emailInput) emailInput.value = '';
+
+    const addrInput = document.getElementById('manualCustomerAddress');
+    if (addrInput) addrInput.value = 'İzmir Buca Showroom Mağazadan Teslim';
+
+    const prodNameInput = document.getElementById('manualProductName');
+    if (prodNameInput) prodNameInput.value = '22 Ayar İşçilikli Altın Bilezik';
+
+    const qtyInput = document.getElementById('manualProductQty');
+    if (qtyInput) qtyInput.value = '1';
+
+    const amountInput = document.getElementById('manualTotalAmount');
+    if (amountInput) amountInput.value = '';
+
+    const noteInput = document.getElementById('manualOrderNote');
+    if (noteInput) noteInput.value = '';
+
+    const errDiv = document.getElementById('manualOrderErrorMsg');
+    if (errDiv) {
+      errDiv.style.display = 'none';
+      errDiv.textContent = '';
+    }
+
+    this.updateManualOrderBreakdownPreview();
+    modal.style.display = 'flex';
+    setTimeout(() => {
+      if (nameInput) nameInput.focus();
+    }, 150);
+  },
+
+  closeManualOrderModal() {
+    const modal = document.getElementById('manualOrderModal');
+    if (modal) modal.style.display = 'none';
+  },
+
+  setManualInvoiceType(type) {
+    const hiddenType = document.getElementById('manualInvoiceType');
+    if (hiddenType) hiddenType.value = type;
+
+    const btnGold = document.getElementById('btnManualTypeGold');
+    const btnWatch = document.getElementById('btnManualTypeWatch');
+    const btnCustom = document.getElementById('btnManualTypeCustom');
+
+    const goldLaborRow = document.getElementById('manualGoldLaborRow');
+    const customKdvRow = document.getElementById('manualCustomKdvRow');
+    const prodNameInput = document.getElementById('manualProductName');
+
+    if (btnGold) {
+      btnGold.style.background = (type === 'GOLD') ? '#064E3B' : '#FFF';
+      btnGold.style.color = (type === 'GOLD') ? '#FFF' : '#064E3B';
+      btnGold.style.borderColor = (type === 'GOLD') ? '#064E3B' : '#A7F3D0';
+    }
+    if (btnWatch) {
+      btnWatch.style.background = (type === 'WATCH') ? '#0284C7' : '#FFF';
+      btnWatch.style.color = (type === 'WATCH') ? '#FFF' : '#0284C7';
+      btnWatch.style.borderColor = (type === 'WATCH') ? '#0284C7' : '#BAE6FD';
+      if (prodNameInput && (!prodNameInput.value || prodNameInput.value.includes('Altın'))) {
+        prodNameInput.value = 'Lüks İsviçre Kol Saati';
+      }
+    }
+    if (btnCustom) {
+      btnCustom.style.background = (type === 'CUSTOM') ? '#334155' : '#FFF';
+      btnCustom.style.color = (type === 'CUSTOM') ? '#FFF' : '#334155';
+      btnCustom.style.borderColor = (type === 'CUSTOM') ? '#334155' : '#CBD5E1';
+    }
+
+    if (type === 'GOLD' && prodNameInput && (!prodNameInput.value || prodNameInput.value.includes('Saat'))) {
+      prodNameInput.value = '22 Ayar İşçilikli Altın Bilezik';
+    }
+
+    if (goldLaborRow) goldLaborRow.style.display = (type === 'GOLD') ? 'flex' : 'none';
+    if (customKdvRow) customKdvRow.style.display = (type === 'CUSTOM') ? 'flex' : 'none';
+
+    this.updateManualOrderBreakdownPreview();
+  },
+
+  setManualLaborRate(rate) {
+    const input = document.getElementById('manualLaborRateInput');
+    if (input) input.value = rate;
+    this.updateManualOrderBreakdownPreview();
+  },
+
+  updateManualOrderBreakdownPreview() {
+    const amountVal = parseFloat(document.getElementById('manualTotalAmount')?.value || 0);
+    const total = isNaN(amountVal) || amountVal < 0 ? 0 : amountVal;
+    const type = document.getElementById('manualInvoiceType')?.value || 'GOLD';
+    const previewBody = document.getElementById('previewBreakdownBody');
+    const previewHeader = document.getElementById('previewHeaderTitle');
+    const prevTot = document.getElementById('previewTotalVal');
+
+    if (prevTot) prevTot.textContent = '₺' + total.toLocaleString('tr-TR', { minimumFractionDigits: 2 });
+
+    if (type === 'GOLD') {
+      if (previewHeader) previewHeader.textContent = '⚖️ e-Arşiv Fatura Özel Matrah Dökümü (Altın):';
+      const laborRate = parseFloat(document.getElementById('manualLaborRateInput')?.value || 1.25) || 0;
+      let workmanshipTotal = 0;
+      let workmanshipNet = 0;
+      let workmanshipKdv = 0;
+      let hasGoldAmount = total;
+
+      if (laborRate > 0 && total > 0) {
+        workmanshipTotal = Math.round(total * (laborRate / 100) * 100) / 100;
+        workmanshipNet = Math.round((workmanshipTotal / 1.20) * 100) / 100;
+        workmanshipKdv = Math.round((workmanshipTotal - workmanshipNet) * 100) / 100;
+        hasGoldAmount = Math.round((total - workmanshipTotal) * 100) / 100;
+      }
+
+      if (previewBody) {
+        previewBody.innerHTML = `
+          <div>• Kıymetli Maden Bedeli (%0 KDV): <strong style="color:#0F172A;">₺${hasGoldAmount.toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</strong></div>
+          <div>• İşçilik Bedeli (KDV Dahil): <strong style="color:#0F172A;">₺${workmanshipTotal.toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</strong></div>
+          <div>• İşçilik Matrahı (Net): <span>₺${workmanshipNet.toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</span></div>
+          <div>• İşçilik KDV (%20): <span style="color:#059669; font-weight:700;">₺${workmanshipKdv.toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</span></div>
+        `;
+      }
+    } else if (type === 'WATCH') {
+      if (previewHeader) previewHeader.textContent = '⌚ e-Arşiv Fatura Matrah Dökümü (Saat %20 KDV):';
+      const netMatrah = Math.round((total / 1.20) * 100) / 100;
+      const kdvAmount = Math.round((total - netMatrah) * 100) / 100;
+
+      if (previewBody) {
+        previewBody.innerHTML = `
+          <div>• Net KDV Matrahı (%20 KDV Hariç): <strong style="color:#0F172A;">₺${netMatrah.toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</strong></div>
+          <div>• Hesaplanan KDV (%20): <strong style="color:#0284C7;">₺${kdvAmount.toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</strong></div>
+          <div style="grid-column:span 2; font-size:11px; color:#64748B;">ℹ️ Fatura tutarının tamamı (%20 KDV) olarak Gelir İdaresi'ne taslak açılacaktır.</div>
+        `;
+      }
+    } else if (type === 'CUSTOM') {
+      if (previewHeader) previewHeader.textContent = '✍️ e-Arşiv Fatura Matrah Dökümü (Serbest):';
+      const kdvRate = parseFloat(document.getElementById('manualCustomKdvSelect')?.value) || 0;
+      let netMatrah = total;
+      let kdvAmount = 0;
+      if (kdvRate > 0) {
+        netMatrah = Math.round((total / (1 + (kdvRate / 100))) * 100) / 100;
+        kdvAmount = Math.round((total - netMatrah) * 100) / 100;
+      }
+
+      if (previewBody) {
+        previewBody.innerHTML = `
+          <div>• Net Matrah (%${kdvRate} Hariç): <strong style="color:#0F172A;">₺${netMatrah.toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</strong></div>
+          <div>• Hesaplanan KDV (%${kdvRate}): <strong style="color:#0284C7;">₺${kdvAmount.toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</strong></div>
+        `;
+      }
+    }
+  },
+
+  async submitManualOrder() {
+    const errDiv = document.getElementById('manualOrderErrorMsg');
+    const btnSubmit = document.getElementById('btnSubmitManualOrder');
+    if (errDiv) { errDiv.style.display = 'none'; errDiv.textContent = ''; }
+
+    const provider = document.getElementById('manualOrderProvider')?.value?.trim() || 'TOSLA_ISIM';
+    const dateTimeVal = document.getElementById('manualOrderDateTime')?.value?.trim();
+    const authCode = document.getElementById('manualOrderAuthCode')?.value?.trim();
+    const rrn = document.getElementById('manualOrderRrn')?.value?.trim();
+    const cardLast4 = document.getElementById('manualOrderCardLast4')?.value?.trim();
+
+    const customerName = document.getElementById('manualCustomerName')?.value?.trim();
+    const customerIdentity = document.getElementById('manualCustomerIdentity')?.value?.trim();
+    const customerPhone = document.getElementById('manualCustomerPhone')?.value?.trim();
+    const customerEmail = document.getElementById('manualCustomerEmail')?.value?.trim() || null;
+    const customerAddress = document.getElementById('manualCustomerAddress')?.value?.trim() || 'İzmir Buca Showroom Mağazadan Teslim';
+
+    const invoiceType = document.getElementById('manualInvoiceType')?.value || 'GOLD';
+    const productName = document.getElementById('manualProductName')?.value?.trim() || (invoiceType === 'WATCH' ? 'Lüks İsviçre Kol Saati' : '22 Ayar İşçilikli Altın Bilezik');
+    const qty = parseInt(document.getElementById('manualProductQty')?.value || '1', 10) || 1;
+    const totalAmount = parseFloat(document.getElementById('manualTotalAmount')?.value || 0);
+    const laborRate = parseFloat(document.getElementById('manualLaborRateInput')?.value || 1.25) || 0;
+    const note = document.getElementById('manualOrderNote')?.value?.trim() || '';
+
+    // Validasyonlar
+    if (!customerName) {
+      if (errDiv) { errDiv.textContent = 'Lütfen müşteri ad ve soyadını girin.'; errDiv.style.display = 'block'; }
+      return;
+    }
+    if (!customerIdentity || customerIdentity.length < 10) {
+      if (errDiv) { errDiv.textContent = 'Lütfen geçerli bir T.C. Kimlik No veya VKN/Pasaport girin (en az 10-11 hane).'; errDiv.style.display = 'block'; }
+      return;
+    }
+    if (!customerPhone || customerPhone.length < 10) {
+      if (errDiv) { errDiv.textContent = 'Lütfen geçerli bir müşteri telefon numarası girin.'; errDiv.style.display = 'block'; }
+      return;
+    }
+    if (isNaN(totalAmount) || totalAmount <= 0) {
+      if (errDiv) { errDiv.textContent = 'Lütfen geçerli bir tahsilat tutarı girin (0 ₺\'den büyük olmalıdır).'; errDiv.style.display = 'block'; }
+      return;
+    }
+
+    let transactionDate = new Date();
+    if (dateTimeVal) {
+      const parsed = new Date(dateTimeVal);
+      if (!isNaN(parsed.getTime())) transactionDate = parsed;
+    }
+
+    const payload = {
+      provider,
+      transactionDate: transactionDate.toISOString(),
+      authCode,
+      rrn,
+      cardLast4,
+      customerName,
+      customerIdentity,
+      customerPhone,
+      customerEmail,
+      customerAddress,
+      invoiceType,
+      laborRate,
+      productName,
+      qty,
+      totalAmount,
+      note
+    };
+
+    if (btnSubmit) {
+      btnSubmit.disabled = true;
+      btnSubmit.innerHTML = '<span>⏳ Kaydediliyor ve Delil Dosyası Hazırlanıyor...</span>';
+    }
+
+    try {
+      const res = await fetch('/api/admin/orders/create', {
+        method: 'POST',
+        headers: this.getAuthHeaders(),
+        body: JSON.stringify(payload)
+      });
+
+      if (res.status === 401) {
+        this.showAuthGate();
+        return;
+      }
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || 'Sipariş oluşturulamadı.');
+      }
+
+      const createdOrder = data.order || {
+        orderId: data.orderId,
+        totalAmount: totalAmount,
+        customerName: customerName,
+        customerPhone: customerPhone,
+        customerIdentity: customerIdentity,
+        provider: provider,
+        isPaid: true,
+        status: 'PAID',
+        createdAt: transactionDate.toISOString(),
+        invoiceStatus: 'PENDING'
+      };
+
+      // 1. Önbelleğe ve mevcut listeye ekle
+      if (!Array.isArray(this.orders)) this.orders = [];
+      this.orders = [createdOrder, ...this.orders.filter(o => o.orderId !== createdOrder.orderId)];
+      
+      try {
+        const cached = localStorage.getItem('belgin_admin_cached_data');
+        let cData = cached ? JSON.parse(cached) : { orders: [] };
+        cData.orders = [createdOrder, ...(cData.orders || []).filter(o => o.orderId !== createdOrder.orderId)];
+        localStorage.setItem('belgin_admin_cached_data', JSON.stringify(cData));
+      } catch (_) {}
+
+      this.closeManualOrderModal();
+      this.filterTable();
+      this.loadStatement();
+
+      // Zengin bildirim & Hızlı işlem yönlendirmesi
+      this.showToast(`✅ ${provider === 'TOSLA_ISIM' ? '🔴 Tosla İşim' : '💳 POS'} Siparişi (${createdOrder.orderId}) başarıyla oluşturuldu!`);
+
+      // İsteğe bağlı olarak Müşteri Beyan/Kimlik yükleme modalını doğrudan açabilmesi için onay dialogu
+      setTimeout(() => {
+        if (confirm(`Sipariş (${createdOrder.orderId}) kaydedildi!\n\nŞimdi müşterinin T.C. Kimlik Kartı veya Tosla POS Slip görselini yüklemek ister misiniz?`)) {
+          this.openDeclarationModal(createdOrder.orderId);
+        }
+      }, 500);
+
+    } catch (err) {
+      console.error('[AdminApp] submitManualOrder error:', err);
+      if (errDiv) {
+        errDiv.textContent = 'Hata: ' + err.message;
+        errDiv.style.display = 'block';
+      }
+    } finally {
+      if (btnSubmit) {
+        btnSubmit.disabled = false;
+        btnSubmit.innerHTML = '<span>✅ Siparişi & Hukuki Dosyayı Oluştur</span>';
+      }
+    }
+  },
+
   // 11. MANUEL POS MODALI
-  openManualPosModal(date, currentAmount, currentNote) {
+  openManualPosModal(entryId, date, currentAmount, currentNote, currentPosRate) {
     const modal = document.getElementById('manualPosModal');
     if (!modal) return;
 
+    const idInput = document.getElementById('manualPosIdInput');
     const dateInput = document.getElementById('manualPosDateInput');
     const amountInput = document.getElementById('manualPosAmountInput');
+    const rateInput = document.getElementById('manualPosRateInput');
     const noteInput = document.getElementById('manualPosNoteInput');
     const btnDel = document.getElementById('btnDeleteManualPos');
     const errDiv = document.getElementById('manualPosErrorMsg');
 
-    const targetDate = date || new Date().toISOString().split('T')[0];
-    if (dateInput) dateInput.value = targetDate;
-    if (amountInput) amountInput.value = currentAmount > 0 ? currentAmount : '';
-    if (noteInput) noteInput.value = currentNote || '';
+    // Eğer parametreler (date, amount, note) şeklinde eski çağrı yapılmışsa
+    let cleanId = '';
+    let cleanDate = '';
+    let cleanAmount = 0;
+    let cleanNote = '';
+    let cleanRate = null;
+
+    if (typeof entryId === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(entryId)) {
+      cleanDate = entryId;
+      cleanAmount = date || 0;
+      cleanNote = currentAmount || '';
+      cleanId = '';
+      cleanRate = currentNote !== undefined && currentNote !== null && !isNaN(Number(currentNote)) ? Number(currentNote) : null;
+    } else {
+      cleanId = entryId || '';
+      cleanDate = date || new Date().toISOString().split('T')[0];
+      cleanAmount = currentAmount || 0;
+      cleanNote = currentNote || '';
+      cleanRate = currentPosRate !== undefined && currentPosRate !== null && !isNaN(Number(currentPosRate)) && currentPosRate !== '' ? Number(currentPosRate) : null;
+    }
+
+    if (idInput) idInput.value = cleanId;
+    if (dateInput) dateInput.value = cleanDate || new Date().toISOString().split('T')[0];
+    if (amountInput) amountInput.value = cleanAmount > 0 ? cleanAmount : '';
+    if (rateInput) rateInput.value = (cleanRate !== null && cleanRate !== undefined) ? cleanRate : '';
+    if (noteInput) noteInput.value = cleanNote || '';
     if (errDiv) errDiv.style.display = 'none';
 
-    if (btnDel) btnDel.style.display = currentAmount > 0 ? 'inline-block' : 'none';
+    if (btnDel) btnDel.style.display = cleanId || cleanAmount > 0 ? 'inline-block' : 'none';
 
     modal.style.display = 'flex';
     setTimeout(() => {
@@ -3189,16 +4148,25 @@ const AdminApp = {
   closeManualPosModal() {
     const modal = document.getElementById('manualPosModal');
     if (modal) modal.style.display = 'none';
+    const idInput = document.getElementById('manualPosIdInput');
+    if (idInput) idInput.value = '';
+    const rateInput = document.getElementById('manualPosRateInput');
+    if (rateInput) rateInput.value = '';
   },
 
   async submitManualPos() {
+    const idInput = document.getElementById('manualPosIdInput');
     const dateInput = document.getElementById('manualPosDateInput');
     const amountInput = document.getElementById('manualPosAmountInput');
+    const rateInput = document.getElementById('manualPosRateInput');
     const noteInput = document.getElementById('manualPosNoteInput');
     const errDiv = document.getElementById('manualPosErrorMsg');
 
+    const id = idInput?.value?.trim() || '';
     const date = dateInput?.value?.trim();
     const amount = parseFloat(amountInput?.value || 0);
+    const rawRate = rateInput?.value?.trim() || '';
+    const posRate = rawRate === '' ? null : parseFloat(rawRate);
     const note = noteInput?.value?.trim() || '';
 
     if (errDiv) errDiv.style.display = 'none';
@@ -3211,18 +4179,22 @@ const AdminApp = {
       if (errDiv) { errDiv.textContent = 'POS tutarı 0\'dan büyük olmalıdır.'; errDiv.style.display = 'block'; }
       return;
     }
+    if (posRate !== null && (isNaN(posRate) || posRate < 0 || posRate > 100)) {
+      if (errDiv) { errDiv.textContent = 'Lütfen geçerli bir POS komisyon oranı (%) giriniz (0 - 100).'; errDiv.style.display = 'block'; }
+      return;
+    }
 
     try {
       const res = await fetch('/api/admin/statement/pos-entry', {
         method: 'POST',
         headers: this.getAuthHeaders(),
-        body: JSON.stringify({ date, amount, note })
+        body: JSON.stringify({ id, date, amount, note, posRate })
       });
 
       const data = await res.json();
       if (data && data.success) {
         this.closeManualPosModal();
-        this.showToast(`✅ POS Kaydı Güncellendi: ₺${amount.toLocaleString('tr-TR')} (${this.formatDateTr(date)})`);
+        this.showToast(`✅ POS Kaydı Başarıyla Kaydedildi: ₺${amount.toLocaleString('tr-TR')} (${this.formatDateTr(date)})`);
         await this.loadStatement();
       } else {
         if (errDiv) { errDiv.textContent = data.message || 'Kayıt yapılamadı.'; errDiv.style.display = 'block'; }
@@ -3232,16 +4204,18 @@ const AdminApp = {
     }
   },
 
-  async deleteManualPos() {
-    const date = document.getElementById('manualPosDateInput')?.value?.trim();
-    if (!date) return;
-    if (!confirm(`${this.formatDateTr(date)} tarihindeki manuel POS kaydını silmek istediğinize emin misiniz?`)) return;
+  async deleteManualPos(targetId, targetDate) {
+    const id = targetId || document.getElementById('manualPosIdInput')?.value?.trim() || '';
+    const date = targetDate || document.getElementById('manualPosDateInput')?.value?.trim();
+    
+    const dateText = date ? this.formatDateTr(date) : '';
+    if (!confirm(`${dateText ? dateText + ' tarihindeki ' : ''}manuel POS kaydını silmek istediğinize emin misiniz?`)) return;
 
     try {
       const res = await fetch('/api/admin/statement/pos-entry/delete', {
         method: 'POST',
         headers: this.getAuthHeaders(),
-        body: JSON.stringify({ date })
+        body: JSON.stringify({ id, date })
       });
 
       const data = await res.json();
@@ -3249,6 +4223,8 @@ const AdminApp = {
         this.closeManualPosModal();
         this.showToast('🗑️ Manuel POS kaydı silindi.');
         await this.loadStatement();
+      } else {
+        alert(data.message || 'Silinemedi.');
       }
     } catch (err) {
       alert('Silme hatası: ' + err.message);
@@ -3276,12 +4252,12 @@ const AdminApp = {
       const payVal = r.paid > 0 ? fmt(r.paid) : '—';
       const descVal = r.description || '';
 
+      let rateVal = '—';
       let profitVal = '—';
       if (r.pos > 0) {
-        const rate = this.getRateForDate(r.date);
-        const bankFee = r.pos * (rate / 100);
-        const profit = Math.round(((r.pos - (r.hakedis || 0)) - bankFee) * 100) / 100;
+        const { profit, effectiveRate } = this.calculateRowProfit(r);
         totalProfit += profit;
+        rateVal = `%${effectiveRate.toFixed(2)}`;
         profitVal = fmt(profit);
       }
 
@@ -3290,6 +4266,7 @@ const AdminApp = {
           <td style="text-align:center; padding:6px; border:1px solid #CBD5E1;">${dateFormatted}</td>
           <td style="text-align:left; padding:6px; border:1px solid #CBD5E1;">${this.escapeHtml(descVal)}</td>
           <td style="text-align:right; padding:6px; border:1px solid #CBD5E1; mso-number-format:'\\#,\\#\\#0\\.00';">${posVal}</td>
+          <td style="text-align:center; padding:6px; border:1px solid #CBD5E1; color:#92400E; font-weight:bold;">${rateVal}</td>
           <td style="text-align:right; padding:6px; border:1px solid #CBD5E1; color:#0369A1; mso-number-format:'\\#,\\#\\#0\\.00';">${hakVal}</td>
           <td style="text-align:right; padding:6px; border:1px solid #CBD5E1; color:#15803D; mso-number-format:'\\#,\\#\\#0\\.00';">${payVal}</td>
           <td style="text-align:right; padding:6px; border:1px solid #CBD5E1; font-weight:bold; color:#991B1B; mso-number-format:'\\#,\\#\\#0\\.00';">${fmt(r.remaining)}</td>
@@ -3313,11 +4290,11 @@ const AdminApp = {
       <body>
         <table style="width:100%; margin-bottom:15px;">
           <tr>
-            <td colspan="4" class="header-title">BELGİN KUYUMCULUK — CARİ HESAP & KÂR EKSTRESİ</td>
-            <td colspan="3" class="remaining-hero">güncel ödenecek tutar: ${fmt(s.totalRemaining)} ₺</td>
+            <td colspan="5" class="header-title">BELGİN KUYUMCULUK — CARİ HESAP & KÂR EKSTRESİ</td>
+            <td colspan="3" class="remaining-hero">GÜNCEL ÖDENECEK TUTAR: ${fmt(s.totalRemaining)} ₺</td>
           </tr>
           <tr>
-            <td colspan="4" style="color:#64748B; font-size:10pt;">Rapor Tarihi: ${todayStr} | Kesinti Oranı: %8 | Banka POS Oranı: %${this.posBankCommissionRate}</td>
+            <td colspan="5" style="color:#64748B; font-size:10pt;">Rapor Tarihi: ${todayStr} | Kesinti Oranı: %8 | Banka POS Oranı: Satır / Dönem Bazlı</td>
             <td colspan="3" style="text-align:right; color:#166534; font-size:10pt; font-weight:bold;">Toplam Net Kâr: ${fmt(totalProfit)} ₺</td>
           </tr>
         </table>
@@ -3325,23 +4302,27 @@ const AdminApp = {
         <table border="1" style="border-collapse:collapse; width:100%;">
           <thead>
             <tr>
-              <th style="width:130px;">tarih</th>
-              <th style="width:260px; text-align:left;">işlem / açıklama</th>
-              <th style="width:130px; text-align:right;">pos</th>
-              <th style="width:150px; text-align:right;">hakediş<br><span style="font-size:8.5pt; font-weight:normal;">pos - %8 kesinti</span></th>
-              <th style="width:130px; text-align:right;">ödenen</th>
-              <th style="width:150px; text-align:right;">kalan tutar</th>
-              <th style="width:150px; text-align:right;">kâr<br><span style="font-size:8.5pt; font-weight:normal;">pos - hakediş - pos komisyonu (%${this.posBankCommissionRate})</span></th>
+              <th style="width:125px;">Tarih</th>
+              <th style="width:250px; text-align:left;">İşlem / Açıklama</th>
+              <th style="width:120px; text-align:right;">POS</th>
+              <th style="width:100px; text-align:center;">POS Oranı (%)</th>
+              <th style="width:140px; text-align:right;">Hakediş<br><span style="font-size:8.5pt; font-weight:normal;">POS - %8 Kesinti</span></th>
+              <th style="width:120px; text-align:right;">Ödenen</th>
+              <th style="width:140px; text-align:right;">Kalan Tutar</th>
+              <th style="width:140px; text-align:right;">Kâr<br><span style="font-size:8.5pt; font-weight:normal;">Net Kazanç</span></th>
             </tr>
           </thead>
           <tbody>
             ${tableRowsHtml}
             <tr class="total-row">
               <td style="text-align:center;">TOPLAM</td>
+              <td></td>
               <td style="text-align:right;">${fmt(s.totalPos)} ₺</td>
+              <td></td>
               <td style="text-align:right; color:#0369A1;">${fmt(s.totalHakedis)} ₺</td>
               <td style="text-align:left; color:#15803D;">${fmt(s.totalPaid)} ₺</td>
               <td style="text-align:right; color:#991B1B; font-size:12pt;">${fmt(s.totalRemaining)} ₺</td>
+              <td style="text-align:right; color:#166534; font-size:12pt;">${fmt(totalProfit)} ₺</td>
             </tr>
           </tbody>
         </table>
@@ -3392,7 +4373,7 @@ const AdminApp = {
           </td>
           <td style="padding: 7px 9px; text-align: left; font-size: 11px; color: #0F172A;">
             <div style="font-weight: 700;">${this.escapeHtml(r.description || 'İşlem')}</div>
-            ${r.customerName && r.type === 'POS_SALE' ? `<div style="font-size: 10px; color: #64748B;">Müşteri: ${this.escapeHtml(r.customerName)} | Sağlayıcı: ${r.provider || 'AKBANK'}</div>` : ''}
+            ${r.customerName && r.type === 'POS_SALE' ? `<div style="font-size: 10px; color: #64748B;">Müşteri: ${this.escapeHtml(r.customerName)} | Sağlayıcı: ${r.provider || 'KUVEYTTURK'}</div>` : ''}
           </td>
           <td style="padding: 7px 9px; text-align: right; font-weight: 700; font-size: 11px; color: #1E293B;">
             ${posVal}
@@ -3643,13 +4624,12 @@ const AdminApp = {
     }
     if (!this.storeItems || this.storeItems.length === 0) {
       this.storeItems = [
-        { name: '7 Gram 22 Ayar Ajda Altın Bilezik', qty: 1, unitPrice: 10000, kdvRate: 0, lineTotal: 10000, kdvAmount: 0 },
-        { name: 'İşçilik', qty: 1, unitPrice: 1000, kdvRate: 20, lineTotal: 1000, kdvAmount: 166.67 }
+        { name: '22 Ayar Altın / Mücevherat', qty: 1, unitPrice: 0, kdvRate: 0, lineTotal: 0, kdvAmount: 0 }
       ];
     }
     this.renderStoreInvoiceItems();
     this.calculateStoreInvoiceLiveSummary();
-    this.handleFreeItemChange();
+    this.handleFreeItemChange(false);
   },
 
   editStoreInvoice(orderId) {
@@ -3793,11 +4773,20 @@ const AdminApp = {
     this.handleFreeItemChange();
   },
 
-  handleFreeItemChange() {
+  setFreeItemLaborRate(rate) {
+    const el = document.getElementById('freeItemLaborRate');
+    if (el) {
+      el.value = String(rate).replace('.', ',');
+    }
+    this.handleFreeItemChange();
+  },
+
+  handleFreeItemChange(autoUpdateInvoice = true) {
     const nameEl = document.getElementById('freeItemName');
     const qtyEl = document.getElementById('freeItemQty');
     const priceEl = document.getElementById('freeItemPrice');
     const kdvEl = document.getElementById('freeItemKdvRate');
+    const laborEl = document.getElementById('freeItemLaborRate');
 
     const name = (nameEl?.value || '22 Ayar Altın / Mücevherat').trim();
     const qty = Math.max(1, parseInt(qtyEl?.value, 10) || 1);
@@ -3811,35 +4800,115 @@ const AdminApp = {
       this.showToast(`⚠️ "${name}" saat ürünü olduğu için KDV oranı yasal zorunluluk olarak %20 yapıldı.`);
     }
 
-    let netMatrah = totalAmount;
-    let kdvAmount = 0;
+    // İşçilik oranı: virgül ve nokta desteği (örn: 1,5 veya 1.5 -> 1.5)
+    let laborRate = 0;
+    if (laborEl && laborEl.value !== undefined) {
+      const cleanLaborStr = String(laborEl.value).replace(/\s/g, '').replace(',', '.');
+      laborRate = parseFloat(cleanLaborStr) || 0;
+    }
 
-    if (rate > 0 && totalAmount > 0) {
-      netMatrah = Math.round((totalAmount / (1 + (rate / 100))) * 100) / 100;
-      kdvAmount = Math.round((totalAmount - netMatrah) * 100) / 100;
+    let goldGross = totalAmount;
+    let laborGross = 0;
+    let laborNet = 0;
+    let laborKdv = 0;
+    let goldNet = totalAmount;
+    let goldKdv = 0;
+
+    if (laborRate > 0 && totalAmount > 0) {
+      // İşçilik tutarı toplam fatura tutarının içinden hesaplanır
+      laborGross = Math.round(totalAmount * (laborRate / 100) * 100) / 100;
+      goldGross = Math.round((totalAmount - laborGross) * 100) / 100;
+      
+      // İşçilik %20 KDV içerir (toplamın içinde)
+      laborNet = Math.round((laborGross / 1.20) * 100) / 100;
+      laborKdv = Math.round((laborGross - laborNet) * 100) / 100;
+
+      // Kıymetli Maden %0 KDV Özel Matrah
+      goldNet = goldGross;
+      goldKdv = 0;
+    } else {
+      if (rate > 0 && totalAmount > 0) {
+        goldNet = Math.round((totalAmount / (1 + (rate / 100))) * 100) / 100;
+        goldKdv = Math.round((totalAmount - goldNet) * 100) / 100;
+      } else {
+        goldNet = totalAmount;
+        goldKdv = 0;
+      }
     }
 
     const netEl = document.getElementById('freeItemLiveNetText');
     const kdvTextEl = document.getElementById('freeItemLiveKdvText');
     const totalEl = document.getElementById('freeItemLiveTotalText');
 
-    if (netEl) netEl.textContent = '₺' + netMatrah.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    if (kdvTextEl) kdvTextEl.textContent = `₺${kdvAmount.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} (%${rate})`;
-    if (totalEl) totalEl.textContent = '₺' + totalAmount.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (netEl) {
+      netEl.textContent = '₺' + goldGross.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    if (kdvTextEl) {
+      if (laborRate > 0) {
+        kdvTextEl.textContent = `₺${laborGross.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} (KDV: ₺${laborKdv.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })})`;
+      } else {
+        kdvTextEl.textContent = `₺${goldKdv.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} (%${rate})`;
+      }
+    }
+    if (totalEl) {
+      totalEl.textContent = '₺' + totalAmount.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    // 🌟 Canlı Eşzamanlama
+    if (autoUpdateInvoice && totalAmount > 0) {
+      const items = [];
+      if (laborRate > 0) {
+        const unitGold = Math.round((goldGross / qty) * 100) / 100;
+        items.push({
+          name: name || '22 Ayar Altın / Mücevherat',
+          qty: qty,
+          unitPrice: unitGold,
+          kdvRate: 0,
+          lineTotal: goldGross,
+          kdvAmount: 0
+        });
+        items.push({
+          name: 'İşçilik',
+          qty: 1,
+          unitPrice: laborGross,
+          kdvRate: 20,
+          lineTotal: laborGross,
+          kdvAmount: laborKdv
+        });
+      } else {
+        const unitPrice = Math.round((totalAmount / qty) * 100) / 100;
+        items.push({
+          name: name || 'Satış Kalemi',
+          qty: qty,
+          unitPrice: unitPrice,
+          kdvRate: rate,
+          lineTotal: totalAmount,
+          kdvAmount: goldKdv
+        });
+      }
+
+      if (this.storeItems.length <= 2) {
+        this.storeItems = items;
+        this.renderStoreInvoiceItems();
+        this.calculateStoreInvoiceLiveSummary();
+      }
+    }
 
     return {
       name,
       qty,
       totalAmount,
-      unitPrice: Math.round((totalAmount / qty) * 100) / 100,
       kdvRate: rate,
-      netMatrah,
-      kdvAmount
+      laborRate,
+      goldGross,
+      laborGross,
+      laborKdv,
+      goldKdv
     };
   },
 
   applyFreeItemToInvoice(isAppend = false) {
-    const data = this.handleFreeItemChange();
+    const data = this.handleFreeItemChange(false);
     if (!data.totalAmount || data.totalAmount <= 0) {
       alert('⚠️ Lütfen geçerli bir Fatura Tutarı giriniz (Örn: 96.000 TL).');
       const priceEl = document.getElementById('freeItemPrice');
@@ -3847,32 +4916,52 @@ const AdminApp = {
       return;
     }
 
-    // Adet başına birim fiyat ve satır toplamı hesapla (toplam kuruşu kuruşuna tam data.totalAmount olmalı)
-    const unitPrice = Math.round((data.totalAmount / data.qty) * 100) / 100;
-    const lineTotal = data.totalAmount; // Satır toplamı her halükarda girilen tutardır (KDV fiyata dahildir)
-    let kdvAmt = 0;
-    if (data.kdvRate > 0) {
-      kdvAmt = Math.round((lineTotal - (lineTotal / (1 + (data.kdvRate / 100)))) * 100) / 100;
+    const itemsToAdd = [];
+    if (data.laborRate > 0) {
+      // 1. Altın Kalemi (%0 KDV Özel Matrah)
+      const unitGold = Math.round((data.goldGross / data.qty) * 100) / 100;
+      itemsToAdd.push({
+        name: data.name || '22 Ayar Altın / Mücevherat',
+        qty: data.qty,
+        unitPrice: unitGold,
+        kdvRate: 0,
+        lineTotal: data.goldGross,
+        kdvAmount: 0
+      });
+
+      // 2. İşçilik Kalemi (%20 KDV Dahil)
+      itemsToAdd.push({
+        name: 'İşçilik',
+        qty: 1,
+        unitPrice: data.laborGross,
+        kdvRate: 20,
+        lineTotal: data.laborGross,
+        kdvAmount: data.laborKdv
+      });
+    } else {
+      // Tek Kalem
+      const unitPrice = Math.round((data.totalAmount / data.qty) * 100) / 100;
+      let kdvAmt = 0;
+      if (data.kdvRate > 0) {
+        kdvAmt = Math.round((data.totalAmount - (data.totalAmount / (1 + (data.kdvRate / 100)))) * 100) / 100;
+      }
+      itemsToAdd.push({
+        name: data.name || 'Satış Kalemi',
+        qty: data.qty,
+        unitPrice: unitPrice,
+        kdvRate: data.kdvRate,
+        lineTotal: data.totalAmount,
+        kdvAmount: kdvAmt
+      });
     }
 
-    const newItem = {
-      name: data.name || 'Satış Kalemi',
-      qty: data.qty,
-      unitPrice: unitPrice,
-      kdvRate: data.kdvRate,
-      lineTotal: lineTotal,
-      kdvAmount: kdvAmt
-    };
-
     if (!isAppend) {
-      // Tek satır olarak faturayı bu kalemle oluştur
-      this.storeItems = [newItem];
+      this.storeItems = itemsToAdd;
     } else {
-      // Satır olarak mevcutlara ekle
       if (this.storeItems.length === 1 && (!this.storeItems[0].name || this.storeItems[0].unitPrice === 0)) {
-        this.storeItems = [newItem];
+        this.storeItems = itemsToAdd;
       } else {
-        this.storeItems.push(newItem);
+        this.storeItems.push(...itemsToAdd);
       }
     }
 
@@ -3880,8 +4969,8 @@ const AdminApp = {
     this.calculateStoreInvoiceLiveSummary();
 
     this.showToast(isAppend 
-      ? `➕ "${newItem.name}" (₺${lineTotal.toLocaleString('tr-TR')}, %${data.kdvRate} KDV) faturaya eklendi.` 
-      : `⚡ Fatura tek kalem olarak (₺${lineTotal.toLocaleString('tr-TR')}, %${data.kdvRate} KDV) oluşturuldu.`);
+      ? `➕ ${itemsToAdd.length} yeni kalem faturaya eklendi (Toplam: ₺${data.totalAmount.toLocaleString('tr-TR')}).` 
+      : `⚡ Fatura (₺${data.totalAmount.toLocaleString('tr-TR')}) kuruşu kuruşuna oluşturuldu.`);
   },
 
   // ==========================================
@@ -4253,6 +5342,127 @@ const AdminApp = {
     this.showToast(`✨ Toplam ₺${baseTotal.toLocaleString('tr-TR')} sabit tutuldu: Altın ₺${goldGross.toLocaleString('tr-TR')} + İşçilik ₺${laborGross.toLocaleString('tr-TR')} (%${rate} KDV)`);
   },
 
+  // 🌟 Hedef Tutara Göre En Yakın 5 Ürünü Arama ve Listeleme (Altın vs Saat)
+  searchProductsByTargetPrice(type, targetPrice) {
+    const target = Number(String(targetPrice).replace(/\./g, '').replace(/,/g, '.').replace(/[^\d.]/g, '')) || 0;
+    const containerId = (type === 'gold') ? 'goldSearchResultsContainer' : 'watchSearchResultsContainer';
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    if (target <= 0) {
+      container.innerHTML = `<div style="font-size:11px; color:#94A3B8; font-style:italic; padding:6px 0;">Hedef tutarı yazarak en yakın 5 ${type === 'gold' ? 'altın' : 'saat'} modelini listeleyebilirsiniz.</div>`;
+      return;
+    }
+
+    let sourceProducts = [];
+    if (type === 'gold') {
+      // 1. VIP 22 Ayar Kataloğu ve Canlı Fiyatlı Ürünler
+      const vipList = (typeof VipEngine !== 'undefined' && Array.isArray(VipEngine.VIP_22_CATALOG))
+        ? VipEngine.VIP_22_CATALOG.map(p => ({
+            name: p.name,
+            price: (typeof VipEngine.getProductUnitPrice === 'function') ? VipEngine.getProductUnitPrice(p) : (p.basePrice || 0),
+            category: '22 Ayar Altın & Bilezik',
+            kdvRate: 0,
+            isGold: true
+          }))
+        : [
+            { name: '7 Gram 22 Ayar Ajda Altın Bilezik', price: 45570, category: '22 Ayar Bilezik', kdvRate: 0, isGold: true },
+            { name: '10 gr 22 Ayar Burma Altın Bilezik', price: 65240, category: '22 Ayar Bilezik', kdvRate: 0, isGold: true },
+            { name: '15 gr 22 Ayar Burma Altın Bilezik', price: 97860, category: '22 Ayar Bilezik', kdvRate: 0, isGold: true },
+            { name: '20 gr 22 Ayar Burma Altın Bilezik', price: 130480, category: '22 Ayar Bilezik', kdvRate: 0, isGold: true },
+            { name: '25 gr 3\'lü Burma 22 Ayar Altın Bilezik', price: 163100, category: '22 Ayar Bilezik', kdvRate: 0, isGold: true },
+            { name: 'Ata Tam Yeni 22 ayar', price: 46107, category: 'Sarrafiye', kdvRate: 0, isGold: true },
+            { name: 'Yarım Altın', price: 22322, category: 'Sarrafiye', kdvRate: 0, isGold: true },
+            { name: 'Çeyrek Altın', price: 11070, category: 'Sarrafiye', kdvRate: 0, isGold: true },
+            { name: 'Ziynet Çeyrek Altın', price: 11070, category: 'Sarrafiye', kdvRate: 0, isGold: true },
+            { name: 'Ata Çeyrek Altın', price: 11520, category: 'Sarrafiye', kdvRate: 0, isGold: true },
+            { name: 'Ata Yarım Altın', price: 23050, category: 'Sarrafiye', kdvRate: 0, isGold: true },
+            { name: 'Gremse Altın (2.5\'luk)', price: 110700, category: 'Sarrafiye', kdvRate: 0, isGold: true },
+            { name: 'Ata Beşli Altın (5\'lik)', price: 230500, category: 'Sarrafiye', kdvRate: 0, isGold: true }
+          ];
+
+      // Eğer PRODUCTS içinde altın/mücevher varsa ekle
+      const allCatalog = (typeof PRODUCTS !== 'undefined' && Array.isArray(PRODUCTS)) ? PRODUCTS : [];
+      const goldCatalog = allCatalog.filter(p => !p.isElite && !p.isWatch && p.category !== 'elit-saatler').map(p => ({
+        name: p.name || p.title || 'Altın Ürünü',
+        price: Number(p.price || p.priceTry || 0),
+        category: p.category || 'Mücevherat',
+        kdvRate: 0,
+        isGold: true
+      }));
+
+      sourceProducts = [...vipList, ...goldCatalog].filter(p => Number(p.price) > 0);
+    } else {
+      // 2. Lüks Saat Kataloğu
+      const allCatalog = (typeof PRODUCTS !== 'undefined' && Array.isArray(PRODUCTS)) ? PRODUCTS : [];
+      const watchCatalog = allCatalog.filter(p => p.isElite || p.isWatch || p.category === 'elit-saatler' || p.category === 'saat' || (p.brand && ['rolex','cartier','omega','patek','audemars piguet','hublot','breitling','iwc','tag heuer','seiko','tissot'].includes(p.brand.toLowerCase()))).map(p => ({
+        name: `${p.brand ? p.brand + ' ' : ''}${p.name || p.title || ''}`.trim(),
+        price: Number(p.price || p.priceTry || 0),
+        category: p.brand || 'Lüks Saat',
+        kdvRate: 20,
+        isWatch: true
+      }));
+
+      sourceProducts = (watchCatalog.length > 0) ? watchCatalog : [
+        { name: 'Rolex Datejust 41 Smooth Bezel Oyster', price: 650000, category: 'Rolex', kdvRate: 20 },
+        { name: 'Rolex Submariner Date 41mm 126610LN', price: 580000, category: 'Rolex', kdvRate: 20 },
+        { name: 'Rolex GMT-Master II Pepsi 126710BLRO', price: 820000, category: 'Rolex', kdvRate: 20 },
+        { name: 'Rolex Daytona 126500LN Siyah Kadran', price: 1250000, category: 'Rolex', kdvRate: 20 },
+        { name: 'Rolex Day-Date 40 228238 18K Sarı Altın', price: 1750000, category: 'Rolex', kdvRate: 20 },
+        { name: 'Cartier Santos de Cartier Large Steel', price: 340000, category: 'Cartier', kdvRate: 20 },
+        { name: 'Audemars Piguet Royal Oak Selfwinding 41mm', price: 1450000, category: 'Audemars Piguet', kdvRate: 20 },
+        { name: 'Patek Philippe Nautilus 5711/1A-010', price: 3200000, category: 'Patek Philippe', kdvRate: 20 },
+        { name: 'Omega Speedmaster Professional Moonwatch', price: 290000, category: 'Omega', kdvRate: 20 }
+      ];
+    }
+
+    // Hedef fiyata göre sırala (|fiyat - hedef|)
+    const sorted = [...sourceProducts]
+      .map(p => ({
+        ...p,
+        diff: Math.abs(p.price - target),
+        diffPercent: ((p.price - target) / target) * 100
+      }))
+      .sort((a, b) => a.diff - b.diff)
+      .slice(0, 5);
+
+    if (sorted.length === 0) {
+      container.innerHTML = `<div style="font-size:11.5px; color:#DC2626; font-weight:700; padding:6px 0;">⚠️ Bu tutara yakın ürün bulunamadı.</div>`;
+      return;
+    }
+
+    const isGold = (type === 'gold');
+    container.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:6px; margin-top:6px;">
+        ${sorted.map(prod => {
+          const diffSign = prod.diffPercent > 0 ? `+${prod.diffPercent.toFixed(1)}%` : `${prod.diffPercent.toFixed(1)}%`;
+          const diffBadgeColor = Math.abs(prod.diffPercent) <= 5 ? '#059669' : (Math.abs(prod.diffPercent) <= 20 ? '#D97706' : '#64748B');
+          const cleanProdName = (prod.name || '').replace(/'/g, "\\'");
+          return `
+            <div style="background:#FFFFFF; border:1.5px solid ${isGold ? '#FCD34D' : '#86EFAC'}; border-radius:8px; padding:7px 10px; display:flex; justify-content:space-between; align-items:center; gap:8px; box-shadow:0 1px 3px rgba(0,0,0,0.03);">
+              <div style="flex:1; min-width:0;">
+                <div style="font-size:12px; font-weight:800; color:#0F172A; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                  ${this.escapeHtml(prod.name)}
+                </div>
+                <div style="display:flex; align-items:center; gap:8px; margin-top:2px;">
+                  <span style="font-size:12.5px; font-weight:900; color:${isGold ? '#92400E' : '#065F46'};">
+                    ₺${Number(prod.price).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </span>
+                  <span style="font-size:9.5px; font-weight:800; color:#FFF; background:${diffBadgeColor}; padding:1px 5px; border-radius:4px;" title="Hedef tutara olan fark yüzdesi">
+                    ${diffSign}
+                  </span>
+                </div>
+              </div>
+              <button type="button" class="btn-admin-primary" style="padding:6px 10px; font-size:11px; font-weight:800; white-space:nowrap; background:${isGold ? 'linear-gradient(135deg, #D97706 0%, #B45309 100%)' : 'linear-gradient(135deg, #059669 0%, #10B981 100%)'}; border:none;" onclick="AdminApp.applyStoreProductTemplate('${cleanProdName}', ${Number(prod.price)}, ${prod.kdvRate})">
+                <span>➕ Faturaya Ekle</span>
+              </button>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  },
+
   // Hızlı Ürün Şablonu Uygula
   applyStoreProductTemplate(name, price, kdvRate = 0) {
     let rate = Number(kdvRate);
@@ -4272,6 +5482,7 @@ const AdminApp = {
     }
     this.renderStoreInvoiceItems();
     this.calculateStoreInvoiceLiveSummary();
+    this.showToast(`➕ "${name}" (₺${Number(price).toLocaleString('tr-TR')}) faturaya eklendi.`);
   },
 
   addStoreInvoiceItemRow(name = '', qty = 1, unitPrice = 0, kdvRate = 20) {
@@ -4372,14 +5583,18 @@ const AdminApp = {
       this.storeItems[idx].kdvRate = newRate;
     } else if (field === 'qty') {
       this.storeItems[idx].qty = Math.max(1, parseInt(val, 10) || 1);
+      const p = Number(this.storeItems[idx].unitPrice || 0);
+      this.storeItems[idx].lineTotal = Math.round(this.storeItems[idx].qty * p * 100) / 100;
     } else if (field === 'unitPrice') {
       this.storeItems[idx].unitPrice = Math.max(0, parseFloat(val) || 0);
+      const q = Number(this.storeItems[idx].qty || 1);
+      this.storeItems[idx].lineTotal = Math.round(q * this.storeItems[idx].unitPrice * 100) / 100;
     }
 
     const q = Number(this.storeItems[idx].qty || 1);
     const p = Number(this.storeItems[idx].unitPrice || 0);
     const rate = Number(this.storeItems[idx].kdvRate || 0);
-    const lineTot = Math.round(q * p * 100) / 100;
+    const lineTot = Number(this.storeItems[idx].lineTotal !== undefined && this.storeItems[idx].lineTotal !== null && Number(this.storeItems[idx].lineTotal) > 0 ? this.storeItems[idx].lineTotal : Math.round(q * p * 100) / 100);
     let kdvAmt = 0;
     if (rate > 0) {
       kdvAmt = Math.round((lineTot - (lineTot / (1 + (rate / 100)))) * 100) / 100;
@@ -4460,8 +5675,15 @@ const AdminApp = {
     this.storeItems.forEach(it => {
       const q = Math.max(1, Number(it.qty || 1));
       const p = Number(it.unitPrice || 0);
-      const lineTot = Math.round(q * p * 100) / 100;
       const rate = Number(it.kdvRate !== undefined ? it.kdvRate : 0);
+
+      // Satır toplamını kuruş kaybı olmaksızın al
+      let lineTot = 0;
+      if (it.lineTotal !== undefined && it.lineTotal !== null && Number(it.lineTotal) > 0) {
+        lineTot = Math.round(Number(it.lineTotal) * 100) / 100;
+      } else {
+        lineTot = Math.round(q * p * 100) / 100;
+      }
 
       totalGrand = Math.round((totalGrand + lineTot) * 100) / 100;
 
@@ -4839,18 +6061,24 @@ const AdminApp = {
     // 1. Masaüstü Tablo Satırları
     if (tbody) {
       tbody.innerHTML = pagedInvoices.map(inv => {
-        const isSigned = (inv.invoiceStatus === 'SIGNED');
+        const isCancelled = (inv.invoiceStatus === 'CANCELLED' || inv.isCancelled);
+        const isSigned = (inv.invoiceStatus === 'SIGNED' && !isCancelled);
         const isSelected = this.selectedStoreInvoiceIds.has(inv.orderId);
         const invNo = this.getGibInvoiceNumber ? this.getGibInvoiceNumber(inv) : (inv.invoiceNumber || (isSigned ? 'GIB2026000000021' : ''));
 
-        const invoiceBadge = isSigned
+        const invoiceBadge = isCancelled
+          ? `<div style="display:flex; flex-direction:column; align-items:center; gap:2px;" title="İptal Gerekçesi: ${this.escapeHtml(inv.cancelReason || 'İptal Edildi')}">
+               <span style="background:#FEE2E2; color:#991B1B; padding:4px 9px; border-radius:6px; font-weight:800; border:1px solid #FCA5A5;">🚫 İptal Edildi</span>
+               ${inv.cancelReason ? `<span style="font-size:10px; color:#DC2626; max-width:130px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${this.escapeHtml(inv.cancelReason)}</span>` : ''}
+             </div>`
+          : (isSigned
           ? `<div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
                <span style="background:#DCFCE7; color:#15803D; padding:4px 9px; border-radius:6px; font-weight:800; border:1px solid #86EFAC;">🧾 İmzalandı</span>
                ${invNo ? `<span style="font-size:11px; font-weight:800; font-family:monospace; color:#065F46; margin-top:2px; background:#F0FDF4; padding:2px 6px; border-radius:4px; border:1px solid #BBF7D0;">📄 ${invNo}</span>` : ''}
              </div>`
           : (inv.invoiceStatus === 'DRAFT'
           ? '<span style="background:#FEF3C7; color:#92400E; padding:4px 9px; border-radius:6px; font-weight:800; border:1px solid #FCD34D;">🧾 Taslak</span>'
-          : '<span style="background:#FEE2E2; color:#991B1B; padding:4px 9px; border-radius:6px; font-weight:800; border:1px solid #FCA5A5;">⚠️ Kesilmedi</span>');
+          : '<span style="background:#FEE2E2; color:#991B1B; padding:4px 9px; border-radius:6px; font-weight:800; border:1px solid #FCA5A5;">⚠️ Kesilmedi</span>'));
 
         const createdTime = this.formatTimeTr(inv.createdAt);
         const updatedTime = this.formatTimeTr(inv.updatedAt);
@@ -4861,11 +6089,11 @@ const AdminApp = {
           : `<span style="font-weight:700; color:#0F172A;">${this.escapeHtml(inv.productName || 'Kuyumculuk Satışı')}</span>`;
 
         return `
-          <tr style="${isSelected ? 'background:#F0FDF4;' : ''}">
+          <tr style="${isCancelled ? 'background:#FEF2F2; opacity:0.85;' : (isSelected ? 'background:#F0FDF4;' : '')}">
             <td style="text-align:center;">
               <input type="checkbox" class="invoice-row-checkbox" value="${inv.orderId}" 
                      ${isSelected ? 'checked' : ''} 
-                     ${!isSigned ? 'disabled title="Yalnızca imzalanmış faturalar seçilebilir"' : 'title="Muhasebeye iletmek için seçin"'} 
+                     ${(!isSigned || isCancelled) ? 'disabled title="Yalnızca geçerli imzalanmış faturalar seçilebilir"' : 'title="Muhasebeye iletmek için seçin"'} 
                      onchange="AdminApp.toggleStoreInvoiceSelection('${inv.orderId}', this.checked)">
             </td>
             <td style="font-family:monospace; font-weight:800; font-size:12px; color:#064E3B;">${inv.orderId}</td>
@@ -4881,14 +6109,18 @@ const AdminApp = {
               <div style="font-size:11px; color:#92400E; font-weight:800;">🆔 <span style="font-family:monospace;">${inv.customerIdentity || '11111111111'}</span></div>
             </td>
             <td style="font-size:12px; color:#1E293B; line-height:1.4;">${itemsDisplay}</td>
-            <td style="font-weight:800; font-size:14px; color:#047857; text-align:right; white-space:nowrap;">
+            <td style="font-weight:800; font-size:14px; color:${isCancelled ? '#991B1B' : '#047857'}; text-align:right; white-space:nowrap;">
               ₺${Number(inv.totalAmount || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </td>
             <td style="text-align:center;">
               ${invoiceBadge}
             </td>
             <td style="display:flex; gap:4px; flex-wrap:wrap; align-items:center;">
-              ${!isSigned ? `
+              ${isCancelled ? `
+                <button class="btn-admin-secondary" style="padding:5px 8px; font-size:11.5px; background:#FFF; border-color:#CBD5E1; color:#64748B; font-weight:700;" onclick="AdminApp.viewStoreInvoice('${inv.invoiceUuid}', '${inv.orderId}')" title="İptal Edilen Faturayı Aç">
+                  📄 Fatura
+                </button>
+              ` : (!isSigned ? `
                 <button class="btn-admin-primary" style="padding:5px 10px; font-size:11.5px; background:linear-gradient(135deg, #059669 0%, #10B981 100%); border-color:#059669; color:#FFF; font-weight:800;" onclick="AdminApp.startStoreInvoiceSigning('${inv.orderId}')" title="GİB e-Arşiv Fatura Kes (SMS)">
                   🧾 Fatura Kes
                 </button>
@@ -4902,7 +6134,10 @@ const AdminApp = {
                 <button class="btn-admin-secondary" style="padding:5px 10px; font-size:11.5px; background:#DCFCE7; border-color:#86EFAC; color:#166534; font-weight:800;" onclick="AdminApp.sendStoreInvoiceToAccounting('${inv.orderId}')" title="Bu Faturayı Doğrudan Muhasebeye İlet">
                   📲 Muhasebe
                 </button>
-              `}
+                <button class="btn-admin-secondary" style="padding:5px 8px; font-size:11.5px; border-color:#FCA5A5; color:#DC2626; background:#FEF2F2; font-weight:800;" onclick="AdminApp.openCancelInvoiceModal('${inv.orderId}', '${inv.invoiceUuid}', '${invNo}', '${this.escapeHtml(inv.customerName || '')}', ${Number(inv.totalAmount || 0)})" title="GİB e-Arşiv Faturasını Gerekçeli İptal Et">
+                  🚫 GİB İptal
+                </button>
+              `)}
               <button class="btn-admin-secondary" style="padding:5px 8px; font-size:11.5px; border-color:#FCA5A5; color:#DC2626; background:#FEF2F2;" onclick="AdminApp.deleteStoreInvoice('${inv.orderId}')" title="Mağaza Faturasını Kalıcı Sil">
                 🗑️
               </button>
@@ -4915,28 +6150,31 @@ const AdminApp = {
     // 2. Mobil Kart Listesi (≤ 768px)
     if (mobileList) {
       mobileList.innerHTML = pagedInvoices.map(inv => {
-        const isSigned = (inv.invoiceStatus === 'SIGNED');
+        const isCancelled = (inv.invoiceStatus === 'CANCELLED' || inv.isCancelled);
+        const isSigned = (inv.invoiceStatus === 'SIGNED' && !isCancelled);
         const isSelected = this.selectedStoreInvoiceIds.has(inv.orderId);
         const invNo = this.getGibInvoiceNumber ? this.getGibInvoiceNumber(inv) : (inv.invoiceNumber || (isSigned ? 'GIB2026000000021' : ''));
 
         const createdTime = this.formatTimeTr(inv.createdAt);
         const updatedTime = this.formatTimeTr(inv.updatedAt);
 
-        const invoiceBadge = isSigned
+        const invoiceBadge = isCancelled
+          ? `<span style="background:#FEE2E2; color:#991B1B; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #FCA5A5; font-size:11px;">🚫 İptal Edildi</span>`
+          : (isSigned
           ? `<div style="display:inline-flex; flex-direction:column; align-items:center; gap:2px;">
                <span style="background:#DCFCE7; color:#15803D; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #86EFAC; font-size:11px;">🧾 İmzalandı</span>
                ${invNo ? `<span style="font-size:11px; font-weight:800; font-family:monospace; color:#065F46; margin-top:2px; background:#F0FDF4; padding:2px 6px; border-radius:4px; border:1px solid #BBF7D0;">📄 ${invNo}</span>` : ''}
              </div>`
           : (inv.invoiceStatus === 'DRAFT'
           ? '<span style="background:#FEF3C7; color:#92400E; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #FCD34D; font-size:11px;">🧾 Taslak</span>'
-          : '<span style="background:#FEE2E2; color:#991B1B; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #FCA5A5; font-size:11px;">⚠️ Kesilmedi</span>');
+          : '<span style="background:#FEE2E2; color:#991B1B; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #FCA5A5; font-size:11px;">⚠️ Kesilmedi</span>'));
 
         const itemsDisplay = Array.isArray(inv.items) && inv.items.length > 0
           ? inv.items.map(i => `${this.escapeHtml(i.name || 'Ürün')} (x${i.qty || 1})`).join(', ')
           : this.escapeHtml(inv.productName || 'Kuyumculuk Satışı');
 
         return `
-          <article class="admin-mobile-card ${isSigned ? 'card-status-paid' : 'card-status-pending'}" style="${isSelected ? 'border-color:#10B981; background:#F8FCF9;' : ''}">
+          <article class="admin-mobile-card ${isCancelled ? 'card-status-failed' : (isSigned ? 'card-status-paid' : 'card-status-pending')}" style="${isSelected ? 'border-color:#10B981; background:#F8FCF9;' : ''}">
             <div class="mobile-card-header">
               <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                 ${isSigned ? `
@@ -4969,7 +6207,7 @@ const AdminApp = {
               <div class="mobile-financial-row" style="background:#F8FAFB; border:1px solid #CBD5E1; padding:12px 14px; border-radius:10px;">
                 <div class="mobile-amount-box">
                   <span class="mobile-amount-label" style="color:#475569; font-weight:800;">Fatura Tutarı</span>
-                  <span class="mobile-amount-value" style="font-size:18px; color:#047857; font-weight:800;">₺${Number(inv.totalAmount || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                  <span class="mobile-amount-value" style="font-size:18px; color:${isCancelled ? '#991B1B' : '#047857'}; font-weight:800;">₺${Number(inv.totalAmount || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 </div>
                 <div class="mobile-invoice-box">
                   <span class="mobile-amount-label" style="color:#475569; font-weight:800;">e-Arşiv Durumu</span>
@@ -4979,7 +6217,13 @@ const AdminApp = {
             </div>
 
             <div class="mobile-card-actions">
-              ${!isSigned ? `
+              ${isCancelled ? `
+                <div class="mobile-actions-split">
+                  <button type="button" class="btn-mobile-action btn-mobile-invoice-view" onclick="AdminApp.viewStoreInvoice('${inv.invoiceUuid}', '${inv.orderId}')">
+                    <span>📄 Faturayı Aç</span>
+                  </button>
+                </div>
+              ` : (!isSigned ? `
                 <button type="button" class="btn-mobile-action btn-mobile-invoice-sign" onclick="AdminApp.startStoreInvoiceSigning('${inv.orderId}')">
                   <span>🧾 GİB e-Arşiv Fatura Kes (SMS)</span>
                 </button>
@@ -4989,18 +6233,21 @@ const AdminApp = {
                     <span>📄 Faturayı Aç / Yazdır</span>
                   </button>
                 </div>
-              `}
+              `)}
 
-              <div class="mobile-actions-grid-bottom" style="grid-template-columns: 1fr 1fr;">
+              <div class="mobile-actions-grid-bottom" style="grid-template-columns: ${isSigned ? '1fr 1fr 1fr' : '1fr 1fr'};">
                 ${isSigned ? `
                   <button type="button" class="btn-mobile-subaction" style="background:#DCFCE7; color:#166534; border-color:#86EFAC; font-weight:800;" onclick="AdminApp.sendStoreInvoiceToAccounting('${inv.orderId}')">
                     <span>📲 Muhasebe</span>
                   </button>
-                ` : `
+                  <button type="button" class="btn-mobile-subaction" style="color:#DC2626; border-color:#FCA5A5; background:#FEF2F2; font-weight:800;" onclick="AdminApp.openCancelInvoiceModal('${inv.orderId}', '${inv.invoiceUuid}', '${invNo}', '${this.escapeHtml(inv.customerName || '')}', ${Number(inv.totalAmount || 0)})">
+                    <span>🚫 GİB İptal</span>
+                  </button>
+                ` : (!isCancelled ? `
                   <button type="button" class="btn-mobile-subaction" style="background:#FEF3C7; color:#92400E; border-color:#FCD34D; font-weight:800;" onclick="AdminApp.editStoreInvoice('${inv.orderId}')">
                     <span>✏️ Düzenle</span>
                   </button>
-                `}
+                ` : '')}
                 <button type="button" class="btn-mobile-subaction" style="color:#991B1B; border-color:#FCA5A5; background:#FEE2E2; font-weight:800;" onclick="AdminApp.deleteStoreInvoice('${inv.orderId}')">
                   <span>🗑️ Sil</span>
                 </button>
