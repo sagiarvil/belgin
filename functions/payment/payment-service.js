@@ -593,7 +593,7 @@ class PaymentService {
         status: nextStatus,
       }, admin);
 
-      // 1. MOBİL ANLIK PUSH BİLDİRİMİ (iPhone / Android Telegram & NTFY) — Arka planda asenkron çalışsın (0 gecikme)
+      // 1. MOBİL ANLIK PUSH BİLDİRİMİ (iPhone / Android Telegram & NTFY) — Güvenilir & Hızlı Teslimat
       const updatedOrderData = {
         ...order,
         status: nextStatus,
@@ -602,9 +602,14 @@ class PaymentService {
         paidAt: new Date(),
       };
       
-      notifier.sendPaymentPushNotification(updatedOrderData).catch((pushErr) => {
+      try {
+        await Promise.race([
+          notifier.sendPaymentPushNotification(updatedOrderData),
+          new Promise((resolve) => setTimeout(resolve, 2500)),
+        ]);
+      } catch (pushErr) {
         console.error('[Notifier] Push bildirim hatası:', pushErr.message);
-      });
+      }
 
       // 2. Hukuki Delil E-Postaları (Arka planda paralel işlensin)
       if (mailer && typeof mailer.dispatchOrderEvidenceEmails === 'function') {
