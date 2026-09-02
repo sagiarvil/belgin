@@ -904,6 +904,7 @@ const LegalApp = {
       !/^0?5555555555$/.test(cleanPhoneDigits) &&
       !/^(\d)\1+$/.test(cleanPhoneDigits);
     const canonicalPhone = isPhoneValid ? rawPhone : '';
+    const phone = canonicalPhone || notProvidedText;
 
     const rawEmail = String(o.customerEmail || o.customer?.email || '').trim();
     const isEmailValid = rawEmail && 
