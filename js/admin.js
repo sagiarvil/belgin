@@ -2672,22 +2672,72 @@ const AdminApp = {
       const escapedCustomer = String(o.customerName || 'Bireysel Mağaza Müşterisi').replace(/</g, '&lt;').replace(/>/g, '&gt;');
       const providerText = String(o.provider || (o.payment && o.payment.provider) || 'KUVEYTTURK');
 
-      // Ürün kalemlerini belirle
+      // Ürün kalemlerini belirle (Birden fazla satır içeren tüm fatura ürünlerini eksiksiz al)
       let itemsList = [];
       if (Array.isArray(o.items) && o.items.length > 0) {
-        itemsList = o.items;
+        itemsList = o.items.map(it => {
+          const q = parseInt(it.qty || it.miktar || 1, 10) || 1;
+          const pr = Number(it.price || it.fiyat || it.lineTotal || (it.unitPrice ? it.unitPrice * q : 0)) || 0;
+          return {
+            name: it.name || it.malHizmet || it.title || '22 Ayar Altın / Mücevherat',
+            qty: q,
+            price: pr,
+            unitPrice: Number(it.unitPrice || it.birimFiyat || (pr > 0 ? pr / q : 0))
+          };
+        });
+      } else if (o.invoicePayload && Array.isArray(o.invoicePayload.malHizmetTable) && o.invoicePayload.malHizmetTable.length > 0) {
+        itemsList = o.invoicePayload.malHizmetTable.map(it => ({
+          name: it.malHizmet,
+          qty: parseInt(it.miktar, 10) || 1,
+          price: Number(it.fiyat) || 0,
+          unitPrice: Number(it.birimFiyat) || 0
+        }));
+      } else if (o.productName && (o.productName.includes('+') || o.productName.includes(' + '))) {
+        // "1x 22 Ayar Bilezik + 2x Çeyrek Altın" formatı
+        const parts = o.productName.split('+').map(p => p.trim()).filter(Boolean);
+        const autoPrice = parts.length > 0 ? (orderAmount / parts.length) : orderAmount;
+        itemsList = parts.map(part => {
+          let qty = 1;
+          let cleanName = part;
+          const match = part.match(/^(\d+)\s*[xX*]\s*(.+)$/);
+          if (match) {
+            qty = parseInt(match[1], 10) || 1;
+            cleanName = match[2].trim();
+          }
+          return {
+            name: cleanName,
+            qty: qty,
+            price: autoPrice,
+            unitPrice: autoPrice / qty
+          };
+        });
       } else {
         const bd = this.calculateJewelryBreakdown(orderAmount, o);
         if (bd && Array.isArray(bd.items) && bd.items.length > 0) {
-          itemsList = bd.items;
+          itemsList = bd.items.map(it => ({
+            name: it.name || it.malHizmet || '22 Ayar Altın / Mücevherat',
+            qty: parseInt(it.qty || it.miktar || 1, 10) || 1,
+            price: Number(it.lineTotal || it.fiyat || it.price) || (orderAmount / bd.items.length),
+            unitPrice: Number(it.unitPrice || it.birimFiyat) || 0
+          }));
         } else {
           itemsList = [{
-            name: o.productName || (o.invoiceType === 'WATCH' ? 'Lüks İsviçre Kol Saati' : '22 Ayar İşçilikli Altın Bilezik'),
-            qty: o.qty || 1,
-            unitPrice: orderAmount / (o.qty || 1),
+            name: o.productName || o.title || (o.invoiceType === 'WATCH' ? 'Lüks İsviçre Kol Saati' : '22 Ayar İşçilikli Altın Bilezik'),
+            qty: parseInt(o.qty, 10) || 1,
+            unitPrice: orderAmount / (parseInt(o.qty, 10) || 1),
             price: orderAmount
           }];
         }
+      }
+
+      // Eğer satırların toplam fiyatı 0 ise sipariş tutarını eşit dağıt
+      const itemsSum = itemsList.reduce((acc, it) => acc + (it.price || 0), 0);
+      if (itemsSum === 0 && orderAmount > 0) {
+        const share = orderAmount / itemsList.length;
+        itemsList.forEach(it => {
+          it.price = share;
+          it.unitPrice = share / (it.qty || 1);
+        });
       }
 
       itemsList.forEach((it, itIdx) => {
