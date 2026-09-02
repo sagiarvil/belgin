@@ -4336,8 +4336,14 @@ const AdminApp = {
   },
 
   // 10.8 FATURA & MÜŞTERİ BİLGİLERİNİ GÜNCELLEME (EDIT CUSTOMER & INVOICE RECIPIENT)
+  formatCurrency(val) {
+    return '₺' + Number(val || 0).toLocaleString('tr-TR', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+  },
+
   openEditCustomerModal(orderId) {
-    const order = (this.orders || []).find(o => o.orderId === orderId);
+    const order = (this.orders || []).find(o => o.orderId === orderId) ||
+                  (this.filteredOrders || []).find(o => o.orderId === orderId) ||
+                  (this.currentPagedOrders || []).find(o => o.orderId === orderId);
     if (!order) {
       alert('Sipariş bulunamadı.');
       return;
@@ -4361,7 +4367,8 @@ const AdminApp = {
 
     const cust = order.customer || {};
     if (idInput) idInput.value = order.orderId;
-    if (subTitle) subTitle.textContent = `Sipariş No: ${order.orderId} (${this.formatCurrency(order.totalAmount || 0)})`;
+    const formattedAmount = this.formatCurrency(order.totalAmount || 0);
+    if (subTitle) subTitle.textContent = `Sipariş No: ${order.orderId} (${formattedAmount})`;
 
     if (nameInput) nameInput.value = order.customerName || cust.name || '';
     if (identityInput) identityInput.value = order.customerIdentity || cust.identityNumber || cust.identity || '';
