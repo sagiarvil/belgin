@@ -3609,6 +3609,103 @@
 </div>
 
 <!-- ======================================================== -->
+<!-- EXCEL (.XLS) DIŞA AKTARMA VE TARİH ARALIĞI MODALI       -->
+<!-- ======================================================== -->
+<div class="admin-modal-overlay" id="excelExportModal" onclick="if(event.target===this) AdminApp.closeExcelExportModal();">
+  <div class="admin-modal-box" style="max-width:540px; padding:0; overflow:hidden; border-radius:14px; border:2px solid #059669;">
+    
+    <!-- Modal Üst Başlık -->
+    <div style="background:linear-gradient(135deg, #064E3B 0%, #059669 50%, #047857 100%); color:#FFF; padding:16px 20px; display:flex; justify-content:space-between; align-items:center;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span style="font-size:24px; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.2));">📊</span>
+        <div>
+          <h3 style="margin:0; font-family:'Playfair Display',serif; font-size:18px; font-weight:800; color:#FFF; letter-spacing:0.3px;">
+            Excel Fatura & Tahsilat Raporu
+          </h3>
+          <span style="font-size:11.5px; color:#D1FAE5; font-weight:500;">
+            Ürün adı, adet, tutar ve e-Arşiv matrah dökümlü Excel raporu oluştur
+          </span>
+        </div>
+      </div>
+      <button type="button" style="background:none; border:none; color:#FFF; font-size:22px; cursor:pointer; line-height:1;" onclick="AdminApp.closeExcelExportModal()">✕</button>
+    </div>
+
+    <!-- Modal Form İçeriği -->
+    <form id="excelExportForm" onsubmit="event.preventDefault(); AdminApp.generateExcelExport();" style="padding:20px; max-height:80vh; overflow-y:auto;">
+      
+      <!-- 1. TARİH ARALIĞI SEÇİMİ -->
+      <div style="background:#F0FDF4; border:1px solid #BBF7D0; border-radius:10px; padding:14px; margin-bottom:14px;">
+        <div style="font-size:12px; font-weight:800; color:#166534; margin-bottom:10px; text-transform:uppercase; display:flex; align-items:center; gap:5px;">
+          <span>📅</span> 1. Tarih Aralığı
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:10px;">
+          <div>
+            <label style="display:block; font-size:11px; font-weight:800; color:#334155; margin-bottom:3px;">
+              Başlangıç Tarihi:
+            </label>
+            <input type="date" id="exportStartDate" style="width:100%; border:1.5px solid #CBD5E1; padding:8px 10px; border-radius:6px; font-size:13px; font-weight:700; color:#0F172A;">
+          </div>
+
+          <div>
+            <label style="display:block; font-size:11px; font-weight:800; color:#334155; margin-bottom:3px;">
+              Bitiş Tarihi:
+            </label>
+            <input type="date" id="exportEndDate" style="width:100%; border:1.5px solid #CBD5E1; padding:8px 10px; border-radius:6px; font-size:13px; font-weight:700; color:#0F172A;">
+          </div>
+        </div>
+
+        <!-- Hızlı Tarih Butonları -->
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <button type="button" class="btn-admin-secondary" style="padding:3px 8px; font-size:11px; font-weight:700;" onclick="AdminApp.setExportDatePreset('today')">Bugün</button>
+          <button type="button" class="btn-admin-secondary" style="padding:3px 8px; font-size:11px; font-weight:700;" onclick="AdminApp.setExportDatePreset('this_week')">Bu Hafta</button>
+          <button type="button" class="btn-admin-secondary" style="padding:3px 8px; font-size:11px; font-weight:700;" onclick="AdminApp.setExportDatePreset('this_month')">Bu Ay</button>
+          <button type="button" class="btn-admin-secondary" style="padding:3px 8px; font-size:11px; font-weight:700;" onclick="AdminApp.setExportDatePreset('last_30')">Son 30 Gün</button>
+          <button type="button" class="btn-admin-secondary" style="padding:3px 8px; font-size:11px; font-weight:700;" onclick="AdminApp.setExportDatePreset('all')">Tüm Zamanlar</button>
+        </div>
+      </div>
+
+      <!-- 2. DURUM VE FORMAT FİLTRESİ -->
+      <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px; padding:14px; margin-bottom:14px;">
+        <div style="font-size:12px; font-weight:800; color:#334155; margin-bottom:10px; text-transform:uppercase; display:flex; align-items:center; gap:5px;">
+          <span>📑</span> 2. Durum & Rapor Detay Seviyesi
+        </div>
+
+        <div style="margin-bottom:10px;">
+          <label style="display:block; font-size:11px; font-weight:800; color:#475569; margin-bottom:3px;">
+            Dahil Edilecek İşlemler:
+          </label>
+          <select id="exportStatusFilter" style="width:100%; border:1.5px solid #CBD5E1; padding:8px 10px; border-radius:6px; font-size:12.5px; font-weight:700; color:#0F172A;">
+            <option value="PAID" selected>✅ Tüm Onaylanan Tahsilatlar</option>
+            <option value="INVOICE_SIGNED">🧾 Yalnızca Faturası Kesilenler (İmzalanmış)</option>
+            <option value="INVOICE_PENDING">⚠️ Yalnızca Faturası Kesilecekler</option>
+            <option value="ALL">📋 Tüm Kayıtlar (İptal/Bekleyenler Dahil)</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="display:block; font-size:11px; font-weight:800; color:#475569; margin-bottom:3px;">
+            Excel Kalem Detayı:
+          </label>
+          <select id="exportDetailType" style="width:100%; border:1.5px solid #CBD5E1; padding:8px 10px; border-radius:6px; font-size:12.5px; font-weight:700; color:#0F172A;">
+            <option value="ITEM_ROWS" selected>💎 Her Ürün Ayrı Satır (Ürün Adı + Adet + Satır Tutarı + KDV Matrahı)</option>
+            <option value="SUMMARY_ROWS">📄 Sipariş Başına Tek Satır (Birleşik Ürün Açıklaması)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Alt Butonlar -->
+      <div style="display:flex; justify-content:flex-end; gap:10px; align-items:center;">
+        <button type="button" class="btn-admin-secondary" onclick="AdminApp.closeExcelExportModal()" style="padding:9px 16px; font-weight:700;">Vazgeç</button>
+        <button type="submit" id="btnRunExcelExport" class="btn-admin-primary" style="background:linear-gradient(135deg, #059669 0%, #10B981 100%); border-color:#059669; color:#FFF; padding:9px 20px; font-weight:800; font-size:13px; border-radius:8px; cursor:pointer;">
+          <span>📥 Excel (.xls) İndir</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ======================================================== -->
 <!-- FATURA ALICI & MÜŞTERİ BİLGİLERİNİ GÜNCELLEME MODALI     -->
 <!-- ======================================================== -->
 <div class="admin-modal-overlay" id="editCustomerModal" onclick="if(event.target===this) AdminApp.closeEditCustomerModal();">

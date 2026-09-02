@@ -2523,70 +2523,274 @@ const AdminApp = {
     }
   },
 
-  // EXCEL (.XLS) RAPORU İNDİR (Formatlı Tablo, Veri Bozulma Koruması ve Toplam Satırı)
+  // 10.9 EXCEL (.XLS) FATURA & ÜRÜN DETAYLI RAPOR DIŞA AKTARMA SİSTEMİ
+  openExcelExportModal() {
+    const modal = document.getElementById('excelExportModal');
+    if (!modal) {
+      this.generateExcelExport();
+      return;
+    }
+
+    const startInput = document.getElementById('exportStartDate');
+    const endInput = document.getElementById('exportEndDate');
+    const statusSelect = document.getElementById('exportStatusFilter');
+
+    const mainStart = document.getElementById('startDate')?.value;
+    const mainEnd = document.getElementById('endDate')?.value;
+    const mainStatus = document.getElementById('statusFilter')?.value;
+
+    if (startInput) {
+      if (mainStart) {
+        startInput.value = mainStart;
+      } else {
+        const now = new Date();
+        const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+        startInput.value = firstDay.toISOString().split('T')[0];
+      }
+    }
+
+    if (endInput) {
+      if (mainEnd) {
+        endInput.value = mainEnd;
+      } else {
+        endInput.value = new Date().toISOString().split('T')[0];
+      }
+    }
+
+    if (statusSelect && mainStatus) {
+      statusSelect.value = mainStatus;
+    }
+
+    modal.style.display = 'flex';
+  },
+
+  closeExcelExportModal() {
+    const modal = document.getElementById('excelExportModal');
+    if (modal) modal.style.display = 'none';
+  },
+
+  setExportDatePreset(preset) {
+    const startInput = document.getElementById('exportStartDate');
+    const endInput = document.getElementById('exportEndDate');
+    if (!startInput || !endInput) return;
+
+    const today = new Date();
+    const todayStr = today.toISOString().split('T')[0];
+
+    if (preset === 'today') {
+      startInput.value = todayStr;
+      endInput.value = todayStr;
+    } else if (preset === 'this_week') {
+      const day = today.getDay();
+      const diff = today.getDate() - day + (day === 0 ? -6 : 1);
+      const monday = new Date(today.setDate(diff));
+      startInput.value = monday.toISOString().split('T')[0];
+      endInput.value = new Date().toISOString().split('T')[0];
+    } else if (preset === 'this_month') {
+      const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+      startInput.value = firstDay.toISOString().split('T')[0];
+      endInput.value = todayStr;
+    } else if (preset === 'last_30') {
+      const prior30 = new Date(today.getTime() - (30 * 24 * 60 * 60 * 1000));
+      startInput.value = prior30.toISOString().split('T')[0];
+      endInput.value = todayStr;
+    } else if (preset === 'all') {
+      startInput.value = '';
+      endInput.value = '';
+    }
+  },
+
   exportToExcel() {
-    const searchVal = (document.getElementById('searchInput')?.value || '').toLowerCase().trim();
-    const statusVal = document.getElementById('statusFilter')?.value || '';
+    this.openExcelExportModal();
+  },
 
-    const ordersToExport = (this.filteredOrders && this.filteredOrders.length > 0 ? this.filteredOrders : this.orders || []).filter(o => {
-      const matchSearch = !searchVal || 
-        (o.orderId && o.orderId.toLowerCase().includes(searchVal)) ||
-        (o.customerName && o.customerName.toLowerCase().includes(searchVal)) ||
-        (o.customerPhone && o.customerPhone.includes(searchVal)) ||
-        (o.provider && o.provider.toLowerCase().includes(searchVal));
+  exportToCsv() {
+    this.openExcelExportModal();
+  },
 
+  generateExcelExport() {
+    const startDateStr = document.getElementById('exportStartDate')?.value || document.getElementById('startDate')?.value || '';
+    const endDateStr = document.getElementById('exportEndDate')?.value || document.getElementById('endDate')?.value || '';
+    const statusVal = document.getElementById('exportStatusFilter')?.value || document.getElementById('statusFilter')?.value || 'PAID';
+    const detailType = document.getElementById('exportDetailType')?.value || 'ITEM_ROWS';
+
+    let allOrders = Array.isArray(this.orders) && this.orders.length > 0 ? this.orders : (this.filteredOrders || []);
+
+    // 1. Tarih ve Durum Filtrelerini Uygula
+    const matchedOrders = allOrders.filter(o => {
+      // Tarih filtresi
+      if (startDateStr) {
+        const orderDate = new Date(o.createdAt);
+        const start = new Date(startDateStr + 'T00:00:00');
+        if (orderDate < start) return false;
+      }
+      if (endDateStr) {
+        const orderDate = new Date(o.createdAt);
+        const end = new Date(endDateStr + 'T23:59:59.999');
+        if (orderDate > end) return false;
+      }
+
+      // Durum filtresi
       const isPaid = Boolean(o.isPaid) && (o.paymentStatus === 'PAID' || o.status === 'PAID' || o.status === 'AWAITING_STORE_PICKUP');
       const isFailed = o.status === 'FAILED' || o.paymentStatus === 'FAILED' || o.status === 'PAYMENT_FAILED';
       const isPending = !isPaid && !isFailed;
       const isInvoiceSigned = (o.invoiceStatus === 'SIGNED');
       const isInvoicePending = isPaid && !isInvoiceSigned;
 
-      let matchStatus = true;
-      if (statusVal === 'PAID') matchStatus = isPaid;
-      else if (statusVal === 'INVOICE_PENDING') matchStatus = isInvoicePending;
-      else if (statusVal === 'INVOICE_SIGNED') matchStatus = isInvoiceSigned;
-      else if (statusVal === 'PENDING') matchStatus = isPending;
-      else if (statusVal === 'FAILED') matchStatus = isFailed;
-
-      return matchSearch && matchStatus;
+      if (statusVal === 'PAID') return isPaid;
+      if (statusVal === 'INVOICE_SIGNED') return isInvoiceSigned;
+      if (statusVal === 'INVOICE_PENDING') return isInvoicePending;
+      if (statusVal === 'PENDING') return isPending;
+      if (statusVal === 'FAILED') return isFailed;
+      return true; // 'ALL'
     });
 
-    if (!ordersToExport || ordersToExport.length === 0) {
-      alert('Dışa aktarılacak ödeme kaydı bulunamadı.');
+    if (!matchedOrders || matchedOrders.length === 0) {
+      alert('Seçilen tarih aralığında ve kriterlere uygun dışa aktarılacak sipariş kaydı bulunamadı.');
       return;
     }
 
-    const startDate = document.getElementById('startDate')?.value || '';
-    const endDate = document.getElementById('endDate')?.value || '';
-    const periodText = (startDate && endDate) ? `${startDate} ile ${endDate} Arası` : `Tüm Kayıtlar (${new Date().toLocaleDateString('tr-TR')})`;
-    const dateSuffix = (startDate && endDate) ? `_${startDate}_${endDate}` : `_${new Date().toISOString().split('T')[0]}`;
+    const periodText = (startDateStr && endDateStr)
+      ? `${startDateStr} ile ${endDateStr} Arası`
+      : (startDateStr ? `${startDateStr} Sonrası` : (endDateStr ? `${endDateStr} Öncesi` : 'Tüm Kayıtlar'));
 
-    let totalSum = 0;
-    const tableRows = ordersToExport.map((o, idx) => {
-      const amount = Number(o.totalAmount || 0);
-      totalSum += amount;
+    const dateSuffix = (startDateStr && endDateStr)
+      ? `_${startDateStr}_${endDateStr}`
+      : `_${new Date().toISOString().split('T')[0]}`;
+
+    let totalQtySum = 0;
+    let totalLineAmountSum = 0;
+    let totalGoldSum = 0;
+    let totalWorkmanshipNetSum = 0;
+    let totalKdvSum = 0;
+    let totalOrderAmountSum = 0;
+
+    let rowsHtml = '';
+    let rowCount = 0;
+
+    matchedOrders.forEach((o, orderIdx) => {
+      const orderAmount = Number(o.totalAmount || 0);
+      totalOrderAmountSum += orderAmount;
       const dateStr = new Date(o.createdAt).toLocaleString('tr-TR');
-      const escapedCustomer = (o.customerName || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      const escapedAddress = (o.customerAddress || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      const bgColor = idx % 2 === 0 ? '#FFFFFF' : '#F9FBFB';
+      const invNo = this.getGibInvoiceNumber ? this.getGibInvoiceNumber(o) : (o.invoiceNumber || (o.invoiceStatus === 'SIGNED' ? 'GIB2026...' : '—'));
+      const invStatusText = o.invoiceStatus === 'SIGNED' ? 'İmzalandı (Resmi Belge)' : (o.invoiceStatus === 'DRAFT' ? 'Taslak' : 'Kesilmedi');
+      const invTypeText = o.invoiceType === 'WATCH' ? 'Lüks Saat (%20 KDV)' : (o.invoiceType === 'CUSTOM' ? 'Serbest Matrah' : 'Altın & Ziynet (KDV Kanunu 23/f Özel Matrah)');
 
-      return `
-        <tr style="background-color: ${bgColor};">
-          <td class="text-cell" style="font-weight:600;">${o.orderId}</td>
-          <td class="text-cell" style="color:#666;">${o.evidenceId || o.orderId}</td>
-          <td class="text-cell">${dateStr}</td>
-          <td>${escapedCustomer}</td>
-          <td class="text-cell">${o.customerIdentity || '—'}</td>
-          <td>${escapedAddress}</td>
-          <td class="text-cell">${o.customerPhone || '—'}</td>
-          <td class="text-cell">${o.customerEmail || '—'}</td>
-          <td class="num-cell" style="font-weight:700; color:#042926;">${amount.toFixed(2)}</td>
-          <td style="text-align:center;">${o.provider || 'KUVEYTTURK'}</td>
-          <td style="text-align:center; font-weight:600; color:${o.paymentStatus === 'PAID' ? '#166534' : '#991B1B'};">${o.paymentStatus || o.status}</td>
-          <td style="text-align:center;">${o.deliveryMethod === 'showroom' ? 'Showroom Teslim' : 'Kargo'}</td>
-        </tr>
-      `;
-    }).join('');
+      const escapedCustomer = String(o.customerName || 'Bireysel Müşteri').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const escapedIdentity = String(o.customerIdentity || '—').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const escapedPhone = String(o.customerPhone || '—').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const escapedAddress = String(o.customerAddress || 'İzmir Buca Showroom Mağazadan Teslim').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const providerText = String(o.provider || 'KUVEYTTURK');
+      const authCode = String(o.authCode || o.bankAuthCode || o.rrn || '—');
+
+      // Ürün kalemlerini belirle
+      let itemsList = [];
+      if (Array.isArray(o.items) && o.items.length > 0) {
+        itemsList = o.items;
+      } else {
+        const bd = this.calculateJewelryBreakdown(orderAmount, o);
+        if (bd && Array.isArray(bd.items) && bd.items.length > 0) {
+          itemsList = bd.items;
+        } else {
+          itemsList = [{
+            name: o.productName || (o.invoiceType === 'WATCH' ? 'Lüks İsviçre Kol Saati' : '22 Ayar İşçilikli Altın Bilezik'),
+            qty: o.qty || 1,
+            unitPrice: orderAmount / (o.qty || 1),
+            price: orderAmount
+          }];
+        }
+      }
+
+      if (detailType === 'SUMMARY_ROWS') {
+        // Sipariş Başına Tek Satır
+        rowCount++;
+        const combinedProductName = itemsList.map(it => `${(it.qty || 1) > 1 ? (it.qty || 1) + 'x ' : ''}${it.name || it.malHizmet || 'Ürün'}`).join(' + ');
+        const totalQty = itemsList.reduce((acc, it) => acc + (parseInt(it.qty, 10) || 1), 0);
+        totalQtySum += totalQty;
+        totalLineAmountSum += orderAmount;
+
+        const bd = this.calculateJewelryBreakdown(orderAmount, o);
+        totalGoldSum += (bd.hasGoldAmount || 0);
+        totalWorkmanshipNetSum += (bd.workmanshipNet || 0);
+        totalKdvSum += (bd.workmanshipKdv || 0);
+
+        const bgColor = rowCount % 2 === 0 ? '#FFFFFF' : '#F9FBFB';
+
+        rowsHtml += `
+          <tr style="background-color: ${bgColor};">
+            <td class="text-cell" style="font-weight:700; color:#064E3B;">${o.orderId}</td>
+            <td class="text-cell">${dateStr}</td>
+            <td style="font-weight:700; color:${o.invoiceStatus === 'SIGNED' ? '#166534' : '#92400E'};">${invStatusText}</td>
+            <td class="text-cell" style="font-weight:700; font-family:monospace; color:#047857;">${invNo}</td>
+            <td class="text-cell">${invTypeText}</td>
+            <td style="font-weight:700; color:#0F172A;">${escapedCustomer}</td>
+            <td class="text-cell">${escapedIdentity}</td>
+            <td class="text-cell">${escapedPhone}</td>
+            <td class="text-cell">${escapedAddress}</td>
+            <td style="font-weight:700; color:#0F172A;">${combinedProductName}</td>
+            <td class="num-cell" style="text-align:center; font-weight:700;">${totalQty}</td>
+            <td class="num-cell" style="font-weight:700;">${orderAmount.toFixed(2)}</td>
+            <td class="num-cell" style="font-weight:700; color:#064E3B;">${orderAmount.toFixed(2)}</td>
+            <td class="num-cell">${(bd.hasGoldAmount || 0).toFixed(2)}</td>
+            <td class="num-cell">${(bd.workmanshipNet || 0).toFixed(2)}</td>
+            <td class="num-cell" style="color:#0284C7; font-weight:700;">${(bd.workmanshipKdv || 0).toFixed(2)}</td>
+            <td class="num-cell" style="font-weight:800; color:#047857; background:#F0FDF4;">${orderAmount.toFixed(2)}</td>
+            <td style="text-align:center;">${providerText}</td>
+            <td class="text-cell" style="text-align:center;">${authCode}</td>
+          </tr>
+        `;
+      } else {
+        // Her Ürün Ayrı Satır (Detailed Item Rows)
+        itemsList.forEach((it, itIdx) => {
+          rowCount++;
+          const itName = String(it.name || it.malHizmet || it.title || 'Altın / Mücevherat Ürünü').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+          const itQty = parseInt(it.qty, 10) || 1;
+          const itLineTotal = Number(it.price || (it.unitPrice ? it.unitPrice * itQty : orderAmount / itemsList.length) || 0);
+          const itUnitPrice = it.unitPrice ? Number(it.unitPrice) : (itLineTotal / itQty);
+
+          totalQtySum += itQty;
+          totalLineAmountSum += itLineTotal;
+
+          // Kalem bazında matrah & KDV dökümü
+          const itemRatio = orderAmount > 0 ? (itLineTotal / orderAmount) : (1 / itemsList.length);
+          const bd = this.calculateJewelryBreakdown(orderAmount, o);
+          const itemGold = Math.round((bd.hasGoldAmount * itemRatio) * 100) / 100;
+          const itemWorkNet = Math.round((bd.workmanshipNet * itemRatio) * 100) / 100;
+          const itemKdv = Math.round((bd.workmanshipKdv * itemRatio) * 100) / 100;
+
+          totalGoldSum += itemGold;
+          totalWorkmanshipNetSum += itemWorkNet;
+          totalKdvSum += itemKdv;
+
+          const isFirstItemOfOrder = itIdx === 0;
+          const bgColor = orderIdx % 2 === 0 ? '#FFFFFF' : '#F9FBFB';
+
+          rowsHtml += `
+            <tr style="background-color: ${bgColor};">
+              <td class="text-cell" style="font-weight:700; color:#064E3B;">${o.orderId}</td>
+              <td class="text-cell">${dateStr}</td>
+              <td style="font-weight:700; color:${o.invoiceStatus === 'SIGNED' ? '#166534' : '#92400E'};">${invStatusText}</td>
+              <td class="text-cell" style="font-weight:700; font-family:monospace; color:#047857;">${invNo}</td>
+              <td class="text-cell">${invTypeText}</td>
+              <td style="font-weight:700; color:#0F172A;">${escapedCustomer}</td>
+              <td class="text-cell">${escapedIdentity}</td>
+              <td class="text-cell">${escapedPhone}</td>
+              <td class="text-cell">${escapedAddress}</td>
+              <td style="font-weight:700; color:#042926;">${itName}</td>
+              <td class="num-cell" style="text-align:center; font-weight:800; color:#0F172A;">${itQty}</td>
+              <td class="num-cell">${itUnitPrice.toFixed(2)}</td>
+              <td class="num-cell" style="font-weight:700; color:#064E3B;">${itLineTotal.toFixed(2)}</td>
+              <td class="num-cell">${itemGold.toFixed(2)}</td>
+              <td class="num-cell">${itemWorkNet.toFixed(2)}</td>
+              <td class="num-cell" style="color:#0284C7; font-weight:700;">${itemKdv.toFixed(2)}</td>
+              <td class="num-cell" style="font-weight:800; color:#047857; background:#F0FDF4;">${(isFirstItemOfOrder ? orderAmount.toFixed(2) : '')}</td>
+              <td style="text-align:center;">${providerText}</td>
+              <td class="text-cell" style="text-align:center;">${authCode}</td>
+            </tr>
+          `;
+        });
+      }
+    });
 
     const excelHtml = `
       <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
@@ -2597,7 +2801,7 @@ const AdminApp = {
           <x:ExcelWorkbook>
             <x:ExcelWorksheets>
               <x:ExcelWorksheet>
-                <x:Name>Tahsilat Raporu</x:Name>
+                <x:Name>Fatura ve Tahsilat Raporu</x:Name>
                 <x:WorksheetOptions>
                   <x:DisplayGridlines/>
                 </x:WorksheetOptions>
@@ -2609,52 +2813,64 @@ const AdminApp = {
         <style>
           body { font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 11pt; color: #1F2937; }
           table { border-collapse: collapse; width: 100%; }
-          th { background-color: #042926; color: #FFFFFF; font-weight: bold; border: 1px solid #084C47; padding: 10px 12px; text-align: left; font-size: 11pt; }
-          td { border: 1px solid #D1D5DB; padding: 8px 10px; vertical-align: middle; font-size: 10.5pt; }
+          th { background-color: #064E3B; color: #FFFFFF; font-weight: bold; border: 1px solid #047857; padding: 10px 12px; text-align: left; font-size: 11pt; }
+          td { border: 1px solid #CBD5E1; padding: 7px 10px; vertical-align: middle; font-size: 10.5pt; }
           .text-cell { mso-number-format:"\\@"; }
           .num-cell { mso-number-format:"\\#\\,\\#\\#0\\.00"; text-align: right; }
-          .total-row td { background-color: #E6F4EA; border-top: 2px solid #137333; border-bottom: 2px solid #137333; font-weight: bold; }
-          .total-amount { background-color: #E6F4EA; border-top: 2px solid #137333; border-bottom: 2px solid #137333; font-weight: bold; font-size: 12pt; color: #137333; mso-number-format:"\\#\\,\\#\\#0\\.00"; text-align: right; }
+          .total-row td { background-color: #DCFCE7; border-top: 2px solid #166534; border-bottom: 2px solid #166534; font-weight: bold; }
+          .total-amount { background-color: #DCFCE7; border-top: 2px solid #166534; border-bottom: 2px solid #166534; font-weight: bold; font-size: 12pt; color: #166534; mso-number-format:"\\#\\,\\#\\#0\\.00"; text-align: right; }
         </style>
       </head>
       <body>
         <table>
           <tr>
-            <td colspan="12" style="border:none; font-size: 16pt; font-weight: bold; color: #042926; padding-bottom: 4px;">BELGİN KUYUMCULUK & SAAT</td>
+            <td colspan="19" style="border:none; font-size: 17pt; font-weight: bold; color: #064E3B; padding-bottom: 4px;">BELGİN KUYUMCULUK & MÜCEVHERAT</td>
           </tr>
           <tr>
-            <td colspan="12" style="border:none; font-size: 12pt; font-weight: bold; color: #B68A32; padding-bottom: 4px;">Sanal POS Tahsilat ve Hesap Özeti Raporu</td>
+            <td colspan="19" style="border:none; font-size: 13pt; font-weight: bold; color: #D97706; padding-bottom: 4px;">e-Arşiv Fatura, Satış Kalemleri ve Tahsilat Hesap Özeti Raporu</td>
           </tr>
           <tr>
-            <td colspan="12" style="border:none; font-size: 10pt; color: #4B5563; padding-bottom: 14px;"><strong>Rapor Dönemi:</strong> ${periodText} | <strong>Oluşturulma:</strong> ${new Date().toLocaleString('tr-TR')}</td>
+            <td colspan="19" style="border:none; font-size: 10.5pt; color: #475569; padding-bottom: 14px;"><strong>Rapor Dönemi:</strong> ${periodText} | <strong>Toplam İşlem:</strong> ${matchedOrders.length} Adet | <strong>Oluşturulma:</strong> ${new Date().toLocaleString('tr-TR')}</td>
           </tr>
           <tr></tr>
           <thead>
             <tr>
-              <th style="width: 200px;">Sipariş No</th>
-              <th style="width: 200px;">Hukuki Delil ID</th>
+              <th style="width: 170px;">Sipariş / İşlem No</th>
               <th style="width: 140px;">İşlem Tarihi</th>
+              <th style="width: 130px;">Fatura Durumu</th>
+              <th style="width: 150px;">GİB Belge No</th>
+              <th style="width: 220px;">Fatura / Vergi Türü</th>
               <th style="width: 180px;">Müşteri Adı Soyadı</th>
-              <th style="width: 140px;">T.C. Kimlik / Pasaport</th>
-              <th style="width: 260px;">Fatura / Teslimat Adresi</th>
+              <th style="width: 140px;">T.C. Kimlik / VKN</th>
               <th style="width: 130px;">Telefon</th>
-              <th style="width: 200px;">E-Posta</th>
-              <th style="width: 140px; text-align: right;">Tutar (TL)</th>
-              <th style="width: 100px; text-align: center;">POS / Banka</th>
-              <th style="width: 120px; text-align: center;">Ödeme Durumu</th>
-              <th style="width: 140px; text-align: center;">Teslimat Kanalı</th>
+              <th style="width: 260px;">Fatura & Teslimat Adresi</th>
+              <th style="width: 260px; background-color: #047857;">Ürün / Fatura Kalem Adı</th>
+              <th style="width: 80px; text-align: center; background-color: #047857;">Adet</th>
+              <th style="width: 120px; text-align: right; background-color: #047857;">Birim Fiyat (TL)</th>
+              <th style="width: 130px; text-align: right; background-color: #047857;">Satır Tutarı (TL)</th>
+              <th style="width: 150px; text-align: right;">Kıymetli Maden (%0 Özel Matrah)</th>
+              <th style="width: 140px; text-align: right;">İşçilik Matrahı (Net)</th>
+              <th style="width: 130px; text-align: right;">KDV (%20)</th>
+              <th style="width: 160px; text-align: right; background-color: #065F46;">Toplam Sipariş Tutarı (TL)</th>
+              <th style="width: 120px; text-align: center;">Ödeme Kanalı</th>
+              <th style="width: 130px; text-align: center;">Dekont / Auth Kod</th>
             </tr>
           </thead>
           <tbody>
-            ${tableRows}
-            <tr style="height: 12px;"><td colspan="12" style="border:none;"></td></tr>
+            ${rowsHtml}
+            <tr style="height: 12px;"><td colspan="19" style="border:none;"></td></tr>
             <tr class="total-row">
-              <td class="text-cell" style="font-size: 11pt; color: #137333;">GENEL TOPLAM</td>
-              <td colspan="2" style="color: #555;"></td>
-              <td style="color: #137333;">Toplam ${ordersToExport.length} Adet İşlem</td>
-              <td colspan="4"></td>
-              <td class="total-amount">${totalSum.toFixed(2)}</td>
-              <td colspan="3" style="text-align: center; color: #137333; font-size: 10pt;">${(this.adminPin ? 'Onaylı Banka Kayıtları' : '')}</td>
+              <td class="text-cell" style="font-size: 11pt; color: #166534;" colspan="2">GENEL TOPLAM</td>
+              <td colspan="7" style="color: #166534;">Toplam ${matchedOrders.length} Sipariş (${rowCount} Kalem Satırı)</td>
+              <td></td>
+              <td class="num-cell" style="text-align: center; color: #166534; font-weight: bold;">${totalQtySum}</td>
+              <td></td>
+              <td class="total-amount">${totalLineAmountSum.toFixed(2)}</td>
+              <td class="total-amount">${totalGoldSum.toFixed(2)}</td>
+              <td class="total-amount">${totalWorkmanshipNetSum.toFixed(2)}</td>
+              <td class="total-amount">${totalKdvSum.toFixed(2)}</td>
+              <td class="total-amount" style="font-size: 13pt; color: #064E3B; background-color: #BBF7D0;">${totalOrderAmountSum.toFixed(2)}</td>
+              <td colspan="2" style="text-align: center; color: #166534; font-size: 10pt;">Onaylı Resmi Kayıtlar</td>
             </tr>
           </tbody>
         </table>
@@ -2666,15 +2882,13 @@ const AdminApp = {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.setAttribute('href', url);
-    link.setAttribute('download', `Belgin_Kuyumculuk_Tahsilat_Raporu${dateSuffix}.xls`);
+    link.setAttribute('download', `Belgin_Kuyumculuk_Fatura_Detayli_Rapor${dateSuffix}.xls`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  },
 
-  // CSV ve Excel fonksiyonları uyumluluğu
-  exportToCsv() {
-    this.exportToExcel();
+    this.closeExcelExportModal();
+    this.showToast(`✅ ${matchedOrders.length} sipariş (${rowCount} kalem) içeren Excel raporu indirildi!`);
   },
 
   // FATURA SEÇİMİNİ DEĞİŞTİR (CHECKBOX)
