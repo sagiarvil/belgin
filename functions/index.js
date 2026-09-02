@@ -728,8 +728,10 @@ exports.createAdminOrder = functions
         vip22Breakdown: breakdown,
         breakdown,
         note,
-        createdAt: transactionDate.toISOString(),
-        paidAt: transactionDate.toISOString(),
+        createdAt: admin.firestore.Timestamp.fromDate(transactionDate),
+        paidAt: admin.firestore.Timestamp.fromDate(transactionDate),
+        createdAtIso: transactionDate.toISOString(),
+        paidAtIso: transactionDate.toISOString(),
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         invoiceStatus: 'PENDING'
       };

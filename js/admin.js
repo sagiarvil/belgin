@@ -3883,6 +3883,99 @@ const AdminApp = {
     if (customKdvRow) customKdvRow.style.display = (type === 'CUSTOM') ? 'flex' : 'none';
 
     this.updateManualOrderBreakdownPreview();
+    this.updateManualClosestProducts();
+  },
+
+  // 10.6 KATALOG ÜRÜN ÖNERİSİ (YAZILAN TUTARA EN YAKIN 5 ÜRÜN)
+  async loadCatalogProductsForSuggestions() {
+    if (this.catalogProducts && this.catalogProducts.length > 0) return this.catalogProducts;
+    try {
+      const res = await fetch('/paytr_products.json');
+      if (res.ok) {
+        this.catalogProducts = await res.json();
+      }
+    } catch (_) {
+      this.catalogProducts = [];
+    }
+    return this.catalogProducts || [];
+  },
+
+  async updateManualClosestProducts() {
+    const wrap = document.getElementById('manualClosestProductsWrap');
+    const listEl = document.getElementById('manualClosestProductsList');
+    const badgeEl = document.getElementById('manualClosestCategoryBadge');
+    if (!wrap || !listEl) return;
+
+    const amountVal = parseFloat(document.getElementById('manualTotalAmount')?.value || 0);
+    const type = document.getElementById('manualInvoiceType')?.value || 'GOLD';
+
+    if (badgeEl) {
+      badgeEl.textContent = type === 'GOLD' ? 'ALTIN & ZİYNET' : (type === 'WATCH' ? 'LÜKS SAAT' : 'TÜM KATALOG');
+      badgeEl.style.background = type === 'GOLD' ? '#DCFCE7' : (type === 'WATCH' ? '#E0F2FE' : '#F1F5F9');
+      badgeEl.style.color = type === 'GOLD' ? '#166534' : (type === 'WATCH' ? '#0369A1' : '#334155');
+    }
+
+    const allProds = await this.loadCatalogProductsForSuggestions();
+    if (!allProds || allProds.length === 0) {
+      wrap.style.display = 'none';
+      return;
+    }
+
+    let filtered = [];
+    const isGoldPattern = /altın|ziynet|bilezik|çeyrek|yarım|tam|ata|cumhuriyet|gremse|ayar|gram/i;
+
+    if (type === 'GOLD') {
+      filtered = allProds.filter(p => {
+        const brand = String(p.brand || '').toLowerCase();
+        const name = String(p.name || '').toLowerCase();
+        return brand.includes('belgin') || isGoldPattern.test(name);
+      });
+    } else if (type === 'WATCH') {
+      filtered = allProds.filter(p => {
+        const brand = String(p.brand || '').toLowerCase();
+        const name = String(p.name || '').toLowerCase();
+        return !brand.includes('belgin') && !isGoldPattern.test(name);
+      });
+    } else {
+      filtered = [...allProds];
+    }
+
+    if (filtered.length === 0) {
+      wrap.style.display = 'none';
+      return;
+    }
+
+    const targetPrice = (!isNaN(amountVal) && amountVal > 0) ? amountVal : 25000;
+
+    // En yakın fiyata göre sırala
+    filtered.sort((a, b) => Math.abs(Number(a.price || 0) - targetPrice) - Math.abs(Number(b.price || 0) - targetPrice));
+    const top5 = filtered.slice(0, 5);
+
+    listEl.innerHTML = top5.map((p) => {
+      const priceFmt = Number(p.price || 0).toLocaleString('tr-TR');
+      const cleanName = String(p.name || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+      const icon = type === 'GOLD' ? '💎' : '⌚';
+      return `
+        <button type="button" class="btn-closest-chip" 
+          onclick="AdminApp.selectClosestProduct('${cleanName}', ${p.price})"
+          title="${cleanName} (${priceFmt} ₺)"
+          style="display:inline-flex; align-items:center; gap:5px; padding:4px 8px; font-size:11px; font-weight:700; background:#FFF; border:1px solid #CBD5E1; border-radius:6px; color:#0F172A; cursor:pointer; transition:all 0.15s ease;"
+          onmouseover="this.style.borderColor='#10B981'; this.style.background='#F0FDF4';"
+          onmouseout="this.style.borderColor='#CBD5E1'; this.style.background='#FFF';">
+          <span>${icon}</span>
+          <span style="max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${p.name}</span>
+          <span style="font-size:10px; font-weight:800; background:${type === 'GOLD' ? '#DCFCE7' : '#E0F2FE'}; color:${type === 'GOLD' ? '#166534' : '#0369A1'}; padding:1px 5px; border-radius:4px;">${priceFmt} ₺</span>
+        </button>
+      `;
+    }).join('');
+
+    wrap.style.display = 'block';
+  },
+
+  selectClosestProduct(name, price) {
+    const prodInput = document.getElementById('manualProductName');
+    if (prodInput) prodInput.value = name;
+    this.updateManualOrderBreakdownPreview();
   },
 
   setManualLaborRate(rate) {
