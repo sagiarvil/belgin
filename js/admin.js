@@ -6424,6 +6424,38 @@ const AdminApp = {
     if (workKdvEl) workKdvEl.textContent = '₺' + Number(totalKdv || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     if (grandTotEl) grandTotEl.textContent = '₺' + Number(totalGrand || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
+    // 🪪 MASAK 180.000 TL+ Kimlik Belgesi Eşiği Canlı Durum Kontrolü
+    const masakBadge = document.getElementById('storeIdentityMasakBadge');
+    const identityBox = document.getElementById('storeIdentityContainerBox');
+    const statusBadge = document.getElementById('storeIdentityStatusBadge');
+    const isMasakMandatory = totalGrand >= 180000;
+
+    if (masakBadge) {
+      if (isMasakMandatory) {
+        masakBadge.style.background = '#DC2626';
+        masakBadge.style.color = '#FFF';
+        masakBadge.style.borderColor = '#B91C1C';
+        masakBadge.textContent = '🚨 180.000 TL+ MASAK YASAL ZORUNLULUK';
+      } else {
+        masakBadge.style.background = '#FEF08A';
+        masakBadge.style.color = '#854D0E';
+        masakBadge.style.borderColor = '#FACC15';
+        masakBadge.textContent = '180.000 TL Altı: İsteğe Bağlı';
+      }
+    }
+
+    if (statusBadge && !this.currentStoreIdentityDoc) {
+      statusBadge.textContent = isMasakMandatory
+        ? '(180.000 TL ve üzeri olduğu için kimlik belgesi ZORUNLUDUR)'
+        : '(180.000 TL altında kimlik belgesi isteğe bağlıdır)';
+      statusBadge.style.color = isMasakMandatory ? '#DC2626' : '#B45309';
+    }
+
+    if (identityBox && !this.currentStoreIdentityDoc) {
+      identityBox.style.borderColor = isMasakMandatory ? '#DC2626' : '#CA8A04';
+      identityBox.style.background = isMasakMandatory ? '#FEF2F2' : '#FFFDF7';
+    }
+
     return {
       total: totalGrand,
       hasGoldAmount: totalGoldMatrah,
@@ -6465,6 +6497,17 @@ const AdminApp = {
     const totalAmount = validItems.reduce((acc, it) => acc + Number(it.lineTotal || 0), 0);
     if (totalAmount <= 0) {
       if (errEl) { errEl.style.display = 'block'; errEl.textContent = 'Fatura toplam tutarı 0\'dan büyük olmalıdır.'; }
+      return;
+    }
+
+    // 🪪 MASAK 180.000 TL+ Kimlik Belgesi Alma Zorunluluğu Denetimi
+    if (totalAmount >= 180000 && !this.currentStoreIdentityDoc) {
+      if (errEl) {
+        errEl.style.display = 'block';
+        errEl.innerHTML = `<strong>🚨 MASAK MEVZUAT ZORUNLULUĞU:</strong> Fatura tutarı <strong>₺${Number(totalAmount).toLocaleString('tr-TR', {minimumFractionDigits:2})}</strong> olup 180.000 TL yasal kimlik tespit eşiğini aşmaktadır.<br>Mali Suçları Araştırma Kurulu (MASAK) mevzuatı gereğince 180.000 TL ve üzeri altın / mücevherat satışlarında müşteriden T.C. Kimlik Kartı / Pasaport fotokopisi alınması ve sisteme yüklenmesi yasal zorunluluktur. Lütfen kimlik belgesi görselini yükleyiniz.`;
+      }
+      alert(`🚨 MASAK MEVZUAT ZORUNLULUĞU:\n\nFatura tutarı ₺${Number(totalAmount).toLocaleString('tr-TR', {minimumFractionDigits:2})} olup 180.000 TL yasal sınırını aşmaktadır.\n\nMASAK ve Kuyumculuk Mevzuatı gereğince 180.000 TL ve üzeri tüm işlemlerde müşteriden T.C. Kimlik Kartı / Pasaport kopyası alınması ve sisteme yüklenmesi YASAL ZORUNLULUKTUR.\n\nLütfen kimlik belgesi görselini yükleyiniz.`);
+      document.getElementById('storeIdentityContainerBox')?.scrollIntoView({ behavior: 'smooth' });
       return;
     }
 
