@@ -6939,6 +6939,24 @@ const AdminApp = {
     const endDate = document.getElementById('storeEndDate')?.value || '';
     const status = document.getElementById('storeStatusFilter')?.value || 'ALL';
 
+    // 1. Önce localStorage'dan hızlıca yükle
+    try {
+      const stored = localStorage.getItem('belgin_store_invoices');
+      if (stored) {
+        let parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          // Tüm mağaza faturalarına varsayılan HAVALE_EFT ata
+          parsed = parsed.map(inv => ({
+            ...inv,
+            paymentMethod: inv.paymentMethod || inv.paymentChannel || 'HAVALE_EFT',
+            paymentChannel: inv.paymentChannel || inv.paymentMethod || 'HAVALE_EFT'
+          }));
+          this.storeInvoices = parsed;
+          this.filterStoreTable();
+        }
+      }
+    } catch (_) {}
+
     try {
       let url = `/api/admin/store-invoices?status=${encodeURIComponent(status)}`;
       if (startDate) url += `&startDate=${encodeURIComponent(startDate)}`;
@@ -6953,9 +6971,13 @@ const AdminApp = {
       const data = await res.json();
 
       if (data && data.success && Array.isArray(data.invoices)) {
-        this.storeInvoices = data.invoices;
+        this.storeInvoices = data.invoices.map(inv => ({
+          ...inv,
+          paymentMethod: inv.paymentMethod || inv.paymentChannel || 'HAVALE_EFT',
+          paymentChannel: inv.paymentChannel || inv.paymentMethod || 'HAVALE_EFT'
+        }));
         try {
-          localStorage.setItem('belgin_store_invoices', JSON.stringify(data.invoices));
+          localStorage.setItem('belgin_store_invoices', JSON.stringify(this.storeInvoices));
         } catch (_) {}
         this.filterStoreTable();
       }
@@ -6966,6 +6988,38 @@ const AdminApp = {
 
     const syncEl = document.getElementById('storeLastSyncTime');
     if (syncEl) syncEl.textContent = 'Son Güncelleme: ' + new Date().toLocaleTimeString('tr-TR');
+  },
+
+  async updateStoreInvoicePaymentMethod(orderId, newMethod) {
+    let list = this.storeInvoices || [];
+    const inv = list.find(i => i.orderId === orderId || i.id === orderId);
+    if (!inv) return;
+    inv.paymentMethod = newMethod;
+    inv.paymentChannel = newMethod;
+    inv.provider = newMethod === 'KREDI_KARTI' ? (inv.posProvider || 'KUVEYT_TURK') : (newMethod === 'HAVALE_EFT' ? (inv.bankName || 'KUVEYT_TURK') : 'NAKIT');
+
+    try {
+      localStorage.setItem('belgin_store_invoices', JSON.stringify(list));
+      const declRaw = localStorage.getItem('belgin_decl_' + orderId);
+      if (declRaw) {
+        const decl = JSON.parse(declRaw);
+        decl.paymentMethod = newMethod;
+        decl.paymentChannel = newMethod;
+        localStorage.setItem('belgin_decl_' + orderId, JSON.stringify(decl));
+      }
+    } catch (_) {}
+
+    this.filterStoreTable();
+    const methodNames = { 'HAVALE_EFT': 'Banka Havalesi / EFT', 'NAKIT': 'Nakit Tahsilat', 'KREDI_KARTI': 'Kredi Kartı / POS' };
+    this.showToast(`✅ Fatura (${orderId}) ödeme yöntemi "${methodNames[newMethod] || newMethod}" olarak güncellendi.`);
+
+    try {
+      await fetch('/api/admin/store-invoices/create', {
+        method: 'POST',
+        headers: this.getAuthHeaders(),
+        body: JSON.stringify({ ...inv, adminKey: this.adminPin })
+      });
+    } catch (_) {}
   },
 
   // 4. MAĞAZA FATURALARI TABLOSUNU FİLTRELE VE ÇİZ
@@ -7063,12 +7117,14 @@ const AdminApp = {
           ? inv.items.map(i => `<span style="font-weight:700; color:#0F172A;">${this.escapeHtml(i.name || 'Ürün')}</span> <span style="color:#64748B; font-weight:800;">(x${i.qty || 1})</span>`).join('<br>')
           : `<span style="font-weight:700; color:#0F172A;">${this.escapeHtml(inv.productName || 'Kuyumculuk Satışı')}</span>`;
 
-        const payMethod = inv.paymentMethod || inv.paymentChannel || (String(inv.orderId).includes('9820') ? 'HAVALE_EFT' : 'HAVALE_EFT');
-        const payBadge = payMethod === 'HAVALE_EFT'
-          ? `<span style="background:#EFF6FF; color:#1E40AF; border:1px solid #BFDBFE; padding:2px 7px; border-radius:4px; font-size:10.5px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🏦 Havale/EFT</span>`
-          : (payMethod === 'NAKIT'
-          ? `<span style="background:#F0FDF4; color:#166534; border:1px solid #BBF7D0; padding:2px 7px; border-radius:4px; font-size:10.5px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">💵 Nakit</span>`
-          : `<span style="background:#FAF5FF; color:#6B21A8; border:1px solid #E9D5FF; padding:2px 7px; border-radius:4px; font-size:10.5px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">💳 POS / Kart</span>`);
+        const payMethod = inv.paymentMethod || inv.paymentChannel || 'HAVALE_EFT';
+        const paySelectorHtml = `
+          <select style="padding:2px 6px; font-size:11px; font-weight:800; border-radius:6px; cursor:pointer; background:${payMethod === 'HAVALE_EFT' ? '#EFF6FF' : (payMethod === 'NAKIT' ? '#F0FDF4' : '#FAF5FF')}; color:${payMethod === 'HAVALE_EFT' ? '#1E40AF' : (payMethod === 'NAKIT' ? '#166534' : '#6B21A8')}; border:1.5px solid ${payMethod === 'HAVALE_EFT' ? '#93C5FD' : (payMethod === 'NAKIT' ? '#86EFAC' : '#D8B4FE')};" onchange="AdminApp.updateStoreInvoicePaymentMethod('${inv.orderId}', this.value)" title="Ödeme Kanalını Değiştir (Evraklar Anında Uyarlanır)">
+            <option value="HAVALE_EFT" ${payMethod === 'HAVALE_EFT' ? 'selected' : ''}>🏦 Havale/EFT</option>
+            <option value="NAKIT" ${payMethod === 'NAKIT' ? 'selected' : ''}>💵 Nakit</option>
+            <option value="KREDI_KARTI" ${payMethod === 'KREDI_KARTI' ? 'selected' : ''}>💳 POS / Kart</option>
+          </select>
+        `;
 
         return `
           <tr style="${isCancelled ? 'background:#FEF2F2; opacity:0.85;' : (isSelected ? 'background:#F0FDF4;' : '')}">
@@ -7086,9 +7142,9 @@ const AdminApp = {
               ${invoicedTime ? `<div style="font-size:10px; color:#15803D; margin-top:1px;">🧾 İmza: <strong>${invoicedTime}</strong></div>` : ''}
             </td>
             <td>
-              <div style="font-weight:800; font-size:13px; color:#0F172A; display:flex; align-items:center; gap:6px;">
+              <div style="font-weight:800; font-size:13px; color:#0F172A; display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                 <span>${this.escapeHtml(inv.customerName || 'Müşteri')}</span>
-                ${payBadge}
+                ${paySelectorHtml}
               </div>
               <div style="font-size:11.5px; color:#475569; font-weight:600;">${inv.customerPhone && inv.customerPhone !== '—' && !inv.customerPhone.includes('Yok') ? inv.customerPhone : '—'}</div>
               <div style="font-size:11px; color:#92400E; font-weight:800; display:flex; align-items:center; gap:6px; margin-top:3px; flex-wrap:wrap;">
