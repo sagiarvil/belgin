@@ -3824,8 +3824,31 @@
           Bu faturaya ait tüm ürün kalemlerini düzenleyebilir, yeni satır ekleyerek faturayı çok parçalı parti satışı olarak yeniden yapılandırabilirsiniz.
         </div>
 
+        <!-- 🔨 ALTIN & İŞÇİLİK OTOMASYONU (TEK TIKLA AYIR) -->
+        <div style="background:#ECFDF5; border:1.5px solid #10B981; border-radius:8px; padding:10px 12px; margin-bottom:12px; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:18px;">🔨</span>
+            <div>
+              <div style="font-size:11.5px; font-weight:800; color:#064E3B; text-transform:uppercase;">
+                Altın & İşçilik Otomasyonu (Tek Tıkla Ayır):
+              </div>
+              <div style="font-size:10.5px; color:#047857;">
+                Toplam tutardan işçiliği otomatik hesaplayıp <strong>Altın (%0 Özel Matrah)</strong> ve <strong>İşçilik (%20 KDV)</strong> olarak kuruşu kuruşuna 2 satıra böler.
+              </div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:5px; flex-wrap:wrap;">
+            <span style="font-size:11px; font-weight:700; color:#064E3B;">Hızlı Oran:</span>
+            <button type="button" class="btn-template-chip" style="padding:4px 8px; font-size:11px; font-weight:800; background:#FFF; border:1.5px solid #10B981; color:#065F46; border-radius:5px; cursor:pointer;" onclick="AdminApp.autoApplyLaborSplit(1)" title="%1 İşçilik (%20 KDV) olarak hesaplar">%1</button>
+            <button type="button" class="btn-template-chip" style="padding:4px 10px; font-size:11.5px; font-weight:900; background:#065F46; border:1.5px solid #065F46; color:#FFF; border-radius:5px; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.15);" onclick="AdminApp.autoApplyLaborSplit(1.25)" title="%1,25 Standart Kuyumcu İşçiliği (Önerilen)">%1,25 (Standart)</button>
+            <button type="button" class="btn-template-chip" style="padding:4px 8px; font-size:11px; font-weight:800; background:#FFF; border:1.5px solid #10B981; color:#065F46; border-radius:5px; cursor:pointer;" onclick="AdminApp.autoApplyLaborSplit(1.5)" title="%1,5 İşçilik">%1,5</button>
+            <button type="button" class="btn-template-chip" style="padding:4px 8px; font-size:11px; font-weight:800; background:#FFF; border:1.5px solid #10B981; color:#065F46; border-radius:5px; cursor:pointer;" onclick="AdminApp.autoApplyLaborSplit(2)" title="%2 İşçilik">%2</button>
+            <button type="button" class="btn-template-chip" style="padding:4px 8px; font-size:11px; font-weight:700; background:#FFF; border:1.5px solid #CBD5E1; color:#475569; border-radius:5px; cursor:pointer;" onclick="AdminApp.autoApplyLaborSplit(0)" title="İşçilik satırını kaldırır, tek satır %0 altın yapar">%0 (İşçiliksiz)</button>
+          </div>
+        </div>
+
         <!-- Kalemler Tablo Başlıkları -->
-        <div style="display:grid; grid-template-columns: 1fr 60px 105px 110px 125px 30px; gap:6px; font-size:10px; font-weight:800; color:#334155; text-transform:uppercase; padding:0 8px 4px;">
+        <div style="display:grid; grid-template-columns: 1fr 60px 105px 110px 145px 30px; gap:6px; font-size:10px; font-weight:800; color:#334155; text-transform:uppercase; padding:0 8px 4px;">
           <span>Ürün / Kalem Açıklaması</span>
           <span style="text-align:center;">Adet</span>
           <span style="text-align:right;">Birim (₺)</span>

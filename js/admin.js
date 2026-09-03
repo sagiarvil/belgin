@@ -5024,13 +5024,74 @@ const AdminApp = {
     if (modal) modal.style.display = 'none';
   },
 
+  // 🔨 ALTIN & İŞÇİLİK OTOMASYONU (TEK TIKLA AYIR)
+  autoApplyLaborSplit(rate = 1.25) {
+    const listEl = document.getElementById('editCustomerItemsList');
+    if (!listEl) return;
+
+    const orderId = document.getElementById('editCustomerOrderId')?.value?.trim();
+    const order = (this.orders || []).find(o => o.orderId === orderId) ||
+                  (this.filteredOrders || []).find(o => o.orderId === orderId);
+
+    // Mevcut satırlardan toplam tutarı veya order.totalAmount'u al
+    let currentTotal = 0;
+    const rows = listEl.querySelectorAll('.edit-item-row');
+    rows.forEach(r => {
+      const p = parseFloat(r.querySelector('.edit-item-price')?.value) || 0;
+      currentTotal += p;
+    });
+
+    if (currentTotal <= 0 && order) {
+      currentTotal = Number(order.totalAmount || order.total || 0);
+    }
+
+    if (currentTotal <= 0) {
+      alert('Lütfen önce geçerli bir fatura tutarı giriniz.');
+      return;
+    }
+
+    // İlk ürün adını koru (örn. "22 AYAR BİLEZİK")
+    let firstProdName = '22 Ayar İşçilikli Altın Bilezik';
+    if (rows.length > 0) {
+      const candidateName = rows[0].querySelector('.edit-item-name')?.value?.trim();
+      if (candidateName && !candidateName.toLowerCase().includes('işçilik')) {
+        firstProdName = candidateName;
+      }
+    } else if (order && order.productName) {
+      firstProdName = order.productName;
+    }
+
+    // Listeyi temizle
+    listEl.innerHTML = '';
+
+    if (rate <= 0) {
+      // Sadece %0 Özel Matrah Tek Satır
+      this.addEditCustomerItemRow(firstProdName, 1, currentTotal, currentTotal, 0);
+      this.showToast(`✅ ${this.formatCurrency(currentTotal)} tutarı işçiliksiz tek satır (%0 Özel Matrah) olarak ayarlandı.`);
+    } else {
+      // İşçilik payını ve altın matrahını hesapla (Tam kuruş eşitlemeli)
+      const laborTotal = Math.max(1, Math.round(currentTotal * (rate / 100) * 100) / 100);
+      const goldTotal = Math.round((currentTotal - laborTotal) * 100) / 100;
+
+      // 1. Satır: Altın Ürünü (%0 Özel Matrah)
+      this.addEditCustomerItemRow(firstProdName, 1, goldTotal, goldTotal, 0);
+
+      // 2. Satır: İşçilik (AGENTS kuralı: açıklama doğrudan ve yalnızca 'İşçilik', %20 KDV)
+      this.addEditCustomerItemRow('İşçilik', 1, laborTotal, laborTotal, 20);
+
+      this.showToast(`⚡ %${rate} İşçilik Ayrıştırıldı: ${this.formatCurrency(goldTotal)} Altın (%0 Özel Matrah) + ${this.formatCurrency(laborTotal)} İşçilik (%20 KDV) = ${this.formatCurrency(currentTotal)}`);
+    }
+
+    this.recalculateEditCustomerTotal();
+  },
+
   addEditCustomerItemRow(name = '', qty = 1, unitPrice = '', price = '', kdvRate = 0) {
     const listEl = document.getElementById('editCustomerItemsList');
     if (!listEl) return;
 
     const rowDiv = document.createElement('div');
     rowDiv.className = 'edit-item-row';
-    rowDiv.style.cssText = 'display:grid; grid-template-columns: 1fr 60px 105px 110px 125px 30px; gap:6px; align-items:center; background:#FFF; border:1px solid #CBD5E1; border-radius:6px; padding:6px 8px;';
+    rowDiv.style.cssText = 'display:grid; grid-template-columns: 1fr 60px 105px 110px 145px 30px; gap:6px; align-items:center; background:#FFF; border:1px solid #CBD5E1; border-radius:6px; padding:6px 8px;';
 
     const safeName = String(name || '').replace(/"/g, '&quot;');
     const q = parseInt(qty, 10) || 1;
@@ -5042,7 +5103,7 @@ const AdminApp = {
 
     rowDiv.innerHTML = `
       <div>
-        <input type="text" class="edit-item-name" value="${safeName}" placeholder="Kalem / Gramaj / Ürün Adı" style="width:100%; border:1px solid #CBD5E1; padding:6px 8px; border-radius:5px; font-size:12px; font-weight:700; color:#0F172A;" required>
+        <input type="text" class="edit-item-name" value="${safeName}" placeholder="Kalem / Gramaj / Ürün Adı" style="width:100%; border:1px solid #CBD5E1; padding:6px 8px; border-radius:5px; font-size:12px; font-weight:700; color:#0F172A;" oninput="AdminApp.onEditCustomerItemNameChange(this)" required>
       </div>
       <div>
         <input type="number" class="edit-item-qty" min="1" value="${q}" style="width:100%; border:1px solid #CBD5E1; padding:6px 2px; border-radius:5px; font-size:12px; font-weight:800; text-align:center; color:#0F172A;" oninput="AdminApp.onEditCustomerItemQtyChange(this)">
@@ -5054,9 +5115,9 @@ const AdminApp = {
         <input type="number" step="0.01" min="0" class="edit-item-price" value="${pr}" placeholder="Tutar ₺" style="width:100%; border:1.5px solid #059669; padding:6px 4px; border-radius:5px; font-size:12.5px; font-weight:800; text-align:right; color:#064E3B;" oninput="AdminApp.onEditCustomerItemPriceChange(this)" required>
       </div>
       <div>
-        <select class="edit-item-kdv" style="width:100%; border:1px solid #CBD5E1; padding:5px 2px; border-radius:5px; font-size:11px; font-weight:700; color:#0F172A; background:#FFF;" onchange="AdminApp.recalculateEditCustomerTotal()">
-          <option value="0" ${!isVat20 ? 'selected' : ''}>%0 Özel Matrah</option>
-          <option value="20" ${isVat20 ? 'selected' : ''}>%20 KDV (Saat)</option>
+        <select class="edit-item-kdv" style="width:100%; border:1.5px solid ${isVat20 ? '#059669' : '#CBD5E1'}; padding:5px 2px; border-radius:5px; font-size:11px; font-weight:700; color:#0F172A; background:#FFF;" onchange="AdminApp.recalculateEditCustomerTotal()">
+          <option value="0" ${!isVat20 ? 'selected' : ''}>%0 Özel Matrah (Altın)</option>
+          <option value="20" ${isVat20 ? 'selected' : ''}>%20 KDV (İşçilik/Saat)</option>
         </select>
       </div>
       <div style="text-align:center;">
@@ -5065,6 +5126,57 @@ const AdminApp = {
     `;
 
     listEl.appendChild(rowDiv);
+    this.recalculateEditCustomerTotal();
+  },
+
+  onEditCustomerItemNameChange(input) {
+    const row = input.closest('.edit-item-row');
+    if (!row) return;
+
+    const val = input.value.trim().toLowerCase();
+    const kdvSelect = row.querySelector('.edit-item-kdv');
+
+    // Eğer kullanıcı 'işçilik' yazdıysa KDV'yi otomatik %20 yap
+    if (val.includes('işçilik') || val.includes('iscilik')) {
+      if (kdvSelect && kdvSelect.value !== '20') {
+        kdvSelect.value = '20';
+        kdvSelect.style.borderColor = '#059669';
+        kdvSelect.style.fontWeight = '800';
+      }
+
+      // Eğer işçilik satırının tutarı henüz girilmemişse, ilk satırdaki tutardan standart %1.25 işçiliği otomatik ayrıştır
+      const priceInput = row.querySelector('.edit-item-price');
+      const unitPriceInput = row.querySelector('.edit-item-unit-price');
+      if (priceInput && (!priceInput.value || parseFloat(priceInput.value) === 0)) {
+        const listEl = document.getElementById('editCustomerItemsList');
+        const otherRows = Array.from(listEl.querySelectorAll('.edit-item-row')).filter(r => r !== row);
+        if (otherRows.length === 1) {
+          const firstRow = otherRows[0];
+          const firstPriceInput = firstRow.querySelector('.edit-item-price');
+          const firstUnitPriceInput = firstRow.querySelector('.edit-item-unit-price');
+          const firstPrice = parseFloat(firstPriceInput?.value) || 0;
+
+          if (firstPrice > 0) {
+            const laborAmt = Math.max(1, Math.round(firstPrice * 0.0125 * 100) / 100);
+            const newGoldAmt = Math.round((firstPrice - laborAmt) * 100) / 100;
+
+            firstPriceInput.value = newGoldAmt.toFixed(2);
+            if (firstUnitPriceInput) firstUnitPriceInput.value = newGoldAmt.toFixed(2);
+
+            priceInput.value = laborAmt.toFixed(2);
+            if (unitPriceInput) unitPriceInput.value = laborAmt.toFixed(2);
+
+            this.showToast(`⚡ İşçilik algılandı: ₺${laborAmt.toLocaleString('tr-TR', {minimumFractionDigits:2})} işçilik (%20 KDV) ve ₺${newGoldAmt.toLocaleString('tr-TR', {minimumFractionDigits:2})} altın bedeli (%0 Özel Matrah) ayrıştırıldı.`);
+          }
+        }
+      }
+    } else if (this.isWatchProduct && this.isWatchProduct(val)) {
+      if (kdvSelect && kdvSelect.value !== '20') {
+        kdvSelect.value = '20';
+        kdvSelect.style.borderColor = '#0284C7';
+      }
+    }
+
     this.recalculateEditCustomerTotal();
   },
 
