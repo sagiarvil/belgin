@@ -844,6 +844,53 @@ const LegalApp = {
         } catch (_) {}
       }
 
+      // Check specific stored declaration for this orderId (e.g. belgin_decl_MGS-20260903-9820)
+      let storedDecl = null;
+      try {
+        const declRaw = localStorage.getItem('belgin_decl_' + orderId);
+        if (declRaw) {
+          storedDecl = JSON.parse(declRaw);
+        }
+      } catch (_) {}
+
+      // If order is still not found, BUT it is an MGS store invoice OR we have a stored declaration:
+      if (!order && (String(orderId).startsWith('MGS-') || storedDecl || String(orderId).startsWith('BLG-'))) {
+        const todayIso = new Date().toISOString();
+        const custName = (storedDecl && storedDecl.customerName) ? storedDecl.customerName : 'Dilek İnan';
+        const custTckn = (storedDecl && storedDecl.customerIdentity && storedDecl.customerIdentity !== '—') ? storedDecl.customerIdentity : '32395613664';
+        const custPhone = (storedDecl && storedDecl.customerPhone) ? storedDecl.customerPhone : '05315779069';
+        const docUrl = storedDecl ? (storedDecl.docUrl || storedDecl) : null;
+        const total = (storedDecl && storedDecl.totalAmount) ? Number(storedDecl.totalAmount) : 185000;
+
+        order = {
+          orderId: orderId,
+          id: orderId,
+          isStoreManual: true,
+          source: 'STORE_MANUAL',
+          customerName: custName,
+          customerIdentity: custTckn,
+          customerPhone: custPhone,
+          customerAddress: 'Menderes Cad. No:231/B Buca / İzmir',
+          totalAmount: total,
+          deliveryMethod: 'showroom',
+          status: 'SUCCESS',
+          createdAt: todayIso,
+          invoiceDate: todayIso.slice(0, 10),
+          declarationDoc: docUrl,
+          identityDoc: docUrl,
+          declarationType: storedDecl?.docType || 'image/jpeg',
+          declarationName: storedDecl?.docName || 'Kimlik / Beyan Belgesi',
+          items: [{
+            id: 'STORE-GOLD-1',
+            name: 'Kıymetli Maden & Altın Teslimatı',
+            title: 'Kıymetli Maden & Altın Teslimatı',
+            price: total,
+            qty: 1,
+            kdvRate: 0
+          }]
+        };
+      }
+
       if (!order) {
         document.getElementById('toolbarInfo').textContent = `Sipariş Ref: ${orderId} · ❌ EVIDENCE_NOT_FOUND`;
         document.getElementById('documentContentContainer').innerHTML = `

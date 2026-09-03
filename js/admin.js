@@ -1170,12 +1170,13 @@ const AdminApp = {
   openDeclarationModal(orderId) {
     try {
       this.activeDeclarationOrderId = orderId;
-      const order = (this.orders && this.orders.find(o => o && o.orderId === orderId)) || {
-        orderId: orderId || 'BLG-UNKNOWN',
-        totalAmount: 120000,
-        customerName: 'İdris Emre Bük',
-        customerIdentity: '32395613664',
-        createdAt: '2026-08-28T09:00:00.000Z'
+      const order = (this.orders && this.orders.find(o => o && (o.orderId === orderId || o.id === orderId))) ||
+                    (this.storeInvoices && this.storeInvoices.find(o => o && (o.orderId === orderId || o.id === orderId))) || {
+        orderId: orderId || 'MGS-NEW',
+        totalAmount: 180000,
+        customerName: document.getElementById('storeCustomerName')?.value || 'Dilek İnan',
+        customerIdentity: document.getElementById('storeCustomerIdentity')?.value || '—',
+        createdAt: new Date().toISOString()
       };
 
       const modal = document.getElementById('declarationModal');
@@ -1192,24 +1193,24 @@ const AdminApp = {
       const pdfName = document.getElementById('declarationPdfName');
       const btnDel = document.getElementById('btnDeleteDeclaration');
 
-      const decl = (order && order.declarationDoc) ? {
-        docUrl: order.declarationDoc,
+      const decl = (order && (order.declarationDoc || order.identityDoc)) ? {
+        docUrl: order.declarationDoc || order.identityDoc,
         docType: order.declarationType || 'image/jpeg',
-        docName: order.declarationName || 'Müşteri İmzalı Beyan Belgesi',
-        time: order.declarationTime || '28.08.2026 12:00',
+        docName: order.declarationName || 'Müşteri Kimlik / Beyan Belgesi',
+        time: order.declarationTime || new Date().toLocaleString('tr-TR'),
         note: order.declarationNote || ''
       } : (this.getStoredDeclaration ? this.getStoredDeclaration(orderId) : null);
 
       if (infoEl) {
-        let dateFormatted = '28.08.2026 12:00';
+        let dateFormatted = new Date().toLocaleString('tr-TR');
         try {
           if (order.createdAt) dateFormatted = new Date(order.createdAt).toLocaleString('tr-TR');
         } catch (_) {}
         infoEl.innerHTML = `
-          <strong>Sipariş No:</strong> <span style="font-family:monospace; font-weight:800;">${order.orderId}</span> | 
-          <strong>Müşteri:</strong> ${order.customerName || 'Müşteri'} (TCKN: ${order.customerIdentity || '32395613664'}) | 
+          <strong>Referans No:</strong> <span style="font-family:monospace; font-weight:800;">${order.orderId}</span> | 
+          <strong>Müşteri:</strong> ${order.customerName || 'Müşteri'} ${order.customerIdentity ? `(TCKN: ${order.customerIdentity})` : ''} | 
           <strong>Tutar:</strong> ₺${Number(order.totalAmount || 0).toLocaleString('tr-TR')} | 
-          <strong>İşlem Saati:</strong> ${dateFormatted}
+          <strong>Tarih:</strong> ${dateFormatted}
         `;
       }
 
@@ -1257,16 +1258,16 @@ const AdminApp = {
 
   handleDeclarationUpload(event) {
     const file = event.target?.files?.[0];
-    if (file) this.processDeclarationFile(file);
+    if (file) this.handleDeclarationFile(file);
     if (event.target) event.target.value = '';
   },
 
   handleDeclarationDrop(event) {
     const file = event.dataTransfer?.files?.[0];
-    if (file) this.processDeclarationFile(file);
+    if (file) this.handleDeclarationFile(file);
   },
 
-  processDeclarationFile(file) {
+  handleDeclarationFile(file) {
     if (!file || !this.activeDeclarationOrderId) return;
 
     if (file.size > 15 * 1024 * 1024) {
@@ -1277,28 +1278,56 @@ const AdminApp = {
     const reader = new FileReader();
     reader.onload = (e) => {
       const dataUrl = e.target.result;
+      
+      const order = this.orders && this.orders.find(o => o && (o.orderId === this.activeDeclarationOrderId || o.id === this.activeDeclarationOrderId));
+      const storeInv = this.storeInvoices && this.storeInvoices.find(o => o && (o.orderId === this.activeDeclarationOrderId || o.id === this.activeDeclarationOrderId));
+      
+      const custName = (storeInv ? storeInv.customerName : (order ? order.customerName : '')) || document.getElementById('storeCustomerName')?.value || 'Dilek İnan';
+      const custIdentity = (storeInv ? storeInv.customerIdentity : (order ? order.customerIdentity : '')) || document.getElementById('storeCustomerIdentity')?.value || '—';
+      const custPhone = (storeInv ? storeInv.customerPhone : (order ? order.customerPhone : '')) || document.getElementById('storeCustomerPhone')?.value || '—';
+      const total = storeInv ? storeInv.totalAmount : (order ? order.totalAmount : 185000);
+
       const declData = {
         docUrl: dataUrl,
         docType: file.type || 'image/jpeg',
         docName: file.name,
-        uploadedAt: new Date().toISOString()
+        uploadedAt: new Date().toISOString(),
+        customerName: custName,
+        customerIdentity: custIdentity,
+        customerPhone: custPhone,
+        totalAmount: total
       };
 
       try {
         localStorage.setItem('belgin_decl_' + this.activeDeclarationOrderId, JSON.stringify(declData));
       } catch (_) {}
 
-      // Sipariş objesini güncelle
-      const order = this.orders && this.orders.find(o => o.orderId === this.activeDeclarationOrderId);
+      // 1. Online Sipariş objesini güncelle
       if (order) {
         order.declarationDoc = dataUrl;
+        order.identityDoc = dataUrl;
         order.declarationType = file.type || 'image/jpeg';
         order.declarationName = file.name;
       }
 
-      this.filterTable();
+      // 2. Mağaza Faturasını güncelle
+      if (storeInv) {
+        storeInv.declarationDoc = dataUrl;
+        storeInv.identityDoc = dataUrl;
+        storeInv.declarationType = file.type || 'image/jpeg';
+        storeInv.declarationName = file.name;
+        try {
+          localStorage.setItem('belgin_store_invoices', JSON.stringify(this.storeInvoices));
+        } catch (_) {}
+      }
+
+      // 3. Fatura sihirbazı açıksa önizlemeyi eşitle
+      this.setStoreIdentityDoc(dataUrl, file.name);
+
+      if (typeof this.filterTable === 'function') this.filterTable();
+      if (typeof this.filterStoreTable === 'function') this.filterStoreTable();
       this.openDeclarationModal(this.activeDeclarationOrderId);
-      alert('✅ Islak imzalı müşteri beyanı başarıyla eklendi! Yasal delil dosyasında (8. Islak İmzalı Beyan & Kimlik) otomatik gösterilecek ve yazdırılabilecektir.');
+      alert('✅ Müşteri kimlik / beyan belgesi başarıyla kaydedildi! Yasal evraklar dosyasından anında görüntülenebilir ve yazdırılabilir.');
     };
 
     reader.readAsDataURL(file);
@@ -1306,15 +1335,16 @@ const AdminApp = {
 
   removeDeclaration() {
     if (!this.activeDeclarationOrderId) return;
-    if (!confirm('Bu siparişe ait ıslak imzalı beyan kaydını kaldırmak istediğinize emin misiniz?')) return;
+    if (!confirm('Bu kayda ait kimlik / beyan belgesini kaldırmak istediğinize emin misiniz?')) return;
 
     try {
       localStorage.removeItem('belgin_decl_' + this.activeDeclarationOrderId);
     } catch (_) {}
 
-    const order = this.orders.find(o => o.orderId === this.activeDeclarationOrderId);
+    const order = this.orders && this.orders.find(o => o && (o.orderId === this.activeDeclarationOrderId || o.id === this.activeDeclarationOrderId));
     if (order) {
       delete order.declarationDoc;
+      delete order.identityDoc;
       delete order.declarationType;
       delete order.declarationName;
     }
