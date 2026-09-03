@@ -46,6 +46,12 @@ jobs:
       - name: Re-run production gates
         run: npm run ci
 
+      - name: Validate canonical redirect patch
+        run: node scripts/ensure-index-canonical-redirect.mjs --dry-run
+
+      - name: Apply canonical redirect patch to deploy config
+        run: node scripts/ensure-index-canonical-redirect.mjs
+
       - name: Verify Firebase target contract
         shell: bash
         run: |
@@ -56,6 +62,11 @@ jobs:
           const required=['createPayTRToken','paytrCallback','getOrderStatus'];
           const rewrites=cfg.hosting?.rewrites||[];
           for(const fn of required) if(!rewrites.some(r=>r.function===fn)) throw new Error(`Missing rewrite: ${fn}`);
+          const indexRedirects=(cfg.hosting?.redirects||[]).filter(r=>r.source==='/index.html');
+          if(indexRedirects.length!==1 || indexRedirects[0].destination!=='/' || Number(indexRedirects[0].type)!==301) {
+            throw new Error('Missing exact /index.html -> / 301 canonical redirect');
+          }
+          console.log('FIREBASE_CONTRACT=PASS index.html->/ 301');
           NODE
 
       - name: Require deployment credential
@@ -106,6 +117,20 @@ jobs:
           LIVE_BASE_URL: https://www.belginkuyumculuk.com
           SEO_SMOKE_SAMPLE: "20"
         run: node scripts/live-seo-smoke.js
+
+      - name: Verify live index canonical redirect
+        shell: bash
+        run: |
+          set -euo pipefail
+          headers="$(curl --silent --show-error --max-time 30 --head https://www.belginkuyumculuk.com/index.html)"
+          printf '%s\n' "$headers"
+          printf '%s\n' "$headers" | grep -Eq '^HTTP/[^ ]+ 301([[:space:]]|$)'
+          location="$(printf '%s\n' "$headers" | awk 'BEGIN{IGNORECASE=1} /^location:/{gsub(/\r/,"",$2); print $2; exit}')"
+          case "$location" in
+            /|https://www.belginkuyumculuk.com/|https://belginkuyumculuk.com/) ;;
+            *) echo "Unexpected index redirect location: $location"; exit 1 ;;
+          esac
+          echo 'INDEX_CANONICAL_REDIRECT=PASS'
 
       - name: Legacy Live smoke check
         shell: bash
