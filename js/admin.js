@@ -837,12 +837,12 @@ const AdminApp = {
             </td>
             <td style="text-align:center;">
               ${(o.declarationDoc || o.identityDoc || AdminApp.getStoredDeclaration(o.orderId)) ? `
-                <button type="button" class="btn-admin-secondary" style="padding:4px 8px; font-size:11px; background:#ECFDF5; border-color:#10B981; color:#065F46; font-weight:700; border-radius:6px; display:inline-flex; align-items:center; gap:4px; white-space:nowrap; cursor:pointer;" onclick="AdminApp.openDeclarationModal('${o.orderId}')" title="Müşteri Kimlik Belgesi / İmzalı Beyanı Gör veya Değiştir">
-                  <span>🪪</span> <span>Kimlik / Beyan (✅ Yüklü)</span>
+                <button type="button" class="btn-admin-secondary" style="padding:4px 9px; font-size:11px; background:#DCFCE7; border:1.5px solid #16A34A; color:#15803D; font-weight:800; border-radius:6px; display:inline-flex; align-items:center; gap:4px; white-space:nowrap; cursor:pointer; box-shadow:0 1px 3px rgba(22, 163, 74, 0.2);" onclick="AdminApp.openDeclarationModal('${o.orderId}')" title="Müşteri Kimlik Belgesi / İmzalı Beyanı Gör veya Değiştir">
+                  <span>🪪</span> <span>Kimlik: ✅ YÜKLÜ</span>
                 </button>
               ` : `
-                <button type="button" class="btn-admin-secondary" style="padding:4px 8px; font-size:11px; background:#FFFBEB; border-color:#FCD34D; color:#92400E; font-weight:700; border-radius:6px; display:inline-flex; align-items:center; gap:4px; white-space:nowrap; cursor:pointer;" onclick="AdminApp.openDeclarationModal('${o.orderId}')" title="Müşteri T.C. Kimlik Kartı Fotoğrafı veya Beyan Belgesi Yükle">
-                  <span>🪪</span> <span>Kimlik / Beyan Yükle</span>
+                <button type="button" class="btn-admin-secondary" style="padding:4px 9px; font-size:11px; background:#FFFBEB; border:1.5px solid #F59E0B; color:#B45309; font-weight:700; border-radius:6px; display:inline-flex; align-items:center; gap:4px; white-space:nowrap; cursor:pointer;" onclick="AdminApp.openDeclarationModal('${o.orderId}')" title="Müşteri T.C. Kimlik Kartı Fotoğrafı veya Beyan Belgesi Yükle">
+                  <span>⚠️</span> <span>Kimlik Yok (Yükle)</span>
                 </button>
               `}
             </td>
@@ -958,9 +958,15 @@ const AdminApp = {
 
               <div class="mobile-declaration-row" style="margin-top:8px; background:#FFFDF7; border:1px solid #FDE68A; border-radius:8px; padding:8px 12px; display:flex; justify-content:space-between; align-items:center;">
                 <span style="font-size:11.5px; font-weight:700; color:#854D0E;">🪪 Kimlik / İmzalı Beyan:</span>
-                <button type="button" class="btn-admin-secondary" style="padding:4px 10px; font-size:11px; font-weight:800; border-radius:6px; ${(o.declarationDoc || o.identityDoc || AdminApp.getStoredDeclaration(o.orderId)) ? 'background:#ECFDF5; border-color:#10B981; color:#065F46;' : 'background:#FFF; border-color:#CBD5E1; color:#475569;'}" onclick="AdminApp.openDeclarationModal('${o.orderId}')">
-                  ${(o.declarationDoc || o.identityDoc || AdminApp.getStoredDeclaration(o.orderId)) ? '🪪 Kimlik (✅ Yüklü)' : '🪪 Kimlik Yükle'}
-                </button>
+                ${(o.declarationDoc || o.identityDoc || AdminApp.getStoredDeclaration(o.orderId)) ? `
+                  <button type="button" class="btn-admin-secondary" style="padding:4px 10px; font-size:11px; font-weight:800; border-radius:6px; background:#DCFCE7; border:1.5px solid #16A34A; color:#15803D; box-shadow:0 1px 3px rgba(22, 163, 74, 0.2);" onclick="AdminApp.openDeclarationModal('${o.orderId}')">
+                    🪪 Kimlik: ✅ YÜKLÜ
+                  </button>
+                ` : `
+                  <button type="button" class="btn-admin-secondary" style="padding:4px 10px; font-size:11px; font-weight:800; border-radius:6px; background:#FFFBEB; border:1.5px solid #F59E0B; color:#B45309;" onclick="AdminApp.openDeclarationModal('${o.orderId}')">
+                    ⚠️ Kimlik Yok (Yükle)
+                  </button>
+                `}
               </div>
             </div>
 
@@ -7004,15 +7010,15 @@ const AdminApp = {
             <td>
               <div style="font-weight:800; font-size:13px; color:#0F172A;">${this.escapeHtml(inv.customerName || 'Müşteri')}</div>
               <div style="font-size:11.5px; color:#475569; font-weight:600;">${inv.customerPhone && inv.customerPhone !== '—' && !inv.customerPhone.includes('Yok') ? inv.customerPhone : '—'}</div>
-              <div style="font-size:11px; color:#92400E; font-weight:800; display:flex; align-items:center; gap:6px; margin-top:2px; flex-wrap:wrap;">
+              <div style="font-size:11px; color:#92400E; font-weight:800; display:flex; align-items:center; gap:6px; margin-top:3px; flex-wrap:wrap;">
                 <span>🆔 <span style="font-family:monospace;">${inv.customerIdentity && inv.customerIdentity !== '—' && !inv.customerIdentity.includes('Yok') && inv.customerIdentity !== '11111111111' ? inv.customerIdentity : '—'}</span></span>
                 ${(inv.declarationDoc || inv.identityDoc || AdminApp.getStoredDeclaration(inv.orderId)) ? `
-                  <button type="button" class="btn-admin-secondary" style="padding:2px 6px; font-size:10px; background:#ECFDF5; border-color:#86EFAC; color:#065F46; font-weight:800; border-radius:4px; cursor:pointer;" onclick="AdminApp.openDeclarationModal('${inv.orderId}')" title="Müşteri Kimlik Belgesini İncele / Değiştir">
-                    🪪 Kimlik Var
+                  <button type="button" class="btn-admin-secondary" style="padding:3px 8px; font-size:11px; background:#DCFCE7; border:1.5px solid #16A34A; color:#15803D; font-weight:800; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center; gap:4px; box-shadow:0 1px 3px rgba(22, 163, 74, 0.2);" onclick="AdminApp.openDeclarationModal('${inv.orderId}')" title="Müşteri Kimlik Belgesini İncele / Değiştir">
+                    <span>🪪</span> <span>Kimlik: ✅ YÜKLÜ</span>
                   </button>
                 ` : `
-                  <button type="button" class="btn-admin-secondary" style="padding:2px 6px; font-size:10px; background:#FFFBEB; border-color:#FCD34D; color:#B45309; font-weight:700; border-radius:4px; cursor:pointer;" onclick="AdminApp.openDeclarationModal('${inv.orderId}')" title="Müşteri Kimlik Belgesi Yükle">
-                    ⚠️ Kimlik Ekle
+                  <button type="button" class="btn-admin-secondary" style="padding:3px 8px; font-size:11px; background:#FFFBEB; border:1.5px solid #F59E0B; color:#B45309; font-weight:700; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center; gap:4px;" onclick="AdminApp.openDeclarationModal('${inv.orderId}')" title="Müşteri Kimlik Belgesi Yükle">
+                    <span>⚠️</span> <span>Kimlik Yok (Yükle)</span>
                   </button>
                 `}
               </div>
@@ -7109,9 +7115,18 @@ const AdminApp = {
             <div class="mobile-card-body">
               <div class="mobile-customer-info">
                 <div class="mobile-customer-name" style="font-size:15px; font-weight:800; color:#0F172A;">${this.escapeHtml(inv.customerName || 'Müşteri')}</div>
-                <div class="mobile-customer-meta" style="margin-top:6px;">
+                <div class="mobile-customer-meta" style="margin-top:6px; display:flex; flex-wrap:wrap; align-items:center; gap:8px;">
                   <span style="color:#64748B; font-size:11.5px; font-weight:600;">Tel: ${inv.customerPhone && inv.customerPhone !== '—' && !inv.customerPhone.includes('Yok') ? inv.customerPhone : '—'}</span>
                   <span class="mobile-meta-tckn">🆔 ${inv.customerIdentity && inv.customerIdentity !== '—' && !inv.customerIdentity.includes('Yok') && inv.customerIdentity !== '11111111111' ? inv.customerIdentity : '—'}</span>
+                  ${(inv.declarationDoc || inv.identityDoc || AdminApp.getStoredDeclaration(inv.orderId)) ? `
+                    <button type="button" class="btn-admin-secondary" style="padding:2px 7px; font-size:10.5px; background:#DCFCE7; border:1.5px solid #16A34A; color:#15803D; font-weight:800; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center; gap:4px; box-shadow:0 1px 3px rgba(22, 163, 74, 0.2);" onclick="AdminApp.openDeclarationModal('${inv.orderId}')">
+                      🪪 Kimlik: ✅ YÜKLÜ
+                    </button>
+                  ` : `
+                    <button type="button" class="btn-admin-secondary" style="padding:2px 7px; font-size:10.5px; background:#FFFBEB; border:1.5px solid #F59E0B; color:#B45309; font-weight:700; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center; gap:4px;" onclick="AdminApp.openDeclarationModal('${inv.orderId}')">
+                      ⚠️ Kimlik Yok (Yükle)
+                    </button>
+                  `}
                 </div>
                 <div style="font-size:12px; color:#1E293B; font-weight:600; margin-top:6px; background:#F1F5F4; padding:6px 10px; border-radius:6px;">📦 ${itemsDisplay}</div>
               </div>
