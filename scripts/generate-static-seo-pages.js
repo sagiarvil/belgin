@@ -659,7 +659,8 @@ function renderCategoryPage(key, list, indexHtml) {
     let magArticles = [];
     try {
       const magModule = require('../js/magazine_data.js');
-      magArticles = magModule.MAGAZINE_ARTICLES || [];
+      magArticles = [...(magModule.MAGAZINE_ARTICLES || [])];
+      magArticles.sort((a, b) => (b.raw_date || '').localeCompare(a.raw_date || ''));
     } catch (e) {}
 
     categorySchema = {
@@ -758,7 +759,8 @@ function renderCategoryPage(key, list, indexHtml) {
     let magArticles = [];
     try {
       const magModule = require('../js/magazine_data.js');
-      magArticles = magModule.MAGAZINE_ARTICLES || [];
+      magArticles = [...(magModule.MAGAZINE_ARTICLES || [])];
+      magArticles.sort((a, b) => (b.raw_date || '').localeCompare(a.raw_date || ''));
     } catch (e) {}
     const magCards = magArticles.map(renderSeoMagazineCard).join('\n');
     const magRegex = /<div class="magazine-grid" id="magazineArticlesGrid">[\s\S]*?<\/div>/i;

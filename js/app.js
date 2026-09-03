@@ -3646,11 +3646,19 @@ const App = {
     const pagination = document.getElementById('magazinePagination');
     if (!grid) return;
 
-    const articles = (typeof window.MAGAZINE_ARTICLES !== 'undefined') ? window.MAGAZINE_ARTICLES : [];
+    let articles = (typeof window.MAGAZINE_ARTICLES !== 'undefined') ? [...window.MAGAZINE_ARTICLES] : [];
     if (!articles || articles.length === 0) {
       grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--color-muted);">Henüz magazin içeriği yüklenmedi.</div>';
       return;
     }
+
+    // En son yazılan/yayınlanan makaleler her zaman en başta (descending) sıralansın
+    articles.sort((a, b) => {
+      const dateA = a.raw_date || '';
+      const dateB = b.raw_date || '';
+      if (dateB !== dateA) return dateB.localeCompare(dateA);
+      return (b.id || '').localeCompare(a.id || '');
+    });
 
     let filtered = articles;
     if (category && category !== 'all') {
