@@ -9,12 +9,36 @@ const Cart = {
   giftWrap: false,
   giftNote: '',
 
+  sanitize() {
+    this.items = (this.items || []).filter(item => {
+      if (!item) return false;
+      const id = String(item.id || '').trim();
+      const name = String(item.name || '').trim();
+      if (!id || id === 'undefined' || id === 'null') return false;
+      if (!name || name === 'undefined' || name === 'null') return false;
+      return true;
+    }).map(item => {
+      let p = Number(item.price);
+      if (isNaN(p) || p <= 0) {
+        const prod = typeof findProduct === 'function' ? findProduct(item.id) : null;
+        if (prod && Number(prod.price) > 0) {
+          p = Number(prod.price);
+        }
+      }
+      item.price = p || 0;
+      item.qty = Math.max(1, parseInt(item.qty, 10) || 1);
+      item.itemKey = item.itemKey || String(item.id);
+      return item;
+    });
+  },
+
   init() {
     try {
       const saved = localStorage.getItem('belgin_cart');
       this.items = saved ? JSON.parse(saved) : [];
+      this.sanitize();
       const savedCoupon = localStorage.getItem('belgin_coupon');
-      if (savedCoupon && VALID_COUPONS[savedCoupon]) {
+      if (savedCoupon && typeof VALID_COUPONS !== 'undefined' && VALID_COUPONS[savedCoupon]) {
         this.coupon = { code: savedCoupon, ...VALID_COUPONS[savedCoupon] };
       }
       this.giftWrap = localStorage.getItem('belgin_gift_wrap') === 'true';
@@ -22,10 +46,12 @@ const Cart = {
     } catch (e) {
       this.items = [];
     }
+    this.save();
     this.updateUI();
   },
 
   save() {
+    this.sanitize();
     try {
       localStorage.setItem('belgin_cart', JSON.stringify(this.items));
       if (this.coupon) {
