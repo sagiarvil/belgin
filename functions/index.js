@@ -1101,6 +1101,8 @@ async function handleInvoiceRequest(req, res) {
     }
   }
 
+  const earsiv = new EarsivPortalService();
+
   // 0. GİB E-ARŞİV TASLAK FATURA ÖNİZLEME (SMS TETİKLEMEDEN CANLI GİB HTML ÇIKTISI)
   if (path.endsWith('/preview') || req.body?.action === 'preview') {
     try {
