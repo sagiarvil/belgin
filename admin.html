@@ -2594,6 +2594,60 @@
                   <input type="email" id="storeCustEmail" class="form-field-input" placeholder="ornek@musteri.com" style="font-weight:600; color:#0F172A;">
                 </div>
               </div>
+
+              <!-- 🪪 MASAK & MEVZUAT: MÜŞTERİ T.C. KİMLİK KARTI YÜKLEME ALANI -->
+              <div style="background:#FFFDF7; border:2px dashed #CA8A04; border-radius:10px; padding:14px 16px; margin-top:14px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-size:18px;">🪪</span>
+                    <strong style="font-size:13px; color:#854D0E;">Müşteri T.C. Kimlik Kartı / Pasaport Fotoğrafı:</strong>
+                    <span style="font-size:10.5px; font-weight:800; background:#FEF08A; color:#854D0E; padding:2px 8px; border-radius:10px; border:1px solid #FACC15;">MASAK & Altın Alım Zorunluluğu</span>
+                  </div>
+                  <div id="storeIdentityStatusBadge" style="font-size:11px; font-weight:700; color:#B45309;">
+                    (Altın tesliminde kimlik kopyası zorunludur)
+                  </div>
+                </div>
+
+                <!-- Önizleme Kartı (Yüklüyse) -->
+                <div id="storeIdentityPreviewBox" style="display:none; background:#FFF; border:1.5px solid #86EFAC; border-radius:8px; padding:10px 14px; margin-bottom:10px; align-items:center; justify-content:space-between; gap:12px;">
+                  <div style="display:flex; align-items:center; gap:12px; min-width:0;">
+                    <div style="width:48px; height:48px; border-radius:6px; overflow:hidden; border:1px solid #CBD5E1; background:#F8FAFC; flex-shrink:0; display:flex; align-items:center; justify-content:center;">
+                      <img id="storeIdentityPreviewImg" src="" alt="Kimlik Önizleme" style="width:100%; height:100%; object-fit:cover;">
+                      <span id="storeIdentityPreviewPdfIcon" style="display:none; font-size:24px;">📄</span>
+                    </div>
+                    <div style="min-width:0;">
+                      <div style="font-size:12.5px; font-weight:800; color:#064E3B; display:flex; align-items:center; gap:6px;">
+                        <span>✅ Kimlik Belgesi Eklendi</span>
+                        <span id="storeIdentityFileName" style="font-size:11px; color:#64748B; font-weight:600; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:180px;"></span>
+                      </div>
+                      <div style="font-size:11px; color:#059669; font-weight:600;">Bu belge doğrudan fatura arşivine ve yasal delil kaydına bağlanacaktır.</div>
+                    </div>
+                  </div>
+                  <div style="display:flex; gap:6px; flex-shrink:0;">
+                    <button type="button" class="btn-admin-secondary" style="padding:4px 8px; font-size:11.5px; color:#065F46; border-color:#86EFAC; background:#F0FDF4; font-weight:700;" onclick="AdminApp.viewCurrentStoreIdentityDoc()">
+                      🔍 İncele
+                    </button>
+                    <button type="button" class="btn-admin-secondary" style="padding:4px 8px; font-size:11.5px; color:#DC2626; border-color:#FCA5A5; background:#FEF2F2; font-weight:700;" onclick="AdminApp.removeStoreIdentityDoc()">
+                      🗑️ Kaldır
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Yükleme Butonu & Sürükle Bırak -->
+                <div id="storeIdentityDropZone" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; background:#FEFCE8; border:1.5px dashed #EAB308; border-radius:8px; padding:10px 14px; cursor:pointer;" onclick="document.getElementById('storeIdentityFileInput').click()" ondragover="event.preventDefault(); this.style.background='#FEF08A';" ondragleave="this.style.background='#FEFCE8';" ondrop="event.preventDefault(); this.style.background='#FEFCE8'; AdminApp.handleStoreIdentityDrop(event);">
+                  <input type="file" id="storeIdentityFileInput" accept="image/png, image/jpeg, image/jpg, image/webp, application/pdf" style="display:none;" onchange="AdminApp.handleStoreIdentityUpload(event)">
+                  <div style="display:flex; align-items:center; gap:10px;">
+                    <span style="font-size:24px;">📥</span>
+                    <div>
+                      <div style="font-size:12px; font-weight:800; color:#713F12;">Kimlik Kartı / Pasaport Görseli Seç veya Sürükle Bırak</div>
+                      <div style="font-size:10.5px; color:#A16207;">Kamera çekimi, JPG, PNG veya PDF (Maks. 10MB)</div>
+                    </div>
+                  </div>
+                  <button type="button" class="btn-admin-primary" style="background:#CA8A04; border-color:#A16207; color:#FFF; font-weight:800; font-size:11.5px; padding:6px 14px;" onclick="event.stopPropagation(); document.getElementById('storeIdentityFileInput').click();">
+                    📂 Dosya Seç / Fotoğraf Yükle
+                  </button>
+                </div>
+              </div>
             </div>
 
             <!-- ADIM 2: ÜRÜN KALEMLERİ VE ŞABLONLAR -->

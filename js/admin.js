@@ -5253,6 +5253,94 @@ const AdminApp = {
     this.handleFreeItemChange(false);
   },
 
+  currentStoreIdentityDoc: null,
+
+  handleStoreIdentityUpload(event) {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+    this.processStoreIdentityFile(file);
+    event.target.value = '';
+  },
+
+  handleStoreIdentityDrop(event) {
+    const file = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0];
+    if (!file) return;
+    this.processStoreIdentityFile(file);
+  },
+
+  processStoreIdentityFile(file) {
+    if (file.size > 10 * 1024 * 1024) {
+      alert('Dosya boyutu 10MB\'dan büyük olamaz.');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const dataUrl = e.target.result;
+      this.setStoreIdentityDoc(dataUrl, file.name);
+      this.showToast('✅ Müşteri kimlik belgesi başarıyla eklendi.');
+    };
+    reader.onerror = () => {
+      alert('Dosya okunamadı. Lütfen geçerli bir görsel veya PDF seçiniz.');
+    };
+    reader.readAsDataURL(file);
+  },
+
+  setStoreIdentityDoc(dataUrl, fileName = 'Kimlik Belgesi') {
+    this.currentStoreIdentityDoc = dataUrl;
+    const previewBox = document.getElementById('storeIdentityPreviewBox');
+    const dropZone = document.getElementById('storeIdentityDropZone');
+    const previewImg = document.getElementById('storeIdentityPreviewImg');
+    const pdfIcon = document.getElementById('storeIdentityPreviewPdfIcon');
+    const nameEl = document.getElementById('storeIdentityFileName');
+    const badgeEl = document.getElementById('storeIdentityStatusBadge');
+
+    if (previewBox && dropZone) {
+      if (dataUrl) {
+        previewBox.style.display = 'flex';
+        dropZone.style.display = 'none';
+        const isPdf = typeof dataUrl === 'string' && (dataUrl.startsWith('data:application/pdf') || dataUrl.toLowerCase().endsWith('.pdf'));
+        if (previewImg) {
+          previewImg.style.display = isPdf ? 'none' : 'block';
+          if (!isPdf) previewImg.src = dataUrl;
+        }
+        if (pdfIcon) pdfIcon.style.display = isPdf ? 'block' : 'none';
+        if (nameEl) nameEl.textContent = fileName || 'Belge Eklendi';
+        if (badgeEl) {
+          badgeEl.innerHTML = '<span style="color:#059669; font-weight:800;">✅ Kimlik Yüklendi</span>';
+        }
+      } else {
+        previewBox.style.display = 'none';
+        dropZone.style.display = 'flex';
+        if (previewImg) previewImg.src = '';
+        if (nameEl) nameEl.textContent = '';
+        if (badgeEl) {
+          badgeEl.innerHTML = '(Altın tesliminde kimlik kopyası zorunludur)';
+        }
+      }
+    }
+  },
+
+  removeStoreIdentityDoc(showToastMsg = true) {
+    this.setStoreIdentityDoc(null);
+    if (showToastMsg) this.showToast('ℹ️ Kimlik belgesi kaldırıldı.');
+  },
+
+  viewCurrentStoreIdentityDoc() {
+    if (!this.currentStoreIdentityDoc) return;
+    const isPdf = typeof this.currentStoreIdentityDoc === 'string' && (this.currentStoreIdentityDoc.startsWith('data:application/pdf') || this.currentStoreIdentityDoc.toLowerCase().endsWith('.pdf'));
+    if (isPdf) {
+      const win = window.open();
+      if (win) {
+        win.document.write('<iframe src="' + this.currentStoreIdentityDoc + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
+      }
+    } else {
+      const win = window.open();
+      if (win) {
+        win.document.write('<div style="display:flex;justify-content:center;align-items:center;min-height:100vh;background:#0F172A;margin:0;"><img src="' + this.currentStoreIdentityDoc + '" style="max-width:90%;max-height:90vh;box-shadow:0 8px 30px rgba(0,0,0,0.5);border-radius:8px;"></div>');
+      }
+    }
+  },
+
   editStoreInvoice(orderId) {
     const inv = (this.storeInvoices || []).find(i => i.orderId === orderId || i.id === orderId);
     if (!inv) {
@@ -5279,6 +5367,12 @@ const AdminApp = {
     if (emailEl) emailEl.value = inv.customerEmail || '';
     if (noteEl) noteEl.value = inv.note || '';
     if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
+
+    if (inv.declarationDoc || inv.identityDoc) {
+      this.setStoreIdentityDoc(inv.declarationDoc || inv.identityDoc, 'Mevcut Kimlik Belgesi');
+    } else {
+      this.removeStoreIdentityDoc(false);
+    }
 
     if (Array.isArray(inv.items) && inv.items.length > 0) {
       this.storeItems = JSON.parse(JSON.stringify(inv.items));
@@ -5352,6 +5446,8 @@ const AdminApp = {
     if (emailEl) emailEl.value = '';
     if (noteEl) noteEl.value = '';
     if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
+
+    this.removeStoreIdentityDoc(false);
 
     const freeNameEl = document.getElementById('freeItemName');
     const freeQtyEl = document.getElementById('freeItemQty');
@@ -6415,6 +6511,8 @@ const AdminApp = {
       customerAddress: address || 'Menderes Cad. No:231/B Buca İzmir',
       customerPhone: phone,
       customerEmail: email,
+      declarationDoc: this.currentStoreIdentityDoc || existingDoc?.declarationDoc || null,
+      identityDoc: this.currentStoreIdentityDoc || existingDoc?.identityDoc || null,
       items: validItems,
       totalAmount: totalAmount,
       total: totalAmount,
@@ -6727,7 +6825,18 @@ const AdminApp = {
             <td>
               <div style="font-weight:800; font-size:13px; color:#0F172A;">${this.escapeHtml(inv.customerName || 'Müşteri')}</div>
               <div style="font-size:11.5px; color:#475569; font-weight:600;">${inv.customerPhone && inv.customerPhone !== '—' && !inv.customerPhone.includes('Yok') ? inv.customerPhone : '—'}</div>
-              <div style="font-size:11px; color:#92400E; font-weight:800;">🆔 <span style="font-family:monospace;">${inv.customerIdentity && inv.customerIdentity !== '—' && !inv.customerIdentity.includes('Yok') && inv.customerIdentity !== '11111111111' ? inv.customerIdentity : '—'}</span></div>
+              <div style="font-size:11px; color:#92400E; font-weight:800; display:flex; align-items:center; gap:6px; margin-top:2px; flex-wrap:wrap;">
+                <span>🆔 <span style="font-family:monospace;">${inv.customerIdentity && inv.customerIdentity !== '—' && !inv.customerIdentity.includes('Yok') && inv.customerIdentity !== '11111111111' ? inv.customerIdentity : '—'}</span></span>
+                ${(inv.declarationDoc || inv.identityDoc || AdminApp.getStoredDeclaration(inv.orderId)) ? `
+                  <button type="button" class="btn-admin-secondary" style="padding:2px 6px; font-size:10px; background:#ECFDF5; border-color:#86EFAC; color:#065F46; font-weight:800; border-radius:4px; cursor:pointer;" onclick="AdminApp.openDeclarationModal('${inv.orderId}')" title="Müşteri Kimlik Belgesini İncele / Değiştir">
+                    🪪 Kimlik Var
+                  </button>
+                ` : `
+                  <button type="button" class="btn-admin-secondary" style="padding:2px 6px; font-size:10px; background:#FFFBEB; border-color:#FCD34D; color:#B45309; font-weight:700; border-radius:4px; cursor:pointer;" onclick="AdminApp.openDeclarationModal('${inv.orderId}')" title="Müşteri Kimlik Belgesi Yükle">
+                    ⚠️ Kimlik Ekle
+                  </button>
+                `}
+              </div>
             </td>
             <td style="font-size:12px; color:#1E293B; line-height:1.4;">${itemsDisplay}</td>
             <td style="font-weight:800; font-size:14px; color:${isCancelled ? '#991B1B' : '#047857'}; text-align:right; white-space:nowrap;">

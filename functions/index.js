@@ -1735,6 +1735,8 @@ async function handleStoreInvoicesRequest(req, res) {
         items,
         totalAmount,
         note,
+        declarationDoc,
+        identityDoc,
         orderId: customOrderId,
         id: customId,
         invoiceId: customInvoiceId,
@@ -1749,6 +1751,7 @@ async function handleStoreInvoicesRequest(req, res) {
       const cleanPhone = String(customerPhone || '').trim();
       const cleanEmail = String(customerEmail || '').trim();
       const cleanDate = String(invoiceDate || new Date().toISOString().slice(0, 10)).trim();
+      const cleanDeclarationDoc = declarationDoc || identityDoc || (existingDoc?.exists ? existingDoc.data().declarationDoc : null) || null;
 
       const itemsList = Array.isArray(items) && items.length > 0 ? items : [
         { name: '22 Ayar Altın / Mücevherat', qty: 1, unitPrice: Number(totalAmount || 0), lineTotal: Number(totalAmount || 0) }
@@ -1781,6 +1784,8 @@ async function handleStoreInvoicesRequest(req, res) {
         customerPhone: cleanPhone,
         customerEmail: cleanEmail,
         invoiceDate: cleanDate,
+        declarationDoc: cleanDeclarationDoc,
+        identityDoc: cleanDeclarationDoc,
         items: itemsList,
         totalAmount: rawTotal,
         total: rawTotal,
