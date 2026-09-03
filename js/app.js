@@ -466,11 +466,12 @@ const App = {
     const pagEl = document.getElementById('homeWatchesPagination');
     if (!el) return;
 
+    const list = this.getAllWatchList();
     const pageSize = this.HOME_WATCH_PAGE_SIZE || 16;
-    const total = WATCHES.length;
+    const total = list.length;
     const start = (page - 1) * pageSize;
     const end = start + pageSize;
-    const pageItems = WATCHES.slice(start, end);
+    const pageItems = list.slice(start, end);
 
     el.innerHTML = pageItems.map(p => this.renderProductCard(p)).join('');
 

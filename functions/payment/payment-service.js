@@ -146,8 +146,30 @@ function normalizeCart(clientItems, isVipPayment = false, vipToken = null, produ
     }
     const qty = rawQty;
 
-    // VIP / Özel Sipariş Güvenlik Denetimi
-    if (isVipPayment || item.isVipCustom === true || id.startsWith('VIP-') || id.startsWith('BLG-')) {
+    // 1. Önce katalogda doğrudan ürün var mı kontrol edilir (Server Fiyat Kilidi)
+    const product = productCatalog[id] || Object.values(productCatalog).find(p => String(p.id) === id || String(p.reference) === id || String(p.ref) === id || String(p.slug) === id);
+    if (product && !item.isVipCustom && !id.startsWith('VIP-')) {
+      if (product.inStock === false) {
+        const error = new Error(`${product.name} stokta değil.`);
+        error.code = 'PRODUCT_OUT_OF_STOCK';
+        throw error;
+      }
+      return {
+        id: String(product.id),
+        name: `${product.brand} ${product.name}`.trim(),
+        brand: String(product.brand || ''),
+        reference: String(product.reference || ''),
+        metal: String(product.metal || ''),
+        price: Number(product.price),
+        qty,
+        category: String(product.category || ''),
+        isGold: product.isGold === true,
+        highValueSecureDelivery: isHighValueCatalogProduct(product),
+      };
+    }
+
+    // 2. VIP / Özel Sipariş Güvenlik Denetimi
+    if (isVipPayment || item.isVipCustom === true || id.startsWith('VIP-')) {
       const verifiedVip = verifyVipToken(vipToken || item.vipToken || item.signedToken, id);
       if (!verifiedVip) {
         const error = new Error('VIP / Özel ödeme tutarı güvenliği: Yetkisiz istemci fiyatı reddedildi. Geçerli sunucu imzalı token zorunludur.');
@@ -168,31 +190,9 @@ function normalizeCart(clientItems, isVipPayment = false, vipToken = null, produ
       };
     }
 
-    // Katalog Ürün Fiyatı: Client'tan gelen price KESİNLİKLE dikkate alınmaz, server kataloğundan okunur!
-    const product = productCatalog[id];
-    if (!product) {
-      const error = new Error(`Ürün doğrulanamadı: ${id}`);
-      error.code = 'PRODUCT_NOT_FOUND';
-      throw error;
-    }
-    if (product.inStock === false) {
-      const error = new Error(`${product.name} stokta değil.`);
-      error.code = 'PRODUCT_OUT_OF_STOCK';
-      throw error;
-    }
-
-    return {
-      id,
-      name: `${product.brand} ${product.name}`.trim(),
-      brand: String(product.brand || ''),
-      reference: String(product.reference || ''),
-      metal: String(product.metal || ''),
-      price: Number(product.price),
-      qty,
-      category: String(product.category || ''),
-      isGold: product.isGold === true,
-      highValueSecureDelivery: isHighValueCatalogProduct(product),
-    };
+    const error = new Error(`Ürün doğrulanamadı: ${id}`);
+    error.code = 'PRODUCT_NOT_FOUND';
+    throw error;
   });
 }
 
@@ -295,7 +295,7 @@ class PaymentService {
     }
 
     const sessionTask = async () => {
-      const isVipPayment = body.isVipPayment === true || (Array.isArray(body.items) && body.items.some((i) => i.isVipCustom || String(i.id).startsWith('VIP-') || String(i.id).startsWith('BLG-')));
+      const isVipPayment = body.isVipPayment === true || (Array.isArray(body.items) && body.items.some((i) => i.isVipCustom || String(i.id).startsWith('VIP-')));
       let email = String(body.email || body.user_email || body.customer?.email || '').trim().toLowerCase();
       if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
         const cleanPhone = String(body.user_phone || body.phone || body.customer?.phone || '').replace(/\D/g, '');
