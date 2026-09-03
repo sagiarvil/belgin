@@ -836,13 +836,13 @@ const AdminApp = {
               ${invoiceBadge}
             </td>
             <td style="text-align:center;">
-              ${(o.declarationDoc || AdminApp.getStoredDeclaration(o.orderId)) ? `
-                <button type="button" class="btn-admin-secondary" style="padding:4px 8px; font-size:11px; background:#ECFDF5; border-color:#10B981; color:#065F46; font-weight:700; border-radius:6px; display:inline-flex; align-items:center; gap:4px; white-space:nowrap; cursor:pointer;" onclick="AdminApp.openDeclarationModal('${o.orderId}')" title="İmzalı Müşteri Beyanını Gör / Değiştir">
-                  <span>📑</span> <span>İmzalı Beyan (✅ Yüklü)</span>
+              ${(o.declarationDoc || o.identityDoc || AdminApp.getStoredDeclaration(o.orderId)) ? `
+                <button type="button" class="btn-admin-secondary" style="padding:4px 8px; font-size:11px; background:#ECFDF5; border-color:#10B981; color:#065F46; font-weight:700; border-radius:6px; display:inline-flex; align-items:center; gap:4px; white-space:nowrap; cursor:pointer;" onclick="AdminApp.openDeclarationModal('${o.orderId}')" title="Müşteri Kimlik Belgesi / İmzalı Beyanı Gör veya Değiştir">
+                  <span>🪪</span> <span>Kimlik / Beyan (✅ Yüklü)</span>
                 </button>
               ` : `
-                <button type="button" class="btn-admin-secondary" style="padding:4px 8px; font-size:11px; background:#F8FAFC; border-color:#CBD5E1; color:#475569; font-weight:600; border-radius:6px; display:inline-flex; align-items:center; gap:4px; white-space:nowrap; cursor:pointer;" onclick="AdminApp.openDeclarationModal('${o.orderId}')" title="Müşteriden Gelen Islak İmzalı Beyan Belgesini Yükle">
-                  <span>📎</span> <span>Beyan Ekle</span>
+                <button type="button" class="btn-admin-secondary" style="padding:4px 8px; font-size:11px; background:#FFFBEB; border-color:#FCD34D; color:#92400E; font-weight:700; border-radius:6px; display:inline-flex; align-items:center; gap:4px; white-space:nowrap; cursor:pointer;" onclick="AdminApp.openDeclarationModal('${o.orderId}')" title="Müşteri T.C. Kimlik Kartı Fotoğrafı veya Beyan Belgesi Yükle">
+                  <span>🪪</span> <span>Kimlik / Beyan Yükle</span>
                 </button>
               `}
             </td>
@@ -957,9 +957,9 @@ const AdminApp = {
               </div>
 
               <div class="mobile-declaration-row" style="margin-top:8px; background:#FFFDF7; border:1px solid #FDE68A; border-radius:8px; padding:8px 12px; display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size:11.5px; font-weight:700; color:#854D0E;">İmzalı Müşteri Beyanı:</span>
-                <button type="button" class="btn-admin-secondary" style="padding:4px 10px; font-size:11px; font-weight:800; border-radius:6px; ${(o.declarationDoc || AdminApp.getStoredDeclaration(o.orderId)) ? 'background:#ECFDF5; border-color:#10B981; color:#065F46;' : 'background:#FFF; border-color:#CBD5E1; color:#475569;'}" onclick="AdminApp.openDeclarationModal('${o.orderId}')">
-                  ${(o.declarationDoc || AdminApp.getStoredDeclaration(o.orderId)) ? '📑 İmzalı Beyan (✅ Yüklü)' : '📎 Beyan Yükle'}
+                <span style="font-size:11.5px; font-weight:700; color:#854D0E;">🪪 Kimlik / İmzalı Beyan:</span>
+                <button type="button" class="btn-admin-secondary" style="padding:4px 10px; font-size:11px; font-weight:800; border-radius:6px; ${(o.declarationDoc || o.identityDoc || AdminApp.getStoredDeclaration(o.orderId)) ? 'background:#ECFDF5; border-color:#10B981; color:#065F46;' : 'background:#FFF; border-color:#CBD5E1; color:#475569;'}" onclick="AdminApp.openDeclarationModal('${o.orderId}')">
+                  ${(o.declarationDoc || o.identityDoc || AdminApp.getStoredDeclaration(o.orderId)) ? '🪪 Kimlik (✅ Yüklü)' : '🪪 Kimlik Yükle'}
                 </button>
               </div>
             </div>
@@ -1782,6 +1782,29 @@ const AdminApp = {
       this.setOrderInvoiceConfigType('GOLD');
     }
 
+    // Kimlik & Beyan Belgesi Durumu
+    const hasDoc = Boolean(order.declarationDoc || order.identityDoc || this.getStoredDeclaration(orderId));
+    const statusTextEl = document.getElementById('cfgModalIdentityStatusText');
+    const identityBox = document.getElementById('cfgModalIdentityBox');
+    const totalAmount = Number(order.totalAmount || 0);
+    const isMasak = totalAmount >= 180000;
+
+    if (statusTextEl && identityBox) {
+      if (hasDoc) {
+        statusTextEl.innerHTML = '<span style="color:#059669; font-weight:800;">✅ Müşteri Kimlik Belgesi / İmzalı Beyan Sisteme Yüklü</span>';
+        identityBox.style.borderColor = '#86EFAC';
+        identityBox.style.background = '#F0FDF4';
+      } else if (isMasak) {
+        statusTextEl.innerHTML = '<span style="color:#DC2626; font-weight:800;">🚨 180.000 TL+ MASAK ZORUNLULUĞU: Kimlik Belgesi Eksik! Fatura öncesi yükleyiniz.</span>';
+        identityBox.style.borderColor = '#DC2626';
+        identityBox.style.background = '#FEF2F2';
+      } else {
+        statusTextEl.innerHTML = '<span style="color:#B45309; font-weight:600;">⚠️ Kimlik Belgesi Henüz Eklenmedi (Her işlemde isteğe bağlı veya yasal kayıt için yükleyebilirsiniz)</span>';
+        identityBox.style.borderColor = '#CA8A04';
+        identityBox.style.background = '#FFFDF7';
+      }
+    }
+
     modal.style.display = 'flex';
   },
 
@@ -2010,6 +2033,14 @@ const AdminApp = {
     this.isBatchInvoice = false;
     const order = this.orders.find(o => o.orderId === orderId);
     if (!order) return;
+
+    // MASAK 180.000 TL+ Kimlik Zorunluluğu Kontrolü
+    const hasDoc = Boolean(order.declarationDoc || order.identityDoc || this.getStoredDeclaration(orderId));
+    if (Number(order.totalAmount || 0) >= 180000 && !hasDoc) {
+      alert(`🚨 MASAK MEVZUAT ZORUNLULUĞU:\n\nSipariş tutarı ₺${Number(order.totalAmount || 0).toLocaleString('tr-TR', {minimumFractionDigits:2})} olup 180.000 TL yasal sınırını aşmaktadır.\n\nMASAK ve Kuyumculuk Mevzuatı gereğince 180.000 TL ve üzeri tüm işlemlerde müşteriden T.C. Kimlik Kartı / Pasaport kopyası alınması ve sisteme yüklenmesi YASAL ZORUNLULUKTUR.\n\nLütfen önce "Kimlik / Beyan Yükle" butonundan müşterinin kimlik belgesini sisteme yükleyiniz.`);
+      this.openDeclarationModal(orderId);
+      return;
+    }
 
     this.activeInvoiceOrderId = orderId;
     const bd = customBreakdown || this.calculateJewelryBreakdown(order.totalAmount, order);
