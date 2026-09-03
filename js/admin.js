@@ -488,36 +488,44 @@ const AdminApp = {
     const startInput = document.getElementById('startDate');
     const endInput = document.getElementById('endDate');
     const today = new Date();
-    const toDateStr = (d) => d.toISOString().split('T')[0];
-
     switch (preset) {
       case 'today':
-        startInput.value = toDateStr(today);
-        endInput.value = toDateStr(today);
+        startInput.value = this.formatLocalDate(today);
+        endInput.value = this.formatLocalDate(today);
         break;
-      case 'yesterday':
-        const yest = new Date(today);
-        yest.setDate(yest.getDate() - 1);
-        startInput.value = toDateStr(yest);
-        endInput.value = toDateStr(yest);
+      case 'yesterday': {
+        const yest = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
+        const yStr = this.formatLocalDate(yest);
+        startInput.value = yStr;
+        endInput.value = yStr;
         break;
-      case 'last7':
-        const d7 = new Date(today);
-        d7.setDate(d7.getDate() - 7);
-        startInput.value = toDateStr(d7);
-        endInput.value = toDateStr(today);
+      }
+      case 'last7': {
+        const d7 = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 6);
+        startInput.value = this.formatLocalDate(d7);
+        endInput.value = this.formatLocalDate(today);
         break;
-      case 'thisMonth':
+      }
+      case 'thisMonth': {
         const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-        startInput.value = toDateStr(firstDay);
-        endInput.value = toDateStr(today);
+        const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        startInput.value = this.formatLocalDate(firstDay);
+        endInput.value = this.formatLocalDate(lastDay);
         break;
-      case 'last30':
-        const d30 = new Date(today);
-        d30.setDate(d30.getDate() - 30);
-        startInput.value = toDateStr(d30);
-        endInput.value = toDateStr(today);
+      }
+      case 'lastMonth': {
+        const prevFirst = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+        const prevLast = new Date(today.getFullYear(), today.getMonth(), 0);
+        startInput.value = this.formatLocalDate(prevFirst);
+        endInput.value = this.formatLocalDate(prevLast);
         break;
+      }
+      case 'last30': {
+        const d30 = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 29);
+        startInput.value = this.formatLocalDate(d30);
+        endInput.value = this.formatLocalDate(today);
+        break;
+      }
       case 'all':
       default:
         startInput.value = '';
@@ -2865,7 +2873,7 @@ const AdminApp = {
       } else {
         const now = new Date();
         const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
-        startInput.value = firstDay.toISOString().split('T')[0];
+        startInput.value = this.formatLocalDate(firstDay);
       }
     }
 
@@ -2873,7 +2881,9 @@ const AdminApp = {
       if (mainEnd) {
         endInput.value = mainEnd;
       } else {
-        endInput.value = new Date().toISOString().split('T')[0];
+        const now = new Date();
+        const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+        endInput.value = this.formatLocalDate(lastDay);
       }
     }
 
@@ -2895,7 +2905,7 @@ const AdminApp = {
     if (!startInput || !endInput) return;
 
     const today = new Date();
-    const todayStr = today.toISOString().split('T')[0];
+    const todayStr = this.formatLocalDate(today);
 
     if (preset === 'today') {
       startInput.value = todayStr;
@@ -2903,16 +2913,22 @@ const AdminApp = {
     } else if (preset === 'this_week') {
       const day = today.getDay();
       const diff = today.getDate() - day + (day === 0 ? -6 : 1);
-      const monday = new Date(today.setDate(diff));
-      startInput.value = monday.toISOString().split('T')[0];
-      endInput.value = new Date().toISOString().split('T')[0];
+      const monday = new Date(today.getFullYear(), today.getMonth(), diff);
+      startInput.value = this.formatLocalDate(monday);
+      endInput.value = todayStr;
     } else if (preset === 'this_month') {
       const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-      startInput.value = firstDay.toISOString().split('T')[0];
-      endInput.value = todayStr;
+      const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+      startInput.value = this.formatLocalDate(firstDay);
+      endInput.value = this.formatLocalDate(lastDay);
+    } else if (preset === 'last_month') {
+      const prevFirst = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+      const prevLast = new Date(today.getFullYear(), today.getMonth(), 0);
+      startInput.value = this.formatLocalDate(prevFirst);
+      endInput.value = this.formatLocalDate(prevLast);
     } else if (preset === 'last_30') {
-      const prior30 = new Date(today.getTime() - (30 * 24 * 60 * 60 * 1000));
-      startInput.value = prior30.toISOString().split('T')[0];
+      const prior30 = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 29);
+      startInput.value = this.formatLocalDate(prior30);
       endInput.value = todayStr;
     } else if (preset === 'all') {
       startInput.value = '';
@@ -3452,43 +3468,69 @@ const AdminApp = {
 
     const startInput = document.getElementById('stmtStartDate');
     const endInput = document.getElementById('stmtEndDate');
+    const monthSelect = document.getElementById('stmtMonthSelector');
+    if (monthSelect) monthSelect.value = '';
+
     const today = new Date();
-    const toDateStr = d => d.toISOString().split('T')[0];
 
     if (preset === 'today') {
-      const todayStr = toDateStr(today);
+      const todayStr = this.formatLocalDate(today);
       if (startInput) startInput.value = todayStr;
       if (endInput) endInput.value = todayStr;
     } else if (preset === 'yesterday') {
-      const y = new Date(today);
-      y.setDate(y.getDate() - 1);
-      const yStr = toDateStr(y);
+      const y = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
+      const yStr = this.formatLocalDate(y);
       if (startInput) startInput.value = yStr;
       if (endInput) endInput.value = yStr;
     } else if (preset === 'last7') {
-      const d7 = new Date(today);
-      d7.setDate(d7.getDate() - 6);
-      if (startInput) startInput.value = toDateStr(d7);
-      if (endInput) endInput.value = toDateStr(today);
+      const d7 = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 6);
+      if (startInput) startInput.value = this.formatLocalDate(d7);
+      if (endInput) endInput.value = this.formatLocalDate(today);
     } else if (preset === 'thisMonth') {
       const mStart = new Date(today.getFullYear(), today.getMonth(), 1);
-      if (startInput) startInput.value = toDateStr(mStart);
-      if (endInput) endInput.value = toDateStr(today);
+      const mEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0); // Ayın tam son günü (30 veya 31)
+      if (startInput) startInput.value = this.formatLocalDate(mStart);
+      if (endInput) endInput.value = this.formatLocalDate(mEnd);
+    } else if (preset === 'lastMonth') {
+      const prevStart = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+      const prevEnd = new Date(today.getFullYear(), today.getMonth(), 0); // Geçen ayın tam son günü
+      if (startInput) startInput.value = this.formatLocalDate(prevStart);
+      if (endInput) endInput.value = this.formatLocalDate(prevEnd);
     } else if (preset === 'last30') {
-      const d30 = new Date(today);
-      d30.setDate(d30.getDate() - 29);
-      if (startInput) startInput.value = toDateStr(d30);
-      if (endInput) endInput.value = toDateStr(today);
+      const d30 = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 29);
+      if (startInput) startInput.value = this.formatLocalDate(d30);
+      if (endInput) endInput.value = this.formatLocalDate(today);
     } else { // 'all' (01.08.2016'dan başlat, bugünün tarihine gelsin)
       if (startInput) startInput.value = '2016-08-01';
-      if (endInput) endInput.value = toDateStr(today);
+      if (endInput) endInput.value = this.formatLocalDate(today);
     }
+
+    this.loadStatement();
+  },
+
+  onStmtMonthSelect(monthVal) {
+    if (!monthVal) return;
+    document.querySelectorAll('[data-stmt-preset]').forEach(b => b.classList.remove('active'));
+
+    const [yearStr, monthStr] = monthVal.split('-');
+    const year = parseInt(yearStr, 10);
+    const month = parseInt(monthStr, 10);
+
+    const firstDay = new Date(year, month - 1, 1);
+    const lastDay = new Date(year, month, 0); // Ayın tam son günü (28, 29, 30 veya 31)
+
+    const startInput = document.getElementById('stmtStartDate');
+    const endInput = document.getElementById('stmtEndDate');
+    if (startInput) startInput.value = this.formatLocalDate(firstDay);
+    if (endInput) endInput.value = this.formatLocalDate(lastDay);
 
     this.loadStatement();
   },
 
   onStmtCustomDateChange() {
     document.querySelectorAll('[data-stmt-preset]').forEach(b => b.classList.remove('active'));
+    const monthSelect = document.getElementById('stmtMonthSelector');
+    if (monthSelect) monthSelect.value = '';
     this.loadStatement();
   },
 
@@ -3506,7 +3548,7 @@ const AdminApp = {
       if (sInput) sInput.value = start;
     }
     if (!end) {
-      end = new Date().toISOString().split('T')[0];
+      end = this.formatLocalDate(new Date());
       const eInput = document.getElementById('stmtEndDate');
       if (eInput) eInput.value = end;
     }
@@ -3758,7 +3800,7 @@ const AdminApp = {
     if (kpiProfit) kpiProfit.textContent = fmt(totalProfit);
 
     const startVal = document.getElementById('stmtStartDate')?.value || '2016-08-01';
-    const endVal = document.getElementById('stmtEndDate')?.value || new Date().toISOString().split('T')[0];
+    const endVal = document.getElementById('stmtEndDate')?.value || this.formatLocalDate(new Date());
     const periodStr = `${this.formatDateTr(startVal)} — ${this.formatDateTr(endVal)}`;
 
     const posSub = document.getElementById('stmtKpiPosSubtext');
@@ -5679,7 +5721,7 @@ const AdminApp = {
     const fmt = val => '₺' + Number(val || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     
     const startVal = document.getElementById('stmtStartDate')?.value || '2016-08-01';
-    const endVal = document.getElementById('stmtEndDate')?.value || new Date().toISOString().split('T')[0];
+    const endVal = document.getElementById('stmtEndDate')?.value || this.formatLocalDate(new Date());
     const periodStr = `${this.formatDateTr(startVal)} — ${this.formatDateTr(endVal)}`;
     const nowStr = new Date().toLocaleString('tr-TR', { dateStyle: 'long', timeStyle: 'short' });
 
@@ -8257,6 +8299,21 @@ const AdminApp = {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+  },
+
+  formatLocalDate(d) {
+    if (!d) return '';
+    if (typeof d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(d)) return d;
+    try {
+      const dateObj = (d instanceof Date) ? d : new Date(d);
+      if (isNaN(dateObj.getTime())) return '';
+      const year = dateObj.getFullYear();
+      const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const day = String(dateObj.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    } catch (_) {
+      return '';
+    }
   },
 
   formatDateTr(dateStr) {

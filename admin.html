@@ -2065,10 +2065,11 @@
       <!-- Hızlı Tarih Seçim Butonları -->
       <div class="admin-presets">
         <button class="btn-preset active" data-preset="all" onclick="AdminApp.selectPreset('all', this)">Tüm Zamanlar</button>
+        <button class="btn-preset" data-preset="thisMonth" onclick="AdminApp.selectPreset('thisMonth', this)" title="İçinde bulunulan tam ayı (01 - 30/31) seçer">Bu Ay</button>
+        <button class="btn-preset" data-preset="lastMonth" onclick="AdminApp.selectPreset('lastMonth', this)" title="Önceki tam ayı (01 - 30/31) seçer">Geçen Ay</button>
         <button class="btn-preset" data-preset="today" onclick="AdminApp.selectPreset('today', this)">Bugün</button>
         <button class="btn-preset" data-preset="yesterday" onclick="AdminApp.selectPreset('yesterday', this)">Dün</button>
         <button class="btn-preset" data-preset="last7" onclick="AdminApp.selectPreset('last7', this)">Son 7 Gün</button>
-        <button class="btn-preset" data-preset="thisMonth" onclick="AdminApp.selectPreset('thisMonth', this)">Bu Ay</button>
         <button class="btn-preset" data-preset="last30" onclick="AdminApp.selectPreset('last30', this)">Son 30 Gün</button>
       </div>
 
@@ -2254,7 +2255,8 @@
       <!-- Hızlı Dönem Seçiciler (Yatay Kaydırılabilir Haplar) -->
       <div class="admin-presets">
         <button class="btn-preset active" data-stmt-preset="all" onclick="AdminApp.selectStmtPreset('all', this)">Tüm Zamanlar</button>
-        <button class="btn-preset" data-stmt-preset="thisMonth" onclick="AdminApp.selectStmtPreset('thisMonth', this)">Bu Ay</button>
+        <button class="btn-preset" data-stmt-preset="thisMonth" onclick="AdminApp.selectStmtPreset('thisMonth', this)" title="İçinde bulunulan tam ayı (01 - 30/31) seçer">Bu Ay</button>
+        <button class="btn-preset" data-stmt-preset="lastMonth" onclick="AdminApp.selectStmtPreset('lastMonth', this)" title="Önceki tam ayı (01 - 30/31) seçer">Geçen Ay</button>
         <button class="btn-preset" data-stmt-preset="last30" onclick="AdminApp.selectStmtPreset('last30', this)">Son 30 Gün</button>
         <button class="btn-preset" data-stmt-preset="today" onclick="AdminApp.selectStmtPreset('today', this)">Bugün</button>
         <button class="btn-preset" data-stmt-preset="yesterday" onclick="AdminApp.selectStmtPreset('yesterday', this)">Dün</button>
@@ -2262,6 +2264,23 @@
       </div>
 
       <div class="admin-filter-row">
+        <!-- Hızlı Ay / Dönem Seçici Dropdown -->
+        <div class="date-input-box" style="min-width:170px;">
+          <label for="stmtMonthSelector">🗓️ Ay Seçimi (01 - Son Gün)</label>
+          <select id="stmtMonthSelector" onchange="AdminApp.onStmtMonthSelect(this.value)" style="border:1.5px solid #059669; border-radius:8px; padding:7px 10px; font-weight:800; color:#064E3B; background:#FFF; font-size:12px; cursor:pointer;">
+            <option value="">-- Ay Seçiniz --</option>
+            <option value="2026-09">Eylül 2026 (01.09 - 30.09)</option>
+            <option value="2026-08">Ağustos 2026 (01.08 - 31.08)</option>
+            <option value="2026-07">Temmuz 2026 (01.07 - 31.07)</option>
+            <option value="2026-06">Haziran 2026 (01.06 - 30.06)</option>
+            <option value="2026-05">Mayıs 2026 (01.05 - 31.05)</option>
+            <option value="2026-04">Nisan 2026 (01.04 - 30.04)</option>
+            <option value="2026-03">Mart 2026 (01.03 - 31.03)</option>
+            <option value="2026-02">Şubat 2026 (01.02 - 28.02)</option>
+            <option value="2026-01">Ocak 2026 (01.01 - 31.01)</option>
+          </select>
+        </div>
+
         <div class="date-inputs-group">
           <div class="date-input-box">
             <label for="stmtStartDate">📅 Başlangıç Tarihi</label>
