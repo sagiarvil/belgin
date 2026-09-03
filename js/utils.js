@@ -682,8 +682,15 @@ function showToast(message, type = 'success') {
 }
 
 function getAllProducts() {
-  const prods = typeof PRODUCTS !== 'undefined' ? PRODUCTS : [];
-  return prods;
+  const prods = typeof PRODUCTS !== 'undefined' && Array.isArray(PRODUCTS) ? PRODUCTS : [];
+  const elite = typeof ELITE_WATCHES !== 'undefined' && Array.isArray(ELITE_WATCHES) ? ELITE_WATCHES : [];
+  const watches = typeof WATCHES !== 'undefined' && Array.isArray(WATCHES) ? WATCHES : [];
+
+  const map = new Map();
+  prods.forEach(p => { if (p && p.id !== undefined) map.set(String(p.id), p); });
+  elite.forEach(p => { if (p && p.id !== undefined && !map.has(String(p.id))) map.set(String(p.id), p); });
+  watches.forEach(p => { if (p && p.id !== undefined && !map.has(String(p.id))) map.set(String(p.id), p); });
+  return Array.from(map.values());
 }
 
 function findProduct(id) {
@@ -693,7 +700,7 @@ function findProduct(id) {
   const prods = getAllProducts();
   return prods.find(p =>
     String(p.id) === strId ||
-    (!isNaN(numId) && p.id === numId) ||
+    (!isNaN(numId) && Number(p.id) === numId) ||
     p.slug === strId ||
     (p.reference && String(p.reference).toLowerCase() === strId.toLowerCase())
   );

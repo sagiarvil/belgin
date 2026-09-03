@@ -2267,49 +2267,114 @@ const App = {
   },
 
   // SEPET GÖRÜNÜMÜ
+  // SEPET GÖRÜNÜMÜ
   renderCart() {
-    const container = document.getElementById('cartItemsList');
+    const container = document.getElementById('cartItemsList') || document.getElementById('cartContent');
     if (!container) return;
 
     if (Cart.items.length === 0) {
       container.innerHTML = `
-        <div style="text-align:center; padding:40px 0;">
-          <p style="color:var(--color-muted); margin-bottom:16px;">Sepetinizde ürün bulunmamaktadır.</p>
-          <a class="btn-hero-filled" href="#" data-page="saatler">Saatleri İncele</a>
+        <div style="text-align:center; padding:56px 16px; color:var(--color-muted);">
+          <div style="font-size:52px; margin-bottom:14px;">🛍️</div>
+          <h3 style="font-size:20px; font-weight:700; color:var(--color-ink); margin-bottom:8px; font-family:var(--font-sans);">Sepetinizde Henüz Ürün Yok</h3>
+          <p style="font-size:14px; color:var(--color-muted); margin-bottom:24px; max-width:400px; margin-left:auto; margin-right:auto;">Lüks saat ve mücevher koleksiyonlarımızı keşfetmeye hemen başlayın.</p>
+          <a class="btn-hero-filled" href="#" data-page="saatler" style="display:inline-block; padding:12px 28px; font-weight:700; border-radius:6px;">Koleksiyonu Keşfet</a>
         </div>
       `;
       return;
     }
 
+    const subtotal = Cart.getSubtotal();
+    const discount = Cart.getDiscountAmount();
+    const grandTotal = Cart.getTotal();
     const hasHighValue = Cart.items.some(item => (typeof isHighValueSecureDelivery === 'function' ? isHighValueSecureDelivery(item) : item.price > 12000));
 
     container.innerHTML = `
-      <div>
-        ${Cart.items.map(item => `
-          <div style="display:flex; justify-content:space-between; align-items:center; padding:16px 0; border-bottom:1px solid var(--color-border);">
-            <div>
-              <h4 style="font-size:15px; font-weight:600;">${item.name}</h4>
-              <p style="font-size:12px; color:var(--color-muted);">${item.qty} Adet × ${formatPrice(item.price)}</p>
+      <div class="cart-items-wrapper" style="display:flex; flex-direction:column; gap:14px;">
+        <div style="border-bottom:1.5px solid #EAE5D9; padding-bottom:10px; margin-bottom:4px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:13px; font-weight:800; color:var(--color-ink); text-transform:uppercase; letter-spacing:0.5px;">Ürünler (${Cart.getCount()} Adet)</span>
+          <button type="button" style="background:none; border:none; color:#DC2626; font-size:12px; font-weight:700; cursor:pointer; text-decoration:underline;" onclick="if(confirm('Sepetteki tüm ürünleri temizlemek istediğinize emin misiniz?')){ Cart.clear(); App.renderCart(); }">Tümünü Temizle</button>
+        </div>
+
+        ${Cart.items.map(item => {
+          const itemKey = item.itemKey || item.id;
+          const itemPrice = Number(item.price || 0);
+          const linePrice = itemPrice * (Number(item.qty) || 1);
+          return `
+            <div class="cart-item-card" style="display:flex; justify-content:space-between; align-items:center; padding:16px; border:1px solid #EAE5D9; border-radius:10px; background:#FAFAFA; gap:14px; flex-wrap:wrap;">
+              <div style="display:flex; align-items:center; gap:14px; min-width:240px; flex:1;">
+                <div style="width:68px; height:68px; border-radius:8px; overflow:hidden; border:1px solid #E2DCCF; background:#FFF; flex-shrink:0; display:flex; align-items:center; justify-content:center;">
+                  <img src="${item.image || 'images/logo.png'}" alt="${item.name}" style="width:100%; height:100%; object-fit:contain;">
+                </div>
+                <div>
+                  <h4 style="font-size:14.5px; font-weight:700; color:var(--color-ink); margin:0 0 4px; line-height:1.3;">${item.name}</h4>
+                  <div style="font-size:12.5px; color:var(--color-muted); font-weight:600;">${formatPrice(itemPrice)} / adet</div>
+                  ${item.ringSize ? `<div style="font-size:11px; color:var(--color-gold-dark); font-weight:700; margin-top:2px;">Ölçü: ${item.ringSize}</div>` : ''}
+                </div>
+              </div>
+
+              <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+                <!-- Miktar Kontrolü (Artır / Azalt) -->
+                <div style="display:inline-flex; align-items:center; border:1.5px solid #CBD5E1; border-radius:6px; background:#FFF; overflow:hidden;">
+                  <button type="button" style="background:none; border:none; width:34px; height:34px; font-size:18px; font-weight:800; color:#334155; cursor:pointer; display:flex; align-items:center; justify-content:center;" onclick="Cart.updateQty('${itemKey}', -1)">−</button>
+                  <span style="min-width:34px; text-align:center; font-size:13.5px; font-weight:800; color:#0F172A; font-family:monospace;">${item.qty}</span>
+                  <button type="button" style="background:none; border:none; width:34px; height:34px; font-size:18px; font-weight:800; color:#334155; cursor:pointer; display:flex; align-items:center; justify-content:center;" onclick="Cart.updateQty('${itemKey}', 1)">+</button>
+                </div>
+
+                <!-- Satır Tutarı -->
+                <div style="font-size:16px; font-weight:800; color:var(--color-teal); min-width:110px; text-align:right;">
+                  ${formatPrice(linePrice)}
+                </div>
+
+                <!-- Silme Butonu -->
+                <button type="button" style="background:#FEE2E2; border:1px solid #FCA5A5; color:#DC2626; width:34px; height:34px; border-radius:6px; cursor:pointer; font-size:15px; font-weight:800; display:flex; align-items:center; justify-content:center;" onclick="Cart.remove('${itemKey}')" title="Ürünü Sepetten Kaldır">
+                  🗑️
+                </button>
+              </div>
             </div>
-            <div style="font-size:16px; font-weight:700; color:var(--color-teal);">${formatPrice(item.price * item.qty)}</div>
-          </div>
-        `).join('')}
+          `;
+        }).join('')}
+
+        <!-- Hediye Paketi & VIP Hizmet -->
+        <div style="background:#FFFDF7; border:1px solid #FDE68A; border-radius:8px; padding:14px; margin-top:6px;">
+          <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:12.5px; font-weight:700; color:#854D0E;">
+            <input type="checkbox" ${Cart.giftWrap ? 'checked' : ''} onchange="Cart.toggleGiftWrap(this.checked)" style="accent-color:#D97706; width:16px; height:16px;">
+            <span>🎁 Özel Belgin Lüks Kadife Hediye Paketi ve Mühürlü Kart İstiyorum (Ücretsiz VIP Hizmet)</span>
+          </label>
+        </div>
 
         ${hasHighValue ? `
-          <div style="background:#FFF9EE; border:1px solid #E6D2A8; padding:14px 16px; border-radius:8px; margin:18px 0; font-size:12.5px; color:#6B531C; line-height:1.5;">
-            <strong>🏛️ Teslim Yöntemi:</strong> Belgin Kuyumculuk Mağazasından Teslim (Menderes Cad. No:231/B Buca / İzmir)<br>
-            <span style="font-size:11.5px; color:#875A00;">⚠️ Sepetinizde 12.000 TL üzeri yüksek değerli ürün bulunmaktadır. Güvenlik protokolü (03) gereği kargo/kurye adrese teslimat seçeneği teknik olarak kapatılmıştır.</span>
+          <div style="background:#FFF9EE; border:1px solid #E6D2A8; padding:14px 16px; border-radius:8px; margin-top:6px; font-size:12.5px; color:#6B531C; line-height:1.5;">
+            <strong>🏛️ Yüksek Değerli Teslimat:</strong> Belgin Kuyumculuk Mağazasından Bizzat Teslim (Menderes Cad. No:231/B Buca / İzmir)<br>
+            <span style="font-size:11.5px; color:#875A00;">Sepetinizde 12.000 TL üzeri yüksek değerli ürün bulunmaktadır. Güvenlik protokolü gereği mağazadan randevulu teslimat yapılmaktadır.</span>
           </div>
         ` : ''}
 
-        <div style="display:flex; justify-content:space-between; align-items:center; padding:20px 0;">
-          <span style="font-size:16px; font-weight:600;">Genel Toplam:</span>
-          <span style="font-size:22px; font-weight:700; color:var(--color-teal);">${formatPrice(Cart.getTotal())}</span>
-        </div>
+        <!-- Fiyat Özeti -->
+        <div style="background:#FFF; border:1px solid #EAE5D9; border-radius:10px; padding:20px; margin-top:10px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:13.5px; color:var(--color-muted);">
+            <span>Ara Toplam (KDV Dahil)</span>
+            <span style="font-weight:700; color:var(--color-ink);">${formatPrice(subtotal)}</span>
+          </div>
+          ${Cart.coupon && discount > 0 ? `
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:13.5px; color:var(--color-gold-dark);">
+              <span>VIP İndirim (${Cart.coupon.code})</span>
+              <span style="font-weight:700;">- ${formatPrice(discount)}</span>
+            </div>
+          ` : ''}
+          <div style="display:flex; justify-content:space-between; margin-bottom:14px; font-size:13.5px; color:#15803D;">
+            <span>Zırhlı / Sigortalı Teslimat</span>
+            <span style="font-weight:700;">Ücretsiz VIP Hizmet</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; border-top:1.5px solid #EAE5D9; padding-top:14px; margin-bottom:18px;">
+            <span style="font-size:16px; font-weight:800; color:var(--color-ink);">Genel Toplam:</span>
+            <span style="font-size:24px; font-weight:800; color:var(--color-teal);">${formatPrice(grandTotal)}</span>
+          </div>
 
-        <button class="btn-art-buy" style="width:100%;" onclick="Router.navigate('checkout')">
-          Güvenli Ödeme Adımına Geç
-        </button>
+          <button type="button" class="btn-art-buy" style="width:100%; padding:15px; font-size:15px; font-weight:800; border-radius:8px; cursor:pointer;" onclick="Router.navigate('odeme')">
+            🔒 Güvenli Ödeme Adımına Geç (${formatPrice(grandTotal)})
+          </button>
+        </div>
       </div>
     `;
   },
