@@ -5372,6 +5372,81 @@ const AdminApp = {
     }
   },
 
+  // MAĞAZA YASAL DOKÜMANTASYON & HUKUKİ EVRAK İNDİRME / YAZDIRMA
+  printStoreFormDoc(docType = 'delivery-tutanak', targetOrderId = null) {
+    let orderId = targetOrderId || this.editingStoreOrderId;
+    const adminKey = this.adminPin || sessionStorage.getItem('belgin_admin_pin') || localStorage.getItem('belgin_admin_pin') || '1999';
+
+    let invoiceData = null;
+    if (orderId) {
+      invoiceData = (this.storeInvoices || []).find(i => i.orderId === orderId || i.id === orderId);
+    }
+
+    if (!invoiceData) {
+      const custName = (document.getElementById('storeCustomerName')?.value || '').trim() || 'Bireysel Mağaza Müşterisi';
+      const custIdentity = (document.getElementById('storeCustomerIdentity')?.value || '').trim();
+      const custPhone = (document.getElementById('storeCustomerPhone')?.value || '').trim();
+      const custCity = (document.getElementById('storeCustomerCity')?.value || '').trim() || 'İzmir';
+      const custAddress = (document.getElementById('storeCustomerAddress')?.value || '').trim() || 'Menderes Cad. No:231/B Buca / İzmir';
+      const summary = (typeof this.calculateStoreInvoiceLiveSummary === 'function') ? this.calculateStoreInvoiceLiveSummary() : { grandTotal: 0 };
+      const grandTotal = summary.grandTotal || 0;
+
+      if (!orderId) {
+        const todayStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+        orderId = `MGS-${todayStr}-${Math.floor(1000 + Math.random() * 9000)}`;
+      }
+
+      const items = (this.storeInvoiceItems && this.storeInvoiceItems.length > 0) ? this.storeInvoiceItems.map(it => ({
+        id: it.id || 'STORE-PROD-1',
+        name: it.name || it.title || 'Kıymetli Maden / Mücevherat',
+        title: it.name || it.title || 'Kıymetli Maden / Mücevherat',
+        price: Number(it.price || 0),
+        qty: Number(it.qty || 1),
+        kdvRate: Number(it.kdvRate || 0)
+      })) : [{
+        id: 'STORE-PROD-1',
+        name: 'Kıymetli Maden / Altın / Mücevherat',
+        title: 'Kıymetli Maden / Altın / Mücevherat',
+        price: grandTotal || 10000,
+        qty: 1,
+        kdvRate: 0
+      }];
+
+      invoiceData = {
+        orderId: orderId,
+        id: orderId,
+        customerName: custName,
+        customerIdentity: custIdentity,
+        customerPhone: custPhone,
+        customerCity: custCity,
+        customerAddress: custAddress,
+        totalAmount: grandTotal,
+        items: items,
+        productName: items.map(i => i.name).join(', '),
+        deliveryMethod: 'showroom',
+        status: 'SUCCESS',
+        createdAt: new Date().toISOString(),
+        invoiceDate: new Date().toISOString().slice(0, 10),
+        identityDoc: this.currentStoreIdentityDoc || null,
+        declarationDoc: this.currentStoreIdentityDoc || null
+      };
+
+      try {
+        localStorage.setItem('belgin_temp_legal_invoice', JSON.stringify(invoiceData));
+      } catch (_) {}
+    }
+
+    let tabParam = 'all';
+    if (docType === 'delivery-tutanak') tabParam = 'delivery-receipt'; // 13. Mağaza Teslim-Tesellüm Formu
+    else if (docType === 'masak-kyc') tabParam = 'declaration'; // 12. Müşteri Tanıma & Kimlik Beyanı
+    else if (docType === 'high-value-delivery') tabParam = 'delivery-statement'; // 03. Yüksek Değerli Teslimat
+    else if (docType === 'summary') tabParam = 'summary';
+    else if (docType === 'full-packet') tabParam = 'all';
+
+    const url = `/hukuki-evrak-yazdir.html?orderId=${encodeURIComponent(orderId)}&tab=${encodeURIComponent(tabParam)}&adminKey=${encodeURIComponent(adminKey)}`;
+    window.open(url, '_blank');
+  },
+
   editStoreInvoice(orderId) {
     const inv = (this.storeInvoices || []).find(i => i.orderId === orderId || i.id === orderId);
     if (!inv) {
@@ -6920,6 +6995,9 @@ const AdminApp = {
               ${invoiceBadge}
             </td>
             <td style="display:flex; gap:4px; flex-wrap:wrap; align-items:center;">
+              <button class="btn-admin-secondary" style="padding:5px 8px; font-size:11.5px; background:#F8FAFC; border-color:#94A3B8; color:#334155; font-weight:800;" onclick="AdminApp.printStoreFormDoc('full-packet', '${inv.orderId}')" title="Yasal Evraklar, MASAK ve Teslim-Tesellüm Dosyasını İndir / Yazdır">
+                📜 Yasal Evraklar
+              </button>
               ${isCancelled ? `
                 <button class="btn-admin-secondary" style="padding:5px 8px; font-size:11.5px; background:#FFF; border-color:#CBD5E1; color:#64748B; font-weight:700;" onclick="AdminApp.viewStoreInvoice('${inv.invoiceUuid}', '${inv.orderId}')" title="İptal Edilen Faturayı Aç">
                   📄 Fatura
@@ -7039,7 +7117,10 @@ const AdminApp = {
                 </div>
               `)}
 
-              <div class="mobile-actions-grid-bottom" style="grid-template-columns: ${isSigned ? '1fr 1fr 1fr' : '1fr 1fr'};">
+              <div class="mobile-actions-grid-bottom" style="grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));">
+                <button type="button" class="btn-mobile-subaction" style="background:#F8FAFC; color:#334155; border-color:#94A3B8; font-weight:800;" onclick="AdminApp.printStoreFormDoc('full-packet', '${inv.orderId}')">
+                  <span>📜 Evraklar</span>
+                </button>
                 ${isSigned ? `
                   <button type="button" class="btn-mobile-subaction" style="background:#DCFCE7; color:#166534; border-color:#86EFAC; font-weight:800;" onclick="AdminApp.sendStoreInvoiceToAccounting('${inv.orderId}')">
                     <span>📲 Muhasebe</span>

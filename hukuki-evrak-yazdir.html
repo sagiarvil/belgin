@@ -811,6 +811,40 @@ const LegalApp = {
       }
 
       if (!order) {
+        try {
+          const storeRes = await fetch(`/api/admin/store-invoices${adminKey ? `?adminKey=${encodeURIComponent(adminKey)}` : ''}`, {
+            headers: adminKey ? { 'x-admin-key': adminKey } : {}
+          });
+          if (storeRes.ok) {
+            const storeData = await storeRes.json();
+            order = (storeData.invoices || storeData.orders || []).find(o => o.orderId === orderId || o.id === orderId);
+          }
+        } catch (_) {}
+      }
+
+      if (!order) {
+        try {
+          const storedInvs = localStorage.getItem('belgin_store_invoices');
+          if (storedInvs) {
+            const list = JSON.parse(storedInvs);
+            order = (list || []).find(o => o.orderId === orderId || o.id === orderId);
+          }
+        } catch (_) {}
+      }
+
+      if (!order) {
+        try {
+          const tempLegal = localStorage.getItem('belgin_temp_legal_invoice');
+          if (tempLegal) {
+            const tempObj = JSON.parse(tempLegal);
+            if (tempObj && (tempObj.orderId === orderId || tempObj.id === orderId)) {
+              order = tempObj;
+            }
+          }
+        } catch (_) {}
+      }
+
+      if (!order) {
         document.getElementById('toolbarInfo').textContent = `Sipariş Ref: ${orderId} · ❌ EVIDENCE_NOT_FOUND`;
         document.getElementById('documentContentContainer').innerHTML = `
           <div style="color:#C92A2A; text-align:center; padding:60px 20px; font-weight:800; font-size:16px; line-height:1.6;">
@@ -890,6 +924,7 @@ const LegalApp = {
     const canonicalTckn = isTcknValid ? rawTckn : '';
     const maskedTckn = canonicalTckn ? `${canonicalTckn.substring(0, 7)}****` : '';
 
+    const rawPhone = String(o.customerPhone || o.customer?.phone || o.phone || o.user_phone || '').trim();
     const cleanPhoneDigits = rawPhone.replace(/\D/g, '');
     const isPhoneValid = rawPhone && 
       rawPhone !== '—' && 
