@@ -850,9 +850,9 @@ const AdminApp = {
               <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#F0F9FF; border-color:#0284C7; color:#0369A1; font-weight:700;" onclick="AdminApp.showDetail('${o.orderId}')">
                 Detay
               </button>
-              ${(o.invoiceStatus === 'CANCELLED' || o.isCancelled) ? `
+              ${(o.invoiceStatus === 'CANCELLED' || o.isCancelled) && o.invoiceNumber ? `
                 <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#FFF; border-color:#CBD5E1; color:#64748B; font-weight:700;" onclick="AdminApp.viewInvoice('${o.invoiceUuid}', '${o.orderId}')" title="İptal Edilen Faturayı Aç">
-                  📄 Fatura
+                  📄 Fatura (İptal)
                 </button>
               ` : (o.invoiceStatus !== 'SIGNED' ? `
                 <button class="btn-admin-primary" style="padding:3px 7px; font-size:11px; background:#059669; border-color:#059669; color:#FFF; font-weight:700;" onclick="AdminApp.openOrderInvoiceModal('${o.orderId}')" title="GİB e-Arşiv Faturası Kes (Altın / Saat / Serbest Seçimli)">
@@ -2575,8 +2575,12 @@ const AdminApp = {
     }
   },
 
-  // İMZALANMIŞ FATURAYI YENİ SEKMEDE GÖRÜNTÜLE
+  // İMZALANMIŞ FATURAYI YENİ SEKMEDE GÖRÜNTÜLE VEYA İMZALANMAMIŞSA SİHİRBAZI AÇ
   viewInvoice(invoiceUuid, orderId) {
+    if (!invoiceUuid || invoiceUuid === 'null' || invoiceUuid === 'undefined') {
+      this.openOrderInvoiceModal(orderId);
+      return;
+    }
     const url = `/api/admin/invoice/view?uuid=${encodeURIComponent(invoiceUuid || '')}&orderId=${encodeURIComponent(orderId || '')}&adminKey=${encodeURIComponent(this.adminPin)}`;
     window.open(url, '_blank');
   },

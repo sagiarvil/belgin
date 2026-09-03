@@ -1670,11 +1670,12 @@ async function handleInvoiceRequest(req, res) {
       }
 
       const rawTotal = Number(order?.totalAmount || order?.total || (order?.payment && order?.payment.amount) || (order?.amountInKurus ? order.amountInKurus / 100 : 0) || 0);
-      const invoiceNumber = order?.invoiceNumber || 'GIB2026000000018';
-      const ettn = targetUuid || order?.invoiceUuid || 'db6fbe41-9ec0-463d-8ac0-b521e52b954b';
+      const isSigned = order?.invoiceStatus === 'SIGNED';
+      const invoiceNumber = order?.invoiceNumber || (isSigned ? 'GIB e-Arşiv' : 'GİB TASLAK (MÜHÜR BEKLİYOR)');
+      const ettn = (targetUuid && targetUuid !== 'null' && targetUuid !== 'undefined') ? targetUuid : (order?.invoiceUuid || 'TASLAK-MÜHÜR-ÖNCESİ');
       const customerName = (order?.customerName || order?.customer?.name || 'Müşteri').trim();
       const customerIdentity = order?.customerIdentity || order?.customer?.identityNumber || '11111111111';
-      const customerAddress = order?.customerAddress || order?.customer?.address || '';
+      const customerAddress = order?.customerAddress || order?.customer?.address || 'Menderes Cad. No:231/B Buca İzmir';
       const customerPhone = order?.customerPhone || order?.customer?.phone || '';
       const customerEmail = order?.customerEmail || order?.customer?.email || '';
 
