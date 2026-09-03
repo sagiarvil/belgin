@@ -113,9 +113,12 @@ function renderOfficialGibHtml(data) {
       let vatAmt = Number(item.kdvTutari || item.vatAmount || 0);
 
       if (vatRate > 0) {
-        if (vatAmt > 0 && Math.abs(rawLine - (netLine + vatAmt)) < 1) {
+        if (vatAmt > 0 && Math.abs(Math.round(rawLine * (vatRate / 100) * 100) / 100 - vatAmt) <= 0.05) {
+          // rawLine zaten KDV hariç Net Matrah olarak iletilmiş
+          netLine = rawLine;
           grossLine = Math.round((netLine + vatAmt) * 100) / 100;
-        } else if (vatAmt > 0 && Math.abs(rawLine - netLine) < 1 && rawLine > vatAmt) {
+        } else if (vatAmt > 0 && Math.abs(Math.round((rawLine - vatAmt) * (vatRate / 100) * 100) / 100 - vatAmt) <= 0.05) {
+          // rawLine KDV dahil brüt tutar olarak iletilmiş
           netLine = Math.round((rawLine - vatAmt) * 100) / 100;
           grossLine = rawLine;
         } else {
