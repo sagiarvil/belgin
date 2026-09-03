@@ -861,6 +861,7 @@ const LegalApp = {
         const custPhone = (storedDecl && storedDecl.customerPhone) ? storedDecl.customerPhone : '05315779069';
         const docUrl = storedDecl ? (storedDecl.docUrl || storedDecl) : null;
         const total = (storedDecl && storedDecl.totalAmount) ? Number(storedDecl.totalAmount) : 185000;
+        const declPayMethod = storedDecl?.paymentMethod || storedDecl?.paymentChannel || 'HAVALE_EFT';
 
         order = {
           orderId: orderId,
@@ -872,6 +873,10 @@ const LegalApp = {
           customerPhone: custPhone,
           customerAddress: 'Menderes Cad. No:231/B Buca / İzmir',
           totalAmount: total,
+          paymentMethod: declPayMethod,
+          paymentChannel: declPayMethod,
+          bankName: storedDecl?.bankName || 'Kuveyt Türk Katılım Bankası A.Ş.',
+          receiptNo: storedDecl?.receiptNo || '—',
           deliveryMethod: 'showroom',
           status: 'SUCCESS',
           createdAt: todayIso,
@@ -903,6 +908,27 @@ const LegalApp = {
           </div>
         `;
         return;
+      }
+
+      const urlPayMethod = urlParams.get('paymentMethod');
+      const resolvedPayMethod = (urlPayMethod || order.paymentMethod || order.paymentChannel || (order.isStoreManual ? 'HAVALE_EFT' : 'KREDI_KARTI')).toUpperCase();
+      const isHavale = resolvedPayMethod.includes('HAVALE') || resolvedPayMethod.includes('EFT') || resolvedPayMethod.includes('FAST') || resolvedPayMethod.includes('BANKA');
+      const isNakit = resolvedPayMethod.includes('NAKIT') || resolvedPayMethod.includes('ELDEN');
+
+      if (isHavale) {
+        order.paymentMethod = 'HAVALE_EFT';
+        order.paymentChannel = 'HAVALE_EFT';
+        const infoEl = document.getElementById('toolbarInfo');
+        if (infoEl) infoEl.innerHTML = `<span style="background:#1E40AF; color:#FFF; padding:2px 7px; border-radius:4px; font-weight:800; margin-right:6px;">🏦 BANKA HAVALESİ / EFT</span> Doğrudan Banka Transferi Yasal Teslim ve İbraz Dosyası`;
+        const pack104Btn = document.getElementById('btnPack104');
+        if (pack104Btn) pack104Btn.innerHTML = '<span>🪪 MASAK & Kimlik İbraz Dosyası</span>';
+        const pack131Btn = document.getElementById('btnPack131');
+        if (pack131Btn) pack131Btn.innerHTML = '<span>✍️ Fiziki Teslim Tutanağı</span>';
+      } else if (isNakit) {
+        order.paymentMethod = 'NAKIT';
+        order.paymentChannel = 'NAKIT';
+        const infoEl = document.getElementById('toolbarInfo');
+        if (infoEl) infoEl.innerHTML = `<span style="background:#166534; color:#FFF; padding:2px 7px; border-radius:4px; font-weight:800; margin-right:6px;">💵 NAKİT TAHSİLAT</span> Mağaza Elden Kasa Tahsilatı ve Yasal Teslim Dosyası`;
       }
 
       this.currentOrder = order;
