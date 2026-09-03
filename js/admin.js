@@ -1103,9 +1103,48 @@ const AdminApp = {
     return raw ? `<span style="background:#F1F5F9; color:#475569; border:1px solid #CBD5E1; font-size:11px; font-weight:800; padding:2px 8px; border-radius:6px; display:inline-flex; align-items:center; letter-spacing:0.3px; vertical-align:middle; margin-left:4px;">${this.escapeHtml(raw)}</span>` : `<span style="background:#E0F2FE; color:#0284C7; border:1px solid #BAE6FD; font-size:11px; font-weight:800; padding:2px 8px; border-radius:6px; display:inline-flex; align-items:center; letter-spacing:0.3px; vertical-align:middle; margin-left:4px;">KUVEYT TÜRK</span>`;
   },
 
-  // KUYUMCULUK ÖZEL MATRAH HESAPLAMA
+  // KUYUMCULUK ÖZEL MATRAH VEYA SAAT %20 KDV HESAPLAMA
   calculateJewelryBreakdown(totalAmount, order = null) {
     const total = Number(totalAmount) || 0;
+    const prodName = order ? (order.productName || (Array.isArray(order.items) && order.items[0]?.name) || '') : '';
+    const pLower = String(prodName || '').toLowerCase().trim();
+    const isWatch = order && (
+      order.taxType === 'SAAT_STANDART' ||
+      (Array.isArray(order.items) && order.items.some(it => it.taxType === 'SAAT_STANDART' || (this.isWatchProduct && this.isWatchProduct(it.name)))) ||
+      ((this.isWatchProduct && this.isWatchProduct(prodName)) &&
+       !pLower.includes('altın') &&
+       !pLower.includes('ziynet') &&
+       !pLower.includes('bilezik') &&
+       !pLower.includes('kuyumculuk') &&
+       !pLower.includes('mücevherat'))
+    );
+
+    if (isWatch) {
+      const netMatrah = Math.round((total / 1.20) * 100) / 100;
+      const kdvAmount = Math.round((total - netMatrah) * 100) / 100;
+      return {
+        isWatch: true,
+        hasGoldAmount: 0,
+        workmanshipNet: netMatrah,
+        workmanshipKdv: kdvAmount,
+        workmanshipTotal: total,
+        totalMatrah: netMatrah,
+        totalKdv: kdvAmount,
+        grandTotal: total,
+        items: [
+          {
+            name: prodName || 'Lüks İsviçre Kol Saati',
+            malHizmet: prodName || 'Lüks İsviçre Kol Saati',
+            qty: 1,
+            lineTotal: netMatrah,
+            kdvRate: 20,
+            kdvAmount: kdvAmount,
+            totalWithKdv: total
+          }
+        ]
+      };
+    }
+
     const is22 = order && (order.isVip22 || order.tag === '/22' || String(order.productName || '').includes('/22') || (Array.isArray(order.items) && order.items.some(i => String(i.name || '').includes('/22'))));
 
     if (order && order.vip22Breakdown && order.vip22Breakdown.items) {
@@ -1489,15 +1528,19 @@ const AdminApp = {
     const content = document.getElementById('modalOrderContent');
     if (!modal || !content) return;
 
+    const prodName = order.productName || (Array.isArray(order.items) && order.items[0]?.name) || '';
     const bd = this.calculateJewelryBreakdown(order.totalAmount, order);
 
     const displayItems = (order.items && order.items.length > 0) ? order.items : (bd.items || []);
-    const itemsHtml = displayItems.map(it => `
+    const itemsHtml = displayItems.map(it => {
+      const itIsWatch = bd.isWatch || (this.isWatchProduct && this.isWatchProduct(it.name || prodName));
+      return `
       <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #EEE; font-size:13px;">
         <span><strong>${it.name || it.title || it.malHizmet}</strong> ${it.qty ? `(x${it.qty})` : ''}</span>
-        <strong style="color:var(--admin-teal);">₺${Number(it.price || it.lineTotal || it.fiyat || 0).toLocaleString('tr-TR')} ${it.kdvRate ? '(+%20 KDV)' : '(%0 KDV)'}</strong>
+        <strong style="color:var(--admin-teal);">₺${Number(it.price || it.lineTotal || it.fiyat || 0).toLocaleString('tr-TR')} ${itIsWatch ? '(+%20 KDV)' : '(%0 KDV)'}</strong>
       </div>
-    `).join('');
+      `;
+    }).join('');
 
     content.innerHTML = `
       <div style="background:#F9F8F5; padding:14px; border-radius:8px; border:1px solid var(--admin-border); margin-bottom:16px;">
@@ -1613,8 +1656,8 @@ const AdminApp = {
           </button>
         `}
         ${order.invoiceStatus !== 'SIGNED' ? `
-          <button class="btn-admin-primary" style="background:#084C47; border-color:#084C47;" onclick="AdminApp.startInvoiceSigning('${order.orderId}')">
-            🧾 GİB e-Arşiv Fatura İmzala (SMS)
+          <button class="btn-admin-primary" style="background:#084C47; border-color:#084C47;" onclick="AdminApp.closeModal(); AdminApp.openOrderInvoiceModal('${order.orderId}')">
+            🧾 GİB e-Arşiv Fatura Kes (Önizle / Onayla)
           </button>
         ` : ''}
         <button class="btn-admin-secondary" style="border-color:#EF9A9A; color:#C62828; font-weight:700;" onclick="AdminApp.deleteOrder('${order.orderId}')" title="Bu test siparişini veritabanından kalıcı olarak sil">
