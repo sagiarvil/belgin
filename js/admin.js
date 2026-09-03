@@ -693,11 +693,13 @@ const AdminApp = {
       const isPending = !isPaid && !isFailed;
       const isInvoiceSigned = (o.invoiceStatus === 'SIGNED');
       const isInvoicePending = isPaid && !isInvoiceSigned;
+      const hasIdentity = Boolean(o.declarationDoc || o.identityDoc || o.identityUrl || (this.getStoredDeclaration && this.getStoredDeclaration(o.orderId)));
 
       let matchStatus = true;
       if (statusVal === 'PAID') matchStatus = isPaid;
       else if (statusVal === 'INVOICE_PENDING') matchStatus = isInvoicePending;
       else if (statusVal === 'INVOICE_SIGNED') matchStatus = isInvoiceSigned;
+      else if (statusVal === 'NO_IDENTITY') matchStatus = isPaid && !hasIdentity;
       else if (statusVal === 'PENDING') matchStatus = isPending;
       else if (statusVal === 'FAILED') matchStatus = isFailed;
 
@@ -712,7 +714,9 @@ const AdminApp = {
         ? `(${visibleOrders.length} Faturası Kesilecek İşlem)`
         : (statusVal === 'INVOICE_SIGNED'
         ? `(${visibleOrders.length} Faturası Kesilmiş İşlem)`
-        : `(${visibleOrders.length} Kayıt)`));
+        : (statusVal === 'NO_IDENTITY'
+        ? `(${visibleOrders.length} Kimlik Belgesi Eksik İşlem)`
+        : `(${visibleOrders.length} Kayıt)`)));
     }
 
     const totalItems = visibleOrders.length;
@@ -2955,6 +2959,10 @@ const AdminApp = {
       if (statusVal === 'PAID') return isPaid;
       if (statusVal === 'INVOICE_SIGNED') return isInvoiceSigned;
       if (statusVal === 'INVOICE_PENDING') return isInvoicePending;
+      if (statusVal === 'NO_IDENTITY') {
+        const hasIdentity = Boolean(o.declarationDoc || o.identityDoc || o.identityUrl || (this.getStoredDeclaration && this.getStoredDeclaration(o.orderId)));
+        return isPaid && !hasIdentity;
+      }
       if (statusVal === 'PENDING') return isPending;
       if (statusVal === 'FAILED') return isFailed;
       return true; // 'ALL'

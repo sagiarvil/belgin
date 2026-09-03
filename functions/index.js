@@ -527,7 +527,7 @@ exports.getAdminOrders = functions
       }
 
       // Durum filtrelemesi (Yalnızca gerçek banka onaylı işlemler)
-      if (statusFilter === 'PAID') {
+      if (statusFilter === 'PAID' || statusFilter === 'NO_IDENTITY' || statusFilter === 'INVOICE_PENDING' || statusFilter === 'INVOICE_SIGNED') {
         orders = orders.filter(o => o.isPaid && o.paymentStatus === 'PAID');
       } else if (statusFilter === 'PENDING') {
         orders = orders.filter(o => !o.isPaid && o.paymentStatus !== 'FAILED' && o.status !== 'FAILED');
