@@ -439,7 +439,7 @@ exports.getAdminOrders = functions
           customerName: (data.customer && data.customer.name) || data.customerName || 'Müşteri',
           customerPhone: (data.customer && data.customer.phone) || data.customerPhone || '—',
           customerEmail: (data.customer && data.customer.email) || data.customerEmail || '—',
-          customerIdentity: (data.customer && (data.customer.identityNumber || data.customer.identity)) || data.customerIdentity || data.identityNumber || '32395613664',
+          customerIdentity: (data.customer && (data.customer.identityNumber || data.customer.identity)) || data.customerIdentity || data.identityNumber || '—',
           customerAddress: (data.customer && data.customer.address) || data.customerAddress || data.address || '—',
           productName: data.productName || data.title || (Array.isArray(data.items) ? data.items.map(it => it.name).join(' + ') : null),
           items: Array.isArray(data.items) && data.items.length > 0 ? data.items : (data.invoicePayload?.malHizmetTable || (data.productName ? [{ name: data.productName, price: Number(data.total || data.totalAmount || 0), qty: Number(data.qty || 1) }] : [{ name: data.title || 'Lüks Saat / Mücevherat', price: data.total || (data.payment && data.payment.amount) || 0, qty: 1 }])),
