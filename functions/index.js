@@ -950,6 +950,37 @@ exports.updateAdminOrderCustomer = functions
         updatedAt: admin.firestore.FieldValue.serverTimestamp()
       };
 
+      if (Array.isArray(body.items) && body.items.length > 0) {
+        const cleanedItems = body.items.map(it => {
+          const qty = Math.max(1, parseInt(it.qty || it.quantity || it.miktar || 1, 10) || 1);
+          const price = Number(it.price || it.lineTotal || it.fiyat || 0);
+          const unitPrice = Number(it.unitPrice || it.birimFiyat || (qty > 0 ? price / qty : price) || 0);
+          const kdvRate = (it.kdvRate !== undefined) ? Number(it.kdvRate) : ((it.kdvOrani !== undefined) ? Number(it.kdvOrani) : null);
+          return {
+            name: String(it.name || it.malHizmet || it.title || 'Ürün').trim(),
+            qty,
+            unitPrice: Math.round(unitPrice * 100) / 100,
+            price: Math.round(price * 100) / 100,
+            kdvRate,
+            taxType: it.taxType || (kdvRate === 20 ? 'SAAT_STANDART' : (kdvRate === 0 ? 'ALTIN_OZEL_MATRAH' : null))
+          };
+        });
+
+        updatePayload.items = cleanedItems;
+        updatePayload.productName = cleanedItems.map(i => `${i.name} (x${i.qty})`).join(' + ');
+
+        if (body.totalAmount !== undefined && Number(body.totalAmount) > 0) {
+          updatePayload.totalAmount = Math.round(Number(body.totalAmount) * 100) / 100;
+          updatePayload.total = Math.round(Number(body.totalAmount) * 100) / 100;
+        } else {
+          const itemsSum = cleanedItems.reduce((acc, i) => acc + (i.price || 0), 0);
+          if (itemsSum > 0) {
+            updatePayload.totalAmount = Math.round(itemsSum * 100) / 100;
+            updatePayload.total = Math.round(itemsSum * 100) / 100;
+          }
+        }
+      }
+
       if (note) updatePayload.adminEditNote = note;
 
       await orderRef.update(updatePayload);
@@ -959,15 +990,22 @@ exports.updateAdminOrderCustomer = functions
         eventType: 'CUSTOMER_INFO_UPDATED_BY_ADMIN',
         previousCustomer: existingData.customer || null,
         newCustomer: updatedCustomer,
-        updatedFields: { customerName, customerIdentity, customerPhone, customerEmail, customerAddress },
+        updatedFields: {
+          customerName, customerIdentity, customerPhone, customerEmail, customerAddress,
+          itemsCount: updatePayload.items ? updatePayload.items.length : 0,
+          totalAmount: updatePayload.totalAmount || existingData.totalAmount
+        },
         serverAt: admin.firestore.FieldValue.serverTimestamp()
       });
 
       return res.status(200).json({
         success: true,
-        message: 'Fatura alıcı bilgileri başarıyla güncellendi.',
+        message: 'Fatura alıcı ve ürün kalemleri başarıyla güncellendi.',
         orderId,
-        customer: updatedCustomer
+        customer: updatedCustomer,
+        items: updatePayload.items || existingData.items || [],
+        productName: updatePayload.productName || existingData.productName || '',
+        totalAmount: updatePayload.totalAmount || existingData.totalAmount || existingData.total || 0
       });
     } catch (err) {
       console.error('[Admin] updateAdminOrderCustomer error:', err);

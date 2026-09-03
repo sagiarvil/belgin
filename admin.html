@@ -3748,7 +3748,7 @@
 <!-- FATURA ALICI & MÜŞTERİ BİLGİLERİNİ GÜNCELLEME MODALI     -->
 <!-- ======================================================== -->
 <div class="admin-modal-overlay" id="editCustomerModal" onclick="if(event.target===this) AdminApp.closeEditCustomerModal();">
-  <div class="admin-modal-box" style="max-width:580px; padding:0; overflow:hidden; border-radius:14px; border:2px solid #F59E0B;">
+  <div class="admin-modal-box" style="max-width:740px; padding:0; overflow:hidden; border-radius:14px; border:2px solid #F59E0B;">
     
     <!-- Modal Üst Başlık -->
     <div style="background:linear-gradient(135deg, #92400E 0%, #D97706 50%, #B45309 100%); color:#FFF; padding:16px 20px; display:flex; justify-content:space-between; align-items:center;">
@@ -3756,7 +3756,7 @@
         <span style="font-size:24px; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.2));">✏️</span>
         <div>
           <h3 style="margin:0; font-family:'Playfair Display',serif; font-size:18px; font-weight:800; color:#FFF; letter-spacing:0.3px;">
-            Fatura & Müşteri Bilgilerini Düzenle
+            Fatura, Müşteri & Ürün Kalemlerini Düzenle
           </h3>
           <span id="editCustomerModalSubtitle" style="font-size:11.5px; color:#FEF3C7; font-weight:600;">
             Sipariş No: BLG-...
@@ -3770,6 +3770,7 @@
     <form id="editCustomerForm" onsubmit="event.preventDefault(); AdminApp.submitEditCustomer();" style="padding:20px; max-height:80vh; overflow-y:auto;">
       <input type="hidden" id="editCustomerOrderId" value="">
 
+      <!-- 1. ALICI & KİMLİK BİLGİLERİ -->
       <div style="background:#FFFBEB; border:1px solid #FDE68A; border-radius:10px; padding:14px; margin-bottom:14px;">
         <div style="font-size:11.5px; font-weight:800; color:#92400E; margin-bottom:10px; text-transform:uppercase; display:flex; align-items:center; gap:5px;">
           <span>👤</span> Alıcı & Kimlik Bilgileri
@@ -3791,7 +3792,7 @@
           </div>
         </div>
 
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:10px;">
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
           <div>
             <label style="display:block; font-size:11px; font-weight:800; color:#334155; margin-bottom:3px;">
               Telefon Numarası:
@@ -3805,6 +3806,42 @@
             </label>
             <input type="email" id="editCustomerEmail" placeholder="ornek@musteri.com" style="width:100%; border:1px solid #CBD5E1; padding:8px 10px; border-radius:6px; font-size:12.5px;">
           </div>
+        </div>
+      </div>
+
+      <!-- 2. FATURA ÜRÜN BİLGİLERİ & SATIŞ KALEMLERİ (PARTİ / ÇOKLU ÜRÜN) -->
+      <div style="background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:10px; padding:14px; margin-bottom:14px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <div style="font-size:11.5px; font-weight:800; color:#166534; text-transform:uppercase; display:flex; align-items:center; gap:5px;">
+            <span>📦</span> Fatura Ürün Bilgileri & Satış Kalemleri (Parti Satış)
+          </div>
+          <button type="button" onclick="AdminApp.addEditCustomerItemRow()" style="display:inline-flex; align-items:center; gap:4px; background:#059669; color:#FFF; border:none; padding:5px 12px; border-radius:6px; font-size:11.5px; font-weight:800; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.15);">
+            <span>➕ Yeni Satır Ekle</span>
+          </button>
+        </div>
+
+        <div style="font-size:11px; color:#475569; margin-bottom:10px; line-height:1.4;">
+          Bu faturaya ait tüm ürün kalemlerini düzenleyebilir, yeni satır ekleyerek faturayı çok parçalı parti satışı olarak yeniden yapılandırabilirsiniz.
+        </div>
+
+        <!-- Kalemler Tablo Başlıkları -->
+        <div style="display:grid; grid-template-columns: 1fr 60px 105px 110px 125px 30px; gap:6px; font-size:10px; font-weight:800; color:#334155; text-transform:uppercase; padding:0 8px 4px;">
+          <span>Ürün / Kalem Açıklaması</span>
+          <span style="text-align:center;">Adet</span>
+          <span style="text-align:right;">Birim (₺)</span>
+          <span style="text-align:right;">Tutar (₺)</span>
+          <span style="text-align:center;">KDV / Vergi Tipi</span>
+          <span></span>
+        </div>
+
+        <!-- Dinamik Satırlar -->
+        <div id="editCustomerItemsList" style="display:flex; flex-direction:column; gap:6px; margin-bottom:10px;">
+        </div>
+
+        <!-- Kalemler Toplam Özeti -->
+        <div style="display:flex; justify-content:space-between; align-items:center; background:#DCFCE7; border:1px solid #86EFAC; border-radius:6px; padding:8px 12px; font-size:12px; font-weight:800; color:#166534;">
+          <span>Fatura Kalemleri Toplamı: <span id="editCustomerItemsCount" style="font-weight:700; color:#475569;">(0 Kalem)</span></span>
+          <span id="editCustomerItemsTotal" style="font-size:14px; font-family:monospace; color:#064E3B; font-weight:900;">₺0,00</span>
         </div>
       </div>
 

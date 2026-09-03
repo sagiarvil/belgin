@@ -4963,6 +4963,56 @@ const AdminApp = {
     if (taxOfficeInput) taxOfficeInput.value = cust.taxOffice || '';
     if (addrInput) addrInput.value = order.customerAddress || cust.address || 'İzmir Buca Showroom Mağazadan Teslim';
 
+    // 📦 Kalem Listesini Doldur
+    const listEl = document.getElementById('editCustomerItemsList');
+    if (listEl) {
+      listEl.innerHTML = '';
+      let itemsToLoad = [];
+
+      if (Array.isArray(order.items) && order.items.length > 0) {
+        itemsToLoad = order.items.map(it => ({
+          name: it.name || it.malHizmet || it.title || 'Ürün',
+          qty: parseInt(it.qty || it.miktar || 1, 10) || 1,
+          price: Number(it.price || it.fiyat || it.lineTotal || 0),
+          unitPrice: Number(it.unitPrice || it.birimFiyat || 0),
+          kdvRate: it.kdvRate !== undefined ? it.kdvRate : (it.kdvOrani !== undefined ? it.kdvOrani : null),
+          taxType: it.taxType || null
+        }));
+      } else if (order.productName && (order.productName.includes('+') || order.productName.includes(' + '))) {
+        const parts = order.productName.split('+').map(p => p.trim()).filter(Boolean);
+        const autoPrice = parts.length > 0 ? (Number(order.totalAmount || 0) / parts.length) : Number(order.totalAmount || 0);
+        itemsToLoad = parts.map(part => {
+          let q = 1;
+          let cName = part;
+          const match = part.match(/^(\d+)\s*[xX*]\s*(.+)$/);
+          if (match) {
+            q = parseInt(match[1], 10) || 1;
+            cName = match[2].trim();
+          }
+          return { name: cName, qty: q, price: autoPrice, unitPrice: autoPrice / q, kdvRate: 0 };
+        });
+      } else {
+        const isWatch = (this.isWatchProduct && this.isWatchProduct(order.productName || order.title)) || order.invoiceType === 'WATCH';
+        itemsToLoad = [{
+          name: order.productName || order.title || (isWatch ? 'Lüks İsviçre Kol Saati' : '22 Ayar İşçilikli Altın Bilezik'),
+          qty: parseInt(order.qty, 10) || 1,
+          price: Number(order.totalAmount || 0),
+          unitPrice: Number(order.totalAmount || 0) / (parseInt(order.qty, 10) || 1),
+          kdvRate: isWatch ? 20 : 0
+        }];
+      }
+
+      itemsToLoad.forEach(it => {
+        const isWatch = (this.isWatchProduct && this.isWatchProduct(it.name)) || it.taxType === 'SAAT_STANDART';
+        const rate = it.kdvRate !== null && it.kdvRate !== undefined ? it.kdvRate : (isWatch ? 20 : 0);
+        this.addEditCustomerItemRow(it.name, it.qty, it.unitPrice, it.price, rate);
+      });
+
+      if (itemsToLoad.length === 0) {
+        this.addEditCustomerItemRow('', 1, '', '', 0);
+      }
+    }
+
     modal.style.display = 'flex';
     setTimeout(() => {
       if (nameInput) nameInput.focus();
@@ -4972,6 +5022,116 @@ const AdminApp = {
   closeEditCustomerModal() {
     const modal = document.getElementById('editCustomerModal');
     if (modal) modal.style.display = 'none';
+  },
+
+  addEditCustomerItemRow(name = '', qty = 1, unitPrice = '', price = '', kdvRate = 0) {
+    const listEl = document.getElementById('editCustomerItemsList');
+    if (!listEl) return;
+
+    const rowDiv = document.createElement('div');
+    rowDiv.className = 'edit-item-row';
+    rowDiv.style.cssText = 'display:grid; grid-template-columns: 1fr 60px 105px 110px 125px 30px; gap:6px; align-items:center; background:#FFF; border:1px solid #CBD5E1; border-radius:6px; padding:6px 8px;';
+
+    const safeName = String(name || '').replace(/"/g, '&quot;');
+    const q = parseInt(qty, 10) || 1;
+    const pr = (price !== '' && price !== undefined && price !== null) ? Number(price).toFixed(2) : '';
+    const upr = (unitPrice !== '' && unitPrice !== undefined && unitPrice !== null && Number(unitPrice) > 0)
+      ? Number(unitPrice).toFixed(2)
+      : (pr !== '' ? (Number(pr) / q).toFixed(2) : '');
+    const isVat20 = Number(kdvRate) === 20;
+
+    rowDiv.innerHTML = `
+      <div>
+        <input type="text" class="edit-item-name" value="${safeName}" placeholder="Kalem / Gramaj / Ürün Adı" style="width:100%; border:1px solid #CBD5E1; padding:6px 8px; border-radius:5px; font-size:12px; font-weight:700; color:#0F172A;" required>
+      </div>
+      <div>
+        <input type="number" class="edit-item-qty" min="1" value="${q}" style="width:100%; border:1px solid #CBD5E1; padding:6px 2px; border-radius:5px; font-size:12px; font-weight:800; text-align:center; color:#0F172A;" oninput="AdminApp.onEditCustomerItemQtyChange(this)">
+      </div>
+      <div>
+        <input type="number" step="0.01" min="0" class="edit-item-unit-price" value="${upr}" placeholder="Birim ₺" style="width:100%; border:1px solid #CBD5E1; padding:6px 4px; border-radius:5px; font-size:12px; font-weight:700; text-align:right; color:#334155;" oninput="AdminApp.onEditCustomerItemUnitPriceChange(this)">
+      </div>
+      <div>
+        <input type="number" step="0.01" min="0" class="edit-item-price" value="${pr}" placeholder="Tutar ₺" style="width:100%; border:1.5px solid #059669; padding:6px 4px; border-radius:5px; font-size:12.5px; font-weight:800; text-align:right; color:#064E3B;" oninput="AdminApp.onEditCustomerItemPriceChange(this)" required>
+      </div>
+      <div>
+        <select class="edit-item-kdv" style="width:100%; border:1px solid #CBD5E1; padding:5px 2px; border-radius:5px; font-size:11px; font-weight:700; color:#0F172A; background:#FFF;" onchange="AdminApp.recalculateEditCustomerTotal()">
+          <option value="0" ${!isVat20 ? 'selected' : ''}>%0 Özel Matrah</option>
+          <option value="20" ${isVat20 ? 'selected' : ''}>%20 KDV (Saat)</option>
+        </select>
+      </div>
+      <div style="text-align:center;">
+        <button type="button" onclick="AdminApp.removeEditCustomerItemRow(this)" style="background:none; border:none; color:#EF4444; font-size:16px; cursor:pointer; padding:2px;" title="Satırı Sil">🗑️</button>
+      </div>
+    `;
+
+    listEl.appendChild(rowDiv);
+    this.recalculateEditCustomerTotal();
+  },
+
+  removeEditCustomerItemRow(btn) {
+    const listEl = document.getElementById('editCustomerItemsList');
+    if (!listEl) return;
+    const row = btn.closest('.edit-item-row');
+    if (row) row.remove();
+    if (listEl.children.length === 0) {
+      this.addEditCustomerItemRow('', 1, '', '', 0);
+    } else {
+      this.recalculateEditCustomerTotal();
+    }
+  },
+
+  onEditCustomerItemQtyChange(input) {
+    const row = input.closest('.edit-item-row');
+    if (!row) return;
+    const qty = Math.max(1, parseInt(input.value, 10) || 1);
+    const unitPriceEl = row.querySelector('.edit-item-unit-price');
+    const priceEl = row.querySelector('.edit-item-price');
+    const unitPrice = parseFloat(unitPriceEl?.value) || 0;
+    if (unitPrice > 0 && priceEl) {
+      priceEl.value = (unitPrice * qty).toFixed(2);
+    }
+    this.recalculateEditCustomerTotal();
+  },
+
+  onEditCustomerItemUnitPriceChange(input) {
+    const row = input.closest('.edit-item-row');
+    if (!row) return;
+    const qty = Math.max(1, parseInt(row.querySelector('.edit-item-qty')?.value, 10) || 1);
+    const unitPrice = parseFloat(input.value) || 0;
+    const priceEl = row.querySelector('.edit-item-price');
+    if (priceEl && unitPrice >= 0) {
+      priceEl.value = (unitPrice * qty).toFixed(2);
+    }
+    this.recalculateEditCustomerTotal();
+  },
+
+  onEditCustomerItemPriceChange(input) {
+    const row = input.closest('.edit-item-row');
+    if (!row) return;
+    const qty = Math.max(1, parseInt(row.querySelector('.edit-item-qty')?.value, 10) || 1);
+    const price = parseFloat(input.value) || 0;
+    const unitPriceEl = row.querySelector('.edit-item-unit-price');
+    if (unitPriceEl && qty > 0) {
+      unitPriceEl.value = (price / qty).toFixed(2);
+    }
+    this.recalculateEditCustomerTotal();
+  },
+
+  recalculateEditCustomerTotal() {
+    const listEl = document.getElementById('editCustomerItemsList');
+    const countEl = document.getElementById('editCustomerItemsCount');
+    const totalEl = document.getElementById('editCustomerItemsTotal');
+    if (!listEl) return;
+
+    let total = 0;
+    const rows = listEl.querySelectorAll('.edit-item-row');
+    rows.forEach(r => {
+      const price = parseFloat(r.querySelector('.edit-item-price')?.value) || 0;
+      total += price;
+    });
+
+    if (countEl) countEl.textContent = `(${rows.length} Kalem)`;
+    if (totalEl) totalEl.textContent = '₺' + total.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   },
 
   async submitEditCustomer() {
@@ -5003,6 +5163,34 @@ const AdminApp = {
       return;
     }
 
+    // Ürün Kalemlerini Topla
+    const itemRows = document.querySelectorAll('#editCustomerItemsList .edit-item-row');
+    const items = [];
+    itemRows.forEach(row => {
+      const name = row.querySelector('.edit-item-name')?.value?.trim();
+      const qty = Math.max(1, parseInt(row.querySelector('.edit-item-qty')?.value, 10) || 1);
+      const price = parseFloat(row.querySelector('.edit-item-price')?.value) || 0;
+      const unitPrice = parseFloat(row.querySelector('.edit-item-unit-price')?.value) || (qty > 0 ? price / qty : price);
+      const kdvRate = parseFloat(row.querySelector('.edit-item-kdv')?.value) || 0;
+      if (name || price > 0) {
+        items.push({
+          name: name || 'Ürün',
+          qty,
+          unitPrice: Math.round(unitPrice * 100) / 100,
+          price: Math.round(price * 100) / 100,
+          kdvRate,
+          taxType: kdvRate === 20 ? 'SAAT_STANDART' : 'ALTIN_OZEL_MATRAH'
+        });
+      }
+    });
+
+    if (items.length === 0) {
+      if (errDiv) { errDiv.textContent = 'Lütfen en az bir ürün kalemi giriniz.'; errDiv.style.display = 'block'; }
+      return;
+    }
+
+    const itemsTotal = items.reduce((acc, it) => acc + (it.price || 0), 0);
+
     if (btnSubmit) {
       btnSubmit.disabled = true;
       btnSubmit.innerHTML = '<span>⏳ Güncelleniyor...</span>';
@@ -5017,7 +5205,9 @@ const AdminApp = {
         customerEmail,
         companyName,
         taxOffice,
-        customerAddress
+        customerAddress,
+        items,
+        totalAmount: itemsTotal > 0 ? Math.round(itemsTotal * 100) / 100 : undefined
       };
 
       const res = await fetch('/api/admin/orders/update-customer', {
@@ -5048,6 +5238,10 @@ const AdminApp = {
         taxOffice
       };
 
+      const finalItems = data.items || items;
+      const finalProductName = data.productName || items.map(i => `${i.name} (x${i.qty})`).join(' + ');
+      const finalTotal = data.totalAmount || itemsTotal;
+
       if (Array.isArray(this.orders)) {
         const target = this.orders.find(o => o.orderId === orderId);
         if (target) {
@@ -5057,6 +5251,12 @@ const AdminApp = {
           target.customerEmail = customerEmail;
           target.customerAddress = customerAddress;
           target.customer = { ...(target.customer || {}), ...updatedCust };
+          target.items = finalItems;
+          target.productName = finalProductName;
+          if (finalTotal > 0) {
+            target.totalAmount = finalTotal;
+            target.total = finalTotal;
+          }
         }
       }
 
@@ -5073,6 +5273,12 @@ const AdminApp = {
               cTarget.customerEmail = customerEmail;
               cTarget.customerAddress = customerAddress;
               cTarget.customer = { ...(cTarget.customer || {}), ...updatedCust };
+              cTarget.items = finalItems;
+              cTarget.productName = finalProductName;
+              if (finalTotal > 0) {
+                cTarget.totalAmount = finalTotal;
+                cTarget.total = finalTotal;
+              }
               localStorage.setItem('belgin_admin_cached_data', JSON.stringify(cData));
             }
           }
@@ -5088,7 +5294,7 @@ const AdminApp = {
         this.showDetail(orderId);
       }
 
-      this.showToast(`✅ Sipariş (${orderId}) fatura ve alıcı bilgileri güncellendi!`);
+      this.showToast(`✅ Sipariş (${orderId}) fatura, müşteri ve ürün kalemleri başarıyla güncellendi!`);
 
     } catch (err) {
       console.error('[AdminApp] submitEditCustomer error:', err);
