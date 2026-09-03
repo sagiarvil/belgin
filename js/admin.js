@@ -418,8 +418,6 @@ const AdminApp = {
     if (nav) nav.style.setProperty('display', 'none', 'important');
     const main = document.querySelector('.admin-container');
     if (main) main.style.setProperty('display', 'none', 'important');
-    const bNav = document.getElementById('adminMobileBottomNav');
-    if (bNav) bNav.style.setProperty('display', 'none', 'important');
   },
 
   hideAuthGate() {
@@ -429,8 +427,6 @@ const AdminApp = {
     if (nav) nav.style.setProperty('display', 'flex', 'important');
     const main = document.querySelector('.admin-container');
     if (main) main.style.setProperty('display', 'block', 'important');
-    const bNav = document.getElementById('adminMobileBottomNav');
-    if (bNav) bNav.style.setProperty('display', 'flex', 'important');
   },
 
   verifyPin() {
@@ -1047,8 +1043,8 @@ const AdminApp = {
       'BLG-1787933146963-8ab15dc828f9325b': 'GIB2026000000017'
     };
     if (o.orderId && knownGibNumbers[o.orderId]) return knownGibNumbers[o.orderId];
-    if (o.invoiceStatus === 'SIGNED' || o.isPaid) {
-      return 'GIB2026000000021';
+    if (o.invoiceStatus === 'SIGNED' && o.invoiceNumber) {
+      return o.invoiceNumber;
     }
     return '';
   },
@@ -1056,24 +1052,55 @@ const AdminApp = {
   getProviderBadge(provider) {
     const p = String(provider || '').toUpperCase();
     if (p.includes('TOSLA')) {
-      return `<div style="margin-top:3px;"><span style="background:#FEE2E2; color:#991B1B; border:1px solid #FECACA; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🔴 TOSLA İŞİM</span></div>`;
+      return `<div style="margin-top:3px;"><span style="background:#FEE2E2; color:#DC2626; border:1px solid #FECACA; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🔴 TOSLA</span></div>`;
     }
     if (p.includes('KUVEYT')) {
-      return `<div style="margin-top:3px;"><span style="background:#DCFCE7; color:#166534; border:1px solid #86EFAC; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🟢 KUVEYT TÜRK</span></div>`;
+      return `<div style="margin-top:3px;"><span style="background:#E0F2FE; color:#0284C7; border:1px solid #BAE6FD; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🔵 KUVEYT TÜRK</span></div>`;
+    }
+    if (p.includes('AKBANK')) {
+      return `<div style="margin-top:3px;"><span style="background:#FFEDD5; color:#EA580C; border:1px solid #FED7AA; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🟠 AKBANK</span></div>`;
     }
     if (p.includes('PAYTR')) {
-      return `<div style="margin-top:3px;"><span style="background:#E0F2FE; color:#0369A1; border:1px solid #BAE6FD; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🔵 PAYTR</span></div>`;
+      return `<div style="margin-top:3px;"><span style="background:#EDE9FE; color:#6D28D9; border:1px solid #DDD6FE; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🟣 PAYTR</span></div>`;
     }
     if (p.includes('HAVALE') || p.includes('EFT') || p.includes('FAST')) {
-      return `<div style="margin-top:3px;"><span style="background:#FEF3C7; color:#92400E; border:1px solid #FCD34D; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🏛️ HAVALE / EFT</span></div>`;
+      return `<div style="margin-top:3px;"><span style="background:#FEF3C7; color:#92400E; border:1px solid #FCD34D; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🏛️ HAVALE / EFT</span></div>`;
     }
-    if (p.includes('YAPIKREDI')) {
-      return `<div style="margin-top:3px;"><span style="background:#EFF6FF; color:#1E40AF; border:1px solid #BFDBFE; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🏦 YAPI KREDİ</span></div>`;
+    if (p.includes('YAPIKREDI') || p.includes('YAPI KREDİ')) {
+      return `<div style="margin-top:3px;"><span style="background:#EFF6FF; color:#1E40AF; border:1px solid #BFDBFE; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🏦 YAPI KREDİ</span></div>`;
     }
     if (p.includes('HALKBANK')) {
-      return `<div style="margin-top:3px;"><span style="background:#F0FDF4; color:#15803D; border:1px solid #BBF7D0; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🏛️ HALKBANK</span></div>`;
+      return `<div style="margin-top:3px;"><span style="background:#F0FDF4; color:#15803D; border:1px solid #BBF7D0; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🏛️ HALKBANK</span></div>`;
     }
-    return p ? `<div style="margin-top:3px;"><span style="background:#F1F5F9; color:#475569; border:1px solid #CBD5E1; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:700;">💳 ${p}</span></div>` : '';
+    return p ? `<div style="margin-top:3px;"><span style="background:#F1F5F9; color:#475569; border:1px solid #CBD5E1; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:700;">💳 ${p}</span></div>` : '';
+  },
+
+  // SADECE BANKA ADINI ETİKET ŞEKLİNDE GÖSTEREN FORMATLAYICI
+  getBankTag(provider) {
+    const raw = String(provider || '').trim();
+    const p = raw.toUpperCase();
+    if (p.includes('TOSLA')) {
+      return `<span style="background:#FEE2E2; color:#DC2626; border:1px solid #FECACA; font-size:11px; font-weight:800; padding:2px 8px; border-radius:6px; display:inline-flex; align-items:center; letter-spacing:0.3px; vertical-align:middle; margin-left:4px;">TOSLA</span>`;
+    }
+    if (p.includes('KUVEYT')) {
+      return `<span style="background:#E0F2FE; color:#0284C7; border:1px solid #BAE6FD; font-size:11px; font-weight:800; padding:2px 8px; border-radius:6px; display:inline-flex; align-items:center; letter-spacing:0.3px; vertical-align:middle; margin-left:4px;">KUVEYT TÜRK</span>`;
+    }
+    if (p.includes('AKBANK')) {
+      return `<span style="background:#FFEDD5; color:#EA580C; border:1px solid #FED7AA; font-size:11px; font-weight:800; padding:2px 8px; border-radius:6px; display:inline-flex; align-items:center; letter-spacing:0.3px; vertical-align:middle; margin-left:4px;">AKBANK</span>`;
+    }
+    if (p.includes('PAYTR')) {
+      return `<span style="background:#EDE9FE; color:#6D28D9; border:1px solid #DDD6FE; font-size:11px; font-weight:800; padding:2px 8px; border-radius:6px; display:inline-flex; align-items:center; letter-spacing:0.3px; vertical-align:middle; margin-left:4px;">PAYTR</span>`;
+    }
+    if (p.includes('YAPIKREDI') || p.includes('YAPI KREDİ')) {
+      return `<span style="background:#EFF6FF; color:#1E40AF; border:1px solid #BFDBFE; font-size:11px; font-weight:800; padding:2px 8px; border-radius:6px; display:inline-flex; align-items:center; letter-spacing:0.3px; vertical-align:middle; margin-left:4px;">YAPI KREDİ</span>`;
+    }
+    if (p.includes('HALKBANK')) {
+      return `<span style="background:#F0FDF4; color:#15803D; border:1px solid #BBF7D0; font-size:11px; font-weight:800; padding:2px 8px; border-radius:6px; display:inline-flex; align-items:center; letter-spacing:0.3px; vertical-align:middle; margin-left:4px;">HALKBANK</span>`;
+    }
+    if (p.includes('HAVALE') || p.includes('EFT') || p.includes('FAST')) {
+      return `<span style="background:#FEF3C7; color:#92400E; border:1px solid #FCD34D; font-size:11px; font-weight:800; padding:2px 8px; border-radius:6px; display:inline-flex; align-items:center; letter-spacing:0.3px; vertical-align:middle; margin-left:4px;">HAVALE / EFT</span>`;
+    }
+    return raw ? `<span style="background:#F1F5F9; color:#475569; border:1px solid #CBD5E1; font-size:11px; font-weight:800; padding:2px 8px; border-radius:6px; display:inline-flex; align-items:center; letter-spacing:0.3px; vertical-align:middle; margin-left:4px;">${this.escapeHtml(raw)}</span>` : `<span style="background:#E0F2FE; color:#0284C7; border:1px solid #BAE6FD; font-size:11px; font-weight:800; padding:2px 8px; border-radius:6px; display:inline-flex; align-items:center; letter-spacing:0.3px; vertical-align:middle; margin-left:4px;">KUVEYT TÜRK</span>`;
   },
 
   // KUYUMCULUK ÖZEL MATRAH HESAPLAMA
@@ -1505,7 +1532,7 @@ const AdminApp = {
 
       <h4 style="margin:14px 0 8px; font-size:14px; color:var(--admin-teal-dark);">Tahsilat & POS Bilgileri</h4>
       <div style="font-size:13px; line-height:1.6; margin-bottom:16px;">
-        <div><strong>POS Kanalı:</strong> ${order.provider || 'KUVEYTTURK'} Sanal POS 3D Secure</div>
+        <div><strong>POS Kanalı:</strong> ${this.getBankTag(order.provider || 'KUVEYTTURK')} Sanal POS 3D Secure</div>
         <div><strong>Ödeme Durumu:</strong> ${order.isPaid && order.paymentStatus === 'PAID' ? '✅ Tahsil Edildi (Kuveyt Türk 3D Onaylı)' : (order.status === 'FAILED' || order.paymentStatus === 'FAILED' ? '❌ Başarısız' : '⏳ Beklemede (Ödeme Tamamlanmadı)')}</div>
         <div><strong>Toplam Tutar:</strong> <span style="font-size:16px; font-weight:800; color:var(--admin-teal);">₺${Number(order.totalAmount || 0).toLocaleString('tr-TR')}</span></div>
         <div style="display:flex; align-items:center; gap:8px; margin-top:8px; background:#FEF9E7; border:1px solid #FCD34D; padding:6px 10px; border-radius:8px;">
@@ -1551,7 +1578,7 @@ const AdminApp = {
           <span>Toplam Fatura Tutarı:</span>
           <span>₺${Number(order.totalAmount || 0).toLocaleString('tr-TR', {minimumFractionDigits:2})}</span>
         </div>
-        ${(order.invoiceStatus === 'SIGNED' || order.isPaid || order.invoiceNumber || order.invoiceStatus === 'CANCELLED') ? `
+        ${(order.invoiceStatus === 'SIGNED' || (order.invoiceNumber && order.invoiceStatus !== 'PENDING') || order.invoiceStatus === 'CANCELLED') ? `
           <div style="margin-top:10px; padding-top:8px; border-top:1px solid #D1E5E1; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
             <span><strong>GİB Belge No:</strong> <span style="font-family:monospace; color:#084C47; font-weight:800;">${this.getGibInvoiceNumber(order)}</span></span>
             <div style="display:flex; gap:6px; flex-wrap:wrap;">
@@ -1896,7 +1923,13 @@ const AdminApp = {
 
     // Ürün Adını ve Tipini Otomatik Analiz Et
     const prodName = order.productName || (Array.isArray(order.items) && order.items[0]?.name) || '';
-    const isWatch = this.isWatchProduct ? this.isWatchProduct(prodName) : (prodName.toLowerCase().includes('saat') || prodName.toLowerCase().includes('rolex') || prodName.toLowerCase().includes('omega'));
+    const pLower = String(prodName || '').toLowerCase().trim();
+    const isWatch = (this.isWatchProduct && this.isWatchProduct(prodName)) && 
+      !pLower.includes('altın') && 
+      !pLower.includes('ziynet') && 
+      !pLower.includes('bilezik') && 
+      !pLower.includes('kuyumculuk') && 
+      !pLower.includes('mücevherat');
 
     if (isWatch) {
       const watchInput = document.getElementById('cfgWatchItemName');
@@ -2004,11 +2037,18 @@ const AdminApp = {
         laborKdv = Math.round((laborGross - laborNet) * 100) / 100;
       }
 
-      const prodName = order.productName || (Array.isArray(order.items) && order.items[0]?.name) || '22 Ayar Altın / Mücevherat';
+      const rawProdName = order.productName || (Array.isArray(order.items) && order.items[0]?.name) || '';
+      const prodName = (rawProdName && !rawProdName.includes('Saat / Mücevherat')) 
+        ? rawProdName 
+        : '22 Ayar Altın / Ziynet';
+
+      const goldDisplayName = prodName.includes('Özel Matrah') 
+        ? prodName 
+        : `${prodName} (Kıymetli Maden Bedeli - Özel Matrah)`;
       
       items.push({
-        name: prodName,
-        malHizmet: prodName,
+        name: goldDisplayName,
+        malHizmet: goldDisplayName,
         qty: 1,
         miktar: 1,
         unitPrice: goldGross,
@@ -2139,6 +2179,80 @@ const AdminApp = {
     const totalKdvSum = items.reduce((acc, i) => acc + Number(i.kdvAmount || i.kdvTutari || 0), 0);
     if (footKdv) footKdv.textContent = '₺' + totalKdvSum.toLocaleString('tr-TR', { minimumFractionDigits: 2 });
     if (footGrand) footGrand.textContent = '₺' + total.toLocaleString('tr-TR', { minimumFractionDigits: 2 });
+  },
+
+  // GİB TASLAĞINI MÜHÜRLEME & SMS ÖNCESİ CANLI ÖNİZLE
+  async previewOrderInvoiceDraft() {
+    const orderId = this.activeInvoiceOrderId;
+    const order = this.activeOrderInvoiceTarget;
+    if (!orderId || !order) return;
+
+    const btn = document.getElementById('btnPreviewOrderInvoice');
+    const originalText = btn ? btn.innerHTML : '';
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = '<span>⏳ GİB Taslağı Hazırlanıyor...</span>';
+    }
+
+    try {
+      const payload = {
+        orderId: order.orderId,
+        totalAmount: Number(order.totalAmount || order.total || (order.payment && order.payment.amount) || 0),
+        customerName: order.customerName || 'Nihai Tüketici',
+        customerIdentity: order.customerIdentity || '11111111111',
+        customerAddress: order.customerAddress || 'Menderes Cad. No:231/B Buca İzmir',
+        customerPhone: order.customerPhone || '',
+        customerEmail: order.customerEmail || '',
+        items: this.activeCustomInvoiceItems,
+        customBreakdown: this.activeCustomInvoiceBreakdown,
+        adminKey: this.adminPin
+      };
+
+      const res = await fetch('/api/admin/invoice/preview', {
+        method: 'POST',
+        headers: this.getAuthHeaders(),
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+      if (!data || !data.success || !data.previewHtml) {
+        throw new Error(data?.message || 'Taslak önizleme oluşturulamadı.');
+      }
+
+      const iframe = document.getElementById('invoiceLivePreviewIframe');
+      const modal = document.getElementById('invoiceLivePreviewModal');
+      if (iframe) {
+        iframe.srcdoc = data.previewHtml;
+      }
+      if (modal) {
+        modal.style.display = 'flex';
+      }
+    } catch (e) {
+      alert('❌ Taslak Önizleme Hatası:\n\n' + e.message);
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+      }
+    }
+  },
+
+  closeLivePreviewModal() {
+    const modal = document.getElementById('invoiceLivePreviewModal');
+    if (modal) modal.style.display = 'none';
+  },
+
+  printPreviewIframe() {
+    const iframe = document.getElementById('invoiceLivePreviewIframe');
+    if (iframe && iframe.contentWindow) {
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+    }
+  },
+
+  proceedFromPreviewToSms() {
+    this.closeLivePreviewModal();
+    this.proceedToGibSmsFromConfig();
   },
 
   proceedToGibSmsFromConfig() {
@@ -3237,9 +3351,6 @@ const AdminApp = {
     const tabBtnOrders = document.getElementById('tabBtnOrders');
     const tabBtnStmt = document.getElementById('tabBtnStatement');
     const tabBtnStore = document.getElementById('tabBtnStoreInvoices');
-    const mNavOrders = document.getElementById('mNavOrders');
-    const mNavStmt = document.getElementById('mNavStatement');
-    const mNavStore = document.getElementById('mNavStoreInvoices');
     const ordersContent = document.getElementById('ordersTabContent');
     const stmtContent = document.getElementById('statementTabContent');
     const storeContent = document.getElementById('storeInvoicesTabContent');
@@ -3247,9 +3358,6 @@ const AdminApp = {
     if (tabBtnOrders) tabBtnOrders.classList.remove('active');
     if (tabBtnStmt) tabBtnStmt.classList.remove('active');
     if (tabBtnStore) tabBtnStore.classList.remove('active');
-    if (mNavOrders) mNavOrders.classList.remove('active');
-    if (mNavStmt) mNavStmt.classList.remove('active');
-    if (mNavStore) mNavStore.classList.remove('active');
 
     if (ordersContent) ordersContent.style.display = 'none';
     if (stmtContent) stmtContent.style.display = 'none';
@@ -3257,17 +3365,14 @@ const AdminApp = {
 
     if (tab === 'statement') {
       if (tabBtnStmt) tabBtnStmt.classList.add('active');
-      if (mNavStmt) mNavStmt.classList.add('active');
       if (stmtContent) stmtContent.style.display = 'block';
       this.loadStatement();
     } else if (tab === 'storeInvoices') {
       if (tabBtnStore) tabBtnStore.classList.add('active');
-      if (mNavStore) mNavStore.classList.add('active');
       if (storeContent) storeContent.style.display = 'block';
       this.loadStoreInvoices();
     } else {
       if (tabBtnOrders) tabBtnOrders.classList.add('active');
-      if (mNavOrders) mNavOrders.classList.add('active');
       if (ordersContent) ordersContent.style.display = 'block';
       this.loadOrders();
     }
@@ -3394,6 +3499,51 @@ const AdminApp = {
       }
     }
     return this.posBankCommissionRate;
+  },
+
+  // İŞLEMİN DAHİL OLDUĞU DÖNEM ARALIĞINI DÖNDÜRÜR
+  getRowPeriodInfo(r) {
+    if (!r || !r.date) return { text: '—', isCustom: false, rate: this.posBankCommissionRate };
+    const dateStr = String(r.date);
+
+    // 1. Tanımlı Özel POS Oran Dönemi Kontrolü
+    if (Array.isArray(this.posRatePeriods) && this.posRatePeriods.length > 0) {
+      for (const p of this.posRatePeriods) {
+        const afterStart = !p.startDate || dateStr >= p.startDate;
+        const beforeEnd = !p.endDate || dateStr <= p.endDate;
+        if (afterStart && beforeEnd && !isNaN(Number(p.rate))) {
+          const s = p.startDate ? this.formatDateTr(p.startDate) : 'Geçmişten';
+          const e = p.endDate ? this.formatDateTr(p.endDate) : 'Bugüne';
+          return {
+            text: `${s} — ${e}`,
+            isCustom: true,
+            rate: Number(p.rate)
+          };
+        }
+      }
+    }
+
+    // 2. Standart Ay Başı - Ay Sonu Dönem Aralığı
+    try {
+      const parts = dateStr.split('-');
+      if (parts.length === 3) {
+        const y = parseInt(parts[0], 10);
+        const m = parseInt(parts[1], 10);
+        const lastDay = new Date(y, m, 0).getDate();
+        const mm = String(m).padStart(2, '0');
+        return {
+          text: `01.${mm}.${y} — ${lastDay}.${mm}.${y}`,
+          isCustom: false,
+          rate: this.posBankCommissionRate
+        };
+      }
+    } catch (_) {}
+
+    return {
+      text: this.formatDateTr(dateStr),
+      isCustom: false,
+      rate: this.posBankCommissionRate
+    };
   },
 
   updatePosRatePeriodsCount() {
@@ -3541,10 +3691,26 @@ const AdminApp = {
     const kpiProfit = document.getElementById('stmtKpiTotalProfit');
     if (kpiProfit) kpiProfit.textContent = fmt(totalProfit);
 
+    const startVal = document.getElementById('stmtStartDate')?.value || '2016-08-01';
+    const endVal = document.getElementById('stmtEndDate')?.value || new Date().toISOString().split('T')[0];
+    const periodStr = `${this.formatDateTr(startVal)} — ${this.formatDateTr(endVal)}`;
+
+    const posSub = document.getElementById('stmtKpiPosSubtext');
+    if (posSub) posSub.innerHTML = `📅 Dönem: <strong>${periodStr}</strong>`;
+
+    const hakSub = document.getElementById('stmtKpiHakedisSubtext');
+    if (hakSub) hakSub.innerHTML = `📅 Dönem: <strong>${periodStr}</strong> (%92 Net)`;
+
+    const paidSub = document.getElementById('stmtKpiPaidSubtext');
+    if (paidSub) paidSub.innerHTML = `📅 Dönem: <strong>${periodStr}</strong>`;
+
+    const remSub = document.getElementById('stmtKpiRemainingSubtext');
+    if (remSub) remSub.innerHTML = `📅 Dönem: <strong>${periodStr}</strong>`;
+
     const profitSub = document.getElementById('stmtKpiProfitSubtext');
     if (profitSub) {
       const hasPeriods = (this.posRatePeriods || []).length > 0;
-      profitSub.textContent = hasPeriods ? `Tarih Bazlı Oranlar (${this.posRatePeriods.length} Kural)` : `(Kesinti %8) — (Banka %${this.posBankCommissionRate})`;
+      profitSub.innerHTML = `📅 Dönem: <strong>${periodStr}</strong> <span style="font-size:10.5px; opacity:0.85;">(${hasPeriods ? `${this.posRatePeriods.length} Kural` : `Banka %${this.posBankCommissionRate}`})</span>`;
     }
 
     const payCountBadge = document.getElementById('stmtTotalPaymentsBadge');
@@ -3731,12 +3897,12 @@ const AdminApp = {
 
       if (isPosSale) {
         typeBadge = `<span style="background:#E0F2FE; color:#0369A1; border:1px solid #7DD3FC; font-size:11px; font-weight:800; padding:3px 8px; border-radius:6px; display:inline-flex; align-items:center; gap:4px;">💳 POS Satış</span>`;
-        descHtml = `<strong style="color:#0F172A; font-size:13.5px;">${r.orderId}</strong> — <span style="font-weight:700; color:#1E293B;">${this.escapeHtml(r.customerName || 'Müşteri')}</span> <span style="font-size:11px; color:#475569; font-weight:600;">(${r.provider || 'KUVEYTTURK'})</span>`;
+        descHtml = `<strong style="color:#0F172A; font-size:13.5px;">${r.orderId}</strong> — <span style="font-weight:700; color:#1E293B;">${this.escapeHtml(r.customerName || 'Müşteri')}</span> ${this.getBankTag(r.provider || 'KUVEYTTURK')}`;
         mainAmountStr = `+${fmt(r.pos)}`;
         mainAmountColor = '#0369A1';
       } else if (isPayment) {
         typeBadge = `<span style="background:#DCFCE7; color:#15803D; border:1px solid #86EFAC; font-size:11px; font-weight:800; padding:3px 8px; border-radius:6px; display:inline-flex; align-items:center; gap:4px;">🟢 Ödeme Çıkışı</span>`;
-        descHtml = `<strong style="color:#15803D; font-size:13.5px;">${this.escapeHtml(r.description || 'Ödeme')}</strong> <span style="font-size:11px; color:#475569; font-weight:600;">(${r.paymentType || 'Banka'})</span>`;
+        descHtml = `<strong style="color:#15803D; font-size:13.5px;">${this.escapeHtml(r.description || 'Ödeme')}</strong> ${this.getBankTag(r.paymentType || 'Banka')}`;
         mainAmountStr = `-${fmt(r.paid)}`;
         mainAmountColor = '#15803D';
       } else if (isManualPos) {
@@ -3875,9 +4041,9 @@ const AdminApp = {
             ${dateFormatted}${timeStr}
           </td>
           <td style="text-align:left; font-size:12.5px;">
-            <div style="display:flex; align-items:center; flex-wrap:wrap; gap:4px;">
-              ${typeBadge}
-              <span>${descHtml}</span>
+            <div style="display:flex; align-items:flex-start; gap:8px;">
+              <div style="margin-top:2px;">${typeBadge}</div>
+              <div style="flex:1;">${descHtml}</div>
             </div>
           </td>
           <td style="text-align:right;" class="col-pos">
@@ -5149,7 +5315,7 @@ const AdminApp = {
           </td>
           <td style="padding: 7px 9px; text-align: left; font-size: 11px; color: #0F172A;">
             <div style="font-weight: 700;">${this.escapeHtml(r.description || 'İşlem')}</div>
-            ${r.customerName && r.type === 'POS_SALE' ? `<div style="font-size: 10px; color: #64748B;">Müşteri: ${this.escapeHtml(r.customerName)} | Sağlayıcı: ${r.provider || 'KUVEYTTURK'}</div>` : ''}
+            ${r.customerName && r.type === 'POS_SALE' ? `<div style="font-size: 10px; color: #64748B; margin-top:2px;">Müşteri: <strong>${this.escapeHtml(r.customerName)}</strong> ${this.getBankTag(r.provider || 'KUVEYTTURK')}</div>` : ''}
           </td>
           <td style="padding: 7px 9px; text-align: right; font-weight: 700; font-size: 11px; color: #1E293B;">
             ${posVal}

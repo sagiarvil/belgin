@@ -51,7 +51,7 @@ runTest('2. Firebase CSP başlıkları Edge ve Safari 3D Gate ve Form POST ile u
   const cspHeader = firebaseJson.hosting.headers[0].headers.find(h => h.key === 'Content-Security-Policy');
   assert(cspHeader, 'CSP Header eksik');
   const val = cspHeader.value;
-  assert(val.includes('https://www.sanalakpos.com'), 'Akbank Sanal POS CSP içinde eksik');
+  assert(val.includes('kuveytturk.com.tr'), 'Kuveyt Türk Sanal POS CSP içinde eksik');
   assert(val.includes('form-action'), 'form-action direktifi eksik');
 });
 

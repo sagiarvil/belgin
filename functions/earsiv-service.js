@@ -381,24 +381,21 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
         }
       }
       
-      const isWatch = (
-        it.taxType === 'SAAT_STANDART' ||
-        /\b(saat|watch|rolex|submariner|datejust|daytona|cartier|santos|patek|philippe|nautilus|audemars|piguet|royal oak|omega|speedmaster|seamaster|breitling|tag heuer|hublot|iwc|panerai|vacheron|seiko|tissot|longines|versace|calvin klein|michael kors|diesel|fossil|guess|welder|gc|citizen|orient|casio|chopard|zenith|montblanc)\b/i.test(itName) ||
-        itName.toLowerCase().includes('saat') ||
-        itName.toLowerCase().includes('rolex') ||
-        itName.toLowerCase().includes('cartier') ||
-        itName.toLowerCase().includes('patek') ||
-        itName.toLowerCase().includes('audemars') ||
-        itName.toLowerCase().includes('omega') ||
-        itName.toLowerCase().includes('breitling') ||
-        itName.toLowerCase().includes('tag heuer') ||
-        itName.toLowerCase().includes('hublot') ||
-        itName.toLowerCase().includes('iwc') ||
-        itName.toLowerCase().includes('panerai') ||
-        itName.toLowerCase().includes('vacheron') ||
-        itName.toLowerCase().includes('seiko') ||
-        itName.toLowerCase().includes('tissot') ||
-        itName.toLowerCase().includes('longines')
+      const itNameLower = itName.toLowerCase();
+      const isWatch = (it.taxType === 'SAAT_STANDART') || (
+        !itNameLower.includes('altın') &&
+        !itNameLower.includes('ziynet') &&
+        !itNameLower.includes('bilezik') &&
+        !itNameLower.includes('özel matrah') &&
+        !itNameLower.includes('kuyumculuk') &&
+        !itNameLower.includes('mücevherat') &&
+        (
+          /\b(rolex|submariner|datejust|daytona|cartier|santos|patek|philippe|nautilus|audemars|piguet|royal oak|omega|speedmaster|seamaster|breitling|tag heuer|hublot|iwc|panerai|vacheron|seiko|tissot|longines|versace|calvin klein|michael kors|diesel|fossil|guess|welder|gc|citizen|orient|casio|chopard|zenith|montblanc)\b/i.test(itName) ||
+          itNameLower.includes('kol saati') ||
+          itNameLower.startsWith('saat ') ||
+          itNameLower.endsWith(' saat') ||
+          itNameLower === 'saat'
+        )
       );
 
       let kdvRate = 0;
@@ -415,8 +412,20 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
       if (kdvRate === 0) {
         goldItems.push({ name: itName, qty: itQty, unitPrice: itPrice, lineTotal: itTotal });
       } else {
-        const netMatrah = Math.round((itTotal / (1 + (kdvRate / 100))) * 100) / 100;
-        const kdvAmount = Math.round((itTotal - netMatrah) * 100) / 100;
+        let netMatrah = 0;
+        let kdvAmount = 0;
+        const explicitKdv = Number(it.kdvAmount || it.kdvTutari || it.vatAmount || 0);
+
+        if (explicitKdv > 0 && Math.abs(Math.round(itTotal * (kdvRate / 100) * 100) / 100 - explicitKdv) <= 0.05) {
+          // itTotal zaten KDV hariç Net Matrah olarak iletilmiş (çifte 1.20 bölmesini önle)
+          netMatrah = itTotal;
+          kdvAmount = explicitKdv;
+        } else {
+          // itTotal KDV dahil brüt tutar olarak iletilmiş, KDV'yi ayrıştır
+          netMatrah = Math.round((itTotal / (1 + (kdvRate / 100))) * 100) / 100;
+          kdvAmount = Math.round((itTotal - netMatrah) * 100) / 100;
+        }
+
         const unitNet = Math.round((netMatrah / itQty) * 100) / 100;
         totalTaxableNet = Math.round((totalTaxableNet + netMatrah) * 100) / 100;
         totalKdv = Math.round((totalKdv + kdvAmount) * 100) / 100;
@@ -840,7 +849,8 @@ class EarsivPortalService {
     const nameParts = rawCustName.split(/\s+/);
     const aliciSoyadi = nameParts.length > 1 ? nameParts.pop() : '';
     const aliciAdi = nameParts.join(' ') || 'Sayın Müşteri';
-    const customerAddress = orderData.customerAddress || customerObj.address || '';
+    const rawAddress = String(orderData.customerAddress || customerObj.address || '').trim();
+    const customerAddress = (rawAddress && rawAddress !== '—' && !rawAddress.includes('Yok')) ? rawAddress : 'Menderes Cad. No:231/B Buca İzmir';
     const customerPhone = orderData.customerPhone || customerObj.phone || '';
     const customerEmail = orderData.customerEmail || customerObj.email || '';
     let customerWebsite = String(orderData.customerWebsite || customerObj.website || '').trim();

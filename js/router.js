@@ -30,7 +30,7 @@ const Router = {
 
   resolveLocation() {
     const path = location.pathname.replace(/\/+$/, '') || '/';
-    if (path === '/') return { page: 'ana-sayfa' };
+    if (path === '/' || path === '/index.html' || path === '/index.php') return { page: 'ana-sayfa' };
     if (path === '/elit-kategori' || path === '/elit-saatler') {
       const brand = new URLSearchParams(location.search).get('marka');
       return { page: 'elit-kategori', filter: brand || 'all' };
@@ -74,7 +74,7 @@ const Router = {
   migrateLegacyHash() {
     const hash = location.hash.replace(/^#/, '');
     if (!hash) return null;
-    if (hash === 'canli-fiyatlar' || hash === 'canlipiyasalar' || hash === 'mucevherat') {
+    if (hash === 'ana-sayfa' || hash === 'home' || hash === 'canli-fiyatlar' || hash === 'canlipiyasalar' || hash === 'mucevherat') {
       history.replaceState({page:'ana-sayfa'}, '', '/');
       return { page: 'ana-sayfa' };
     }
@@ -92,6 +92,8 @@ const Router = {
       }
     }
     const old = {
+      'ana-sayfa': '/',
+      'home': '/',
       'canli-fiyatlar': '/',
       'canlipiyasalar': '/',
       'saatler': '/saatler/',
@@ -117,8 +119,38 @@ const Router = {
   },
 
   init() {
+    window.goToHome = function(e) {
+      if (e) {
+        if (typeof e.preventDefault === 'function') e.preventDefault();
+        if (typeof e.stopPropagation === 'function') e.stopPropagation();
+      }
+      if (typeof App !== 'undefined') {
+        if (App.closeNavDropdowns) App.closeNavDropdowns();
+        if (App.closeQuickDrawer) App.closeQuickDrawer();
+        if (App.closeSearchModal) App.closeSearchModal();
+        if (App.toggleMobileDrawer) App.toggleMobileDrawer(false);
+      }
+      document.body.style.overflow = '';
+      const homePage = document.getElementById('page-ana-sayfa');
+      if (homePage && typeof Router !== 'undefined' && typeof Router.navigate === 'function') {
+        Router.navigate('ana-sayfa', true);
+      } else {
+        window.location.href = '/';
+      }
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      return false;
+    };
+
     document.addEventListener('click', (e) => {
-      // 1. Ürün kartı linkleri (data-product-id)
+      // 1. Logo tıklaması (Doğrudan ana sayfaya güvenli yönlendirme)
+      const logoLink = e.target.closest('.brand-logo-link, .logo-area-main, .footer-brand-logo-wrap, [data-page="ana-sayfa"], a[href="/"]');
+      if (logoLink && (logoLink.getAttribute('href') === '/' || logoLink.getAttribute('data-page') === 'ana-sayfa' || logoLink.classList.contains('brand-logo-link') || logoLink.classList.contains('footer-brand-logo-wrap') || logoLink.classList.contains('logo-area-main'))) {
+        return window.goToHome(e);
+      }
+
+      // 2. Ürün kartı linkleri (data-product-id)
       const productLink = e.target.closest('a[data-product-id]');
       if (productLink) {
         e.preventDefault();
@@ -132,7 +164,7 @@ const Router = {
         return;
       }
 
-      // 2. data-page navigasyon linkleri
+      // 3. data-page navigasyon linkleri
       const link = e.target.closest('[data-page]');
       if (link) {
         e.preventDefault();
@@ -142,7 +174,7 @@ const Router = {
         return;
       }
 
-      // 3. Prevent default jump for href="#"
+      // 4. Prevent default jump for href="#"
       const hrefHash = e.target.closest('a[href="#"]');
       if (hrefHash && !hrefHash.getAttribute('data-page') && !hrefHash.getAttribute('onclick')) {
         e.preventDefault();
@@ -165,9 +197,13 @@ const Router = {
   navigate(page, pushState = true, options = {}) {
     if (!page) page = 'ana-sayfa';
 
-    if (typeof App !== 'undefined' && App.closeNavDropdowns) {
-      App.closeNavDropdowns();
+    if (typeof App !== 'undefined') {
+      if (App.closeNavDropdowns) App.closeNavDropdowns();
+      if (App.closeQuickDrawer) App.closeQuickDrawer();
+      if (App.closeSearchModal) App.closeSearchModal();
+      if (App.toggleMobileDrawer) App.toggleMobileDrawer(false);
     }
+    document.body.style.overflow = '';
 
     if (page.startsWith('urun-') || page.startsWith('product-')) {
       const rawId = page.replace('urun-', '').replace('product-', '');
@@ -243,6 +279,7 @@ const Router = {
     document.getElementById('mobileDrawerOverlay')?.classList.remove('open');
     document.getElementById('cartDropdown')?.classList.remove('show');
     document.getElementById('searchOverlay')?.classList.remove('open');
+    document.getElementById('quickDrawerBackdrop')?.classList.remove('open');
 
     // 4. Sayfa Başlığı & Gelişmiş Meta ve Şema Güncelleme
     if (typeof SeoManager !== 'undefined') {
@@ -258,7 +295,10 @@ const Router = {
 
     // 6. İlgili Sayfa / Ürün Başına Akıllı Kaydırma (Smart Smooth Scroll)
     if ((page === 'ana-sayfa' && !options.filter) || page === 'urun') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
     } else {
       setTimeout(() => {
         const pageEl = document.getElementById('page-' + page) || target;

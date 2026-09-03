@@ -1,0 +1,57 @@
+D:\Users\esinf\Documents\Visual Studio 2015\Projects\ThreeDMode\ThreeDMode\bin\roslyn\csc.exe
+D:\Users\esinf\Documents\Visual Studio 2015\Projects\ThreeDMode\ThreeDMode\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\Users\esinf\Documents\Visual Studio 2015\Projects\ThreeDMode\ThreeDMode\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\Users\esinf\Documents\Visual Studio 2015\Projects\ThreeDMode\ThreeDMode\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\Users\esinf\Documents\Visual Studio 2015\Projects\ThreeDMode\ThreeDMode\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Users\esinf\Documents\Visual Studio 2015\Projects\ThreeDMode\ThreeDMode\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\Users\esinf\Documents\Visual Studio 2015\Projects\ThreeDMode\ThreeDMode\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\Users\esinf\Documents\Visual Studio 2015\Projects\ThreeDMode\ThreeDMode\bin\roslyn\System.Collections.Immutable.dll
+D:\Users\esinf\Documents\Visual Studio 2015\Projects\ThreeDMode\ThreeDMode\bin\roslyn\System.Reflection.Metadata.dll
+D:\Users\esinf\Documents\Visual Studio 2015\Projects\ThreeDMode\ThreeDMode\bin\roslyn\vbc.exe
+D:\Users\esinf\Documents\Visual Studio 2015\Projects\ThreeDMode\ThreeDMode\bin\roslyn\VBCSCompiler.exe
+D:\Users\esinf\Documents\Visual Studio 2015\Projects\ThreeDMode\ThreeDMode\bin\roslyn\VBCSCompiler.exe.config
+D:\Users\esinf\Documents\Visual Studio 2015\Projects\ThreeDMode\ThreeDMode\bin\ThreeDMode.dll.config
+D:\Users\esinf\Documents\Visual Studio 2015\Projects\ThreeDMode\ThreeDMode\bin\ThreeDMode.dll
+D:\Users\esinf\Documents\Visual Studio 2015\Projects\ThreeDMode\ThreeDMode\bin\ThreeDMode.pdb
+D:\Users\esinf\Documents\Visual Studio 2015\Projects\ThreeDMode\ThreeDMode\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\Users\esinf\Documents\Visual Studio 2015\Projects\ThreeDMode\ThreeDMode\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\Users\esinf\Documents\Visual Studio 2015\Projects\ThreeDMode\ThreeDMode\obj\Debug\ThreeDMode.dll
+D:\Users\esinf\Documents\Visual Studio 2015\Projects\ThreeDMode\ThreeDMode\obj\Debug\ThreeDMode.pdb
+D:\EntegrasyonKodları\aspnet\ThreeDMode\ThreeDMode\bin\roslyn\csc.exe
+D:\EntegrasyonKodları\aspnet\ThreeDMode\ThreeDMode\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\EntegrasyonKodları\aspnet\ThreeDMode\ThreeDMode\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\EntegrasyonKodları\aspnet\ThreeDMode\ThreeDMode\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\EntegrasyonKodları\aspnet\ThreeDMode\ThreeDMode\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\EntegrasyonKodları\aspnet\ThreeDMode\ThreeDMode\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\EntegrasyonKodları\aspnet\ThreeDMode\ThreeDMode\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\EntegrasyonKodları\aspnet\ThreeDMode\ThreeDMode\bin\roslyn\System.Collections.Immutable.dll
+D:\EntegrasyonKodları\aspnet\ThreeDMode\ThreeDMode\bin\roslyn\System.Reflection.Metadata.dll
+D:\EntegrasyonKodları\aspnet\ThreeDMode\ThreeDMode\bin\roslyn\vbc.exe
+D:\EntegrasyonKodları\aspnet\ThreeDMode\ThreeDMode\bin\roslyn\VBCSCompiler.exe
+D:\EntegrasyonKodları\aspnet\ThreeDMode\ThreeDMode\bin\roslyn\VBCSCompiler.exe.config
+D:\EntegrasyonKodları\aspnet\ThreeDMode\ThreeDMode\bin\ThreeDMode.dll.config
+D:\EntegrasyonKodları\aspnet\ThreeDMode\ThreeDMode\bin\ThreeDMode.dll
+D:\EntegrasyonKodları\aspnet\ThreeDMode\ThreeDMode\bin\ThreeDMode.pdb
+D:\EntegrasyonKodları\aspnet\ThreeDMode\ThreeDMode\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\EntegrasyonKodları\aspnet\ThreeDMode\ThreeDMode\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\EntegrasyonKodları\aspnet\ThreeDMode\ThreeDMode\obj\Debug\ThreeDMode.dll
+D:\EntegrasyonKodları\aspnet\ThreeDMode\ThreeDMode\obj\Debug\ThreeDMode.pdb
+D:\Users\esinf\Desktop\Ethem Yılmaz Paylaşım\aspnet_sanalpos\aspnet_sanalpos\ThreeDMode\ThreeDMode\bin\roslyn\csc.exe
+D:\Users\esinf\Desktop\Ethem Yılmaz Paylaşım\aspnet_sanalpos\aspnet_sanalpos\ThreeDMode\ThreeDMode\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\Users\esinf\Desktop\Ethem Yılmaz Paylaşım\aspnet_sanalpos\aspnet_sanalpos\ThreeDMode\ThreeDMode\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\Users\esinf\Desktop\Ethem Yılmaz Paylaşım\aspnet_sanalpos\aspnet_sanalpos\ThreeDMode\ThreeDMode\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\Users\esinf\Desktop\Ethem Yılmaz Paylaşım\aspnet_sanalpos\aspnet_sanalpos\ThreeDMode\ThreeDMode\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Users\esinf\Desktop\Ethem Yılmaz Paylaşım\aspnet_sanalpos\aspnet_sanalpos\ThreeDMode\ThreeDMode\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\Users\esinf\Desktop\Ethem Yılmaz Paylaşım\aspnet_sanalpos\aspnet_sanalpos\ThreeDMode\ThreeDMode\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\Users\esinf\Desktop\Ethem Yılmaz Paylaşım\aspnet_sanalpos\aspnet_sanalpos\ThreeDMode\ThreeDMode\bin\roslyn\System.Collections.Immutable.dll
+D:\Users\esinf\Desktop\Ethem Yılmaz Paylaşım\aspnet_sanalpos\aspnet_sanalpos\ThreeDMode\ThreeDMode\bin\roslyn\System.Reflection.Metadata.dll
+D:\Users\esinf\Desktop\Ethem Yılmaz Paylaşım\aspnet_sanalpos\aspnet_sanalpos\ThreeDMode\ThreeDMode\bin\roslyn\vbc.exe
+D:\Users\esinf\Desktop\Ethem Yılmaz Paylaşım\aspnet_sanalpos\aspnet_sanalpos\ThreeDMode\ThreeDMode\bin\roslyn\VBCSCompiler.exe
+D:\Users\esinf\Desktop\Ethem Yılmaz Paylaşım\aspnet_sanalpos\aspnet_sanalpos\ThreeDMode\ThreeDMode\bin\roslyn\VBCSCompiler.exe.config
+D:\Users\esinf\Desktop\Ethem Yılmaz Paylaşım\aspnet_sanalpos\aspnet_sanalpos\ThreeDMode\ThreeDMode\bin\ThreeDMode.dll.config
+D:\Users\esinf\Desktop\Ethem Yılmaz Paylaşım\aspnet_sanalpos\aspnet_sanalpos\ThreeDMode\ThreeDMode\bin\ThreeDMode.dll
+D:\Users\esinf\Desktop\Ethem Yılmaz Paylaşım\aspnet_sanalpos\aspnet_sanalpos\ThreeDMode\ThreeDMode\bin\ThreeDMode.pdb
+D:\Users\esinf\Desktop\Ethem Yılmaz Paylaşım\aspnet_sanalpos\aspnet_sanalpos\ThreeDMode\ThreeDMode\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\Users\esinf\Desktop\Ethem Yılmaz Paylaşım\aspnet_sanalpos\aspnet_sanalpos\ThreeDMode\ThreeDMode\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\Users\esinf\Desktop\Ethem Yılmaz Paylaşım\aspnet_sanalpos\aspnet_sanalpos\ThreeDMode\ThreeDMode\obj\Debug\ThreeDMode.dll
+D:\Users\esinf\Desktop\Ethem Yılmaz Paylaşım\aspnet_sanalpos\aspnet_sanalpos\ThreeDMode\ThreeDMode\obj\Debug\ThreeDMode.pdb

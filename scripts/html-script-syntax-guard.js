@@ -101,13 +101,13 @@ try {
   vm.runInContext(vipCode, context);
   const VipEngine = context.VipEngine;
 
-  const t1 = VipEngine.decodeCompact(VipEngine.encodeCompact({ orderId: 'T1', title: 'Test', amount: 1000, provider: 'AKBANK' }));
+  const t1 = VipEngine.decodeCompact(VipEngine.encodeCompact({ orderId: 'T1', title: 'Test', amount: 1000, provider: 'KUVEYTTURK' }));
   const t2 = VipEngine.decodeCompact(VipEngine.encodeCompact({ orderId: 'T2', title: 'Test2', amount: 2000, provider: 'PAYTR' }));
   
-  if (t1.provider !== 'AKBANK' || t2.provider !== 'PAYTR') {
+  if (t1.provider !== 'KUVEYTTURK' || t2.provider !== 'PAYTR') {
     throw new Error('VipEngine provider encoding uyuşmazlığı tespit edildi.');
   }
-  console.log('✅ [VIP ENGINE]: Akbank ve PayTR çoklu token motoru ve /22 ayrıştırıcı doğrulandı.');
+  console.log('✅ [VIP ENGINE]: Kuveyt Türk ve PayTR çoklu token motoru ve /22 ayrıştırıcı doğrulandı.');
 } catch (err) {
   totalErrors++;
   console.error('  ❌ [VIP ENGINE ERROR]:', err.message);

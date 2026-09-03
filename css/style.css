@@ -1215,88 +1215,64 @@ p, span, li, td, th, label, input, button, select, textarea {
    📖 BİZ KİMİZ — LUXURY EDITORIAL HEADER & TOP FOLIO VIEWER
    ========================================================== */
 .biz-kimiz-master-wrap {
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
-  padding: 16px 16px 48px;
+  padding: 10px 12px 36px;
 }
 
+/* 1. SLIM & COMPACT TOP CONTROL BAR */
 .biz-kimiz-top-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 12px;
   background: linear-gradient(135deg, #141A18 0%, #0A0E0D 100%);
   border: 1px solid rgba(194, 167, 104, 0.35);
-  border-radius: 12px;
-  padding: 20px 24px;
-  margin-bottom: 20px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 10px 18px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
 .biz-kimiz-header-left {
-  flex: 1 1 500px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
 }
 
 .biz-kimiz-badge-pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(194, 167, 104, 0.12);
-  border: 1px solid rgba(194, 167, 104, 0.35);
-  padding: 4px 10px;
+  background: rgba(194, 167, 104, 0.15);
+  border: 1px solid rgba(194, 167, 104, 0.4);
+  padding: 3px 8px;
   border-radius: 100px;
   font-size: 11px;
   font-weight: 700;
   color: var(--color-gold-bright);
-  letter-spacing: 1px;
-  margin-bottom: 6px;
+  letter-spacing: 0.8px;
 }
 
 .biz-kimiz-title {
   font-family: var(--font-heading);
-  font-size: clamp(20px, 2.8vw, 28px);
-  font-weight: 800;
+  font-size: 16px;
+  font-weight: 700;
   color: #FFFFFF;
-  margin: 0 0 4px 0;
-  line-height: 1.25;
-}
-
-.biz-kimiz-subtitle {
-  font-size: 13.5px;
-  color: #C8C7BE;
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.2;
 }
 
 .biz-kimiz-header-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
-.btn-biz-download {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  background: linear-gradient(135deg, #C2A768, #9E8548);
-  color: #070A09;
-  font-weight: 700;
-  font-size: 13px;
-  padding: 9px 16px;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(194, 167, 104, 0.25);
-}
-
-.btn-biz-download:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(194, 167, 104, 0.35);
-}
-
-.btn-biz-fullscreen, .btn-biz-vip {
+.btn-biz-zoom, .btn-biz-download, .btn-biz-fullscreen, .btn-biz-vip {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -1304,63 +1280,84 @@ p, span, li, td, th, label, input, button, select, textarea {
   border: 1px solid rgba(194, 167, 104, 0.4);
   color: #FFFFFF;
   font-weight: 600;
-  font-size: 13px;
-  padding: 9px 14px;
-  border-radius: 8px;
+  font-size: 12px;
+  padding: 7px 12px;
+  border-radius: 6px;
   cursor: pointer;
+  text-decoration: none;
   transition: all 0.2s ease;
 }
 
-.btn-biz-fullscreen:hover, .btn-biz-vip:hover {
-  background: rgba(255, 255, 255, 0.12);
+.btn-biz-zoom {
+  background: rgba(194, 167, 104, 0.12);
+  border-color: rgba(194, 167, 104, 0.5);
+  color: var(--color-gold-bright);
+}
+
+.btn-biz-zoom.active {
+  background: var(--color-gold);
+  color: #000;
+  font-weight: 700;
   border-color: var(--color-gold-bright);
 }
 
-/* 📖 PROMINENT TOP FOLIO / PDF STAGE */
+.btn-biz-download {
+  background: linear-gradient(135deg, #C2A768, #9E8548);
+  color: #070A09;
+  font-weight: 700;
+}
+
+.btn-biz-download:hover, .btn-biz-zoom:hover, .btn-biz-fullscreen:hover, .btn-biz-vip:hover {
+  transform: translateY(-1px);
+  border-color: var(--color-gold-bright);
+}
+
+/* 📖 16:9 PROMINENT FIRST-SCREEN FOLIO / PDF STAGE */
 .biz-kimiz-folio-card {
   background: radial-gradient(circle at 50% 15%, #18221F 0%, #0B100F 100%);
   border: 1px solid rgba(194, 167, 104, 0.4);
-  border-radius: 16px;
-  padding: 20px 24px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
-  margin-bottom: 32px;
+  border-radius: 12px;
+  padding: 14px 18px 16px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55);
+  margin-bottom: 24px;
   position: relative;
+  transition: all 0.3s ease;
 }
 
 .folio-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
-  padding-bottom: 14px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
 }
 
 .folio-toolbar-left, .folio-toolbar-right {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
 .folio-mode-pills {
   display: inline-flex;
-  background: rgba(0, 0, 0, 0.3);
-  padding: 3px;
-  border-radius: 8px;
-  border: 1px solid rgba(194, 167, 104, 0.2);
+  background: rgba(0, 0, 0, 0.35);
+  padding: 2px;
+  border-radius: 6px;
+  border: 1px solid rgba(194, 167, 104, 0.25);
 }
 
 .folio-pill-btn {
   background: transparent;
   border: none;
   color: #CCC;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 6px;
+  padding: 5px 10px;
+  border-radius: 4px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -1368,26 +1365,25 @@ p, span, li, td, th, label, input, button, select, textarea {
 .folio-pill-btn.active {
   background: var(--color-teal);
   color: #FFF;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
 .folio-counter-pill {
-  background: rgba(194, 167, 104, 0.12);
-  border: 1px solid rgba(194, 167, 104, 0.35);
+  background: rgba(194, 167, 104, 0.15);
+  border: 1px solid rgba(194, 167, 104, 0.4);
   color: var(--color-gold-bright);
   font-weight: 700;
-  padding: 6px 12px;
+  padding: 5px 10px;
   border-radius: 6px;
-  font-size: 12px;
+  font-size: 11.5px;
 }
 
 .folio-page-btn {
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(194, 167, 104, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(194, 167, 104, 0.35);
   color: #FFF;
   font-size: 12px;
   font-weight: 600;
-  padding: 6px 12px;
+  padding: 5px 12px;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -1395,7 +1391,7 @@ p, span, li, td, th, label, input, button, select, textarea {
 
 .folio-page-btn:hover {
   background: var(--color-teal);
-  border-color: var(--color-teal);
+  border-color: var(--color-gold);
 }
 
 .folio-stage {
@@ -1403,46 +1399,56 @@ p, span, li, td, th, label, input, button, select, textarea {
   justify-content: center;
   align-items: center;
   position: relative;
-  min-height: 480px;
-  padding: 8px 0;
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 4px 0;
+  transition: all 0.3s ease;
 }
 
 .folio-book-wrapper {
   display: flex;
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(194, 167, 104, 0.25);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(194, 167, 104, 0.35);
   border-radius: 8px;
   overflow: hidden;
-  max-width: 960px;
-  background: #FFF;
+  width: 100%;
+  max-width: 1080px;
+  aspect-ratio: 16 / 9;
+  background: #000;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, max-width 0.3s ease;
 }
 
 .folio-book-wrapper:hover {
-  transform: scale(1.008);
-  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(194, 167, 104, 0.5);
+  transform: scale(1.004);
+  box-shadow: 0 20px 52px rgba(0, 0, 0, 0.9), 0 0 0 1.5px rgba(194, 167, 104, 0.6);
 }
 
 .flipbook-page-img {
   width: 100%;
-  max-width: 620px;
-  max-height: 640px;
-  height: auto;
+  height: 100%;
   object-fit: contain;
   display: block;
   user-select: none;
 }
 
+.folio-stage.spread .folio-book-wrapper {
+  max-width: 1200px;
+}
+
 .folio-stage.spread .flipbook-page-img {
-  max-width: 460px;
+  width: 50%;
+  height: 100%;
+  object-fit: contain;
 }
 
-.folio-stage.spread .flipbook-page-img:first-child {
-  box-shadow: inset -10px 0 20px rgba(0, 0, 0, 0.12);
+.folio-stage.zoom-large {
+  max-width: 100%;
 }
 
-.folio-stage.spread .flipbook-page-img:last-child {
-  box-shadow: inset 10px 0 20px rgba(0, 0, 0, 0.12);
+.folio-stage.zoom-large .folio-book-wrapper {
+  max-width: 100%;
+  min-height: 75vh;
 }
 
 .folio-nav-arrow {
@@ -1452,8 +1458,8 @@ p, span, li, td, th, label, input, button, select, textarea {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: rgba(20, 26, 24, 0.92);
-  border: 1px solid rgba(194, 167, 104, 0.5);
+  background: rgba(18, 26, 23, 0.95);
+  border: 1.5px solid rgba(194, 167, 104, 0.6);
   color: #FFF;
   font-size: 22px;
   display: flex;
@@ -1522,54 +1528,54 @@ p, span, li, td, th, label, input, button, select, textarea {
   border-radius: 3px;
 }
 
-/* 🏛️ 4 CORE METRICS (TİCARİ DEĞERLER) */
+/* 🏛️ 4 CORE METRICS (TİCARİ DEĞERLER) - SLIM & ELEGANT */
 .biz-kimiz-metrics-strip {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-  margin-bottom: 40px;
+  gap: 12px;
+  margin-bottom: 24px;
 }
 
 .metric-card-lux {
   background: #FFFFFF;
   border: 1px solid var(--color-border);
-  border-radius: 12px;
-  padding: 22px 20px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+  padding: 12px 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .metric-card-lux:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
   border-color: var(--color-gold);
-  box-shadow: 0 8px 24px rgba(194, 167, 104, 0.15);
+  box-shadow: 0 4px 14px rgba(194, 167, 104, 0.15);
 }
 
 .metric-icon {
-  font-size: 24px;
+  font-size: 20px;
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .metric-number {
   font-family: var(--font-heading);
-  font-size: 26px;
+  font-size: 20px;
   font-weight: 800;
   color: var(--color-teal);
-  line-height: 1.2;
+  line-height: 1.15;
 }
 
 .metric-title {
-  font-size: 14px;
+  font-size: 12.5px;
   font-weight: 700;
   color: var(--color-ink);
-  margin: 4px 0 6px;
+  margin: 2px 0 4px;
 }
 
 .metric-sub {
-  font-size: 12px;
+  font-size: 11.5px;
   color: var(--color-muted);
-  line-height: 1.5;
+  line-height: 1.4;
   margin: 0;
 }
 
@@ -5696,8 +5702,9 @@ p, span, li, td, th, label, input, button, select, textarea {
   gap: 8px;
   flex-wrap: wrap;
 }
-.pay-badge-akbank {
-  background: #ED1C24;
+.pay-badge-akbank,
+.pay-badge-kuveytturk {
+  background: #008450; /* Kuveyt Türk Corporate Green */
   color: #FFFFFF;
   font-size: 11px;
   font-weight: 800;
@@ -7145,17 +7152,17 @@ mark.legal-highlight {
    ========================================================== */
 .checkout-grid-container {
   display: grid;
-  grid-template-columns: 1.18fr 0.82fr;
-  gap: 32px;
+  grid-template-columns: 1.06fr 0.94fr;
+  gap: 20px;
   align-items: start;
-  max-width: 1160px;
-  margin: 32px auto 80px;
+  max-width: 1180px;
+  margin: 16px auto 48px;
 }
 @media (max-width: 960px) {
   .checkout-grid-container {
     grid-template-columns: 1fr;
-    gap: 24px;
-    margin: 20px auto 60px;
+    gap: 18px;
+    margin: 12px auto 40px;
   }
 }
 
@@ -7163,47 +7170,50 @@ mark.legal-highlight {
   background: #FFFFFF;
   border: 1px solid var(--color-border);
   border-radius: 12px;
-  padding: 32px 28px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.03);
+  padding: 20px 22px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
 }
 @media (max-width: 600px) {
   .checkout-main-panel {
-    padding: 20px 16px;
+    padding: 16px 14px;
   }
 }
 
 .checkout-sidebar-panel {
-  position: sticky;
-  top: 96px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 .checkout-card-box {
   background: #FFFFFF;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: 36px 32px;
+  padding: 24px 22px;
   max-width: 860px;
-  margin: 40px auto 80px;
+  margin: 24px auto 60px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
 }
 @media (max-width: 600px) {
-  .checkout-card-box { padding: 22px 16px; margin: 20px auto 60px; }
+  .checkout-card-box { padding: 18px 14px; margin: 16px auto 40px; }
 }
 
 .checkout-summary-box {
-  background: #FAF8F5;
-  border: 1px solid #EAE5D9;
-  border-radius: 10px;
-  padding: 20px 22px;
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
 }
 .checkout-summary-title {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--color-ink);
-  margin-bottom: 12px;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--color-teal);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #F0ECE4;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -7211,27 +7221,41 @@ mark.legal-highlight {
 .checkout-items-mini {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-bottom: 14px;
+  gap: 6px;
+  max-height: 120px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  padding-right: 4px;
+}
+.checkout-items-mini::-webkit-scrollbar {
+  width: 4px;
+}
+.checkout-items-mini::-webkit-scrollbar-track {
+  background: #F5F3EF;
+  border-radius: 4px;
+}
+.checkout-items-mini::-webkit-scrollbar-thumb {
+  background: #D8D2C5;
+  border-radius: 4px;
 }
 .checkout-item-mini-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 13px;
-  padding-bottom: 8px;
-  border-bottom: 1px dashed rgba(0, 0, 0, 0.08);
+  font-size: 12.5px;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.06);
 }
 .checkout-total-row {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   font-size: 17px;
-  font-weight: 800;
+  font-weight: 900;
   color: var(--color-teal);
-  padding-top: 10px;
+  padding-top: 8px;
   border-top: 1px solid #EAE5D9;
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
 
@@ -7323,8 +7347,9 @@ mark.legal-highlight {
   .cc-grid-2 { grid-template-columns: 1fr; }
 }
 
-/* Akbank 3D Secure Modal Overlay */
-.akbank-3d-overlay {
+/* Kuveyt Türk 3D Secure Modal Overlay */
+.akbank-3d-overlay,
+.kuveytturk-3d-overlay {
   position: fixed;
   inset: 0;
   background: rgba(4, 36, 33, 0.75);
@@ -7338,11 +7363,13 @@ mark.legal-highlight {
   visibility: hidden;
   transition: opacity 0.25s ease, visibility 0.25s ease;
 }
-.akbank-3d-overlay.active {
+.akbank-3d-overlay.active,
+.kuveytturk-3d-overlay.active {
   opacity: 1;
   visibility: visible;
 }
-.akbank-3d-dialog {
+.akbank-3d-dialog,
+.kuveytturk-3d-dialog {
   background: #FFFFFF;
   border-radius: 12px;
   max-width: 460px;
@@ -7352,33 +7379,39 @@ mark.legal-highlight {
   transform: translateY(12px);
   transition: transform 0.25s ease;
 }
-.akbank-3d-overlay.active .akbank-3d-dialog {
+.akbank-3d-overlay.active .akbank-3d-dialog,
+.kuveytturk-3d-overlay.active .kuveytturk-3d-dialog {
   transform: translateY(0);
 }
-.akbank-3d-header {
-  background: #ED1C24; /* Akbank Corporate Red */
+.akbank-3d-header,
+.kuveytturk-3d-header {
+  background: #008450; /* Kuveyt Türk Corporate Green */
   color: #FFFFFF;
   padding: 16px 22px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.akbank-3d-logo-text {
+.akbank-3d-logo-text,
+.kuveytturk-3d-logo-text {
   font-size: 17px;
   font-weight: 800;
   letter-spacing: 1px;
 }
-.akbank-3d-sec-tag {
+.akbank-3d-sec-tag,
+.kuveytturk-3d-sec-tag {
   font-size: 11.5px;
   background: rgba(255, 255, 255, 0.2);
   padding: 3px 8px;
   border-radius: 4px;
   font-weight: 600;
 }
-.akbank-3d-body {
+.akbank-3d-body,
+.kuveytturk-3d-body {
   padding: 24px;
 }
-.akbank-3d-info-table {
+.akbank-3d-info-table,
+.kuveytturk-3d-info-table {
   background: #F9FAFB;
   border: 1px solid #E5E7EB;
   border-radius: 8px;
@@ -7386,38 +7419,45 @@ mark.legal-highlight {
   margin-bottom: 20px;
   font-size: 12.5px;
 }
-.akbank-3d-info-row {
+.akbank-3d-info-row,
+.kuveytturk-3d-info-row {
   display: flex;
   justify-content: space-between;
   margin-bottom: 6px;
   color: #4B5563;
 }
-.akbank-3d-info-row:last-child { margin-bottom: 0; }
-.akbank-3d-info-row strong { color: #111827; }
-.akbank-otp-box {
+.akbank-3d-info-row:last-child,
+.kuveytturk-3d-info-row:last-child { margin-bottom: 0; }
+.akbank-3d-info-row strong,
+.kuveytturk-3d-info-row strong { color: #111827; }
+.akbank-otp-box,
+.kuveytturk-otp-box {
   margin: 18px 0;
   text-align: center;
 }
-.akbank-otp-input {
+.akbank-otp-input,
+.kuveytturk-otp-input {
   width: 200px;
   font-size: 22px;
   letter-spacing: 8px;
   text-align: center;
   font-weight: 700;
   padding: 10px 12px;
-  border: 2px solid #ED1C24;
+  border: 2px solid #008450;
   border-radius: 8px;
   outline: none;
   font-family: monospace;
 }
-.akbank-timer-text {
+.akbank-timer-text,
+.kuveytturk-timer-text {
   font-size: 12px;
   color: #6B7280;
   margin-top: 8px;
 }
-.akbank-3d-btn-submit {
+.akbank-3d-btn-submit,
+.kuveytturk-3d-btn-submit {
   width: 100%;
-  background: #ED1C24;
+  background: #008450;
   color: #FFFFFF;
   border: none;
   padding: 14px;
@@ -7427,10 +7467,12 @@ mark.legal-highlight {
   cursor: pointer;
   transition: background 0.2s;
 }
-.akbank-3d-btn-submit:hover {
-  background: #C4161D;
+.akbank-3d-btn-submit:hover,
+.kuveytturk-3d-btn-submit:hover {
+  background: #00663e;
 }
-.akbank-3d-btn-cancel {
+.akbank-3d-btn-cancel,
+.kuveytturk-3d-btn-cancel {
   width: 100%;
   background: transparent;
   color: #6B7280;
@@ -7441,7 +7483,8 @@ mark.legal-highlight {
   cursor: pointer;
   margin-top: 8px;
 }
-.akbank-3d-btn-cancel:hover {
+.akbank-3d-btn-cancel:hover,
+.kuveytturk-3d-btn-cancel:hover {
   background: #F3F4F6;
   color: #111827;
 }

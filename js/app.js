@@ -198,6 +198,23 @@ function runBelginSearch(items, query) {
 }
 
 const App = {
+  goToHome(e) {
+    if (typeof window.goToHome === 'function') {
+      return window.goToHome(e);
+    }
+    if (e) {
+      if (typeof e.preventDefault === 'function') e.preventDefault();
+      if (typeof e.stopPropagation === 'function') e.stopPropagation();
+    }
+    if (typeof Router !== 'undefined' && typeof Router.navigate === 'function') {
+      Router.navigate('ana-sayfa', true);
+    } else {
+      window.location.href = '/';
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    return false;
+  },
+
   init() {
     Cart.init();
     Wishlist.init();

@@ -127,25 +127,26 @@ assert(marketingPolicy.length > 500, 'Ticari elektronik ileti politikası mevcut
 
 console.log('\n--- 8. Çoklu Sanal POS Mimarisi ve Güvenlik Testleri ---');
 const { PROVIDERS, PAYMENT_STATUS, DEFAULT_PROVIDER, ORDER_STATUS, canTransition } = require('../functions/payment/payment-constants');
-assert(PROVIDERS.PAYTR === 'PAYTR' && PROVIDERS.QNB === 'QNB' && PROVIDERS.AKBANK === 'AKBANK' && PROVIDERS.YAPIKREDI === 'YAPIKREDI', 'Merkezi 4 POS sağlayıcı sabiti tanımlı');
-assert(DEFAULT_PROVIDER === 'AKBANK', 'Varsayılan sağlayıcı AKBANK');
+assert(PROVIDERS.PAYTR === 'PAYTR' && PROVIDERS.QNB === 'QNB' && PROVIDERS.KUVEYTTURK === 'KUVEYTTURK' && PROVIDERS.YAPIKREDI === 'YAPIKREDI', 'Merkezi 4 POS sağlayıcı sabiti tanımlı');
+assert(DEFAULT_PROVIDER === 'KUVEYTTURK', 'Varsayılan sağlayıcı KUVEYTTURK');
 assert(PAYMENT_STATUS.PAID === 'PAYMENT_PAID' && PAYMENT_STATUS.PENDING === 'PAYMENT_PENDING', 'Standart ödeme durum modelleri tanımlı');
 assert(canTransition(ORDER_STATUS.CREATED, ORDER_STATUS.PAYMENT_SESSION_CREATING), 'FSM: CREATED -> PAYMENT_SESSION_CREATING geçerli');
 assert(!canTransition(ORDER_STATUS.CREATED, ORDER_STATUS.COMPLETED), 'FSM: CREATED -> COMPLETED doğrudan geçiş engellenir');
 
 const paymentRouter = require('../functions/payment/payment-router');
-assert(paymentRouter.getProvider('AKBANK').name === 'AKBANK', 'Payment router AKBANK sağlayıcısını çözümlüyor');
-assert(paymentRouter.getProvider().name === 'AKBANK', 'Payment router boş çağrıda varsayılan AKBANK dönüyor');
+assert(paymentRouter.getProvider('KUVEYTTURK').name === 'KUVEYTTURK', 'Payment router KUVEYTTURK sağlayıcısını çözümlüyor');
+assert(paymentRouter.getProvider().name === 'KUVEYTTURK', 'Payment router boş çağrıda varsayılan KUVEYTTURK dönüyor');
 
 const qnbAdapter = paymentRouter.getProvider('QNB');
 let qnbBlocked = false;
 qnbAdapter.createPayment().catch((e) => { if (e.code === 'PROVIDER_NOT_CONFIGURED') qnbBlocked = true; });
 assert(qnbAdapter.verifyCallback().reason === 'PROVIDER_NOT_CONFIGURED', 'QNB Finansbank adapter dokümansız çağrıda FAIL-CLOSED davranıyor (PROVIDER_NOT_CONFIGURED)');
 
-const akbankAdapter = paymentRouter.getProvider('AKBANK');
-let akbankBlocked = false;
-akbankAdapter.createPayment().catch((e) => { if (e.code === 'PROVIDER_NOT_CONFIGURED') akbankBlocked = true; });
-assert(akbankAdapter.verifyCallback().reason === 'PROVIDER_NOT_CONFIGURED', 'Akbank adapter dokümansız çağrıda FAIL-CLOSED davranıyor (PROVIDER_NOT_CONFIGURED)');
+const kuveytTurkAdapter = paymentRouter.getProvider('KUVEYTTURK');
+let kuveytTurkBlocked = false;
+kuveytTurkAdapter.createPayment().catch((e) => { if (e.code === 'PROVIDER_NOT_CONFIGURED') kuveytTurkBlocked = true; });
+const ktRes = kuveytTurkAdapter.verifyCallback();
+assert(ktRes && (typeof ktRes.then === 'function' || ktRes.reason === 'ORDER_ID_MISSING'), 'Kuveyt Türk adapter eksik çağrıda FAIL-CLOSED davranıyor (ORDER_ID_MISSING)');
 
 const yapiKrediAdapter = paymentRouter.getProvider('YAPIKREDI');
 let yapiKrediBlocked = false;

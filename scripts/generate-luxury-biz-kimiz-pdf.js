@@ -1,15 +1,14 @@
 #!/usr/bin/env node
 /**
  * ====================================================================
- * 👑 BELGİN SAAT — ULTRA-LUXURY KURUMSAL PROFİL PDF & FLIPBOOK MOTORU
+ * 👑 BELGİN SAAT — ULTRA-LUXURY LANDSCAPE (16:9) PRESENTATION MOTORU
  * ====================================================================
- * Bu motor:
- * 1. Şirket cirosu/hacim gibi gizli ticari rakamları (15-30 Mn vb.) tamamen kaldırır.
- * 2. Kullanıcının yüklediği lüks saat görsellerini ve magazin görsellerini harmanlar.
- * 3. Prestij, güven inşası, köklü miras (Est. 1999) ve Haute Horlogerie dilinde
- *    10 sayfalık nefes kesici bir kurumsal folio üretir.
- * 4. Google Chrome headless ile hem 10 adet sayfa görselini (page-1.jpg .. page-10.jpg)
- *    hem de 10 sayfalık master PDF'i (docs/belgin-saat-kurumsal-profil-2026.pdf) derler.
+ * 1. Yatay 16:9 Widescreen (1920x1080) formatı ile kullanıcı ekranı kaydırmadan
+ *    tüm sayfayı ilk ekranda (Above-the-Fold), devasa ve net yazılarla okur.
+ * 2. 10 sayfalık master sunum metinleri, alıntıları, marka evreni ve görselleri
+ *    tam sayfa yatay lüks editoryal dergi düzeninde işlenir.
+ * 3. Google Chrome headless ile 10 adet sayfa görseli (page-1.jpg .. page-10.jpg)
+ *    ve master A4 Landscape PDF (docs/belgin-saat-kurumsal-profil-2026.pdf) üretilir.
  */
 
 const fs = require('fs');
@@ -25,7 +24,6 @@ fs.mkdirSync(BIZ_IMG_DIR, { recursive: true });
 fs.mkdirSync(DOCS_DIR, { recursive: true });
 fs.mkdirSync(SCRATCH_DIR, { recursive: true });
 
-// Convert images to base64 for reliable standalone offline rendering
 function imgBase64(relPath) {
   const full = path.join(ROOT, relPath);
   if (!fs.existsSync(full)) {
@@ -38,57 +36,64 @@ function imgBase64(relPath) {
   return `data:${mime};base64,${b64}`;
 }
 
-const imgDaytonaIce = imgBase64('images/biz-kimiz/assets/media_1788290903882.jpg');
-const imgZenithSport = imgBase64('images/biz-kimiz/assets/media_1788290903881.jpg');
-const imgTudorSuit = imgBase64('images/biz-kimiz/assets/media_1788290903879.jpg');
-const imgTrioWatches = imgBase64('images/biz-kimiz/assets/media_1788290903879.webp');
-const imgCartierWrist = imgBase64('images/biz-kimiz/assets/media_1788285695721.jpg') || imgBase64('images/hero/hero-geneva-sunset.jpg');
-const imgRolexSub = imgBase64('images/magazine/rolex-submariner-vs-sea-dweller-guide.jpg');
-const imgPatekNautilus = imgBase64('images/magazine/patek-philippe-nautilus-aquanaut-guide.jpg');
-const imgMaisonHero = imgBase64('images/hero/hero-rolex-lineup.jpg');
-const imgGeneva = imgBase64('images/hero/hero-geneva-sunset.jpg');
+// Görsel Varlıkları
+const imgRolexGMT = imgBase64('images/biz-kimiz/assets/media_1788290903882.jpg') || imgBase64('images/hero/hero-rolex-lineup.jpg');
+const imgRichardMille = imgBase64('images/biz-kimiz/assets/media_1788290903881.jpg') || imgBase64('images/biz-kimiz/assets/media_1788285695715.jpg');
+const imgPatekTiffany = imgBase64('images/biz-kimiz/assets/media_1788290903879.jpg') || imgBase64('images/magazine/patek-philippe-nautilus-aquanaut-guide.jpg');
+const imgCelebrities = imgBase64('images/biz-kimiz/assets/media_1788290903879.webp') || imgBase64('images/biz-kimiz/assets/media_1788289518569.png');
+const imgDaytonaZenith = imgBase64('images/biz-kimiz/assets/media_1788285087384.jpg') || imgRolexGMT;
+const imgMissTourism = imgBase64('images/biz-kimiz/assets/media_1788288519572.png') || imgCelebrities;
+const imgVintagePatek = imgBase64('images/biz-kimiz/assets/media_1788285619493.jpg') || imgRolexGMT;
+const imgWatchHandover = imgBase64('images/biz-kimiz/assets/media_1788285695720.jpg') || imgRolexGMT;
+const imgWatchBoxVIP = imgBase64('images/biz-kimiz/assets/media_1788285695721.jpg') || imgRolexGMT;
 
 const PAGES = [
   // -------------------------------------------------------------
-  // SAYFA 1: KAPAK (COVER OF EXCELLENCE)
+  // SAYFA 1: KAPAK — LÜKS SAAT ODAĞINDA GÜVEN, SEÇKİ VE GÖRÜNÜRLÜK
   // -------------------------------------------------------------
   {
     num: 1,
-    title: 'Kapak',
+    title: 'Kapak & Profil',
     html: `
-      <div class="page-container dark-cover">
-        <div class="cover-gold-border">
-          <div class="cover-header">
-            <div class="brand-crest">👑</div>
-            <div class="brand-title">BELGİN SAAT</div>
-            <div class="brand-subtitle">HAUTE HORLOGERIE &bull; İZMİR BUCA &bull; EST. 1999</div>
+      <div class="page-container page-layout-split">
+        <div class="split-content-left">
+          <div class="brand-header-row">
+            <div class="brand-title-box">
+              <span class="brand-name-serif">Belgin</span>
+              <span class="brand-sub-sans">Saat &amp; Kuyumculuk &bull; Est. 1999</span>
+            </div>
           </div>
 
-          <div class="cover-hero-img-wrap">
-            <img src="${imgDaytonaIce}" class="cover-hero-img" alt="Rolex Daytona Platinum">
-            <div class="cover-hero-overlay"></div>
-          </div>
+          <div class="cover-main-hero">
+            <h1 class="cover-headline">Belgin Saat &amp; <span class="highlight-gold">Kuyumculuk</span></h1>
+            
+            <div class="diamond-divider">💎 &bull; &bull; &bull;</div>
 
-          <div class="cover-content">
-            <div class="cover-badge">KURUMSAL TİCARET VE LÜKS SAAT PROFİLİ</div>
-            <h1 class="cover-heading">Zamanın ve Değerin<br><span class="gold-text">Çeyrek Asırlık Mirası</span></h1>
+            <h2 class="cover-subtitle">Lüks saat odağında güven, seçki ve görünürlük</h2>
+
             <p class="cover-desc">
-              1999'dan bu yana kuyumculuk ve lüks saat dünyasında sarsılmaz güven, mutlak şeffaflık ve kurumsal uzmanlıkla inşa edilen seçkin ticaret hafızası.
+              Belgin Saat&amp;Kuyumculuk, seçkin saat kültürünü güven temelli ilişki anlayışıyla bir araya getirmektedir. YouWatch mirasıyla güçlenen görünürlük, kürasyon disipliniyle desteklenmekte; vitrin dışında da yaşayan bir saat evreni kurulmaktadır.
             </p>
+
+            <div class="gold-quote-card">
+              <span class="card-crown-icon">👑</span>
+              <p class="card-quote-text">
+                Seçilen her parça, prestij ile güven arasındaki dengeyi temsil etmektedir.
+              </p>
+            </div>
           </div>
 
-          <div class="cover-footer">
-            <div class="cover-meta-item">
-              <span class="lbl">MERKEZ SHOWROOM</span>
-              <span class="val">Menderes Cad. No:41/A Buca / İzmir</span>
-            </div>
-            <div class="cover-meta-item">
-              <span class="lbl">DİJİTAL FOLİO</span>
-              <span class="val">2026 Resmî Kurumsal Sürüm</span>
-            </div>
-            <div class="cover-meta-item">
-              <span class="lbl">HUKUKİ STATÜ</span>
-              <span class="val">Semih Sonbahar &bull; Kayıtlı Mülk</span>
+          <div class="page-footer-row">
+            <span>| KURUMSAL PROFİL</span>
+            <span>www.belginkuyumculuk.com</span>
+          </div>
+        </div>
+
+        <div class="split-visual-right visual-cover-bg">
+          <div class="cover-photo-composition">
+            <img src="${imgRolexGMT}" alt="Rolex GMT-Master II Luxury Watch" class="main-cover-watch">
+            <div class="cover-movement-box">
+              <img src="${imgRichardMille}" alt="Haute Horlogerie Movement" class="cover-sub-watch">
             </div>
           </div>
         </div>
@@ -97,60 +102,72 @@ const PAGES = [
   },
 
   // -------------------------------------------------------------
-  // SAYFA 2: YÖNETİCİ ÖZETİ & TEMEL DEĞERLER (EXECUTIVE SUMMARY)
+  // SAYFA 2: SAAT KÜLTÜRÜ VE MARKA HAFIZASI
   // -------------------------------------------------------------
   {
     num: 2,
-    title: 'Yönetici Özeti & İlkeler',
+    title: 'Saat Kültürü ve Marka Hafızası',
     html: `
-      <div class="page-container">
-        <div class="page-header">
-          <div class="page-header-left">
-            <span class="sec-tag">BÖLÜM 01 &bull; YÖNETİCİ ÖZETİ</span>
-            <h2 class="sec-title">Mükemmellik, Mutlak Gizlilik ve Kurumsal Güven</h2>
-          </div>
-          <div class="page-header-right">
-            <span class="page-num">02</span>
-          </div>
-        </div>
+      <div class="page-container page-layout-split">
+        <div class="split-content-left">
+          <div class="top-nav-tag">02 | KURUMSAL PROFİL &bull; TİCARET HAFIZASI</div>
 
-        <div class="page-grid-2col" style="margin-top:24px;">
-          <div class="col-text">
-            <p class="lead-p">
-              Lüks saat ve kıymetli maden ticareti, yalnızca sermaye ile değil; <strong>yılların biriktirdiği piyasa hafızası, kusursuz ekspertiz kabiliyeti ve yüksek gizlilik disiplini</strong> ile icra edilir.
+          <div class="inner-header-block">
+            <h1 class="page-main-title">Saat Kültürü <span style="font-weight:400; font-family:'Cinzel', serif; font-size:42px;">ve</span> <span class="highlight-gold">Marka Hafızası</span></h1>
+            
+            <p class="page-lead-bold">
+              Bizim için saat, bir ürün değil; zevkin, sürekliliğin ve güvenin kuşaktan kuşağa aktarılan bir kültürüdür.
             </p>
-            <p>
-              Belgin Saat & Kuyumculuk; 1999 yılında İzmir Buca'da temelleri atılan, çeyrek asrı aşkın köklü ticaret hafızasıyla Türkiye'nin ve dünyanın en prestijli saat evlerinin (Rolex, Patek Philippe, Audemars Piguet, Omega, Cartier vb.) nadide parçalarını seçkin koleksiyonerlerle buluşturan bağımsız bir lüks saat otoritesidir.
-            </p>
-            <div class="quote-card">
-              <div class="quote-mark">“</div>
-              <p>Yüksek değerli bir saat ticaretinde karar katalogdan önce karşılıklı güvenle başlar. Biz tek seferlik bir satış değil; nesiller boyu sürecek bir koleksiyon ortaklığı inşa ederiz.”</p>
+          </div>
+
+          <div class="feature-items-grid">
+            <div class="feature-item-card">
+              <div class="f-icon-wrap">🔍</div>
+              <div class="f-content">
+                <h3 class="f-title">Seçki Anlayışımız</h3>
+                <p class="f-desc">
+                  Her markanın, modelin ve detayın kendi karakteri olduğuna inanıyoruz. Zamanın ötesinde değer taşıyan parçaları titizlikle seçerek koleksiyonumuzu oluşturuyoruz.
+                </p>
+              </div>
+            </div>
+
+            <div class="feature-item-card">
+              <div class="f-icon-wrap">🤝</div>
+              <div class="f-content">
+                <h3 class="f-title">Uzun İlişki Hafızası</h3>
+                <p class="f-desc">
+                  Müşterilerimizle bağımız bir satış anıyla sınırlı değildir. Yıllara yayılan güven ilişkisi ortak bir hafızaya dönüşür; değerli saatlerin anlamını derinleştirir.
+                </p>
+              </div>
+            </div>
+
+            <div class="feature-item-card">
+              <div class="f-icon-wrap">👤</div>
+              <div class="f-content">
+                <h3 class="f-title">Doğru Parçayı Eşleştirme</h3>
+                <p class="f-desc">
+                  Her koleksiyon sahibinin hikâyesi farklıdır. Doğru parçayı bulmak, yalnızca ürün bilgisiyle değil anlayış ve sezgiyle mümkündür.
+                </p>
+              </div>
             </div>
           </div>
 
-          <div class="col-visual">
-            <div class="visual-img-card">
-              <img src="${imgZenithSport}" class="visual-img" alt="Zenith Chronomaster Sport">
-              <div class="img-caption">Haute Horlogerie Standardında Mikroskobik Mekanizma ve Kondisyon İncelemesi</div>
-            </div>
+          <div class="dark-teal-quote-box">
+            <p class="teal-quote-text">
+              “Bir saatin değeri, yalnızca zamanı göstermesinde değil; taşıdığı hikâyede, ustalığında ve bize hatırlattığı anlarda saklıdır.”
+            </p>
+          </div>
+
+          <div class="page-footer-row">
+            <span>Belgin Kuyumculuk &bull; Saat</span>
+            <span>BELGİN SAAT &amp; KUYUMCULUK</span>
           </div>
         </div>
 
-        <div class="three-pillars-strip">
-          <div class="pillar-box">
-            <span class="pillar-icon">🏛️</span>
-            <h4>Köklü Miras</h4>
-            <p>1999'dan beri aynı adreste, kendi mülkümüzde kesintisiz fiziksel varlık ve itibar.</p>
-          </div>
-          <div class="pillar-box">
-            <span class="pillar-icon">🔍</span>
-            <h4>Kusursuz Ekspertiz</h4>
-            <p>Her referans için fabrikasyon toleranslarında optik, mekanik ve seri kontrolü.</p>
-          </div>
-          <div class="pillar-box">
-            <span class="pillar-icon">🔒</span>
-            <h4>Mutlak Gizlilik</h4>
-            <p>VIP müşterilerimiz için en üst düzeyde kişisel veri ve işlem mahremiyeti disiplini.</p>
+        <div class="split-visual-right visual-angled-bg">
+          <div class="angled-photo-wrap">
+            <img src="${imgRolexGMT}" alt="Rolex Dial Precision" class="angled-top-img">
+            <img src="${imgDaytonaZenith}" alt="Swiss Watchmaking Cityscape" class="angled-bot-img">
           </div>
         </div>
       </div>
@@ -158,66 +175,68 @@ const PAGES = [
   },
 
   // -------------------------------------------------------------
-  // SAYFA 3: 20+ YILLIK TİCARET HAFIZASI (HERITAGE & PEDIGREE)
+  // SAYFA 3: YOUWATCH ETKİSİ
   // -------------------------------------------------------------
   {
     num: 3,
-    title: '20+ Yıllık Ticaret Hafızası',
+    title: 'YouWatch Etkisi',
     html: `
-      <div class="page-container">
-        <div class="page-header">
-          <div class="page-header-left">
-            <span class="sec-tag">BÖLÜM 02 &bull; TİCARET HAFIZASI</span>
-            <h2 class="sec-title">20+ Yılın Biriktirdiği Şey: Ürün Değil, Güven</h2>
-          </div>
-          <div class="page-header-right">
-            <span class="page-num">03</span>
-          </div>
-        </div>
+      <div class="page-container page-layout-split">
+        <div class="split-content-left">
+          <div class="top-nav-tag">03 | KURUMSAL PROFİL &bull; MARKA MİRASI</div>
 
-        <div class="page-grid-2col" style="margin-top:20px;">
-          <div class="col-visual">
-            <div class="visual-img-card">
-              <img src="${imgTudorSuit}" class="visual-img" alt="Tudor Black Bay Luxury Wristshot">
-              <div class="img-caption">Seçkin İş Dünyası ve Koleksiyonerlerin Bileğinde Yaşayan Prestij</div>
-            </div>
-          </div>
-
-          <div class="col-text">
-            <p class="lead-p">
-              Çeyrek asırlık ticaret hafızası; dalgalanan piyasalarda doğru referansı, doğru kondisyonda ve adil değerle tespit edebilme gücüdür.
-            </p>
+          <div class="inner-header-block">
+            <h1 class="page-main-title">YouWatch <span class="highlight-gold">Etkisi</span></h1>
             
-            <div class="feature-item">
-              <div class="feat-icon">💎</div>
-              <div>
-                <h5>Ürün Hafızası</h5>
-                <p>Nadir referansların üretim yılları, kalibre revizyonları, kasa polisaj geçmişi ve ikincil piyasa likidite analizi.</p>
+            <p class="page-lead-bold">
+              YouWatch geçmişiyle oluşan görünürlük, ürünün vitrin dışında da dolaşımda kalmasını sağlamaktadır.
+            </p>
+
+            <p class="body-p-regular" style="margin-top:8px;">
+              Saatler spor, iş, sanat ve yaşam tarzı çevrelerinde görünürlük kazanmaktadır; hatırlanma, tavsiye ve güven birbirini beslemektedir.
+            </p>
+          </div>
+
+          <div class="feature-items-grid" style="grid-template-columns: 1fr 1fr;">
+            <div class="feature-item-card">
+              <div class="f-icon-wrap">👥</div>
+              <div class="f-content">
+                <h3 class="f-title">Görünürlük her ortamda, etki her temasda.</h3>
+                <p class="f-desc">
+                  YouWatch kültürü, saatleri yalnızca vitrinde değil; günlük hayatın içinde gerçek ve doğal anlarla görünür kılar.
+                </p>
               </div>
             </div>
 
-            <div class="feature-item">
-              <div class="feat-icon">🤝</div>
-              <div>
-                <h5>Müşteri Hafızası</h5>
-                <p>Koleksiyonerlerimizin zevklerini, aradıkları özel kasa materyallerini ve portföy hedeflerini yakından takip eden kişisel danışmanlık.</p>
-              </div>
-            </div>
-
-            <div class="feature-item">
-              <div class="feat-icon">📈</div>
-              <div>
-                <h5>Piyasa Hafızası</h5>
-                <p>Cenevre, Londra, Dubai ve Hong Kong borsa dinamikleriyle tam senkronize küresel değerleme doğruluğu.</p>
+            <div class="feature-item-card">
+              <div class="f-icon-wrap">🤝</div>
+              <div class="f-content">
+                <h3 class="f-title">Hatırlanır, önerilir, tercih edilir.</h3>
+                <p class="f-desc">
+                  Gerçek deneyimler, çevreye ilham olur, tavsiye doğurur; güven ve sadakat kalıcı değer yaratır.
+                </p>
               </div>
             </div>
           </div>
+
+          <div class="dark-teal-quote-box">
+            <p class="teal-quote-text">
+              “Gerçek hayatın içinde görülen her saat, yarınki tercihe dönüşür.”
+            </p>
+          </div>
+
+          <div class="page-footer-row">
+            <span>| KURUMSAL PROFİL</span>
+            <span>www.belginkuyumculuk.com</span>
+          </div>
         </div>
 
-        <div class="banner-gold-box">
-          <div class="gold-icon">📍</div>
-          <div class="gold-text-wrap">
-            <strong>Fiziksel Güvenin Adresi:</strong> İzmir Buca Menderes Caddesi'ndeki kendi mülkümüz olan showroomumuzda, randevulu VIP ağırlama odamızda her işlem yüz yüze, güvenle ve şeffaflıkla sonuçlandırılır.
+        <div class="split-visual-right">
+          <div class="youwatch-mosaic-grid">
+            <div class="mosaic-item"><img src="${imgCelebrities}" alt="Celebrity &amp; Athlete Lifestyle"></div>
+            <div class="mosaic-item"><img src="${imgMissTourism}" alt="Miss Tourism Sponsorship"></div>
+            <div class="mosaic-item"><img src="${imgRichardMille}" alt="Haute Horlogerie Movement"></div>
+            <div class="mosaic-item"><img src="${imgRolexGMT}" alt="YouWatch Wrist Shot"></div>
           </div>
         </div>
       </div>
@@ -225,60 +244,56 @@ const PAGES = [
   },
 
   // -------------------------------------------------------------
-  // SAYFA 4: MARKA KURMA & ÖLÇEKLEME GÜCÜ (YOU WATCH CASE STUDY)
+  // SAYFA 4: SEÇKİN MARKA EVRENİ
   // -------------------------------------------------------------
   {
     num: 4,
-    title: 'Marka Kurma ve Dağıtım Gücü',
+    title: 'Seçkin Marka Evreni',
     html: `
-      <div class="page-container">
-        <div class="page-header">
-          <div class="page-header-left">
-            <span class="sec-tag">BÖLÜM 03 &bull; TİCARİ VİZYON</span>
-            <h2 class="sec-title">Marka Kurma, Ölçekleme ve Global Devir Tecrübesi</h2>
+      <div class="page-container page-layout-split">
+        <div class="split-content-left">
+          <div class="top-nav-tag">04 | KURUMSAL PROFİL &bull; DÜNYA SAAT EVLERİ</div>
+
+          <div class="inner-header-block">
+            <h1 class="page-main-title">Seçkin Marka <span class="highlight-gold">Evreni</span></h1>
+            
+            <p class="page-lead-bold">
+              Dünyanın en arzu edilen saat markaları ve özenle seçilmiş ikonlar etrafında şekillenen bir evren.
+            </p>
           </div>
-          <div class="page-header-right">
-            <span class="page-num">04</span>
+
+          <div class="brand-capsule-bar">
+            <span>ROLEX</span> &bull; <span>PATEK PHILIPPE</span> &bull; <span>AUDEMARS PIGUET</span> &bull; <span>RICHARD MILLE</span> &bull; <span>CARTIER</span> &bull; <span>OMEGA</span> &bull; <span>HUBLOT</span> &bull; <span>TAG HEUER</span> &bull; <span>PANERAI</span> &bull; <span>BREITLING</span>
+          </div>
+
+          <div class="body-p-block" style="margin-top:12px;">
+            <p>
+              Belgin Saat&amp;Kuyumculuk'ta her bir seçki, prestij algısı ile uzun vadeli güven arasında denge kurularak şekillendirilir. Her marka; mirası, mühendisliği, estetiği ve değerini sürdürebilme kabiliyeti ile titizlikle değerlendirilir.
+            </p>
+            <p style="margin-top:8px;">
+              Koleksiyon tutkusuyla yaşayanlardan stil ve imajına özen gösteren seçkin müşterilere kadar geniş bir yelpazede beklentilere kalıcı anlam katar.
+            </p>
+          </div>
+
+          <div class="gold-quote-card">
+            <span class="card-crown-icon">👑</span>
+            <p class="card-quote-text">
+              Zamana yön veren markalar. Seçici zevklere özel, kalıcı değerler.
+            </p>
+          </div>
+
+          <div class="page-footer-row">
+            <span>| KURUMSAL PROFİL</span>
+            <span>www.belginkuyumculuk.com</span>
           </div>
         </div>
 
-        <div class="page-grid-2col" style="margin-top:20px;">
-          <div class="col-text">
-            <p class="lead-p">
-              Belgin Saat'in kurucusu Semih Sonbahar, sıfırdan kurup ulusal bir fenomene dönüştürdüğü <strong>You Watch</strong> markası ile Türkiye'nin en büyük perakende ve dağıtım başarılarından birine imza atmıştır.
-            </p>
-            <p>
-              Türkiye genelinde <strong>yaklaşık 600 satış noktasına</strong> ulaşan devasa bayi ağı, <strong>Beymen, Vakko, Boyner ve ÇiçekSepeti</strong> gibi ülkenin en prestijli mağaza zincirlerinde tescillenen marka değeri; kurumsal ölçekleme kabiliyetimizin en somut kanıtıdır.
-            </p>
-            <p>
-              Marka, pandemi öncesi dönemde <strong>Hollandalı uluslararası bir yatırım grubuna</strong> başarılı bir operasyonla devredilerek döngüsünü tamamlamıştır. Bu kurumsal miras, bugün lüks saat segmentindeki yüksek operasyonel disiplinimizin temelidir.
-            </p>
-          </div>
-
-          <div class="col-visual">
-            <div class="visual-img-card">
-              <img src="${imgTrioWatches}" class="visual-img" alt="Panerai Omega Breitling Luxury Trio">
-              <div class="img-caption">Küresel Saat Markaları Portföy Yönetimi &amp; Güçlü Dağıtım Ağı</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="stats-row-4">
-          <div class="stat-mini">
-            <span class="s-num">~600</span>
-            <span class="s-lbl">Geçmiş Satış Noktası</span>
-          </div>
-          <div class="stat-mini">
-            <span class="s-num">81</span>
-            <span class="s-lbl">İlde Dağıtım Gücü</span>
-          </div>
-          <div class="stat-mini">
-            <span class="s-num">4+</span>
-            <span class="s-lbl">Dev Perakende Zinciri</span>
-          </div>
-          <div class="stat-mini">
-            <span class="s-num">Global</span>
-            <span class="s-lbl">Marka Devir Başarısı</span>
+        <div class="split-visual-right">
+          <div class="brand-watches-mosaic">
+            <div class="b-card"><img src="${imgRichardMille}" alt="Richard Mille"></div>
+            <div class="b-card"><img src="${imgRolexGMT}" alt="Rolex GMT Master II"></div>
+            <div class="b-card"><img src="${imgPatekTiffany}" alt="Patek Philippe Tiffany"></div>
+            <div class="b-card"><img src="${imgVintagePatek}" alt="Cartier Santos &amp; Patek"></div>
           </div>
         </div>
       </div>
@@ -286,45 +301,57 @@ const PAGES = [
   },
 
   // -------------------------------------------------------------
-  // SAYFA 5: SEÇKİN MÜŞTERİ AĞI (EXCLUSIVE CLIENT NETWORK)
+  // SAYFA 5: SEÇKİN MÜŞTERİ ÇEVRESİ
   // -------------------------------------------------------------
   {
     num: 5,
-    title: 'Seçkin Müşteri Ekosistemi',
+    title: 'Seçkin Müşteri Çevresi',
     html: `
-      <div class="page-container">
-        <div class="page-header">
-          <div class="page-header-left">
-            <span class="sec-tag">BÖLÜM 04 &bull; ORGANİK AĞ</span>
-            <h2 class="sec-title">Seçkin Çevrelerde Organik ve Güven Temelli Dolaşım</h2>
-          </div>
-          <div class="page-header-right">
-            <span class="page-num">05</span>
-          </div>
-        </div>
+      <div class="page-container page-layout-split">
+        <div class="split-content-left">
+          <div class="top-nav-tag">05 | KURUMSAL PROFİL &bull; MÜŞTERİ AĞI</div>
 
-        <div class="page-grid-2col" style="margin-top:20px;">
-          <div class="col-visual">
-            <div class="visual-img-card">
-              <img src="${imgCartierWrist}" class="visual-img" alt="Cartier Santos Luxury Wristshot">
-              <div class="img-caption">İş İnsanları ve Sanat Dünyasının Tercih Ettiği Ebedi İkonlar</div>
+          <div class="inner-header-block">
+            <h1 class="page-main-title">Seçkin Müşteri <span class="highlight-gold">Çevresi</span></h1>
+            
+            <p class="page-lead-bold">
+              Belgin Saat, futbolculardan sanatçılara, iş insanlarından lüks odaklı seçkin müşterilere kadar uzanan bir çevreyle doğal bir bağ kurar.
+            </p>
+          </div>
+
+          <div class="body-p-block" style="margin-top:10px;">
+            <p>
+              Her bir saat, kişinin zevkini, duruşunu ve özgüvenini görünür kılan güçlü bir ifadedir. Tarz sahibi bu çevrelerde saat; yalnızca takılan bir ürün değil, kimliğin ve imajın ayrılmaz bir uzantısıdır.
+            </p>
+          </div>
+
+          <div class="feature-item-card" style="margin-top:12px;">
+            <div class="f-icon-wrap">👥</div>
+            <div class="f-content">
+              <p class="f-desc" style="font-size:22px; font-weight:700; color:var(--ink); line-height:1.45;">
+                Tavsiye, hatıra ve ilişkilerin derinliği bu çevrelerde zamanla daha da güçlenir; bağlar kalıcı değere dönüşür.
+              </p>
             </div>
           </div>
 
-          <div class="col-text">
-            <p class="lead-p">
-              Lüks saat ticaretinde müşteri portföyünün kalitesi, fiyat kadar belirleyici bir avantaj sağlar.
+          <div class="dark-teal-quote-box">
+            <p class="teal-quote-text">
+              “Saat, yalnızca aksesuar değil; karakteri görünür kılan bir imzaya dönüşmektedir.”
             </p>
-            <p>
-              Belgin Saat; <strong>iş dünyasının liderleri, üst düzey yöneticiler, sporcular, sanatçılar ve kıdemli saat koleksiyonerlerinden</strong> oluşan seçkin bir müşteri ekosistemine sahiptir.
-            </p>
-            <p>
-              Bu organik ağ, reklam kampanyalarıyla değil; yalnızca <strong>başarıyla tamamlanan işlemler, şeffaf ekspertiz raporları ve tavsiye zinciri</strong> ile büyümüştür. Portföyümüzdeki müşteriler hem sürekli alıcı hem de güvenilir satıcı olarak döngüde yer alır.
-            </p>
-            
-            <div class="vip-benefit-card">
-              <div class="vip-badge">💎 VIP PROTOKOLÜ</div>
-              <p>Müşterilerimizin kimlik bilgileri, koleksiyon içerikleri ve finansal işlem detayları en üst düzey kurumsal sır prensibiyle korunmaktadır.</p>
+          </div>
+
+          <div class="page-footer-row">
+            <span>| KURUMSAL PROFİL</span>
+            <span>www.belginkuyumculuk.com</span>
+          </div>
+        </div>
+
+        <div class="split-visual-right">
+          <div class="vip-clientele-mosaic">
+            <div class="vip-photo-hero"><img src="${imgCelebrities}" alt="VIP Clientele Lounge"></div>
+            <div class="vip-photo-dual">
+              <img src="${imgWatchHandover}" alt="Business Lounge">
+              <img src="${imgRolexGMT}" alt="Rolex Submariner Wrist">
             </div>
           </div>
         </div>
@@ -333,101 +360,107 @@ const PAGES = [
   },
 
   // -------------------------------------------------------------
-  // SAYFA 6: DÜNYA MARKALARINA DOĞRUDAN ERİŞİM (THE 10 MAISONS)
+  // SAYFA 6: ÖZEL SİPARİŞ VE KAYNAK AĞI
   // -------------------------------------------------------------
   {
     num: 6,
-    title: 'Lüks Saat Markaları Evreni',
+    title: 'Özel Sipariş ve Kaynak Ağı',
     html: `
-      <div class="page-container">
-        <div class="page-header">
-          <div class="page-header-left">
-            <span class="sec-tag">BÖLÜM 05 &bull; MARKA PORTFÖYÜ</span>
-            <h2 class="sec-title">Dünya Saat Evlerine Doğrudan Erişim ve Portföy</h2>
+      <div class="page-container page-layout-split">
+        <div class="split-content-left">
+          <div class="top-nav-tag">06 | KURUMSAL PROFİL &bull; GLOBAL TEDARİK</div>
+
+          <div class="inner-header-block">
+            <h1 class="page-main-title">Özel Sipariş <span style="font-weight:400; font-family:'Cinzel', serif; font-size:42px;">ve</span> <span class="highlight-gold">Kaynak Ağı</span></h1>
+            
+            <p class="page-lead-bold">
+              Nadir bulunan veya profilinize özel parçalar; sabır, yaklaşım ve ilişki sermayesiyle, güvenilir kanallar aracılığıyla sizin için kaynağımızdan temin edilir.
+            </p>
           </div>
-          <div class="page-header-right">
-            <span class="page-num">06</span>
+
+          <div class="body-p-block" style="margin-top:10px;">
+            <p>
+              Her arayış, titiz bir değerlendirme ve kapsamlı bir ağ çalışmasıyla yürütülür. Doğru saat, doğru koşullarda, sizi yansıtan nitelikte ve tam zamanında ulaştırılır.
+            </p>
+          </div>
+
+          <div class="gold-quote-card">
+            <span class="card-crown-icon">💎</span>
+            <p class="card-quote-text">
+              Prestij kovalanmaz, özenle seçilir ve doğru zamanda ortaya çıkar.
+            </p>
+          </div>
+
+          <div class="gold-line-card">
+            <p style="font-size:20px; color:#2C3833; line-height:1.5; font-weight:600;">
+              Zevk seviyeniz, özgünlük beklentiniz ve kime ait olduğunuz; bizim seçim yolculuğumuzun pusulasıdır.
+            </p>
+          </div>
+
+          <div class="page-footer-row">
+            <span>| KURUMSAL PROFİL</span>
+            <span>www.belginkuyumculuk.com</span>
           </div>
         </div>
 
-        <p class="lead-p" style="margin-top:16px;">
-          İsviçre ve Alman Haute Horlogerie dünyasının en prestijli 10 lüks saat evine ait ikonik ve nadir modeller Belgin Saat güvencesiyle temin edilmektedir.
-        </p>
-
-        <div class="brand-showcase-grid">
-          <div class="brand-card-item"><strong>👑 Rolex</strong><span>Daytona, Submariner, GMT-Master II, Day-Date</span></div>
-          <div class="brand-card-item"><strong>🏛️ Patek Philippe</strong><span>Nautilus, Aquanaut, Calatrava, Grand Complications</span></div>
-          <div class="brand-card-item"><strong>⚡ Audemars Piguet</strong><span>Royal Oak, Offshore, Concept, Code 11.59</span></div>
-          <div class="brand-card-item"><strong>🚀 Omega</strong><span>Speedmaster Moonwatch, Seamaster, Aqua Terra</span></div>
-          <div class="brand-card-item"><strong>💎 Cartier</strong><span>Santos, Tank Must, Ballon Bleu, Panthère</span></div>
-          <div class="brand-card-item"><strong>🛡️ Tudor</strong><span>Black Bay 58, Pelagos FXD, Chrono Panda</span></div>
-          <div class="brand-card-item"><strong>🧭 Panerai</strong><span>Luminor Marina, Submersible, Radiomir</span></div>
-          <div class="brand-card-item"><strong>✈️ IWC Schaffhausen</strong><span>Big Pilot, Portugieser Chrono, Ingenieur</span></div>
-          <div class="brand-card-item"><strong>🏎️ TAG Heuer</strong><span>Monaco Steve McQueen, Carrera Glassbox</span></div>
-          <div class="brand-card-item"><strong>🛩️ Breitling</strong><span>Navitimer B01, Chronomat, Superocean Heritage</span></div>
-        </div>
-
-        <div class="split-gallery-2">
-          <div class="gal-img-wrap"><img src="${imgRolexSub}" alt="Rolex Submariner"><span>Rolex Submariner &amp; Sea-Dweller Serisi</span></div>
-          <div class="gal-img-wrap"><img src="${imgPatekNautilus}" alt="Patek Philippe Nautilus"><span>Patek Philippe Nautilus &amp; Aquanaut Serisi</span></div>
+        <div class="split-visual-right">
+          <div class="procure-visual-wrap">
+            <img src="${imgDaytonaZenith}" alt="Geneva Luxury Watchmaking Bridge" class="procure-city-img">
+            <img src="${imgPatekTiffany}" alt="Rolex Daytona Platinum Ice Blue Dial" class="procure-watch-img">
+          </div>
         </div>
       </div>
     `
   },
 
   // -------------------------------------------------------------
-  // SAYFA 7: 4 KADEMELİ MUTLAK GÜVEN PROTOKOLÜ (VERIFICATION GATE)
+  // SAYFA 7: PORTFÖYÜ CANLI TUTAN DEĞER DÖNGÜSÜ
   // -------------------------------------------------------------
   {
     num: 7,
-    title: '4 Kademeli Güven Protokolü',
+    title: 'Portföyü Canlı Tutan Değer Döngüsü',
     html: `
-      <div class="page-container">
-        <div class="page-header">
-          <div class="page-header-left">
-            <span class="sec-tag">BÖLÜM 06 &bull; EKSPERTİZ &amp; GÜVENLİK</span>
-            <h2 class="sec-title">4 Kademeli Kusursuz Orijinallik ve Güven Protokolü</h2>
+      <div class="page-container page-layout-split">
+        <div class="split-content-left">
+          <div class="top-nav-tag">07 | KURUMSAL PROFİL &bull; DEĞER DÖNGÜSÜ</div>
+
+          <div class="inner-header-block">
+            <h1 class="page-main-title">Portföyü Canlı Tutan <span class="highlight-gold">Değer Döngüsü</span></h1>
+            
+            <p class="page-lead-bold">
+              Belgin Saat’te her saat, sizi yansıtan bir arzu olarak başlar; güvene dayalı ilişkiler ağı içinde değerini koruyarak yoluna devam eder.
+            </p>
           </div>
-          <div class="page-header-right">
-            <span class="page-num">07</span>
+
+          <div class="body-p-block" style="margin-top:10px;">
+            <p>
+              Seçici alım, doğru zamanda satış ve değişim (trade-back) mantığıyla işleyen modelimiz; özel siparişler, koleksiyon yenilemeleri ve değer odaklı kararlarla portföyü sürekli canlı tutar.
+            </p>
+            <p style="margin-top:8px; font-weight:700; color:var(--ink); font-size:22px;">
+              Bugün bir arzu nesnesi olarak sahip olursunuz, yarın güvenilir bir ağda dolaşan değerli bir varlığa dönüşür.
+            </p>
+          </div>
+
+          <div class="feature-item-card" style="background:#FBF9F5; border:2px solid var(--gold);">
+            <div class="f-icon-wrap">🤝</div>
+            <div class="f-content">
+              <h3 class="f-title" style="color:var(--teal); font-size:23px;">Kalıcı İlişkileri Destekler, Portföyü Daima Hareketli Kılar</h3>
+              <p class="f-desc">
+                Bu yaklaşım, uzun soluklu ve güvene dayalı ilişkileri güçlendirir. Portföyünüz her zaman dinamik ve size özel kalır.
+              </p>
+            </div>
+          </div>
+
+          <div class="page-footer-row">
+            <span>| KURUMSAL PROFİL</span>
+            <span>www.belginkuyumculuk.com</span>
           </div>
         </div>
 
-        <p class="lead-p" style="margin-top:16px;">
-          Belgin Saat bünyesinde el değiştiren her saat, istisnasız 4 aşamalı kurumsal güvenlik ve ekspertiz süzgecinden geçirilir:
-        </p>
-
-        <div class="protocol-steps-list">
-          <div class="proto-step">
-            <div class="proto-badge">1</div>
-            <div class="proto-body">
-              <h4>Kaynak &amp; Menşei Doğrulaması</h4>
-              <p>Saatin orijinal evrakları, garanti kartı seri numarası, uluslararası veri tabanları ve çalıntı/kayıp kaydı çapraz sorgulanır.</p>
-            </div>
-          </div>
-
-          <div class="proto-step">
-            <div class="proto-badge">2</div>
-            <div class="proto-body">
-              <h4>Mikroskobik Optik &amp; Mekanizma Ekspertizi</h4>
-              <p>Kasa polisaj durumu, orijinal bileşenler, kadran fontları, lazer taç mühürleri ve manüfaktür kalibrenin mikro düzeyde incelenmesi.</p>
-            </div>
-          </div>
-
-          <div class="proto-step">
-            <div class="proto-badge">3</div>
-            <div class="proto-body">
-              <h4>Zaman Tutuş &amp; Su Geçirmezlik Testi</h4>
-              <p>Elektronik timegrapher cihazı ile günlük sapma oranı (± saniye/gün), genlik (amplitude), vuruş hatası ve basınç izolasyon testi.</p>
-            </div>
-          </div>
-
-          <div class="proto-step">
-            <div class="proto-badge">4</div>
-            <div class="proto-body">
-              <h4>Hukuki Sözleşme &amp; Güvenli Teslim</h4>
-              <p>Resmî e-fatura, seri numaralı teslim tutanağı ve İzmir Buca VIP Showroom'da elden şahsi teslim protokolü.</p>
-            </div>
+        <div class="split-visual-right">
+          <div class="portfolio-visual-stack">
+            <img src="${imgVintagePatek}" alt="Patek Philippe Nautilus Rose Gold" class="nautilus-hero-img">
+            <img src="${imgRichardMille}" alt="Haute Horlogerie Movement Rotor" class="rotor-hero-img">
           </div>
         </div>
       </div>
@@ -435,50 +468,53 @@ const PAGES = [
   },
 
   // -------------------------------------------------------------
-  // SAYFA 8: YÜKSEK LİKİDİTE & PORTFÖY DÖNGÜSÜ (LIQUIDITY ENGINE)
+  // SAYFA 8: KÜRASYON DİLİ
   // -------------------------------------------------------------
   {
     num: 8,
-    title: 'Yüksek Likidite ve Portföy Döngüsü',
+    title: 'Kürasyon Dili',
     html: `
-      <div class="page-container">
-        <div class="page-header">
-          <div class="page-header-left">
-            <span class="sec-tag">BÖLÜM 07 &bull; PORTFÖY EKONOMİSİ</span>
-            <h2 class="sec-title">Yatırımı Değere, Zamanı Likiditeye Dönüştüren Model</h2>
+      <div class="page-container page-layout-split">
+        <div class="split-content-left">
+          <div class="top-nav-tag">08 | KURUMSAL PROFİL &bull; ESTETİK &amp; DETAY</div>
+
+          <div class="inner-header-block">
+            <h1 class="page-main-title">Kürasyon <span class="highlight-gold">Dili</span></h1>
+            
+            <p class="page-lead-bold">
+              Her seçili saat, kalite, incelik ve sessiz prestij atmosferine katkı sağlar.
+            </p>
           </div>
-          <div class="page-header-right">
-            <span class="page-num">08</span>
+
+          <div class="body-p-block" style="margin-top:10px;">
+            <p>
+              Kürasyonumuzda yer alan her model; estetik, ustalık ve zamansız değer açısından özenle değerlendirilir. Amacımız yalnızca güzel saatler sunmak değil, iyi hissettiren bir bütün kurmaktır. Bu bütün detaylara verilen önemle oluşur, bakışları değil, zevki konuşur.
+            </p>
+          </div>
+
+          <div class="gold-quote-card">
+            <span class="card-crown-icon">👑</span>
+            <p class="card-quote-text">
+              Formlar, malzemeler, kadran dokuları, bezel tasarımları, bilezik yapıları ve bilekteki duruş birlikte ele alınır.
+            </p>
+          </div>
+
+          <div class="body-p-block" style="margin-top:10px;">
+            <p>
+              Her unsurun birbiriyle kurduğu uyum, koleksiyonumuzun karakterini belirler. Seçim dilimiz; dengeli, rafine ve zamansız bir çizgide şekillenir.
+            </p>
+          </div>
+
+          <div class="page-footer-row">
+            <span>| KÜRASYON DİLİ</span>
+            <span>www.belginkuyumculuk.com</span>
           </div>
         </div>
 
-        <div class="page-grid-2col" style="margin-top:20px;">
-          <div class="col-text">
-            <p class="lead-p">
-              Lüks saat koleksiyonerliği durağan bir hobi değil; yaşayan, evrilen ve değer üreten bir portföy yönetimidir.
-            </p>
-            
-            <div class="liq-card">
-              <h4>💵 Anında Nakit Likiditesi</h4>
-              <p>Koleksiyonunuzdaki yüksek değerli parçalar için güncel küresel pazar değerinde anında nakit alım garantisi ve aynı gün ödeme.</p>
-            </div>
-
-            <div class="liq-card">
-              <h4>🔄 Şeffaf Takas &amp; Model Yükseltme</h4>
-              <p>Mevcut saatinizi değerinde sayarak hayalinizdeki yeni referansa adil marj farkıyla geçiş yapabilme imkânı.</p>
-            </div>
-
-            <div class="liq-card">
-              <h4>🎯 Özel Sipariş &amp; Tahsis</h4>
-              <p>Dünya çapında bekleme listesi bulunan nadir referansların hızlı ve güvenli tedarik ağı.</p>
-            </div>
-          </div>
-
-          <div class="col-visual">
-            <div class="visual-img-card">
-              <img src="${imgMaisonHero}" class="visual-img" alt="Rolex Lineup Luxury Watch Showcase">
-              <div class="img-caption">Koleksiyon Değerinizi Koruyan ve Büyüten Stratejik Portföy Yönetimi</div>
-            </div>
+        <div class="split-visual-right">
+          <div class="curation-mosaic-grid">
+            <img src="${imgRolexGMT}" alt="Breitling Superocean Chronograph" class="curation-top-img">
+            <img src="${imgPatekTiffany}" alt="Rolex Jubilee &amp; Blue Dial" class="curation-bot-img">
           </div>
         </div>
       </div>
@@ -486,102 +522,107 @@ const PAGES = [
   },
 
   // -------------------------------------------------------------
-  // SAYFA 9: HUKUKİ UYUM & MALİ ŞEFFAFLIK (LEGAL & COMPLIANCE)
+  // SAYFA 9: GÜVEN, ÖZGÜNLÜK VE TESLİM DİSİPLİNİ
   // -------------------------------------------------------------
   {
     num: 9,
-    title: 'Hukuki Güvence ve Şeffaflık',
+    title: 'Güven, Özgünlük ve Teslim Disiplini',
     html: `
-      <div class="page-container">
-        <div class="page-header">
-          <div class="page-header-left">
-            <span class="sec-tag">BÖLÜM 08 &bull; HUKUKİ ŞEFFAFLIK</span>
-            <h2 class="sec-title">Kurumsal Güvence, Faturalı Ticaret ve Tam Mevzuat Uyumu</h2>
+      <div class="page-container page-layout-split">
+        <div class="split-content-left">
+          <div class="top-nav-tag">09 | KURUMSAL PROFİL &bull; GÜVEN PROTOKOLÜ</div>
+
+          <div class="inner-header-block">
+            <h1 class="page-main-title">Güven, Özgünlük <span style="font-weight:400; font-family:'Cinzel', serif; font-size:42px;">ve</span> <span class="highlight-gold">Teslim Disiplini</span></h1>
           </div>
-          <div class="page-header-right">
-            <span class="page-num">09</span>
+
+          <div class="body-p-block" style="margin-top:10px;">
+            <p>
+              Belgin Saat&amp;Kuyumculuk, ürün seçiminden nihai teslim anına kadar condition, özgünlük, parça bütünlüğü, mekanik sağlık, kozmetik denge ve müşteri beklentisini birlikte değerlendirmektedir.
+            </p>
+            <p style="margin-top:8px;">
+              Her parçanın geçmişini, bugününü ve yarın değerini aynı disiplinle ele alıyor; mekanik güvenilirliği ve uzun vadeli sağlamlığı önceliğimiz olarak görüyoruz.
+            </p>
+          </div>
+
+          <div class="feature-item-card" style="border:2px solid var(--gold);">
+            <div class="f-icon-wrap">🛡️</div>
+            <div class="f-content">
+              <p class="f-desc" style="font-size:22px; color:#1A2521; font-weight:700; line-height:1.5;">
+                Karar süreci aceleye değil güvene dayanmakta; sunum, doğrulama ve teslim çizgisi kontrollü biçimde yürütülmektedir.
+              </p>
+            </div>
+          </div>
+
+          <div class="luxury-closing-callout">
+            Kusursuz süreç, <span>kalıcı değer yaratır.</span>
+          </div>
+
+          <div class="page-footer-row">
+            <span>| KURUMSAL PROFİL</span>
+            <span>www.belginkuyumculuk.com</span>
           </div>
         </div>
 
-        <p class="lead-p" style="margin-top:16px;">
-          Belgin Saat bünyesinde gerçekleşen her ticari işlem, Türkiye Cumhuriyeti kanunlarına ve MASAK finansal güvenlik düzenlemelerine 100% uygun yürütülür.
-        </p>
-
-        <div class="compliance-grid-3">
-          <div class="comp-box">
-            <span class="comp-icon">📑</span>
-            <h4>Resmî e-Fatura</h4>
-            <p>Her satış için 3065 sayılı KDV Kanunu özel matrah düzenlemesine uygun resmî fatura tanzimi.</p>
+        <div class="split-visual-right">
+          <div class="discipline-visual-stack">
+            <img src="${imgVintagePatek}" alt="Cartier Tank Roman Dial" class="disc-card-img">
+            <img src="${imgRichardMille}" alt="Skeleton Tourbillon Movement" class="disc-move-img">
           </div>
-          <div class="comp-box">
-            <span class="comp-icon">🛡️</span>
-            <h4>BKM &amp; 3D Secure 2.0</h4>
-            <p>Banka düzeyinde 256-bit EV SSL ve Akbank Sanal POS 3D Secure altyapısıyla güvenli tahsilat.</p>
-          </div>
-          <div class="comp-box">
-            <span class="comp-icon">⚖️</span>
-            <h4>Hukuki Delil Zinciri</h4>
-            <p>Sözleşmeler, kimlik doğrulama ve Bitcoin OpenTimestamps dijital zaman damgasıyla değişmez delil kaydı.</p>
-          </div>
-        </div>
-
-        <div class="compliance-quote">
-          <strong>Kurumsal Güvence Bildirgesi:</strong> Belgin Saat (Semih Sonbahar) vergi mükellefiyeti, kayıtlı mülkü ve çeyrek asırlık ticari itibarı ile tüm müşterilerine yüzde yüz yasal, şeffaf ve denetlenebilir bir ticaret ortamı taahhüt eder.
         </div>
       </div>
     `
   },
 
   // -------------------------------------------------------------
-  // SAYFA 10: SHOWROOM & VIP RANDEVU (VISIT & CONTACT)
+  // SAYFA 10: GÜVEN VE KALİTE İLE TAMAMLANAN İZLENİM
   // -------------------------------------------------------------
   {
     num: 10,
-    title: 'VIP Randevu ve İletişim',
+    title: 'Güven ve Kalite ile Tamamlanan İzlenim',
     html: `
-      <div class="page-container dark-cover" style="padding-top:40px;">
-        <div class="cover-gold-border" style="display:flex; flex-direction:column; justify-content:space-between;">
-          <div>
-            <div class="cover-header" style="margin-bottom:20px;">
-              <div class="brand-crest">👑</div>
-              <div class="brand-title" style="font-size:24px;">BELGİN SAAT</div>
-              <div class="brand-subtitle">HAUTE HORLOGERIE &bull; İZMİR BUCA &bull; EST. 1999</div>
-            </div>
+      <div class="page-container page-layout-split">
+        <div class="split-content-left">
+          <div class="top-nav-tag">10 | KURUMSAL PROFİL &bull; KAPANIŞ &amp; MİRAS</div>
 
-            <div class="contact-card-box">
-              <h2 style="font-family:'Cinzel', serif; font-size:24px; color:var(--gold); margin:0 0 10px 0; text-align:center;">İzmir Buca VIP Showroom</h2>
-              <p style="text-align:center; font-size:13.5px; color:#ccc; line-height:1.6; margin-bottom:24px;">
-                Sizi ve koleksiyonunuzu, yüksek güvenlikli ve konforlu VIP ağırlama salonumuzda kahve eşliğinde ağırlamaktan onur duyarız.
-              </p>
-
-              <div class="contact-info-list">
-                <div class="c-row">
-                  <span class="c-icon">📍</span>
-                  <div><strong>Showroom Adresi:</strong> Menderes Caddesi No:41/A Buca / İzmir (Kendi Mülkümüz)</div>
-                </div>
-                <div class="c-row">
-                  <span class="c-icon">📞</span>
-                  <div><strong>Telefon &amp; WhatsApp VIP:</strong> +90 532 230 95 53</div>
-                </div>
-                <div class="c-row">
-                  <span class="c-icon">✉️</span>
-                  <div><strong>Kurumsal E-Posta:</strong> iletisim@belginkuyumculuk.com &bull; destek@belginkuyumculuk.com</div>
-                </div>
-                <div class="c-row">
-                  <span class="c-icon">🌐</span>
-                  <div><strong>Resmî Web Platformu:</strong> https://www.belginkuyumculuk.com</div>
-                </div>
-              </div>
-            </div>
+          <div class="inner-header-block">
+            <h1 class="page-main-title">Güven ve Kalite ile <span class="highlight-gold">Tamamlanan İzlenim</span></h1>
+            
+            <p class="page-lead-bold" style="margin-top:8px;">
+              Belgin Saat&amp;Kuyumculuk, lüks saat dünyasında güveni, seçkinliği, görünürlüğü ve rafine hizmeti bir araya getirir.
+            </p>
           </div>
 
-          <div style="text-align:center; padding:20px 0 10px 0; border-top:1px solid rgba(212,175,55,0.3);">
-            <p style="font-size:12px; color:var(--gold); letter-spacing:1px; margin:0; text-transform:uppercase;">
-              “Zaman Geçer, Gerçek Değer ve Asil Miras Kalır.”
-            </p>
-            <p style="font-size:10.5px; color:#888; margin:6px 0 0 0;">
-              &copy; 2026 Belgin Saat &bull; Semih Sonbahar &bull; Tüm Hakları Saklıdır.
-            </p>
+          <div class="three-pillars-list">
+            <div class="pillar-bullet">✦ Her ilişki kalıcı olmak üzere kurulur.</div>
+            <div class="pillar-bullet">✦ Her seçim, özenle ve titizlikle yapılır.</div>
+            <div class="pillar-bullet">✦ Her deneyim, ayrıcalıkla ve gizlilikle taşınır.</div>
+          </div>
+
+          <p class="body-p-regular">
+            Zamanın ötesinde bir değer için, zarafetle şekillenen bir yolculukta sizlere eşlik etmekten gurur duyuyoruz.
+          </p>
+
+          <div class="gold-box-statement">
+            <span class="card-crown-icon" style="display:block; margin-bottom:4px; font-size:32px;">👑</span>
+            <strong>ZAMANIN DEĞERİNİ BİLENLER İÇİN, HER ANI ANLAMLI KILAN AYRICALIKLI BİR SEÇİM.</strong>
+          </div>
+
+          <div class="page-footer-row">
+            <div class="bottom-brand-logo">
+              <span style="font-family:'Cinzel', serif; font-size:26px; font-weight:800; color:var(--teal);">Belgin</span>
+              <span style="font-size:12px; letter-spacing:2px; color:var(--gold-dark); text-transform:uppercase; margin-left:8px;">Kuyumculuk &bull; Saat</span>
+            </div>
+            <span>İzmir Buca VIP Showroom &bull; Menderes Cad. No:41/A</span>
+          </div>
+        </div>
+
+        <div class="split-visual-right">
+          <div class="quad-photo-grid">
+            <div class="quad-item"><img src="${imgRolexGMT}" alt="Rolex Submariner Crown"></div>
+            <div class="quad-item"><img src="${imgDaytonaZenith}" alt="Geneva Bridge Landscape"></div>
+            <div class="quad-item"><img src="${imgRichardMille}" alt="Manufacture Rotor Movement"></div>
+            <div class="quad-item"><img src="${imgVintagePatek}" alt="Cartier Santos on Wrist"></div>
           </div>
         </div>
       </div>
@@ -589,363 +630,501 @@ const PAGES = [
   }
 ];
 
-// Common CSS Stylesheet for PDF & Images
+// Master High-Legibility Landscape (16:9 Widescreen) CSS Stylesheet
 const STYLES = `
-  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
   :root {
-    --gold: #d4af37;
-    --gold-bright: #f3e5ab;
-    --gold-dark: #aa820a;
-    --navy-deep: #071118;
-    --navy-card: #0d1e29;
-    --ink: #111a24;
-    --text-muted: #5a6b7c;
-    --paper: #ffffff;
-    --cream: #faf8f5;
+    --gold: #C2A768;
+    --gold-bright: #D4AF37;
+    --gold-dark: #8F763A;
+    --teal: #082622;
+    --teal-dark: #041B18;
+    --ink: #141E1A;
+    --paper: #FAF8F5;
+    --paper-light: #FCFAF7;
+    --muted: #2E3B36;
+    --border: rgba(194, 167, 104, 0.45);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
+
   body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
     color: var(--ink);
-    background: #eef2f5;
+    background: #FFFFFF;
     -webkit-font-smoothing: antialiased;
   }
 
   .page-container {
-    width: 1240px;
-    height: 1754px;
-    padding: 60px 70px;
-    background: var(--paper);
+    width: 1920px;
+    height: 1080px;
     position: relative;
     overflow: hidden;
+    background: var(--paper-light);
     page-break-after: always;
+  }
+
+  .page-layout-split {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  /* DARK LUXURY COVER */
-  .dark-cover {
-    background: radial-gradient(circle at center, #0f2432 0%, #060e14 100%);
-    color: #fff;
-  }
-
-  .cover-gold-border {
-    border: 2px solid rgba(212, 175, 55, 0.4);
-    height: 100%;
-    padding: 40px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .cover-header { text-align: center; }
-  .brand-crest { font-size: 38px; margin-bottom: 8px; filter: drop-shadow(0 2px 8px rgba(212,175,55,0.4)); }
-  .brand-title { font-family: 'Cinzel', serif; font-size: 34px; font-weight: 800; letter-spacing: 4px; color: #fff; }
-  .brand-subtitle { font-size: 11px; font-weight: 700; letter-spacing: 3px; color: var(--gold); margin-top: 6px; }
-
-  .cover-hero-img-wrap {
     width: 100%;
-    height: 640px;
-    margin: 20px 0;
-    position: relative;
-    border-radius: 6px;
-    overflow: hidden;
-    border: 1px solid rgba(212, 175, 55, 0.3);
-  }
-  .cover-hero-img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
-  .cover-hero-overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(6,14,20,0.85) 0%, transparent 50%, rgba(6,14,20,0.5) 100%);
+    height: 100%;
   }
 
-  .cover-content { text-align: center; padding: 0 30px; }
-  .cover-badge {
-    display: inline-block;
-    padding: 6px 18px;
-    background: rgba(212,175,55,0.15);
-    border: 1px solid var(--gold);
-    color: var(--gold-bright);
-    font-size: 11px;
+  /* Sol Panel (Geniş Metin Alanı) */
+  .split-content-left {
+    width: 55%;
+    height: 100%;
+    padding: 48px 56px 36px 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--paper-light);
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Sağ Panel (Görseller) */
+  .split-visual-right {
+    width: 45%;
+    height: 100%;
+    background: var(--teal);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .brand-header-row {
+    display: flex;
+    align-items: center;
+  }
+
+  .brand-name-serif {
+    font-family: 'Cinzel', serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: #35463E;
+    letter-spacing: 0.5px;
+  }
+
+  .brand-sub-sans {
+    font-size: 14px;
     font-weight: 800;
     letter-spacing: 2px;
-    border-radius: 50px;
-    margin-bottom: 14px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin-left: 12px;
   }
-  .cover-heading {
+
+  .top-nav-tag {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--gold-dark);
+    text-transform: uppercase;
+  }
+
+  .cover-headline {
     font-family: 'Cinzel', serif;
-    font-size: 38px;
+    font-size: 54px;
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--teal);
+    margin: 12px 0 8px;
+  }
+
+  .highlight-gold {
+    color: var(--gold-dark);
+  }
+
+  .diamond-divider {
+    font-size: 24px;
+    margin: 8px 0;
+    color: var(--gold);
+  }
+
+  .cover-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
     font-weight: 700;
     line-height: 1.25;
-    color: #fff;
+    color: var(--teal);
     margin-bottom: 14px;
   }
-  .gold-text { color: var(--gold); }
+
   .cover-desc {
-    font-size: 14px;
-    line-height: 1.7;
-    color: #b0c4de;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .cover-footer {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(212, 175, 55, 0.3);
-    text-align: center;
-  }
-  .cover-meta-item .lbl { display: block; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: var(--gold); text-transform: uppercase; }
-  .cover-meta-item .val { display: block; font-size: 12px; font-weight: 600; color: #fff; margin-top: 4px; }
-
-  /* PAGE HEADER */
-  .page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    padding-bottom: 18px;
-    border-bottom: 2px solid #e2e8f0;
-  }
-  .sec-tag { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; color: var(--gold-dark); text-transform: uppercase; }
-  .sec-title { font-family: 'Cinzel', serif; font-size: 26px; font-weight: 700; color: var(--ink); margin-top: 4px; }
-  .page-num { font-family: 'Cinzel', serif; font-size: 28px; font-weight: 800; color: #cbd5e1; }
-
-  .page-grid-2col {
-    display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
-    gap: 40px;
-    align-items: center;
-    flex: 1;
-  }
-  .lead-p { font-size: 16px; font-weight: 500; line-height: 1.7; color: var(--ink); margin-bottom: 16px; }
-  p { font-size: 14px; line-height: 1.7; color: #475569; margin-bottom: 14px; }
-
-  .quote-card {
-    background: var(--cream);
-    border-left: 4px solid var(--gold);
-    padding: 20px 24px;
-    border-radius: 0 8px 8px 0;
-    margin: 20px 0;
-    position: relative;
-  }
-  .quote-mark { font-family: 'Cinzel', serif; font-size: 48px; color: var(--gold); position: absolute; top: -10px; right: 16px; opacity: 0.3; }
-  .quote-card p { font-style: italic; font-size: 14px; line-height: 1.65; color: #334155; margin: 0; }
-
-  .visual-img-card {
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-    border: 1px solid #e2e8f0;
-    background: #fff;
-  }
-  .visual-img { width: 100%; height: 520px; object-fit: cover; display: block; }
-  .img-caption { padding: 12px 16px; font-size: 11.5px; color: #64748b; background: #f8fafc; text-align: center; border-top: 1px solid #f1f5f9; }
-
-  .three-pillars-strip {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-top: 24px;
-    padding-top: 24px;
-    border-top: 1px solid #e2e8f0;
-  }
-  .pillar-box {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-  }
-  .pillar-icon { font-size: 26px; margin-bottom: 8px; display: block; }
-  .pillar-box h4 { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
-  .pillar-box p { font-size: 12px; color: #64748b; line-height: 1.5; margin: 0; }
-
-  /* FEATURE ITEMS */
-  .feature-item {
-    display: flex;
-    gap: 16px;
+    font-size: 22px;
+    line-height: 1.6;
+    color: #2D3A35;
+    font-weight: 500;
     margin-bottom: 18px;
   }
-  .feat-icon { font-size: 24px; line-height: 1; margin-top: 2px; }
-  .feature-item h5 { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
-  .feature-item p { font-size: 13px; color: #64748b; line-height: 1.55; margin: 0; }
 
-  .banner-gold-box {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    background: linear-gradient(135deg, #fbf7ee 0%, #f5ecd8 100%);
-    border: 1px solid rgba(212,175,55,0.4);
+  .page-main-title {
+    font-family: 'Cinzel', serif;
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--teal);
+    margin: 8px 0;
+  }
+
+  .page-lead-bold {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+
+  .body-p-regular {
+    font-size: 21px;
+    line-height: 1.55;
+    color: #2D3A35;
+    font-weight: 500;
+  }
+
+  .body-p-block p {
+    font-size: 21px;
+    line-height: 1.55;
+    color: #2D3A35;
+    font-weight: 500;
+  }
+
+  /* Kartlar & Izgaralar */
+  .gold-quote-card {
+    background: #FFFFFF;
+    border: 1.5px solid var(--border);
+    border-left: 5px solid var(--gold);
     border-radius: 8px;
     padding: 16px 20px;
-    margin-top: 20px;
-  }
-  .gold-icon { font-size: 28px; }
-  .gold-text-wrap { font-size: 13px; line-height: 1.6; color: #614805; }
-
-  .stats-row-4 {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    align-items: center;
     gap: 16px;
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid #e2e8f0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.03);
   }
-  .stat-mini {
-    background: #0f1d27;
-    color: #fff;
-    padding: 16px;
-    border-radius: 8px;
-    text-align: center;
-    border-bottom: 3px solid var(--gold);
-  }
-  .stat-mini .s-num { display: block; font-family: 'Cinzel', serif; font-size: 24px; font-weight: 800; color: var(--gold-bright); }
-  .stat-mini .s-lbl { display: block; font-size: 11px; font-weight: 600; color: #cbd5e1; margin-top: 4px; }
 
-  .vip-benefit-card {
-    background: #f1f5f9;
-    border-left: 3px solid #0f1d27;
-    padding: 16px;
-    border-radius: 0 6px 6px 0;
-    margin-top: 16px;
+  .card-crown-icon {
+    font-size: 28px;
+    flex-shrink: 0;
   }
-  .vip-badge { font-size: 11px; font-weight: 800; letter-spacing: 1px; color: var(--navy-deep); margin-bottom: 4px; }
-  .vip-benefit-card p { font-size: 12.5px; color: #475569; margin: 0; line-height: 1.55; }
 
-  /* BRAND SHOWCASE */
-  .brand-showcase-grid {
+  .card-quote-text {
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+
+  .feature-items-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 12px;
-    margin: 20px 0;
+    margin: 12px 0;
   }
-  .brand-card-item {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    padding: 14px 18px;
-    border-radius: 6px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .brand-card-item strong { font-size: 14px; color: var(--ink); }
-  .brand-card-item span { font-size: 11.5px; color: #64748b; }
 
-  .split-gallery-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-top: 10px;
-  }
-  .gal-img-wrap {
+  .feature-item-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(0,0,0,0.08);
     border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-    border: 1px solid #e2e8f0;
-    background: #fff;
-  }
-  .gal-img-wrap img { width: 100%; height: 260px; object-fit: cover; display: block; }
-  .gal-img-wrap span { display: block; padding: 10px; font-size: 11.5px; text-align: center; color: #475569; background: #f8fafc; font-weight: 600; }
-
-  /* PROTOCOL STEPS */
-  .protocol-steps-list { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; }
-  .proto-step {
+    padding: 14px 16px;
     display: flex;
-    gap: 20px;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 20px 24px;
-    align-items: center;
+    gap: 12px;
+    align-items: flex-start;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.03);
   }
-  .proto-badge {
-    width: 46px;
-    height: 46px;
-    background: #0f1d27;
-    color: var(--gold-bright);
-    font-family: 'Cinzel', serif;
-    font-size: 20px;
-    font-weight: 800;
-    border-radius: 50%;
+
+  .f-icon-wrap {
+    font-size: 22px;
+    flex-shrink: 0;
+    background: #F7F4EE;
+    width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
-    border: 2px solid var(--gold);
+    border-radius: 50%;
+    border: 1.5px solid rgba(194, 167, 104, 0.5);
   }
-  .proto-body h4 { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
-  .proto-body p { font-size: 13px; color: #64748b; line-height: 1.55; margin: 0; }
 
-  /* LIQUIDITY CARDS */
-  .liq-card {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-left: 4px solid var(--gold);
-    padding: 16px 20px;
-    border-radius: 0 8px 8px 0;
-    margin-bottom: 14px;
+  .f-title {
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--teal);
+    margin-bottom: 4px;
   }
-  .liq-card h4 { font-size: 14.5px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
-  .liq-card p { font-size: 13px; color: #64748b; line-height: 1.55; margin: 0; }
 
-  /* COMPLIANCE GRID */
-  .compliance-grid-3 {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin: 24px 0;
+  .f-desc {
+    font-size: 17px;
+    line-height: 1.48;
+    color: #2D3A35;
+    font-weight: 500;
   }
-  .comp-box {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    padding: 24px 20px;
+
+  .dark-teal-quote-box {
+    background: var(--teal);
+    color: #FFFFFF;
     border-radius: 8px;
+    padding: 14px 20px;
+    border: 1.5px solid rgba(194, 167, 104, 0.4);
+    box-shadow: 0 6px 20px rgba(8, 38, 34, 0.2);
+  }
+
+  .teal-quote-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 21px;
+    line-height: 1.45;
+    color: #F0F4F2;
     text-align: center;
   }
-  .comp-icon { font-size: 32px; margin-bottom: 12px; display: block; }
-  .comp-box h4 { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
-  .comp-box p { font-size: 12.5px; color: #64748b; line-height: 1.6; margin: 0; }
 
-  .compliance-quote {
-    background: #eef7ee;
-    border: 1px solid #c2e2c2;
-    padding: 20px 24px;
+  .brand-capsule-bar {
+    background: #FFFFFF;
+    border: 1.5px solid var(--border);
     border-radius: 8px;
-    font-size: 13.5px;
-    color: #1b5e20;
-    line-height: 1.65;
+    padding: 12px 16px;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: var(--teal);
+    line-height: 1.5;
+    margin-top: 10px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.03);
   }
 
-  /* CONTACT PAGE */
-  .contact-card-box {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(212,175,55,0.3);
-    border-radius: 10px;
-    padding: 40px;
-    margin: 30px auto;
-    max-width: 900px;
+  .gold-line-card {
+    background: #FFFFFF;
+    border: 1.5px solid var(--border);
+    padding: 14px 18px;
+    border-radius: 8px;
+    margin-top: 10px;
   }
-  .contact-info-list { display: flex; flex-direction: column; gap: 20px; }
-  .c-row {
+
+  .luxury-closing-callout {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--teal);
+    line-height: 1.25;
+    margin-top: 10px;
+  }
+
+  .luxury-closing-callout span {
+    color: var(--gold-dark);
+  }
+
+  .three-pillars-list {
     display: flex;
-    gap: 16px;
-    align-items: center;
-    font-size: 14.5px;
-    color: #e2e8f0;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px 0;
   }
-  .c-icon { font-size: 24px; }
-  .c-row strong { color: var(--gold-bright); }
+
+  .pillar-bullet {
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--teal);
+    line-height: 1.4;
+  }
+
+  .gold-box-statement {
+    background: linear-gradient(135deg, rgba(194, 167, 104, 0.2) 0%, rgba(194, 167, 104, 0.35) 100%);
+    border: 2px solid var(--gold);
+    border-radius: 8px;
+    padding: 16px 20px;
+    text-align: center;
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--teal);
+    line-height: 1.45;
+  }
+
+  .page-footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #6C7C77;
+    text-transform: uppercase;
+  }
+
+  /* Görseller (Sağ Kolon) */
+  .visual-cover-bg {
+    background: radial-gradient(circle at 60% 40%, #0C3831 0%, #051F1B 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cover-photo-composition {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .main-cover-watch {
+    width: 100%;
+    height: 70%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .cover-movement-box {
+    width: 100%;
+    height: 30%;
+    overflow: hidden;
+  }
+
+  .cover-sub-watch {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .angled-photo-wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .angled-top-img {
+    width: 100%;
+    height: 60%;
+    object-fit: cover;
+  }
+
+  .angled-bot-img {
+    width: 100%;
+    height: 40%;
+    object-fit: cover;
+  }
+
+  .youwatch-mosaic-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    width: 100%;
+    height: 100%;
+    gap: 8px;
+    padding: 8px;
+    background: var(--teal-dark);
+  }
+
+  .mosaic-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  .brand-watches-mosaic {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    width: 100%;
+    height: 100%;
+    gap: 8px;
+    padding: 8px;
+    background: var(--teal-dark);
+  }
+
+  .b-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  .vip-clientele-mosaic {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    gap: 8px;
+    padding: 8px;
+    background: var(--teal-dark);
+  }
+
+  .vip-photo-hero {
+    height: 55%;
+    overflow: hidden;
+    border-radius: 4px;
+  }
+  .vip-photo-hero img { width:100%; height:100%; object-fit:cover; }
+
+  .vip-photo-dual {
+    height: 45%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .vip-photo-dual img { width:100%; height:100%; object-fit:cover; border-radius:4px; }
+
+  .procure-visual-wrap {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
+
+  .procure-city-img { width:100%; height:45%; object-fit:cover; }
+  .procure-watch-img { width:100%; height:55%; object-fit:cover; }
+
+  .portfolio-visual-stack {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
+  .nautilus-hero-img { width:100%; height:60%; object-fit:cover; }
+  .rotor-hero-img { width:100%; height:40%; object-fit:cover; }
+
+  .curation-mosaic-grid {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
+  .curation-top-img { width:100%; height:55%; object-fit:cover; }
+  .curation-bot-img { width:100%; height:45%; object-fit:cover; }
+
+  .discipline-visual-stack {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
+  .disc-card-img { width:100%; height:50%; object-fit:cover; }
+  .disc-move-img { width:100%; height:50%; object-fit:cover; }
+
+  .quad-photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    width: 100%;
+    height: 100%;
+    gap: 6px;
+    padding: 6px;
+    background: var(--teal-dark);
+  }
+  .quad-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+  }
 `;
 
 async function buildFolio() {
-  console.log('🚀 [KURUMSAL PROFİL MOTORU] Başlatılıyor...');
+  console.log('🚀 [KURUMSAL PROFİL MOTORU — 16:9 LANDSCAPE] Başlatılıyor...');
 
-  // 1. Generate individual HTML files for each page
   for (const page of PAGES) {
     const pageHtml = `<!DOCTYPE html>
 <html lang="tr">
@@ -964,8 +1143,7 @@ async function buildFolio() {
 
     const jpgDest = path.join(BIZ_IMG_DIR, `page-${page.num}.jpg`);
 
-    // Render 1240x1754 High-Res JPG with Google Chrome
-    const cmd = `"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu --window-size=1240,1754 --screenshot="${jpgDest}" "file://${htmlFile}"`;
+    const cmd = `"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu --window-size=1920,1080 --screenshot="${jpgDest}" "file://${htmlFile}"`;
     try {
       execSync(cmd, { stdio: 'pipe' });
       console.log(`✅ [SAYFA ${page.num}/10] Görseli başarıyla üretildi: images/biz-kimiz/page-${page.num}.jpg (${(fs.statSync(jpgDest).size / 1024).toFixed(1)} KB)`);
@@ -974,7 +1152,6 @@ async function buildFolio() {
     }
   }
 
-  // 2. Generate Master 10-Page Combined Document for PDF Print
   const masterHtml = `<!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -983,7 +1160,7 @@ async function buildFolio() {
   <style>
     ${STYLES}
     @page {
-      size: A4 portrait;
+      size: A4 landscape;
       margin: 0;
     }
     body {
@@ -1010,7 +1187,7 @@ async function buildFolio() {
   }
 
   console.log('\n=============================================================');
-  console.log('👑 KURUMSAL PROFİL FOLİOSU VE 10 SAYFA GÖRSELİ TAMAMLANDI!');
+  console.log('👑 16:9 LANDSCAPE KURUMSAL PROFİL FOLİOSU VE 10 SAYFA TAMAMLANDI!');
   console.log('=============================================================');
 }
 

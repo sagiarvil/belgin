@@ -441,14 +441,14 @@ exports.getAdminOrders = functions
           customerEmail: (data.customer && data.customer.email) || data.customerEmail || '—',
           customerIdentity: (data.customer && (data.customer.identityNumber || data.customer.identity)) || data.customerIdentity || data.identityNumber || '—',
           customerAddress: (data.customer && data.customer.address) || data.customerAddress || data.address || '—',
-          productName: data.productName || data.title || (Array.isArray(data.items) ? data.items.map(it => it.name).join(' + ') : null),
-          items: Array.isArray(data.items) && data.items.length > 0 ? data.items : (data.invoicePayload?.malHizmetTable || (data.productName ? [{ name: data.productName, price: Number(data.total || data.totalAmount || 0), qty: Number(data.qty || 1) }] : [{ name: data.title || 'Lüks Saat / Mücevherat', price: data.total || (data.payment && data.payment.amount) || 0, qty: 1 }])),
+          productName: data.productName || data.title || (Array.isArray(data.items) ? data.items.map(it => it.name).join(' + ') : '22 Ayar Altın / Ziynet'),
+          items: Array.isArray(data.items) && data.items.length > 0 ? data.items : (data.invoicePayload?.malHizmetTable || (data.productName ? [{ name: data.productName, price: Number(data.total || data.totalAmount || 0), qty: Number(data.qty || 1) }] : [{ name: data.title || '22 Ayar Kuyumculuk Ürünü', price: data.total || (data.payment && data.payment.amount) || 0, qty: 1 }])),
           invoiceType: data.invoiceType || null,
           invoicePayload: data.invoicePayload || null,
           createdAt: (orderIdVal === 'BLG-1787933146963-8ab15dc828f9325b') ? '2026-08-28T09:00:00.000Z' : ((orderIdVal === 'BLG-1787933807000-9cd26eb919a8417c' || orderIdVal === 'BLG-1787906878142-03da073a5aec9f6e' || String(orderIdVal).includes('03da073a') || String(orderIdVal).includes('1787906878142')) ? '2026-08-28T09:11:00.000Z' : createdAtIso),
           productSnapshotHash: data.productSnapshotHash || null,
-          invoiceStatus: data.invoiceStatus || (isPaid ? 'SIGNED' : null),
-          invoiceNumber: data.invoiceNumber || data.invoiceNo || data.belgeNo || (data.invoice && (data.invoice.invoiceNumber || data.invoice.number || data.invoice.belgeNo)) || ((orderIdVal === 'BLG-1788172538908-371ab4406cd89319') ? 'GIB2026000000022' : ((orderIdVal === 'BLG-1788170792796-2b8cfa663f2a6eaa') ? 'GIB2026000000021' : ((orderIdVal === 'BLG-1788170114256-df4a4d9e5124a804') ? 'GIB2026000000020' : ((orderIdVal === 'BLG-1788168416857-d46074a4de6fecd4') ? 'GIB2026000000019' : ((orderIdVal === 'BLG-1787920182675-3d380d4695ab96d5') ? 'GIB2026000000016' : ((orderIdVal === 'BLG-1787906878142-03da073a5aec9f6e' || String(orderIdVal).includes('03da073a') || String(orderIdVal).includes('1787906878142')) ? 'GIB2026000000018' : ((orderIdVal === 'BLG-1787933146963-8ab15dc828f9325b') ? 'GIB2026000000017' : (isPaid ? 'GIB2026000000021' : null)))))))),
+          invoiceStatus: data.invoiceStatus || null,
+          invoiceNumber: data.invoiceNumber || data.invoiceNo || data.belgeNo || (data.invoice && (data.invoice.invoiceNumber || data.invoice.number || data.invoice.belgeNo)) || ((orderIdVal === 'BLG-1788172538908-371ab4406cd89319') ? 'GIB2026000000022' : ((orderIdVal === 'BLG-1788170792796-2b8cfa663f2a6eaa') ? 'GIB2026000000021' : ((orderIdVal === 'BLG-1788170114256-df4a4d9e5124a804') ? 'GIB2026000000020' : ((orderIdVal === 'BLG-1788168416857-d46074a4de6fecd4') ? 'GIB2026000000019' : ((orderIdVal === 'BLG-1787920182675-3d380d4695ab96d5') ? 'GIB2026000000016' : ((orderIdVal === 'BLG-1787906878142-03da073a5aec9f6e' || String(orderIdVal).includes('03da073a') || String(orderIdVal).includes('1787906878142')) ? 'GIB2026000000018' : ((orderIdVal === 'BLG-1787933146963-8ab15dc828f9325b') ? 'GIB2026000000017' : null))))))),
           invoiceUuid: data.invoiceUuid || null,
           declarationDoc: data.declarationDoc || ((orderIdVal === 'BLG-1787933146963-8ab15dc828f9325b') ? '/images/declarations/beyan_idris_emre_buk_1200.jpg' : ((orderIdVal === 'BLG-1787933807000-9cd26eb919a8417c' || orderIdVal === 'BLG-1787906878142-03da073a5aec9f6e' || String(orderIdVal).includes('03da073a') || String(orderIdVal).includes('1787906878142')) ? '/images/declarations/beyan_idris_emre_buk_1211.jpg' : null)),
           declarationTime: data.declarationTime || ((orderIdVal === 'BLG-1787933146963-8ab15dc828f9325b') ? '28.08.2026 12:00' : ((orderIdVal === 'BLG-1787933807000-9cd26eb919a8417c' || orderIdVal === 'BLG-1787906878142-03da073a5aec9f6e' || String(orderIdVal).includes('03da073a') || String(orderIdVal).includes('1787906878142')) ? '28.08.2026 12:11' : null)),
@@ -1101,7 +1101,79 @@ async function handleInvoiceRequest(req, res) {
     }
   }
 
-  const earsiv = new EarsivPortalService();
+  // 0. GİB E-ARŞİV TASLAK FATURA ÖNİZLEME (SMS TETİKLEMEDEN CANLI GİB HTML ÇIKTISI)
+  if (path.endsWith('/preview') || req.body?.action === 'preview') {
+    try {
+      const { orderId, hasGoldAmount, workmanshipAmount } = req.body || {};
+      if (!orderId) {
+        return res.status(400).json({ success: false, message: 'orderId zorunludur.' });
+      }
+
+      const target = await getInvoiceTargetDoc(orderId, req.body.orderData);
+      const order = target ? target.data : (req.body.orderData || { orderId });
+      const rawTotal = Number(req.body.totalAmount || order.totalAmount || order.total || (order.payment && order.payment.amount) || (order.amountInKurus ? order.amountInKurus / 100 : 0) || 0);
+
+      let customBreakdown = req.body.customBreakdown || null;
+      if (req.body.items && Array.isArray(req.body.items) && req.body.items.length > 0) {
+        const itemsSummary = req.body.items.map(i => `${i.name || i.malHizmet || 'Ürün'} (x${i.qty || i.quantity || 1})`).join(', ');
+        customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, itemsSummary, {
+          items: req.body.items,
+          isStoreManual: true
+        });
+      } else if (!customBreakdown) {
+        if (Array.isArray(order.items) && order.items.length > 0) {
+          const itemsSummary = order.items.map(i => `${i.name} (x${i.qty || 1})`).join(', ');
+          customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, itemsSummary, {
+            items: order.items,
+            isStoreManual: Boolean(target?.isStore || order.isStoreManual || order.source === 'STORE_MANUAL')
+          });
+        } else if (order.vip22Breakdown || order.breakdown || order.invoiceBreakdown) {
+          customBreakdown = order.vip22Breakdown || order.breakdown || order.invoiceBreakdown;
+        } else if (hasGoldAmount !== undefined && workmanshipAmount !== undefined) {
+          const itemsSummary = order.productName || '22 Ayar Kuyumculuk Ürünü';
+          customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, itemsSummary, {
+            hasGoldAmount,
+            workmanshipAmount,
+            isVip22: order.isVip22 === true
+          });
+        } else {
+          customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, order.productName || '22 Ayar Kuyumculuk Ürünü', {
+            isVip22: order.isVip22 === true
+          });
+        }
+      }
+
+      const { renderOfficialGibHtml } = require('./gib-template');
+      const customerIdentityRaw = String(req.body.customerIdentity || order.customerIdentity || order.customer?.identityNumber || '11111111111').replace(/\D/g, '');
+      const customerIdentity = (customerIdentityRaw.length === 10 || customerIdentityRaw.length === 11) ? customerIdentityRaw : '11111111111';
+
+      const previewHtml = renderOfficialGibHtml({
+        invoiceNumber: 'GİB TASLAK (MÜHÜR ÖNCESİ ÖNİZLEME)',
+        ettn: 'TASLAK-MÜHÜR-ÖNCESİ-KONTROL',
+        invoiceDate: new Date().toISOString().split('T')[0],
+        invoiceTime: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }),
+        customerName: req.body.customerName || order.customerName || order.customer?.name || 'Nihai Tüketici',
+        customerIdentity,
+        customerAddress: req.body.customerAddress || order.customerAddress || order.customer?.address || 'Menderes Cad. No:231/B Buca İzmir',
+        customerPhone: req.body.customerPhone || order.customerPhone || order.customer?.phone || '',
+        customerEmail: req.body.customerEmail || order.customerEmail || order.customer?.email || '',
+        orderId: order.orderId || orderId,
+        totalAmount: rawTotal,
+        items: customBreakdown.items,
+        bd: customBreakdown
+      });
+
+      return res.status(200).json({
+        success: true,
+        previewHtml,
+        breakdown: customBreakdown,
+        message: 'Resmi GİB taslak faturası başarıyla önizlendi.'
+      });
+    } catch (err) {
+      console.error('[Invoice API Preview Error]:', err.message);
+      return res.status(500).json({ success: false, message: 'Önizleme oluşturulamadı: ' + err.message });
+    }
+  }
 
   // 1. GİB E-ARŞİV TASLAK FATURA OLUŞTUR VE SMS TETİKLE
   if (path.endsWith('/draft') || req.body?.action === 'draft') {

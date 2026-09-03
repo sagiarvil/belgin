@@ -13,6 +13,12 @@ process.env.AKBANK_SECURE_MERCHANT_ID = process.env.AKBANK_SECURE_MERCHANT_ID ||
 process.env.AKBANK_SECURE_TERMINAL_ID = process.env.AKBANK_SECURE_TERMINAL_ID || 'TEST_SECURE_TERMINAL_ID';
 process.env.AKBANK_STORE_KEY = process.env.AKBANK_STORE_KEY || 'TEST_STORE_KEY_FOR_LOCAL_SUITE';
 
+process.env.KUVEYTTURK_TEST_MODE = 'true';
+process.env.KUVEYTTURK_CUSTOMER_ID = process.env.KUVEYTTURK_CUSTOMER_ID || '12345678';
+process.env.KUVEYTTURK_MERCHANT_ID = process.env.KUVEYTTURK_MERCHANT_ID || '892543';
+process.env.KUVEYTTURK_USER_NAME = process.env.KUVEYTTURK_USER_NAME || 'TEST_USER';
+process.env.KUVEYTTURK_PASSWORD = process.env.KUVEYTTURK_PASSWORD || 'TEST_PASS_123';
+
 const assert = require('assert');
 const crypto = require('crypto');
 const fs = require('fs');
@@ -180,10 +186,10 @@ const mockLegalSnapshot = () => ({
       paymentStatus: PAYMENT_STATUS.PENDING,
       amountInKurus: '50000',
       total: 500,
-      payment: { provider: 'AKBANK' }
+      payment: { provider: 'KUVEYTTURK' }
     });
 
-    paymentRouter.getProvider('AKBANK').verifyCallback = () => ({
+    paymentRouter.getProvider('KUVEYTTURK').verifyCallback = () => ({
       isValid: true,
       isSuccess: true,
       orderId,
@@ -191,7 +197,7 @@ const mockLegalSnapshot = () => ({
     });
 
     const callbackRes = await paymentService.handleCallback({
-      providerName: 'AKBANK',
+      providerName: 'KUVEYTTURK',
       body: { merchant_oid: orderId },
       db,
       admin: mockAdmin,

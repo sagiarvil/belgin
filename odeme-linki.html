@@ -194,78 +194,93 @@
     }
     .field-error.show { display: flex; }
 
-    /* POS SEÇİMİ */
-    .pos-grid {
+    /* BANKA & POS SEÇİM ALTYAPISI */
+    .bank-selector-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       gap: 10px;
       margin-top: 4px;
     }
-    .pos-card {
+    .bank-card {
       position: relative;
       background: var(--input-bg);
       border: 1.5px solid var(--input-border);
       border-radius: var(--radius-md);
-      padding: 13px 12px;
+      padding: 12px 14px;
       cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
       transition: all .2s ease;
       user-select: none;
+      display: block;
     }
-    .pos-card:hover {
+    .bank-card:hover {
       border-color: rgba(212,175,55,0.5);
     }
-    .pos-card.active {
+    .bank-card.active {
       border-color: var(--gold);
-      background: linear-gradient(135deg, rgba(23,131,112,0.25) 0%, rgba(212,175,55,0.12) 100%);
+      background: linear-gradient(135deg, rgba(0,132,80,0.22) 0%, rgba(212,175,55,0.14) 100%);
       box-shadow: 0 0 0 2px rgba(212,175,55,0.25);
     }
-    .pos-card input[type="radio"] {
+    .bank-card input[type="radio"] {
       position: absolute;
       opacity: 0;
       pointer-events: none;
     }
-    .pos-title {
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--text);
+    .bank-card-inner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .bank-emblem-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 1.5px solid var(--gold-dim);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+      background: #008450;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .bank-emblem-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .bank-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .bank-name-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 8px;
     }
-    .pos-card.active .pos-title {
+    .bank-title {
+      font-size: 13.5px;
+      font-weight: 800;
       color: var(--gold-light);
+      letter-spacing: 0.2px;
     }
-    .pos-check {
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      border: 1.5px solid var(--text-faint);
-      position: relative;
+    .bank-active-tag {
+      font-size: 10.5px;
+      font-weight: 800;
+      color: #25D366;
+      background: rgba(37,211,102,0.12);
+      border: 1px solid rgba(37,211,102,0.3);
+      padding: 2px 7px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
     }
-    .pos-card.active .pos-check {
-      border-color: var(--gold);
-      background: var(--gold);
-    }
-    .pos-card.active .pos-check::after {
-      content: '';
-      position: absolute;
-      top: 4px; left: 4px;
-      width: 6px; height: 6px;
-      background: #0A1412;
-      border-radius: 50%;
-    }
-    .pos-desc {
+    .bank-desc {
       font-size: 11px;
-      color: var(--text-faint);
-      line-height: 1.35;
-      font-weight: 500;
-    }
-    .pos-card.active .pos-desc {
       color: var(--text-muted);
+      margin-top: 3px;
+      line-height: 1.35;
     }
 
     .btn-submit {
@@ -544,24 +559,43 @@
         </div>
 
         <div class="field">
-          <label class="field-label">Tahsilat / Sanal POS Kapısı <span class="req">*</span></label>
-          <div class="pos-grid">
-            <label class="pos-card active" id="posCardAkbank">
-              <input type="radio" name="posProvider" value="AKBANK" checked>
-              <div class="pos-title">
-                <span>🔴 Akbank POS</span>
-                <span class="pos-check"></span>
+          <label class="field-label">Tahsilat / Banka Sanal POS Kapısı <span class="req">*</span></label>
+          <div class="bank-selector-grid" id="bankSelectorGrid">
+            <!-- 1. KUVEYT TÜRK (AKTİF VE KANONİK SANAL POS) -->
+            <label class="bank-card active" id="bankCardKuveyt">
+              <input type="radio" name="posProvider" value="KUVEYTTURK" checked>
+              <div class="bank-card-inner">
+                <div class="bank-emblem-wrap">
+                  <img src="/images/bankalar/kuveytturk.jpg" alt="Kuveyt Türk" class="bank-emblem-img">
+                </div>
+                <div class="bank-info">
+                  <div class="bank-name-row">
+                    <span class="bank-title">Kuveyt Türk Katılım Bankası</span>
+                    <span class="bank-active-tag">✓ Seçili POS</span>
+                  </div>
+                  <div class="bank-desc">Resmi 3D Secure 2.0 Doğrudan Tahsilat Protokolü</div>
+                </div>
               </div>
-              <div class="pos-desc">Doğrudan 3D Secure Pay Hosting</div>
             </label>
-            <label class="pos-card" id="posCardXpos">
-              <input type="radio" name="posProvider" value="PAYTR">
-              <div class="pos-title">
-                <span>🔵 Diğer POS (XPOS)</span>
-                <span class="pos-check"></span>
-              </div>
-              <div class="pos-desc">PayTR / 256-Bit SSL 3D Kapısı</div>
-            </label>
+          </div>
+          <div style="font-size:10.5px; color:var(--text-faint); margin-top:6px; padding-left:2px;">
+            🔒 VIP linki müşteriye iletildiğinde tahsilat doğrudan seçili bankanın 3D Secure ekranında gerçekleşir.
+          </div>
+        </div>
+
+        <!-- TUTARA EN YAKIN 10 SAAT ÖNERİSİ ALANI -->
+        <div id="watchSuggestionsSection" style="display:none; margin-bottom:18px; background:#0B1917; border:1.5px solid rgba(212,175,55,0.35); border-radius:12px; padding:14px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <div style="font-weight:800; color:var(--gold-light); font-size:12.5px; display:flex; align-items:center; gap:6px;">
+              <span>⌚ Tutara En Yakın 10 Saat Ürünü (Öneri)</span>
+            </div>
+            <span style="font-size:10.5px; color:var(--text-faint); font-weight:600;">Fatura Adı İçin Seçin</span>
+          </div>
+          <div style="font-size:11px; color:var(--text-muted); margin-bottom:10px; line-height:1.4;">
+            Aşağıdaki listeden bir saat seçebilir veya yukarıdaki ürün kutusuna kendiniz manuel olarak istediğinizi yazabilirsiniz:
+          </div>
+          <div id="watchSuggestionsList" style="display:flex; flex-direction:column; gap:6px; max-height:220px; overflow-y:auto; padding-right:4px;">
+            <!-- JS Dinamik Dolduracak -->
           </div>
         </div>
 
@@ -603,7 +637,7 @@
       <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(212,175,55,0.25); border-radius:10px; padding:10px 14px; margin-top:20px; display:flex; align-items:center; justify-content:center; gap:8px; font-size:12px; color:var(--gold-light); font-weight:700;">
         <span>🔒 256-Bit EV SSL</span>
         <span>•</span>
-        <span>Akbank 3D Secure 2.0</span>
+        <span>Kuveyt Türk 3D Secure 2.0</span>
         <span>•</span>
         <span>GİB e-Arşiv Uyumlu</span>
       </div>
@@ -613,7 +647,8 @@
 
   <div id="toast" class="toast">Panoya kopyalandı!</div>
 
-  <script src="/js/vip-payment.js?v=20260830-multipos-v3"></script>
+  <script src="/js/data.js?v=2026.09.02"></script>
+  <script src="/js/vip-payment.js?v=20260902-kuveytturk-v1"></script>
   <script>
     const form = document.getElementById('linkForm');
     const titleInput = document.getElementById('productTitle');
@@ -637,11 +672,11 @@
     let currentUrl = '';
     let currentMsg = '';
 
-    // --- POS Kart Seçim Olayları ---
-    const posCards = document.querySelectorAll('.pos-card');
-    posCards.forEach(card => {
+    // --- Banka / POS Kart Seçim Olayları (Gelecekteki Çoklu Banka Altyapısına Uyumlu) ---
+    const bankCards = document.querySelectorAll('.bank-card, .pos-card');
+    bankCards.forEach(card => {
       card.addEventListener('click', (e) => {
-        posCards.forEach(c => c.classList.remove('active'));
+        bankCards.forEach(c => c.classList.remove('active'));
         card.classList.add('active');
         const radio = card.querySelector('input[type="radio"]');
         if (radio) radio.checked = true;
@@ -650,8 +685,147 @@
 
     function getSelectedProvider() {
       const checked = document.querySelector('input[name="posProvider"]:checked');
-      return checked ? checked.value : 'AKBANK';
+      return checked ? checked.value : 'KUVEYTTURK';
     }
+
+    // --- EN YAKIN 10 SAAT ÖNERİSİ MOTORU ---
+    const watchSection = document.getElementById('watchSuggestionsSection');
+    const watchList = document.getElementById('watchSuggestionsList');
+    let selectedWatchId = null;
+
+    function getWatchCatalog() {
+      if (typeof PRODUCTS !== 'undefined' && Array.isArray(PRODUCTS)) {
+        return PRODUCTS.filter(p => {
+          const cat = String(p.category || '').toLowerCase();
+          const name = String(p.name || '').toLowerCase();
+          const brand = String(p.brand || '').toLowerCase();
+          return (
+            cat.includes('saat') || 
+            cat.includes('watch') || 
+            cat.includes('seckin') || 
+            cat.includes('ikinci-el') || 
+            cat.includes('luxury') ||
+            brand.includes('rolex') ||
+            brand.includes('omega') ||
+            brand.includes('patek') ||
+            brand.includes('audemars') ||
+            brand.includes('cartier') ||
+            brand.includes('breitling') ||
+            brand.includes('tudor') ||
+            brand.includes('tag') ||
+            brand.includes('iwc') ||
+            brand.includes('panerai') ||
+            brand.includes('seiko') ||
+            brand.includes('casio') ||
+            brand.includes('tissot') ||
+            name.includes('saat') ||
+            name.includes('watch') ||
+            name.includes('rolex') ||
+            name.includes('omega')
+          );
+        });
+      }
+      return [];
+    }
+
+    function renderWatchSuggestions(amount) {
+      if (!watchSection || !watchList) return;
+      if (!amount || amount < 100) {
+        watchSection.style.display = 'none';
+        return;
+      }
+
+      const allWatches = getWatchCatalog();
+      if (allWatches.length === 0) {
+        watchSection.style.display = 'none';
+        return;
+      }
+
+      // Tutara en yakın 10 saat (fark mutlak değerine göre sırala)
+      const sortedWatches = [...allWatches].sort((a, b) => {
+        const diffA = Math.abs((Number(a.price) || 0) - amount);
+        const diffB = Math.abs((Number(b.price) || 0) - amount);
+        return diffA - diffB;
+      }).slice(0, 10);
+
+      watchList.innerHTML = sortedWatches.map(w => {
+        const pPrice = Number(w.price) || 0;
+        const diff = pPrice - amount;
+        const diffText = diff === 0 
+          ? '🎯 Birebir Tutar' 
+          : (diff > 0 ? `+₺${diff.toLocaleString('tr-TR')} liste` : `-₺${Math.abs(diff).toLocaleString('tr-TR')} liste`);
+        const isSelected = selectedWatchId === String(w.id) || (titleInput.value.trim() === w.name.trim());
+
+        return `
+          <div class="watch-opt-card" data-name="${encodeURIComponent(w.name)}" data-id="${w.id}" style="
+            background: ${isSelected ? 'linear-gradient(135deg, rgba(23,131,112,0.3) 0%, rgba(212,175,55,0.2) 100%)' : '#11211F'};
+            border: 1px solid ${isSelected ? 'var(--gold)' : '#1F3D38'};
+            border-radius: 8px;
+            padding: 8px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+          ">
+            <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:0;">
+              <span style="font-size:14px;">⌚</span>
+              <div style="overflow:hidden;">
+                <div style="font-size:12px; font-weight:700; color:${isSelected ? 'var(--gold-light)' : 'var(--text)'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                  ${w.name}
+                </div>
+                <div style="font-size:10px; color:var(--text-faint);">
+                  ${w.brand || 'Lüks Saat'} • Liste: ₺${pPrice.toLocaleString('tr-TR')} <span style="color:${diff === 0 ? '#25D366' : 'var(--gold-dim)'}; font-weight:600;">(${diffText})</span>
+                </div>
+              </div>
+            </div>
+            <button type="button" style="
+              background: ${isSelected ? 'var(--gold)' : 'rgba(212,175,55,0.15)'};
+              color: ${isSelected ? '#0A1412' : 'var(--gold-light)'};
+              border: 1px solid ${isSelected ? 'var(--gold)' : 'rgba(212,175,55,0.35)'};
+              padding: 4px 9px;
+              border-radius: 6px;
+              font-size: 10.5px;
+              font-weight: 800;
+              cursor: pointer;
+              white-space: nowrap;
+            ">
+              ${isSelected ? '✓ Seçildi' : '+ Faturaya Ekle'}
+            </button>
+          </div>
+        `;
+      }).join('');
+
+      // Tıklama olaylarını bağla
+      watchList.querySelectorAll('.watch-opt-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const rawName = decodeURIComponent(card.dataset.name);
+          const wId = card.dataset.id;
+          selectedWatchId = wId;
+          titleInput.value = rawName;
+          titleShell.classList.remove('error');
+          titleError.classList.remove('show');
+          checkTag22();
+          renderWatchSuggestions(amount);
+          
+          if (typeof showToast === 'function') {
+            showToast(`"${rawName}" fatura ürün adı olarak seçildi.`);
+          }
+        });
+      });
+
+      watchSection.style.display = 'block';
+    }
+
+    // Kullanıcı manuel yazdığında seçili saat id'sini sıfırla
+    titleInput.addEventListener('input', () => {
+      selectedWatchId = null;
+      const amount = parseInt(amountInput.dataset.raw || '0', 10);
+      if (amount >= 100) {
+        renderWatchSuggestions(amount);
+      }
+    });
 
     // --- URL Parametreleri ile Otomatik Doldurma ---
     try {
@@ -668,6 +842,7 @@
         if (cleanAmt) {
           amountInput.value = parseInt(cleanAmt, 10).toLocaleString('tr-TR');
           amountInput.dataset.raw = cleanAmt;
+          renderWatchSuggestions(parseInt(cleanAmt, 10));
         }
       }
       if (paramPos === 'PAYTR' || paramPos === 'XPOS') {
@@ -734,11 +909,13 @@
       if (!digitsOnly) {
         amountInput.value = '';
         checkTag22();
+        if (watchSection) watchSection.style.display = 'none';
         return;
       }
       const num = parseInt(digitsOnly, 10);
       amountInput.value = num.toLocaleString('tr-TR');
       checkTag22();
+      renderWatchSuggestions(num);
     }
     amountInput.addEventListener('input', formatAmountInput);
 
@@ -816,12 +993,12 @@
       if (breakdown22Preview) breakdown22Preview.style.display = 'none';
       if (resultSection) resultSection.style.display = 'none';
 
-      // Reset POS selector back to Akbank
+      // Reset POS selector back to Kuveyt Türk
       posCards.forEach(c => c.classList.remove('active'));
-      const akCard = document.getElementById('posCardAkbank');
-      if (akCard) {
-        akCard.classList.add('active');
-        const r = akCard.querySelector('input[type="radio"]');
+      const ktCard = document.getElementById('posCardKuveyt');
+      if (ktCard) {
+        ktCard.classList.add('active');
+        const r = ktCard.querySelector('input[type="radio"]');
         if (r) r.checked = true;
       }
 

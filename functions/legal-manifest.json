@@ -1,9 +1,9 @@
 {
   "schema": "belgin-legal-evidence-manifest-v3",
   "version": "2026-08-25-v3.1",
-  "generatedAt": "2026-09-02T08:29:31.087Z",
+  "generatedAt": "2026-09-03T16:52:23.430Z",
   "algorithm": "SHA-256",
-  "manifestRootSha256": "43f1eb7e96effb65b48b18cee848570647ae06d19a9ae4b2282651871cbbdc10",
+  "manifestRootSha256": "5c97f4d0dd6c812f3f1b43c20b194db1bf9b4f47c51d00e1c7f80304115fe1de",
   "externalTimestampModel": "OpenTimestamps/Bitcoin auxiliary proof",
   "legalNotice": "SHA-256 ve OpenTimestamps kayıtları teknik belge bütünlüğü ve zaman ispatı katmanıdır; tek başına 5070 sayılı Kanun kapsamında nitelikli elektronik imza veya ESHS zaman damgası olarak sunulmaz.",
   "documents": {
@@ -11,29 +11,29 @@
       "code": "08",
       "version": "08_v2.1 (25.08.2026)",
       "title": "Çerez Politikası",
-      "sha256": "c2d1d2f83a1cca170f6a68b0f9d8afa6d839fa3e9329409f7d9dbb126a308c01",
-      "bytes": 33271
+      "sha256": "6cdfbe1075fa99036d8c9bf89cc2d233b75dcdc49393a2023af65c616d358935",
+      "bytes": 32839
     },
     "garanti-ve-satis-sonrasi.html": {
       "code": "11",
       "version": "11_v2.1 (25.08.2026)",
       "title": "Garanti ve Satış Sonrası Hizmetler",
-      "sha256": "074df477f7e628c3b5fb6591001add8b3cb44f9cec6ff3c8f9da593c0320a2e2",
-      "bytes": 33399
+      "sha256": "e0ae5a3591b8a4713a73c470c9aac5bcce51cb3f8456eeeaef8cb367eb1a5b28",
+      "bytes": 33417
     },
     "gizlilik-politikasi.html": {
       "code": "07",
       "version": "07_v2.1 (25.08.2026)",
       "title": "Gizlilik Politikası",
-      "sha256": "49a54463e060696bb6c72aa6290e23b44bf6a4c478df40370a36eabd56cf6854",
-      "bytes": 33888
+      "sha256": "622bab5a2b5aff79bd31241218348715474c312f057ff2cb38cde41ee6f7ce7c",
+      "bytes": 33906
     },
     "guvenli-odeme-ve-3d-secure.html": {
       "code": "15",
       "version": "15_v2.1 (25.08.2026)",
       "title": "Güvenli Ödeme ve 3D Secure",
-      "sha256": "6a2ae21cfe49d92bac23790e941e8d23f0165da0a9dd15a85d740a96db583930",
-      "bytes": 36535
+      "sha256": "a404981d4d23ad739da49efd67684d7b7601f8d14c6217289081b7aa2bb097f8",
+      "bytes": 36595
     },
     "hukuki-delil-ve-kayit-politikasi.html": {
       "code": "16",
@@ -46,29 +46,29 @@
       "code": "14",
       "version": "14_v2.1 (25.08.2026)",
       "title": "İade, Değişim ve Cayma Hakkı Rehberi",
-      "sha256": "07148253fcf84f07af828a8b68668077a2ed0bce9a5595a491cd44f846de2d95",
-      "bytes": 37010
+      "sha256": "6f240fbbfbb1effd68522ae086572503bd6a6ccbe3e9953f92dfc8a323448039",
+      "bytes": 37070
     },
     "iade-degisim.html": {
       "code": "14",
       "version": "14_v2.1 (25.08.2026)",
       "title": "İade ve Değişim Koşulları",
-      "sha256": "2adfcd53d7dd3020f6dc449be8ed4d0ccfaf36fdf9f58ff606a7521af07bf402",
-      "bytes": 34541
+      "sha256": "8bb95ba2399178770fcc397d626f9f0384981030b38065807dc1e15b91ce9fc5",
+      "bytes": 34601
     },
     "kullanim-kosullari.html": {
       "code": "04",
       "version": "04_v2.1 (25.08.2026)",
       "title": "Kullanım Koşulları",
-      "sha256": "7396a3586f8522dd3c3b050c3ccca7739a5eca0afde73d8b24e25c19d0fda3a2",
-      "bytes": 33670
+      "sha256": "94f9d8130fbc367cd71e66186085526834bc21d8b3ee749b64f6fefa81c82dfb",
+      "bytes": 33730
     },
     "kvkk-acik-riza.html": {
       "code": "10",
       "version": "10_v2.1 (25.08.2026)",
       "title": "KVKK Açık Rıza Metni",
-      "sha256": "4d005ad9fad32145dd23adec1ac2039dcba6d42bac1791ec8c83bdf0653e047c",
-      "bytes": 33392
+      "sha256": "5142a4068ebd55e53bc725ade9c08e798e269cbe0ab2aaf508b8192ab196f45a",
+      "bytes": 33452
     },
     "kvkk-aydinlatma-metni.html": {
       "code": "05",

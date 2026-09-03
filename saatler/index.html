@@ -90,7 +90,7 @@
     </button>
 
     <!-- Sol Logo -->
-    <a class="logo-area-main brand-logo-link" href="/" data-page="ana-sayfa" aria-label="Belgin Kuyumculuk & Saat ana sayfa">
+    <a class="logo-area-main brand-logo-link" href="/" data-page="ana-sayfa" onclick="goToHome(event)" aria-label="Belgin Kuyumculuk & Saat ana sayfa">
       <img class="brand-logo brand-logo-header" src="images/belgin-logo-header.png" width="1672" height="941" alt="Belgin Kuyumculuk & Saat" decoding="async" fetchpriority="high">
     </a>
 
@@ -454,7 +454,7 @@
 <div class="mobile-drawer-overlay" id="mobileDrawerOverlay" onclick="App.toggleMobileDrawer(false)">
   <div class="mobile-drawer" onclick="event.stopPropagation()">
     <div class="mobile-drawer-header">
-      <a class="logo-area-main brand-logo-link brand-logo-mobile-surface" href="/" data-page="ana-sayfa" aria-label="Belgin Kuyumculuk & Saat ana sayfa" onclick="App.toggleMobileDrawer(false)">
+      <a class="logo-area-main brand-logo-link brand-logo-mobile-surface" href="/" data-page="ana-sayfa" onclick="goToHome(event)" aria-label="Belgin Kuyumculuk & Saat ana sayfa">
         <img class="brand-logo brand-logo-mobile" src="images/belgin-logo-mobile.png" width="1672" height="941" alt="Belgin Kuyumculuk & Saat" decoding="async">
       </a>
       <button class="mobile-drawer-close" onclick="App.toggleMobileDrawer(false)" aria-label="Menüyü Kapat">✕</button>
@@ -695,7 +695,7 @@
           <div class="hero-content-slide" data-content-slide="4">
             <span class="hero-eyebrow">🌐 TÜRKİYE'NİN EN GENİŞ PRESTİJ SAAT ARŞİVİ</span>
             <h1 class="hero-title">10 Dünya Markası &amp; <span class="hero-title-gold">1.925 Model Kataloğu</span></h1>
-            <p class="hero-subtext">Longines, Rado, Tissot, TAG Heuer, Breitling ve Versace... Distribütör garantili orijinal saatler, anında kargo ve takas imkanı.</p>
+            <p class="hero-subtext">Longines, Rado, Tissot, TAG Heuer, Breitling ve Versace... Orijinal saatler, güvenli teslimat ve takas imkanı.</p>
             <div class="hero-actions">
               <a href="/saatler/" class="btn-hero-primary" onclick="Router.navigate('saatler'); return false;">
                 <span>⌚ Tüm Koleksiyonu Gör (1.925 Saat)</span>
@@ -704,9 +704,6 @@
               <a href="/markalar/" class="btn-hero-secondary" onclick="Router.navigate('markalar'); return false;">
                 <span>🏷️ Markalar Dizini</span>
               </a>
-            </div>
-            <div class="hero-trust-line">
-              <span>✦ Resmî Distribütör Garantisi</span> &bull; <span>Aynı Gün Sigortalı Kargo</span> &bull; <span>Orijinal Kutu &amp; Evrak</span>
             </div>
           </div>
 
@@ -758,17 +755,17 @@
         
         <div class="brands-carousel-wrapper">
           <div class="brands-carousel-track" id="watchBrandsGrid">
-            <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Rolex', null)" title="Rolex Saat Modelleri"><img src="images/markalar/rolex.png" alt="Rolex" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
-            <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Patek Philippe', null)" title="Patek Philippe Saat Modelleri"><img src="images/markalar/patek-philippe.png" alt="Patek Philippe" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
-            <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Audemars Piguet', null)" title="Audemars Piguet Saat Modelleri"><img src="images/markalar/audemars-piguet.png" alt="Audemars Piguet" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
-            <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Vacheron Constantin', null)" title="Vacheron Constantin Saat Modelleri"><img src="images/markalar/vacheron-constantin.png" alt="Vacheron Constantin" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
-            <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Omega', null)" title="Omega Saat Modelleri"><img src="images/markalar/omega.png" alt="Omega" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
-            <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Cartier', null)" title="Cartier Saat Modelleri"><img src="images/markalar/cartier.png" alt="Cartier" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
-            <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Breitling', null)" title="Breitling Saat Modelleri"><img src="images/markalar/breitling.png" alt="Breitling" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
-            <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Tudor', null)" title="Tudor Saat Modelleri"><img src="images/markalar/tudor.png" alt="Tudor" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
-            <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('TAG Heuer', null)" title="TAG Heuer Saat Modelleri"><img src="images/markalar/tag-heuer.png" alt="TAG Heuer" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
-            <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('IWC Schaffhausen', null)" title="IWC Schaffhausen Saat Modelleri"><img src="images/markalar/iwc.png" alt="IWC Schaffhausen" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
-            <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Panerai', null)" title="Panerai Saat Modelleri"><img src="images/markalar/panerai.png" alt="Panerai" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
+            <div class="brand-carousel-card" onclick="App.filterEliteWatchesByBrand('Rolex', null)" title="Rolex Saat Modelleri"><img src="images/markalar/rolex.png" alt="Rolex" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
+            <div class="brand-carousel-card" onclick="App.filterEliteWatchesByBrand('Patek Philippe', null)" title="Patek Philippe Saat Modelleri"><img src="images/markalar/patek-philippe.png" alt="Patek Philippe" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
+            <div class="brand-carousel-card" onclick="App.filterEliteWatchesByBrand('Audemars Piguet', null)" title="Audemars Piguet Saat Modelleri"><img src="images/markalar/audemars-piguet.png" alt="Audemars Piguet" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
+            <div class="brand-carousel-card" onclick="App.filterEliteWatchesByBrand('Vacheron Constantin', null)" title="Vacheron Constantin Saat Modelleri"><img src="images/markalar/vacheron-constantin.png" alt="Vacheron Constantin" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
+            <div class="brand-carousel-card" onclick="App.filterEliteWatchesByBrand('Omega', null)" title="Omega Saat Modelleri"><img src="images/markalar/omega.png" alt="Omega" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
+            <div class="brand-carousel-card" onclick="App.filterEliteWatchesByBrand('Cartier', null)" title="Cartier Saat Modelleri"><img src="images/markalar/cartier.png" alt="Cartier" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
+            <div class="brand-carousel-card" onclick="App.filterEliteWatchesByBrand('Breitling', null)" title="Breitling Saat Modelleri"><img src="images/markalar/breitling.png" alt="Breitling" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
+            <div class="brand-carousel-card" onclick="App.filterEliteWatchesByBrand('Tudor', null)" title="Tudor Saat Modelleri"><img src="images/markalar/tudor.png" alt="Tudor" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
+            <div class="brand-carousel-card" onclick="App.filterEliteWatchesByBrand('TAG Heuer', null)" title="TAG Heuer Saat Modelleri"><img src="images/markalar/tag-heuer.png" alt="TAG Heuer" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
+            <div class="brand-carousel-card" onclick="App.filterEliteWatchesByBrand('IWC Schaffhausen', null)" title="IWC Schaffhausen Saat Modelleri"><img src="images/markalar/iwc.png" alt="IWC Schaffhausen" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
+            <div class="brand-carousel-card" onclick="App.filterEliteWatchesByBrand('Panerai', null)" title="Panerai Saat Modelleri"><img src="images/markalar/panerai.png" alt="Panerai" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
             <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Longines', null)" title="Longines Saat Modelleri"><img src="images/markalar/longines.png" alt="Longines" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
             <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Rado', null)" title="Rado Saat Modelleri"><img src="images/markalar/rado.png" alt="Rado" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
             <div class="brand-carousel-card" onclick="App.filterWatchesByBrand('Tissot', null)" title="Tissot Saat Modelleri"><img src="images/markalar/tissot.png" alt="Tissot" class="brand-carousel-logo" width="220" height="100" decoding="async"></div>
@@ -48526,22 +48523,23 @@
       <header class="biz-kimiz-top-header">
         <div class="biz-kimiz-header-left">
           <div class="biz-kimiz-badge-pill">
-            <span style="color:var(--color-gold-bright); font-size:12px;">●</span>
-            <span>BELGİN SAAT &bull; KURUMSAL PROFİL FOLİOSU &bull; EST. 1999</span>
+            <span style="color:var(--color-gold-bright); font-size:11px;">●</span>
+            <span>BELGİN SAAT &bull; KURUMSAL PROFİL FOLİOSU</span>
           </div>
           <h1 class="biz-kimiz-title">Lüks Saate Odaklanan Seçkin Ticaret Profili</h1>
-          <p class="biz-kimiz-subtitle">
-            20 yılı aşan ticaret hafızası, You Watch ile kanıtlanmış marka kurma deneyimi ve seçkin müşteri portföyü.
-          </p>
         </div>
 
         <div class="biz-kimiz-header-actions">
-          <a href="/docs/belgin-saat-kurumsal-profil-2026.pdf" target="_blank" download class="btn-biz-download" title="Orijinal 10 Sayfalık PDF Dokümanını İndir">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            <span>Orijinal PDF (7 MB)</span>
+          <button type="button" class="btn-biz-zoom" id="flipbookZoomBtnTop" onclick="App.toggleFlipbookZoom()" title="Görünümü Genişlet / Standart Boyuta Dön">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            <span id="flipbookZoomBtnTopText">Genişlet (%130)</span>
+          </button>
+          <a href="/docs/belgin-saat-kurumsal-profil-2026.pdf" target="_blank" download class="btn-biz-download" title="Orijinal 10 Sayfalık Lüks Kurumsal Sunum PDF Dokümanını İndir">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>PDF İndir (3 MB)</span>
           </a>
           <button type="button" class="btn-biz-fullscreen" onclick="App.toggleFlipbookFullscreen()" title="Tam Ekran Okuma Modu">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
             <span>Tam Ekran</span>
           </button>
           <button type="button" class="btn-biz-vip" onclick="App.openVipModal();" title="İzmir Buca VIP Showroom Randevusu">
@@ -48550,7 +48548,7 @@
         </div>
       </header>
 
-      <!-- 2. PROMINENT FIRST-SCREEN PDF / FLIPBOOK VIEWER -->
+      <!-- 2. PROMINENT FIRST-SCREEN 16:9 PDF / FLIPBOOK VIEWER -->
       <div class="biz-kimiz-folio-card" id="bizKimizFolioCard">
         <!-- Toolbar -->
         <div class="folio-toolbar">
@@ -48563,6 +48561,7 @@
           </div>
 
           <div class="folio-toolbar-right">
+            <button class="folio-page-btn" id="flipbookZoomBtn" onclick="App.toggleFlipbookZoom()" title="Görünümü Büyüt / İlk Görünüme Dön">🔍 Genişlet (%130)</button>
             <button class="folio-page-btn" onclick="App.prevFlipbookPage()">‹ Önceki Sayfa</button>
             <button class="folio-page-btn" onclick="App.nextFlipbookPage()">Sonraki Sayfa ›</button>
           </div>
@@ -48581,16 +48580,16 @@
 
         <!-- Thumbnail Carousel Rail -->
         <div class="folio-thumb-strip">
-          <div class="flipbook-thumb-item active" onclick="App.setFlipbookPage(1)" title="Sayfa 1: Kapak"><img src="/images/biz-kimiz/page-1.jpg" alt="Sayfa 1"><span class="thumb-lbl">01</span></div>
-          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(2)" title="Sayfa 2: İçindekiler &amp; Özet"><img src="/images/biz-kimiz/page-2.jpg" alt="Sayfa 2"><span class="thumb-lbl">02</span></div>
-          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(3)" title="Sayfa 3: Ticaret Hafızası"><img src="/images/biz-kimiz/page-3.jpg" alt="Sayfa 3"><span class="thumb-lbl">03</span></div>
-          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(4)" title="Sayfa 4: Marka Kurma Gücü"><img src="/images/biz-kimiz/page-4.jpg" alt="Sayfa 4"><span class="thumb-lbl">04</span></div>
-          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(5)" title="Sayfa 5: Seçkin Müşteri Ağı"><img src="/images/biz-kimiz/page-5.jpg" alt="Sayfa 5"><span class="thumb-lbl">05</span></div>
-          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(6)" title="Sayfa 6: Güvenli İşlem Modeli"><img src="/images/biz-kimiz/page-6.jpg" alt="Sayfa 6"><span class="thumb-lbl">06</span></div>
-          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(7)" title="Sayfa 7: Ekspertiz &amp; Sertifikasyon"><img src="/images/biz-kimiz/page-7.jpg" alt="Sayfa 7"><span class="thumb-lbl">07</span></div>
-          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(8)" title="Sayfa 8: Fiziksel Showroom"><img src="/images/biz-kimiz/page-8.jpg" alt="Sayfa 8"><span class="thumb-lbl">08</span></div>
-          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(9)" title="Sayfa 9: Finansal Uyum &amp; Şeffaflık"><img src="/images/biz-kimiz/page-9.jpg" alt="Sayfa 9"><span class="thumb-lbl">09</span></div>
-          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(10)" title="Sayfa 10: İletişim &amp; Randevu"><img src="/images/biz-kimiz/page-10.jpg" alt="Sayfa 10"><span class="thumb-lbl">10</span></div>
+          <div class="flipbook-thumb-item active" onclick="App.setFlipbookPage(1)" title="Sayfa 1: Kapak &amp; Profil"><img src="/images/biz-kimiz/page-1.jpg" alt="Sayfa 1"><span class="thumb-lbl">01</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(2)" title="Sayfa 2: Saat Kültürü ve Marka Hafızası"><img src="/images/biz-kimiz/page-2.jpg" alt="Sayfa 2"><span class="thumb-lbl">02</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(3)" title="Sayfa 3: YouWatch Etkisi"><img src="/images/biz-kimiz/page-3.jpg" alt="Sayfa 3"><span class="thumb-lbl">03</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(4)" title="Sayfa 4: Seçkin Marka Evreni"><img src="/images/biz-kimiz/page-4.jpg" alt="Sayfa 4"><span class="thumb-lbl">04</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(5)" title="Sayfa 5: Seçkin Müşteri Çevresi"><img src="/images/biz-kimiz/page-5.jpg" alt="Sayfa 5"><span class="thumb-lbl">05</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(6)" title="Sayfa 6: Özel Sipariş ve Kaynak Ağı"><img src="/images/biz-kimiz/page-6.jpg" alt="Sayfa 6"><span class="thumb-lbl">06</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(7)" title="Sayfa 7: Portföy Değer Döngüsü"><img src="/images/biz-kimiz/page-7.jpg" alt="Sayfa 7"><span class="thumb-lbl">07</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(8)" title="Sayfa 8: Kürasyon Dili"><img src="/images/biz-kimiz/page-8.jpg" alt="Sayfa 8"><span class="thumb-lbl">08</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(9)" title="Sayfa 9: Güven, Özgünlük ve Teslim"><img src="/images/biz-kimiz/page-9.jpg" alt="Sayfa 9"><span class="thumb-lbl">09</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(10)" title="Sayfa 10: Güven ve Kalite"><img src="/images/biz-kimiz/page-10.jpg" alt="Sayfa 10"><span class="thumb-lbl">10</span></div>
         </div>
       </div>
 
@@ -48604,15 +48603,15 @@
         </div>
         <div class="metric-card-lux">
           <span class="metric-icon">🌐</span>
-          <div class="metric-number">~600</div>
-          <div class="metric-title">Geçmiş Satış Noktası</div>
-          <p class="metric-sub">You Watch ile Türkiye genelinde 81 ilde kurulan devasa dağıtım ve perakende tecrübesi.</p>
+          <div class="metric-number">YouWatch</div>
+          <div class="metric-title">Kanıtlanmış Marka Mirası</div>
+          <p class="metric-sub">Türkiye genelinde yüzlerce noktaya ulaşan, vitrin dışında da yaşayan seçkin marka vizyonu.</p>
         </div>
         <div class="metric-card-lux">
           <span class="metric-icon">💎</span>
-          <div class="metric-number">Yüksek Likidite</div>
-          <div class="metric-title">Anında Karşılık &amp; Güven</div>
-          <p class="metric-sub">Yüksek değerli saat ve kuyum portföyünde güçlü sermaye, anında nakit alım ve şeffaf takas.</p>
+          <div class="metric-number">Özel Sipariş</div>
+          <div class="metric-title">Küresel Kaynak &amp; Likidite</div>
+          <p class="metric-sub">Haute Horlogerie parçalarda güvenilir ağ aracılığıyla doğrudan temin, anında alım ve şeffaf takas.</p>
         </div>
         <div class="metric-card-lux">
           <span class="metric-icon">📍</span>
@@ -48627,7 +48626,7 @@
         <div>
           <span class="hero-eyebrow" style="color:var(--color-gold-dark);">KURUMSAL TİCARET VE DEĞER İLKELERİ</span>
           <h2 style="font-family:var(--font-heading); font-size:24px; font-weight:700; color:var(--color-ink); margin:0;">
-            Kurumsal Profil &amp; Ticari Hafızamızın Temel Taşları
+            Kurumsal Profil &amp; Değer İlkelerimiz
           </h2>
         </div>
       </div>
@@ -48636,96 +48635,120 @@
         <!-- 1. Bölüm -->
         <div class="biz-kimiz-chapter-card">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <span style="font-size:11px; font-weight:800; color:var(--color-gold-dark); letter-spacing:1px; text-transform:uppercase;">01 &bull; TİCARET PROFİLİ</span>
-            <span style="font-size:18px;">👑</span>
+            <span style="font-size:11px; font-weight:800; color:var(--color-gold-dark); letter-spacing:1px; text-transform:uppercase;">01 &bull; LÜKS SAAT ODAĞI</span>
+            <span style="font-size:18px;">💎</span>
           </div>
-          <h3 style="font-size:18px; font-weight:700; color:var(--color-ink); margin:0 0 10px 0;">Lüks Saate Odaklanan Seçkin Ticaret Profili</h3>
+          <h3 style="font-size:18px; font-weight:700; color:var(--color-ink); margin:0 0 10px 0;">Güven, Seçki ve Görünürlük</h3>
           <p style="font-size:13.5px; color:#555; line-height:1.65; margin:0;">
-            Geçmişte marka kurup ölçekleyen, bugün yüksek değerli saatlerde sipariş, geri alım, takas ve yeniden satış döngüsünü yöneten yapı; tek işlem değil, uzun vadeli müşteri ilişkisi üretmektedir.
+            Belgin Saat&amp;Kuyumculuk, seçkin saat kültürünü güven temelli ilişki anlayışıyla bir araya getirmektedir. YouWatch mirasıyla güçlenen görünürlük, kürasyon disipliniyle desteklenmekte; vitrin dışında da yaşayan bir saat evreni kurulmaktadır.
           </p>
         </div>
 
         <!-- 2. Bölüm -->
         <div class="biz-kimiz-chapter-card">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <span style="font-size:11px; font-weight:800; color:var(--color-gold-dark); letter-spacing:1px; text-transform:uppercase;">02 &bull; TİCARET HAFIZASI</span>
-            <span style="font-size:18px;">🛡️</span>
+            <span style="font-size:11px; font-weight:800; color:var(--color-gold-dark); letter-spacing:1px; text-transform:uppercase;">02 &bull; MARKA HAFIZASI</span>
+            <span style="font-size:18px;">👑</span>
           </div>
-          <h3 style="font-size:18px; font-weight:700; color:var(--color-ink); margin:0 0 10px 0;">20+ Yılın Biriktirdiği Şey: Ürün Değil, Güven</h3>
+          <h3 style="font-size:18px; font-weight:700; color:var(--color-ink); margin:0 0 10px 0;">Saat Kültürü ve Marka Hafızası</h3>
           <p style="font-size:13.5px; color:#555; line-height:1.65; margin:0;">
-            Yüksek değerli saatte karar katalogdan önce ilişkiyle başlar. Ürün Hafızası (referans, kondisyon, likidite), Müşteri Hafızası (tekrar alım, tavsiye zinciri) ve Piyasa Hafızası (dönemsel fiyat hareketleri) ile doğru ürün, doğru müşteriyle eşleştirilir.
+            Bizim için saat, bir ürün değil; zevkin, sürekliliğin ve güvenin kuşaktan kuşağa aktarılan bir kültürüdür. Seçki anlayışımız, uzun ilişki hafızamız ve doğru parçayı eşleştirme sezgimizle şekillenir.
           </p>
         </div>
 
         <!-- 3. Bölüm -->
         <div class="biz-kimiz-chapter-card">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <span style="font-size:11px; font-weight:800; color:var(--color-gold-dark); letter-spacing:1px; text-transform:uppercase;">03 &bull; MARKA KURMA DENEYİMİ</span>
+            <span style="font-size:11px; font-weight:800; color:var(--color-gold-dark); letter-spacing:1px; text-transform:uppercase;">03 &bull; GÖRÜNÜRLÜK &amp; ETKİ</span>
             <span style="font-size:18px;">🚀</span>
           </div>
-          <h3 style="font-size:18px; font-weight:700; color:var(--color-ink); margin:0 0 10px 0;">You Watch: Kurulan, Ölçeklenen, Devredilen Marka</h3>
+          <h3 style="font-size:18px; font-weight:700; color:var(--color-ink); margin:0 0 10px 0;">YouWatch Etkisi</h3>
           <p style="font-size:13.5px; color:#555; line-height:1.65; margin:0;">
-            Türkiye genelinde yaklaşık 600 satış noktasına ulaşan mağaza/bayi ağı; Beymen, Vakko, Boyner ve ÇiçekSepeti gibi seçkin kanallarda görünürlük; sponsorluklar ve pandemi öncesi Hollandalı bir gruba başarılı marka devri ile tamamlanan marka kurma döngüsü.
+            YouWatch geçmişiyle oluşan görünürlük, ürünün vitrin dışında da dolaşımda kalmasını sağlamaktadır. Spor, iş, sanat ve yaşam tarzı çevrelerinde gerçek deneyimler ilham olur; güven ve sadakat kalıcı değer yaratır.
           </p>
         </div>
 
         <!-- 4. Bölüm -->
         <div class="biz-kimiz-chapter-card">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <span style="font-size:11px; font-weight:800; color:var(--color-gold-dark); letter-spacing:1px; text-transform:uppercase;">04 &bull; MÜŞTERİ ÇEVRESİ</span>
-            <span style="font-size:18px;">🤝</span>
+            <span style="font-size:11px; font-weight:800; color:var(--color-gold-dark); letter-spacing:1px; text-transform:uppercase;">04 &bull; DÜNYA MARKALARI</span>
+            <span style="font-size:18px;">🌍</span>
           </div>
-          <h3 style="font-size:18px; font-weight:700; color:var(--color-ink); margin:0 0 10px 0;">Seçkin Çevrelerde Organik Dolaşım</h3>
+          <h3 style="font-size:18px; font-weight:700; color:var(--color-ink); margin:0 0 10px 0;">Seçkin Marka Evreni</h3>
           <p style="font-size:13.5px; color:#555; line-height:1.65; margin:0;">
-            Futbolcular, sanatçılar, medya dünyası, iş insanları ve lüksü günlük yaşamın parçası yapan müşteriler. Yüksek değerli saat ticaretinde çevre kalitesi fiyat kadar belirleyici bir dağıtım avantajı sağlar.
+            Rolex, Patek Philippe, Audemars Piguet, Richard Mille, Cartier, Omega, Hublot, Panerai ve Breitling. Zamana yön veren dünya markaları, seçici zevklere özel kalıcı değerlerle koleksiyona kazandırılır.
           </p>
         </div>
 
         <!-- 5. Bölüm -->
         <div class="biz-kimiz-chapter-card">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <span style="font-size:11px; font-weight:800; color:var(--color-gold-dark); letter-spacing:1px; text-transform:uppercase;">05 &bull; MARKA EVRENİ</span>
-            <span style="font-size:18px;">🌍</span>
+            <span style="font-size:11px; font-weight:800; color:var(--color-gold-dark); letter-spacing:1px; text-transform:uppercase;">05 &bull; MÜŞTERİ PORTFÖYÜ</span>
+            <span style="font-size:18px;">👥</span>
           </div>
-          <h3 style="font-size:18px; font-weight:700; color:var(--color-ink); margin:0 0 10px 0;">Dünya Markalarına Erişim: Doğru Ürün, Doğru Zaman</h3>
+          <h3 style="font-size:18px; font-weight:700; color:var(--color-ink); margin:0 0 10px 0;">Seçkin Müşteri Çevresi</h3>
           <p style="font-size:13.5px; color:#555; line-height:1.65; margin:0;">
-            Rolex, Patek Philippe, Audemars Piguet, Richard Mille, Cartier, Hublot, TAG Heuer, Omega, Ulysse Nardin, Breitling. Sipariş usulü yaklaşım ile yüksek sermayeli ürünü gerçek taleple buluşturma disiplini.
+            Futbolculardan sanatçılara, iş insanlarından lüks odaklı seçkin müşterilere kadar uzanan bir çevreyle doğal bir bağ. Saat; yalnızca bir aksesuar değil, karakteri görünür kılan bir imzadır.
           </p>
         </div>
 
         <!-- 6. Bölüm -->
         <div class="biz-kimiz-chapter-card">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <span style="font-size:11px; font-weight:800; color:var(--color-gold-dark); letter-spacing:1px; text-transform:uppercase;">06 &bull; PORTFÖY EKONOMİSİ</span>
-            <span style="font-size:18px;">🔄</span>
+            <span style="font-size:11px; font-weight:800; color:var(--color-gold-dark); letter-spacing:1px; text-transform:uppercase;">06 &bull; ÖZEL TEDARİK</span>
+            <span style="font-size:18px;">🔍</span>
           </div>
-          <h3 style="font-size:18px; font-weight:700; color:var(--color-ink); margin:0 0 10px 0;">Portföyü Dolaşımda Tutan Lüks Saat Modeli</h3>
+          <h3 style="font-size:18px; font-weight:700; color:var(--color-ink); margin:0 0 10px 0;">Özel Sipariş ve Kaynak Ağı</h3>
           <p style="font-size:13.5px; color:#555; line-height:1.65; margin:0;">
-            Sipariş + geri alım + takas + yeniden satış. Aynı müşteri zaman içinde hem alıcı hem satıcı olabildiği için, kârlılık tek satıştan değil ilişkinin toplam ömründen üretilmektedir.
+            Nadir bulunan veya profilinize özel parçalar; sabır, yaklaşım ve ilişki sermayesiyle, güvenilir kanallar aracılığıyla kaynağımızdan temin edilir. Prestij kovalanmaz, özenle seçilir.
           </p>
         </div>
 
         <!-- 7. Bölüm -->
         <div class="biz-kimiz-chapter-card">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <span style="font-size:11px; font-weight:800; color:var(--color-gold-dark); letter-spacing:1px; text-transform:uppercase;">07 &bull; İŞLEM GÜCÜ &amp; LİKİDİTE</span>
-            <span style="font-size:18px;">📊</span>
+            <span style="font-size:11px; font-weight:800; color:var(--color-gold-dark); letter-spacing:1px; text-transform:uppercase;">07 &bull; PORTFÖY DİNAMİĞİ</span>
+            <span style="font-size:18px;">🔄</span>
           </div>
-          <h3 style="font-size:18px; font-weight:700; color:var(--color-ink); margin:0 0 10px 0;">Yüksek Likidite ve Anında Karşılık Güvencesi</h3>
+          <h3 style="font-size:18px; font-weight:700; color:var(--color-ink); margin:0 0 10px 0;">Portföyü Canlı Tutan Değer Döngüsü</h3>
           <p style="font-size:13.5px; color:#555; line-height:1.65; margin:0;">
-            Koleksiyonerlerimize sunduğumuz anında nakit alım, şeffaf takas, konsinye satış ve küresel saat borsası eşleşmeleri ile kesintisiz sermaye ve likidite gücü.
+            Seçici alım, doğru zamanda satış ve trade-back mantığıyla işleyen modelimiz; bugün bir arzu nesnesi olan parçayı, yarın güvenilir bir ağda dolaşan değerli bir varlığa dönüştürür.
           </p>
         </div>
 
         <!-- 8. Bölüm -->
         <div class="biz-kimiz-chapter-card">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <span style="font-size:11px; font-weight:800; color:var(--color-gold-dark); letter-spacing:1px; text-transform:uppercase;">08 &bull; GÜVEN PROTOKOLÜ</span>
-            <span style="font-size:18px;">📜</span>
+            <span style="font-size:11px; font-weight:800; color:var(--color-gold-dark); letter-spacing:1px; text-transform:uppercase;">08 &bull; ESTETİK &amp; DETAY</span>
+            <span style="font-size:18px;">✨</span>
           </div>
-          <h3 style="font-size:18px; font-weight:700; color:var(--color-ink); margin:0 0 10px 0;">Yüksek Değerli İşlemde 4 Adımlı Güven Protokolü</h3>
+          <h3 style="font-size:18px; font-weight:700; color:var(--color-ink); margin:0 0 10px 0;">Kürasyon Dili</h3>
           <p style="font-size:13.5px; color:#555; line-height:1.65; margin:0;">
-            1. Seçim (talep ve bütçe netleştirme) &bull; 2. Değerleme (kondisyon ve piyasa karşılığı) &bull; 3. Doğrulama (seri ve belge kontrolü) &bull; 4. Teslim &amp; İlişki (İzmir Buca VIP Showroom'da fiziksel teslim).
+            Formlar, malzemeler, kadran dokuları, bezel tasarımları, bilezik yapıları ve bilekteki duruş birlikte ele alınır. Seçim dilimiz dengeli, rafine ve zamansız bir çizgide şekillenir.
+          </p>
+        </div>
+
+        <!-- 9. Bölüm -->
+        <div class="biz-kimiz-chapter-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <span style="font-size:11px; font-weight:800; color:var(--color-gold-dark); letter-spacing:1px; text-transform:uppercase;">09 &bull; GÜVEN PROTOKOLÜ</span>
+            <span style="font-size:18px;">🛡️</span>
+          </div>
+          <h3 style="font-size:18px; font-weight:700; color:var(--color-ink); margin:0 0 10px 0;">Güven, Özgünlük ve Teslim Disiplini</h3>
+          <p style="font-size:13.5px; color:#555; line-height:1.65; margin:0;">
+            Condition, özgünlük, parça bütünlüğü, mekanik sağlık ve kozmetik denge kontrolü. Karar süreci aceleye değil güvene dayanır; kusursuz süreç, kalıcı değer yaratır.
+          </p>
+        </div>
+
+        <!-- 10. Bölüm -->
+        <div class="biz-kimiz-chapter-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <span style="font-size:11px; font-weight:800; color:var(--color-gold-dark); letter-spacing:1px; text-transform:uppercase;">10 &bull; KURUMSAL MİRAS</span>
+            <span style="font-size:18px;">🏛️</span>
+          </div>
+          <h3 style="font-size:18px; font-weight:700; color:var(--color-ink); margin:0 0 10px 0;">Güven ve Kalite ile Tamamlanan İzlenim</h3>
+          <p style="font-size:13.5px; color:#555; line-height:1.65; margin:0;">
+            Zamanın değerini bilenler için ayrıcalıklı bir seçim. İzmir Buca Menderes Caddesi'ndeki fiziksel showroomumuzda randevulu VIP ağırlama ile her işlem şeffaflıkla sonuçlandırılır.
           </p>
         </div>
       </div>
@@ -49128,7 +49151,7 @@
           <span style="font-size:24px;">💳</span>
           <div>
             <strong style="font-size:13px; color:var(--color-ink); display:block;">BDDK Lisanslı 3D Secure</strong>
-            <span style="font-size:11.5px; color:#666;">Akbank 256-Bit SSL korumalı tahsilat</span>
+            <span style="font-size:11.5px; color:#666;">Kuveyt Türk 256-Bit SSL korumalı tahsilat</span>
           </div>
         </div>
         <div style="display:flex; gap:12px; align-items:center;">
@@ -49158,121 +49181,121 @@
     </div>
   </section>
 
-  <!-- 8. GÜVENLİ ÖDEME VE İZMİR TESLİMAT SAYFASI (LUXURY 2-COLUMN SYMMETRICAL MAISON CHECKOUT) -->
+  <!-- 8. GÜVENLİ ÖDEME VE İZMİR TESLİMAT SAYFASI (LUXURY COMPACT 4-STEP PROCESS ARCHITECTURE) -->
   <section id="page-odeme" class="page">
     <div class="container-art">
       
       <!-- MAISON HEADER & TRUST BANNER -->
-      <div style="margin-bottom:24px; padding-bottom:18px; border-bottom:1px solid var(--color-border); display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px;">
+      <div style="margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--color-border); display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:10px;">
         <div>
-          <span style="font-size:11px; letter-spacing:2px; font-weight:800; color:var(--color-gold-dark); text-transform:uppercase; display:block; margin-bottom:4px;">
+          <span style="font-size:11px; letter-spacing:1.8px; font-weight:800; color:var(--color-gold-dark); text-transform:uppercase; display:block; margin-bottom:2px;">
             🏛️ BELGIN HAUTE JOAILLERIE & YÜKSEK SAATÇİLİK (EST. 1999)
           </span>
-          <h2 style="font-family:var(--font-sans); font-size:24px; font-weight:800; color:var(--color-ink); margin:0 0 4px;">
+          <h2 style="font-family:var(--font-sans); font-size:22px; font-weight:800; color:var(--color-ink); margin:0 0 2px;">
             Güvenli Ödeme & Sipariş Onayı
           </h2>
-          <p style="font-size:13px; color:var(--color-muted); margin:0;">
-            Akbank 256-Bit EV SSL & 3D Secure 2.0 Doğrudan Tahsilat Protokolü
+          <p style="font-size:12.5px; color:var(--color-muted); margin:0;">
+            Kuveyt Türk 256-Bit EV SSL & 3D Secure 2.0 Doğrudan Tahsilat Protokolü
           </p>
         </div>
       </div>
 
-      <div class="checkout-grid-container" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(340px, 1fr)); gap:28px; align-items:start; max-width:1160px; margin:24px auto 60px;">
+      <div class="checkout-grid-container">
         
-        <!-- SOL KOLON: ALICI BİLGİLERİ, TESLİMAT TERCİHİ VE HUKUKİ ONAYLAR -->
-        <div class="checkout-main-panel" style="background:#FFFFFF; border:1px solid var(--color-border); border-radius:12px; padding:24px 26px; box-shadow:0 4px 20px rgba(0,0,0,0.02);">
+        <!-- SOL KOLON: 1. SIRA - ALICI BİLGİLERİ, TESLİMAT VE HUKUKİ ONAYLAR -->
+        <div class="checkout-main-panel">
           <form id="checkoutForm" onsubmit="event.preventDefault(); App.processOrder();">
             
             <!-- 1. Müşteri & İletişim Bilgileri -->
-            <div style="margin-bottom:22px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; border-bottom:1px solid #F0ECE4; padding-bottom:10px;">
-                <h3 style="font-size:13.5px; font-weight:800; color:var(--color-teal); text-transform:uppercase; letter-spacing:0.8px; margin:0; display:flex; align-items:center; gap:6px;">
+            <div style="margin-bottom:16px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #F0ECE4; padding-bottom:6px;">
+                <h3 style="font-size:13px; font-weight:800; color:var(--color-teal); text-transform:uppercase; letter-spacing:0.6px; margin:0; display:flex; align-items:center; gap:6px;">
                   <span>👤 1. Alıcı & İletişim Bilgileri</span>
                 </h3>
-                <span style="font-size:11px; color:#777; font-weight:600;">e-Arşiv Fatura & 3D SMS</span>
+                <span style="font-size:11px; color:#666; font-weight:600; background:#FAF8F5; padding:2px 8px; border-radius:4px; border:1px solid #EAE5D9;">e-Arşiv & 3D SMS</span>
               </div>
 
-              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
                 <div>
-                  <label style="font-size:12px; font-weight:700; display:block; margin-bottom:5px; color:#222;">Adınız *</label>
-                  <input type="text" id="checkoutFirstName" required placeholder="Adınız" autocomplete="given-name" style="width:100%; padding:10px 12px; border:1.5px solid #D8D2C5; border-radius:6px; font-family:inherit; font-size:13px; background:#FAFAFA; box-sizing:border-box;">
+                  <label style="font-size:11.5px; font-weight:700; display:block; margin-bottom:3px; color:#333;">Adınız *</label>
+                  <input type="text" id="checkoutFirstName" required placeholder="Adınız" autocomplete="given-name" style="width:100%; padding:8px 12px; border:1.5px solid #D8D2C5; border-radius:6px; font-family:inherit; font-size:13px; background:#FAFAFA; box-sizing:border-box;">
                 </div>
                 <div>
-                  <label style="font-size:12px; font-weight:700; display:block; margin-bottom:5px; color:#222;">Soyadınız *</label>
-                  <input type="text" id="checkoutLastName" required placeholder="Soyadınız" autocomplete="family-name" style="width:100%; padding:10px 12px; border:1.5px solid #D8D2C5; border-radius:6px; font-family:inherit; font-size:13px; background:#FAFAFA; box-sizing:border-box;">
+                  <label style="font-size:11.5px; font-weight:700; display:block; margin-bottom:3px; color:#333;">Soyadınız *</label>
+                  <input type="text" id="checkoutLastName" required placeholder="Soyadınız" autocomplete="family-name" style="width:100%; padding:8px 12px; border:1.5px solid #D8D2C5; border-radius:6px; font-family:inherit; font-size:13px; background:#FAFAFA; box-sizing:border-box;">
                 </div>
               </div>
 
-              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
                 <div>
-                  <label style="font-size:12px; font-weight:700; display:block; margin-bottom:5px; color:#222;">Telefon (3D Secure SMS) *</label>
-                  <input type="tel" id="checkoutPhone" required placeholder="05XX XXX XX XX" autocomplete="tel" style="width:100%; padding:10px 12px; border:1.5px solid #D8D2C5; border-radius:6px; font-family:inherit; font-size:13px; background:#FAFAFA; box-sizing:border-box;">
+                  <label style="font-size:11.5px; font-weight:700; display:block; margin-bottom:3px; color:#333;">Telefon (3D SMS) *</label>
+                  <input type="tel" id="checkoutPhone" required placeholder="05XX XXX XX XX" autocomplete="tel" style="width:100%; padding:8px 12px; border:1.5px solid #D8D2C5; border-radius:6px; font-family:inherit; font-size:13px; background:#FAFAFA; box-sizing:border-box;">
                 </div>
                 <div>
-                  <label style="font-size:12px; font-weight:700; display:block; margin-bottom:5px; color:#222;">E-Posta (e-Arşiv & Belge) *</label>
-                  <input type="email" id="checkoutEmail" required placeholder="ornek@alanadi.com" autocomplete="email" style="width:100%; padding:10px 12px; border:1.5px solid #D8D2C5; border-radius:6px; font-family:inherit; font-size:13px; background:#FAFAFA; box-sizing:border-box;">
+                  <label style="font-size:11.5px; font-weight:700; display:block; margin-bottom:3px; color:#333;">E-Posta (e-Arşiv) *</label>
+                  <input type="email" id="checkoutEmail" required placeholder="ornek@alanadi.com" autocomplete="email" style="width:100%; padding:8px 12px; border:1.5px solid #D8D2C5; border-radius:6px; font-family:inherit; font-size:13px; background:#FAFAFA; box-sizing:border-box;">
                 </div>
               </div>
 
               <div>
-                <label style="font-size:12px; font-weight:700; display:block; margin-bottom:5px; color:#222;">T.C. Kimlik / Pasaport No <small style="font-weight:400; color:#888;">(MASAK Uyum & Fatura)</small></label>
-                <input type="text" id="checkoutIdentity" maxlength="11" placeholder="T.C. Kimlik No (11 Haneli)" style="width:100%; padding:10px 12px; border:1.5px solid #D8D2C5; border-radius:6px; font-family:inherit; font-size:13px; background:#FAFAFA; box-sizing:border-box;">
+                <label style="font-size:11.5px; font-weight:700; display:block; margin-bottom:3px; color:#333;">T.C. Kimlik / Pasaport No <small style="font-weight:400; color:#777;">(MASAK & Fatura)</small></label>
+                <input type="text" id="checkoutIdentity" maxlength="11" placeholder="T.C. Kimlik No (11 Haneli)" style="width:100%; padding:8px 12px; border:1.5px solid #D8D2C5; border-radius:6px; font-family:inherit; font-size:13px; background:#FAFAFA; box-sizing:border-box;">
               </div>
             </div>
 
-            <!-- 2. Teslimat & Adres Tercihi -->
-            <div id="checkoutDeliverySection" style="margin-bottom:22px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid #F0ECE4; padding-bottom:8px;">
-                <h3 id="checkoutDeliveryHeading" style="font-size:13.5px; font-weight:800; color:var(--color-teal); text-transform:uppercase; letter-spacing:0.8px; margin:0;">
-                  🏛️ 2. Teslimat & Adres Tercihi
+            <!-- Teslimat & Adres Tercihi -->
+            <div id="checkoutDeliverySection" style="margin-bottom:14px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px solid #F0ECE4; padding-bottom:6px;">
+                <h3 id="checkoutDeliveryHeading" style="font-size:13px; font-weight:800; color:var(--color-teal); text-transform:uppercase; letter-spacing:0.6px; margin:0;">
+                  🏛️ Teslimat & Showroom Tercihi
                 </h3>
                 <span id="checkoutDeliveryBadge" style="font-size:11px; color:#15803D; font-weight:700; background:#EAF5ED; padding:2px 8px; border-radius:4px;">Sigortalı & Ücretsiz</span>
               </div>
               
               <div id="checkoutDeliveryContent">
-                <div style="border:1px solid #CBE5E2; background:#F4FAF9; padding:12px 14px; border-radius:8px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+                <div style="border:1px solid #CBE5E2; background:#F4FAF9; padding:10px 12px; border-radius:8px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
                   <div>
-                    <strong style="font-size:13px; color:var(--color-ink); display:block; margin-bottom:2px;">İzmir Buca Showroom Mağazadan Teslimat</strong>
-                    <span style="font-size:11.5px; color:#555;">Menderes Cad. No:231/B Buca / İzmir · 12.000 TL+ MASAK Kimlik İbraz Protokolü</span>
+                    <strong style="font-size:12.5px; color:var(--color-ink); display:block; margin-bottom:1px;">İzmir Buca Showroom Mağazadan Teslimat</strong>
+                    <span style="font-size:11px; color:#555;">Menderes Cad. No:231/B Buca / İzmir · 12.000 TL+ MASAK Kimlik İbraz Protokolü</span>
                   </div>
                   <input type="radio" name="shippingMethod" value="showroom" checked style="accent-color:var(--color-teal); width:16px; height:16px;">
                 </div>
               </div>
             </div>
 
-            <!-- 3. HUKUKİ ONAYLAR VE HMK m.193 DELİL ŞERHİ -->
-            <div style="font-size:11.5px; color:#555; display:flex; flex-direction:column; gap:8px; background:#FAF9F6; border:1px solid #EAE6DF; padding:14px 16px; border-radius:10px;">
-              <div style="font-size:11px; color:#666; line-height:1.4; border-bottom:1px solid #EAE6DF; padding-bottom:8px; display:flex; align-items:center; gap:6px;">
+            <!-- HUKUKİ ONAYLAR VE DELİL ŞERHİ -->
+            <div style="font-size:11px; color:#555; display:flex; flex-direction:column; gap:6px; background:#FAF9F6; border:1px solid #EAE6DF; padding:10px 12px; border-radius:8px;">
+              <div style="font-size:10.5px; color:#666; line-height:1.35; border-bottom:1px solid #EAE6DF; padding-bottom:6px; display:flex; align-items:center; gap:5px;">
                 <span>ℹ️</span>
                 <span>Verileriniz siparişin ifası için <a href="kvkk-aydinlatma-metni.html" target="_blank" style="color:var(--color-teal); font-weight:700; text-decoration:underline;">KVKK Aydınlatma Metni (05)</a> kapsamında korunmaktadır.</span>
               </div>
 
               <!-- 01 + 02: Zorunlu Ortak Hukuk Onayı -->
-              <label style="display:flex; gap:8px; align-items:flex-start; cursor:pointer;">
+              <label style="display:flex; gap:6px; align-items:flex-start; cursor:pointer;">
                 <input type="checkbox" id="chkTerms" required checked style="margin-top:2px; accent-color:var(--color-teal);">
                 <span><a href="on-bilgilendirme-formu.html?source=checkout" target="_blank" style="color:var(--color-teal); font-weight:700; text-decoration:underline;">Ön Bilgilendirme Formunu (02)</a> ve <a href="mesafeli-satis-sozlesmesi.html?source=checkout" target="_blank" style="color:var(--color-teal); font-weight:700; text-decoration:underline;">Mesafeli Satış Sözleşmesini (01)</a> onaylıyorum. *</span>
               </label>
 
               <!-- 12 + 03 + 13: Güvenlik ve Teslimat Protokolleri -->
-              <label style="display:flex; gap:8px; align-items:flex-start; cursor:pointer;">
+              <label style="display:flex; gap:6px; align-items:flex-start; cursor:pointer;">
                 <input type="checkbox" id="chkKyc" required checked style="margin-top:2px; accent-color:var(--color-teal);">
                 <span><a href="musteri-tanima-ve-islem-guvenligi.html?source=checkout" target="_blank" style="color:var(--color-teal); font-weight:700; text-decoration:underline;">Müşteri Tanıma (12)</a> ve 12.000 TL+ <a href="yuksek-degerli-urun-teslimi.html?source=checkout" target="_blank" style="color:var(--color-teal); font-weight:700; text-decoration:underline;">Yüksek Değerli Teslim (03)</a> esaslarını kabul ediyorum. *</span>
               </label>
               <input type="checkbox" id="chkHighValue" required checked style="display:none;">
 
               <!-- 13: Mağaza Teslim-Tesellüm -->
-              <label style="display:flex; gap:8px; align-items:flex-start; cursor:pointer;">
+              <label style="display:flex; gap:6px; align-items:flex-start; cursor:pointer;">
                 <input type="checkbox" id="chkHandover" required checked style="margin-top:2px; accent-color:var(--color-teal);">
                 <span><a href="magaza-teslim-tesellum-formu.html?source=checkout" target="_blank" style="color:var(--color-teal); font-weight:700; text-decoration:underline;">Mağaza Teslim-Tesellüm Formu (13)</a> şartlarını kabul ediyorum. *</span>
               </label>
 
               <!-- 09 + 10: Pazarlama & KVKK Rıza -->
-              <div style="display:flex; flex-direction:column; gap:6px; border-top:1px dashed #EAE6DF; padding-top:8px; margin-top:2px;">
-                <label style="display:flex; gap:8px; align-items:flex-start; cursor:pointer;">
+              <div style="display:flex; flex-direction:column; gap:4px; border-top:1px dashed #EAE6DF; padding-top:6px; margin-top:2px;">
+                <label style="display:flex; gap:6px; align-items:flex-start; cursor:pointer;">
                   <input type="checkbox" id="chkMarketing" checked style="margin-top:2px; accent-color:var(--color-teal);">
                   <span>Fırsatlardan SMS/e-posta ile haberdar olmak istiyorum (<a href="ticari-elektronik-ileti-onayi.html?source=checkout" target="_blank" style="color:var(--color-teal); text-decoration:underline;">09</a>).</span>
                 </label>
-                <label style="display:flex; gap:8px; align-items:flex-start; cursor:pointer;">
+                <label style="display:flex; gap:6px; align-items:flex-start; cursor:pointer;">
                   <input type="checkbox" id="chkConsent" checked style="margin-top:2px; accent-color:var(--color-teal);">
                   <span>Kişiselleştirilmiş ürün/öneri analizine rıza veriyorum (<a href="kvkk-acik-riza.html?source=checkout" target="_blank" style="color:var(--color-teal); text-decoration:underline;">10</a>).</span>
                 </label>
@@ -49281,19 +49304,19 @@
           </form>
         </div>
 
-        <!-- SAĞ KOLON: SİPARİŞ ÖZETİ, ROLEX BUTONU, AKBANK GÜVENCESİ VE MAĞAZA İLETİŞİMİ -->
-        <div class="checkout-sidebar-panel" style="display:flex; flex-direction:column; gap:18px;">
+        <!-- SAĞ KOLON: 2. SIRA SEPET + 3. SIRA KART BİLGİLERİ + 4. SIRA ÖDEME BUTONU -->
+        <div class="checkout-sidebar-panel">
           
-          <!-- 1. Sipariş Özeti Kutusu + Rolex Yeşil Buton -->
-          <div id="checkoutSummaryContainer" class="checkout-summary-box" style="background:#FFFFFF; border:1px solid var(--color-border); border-radius:12px; padding:22px; box-shadow:0 4px 20px rgba(0,0,0,0.02);">
-            <div class="checkout-summary-title" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; border-bottom:1px solid #F0ECE4; padding-bottom:10px;">
-              <span style="font-size:14px; font-weight:800; color:var(--color-ink);">📦 Sipariş Özeti</span>
-              <a href="#" data-page="sepet" style="font-size:12px; color:var(--color-teal); text-decoration:underline; font-weight:600;">Sepeti Düzenle</a>
+          <!-- 2. SIRA: SİPARİŞ ÖZETİ (SEPET) -->
+          <div id="checkoutSummaryContainer" class="checkout-summary-box">
+            <div class="checkout-summary-title">
+              <span>📦 2. Sipariş Özeti</span>
+              <a href="#" data-page="sepet" style="font-size:11.5px; color:var(--color-teal); text-decoration:underline; font-weight:700; text-transform:none; letter-spacing:0;">Sepeti Düzenle</a>
             </div>
-            <div id="checkoutItemsListMini" class="checkout-items-mini" style="max-height:240px; overflow-y:auto; margin-bottom:14px;">
+            <div id="checkoutItemsListMini" class="checkout-items-mini">
               <!-- JS ile dinamik doldurulur -->
             </div>
-            <div style="border-top:1px solid #EAE5D9; padding-top:12px; display:flex; flex-direction:column; gap:8px; font-size:13px;">
+            <div style="border-top:1px solid #EAE5D9; padding-top:8px; display:flex; flex-direction:column; gap:6px; font-size:12.5px;">
               <div style="display:flex; justify-content:space-between; color:var(--color-muted);">
                 <span>Ara Toplam (KDV Dahil)</span>
                 <span id="checkoutSubtotalDisplay" style="font-weight:700; color:var(--color-ink);">₺0</span>
@@ -49306,76 +49329,95 @@
                 <span>Teslimat & Sigorta</span>
                 <span style="color:#15803D; font-weight:700;">Ücretsiz (Sigortalı)</span>
               </div>
-              <div class="checkout-total-row" style="display:flex; justify-content:space-between; align-items:baseline; font-size:18px; font-weight:900; color:var(--color-teal); padding-top:10px; border-top:1px solid #EAE5D9; margin-top:4px; margin-bottom:14px;">
+              <div class="checkout-total-row">
                 <span>Ödenecek Tutar</span>
                 <span id="checkoutGrandTotalDisplay">₺0</span>
               </div>
             </div>
-
-            <!-- 🎯 SAĞ TARAFTA: ROLEX ZÜMRÜT YEŞİLİ TEK BASKIN VE ULTRA-LÜKS ÖDEME BUTONU -->
-            <button type="button" onclick="App.processOrder()" id="checkoutSubmitBtn" class="btn-checkout-luxe" style="display:flex !important; align-items:center !important; justify-content:center !important; gap:10px !important; width:100% !important; min-height:56px !important; padding:15px 20px !important; background:linear-gradient(135deg, #006039 0%, #004D2C 50%, #00361F 100%) !important; color:#FFFFFF !important; font-family:'Plus Jakarta Sans', sans-serif !important; font-size:15.5px !important; font-weight:800 !important; letter-spacing:0.4px !important; border:2px solid #C2A768 !important; border-radius:10px !important; cursor:pointer !important; box-shadow:0 10px 26px rgba(0, 96, 57, 0.45), 0 3px 8px rgba(0,0,0,0.18) !important; text-shadow:0 1px 2px rgba(0,0,0,0.5) !important; transition:all 0.28s ease !important; box-sizing:border-box !important;">
-              <span class="btn-checkout-icon" style="font-size:22px; line-height:1; filter:drop-shadow(0 1px 2px rgba(0,0,0,0.4));">🔒</span>
-              <span id="checkoutSubmitBtnText" style="font-size:15px; font-weight:800; color:#FFFFFF; letter-spacing:0.4px;">3D Secure ile Güvenli Öde (₺0)</span>
-            </button>
-            <div style="display:flex; align-items:center; justify-content:center; gap:6px; font-size:11px; color:#666; margin-top:10px; text-align:center;">
-              <span style="color:#006039; font-weight:800;">🔒</span>
-              <span>Akbank 3D SMS şifresi ile anında güvenli tahsilat</span>
-            </div>
           </div>
 
-          <!-- 2. Akbank Sanal POS Doğrudan Ödeme Kapısı & Güvenlik Paneli (TEK VE KANONİK ALAN) -->
-          <div id="cardPaymentFields" style="background:#FFFFFF; border:1.5px solid #C2A768; border-radius:12px; padding:20px 22px; box-shadow:0 4px 16px rgba(194,167,104,0.12);" data-payment-network-readiness="v1">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid #F0ECE4; padding-bottom:10px;">
-              <div style="display:flex; align-items:center; gap:8px;">
-                <span style="font-size:18px;">🛡️</span>
+          <!-- 3. SIRA: KUVEYT TÜRK SANAL POS KART BİLGİLERİ ALANI -->
+          <div id="cardPaymentFields" style="background:#FFFFFF; border:1.5px solid #C2A768; border-radius:12px; padding:16px 18px; box-shadow:0 4px 16px rgba(194,167,104,0.12);" data-payment-network-readiness="v1">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #F0ECE4; padding-bottom:8px;">
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span style="font-size:16px;">🛡️</span>
                 <div>
-                  <h3 style="font-size:13px; font-weight:800; color:var(--color-teal); text-transform:uppercase; letter-spacing:0.6px; margin:0;">
-                    Akbank Sanal POS Güvencesi
+                  <h3 style="font-size:12.5px; font-weight:800; color:var(--color-teal); text-transform:uppercase; letter-spacing:0.5px; margin:0;">
+                    3. Kart ile Güvenli Ödeme
                   </h3>
-                  <span style="font-size:11px; color:#666;">256-Bit EV SSL & BDDK Lisanslı 3D Secure</span>
+                  <span style="font-size:10.5px; color:#666;">Kuveyt Türk 256-Bit SSL & 3D Secure</span>
                 </div>
               </div>
-              <div style="display:flex; align-items:center; gap:5px; flex-wrap:wrap;">
-                <span style="background:#ED1C24; color:#FFF; font-size:10px; font-weight:900; padding:2px 6px; border-radius:4px;">AKBANK</span>
-                <span style="background:#005BAC; color:#FFF; font-size:9.5px; font-weight:800; padding:2px 5px; border-radius:4px;">TROY</span>
-                <span style="background:#1A1F71; color:#FFF; font-size:9.5px; font-weight:800; padding:2px 5px; border-radius:4px;">VISA</span>
-                <span style="background:#EB001B; color:#FFF; font-size:9.5px; font-weight:800; padding:2px 5px; border-radius:4px;">Mastercard</span>
+              <div style="display:flex; align-items:center; gap:4px; flex-wrap:wrap;">
+                <span style="background:#008450; color:#FFF; font-size:9.5px; font-weight:900; padding:2px 5px; border-radius:4px; display:inline-flex; align-items:center; gap:3px;"><img src="/images/bankalar/kuveytturk.jpg" style="width:10px; height:10px; border-radius:50%;"> KUVEYT TÜRK</span>
+                <span style="background:#005BAC; color:#FFF; font-size:9px; font-weight:800; padding:2px 4px; border-radius:4px;">TROY</span>
+                <span style="background:#1A1F71; color:#FFF; font-size:9px; font-weight:800; padding:2px 4px; border-radius:4px;">VISA</span>
+                <span style="background:#EB001B; color:#FFF; font-size:9px; font-weight:800; padding:2px 4px; border-radius:4px;">Mastercard</span>
               </div>
               <input type="radio" name="paymentOption" value="card" checked style="display:none;">
             </div>
 
-            <p style="font-size:12px; color:#444; line-height:1.5; margin:0 0 10px;">
-              Kart bilgileriniz bu sayfada <strong>asla istenmez ve saklanmaz</strong>. Yukarıdaki butona tıkladığınızda doğrudan <strong>Akbank T.A.Ş. Resmi 256-Bit SSL 3D Secure</strong> ödeme ekranına yönlendirilirsiniz.
-            </p>
-
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; padding-top:8px; border-top:1px dashed #D9D0B8; font-size:11px; color:#5D4411;">
-              <div style="display:flex; align-items:center; gap:5px;">
+            <div style="margin:8px 0 10px; display:flex; flex-direction:column; gap:8px;">
+              <div>
+                <label style="display:block; font-size:11px; font-weight:700; color:#444; margin-bottom:3px;">Kart Üzerindeki İsim *</label>
+                <input type="text" id="checkoutCardHolder" placeholder="Kart üzerindeki Ad Soyad" style="width:100%; padding:8px 12px; border:1px solid #D5CBB9; border-radius:6px; font-size:13px; font-family:inherit; box-sizing:border-box;" autocomplete="cc-name">
+              </div>
+              <div>
+                <label style="display:block; font-size:11px; font-weight:700; color:#444; margin-bottom:3px;">Kart Numarası *</label>
+                <input type="tel" id="checkoutCardNumber" placeholder="0000 0000 0000 0000" maxlength="19" style="width:100%; padding:8px 12px; border:1px solid #D5CBB9; border-radius:6px; font-size:13.5px; font-weight:700; letter-spacing:1px; font-family:inherit; box-sizing:border-box;" autocomplete="cc-number">
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                <div>
+                  <label style="display:block; font-size:11px; font-weight:700; color:#444; margin-bottom:3px;">Son Kullanma (AA/YY) *</label>
+                  <input type="tel" id="checkoutCardExpiry" placeholder="AA/YY" maxlength="5" style="width:100%; padding:8px 12px; border:1px solid #D5CBB9; border-radius:6px; font-size:13px; font-weight:700; font-family:inherit; box-sizing:border-box;" autocomplete="cc-exp">
+                </div>
+                <div>
+                  <label style="display:block; font-size:11px; font-weight:700; color:#444; margin-bottom:3px;">Güvenlik Kodu (CVV) *</label>
+                  <input type="tel" id="checkoutCardCvc" placeholder="CVV" maxlength="4" style="width:100%; padding:8px 12px; border:1px solid #D5CBB9; border-radius:6px; font-size:13px; font-weight:700; font-family:inherit; box-sizing:border-box;" autocomplete="cc-csc">
+                </div>
+              </div>
+            </div>
+            
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; padding-top:6px; border-top:1px dashed #D9D0B8; font-size:10.5px; color:#5D4411;">
+              <div style="display:flex; align-items:center; gap:4px;">
                 <span>🛡️</span>
                 <span><strong>PCI-DSS Seviye 1:</strong> Sıfır veri</span>
               </div>
-              <div style="display:flex; align-items:center; gap:5px;">
+              <div style="display:flex; align-items:center; gap:4px;">
                 <span>📲</span>
                 <span><strong>SMS OTP:</strong> Banka şifreli</span>
               </div>
-              <div style="display:flex; align-items:center; gap:5px;">
+              <div style="display:flex; align-items:center; gap:4px;">
                 <span>💎</span>
                 <span><strong>Tek Çekim:</strong> Mevzuata uygun</span>
               </div>
-              <div style="display:flex; align-items:center; gap:5px;">
+              <div style="display:flex; align-items:center; gap:4px;">
                 <span>🔒</span>
                 <span><strong>EV-SSL:</strong> 256-Bit şifreli</span>
               </div>
             </div>
           </div>
 
-          <!-- 3. Mağaza & Destek Kartı -->
-          <div style="background:#FFFFFF; border:1px solid var(--color-border); border-radius:12px; padding:16px 20px; font-size:12px; color:#444; display:flex; flex-direction:column; gap:6px; box-shadow:0 2px 8px rgba(0,0,0,0.02);">
-            <strong style="color:var(--color-teal); font-size:13px;">🏛️ Belgin Kuyumculuk Showroom</strong>
-            <span>📍 Menderes Cad. No:231/B Buca / İzmir</span>
-            <span>✉️ <a href="mailto:destek@belginkuyumculuk.com" style="color:var(--color-teal); text-decoration:underline;">destek@belginkuyumculuk.com</a></span>
-            <a href="https://wa.me/905419305372?text=Merhaba,%20sipari%C5%9F%20ve%20%C3%B6deme%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener" style="color:var(--color-teal); text-decoration:underline; font-weight:700; display:inline-flex; align-items:center; gap:4px; margin-top:4px;">
-              💬 WhatsApp Müşteri Temsilcisi (+90 541 930 53 72)
-            </a>
+          <!-- 4. SIRA: ÖDEME YAP / SATIN AL BUTONU (TEK BASKIN CTA) & DESTEK NOTU -->
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <button type="button" onclick="App.processOrder()" id="checkoutSubmitBtn" class="btn-checkout-luxe" style="display:flex !important; align-items:center !important; justify-content:center !important; gap:10px !important; width:100% !important; min-height:50px !important; padding:14px 20px !important; background:linear-gradient(135deg, #006039 0%, #004D2C 50%, #00361F 100%) !important; color:#FFFFFF !important; font-family:'Plus Jakarta Sans', sans-serif !important; font-size:15px !important; font-weight:800 !important; letter-spacing:0.4px !important; border:2px solid #C2A768 !important; border-radius:10px !important; cursor:pointer !important; box-shadow:0 8px 24px rgba(0, 96, 57, 0.4), 0 2px 6px rgba(0,0,0,0.15) !important; text-shadow:0 1px 2px rgba(0,0,0,0.5) !important; transition:all 0.25s ease !important; box-sizing:border-box !important;">
+              <span class="btn-checkout-icon" style="font-size:20px; line-height:1; filter:drop-shadow(0 1px 2px rgba(0,0,0,0.4));">🔒</span>
+              <span id="checkoutSubmitBtnText" style="font-size:14.5px; font-weight:800; color:#FFFFFF; letter-spacing:0.3px;">3D Secure ile Güvenli Öde (₺0)</span>
+            </button>
+            
+            <div style="display:flex; align-items:center; justify-content:center; gap:5px; font-size:10.5px; color:#666; text-align:center;">
+              <span style="color:#006039; font-weight:800;">🔒</span>
+              <span>Kuveyt Türk 3D SMS şifresi ile anında güvenli tahsilat</span>
+            </div>
+
+            <!-- Showroom & VIP Danışmanlık Bilgisi (Kompakt Tek Satır) -->
+            <div style="background:#FFFFFF; border:1px solid var(--color-border); border-radius:8px; padding:8px 12px; font-size:11px; color:#555; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+              <span>🏛️ <strong>Showroom:</strong> Buca / İzmir</span>
+              <span>✉️ <a href="mailto:destek@belginkuyumculuk.com" style="color:var(--color-teal); text-decoration:underline;">destek@belginkuyumculuk.com</a></span>
+              <a href="https://wa.me/905419305372?text=Merhaba,%20sipari%C5%9F%20ve%20%C3%B6deme%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener" style="color:var(--color-teal); text-decoration:underline; font-weight:700; display:inline-flex; align-items:center; gap:3px;">
+                💬 WhatsApp (+90 541 930 53 72)
+              </a>
+            </div>
           </div>
 
         </div>
@@ -49481,7 +49523,7 @@
         </div>
         <div class="trust-card-content">
           <div class="trust-card-title">256-Bit SSL & 3D Secure</div>
-          <div class="trust-card-desc">Akbank Sanal POS ile şifreli ödeme altyapısı</div>
+          <div class="trust-card-desc">Kuveyt Türk Sanal POS ile şifreli ödeme altyapısı</div>
         </div>
       </div>
 
@@ -49510,7 +49552,7 @@
     <div class="footer-art-grid">
       <!-- Kolon 1: Maison & Showroom -->
       <div class="footer-brand-col">
-        <a class="footer-brand-logo-wrap" href="/" data-page="ana-sayfa" aria-label="Belgin Kuyumculuk & Saat ana sayfa">
+        <a class="footer-brand-logo-wrap" href="/" data-page="ana-sayfa" onclick="goToHome(event)" aria-label="Belgin Kuyumculuk & Saat ana sayfa">
           <img class="brand-logo brand-logo-footer" src="images/belgin-logo.png" width="1672" height="941" alt="Belgin Kuyumculuk & Saat" loading="lazy" decoding="async">
         </a>
         <p class="footer-art-text">
@@ -49621,10 +49663,10 @@
         <div class="payment-matrix-info">
           <span class="security-shield-icon">🛡️</span>
           <strong>Kartlı Ödeme Güvenliği:</strong>
-          <span class="security-note">Akbank Sanal POS altyapısı, 3D Secure ve 256-Bit SSL koruması. Kart verileri Belgin sistemlerinde saklanmaz.</span>
+          <span class="security-note">Kuveyt Türk Sanal POS altyapısı, 3D Secure ve 256-Bit SSL koruması. Kart verileri Belgin sistemlerinde saklanmaz.</span>
         </div>
         <div class="payment-badges-wrap">
-          <span class="pay-badge-akbank">AKBANK</span>
+          <span class="pay-badge-kuveytturk">KUVEYT TÜRK</span>
           <span class="pay-badge-network visa" aria-label="Visa kabul edilir">VISA</span>
           <span class="pay-badge-network mastercard" aria-label="Mastercard kabul edilir">Mastercard</span>
           <span class="pay-badge-network troy" aria-label="TROY kabul edilir">TROY</span>
@@ -49670,7 +49712,7 @@
 
 <!-- MOBİL ALT SABİT LÜKS DOCK (IPHONE & ANDROID SAFE-AREA UYUMLU) -->
 <nav class="mobile-bottom-dock" role="navigation" aria-label="Mobil Hızlı Menü">
-  <a href="/" data-page="ana-sayfa" class="mobile-dock-btn active">
+  <a href="/" data-page="ana-sayfa" onclick="goToHome(event)" class="mobile-dock-btn active">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
     <span>Ana Sayfa</span>
   </a>

@@ -253,7 +253,9 @@
                             {{buyer.addressLine2}}&nbsp;
                         </td>
                     </tr>
+                    {{#if buyer.website}}
                     <tr align="left"><td>Web Sitesi: {{buyer.website}}</td></tr>
+                    {{/if}}
                     <tr align="left"><td>E-Posta: {{buyer.email}}</td></tr>
                     <tr align="left"><td align="left" style="width:469px; ">Tel: {{buyer.phone}} Fax: {{buyer.fax}}&nbsp;</td></tr>
                     <tr align="left"><td>{{buyer.idLabel}}: {{buyer.id}}</td></tr>

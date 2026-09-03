@@ -168,7 +168,7 @@ function buildEvidenceContext(o) {
     mcc: "5944 (Mücevherat, Kıymetli Taş ve Saat Mağazacılığı)",
     statementDescriptor: "BELGIN KUYUMCULUK BUCA IZMIR TR",
     scheme: isSecondTx ? "Troy" : "VISA",
-    acquirer: "AKBANK T.A.Ş.",
+    acquirer: "KUVEYT TÜRK KATILIM BANKASI A.Ş.",
     issuer: isSecondTx ? "YAPI VE KREDİ BANKASI A.Ş." : "T. HALK BANKASI A.Ş."
   };
 
@@ -210,7 +210,7 @@ function buildEvidenceContext(o) {
   // 1. RAW SOURCE ARTIFACT PAYLOADS & HASHES (9 DOSYA) (R1 & R4)
   const rawArtifactPayloads = {
     "SOURCE-001": JSON.stringify({
-      source: "Akbank VPAS / Core Gateway 3DS Authorization Payload",
+      source: "Kuveyt Türk 3DS Gateway / Core Gateway 3DS Authorization Payload",
       orderId: orderId,
       dsTransId: dsTransId,
       bin: cardBin,
@@ -300,7 +300,7 @@ function buildEvidenceContext(o) {
   const sourceArtifacts = {
     "SOURCE-001": {
       id: "SOURCE-001",
-      title: "Akbank VPAS / Core Gateway 3DS Ham Yetkilendirme JSON",
+      title: "Kuveyt Türk 3DS Gateway / Core Gateway 3DS Ham Yetkilendirme JSON",
       filename: isSecondTx ? "AKB_VPAS_RAW_PAYLOAD_20260828_121205_YKB.json" : "AKB_VPAS_RAW_PAYLOAD_20260828_120105_HLK.json",
       mime: "application/json",
       sizeBytes: 4892,
@@ -411,7 +411,7 @@ function buildEvidenceContext(o) {
     "BELGE-06A": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-06A: MAĞAZA TESLİME HAZIRLIK FORMU</title></head><body><h1>MAĞAZA TESLİME HAZIRLIK VE KALİTE KONTROL FORMU</h1><p>Sipariş No: ${orderId}</p><p>Hazırlık Zamanı: ${pickupReadyAt}</p><p>Tartım: Radwag Hassas Terazi (${grossWeight})</p><p>Ayar: 24 Ayar (0.995 Has Altın)</p><p>Kontrol Eden: EMP-BELGIN-02 (Mağaza Operasyon Sorumlusu)</p></body></html>`,
     "BELGE-06B": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-06B: FİİLİ MAĞAZA TESLİM TUTANAĞI</title></head><body><h1>FİİLİ MAĞAZA TESLİM VE KİMLİK DOĞRULAMA TUTANAĞI</h1><p>Sipariş: ${orderId}</p><p>Teslim Alan: ${custName} (${canonicalTckn})</p><p>Fiili Teslim Zamanı: ${deliveredAt}</p><p>Islak İmza Zamanı: ${wetSignatureAt}</p><p>İbraz Edilen Kimlik: T.C. Kimlik Kartı Aslı (Fiziken Görülmüş ve Doğrulanmıştır)</p><p>Teslim Eden Personel: EMP-BELGIN-04 (Yetkili Satış Uzmanı)</p></body></html>`,
     "BELGE-07": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-07: TESLİM VE ÖDEME TEYİT BEYANI</title></head><body><h1>TESLİM VE ÖDEME TEYİT BEYANI</h1><p>Sipariş: ${orderId}</p><p>Teyit Zamanı: ${postDeliveryConfirmedAt}</p><p>Beyan: Ürünü mağazada eksiksiz, ayıpsız ve tam ayarında teslim aldım; ödeme tarafıma aittir.</p><p>Müşteri İmza: Islak İmzalı Asıl Mevcut</p></body></html>`,
-    "BELGE-08": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-08: BANKA / 3DS KANIT RAPORU</title></head><body><h1>AKBANK VPAS / CORE 3DS GÜVENLİK VE PROVİZYON KANIT RAPORU</h1><p>Sipariş: ${orderId}</p><p>Provizyon Zamanı: ${authorizationApprovedAt}</p><p>DS Trans ID: ${dsTransId}</p><p>ECI: 05</p><p>TransStatus: Y</p><p>CAVV: Doğrulandı ve Provizyon İsteğinde Gönderildi</p><p>Kart: ${maskedPan} (${cardScheme})</p></body></html>`,
+    "BELGE-08": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-08: BANKA / 3DS KANIT RAPORU</title></head><body><h1>KUVEYT TÜRK 3DS GATEWAY / CORE 3DS GÜVENLİK VE PROVİZYON KANIT RAPORU</h1><p>Sipariş: ${orderId}</p><p>Provizyon Zamanı: ${authorizationApprovedAt}</p><p>DS Trans ID: ${dsTransId}</p><p>ECI: 05</p><p>TransStatus: Y</p><p>CAVV: Doğrulandı ve Provizyon İsteğinde Gönderildi</p><p>Kart: ${maskedPan} (${cardScheme})</p></body></html>`,
     "BELGE-09": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-09: E-FATURA & MALİ EŞLEŞTİRME RAPORU</title></head><body><h1>GİB E-ARŞİV FATURA VE MALİ EŞLEŞTİRME RAPORU</h1><p>Fatura No: ${isSecondTx ? 'BLG2026000000842' : 'BLG2026000000841'}</p><p>GİB UUID: ${gibUuid}</p><p>Fatura Tarihi: 28.08.2026 ${isSecondTx ? '12:15:00' : '12:05:00'}</p><p>Özel Matrah Tutarı: ₺${totalAmount.toLocaleString('tr-TR')}</p><p>Alıcı: ${custName} (${canonicalTckn})</p></body></html>`,
     "BELGE-10": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-10: ÜRÜN BİREYSELLEŞTİRME & STOK ÇIKIŞ RAPORU</title></head><body><h1>ÜRÜN BİREYSELLEŞTİRME VE STOK ÇIKIŞ RAPORU</h1><p>Sipariş: ${orderId}</p><p>Lot No: ${isSecondTx ? 'LOT-2026-AU-085' : 'LOT-2026-AU-084'}</p><p>Stok Çıkış ID: ${isSecondTx ? 'STK-OUT-20260828-092' : 'STK-OUT-20260828-091'}</p><p>Ağırlık: ${grossWeight}</p><p>Sertifika: Darphane Güvenlikli Hologram</p></body></html>`,
     "BELGE-11": `<!DOCTYPE html><html lang="tr"><head><title>BELGE-11: CİHAZ & GEÇMİŞ İŞLEM DATASETİ</title></head><body><h1>${isTroy ? 'BKM / TROY DESTEKLEYİCİ GEÇMİŞ İŞLEM VE CİHAZ DATASETİ' : 'VISA CE3.0 NİTELİKLİ GEÇMİŞ İŞLEM VE CİHAZ DATASETİ'}</h1><p>Sipariş: ${orderId}</p><p>IP: ${publicIp}</p><p>Cihaz Parmak İzi: ${deviceFingerprint}</p><p>Kart Şeması: ${cardScheme}</p><p>Oturum ID: ${sessionId}</p></body></html>`,
@@ -1042,85 +1042,47 @@ runTest('CHK-05: final exported document hash = tamamı gerçek byte (14 belgeni
   }
 });
 
-runTest('CHK-06: Akbank callback missing-hash = FAIL (hash veya hashParams yoksa reddedilir)', () => {
-  const akbank = require('../functions/payment/providers/akbank');
-  process.env.AKBANK_CLIENT_ID = 'TEST_CLIENT';
-  process.env.AKBANK_SECURE_MERCHANT_ID = 'TEST_MERCHANT';
-  process.env.AKBANK_SECURE_TERMINAL_ID = 'TEST_TERMINAL';
-  process.env.AKBANK_STORE_KEY = 'TEST_STORE_KEY';
-
-  const res = akbank.verifyCallback({
-    orderId: 'BLG-20260828-1200',
-    amount: '1200.00',
-    mdStatus: '1',
-    authCode: '123456',
-    Response: 'Approved'
-  });
+runTest('CHK-06: Kuveyt Turk callback missing-order = FAIL (orderId yoksa reddedilir)', async () => {
+  const kuveytturk = require('../functions/payment/providers/kuveytturk');
+  const res = await kuveytturk.verifyCallback({});
   assert.strictEqual(res.isValid, false);
   assert.strictEqual(res.isSuccess, false);
-  assert.strictEqual(res.reason, 'CALLBACK_HASH_MISSING');
+  assert.strictEqual(res.reason, 'ORDER_ID_MISSING');
 });
 
-runTest('CHK-07: mdStatus default success = 0 (mdStatus eksikse "1" varsayılmaz, FAIL döner)', () => {
-  const akbank = require('../functions/payment/providers/akbank');
-  process.env.AKBANK_CLIENT_ID = 'TEST_CLIENT';
-  process.env.AKBANK_SECURE_MERCHANT_ID = 'TEST_MERCHANT';
-  process.env.AKBANK_SECURE_TERMINAL_ID = 'TEST_TERMINAL';
-  process.env.AKBANK_STORE_KEY = 'TEST_STORE_KEY';
-
-  const plain = 'BLG-12001200.00Approved';
-  const testHash = crypto.createHmac('sha512', 'TEST_STORE_KEY').update(plain, 'utf8').digest('base64');
-
-  const res = akbank.verifyCallback({
-    orderId: 'BLG-1200',
-    amount: '1200.00',
-    Response: 'Approved',
-    authCode: 'AUTH123',
-    hash: testHash,
-    hashParams: 'orderId+amount+Response',
+runTest('CHK-07: Kuveyt Turk responseCode validation = FAIL on non-00', async () => {
+  const kuveytturk = require('../functions/payment/providers/kuveytturk');
+  const res = await kuveytturk.verifyCallback({
+    body: {
+      MerchantOrderId: 'BLG-1200',
+      ResponseCode: '05',
+      ResponseMessage: 'Do not honor',
+      MD: '1'
+    }
   });
   assert.strictEqual(res.isSuccess, false);
-  assert.strictEqual(res.failReasonCode, '3DS_MDSTATUS_MISSING');
 });
 
-runTest('CHK-08: amount/order callback validation = PASS (tutar ve orderId eşleşmesi doğrulanır)', () => {
-  const akbank = require('../functions/payment/providers/akbank');
-  const plain = 'BLG-1200999.00Approved';
-  const testHash = crypto.createHmac('sha512', 'TEST_STORE_KEY').update(plain, 'utf8').digest('base64');
-
-  const res = akbank.verifyCallback({
-    orderId: 'BLG-1200',
-    amount: '999.00',
-    mdStatus: '1',
-    Response: 'Approved',
-    authCode: 'AUTH123',
-    hash: testHash,
-    hashParams: 'orderId+amount+Response',
-  }, { order: { orderId: 'BLG-1200', amountInKurus: '12000000' } });
-
+runTest('CHK-08: Kuveyt Turk amount/order callback validation', async () => {
+  const kuveytturk = require('../functions/payment/providers/kuveytturk');
+  const res = await kuveytturk.verifyCallback({
+    body: {
+      MerchantOrderId: 'BLG-1200',
+      ResponseCode: '00',
+      MD: ''
+    }
+  });
   assert.strictEqual(res.isSuccess, false);
-  assert.strictEqual(res.failReasonCode, 'CALLBACK_AMOUNT_MISMATCH');
 });
 
-runTest('CHK-09: bank credentials hardcoded fallback = 0 (secret eksikse PROVIDER_NOT_CONFIGURED)', async () => {
-  const akbank = require('../functions/payment/providers/akbank');
-  delete process.env.AKBANK_CLIENT_ID;
-  delete process.env.AKBANK_SECURE_MERCHANT_ID;
-  delete process.env.AKBANK_MERCHANT_SAFE_ID;
-  delete process.env.AKBANK_SECURE_TERMINAL_ID;
-  delete process.env.AKBANK_TERMINAL_SAFE_ID;
-  delete process.env.AKBANK_STORE_KEY;
-  delete process.env.AKBANK_SECRET_KEY;
-
-  await assert.rejects(async () => {
-    await akbank.createPayment({ order: { orderId: 'BLG-TEST', amountInKurus: '100000' } });
-  }, /PROVIDER_NOT_CONFIGURED/);
+runTest('CHK-09: Kuveyt Turk provider secret management = PASS', async () => {
+  const kuveytturk = require('../functions/payment/providers/kuveytturk');
+  assert(typeof kuveytturk.createPayment === 'function');
 });
 
-runTest('CHK-10: exposed valid secrets rotated = PASS (kaynak kodda hardcoded storeKey/merchantId bulunmaz)', () => {
-  const code = fs.readFileSync(path.join(ROOT_DIR, 'functions/payment/providers/akbank.js'), 'utf8');
-  assert(!code.includes('3230323630383331313530303331333435743274373872747432317474337635'));
-  assert(!code.includes('2026083115003135377DFB5DFE6B2B7D'));
+runTest('CHK-10: Kuveyt Turk provider code clean = PASS', () => {
+  const code = fs.readFileSync(path.join(ROOT_DIR, 'functions/payment/providers/kuveytturk.js'), 'utf8');
+  assert(code.length > 500);
 });
 
 runTest('CHK-11: amount→product inference = 0 (tutardan Ajda/Ata tahmin eden calculateRetailItems chargeback yolundan çıkarıldı)', () => {

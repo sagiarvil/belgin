@@ -1943,125 +1943,6 @@
         border-radius: 10px !important;
       }
     } /* End of @media (max-width: 880px) */
-
-    /* ==========================================================
-       🌟 ULTRA-PREMIUM EXECUTIVE FLOATING SHORTCUT DOCK (UNIVERSAL DESKTOP & TABLET)
-       ========================================================== */
-    .admin-mobile-bottom-nav {
-      position: fixed !important;
-      bottom: 24px !important;
-      left: 28px !important;
-      right: auto !important;
-      width: auto !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      gap: 6px !important;
-      background: rgba(10, 26, 23, 0.94) !important;
-      backdrop-filter: blur(24px) saturate(190%) !important;
-      -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
-      border: 1px solid rgba(194, 167, 104, 0.4) !important;
-      border-radius: 100px !important;
-      padding: 6px 10px !important;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
-      z-index: 99999 !important;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    }
-
-    .admin-mobile-bottom-nav:hover {
-      border-color: rgba(194, 167, 104, 0.75) !important;
-      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6), 0 0 20px rgba(194, 167, 104, 0.25) !important;
-      transform: translateY(-2px) !important;
-    }
-
-    .admin-mobile-nav-item {
-      display: inline-flex !important;
-      flex-direction: row !important;
-      align-items: center !important;
-      justify-content: center !important;
-      gap: 8px !important;
-      background: transparent !important;
-      border: 1px solid transparent !important;
-      color: #CBD5E1 !important;
-      font-size: 13px !important;
-      font-weight: 600 !important;
-      letter-spacing: 0.3px !important;
-      cursor: pointer !important;
-      padding: 8px 16px !important;
-      border-radius: 100px !important;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
-      user-select: none !important;
-      text-decoration: none !important;
-      outline: none !important;
-    }
-
-    .admin-mobile-nav-item:hover {
-      background: rgba(255, 255, 255, 0.08) !important;
-      color: #FFFFFF !important;
-      border-color: rgba(194, 167, 104, 0.3) !important;
-    }
-
-    .admin-mobile-nav-item.active {
-      background: linear-gradient(135deg, rgba(194, 167, 104, 0.32) 0%, rgba(194, 167, 104, 0.15) 100%) !important;
-      color: var(--color-gold-bright, #D4AF37) !important;
-      border: 1px solid rgba(194, 167, 104, 0.65) !important;
-      font-weight: 800 !important;
-      box-shadow: 0 4px 14px rgba(194, 167, 104, 0.25) !important;
-    }
-
-    .m-nav-bubble {
-      font-size: 16px !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      line-height: 1 !important;
-      transition: transform 0.2s ease !important;
-    }
-
-    .admin-mobile-nav-item:hover .m-nav-bubble {
-      transform: scale(1.15) !important;
-    }
-
-    @media (max-width: 900px) {
-      /* 10. ALT SABİT THUMB-ZONE BAR (MOBİL DOKUNMATİK TAB BAR) */
-      .admin-mobile-bottom-nav {
-        bottom: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        width: 100vw !important;
-        max-width: 100vw !important;
-        border-radius: 0 !important;
-        border: none !important;
-        border-top: 1.5px solid rgba(194, 167, 104, 0.35) !important;
-        background: rgba(10, 26, 23, 0.96) !important;
-        display: flex !important;
-        justify-content: space-around !important;
-        align-items: center !important;
-        padding: 6px 4px calc(6px + env(safe-area-inset-bottom, 0px)) !important;
-        transform: none !important;
-        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4) !important;
-      }
-      .admin-mobile-nav-item {
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        gap: 2px !important;
-        font-size: 10.5px !important;
-        font-weight: 700 !important;
-        flex: 1 !important;
-        padding: 5px 0 !important;
-        border-radius: 8px !important;
-      }
-      .admin-mobile-nav-item.active {
-        background: rgba(194, 167, 104, 0.2) !important;
-        color: var(--color-gold-bright, #D4AF37) !important;
-      }
-      .m-nav-bubble {
-        width: 38px !important;
-        height: 24px !important;
-        border-radius: 12px !important;
-        font-size: 14px !important;
-      }
-    }
   </style>
 </head>
 <body>
@@ -2425,35 +2306,35 @@
       <div class="admin-kpi-card kpi-indigo" style="border:1.5px solid #312E81;">
         <div class="kpi-label" style="color:#C7D2FE;">Toplam POS Cirosu</div>
         <div class="kpi-value" id="stmtKpiTotalPos" style="color:#FFFFFF;">₺0</div>
-        <div class="kpi-subtext" id="stmtKpiPosSubtext" style="color:#A5B4FC; font-weight:600;">Filtrelenen dönemdeki POS toplamı</div>
+        <div class="kpi-subtext" id="stmtKpiPosSubtext" style="color:#E0E7FF; font-weight:700; font-size:11.5px;">📅 Dönem: 01.08.2016 — Bugün</div>
       </div>
 
       <!-- 2. NET HAKEDİŞ -->
       <div class="admin-kpi-card" style="border:2px solid #7DD3FC; background:linear-gradient(145deg, #FFFFFF 0%, #F0F9FF 100%);">
         <div class="kpi-label" style="color:#0369A1; font-weight:800;">Net Hakediş (%92 Net)</div>
         <div class="kpi-value" id="stmtKpiTotalHakedis" style="color:#0284C7;">₺0</div>
-        <div class="kpi-subtext" style="color:#075985; font-weight:600;">POS tutarından %8 komisyon düşülerek net hakediş</div>
+        <div class="kpi-subtext" id="stmtKpiHakedisSubtext" style="color:#0369A1; font-weight:700; font-size:11.5px;">📅 Dönem: 01.08.2016 — Bugün</div>
       </div>
 
       <!-- 3. TOPLAM YAPILAN ÖDEMELER -->
       <div class="admin-kpi-card kpi-emerald" style="border:1.5px solid #047857;">
         <div class="kpi-label" style="color:#A7F3D0;">Toplam Yapılan Ödemeler</div>
         <div class="kpi-value" id="stmtKpiTotalPaid" style="color:#FDE68A;">₺0</div>
-        <div class="kpi-subtext" id="stmtKpiPaidSubtext" style="color:#D1FAE5; font-weight:600;">Kayıtlı ödemelerin genel toplamı</div>
+        <div class="kpi-subtext" id="stmtKpiPaidSubtext" style="color:#ECFDF5; font-weight:700; font-size:11.5px;">📅 Dönem: 01.08.2016 — Bugün</div>
       </div>
 
       <!-- 4. GÜNCEL ÖDENECEK TUTAR -->
       <div class="admin-kpi-card" style="border:2px solid #FECACA; background:linear-gradient(145deg, #FFFFFF 0%, #FEF2F2 100%);">
         <div class="kpi-label" style="color:#991B1B; font-weight:800;">Güncel Ödenecek Bakiye</div>
         <div class="kpi-value" id="stmtKpiTotalRemaining" style="color:#DC2626;">₺0</div>
-        <div class="kpi-subtext" style="color:#991B1B; font-weight:700;">Hakediş — Ödenen Net Tutar</div>
+        <div class="kpi-subtext" id="stmtKpiRemainingSubtext" style="color:#991B1B; font-weight:700; font-size:11.5px;">📅 Dönem: 01.08.2016 — Bugün</div>
       </div>
 
       <!-- 5. TOPLAM NET KÂR -->
       <div class="admin-kpi-card" style="border:2px solid #86EFAC; background:linear-gradient(145deg, #FFFFFF 0%, #F0FDF4 100%);">
         <div class="kpi-label" style="color:#166534; font-weight:800;">Toplam Net Kâr</div>
         <div class="kpi-value" id="stmtKpiTotalProfit" style="color:#15803D;">₺0</div>
-        <div class="kpi-subtext" id="stmtKpiProfitSubtext" style="color:#14532D; font-weight:600;">(Kesinti %8) — (Banka POS Oranı)</div>
+        <div class="kpi-subtext" id="stmtKpiProfitSubtext" style="color:#14532D; font-weight:700; font-size:11.5px;">📅 Dönem: 01.08.2016 — Bugün</div>
       </div>
     </section>
 
@@ -4137,17 +4018,70 @@
       <div id="cfgModalErrorMsg" style="display:none; background:#FEE2E2; border:1px solid #FCA5A5; color:#991B1B; padding:10px 12px; border-radius:8px; font-size:12.5px; font-weight:700; margin-bottom:14px;"></div>
 
       <!-- Butonlar -->
-      <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid #E2E8F0; padding-top:14px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid #E2E8F0; padding-top:14px; gap:8px; flex-wrap:wrap;">
         <button type="button" class="btn-admin-secondary" onclick="AdminApp.closeOrderInvoiceModal()">
           Vazgeç
         </button>
 
-        <button type="submit" id="btnSubmitOrderInvoiceConfig" class="btn-admin-primary" style="background:linear-gradient(135deg, #059669 0%, #10B981 100%); border-color:#059669; font-size:13.5px; font-weight:800; padding:10px 22px; box-shadow:0 4px 14px rgba(16,185,129,0.3);">
-          <span>🧾 GİB Taslak Fatura Oluştur & SMS Gönder 📲</span>
-        </button>
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+          <button type="button" id="btnPreviewOrderInvoice" class="btn-admin-secondary" style="background:#F0FDF4; border:1.5px solid #059669; color:#065F46; font-size:13px; font-weight:800; padding:10px 18px; cursor:pointer; border-radius:8px; display:inline-flex; align-items:center; gap:6px;" onclick="AdminApp.previewOrderInvoiceDraft()">
+            <span>👁️ Resmi GİB Taslağını Canlı İncele</span>
+          </button>
+
+          <button type="submit" id="btnSubmitOrderInvoiceConfig" class="btn-admin-primary" style="background:linear-gradient(135deg, #059669 0%, #10B981 100%); border-color:#059669; font-size:13px; font-weight:800; padding:10px 20px; border-radius:8px; box-shadow:0 4px 14px rgba(16,185,129,0.3); display:inline-flex; align-items:center; gap:6px;">
+            <span>📲 Onayla & GİB SMS Kodu Gönder</span>
+          </button>
+        </div>
       </div>
 
     </form>
+  </div>
+</div>
+
+<!-- ======================================================== -->
+<!-- GİB E-ARŞİV FATURA MÜHÜRLEME ÖNCESİ RESMİ CANLI ÖNİZLEME MODALI -->
+<!-- ======================================================== -->
+<div class="admin-modal-overlay" id="invoiceLivePreviewModal" onclick="if(event.target===this) AdminApp.closeLivePreviewModal();" style="display:none; z-index:999999;">
+  <div class="admin-modal-box" style="max-width:960px; width:95vw; height:90vh; padding:0; overflow:hidden; border-radius:14px; border:2px solid #059669; display:flex; flex-direction:column; background:#FFF;">
+    
+    <!-- Üst Bar -->
+    <div style="background:linear-gradient(135deg, #064E3B 0%, #059669 100%); color:#FFF; padding:12px 20px; display:flex; justify-content:space-between; align-items:center; flex-shrink:0;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span style="font-size:22px;">👁️</span>
+        <div>
+          <h3 style="margin:0; font-family:'Playfair Display',serif; font-size:16px; font-weight:800; color:#FFF;">
+            GİB e-Arşiv Resmi Taslak Fatura Önizlemesi (Mühür Öncesi İnceleme)
+          </h3>
+          <span style="font-size:11px; color:#D1FAE5;">
+            Bu belge SMS onayına gitmeden önceki resmi taslaktır. Alıcı ve KDV kalemlerini inceleyiniz.
+          </span>
+        </div>
+      </div>
+      <button type="button" style="background:none; border:none; color:#FFF; font-size:22px; cursor:pointer;" onclick="AdminApp.closeLivePreviewModal()">✕</button>
+    </div>
+
+    <!-- Canlı Önizleme Çerçevesi -->
+    <div style="flex:1; position:relative; background:#F8FAFC; overflow:hidden;">
+      <iframe id="invoiceLivePreviewIframe" style="width:100%; height:100%; border:none; background:#FFF;"></iframe>
+    </div>
+
+    <!-- Alt İşlem Çubuğu -->
+    <div style="padding:12px 20px; background:#F1F5F9; border-top:1.5px solid #CBD5E1; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; flex-wrap:wrap; gap:8px;">
+      <button type="button" class="btn-admin-secondary" onclick="AdminApp.closeLivePreviewModal()" style="font-weight:700; padding:8px 16px;">
+        <span>✕ Kapat & Düzenlemeye Dön</span>
+      </button>
+
+      <div style="display:flex; gap:10px; align-items:center;">
+        <button type="button" class="btn-admin-secondary" onclick="AdminApp.printPreviewIframe()" style="background:#FFF; border-color:#0284C7; color:#0369A1; font-weight:800; padding:8px 16px;">
+          <span>🖨️ Yazdır / PDF İncele</span>
+        </button>
+
+        <button type="button" class="btn-admin-primary" style="background:linear-gradient(135deg, #059669 0%, #10B981 100%); font-weight:800; font-size:13px; padding:9px 22px; box-shadow:0 3px 10px rgba(5,150,105,0.3);" onclick="AdminApp.proceedFromPreviewToSms()">
+          <span>✅ Taslak Doğru, Onayla & SMS Gönder 📲</span>
+        </button>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -4339,26 +4273,10 @@
   </div>
 </div>
 
-<!-- 🌟 ULTRA-PREMIUM EXECUTIVE FLOATING SHORTCUT DOCK -->
-<nav class="admin-mobile-bottom-nav" id="adminMobileBottomNav" style="display:none;" aria-label="Yönetim Hızlı Erişim Menüsü">
-  <button type="button" class="admin-mobile-nav-item active" id="mNavOrders" onclick="AdminApp.switchTab('orders')" title="Online Siparişler ve Tahsilat Akışı">
-    <span class="m-nav-bubble">🛒</span>
-    <span>Siparişler</span>
-  </button>
-  <button type="button" class="admin-mobile-nav-item" id="mNavStatement" onclick="AdminApp.switchTab('statement')" title="Müşteri ve Ortak Cari Ekstreleri">
-    <span class="m-nav-bubble">📊</span>
-    <span>Cari Ekstre</span>
-  </button>
-  <button type="button" class="admin-mobile-nav-item" id="mNavStoreInvoices" onclick="AdminApp.switchTab('storeInvoices')" title="Resmî e-Arşiv Mağaza Satış Faturaları">
-    <span class="m-nav-bubble">🏛️</span>
-    <span>Faturalar</span>
-  </button>
-</nav>
-
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 <script src="js/data.js"></script>
 <script src="js/vip-payment.js?v=2.8.8"></script>
-<script src="js/admin.js?v=20260902-pos-rate-v3"></script>
+<script src="js/admin.js?v=20260903-kpi-clean-v4"></script>
 </body>
 </html>

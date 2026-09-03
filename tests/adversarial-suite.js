@@ -11,6 +11,12 @@ process.env.AKBANK_SECURE_MERCHANT_ID = process.env.AKBANK_SECURE_MERCHANT_ID ||
 process.env.AKBANK_SECURE_TERMINAL_ID = process.env.AKBANK_SECURE_TERMINAL_ID || 'TEST_SECURE_TERMINAL_ID';
 process.env.AKBANK_STORE_KEY = process.env.AKBANK_STORE_KEY || 'TEST_STORE_KEY_FOR_LOCAL_SUITE';
 
+process.env.KUVEYTTURK_TEST_MODE = 'true';
+process.env.KUVEYTTURK_CUSTOMER_ID = process.env.KUVEYTTURK_CUSTOMER_ID || '12345678';
+process.env.KUVEYTTURK_MERCHANT_ID = process.env.KUVEYTTURK_MERCHANT_ID || '892543';
+process.env.KUVEYTTURK_USER_NAME = process.env.KUVEYTTURK_USER_NAME || 'TEST_USER';
+process.env.KUVEYTTURK_PASSWORD = process.env.KUVEYTTURK_PASSWORD || 'TEST_PASS_123';
+
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
@@ -320,7 +326,7 @@ const mockLegalSnapshot = () => ({
     orderId: 'BLG-MISMATCH-1',
     status: 'PAYMENT_PENDING',
     paymentStatus: 'PENDING',
-    payment: { provider: 'AKBANK' }
+    payment: { provider: 'KUVEYTTURK' }
   });
   const mismatchRes = await paymentService.handleCallback({
     providerName: 'PAYTR',
@@ -354,20 +360,20 @@ const mockLegalSnapshot = () => ({
     paymentStatus: 'PENDING',
     amountInKurus: '10000',
     total: 100,
-    payment: { provider: 'AKBANK' }
+    payment: { provider: 'KUVEYTTURK' }
   });
   // Fake Akbank verify for testing
-  const origVerify = paymentRouter.getProvider('AKBANK').verifyCallback;
-  paymentRouter.getProvider('AKBANK').verifyCallback = () => ({ isValid: true, isSuccess: true, orderId: 'BLG-PARALLEL-1', totalAmountReceived: '10000' });
+  const origVerify = paymentRouter.getProvider('KUVEYTTURK').verifyCallback;
+  paymentRouter.getProvider('KUVEYTTURK').verifyCallback = () => ({ isValid: true, isSuccess: true, orderId: 'BLG-PARALLEL-1', totalAmountReceived: '10000' });
   const parallelCallbacks = await Promise.all(
     Array.from({ length: 50 }, () => paymentService.handleCallback({
-      providerName: 'AKBANK',
+      providerName: 'KUVEYTTURK',
       body: { merchant_oid: 'BLG-PARALLEL-1' },
       db: mockDb21,
       admin: mockAdmin
     }))
   );
-  paymentRouter.getProvider('AKBANK').verifyCallback = origVerify;
+  paymentRouter.getProvider('KUVEYTTURK').verifyCallback = origVerify;
   assert(parallelCallbacks.every(r => r.status === 200), '21. 50 paralel callback eş zamanlılık altında atomik ve idempotent işlendi');
 
   // 22. Double-click idempotency
@@ -434,16 +440,16 @@ const mockLegalSnapshot = () => ({
 
   // 29. Mail failure after PAID (fail-safe)
   const mockDb29 = createMockDb();
-  mockDb29._store.set('BLG-MAIL-FAIL', { orderId: 'BLG-MAIL-FAIL', status: ORDER_STATUS.PAYMENT_PENDING, paymentStatus: 'PENDING', amountInKurus: '10000', total: 100, payment: { provider: 'AKBANK' } });
-  paymentRouter.getProvider('AKBANK').verifyCallback = () => ({ isValid: true, isSuccess: true, orderId: 'BLG-MAIL-FAIL', totalAmountReceived: '10000' });
+  mockDb29._store.set('BLG-MAIL-FAIL', { orderId: 'BLG-MAIL-FAIL', status: ORDER_STATUS.PAYMENT_PENDING, paymentStatus: 'PENDING', amountInKurus: '10000', total: 100, payment: { provider: 'KUVEYTTURK' } });
+  paymentRouter.getProvider('KUVEYTTURK').verifyCallback = () => ({ isValid: true, isSuccess: true, orderId: 'BLG-MAIL-FAIL', totalAmountReceived: '10000' });
   const mailErrRes = await paymentService.handleCallback({
-    providerName: 'AKBANK',
+    providerName: 'KUVEYTTURK',
     body: { merchant_oid: 'BLG-MAIL-FAIL' },
     db: mockDb29,
     admin: mockAdmin,
     mailer: { dispatchOrderEvidenceEmails: async () => { throw new Error('SMTP Error'); } }
   });
-  paymentRouter.getProvider('AKBANK').verifyCallback = origVerify;
+  paymentRouter.getProvider('KUVEYTTURK').verifyCallback = origVerify;
   assert(mailErrRes.status === 200, '29. Mail servisi çökse bile ödeme onayı güvenli şekilde tamamlanır');
 
   // 30. Browser refresh idempotency

@@ -27,6 +27,7 @@
     "sync:rolex": "node scripts/sync-seckin-rolex.js",
     "sync:gold": "node scripts/sync-prices-and-stock.js",
     "sync:all": "node scripts/smart-diff-sync.js",
+    "sync:magazine": ".venv/bin/python3 scripts/daily-chrono24-magazine-sync.py",
     "serve": "npx serve . -l 3000"
   },
   "keywords": [
