@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { BASE_URL, PRIMARY_ORGANIZATION, SEO_REGISTRY } = require('./seo-registry.js');
+const { BASE_URL, SEO_REGISTRY } = require('./seo-registry.js');
 const { PRODUCTS: products } = require('../js/data.js');
 const { CATEGORY_ROUTES, productUrl } = require('./seo-routes.js');
 
@@ -40,7 +40,19 @@ function imageUrl(p) {
 }
 
 function write(name, body) {
-  fs.writeFileSync(path.join(ROOT, name), body, 'utf8');
+  const target = path.join(ROOT, name);
+  fs.mkdirSync(path.dirname(target), { recursive: true });
+  fs.writeFileSync(target, body, 'utf8');
+}
+
+function uniqueByLoc(items) {
+  const seen = new Set();
+  return items.filter(item => {
+    const loc = String(item.loc);
+    if (seen.has(loc)) return false;
+    seen.add(loc);
+    return true;
+  });
 }
 
 function urlset(items, withImages = false) {
@@ -48,8 +60,8 @@ function urlset(items, withImages = false) {
   xml += withImages
     ? '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n'
     : '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
-  
-  for (const item of items) {
+
+  for (const item of uniqueByLoc(items)) {
     if (String(item.loc).includes('#')) throw new Error(`Fragment URL yasak: ${item.loc}`);
     xml += '  <url>\n';
     xml += `    <loc>${x(item.loc)}</loc>\n`;
@@ -66,12 +78,14 @@ function urlset(items, withImages = false) {
 }
 
 function buildSitemaps() {
-  const pages = SEO_REGISTRY.filter(p => p.indexDirective === 'index' && !String(p.route).includes('#')).map(p => ({
-    loc: `${BASE_URL}${p.route}`
-  }));
+  const pages = SEO_REGISTRY
+    .filter(p => p.indexDirective === 'index' && !String(p.route).includes('#'))
+    .map(p => ({ loc: `${BASE_URL}${p.route}` }));
+
   const categories = Object.keys(CATEGORY_ROUTES).map(k => ({
     loc: `${BASE_URL}${CATEGORY_ROUTES[k]}`
   }));
+
   const productItems = products.map(p => ({
     loc: productUrl(p),
     lastmod: lastmod(p),
@@ -86,7 +100,7 @@ function buildSitemaps() {
 
   const magazineItems = magArticles.map(a => ({
     loc: `${BASE_URL}/magazin/${a.slug}/`,
-    lastmod: a.raw_date || '2026-08-01',
+    lastmod: a.raw_date || null,
     image: a.image ? { loc: (a.image.startsWith('http') ? a.image : `${BASE_URL}/${a.image.replace(/^\/+/, '')}`), title: a.title } : null
   }));
 
@@ -97,41 +111,42 @@ function buildSitemaps() {
   write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <sitemap><loc>${BASE_URL}/sitemap-pages.xml</loc></sitemap>\n  <sitemap><loc>${BASE_URL}/sitemap-categories.xml</loc></sitemap>\n  <sitemap><loc>${BASE_URL}/sitemap-products.xml</loc></sitemap>\n  <sitemap><loc>${BASE_URL}/sitemap-magazine.xml</loc></sitemap>\n</sitemapindex>\n`);
 }
 
-function buildLlms() {
-  const legal = SEO_REGISTRY.filter(p => p.role === 'legal' && p.indexDirective === 'index').map(p => `- [${p.title}](${BASE_URL}${p.route}) — ${p.metaDescription}`).join('\n');
-  
-  const selected = products.slice(0, 100).map(p => {
+function productCatalogForLlms() {
+  return products.map(p => {
     const name = `${p.brand || ''} ${p.name || ''}`.trim();
-    return [
-      `- **${name}**`,
-      `Ref: ${p.reference || p.ref || p.id}`,
-      `Fiyat: ₺${Number(p.price).toLocaleString('tr-TR')}`,
-      `URL: ${productUrl(p)}`
-    ].join(' | ');
+    return `- ${name} | Ref: ${p.reference || p.ref || p.id} | URL: ${productUrl(p)}`;
   }).join('\n');
+}
 
-  const semanticTriples = [
-    '- (Belgin Kuyumculuk) -[fiziki showroom]-> (Menderes Caddesi No:231/B, Buca / İzmir)',
-    '- (Belgin Kuyumculuk) -[kuruluş yılı]-> (1999)',
-    '- (Belgin Kuyumculuk) -[sunar]-> (1.618+ Orijinal Distribütör Garantili Lüks Saat)',
-    '- (Belgin Kuyumculuk) -[saat marjı]-> (Saat&Saat Distribütör Fiyatı + %40 Kâr Marjı)',
-    '- (Yüksek Değerli Teslimat) -[güvenlik eşiği]-> (12.000 TL Üzeri Kimlikli ve İmzalı Mağaza Teslimi)',
-    '- (Hukuki Bütünlük) -[delil zinciri]-> (Deterministik SHA-256 Kök Özeti ve OpenTimestamps Bitcoin Dış Zaman İspatı)'
-  ].join('\n');
-  
-  write('llms.txt', `# Belgin Kuyumculuk & Saat\n\n> Yardımcı makine-okunabilir keşif katmanı. Canonical HTML sayfaları birincil kaynaktır.\n\n## İşletme\n- Resmi ad: ${PRIMARY_ORGANIZATION.name}\n- Kuruluş: 1999\n- Adres: ${PRIMARY_ORGANIZATION.address.streetAddress}, ${PRIMARY_ORGANIZATION.address.addressLocality} / ${PRIMARY_ORGANIZATION.address.addressRegion}\n- Web: ${BASE_URL}\n- IndexNow Key: https://${PRIMARY_ORGANIZATION.url ? new URL(BASE_URL).hostname : 'www.belginkuyumculuk.com'}/indexnow-key.txt\n\n## Semantik İlişkiler & Doğrulanmış Varlık Bilgileri (Semantic Triples)\n${semanticTriples}\n\n## Ana koleksiyonlar\n- [Saatler](${BASE_URL}/saatler/)\n- [Mücevherat](${BASE_URL}/mucevherat/)\n- [Ekspertizli Seçkin Ürünler](${BASE_URL}/ikinci-el/)\n\n## Yasal sayfalar\n${legal}\n\n## Seçilmiş ürünler\n${selected}\n\n## Tam katalog\n- [llms-full.txt](${BASE_URL}/llms-full.txt)\n`);
-  write('llms-full.txt', `# Belgin Kuyumculuk & Saat — Tam Ürün Kataloğu\n\nBirincil kaynak her ürünün canonical HTML sayfasıdır.\n\n## Semantik İlişkiler (Semantic Triples)\n${semanticTriples}\n\n## Ürün Envanteri\n${products.map(p => `### ${p.brand || ''} ${p.name || ''}`.trim() + `\n- ID: ${p.id}\n- Referans: ${p.reference || p.ref || p.id}\n- Fiyat: ₺${Number(p.price).toLocaleString('tr-TR')}\n- Stok: ${p.inStock === false ? 'Yok' : 'Var'}\n- URL: ${productUrl(p)}\n`).join('\n')}`);
+function buildLlms() {
+  write('llms.txt', `# Belgin Kuyumculuk & Saat — LLM Discovery Manifest\n\nCanonical site: ${BASE_URL}/\nLanguage: tr-TR\nPrimary entity: Belgin Kuyumculuk & Saat, Buca / İzmir\nPurpose: Makine-okunabilir keşif yönlendirmesi. Canonical HTML sayfaları ve güncel runtime ürün verisi birincil kaynaktır.\n\n## Core\n- ${BASE_URL}/llms/core.md\n- ${BASE_URL}/llms-full.txt\n\n## Entities\n- ${BASE_URL}/llms/entities/belgin-kuyumculuk.md\n- ${BASE_URL}/llms/entities/showroom.md\n\n## Brands\n- ${BASE_URL}/llms/brands/rolex.md\n\n## Local\n- ${BASE_URL}/llms/local/izmir-luks-saat.md\n\n## Topics\n- ${BASE_URL}/llms/topics/ikinci-el-luks-saat.md\n\n## Canonical human-facing hubs\n- ${BASE_URL}/\n- ${BASE_URL}/elit-kategori/\n- ${BASE_URL}/markalar/\n- ${BASE_URL}/saatler/\n- ${BASE_URL}/mucevherat/\n- ${BASE_URL}/iletisim.html\n\n## Machine discovery\n- Sitemap: ${BASE_URL}/sitemap.xml\n- Robots: ${BASE_URL}/robots.txt\n\n## Data integrity rules\n- Ürün fiyatı, stok ve anlık availability bu manifestte sabitlenmez; güncel canonical ürün sayfasından/runtime kaynaktan alınır.\n- LLMS, canonical HTML veya schema ile çelişemez.\n- Doğrulanmamış rating, review, sertifika, stok, garanti veya ticari iddia makine katmanına eklenemez.\n- Chrono24 temelli bağlayıcı fiyat/güvence formülü bu bilgi sözleşmesinin parçası değildir ve yeniden eklenemez.\n`);
+
+  write('llms-full.txt', `# Belgin Kuyumculuk & Saat — Full Machine Knowledge Index\n\nCanonical site: ${BASE_URL}/\nLanguage: tr-TR\n\n## Stable knowledge graph\n- Core: ${BASE_URL}/llms/core.md\n- Organization: ${BASE_URL}/llms/entities/belgin-kuyumculuk.md\n- Showroom: ${BASE_URL}/llms/entities/showroom.md\n- Rolex brand hub: ${BASE_URL}/llms/brands/rolex.md\n- İzmir lüks saat local hub: ${BASE_URL}/llms/local/izmir-luks-saat.md\n- İkinci el lüks saat topic hub: ${BASE_URL}/llms/topics/ikinci-el-luks-saat.md\n\n## Product discovery catalog\nFiyat ve stok burada sabitlenmez. Güncel gerçek canonical ürün sayfası/runtime kaynağından alınır.\n\n${productCatalogForLlms()}\n\n## Discovery\n- ${BASE_URL}/sitemap.xml\n- ${BASE_URL}/sitemap-products.xml\n- ${BASE_URL}/sitemap-categories.xml\n- ${BASE_URL}/sitemap-pages.xml\n- ${BASE_URL}/sitemap-magazine.xml\n`);
 }
 
 function buildRobots() {
-  write('robots.txt', `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /node_modules/\nDisallow: /mucevherat/\nDisallow: /canli-fiyatlar/\nDisallow: /canlipiyasalar/\nDisallow: /rehber/altin-yatirimi-ve-ozel-matrah-rehberi/\nDisallow: /rehber/pirlanta-ve-gemoloji-degerleme-rehberi/\nDisallow: /rehber/izmir-kuyumculuk-ve-guvenli-teslimat/\nDisallow: /urun/belgin-kuyumculuk-blg-*\n\nUser-agent: GPTBot\nAllow: /\n\nUser-agent: ChatGPT-User\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: anthropic-ai\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nUser-agent: Applebot-Extended\nAllow: /\n\nUser-agent: Amazonbot\nAllow: /\n\nUser-agent: cohere-ai\nAllow: /\n\nSitemap: ${BASE_URL}/sitemap.xml\n`);
+  const publicBot = (agent, extra = '') => `User-agent: ${agent}\nAllow: /\nDisallow: /api/\nDisallow: /admin/\n${extra}`;
+  write('robots.txt', [
+    publicBot('Googlebot', 'Disallow: /node_modules/\nDisallow: /canli-fiyatlar/\nDisallow: /canlipiyasalar/\n'),
+    publicBot('Bingbot', 'Disallow: /node_modules/\nDisallow: /canli-fiyatlar/\nDisallow: /canlipiyasalar/\n'),
+    publicBot('OAI-SearchBot'),
+    publicBot('ChatGPT-User'),
+    publicBot('PerplexityBot'),
+    publicBot('Claude-SearchBot'),
+    publicBot('Claude-User'),
+    publicBot('GPTBot'),
+    publicBot('ClaudeBot'),
+    publicBot('Google-Extended'),
+    `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /node_modules/\nDisallow: /canli-fiyatlar/\nDisallow: /canlipiyasalar/\n`,
+    `Sitemap: ${BASE_URL}/sitemap.xml\n`
+  ].join('\n'));
 }
 
 function main() {
   buildSitemaps();
   buildLlms();
   buildRobots();
-  console.log(`[seo-assets] ${products.length} ürün gerçek canonical URL ile üretildi.`);
+  console.log(`[seo-assets] ${products.length} ürün canonical URL ile üretildi; LLMS fiyat/stok snapshot'i içermez.`);
 }
 
 if (require.main === module) {
