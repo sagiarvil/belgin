@@ -1,41 +1,65 @@
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /node_modules/
+Disallow: /canli-fiyatlar/
+Disallow: /canlipiyasalar/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /node_modules/
+Disallow: /canli-fiyatlar/
+Disallow: /canlipiyasalar/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-agent: Claude-User
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-agent: GPTBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
 User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /admin/
 Disallow: /node_modules/
-Disallow: /mucevherat/
 Disallow: /canli-fiyatlar/
 Disallow: /canlipiyasalar/
-Disallow: /rehber/altin-yatirimi-ve-ozel-matrah-rehberi/
-Disallow: /rehber/pirlanta-ve-gemoloji-degerleme-rehberi/
-Disallow: /rehber/izmir-kuyumculuk-ve-guvenli-teslimat/
-Disallow: /urun/belgin-kuyumculuk-blg-*
-
-User-agent: GPTBot
-Allow: /
-
-User-agent: ChatGPT-User
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: anthropic-ai
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: Google-Extended
-Allow: /
-
-User-agent: Applebot-Extended
-Allow: /
-
-User-agent: Amazonbot
-Allow: /
-
-User-agent: cohere-ai
-Allow: /
 
 Sitemap: https://www.belginkuyumculuk.com/sitemap.xml

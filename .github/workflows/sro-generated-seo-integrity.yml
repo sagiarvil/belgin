@@ -1,0 +1,32 @@
+name: sro-generated-seo-integrity
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  generated-seo-parity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Generate canonical SEO artifacts
+        run: npm run seo:generate
+      - name: Sitemap index parity
+        run: git diff --exit-code -- sitemap.xml
+      - name: Pages sitemap parity
+        run: git diff --exit-code -- sitemap-pages.xml
+      - name: Categories sitemap parity
+        run: git diff --exit-code -- sitemap-categories.xml
+      - name: Products sitemap parity
+        run: git diff --exit-code -- sitemap-products.xml
+      - name: LLMS manifest parity
+        run: git diff --exit-code -- llms.txt
+      - name: LLMS full-index parity
+        run: git diff --exit-code -- llms-full.txt
+      - name: Route map parity
+        run: git diff --exit-code -- js/seo-route-map.js

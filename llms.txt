@@ -1,138 +1,41 @@
-# Belgin Kuyumculuk & Saat
+# Belgin Kuyumculuk & Saat — LLM Discovery Manifest
 
-> Yardımcı makine-okunabilir keşif katmanı. Canonical HTML sayfaları birincil kaynaktır.
+Canonical site: https://www.belginkuyumculuk.com/
+Language: tr-TR
+Primary entity: Belgin Kuyumculuk & Saat, Buca / İzmir
+Purpose: Makine-okunabilir keşif yönlendirmesi. Canonical HTML sayfaları ve güncel runtime ürün verisi birincil kaynaktır.
 
-## İşletme
-- Resmi ad: BELGİN KUYUMCULUK - SEMİH SONBAHAR
-- Kuruluş: 1999
-- Adres: Menderes Caddesi No:231/B, Buca / İzmir
-- Web: https://www.belginkuyumculuk.com
-- IndexNow Key: https://www.belginkuyumculuk.com/indexnow-key.txt
+## Core
+- https://www.belginkuyumculuk.com/llms/core.md
+- https://www.belginkuyumculuk.com/llms-full.txt
 
-## Semantik İlişkiler & Doğrulanmış Varlık Bilgileri (Semantic Triples)
-- (Belgin Kuyumculuk) -[fiziki showroom]-> (Menderes Caddesi No:231/B, Buca / İzmir)
-- (Belgin Kuyumculuk) -[kuruluş yılı]-> (1999)
-- (Belgin Kuyumculuk) -[sunar]-> (1.618+ Orijinal Distribütör Garantili Lüks Saat)
-- (Belgin Kuyumculuk) -[saat marjı]-> (Saat&Saat Distribütör Fiyatı + %40 Kâr Marjı)
-- (Yüksek Değerli Teslimat) -[güvenlik eşiği]-> (12.000 TL Üzeri Kimlikli ve İmzalı Mağaza Teslimi)
-- (Hukuki Bütünlük) -[delil zinciri]-> (Deterministik SHA-256 Kök Özeti ve OpenTimestamps Bitcoin Dış Zaman İspatı)
+## Entities
+- https://www.belginkuyumculuk.com/llms/entities/belgin-kuyumculuk.md
+- https://www.belginkuyumculuk.com/llms/entities/showroom.md
 
-## Ana koleksiyonlar
-- [Saatler](https://www.belginkuyumculuk.com/saatler/)
-- [Mücevherat](https://www.belginkuyumculuk.com/mucevherat/)
-- [Ekspertizli Seçkin Ürünler](https://www.belginkuyumculuk.com/ikinci-el/)
+## Brands
+- https://www.belginkuyumculuk.com/llms/brands/rolex.md
 
-## Yasal sayfalar
-- [Mesafeli Satış Sözleşmesi (01) | Belgin Kuyumculuk](https://www.belginkuyumculuk.com/mesafeli-satis-sozlesmesi.html) — 6502 sayılı TKHK kapsamında mesafeli satış, ödeme, teslimat, KYC ve tüketici haklarına ilişkin resmi sözleşme metni.
-- [Ön Bilgilendirme Formu (02) | Belgin Kuyumculuk](https://www.belginkuyumculuk.com/on-bilgilendirme-formu.html) — Sipariş öncesi ürün bedeli, kargo/teslimat şartları, ödeme yöntemleri ve cayma hakkı bilgilendirmesi.
-- [Müşteri Tanıma ve İşlem Güvenliği Politikası (12) | Belgin Kuyumculuk](https://www.belginkuyumculuk.com/musteri-tanima-ve-islem-guvenligi.html) — 12.000 TL iç güvenlik standardı, kimlik doğrulama, MASAK uyumu ve şüpheli işlem değerlendirme ilkeleri.
-- [Yüksek Değerli Ürün Teslim Protokolü (03) | Belgin Kuyumculuk](https://www.belginkuyumculuk.com/yuksek-degerli-urun-teslimi.html) — 12.000 TL ve üzerindeki altın ve lüks saat ürünlerinde mağazadan teslimat, kimlik tespiti ve teslim-tesellüm tutanağı esasları.
-- [Hukuki Delil ve Kayıt Politikası (04) | Belgin Kuyumculuk](https://www.belginkuyumculuk.com/hukuki-delil-ve-kayit-politikasi.html) — HMK m. 193 delil sözleşmesi, SHA-256 bütünlük özetleri, OpenTimestamps Bitcoin blokzincir dış zaman ispatı ve sipariş audit zinciri.
-- [KVKK Aydınlatma Metni (05) | Belgin Kuyumculuk](https://www.belginkuyumculuk.com/kvkk.html) — 6698 sayılı Kişisel Verilerin Korunması Kanunu uyarınca veri işleme amaçları, hukuki sebepler ve ilgili kişi hakları.
-- [İptal, İade ve Cayma Politikası (07) | Belgin Kuyumculuk](https://www.belginkuyumculuk.com/iade-degisim-cayma.html) — Altın, mücevherat ve lüks saat ürünlerinde cayma hakkı kanuni istisnaları, ayıplı mal yönetimi ve iade-değişim prosedürü.
-- [Güvenli Ödeme ve 3D Secure Politikası (08) | Belgin Kuyumculuk](https://www.belginkuyumculuk.com/guvenli-odeme-ve-3d-secure.html) — PayTR 256-Bit SSL sertifikası, 3D Secure SMS doğrulaması, kart güvenliği ve taksitlendirme esasları.
+## Local
+- https://www.belginkuyumculuk.com/llms/local/izmir-luks-saat.md
 
-## Seçilmiş ürünler
-- **Rolex Submariner Date 41mm Siyah Kadran & Cerachrom Bezel** | Ref: 126610LN | Fiyat: ₺1.260.061 | URL: https://www.belginkuyumculuk.com/urun/rolex-126610ln-5001/
-- **Rolex Cosmograph Daytona 40mm Beyaz 'Panda' Kadran** | Ref: 126500LN | Fiyat: ₺2.737.374 | URL: https://www.belginkuyumculuk.com/urun/rolex-126500ln-5002/
-- **Rolex GMT-Master II 40mm 'Pepsi' Jubilee Bilezik** | Ref: 126710BLRO | Fiyat: ₺1.868.366 | URL: https://www.belginkuyumculuk.com/urun/rolex-126710blro-5003/
-- **Rolex GMT-Master II 40mm 'Batman' Oyster Bilezik** | Ref: 126710BLNR | Fiyat: ₺1.494.693 | URL: https://www.belginkuyumculuk.com/urun/rolex-126710blnr-5004/
-- **Rolex GMT-Master II 'Sprite' Sol Tepe Yeşil/Siyah** | Ref: 126720VTNR | Fiyat: ₺1.607.664 | URL: https://www.belginkuyumculuk.com/urun/rolex-126720vtnr-5005/
-- **Rolex Datejust 41mm Yivli Bezel & Mavi Kadran Jubilee** | Ref: 126334-0002 | Fiyat: ₺1.199.230 | URL: https://www.belginkuyumculuk.com/urun/rolex-126334-0002-5006/
-- **Rolex Datejust 41mm Wimbledon Yeşil Romen Rakamlı** | Ref: 126334-0014 | Fiyat: ₺1.233.991 | URL: https://www.belginkuyumculuk.com/urun/rolex-126334-0014-5007/
-- **Rolex Datejust 36mm Palm Motiv Yeşil Kadran** | Ref: 126234-0050 | Fiyat: ₺1.173.160 | URL: https://www.belginkuyumculuk.com/urun/rolex-126234-0050-5008/
-- **Rolex Day-Date 40mm 18K Sarı Altın Şampanya Kadran President** | Ref: 228238-0006 | Fiyat: ₺3.823.633 | URL: https://www.belginkuyumculuk.com/urun/rolex-228238-0006-5009/
-- **Rolex Day-Date 40mm Platin Buz Mavisi Kadran Yivli Bezel** | Ref: 228236-0010 | Fiyat: ₺6.256.855 | URL: https://www.belginkuyumculuk.com/urun/rolex-228236-0010-5010/
-- **Rolex Submariner No-Date 41mm Oystersteel** | Ref: 124060 | Fiyat: ₺1.112.330 | URL: https://www.belginkuyumculuk.com/urun/rolex-124060-5011/
-- **Rolex Submariner Date 41mm 'Kermit / Starbucks' Yeşil Bezel** | Ref: 126610LV | Fiyat: ₺1.407.792 | URL: https://www.belginkuyumculuk.com/urun/rolex-126610lv-5012/
-- **Rolex Cosmograph Daytona 18K Everose Altın & Oysterflex** | Ref: 126515LN | Fiyat: ₺3.649.832 | URL: https://www.belginkuyumculuk.com/urun/rolex-126515ln-5013/
-- **Rolex Explorer 36mm Oystersteel Siyah Kadran** | Ref: 124270 | Fiyat: ₺773.417 | URL: https://www.belginkuyumculuk.com/urun/rolex-124270-5014/
-- **Rolex Explorer II 42mm Beyaz 'Polar' Kadran** | Ref: 226570-0001 | Fiyat: ₺1.034.119 | URL: https://www.belginkuyumculuk.com/urun/rolex-226570-0001-5015/
-- **Rolex Yacht-Master 40mm 18K Everose Altın & Siyah Cerachrom** | Ref: 126655 | Fiyat: ₺2.563.572 | URL: https://www.belginkuyumculuk.com/urun/rolex-126655-5016/
-- **Rolex Yacht-Master 42mm Titanyum RLX** | Ref: 226627 | Fiyat: ₺2.693.924 | URL: https://www.belginkuyumculuk.com/urun/rolex-226627-5017/
-- **Rolex Oyster Perpetual 41mm Turkuaz Mavi 'Tiffany' Kadran** | Ref: 124300-0006 | Fiyat: ₺1.346.962 | URL: https://www.belginkuyumculuk.com/urun/rolex-124300-0006-5018/
-- **Rolex Oyster Perpetual 36mm Kutlama 'Celebration' Kadran** | Ref: 126000-0014 | Fiyat: ₺1.459.933 | URL: https://www.belginkuyumculuk.com/urun/rolex-126000-0014-5019/
-- **Rolex Sea-Dweller 43mm Oystersteel & Siyah Kadran Kırmızı Yazı** | Ref: 126600 | Fiyat: ₺1.286.131 | URL: https://www.belginkuyumculuk.com/urun/rolex-126600-5020/
-- **Omega Speedmaster Professional Moonwatch Co-Axial Master Chronometer** | Ref: 310.30.42.50.01.002 | Fiyat: ₺677.826 | URL: https://www.belginkuyumculuk.com/urun/omega-310-30-42-50-01-002-5021/
-- **Omega Seamaster Diver 300M Co-Axial 42mm Siyah Kadran** | Ref: 210.30.42.20.01.001 | Fiyat: ₺486.644 | URL: https://www.belginkuyumculuk.com/urun/omega-210-30-42-20-01-001-5022/
-- **Omega Seamaster Diver 300M '007 Edition No Time To Die' Titanyum** | Ref: 210.90.42.20.01.001 | Fiyat: ₺816.867 | URL: https://www.belginkuyumculuk.com/urun/omega-210-90-42-20-01-001-5023/
-- **Omega Seamaster Planet Ocean 600M Co-Axial Master 43.5mm** | Ref: 215.30.44.21.01.001 | Fiyat: ₺599.615 | URL: https://www.belginkuyumculuk.com/urun/omega-215-30-44-21-01-001-5024/
-- **Omega Seamaster Aqua Terra 150M 41mm Yeşil Kadran Teak Desenli** | Ref: 220.10.41.21.10.001 | Fiyat: ₺538.785 | URL: https://www.belginkuyumculuk.com/urun/omega-220-10-41-21-10-001-5025/
-- **Omega Speedmaster 'Dark Side of the Moon' Siyah Seramik Kronograf** | Ref: 311.92.44.51.01.003 | Fiyat: ₺1.086.260 | URL: https://www.belginkuyumculuk.com/urun/omega-311-92-44-51-01-003-5026/
-- **Omega Constellation Co-Axial Master Chronometer 41mm Sedna Altın & Çelik** | Ref: 131.20.41.21.02.001 | Fiyat: ₺938.528 | URL: https://www.belginkuyumculuk.com/urun/omega-131-20-41-21-02-001-5027/
-- **Omega Speedmaster 'Silver Snoopy Award' 50th Anniversary** | Ref: 310.32.42.50.02.001 | Fiyat: ₺1.520.763 | URL: https://www.belginkuyumculuk.com/urun/omega-310-32-42-50-02-001-5028/
-- **Omega Seamaster Aqua Terra 150M Worldtimer 43mm Çelik** | Ref: 220.10.43.22.03.001 | Fiyat: ₺799.487 | URL: https://www.belginkuyumculuk.com/urun/omega-220-10-43-22-03-001-5029/
-- **Omega Seamaster 300 Heritage Co-Axial Master 41mm Vintage Siyah** | Ref: 234.30.41.21.01.001 | Fiyat: ₺590.925 | URL: https://www.belginkuyumculuk.com/urun/omega-234-30-41-21-01-001-5030/
-- **Omega Speedmaster Chronoscope Co-Axial Master 43mm Panda Kadran** | Ref: 329.30.43.51.02.001 | Fiyat: ₺764.727 | URL: https://www.belginkuyumculuk.com/urun/omega-329-30-43-51-02-001-5031/
-- **Omega Seamaster Planet Ocean 600M Ultra Deep 6000M Titanyum** | Ref: 215.92.46.21.01.001 | Fiyat: ₺1.121.020 | URL: https://www.belginkuyumculuk.com/urun/omega-215-92-46-21-01-001-5032/
-- **Omega De Ville Trésor Co-Axial Master 40mm 18K Sarı Altın** | Ref: 435.53.40.21.02.001 | Fiyat: ₺1.233.991 | URL: https://www.belginkuyumculuk.com/urun/omega-435-53-40-21-02-001-5033/
-- **Omega Speedmaster Racing Co-Axial Master Chronograph 44.25mm** | Ref: 329.30.44.51.01.001 | Fiyat: ₺773.417 | URL: https://www.belginkuyumculuk.com/urun/omega-329-30-44-51-01-001-5034/
-- **Omega Seamaster Aqua Terra 150M 'Shades' 38mm Atlantik Mavisi** | Ref: 220.10.38.20.03.003 | Fiyat: ₺556.165 | URL: https://www.belginkuyumculuk.com/urun/omega-220-10-38-20-03-003-5035/
-- **Omega Speedmaster Professional Moonphase Co-Axial 44.25mm Mavi Kadran** | Ref: 304.30.44.52.03.001 | Fiyat: ₺973.289 | URL: https://www.belginkuyumculuk.com/urun/omega-304-30-44-52-03-001-5036/
-- **Omega Seamaster Diver 300M Chronograph 44mm Siyah Seramik & Sedna Altın** | Ref: 210.20.44.51.01.001 | Fiyat: ₺1.034.119 | URL: https://www.belginkuyumculuk.com/urun/omega-210-20-44-51-01-001-5037/
-- **Omega Constellation Co-Axial Master 39mm 18K Sarı Altın & Gümüş Kadran** | Ref: 131.53.39.20.02.001 | Fiyat: ₺1.720.635 | URL: https://www.belginkuyumculuk.com/urun/omega-131-53-39-20-02-001-5038/
-- **Omega Speedmaster 'First Omega in Space' Hesalite Chronograph** | Ref: 311.32.40.30.01.001 | Fiyat: ₺564.855 | URL: https://www.belginkuyumculuk.com/urun/omega-311-32-40-30-01-001-5039/
-- **Omega Seamaster Planet Ocean 600M GMT 'GoodPlanet' 43.5mm Titanyum** | Ref: 232.92.44.22.03.001 | Fiyat: ₺729.966 | URL: https://www.belginkuyumculuk.com/urun/omega-232-92-44-22-03-001-5040/
-- **Patek Philippe Nautilus Paslanmaz Çelik Mavi Kadran** | Ref: 5711/1A-010 | Fiyat: ₺10.254.290 | URL: https://www.belginkuyumculuk.com/urun/patek-philippe-5711-1a-010-5041/
-- **Patek Philippe Nautilus Moonphase & Güç Rezervi Paslanmaz Çelik** | Ref: 5712/1A-001 | Fiyat: ₺9.124.580 | URL: https://www.belginkuyumculuk.com/urun/patek-philippe-5712-1a-001-5042/
-- **Patek Philippe Nautilus Yıllık Takvim & Ay Fazı Çelik Mavi Kadran** | Ref: 5726/1A-014 | Fiyat: ₺8.516.274 | URL: https://www.belginkuyumculuk.com/urun/patek-philippe-5726-1a-014-5043/
-- **Patek Philippe Nautilus Kronograf 18K Gül Altın Siyah Kadran** | Ref: 5980/1R-001 | Fiyat: ₺15.207.633 | URL: https://www.belginkuyumculuk.com/urun/patek-philippe-5980-1r-001-5044/
-- **Patek Philippe Aquanaut Paslanmaz Çelik Siyah Kadran & Kompozit Kayış** | Ref: 5167A-001 | Fiyat: ₺5.040.244 | URL: https://www.belginkuyumculuk.com/urun/patek-philippe-5167a-001-5045/
-- **Patek Philippe Aquanaut 18K Beyaz Altın Gece Mavisi 'Jumbo' Kadran** | Ref: 5168G-001 | Fiyat: ₺6.256.855 | URL: https://www.belginkuyumculuk.com/urun/patek-philippe-5168g-001-5046/
-- **Patek Philippe Aquanaut Kronograf Paslanmaz Çelik Turuncu Vurgulu** | Ref: 5968A-001 | Fiyat: ₺11.123.297 | URL: https://www.belginkuyumculuk.com/urun/patek-philippe-5968a-001-5047/
-- **Patek Philippe Calatrava 18K Beyaz Altın Clous de Paris Guilloché Bezel** | Ref: 6119G-001 | Fiyat: ₺2.693.924 | URL: https://www.belginkuyumculuk.com/urun/patek-philippe-6119g-001-5048/
-- **Patek Philippe Calatrava Sub-Second 18K Sarı Altın Fildişi Kadran** | Ref: 5227J-001 | Fiyat: ₺3.128.427 | URL: https://www.belginkuyumculuk.com/urun/patek-philippe-5227j-001-5049/
-- **Patek Philippe Grand Complications Perpetual Calendar 18K Beyaz Altın** | Ref: 5327G-001 | Fiyat: ₺8.168.671 | URL: https://www.belginkuyumculuk.com/urun/patek-philippe-5327g-001-5050/
-- **Patek Philippe Grand Complications Chronograph Perpetual Calendar Platin** | Ref: 5270P-001 | Fiyat: ₺16.945.648 | URL: https://www.belginkuyumculuk.com/urun/patek-philippe-5270p-001-5051/
-- **Patek Philippe Aquanaut Luce Kadın Otomatik 18K Gül Altın Pırlantalı Bezel** | Ref: 5267/200R-001 | Fiyat: ₺5.387.847 | URL: https://www.belginkuyumculuk.com/urun/patek-philippe-5267-200r-001-5052/
-- **Patek Philippe Complications World Time 18K Beyaz Altın Cloisonné Emaye** | Ref: 5231G-001 | Fiyat: ₺9.559.084 | URL: https://www.belginkuyumculuk.com/urun/patek-philippe-5231g-001-5053/
-- **Patek Philippe Complications Annual Calendar 18K Beyaz Altın Mavi Kadran** | Ref: 5396G-011 | Fiyat: ₺4.692.641 | URL: https://www.belginkuyumculuk.com/urun/patek-philippe-5396g-011-5054/
-- **Patek Philippe Complications Chronograph 18K Sarı Altın Vintage Kadran** | Ref: 5172G-001 | Fiyat: ₺6.778.259 | URL: https://www.belginkuyumculuk.com/urun/patek-philippe-5172g-001-5055/
-- **Patek Philippe Calatrava Pilot Travel Time 18K Beyaz Altın 42mm** | Ref: 5524G-001 | Fiyat: ₺4.518.840 | URL: https://www.belginkuyumculuk.com/urun/patek-philippe-5524g-001-5056/
-- **Patek Philippe Golden Ellipse 18K Gül Altın Siyah Abanoz Kadran** | Ref: 5738R-001 | Fiyat: ₺3.041.527 | URL: https://www.belginkuyumculuk.com/urun/patek-philippe-5738r-001-5057/
-- **Patek Philippe Complications Minute Repeater 18K Gül Altın Grand Feu Kadran** | Ref: 5078R-001 | Fiyat: ₺33.891.296 | URL: https://www.belginkuyumculuk.com/urun/patek-philippe-5078r-001-5058/
-- **Patek Philippe Nautilus Kadın Otomatik 18K Gül Altın Pırlantalı Bezel** | Ref: 7118/1200R-001 | Fiyat: ₺6.517.557 | URL: https://www.belginkuyumculuk.com/urun/patek-philippe-7118-1200r-001-5059/
-- **Patek Philippe Twenty~4 Otomatik 36mm Paslanmaz Çelik Mavi Sunburst** | Ref: 7300/1200A-001 | Fiyat: ₺2.476.672 | URL: https://www.belginkuyumculuk.com/urun/patek-philippe-7300-1200a-001-5060/
-- **Audemars Piguet Royal Oak 'Jumbo' Extra-Thin 39mm Bleu Nuit Kadran** | Ref: 16202ST.OO.1240ST.01 | Fiyat: ₺6.778.259 | URL: https://www.belginkuyumculuk.com/urun/audemars-piguet-16202st-oo-1240st-01-5061/
-- **Audemars Piguet Royal Oak Selfwinding 41mm Siyah Grande Tapisserie Kadran** | Ref: 15510ST.OO.1320ST.07 | Fiyat: ₺3.997.435 | URL: https://www.belginkuyumculuk.com/urun/audemars-piguet-15510st-oo-1320st-07-5062/
-- **Audemars Piguet Royal Oak Selfwinding Chronograph 41mm Mavi Kadran** | Ref: 26240ST.OO.1320ST.05 | Fiyat: ₺5.387.847 | URL: https://www.belginkuyumculuk.com/urun/audemars-piguet-26240st-oo-1320st-05-5063/
-- **Audemars Piguet Royal Oak Double Balance Wheel Openworked 41mm Çelik** | Ref: 15407ST.OO.1220ST.01 | Fiyat: ₺10.862.595 | URL: https://www.belginkuyumculuk.com/urun/audemars-piguet-15407st-oo-1220st-01-5064/
-- **Audemars Piguet Royal Oak Offshore Chronograph 43mm Titanyum & Seramik** | Ref: 26420TI.OO.A027CA.01 | Fiyat: ₺3.649.832 | URL: https://www.belginkuyumculuk.com/urun/audemars-piguet-26420ti-oo-a027ca-01-5065/
-- **Audemars Piguet Royal Oak Offshore Diver 42mm Haki Yeşil Kadran** | Ref: 15720ST.OO.A052CA.01 | Fiyat: ₺2.780.824 | URL: https://www.belginkuyumculuk.com/urun/audemars-piguet-15720st-oo-a052ca-01-5066/
-- **Audemars Piguet Royal Oak Selfwinding 18K Pembe Altın & Mavi Tapisserie** | Ref: 15510OR.OO.1320OR.04 | Fiyat: ₺7.647.267 | URL: https://www.belginkuyumculuk.com/urun/audemars-piguet-15510or-oo-1320or-04-5067/
-- **Audemars Piguet Royal Oak Chronograph 38mm Gümüş Kadran Çelik** | Ref: 26715ST.OO.1356ST.02 | Fiyat: ₺4.171.236 | URL: https://www.belginkuyumculuk.com/urun/audemars-piguet-26715st-oo-1356st-02-5068/
-- **Audemars Piguet Royal Oak Perpetual Calendar 41mm Paslanmaz Çelik** | Ref: 26574ST.OO.1220ST.03 | Fiyat: ₺9.993.587 | URL: https://www.belginkuyumculuk.com/urun/audemars-piguet-26574st-oo-1220st-03-5069/
-- **Audemars Piguet Royal Oak Offshore Selfwinding Chronograph 42mm Siyah Seramik** | Ref: 26405CE.OO.A002CA.02 | Fiyat: ₺4.258.137 | URL: https://www.belginkuyumculuk.com/urun/audemars-piguet-26405ce-oo-a002ca-02-5070/
-- **Audemars Piguet Code 11.59 by Audemars Piguet Chronograph 41mm 18K Beyaz Altın & Seramik** | Ref: 26393NB.OO.A002KB.01 | Fiyat: ₺3.389.130 | URL: https://www.belginkuyumculuk.com/urun/audemars-piguet-26393nb-oo-a002kb-01-5071/
-- **Audemars Piguet Royal Oak Frosted Gold 37mm 18K Beyaz Altın Carolina Bucci** | Ref: 15454BC.GG.1259BC.01 | Fiyat: ₺5.909.252 | URL: https://www.belginkuyumculuk.com/urun/audemars-piguet-15454bc-gg-1259bc-01-5072/
-- **Audemars Piguet Royal Oak Flying Tourbillon 41mm Paslanmaz Çelik Yeşil Kadran** | Ref: 26730ST.OO.1320ST.01 | Fiyat: ₺16.945.648 | URL: https://www.belginkuyumculuk.com/urun/audemars-piguet-26730st-oo-1320st-01-5073/
-- **Audemars Piguet Royal Oak Offshore 'Music Edition' 43mm Titanyum Ekolayzır Kadran** | Ref: 77600TI.OO.A343CA.01 | Fiyat: ₺3.302.229 | URL: https://www.belginkuyumculuk.com/urun/audemars-piguet-77600ti-oo-a343ca-01-5074/
-- **Audemars Piguet Royal Oak Selfwinding 34mm Siyah Seramik & Pembe Altın Vidalar** | Ref: 77350CE.OO.1266CE.01 | Fiyat: ₺4.692.641 | URL: https://www.belginkuyumculuk.com/urun/audemars-piguet-77350ce-oo-1266ce-01-5075/
-- **Audemars Piguet Royal Oak Offshore Diver 42mm Beyaz Kadran Mavi Bezel Çelik** | Ref: 15710ST.OO.A010CA.01 | Fiyat: ₺2.433.221 | URL: https://www.belginkuyumculuk.com/urun/audemars-piguet-15710st-oo-a010ca-01-5076/
-- **Audemars Piguet Royal Oak Chronograph 41mm 'Panda' Kadran Çelik** | Ref: 26331ST.OO.1220ST.03 | Fiyat: ₺4.866.443 | URL: https://www.belginkuyumculuk.com/urun/audemars-piguet-26331st-oo-1220st-03-5077/
-- **Audemars Piguet Code 11.59 by Audemars Piguet Selfwinding 41mm Dumanlı Mor Kadran** | Ref: 15210CR.OO.A009KB.01 | Fiyat: ₺2.867.725 | URL: https://www.belginkuyumculuk.com/urun/audemars-piguet-15210cr-oo-a009kb-01-5078/
-- **Audemars Piguet Royal Oak Concept Flying Tourbillon GMT 44mm Titanyum** | Ref: 26589IO.OO.D002CA.01 | Fiyat: ₺21.290.686 | URL: https://www.belginkuyumculuk.com/urun/audemars-piguet-26589io-oo-d002ca-01-5079/
-- **Audemars Piguet Royal Oak Quartz 33mm 18K Pembe Altın Pırlantalı Bezel** | Ref: 67651OR.ZZ.1261OR.01 | Fiyat: ₺3.910.534 | URL: https://www.belginkuyumculuk.com/urun/audemars-piguet-67651or-zz-1261or-01-5080/
-- **Breitling Navitimer B01 Chronograph 43mm Siyah Kadran Çelik** | Ref: AB0138211B1A1 | Fiyat: ₺825.557 | URL: https://www.belginkuyumculuk.com/urun/breitling-ab0138211b1a1-5081/
-- **Breitling Navitimer B01 Chronograph 46mm Mavi Kadran & Timsah Derisi** | Ref: AB0137211C1P1 | Fiyat: ₺799.487 | URL: https://www.belginkuyumculuk.com/urun/breitling-ab0137211c1p1-5082/
-- **Breitling Chronomat B01 42mm Gümüş Kadran Rouleaux Bilezik** | Ref: AB0134101G1A1 | Fiyat: ₺773.417 | URL: https://www.belginkuyumculuk.com/urun/breitling-ab0134101g1a1-5083/
-- **Breitling Superocean Heritage B20 Automatic 42mm Yeşil Kadran Hasır Bilezik** | Ref: AB2010121L1A1 | Fiyat: ₺469.264 | URL: https://www.belginkuyumculuk.com/urun/breitling-ab2010121l1a1-5084/
-- **Breitling Superocean Automatic 44mm Siyah Kadran Kauçuk Kayış** | Ref: A17376211B1S1 | Fiyat: ₺425.814 | URL: https://www.belginkuyumculuk.com/urun/breitling-a17376211b1s1-5085/
-- **Breitling Premier B01 Chronograph 42mm Somon Kadran Deri Kayış** | Ref: AB0145371L1P1 | Fiyat: ₺790.797 | URL: https://www.belginkuyumculuk.com/urun/breitling-ab0145371l1p1-5086/
-- **Breitling Avenger Chronograph 45mm Night Mission DLC Titanyum** | Ref: V13317101L1X1 | Fiyat: ₺538.785 | URL: https://www.belginkuyumculuk.com/urun/breitling-v13317101l1x1-5087/
-- **Breitling Top Time B01 'Shelby Cobra' Chronograph 41mm** | Ref: AB01763A1C1X1 | Fiyat: ₺712.586 | URL: https://www.belginkuyumculuk.com/urun/breitling-ab01763a1c1x1-5088/
-- **Breitling Top Time B01 'Ford Mustang' Chronograph 41mm Yeşil** | Ref: AB01762A1L1X1 | Fiyat: ₺712.586 | URL: https://www.belginkuyumculuk.com/urun/breitling-ab01762a1l1x1-5089/
-- **Breitling Top Time B01 'Chevrolet Corvette' Chronograph 41mm Kırmızı** | Ref: AB01761A1K1X1 | Fiyat: ₺712.586 | URL: https://www.belginkuyumculuk.com/urun/breitling-ab01761a1k1x1-5090/
-- **Breitling Navitimer B01 Chronograph 41mm 18K Kırmızı Altın Gümüş Kadran** | Ref: RB0139211G1P1 | Fiyat: ₺1.694.565 | URL: https://www.belginkuyumculuk.com/urun/breitling-rb0139211g1p1-5091/
-- **Breitling Chronomat Automatic GMT 40mm Antrasit Kadran Çelik** | Ref: A32398101B1A1 | Fiyat: ₺512.714 | URL: https://www.belginkuyumculuk.com/urun/breitling-a32398101b1a1-5092/
-- **Breitling Superocean Heritage '57 Pastel Paradise 38mm Mavi** | Ref: A10340161C1X1 | Fiyat: ₺417.124 | URL: https://www.belginkuyumculuk.com/urun/breitling-a10340161c1x1-5093/
-- **Breitling Avenger Automatic 42mm Siyah Kadran Çelik Bilezik** | Ref: A17328101B1A1 | Fiyat: ₺399.743 | URL: https://www.belginkuyumculuk.com/urun/breitling-a17328101b1a1-5094/
-- **Breitling Endurance Pro 44mm Breitlight® Ultra Hafif Kuvars Sarı** | Ref: X82310A41B1S1 | Fiyat: ₺295.463 | URL: https://www.belginkuyumculuk.com/urun/breitling-x82310a41b1s1-5095/
-- **Breitling Premier B09 Chronograph 40mm Pistachio Yeşil Kadran Çelik** | Ref: AB0930D41L1P1 | Fiyat: ₺747.347 | URL: https://www.belginkuyumculuk.com/urun/breitling-ab0930d41l1p1-5096/
-- **Breitling Chronomat B01 44mm Super Chronomat Dört Mevsim UTC Modüllü** | Ref: AB0136251B1A2 | Fiyat: ₺938.528 | URL: https://www.belginkuyumculuk.com/urun/breitling-ab0136251b1a2-5097/
-- **Breitling Navitimer Automatic 38mm Mavi Kadran Boncuklu Bezel** | Ref: A17395161C1A1 | Fiyat: ₺425.814 | URL: https://www.belginkuyumculuk.com/urun/breitling-a17395161c1a1-5098/
-- **Breitling Superocean Automatic 36mm Turkuaz Kadran Beyaz Kauçuk** | Ref: A17377211A1S1 | Fiyat: ₺408.434 | URL: https://www.belginkuyumculuk.com/urun/breitling-a17377211a1s1-5099/
-- **Breitling Professional Aerospace B70 Orbiter Titanyum & Hibrit Ekran** | Ref: EB70101A1O1E1 | Fiyat: ₺425.814 | URL: https://www.belginkuyumculuk.com/urun/breitling-eb70101a1o1e1-5100/
+## Topics
+- https://www.belginkuyumculuk.com/llms/topics/ikinci-el-luks-saat.md
 
-## Tam katalog
-- [llms-full.txt](https://www.belginkuyumculuk.com/llms-full.txt)
+## Canonical human-facing hubs
+- https://www.belginkuyumculuk.com/
+- https://www.belginkuyumculuk.com/elit-kategori/
+- https://www.belginkuyumculuk.com/markalar/
+- https://www.belginkuyumculuk.com/saatler/
+- https://www.belginkuyumculuk.com/mucevherat/
+- https://www.belginkuyumculuk.com/iletisim.html
+
+## Machine discovery
+- Sitemap: https://www.belginkuyumculuk.com/sitemap.xml
+- Robots: https://www.belginkuyumculuk.com/robots.txt
+
+## Data integrity rules
+- Ürün fiyatı, stok ve anlık availability bu manifestte sabitlenmez; güncel canonical ürün sayfasından/runtime kaynaktan alınır.
+- LLMS, canonical HTML veya schema ile çelişemez.
+- Doğrulanmamış rating, review, sertifika, stok, garanti veya ticari iddia makine katmanına eklenemez.
+- Chrono24 temelli bağlayıcı fiyat/güvence formülü bu bilgi sözleşmesinin parçası değildir ve yeniden eklenemez.

@@ -20,53 +20,30 @@ function normalizeHeritageClaims(html) {
 
 function hardenEvidenceClaims(html) {
   const rules = [
-    {
-      enabled: CLAIMS.certifiedDeliveries14000,
-      pattern: /14\.?000\+\s*Sertifikalı Teslimat/gi,
-      replacement: 'Uzman kontrollü ürün teslimatı'
-    },
-    {
-      enabled: CLAIMS.giaHrdCoverage,
-      pattern: /GIA,\s*HRD[^<.]*/gi,
-      replacement: 'Ürüne ait mevcut sertifika ve ekspertiz bilgileri'
-    },
-    {
-      enabled: CLAIMS.twelvePointExpertiseAllProducts,
-      pattern: /12\s*Nokta Ekspertiz[^<.]*/gi,
-      replacement: 'Ürüne göre ekspertiz ve kontrol bilgileri'
-    },
-    {
-      enabled: CLAIMS.distributorWarrantyTwoYearsAllWatches,
-      pattern: /2\s*Yıl Distribütör Garantisi/gi,
-      replacement: 'Garanti kapsamı ürün belgesine göre'
-    },
-    {
-      enabled: CLAIMS.bestPriceGuarantee,
-      pattern: /en iyi fiyat garantisi/gi,
-      replacement: 'güncel fiyatlandırma'
-    },
-    {
-      enabled: CLAIMS.cashBuybackGuarantee,
-      pattern: /geri alım güvencesi/gi,
-      replacement: 'alım ve değerleme hizmeti'
-    },
-    {
-      enabled: CLAIMS.support247,
-      pattern: /7\/24\s*Kesintisiz/gi,
-      replacement: 'WhatsApp danışma'
-    }
+    { enabled: CLAIMS.certifiedDeliveries14000, pattern: /14\.?000\+\s*Sertifikalı Teslimat/gi, replacement: 'Uzman kontrollü ürün teslimatı' },
+    { enabled: CLAIMS.giaHrdCoverage, pattern: /GIA,\s*HRD[^<.]*/gi, replacement: 'Ürüne ait mevcut sertifika ve ekspertiz bilgileri' },
+    { enabled: CLAIMS.twelvePointExpertiseAllProducts, pattern: /12\s*Nokta Ekspertiz[^<.]*/gi, replacement: 'Ürüne göre ekspertiz ve kontrol bilgileri' },
+    { enabled: CLAIMS.distributorWarrantyTwoYearsAllWatches, pattern: /2\s*Yıl Distribütör Garantisi/gi, replacement: 'Garanti kapsamı ürün belgesine göre' },
+    { enabled: CLAIMS.bestPriceGuarantee, pattern: /en iyi fiyat garantisi/gi, replacement: 'güncel fiyatlandırma' },
+    { enabled: CLAIMS.cashBuybackGuarantee, pattern: /geri alım güvencesi/gi, replacement: 'alım ve değerleme hizmeti' },
+    { enabled: CLAIMS.support247, pattern: /7\/24\s*Kesintisiz/gi, replacement: 'WhatsApp danışma' }
   ];
-
-  for (const rule of rules) {
-    if (!rule.enabled) {
-      html = html.replace(rule.pattern, rule.replacement);
-    }
-  }
-
+  for (const rule of rules) if (!rule.enabled) html = html.replace(rule.pattern, rule.replacement);
   return html;
 }
 
-const textFiles = fs.readdirSync(root).filter((f) => /\.(html|txt|xml|js|json)$/i.test(f) && !f.includes('package-lock'));
+// These files are canonical generated outputs. Generic text hardening must happen in
+// source/registry data before generation, never by mutating generated discovery files.
+const GENERATED_SEO_ARTIFACTS = new Set([
+  'llms.txt', 'llms-full.txt', 'robots.txt', 'sitemap.xml', 'sitemap-pages.xml',
+  'sitemap-categories.xml', 'sitemap-products.xml', 'sitemap-magazine.xml'
+]);
+
+const textFiles = fs.readdirSync(root).filter((f) =>
+  /\.(html|txt|xml|js|json)$/i.test(f) &&
+  !f.includes('package-lock') &&
+  !GENERATED_SEO_ARTIFACTS.has(f)
+);
 
 const baseReplacements = [
   [/Belgin Kuyumculuk Sanayi ve Ticaret Ltd\. Şti\./g, 'BELGİN KUYUMCULUK - SEMİH SONBAHAR'],
@@ -94,19 +71,12 @@ for (const file of textFiles) {
   if (!fs.statSync(full).isFile()) continue;
   let content = fs.readFileSync(full, 'utf8');
   const before = content;
-  
-  for (const [pattern, replacement] of baseReplacements) {
-    content = content.replace(pattern, replacement);
-  }
-  
+  for (const [pattern, replacement] of baseReplacements) content = content.replace(pattern, replacement);
   content = normalizeHeritageClaims(content);
   content = hardenEvidenceClaims(content);
-
-  if (content !== before) {
-    fs.writeFileSync(full, content, 'utf8');
-  }
+  if (content !== before) fs.writeFileSync(full, content, 'utf8');
 }
 
-console.log('[public-claims] Doğrulanmamış iddialar ve miras metinleri 1999 standardına göre sertleştirildi.');
+console.log('[public-claims] Doğrulanmamış iddialar sertleştirildi; generated SEO artefactları canonical generator tarafından yönetilir.');
 
 module.exports = { normalizeHeritageClaims, hardenEvidenceClaims };
