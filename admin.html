@@ -2600,74 +2600,48 @@
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:6px;">
                   <div style="display:flex; align-items:center; gap:8px;">
                     <span style="font-size:18px;">💰</span>
-                    <strong style="font-size:13px; color:#0369A1;">Ödeme Kanalı & Tahsilat Yöntemi: *</strong>
-                    <span id="storePaymentMethodBadge" style="font-size:10.5px; font-weight:800; background:#DBEAFE; color:#1E40AF; padding:2px 8px; border-radius:10px;">Banka Havalesi</span>
+                    <strong style="font-size:13px; color:#0369A1;">Ödeme Yöntemi: *</strong>
+                    <span id="storePaymentMethodBadge" style="font-size:10.5px; font-weight:800; background:#DBEAFE; color:#1E40AF; padding:2px 8px; border-radius:10px;">Banka Havalesi / EFT</span>
                   </div>
                   <div style="font-size:11px; color:#0284C7; font-weight:600;">
-                    Yasal evrak seti seçilen ödeme kanalına göre otomatik uyarlanır
+                    Yasal evrak seti seçilen ödeme yöntemine göre otomatik hazırlanır
                   </div>
                 </div>
 
-                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:10px;">
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:10px;">
                   <!-- Havale / EFT -->
-                  <label id="storeOptHavale" class="store-payment-option" style="background:#FFF; border:2px solid #3B82F6; border-radius:8px; padding:10px; cursor:pointer; display:flex; align-items:flex-start; gap:8px; transition:all 0.2s;">
-                    <input type="radio" name="storePaymentChannel" value="HAVALE_EFT" checked style="margin-top:2px;" onchange="AdminApp.handleStorePaymentMethodChange(this.value)">
+                  <label id="storeOptHavale" class="store-payment-option" style="background:#FFF; border:2px solid #3B82F6; border-radius:8px; padding:12px 10px; cursor:pointer; display:flex; align-items:center; gap:8px; transition:all 0.2s;">
+                    <input type="radio" name="storePaymentChannel" value="HAVALE_EFT" checked onchange="AdminApp.handleStorePaymentMethodChange(this.value)">
                     <div>
-                      <div style="font-size:12.5px; font-weight:800; color:#1E3A8A;">🏦 Banka Havalesi / EFT / FAST</div>
-                      <div style="font-size:10.5px; color:#64748B; margin-top:2px;">Banka hesabına havale (Kimlik + İmzalı Teslim Tutanağı)</div>
+                      <div style="font-size:13px; font-weight:800; color:#1E3A8A;">🏦 Banka Havalesi / EFT</div>
+                      <div style="font-size:10.5px; color:#64748B; margin-top:1px;">Banka transferi ile tahsilat</div>
                     </div>
                   </label>
 
-                  <!-- Nakit / Elden -->
-                  <label id="storeOptNakit" class="store-payment-option" style="background:#FFF; border:1.5px solid #CBD5E1; border-radius:8px; padding:10px; cursor:pointer; display:flex; align-items:flex-start; gap:8px; transition:all 0.2s;">
-                    <input type="radio" name="storePaymentChannel" value="NAKIT" style="margin-top:2px;" onchange="AdminApp.handleStorePaymentMethodChange(this.value)">
+                  <!-- Nakit Ödeme -->
+                  <label id="storeOptNakit" class="store-payment-option" style="background:#FFF; border:1.5px solid #CBD5E1; border-radius:8px; padding:12px 10px; cursor:pointer; display:flex; align-items:center; gap:8px; transition:all 0.2s;">
+                    <input type="radio" name="storePaymentChannel" value="NAKIT" onchange="AdminApp.handleStorePaymentMethodChange(this.value)">
                     <div>
-                      <div style="font-size:12.5px; font-weight:800; color:#065F46;">💵 Nakit / Elden Tahsilat</div>
-                      <div style="font-size:10.5px; color:#64748B; margin-top:2px;">Mağazada elden nakit tahsilat (Kasa Makbuzu + İmzalı Tutanak)</div>
+                      <div style="font-size:13px; font-weight:800; color:#065F46;">💵 Nakit Ödeme</div>
+                      <div style="font-size:10.5px; color:#64748B; margin-top:1px;">Elden nakit kasa tahsilatı</div>
                     </div>
                   </label>
 
                   <!-- Kredi Kartı / POS -->
-                  <label id="storeOptKart" class="store-payment-option" style="background:#FFF; border:1.5px solid #CBD5E1; border-radius:8px; padding:10px; cursor:pointer; display:flex; align-items:flex-start; gap:8px; transition:all 0.2s;">
-                    <input type="radio" name="storePaymentChannel" value="KREDI_KARTI" style="margin-top:2px;" onchange="AdminApp.handleStorePaymentMethodChange(this.value)">
+                  <label id="storeOptKart" class="store-payment-option" style="background:#FFF; border:1.5px solid #CBD5E1; border-radius:8px; padding:12px 10px; cursor:pointer; display:flex; align-items:center; gap:8px; transition:all 0.2s;">
+                    <input type="radio" name="storePaymentChannel" value="KREDI_KARTI" onchange="AdminApp.handleStorePaymentMethodChange(this.value)">
                     <div>
-                      <div style="font-size:12.5px; font-weight:800; color:#6B21A8;">💳 Kredi Kartı / POS</div>
-                      <div style="font-size:10.5px; color:#64748B; margin-top:2px;">Fiziki/Sanal POS çekimi (14'lü Tam Adli Delil Paketi)</div>
+                      <div style="font-size:13px; font-weight:800; color:#6B21A8;">💳 Kredi Kartı / POS</div>
+                      <div style="font-size:10.5px; color:#64748B; margin-top:1px;">POS cihazı ile kart çekimi</div>
                     </div>
                   </label>
                 </div>
 
-                <!-- Havale / EFT Ek Bilgileri -->
-                <div id="storeBankDetailsRow" style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px; padding-top:10px; border-top:1px dashed #BAE6FD;">
-                  <div class="form-field-group">
-                    <label class="form-field-label" for="storeBankName" style="color:#1E3A8A; font-weight:800;">Tahsilat Yapılan Şirket Banka Hesabı: *</label>
-                    <select id="storeBankName" class="form-field-input" style="font-weight:700; color:#0F172A;">
-                      <option value="KUVEYT_TURK">Kuveyt Türk Katılım Bankası (TR...)</option>
-                      <option value="AKBANK">Akbank T.A.Ş. (TR...)</option>
-                      <option value="GARANTI_BBVA">Garanti BBVA (TR...)</option>
-                      <option value="IS_BANKASI">Türkiye İş Bankası (TR...)</option>
-                      <option value="YAPI_KREDI">Yapı ve Kredi Bankası (TR...)</option>
-                      <option value="ZIRAAT_BANKASI">T.C. Ziraat Bankası (TR...)</option>
-                      <option value="DIGER_BANKA">Diğer Banka Hesabı</option>
-                    </select>
-                  </div>
-                  <div class="form-field-group">
-                    <label class="form-field-label" for="storeReceiptNo" style="color:#1E3A8A; font-weight:800;">Banka Dekont No / İşlem Referansı (Opsiyonel):</label>
-                    <input type="text" id="storeReceiptNo" class="form-field-input" placeholder="Örn: REF-982012 / FAST-0914" style="font-weight:600; color:#0F172A;">
-                  </div>
-                </div>
-
-                <!-- Kredi Kartı POS Sağlayıcı Seçimi -->
-                <div id="storePosDetailsRow" style="display:none; grid-template-columns:1fr; gap:12px; margin-top:10px; padding-top:10px; border-top:1px dashed #E9D5FF;">
-                  <div class="form-field-group">
-                    <label class="form-field-label" for="storePosProvider" style="color:#6B21A8; font-weight:800;">POS Sağlayıcı / Cihaz:</label>
-                    <select id="storePosProvider" class="form-field-input" style="font-weight:700; color:#0F172A;">
-                      <option value="KUVEYT_TURK">Kuveyt Türk Sanal/Fiziki POS</option>
-                      <option value="AKBANK">Akbank Sanal/Fiziki POS</option>
-                      <option value="TOSLA">Tosla İşim POS (Akbank)</option>
-                      <option value="PAYTR">PayTR Güvenli Ödeme</option>
-                      <option value="DIGER_POS">Diğer Banka POS</option>
-                    </select>
+                <!-- Havale / EFT Dekont No Alanı (Opsiyonel) -->
+                <div id="storeBankDetailsRow" style="margin-top:10px; padding-top:10px; border-top:1px dashed #BAE6FD;">
+                  <div class="form-field-group" style="margin-bottom:0;">
+                    <label class="form-field-label" for="storeReceiptNo" style="color:#1E3A8A; font-weight:800;">Banka Dekont / Referans No (Opsiyonel):</label>
+                    <input type="text" id="storeReceiptNo" class="form-field-input" placeholder="Varsa dekont / referans no yazınız" style="font-weight:600; color:#0F172A;">
                   </div>
                 </div>
               </div>

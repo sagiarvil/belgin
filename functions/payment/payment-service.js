@@ -297,7 +297,12 @@ class PaymentService {
     const sessionTask = async () => {
       const isVipPayment = body.isVipPayment === true || (Array.isArray(body.items) && body.items.some((i) => i.isVipCustom || String(i.id).startsWith('VIP-')));
       let email = String(body.email || body.user_email || body.customer?.email || '').trim().toLowerCase();
-      if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+      if (email && !/^\S+@\S+\.\S+$/.test(email)) {
+        const error = new Error('Geçersiz e-posta adresi.');
+        error.code = 'INVALID_EMAIL';
+        throw error;
+      }
+      if (!email) {
         const cleanPhone = String(body.user_phone || body.phone || body.customer?.phone || '').replace(/\D/g, '');
         email = cleanPhone ? `musteri_${cleanPhone}@belginkuyumculuk.com` : `siparis_${Date.now()}@belginkuyumculuk.com`;
       }
@@ -535,6 +540,11 @@ class PaymentService {
 
     const order = orderDoc.data();
     const orderProvider = String(order.payment?.provider || order.provider || 'KUVEYTTURK').toUpperCase();
+    const incomingProvider = String(providerName || '').toUpperCase();
+    if (incomingProvider && orderProvider && incomingProvider !== orderProvider) {
+      console.error(`[Payment Security] Provider mismatch: order is ${orderProvider} but callback from ${incomingProvider}`);
+      return { status: 400, message: `PROVIDER_MISMATCH: Sipariş ${orderProvider} için açılmış, ${incomingProvider} callback reddedildi.`, isValid: false, isSuccess: false };
+    }
     const effectiveProviderName = orderProvider || String(providerName || DEFAULT_PROVIDER).toUpperCase();
     const provider = paymentRouter.getProvider(effectiveProviderName);
 
@@ -568,6 +578,7 @@ class PaymentService {
         totalAmountReceived: totalReceived,
         totalAmount: order.totalAmount || (Number(totalReceived) / 100),
         paymentStatus: 'PAID',
+        paidAt: admin.firestore.FieldValue.serverTimestamp(),
         isPaid: true,
         provider: provider.name,
         payment: {

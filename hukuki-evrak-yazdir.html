@@ -1042,7 +1042,6 @@ const LegalApp = {
     const isHavale = payMethod.includes('HAVALE') || payMethod.includes('EFT') || payMethod.includes('FAST') || payMethod.includes('BANKA');
     const isNakit = payMethod.includes('NAKIT') || payMethod.includes('ELDEN');
     const isCard = !isHavale && !isNakit;
-    const bankName = o.bankName || 'Kuveyt Türk Katılım Bankası A.Ş.';
     const receiptNo = o.receiptNo || '—';
 
     const providerStr = String(o.provider || o.payment?.provider || '').toUpperCase();
@@ -1053,9 +1052,9 @@ const LegalApp = {
     const isPaytr = providerStr.includes('PAYTR');
 
     const acquirer = isHavale
-      ? `${bankName} (Resmi Banka Hesabı Transferi)`
+      ? "Banka Havalesi / EFT (Şirket Banka Hesabı Transferi)"
       : (isNakit
-      ? "Belgin Kuyumculuk Showroom Kasa (Nakit Tahsilat)"
+      ? "Nakit Ödeme (Mağaza Kasa Tahsilatı)"
       : (isTosla 
           ? "TÖHÖŞ / AKBANK T.A.Ş. (TOSLA İŞİM POS ALTYAPISI)"
           : (isKuveyt ? "KUVEYT TÜRK KATILIM BANKASI A.Ş." : (isPaytr ? "PAYTR ÖDEME VE ELEKTRONİK PARA KURULUŞU A.Ş." : "KUVEYT TÜRK KATILIM BANKASI A.Ş."))));
@@ -2123,15 +2122,17 @@ const LegalApp = {
   renderCustomerDualSignature(c, eventTimestamp, approvalType = 'Elektronik Sipariş Formu Onay Kutusu') {
     const timeStr = this.formatDate(eventTimestamp || c.timeline.orderCreatedAt);
     const paymentApprovalDetails = c.isHavale
-      ? `<strong>Ödeme Kanalı:</strong> 🏦 Banka Havalesi / EFT / FAST (${c.bankName || 'Banka Hesabı'})<br>
-         <strong>Banka Dekont / Ref No:</strong> ${c.receiptNo && c.receiptNo !== '—' ? c.receiptNo : 'Banka Hesap Ekstresi İle Eşleşti'}<br>
-         <strong>Müşteri T.C. Kimlik İbrazı:</strong> ${c.customer.name} (${c.customer.tcknDisplay}) — Kimlik Belgesi Doğrulanmıştır.`
+      ? `<strong>Ödeme Yöntemi:</strong> 🏦 Banka Havalesi / EFT<br>
+         <strong>Tahsilat Durumu:</strong> Banka Hesabı Transferi ile Tahsil Edilmiştir (Müşteri Kimlik Belgesi Doğrulandı)<br>
+         ${c.receiptNo && c.receiptNo !== '—' ? `<strong>Banka Dekont / Ref No:</strong> ${c.receiptNo}<br>` : ''}
+         <strong>Müşteri T.C. Kimlik İbrazı:</strong> ${c.customer.name} (${c.customer.tcknDisplay}) — Doğrulandı`
       : (c.isNakit
-      ? `<strong>Ödeme Kanalı:</strong> 💵 Nakit / Elden Tahsilat (Mağaza Kasa Makbuzu)<br>
-         <strong>Tahsilat Yeri:</strong> Belgin Kuyumculuk Showroom Kasa (Buca / İzmir)<br>
-         <strong>Müşteri T.C. Kimlik İbrazı:</strong> ${c.customer.name} (${c.customer.tcknDisplay}) — Kimlik Belgesi Doğrulanmıştır.`
-      : `<strong>İlişkili Ödeme Auth Ref:</strong> <span class="mono-val">${c.payment.authCode}</span> (${this.formatDate(c.timeline.authorizationApprovedAt)} TSİ)<br>
-         <strong>Müşteri Public IP:</strong> ${c.sessionCe3.publicIp} · <strong>POS Terminal ID:</strong> ${c.merchant.tid}`);
+      ? `<strong>Ödeme Yöntemi:</strong> 💵 Nakit Ödeme<br>
+         <strong>Tahsilat Durumu:</strong> Mağazada Elden Nakit Tahsil Edilmiştir (Müşteri Kimlik Belgesi Doğrulandı)<br>
+         <strong>Müşteri T.C. Kimlik İbrazı:</strong> ${c.customer.name} (${c.customer.tcknDisplay}) — Doğrulandı`
+      : `<strong>Ödeme Yöntemi:</strong> 💳 Kredi Kartı / POS ile Ödeme<br>
+         <strong>İlişkili Ödeme Ref:</strong> <span class="mono-val">${c.payment.authCode}</span> (${this.formatDate(c.timeline.authorizationApprovedAt)} TSİ)<br>
+         <strong>Müşteri Public IP:</strong> ${c.sessionCe3.publicIp}`);
 
     return `
       <div class="dual-signature-grid">
@@ -2154,7 +2155,7 @@ const LegalApp = {
           <div style="font-size:10px; line-height:1.45; color:#166534;">
             <strong>İmzalayan / T.C. No:</strong> ${c.customer.name} (T.C. No: ${c.customer.tcknDisplay})<br>
             <strong>İşlem & Onay Zamanı:</strong> ${timeStr} (TSİ)<br>
-            <strong>Onay Yöntemi:</strong> ${c.isHavale ? 'Banka Havalesi / Dekont İbrazı & Islak İmzalı Teslim Tutanağı' : (c.isNakit ? 'Nakit Kasa Tahsilatı & Islak İmzalı Teslim Tutanağı' : approvalType)}<br>
+            <strong>Onay Yöntemi:</strong> ${c.isHavale ? 'Banka Havalesi / EFT & Islak İmzalı Teslim Tutanağı' : (c.isNakit ? 'Nakit Ödeme & Islak İmzalı Teslim Tutanağı' : approvalType)}<br>
             ${paymentApprovalDetails}
           </div>
           <div style="font-size:8.5px; color:#4B5563; margin-top:6px; border-top:1px solid #BBF7D0; padding-top:4px; line-height:1.3;">
@@ -2207,10 +2208,10 @@ const LegalApp = {
   // ==========================================
   renderSummaryDoc(c) {
     const paymentInfrastructureDisplay = c.isHavale
-      ? `🏦 Banka Havalesi / EFT / FAST (${c.bankName || 'Kuveyt Türk Katılım Bankası A.Ş.'}) · Dekont/Ref: ${c.receiptNo && c.receiptNo !== '—' ? c.receiptNo : 'Banka Transferi ile Tahsil Edildi'}`
+      ? (`🏦 Banka Havalesi / EFT` + (c.receiptNo && c.receiptNo !== '—' ? ` · Dekont/Ref: ${c.receiptNo}` : ` · Banka Transferi ile Tahsil Edildi`))
       : (c.isNakit
-      ? `💵 Nakit / Elden Tahsilat (Mağaza Kasa Makbuzu)`
-      : `${c.merchant.acquirer} Sanal POS 256-Bit SSL (${c.payment.scheme} / Tam Tahsilat)`);
+      ? `💵 Nakit Ödeme (Mağaza Kasa Tahsilatı)`
+      : `💳 Kredi Kartı / POS ile Ödeme`);
 
     return `
       <div class="document-page-block">
@@ -2223,7 +2224,7 @@ const LegalApp = {
           <tr><td class="label-col">İşlem Tarihi & Zaman Damgası:</td><td>${this.formatDate(c.timeline.orderCreatedAt)} (TSİ)</td></tr>
           <tr><td class="label-col">Alıcı / Müşteri Bilgisi:</td><td><strong>${c.customer.name}</strong> · T.C. No: ${c.customer.tcknDisplay} · Tel: ${c.customer.phoneDisplay} · E-Posta: ${c.customer.emailDisplay}</td></tr>
           <tr><td class="label-col">Teslimat Yöntemi & Adresi:</td><td>${c.customer.addressDisplay}</td></tr>
-          <tr><td class="label-col">Ödeme Yöntemi & Kanalı:</td><td>${paymentInfrastructureDisplay}</td></tr>
+          <tr><td class="label-col">Ödeme Yöntemi:</td><td>${paymentInfrastructureDisplay}</td></tr>
           <tr><td class="label-col">Tahsilat Durumu & Toplam Tutar:</td><td><strong>₺${c.totalAmount.toLocaleString('tr-TR')}</strong> (KDV Dahil) — <span class="pass-badge">✅ TAHSİL EDİLDİ / ONAYLANDI</span></td></tr>
         </table>
 
@@ -2564,7 +2565,7 @@ const LegalApp = {
       const isHavale = c.isHavale;
       return `
       <div class="document-page-block">
-        ${this.renderHeader('BELGE-07', isHavale ? 'BANKA HAVALESİ VE FİİLİ TESLİM DELİL / TEYİT KAYDI (17_v2.1)' : 'NAKİT TAHSİLAT VE FİİLİ TESLİM DELİL / TEYİT KAYDI (17_v2.1)', 'HMK m. 193 & m. 200 · Hukuki Teyit Kaydı', c)}
+        ${this.renderHeader('BELGE-07', isHavale ? 'BANKA HAVALESİ VE FİİLİ TESLİM DELİL / TEYİT KAYDI (17_v2.1)' : 'NAKİT ÖDEME VE FİİLİ TESLİM DELİL / TEYİT KAYDI (17_v2.1)', 'HMK m. 193 & m. 200 · Hukuki Teyit Kaydı', c)}
 
         <div class="section-title"><span>1. TARAFLAR VE İLİŞKİLİ İŞLEM BİLGİSİ</span></div>
         <table class="legal-grid-table">
@@ -2572,13 +2573,13 @@ const LegalApp = {
           <tr><td class="label-col">Alıcı (Müşteri):</td><td><strong>${c.customer.name}</strong> (T.C. Kimlik No: ${c.customer.tcknDisplay}) · Tel: ${c.customer.phoneDisplay}</td></tr>
           <tr><td class="label-col">İlişkili Sipariş / Fatura No:</td><td class="mono-val"><strong>${c.orderId}</strong></td></tr>
           <tr><td class="label-col">Satın Alınan Ürünler:</td><td>${c.items.map(it => `${it.name} (x${it.qty})`).join(', ')}</td></tr>
-          <tr><td class="label-col">Toplam Tahsilat Tutarı:</td><td><strong>₺${c.totalAmount.toLocaleString('tr-TR')}</strong> (${isHavale ? `Banka Havalesi / FAST (${c.bankName}) ile Kesinleşti` : 'Showroom Elden Nakit Tahsilat ile Kesinleşti'})</td></tr>
+          <tr><td class="label-col">Toplam Tahsilat Tutarı:</td><td><strong>₺${c.totalAmount.toLocaleString('tr-TR')}</strong> (${isHavale ? 'Banka Havalesi / EFT ile Kesinleşti' : 'Mağazada Nakit Ödeme ile Kesinleşti'})</td></tr>
         </table>
 
         <div class="section-title"><span>2. ÖDEME YETKİLENDİRME VE FİİLİ TESLİM TEYİDİ</span></div>
         <div style="background:#F0FDF4; border:1.5px solid #084C47; padding:12px; border-radius:6px; font-size:11px; line-height:1.6; color:#064E3B; margin-bottom:12px;">
           <strong>MÜŞTERİ BEYANI VE TEYİT METNİ:</strong><br>
-          "Bu siparişin tarafı olduğumu, bedeli ${isHavale ? `banka hesabımdan doğrudan satıcının şirket banka hesabına havale/EFT ile ödediğimi` : `mağazada nakit olarak ödediğimi`}, yukarıda belirtilen kıymetli maden ürünlerini belirtilen tarih ve saatte mağazada bizzat teslim aldığımı ve teslim sırasında ürünü eksiksiz inceleyerek ayıpsız teslim aldığımı beyan ve teyit ederim."
+          "Bu siparişin tarafı olduğumu, sipariş bedelini ${isHavale ? 'Banka Havalesi / EFT ile şirket banka hesabına ödediğimi' : 'mağazada nakit olarak ödediğimi'}, yukarıda belirtilen kıymetli maden ürünlerini mağazada bizzat teslim aldığımı ve teslim sırasında ürünü eksiksiz inceleyerek ayıpsız teslim aldığımı beyan ve teyit ederim."
         </div>
 
         <div class="section-title"><span>3. ${isHavale ? 'BANKACILIK TAHSİLAT & DOĞRULAMA VERİ MATRİSİ' : 'NAKİT TAHSİLAT & KASA DOĞRULAMA VERİ MATRİSİ'}</span></div>
@@ -2587,27 +2588,27 @@ const LegalApp = {
             <tr>
               <th>Doğrulama Alanı</th>
               <th>Değer / Referans</th>
-              <th>Resmi Veri Kaynağı (Provenance)</th>
+              <th>Resmi Veri Kaynağı</th>
               <th style="text-align:center;">Durum</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Ödeme Kanalı</td>
-              <td><strong>${isHavale ? 'Banka Havalesi / EFT / FAST' : 'Nakit / Elden Tahsilat'}</strong></td>
-              <td>${isHavale ? (c.bankName || 'Banka Sistemi') : 'Mağaza Kasa Sistemi'}</td>
+              <td>Ödeme Yöntemi</td>
+              <td><strong>${isHavale ? 'Banka Havalesi / EFT' : 'Nakit Ödeme'}</strong></td>
+              <td>${isHavale ? 'Banka Transfer Kaydı' : 'Mağaza Kasa Kaydı'}</td>
               <td style="text-align:center;"><span class="pass-badge">PASS</span></td>
             </tr>
             <tr>
               <td>Tahsilat Referans / Dekont No</td>
-              <td><span class="mono-val">${c.receiptNo && c.receiptNo !== '—' ? c.receiptNo : 'Banka Hesap Özeti ile Sabit'}</span></td>
-              <td>${isHavale ? 'Resmi Banka Hesap Ekstresi' : 'Mağaza Kasa Makbuzu'}</td>
+              <td><span class="mono-val">${c.receiptNo && c.receiptNo !== '—' ? c.receiptNo : (isHavale ? 'Banka Havalesi / EFT ile Sabit' : 'Kasa Makbuzu ile Sabit')}</span></td>
+              <td>${isHavale ? 'Resmi Banka Ekstresi' : 'Mağaza Kasa Makbuzu'}</td>
               <td style="text-align:center;"><span class="pass-badge">PASS</span></td>
             </tr>
             <tr>
               <td>Müşteri T.C. Kimlik Teyidi</td>
               <td><strong>${c.customer.name}</strong> (${c.customer.tcknDisplay})</td>
-              <td>T.C. İçişleri Bakanlığı Nüfus Cüzdanı / Kimlik Kartı Aslı</td>
+              <td>T.C. Nüfus Cüzdanı / Kimlik Kartı Aslı</td>
               <td style="text-align:center;"><span class="pass-badge">PASS</span></td>
             </tr>
             <tr>
@@ -2642,7 +2643,7 @@ const LegalApp = {
           <tr><td class="label-col">Alıcı (Müşteri):</td><td><strong>${c.customer.name}</strong> (T.C. Kimlik No: ${c.customer.tcknDisplay}) · Tel: ${c.customer.phoneDisplay}</td></tr>
           <tr><td class="label-col">İlişkili Sipariş No:</td><td class="mono-val"><strong>${c.orderId}</strong></td></tr>
           <tr><td class="label-col">Satın Alınan Ürünler:</td><td>${c.items.map(it => `${it.name} (x${it.qty})`).join(', ')}</td></tr>
-          <tr><td class="label-col">Toplam Tahsilat Tutarı:</td><td><strong>₺${c.totalAmount.toLocaleString('tr-TR')}</strong> (${c.merchant.acquirer} Sanal POS ile Kesinleşti)</td></tr>
+          <tr><td class="label-col">Toplam Tahsilat Tutarı:</td><td><strong>₺${c.totalAmount.toLocaleString('tr-TR')}</strong> (${c.merchant.acquirer} ile Kesinleşti)</td></tr>
         </table>
 
         <div class="section-title"><span>2. ÖDEME YETKİLENDİRME VE FİİLİ TESLİM TEYİDİ</span></div>
@@ -2665,7 +2666,7 @@ const LegalApp = {
             <tr>
               <td>Authorization Code</td>
               <td><span class="mono-val"><strong>${c.payment.authCode}</strong></span></td>
-              <td>Kuveyt Türk 3DS Gateway Gateway</td>
+              <td>Ödeme Ağ Geçidi Gateway</td>
               <td style="text-align:center;"><span class="pass-badge">PASS</span></td>
             </tr>
             <tr>
@@ -2722,24 +2723,23 @@ const LegalApp = {
       const isHavale = c.isHavale;
       return `
       <div class="document-page-block">
-        ${this.renderHeader('BELGE-08', isHavale ? 'BANKA HAVALESİ / EFT TAHSİLAT VE DEKONT MUTABAKAT RAPORU (08_v2.1)' : 'NAKİT TAHSİLAT VE KASA MUTABAKAT RAPORU (08_v2.1)', isHavale ? `Resmi Banka Ekstresi · ${c.bankName || 'Banka Hesabı'} Dekont Kaydı` : 'Mağaza Kasa Giriş Belgesi & VUK Kaydı', c)}
+        ${this.renderHeader('BELGE-08', isHavale ? 'BANKA HAVALESİ / EFT TAHSİLAT RAPORU (08_v2.1)' : 'NAKİT TAHSİLAT VE KASA MUTABAKAT RAPORU (08_v2.1)', isHavale ? 'Resmi Banka Transferi & Tahsilat Kaydı' : 'Mağaza Kasa Giriş Belgesi & VUK Kaydı', c)}
 
         <div style="background:#EFF6FF; border:1px solid #BFDBFE; padding:10px; border-radius:6px; margin-bottom:12px; font-size:10.5px;">
-          <strong>Banka & Tahsilat Veri Kaynağı Şerhi:</strong> İşbu rapor, ${isHavale ? `işletmenin ${c.bankName || 'Kuveyt Türk Katılım Bankası A.Ş.'} nezdindeki resmi ticari hesabına intikal eden havale/EFT transfer kaydından` : 'mağaza kasasına intikal eden nakit tahsilat kaydından'} işletme ERP sistemi tarafından derlenmiştir. Bu işlemde kart ağları üzerinden gerçekleşen harcama itirazı (chargeback) riski mevzuat gereği bulunmamaktadır.
+          <strong>Tahsilat Veri Kaynağı Şerhi:</strong> İşbu rapor, ${isHavale ? 'işletmenin resmi ticari banka hesabına intikal eden havale/EFT transfer kaydından' : 'mağaza kasasına intikal eden nakit tahsilat kaydından'} işletme ERP sistemi tarafından derlenmiştir. Bu işlemde kart ağları üzerinden gerçekleşen harcama itirazı (chargeback) riski mevzuat gereği bulunmamaktadır.
         </div>
 
-        <div class="section-title"><span>1. İŞYERİ VE BANKA HESAP BİLGİLERİ</span></div>
+        <div class="section-title"><span>1. İŞYERİ VE TAHSİLAT HESAP BİLGİLERİ</span></div>
         <table class="legal-grid-table">
-          <tr><td class="label-col">Ödeme Yöntemi:</td><td><strong>${isHavale ? 'Banka Havalesi / EFT / FAST' : 'Nakit / Elden Tahsilat'}</strong></td></tr>
-          <tr><td class="label-col">Tahsilat Yapılan Banka / Kasa:</td><td><strong>${isHavale ? (c.bankName || 'Kuveyt Türk Katılım Bankası A.Ş.') : 'Belgin Kuyumculuk Showroom Ana Kasa'}</strong></td></tr>
+          <tr><td class="label-col">Ödeme Yöntemi:</td><td><strong>${isHavale ? 'Banka Havalesi / EFT' : 'Nakit Ödeme'}</strong></td></tr>
+          <tr><td class="label-col">Tahsilat Hesabı / Yeri:</td><td><strong>${isHavale ? 'Şirket Ticari Banka Hesabı' : 'Belgin Kuyumculuk Showroom Kasa'}</strong></td></tr>
           <tr><td class="label-col">Hesap Sahibi:</td><td><strong>${c.merchant.legalName}</strong> (VKN: ${c.merchant.vkn})</td></tr>
-          <tr><td class="label-col">Hesap / Kasa Şubesi:</td><td>İzmir Şirinyer Şubesi</td></tr>
         </table>
 
         <div class="section-title"><span>2. TRANSFER VE TAHSİLAT DETAYLARI</span></div>
         <table class="legal-grid-table">
           <tr><td class="label-col">Gönderen / Müşteri:</td><td><strong>${c.customer.name}</strong> (T.C. No: ${c.customer.tcknDisplay})</td></tr>
-          <tr><td class="label-col">Tahsilat / Dekont Ref No:</td><td><span class="mono-val"><strong>${c.receiptNo && c.receiptNo !== '—' ? c.receiptNo : 'Banka Ekstresi ile Doğrulandı'}</strong></span></td></tr>
+          <tr><td class="label-col">Tahsilat / Dekont Ref No:</td><td><span class="mono-val"><strong>${c.receiptNo && c.receiptNo !== '—' ? c.receiptNo : (isHavale ? 'Banka Havalesi / EFT ile Sabit' : 'Kasa Tahsilat Makbuzu')}</strong></span></td></tr>
           <tr><td class="label-col">İşlem Tarihi ve Saati:</td><td>${this.formatDate(c.timeline.authorizationApprovedAt || c.timeline.orderCreatedAt)} (TSİ)</td></tr>
           <tr><td class="label-col">Tahsil Edilen Toplam Tutar:</td><td><strong>₺${c.totalAmount.toLocaleString('tr-TR')} TRY</strong></td></tr>
           <tr><td class="label-col">İşlem Açıklaması:</td><td>${c.orderId} Sipariş Bedeli — ${c.items.map(it => it.name).join(', ')}</td></tr>
@@ -2758,7 +2758,7 @@ const LegalApp = {
 
     return `
       <div class="document-page-block">
-        ${this.renderHeader('BELGE-08', 'BANKA / ACQUIRER İŞLEM VE 3DS DOĞRULAMA MUTABAKAT ÖZETİ (08_v2.1)', 'Merchant Evidence Summary · Kuveyt Türk 3DS Gateway Gateway Log Reference', c)}
+        ${this.renderHeader('BELGE-08', 'BANKA / ACQUIRER İŞLEM VE 3DS DOĞRULAMA MUTABAKAT ÖZETİ (08_v2.1)', 'Merchant Evidence Summary · 3DS Gateway Gateway Log Reference', c)}
 
         <div style="background:#EFF6FF; border:1px solid #BFDBFE; padding:10px; border-radius:6px; margin-bottom:12px; font-size:10.5px;">
           <strong>Banka Veri Kaynağı Şerhi:</strong> İşbu özet rapor, Akbank Sanal POS Core Gateway ve BKM/${c.payment.scheme} altyapısından elektronik ortamda alınan <span class="mono-val">${c.payment.sourceArtifactFile}</span> (SHA-256: <span class="mono-val">${c.payment.sourceFileHash}</span>) kaynaklı ham işlem kaydından işletme ERP sistemi tarafından derlenmiştir.
@@ -2896,7 +2896,7 @@ const LegalApp = {
   },
 
   // ==========================================
-  // BELGE-11: CUSTOMER SESSION / DEVICE / HISTORICAL TRANSACTION DATASET (MERCHANT_DERIVED)
+  // BELGE-11: MÜŞTERİ OTURUM, CİHAZ VE İŞLEM GEÇMİŞİ (MERCHANT_DERIVED)
   // ==========================================
   renderSessionCe3Doc(c) {
     if (c.isHavale || c.isNakit) {
@@ -2907,7 +2907,7 @@ const LegalApp = {
 
         <div style="background:#EFF6FF; border:1.5px solid #3B82F6; padding:12px; border-radius:6px; margin-bottom:12px; font-size:10.5px; line-height:1.5;">
           <strong>⚖️ HUKUKİ İŞLEM STATÜSÜ VE MEVZUAT ROUTER'I:</strong><br>
-          <strong>1. İŞLEM TÜRÜ:</strong> Bu satış ${isHavale ? `müşterinin kendi banka hesabından işletmenin ${c.bankName || 'Kuveyt Türk Katılım Bankası'} resmi şirket hesabına doğrudan Banka Havalesi / FAST transferi` : 'mağazada nakit tahsilat makbuzu'} ile gerçekleştirilmiştir.<br>
+          <strong>1. İŞLEM TÜRÜ:</strong> Bu satış ${isHavale ? 'müşterinin banka hesabından işletmenin resmi şirket banka hesabına doğrudan Banka Havalesi / EFT transferi' : 'mağazada nakit ödeme'} ile gerçekleştirilmiştir.<br>
           <strong>2. KART AĞI VE TERS İBRAZ İSTİSNASI:</strong> Banka transferi ve nakit tahsilat işlemlerinde kredi kartı 3DS / chargeback kuralları uygulanmaz. Tahsilat banka hesap ekstresi ve resmi GİB e-arşiv faturası ile kesinleşmiştir.<br>
           <strong>3. MADDİ DELİLLER (CORROBORATING EVIDENCE):</strong> Showroom fiziki teslimatı, T.C. Kimlik Kartı aslı doğrulaması, CCTV video kaydı ve müşterinin el yazılı ıslak imzalı teslim teyit beyanı.
         </div>
@@ -2916,8 +2916,8 @@ const LegalApp = {
         <table class="legal-grid-table">
           <tr><td class="label-col">Müşteri Adı & TCKN:</td><td><strong>${c.customer.name}</strong> (T.C. No: ${c.customer.tcknDisplay})</td></tr>
           <tr><td class="label-col">Müşteri Doğrulanmış Telefon:</td><td>${c.customer.phoneDisplay}</td></tr>
-          <tr><td class="label-col">Ödeme Yöntemi:</td><td>${isHavale ? `🏦 Banka Havalesi / EFT / FAST (${c.bankName})` : '💵 Nakit / Elden Tahsilat'}</td></tr>
-          <tr><td class="label-col">Banka Dekont / Ref No:</td><td><span class="mono-val">${c.receiptNo && c.receiptNo !== '—' ? c.receiptNo : 'Banka Ekstresi ile Eşleşti'}</span></td></tr>
+          <tr><td class="label-col">Ödeme Yöntemi:</td><td>${isHavale ? '🏦 Banka Havalesi / EFT' : '💵 Nakit Ödeme'}</td></tr>
+          <tr><td class="label-col">Banka Dekont / Ref No:</td><td><span class="mono-val">${c.receiptNo && c.receiptNo !== '—' ? c.receiptNo : (isHavale ? 'Banka Havalesi / EFT ile Sabit' : 'Kasa Tahsilat Makbuzu')}</span></td></tr>
           <tr><td class="label-col">Teslim Yeri:</td><td>Belgin Kuyumculuk Showroom (Menderes Cad. No:231/B Buca / İzmir)</td></tr>
         </table>
 
@@ -3272,8 +3272,8 @@ const LegalApp = {
           <tr>
             <td class="label-col">İşlem / Beyan Saati:</td>
             <td>${statementTimeStr} (TSİ)</td>
-            <td class="label-col">${(c.isHavale || c.isNakit) ? 'Ödeme / Tahsilat Kanalı:' : 'İbraz Edilen Kart:'}</td>
-            <td>${c.isHavale ? `<strong>🏦 Banka Havalesi / EFT (${c.bankName})</strong>` : (c.isNakit ? `<strong>💵 Nakit / Elden Tahsilat</strong>` : `<strong>${c.declaration.cardBrand}</strong>`)}</td>
+            <td class="label-col">Ödeme Yöntemi:</td>
+            <td>${c.isHavale ? '<strong>🏦 Banka Havalesi / EFT</strong>' : (c.isNakit ? '<strong>💵 Nakit Ödeme</strong>' : `<strong>💳 Kredi Kartı / POS (${c.declaration.cardBrand})</strong>`)}</td>
           </tr>
           <tr>
             <td class="label-col" colspan="4" style="background:#FFFDF7;">

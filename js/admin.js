@@ -5482,7 +5482,6 @@ const AdminApp = {
 
   handleStorePaymentMethodChange(method) {
     const bankRow = document.getElementById('storeBankDetailsRow');
-    const posRow = document.getElementById('storePosDetailsRow');
     const badge = document.getElementById('storePaymentMethodBadge');
     const optHavale = document.getElementById('storeOptHavale');
     const optNakit = document.getElementById('storeOptNakit');
@@ -5493,8 +5492,7 @@ const AdminApp = {
     if (optKart) optKart.style.borderColor = method === 'KREDI_KARTI' ? '#A855F7' : '#CBD5E1';
 
     if (method === 'HAVALE_EFT') {
-      if (bankRow) bankRow.style.display = 'grid';
-      if (posRow) posRow.style.display = 'none';
+      if (bankRow) bankRow.style.display = 'block';
       if (badge) {
         badge.textContent = 'Banka Havalesi / EFT';
         badge.style.background = '#DBEAFE';
@@ -5502,15 +5500,13 @@ const AdminApp = {
       }
     } else if (method === 'NAKIT') {
       if (bankRow) bankRow.style.display = 'none';
-      if (posRow) posRow.style.display = 'none';
       if (badge) {
-        badge.textContent = 'Nakit / Elden Tahsilat';
+        badge.textContent = 'Nakit Ödeme';
         badge.style.background = '#DCFCE7';
         badge.style.color = '#166534';
       }
     } else if (method === 'KREDI_KARTI') {
       if (bankRow) bankRow.style.display = 'none';
-      if (posRow) posRow.style.display = 'grid';
       if (badge) {
         badge.textContent = 'Kredi Kartı / POS';
         badge.style.background = '#F3E8FF';
@@ -7010,7 +7006,7 @@ const AdminApp = {
     } catch (_) {}
 
     this.filterStoreTable();
-    const methodNames = { 'HAVALE_EFT': 'Banka Havalesi / EFT', 'NAKIT': 'Nakit Tahsilat', 'KREDI_KARTI': 'Kredi Kartı / POS' };
+    const methodNames = { 'HAVALE_EFT': 'Banka Havalesi / EFT', 'NAKIT': 'Nakit Ödeme', 'KREDI_KARTI': 'Kredi Kartı / POS' };
     this.showToast(`✅ Fatura (${orderId}) ödeme yöntemi "${methodNames[newMethod] || newMethod}" olarak güncellendi.`);
 
     try {
