@@ -1,5 +1,13 @@
 # Belgin Kuyumculuk — ajan kuralları
 
+## Canonical SEO / GEO / LLMS mandate — zorunlu
+
+Her SEO, GEO, AEO, LLMS, sitemap, robots, canonical, structured-data, search-content, internal-link, redirect veya search-measurement değişikliğinden önce `SAGIARVIL_SEARCH_REVENUE_OS_MANDATE.md` tamamen okunur.
+
+Bu kapsamlarda `SAGIARVIL_SEARCH_REVENUE_OS_MANDATE.md` tek kanonik Search Revenue mandate'idir ve eski SEO/GEO/LLMS talimat belgelerinin yerini alır. Runtime `robots.txt`, sitemap dosyaları/üreteçleri, `llms.txt`, `llms-full.txt`, `/llms/**`, schema kodu, ürün/fiyat/stok verisi operasyonel/source-of-truth varlıklarıdır; eski talimat belgesi sayılmaz.
+
+Otorite sırası: kullanıcının en güncel açık talebi > SEO/GEO/AEO/LLMS/search scope'ta `SAGIARVIL_SEARCH_REVENUE_OS_MANDATE.md` > doğrulanmış ürün/fiyat/stok/yasal/runtime source-of-truth > görsel scope'ta `DESIGN.md` > bu dosyanın diğer operasyon kuralları. Search mandate gerçek ürün/fiyat/stok/yasal veriyi uyduramaz veya ezemez. Chrono24 marka adı veya Chrono24 temelli bağlayıcı fiyat/güvence formülü yeniden eklenemez.
+
 ## UI / Tasarım işleri — zorunlu
 
 Kullanıcıya görünen HTML, CSS, responsive, product card, gallery, cart, checkout, legal page veya navigation değişikliğinden önce:
