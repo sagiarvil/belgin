@@ -10,6 +10,9 @@ concurrency:
   group: sync-unified-catalog
   cancel-in-progress: true
 
+permissions:
+  contents: write
+
 jobs:
   smart-sync:
     name: Smart Diffing Catalog Sync (Watches +40% / Gold +5%)

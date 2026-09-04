@@ -10,6 +10,9 @@ concurrency:
   group: sync-carren
   cancel-in-progress: true
 
+permissions:
+  contents: write
+
 jobs:
   sync-and-deploy:
     name: Sync Carren Live Catalog & Deploy

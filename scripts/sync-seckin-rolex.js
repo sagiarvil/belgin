@@ -271,7 +271,7 @@ async function syncSeckinRolex() {
   const existingNonRolexPreOwned = existingData.PRODUCTS.filter(p => p.isPreOwned === true && !p.sourceUrl?.includes("nasyonelchrono.com"));
   const nonPreOwnedProducts = existingData.PRODUCTS.filter(p => !p.isPreOwned);
 
-  let nextId = 5001;
+  let nextId = 6001;
   const newPreOwnedItems = rawRolexItems.map(item => {
     const isJewelry = item.brand === "Van Cleef & Arpels" || (item.brand === "Cartier" && item.title.includes("BİLEZİK"));
     const isGold = item.materyal.includes("Altın") || item.title.toLowerCase().includes("altin") || item.title.toLowerCase().includes("altın");
