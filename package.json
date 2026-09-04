@@ -16,7 +16,7 @@
     "seo:generate": "node scripts/generate-static-seo-pages.js && node scripts/inject-seo-schemas.js && node scripts/generate-seo-assets.js && node scripts/sync-seo-redirects.js",
     "payments:catalog": "node scripts/generate-payment-catalog.js",
     "catalog:verify": "node scripts/verify-product-catalog.js",
-    "guard": "node scripts/html-script-syntax-guard.js && node scripts/price-safety-guard.js && node scripts/production-guard.js && node scripts/bank-pos-guard.js && node scripts/evidence-guard.js",
+    "guard": "node scripts/prohibited-vendor-guard.js && node scripts/html-script-syntax-guard.js && node scripts/price-safety-guard.js && node scripts/production-guard.js && node scripts/bank-pos-guard.js && node scripts/evidence-guard.js",
     "test": "npm run build && npm run catalog:verify && npm run seo:gate && node tests/stress-price-fuzzer.js && node tests/test-suite.js && node tests/adversarial-suite.js && node tests/cross-browser-stress.js && node tests/n8n-workflow-reverse-engineering.js && node tests/chargeback-pipeline-integrity.js",
     "ci": "npm run test && npm run guard",
     "deploy": "node scripts/safe-deploy.js",
@@ -27,7 +27,6 @@
     "sync:rolex": "node scripts/sync-seckin-rolex.js",
     "sync:gold": "node scripts/sync-prices-and-stock.js",
     "sync:all": "node scripts/smart-diff-sync.js",
-    "sync:magazine": ".venv/bin/python3 scripts/daily-chrono24-magazine-sync.py",
     "serve": "npx serve . -l 3000"
   },
   "keywords": [
