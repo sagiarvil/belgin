@@ -3660,6 +3660,13 @@ const App = {
       return (b.id || '').localeCompare(a.id || '');
     });
 
+    // Dinamik filtre sekmesi sayacı (146+ makale için canlı otomatik senkronizasyon)
+    const allTabBtn = document.querySelector('#magazineFilterTabs .mag-filter-pill[onclick*="\'all\'"]') ||
+                     document.querySelector('#magazineFilterTabs .mag-filter-pill:first-child');
+    if (allTabBtn) {
+      allTabBtn.textContent = `⭐ Tümü (${articles.length})`;
+    }
+
     let filtered = articles;
     if (category && category !== 'all') {
       filtered = articles.filter(a => a.category === category || (a.title && a.title.toLowerCase().includes(category.toLowerCase())));

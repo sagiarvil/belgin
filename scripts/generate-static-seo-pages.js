@@ -202,7 +202,7 @@ function replaceFirst(html, pattern, replacement, label) {
   if (!pattern.test(html)) {
     throw new Error(`[seo-static] ${label} bulunamadı.`);
   }
-  return html.replace(pattern, replacement);
+  return html.replace(pattern, () => replacement);
 }
 
 function renderSeoProductCard(p) {
@@ -769,6 +769,10 @@ function renderCategoryPage(key, list, indexHtml) {
       magRegex,
       `<div class="magazine-grid" id="magazineArticlesGrid">${magCards}</div>`,
       `${meta.gridId} magazine grid`
+    );
+    pageHtml = pageHtml.replace(
+      /<button class="mag-filter-pill active"[^>]*>⭐ Tümü \(\d+\)<\/button>/,
+      `<button class="mag-filter-pill active" onclick="App.filterMagazineCategory('all', this)">⭐ Tümü (${magArticles.length})</button>`
     );
   } else if (meta.gridId && (meta.gridId !== 'allWatchesGrid' || key !== 'markalar')) {
     const emptyGrid = new RegExp(
