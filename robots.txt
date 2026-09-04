@@ -40,19 +40,13 @@ Disallow: /api/
 Disallow: /admin/
 
 User-agent: GPTBot
-Allow: /
-Disallow: /api/
-Disallow: /admin/
+Disallow: /
 
 User-agent: ClaudeBot
-Allow: /
-Disallow: /api/
-Disallow: /admin/
+Disallow: /
 
 User-agent: Google-Extended
-Allow: /
-Disallow: /api/
-Disallow: /admin/
+Disallow: /
 
 User-agent: *
 Allow: /
