@@ -114,7 +114,7 @@ jobs:
         run: |
           set -euo pipefail
           git fetch origin main --depth=1 || true
-          if git diff --quiet origin/main...HEAD -- functions/package.json functions/package-lock.json; then
+          if git diff --quiet origin/main HEAD -- functions/package.json functions/package-lock.json; then
             echo 'changed=false' >> "$GITHUB_OUTPUT"
           else
             echo 'changed=true' >> "$GITHUB_OUTPUT"
@@ -149,12 +149,13 @@ jobs:
             echo 'DEPENDENCY_AUDIT_PASS'
             exit 0
           fi
-          if grep -Eqi '(found [1-9][0-9]* (high|critical)|severity vulnerabilities|# npm audit report)' npm-audit.log && ! grep -Eqi '(503 Service Unavailable|ETIMEDOUT|ECONNRESET|ENETUNREACH|EAI_AGAIN|timed out|exit code 124)' npm-audit.log; then
+          transport='(503 Service Unavailable|ETIMEDOUT|ECONNRESET|ENETUNREACH|EAI_AGAIN|timed out|exit code 124|rc=124)'
+          if grep -Eqi '(found [1-9][0-9]* (high|critical)|severity vulnerabilities|# npm audit report)' npm-audit.log && ! grep -Eqi "$transport" npm-audit.log; then
             echo 'DEPENDENCY_AUDIT_FAIL_SECURITY_ADVISORY'
             cat npm-audit.log
             exit 1
           fi
-          if grep -Eqi '(503 Service Unavailable|ETIMEDOUT|ECONNRESET|ENETUNREACH|EAI_AGAIN|timed out|exit code 124)' npm-audit.log; then
+          if grep -Eqi "$transport" npm-audit.log; then
             if [ "$DEP_CHANGED" = "true" ]; then
               echo 'DEPENDENCY_AUDIT_FAIL_CLOSED_TRANSPORT_WITH_DEPENDENCY_DRIFT'
               cat npm-audit.log
