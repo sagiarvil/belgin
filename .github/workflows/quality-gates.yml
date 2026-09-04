@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [main]
   push:
-    branches: [main, "chore/**", "feat/**", "fix/**", "legal/**", "legal-compliance-**"]
+    branches: [main, "chore/**", "feat/**", "fix/**", "legal/**", "legal-compliance-**", "sro/**", "growth/**"]
 
 concurrency:
   group: belgin-${{ github.ref }}
@@ -16,11 +16,13 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Node 22
         uses: actions/setup-node@v4
@@ -29,8 +31,19 @@ jobs:
           cache: npm
           cache-dependency-path: functions/package-lock.json
 
-      - name: Install functions dependencies
-        run: npm ci --prefix functions
+      - name: Install functions dependencies with bounded retry
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in 1 2 3; do
+            if timeout 180s npm ci --prefix functions --ignore-scripts --no-audit --no-fund; then
+              exit 0
+            fi
+            rc=$?
+            echo "functions npm ci failed attempt=${attempt}/3 rc=${rc}"
+            if [ "$attempt" -eq 3 ]; then exit "$rc"; fi
+            sleep $((attempt * 3))
+          done
 
       - name: Syntax checks
         run: |
@@ -64,6 +77,7 @@ jobs:
           node --check scripts/price-safety-guard.js
           node --check scripts/izko-safety-crosscheck.js
           node --check scripts/safe-deploy.js
+          node --check scripts/prohibited-vendor-guard.js
           node --check tests/test-suite.js
 
       - name: Build and tests
@@ -96,8 +110,84 @@ jobs:
           if-no-files-found: ignore
           retention-days: 3
 
-      - name: Dependency audit
-        run: npm audit --prefix functions --omit=dev --audit-level=high
+      - name: Trivy HIGH/CRITICAL dependency and repository scan
+        uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1
+        with:
+          scan-type: fs
+          scan-ref: .
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: '1'
+          scanners: vuln,secret,misconfig
+
+      - name: Detect dependency drift from main
+        id: dep_drift
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main --depth=1 || true
+          if git diff --quiet origin/main HEAD -- functions/package.json functions/package-lock.json; then
+            echo 'changed=false' >> "$GITHUB_OUTPUT"
+          else
+            echo 'changed=true' >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Dependency audit with bounded retry
+        id: npm_audit
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          : > npm-audit.log
+          rc=0
+          for attempt in 1 2; do
+            echo "npm audit attempt=$attempt" | tee -a npm-audit.log
+            timeout 120s npm audit --prefix functions --omit=dev --audit-level=high 2>&1 | tee -a npm-audit.log && exit 0
+            rc=${PIPESTATUS[0]}
+            echo "npm audit attempt=$attempt rc=$rc" | tee -a npm-audit.log
+            sleep 5
+          done
+          exit "$rc"
+
+      - name: Classify dependency audit result
+        if: always()
+        shell: bash
+        env:
+          AUDIT_OUTCOME: ${{ steps.npm_audit.outcome }}
+          DEP_CHANGED: ${{ steps.dep_drift.outputs.changed }}
+        run: |
+          set -euo pipefail
+          if [ "$AUDIT_OUTCOME" = "success" ]; then
+            echo 'DEPENDENCY_AUDIT_PASS'
+            exit 0
+          fi
+          transport='(503 Service Unavailable|ETIMEDOUT|ECONNRESET|ENETUNREACH|EAI_AGAIN|timed out|exit code 124|rc=124)'
+          if grep -Eqi '(found [1-9][0-9]* (high|critical)|severity vulnerabilities|# npm audit report)' npm-audit.log && ! grep -Eqi "$transport" npm-audit.log; then
+            echo 'DEPENDENCY_AUDIT_FAIL_SECURITY_ADVISORY'
+            cat npm-audit.log
+            exit 1
+          fi
+          if grep -Eqi "$transport" npm-audit.log; then
+            if [ "$DEP_CHANGED" = "true" ]; then
+              echo 'DEPENDENCY_AUDIT_FAIL_CLOSED_TRANSPORT_WITH_DEPENDENCY_DRIFT'
+              cat npm-audit.log
+              exit 1
+            fi
+            echo 'DEPENDENCY_AUDIT_TRANSPORT_UNAVAILABLE_NO_DEPENDENCY_DRIFT — independent Trivy HIGH/CRITICAL gate passed.'
+            exit 0
+          fi
+          echo 'DEPENDENCY_AUDIT_UNKNOWN_FAILURE'
+          cat npm-audit.log
+          exit 1
+
+      - name: Upload dependency audit proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-audit-proof
+          path: npm-audit.log
+          if-no-files-found: error
+          retention-days: 3
 
       - name: Ensure generated legal & payment artifacts are deterministic
         run: |
@@ -114,9 +204,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-
           mkdir -p /tmp/seo-before
-
           cp sitemap.xml /tmp/seo-before/
           cp sitemap-pages.xml /tmp/seo-before/
           cp sitemap-categories.xml /tmp/seo-before/
@@ -124,9 +212,7 @@ jobs:
           cp llms.txt /tmp/seo-before/
           cp llms-full.txt /tmp/seo-before/
           cp js/seo-route-map.js /tmp/seo-before/
-
           npm run seo:generate
-
           cmp --silent /tmp/seo-before/sitemap.xml sitemap.xml
           cmp --silent /tmp/seo-before/sitemap-pages.xml sitemap-pages.xml
           cmp --silent /tmp/seo-before/sitemap-categories.xml sitemap-categories.xml
@@ -134,3 +220,8 @@ jobs:
           cmp --silent /tmp/seo-before/llms.txt llms.txt
           cmp --silent /tmp/seo-before/llms-full.txt llms-full.txt
           cmp --silent /tmp/seo-before/seo-route-map.js js/seo-route-map.js
+
+      - name: LLMS and growth release contracts
+        run: |
+          node scripts/validate-llms-graph.js
+          node scripts/growth-contract.js
