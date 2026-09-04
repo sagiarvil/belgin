@@ -391,9 +391,23 @@ def main():
     existing_urls = {a.get("source_url") for a in existing_articles if a.get("source_url")}
 
     print(f"Mevcut yayındaki makale sayısı: {len(existing_articles)}")
-    print("Chrono24 Magazine kaynakları taranıyor...")
+    print("Chrono24 Magazine kaynakları ve post-sitemap.xml taranıyor...")
 
     discovered_urls = []
+    
+    # 1. Öncelikli olarak post-sitemap.xml'den tüm güncel URL'leri çek
+    try:
+        sm_res = requests.get(f"{BASE}/magazine/post-sitemap.xml", impersonate="chrome", timeout=15)
+        if sm_res.status_code == 200:
+            sm_urls = re.findall(r"<loc>(https://www.chrono24.com/magazine/[^<]+)</loc>", sm_res.text)
+            for u in sm_urls:
+                if u not in discovered_urls:
+                    discovered_urls.append(u)
+            print(f"  [Sitemap] {len(sm_urls)} makale URL'si keşfedildi.")
+    except Exception as e:
+        print(f"  [Sitemap Hata]: {e}")
+
+    # 2. Kategori sayfalarını da tara
     for src in SOURCES:
         try:
             res = requests.get(src, impersonate="chrome", timeout=15)
@@ -409,13 +423,24 @@ def main():
             print(f"[TARAMA HATA] {src}: {e}")
 
     print(f"Toplam keşfedilen makale URL'si: {len(discovered_urls)}")
-    new_urls = [u for u in discovered_urls if u not in existing_urls]
+    new_urls = []
+    for u in discovered_urls:
+        id_m = re.search(r"p_(\d+)", u)
+        art_id = f"mag-{id_m.group(1)}" if id_m else None
+        if art_id and art_id in existing_ids:
+            continue
+        if u in existing_urls:
+            continue
+        if re.search(r"(?i)staff|picks|team|author|employee|favorite-watches|steiert|gehrlein|breining|gtg", u):
+            continue
+        new_urls.append(u)
+
     print(f"Yeni eklenecek makale sayısı: {len(new_urls)}")
 
     new_articles = []
     if new_urls:
-        target_urls = new_urls[:25]
-        with ThreadPoolExecutor(max_workers=4) as executor:
+        target_urls = new_urls
+        with ThreadPoolExecutor(max_workers=6) as executor:
             future_to_url = {executor.submit(scrape_single_article, u): u for u in target_urls}
             for future in as_completed(future_to_url):
                 res = future.result()
