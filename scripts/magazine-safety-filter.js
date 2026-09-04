@@ -61,6 +61,18 @@ function decodeEntities(str) {
     .trim();
 }
 
+const BLOCKED_ARTICLE_IDS = new Set([
+  "mag-180505",
+  "mag-177236"
+]);
+
+const BLOCKED_IMAGE_PATTERNS = [
+  /rolex-report/i,
+  /the-rolex-report/i,
+  /chronopulse/i,
+  /luks-saat-deger-endeksi/i
+];
+
 const CANONICAL_SLUGS = {
   "mag-181439": "su-gecirmez-luks-dalis-saatleri-rehberi",
   "mag-180768": "doxa-okyanuslarin-cagrisi-ve-profesyonel-dalis-saatleri",
@@ -72,13 +84,11 @@ const CANONICAL_SLUGS = {
   "mag-112425": "dunyanin-en-iyi-10-isvicre-saat-markasi",
   "mag-179383": "patek-philippe-son-5-yillik-deger-ve-fiyat-gelisimi",
   "mag-178142": "saat-fiyatlari-yaz-aylarinda-duser-mi-mevsimsel-analiz",
-  "mag-177236": "en-cok-deger-kazanan-luks-saat-modelleri-piyasa-analizi",
   "mag-95156": "saat-fiyatlarini-belirleyen-en-onemli-faktorler-nelerdir",
   "mag-129820": "rolex-gmt-master-ii-pepsi-uretimi-sona-eriyor-mu",
   "mag-169209": "2026-luks-saat-piyasasi-ongoruleri-ve-koleksiyoner-trendleri",
   "mag-181302": "omega-seamaster-diver-300m-icin-5-ulasilabilir-alternatif",
   "mag-180772": "en-populer-5-omega-speedmaster-modeli",
-  "mag-180505": "rolex-raporu-2026-en-cok-tercih-edilen-modeller",
   "mag-178583": "girard-perregaux-laureato-fifty-yildonumu-modelleri",
   "mag-180358": "koleksiyonluk-rolex-saatler-gecmisin-unutulan-efsaneleri",
   "mag-178206": "gmt-ve-dunya-saati-karsilastirmasi",
@@ -139,13 +149,11 @@ const CANONICAL_TITLES = {
   "mag-112425": "Bir Bakışta Dünyanın En İyi 10 İsviçre Saat Markası ve Tarihsel Mirasları",
   "mag-179383": "Patek Philippe Son 5 Yıldaki Değer Gelişimi ve Yatırım Değerlemesi",
   "mag-178142": "Mevsimsel Saat Piyasası Efsanesi: Yaz Aylarında Saat Fiyatları Gerçekten Düşer mi?",
-  "mag-177236": "Lüks Saat Değer Endeksi: Küresel Pazarın En Çok Değer Kazanan İkonik Modelleri",
   "mag-95156": "Lüks Saat Fiyatlarını ve Değer Artışını Belirleyen En Önemli Faktörler Nelerdir?",
   "mag-129820": "Bir Dönemin Sonu mu: Rolex GMT-Master II Pepsi Üretimden Kalkıyor mu? Güncel Analiz",
   "mag-169209": "2026 Lüks Saat Piyasası Öngörüleri, Fiyat Trendleri ve Koleksiyoner Beklentileri",
   "mag-181302": "Omega Seamaster Diver 300M İçin 5 Ulaşılabilir ve Güçlü Alternatif Model",
   "mag-180772": "En Popüler 5 Omega Speedmaster Modeli ve Koleksiyon Değeri",
-  "mag-180505": "Rolex Raporu 2026: En Çok Tercih Edilen Rolex Koleksiyonları ve Aranan Referanslar",
   "mag-178583": "Girard-Perregaux Laureato Fifty: Yeni Yıldönümü Modellerine Kapsamlı Bakış",
   "mag-180358": "Koleksiyonluk Rolex Saatler: Zamanında Değeri Bilinmeyen ve Bugün Prim Yapan Modeller",
   "mag-178206": "GMT ve Dünya Saati (World Timer) Karşılaştırması: Seyahat İçin Hangisi İdeal?",
@@ -197,6 +205,25 @@ const CANONICAL_TITLES = {
 
 function cleanArticle(art) {
   const artId = art.id;
+
+  // 🛡️ SIFIR TOLERANS: 3. taraf logo, filigran veya Chrono24/ChronoPulse logolu makaleleri engelle
+  if (BLOCKED_ARTICLE_IDS.has(artId)) {
+    console.log(`[ENGEL] Yasaklı logo/içerik kimliği tespit edildi ve kaldırıldı: ${artId}`);
+    return null;
+  }
+
+  const imgStr = art.image || '';
+  if (BLOCKED_IMAGE_PATTERNS.some(re => re.test(imgStr))) {
+    console.log(`[ENGEL] Yasaklı logo görsel paterni tespit edildi ve kaldırıldı: ${artId} (${imgStr})`);
+    return null;
+  }
+
+  const slugStr = art.slug || '';
+  if (BLOCKED_IMAGE_PATTERNS.some(re => re.test(slugStr))) {
+    console.log(`[ENGEL] Yasaklı slug paterni tespit edildi ve kaldırıldı: ${artId} (${slugStr})`);
+    return null;
+  }
+
   let title = CANONICAL_TITLES[artId] || decodeEntities(art.title);
   let slug = CANONICAL_SLUGS[artId] || art.slug;
   let summary = decodeEntities(art.summary);
@@ -204,11 +231,6 @@ function cleanArticle(art) {
   let image = art.image;
   let category = art.category || "Saat Dünyası & Analiz";
   let readTime = art.read_time || "8 dk okuma";
-
-  // Özel görsel düzeltmeleri
-  if (artId === "mag-177236") {
-    image = "images/magazine/luks-saat-deger-endeksi-en-iyi-modeller.jpg";
-  }
 
   // İçerik içerisindeki son entity ve Chrono kontrolleri
   content = content.replace(/OurChronoPulse Index/gi, 'Belgin Saat Lüks Değer Endeksi');
@@ -259,7 +281,6 @@ function updateRedirects(articles) {
   const OLD_SLUGS_MAP = {
     "mag-181302": "5-affordable-alternatives-to-the-omega-seamaster-diver-300m",
     "mag-180772": "en-populer-5-omega-speedmaster-models-on-belgin-saat",
-    "mag-180505": "rolex-report-2026-en-cok-tercih-edilen-rolex-collections-and-koleksiyonerlerin-en-cok-aradigi-modeller-most-right-now",
     "mag-178583": "girard-perregaux-laureato-fifty-a-complete-walkthrough-of-the-new-anniversary-models",
     "mag-180358": "collectible-rolex-watches-these-models-used-to-be-unpopular",
     "mag-178206": "gmt-vs-world-timer-which-is-the-better-travel-companion",
@@ -307,6 +328,27 @@ function updateRedirects(articles) {
   };
 
   let added = 0;
+
+  // Kaldırılan / logo içeren makalelerin slug'larını 301 ile /magazin/ ana dizinine yönlendir
+  const BLOCKED_SLUGS_REDIRECTS = [
+    "/magazin/rolex-raporu-2026-en-cok-tercih-edilen-modeller",
+    "/magazin/rolex-report-2026-en-cok-tercih-edilen-rolex-collections-and-koleksiyonerlerin-en-cok-aradigi-modeller-most-right-now",
+    "/magazin/en-cok-deger-kazanan-luks-saat-modelleri-piyasa-analizi",
+    "/magazin/chronopulse-check-the-best-performing-watches"
+  ];
+  for (const src of BLOCKED_SLUGS_REDIRECTS) {
+    const cleanSrc = src.replace(/\/$/, '');
+    if (!existingSources.has(cleanSrc)) {
+      registry.redirects.push({
+        from: cleanSrc,
+        to: "/magazin/",
+        type: 301
+      });
+      existingSources.add(cleanSrc);
+      added++;
+    }
+  }
+
   for (const [id, oldSlug] of Object.entries(OLD_SLUGS_MAP)) {
     const art = articles.find(a => a.id === id);
     if (art && art.slug && art.slug !== oldSlug) {
@@ -336,7 +378,7 @@ function runFilter() {
 
   console.log(`[Magazin Güvenlik Filtresi] Toplam ${rawArticles.length} makale denetleniyor ve arındırılıyor...`);
 
-  const cleanArticles = rawArticles.map(cleanArticle);
+  const cleanArticles = rawArticles.map(cleanArticle).filter(Boolean);
 
   const jsContent = `// ==========================================================
 // BELGİN SAAT MAGAZİN — 100% EDİTORYAL SAAT İÇERİKLERİ

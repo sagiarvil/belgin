@@ -234,6 +234,21 @@
       "from": "/magazin/jumping-hour-watches",
       "to": "/magazin/atlayan-saat-jumping-hour-mekanizmalari-ve-tarihi/",
       "type": 301
+    },
+    {
+      "from": "/magazin/rolex-raporu-2026-en-cok-tercih-edilen-modeller",
+      "to": "/magazin/",
+      "type": 301
+    },
+    {
+      "from": "/magazin/en-cok-deger-kazanan-luks-saat-modelleri-piyasa-analizi",
+      "to": "/magazin/",
+      "type": 301
+    },
+    {
+      "from": "/magazin/chronopulse-check-the-best-performing-watches",
+      "to": "/magazin/",
+      "type": 301
     }
   ],
   "gone": []

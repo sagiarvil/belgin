@@ -168,20 +168,56 @@ def format_date_tr(date_str):
         pass
     return date_str
 
+def is_image_contaminated(image_path):
+    """
+    Görselin 3. taraf logo, filigran veya Chrono24/ChronoPulse ibaresi içerip içermediğini denetler.
+    """
+    if not os.path.exists(image_path):
+        return False
+    fname = os.path.basename(image_path).lower()
+    for bad in ["rolex-report", "chronopulse", "luks-saat-deger-endeksi", "the-rolex-report", "c24-", "chrono24"]:
+        if bad in fname:
+            return True
+    try:
+        from PIL import Image
+        import pytesseract
+        im = Image.open(image_path)
+        txt = pytesseract.image_to_string(im).lower()
+        for bad_text in ["chrono24", "chronopulse", "c24"]:
+            if bad_text in txt:
+                return True
+    except Exception:
+        pass
+    return False
+
 def download_image(img_url, filename):
     local_path = os.path.join(IMG_DIR, filename)
     rel_path = f"images/magazine/{filename}"
     if os.path.exists(local_path) and os.path.getsize(local_path) > 1000:
+        if is_image_contaminated(local_path):
+            try:
+                os.remove(local_path)
+            except Exception:
+                pass
+            return None
         return rel_path
     try:
         r = requests.get(img_url, impersonate="chrome", timeout=15)
         if r.status_code == 200 and len(r.content) > 1000:
             with open(local_path, "wb") as f:
                 f.write(r.content)
+            # 🛡️ OTOMATİK 3. TARAF LOGO & FİLİGRAN GÜVENLİK DENETİMİ
+            if is_image_contaminated(local_path):
+                print(f"[ENGEL] 3. taraf logo filigranlı görsel engellendi ve silindi: {filename}")
+                try:
+                    os.remove(local_path)
+                except Exception:
+                    pass
+                return None
             return rel_path
     except Exception as e:
         print(f"[GÖRSEL HATA] {img_url}: {e}")
-    return img_url
+    return None
 
 def translate_article_content(title, raw_paras, url):
     """
@@ -301,6 +337,12 @@ def scrape_single_article(url):
         id_match = re.search(r"p_(\d+)", url)
         art_id = f"mag-{id_match.group(1)}" if id_match else f"mag-{abs(hash(url)) % 100000}"
         
+        # 🛡️ GÜVENLİK FİLTRESİ: Kesin engellenen makale ID'leri
+        BLOCKED_MAG_IDS = {"mag-180505", "mag-177236"}
+        if art_id in BLOCKED_MAG_IDS:
+            print(f"[SYNC ATLA] Kara listedeki makale ID'si engellendi: {art_id}")
+            return None
+
         h1 = soup.find("h1")
         raw_title = h1.get_text(strip=True) if h1 else ""
         if not raw_title and json_ld:
@@ -309,7 +351,7 @@ def scrape_single_article(url):
             return None
 
         # 🛡️ GÜVENLİK FİLTRESİ: Personel profilleri, çalışan röportajları ve logo filigranlı içerikleri engelle
-        if re.search(r"(?i)favorite\s*watches|staff\s*picks|steiert|gehrlein|breining|team\s*member|employee|chrono24\s*team", raw_title + " " + url):
+        if re.search(r"(?i)favorite\s*watches|staff\s*picks|steiert|gehrlein|breining|team\s*member|employee|chrono24\s*team|rolex-report|chronopulse", raw_title + " " + url):
             print(f"[SYNC ATLA] 3. taraf personel/logo makalesi engellendi: {url}")
             return None
 
@@ -343,7 +385,10 @@ def scrape_single_article(url):
                 hero_img_url = imgs
 
         img_filename = f"{slug[:45]}.jpg"
-        final_img = download_image(hero_img_url, img_filename) if hero_img_url else "images/hero-belgin-signature.webp"
+        final_img = download_image(hero_img_url, img_filename) if hero_img_url else None
+        if not final_img:
+            print(f"[SYNC ATLA] Temiz görsel bulunamadı veya 3. taraf logo filigranı içerdiği için makale atlandı: {url}")
+            return None
 
         raw_paras = [p.get_text(strip=True) for p in soup.find_all("p")]
         content_html = translate_article_content(title, raw_paras, url)
@@ -423,15 +468,16 @@ def main():
             print(f"[TARAMA HATA] {src}: {e}")
 
     print(f"Toplam keşfedilen makale URL'si: {len(discovered_urls)}")
+    BLOCKED_SYNC_IDS = {"mag-180505", "mag-177236"}
     new_urls = []
     for u in discovered_urls:
         id_m = re.search(r"p_(\d+)", u)
         art_id = f"mag-{id_m.group(1)}" if id_m else None
-        if art_id and art_id in existing_ids:
+        if art_id and (art_id in existing_ids or art_id in BLOCKED_SYNC_IDS):
             continue
         if u in existing_urls:
             continue
-        if re.search(r"(?i)staff|picks|team|author|employee|favorite-watches|steiert|gehrlein|breining|gtg", u):
+        if re.search(r"(?i)staff|picks|team|author|employee|favorite-watches|steiert|gehrlein|breining|gtg|rolex-report|chronopulse", u):
             continue
         new_urls.append(u)
 

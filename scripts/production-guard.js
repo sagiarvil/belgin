@@ -137,6 +137,25 @@ for (const file of scanFiles) {
   if (secretPatterns.some((re) => re.test(txt))) fail(`Olası secret bulundu: ${file}`);
 }
 
+// 🛡️ MAGAZİN 3. TARAF LOGO & GÜVENLİK GUARD
+const magModule = require('../js/magazine_data.js');
+const magArticles = magModule.MAGAZINE_ARTICLES || [];
+const prohibitedMagIds = ['mag-180505', 'mag-177236'];
+for (const art of magArticles) {
+  if (prohibitedMagIds.includes(art.id)) {
+    fail(`Magazin verisinde yasaklı 3. taraf logo makalesi kaldı: ${art.id}`);
+  }
+  const imgStr = art.image || '';
+  if (/rolex-report|the-rolex-report|chronopulse|luks-saat-deger-endeksi/i.test(imgStr)) {
+    fail(`Magazin verisinde 3. taraf logo filigranlı görsel kaldı: ${imgStr}`);
+  }
+}
+const indexHtmlContent = read('index.html');
+if (indexHtmlContent.includes('mag-180505') || indexHtmlContent.includes('rolex-report-2026-en-cok-tercih-edilen-rolex-')) {
+  fail('index.html içinde yasaklı 3. taraf logo makalesi veya görseli referansı kaldı.');
+}
+pass('Magazin 3. taraf logo ve filigran güvenlik kontrolü geçti (Sıfır tolerans).');
+
 if (failed) {
   console.error('\nPRODUCTION_GUARD=FAIL');
   process.exit(1);
