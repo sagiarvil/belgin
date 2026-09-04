@@ -4,7 +4,7 @@
   "description": "Belgin Kuyumculuk — Enterprise & Exclusive Luxury Jewellery & Watches Platform",
   "main": "index.html",
   "scripts": {
-    "build": "node scripts/generate-luxury-biz-kimiz-pdf.js && node scripts/magazine-safety-filter.js && node scripts/generate-llms-full.js && node scripts/harden-public-claims.js && node scripts/bank-pos-hardening.js && node scripts/harden-legal-pages.js && node scripts/generate-static-seo-pages.js && node scripts/inject-seo-schemas.js && node scripts/generate-legal-manifest.js && node scripts/generate-payment-catalog.js && node scripts/generate-seo-assets.js && node scripts/sync-seo-redirects.js",
+    "build": "node scripts/generate-luxury-biz-kimiz-pdf.js && node scripts/magazine-safety-filter.js && node scripts/generate-llms-full.js && node scripts/harden-public-claims.js && node scripts/bank-pos-hardening.js && node scripts/harden-legal-pages.js && node scripts/generate-static-seo-pages.js && node scripts/inject-seo-schemas.js && node scripts/generate-legal-manifest.js && node scripts/generate-payment-catalog.js && node scripts/generate-seo-assets.js && node scripts/sync-seo-redirects.js && node scripts/inject-growth.js && node scripts/validate-llms-graph.js && node scripts/growth-contract.js",
     "public:harden": "node scripts/harden-public-claims.js && node scripts/bank-pos-hardening.js",
     "legal:harden": "node scripts/harden-legal-pages.js",
     "legal:manifest": "node scripts/generate-legal-manifest.js",
@@ -13,10 +13,12 @@
     "seo:redirects": "node scripts/sync-seo-redirects.js",
     "seo:gate": "node scripts/seo-ci-gate.js",
     "seo:live": "node scripts/live-seo-smoke.js",
-    "seo:generate": "node scripts/generate-static-seo-pages.js && node scripts/inject-seo-schemas.js && node scripts/generate-seo-assets.js && node scripts/sync-seo-redirects.js",
+    "seo:generate": "node scripts/generate-static-seo-pages.js && node scripts/inject-seo-schemas.js && node scripts/generate-seo-assets.js && node scripts/sync-seo-redirects.js && node scripts/inject-growth.js",
+    "llms:validate": "node scripts/validate-llms-graph.js",
+    "growth:verify": "node scripts/growth-contract.js",
     "payments:catalog": "node scripts/generate-payment-catalog.js",
     "catalog:verify": "node scripts/verify-product-catalog.js",
-    "guard": "node scripts/prohibited-vendor-guard.js && node scripts/html-script-syntax-guard.js && node scripts/price-safety-guard.js && node scripts/production-guard.js && node scripts/bank-pos-guard.js && node scripts/evidence-guard.js",
+    "guard": "node scripts/prohibited-vendor-guard.js && node scripts/html-script-syntax-guard.js && node scripts/price-safety-guard.js && node scripts/production-guard.js && node scripts/bank-pos-guard.js && node scripts/evidence-guard.js && node scripts/validate-llms-graph.js && node scripts/growth-contract.js",
     "test": "npm run build && npm run catalog:verify && npm run seo:gate && node tests/stress-price-fuzzer.js && node tests/test-suite.js && node tests/adversarial-suite.js && node tests/cross-browser-stress.js && node tests/n8n-workflow-reverse-engineering.js && node tests/chargeback-pipeline-integrity.js",
     "ci": "npm run test && npm run guard",
     "deploy": "node scripts/safe-deploy.js",
@@ -29,16 +31,7 @@
     "sync:all": "node scripts/smart-diff-sync.js",
     "serve": "npx serve . -l 3000"
   },
-  "keywords": [
-    "jewelry",
-    "luxury",
-    "e-commerce",
-    "paytr",
-    "firebase",
-    "izmir",
-    "buca",
-    "watches"
-  ],
+  "keywords": ["jewelry","luxury","e-commerce","paytr","firebase","izmir","buca","watches"],
   "author": "Belgin Kuyumculuk",
   "license": "UNLICENSED",
   "private": true
