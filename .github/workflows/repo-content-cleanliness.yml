@@ -1,0 +1,25 @@
+name: repo-content-cleanliness
+
+on:
+  push:
+    branches: [fix/catalog-sync-functions-deps]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  prohibited-vendor-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prove prohibited vendor term is absent
+        shell: bash
+        run: |
+          set -euo pipefail
+          needle="$(printf '\x63\x68\x72\x6f\x6e\x6f\x32\x34')"
+          if grep -RniI --exclude-dir=.git --exclude='repo-content-cleanliness.yml' "$needle" .; then
+            echo 'Prohibited vendor reference remains in repository content.'
+            exit 1
+          fi
+          echo 'Repository content clean.'
