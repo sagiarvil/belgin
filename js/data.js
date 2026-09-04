@@ -1,6 +1,6 @@
 // ==========================================================
 // BELGİN SAAT — MASTER ÜRÜN VE KOLEKSİYON VERİTABANI
-// Sürüm: 2026-09-01.elite-exact-images-sync
+// Sürüm: 2026-09-04.elite-usd-80margin-sync
 // Toplam Yayın Ürünü: 2125 (200 Elit Saat + 1925 Saat Kataloğu)
 // ==========================================================
 
@@ -294,7 +294,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126610LN",
     "reference": "126610LN",
-    "price": 1260061,
+    "price": 1264344,
     "usdRefPrice": 14500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -334,7 +334,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5002,
@@ -342,7 +342,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126500LN",
     "reference": "126500LN",
-    "price": 2737374,
+    "price": 2746678,
     "usdRefPrice": 31500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -382,7 +382,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5003,
@@ -390,7 +390,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126710BLRO",
     "reference": "126710BLRO",
-    "price": 1868366,
+    "price": 1874717,
     "usdRefPrice": 21500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -430,7 +430,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5004,
@@ -438,7 +438,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126710BLNR",
     "reference": "126710BLNR",
-    "price": 1494693,
+    "price": 1499774,
     "usdRefPrice": 17200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -478,7 +478,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5005,
@@ -486,7 +486,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126720VTNR",
     "reference": "126720VTNR",
-    "price": 1607664,
+    "price": 1613129,
     "usdRefPrice": 18500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -526,7 +526,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5006,
@@ -534,7 +534,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126334-0002",
     "reference": "126334-0002",
-    "price": 1199230,
+    "price": 1203307,
     "usdRefPrice": 13800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -574,7 +574,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5007,
@@ -582,7 +582,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126334-0014",
     "reference": "126334-0014",
-    "price": 1233991,
+    "price": 1238185,
     "usdRefPrice": 14200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -622,7 +622,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5008,
@@ -630,7 +630,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126234-0050",
     "reference": "126234-0050",
-    "price": 1173160,
+    "price": 1177148,
     "usdRefPrice": 13500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -670,7 +670,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5009,
@@ -678,7 +678,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "228238-0006",
     "reference": "228238-0006",
-    "price": 3823633,
+    "price": 3836630,
     "usdRefPrice": 44000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -718,7 +718,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5010,
@@ -726,7 +726,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "228236-0010",
     "reference": "228236-0010",
-    "price": 6256855,
+    "price": 6278122,
     "usdRefPrice": 72000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -766,7 +766,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5011,
@@ -774,7 +774,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "124060",
     "reference": "124060",
-    "price": 1112330,
+    "price": 1116111,
     "usdRefPrice": 12800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -814,7 +814,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5012,
@@ -822,7 +822,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126610LV",
     "reference": "126610LV",
-    "price": 1407792,
+    "price": 1412577,
     "usdRefPrice": 16200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -862,7 +862,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5013,
@@ -870,7 +870,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126515LN",
     "reference": "126515LN",
-    "price": 3649832,
+    "price": 3662238,
     "usdRefPrice": 42000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -910,7 +910,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5014,
@@ -918,7 +918,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "124270",
     "reference": "124270",
-    "price": 773417,
+    "price": 776046,
     "usdRefPrice": 8900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -958,7 +958,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5015,
@@ -966,7 +966,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "226570-0001",
     "reference": "226570-0001",
-    "price": 1034119,
+    "price": 1037634,
     "usdRefPrice": 11900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1006,7 +1006,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5016,
@@ -1014,7 +1014,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126655",
     "reference": "126655",
-    "price": 2563572,
+    "price": 2572286,
     "usdRefPrice": 29500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1054,7 +1054,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5017,
@@ -1062,7 +1062,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "226627",
     "reference": "226627",
-    "price": 2693924,
+    "price": 2703080,
     "usdRefPrice": 31000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1102,7 +1102,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5018,
@@ -1110,7 +1110,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "124300-0006",
     "reference": "124300-0006",
-    "price": 1346962,
+    "price": 1351540,
     "usdRefPrice": 15500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1150,7 +1150,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5019,
@@ -1158,7 +1158,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126000-0014",
     "reference": "126000-0014",
-    "price": 1459933,
+    "price": 1464895,
     "usdRefPrice": 16800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1198,7 +1198,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5020,
@@ -1206,7 +1206,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126600",
     "reference": "126600",
-    "price": 1286131,
+    "price": 1290503,
     "usdRefPrice": 14800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1246,7 +1246,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5021,
@@ -1254,7 +1254,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "310.30.42.50.01.002",
     "reference": "310.30.42.50.01.002",
-    "price": 677826,
+    "price": 680130,
     "usdRefPrice": 7800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1294,7 +1294,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5022,
@@ -1302,7 +1302,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "210.30.42.20.01.001",
     "reference": "210.30.42.20.01.001",
-    "price": 486644,
+    "price": 488298,
     "usdRefPrice": 5600,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1342,7 +1342,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5023,
@@ -1350,7 +1350,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "210.90.42.20.01.001",
     "reference": "210.90.42.20.01.001",
-    "price": 816867,
+    "price": 819644,
     "usdRefPrice": 9400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1390,7 +1390,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5024,
@@ -1398,7 +1398,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "215.30.44.21.01.001",
     "reference": "215.30.44.21.01.001",
-    "price": 599615,
+    "price": 601653,
     "usdRefPrice": 6900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1437,7 +1437,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5025,
@@ -1445,7 +1445,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "220.10.41.21.10.001",
     "reference": "220.10.41.21.10.001",
-    "price": 538785,
+    "price": 540616,
     "usdRefPrice": 6200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1485,7 +1485,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5026,
@@ -1493,7 +1493,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "311.92.44.51.01.003",
     "reference": "311.92.44.51.01.003",
-    "price": 1086260,
+    "price": 1089952,
     "usdRefPrice": 12500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1531,7 +1531,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5027,
@@ -1539,7 +1539,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "131.20.41.21.02.001",
     "reference": "131.20.41.21.02.001",
-    "price": 938528,
+    "price": 941718,
     "usdRefPrice": 10800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1579,7 +1579,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5028,
@@ -1587,7 +1587,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "310.32.42.50.02.001",
     "reference": "310.32.42.50.02.001",
-    "price": 1520763,
+    "price": 1525932,
     "usdRefPrice": 17500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1626,7 +1626,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5029,
@@ -1634,7 +1634,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "220.10.43.22.03.001",
     "reference": "220.10.43.22.03.001",
-    "price": 799487,
+    "price": 802204,
     "usdRefPrice": 9200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1672,7 +1672,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5030,
@@ -1680,7 +1680,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "234.30.41.21.01.001",
     "reference": "234.30.41.21.01.001",
-    "price": 590925,
+    "price": 592934,
     "usdRefPrice": 6800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1718,7 +1718,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5031,
@@ -1726,7 +1726,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "329.30.43.51.02.001",
     "reference": "329.30.43.51.02.001",
-    "price": 764727,
+    "price": 767326,
     "usdRefPrice": 8800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1764,7 +1764,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5032,
@@ -1772,7 +1772,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "215.92.46.21.01.001",
     "reference": "215.92.46.21.01.001",
-    "price": 1121020,
+    "price": 1124830,
     "usdRefPrice": 12900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1809,7 +1809,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5033,
@@ -1817,7 +1817,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "435.53.40.21.02.001",
     "reference": "435.53.40.21.02.001",
-    "price": 1233991,
+    "price": 1238185,
     "usdRefPrice": 14200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1856,7 +1856,7 @@ const PRODUCTS = [
       "Kasa Materyali": "18K Masif Sarı Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5034,
@@ -1864,7 +1864,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "329.30.44.51.01.001",
     "reference": "329.30.44.51.01.001",
-    "price": 773417,
+    "price": 776046,
     "usdRefPrice": 8900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1902,7 +1902,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5035,
@@ -1910,7 +1910,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "220.10.38.20.03.003",
     "reference": "220.10.38.20.03.003",
-    "price": 556165,
+    "price": 558055,
     "usdRefPrice": 6400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1948,7 +1948,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5036,
@@ -1956,7 +1956,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "304.30.44.52.03.001",
     "reference": "304.30.44.52.03.001",
-    "price": 973289,
+    "price": 976597,
     "usdRefPrice": 11200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1994,7 +1994,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5037,
@@ -2002,7 +2002,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "210.20.44.51.01.001",
     "reference": "210.20.44.51.01.001",
-    "price": 1034119,
+    "price": 1037634,
     "usdRefPrice": 11900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2039,7 +2039,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5038,
@@ -2047,7 +2047,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "131.53.39.20.02.001",
     "reference": "131.53.39.20.02.001",
-    "price": 1720635,
+    "price": 1726484,
     "usdRefPrice": 19800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2084,7 +2084,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5039,
@@ -2092,7 +2092,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "311.32.40.30.01.001",
     "reference": "311.32.40.30.01.001",
-    "price": 564855,
+    "price": 566775,
     "usdRefPrice": 6500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2130,7 +2130,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5040,
@@ -2138,7 +2138,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "232.92.44.22.03.001",
     "reference": "232.92.44.22.03.001",
-    "price": 729966,
+    "price": 732448,
     "usdRefPrice": 8400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2175,7 +2175,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5041,
@@ -2183,7 +2183,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5711/1A-010",
     "reference": "5711/1A-010",
-    "price": 10254290,
+    "price": 10289145,
     "usdRefPrice": 118000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2221,7 +2221,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5042,
@@ -2229,7 +2229,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5712/1A-001",
     "reference": "5712/1A-001",
-    "price": 9124580,
+    "price": 9155595,
     "usdRefPrice": 105000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2267,7 +2267,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5043,
@@ -2275,7 +2275,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5726/1A-014",
     "reference": "5726/1A-014",
-    "price": 8516274,
+    "price": 8545222,
     "usdRefPrice": 98000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2312,7 +2312,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5044,
@@ -2320,7 +2320,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5980/1R-001",
     "reference": "5980/1R-001",
-    "price": 15207633,
+    "price": 15259325,
     "usdRefPrice": 175000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2357,7 +2357,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5045,
@@ -2365,7 +2365,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5167A-001",
     "reference": "5167A-001",
-    "price": 5040244,
+    "price": 5057376,
     "usdRefPrice": 58000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2403,7 +2403,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5046,
@@ -2411,7 +2411,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5168G-001",
     "reference": "5168G-001",
-    "price": 6256855,
+    "price": 6278122,
     "usdRefPrice": 72000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2448,7 +2448,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5047,
@@ -2456,7 +2456,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5968A-001",
     "reference": "5968A-001",
-    "price": 11123297,
+    "price": 11161106,
     "usdRefPrice": 128000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2494,7 +2494,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5048,
@@ -2502,7 +2502,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "6119G-001",
     "reference": "6119G-001",
-    "price": 2693924,
+    "price": 2703080,
     "usdRefPrice": 31000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2541,7 +2541,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5049,
@@ -2549,7 +2549,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5227J-001",
     "reference": "5227J-001",
-    "price": 3128427,
+    "price": 3139061,
     "usdRefPrice": 36000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2587,7 +2587,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5050,
@@ -2595,7 +2595,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5327G-001",
     "reference": "5327G-001",
-    "price": 8168671,
+    "price": 8196437,
     "usdRefPrice": 94000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2633,7 +2633,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5051,
@@ -2641,7 +2641,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5270P-001",
     "reference": "5270P-001",
-    "price": 16945648,
+    "price": 17003247,
     "usdRefPrice": 195000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2678,7 +2678,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5052,
@@ -2686,7 +2686,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5267/200R-001",
     "reference": "5267/200R-001",
-    "price": 5387847,
+    "price": 5406161,
     "usdRefPrice": 62000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2724,7 +2724,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5053,
@@ -2732,7 +2732,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5231G-001",
     "reference": "5231G-001",
-    "price": 9559084,
+    "price": 9591575,
     "usdRefPrice": 110000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2770,7 +2770,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5054,
@@ -2778,7 +2778,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5396G-011",
     "reference": "5396G-011",
-    "price": 4692641,
+    "price": 4708592,
     "usdRefPrice": 54000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2815,7 +2815,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5055,
@@ -2823,7 +2823,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5172G-001",
     "reference": "5172G-001",
-    "price": 6778259,
+    "price": 6801299,
     "usdRefPrice": 78000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2860,7 +2860,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5056,
@@ -2868,7 +2868,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5524G-001",
     "reference": "5524G-001",
-    "price": 4518840,
+    "price": 4534199,
     "usdRefPrice": 52000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2905,7 +2905,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5057,
@@ -2913,7 +2913,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5738R-001",
     "reference": "5738R-001",
-    "price": 3041527,
+    "price": 3051865,
     "usdRefPrice": 35000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2951,7 +2951,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5058,
@@ -2959,7 +2959,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5078R-001",
     "reference": "5078R-001",
-    "price": 33891296,
+    "price": 34006495,
     "usdRefPrice": 390000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2996,7 +2996,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5059,
@@ -3004,7 +3004,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "7118/1200R-001",
     "reference": "7118/1200R-001",
-    "price": 6517557,
+    "price": 6539711,
     "usdRefPrice": 75000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3042,7 +3042,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5060,
@@ -3050,7 +3050,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "7300/1200A-001",
     "reference": "7300/1200A-001",
-    "price": 2476672,
+    "price": 2485090,
     "usdRefPrice": 28500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3088,7 +3088,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5061,
@@ -3096,7 +3096,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "16202ST.OO.1240ST.01",
     "reference": "16202ST.OO.1240ST.01",
-    "price": 6778259,
+    "price": 6801299,
     "usdRefPrice": 78000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3134,7 +3134,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5062,
@@ -3142,7 +3142,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "15510ST.OO.1320ST.07",
     "reference": "15510ST.OO.1320ST.07",
-    "price": 3997435,
+    "price": 4011022,
     "usdRefPrice": 46000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3180,7 +3180,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5063,
@@ -3188,7 +3188,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26240ST.OO.1320ST.05",
     "reference": "26240ST.OO.1320ST.05",
-    "price": 5387847,
+    "price": 5406161,
     "usdRefPrice": 62000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3225,7 +3225,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5064,
@@ -3233,7 +3233,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "15407ST.OO.1220ST.01",
     "reference": "15407ST.OO.1220ST.01",
-    "price": 10862595,
+    "price": 10899518,
     "usdRefPrice": 125000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3270,7 +3270,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5065,
@@ -3278,7 +3278,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26420TI.OO.A027CA.01",
     "reference": "26420TI.OO.A027CA.01",
-    "price": 3649832,
+    "price": 3662238,
     "usdRefPrice": 42000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3315,7 +3315,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5066,
@@ -3323,7 +3323,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "15720ST.OO.A052CA.01",
     "reference": "15720ST.OO.A052CA.01",
-    "price": 2780824,
+    "price": 2790276,
     "usdRefPrice": 32000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3360,7 +3360,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5067,
@@ -3368,7 +3368,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "15510OR.OO.1320OR.04",
     "reference": "15510OR.OO.1320OR.04",
-    "price": 7647267,
+    "price": 7673260,
     "usdRefPrice": 88000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3405,7 +3405,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5068,
@@ -3413,7 +3413,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26715ST.OO.1356ST.02",
     "reference": "26715ST.OO.1356ST.02",
-    "price": 4171236,
+    "price": 4185415,
     "usdRefPrice": 48000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3450,7 +3450,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5069,
@@ -3458,7 +3458,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26574ST.OO.1220ST.03",
     "reference": "26574ST.OO.1220ST.03",
-    "price": 9993587,
+    "price": 10027556,
     "usdRefPrice": 115000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3495,7 +3495,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5070,
@@ -3503,7 +3503,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26405CE.OO.A002CA.02",
     "reference": "26405CE.OO.A002CA.02",
-    "price": 4258137,
+    "price": 4272611,
     "usdRefPrice": 49000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3540,7 +3540,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5071,
@@ -3548,7 +3548,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26393NB.OO.A002KB.01",
     "reference": "26393NB.OO.A002KB.01",
-    "price": 3389130,
+    "price": 3400649,
     "usdRefPrice": 39000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3585,7 +3585,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5072,
@@ -3593,7 +3593,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "15454BC.GG.1259BC.01",
     "reference": "15454BC.GG.1259BC.01",
-    "price": 5909252,
+    "price": 5929338,
     "usdRefPrice": 68000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3630,7 +3630,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5073,
@@ -3638,7 +3638,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26730ST.OO.1320ST.01",
     "reference": "26730ST.OO.1320ST.01",
-    "price": 16945648,
+    "price": 17003247,
     "usdRefPrice": 195000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3676,7 +3676,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5074,
@@ -3684,7 +3684,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "77600TI.OO.A343CA.01",
     "reference": "77600TI.OO.A343CA.01",
-    "price": 3302229,
+    "price": 3313453,
     "usdRefPrice": 38000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3722,7 +3722,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5075,
@@ -3730,7 +3730,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "77350CE.OO.1266CE.01",
     "reference": "77350CE.OO.1266CE.01",
-    "price": 4692641,
+    "price": 4708592,
     "usdRefPrice": 54000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3767,7 +3767,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5076,
@@ -3775,7 +3775,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "15710ST.OO.A010CA.01",
     "reference": "15710ST.OO.A010CA.01",
-    "price": 2433221,
+    "price": 2441492,
     "usdRefPrice": 28000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3812,7 +3812,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5077,
@@ -3820,7 +3820,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26331ST.OO.1220ST.03",
     "reference": "26331ST.OO.1220ST.03",
-    "price": 4866443,
+    "price": 4882984,
     "usdRefPrice": 56000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3858,7 +3858,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5078,
@@ -3866,7 +3866,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "15210CR.OO.A009KB.01",
     "reference": "15210CR.OO.A009KB.01",
-    "price": 2867725,
+    "price": 2877473,
     "usdRefPrice": 33000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3903,7 +3903,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5079,
@@ -3911,7 +3911,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26589IO.OO.D002CA.01",
     "reference": "26589IO.OO.D002CA.01",
-    "price": 21290686,
+    "price": 21363054,
     "usdRefPrice": 245000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3950,7 +3950,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5080,
@@ -3958,7 +3958,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "67651OR.ZZ.1261OR.01",
     "reference": "67651OR.ZZ.1261OR.01",
-    "price": 3910534,
+    "price": 3923826,
     "usdRefPrice": 45000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3996,7 +3996,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5081,
@@ -4004,7 +4004,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB0138211B1A1",
     "reference": "AB0138211B1A1",
-    "price": 825557,
+    "price": 828363,
     "usdRefPrice": 9500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4043,7 +4043,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5082,
@@ -4051,7 +4051,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB0137211C1P1",
     "reference": "AB0137211C1P1",
-    "price": 799487,
+    "price": 802204,
     "usdRefPrice": 9200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4089,7 +4089,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5083,
@@ -4097,7 +4097,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB0134101G1A1",
     "reference": "AB0134101G1A1",
-    "price": 773417,
+    "price": 776046,
     "usdRefPrice": 8900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4135,7 +4135,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5084,
@@ -4143,7 +4143,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB2010121L1A1",
     "reference": "AB2010121L1A1",
-    "price": 469264,
+    "price": 470859,
     "usdRefPrice": 5400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4181,7 +4181,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5085,
@@ -4189,7 +4189,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "A17376211B1S1",
     "reference": "A17376211B1S1",
-    "price": 425814,
+    "price": 427261,
     "usdRefPrice": 4900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4227,7 +4227,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5086,
@@ -4235,7 +4235,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB0145371L1P1",
     "reference": "AB0145371L1P1",
-    "price": 790797,
+    "price": 793485,
     "usdRefPrice": 9100,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4273,7 +4273,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5087,
@@ -4281,7 +4281,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "V13317101L1X1",
     "reference": "V13317101L1X1",
-    "price": 538785,
+    "price": 540616,
     "usdRefPrice": 6200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4319,7 +4319,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Siyah DLC Kaplama Titanyum",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5088,
@@ -4327,7 +4327,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB01763A1C1X1",
     "reference": "AB01763A1C1X1",
-    "price": 712586,
+    "price": 715008,
     "usdRefPrice": 8200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4365,7 +4365,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5089,
@@ -4373,7 +4373,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB01762A1L1X1",
     "reference": "AB01762A1L1X1",
-    "price": 712586,
+    "price": 715008,
     "usdRefPrice": 8200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4411,7 +4411,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5090,
@@ -4419,7 +4419,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB01761A1K1X1",
     "reference": "AB01761A1K1X1",
-    "price": 712586,
+    "price": 715008,
     "usdRefPrice": 8200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4457,7 +4457,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5091,
@@ -4465,7 +4465,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "RB0139211G1P1",
     "reference": "RB0139211G1P1",
-    "price": 1694565,
+    "price": 1700325,
     "usdRefPrice": 19500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4504,7 +4504,7 @@ const PRODUCTS = [
       "Kasa Materyali": "18K Kırmızı Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5092,
@@ -4512,7 +4512,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "A32398101B1A1",
     "reference": "A32398101B1A1",
-    "price": 512714,
+    "price": 514457,
     "usdRefPrice": 5900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4549,7 +4549,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5093,
@@ -4557,7 +4557,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "A10340161C1X1",
     "reference": "A10340161C1X1",
-    "price": 417124,
+    "price": 418541,
     "usdRefPrice": 4800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4595,7 +4595,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4422
   },
   {
     "id": 5094,
@@ -4603,7 +4603,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "A17328101B1A1",
     "reference": "A17328101B1A1",
-    "price": 399743,
+    "price": 401102,
     "usdRefPrice": 4600,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4640,7 +4640,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5095,
@@ -4648,7 +4648,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "X82310A41B1S1",
     "reference": "X82310A41B1S1",
-    "price": 295463,
+    "price": 296467,
     "usdRefPrice": 3400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4686,7 +4686,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Breitlight® Karbon Alaşım",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5096,
@@ -4694,7 +4694,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB0930D41L1P1",
     "reference": "AB0930D41L1P1",
-    "price": 747347,
+    "price": 749887,
     "usdRefPrice": 8600,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4732,7 +4732,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5097,
@@ -4740,7 +4740,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB0136251B1A2",
     "reference": "AB0136251B1A2",
-    "price": 938528,
+    "price": 941718,
     "usdRefPrice": 10800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4778,7 +4778,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5098,
@@ -4786,7 +4786,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "A17395161C1A1",
     "reference": "A17395161C1A1",
-    "price": 425814,
+    "price": 427261,
     "usdRefPrice": 4900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4824,7 +4824,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5099,
@@ -4832,7 +4832,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "A17377211A1S1",
     "reference": "A17377211A1S1",
-    "price": 408434,
+    "price": 409822,
     "usdRefPrice": 4700,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4869,7 +4869,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5100,
@@ -4877,7 +4877,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "EB70101A1O1E1",
     "reference": "EB70101A1O1E1",
-    "price": 425814,
+    "price": 427261,
     "usdRefPrice": 4900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4915,7 +4915,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5101,
@@ -4923,7 +4923,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSSA0018",
     "reference": "WSSA0018",
-    "price": 686516,
+    "price": 688850,
     "usdRefPrice": 7900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4961,7 +4961,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5102,
@@ -4969,7 +4969,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSSA0029",
     "reference": "WSSA0029",
-    "price": 625685,
+    "price": 627812,
     "usdRefPrice": 7200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5006,7 +5006,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5103,
@@ -5014,7 +5014,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WHSA0008",
     "reference": "WHSA0008",
-    "price": 2954626,
+    "price": 2964669,
     "usdRefPrice": 34000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5053,7 +5053,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Masif 18K Pembe Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5104,
@@ -5061,7 +5061,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSTA0041",
     "reference": "WSTA0041",
-    "price": 304153,
+    "price": 305186,
     "usdRefPrice": 3500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5099,7 +5099,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4422
   },
   {
     "id": 5105,
@@ -5107,7 +5107,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSTA0040",
     "reference": "WSTA0040",
-    "price": 425814,
+    "price": 427261,
     "usdRefPrice": 4900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5144,7 +5144,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5106,
@@ -5152,7 +5152,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WGTA0010",
     "reference": "WGTA0010",
-    "price": 973289,
+    "price": 976597,
     "usdRefPrice": 11200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5190,7 +5190,7 @@ const PRODUCTS = [
       "Kasa Materyali": "18K Masif Sarı Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5107,
@@ -5198,7 +5198,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSTA0065",
     "reference": "WSTA0065",
-    "price": 417124,
+    "price": 418541,
     "usdRefPrice": 4800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5236,7 +5236,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4422
   },
   {
     "id": 5108,
@@ -5244,7 +5244,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSBB0025",
     "reference": "WSBB0025",
-    "price": 643066,
+    "price": 645251,
     "usdRefPrice": 7400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5282,7 +5282,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5109,
@@ -5290,7 +5290,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "W3BB0024",
     "reference": "W3BB0024",
-    "price": 1112330,
+    "price": 1116111,
     "usdRefPrice": 12800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5328,7 +5328,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5110,
@@ -5336,7 +5336,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "W2PN0007",
     "reference": "W2PN0007",
-    "price": 834247,
+    "price": 837083,
     "usdRefPrice": 9600,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5374,7 +5374,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5111,
@@ -5382,7 +5382,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSPA0009",
     "reference": "WSPA0009",
-    "price": 634376,
+    "price": 636532,
     "usdRefPrice": 7300,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5420,7 +5420,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5112,
@@ -5428,7 +5428,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WGSA0032",
     "reference": "WGSA0032",
-    "price": 1173160,
+    "price": 1177148,
     "usdRefPrice": 13500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5466,7 +5466,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Masif 18K Gül Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5113,
@@ -5474,7 +5474,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSTA0083",
     "reference": "WSTA0083",
-    "price": 582235,
+    "price": 584214,
     "usdRefPrice": 6700,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5511,7 +5511,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5114,
@@ -5519,7 +5519,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSRN0032",
     "reference": "WSRN0032",
-    "price": 382363,
+    "price": 383663,
     "usdRefPrice": 4400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5557,7 +5557,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5115,
@@ -5565,7 +5565,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSSA0017",
     "reference": "WSSA0017",
-    "price": 851627,
+    "price": 854522,
     "usdRefPrice": 9800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5603,7 +5603,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5116,
@@ -5611,7 +5611,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WGBB0030",
     "reference": "WGBB0030",
-    "price": 1286131,
+    "price": 1290503,
     "usdRefPrice": 14800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5649,7 +5649,7 @@ const PRODUCTS = [
       "Kasa Materyali": "18K Pembe Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5117,
@@ -5657,7 +5657,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WGBA0007",
     "reference": "WGBA0007",
-    "price": 1034119,
+    "price": 1037634,
     "usdRefPrice": 11900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5695,7 +5695,7 @@ const PRODUCTS = [
       "Kasa Materyali": "18K Sarı Altın (Kusursuz Oval Form)",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5118,
@@ -5703,7 +5703,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "W2SA0016",
     "reference": "W2SA0016",
-    "price": 990669,
+    "price": 994036,
     "usdRefPrice": 11400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5741,7 +5741,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5119,
@@ -5749,7 +5749,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WGTA0057",
     "reference": "WGTA0057",
-    "price": 2433221,
+    "price": 2441492,
     "usdRefPrice": 28000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5787,7 +5787,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5120,
@@ -5795,7 +5795,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSPA0027",
     "reference": "WSPA0027",
-    "price": 773417,
+    "price": 776046,
     "usdRefPrice": 8900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5833,7 +5833,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5121,
@@ -5841,7 +5841,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79030N-0001",
     "reference": "M79030N-0001",
-    "price": 356293,
+    "price": 357504,
     "usdRefPrice": 4100,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5879,7 +5879,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5122,
@@ -5887,7 +5887,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79000N-0001",
     "reference": "M79000N-0001",
-    "price": 343258,
+    "price": 344425,
     "usdRefPrice": 3950,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5924,7 +5924,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5123,
@@ -5932,7 +5932,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79470-0001",
     "reference": "M79470-0001",
-    "price": 373673,
+    "price": 374943,
     "usdRefPrice": 4300,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5969,7 +5969,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4422
   },
   {
     "id": 5124,
@@ -5977,7 +5977,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M25407N-0001",
     "reference": "M25407N-0001",
-    "price": 408434,
+    "price": 409822,
     "usdRefPrice": 4700,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6015,7 +6015,7 @@ const PRODUCTS = [
       "Kasa Materyali": "2. Sınıf Saten Titanyum",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5125,
@@ -6023,7 +6023,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M25707B/24-0001",
     "reference": "M25707B/24-0001",
-    "price": 364983,
+    "price": 366224,
     "usdRefPrice": 4200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6061,7 +6061,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Sabit Askılı Monoblok Titanyum",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5126,
@@ -6069,7 +6069,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79360N-0002",
     "reference": "M79360N-0002",
-    "price": 477954,
+    "price": 479579,
     "usdRefPrice": 5500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6106,7 +6106,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5127,
@@ -6114,7 +6114,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79830RB-0001",
     "reference": "M79830RB-0001",
-    "price": 382363,
+    "price": 383663,
     "usdRefPrice": 4400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6152,7 +6152,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5128,
@@ -6160,7 +6160,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M25600TN-0001",
     "reference": "M25600TN-0001",
-    "price": 425814,
+    "price": 427261,
     "usdRefPrice": 4900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6197,7 +6197,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5129,
@@ -6205,7 +6205,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M28603-0003",
     "reference": "M28603-0003",
-    "price": 330223,
+    "price": 331345,
     "usdRefPrice": 3800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6243,7 +6243,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4422
   },
   {
     "id": 5130,
@@ -6251,7 +6251,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79210CNU-0001",
     "reference": "M79210CNU-0001",
-    "price": 443194,
+    "price": 444700,
     "usdRefPrice": 5100,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6289,7 +6289,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5131,
@@ -6297,7 +6297,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79010SG-0001",
     "reference": "M79010SG-0001",
-    "price": 399743,
+    "price": 401102,
     "usdRefPrice": 4600,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6335,7 +6335,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Masif 925 Ayar Gümüş",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5132,
@@ -6343,7 +6343,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79018V-0001",
     "reference": "M79018V-0001",
-    "price": 1546834,
+    "price": 1552091,
     "usdRefPrice": 17800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6381,7 +6381,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Masif 18K Sarı Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5133,
@@ -6389,7 +6389,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M28300-0007",
     "reference": "M28300-0007",
-    "price": 278082,
+    "price": 279028,
     "usdRefPrice": 3200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6427,7 +6427,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5134,
@@ -6435,7 +6435,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M7941A1A0RU-0003",
     "reference": "M7941A1A0RU-0003",
-    "price": 395398,
+    "price": 396742,
     "usdRefPrice": 4550,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6473,7 +6473,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4422
   },
   {
     "id": 5135,
@@ -6481,7 +6481,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79950-0001",
     "reference": "M79950-0001",
-    "price": 286773,
+    "price": 287747,
     "usdRefPrice": 3300,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6519,7 +6519,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4422
   },
   {
     "id": 5136,
@@ -6527,7 +6527,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M25807KN-0001",
     "reference": "M25807KN-0001",
-    "price": 460574,
+    "price": 462140,
     "usdRefPrice": 5300,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6565,7 +6565,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Mat Siyah Karbon Kompozit & Titanyum Bezel",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5137,
@@ -6573,7 +6573,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79360N-0019",
     "reference": "M79360N-0019",
-    "price": 686516,
+    "price": 688850,
     "usdRefPrice": 7900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6611,7 +6611,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5138,
@@ -6619,7 +6619,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M91551-0001",
     "reference": "M91551-0001",
-    "price": 295463,
+    "price": 296467,
     "usdRefPrice": 3400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6657,7 +6657,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5139,
@@ -6665,7 +6665,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79250BA-0001",
     "reference": "M79250BA-0001",
-    "price": 391053,
+    "price": 392383,
     "usdRefPrice": 4500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6703,7 +6703,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Alüminyum Bronz Alaşım",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5140,
@@ -6711,7 +6711,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M35500-0004",
     "reference": "M35500-0004",
-    "price": 252012,
+    "price": 252869,
     "usdRefPrice": 2900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6749,7 +6749,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5141,
@@ -6757,7 +6757,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CBS2210.FC6534",
     "reference": "CBS2210.FC6534",
-    "price": 582235,
+    "price": 584214,
     "usdRefPrice": 6700,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6794,7 +6794,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5142,
@@ -6802,7 +6802,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CAW211P.FC6356",
     "reference": "CAW211P.FC6356",
-    "price": 703896,
+    "price": 706289,
     "usdRefPrice": 8100,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6839,7 +6839,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5143,
@@ -6847,7 +6847,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CBS2011.FC6529",
     "reference": "CBS2011.FC6529",
-    "price": 816867,
+    "price": 819644,
     "usdRefPrice": 9400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6884,7 +6884,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5144,
@@ -6892,7 +6892,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "WBP5110.BA0013",
     "reference": "WBP5110.BA0013",
-    "price": 330223,
+    "price": 331345,
     "usdRefPrice": 3800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6929,7 +6929,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4422
   },
   {
     "id": 5145,
@@ -6937,7 +6937,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "WBN2313.BA0001",
     "reference": "WBN2313.BA0001",
-    "price": 295463,
+    "price": 296467,
     "usdRefPrice": 3400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6975,7 +6975,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5146,
@@ -6983,7 +6983,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CBL2181.FC6515",
     "reference": "CBL2181.FC6515",
-    "price": 860318,
+    "price": 863242,
     "usdRefPrice": 9900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7021,7 +7021,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5147,
@@ -7029,7 +7029,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "WBP1180.BF0000",
     "reference": "WBP1180.BF0000",
-    "price": 278082,
+    "price": 279028,
     "usdRefPrice": 3200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7067,7 +7067,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Kumlanmış 2. Sınıf Titanyum",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5148,
@@ -7075,7 +7075,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CBS5010.FC6543",
     "reference": "CBS5010.FC6543",
-    "price": 2129069,
+    "price": 2136305,
     "usdRefPrice": 24500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7113,7 +7113,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5149,
@@ -7121,7 +7121,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CBE511A.FC8279",
     "reference": "CBE511A.FC8279",
-    "price": 616995,
+    "price": 619093,
     "usdRefPrice": 7100,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7158,7 +7158,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5150,
@@ -7166,7 +7166,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CAZ201D.BA0876",
     "reference": "CAZ201D.BA0876",
-    "price": 356293,
+    "price": 357504,
     "usdRefPrice": 4100,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7204,7 +7204,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5151,
@@ -7212,7 +7212,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "WBN201A.BA0640",
     "reference": "WBN201A.BA0640",
-    "price": 321533,
+    "price": 322626,
     "usdRefPrice": 3700,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7249,7 +7249,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5152,
@@ -7257,7 +7257,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CBL2182.FT6235",
     "reference": "CBL2182.FT6235",
-    "price": 973289,
+    "price": 976597,
     "usdRefPrice": 11200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7295,7 +7295,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Kumlanmış Titanyum & Mavi İskelet Kadran",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5153,
@@ -7303,7 +7303,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "WBP2010.BA0632",
     "reference": "WBP2010.BA0632",
-    "price": 364983,
+    "price": 366224,
     "usdRefPrice": 4200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7341,7 +7341,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5154,
@@ -7349,7 +7349,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CBN2A10.BA0643",
     "reference": "CBN2A10.BA0643",
-    "price": 556165,
+    "price": 558055,
     "usdRefPrice": 6400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7387,7 +7387,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5155,
@@ -7395,7 +7395,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CAZ101N.FC8243",
     "reference": "CAZ101N.FC8243",
-    "price": 243322,
+    "price": 244149,
     "usdRefPrice": 2800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7433,7 +7433,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4422
   },
   {
     "id": 5156,
@@ -7441,7 +7441,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "WBN2111.BA0639",
     "reference": "WBN2111.BA0639",
-    "price": 278082,
+    "price": 279028,
     "usdRefPrice": 3200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7478,7 +7478,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5157,
@@ -7486,7 +7486,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "WBP2111.BA0627",
     "reference": "WBP2111.BA0627",
-    "price": 256357,
+    "price": 257229,
     "usdRefPrice": 2950,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7524,7 +7524,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5158,
@@ -7532,7 +7532,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CAW218C.FC6548",
     "reference": "CAW218C.FC6548",
-    "price": 834247,
+    "price": 837083,
     "usdRefPrice": 9600,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7570,7 +7570,7 @@ const PRODUCTS = [
       "Kasa Materyali": "2. Sınıf Titanyum",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5159,
@@ -7578,7 +7578,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CBS2213.FN6535",
     "reference": "CBS2213.FN6535",
-    "price": 603960,
+    "price": 606013,
     "usdRefPrice": 6950,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7615,7 +7615,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5160,
@@ -7623,7 +7623,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "SBR8A80.BT6261",
     "reference": "SBR8A80.BT6261",
-    "price": 225942,
+    "price": 226710,
     "usdRefPrice": 2600,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7661,7 +7661,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Siyah DLC Titanyum & Seramik Bezel",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5161,
@@ -7669,7 +7669,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW329301",
     "reference": "IW329301",
-    "price": 773417,
+    "price": 776046,
     "usdRefPrice": 8900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7706,7 +7706,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5162,
@@ -7714,7 +7714,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW371606",
     "reference": "IW371606",
-    "price": 729966,
+    "price": 732448,
     "usdRefPrice": 8400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7751,7 +7751,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5163,
@@ -7759,7 +7759,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW388104",
     "reference": "IW388104",
-    "price": 712586,
+    "price": 715008,
     "usdRefPrice": 8200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7797,7 +7797,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5164,
@@ -7805,7 +7805,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW500704",
     "reference": "IW500704",
-    "price": 1147090,
+    "price": 1150989,
     "usdRefPrice": 13200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7843,7 +7843,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5165,
@@ -7851,7 +7851,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW328203",
     "reference": "IW328203",
-    "price": 486644,
+    "price": 488298,
     "usdRefPrice": 5600,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7889,7 +7889,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5166,
@@ -7897,7 +7897,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW503605",
     "reference": "IW503605",
-    "price": 2867725,
+    "price": 2877473,
     "usdRefPrice": 33000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7935,7 +7935,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5167,
@@ -7943,7 +7943,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW389101",
     "reference": "IW389101",
-    "price": 860318,
+    "price": 863242,
     "usdRefPrice": 9900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7981,7 +7981,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Mat Siyah Zirkonyum Oksit Seramik",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5168,
@@ -7989,7 +7989,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW389404",
     "reference": "IW389404",
-    "price": 1077569,
+    "price": 1081232,
     "usdRefPrice": 12400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8027,7 +8027,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Pantone® 'Oceana' Mavi Seramik",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5169,
@@ -8035,7 +8035,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW503302",
     "reference": "IW503302",
-    "price": 3649832,
+    "price": 3662238,
     "usdRefPrice": 42000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8073,7 +8073,7 @@ const PRODUCTS = [
       "Kasa Materyali": "18K Armor Gold®",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5170,
@@ -8081,7 +8081,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW356501",
     "reference": "IW356501",
-    "price": 469264,
+    "price": 470859,
     "usdRefPrice": 5400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8119,7 +8119,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5171,
@@ -8127,7 +8127,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW391405",
     "reference": "IW391405",
-    "price": 582235,
+    "price": 584214,
     "usdRefPrice": 6700,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8165,7 +8165,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5172,
@@ -8173,7 +8173,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW395601",
     "reference": "IW395601",
-    "price": 1607664,
+    "price": 1613129,
     "usdRefPrice": 18500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8211,7 +8211,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5173,
@@ -8219,7 +8219,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW328903",
     "reference": "IW328903",
-    "price": 1112330,
+    "price": 1116111,
     "usdRefPrice": 12800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8257,7 +8257,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5174,
@@ -8265,7 +8265,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW329001",
     "reference": "IW329001",
-    "price": 530095,
+    "price": 531896,
     "usdRefPrice": 6100,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8302,7 +8302,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5175,
@@ -8310,7 +8310,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW377714",
     "reference": "IW377714",
-    "price": 599615,
+    "price": 601653,
     "usdRefPrice": 6900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8348,7 +8348,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5176,
@@ -8356,7 +8356,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW390701",
     "reference": "IW390701",
-    "price": 1199230,
+    "price": 1203307,
     "usdRefPrice": 13800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8393,7 +8393,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5177,
@@ -8401,7 +8401,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW501015",
     "reference": "IW501015",
-    "price": 1433863,
+    "price": 1438736,
     "usdRefPrice": 16500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8439,7 +8439,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lake Tahoe Kar Beyazı Seramik",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5178,
@@ -8447,7 +8447,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW344602",
     "reference": "IW344602",
-    "price": 2954626,
+    "price": 2964669,
     "usdRefPrice": 34000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8485,7 +8485,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Masif 18K 5N Pembe Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5179,
@@ -8493,7 +8493,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW324007",
     "reference": "IW324007",
-    "price": 408434,
+    "price": 409822,
     "usdRefPrice": 4700,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8531,7 +8531,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5180,
@@ -8539,7 +8539,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW510301",
     "reference": "IW510301",
-    "price": 1260061,
+    "price": 1264344,
     "usdRefPrice": 14500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8577,7 +8577,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5181,
@@ -8585,7 +8585,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01312",
     "reference": "PAM01312",
-    "price": 764727,
+    "price": 767326,
     "usdRefPrice": 8800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8623,7 +8623,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5182,
@@ -8631,7 +8631,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01314",
     "reference": "PAM01314",
-    "price": 764727,
+    "price": 767326,
     "usdRefPrice": 8800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8669,7 +8669,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5183,
@@ -8677,7 +8677,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01218",
     "reference": "PAM01218",
-    "price": 860318,
+    "price": 863242,
     "usdRefPrice": 9900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8715,7 +8715,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Paslanmaz Çelik & Sol Taraf Butonlar",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5184,
@@ -8723,7 +8723,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM00799",
     "reference": "PAM00799",
-    "price": 1407792,
+    "price": 1412577,
     "usdRefPrice": 16200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8761,7 +8761,7 @@ const PRODUCTS = [
       "Kasa Materyali": "BMG-TECH™ Dökme Metalik Cam Alaşım",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5185,
@@ -8769,7 +8769,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM02683",
     "reference": "PAM02683",
-    "price": 947218,
+    "price": 950438,
     "usdRefPrice": 10900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8807,7 +8807,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5186,
@@ -8815,7 +8815,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01348",
     "reference": "PAM01348",
-    "price": 643066,
+    "price": 645251,
     "usdRefPrice": 7400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8853,7 +8853,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Brunito eSteel™ Eskitilmiş Vintage Çelik",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5187,
@@ -8861,7 +8861,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01026",
     "reference": "PAM01026",
-    "price": 1459933,
+    "price": 1464895,
     "usdRefPrice": 16800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8899,7 +8899,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Masif 18K Goldtech™ Kırmızı Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5188,
@@ -8907,7 +8907,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01249",
     "reference": "PAM01249",
-    "price": 625685,
+    "price": 627812,
     "usdRefPrice": 7200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8945,7 +8945,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5189,
@@ -8953,7 +8953,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01616",
     "reference": "PAM01616",
-    "price": 1720635,
+    "price": 1726484,
     "usdRefPrice": 19800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8991,7 +8991,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Karbon Fiber Kompozit Carbotech™",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5190,
@@ -8999,7 +8999,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01361",
     "reference": "PAM01361",
-    "price": 903768,
+    "price": 906840,
     "usdRefPrice": 10400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -9036,7 +9036,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5191,
@@ -9044,7 +9044,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01347",
     "reference": "PAM01347",
-    "price": 860318,
+    "price": 863242,
     "usdRefPrice": 9900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -9082,7 +9082,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5192,
@@ -9090,7 +9090,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01157",
     "reference": "PAM01157",
-    "price": 799487,
+    "price": 802204,
     "usdRefPrice": 9200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -9128,7 +9128,7 @@ const PRODUCTS = [
       "Kasa Materyali": "eSteel™ (%95 Geri Dönüştürülmüş Çelik)",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5193,
@@ -9136,7 +9136,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01229",
     "reference": "PAM01229",
-    "price": 834247,
+    "price": 837083,
     "usdRefPrice": 9600,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -9173,7 +9173,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5194,
@@ -9181,7 +9181,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01181",
     "reference": "PAM01181",
-    "price": 1868366,
+    "price": 1874717,
     "usdRefPrice": 21500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -9219,7 +9219,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Masif 18K Goldtech™ & 24K Masif Altın Ay Diski",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5195,
@@ -9227,7 +9227,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM00424",
     "reference": "PAM00424",
-    "price": 729966,
+    "price": 732448,
     "usdRefPrice": 8400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -9265,7 +9265,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5196,
@@ -9273,7 +9273,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM00982",
     "reference": "PAM00982",
-    "price": 1729325,
+    "price": 1735203,
     "usdRefPrice": 19900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -9310,7 +9310,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5197,
@@ -9318,7 +9318,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM00767",
     "reference": "PAM00767",
-    "price": 12861312,
+    "price": 12905029,
     "usdRefPrice": 148000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -9356,7 +9356,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5198,
@@ -9364,7 +9364,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM00514",
     "reference": "PAM00514",
-    "price": 686516,
+    "price": 688850,
     "usdRefPrice": 7900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -9402,7 +9402,7 @@ const PRODUCTS = [
       "Kasa Materyali": "1940 Masif Kulaklı Paslanmaz Çelik",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5199,
@@ -9410,7 +9410,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01372",
     "reference": "PAM01372",
-    "price": 773417,
+    "price": 776046,
     "usdRefPrice": 8900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -9448,7 +9448,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 5200,
@@ -9456,7 +9456,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM00979",
     "reference": "PAM00979",
-    "price": 1781466,
+    "price": 1787521,
     "usdRefPrice": 20500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -9494,7 +9494,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Carbotech™ & Donanma Komando Gravürü",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.2782
+    "usdSellingRate": 48.4423
   },
   {
     "id": 1000,
@@ -9686,7 +9686,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVE6F00523",
     "reference": "VRSCVE6F00523",
-    "price": 70762,
+    "price": 90720,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -9959,7 +9959,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVE2E00821",
     "reference": "VRSCVE2E00821",
-    "price": 44881,
+    "price": 57540,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -10004,7 +10004,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVE2E00721",
     "reference": "VRSCVE2E00721",
-    "price": 44881,
+    "price": 57540,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -10508,7 +10508,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVE7C00523",
     "reference": "VRSCVE7C00523",
-    "price": 95900,
+    "price": 67130,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -10790,7 +10790,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVEV901323",
     "reference": "VRSCVEV901323",
-    "price": 38657,
+    "price": 49560,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -11252,7 +11252,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVE8P00324",
     "reference": "VRSCVE8P00324",
-    "price": 95900,
+    "price": 67130,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Polikarbonat",
@@ -11391,7 +11391,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVEOCA0324",
     "reference": "VRSCVEOCA0324",
-    "price": 41278,
+    "price": 52920,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -11663,7 +11663,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVE9A00324",
     "reference": "VRSCVE9A00324",
-    "price": 84000,
+    "price": 58800,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -11895,7 +11895,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVE9K01124",
     "reference": "VRSCVE9K01124",
-    "price": 133000,
+    "price": 93100,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -11942,7 +11942,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVE9A00224",
     "reference": "VRSCVE9A00224",
-    "price": 77700,
+    "price": 54390,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -12036,7 +12036,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVEDFA0124",
     "reference": "VRSCVEDFA0124",
-    "price": 91700,
+    "price": 64190,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -12083,7 +12083,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVEAFA0424",
     "reference": "VRSCVEAFA0424",
-    "price": 47502,
+    "price": 60900,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -12805,7 +12805,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVEKWA0326",
     "reference": "VRSCVEKWA0326",
-    "price": 52114,
+    "price": 59220,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Geri Dönüştürülmüş Çelik",
@@ -13170,7 +13170,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVEKSA0526",
     "reference": "VRSCVEKSA0526",
-    "price": 53621,
+    "price": 63084,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Geri Dönüştürülmüş Çelik",
@@ -13630,7 +13630,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVE3L00422",
     "reference": "VRSCVE3L00422",
-    "price": 53071,
+    "price": 68040,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -13675,7 +13675,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVE2E00421",
     "reference": "VRSCVE2E00421",
-    "price": 47502,
+    "price": 60900,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -14080,7 +14080,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVEVI00320",
     "reference": "VRSCVEVI00320",
-    "price": 129500,
+    "price": 90650,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -14125,7 +14125,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVEV600619",
     "reference": "VRSCVEV600619",
-    "price": 50778,
+    "price": 65100,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -14496,7 +14496,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVEV601623",
     "reference": "VRSCVEV601623",
-    "price": 50123,
+    "price": 64260,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -14772,7 +14772,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVE8J00524",
     "reference": "VRSCVE8J00524",
-    "price": 53620,
+    "price": 37534,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Silikon",
@@ -14819,7 +14819,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVE8J00624",
     "reference": "VRSCVE8J00624",
-    "price": 53620,
+    "price": 37534,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Silikon",
@@ -14912,7 +14912,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVEZCA0724",
     "reference": "VRSCVEZCA0724",
-    "price": 59296,
+    "price": 76020,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -14957,7 +14957,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVEAFA0524",
     "reference": "VRSCVEAFA0524",
-    "price": 50123,
+    "price": 64260,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -16230,7 +16230,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVE2S01125",
     "reference": "VRSCVE2S01125",
-    "price": 47174,
+    "price": 60480,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -16414,7 +16414,7 @@ const PRODUCTS = [
     "brand": "Versace",
     "ref": "VRSCVEKIA0225",
     "reference": "VRSCVEKIA0225",
-    "price": 47174,
+    "price": 60480,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -20521,7 +20521,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK2923",
     "reference": "MK2923",
-    "price": 24766,
+    "price": 25998,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -20567,7 +20567,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK7300",
     "reference": "MK7300",
-    "price": 32116,
+    "price": 33726,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -20613,7 +20613,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK7257",
     "reference": "MK7257",
-    "price": 34216,
+    "price": 35924,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -20794,7 +20794,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK7240",
     "reference": "MK7240",
-    "price": 37394,
+    "price": 39270,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -20886,7 +20886,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK7218",
     "reference": "MK7218",
-    "price": 31962,
+    "price": 33558,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -20978,7 +20978,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK8858",
     "reference": "MK8858",
-    "price": 37254,
+    "price": 39116,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -21023,7 +21023,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK3900",
     "reference": "MK3900",
-    "price": 32284,
+    "price": 33894,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -21068,7 +21068,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK8344",
     "reference": "MK8344",
-    "price": 37240,
+    "price": 39102,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -21249,7 +21249,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK5605",
     "reference": "MK5605",
-    "price": 13537,
+    "price": 22562,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -21704,7 +21704,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK4863",
     "reference": "MK4863",
-    "price": 34174,
+    "price": 35882,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -21750,7 +21750,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK4865",
     "reference": "MK4865",
-    "price": 27916,
+    "price": 29316,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -21796,7 +21796,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK9193",
     "reference": "MK9193",
-    "price": 12666,
+    "price": 21109,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -21842,7 +21842,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK9155",
     "reference": "MK9155",
-    "price": 34174,
+    "price": 35882,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -21979,7 +21979,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK4880",
     "reference": "MK4880",
-    "price": 24752,
+    "price": 25984,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -22071,7 +22071,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK7531",
     "reference": "MK7531",
-    "price": 34090,
+    "price": 35798,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -22117,7 +22117,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK9196",
     "reference": "MK9196",
-    "price": 13477,
+    "price": 22462,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -22209,7 +22209,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK4892",
     "reference": "MK4892",
-    "price": 32032,
+    "price": 33628,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -22301,7 +22301,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK7540",
     "reference": "MK7540",
-    "price": 37212,
+    "price": 39074,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -22393,7 +22393,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK4903",
     "reference": "MK4903",
-    "price": 27874,
+    "price": 29274,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -22485,7 +22485,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK9221",
     "reference": "MK9221",
-    "price": 12382,
+    "price": 22512,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -22531,7 +22531,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK4922",
     "reference": "MK4922",
-    "price": 54880,
+    "price": 57680,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -22577,7 +22577,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK4934",
     "reference": "MK4934",
-    "price": 34090,
+    "price": 35798,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -22623,7 +22623,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK4938LE",
     "reference": "MK4938LE",
-    "price": 69300,
+    "price": 72800,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -22716,7 +22716,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK4941",
     "reference": "MK4941",
-    "price": 12277,
+    "price": 24553,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -22762,7 +22762,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MKO1106",
     "reference": "MKO1106",
-    "price": 12382,
+    "price": 22512,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -22807,7 +22807,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK4957",
     "reference": "MK4957",
-    "price": 32032,
+    "price": 33628,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -23035,7 +23035,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK7258",
     "reference": "MK7258",
-    "price": 34216,
+    "price": 35924,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -23172,7 +23172,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK7226",
     "reference": "MK7226",
-    "price": 31962,
+    "price": 33558,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -23218,7 +23218,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK5955",
     "reference": "MK5955",
-    "price": 34076,
+    "price": 35784,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -23305,7 +23305,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK8848",
     "reference": "MK8848",
-    "price": 37254,
+    "price": 39116,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -23350,7 +23350,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK3979",
     "reference": "MK3979",
-    "price": 32284,
+    "price": 33894,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -23395,7 +23395,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK6717",
     "reference": "MK6717",
-    "price": 31962,
+    "price": 33558,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -23484,7 +23484,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK6475",
     "reference": "MK6475",
-    "price": 14600,
+    "price": 22462,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -23528,7 +23528,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK6474",
     "reference": "MK6474",
-    "price": 31962,
+    "price": 33558,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -23572,7 +23572,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK3514",
     "reference": "MK3514",
-    "price": 24752,
+    "price": 18189,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -23616,7 +23616,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK3845",
     "reference": "MK3845",
-    "price": 27874,
+    "price": 29274,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -23662,7 +23662,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK3784",
     "reference": "MK3784",
-    "price": 34090,
+    "price": 35798,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -23750,7 +23750,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK6357",
     "reference": "MK6357",
-    "price": 31962,
+    "price": 33558,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -23794,7 +23794,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK6356",
     "reference": "MK6356",
-    "price": 32536,
+    "price": 34160,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -23839,7 +23839,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK3513",
     "reference": "MK3513",
-    "price": 24752,
+    "price": 25984,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -23883,7 +23883,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK3512",
     "reference": "MK3512",
-    "price": 24752,
+    "price": 25984,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -23928,7 +23928,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK6174",
     "reference": "MK6174",
-    "price": 34090,
+    "price": 35798,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -23973,7 +23973,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK5896",
     "reference": "MK5896",
-    "price": 37534,
+    "price": 39410,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -24019,7 +24019,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK5354",
     "reference": "MK5354",
-    "price": 13537,
+    "price": 22562,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -24154,7 +24154,7 @@ const PRODUCTS = [
     "brand": "Michael Kors",
     "ref": "MK4711",
     "reference": "MK4711",
-    "price": 32116,
+    "price": 23608,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -29002,7 +29002,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY92005L1MF",
     "reference": "GCY92005L1MF",
-    "price": 49840,
+    "price": 52360,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -29049,7 +29049,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ20004L9MF",
     "reference": "GCZ20004L9MF",
-    "price": 39368,
+    "price": 41342,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -29241,7 +29241,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ23005L9MF",
     "reference": "GCZ23005L9MF",
-    "price": 31528,
+    "price": 33110,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -29331,7 +29331,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ23002L9MF",
     "reference": "GCZ23002L9MF",
-    "price": 38906,
+    "price": 40852,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -29376,7 +29376,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ24001L1MF",
     "reference": "GCZ24001L1MF",
-    "price": 35574,
+    "price": 37352,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -29421,7 +29421,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY59008L1MF",
     "reference": "GCY59008L1MF",
-    "price": 13477,
+    "price": 22462,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -29466,7 +29466,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ13003G9MF",
     "reference": "GCZ13003G9MF",
-    "price": 52080,
+    "price": 54740,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -29516,7 +29516,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY83008G1MF",
     "reference": "GCY83008G1MF",
-    "price": 54740,
+    "price": 57540,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -29664,7 +29664,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ02001L1MF",
     "reference": "GCZ02001L1MF",
-    "price": 32704,
+    "price": 34342,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -29714,7 +29714,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ01001L3MF",
     "reference": "GCZ01001L3MF",
-    "price": 32718,
+    "price": 34356,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -29763,7 +29763,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY93005L1MF",
     "reference": "GCY93005L1MF",
-    "price": 29134,
+    "price": 30590,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -29858,7 +29858,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY65001L1MF",
     "reference": "GCY65001L1MF",
-    "price": 43120,
+    "price": 45220,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -29903,7 +29903,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY18020L1MF",
     "reference": "GCY18020L1MF",
-    "price": 39522,
+    "price": 41496,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -30138,7 +30138,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ20003L1MF",
     "reference": "GCZ20003L1MF",
-    "price": 40516,
+    "price": 42560,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -30279,7 +30279,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ20008L1MF",
     "reference": "GCZ20008L1MF",
-    "price": 45080,
+    "price": 47320,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -30467,7 +30467,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ32004G1MF",
     "reference": "GCZ32004G1MF",
-    "price": 46060,
+    "price": 48300,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -30513,7 +30513,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ21007L1MF",
     "reference": "GCZ21007L1MF",
-    "price": 44520,
+    "price": 46760,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -30560,7 +30560,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ32001G2MF",
     "reference": "GCZ32001G2MF",
-    "price": 51800,
+    "price": 54460,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -30707,7 +30707,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ02008L1MF",
     "reference": "GCZ02008L1MF",
-    "price": 32704,
+    "price": 34342,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -30807,7 +30807,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ38003L3MF",
     "reference": "GCZ38003L3MF",
-    "price": 38528,
+    "price": 28322,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -30857,7 +30857,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY98009L3MF",
     "reference": "GCY98009L3MF",
-    "price": 43960,
+    "price": 46200,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -30907,7 +30907,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ05009L2MF",
     "reference": "GCZ05009L2MF",
-    "price": 38528,
+    "price": 40460,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -30957,7 +30957,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY70009G5MF",
     "reference": "GCY70009G5MF",
-    "price": 61880,
+    "price": 64960,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -31004,7 +31004,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ50004G9MF",
     "reference": "GCZ50004G9MF",
-    "price": 53340,
+    "price": 56000,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -31051,7 +31051,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ02007L9MF",
     "reference": "GCZ02007L9MF",
-    "price": 31122,
+    "price": 32676,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -31101,7 +31101,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ46005G7MF",
     "reference": "GCZ46005G7MF",
-    "price": 52500,
+    "price": 55160,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -31148,7 +31148,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ46001G2MF",
     "reference": "GCZ46001G2MF",
-    "price": 56280,
+    "price": 59080,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -31198,7 +31198,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ50001G7MF",
     "reference": "GCZ50001G7MF",
-    "price": 49700,
+    "price": 52220,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -31245,7 +31245,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ50002G7MF",
     "reference": "GCZ50002G7MF",
-    "price": 53200,
+    "price": 55860,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -31392,7 +31392,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ32003G7MF",
     "reference": "GCZ32003G7MF",
-    "price": 44100,
+    "price": 46340,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -31442,7 +31442,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY29007L9MM",
     "reference": "GCY29007L9MM",
-    "price": 14645,
+    "price": 26628,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -31487,7 +31487,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ61002G9",
     "reference": "GCZ61002G9",
-    "price": 49700,
+    "price": 52220,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -31581,7 +31581,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ57002L1",
     "reference": "GCZ57002L1",
-    "price": 37394,
+    "price": 39270,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -31628,7 +31628,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ32005G9",
     "reference": "GCZ32005G9",
-    "price": 52360,
+    "price": 55020,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -31679,7 +31679,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ61001G2",
     "reference": "GCZ61001G2",
-    "price": 44940,
+    "price": 47180,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -31726,7 +31726,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ55002L7",
     "reference": "GCZ55002L7",
-    "price": 40404,
+    "price": 42420,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -31821,7 +31821,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY24018G2MF",
     "reference": "GCY24018G2MF",
-    "price": 37534,
+    "price": 39410,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -31866,7 +31866,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ23001L1MF",
     "reference": "GCZ23001L1MF",
-    "price": 38220,
+    "price": 40138,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -31961,7 +31961,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY98001L5MF",
     "reference": "GCY98001L5MF",
-    "price": 49000,
+    "price": 51520,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -32010,7 +32010,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ01003L1MF",
     "reference": "GCZ01003L1MF",
-    "price": 35658,
+    "price": 37436,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -32060,7 +32060,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ01006L9MF",
     "reference": "GCZ01006L9MF",
-    "price": 38514,
+    "price": 40446,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -32159,7 +32159,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY92002L1MF",
     "reference": "GCY92002L1MF",
-    "price": 40180,
+    "price": 42140,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -32248,7 +32248,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY83002G5MF",
     "reference": "GCY83002G5MF",
-    "price": 48020,
+    "price": 50400,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -32293,7 +32293,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY70001G7MF",
     "reference": "GCY70001G7MF",
-    "price": 55440,
+    "price": 58240,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -32337,7 +32337,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY16020L1MF",
     "reference": "GCY16020L1MF",
-    "price": 45080,
+    "price": 47320,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -32380,7 +32380,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY18002L1MF",
     "reference": "GCY18002L1MF",
-    "price": 39522,
+    "price": 41496,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -32426,7 +32426,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY24002G2MF",
     "reference": "GCY24002G2MF",
-    "price": 54740,
+    "price": 57540,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -32802,7 +32802,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ32002G9MF",
     "reference": "GCZ32002G9MF",
-    "price": 46060,
+    "price": 48300,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -32899,7 +32899,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ01019L9MF",
     "reference": "GCZ01019L9MF",
-    "price": 35686,
+    "price": 37464,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -32949,7 +32949,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY98010L9MF",
     "reference": "GCY98010L9MF",
-    "price": 43960,
+    "price": 46200,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -33199,7 +33199,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ18006G7MF",
     "reference": "GCZ18006G7MF",
-    "price": 52500,
+    "price": 55160,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -33296,7 +33296,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ46002G9MF",
     "reference": "GCZ46002G9MF",
-    "price": 56280,
+    "price": 59080,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -33343,7 +33343,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ48003L6MF",
     "reference": "GCZ48003L6MF",
-    "price": 45080,
+    "price": 47320,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -33390,7 +33390,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ29008L1MF",
     "reference": "GCZ29008L1MF",
-    "price": 40516,
+    "price": 42560,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -33440,7 +33440,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ49002L1MF",
     "reference": "GCZ49002L1MF",
-    "price": 36428,
+    "price": 38248,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -33626,7 +33626,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ58002L9",
     "reference": "GCZ58002L9",
-    "price": 35728,
+    "price": 37520,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -33676,7 +33676,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ61005G7",
     "reference": "GCZ61005G7",
-    "price": 44940,
+    "price": 47180,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -33770,7 +33770,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ56005G2",
     "reference": "GCZ56005G2",
-    "price": 51800,
+    "price": 54460,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -33817,7 +33817,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ53001L1",
     "reference": "GCZ53001L1",
-    "price": 43120,
+    "price": 45220,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -33868,7 +33868,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ67001G7",
     "reference": "GCZ67001G7",
-    "price": 36372,
+    "price": 38192,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -33915,7 +33915,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ46006G2",
     "reference": "GCZ46006G2",
-    "price": 50680,
+    "price": 53200,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -33962,7 +33962,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ62002L9",
     "reference": "GCZ62002L9",
-    "price": 42420,
+    "price": 44520,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -34009,7 +34009,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ44004L3",
     "reference": "GCZ44004L3",
-    "price": 37366,
+    "price": 39228,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -34056,7 +34056,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ18007G1",
     "reference": "GCZ18007G1",
-    "price": 49700,
+    "price": 52220,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -34106,7 +34106,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ44005L3",
     "reference": "GCZ44005L3",
-    "price": 32704,
+    "price": 34342,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -34156,7 +34156,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ66002G7",
     "reference": "GCZ66002G7",
-    "price": 57540,
+    "price": 60480,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -34208,7 +34208,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ18009G2",
     "reference": "GCZ18009G2",
-    "price": 54600,
+    "price": 57400,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -34257,7 +34257,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY53010G2M",
     "reference": "GCY53010G2M",
-    "price": 42420,
+    "price": 44520,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -34302,7 +34302,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY24022G9M",
     "reference": "GCY24022G9M",
-    "price": 43960,
+    "price": 46200,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -34482,7 +34482,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY70002G2MF",
     "reference": "GCY70002G2MF",
-    "price": 55440,
+    "price": 58240,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -34574,7 +34574,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY65003L2MF",
     "reference": "GCY65003L2MF",
-    "price": 40096,
+    "price": 42140,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -34619,7 +34619,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY16002L1MF",
     "reference": "GCY16002L1MF",
-    "price": 45080,
+    "price": 47320,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -34665,7 +34665,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY24003G2MF",
     "reference": "GCY24003G2MF",
-    "price": 46900,
+    "price": 49280,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -34711,7 +34711,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY16001L1MF",
     "reference": "GCY16001L1MF",
-    "price": 36344,
+    "price": 38164,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -34895,7 +34895,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ40002G9MF",
     "reference": "GCZ40002G9MF",
-    "price": 47180,
+    "price": 49560,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -35045,7 +35045,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ36002L6MF",
     "reference": "GCZ36002L6MF",
-    "price": 40516,
+    "price": 42560,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -35095,7 +35095,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ36001L3MF",
     "reference": "GCZ36001L3MF",
-    "price": 40516,
+    "price": 42560,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -35142,7 +35142,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ43002L1MF",
     "reference": "GCZ43002L1MF",
-    "price": 41062,
+    "price": 43120,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -35340,7 +35340,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ14011G7MF",
     "reference": "GCZ14011G7MF",
-    "price": 54740,
+    "price": 57540,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -35584,7 +35584,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ05007L1MF",
     "reference": "GCZ05007L1MF",
-    "price": 40516,
+    "price": 42560,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -35634,7 +35634,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ29009L9MF",
     "reference": "GCZ29009L9MF",
-    "price": 40516,
+    "price": 42560,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -35681,7 +35681,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ49001L1MF",
     "reference": "GCZ49001L1MF",
-    "price": 40516,
+    "price": 42560,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -35728,7 +35728,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ44002L9MF",
     "reference": "GCZ44002L9MF",
-    "price": 37366,
+    "price": 39228,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -35777,7 +35777,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ44003L1MF",
     "reference": "GCZ44003L1MF",
-    "price": 37352,
+    "price": 39214,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -35923,7 +35923,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ52002L9MF",
     "reference": "GCZ52002L9MF",
-    "price": 41062,
+    "price": 43120,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -35973,7 +35973,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ52001L1MF",
     "reference": "GCZ52001L1MF",
-    "price": 41062,
+    "price": 43120,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -36111,7 +36111,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY32005L1MM",
     "reference": "GCY32005L1MM",
-    "price": 13314,
+    "price": 26628,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -36156,7 +36156,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY32008L9MM",
     "reference": "GCY32008L9MM",
-    "price": 14645,
+    "price": 26628,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -36246,7 +36246,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ57003L9",
     "reference": "GCZ57003L9",
-    "price": 37394,
+    "price": 39270,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -36296,7 +36296,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ53002L6",
     "reference": "GCZ53002L6",
-    "price": 43120,
+    "price": 45220,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -36346,7 +36346,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ55003L9",
     "reference": "GCZ55003L9",
-    "price": 40404,
+    "price": 42420,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -36440,7 +36440,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ58001L1",
     "reference": "GCZ58001L1",
-    "price": 35728,
+    "price": 37520,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -36492,7 +36492,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCZ53003L7",
     "reference": "GCZ53003L7",
-    "price": 38374,
+    "price": 40292,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -36691,7 +36691,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY44009G2M",
     "reference": "GCY44009G2M",
-    "price": 35700,
+    "price": 37492,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -36736,7 +36736,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY79005L9M",
     "reference": "GCY79005L9M",
-    "price": 29036,
+    "price": 30492,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -36781,7 +36781,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY59017L6M",
     "reference": "GCY59017L6M",
-    "price": 13257,
+    "price": 20395,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -36826,7 +36826,7 @@ const PRODUCTS = [
     "brand": "Gc",
     "ref": "GCY44010G7M",
     "reference": "GCY44010G7M",
-    "price": 35700,
+    "price": 37492,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -37261,7 +37261,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0033L9",
     "reference": "GUGW0033L9",
-    "price": 14952,
+    "price": 15694,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -37455,7 +37455,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0546L2",
     "reference": "GUGW0546L2",
-    "price": 20020,
+    "price": 21028,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -37552,7 +37552,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0465L5",
     "reference": "GUGW0465L5",
-    "price": 21084,
+    "price": 22134,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -37599,7 +37599,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0308L5",
     "reference": "GUGW0308L5",
-    "price": 17136,
+    "price": 17990,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -37646,7 +37646,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0033L8",
     "reference": "GUGW0033L8",
-    "price": 17472,
+    "price": 18340,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -37740,7 +37740,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0265G8",
     "reference": "GUGW0265G8",
-    "price": 18004,
+    "price": 18900,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -37791,7 +37791,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0471L2",
     "reference": "GUGW0471L2",
-    "price": 15106,
+    "price": 15862,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -37841,7 +37841,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0471L1",
     "reference": "GUGW0471L1",
-    "price": 14126,
+    "price": 14826,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -37891,7 +37891,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0265G7",
     "reference": "GUGW0265G7",
-    "price": 14112,
+    "price": 14812,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -37988,7 +37988,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0401L3",
     "reference": "GUGW0401L3",
-    "price": 20104,
+    "price": 21112,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -38038,7 +38038,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0401L1",
     "reference": "GUGW0401L1",
-    "price": 15106,
+    "price": 15862,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -38085,7 +38085,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0320L1",
     "reference": "GUGW0320L1",
-    "price": 17472,
+    "price": 18340,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -38135,7 +38135,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0300L2",
     "reference": "GUGW0300L2",
-    "price": 17136,
+    "price": 17990,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -38184,7 +38184,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0308L1",
     "reference": "GUGW0308L1",
-    "price": 14182,
+    "price": 14896,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -38234,7 +38234,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0022L1",
     "reference": "GUGW0022L1",
-    "price": 12600,
+    "price": 13230,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -38333,7 +38333,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0683L2",
     "reference": "GUGW0683L2",
-    "price": 19516,
+    "price": 20496,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -38433,7 +38433,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0707G1",
     "reference": "GUGW0707G1",
-    "price": 15106,
+    "price": 15862,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -38483,7 +38483,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0723L2",
     "reference": "GUGW0723L2",
-    "price": 21098,
+    "price": 22148,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -38530,7 +38530,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0308L6",
     "reference": "GUGW0308L6",
-    "price": 17220,
+    "price": 18088,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -38577,7 +38577,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0757L2",
     "reference": "GUGW0757L2",
-    "price": 20090,
+    "price": 21098,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -38624,7 +38624,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0762L1",
     "reference": "GUGW0762L1",
-    "price": 13090,
+    "price": 13748,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -38671,7 +38671,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0762L4",
     "reference": "GUGW0762L4",
-    "price": 16142,
+    "price": 16954,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -38718,7 +38718,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0798G1",
     "reference": "GUGW0798G1",
-    "price": 20090,
+    "price": 21098,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -38765,7 +38765,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0770L1",
     "reference": "GUGW0770L1",
-    "price": 15106,
+    "price": 15862,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -38812,7 +38812,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0800G2",
     "reference": "GUGW0800G2",
-    "price": 22946,
+    "price": 24094,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -38859,7 +38859,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0770L5",
     "reference": "GUGW0770L5",
-    "price": 17220,
+    "price": 18088,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -38906,7 +38906,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0770L2",
     "reference": "GUGW0770L2",
-    "price": 18004,
+    "price": 18900,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -38956,7 +38956,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0777L2",
     "reference": "GUGW0777L2",
-    "price": 21098,
+    "price": 22148,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -39003,7 +39003,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0746L1",
     "reference": "GUGW0746L1",
-    "price": 15652,
+    "price": 16436,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -39053,7 +39053,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0789G1",
     "reference": "GUGW0789G1",
-    "price": 15652,
+    "price": 16436,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -39103,7 +39103,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0746L2",
     "reference": "GUGW0746L2",
-    "price": 17472,
+    "price": 18340,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -39153,7 +39153,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0842L1",
     "reference": "GUGW0842L1",
-    "price": 12642,
+    "price": 13272,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -39201,7 +39201,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0865L2",
     "reference": "GUGW0865L2",
-    "price": 16534,
+    "price": 17360,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -39248,7 +39248,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0841L2",
     "reference": "GUGW0841L2",
-    "price": 15582,
+    "price": 16366,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -39296,7 +39296,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0842L3",
     "reference": "GUGW0842L3",
-    "price": 15652,
+    "price": 16436,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -39344,7 +39344,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0865L3",
     "reference": "GUGW0865L3",
-    "price": 17206,
+    "price": 18060,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -39391,7 +39391,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0856L1",
     "reference": "GUGW0856L1",
-    "price": 16184,
+    "price": 16996,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -39440,7 +39440,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0914L1",
     "reference": "GUGW0914L1",
-    "price": 13090,
+    "price": 13748,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -39487,7 +39487,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0849G2",
     "reference": "GUGW0849G2",
-    "price": 15050,
+    "price": 15806,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -39629,7 +39629,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0874L2",
     "reference": "GUGW0874L2",
-    "price": 16184,
+    "price": 16996,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -39678,7 +39678,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0874L1",
     "reference": "GUGW0874L1",
-    "price": 13160,
+    "price": 13818,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -39730,7 +39730,7 @@ const PRODUCTS = [
     "brand": "Guess",
     "ref": "GUGW0917G1",
     "reference": "GUGW0917G1",
-    "price": 19446,
+    "price": 20412,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -51327,7 +51327,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25200236",
     "reference": "CK25200236",
-    "price": 24654,
+    "price": 25886,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -51465,7 +51465,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25200235",
     "reference": "CK25200235",
-    "price": 24682,
+    "price": 25914,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -51649,7 +51649,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25200163",
     "reference": "CK25200163",
-    "price": 22218,
+    "price": 23324,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -51876,7 +51876,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25200083",
     "reference": "CK25200083",
-    "price": 20986,
+    "price": 22036,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -52057,7 +52057,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25200032",
     "reference": "CK25200032",
-    "price": 18494,
+    "price": 19418,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -52239,7 +52239,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25200377",
     "reference": "CK25200377",
-    "price": 24654,
+    "price": 25886,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -52331,7 +52331,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25100061",
     "reference": "CK25100061",
-    "price": 19726,
+    "price": 20706,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -52377,7 +52377,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25100062",
     "reference": "CK25100062",
-    "price": 22218,
+    "price": 23324,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -52562,7 +52562,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25100055",
     "reference": "CK25100055",
-    "price": 18494,
+    "price": 19418,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -52700,7 +52700,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25200489",
     "reference": "CK25200489",
-    "price": 23464,
+    "price": 24640,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -52746,7 +52746,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25200484",
     "reference": "CK25200484",
-    "price": 23422,
+    "price": 24598,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -52792,7 +52792,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25100079",
     "reference": "CK25100079",
-    "price": 20916,
+    "price": 21966,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -52838,7 +52838,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25100080",
     "reference": "CK25100080",
-    "price": 20916,
+    "price": 21966,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -52884,7 +52884,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25100072",
     "reference": "CK25100072",
-    "price": 30856,
+    "price": 32396,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Seramik",
@@ -52930,7 +52930,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25100073",
     "reference": "CK25100073",
-    "price": 30856,
+    "price": 32396,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Seramik",
@@ -53022,7 +53022,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25100075",
     "reference": "CK25100075",
-    "price": 30842,
+    "price": 32382,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Seramik",
@@ -53068,7 +53068,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25200497",
     "reference": "CK25200497",
-    "price": 22176,
+    "price": 23282,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -53114,7 +53114,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25100113",
     "reference": "CK25100113",
-    "price": 23422,
+    "price": 24598,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -53160,7 +53160,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25100099",
     "reference": "CK25100099",
-    "price": 19698,
+    "price": 20678,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -53206,7 +53206,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25100108",
     "reference": "CK25100108",
-    "price": 22176,
+    "price": 23282,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -53252,7 +53252,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25200494",
     "reference": "CK25200494",
-    "price": 25900,
+    "price": 27202,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -53298,7 +53298,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25100134",
     "reference": "CK25100134",
-    "price": 22162,
+    "price": 23268,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -53344,7 +53344,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25200520",
     "reference": "CK25200520",
-    "price": 25886,
+    "price": 27174,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -53390,7 +53390,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25100197",
     "reference": "CK25100197",
-    "price": 17220,
+    "price": 18088,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -53436,7 +53436,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25100225",
     "reference": "CK25100225",
-    "price": 20958,
+    "price": 22008,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -53482,7 +53482,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25100226",
     "reference": "CK25100226",
-    "price": 19740,
+    "price": 20734,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -53528,7 +53528,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25100224",
     "reference": "CK25100224",
-    "price": 18480,
+    "price": 19404,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -53574,7 +53574,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25100039",
     "reference": "CK25100039",
-    "price": 12298,
+    "price": 15372,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -53755,7 +53755,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25200237",
     "reference": "CK25200237",
-    "price": 24668,
+    "price": 25900,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -53893,7 +53893,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25200139",
     "reference": "CK25200139",
-    "price": 23464,
+    "price": 24640,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -53939,7 +53939,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25200138",
     "reference": "CK25200138",
-    "price": 20986,
+    "price": 22036,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -54074,7 +54074,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25200062",
     "reference": "CK25200062",
-    "price": 24710,
+    "price": 25942,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -54119,7 +54119,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25200043",
     "reference": "CK25200043",
-    "price": 22218,
+    "price": 23324,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -54164,7 +54164,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25200042",
     "reference": "CK25200042",
-    "price": 22218,
+    "price": 23324,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -54299,7 +54299,7 @@ const PRODUCTS = [
     "brand": "Calvin Klein",
     "ref": "CK25200279",
     "reference": "CK25200279",
-    "price": 20930,
+    "price": 21980,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -57371,7 +57371,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC835",
     "reference": "WWRC835",
-    "price": 16996,
+    "price": 18746,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -57414,7 +57414,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC124",
     "reference": "WWRC124",
-    "price": 16884,
+    "price": 18606,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -57460,7 +57460,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC629",
     "reference": "WWRC629",
-    "price": 16884,
+    "price": 18606,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -57503,7 +57503,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC692",
     "reference": "WWRC692",
-    "price": 17206,
+    "price": 18970,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -57548,7 +57548,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC1037",
     "reference": "WWRC1037",
-    "price": 15974,
+    "price": 17612,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -57591,7 +57591,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRD100S",
     "reference": "WWRD100S",
-    "price": 239400,
+    "price": 264600,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -57635,7 +57635,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC1035",
     "reference": "WWRC1035",
-    "price": 16240,
+    "price": 17906,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -57678,7 +57678,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC1034",
     "reference": "WWRC1034",
-    "price": 15512,
+    "price": 17094,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -57727,7 +57727,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC676",
     "reference": "WWRC676",
-    "price": 14504,
+    "price": 15988,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -57773,7 +57773,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC670",
     "reference": "WWRC670",
-    "price": 17248,
+    "price": 19026,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -57816,7 +57816,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRC669",
     "reference": "WRC669",
-    "price": 14084,
+    "price": 15526,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -57861,7 +57861,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC663",
     "reference": "WWRC663",
-    "price": 17234,
+    "price": 19012,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -57906,7 +57906,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC1025",
     "reference": "WWRC1025",
-    "price": 15666,
+    "price": 17276,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -57949,7 +57949,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC1024",
     "reference": "WWRC1024",
-    "price": 15022,
+    "price": 16562,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -57992,7 +57992,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC1023",
     "reference": "WWRC1023",
-    "price": 16142,
+    "price": 17808,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -58037,7 +58037,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC658",
     "reference": "WWRC658",
-    "price": 15414,
+    "price": 16996,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -58081,7 +58081,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRS645",
     "reference": "WRS645",
-    "price": 13692,
+    "price": 15092,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -58124,7 +58124,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRS614",
     "reference": "WWRS614",
-    "price": 12334,
+    "price": 13594,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -58170,7 +58170,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRS605",
     "reference": "WWRS605",
-    "price": 14784,
+    "price": 16296,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -58214,7 +58214,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRS625",
     "reference": "WRS625",
-    "price": 12852,
+    "price": 14168,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -58261,7 +58261,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC1016",
     "reference": "WWRC1016",
-    "price": 14504,
+    "price": 15988,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -58307,7 +58307,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRC739",
     "reference": "WRC739",
-    "price": 13888,
+    "price": 15316,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -58352,7 +58352,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC736",
     "reference": "WWRC736",
-    "price": 15316,
+    "price": 16884,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -58395,7 +58395,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC419",
     "reference": "WWRC419",
-    "price": 16226,
+    "price": 17892,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -58440,7 +58440,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC715",
     "reference": "WWRC715",
-    "price": 15624,
+    "price": 17234,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -58485,7 +58485,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC713",
     "reference": "WWRC713",
-    "price": 12726,
+    "price": 14028,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -58529,7 +58529,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC1007",
     "reference": "WWRC1007",
-    "price": 15806,
+    "price": 17416,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -58573,7 +58573,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC1001",
     "reference": "WWRC1001",
-    "price": 13692,
+    "price": 15092,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -58617,7 +58617,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC802",
     "reference": "WWRC802",
-    "price": 13692,
+    "price": 15092,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -58660,7 +58660,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC405",
     "reference": "WWRC405",
-    "price": 15862,
+    "price": 17500,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -58704,7 +58704,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC401",
     "reference": "WWRC401",
-    "price": 15680,
+    "price": 17290,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -58749,7 +58749,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC304",
     "reference": "WWRC304",
-    "price": 13132,
+    "price": 14476,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -58793,7 +58793,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC302",
     "reference": "WWRC302",
-    "price": 13132,
+    "price": 14476,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -58836,7 +58836,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC300",
     "reference": "WWRC300",
-    "price": 13132,
+    "price": 14476,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -58879,7 +58879,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRC627",
     "reference": "WRC627",
-    "price": 12586,
+    "price": 13874,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -58922,7 +58922,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRC625",
     "reference": "WRC625",
-    "price": 13314,
+    "price": 14686,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -58965,7 +58965,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRC624",
     "reference": "WRC624",
-    "price": 12754,
+    "price": 14070,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -59010,7 +59010,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRC622",
     "reference": "WRC622",
-    "price": 12852,
+    "price": 14168,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -59054,7 +59054,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRC607",
     "reference": "WRC607",
-    "price": 12950,
+    "price": 14280,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -59098,7 +59098,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRC408",
     "reference": "WRC408",
-    "price": 13328,
+    "price": 14700,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -59141,7 +59141,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRC407",
     "reference": "WRC407",
-    "price": 13538,
+    "price": 14924,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -59282,7 +59282,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRT1003",
     "reference": "WRT1003",
-    "price": 36862,
+    "price": 40642,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -59331,7 +59331,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC126",
     "reference": "WWRC126",
-    "price": 16002,
+    "price": 17640,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -59665,7 +59665,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRD1000-03",
     "reference": "WRD1000-03",
-    "price": 28224,
+    "price": 31122,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -59756,7 +59756,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRC3004",
     "reference": "WRC3004",
-    "price": 13440,
+    "price": 14812,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -59801,7 +59801,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRC2002",
     "reference": "WRC2002",
-    "price": 14070,
+    "price": 15512,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -59846,7 +59846,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRC3000",
     "reference": "WRC3000",
-    "price": 12278,
+    "price": 13538,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -59891,7 +59891,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWMD6002",
     "reference": "WWMD6002",
-    "price": 16828,
+    "price": 18550,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -59939,7 +59939,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WMD7003",
     "reference": "WMD7003",
-    "price": 15442,
+    "price": 17024,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -59987,7 +59987,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WMD7002",
     "reference": "WMD7002",
-    "price": 13510,
+    "price": 14896,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -60035,7 +60035,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRT1015",
     "reference": "WRT1015",
-    "price": 36750,
+    "price": 40516,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -60083,7 +60083,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRT1017",
     "reference": "WRT1017",
-    "price": 36750,
+    "price": 40516,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -60131,7 +60131,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWMD5002",
     "reference": "WWMD5002",
-    "price": 17752,
+    "price": 19572,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -60179,7 +60179,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWMD5001",
     "reference": "WWMD5001",
-    "price": 17752,
+    "price": 19572,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -60227,7 +60227,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWMD4002",
     "reference": "WWMD4002",
-    "price": 17752,
+    "price": 19572,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -60275,7 +60275,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWMD4001",
     "reference": "WWMD4001",
-    "price": 17752,
+    "price": 19572,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -60323,7 +60323,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRT1019",
     "reference": "WRT1019",
-    "price": 36750,
+    "price": 40516,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -60371,7 +60371,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRM5009",
     "reference": "WRM5009",
-    "price": 12572,
+    "price": 13860,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Polikarbonat",
@@ -60417,7 +60417,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRM5007",
     "reference": "WRM5007",
-    "price": 12572,
+    "price": 13860,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Polikarbonat",
@@ -60463,7 +60463,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRE1004",
     "reference": "WWRE1004",
-    "price": 21322,
+    "price": 23506,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -60509,7 +60509,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRE1002",
     "reference": "WWRE1002",
-    "price": 21322,
+    "price": 23506,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -60555,7 +60555,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC699",
     "reference": "WWRC699",
-    "price": 16884,
+    "price": 18606,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -60600,7 +60600,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC654",
     "reference": "WWRC654",
-    "price": 16184,
+    "price": 17850,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -60646,7 +60646,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC653",
     "reference": "WWRC653",
-    "price": 16184,
+    "price": 17850,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -60737,7 +60737,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC682",
     "reference": "WWRC682",
-    "price": 18256,
+    "price": 20118,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -60780,7 +60780,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC677",
     "reference": "WWRC677",
-    "price": 14504,
+    "price": 15988,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -60823,7 +60823,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC672",
     "reference": "WWRC672",
-    "price": 14504,
+    "price": 15988,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -60866,7 +60866,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC668",
     "reference": "WWRC668",
-    "price": 14938,
+    "price": 16464,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -60911,7 +60911,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC665",
     "reference": "WWRC665",
-    "price": 17234,
+    "price": 19012,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -60954,7 +60954,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC1020",
     "reference": "WWRC1020",
-    "price": 15666,
+    "price": 17276,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -60999,7 +60999,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC519",
     "reference": "WWRC519",
-    "price": 16002,
+    "price": 17640,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -61042,7 +61042,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC646",
     "reference": "WWRC646",
-    "price": 17248,
+    "price": 19026,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -61087,7 +61087,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRC645",
     "reference": "WRC645",
-    "price": 14070,
+    "price": 15512,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -61132,7 +61132,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC738",
     "reference": "WWRC738",
-    "price": 16674,
+    "price": 18396,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -61176,7 +61176,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC610",
     "reference": "WWRC610",
-    "price": 15638,
+    "price": 17248,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -61220,7 +61220,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC422",
     "reference": "WWRC422",
-    "price": 15680,
+    "price": 17290,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -61265,7 +61265,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC421",
     "reference": "WWRC421",
-    "price": 15680,
+    "price": 17290,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -61308,7 +61308,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC1009",
     "reference": "WWRC1009",
-    "price": 13692,
+    "price": 15092,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -61352,7 +61352,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC1005",
     "reference": "WWRC1005",
-    "price": 16240,
+    "price": 17906,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -61397,7 +61397,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC1003",
     "reference": "WWRC1003",
-    "price": 13692,
+    "price": 15092,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -61441,7 +61441,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC1002",
     "reference": "WWRC1002",
-    "price": 13692,
+    "price": 15092,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -61484,7 +61484,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRC723",
     "reference": "WRC723",
-    "price": 13034,
+    "price": 14378,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -61528,7 +61528,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC402",
     "reference": "WWRC402",
-    "price": 16002,
+    "price": 17640,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -61574,7 +61574,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC615",
     "reference": "WWRC615",
-    "price": 13146,
+    "price": 14490,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -61617,7 +61617,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC606",
     "reference": "WWRC606",
-    "price": 15470,
+    "price": 17052,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -61660,7 +61660,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC605",
     "reference": "WWRC605",
-    "price": 15974,
+    "price": 17612,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -61706,7 +61706,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC604",
     "reference": "WWRC604",
-    "price": 15358,
+    "price": 16940,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -61751,7 +61751,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC601",
     "reference": "WWRC601",
-    "price": 13146,
+    "price": 14490,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -61794,7 +61794,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC414",
     "reference": "WWRC414",
-    "price": 16072,
+    "price": 17710,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -61839,7 +61839,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC404",
     "reference": "WWRC404",
-    "price": 13692,
+    "price": 15092,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -61883,7 +61883,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC314",
     "reference": "WWRC314",
-    "price": 13132,
+    "price": 14476,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -62214,7 +62214,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRT1014",
     "reference": "WRT1014",
-    "price": 36862,
+    "price": 40642,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -62263,7 +62263,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRC255",
     "reference": "WRC255",
-    "price": 12754,
+    "price": 14070,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -62308,7 +62308,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRC254",
     "reference": "WRC254",
-    "price": 12754,
+    "price": 14070,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -62353,7 +62353,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRC253",
     "reference": "WRC253",
-    "price": 12754,
+    "price": 14070,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -62398,7 +62398,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRC760",
     "reference": "WRC760",
-    "price": 13398,
+    "price": 14770,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -62443,7 +62443,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWMD1015",
     "reference": "WWMD1015",
-    "price": 18130,
+    "price": 19992,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -62491,7 +62491,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRC919",
     "reference": "WRC919",
-    "price": 13818,
+    "price": 15232,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -62536,7 +62536,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRM5001",
     "reference": "WRM5001",
-    "price": 12572,
+    "price": 13860,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Polikarbonat",
@@ -62582,7 +62582,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WMD3001",
     "reference": "WMD3001",
-    "price": 25480,
+    "price": 28098,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -62630,7 +62630,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC551",
     "reference": "WWRC551",
-    "price": 13524,
+    "price": 14910,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -62676,7 +62676,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC553",
     "reference": "WWRC553",
-    "price": 13524,
+    "price": 14910,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -62722,7 +62722,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC554",
     "reference": "WWRC554",
-    "price": 13524,
+    "price": 14910,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -62768,7 +62768,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRC2004",
     "reference": "WRC2004",
-    "price": 14070,
+    "price": 15512,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -62813,7 +62813,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRC3003",
     "reference": "WRC3003",
-    "price": 13440,
+    "price": 14812,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -62858,7 +62858,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRC3001",
     "reference": "WRC3001",
-    "price": 13440,
+    "price": 14812,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -62903,7 +62903,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WMD7000",
     "reference": "WMD7000",
-    "price": 14672,
+    "price": 16170,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -62951,7 +62951,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WMD7001",
     "reference": "WMD7001",
-    "price": 14672,
+    "price": 16170,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -62999,7 +62999,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRT1016",
     "reference": "WRT1016",
-    "price": 36750,
+    "price": 40516,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -63047,7 +63047,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWMD5000",
     "reference": "WWMD5000",
-    "price": 16212,
+    "price": 17878,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -63095,7 +63095,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWMD4000",
     "reference": "WWMD4000",
-    "price": 16212,
+    "price": 17878,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -63143,7 +63143,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWMD4004",
     "reference": "WWMD4004",
-    "price": 17752,
+    "price": 19572,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -63191,7 +63191,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC853",
     "reference": "WWRC853",
-    "price": 17640,
+    "price": 19446,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -63236,7 +63236,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC852",
     "reference": "WWRC852",
-    "price": 17640,
+    "price": 19446,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -63281,7 +63281,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC851",
     "reference": "WWRC851",
-    "price": 17640,
+    "price": 19446,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -63326,7 +63326,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRM5010",
     "reference": "WRM5010",
-    "price": 12572,
+    "price": 13860,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Polikarbonat",
@@ -63372,7 +63372,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRM5008",
     "reference": "WRM5008",
-    "price": 12572,
+    "price": 13860,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Polikarbonat",
@@ -63418,7 +63418,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC850",
     "reference": "WWRC850",
-    "price": 16170,
+    "price": 17836,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -63463,7 +63463,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRE1006",
     "reference": "WWRE1006",
-    "price": 21322,
+    "price": 23506,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -63509,7 +63509,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRE1005",
     "reference": "WWRE1005",
-    "price": 19110,
+    "price": 21070,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -63555,7 +63555,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRE1000",
     "reference": "WWRE1000",
-    "price": 19110,
+    "price": 21070,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -63601,7 +63601,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRC3001D",
     "reference": "WRC3001D",
-    "price": 13440,
+    "price": 14812,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -63646,7 +63646,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC834",
     "reference": "WWRC834",
-    "price": 16450,
+    "price": 18144,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -63689,7 +63689,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC698",
     "reference": "WWRC698",
-    "price": 16184,
+    "price": 17850,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -63735,7 +63735,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC655",
     "reference": "WWRC655",
-    "price": 16184,
+    "price": 17850,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -63782,7 +63782,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC647",
     "reference": "WWRC647",
-    "price": 15470,
+    "price": 17052,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -63830,7 +63830,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC641",
     "reference": "WWRC641",
-    "price": 16450,
+    "price": 18144,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -63873,7 +63873,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC695",
     "reference": "WWRC695",
-    "price": 13146,
+    "price": 14490,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -63916,7 +63916,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC613",
     "reference": "WWRC613",
-    "price": 15470,
+    "price": 17052,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -63960,7 +63960,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRD100G",
     "reference": "WWRD100G",
-    "price": 239400,
+    "price": 264600,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -64004,7 +64004,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC671",
     "reference": "WWRC671",
-    "price": 16002,
+    "price": 17640,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -64047,7 +64047,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC664",
     "reference": "WWRC664",
-    "price": 17234,
+    "price": 19012,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -64093,7 +64093,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC1021",
     "reference": "WWRC1021",
-    "price": 15862,
+    "price": 17500,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -64136,7 +64136,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC656",
     "reference": "WWRC656",
-    "price": 16884,
+    "price": 18606,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -64225,7 +64225,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC511",
     "reference": "WWRC511",
-    "price": 15512,
+    "price": 17094,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -64270,7 +64270,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WRS624",
     "reference": "WRS624",
-    "price": 12474,
+    "price": 13762,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -64313,7 +64313,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRS636",
     "reference": "WWRS636",
-    "price": 14070,
+    "price": 15512,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -64356,7 +64356,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRS419",
     "reference": "WWRS419",
-    "price": 14784,
+    "price": 16296,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -64402,7 +64402,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRS414",
     "reference": "WWRS414",
-    "price": 14784,
+    "price": 16296,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -64448,7 +64448,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC819",
     "reference": "WWRC819",
-    "price": 16884,
+    "price": 18606,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -64493,7 +64493,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC1013",
     "reference": "WWRC1013",
-    "price": 16072,
+    "price": 17710,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -64536,7 +64536,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC643",
     "reference": "WWRC643",
-    "price": 15624,
+    "price": 17234,
     "category": "saat",
     "subCategory": "Kadın Saat",
     "metal": "Çelik",
@@ -64580,7 +64580,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC1011",
     "reference": "WWRC1011",
-    "price": 16408,
+    "price": 18102,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -64624,7 +64624,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC1006",
     "reference": "WWRC1006",
-    "price": 15974,
+    "price": 17612,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -64669,7 +64669,7 @@ const PRODUCTS = [
     "brand": "Welder",
     "ref": "WWRC1004",
     "reference": "WWRC1004",
-    "price": 16184,
+    "price": 17850,
     "category": "saat",
     "subCategory": "Erkek Saat",
     "metal": "Çelik",
@@ -66510,7 +66510,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 11179,
+    "price": 12173,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66547,7 +66547,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 11381,
+    "price": 12387,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66584,7 +66584,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 11509,
+    "price": 12659,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66621,7 +66621,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 22322,
+    "price": 24043,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66658,7 +66658,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 22753,
+    "price": 24497,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66695,7 +66695,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 22753,
+    "price": 24847,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66732,7 +66732,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 22753,
+    "price": 24847,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66769,7 +66769,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 22753,
+    "price": 24847,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66806,7 +66806,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 22753,
+    "price": 24847,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66843,7 +66843,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 23019,
+    "price": 25068,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66880,7 +66880,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 44714,
+    "price": 47628,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66917,7 +66917,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 45340,
+    "price": 48298,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66953,7 +66953,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 45340,
+    "price": 49230,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66990,7 +66990,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 45340,
+    "price": 49230,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67027,7 +67027,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 44714,
+    "price": 49249,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67064,7 +67064,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 46107,
+    "price": 49838,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67101,7 +67101,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 45340,
+    "price": 50721,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67138,7 +67138,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 45340,
+    "price": 50721,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67175,7 +67175,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 111785,
+    "price": 119742,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67212,7 +67212,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 113350,
+    "price": 120977,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67249,7 +67249,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 115093,
+    "price": 123549,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67286,7 +67286,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 136020,
+    "price": 147182,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67323,7 +67323,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 223570,
+    "price": 239234,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67359,7 +67359,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 226700,
+    "price": 241704,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67396,7 +67396,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 226700,
+    "price": 245135,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67433,7 +67433,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 230185,
+    "price": 246848,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67470,7 +67470,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 230535,
+    "price": 248453,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67507,7 +67507,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 25150,
+    "price": 26627,
     "metal": "14 Ayar Altın (585/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67544,7 +67544,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 25150,
+    "price": 26627,
     "metal": "14 Ayar Altın (585/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67581,7 +67581,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 25150,
+    "price": 26627,
     "metal": "14 Ayar Altın (585/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67618,7 +67618,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 32620,
+    "price": 35585,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67655,7 +67655,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 35210,
+    "price": 37667,
     "metal": "14 Ayar Altın (585/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67692,7 +67692,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 45668,
+    "price": 48755,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67729,7 +67729,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 50300,
+    "price": 51950,
     "metal": "14 Ayar Altın (585/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67766,7 +67766,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 50300,
+    "price": 51950,
     "metal": "14 Ayar Altın (585/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67803,7 +67803,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 50300,
+    "price": 51950,
     "metal": "14 Ayar Altın (585/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67840,7 +67840,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 50300,
+    "price": 53463,
     "metal": "14 Ayar Altın (585/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67877,7 +67877,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 65240,
+    "price": 69257,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67914,7 +67914,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 65240,
+    "price": 69269,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67951,7 +67951,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 65240,
+    "price": 69269,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67988,7 +67988,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 65240,
+    "price": 69269,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -68025,7 +68025,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 65240,
+    "price": 69493,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -68062,7 +68062,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 130480,
+    "price": 137565,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -68135,7 +68135,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 130480,
+    "price": 137889,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -89785,4 +89785,12 @@ if (typeof module !== 'undefined' && module.exports) {
     JEWELRY_BRANDS,
     PRE_OWNED_ITEMS
   };
+}
+
+if (typeof window !== 'undefined') {
+  window.PRODUCTS = PRODUCTS;
+  window.ELITE_WATCH_BRANDS = ELITE_WATCH_BRANDS;
+  window.WATCH_BRANDS = WATCH_BRANDS;
+  window.JEWELRY_BRANDS = JEWELRY_BRANDS;
+  window.PRE_OWNED_ITEMS = PRE_OWNED_ITEMS;
 }

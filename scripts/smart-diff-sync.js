@@ -64,6 +64,41 @@ function fetchUrl(url) {
   });
 }
 
+function fetchLiveUsdRate() {
+  return new Promise((resolve) => {
+    const options = {
+      hostname: 'kur.doviz.com',
+      path: '/serbest-piyasa/amerikan-dolari',
+      method: 'GET',
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
+      },
+      timeout: 8000
+    };
+    const req = https.request(options, (res) => {
+      let data = '';
+      res.on('data', chunk => data += chunk);
+      res.on('end', () => {
+        try {
+          const match = data.match(/data-socket-key="USD"[^>]*data-socket-attr="s"[^>]*>([0-9.,]+)</) ||
+                        data.match(/"selling":([0-9.]+)/) ||
+                        data.match(/class="text-xl font-bold[^>]*>([0-9.,]+)</);
+          if (match) {
+            const parsed = parseFloat(match[1].replace(',', '.'));
+            if (parsed > 30 && parsed < 100) {
+              return resolve(parsed);
+            }
+          }
+        } catch (e) {}
+        resolve(48.4422);
+      });
+    });
+    req.on('error', () => resolve(48.4422));
+    req.on('timeout', () => { req.destroy(); resolve(48.4422); });
+    req.end();
+  });
+}
+
 function parseAgaKulchePage(html) {
   const products = [];
   const itemMatches = [...html.matchAll(/<h3[^>]*class=["']product-title["'][^>]*>([\s\S]*?)<\/h3>[\s\S]*?<strong[^>]*class=["']last-price["'][^>]*>([\d\.,]+)\s*TL[\s\S]*?(?:<\/div>|<button)/gi)];
@@ -238,6 +273,32 @@ async function runSmartDiffSync() {
     } catch (e) {}
   }
   console.log(`  ✓ ${scrapedWatchesCount} canlı saat ürünü 9 markada tarandı.`);
+
+  // ==========================================================
+  // 3. ELİT KATEGORİ LÜKS SAAT SENKRONİZASYONU (+%80 MARJ — 10 MARKA / 200 SAAT)
+  // ==========================================================
+  console.log('\n[SMART-DIFF] 👑 3. Elit Kategori Lüks Saat Canlı Kuru ve Fiyatları Taranıyor (+%80 Marj)...');
+  try {
+    const usdRate = await fetchLiveUsdRate();
+    const ELITE_MARKUP = 1.80; // +%80 Kâr Marjı
+    let eliteChecked = 0;
+    for (const p of PRODUCTS) {
+      if (p.isElite || p.category === 'elit-saatler') {
+        eliteChecked++;
+        const baseUsd = Number(p.usdRefPrice) || 10000;
+        const targetPrice = Math.round(baseUsd * usdRate * ELITE_MARKUP);
+        const snap = initialSnapshot.get(p.id);
+        if (snap && snap.price !== targetPrice) {
+          deltas.push(`👑 [ELİT SAAT FİYAT DEĞİŞİMİ] ${p.brand} ${p.name}: ${snap.price.toLocaleString('tr-TR')} TL ➔ ${targetPrice.toLocaleString('tr-TR')} TL (USD ${usdRate} TL, +%80 marj)`);
+          p.price = targetPrice;
+          p.usdSellingRate = usdRate;
+        }
+      }
+    }
+    console.log(`  ✓ ${eliteChecked} adet Elit Saat modeli (10 marka) canlı kurla (${usdRate} TL) tarandı.`);
+  } catch (e) {
+    console.warn('  ⚠️ [SMART-DIFF] Elit Saat kur güncellemesi atlandı:', e.message);
+  }
 
   // ==========================================================
   // 4. SMART DIFFING KARAR KAPISI

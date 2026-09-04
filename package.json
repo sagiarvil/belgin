@@ -24,7 +24,7 @@
     "deploy:functions": "node scripts/safe-deploy.js functions",
     "sync:saatvesaat": "node scripts/sync-saatvesaat.js",
     "sync:carren": "node scripts/sync-carren.js",
-    "sync:rolex": "node scripts/sync-seckin-rolex.js",
+    "sync:elite": "node scripts/sync-elite-watch-prices.js",
     "sync:gold": "node scripts/sync-prices-and-stock.js",
     "sync:all": "node scripts/smart-diff-sync.js",
     "sync:magazine": ".venv/bin/python3 scripts/daily-chrono24-magazine-sync.py",
