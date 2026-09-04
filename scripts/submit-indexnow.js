@@ -30,7 +30,7 @@ const CORE_URLS = [
   `https://${HOST}/sitemap-magazine.xml`
 ];
 
-// Add 50 magazine articles
+// Add all magazine articles
 try {
   const mag = require('../js/magazine_data.js');
   if (mag && mag.MAGAZINE_ARTICLES) {

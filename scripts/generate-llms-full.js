@@ -20,7 +20,7 @@ let fullText = `# Belgin Saat & Kuyumculuk — Kapsamlı Editoryal & Ürün Bilg
 
 ---
 
-## 2. Belgin Saat Magazin — 50 Editoryal Makale Arşivi
+## 2. Belgin Saat Magazin — ${articles.length} Editoryal Makale Arşivi
 
 `;
 

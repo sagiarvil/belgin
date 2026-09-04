@@ -414,7 +414,7 @@ def main():
 
     new_articles = []
     if new_urls:
-        target_urls = new_urls[:15]
+        target_urls = new_urls[:25]
         with ThreadPoolExecutor(max_workers=4) as executor:
             future_to_url = {executor.submit(scrape_single_article, u): u for u in target_urls}
             for future in as_completed(future_to_url):
@@ -426,11 +426,13 @@ def main():
 
     if new_articles:
         print(f"✅ {len(new_articles)} yeni makale başarıyla çekildi ve Türkçeleştirildi.")
-        # Yeni makaleleri en başa al
         all_articles = new_articles + existing_articles
     else:
         print("Yeni içerik bulunamadı; mevcut içerikler sanitize ediliyor.")
         all_articles = existing_articles
+
+    # En yeni makaleler en başta (descending) olacak şekilde sırala
+    all_articles.sort(key=lambda a: (a.get("raw_date", "") or "", a.get("id", "") or ""), reverse=True)
 
     # js/magazine_data.js dosyasını kaydet
     js_content = f"""// ==========================================================
