@@ -2292,11 +2292,21 @@
           </div>
         </div>
 
-        <!-- POS KOMİSYON ORANI AYARI (VARSAYILAN: 3.74) -->
-        <div class="pos-rate-box" style="display:flex; align-items:center; gap:8px; background:#FEF3C7; border:2px solid #F59E0B; padding:6px 12px; border-radius:10px; min-height:46px;">
-          <label for="posBankCommissionRate" style="font-size:12px; font-weight:800; color:#92400E; white-space:nowrap; margin:0;">🏦 POS Oranı (%):</label>
-          <input type="number" id="posBankCommissionRate" value="3.74" step="0.01" min="0" max="100" style="width:68px; padding:4px 6px; font-weight:800; font-size:14px; color:#92400E; border:1.5px solid #D97706; border-radius:6px; background:#FFF; text-align:center;" oninput="AdminApp.onPosCommissionRateChange(this.value)">
-          <button type="button" class="btn-admin-secondary" style="background:#FFF; border:1.5px solid #D97706; color:#92400E; font-size:11px; font-weight:800; padding:4px 8px; border-radius:6px; cursor:pointer;" onclick="AdminApp.openPosRatesModal()" title="Zaman içinde değişen dönemsel POS oranlarını yönet">
+        <!-- POS KOMİSYON ORANLARI: KUVEYT TÜRK (%2.99) & TOSLA (%3.79) -->
+        <div class="pos-rate-box" style="display:flex; align-items:center; gap:8px; background:#FEF3C7; border:2px solid #F59E0B; padding:6px 10px; border-radius:10px; min-height:46px; flex-wrap:wrap;">
+          <div style="display:flex; align-items:center; gap:4px;">
+            <span style="font-size:11px; font-weight:800; background:#E0F2FE; color:#0284C7; border:1px solid #BAE6FD; padding:2px 6px; border-radius:5px; white-space:nowrap;">🏛️ Kuveyt Türk</span>
+            <label for="posBankCommissionRate" style="font-size:11.5px; font-weight:800; color:#0284C7; margin:0;">%</label>
+            <input type="number" id="posBankCommissionRate" value="2.99" step="0.01" min="0" max="100" style="width:58px; padding:3px 4px; font-weight:800; font-size:13px; color:#0284C7; border:1.5px solid #0284C7; border-radius:6px; background:#FFF; text-align:center;" oninput="AdminApp.onPosCommissionRateChange(this.value, 'kuveyt')" title="Kuveyt Türk POS Cihazı Komisyon Oranı (%2.99)">
+          </div>
+
+          <div style="display:flex; align-items:center; gap:4px;">
+            <span style="font-size:11px; font-weight:800; background:#FEE2E2; color:#DC2626; border:1px solid #FECACA; padding:2px 6px; border-radius:5px; white-space:nowrap;">🔴 Tosla</span>
+            <label for="posRateTosla" style="font-size:11.5px; font-weight:800; color:#DC2626; margin:0;">%</label>
+            <input type="number" id="posRateTosla" value="3.79" step="0.01" min="0" max="100" style="width:58px; padding:3px 4px; font-weight:800; font-size:13px; color:#DC2626; border:1.5px solid #DC2626; border-radius:6px; background:#FFF; text-align:center;" oninput="AdminApp.onPosCommissionRateChange(this.value, 'tosla')" title="Tosla POS Komisyon Oranı (%3.79)">
+          </div>
+
+          <button type="button" class="btn-admin-secondary" style="background:#FFF; border:1.5px solid #D97706; color:#92400E; font-size:11px; font-weight:800; padding:4px 8px; border-radius:6px; cursor:pointer; white-space:nowrap;" onclick="AdminApp.openPosRatesModal()" title="Zaman içinde değişen dönemsel POS oranlarını yönet">
             📅 Oranlar (<span id="posRatePeriodsCountBadge">0</span>)
           </button>
         </div>
@@ -2379,7 +2389,7 @@
               <th style="width:125px; text-align:center;">Tarih & Saat</th>
               <th style="text-align:left;">İşlem & Açıklama</th>
               <th style="width:115px; text-align:right;">POS (₺)</th>
-              <th style="width:110px; text-align:center; color:#92400E;">POS Oranı (%)</th>
+              <th style="width:115px; text-align:center; color:#92400E;">POS Oranı (%)<br><span style="font-size:9.5px; font-weight:700; opacity:0.9;">(Kuv %2.99 / Tosla %3.79)</span></th>
               <th style="width:130px; text-align:right; color:#0369A1;">Hakediş (₺)<br><span style="font-size:10px; font-weight:700; opacity:0.9;">(POS - %8 Kesinti)</span></th>
               <th style="width:110px; text-align:right; color:#15803D;">Ödenen (₺)</th>
               <th style="width:130px; text-align:right; color:#991B1B;">Kalan Bakiye (₺)<br><span style="font-size:10px; font-weight:700; opacity:0.9;">(Güncel Tutar)</span></th>
@@ -4201,8 +4211,8 @@
         <label style="display:block; font-size:11.5px; font-weight:800; color:#92400E; margin-bottom:4px; text-transform:uppercase;">
           🏦 POS Komisyon Oranı (%):
         </label>
-        <input type="number" id="manualPosRateInput" step="0.01" min="0" max="100" placeholder="Örn: 3.74 (Boşsa varsayılan uygulanır)" style="width:100%; border:1.5px solid #FCD34D; background:#FFFDF7; padding:9px 12px; border-radius:6px; font-size:14px; font-weight:800; color:#92400E;">
-        <div style="font-size:11px; color:#B45309; margin-top:3px;">* Bankaya göre özel komisyon oranını manuel belirleyebilirsiniz.</div>
+        <input type="number" id="manualPosRateInput" step="0.01" min="0" max="100" placeholder="Kuveyt Türk: 2.99 | Tosla: 3.79 (Boşsa varsayılan uygulanır)" style="width:100%; border:1.5px solid #FCD34D; background:#FFFDF7; padding:9px 12px; border-radius:6px; font-size:13.5px; font-weight:800; color:#92400E;">
+        <div style="font-size:11px; color:#B45309; margin-top:3px;">* Kuveyt Türk işlemleri için %2.99, Tosla işlemleri için %3.79 otomatik uygulanır.</div>
       </div>
 
       <div style="margin-bottom:16px;">
@@ -4242,7 +4252,7 @@
 
     <div style="padding:20px; max-height:80vh; overflow-y:auto;">
       <p style="font-size:12.5px; color:#475569; margin:0 0 16px 0; line-height:1.5;">
-        Banka POS komisyon oranları zaman içinde değiştiğinde (örneğin belirli bir tarihe kadar %3.74, sonrasında %4.10 olduğunda) aşağıdaki tablodan tarih aralıkları tanımlayabilirsiniz. Sistem her satışın gerçekleştiği tarihteki oranı otomatik uygulayarak kârı kuruşu kuruşuna doğru hesaplar.
+        Banka POS komisyon oranları zaman içinde değiştiğinde (örneğin Kuveyt Türk için %2.99, Tosla için %3.79 yerine belirli bir tarih aralığında farklı bir oran uygulandığında) aşağıdaki tablodan tarih aralıkları tanımlayabilirsiniz. Sistem her satışın gerçekleştiği tarihteki oranı otomatik uygulayarak kârı kuruşu kuruşuna doğru hesaplar.
       </p>
 
       <!-- Yeni Oran Kuralı Ekleme Formu -->
@@ -4259,7 +4269,7 @@
           </div>
           <div>
             <label style="font-size:11px; font-weight:700; color:#78350F; display:block; margin-bottom:2px;">Oran (%):</label>
-            <input type="number" id="ratePeriodValue" step="0.01" min="0" max="100" placeholder="3.74" style="width:100%; padding:6px 8px; border:1px solid #CBD5E1; border-radius:5px; font-size:12px; font-weight:800; text-align:center;">
+            <input type="number" id="ratePeriodValue" step="0.01" min="0" max="100" placeholder="2.99" style="width:100%; padding:6px 8px; border:1px solid #CBD5E1; border-radius:5px; font-size:12px; font-weight:800; text-align:center;">
           </div>
           <div>
             <button type="button" class="btn-admin-primary" style="background:#B45309; border-color:#92400E; padding:7px 14px; font-size:12px; font-weight:800; color:#FFF; cursor:pointer;" onclick="AdminApp.addPosRatePeriod()">
@@ -4281,7 +4291,7 @@
           </tr>
         </thead>
         <tbody id="posRatePeriodsTableBody">
-          <tr><td colspan="4" style="text-align:center; padding:16px; color:#64748B;">Henüz özel tarih aralığı eklenmedi. Tüm tarihler için üstteki genel oran (%3.74) uygulanır.</td></tr>
+          <tr><td colspan="4" style="text-align:center; padding:16px; color:#64748B;">Henüz özel tarih aralığı eklenmedi. Kuveyt Türk için %2.99, Tosla için %3.79 varsayılan oranlar uygulanır.</td></tr>
         </tbody>
       </table>
     </div>

@@ -48,7 +48,9 @@ const AdminApp = {
   statementSummary: { totalPos: 0, totalHakedis: 0, totalPaid: 0, totalRemaining: 0 },
   allPayments: [],
   currentStmtPreset: 'all',
-  posBankCommissionRate: 3.74,
+  posBankCommissionRate: 2.99,
+  posRateKuveytTurk: 2.99,
+  posRateTosla: 3.79,
   posRatePeriods: [],
   isStatementInitialLoadDone: false,
 
@@ -78,12 +80,28 @@ const AdminApp = {
 
   init() {
     this.startClock();
-    const savedRate = localStorage.getItem('belgin_pos_bank_rate');
-    if (savedRate !== null && !isNaN(parseFloat(savedRate))) {
-      this.posBankCommissionRate = parseFloat(savedRate);
+    // Kuveyt Türk POS oranı (Varsayılan: 2.99)
+    const savedKuveyt = localStorage.getItem('belgin_pos_rate_kuveyt') || localStorage.getItem('belgin_pos_bank_rate');
+    if (savedKuveyt !== null && !isNaN(parseFloat(savedKuveyt))) {
+      const parsed = parseFloat(savedKuveyt);
+      this.posRateKuveytTurk = (parsed === 3.74) ? 2.99 : parsed;
+      this.posBankCommissionRate = this.posRateKuveytTurk;
+    } else {
+      this.posRateKuveytTurk = 2.99;
+      this.posBankCommissionRate = 2.99;
     }
     const rateInput = document.getElementById('posBankCommissionRate');
-    if (rateInput) rateInput.value = this.posBankCommissionRate;
+    if (rateInput) rateInput.value = this.posRateKuveytTurk;
+
+    // Tosla POS oranı (Varsayılan: 3.79)
+    const savedTosla = localStorage.getItem('belgin_pos_rate_tosla');
+    if (savedTosla !== null && !isNaN(parseFloat(savedTosla))) {
+      this.posRateTosla = parseFloat(savedTosla);
+    } else {
+      this.posRateTosla = 3.79;
+    }
+    const toslaInput = document.getElementById('posRateTosla');
+    if (toslaInput) toslaInput.value = this.posRateTosla;
 
     try {
       const savedPeriods = localStorage.getItem('belgin_pos_rate_periods');
@@ -1594,7 +1612,7 @@ const AdminApp = {
           <strong style="color:#92400E; font-size:12.5px;">🏦 Banka POS Oranı:</strong>
           <div style="display:flex; align-items:center; gap:3px;">
             <span style="font-weight:800; color:#B45309;">%</span>
-            <input type="number" id="detailOrderPosRateInput" step="0.01" min="0" max="100" value="${(order.posRate !== undefined && order.posRate !== null) ? order.posRate : ''}" placeholder="${(this.getRateForDate((order.createdAt || '').slice(0, 10))).toFixed(2)}" style="width:64px; padding:3px 6px; border:1.5px solid #D97706; border-radius:6px; font-weight:800; font-size:13px; color:#92400E; text-align:center; background:#FFF;">
+            <input type="number" id="detailOrderPosRateInput" step="0.01" min="0" max="100" value="${(order.posRate !== undefined && order.posRate !== null) ? order.posRate : ''}" placeholder="${(this.getRateForDate((order.createdAt || '').slice(0, 10), order.provider, order.description || order.orderId)).toFixed(2)}" style="width:64px; padding:3px 6px; border:1.5px solid #D97706; border-radius:6px; font-weight:800; font-size:13px; color:#92400E; text-align:center; background:#FFF;">
           </div>
           <button type="button" class="btn-admin-secondary" style="background:#FFF; border:1.5px solid #D97706; color:#92400E; padding:4px 10px; font-size:11.5px; font-weight:800; cursor:pointer;" onclick="AdminApp.saveDetailOrderPosRate('${order.orderId}')">
             💾 Kaydet
@@ -3585,18 +3603,40 @@ const AdminApp = {
   },
 
   // 2.1. POS BANKA KOMİSYON ORANI DEĞİŞTİRME & DÖNEMSEL ORANLAR
-  onPosCommissionRateChange(newRate) {
+  onPosCommissionRateChange(newRate, bankType = 'kuveyt') {
     const num = parseFloat(String(newRate || '').replace(',', '.'));
-    this.posBankCommissionRate = isNaN(num) ? 0 : num;
-    try {
-      localStorage.setItem('belgin_pos_bank_rate', this.posBankCommissionRate);
-    } catch (_) {}
+    const clean = isNaN(num) ? 0 : num;
+    if (bankType === 'tosla') {
+      this.posRateTosla = clean;
+      try {
+        localStorage.setItem('belgin_pos_rate_tosla', this.posRateTosla);
+      } catch (_) {}
+    } else {
+      this.posRateKuveytTurk = clean;
+      this.posBankCommissionRate = clean;
+      try {
+        localStorage.setItem('belgin_pos_rate_kuveyt', this.posRateKuveytTurk);
+        localStorage.setItem('belgin_pos_bank_rate', this.posBankCommissionRate);
+      } catch (_) {}
+    }
 
     this.updateStatementMetrics();
     this.renderStatementTable(this.filteredStatementRows);
   },
 
-  getRateForDate(dateStr) {
+  getDefaultRateForProvider(provider, description = '') {
+    const p = String(provider || '').toUpperCase();
+    const d = String(description || '').toUpperCase();
+    if (p.includes('TOSLA') || d.includes('TOSLA')) {
+      return Number(this.posRateTosla || 3.79);
+    }
+    if (p.includes('KUVEYT') || d.includes('KUVEYT')) {
+      return Number(this.posRateKuveytTurk || 2.99);
+    }
+    return Number(this.posRateKuveytTurk || 2.99);
+  },
+
+  getRateForDate(dateStr, provider = 'KUVEYTTURK', description = '') {
     if (Array.isArray(this.posRatePeriods) && this.posRatePeriods.length > 0) {
       for (const p of this.posRatePeriods) {
         const afterStart = !p.startDate || dateStr >= p.startDate;
@@ -3606,12 +3646,13 @@ const AdminApp = {
         }
       }
     }
-    return this.posBankCommissionRate;
+    return this.getDefaultRateForProvider(provider, description);
   },
 
   // İŞLEMİN DAHİL OLDUĞU DÖNEM ARALIĞINI DÖNDÜRÜR
   getRowPeriodInfo(r) {
-    if (!r || !r.date) return { text: '—', isCustom: false, rate: this.posBankCommissionRate };
+    const defaultRate = this.getDefaultRateForProvider(r?.provider, r?.description);
+    if (!r || !r.date) return { text: '—', isCustom: false, rate: defaultRate };
     const dateStr = String(r.date);
 
     // 1. Tanımlı Özel POS Oran Dönemi Kontrolü
@@ -3642,7 +3683,7 @@ const AdminApp = {
         return {
           text: `01.${mm}.${y} — ${lastDay}.${mm}.${y}`,
           isCustom: false,
-          rate: this.posBankCommissionRate
+          rate: defaultRate
         };
       }
     } catch (_) {}
@@ -3650,7 +3691,7 @@ const AdminApp = {
     return {
       text: this.formatDateTr(dateStr),
       isCustom: false,
-      rate: this.posBankCommissionRate
+      rate: defaultRate
     };
   },
 
@@ -3680,7 +3721,7 @@ const AdminApp = {
     if (!tbody) return;
 
     if (!this.posRatePeriods || this.posRatePeriods.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:16px; color:#64748B;">Henüz özel tarih aralığı eklenmedi. Tüm tarihler için üstteki genel oran (%${this.posBankCommissionRate}) uygulanır.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:16px; color:#64748B;">Henüz özel tarih aralığı eklenmedi. Kuveyt Türk için %${(this.posRateKuveytTurk || 2.99).toFixed(2)}, Tosla için %${(this.posRateTosla || 3.79).toFixed(2)} varsayılan oranlar uygulanır.</td></tr>`;
       return;
     }
 
@@ -3818,7 +3859,7 @@ const AdminApp = {
     const profitSub = document.getElementById('stmtKpiProfitSubtext');
     if (profitSub) {
       const hasPeriods = (this.posRatePeriods || []).length > 0;
-      profitSub.innerHTML = `📅 Dönem: <strong>${periodStr}</strong> <span style="font-size:10.5px; opacity:0.85;">(${hasPeriods ? `${this.posRatePeriods.length} Kural` : `Banka %${this.posBankCommissionRate}`})</span>`;
+      profitSub.innerHTML = `📅 Dönem: <strong>${periodStr}</strong> <span style="font-size:10.5px; opacity:0.85;">(${hasPeriods ? `${this.posRatePeriods.length} Kural` : `Kuv %${(this.posRateKuveytTurk || 2.99).toFixed(2)} | Tosla %${(this.posRateTosla || 3.79).toFixed(2)}`})</span>`;
     }
 
     const payCountBadge = document.getElementById('stmtTotalPaymentsBadge');
@@ -3837,7 +3878,7 @@ const AdminApp = {
       return { profit: 0, profitRate: '0.00', effectiveRate: 0, hasCustomRate: false };
     }
     const hasCustomRate = (r.posRate !== undefined && r.posRate !== null && !isNaN(Number(r.posRate)) && Number(r.posRate) >= 0);
-    const effectiveRate = hasCustomRate ? Number(r.posRate) : this.getRateForDate(r.date);
+    const effectiveRate = hasCustomRate ? Number(r.posRate) : this.getRateForDate(r.date, r.provider, r.description);
     const bankFee = r.pos * (effectiveRate / 100);
     const hakedis = Number(r.hakedis || 0);
     const profit = Math.round(((r.pos - hakedis) - bankFee) * 100) / 100;
@@ -4040,7 +4081,7 @@ const AdminApp = {
                    id="stmtInlinePosRate_${r.id}"
                    value="${hasCustomRate ? Number(r.posRate) : ''}" 
                    placeholder="${effectiveRate.toFixed(2)}" 
-                   title="Banka POS Komisyon Oranı (%): 3.74 veya 3,74 olarak girebilirsiniz."
+                   title="Banka POS Komisyon Oranı (%): Kuveyt Türk %${(this.posRateKuveytTurk || 2.99).toFixed(2)}, Tosla %${(this.posRateTosla || 3.79).toFixed(2)}. Noktalı veya virgüllü girebilirsiniz."
                    style="width:52px; border:none; background:transparent; font-size:12.5px; font-weight:800; color:${hasCustomRate ? '#92400E' : '#334155'}; text-align:center; outline:none; padding:1px 0;" 
                    oninput="AdminApp.onInlinePosRateInput('${this.escapeHtml(r.id)}', this.value)" 
                    onchange="AdminApp.saveInlinePosRate('${this.escapeHtml(r.id)}', '${r.type}', this.value, '${this.escapeHtml(r.orderId || '')}', '${this.escapeHtml(r.entryId || '')}')">
@@ -4056,7 +4097,7 @@ const AdminApp = {
                      inputmode="decimal"
                      value="${hasCustomRate ? Number(r.posRate) : ''}" 
                      placeholder="${effectiveRate.toFixed(2)}" 
-                     title="3.74 veya 3,74 olarak girebilirsiniz."
+                     title="Kuveyt Türk %${(this.posRateKuveytTurk || 2.99).toFixed(2)}, Tosla %${(this.posRateTosla || 3.79).toFixed(2)}"
                      style="width:62px; height:32px; border:1.5px solid #D97706; border-radius:6px; font-size:13px; font-weight:800; color:#92400E; text-align:center; background:#FFF;" 
                      oninput="AdminApp.onInlinePosRateInput('${this.escapeHtml(r.id)}', this.value)" 
                      onchange="AdminApp.saveInlinePosRate('${this.escapeHtml(r.id)}', '${r.type}', this.value, '${this.escapeHtml(r.orderId || '')}', '${this.escapeHtml(r.entryId || '')}')">
