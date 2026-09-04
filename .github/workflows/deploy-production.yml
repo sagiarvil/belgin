@@ -69,6 +69,15 @@ jobs:
           console.log('FIREBASE_CONTRACT=PASS index.html->/ 301');
           NODE
 
+      - name: Resolve Belgin Firebase function deploy scope
+        shell: bash
+        run: |
+          set -euo pipefail
+          scope="$(node scripts/firebase-function-scope.mjs)"
+          test -n "$scope"
+          echo "FIREBASE_FUNCTION_SCOPE=$scope" >> "$GITHUB_ENV"
+          echo "BELGIN_FUNCTION_SCOPE=PASS count=$(printf '%s' "$scope" | tr ',' '\n' | wc -l)"
+
       - name: Require deployment credential
         shell: bash
         env:
@@ -98,7 +107,7 @@ jobs:
 
       - name: Deploy Cloud Functions with service account
         if: env.FIREBASE_SERVICE_ACCOUNT != ''
-        run: npx -y firebase-tools@latest deploy --project "$FIREBASE_PROJECT_ID" --only functions --non-interactive
+        run: npx -y firebase-tools@latest deploy --project "$FIREBASE_PROJECT_ID" --only "$FIREBASE_FUNCTION_SCOPE" --non-interactive
 
       - name: Deploy Hosting with service account
         if: env.FIREBASE_SERVICE_ACCOUNT != ''
@@ -106,7 +115,7 @@ jobs:
 
       - name: Deploy Cloud Functions with legacy token
         if: env.FIREBASE_SERVICE_ACCOUNT == '' && env.FIREBASE_TOKEN != ''
-        run: npx -y firebase-tools@latest deploy --project "$FIREBASE_PROJECT_ID" --only functions --non-interactive --token "$FIREBASE_TOKEN"
+        run: npx -y firebase-tools@latest deploy --project "$FIREBASE_PROJECT_ID" --only "$FIREBASE_FUNCTION_SCOPE" --non-interactive --token "$FIREBASE_TOKEN"
 
       - name: Deploy Hosting with legacy token
         if: env.FIREBASE_SERVICE_ACCOUNT == '' && env.FIREBASE_TOKEN != ''
