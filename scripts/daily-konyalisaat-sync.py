@@ -10,7 +10,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from curl_cffi import requests
 from bs4 import BeautifulSoup
 
-ROOT = "/Users/macair1/projects/belgin"
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_JS = os.path.join(ROOT, "js", "data.js")
 PAYTR_JSON = os.path.join(ROOT, "paytr_products.json")
 
@@ -110,25 +110,29 @@ def main():
     with open(DATA_JS, "r", encoding="utf8") as f:
         content = f.read()
 
-    match = re.search(r"const PRODUCTS = (\[.*?\]);\s*\nconst WATCHES", content, re.DOTALL)
+    match = re.search(r"const PRODUCTS = (\[[\s\S]*?\]);", content)
     if not match:
         print("Error: Could not locate PRODUCTS array in data.js")
         return
 
     products = json.loads(match.group(1))
-    konyali_items = [p for p in products if p.get("source") == "konyalisaat"]
+    konyali_items = [p for p in products if "konyalisaat" in (p.get("sourceUrl") or p.get("source_url") or "")]
     print(f"Syncing {len(konyali_items)} active KonyalıSaat products with live +40% pricing...")
 
     updated_count = 0
-    with ThreadPoolExecutor(max_workers=12) as executor:
-        future_to_item = {executor.submit(sync_price_and_stock, item["source_url"], item["brand"]): item for item in konyali_items if item.get("source_url")}
+    with ThreadPoolExecutor(max_workers=8) as executor:
+        future_to_item = {
+            executor.submit(sync_price_and_stock, item.get("source_url") or item.get("sourceUrl"), item["brand"]): item
+            for item in konyali_items
+            if (item.get("source_url") or item.get("sourceUrl"))
+        }
         for future in as_completed(future_to_item):
             item = future_to_item[future]
             res = future.result()
             if res and res.get("price"):
                 item["price"] = res["price"]
                 item["konyali_base_price"] = res["base_price"]
-                item["inStock"] = res["inStock"]
+                item["inStock"] = res.get("inStock", True)
                 updated_count += 1
 
     print(f"Updated {updated_count}/{len(konyali_items)} products.")

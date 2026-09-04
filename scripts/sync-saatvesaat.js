@@ -94,9 +94,12 @@ async function syncAllBrands() {
 
   const existingData = require('../js/data.js');
   
-  // Preserve non-watch products (Pre-owned, Jewelry, Cartier)
-  const nonWatchProducts = existingData.PRODUCTS.filter(p => p.isPreOwned === true || p.category === 'jewelry' || p.category === 'jewellery');
-  console.log(`[sync] Korunan ikinci el ve mücevher ürün sayısı: ${nonWatchProducts.length}`);
+  // Preserve non-Saat&Saat products (Carren, Konyalı Saat, Elit Koleksiyon, İkinci El, Mücevherat)
+  const nonSaatveSaatProducts = existingData.PRODUCTS.filter(p => {
+    const sUrl = p.sourceUrl || p.source_url || '';
+    return !sUrl.includes('saatvesaat.com.tr');
+  });
+  console.log(`[sync] Korunan diğer ürün sayısı (Carren, Konyalı, Elit, Mücevherat): ${nonSaatveSaatProducts.length}`);
 
   let newWatchList = [];
   let nextId = 1000; // Watches start from ID 1000 to prevent overlap with jewelry (1-10) and second-hand (101-108)
@@ -305,9 +308,9 @@ async function syncAllBrands() {
     }
   }
 
-  // Combine watches with non-watch items
-  const combinedProducts = [...newWatchList, ...nonWatchProducts];
-  console.log(`[sync] Toplam Yayın Kataloğu: ${combinedProducts.length} (Saatler: ${newWatchList.length}, İkinci El & Mücevherat: ${nonWatchProducts.length})`);
+  // Combine new Saat&Saat watches with preserved non-Saat&Saat products
+  const combinedProducts = [...newWatchList, ...nonSaatveSaatProducts];
+  console.log(`[sync] Toplam Yayın Kataloğu: ${combinedProducts.length} (Saat&Saat: ${newWatchList.length}, Diğer Ürünler: ${nonSaatveSaatProducts.length})`);
 
   // Update js/data.js
   const dataFileContent = `// ==========================================================
