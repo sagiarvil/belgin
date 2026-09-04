@@ -28,8 +28,11 @@ jobs:
           node-version: 22
           cache: "npm"
 
-      - name: Install dependencies
+      - name: Install site dependencies
         run: npm ci
+
+      - name: Install Functions dependencies
+        run: npm ci --prefix functions --ignore-scripts --no-audit --no-fund
 
       - name: Run Seckin Rolex Live Sync Engine
         run: node scripts/sync-seckin-rolex.js
