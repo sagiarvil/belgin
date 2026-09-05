@@ -2,7 +2,7 @@
 /**
  * BELGIN KUYUMCULUK — HAREM ALTIN CANLI BORSA SAĞLAMA & FİYAT GÜVENCE MOTORU
  * Kaynak: https://canlipiyasalar.haremaltin.com/ (wss://hrmsocketonly.haremaltin.com)
- * Kural: Sarı Tabela ve Ürün Sayfası Fiyatları +%1 Marj ile 1:1 Eşleşir.
+ * Kural: Sarı Tabela ve Ürün Sayfası Fiyatları +%2 Marj ile 1:1 Eşleşir.
  */
 
 const fs = require('fs');
@@ -14,22 +14,22 @@ const dataJsPath = path.join(ROOT_DIR, 'js/data.js');
 
 async function verifyAndProtectWithHarem() {
   console.log('====================================================');
-  console.log('🏛️  HAREM ALTIN CANLI BORSA SAĞLAMA & +%1 FİYAT GÜVENCESİ');
+  console.log('🏛️  HAREM ALTIN CANLI BORSA SAĞLAMA & +%2 FİYAT GÜVENCESİ');
   console.log('====================================================');
 
   const rates = {
-    pGram: 6962,
-    p22k: 6524,
-    p18k: 5220,
-    p14k: 5030,
-    pCeyrekYeni: 11381,
-    pCeyrekEski: 11179,
-    pYarimYeni: 22753,
-    pYarimEski: 22322,
-    pZiynetYeni: 45340,
-    pZiynetEski: 44714,
-    pAtaYeni: 46107,
-    pAtaEski: 46037
+    pGram: 7031,
+    p22k: 6589,
+    p18k: 5272,
+    p14k: 5080,
+    pCeyrekYeni: 11494,
+    pCeyrekEski: 11290,
+    pYarimYeni: 22978,
+    pYarimEski: 22543,
+    pZiynetYeni: 45789,
+    pZiynetEski: 45157,
+    pAtaYeni: 46563,
+    pAtaEski: 46493
   };
 
   const currentDataRaw = fs.readFileSync(dataJsPath, 'utf8');
@@ -48,7 +48,7 @@ async function verifyAndProtectWithHarem() {
   
   execSync('node scripts/generate-payment-catalog.js', { stdio: 'inherit' });
   execSync('node scripts/generate-seo-assets.js', { stdio: 'inherit' });
-  console.log(`[HAREM-GUARD] Tüm ürünler Harem Altın +%1 güvencesiyle yayına alındı.`);
+  console.log(`[HAREM-GUARD] Tüm ürünler Harem Altın +%2 güvencesiyle yayına alındı.`);
   console.log('====================================================\n');
   return { inStockCount };
 }

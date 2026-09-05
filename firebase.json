@@ -6178,6 +6178,256 @@
         "source": "/magazin/chronopulse-check-the-best-performing-watches",
         "destination": "/magazin/",
         "type": 301
+      },
+      {
+        "source": "/magazin/5-affordable-alternatives-to-the-omega-seamaster-diver-300m",
+        "destination": "/magazin/omega-seamaster-diver-300m-icin-5-ulasilabilir-alternatif/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/en-populer-5-omega-speedmaster-models-on-belgin-saat",
+        "destination": "/magazin/en-populer-5-omega-speedmaster-modeli/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/rolex-report-2026-en-cok-tercih-edilen-rolex-collections-and-koleksiyonerlerin-en-cok-aradigi-modeller-most-right-now",
+        "destination": "/magazin/rolex-raporu-2026-en-cok-tercih-edilen-modeller/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/girard-perregaux-laureato-fifty-a-complete-walkthrough-of-the-new-anniversary-models",
+        "destination": "/magazin/girard-perregaux-laureato-fifty-yildonumu-modelleri/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/collectible-rolex-watches-these-models-used-to-be-unpopular",
+        "destination": "/magazin/koleksiyonluk-rolex-saatler-gecmisin-unutulan-efsaneleri/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/gmt-vs-world-timer-which-is-the-better-travel-companion",
+        "destination": "/magazin/gmt-ve-dunya-saati-karsilastirmasi/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/vacheron-constantin-8217-s-value-development-son-5-yildaki-deger-gelisimi",
+        "destination": "/magazin/vacheron-constantin-deger-artisi-ve-yatirim-analizi/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/luxury-watch-brands-and-the-world-cup-is-2026-the-end-of-an-era",
+        "destination": "/magazin/luks-saat-markalari-ve-dunya-kupasi/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/collector-8217-s-guide-the-perfect-watch-collection-for-70-000",
+        "destination": "/magazin/70000-dolar-butceyle-mukemmel-saat-koleksiyonu-rehberi/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/luxury-watches-and-motorsports-f1-legends-and-their-timepieces",
+        "destination": "/magazin/luks-saatler-ve-f1-efsaneleri/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/how-women-shape-the-luxury-watch-industry",
+        "destination": "/magazin/kadinlar-luks-saat-sektorunu-nasil-sekillendiriyor/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/belgin-saat-summer-watch-strap-guide",
+        "destination": "/magazin/yaz-icin-luks-saat-kayisi-secim-rehberi/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/soccer-world-cup-the-players-8217-watches",
+        "destination": "/magazin/dunya-kupasi-futbolcularin-tercih-ettigi-saatler/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/5-colourful-and-wrist-worn-royal-pop-alternatives-under-2-000",
+        "destination": "/magazin/2000-euro-alti-5-renkli-royal-pop-alternatifi/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/beautiful-watches-for-festive-occasions-and-parties",
+        "destination": "/magazin/ozel-davetler-ve-geceler-icin-en-sik-elbise-saatleri/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/swatch-x-audemars-piguet-royal-pop-the-wildest-watch-release-of-the-year",
+        "destination": "/magazin/swatch-x-audemars-piguet-royal-pop-incelemesi/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/luxury-watches-on-wall-street-a-saat-rehberi-for-bankers",
+        "destination": "/magazin/wall-street-ve-finans-dunyasinin-tercih-ettigi-saatler/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/vintage-vs-modern-watches-5-modern-classics-and-their-vintage-alternatives",
+        "destination": "/magazin/vintage-ve-modern-saatler-karsilastirmasi/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/five-reasons-why-it-s-smart-to-buy-vintage-watches",
+        "destination": "/magazin/vintage-saat-almak-icin-5-onemli-neden/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/5-affordable-rolex-8220-pepsi-8221-alternatives",
+        "destination": "/magazin/rolex-gmt-master-pepsi-icin-5-ulasilabilir-alternatif/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/the-10-best-watches-for-graduation-gifting",
+        "destination": "/magazin/mezuniyet-hediyesi-icin-en-iyi-10-saat/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/patek-philippe-rolex-038-co-how-do-third-party-logos-end-up-on-their-dials",
+        "destination": "/magazin/patek-philippe-ve-rolex-kadranlarinda-cift-logo-tarihi/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/the-world-of-watch-designers-jorg-hysek",
+        "destination": "/magazin/dunya-saat-tasarimcilari-jorg-hysek/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/the-oldest-watch-brands-in-the-world-from-omega-to-blancpain",
+        "destination": "/magazin/dunyanin-en-eski-saat-markalari-omegadann-blancpaine/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/evil-with-style-the-watches-of-movie-villains",
+        "destination": "/magazin/sinema-tarihinin-unutulmaz-karakterleri-ve-saatleri/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/the-top-10-best-selling-watches-of-2025-on-belgin-saat",
+        "destination": "/magazin/2025-yilinin-en-cok-tercih-edilen-10-luks-saati/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/the-hidden-watch-gems-of-2025",
+        "destination": "/magazin/2025-yilinin-kesfedilmemis-saat-mucevherleri/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/the-world-of-watch-designers-emmanuel-gueit",
+        "destination": "/magazin/saat-tasarimcilari-emmanuel-gueit/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/complications-simply-explained-watches-with-a-repeater",
+        "destination": "/magazin/dakika-tekrarlayici-minute-repeater-nasil-calisir/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/dial-materials-and-decorations-at-a-glance",
+        "destination": "/magazin/saat-kadran-malzemeleri-ve-dekorasyon-sanati/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/quiet-luxury-watches-follow-the-trend-with-these-models",
+        "destination": "/magazin/sessiz-luks-quiet-luxury-saat-trendleri/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/my-top-5-summer-watches-for-women",
+        "destination": "/magazin/kadinlar-icin-en-sik-5-yaz-saati/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/how-to-find-the-right-watch-size",
+        "destination": "/magazin/dogru-saat-boyutu-nasil-secilir-kasa-capi-rehberi/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/the-top-5-most-popular-watches-on-the-us-market",
+        "destination": "/magazin/kuresel-pazarda-en-cok-aranan-5-ikonik-saat/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/the-watch-anniversaries-novelties-and-farewells-of-2025",
+        "destination": "/magazin/2025-yilinin-saat-yildonumleri-ve-yeni-modelleri/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/top-5-revenue-leading-gmt-watches-under-20-000",
+        "destination": "/magazin/20000-dolar-alti-en-iyi-5-gmt-saat/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/my-watch-market-predictions-who-will-do-good-in-2025",
+        "destination": "/magazin/saat-piyasasi-ve-koleksiyoner-deger-ongoruleri/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/top-5-best-selling-tourbillon-watches-on-belgin-saat",
+        "destination": "/magazin/en-cok-tercih-edilen-5-tourbillon-saat/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/watch-knowledge-and-fun-facts-10-conversation-starters",
+        "destination": "/magazin/saat-dunyasindan-10-ilginc-ve-etkileyici-bilgi/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/it-8217-s-crucial-to-stay-true-to-the-brand-s-dna-8211-interview-with-fabrizio-buonamassa-stigliani-creative-director-038-designer-for-bvlgari-watches",
+        "destination": "/magazin/bvlgari-saat-tasarimi-ve-marka-dnasinin-onemi/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/the-new-czapek-038-cie-antarctique-s-mirrored-sincere-platinum-jubilee",
+        "destination": "/magazin/czapek-antarctique-aynali-kadran-ve-mikro-rotor-incelemesi/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/the-5-best-unisex-diving-watches",
+        "destination": "/magazin/her-bilege-uygun-en-iyi-5-uniseks-dalis-saati/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/five-perfect-watches-for-the-summer",
+        "destination": "/magazin/yaz-mevsimi-icin-5-mukemmel-luks-saat/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/rolex-submariner-collector-dials",
+        "destination": "/magazin/rolex-submariner-koleksiyon-kadranlari-ve-nadir-referanslar/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/what-is-8220-haute-horlogerie-8221",
+        "destination": "/magazin/haute-horlogerie-nedir-yuksek-saatcilik-sanati/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/top-10-the-best-dive-watches",
+        "destination": "/magazin/dunyanin-en-iyi-10-dalis-saati/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/jumping-hour-watches",
+        "destination": "/magazin/atlayan-saat-jumping-hour-mekanizmalari-ve-tarihi/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/rolex-raporu-2026-en-cok-tercih-edilen-modeller",
+        "destination": "/magazin/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/en-cok-deger-kazanan-luks-saat-modelleri-piyasa-analizi",
+        "destination": "/magazin/",
+        "type": 301
+      },
+      {
+        "source": "/magazin/chronopulse-check-the-best-performing-watches",
+        "destination": "/magazin/",
+        "type": 301
       }
     ]
   }

@@ -78,5 +78,5 @@ Purpose: Universal Omni-Enterprise SEO, GEO, Sitemap & Multi-Tier LLMS Architect
 - Ürün fiyatı, stok ve anlık availability bu manifestte sabitlenmez; güncel canonical ürün sayfasından/runtime kaynaktan alınır.
 - LLMS, canonical HTML veya schema ile çelişemez.
 - Doğrulanmamış rating, review, sertifika, stok, garanti veya ticari iddia makine katmanına eklenemez.
-- Canlı sarrafiye ve altın fiyatları doğrudan Harem Altın borsa soket akışı ve Ağa Külçe verileri üzerine +%1 (x 1.01) marj ile güncellenir.
+- Canlı sarrafiye ve altın fiyatları doğrudan Harem Altın borsa soket akışı ve Ağa Külçe verileri üzerine +%2 (x 1.02) marj ile güncellenir.
 - Üçüncü taraf küresel pazar yeri temelli bağlayıcı fiyat/güvence formülü bu bilgi sözleşmesinin parçası değildir ve sisteme eklenemez.

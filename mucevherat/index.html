@@ -8,6 +8,11 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png?v=20260831-lion-max-gold-v5">
   <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png?v=20260831-lion-max-gold-v5">
   <base href="/">
+  <script>
+    if (window.location.hash === '#canli-fiyatlar' || window.location.hash === '#canlipiyasalar') {
+      window.location.replace('/canli-fiyatlar/');
+    }
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mücevher Koleksiyonu &amp; Altın | Belgin Kuyumculuk İzmir Buca</title>
@@ -587,20 +592,6 @@
 
   <!-- 1. ANA SAYFA -->
   <section id="page-ana-sayfa" class="page">
-    
-    <!-- AEO & NAVBOOST DİNAMİK CEVAP MOTORU (HERO ANSWER ENGINE - MANDATE V6) -->
-    <div class="container-art" style="padding-top:14px; padding-bottom:6px;">
-      <div class="hero-answer-engine" data-registry-route="/">
-        <div class="hero-answer-engine-badge"><span class="dot"></span> CANLI DOĞRULANMIŞ TİCARİ BİLGİ</div>
-        <p class="hero-answer-engine-text">Belgin Kuyumculuk, 1999 yılından bu yana İzmir Buca Menderes Caddesi No:231/B adresindeki showroomunda faaliyet gösteren tescilli lüks saat ve mücevherat kuruluşudur. Platformumuzda 2.125 aktif ürün yer almakta olup; Rolex, Patek Philippe ve Audemars Piguet dahil 10 seçkin İsviçre saat evinin ekspertizli modelleri, Darphane damgalı 24K altın ve GIA/HRD sertifikalı pırlantalar sunulmaktadır. Canlı borsa fiyat akışı Harem Altın borsa soket verileriyle %1 şeffaf marj üzerinden yansıtılır. 12.000 TL üzeri işlemlerde kimlik teyitli mağaza içi veya özel zırhlı teslimat uygulanır.</p>
-        <div class="hero-answer-engine-meta">
-          <span><strong>Lokasyon:</strong> İzmir Buca (Menderes Cad. No:231/B)</span>
-          <span><strong>Son Doğrulama:</strong> 2026-09-05</span>
-          <span><strong>Kaynak:</strong> Belgin SSOT Knowledge Graph</span>
-          <a href="/llms/pages/ana-sayfa.md" class="hero-answer-engine-llm-link">Makine Özeti (LLMS) &rarr;</a>
-        </div>
-      </div>
-    </div>
     
     <!-- BELGIN SIGNATURE MAISON HERO -->
     <section class="hero-signature" aria-label="Belgin Saat Ana Vitrin" id="heroSignatureSection">
@@ -2235,8 +2226,20 @@
     </div>
   </section>
 
-  <!-- 4. TÜM MÜCEVHERLER SAYFASI -->
+  <!-- 4. TÜM MÜCEVHERLER SAYFASI (GİZLİ) -->
   <section id="page-mucevherat" class="page active">
+    <div class="container-art" style="padding-top:14px; padding-bottom:6px;">
+    <div class="hero-answer-engine" data-registry-route="/mucevherat/">
+      <div class="hero-answer-engine-badge"><span class="dot"></span> CANLI DOĞRULANMIŞ TİCARİ BİLGİ</div>
+      <p class="hero-answer-engine-text">Belgin Kuyumculuk mücevher koleksiyonu, Darphane damgalı 24 ayar külçe altın, 22 ayar Ajda ve burma bilezikler ile uluslararası standartta derecelendirilmiş pırlanta takıları içerir. Fiyatlarımız Harem Altın canlı borsa verisi referans alınarak anlık olarak güncellenir ve %1 kâr marjı ile sunulur. 3065 sayılı KDV Kanunu 23/f maddesi uyarınca altın bedeli KDV’den istisnadır (%0 KDV); faturada yalnızca işçilik bedeline %20 KDV uygulanarak tüketici lehine maksimum vergi şeffaflığı sağlanır.</p>
+      <div class="hero-answer-engine-meta">
+        <span><strong>Lokasyon:</strong> İzmir Buca (Menderes Cad. No:231/B)</span>
+        <span><strong>Son Doğrulama:</strong> 2026-09-04</span>
+        <span><strong>Kaynak:</strong> Belgin SSOT Knowledge Graph</span>
+        <a href="/llms/pages/mucevherat.md" class="hero-answer-engine-llm-link">Makine Özeti (LLMS) &rarr;</a>
+      </div>
+    </div>
+  </div>
     <div class="container-art section-art">
       <div class="section-header-flex">
         <div>
@@ -2270,7 +2273,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Eski Kulplu Ziynet Çeyrek Altın</p>
         <p class="prod-ref-size">BLG-ZYN-043</p>
-        <div class="prod-price-tag">₺12.057</div>
+        <div class="prod-price-tag">₺12.202</div>
       </div>
     </a>
   
@@ -2295,7 +2298,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Yeni Kulplu Ziynet Çeyrek Altın</p>
         <p class="prod-ref-size">BLG-ZYN-044</p>
-        <div class="prod-price-tag">₺12.269</div>
+        <div class="prod-price-tag">₺12.416</div>
       </div>
     </a>
   
@@ -2320,7 +2323,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Eski Ata Çeyrek Altın</p>
         <p class="prod-ref-size">BLG-ZYN-045</p>
-        <div class="prod-price-tag">₺12.540</div>
+        <div class="prod-price-tag">₺12.691</div>
       </div>
     </a>
   
@@ -2345,7 +2348,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Eski Kulplu Ziynet Yarım Altın</p>
         <p class="prod-ref-size">BLG-ZYN-046</p>
-        <div class="prod-price-tag">₺23.814</div>
+        <div class="prod-price-tag">₺24.100</div>
       </div>
     </a>
   
@@ -2370,7 +2373,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Yeni Kulplu Ziynet Yarım Altın</p>
         <p class="prod-ref-size">BLG-ZYN-048</p>
-        <div class="prod-price-tag">₺24.264</div>
+        <div class="prod-price-tag">₺24.554</div>
       </div>
     </a>
   
@@ -2395,7 +2398,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">22 Ayar Yarım Altınlı Kırmızı İpli Bileklik</p>
         <p class="prod-ref-size">BLG-ZYN-050</p>
-        <div class="prod-price-tag">₺24.621</div>
+        <div class="prod-price-tag">₺24.916</div>
       </div>
     </a>
   
@@ -2420,7 +2423,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">22 Ayar Yarım Altınlı Beyaz İpli Bileklik</p>
         <p class="prod-ref-size">BLG-ZYN-051</p>
-        <div class="prod-price-tag">₺24.621</div>
+        <div class="prod-price-tag">₺24.916</div>
       </div>
     </a>
   
@@ -2445,7 +2448,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">22 Ayar Yarım Altınlı Siyah İpli Bileklik</p>
         <p class="prod-ref-size">BLG-ZYN-052</p>
-        <div class="prod-price-tag">₺24.621</div>
+        <div class="prod-price-tag">₺24.916</div>
       </div>
     </a>
   
@@ -2470,7 +2473,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">22 Ayar Yarım Altın Siyah İpli Kolye</p>
         <p class="prod-ref-size">BLG-ZYN-053</p>
-        <div class="prod-price-tag">₺24.621</div>
+        <div class="prod-price-tag">₺24.916</div>
       </div>
     </a>
   
@@ -2495,7 +2498,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Eski Ata Yarım Altın</p>
         <p class="prod-ref-size">BLG-ZYN-054</p>
-        <div class="prod-price-tag">₺24.831</div>
+        <div class="prod-price-tag">₺25.128</div>
       </div>
     </a>
   
@@ -2520,7 +2523,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Eski Kulplu Ziynet Tam Altın</p>
         <p class="prod-ref-size">BLG-ZYN-057</p>
-        <div class="prod-price-tag">₺47.403</div>
+        <div class="prod-price-tag">₺47.972</div>
       </div>
     </a>
   
@@ -2545,7 +2548,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Yeni Tarihli Ziynet Tam Altın</p>
         <p class="prod-ref-size">BLG-ZYN-058</p>
-        <div class="prod-price-tag">₺48.072</div>
+        <div class="prod-price-tag">₺48.648</div>
       </div>
     </a>
   
@@ -2570,7 +2573,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">22 Ayar Tam Altınlı Siyah İpli Bileklik</p>
         <p class="prod-ref-size">BLG-ZYN-059</p>
-        <div class="prod-price-tag">₺48.779</div>
+        <div class="prod-price-tag">₺49.363</div>
       </div>
     </a>
   
@@ -2595,7 +2598,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">22 Ayar Tam Altın Siyah İpli Kolye</p>
         <p class="prod-ref-size">BLG-ZYN-060</p>
-        <div class="prod-price-tag">₺48.779</div>
+        <div class="prod-price-tag">₺49.363</div>
       </div>
     </a>
   
@@ -2620,7 +2623,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Eski Ata Tam Altın</p>
         <p class="prod-ref-size">BLG-ZYN-062</p>
-        <div class="prod-price-tag">₺48.778</div>
+        <div class="prod-price-tag">₺49.362</div>
       </div>
     </a>
   
@@ -2645,7 +2648,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Ata Tam Yeni</p>
         <p class="prod-ref-size">BLG-ZYN-063</p>
-        <div class="prod-price-tag">₺49.362</div>
+        <div class="prod-price-tag">₺49.953</div>
       </div>
     </a>
   
@@ -2670,7 +2673,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Reşat Altın</p>
         <p class="prod-ref-size">BLG-ZYN-065</p>
-        <div class="prod-price-tag">₺50.236</div>
+        <div class="prod-price-tag">₺50.838</div>
       </div>
     </a>
   
@@ -2695,7 +2698,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">22 Ayar Reşat Altın Siyah İpli Kolye</p>
         <p class="prod-ref-size">BLG-ZYN-066</p>
-        <div class="prod-price-tag">₺50.236</div>
+        <div class="prod-price-tag">₺51.472</div>
       </div>
     </a>
   
@@ -2720,7 +2723,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Ziynet 2.5 luk Gremse Altın Eski Kulplu</p>
         <p class="prod-ref-size">BLG-ZYN-078</p>
-        <div class="prod-price-tag">₺118.597</div>
+        <div class="prod-price-tag">₺120.018</div>
       </div>
     </a>
   
@@ -2745,7 +2748,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Ziynet 2.5 luk Gremse Altın Yeni Kulplu</p>
         <p class="prod-ref-size">BLG-ZYN-079</p>
-        <div class="prod-price-tag">₺119.820</div>
+        <div class="prod-price-tag">₺121.257</div>
       </div>
     </a>
   
@@ -2770,7 +2773,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Ata 2.5 luk Gremse Altın Eski</p>
         <p class="prod-ref-size">BLG-ZYN-082</p>
-        <div class="prod-price-tag">₺122.369</div>
+        <div class="prod-price-tag">₺123.835</div>
       </div>
     </a>
   
@@ -2795,7 +2798,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">22 Ayar 3 Tam Altın Siyah İpli Kolye</p>
         <p class="prod-ref-size">BLG-ZYN-086</p>
-        <div class="prod-price-tag">₺145.829</div>
+        <div class="prod-price-tag">₺147.578</div>
       </div>
     </a>
   
@@ -2820,7 +2823,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Ziynet Beşli Altın Eski Kulplu</p>
         <p class="prod-ref-size">BLG-ZYN-090</p>
-        <div class="prod-price-tag">₺236.944</div>
+        <div class="prod-price-tag">₺239.785</div>
       </div>
     </a>
   
@@ -2845,7 +2848,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Ziynet Beşli Altın Yeni</p>
         <p class="prod-ref-size">BLG-ZYN-092</p>
-        <div class="prod-price-tag">₺239.391</div>
+        <div class="prod-price-tag">₺242.261</div>
       </div>
     </a>
   
@@ -2870,7 +2873,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">22 Ayar 5 Tam Altın Siyah İpli Kolye</p>
         <p class="prod-ref-size">BLG-ZYN-093</p>
-        <div class="prod-price-tag">₺242.880</div>
+        <div class="prod-price-tag">₺245.791</div>
       </div>
     </a>
   
@@ -2895,7 +2898,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Ata Beşli Altın Eski</p>
         <p class="prod-ref-size">BLG-ZYN-097</p>
-        <div class="prod-price-tag">₺244.486</div>
+        <div class="prod-price-tag">₺247.417</div>
       </div>
     </a>
   
@@ -2920,7 +2923,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Ata Beşli Altın Yeni</p>
         <p class="prod-ref-size">BLG-ZYN-099</p>
-        <div class="prod-price-tag">₺246.075</div>
+        <div class="prod-price-tag">₺249.026</div>
       </div>
     </a>
   
@@ -2945,7 +2948,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">14 Ayar 5 Gram Ajda Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-107</p>
-        <div class="prod-price-tag">₺26.384</div>
+        <div class="prod-price-tag">₺26.701</div>
       </div>
     </a>
   
@@ -2970,7 +2973,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">14 Ayar 5 Gram Kibrit Çöpü Ajda Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-108</p>
-        <div class="prod-price-tag">₺26.384</div>
+        <div class="prod-price-tag">₺26.701</div>
       </div>
     </a>
   
@@ -2995,7 +2998,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">14 Ayar 5 Gram Kalemli Ajda Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-109</p>
-        <div class="prod-price-tag">₺26.384</div>
+        <div class="prod-price-tag">₺26.701</div>
       </div>
     </a>
   
@@ -3020,7 +3023,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">5 Gram 22 Ayar Ajda Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-110</p>
-        <div class="prod-price-tag">₺35.263</div>
+        <div class="prod-price-tag">₺35.686</div>
       </div>
     </a>
   
@@ -3045,7 +3048,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">14 Ayar 7 Gram Şarnel Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-111</p>
-        <div class="prod-price-tag">₺37.322</div>
+        <div class="prod-price-tag">₺37.769</div>
       </div>
     </a>
   
@@ -3070,7 +3073,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">7 Gram 22 Ayar Ajda Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-112</p>
-        <div class="prod-price-tag">₺48.312</div>
+        <div class="prod-price-tag">₺48.891</div>
       </div>
     </a>
   
@@ -3095,7 +3098,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">14 Ayar 10 Gram Ajda Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-113</p>
-        <div class="prod-price-tag">₺51.474</div>
+        <div class="prod-price-tag">₺52.090</div>
       </div>
     </a>
   
@@ -3120,7 +3123,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">14 Ayar 10 Gram Kibrit Çöpü Ajda Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-114</p>
-        <div class="prod-price-tag">₺51.474</div>
+        <div class="prod-price-tag">₺52.090</div>
       </div>
     </a>
   
@@ -3145,7 +3148,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">14 Ayar 10 Gram Kalemli Ajda Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-115</p>
-        <div class="prod-price-tag">₺51.474</div>
+        <div class="prod-price-tag">₺52.090</div>
       </div>
     </a>
   
@@ -3170,7 +3173,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">14 Ayar 10 Gram Dalgalı Şarnel Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-116</p>
-        <div class="prod-price-tag">₺52.972</div>
+        <div class="prod-price-tag">₺53.607</div>
       </div>
     </a>
   
@@ -3195,7 +3198,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">10 gr 22 Ayar Burma Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-117</p>
-        <div class="prod-price-tag">₺68.619</div>
+        <div class="prod-price-tag">₺69.443</div>
       </div>
     </a>
   
@@ -3220,7 +3223,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">10 Gram 22 Ayar Ajda Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-118</p>
-        <div class="prod-price-tag">₺68.619</div>
+        <div class="prod-price-tag">₺69.443</div>
       </div>
     </a>
   
@@ -3245,7 +3248,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Müjde Kristal 10 gr 22 Ayar Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-119</p>
-        <div class="prod-price-tag">₺68.619</div>
+        <div class="prod-price-tag">₺69.443</div>
       </div>
     </a>
   
@@ -3270,7 +3273,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Ajda Zik-Zak 10 gr 22 Ayar Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-120</p>
-        <div class="prod-price-tag">₺68.619</div>
+        <div class="prod-price-tag">₺69.443</div>
       </div>
     </a>
   
@@ -3295,7 +3298,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Ajda Kibrit Çöpü Ray 10 gr 22 Ayar Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-121</p>
-        <div class="prod-price-tag">₺68.843</div>
+        <div class="prod-price-tag">₺69.667</div>
       </div>
     </a>
   
@@ -3320,7 +3323,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">20 Gram 22 Ayar Ajda Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-122</p>
-        <div class="prod-price-tag">₺136.313</div>
+        <div class="prod-price-tag">₺137.947</div>
       </div>
     </a>
   
@@ -3370,7 +3373,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">20 gr 22 Ayar Burma Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-124</p>
-        <div class="prod-price-tag">₺136.568</div>
+        <div class="prod-price-tag">₺138.205</div>
       </div>
     </a>
   
@@ -3777,9 +3780,91 @@
     </div>
   </section>
 
-  <!-- 4.1 CANLI PİYASALAR & ALTIN FİYATLARI (GİZLİ) -->
+  <!-- 4.1 CANLI PİYASALAR & ALTIN FİYATLARI -->
   <section id="page-canli-fiyatlar" class="page">
-    <!-- App.renderLivePricesPage() tarafından dinamik basılacak -->
+    <div class="page-canli-fiyatlar-wrapper">
+      <div class="container-art" style="max-width: 100%; width: 100%; height: 100%; padding: 0; margin: 0;">
+        
+        <!-- BİREBİR DİJİTAL KUYUMCU TABELASI (#fff200) -->
+        <div class="board-exact-frame">
+          
+          <!-- Üst Kırmızı Başlık Metni -->
+          <div class="board-exact-top-bar">
+            Belgin Kuyumculuk Canlı Satış Fiyatlarıdır.
+          </div>
+
+          <!-- Birebir Tablo -->
+          <table class="board-exact-table">
+            <thead>
+              <tr>
+                <th style="width: 38%;">ALTIN</th>
+                <th style="width: 31%;">SATIŞ</th>
+                <th style="width: 31%;">HOŞGELDİNİZ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-label">22 AYAR</td>
+                <td class="td-price"><span class="price-num" id="live_22k">6.690</span></td>
+                <td class="td-right-message" rowspan="5">
+                  <div class="right-message-inner">
+                    <div class="right-title">BELGİN</div>
+                    <div class="right-title">KUYUMCULUK</div>
+                    <div class="right-sub">CANLI</div>
+                    <div class="right-sub">SATIŞ</div>
+                    <div class="right-sub">FİYATLARIDIR!</div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="td-label">18 AYAR</td>
+                <td class="td-price"><span class="price-num" id="live_18k">6.400</span></td>
+              </tr>
+              <tr>
+                <td class="td-label">14 AYAR</td>
+                <td class="td-price"><span class="price-num" id="live_14k">5.950</span></td>
+              </tr>
+              <tr>
+                <td class="td-label">GRAM ALTIN</td>
+                <td class="td-price"><span class="price-num" id="live_gram">7.121</span></td>
+              </tr>
+              <tr>
+                <td class="td-label">CUMHURİYET</td>
+                <td class="td-price"><span class="price-num" id="live_cumhuriyet">47.400</span></td>
+              </tr>
+              <tr class="tr-sarrafiye-header">
+                <td style="background-color:#fff200; border: 2px solid #000;"></td>
+                <th style="border: 2px solid #000;">YENİ</th>
+                <th style="border: 2px solid #000;">ESKİ</th>
+              </tr>
+              <tr>
+                <td class="td-label">ÇEYREK</td>
+                <td class="td-price"><span class="price-num" id="live_ceyrek_yeni">11.750</span></td>
+                <td class="td-price"><span class="price-num" id="live_ceyrek_eski">11.600</span></td>
+              </tr>
+              <tr>
+                <td class="td-label">YARIM</td>
+                <td class="td-price"><span class="price-num" id="live_yarim_yeni">23.500</span></td>
+                <td class="td-price"><span class="price-num" id="live_yarim_eski">23.200</span></td>
+              </tr>
+              <tr>
+                <td class="td-label">ZİYNET</td>
+                <td class="td-price"><span class="price-num" id="live_ziynet_yeni">47.000</span></td>
+                <td class="td-price"><span class="price-num" id="live_ziynet_eski">46.400</span></td>
+              </tr>
+              <tr>
+                <td class="td-has-label">HAS ALTIN:</td>
+                <td colspan="2" style="text-align: center; border: 2px solid #000;">
+                  <span class="has-red-box"><span class="price-num" id="live_has_altin">7.121,00</span></span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+
+      </div>
+    </div>
   </section>
 
   <!-- 5. 1999'DAN BERİ SÜREN MİRAS & HAKKIMIZDA SAYFASI (GİZLİ — BİZ KİMİZ KULLANILIR) -->
@@ -4442,6 +4527,22 @@
 </a>
 
 <!-- 8. TÜRKİYE YASAL & ETBİS VE FOOTER ALTYAPISI (HAUTE MAISON) -->
+  <!-- SEO / GEO ticari doğrulama alanı: ana vitrin tasarımını bozmayacak şekilde footer önüne taşındı. -->
+  <section class="seo-business-facts" aria-label="Belgin ticari bilgi özeti" style="margin:28px auto 0; max-width:1760px; padding:0 24px;">
+    <div class="hero-answer-engine" data-registry-route="/" style="border-top:1px solid rgba(5,51,47,.12); padding:18px 0 20px; color:#5f6664; font-size:12px; line-height:1.7; background:transparent; box-shadow:none;">
+      <div style="display:flex; flex-wrap:wrap; gap:10px 22px; align-items:center; margin-bottom:8px; color:#05332f; font-weight:700; letter-spacing:.04em; text-transform:uppercase; font-size:10px;">
+        <span>Belgin Saat • Ticari Bilgi Özeti</span>
+        <span>İzmir Buca • Est. 1999</span>
+      </div>
+      <p style="margin:0; max-width:1380px;">Belgin Kuyumculuk, 1999 yılından bu yana İzmir Buca Menderes Caddesi No:231/B adresindeki showroomunda faaliyet gösteren tescilli lüks saat ve mücevherat kuruluşudur. Platformumuzda 2.125 aktif ürün yer almakta olup; Rolex, Patek Philippe ve Audemars Piguet dahil 10 seçkin İsviçre saat evinin ekspertizli modelleri, Darphane damgalı 24K altın ve GIA/HRD sertifikalı pırlantalar sunulmaktadır. Canlı borsa fiyat akışı Harem Altın borsa soket verileriyle %1 şeffaf marj üzerinden yansıtılır. 12.000 TL üzeri işlemlerde kimlik teyitli mağaza içi veya özel zırhlı teslimat uygulanır.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:8px 18px; margin-top:8px; font-size:11px; color:#7a807e;">
+        <span><strong style="color:#4f5754;">Son doğrulama:</strong> 2026-09-04</span>
+        <span><strong style="color:#4f5754;">Kaynak:</strong> Belgin SSOT Knowledge Graph</span>
+        <a href="/llms/pages/ana-sayfa.md" style="color:#6b5b2a; text-decoration:none; border-bottom:1px solid rgba(107,91,42,.35);">Makine Özeti (LLMS) →</a>
+      </div>
+    </div>
+  </section>
+
 <footer class="footer-art" role="contentinfo">
   <div class="container-art">
 
@@ -4646,6 +4747,10 @@
         BELGİN KUYUMCULUK - SEMİH SONBAHAR • <strong>NACE Kodu:</strong> 47.77.03 • İzmir Buca • Vergi ve ticari sicil bilgileri resmi kayıtta ibraz edilir.
       </div>
     </div>
+
+      <div class="footer-machine-summary" style="margin-top:14px; padding-top:12px; border-top:1px solid rgba(255,255,255,.08); font-size:11px; line-height:1.5; letter-spacing:.02em; opacity:.52; text-align:center;">
+        <a href="/llms/pages/ana-sayfa.md" style="color:inherit; text-decoration:none;" aria-label="Belgin kurumsal bilgi ve makine okunabilir özet">Kurumsal bilgi · Makine okunabilir özet →</a>
+      </div>
 
   </div>
 </footer>

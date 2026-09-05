@@ -383,13 +383,13 @@ async function fetchLiveMarketRates() {
 /**
  * TÜM ALTIN ÜRÜNLERİNİN FİYATINI SARI TABELA İLE %100 BİREBİR SENKRONİZE ET
  * Kaynak: Harem Altın Canlı Borsa Soketi (wss://hrmsocketonly.haremaltin.com)
- * Kural: Sarı Tabela Satış Fiyatları (+%1 Marj) ile Ürün Sayfası / Katalog Fiyatları 1:1 Eşittir.
+ * Kural: Sarı Tabela Satış Fiyatları (+%2 Marj) ile Ürün Sayfası / Katalog Fiyatları 1:1 Eşittir.
  */
 function updateDynamicGoldProductPrices() {
   if (typeof PRODUCTS === 'undefined' || !Array.isArray(PRODUCTS)) return;
 
   const rawItems = LIVE_MARKET_DATA.items || {};
-  const BOARD_MARGIN = 1.01; // Sarı Tabela ve Ürün Sayfası Birebir Canlı Satış Marjı (+%1)
+  const BOARD_MARGIN = 1.02; // Sarı Tabela ve Ürün Sayfası Birebir Canlı Satış Marjı (+%2)
 
   const baseHas = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.hasAltin || LIVE_MARKET_DATA.gramGold24k || 6892.70;
   const baseGram = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.gramGold24k || baseHas;
@@ -556,7 +556,7 @@ function updateDynamicGoldProductPrices() {
  */
 function updateMarketTickerDOM() {
   const rawItems = LIVE_MARKET_DATA.items || {};
-  const BOARD_MARGIN = 1.01; // Sarı Tabela, Ürün Sayfası ve Kayan Bant %100 Birebir Eşleşme Marjı (+%1)
+  const BOARD_MARGIN = 1.02; // Sarı Tabela, Ürün Sayfası ve Kayan Bant %100 Birebir Eşleşme Marjı (+%2)
 
   const baseHas = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.hasAltin || LIVE_MARKET_DATA.gramGold24k || 6892.70;
   const baseGram = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.gramGold24k || baseHas;

@@ -2,7 +2,7 @@
 /**
  * BELGIN KUYUMCULUK — HAREM ALTIN %100 BİREBİR SENKRONİZASYON MOTORU
  * 
- * Amaç: Sarı Tabela (#canli-fiyatlar) nihai canlı satış fiyatları (+%1 marj) ile
+ * Amaç: Sarı Tabela (#canli-fiyatlar) nihai canlı satış fiyatları (+%2 marj) ile
  * katalogdaki ve ürün detay sayfalarındaki altın ürünlerini %100 birebir eşlemek.
  */
 
@@ -129,20 +129,20 @@ function syncHaremPricesToCatalog(rates) {
   }
 }
 
-// Default Harem Altin Live Rates (+%1 Margin)
+// Default Harem Altin Live Rates (+%2 Margin)
 const defaultRates = {
-  pGram: 6962,
-  p22k: 6524,
-  p18k: 5220,
-  p14k: 5030,
-  pCeyrekYeni: 11381,
-  pCeyrekEski: 11179,
-  pYarimYeni: 22753,
-  pYarimEski: 22322,
-  pZiynetYeni: 45340,
-  pZiynetEski: 44714,
-  pAtaYeni: 46107,
-  pAtaEski: 46037
+  pGram: 7031,
+  p22k: 6589,
+  p18k: 5272,
+  p14k: 5080,
+  pCeyrekYeni: 11494,
+  pCeyrekEski: 11290,
+  pYarimYeni: 22978,
+  pYarimEski: 22543,
+  pZiynetYeni: 45789,
+  pZiynetEski: 45157,
+  pAtaYeni: 46563,
+  pAtaEski: 46493
 };
 
 syncHaremPricesToCatalog(defaultRates);

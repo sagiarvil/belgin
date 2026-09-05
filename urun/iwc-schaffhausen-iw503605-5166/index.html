@@ -8,6 +8,11 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png?v=20260831-lion-max-gold-v5">
   <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png?v=20260831-lion-max-gold-v5">
   <base href="/">
+  <script>
+    if (window.location.hash === '#canli-fiyatlar' || window.location.hash === '#canlipiyasalar') {
+      window.location.replace('/canli-fiyatlar/');
+    }
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IWC Schaffhausen Big Pilot&#39;s Watch Perpetual Calendar 46.2mm Mavi Kadran Çelik | Belgin Kuyumculuk</title>
@@ -382,8 +387,8 @@
           </div>
         </li>
 
-        <!-- 4. MÜCEVHERAT DROPDOWN (GİZLİ) -->
-        <li class="nav-has-dropdown" style="display:none;">
+        <!-- 4. MÜCEVHERAT DROPDOWN -->
+        <li class="nav-has-dropdown">
           <a href="/mucevherat/" data-page="mucevherat" class="nav-link-main">
             Mücevherat <span class="nav-arrow">▾</span>
           </a>
@@ -418,8 +423,8 @@
           </div>
         </li>
 
-        <!-- 5. CANLI FİYATLAR (GİZLİ) -->
-        <li style="display:none;">
+        <!-- 5. CANLI FİYATLAR -->
+        <li>
           <a href="/canli-fiyatlar/" data-page="canli-fiyatlar" class="nav-link-main nav-link-live-rates" title="Canlı Altın ve Döviz Fiyatları">
             <span class="live-dot-pulse"></span> Canlı Fiyatlar
           </a>
@@ -462,8 +467,8 @@
     </div>
 
     <nav class="mobile-drawer-nav">
-      <!-- 0. Canlı Fiyatlar Butonu (GİZLİ) -->
-      <a href="/canli-fiyatlar/" data-page="canli-fiyatlar" onclick="App.toggleMobileDrawer(false);" class="mobile-nav-main-link" style="display:none; color:var(--color-teal); font-weight:800; justify-content:space-between; align-items:center; background:#FFFDE6; border:1px solid #E5E2D9; padding:12px 14px; border-radius:8px; margin-bottom:12px;">
+      <!-- 0. Canlı Fiyatlar Butonu -->
+      <a href="/canli-fiyatlar/" data-page="canli-fiyatlar" onclick="App.toggleMobileDrawer(false);" class="mobile-nav-main-link" style="color:var(--color-teal); font-weight:800; display:flex; justify-content:space-between; align-items:center; background:#FFFDE6; border:1px solid #E5E2D9; padding:12px 14px; border-radius:8px; margin-bottom:12px;">
         <span>📈 Canlı Fiyatlar (Altın & Döviz)</span>
         <span class="live-dot-pulse"></span>
       </a>
@@ -551,8 +556,8 @@
         </div>
       </div>
 
-      <!-- 3. Mücevherat Akordeon (GİZLİ) -->
-      <div style="display:none;">
+      <!-- 3. Mücevherat Akordeon -->
+      <div>
         <button class="mobile-nav-accordion-header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.acc-arr').textContent = this.nextElementSibling.classList.contains('open') ? '▴' : '▾';">
           <span>💎 Mücevherat & Altın (66)</span>
           <span class="acc-arr">▾</span>
@@ -587,20 +592,6 @@
 
   <!-- 1. ANA SAYFA -->
   <section id="page-ana-sayfa" class="page">
-    
-    <!-- AEO & NAVBOOST DİNAMİK CEVAP MOTORU (HERO ANSWER ENGINE - MANDATE V6) -->
-    <div class="container-art" style="padding-top:14px; padding-bottom:6px;">
-      <div class="hero-answer-engine" data-registry-route="/">
-        <div class="hero-answer-engine-badge"><span class="dot"></span> CANLI DOĞRULANMIŞ TİCARİ BİLGİ</div>
-        <p class="hero-answer-engine-text">Belgin Kuyumculuk, 1999 yılından bu yana İzmir Buca Menderes Caddesi No:231/B adresindeki showroomunda faaliyet gösteren tescilli lüks saat ve mücevherat kuruluşudur. Platformumuzda 2.125 aktif ürün yer almakta olup; Rolex, Patek Philippe ve Audemars Piguet dahil 10 seçkin İsviçre saat evinin ekspertizli modelleri, Darphane damgalı 24K altın ve GIA/HRD sertifikalı pırlantalar sunulmaktadır. Canlı borsa fiyat akışı Harem Altın borsa soket verileriyle %1 şeffaf marj üzerinden yansıtılır. 12.000 TL üzeri işlemlerde kimlik teyitli mağaza içi veya özel zırhlı teslimat uygulanır.</p>
-        <div class="hero-answer-engine-meta">
-          <span><strong>Lokasyon:</strong> İzmir Buca (Menderes Cad. No:231/B)</span>
-          <span><strong>Son Doğrulama:</strong> 2026-09-05</span>
-          <span><strong>Kaynak:</strong> Belgin SSOT Knowledge Graph</span>
-          <a href="/llms/pages/ana-sayfa.md" class="hero-answer-engine-llm-link">Makine Özeti (LLMS) &rarr;</a>
-        </div>
-      </div>
-    </div>
     
     <!-- BELGIN SIGNATURE MAISON HERO -->
     <section class="hero-signature" aria-label="Belgin Saat Ana Vitrin" id="heroSignatureSection">
@@ -2236,7 +2227,7 @@
   </section>
 
   <!-- 4. TÜM MÜCEVHERLER SAYFASI (GİZLİ) -->
-  <section id="page-mucevherat" class="page" style="display:none !important;">
+  <section id="page-mucevherat" class="page">
     <div class="container-art section-art">
       <div class="section-header-flex">
         <div>
@@ -2253,9 +2244,91 @@
     </div>
   </section>
 
-  <!-- 4.1 CANLI PİYASALAR & ALTIN FİYATLARI (GİZLİ) -->
-  <section id="page-canli-fiyatlar" class="page" style="display:none !important;">
-    <!-- App.renderLivePricesPage() tarafından dinamik basılacak -->
+  <!-- 4.1 CANLI PİYASALAR & ALTIN FİYATLARI -->
+  <section id="page-canli-fiyatlar" class="page">
+    <div class="page-canli-fiyatlar-wrapper">
+      <div class="container-art" style="max-width: 100%; width: 100%; height: 100%; padding: 0; margin: 0;">
+        
+        <!-- BİREBİR DİJİTAL KUYUMCU TABELASI (#fff200) -->
+        <div class="board-exact-frame">
+          
+          <!-- Üst Kırmızı Başlık Metni -->
+          <div class="board-exact-top-bar">
+            Belgin Kuyumculuk Canlı Satış Fiyatlarıdır.
+          </div>
+
+          <!-- Birebir Tablo -->
+          <table class="board-exact-table">
+            <thead>
+              <tr>
+                <th style="width: 38%;">ALTIN</th>
+                <th style="width: 31%;">SATIŞ</th>
+                <th style="width: 31%;">HOŞGELDİNİZ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-label">22 AYAR</td>
+                <td class="td-price"><span class="price-num" id="live_22k">6.690</span></td>
+                <td class="td-right-message" rowspan="5">
+                  <div class="right-message-inner">
+                    <div class="right-title">BELGİN</div>
+                    <div class="right-title">KUYUMCULUK</div>
+                    <div class="right-sub">CANLI</div>
+                    <div class="right-sub">SATIŞ</div>
+                    <div class="right-sub">FİYATLARIDIR!</div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="td-label">18 AYAR</td>
+                <td class="td-price"><span class="price-num" id="live_18k">6.400</span></td>
+              </tr>
+              <tr>
+                <td class="td-label">14 AYAR</td>
+                <td class="td-price"><span class="price-num" id="live_14k">5.950</span></td>
+              </tr>
+              <tr>
+                <td class="td-label">GRAM ALTIN</td>
+                <td class="td-price"><span class="price-num" id="live_gram">7.121</span></td>
+              </tr>
+              <tr>
+                <td class="td-label">CUMHURİYET</td>
+                <td class="td-price"><span class="price-num" id="live_cumhuriyet">47.400</span></td>
+              </tr>
+              <tr class="tr-sarrafiye-header">
+                <td style="background-color:#fff200; border: 2px solid #000;"></td>
+                <th style="border: 2px solid #000;">YENİ</th>
+                <th style="border: 2px solid #000;">ESKİ</th>
+              </tr>
+              <tr>
+                <td class="td-label">ÇEYREK</td>
+                <td class="td-price"><span class="price-num" id="live_ceyrek_yeni">11.750</span></td>
+                <td class="td-price"><span class="price-num" id="live_ceyrek_eski">11.600</span></td>
+              </tr>
+              <tr>
+                <td class="td-label">YARIM</td>
+                <td class="td-price"><span class="price-num" id="live_yarim_yeni">23.500</span></td>
+                <td class="td-price"><span class="price-num" id="live_yarim_eski">23.200</span></td>
+              </tr>
+              <tr>
+                <td class="td-label">ZİYNET</td>
+                <td class="td-price"><span class="price-num" id="live_ziynet_yeni">47.000</span></td>
+                <td class="td-price"><span class="price-num" id="live_ziynet_eski">46.400</span></td>
+              </tr>
+              <tr>
+                <td class="td-has-label">HAS ALTIN:</td>
+                <td colspan="2" style="text-align: center; border: 2px solid #000;">
+                  <span class="has-red-box"><span class="price-num" id="live_has_altin">7.121,00</span></span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+
+      </div>
+    </div>
   </section>
 
   <!-- 5. 1999'DAN BERİ SÜREN MİRAS & HAKKIMIZDA SAYFASI (GİZLİ — BİZ KİMİZ KULLANILIR) -->
@@ -2963,6 +3036,22 @@
 </a>
 
 <!-- 8. TÜRKİYE YASAL & ETBİS VE FOOTER ALTYAPISI (HAUTE MAISON) -->
+  <!-- SEO / GEO ticari doğrulama alanı: ana vitrin tasarımını bozmayacak şekilde footer önüne taşındı. -->
+  <section class="seo-business-facts" aria-label="Belgin ticari bilgi özeti" style="margin:28px auto 0; max-width:1760px; padding:0 24px;">
+    <div class="hero-answer-engine" data-registry-route="/" style="border-top:1px solid rgba(5,51,47,.12); padding:18px 0 20px; color:#5f6664; font-size:12px; line-height:1.7; background:transparent; box-shadow:none;">
+      <div style="display:flex; flex-wrap:wrap; gap:10px 22px; align-items:center; margin-bottom:8px; color:#05332f; font-weight:700; letter-spacing:.04em; text-transform:uppercase; font-size:10px;">
+        <span>Belgin Saat • Ticari Bilgi Özeti</span>
+        <span>İzmir Buca • Est. 1999</span>
+      </div>
+      <p style="margin:0; max-width:1380px;">Belgin Kuyumculuk, 1999 yılından bu yana İzmir Buca Menderes Caddesi No:231/B adresindeki showroomunda faaliyet gösteren tescilli lüks saat ve mücevherat kuruluşudur. Platformumuzda 2.125 aktif ürün yer almakta olup; Rolex, Patek Philippe ve Audemars Piguet dahil 10 seçkin İsviçre saat evinin ekspertizli modelleri, Darphane damgalı 24K altın ve GIA/HRD sertifikalı pırlantalar sunulmaktadır. Canlı borsa fiyat akışı Harem Altın borsa soket verileriyle %1 şeffaf marj üzerinden yansıtılır. 12.000 TL üzeri işlemlerde kimlik teyitli mağaza içi veya özel zırhlı teslimat uygulanır.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:8px 18px; margin-top:8px; font-size:11px; color:#7a807e;">
+        <span><strong style="color:#4f5754;">Son doğrulama:</strong> 2026-09-04</span>
+        <span><strong style="color:#4f5754;">Kaynak:</strong> Belgin SSOT Knowledge Graph</span>
+        <a href="/llms/pages/ana-sayfa.md" style="color:#6b5b2a; text-decoration:none; border-bottom:1px solid rgba(107,91,42,.35);">Makine Özeti (LLMS) →</a>
+      </div>
+    </div>
+  </section>
+
 <footer class="footer-art" role="contentinfo">
   <div class="container-art">
 
@@ -3168,6 +3257,10 @@
       </div>
     </div>
 
+      <div class="footer-machine-summary" style="margin-top:14px; padding-top:12px; border-top:1px solid rgba(255,255,255,.08); font-size:11px; line-height:1.5; letter-spacing:.02em; opacity:.52; text-align:center;">
+        <a href="/llms/pages/ana-sayfa.md" style="color:inherit; text-decoration:none;" aria-label="Belgin kurumsal bilgi ve makine okunabilir özet">Kurumsal bilgi · Makine okunabilir özet →</a>
+      </div>
+
   </div>
 </footer>
 
@@ -3183,7 +3276,7 @@
     <span>Saatler</span>
   </a>
 
-  <a href="/mucevherat/" data-page="mucevherat" class="mobile-dock-btn" style="display:none;">
+  <a href="/mucevherat/" data-page="mucevherat" class="mobile-dock-btn">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M10 3v6l-4 6"/><path d="M14 3v6l4 6"/><path d="M2 9h20"/></svg>
     <span>Mücevher</span>
   </a>

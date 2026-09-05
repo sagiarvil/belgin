@@ -13,7 +13,7 @@ let fullText = `# Belgin Saat & Kuyumculuk — Kapsamlı Editoryal & Ürün Bilg
 ---
 
 ## 1. Kurumsal İlkeler & Güvenlik Protokolü
-- **Fiyatlama Sözleşmesi:** Canlı altın ve sarrafiye ürünleri doğrudan Harem Altın borsa soket akışı ve Ağa Külçe verileri üzerine +%1 (x 1.01) marj ile hesaplanır.
+- **Fiyatlama Sözleşmesi:** Canlı altın ve sarrafiye ürünleri doğrudan Harem Altın borsa soket akışı ve Ağa Külçe verileri üzerine +%2 (x 1.02) marj ile hesaplanır.
 - **Elit Saat Koleksiyonu:** Rolex, Patek Philippe, Audemars Piguet, Cartier, Omega, Breitling, IWC, Tudor, TAG Heuer, Panerai markalarında 200 seçkin model.
 - **Ödeme & Teslimat:** Akbank 3D Pay ve PayTR 256-Bit SSL kart ödemesi, İzmir Buca Showroom'da fiziksel teslim veya Türkiye genelinde tam sigortalı zırhlı sevkiyat.
 - **Delil Zinciri:** Tüm sipariş ve evraklar SHA-256 hash ve OpenTimestamps ile Bitcoin blokzincirinde zamana karşı mühürlenir.

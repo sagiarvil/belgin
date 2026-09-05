@@ -37,7 +37,7 @@
       weight: 7.0,
       karat: 22,
       priceKey: 'gramGold22k',
-      priceMultiplier: 7.0 * 1.01
+      priceMultiplier: 7.0 * 1.02
     },
     {
       id: '2669',
@@ -48,7 +48,7 @@
       weight: 7.216,
       karat: 22,
       priceKey: 'ataGold',
-      priceMultiplier: 1.01
+      priceMultiplier: 1.02
     },
     {
       id: '2667',
@@ -59,7 +59,7 @@
       weight: 1.754,
       karat: 22,
       priceKey: 'quarterGold',
-      priceMultiplier: 1.01
+      priceMultiplier: 1.02
     },
     {
       id: '2670',
@@ -70,7 +70,7 @@
       weight: 3.508,
       karat: 22,
       priceKey: 'halfGold',
-      priceMultiplier: 1.01
+      priceMultiplier: 1.02
     },
     {
       id: '2668',
@@ -81,7 +81,7 @@
       weight: 1.754,
       karat: 22,
       priceKey: 'quarterGold',
-      priceMultiplier: 1.01
+      priceMultiplier: 1.02
     },
     {
       id: '2741',
@@ -92,7 +92,7 @@
       weight: 10.0,
       karat: 22,
       priceKey: 'gramGold22k',
-      priceMultiplier: 10.0 * 1.01
+      priceMultiplier: 10.0 * 1.02
     },
     {
       id: '2748',
@@ -103,7 +103,7 @@
       weight: 20.0,
       karat: 22,
       priceKey: 'gramGold22k',
-      priceMultiplier: 20.0 * 1.01
+      priceMultiplier: 20.0 * 1.02
     },
     {
       id: '2753',
@@ -114,7 +114,7 @@
       weight: 25.0,
       karat: 22,
       priceKey: 'gramGold22k',
-      priceMultiplier: 25.0 * 1.01
+      priceMultiplier: 25.0 * 1.02
     }
   ]);
 

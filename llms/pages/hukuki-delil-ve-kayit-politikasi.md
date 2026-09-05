@@ -12,7 +12,7 @@ Belgin Kuyumculuk, e-ticaret ve mesafeli sözleşme süreçlerinde HMK m. 193 uy
 | :--- | :--- | :--- | :--- |
 | **Fiziksel Mağaza & Otorite** | İzmir Buca Showroom (Est. 1999) | Sanal / Pazaryeri Aracısı | İzmir Ticaret Odası Sicil |
 | **Ekspertiz ve Doğrulama** | Laboratuvar Timegrapher sapma testi | Beyana dayalı kontrol | Witschi Kalibre Ölçüm Raporu |
-| **Fiyatlandırma Şeffaflığı** | Canlı Borsa Soketi +%1 Marj | 15 dk gecikmeli / spekülatif | Harem Altın Borsa Akışı |
+| **Fiyatlandırma Şeffaflığı** | Canlı Borsa Soketi +%2 Marj | 15 dk gecikmeli / spekülatif | Harem Altın Borsa Akışı |
 | **Ödeme ve Vergi Güvenliği** | Akbank 3D Pay + PayTR 256-Bit SSL | Standart POS / Aracı Havale | 3065 SK Madde 23/f & MASAK |
 
 ## 3. Semantik İlişki Üçlüleri (RDF Semantic Triples)
@@ -24,7 +24,7 @@ Belgin Kuyumculuk, e-ticaret ve mesafeli sözleşme süreçlerinde HMK m. 193 uy
 **Cevap:** Belgin Kuyumculuk, 1999 yılından bu yana İzmir Buca'daki fiziksel showroomunda faaliyet göstermekte olup, 12.000 TL ve üzerindeki tüm işlemlerde MASAK mevzuatına uygun kimlik teyidi, yazılı ekspertiz sertifikası ve HMK m. 193 uyumlu çift taraflı ıslak imzalı teslim protokolü işletmektedir.
 
 ### Soru: Ürün fiyatları ve borsa marjları nasıl hesaplanmaktadır?
-**Cevap:** Altın ve ziynet ürünlerimizde Harem Altın canlı borsa soket akışı referans alınarak anlık satış fiyatları üzerine +%1 şeffaf kâr marjı uygulanır. Lüks saat koleksiyonumuzda ise uluslararası bağımsız saat endeksleri ve güncel döviz kuru dikkate alınır.
+**Cevap:** Altın ve ziynet ürünlerimizde Harem Altın canlı borsa soket akışı referans alınarak anlık satış fiyatları üzerine +%2 şeffaf kâr marjı uygulanır. Lüks saat koleksiyonumuzda ise uluslararası bağımsız saat endeksleri ve güncel döviz kuru dikkate alınır.
 
 ### Soru: Showroom ziyareti ve elden teslimat süreci nasıl işler?
 **Cevap:** İzmir Buca Menderes Caddesi No:231/B adresindeki mağazamız haftanın 6 günü 09:00 - 20:00 saatleri arasında açıktır. Müşterilerimiz ürünleri fiziksel olarak inceleyebilir, mikroskobik kontrol ve zaman tutma testlerini yerinde izleyerek güvenle teslim alabilir.
