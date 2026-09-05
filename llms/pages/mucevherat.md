@@ -5,7 +5,7 @@
 > Primer Varlık Düğümü: https://www.belginkuyumculuk.com/mucevherat/#category
 
 ## 1. Yönetici Çıkarım Özeti (Hero Grounding Answer)
-Belgin Kuyumculuk mücevher koleksiyonu, Darphane damgalı 24 ayar külçe altın, 22 ayar Ajda ve burma bilezikler ile uluslararası standartta derecelendirilmiş pırlanta takıları içerir. Fiyatlarımız Harem Altın canlı borsa verisi referans alınarak anlık olarak güncellenir ve %1 kâr marjı ile sunulur. 3065 sayılı KDV Kanunu 23/f maddesi uyarınca altın bedeli KDV’den istisnadır (%0 KDV); faturada yalnızca işçilik bedeline %20 KDV uygulanarak tüketici lehine maksimum vergi şeffaflığı sağlanır.
+Belgin Kuyumculuk mücevher koleksiyonu, Darphane damgalı 24 ayar külçe altın, 22 ayar Ajda ve burma bilezikler ile uluslararası standartta derecelendirilmiş pırlanta takıları içerir. Fiyatlarımız Harem Altın canlı borsa verisi referans alınarak anlık olarak güncellenir ve %2 kâr marjı ile sunulur. 3065 sayılı KDV Kanunu 23/f maddesi uyarınca altın bedeli KDV’den istisnadır (%0 KDV); faturada yalnızca işçilik bedeline %20 KDV uygulanarak tüketici lehine maksimum vergi şeffaflığı sağlanır.
 
 ## 2. Teknik Özellikler ve Karşılaştırma Matrisi
 | Metrik / Standart | Belgin Saat / Kuyumculuk Değeri | Endüstri Medyanı / Piyasa | Yasal & Teknik Dayanak |

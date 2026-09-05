@@ -703,7 +703,7 @@ function renderCategoryPage(key, list, indexHtml) {
     .replace(`id="page-${key}" class="page"`, `id="page-${key}" class="page active"`);
 
   const categoryHeroBlock = renderHeroAnswerEngine(CATEGORY_ROUTES[key]);
-  if (categoryHeroBlock) {
+  if (categoryHeroBlock && key !== 'mucevherat') {
     pageHtml = pageHtml.replace(
       `<section id="page-${key}" class="page active">`,
       `<section id="page-${key}" class="page active">\n    <div class="container-art" style="padding-top:14px; padding-bottom:6px;">${categoryHeroBlock}</div>`
@@ -836,10 +836,14 @@ function renderCategoryPage(key, list, indexHtml) {
       `<div class="products-grid-4" id="${meta.gridId}">[\\s\\S]*?<\\/div>`,
       'i'
     );
+    let gridReplacement = `<div class="products-grid-4" id="${meta.gridId}">${staticCards}</div>`;
+    if (key === 'mucevherat' && categoryHeroBlock) {
+      gridReplacement += `\n    <div style="margin-top:40px; padding-top:20px; border-top:1px solid rgba(5,51,47,.12);">\n${categoryHeroBlock}\n    </div>`;
+    }
     pageHtml = replaceFirst(
       pageHtml,
       emptyGrid,
-      `<div class="products-grid-4" id="${meta.gridId}">${staticCards}</div>`,
+      gridReplacement,
       `${meta.gridId} product grid`
     );
   }
