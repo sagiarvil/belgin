@@ -8,6 +8,11 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png?v=20260831-lion-max-gold-v5">
   <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png?v=20260831-lion-max-gold-v5">
   <base href="/">
+  <script>
+    if (window.location.hash === '#canli-fiyatlar' || window.location.hash === '#canlipiyasalar') {
+      window.location.replace('/canli-fiyatlar/');
+    }
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Belgin Saat — Lüks Saat & Prestij Koleksiyonu (Est. 1999)</title>
@@ -2363,9 +2368,91 @@
     </div>
   </section>
 
-  <!-- 4.1 CANLI PİYASALAR & ALTIN FİYATLARI (GİZLİ) -->
+  <!-- 4.1 CANLI PİYASALAR & ALTIN FİYATLARI -->
   <section id="page-canli-fiyatlar" class="page">
-    <!-- App.renderLivePricesPage() tarafından dinamik basılacak -->
+    <div class="page-canli-fiyatlar-wrapper">
+      <div class="container-art" style="max-width: 100%; width: 100%; height: 100%; padding: 0; margin: 0;">
+        
+        <!-- BİREBİR DİJİTAL KUYUMCU TABELASI (#fff200) -->
+        <div class="board-exact-frame">
+          
+          <!-- Üst Kırmızı Başlık Metni -->
+          <div class="board-exact-top-bar">
+            Belgin Kuyumculuk Canlı Satış Fiyatlarıdır.
+          </div>
+
+          <!-- Birebir Tablo -->
+          <table class="board-exact-table">
+            <thead>
+              <tr>
+                <th style="width: 38%;">ALTIN</th>
+                <th style="width: 31%;">SATIŞ</th>
+                <th style="width: 31%;">HOŞGELDİNİZ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-label">22 AYAR</td>
+                <td class="td-price"><span class="price-num" id="live_22k">6.690</span></td>
+                <td class="td-right-message" rowspan="5">
+                  <div class="right-message-inner">
+                    <div class="right-title">BELGİN</div>
+                    <div class="right-title">KUYUMCULUK</div>
+                    <div class="right-sub">CANLI</div>
+                    <div class="right-sub">SATIŞ</div>
+                    <div class="right-sub">FİYATLARIDIR!</div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="td-label">18 AYAR</td>
+                <td class="td-price"><span class="price-num" id="live_18k">6.400</span></td>
+              </tr>
+              <tr>
+                <td class="td-label">14 AYAR</td>
+                <td class="td-price"><span class="price-num" id="live_14k">5.950</span></td>
+              </tr>
+              <tr>
+                <td class="td-label">GRAM ALTIN</td>
+                <td class="td-price"><span class="price-num" id="live_gram">7.121</span></td>
+              </tr>
+              <tr>
+                <td class="td-label">CUMHURİYET</td>
+                <td class="td-price"><span class="price-num" id="live_cumhuriyet">47.400</span></td>
+              </tr>
+              <tr class="tr-sarrafiye-header">
+                <td style="background-color:#fff200; border: 2px solid #000;"></td>
+                <th style="border: 2px solid #000;">YENİ</th>
+                <th style="border: 2px solid #000;">ESKİ</th>
+              </tr>
+              <tr>
+                <td class="td-label">ÇEYREK</td>
+                <td class="td-price"><span class="price-num" id="live_ceyrek_yeni">11.750</span></td>
+                <td class="td-price"><span class="price-num" id="live_ceyrek_eski">11.600</span></td>
+              </tr>
+              <tr>
+                <td class="td-label">YARIM</td>
+                <td class="td-price"><span class="price-num" id="live_yarim_yeni">23.500</span></td>
+                <td class="td-price"><span class="price-num" id="live_yarim_eski">23.200</span></td>
+              </tr>
+              <tr>
+                <td class="td-label">ZİYNET</td>
+                <td class="td-price"><span class="price-num" id="live_ziynet_yeni">47.000</span></td>
+                <td class="td-price"><span class="price-num" id="live_ziynet_eski">46.400</span></td>
+              </tr>
+              <tr>
+                <td class="td-has-label">HAS ALTIN:</td>
+                <td colspan="2" style="text-align: center; border: 2px solid #000;">
+                  <span class="has-red-box"><span class="price-num" id="live_has_altin">7.121,00</span></span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+
+      </div>
+    </div>
   </section>
 
   <!-- 5. 1999'DAN BERİ SÜREN MİRAS & HAKKIMIZDA SAYFASI (GİZLİ — BİZ KİMİZ KULLANILIR) -->

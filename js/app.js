@@ -216,6 +216,9 @@ const App = {
   },
 
   init() {
+    if (this._initialized) return;
+    this._initialized = true;
+
     Cart.init();
     Wishlist.init();
     Router.init();

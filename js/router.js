@@ -111,7 +111,7 @@ const Router = {
       return { page: 'ana-sayfa' };
     }
     if (hash === 'canli-fiyatlar' || hash === 'canlipiyasalar') {
-      history.replaceState({page:'canli-fiyatlar'}, '', '/canli-fiyatlar/');
+      window.location.replace('/canli-fiyatlar/');
       return { page: 'canli-fiyatlar' };
     }
     if (hash === 'mucevherat' || hash === 'jewellery') {
@@ -209,8 +209,12 @@ const Router = {
       // 3. data-page navigasyon linkleri
       const link = e.target.closest('[data-page]');
       if (link) {
-        e.preventDefault();
         const page = link.getAttribute('data-page');
+        if (page === 'canli-fiyatlar') {
+          window.location.href = '/canli-fiyatlar/';
+          return;
+        }
+        e.preventDefault();
         const filterVal = link.getAttribute('data-filter');
         this.navigate(page, true, { filter: filterVal });
         return;
@@ -220,6 +224,13 @@ const Router = {
       const hrefHash = e.target.closest('a[href="#"]');
       if (hrefHash && !hrefHash.getAttribute('data-page') && !hrefHash.getAttribute('onclick')) {
         e.preventDefault();
+      }
+    });
+
+    window.addEventListener('hashchange', () => {
+      const hash = location.hash.replace(/^#/, '');
+      if (hash === 'canli-fiyatlar' || hash === 'canlipiyasalar') {
+        window.location.replace('/canli-fiyatlar/');
       }
     });
 
@@ -334,7 +345,7 @@ const Router = {
     }
 
     // 6. İlgili Sayfa / Ürün Başına Akıllı Kaydırma (Smart Smooth Scroll)
-    if ((page === 'ana-sayfa' && !options.filter) || page === 'urun') {
+    if ((page === 'ana-sayfa' && !options.filter) || page === 'urun' || page === 'canli-fiyatlar') {
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
       window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
       document.documentElement.scrollTop = 0;
