@@ -1,0 +1,6 @@
+Contact: mailto:destek@belginkuyumculuk.com
+Expires: 2027-01-01T00:00:00.000Z
+Preferred-Languages: tr, en
+Canonical: https://www.belginkuyumculuk.com/.well-known/security.txt
+Policy: https://www.belginkuyumculuk.com/hukuki-delil-ve-kayit-politikasi.html
+Acknowledgments: https://www.belginkuyumculuk.com/biz-kimiz/

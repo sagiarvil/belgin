@@ -116,14 +116,15 @@ function runQualityGates() {
   const llmsPath = path.join(ROOT_DIR, 'llms.txt');
   if (fs.existsSync(llmsPath)) {
     const llmsContent = fs.readFileSync(llmsPath, 'utf8');
-    const llmsLinkMatches = [...llmsContent.matchAll(new RegExp(`- ${BASE_URL}/(llms/[\\w\\-\\.\\/]+)`, 'g'))];
+    const llmsLinkMatches = [...llmsContent.matchAll(new RegExp(`\\]\\(${BASE_URL}/(llms/[\\w\\-\\.\\/]+)\\)|- ${BASE_URL}/(llms/[\\w\\-\\.\\/]+)`, 'g'))];
     for (const match of llmsLinkMatches) {
-      const relPath = match[1];
+      const relPath = match[1] || match[2];
       const diskPath = path.join(ROOT_DIR, relPath);
       if (!fs.existsSync(diskPath)) {
         errors.push(`[G4 LLMS 404] llms.txt içindeki bağlantı diskte bulunamadı: ${relPath}`);
       }
     }
+
   }
 
   // G5: IndexNow Doğrulaması (Key & Multi-Hub Readiness)

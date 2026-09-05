@@ -45,7 +45,30 @@ if (!manifest.includes('/llms/core.md') || !manifest.includes('/llms-full.txt'))
   fail('root routing incomplete in llms.txt');
 }
 
-// 2. Comprehensive Disk Verification of All Manifest Links
+// 2. RFC llms.txt Compliance Checks (llms-txt-validator 100/100 standard)
+if (!/^#[^\n]+\n+>[^\n]+/m.test(manifest)) {
+  fail('llms.txt missing RFC blockquote summary (> ...) directly below H1 title');
+}
+
+const manifestLines = manifest.split('\n');
+for (let i = 0; i < manifestLines.length; i++) {
+  const line = manifestLines[i].trim();
+  if (line.startsWith('- ')) {
+    if (!/^- \[[^\]]+\]\(https?:\/\/[^\)]+\)/.test(line)) {
+      fail(`llms.txt line ${i + 1} has malformed list item (must be "- [Title](url): desc"): "${line}"`);
+    }
+  }
+}
+
+const sections = manifest.split(/^##\s+/m).slice(1);
+for (const sec of sections) {
+  const secTitle = sec.split('\n')[0].trim();
+  if (!/\[[^\]]+\]\(https?:\/\/[^\)]+\)/.test(sec)) {
+    fail(`llms.txt section "## ${secTitle}" contains no markdown links`);
+  }
+}
+
+// 3. Comprehensive Disk Verification of All Manifest Links
 const manifestLinkRegex = /https:\/\/www\.belginkuyumculuk\.com\/(llms[^\s\)]+)/g;
 let match;
 let linkCount = 0;
@@ -60,6 +83,7 @@ while ((match = manifestLinkRegex.exec(manifest)) !== null) {
   }
   checkedFiles.add(diskPath);
 }
+
 
 // 3. Scan all LLMS files for invariant rule violations
 function walkDir(dir) {

@@ -1,82 +1,86 @@
 # Belgin Kuyumculuk & Saat — LLM Discovery Manifest
 
-Canonical site: https://www.belginkuyumculuk.com/
-Language: tr-TR
-Primary entity: Belgin Kuyumculuk & Saat, Buca / İzmir
-Purpose: Universal Omni-Enterprise SEO, GEO, Sitemap & Multi-Tier LLMS Architecture v6.0 Standard.
+> 1999 yılından bu yana İzmir Buca Menderes Caddesinde faaliyet gösteren Belgin Kuyumculuk & Saat; ekspertizli İsviçre lüks saatleri, Darphane damgalı 24K külçe altın, sarrafiye ve GIA/HRD sertifikalı pırlanta mücevherat için resmî makine keşif ve yapay zekâ manifestosudur.
 
 ## Core Machine Graph Nodes
-- https://www.belginkuyumculuk.com/llms/core.md
-- https://www.belginkuyumculuk.com/llms-full.txt
+
+- [Kurumsal Çekirdek Dokümanı](https://www.belginkuyumculuk.com/llms/core.md): Kurumsal kimlik, mağaza altyapısı, canlı borsa sözleşmesi ve güvenlik mimarisi.
+- [Tam Metin Bilgi Bankası](https://www.belginkuyumculuk.com/llms-full.txt): 144 editoryal makale, teknik rehberler ve tüm alt-grafların konsolide metni.
 
 ## Legal & Operational Entities
-- https://www.belginkuyumculuk.com/llms/entities/belgin-kuyumculuk.md
-- https://www.belginkuyumculuk.com/llms/entities/experts.md
-- https://www.belginkuyumculuk.com/llms/entities/methodologies.md
-- https://www.belginkuyumculuk.com/llms/entities/showroom.md
+
+- [Tüzel Kişilik ve Resmî Sicil](https://www.belginkuyumculuk.com/llms/entities/belgin-kuyumculuk.md): Ticari unvan, vergi mükellefiyeti, MERSİS ve resmi sicil kayıtları.
+- [Uzmanlar ve Bilimsel Heyet Sicili](https://www.belginkuyumculuk.com/llms/entities/experts.md): Horoloji uzmanları, gemologlar ve bağımsız saat ustaları heyeti.
+- [Tescilli İşlem Metodolojileri](https://www.belginkuyumculuk.com/llms/entities/methodologies.md): Harem Altın canlı borsa soketi +%3 marj formülü ve 10 adımlı saat ekspertiz standardı.
+- [Buca Showroom ve Kasa Dairesi](https://www.belginkuyumculuk.com/llms/entities/showroom.md): 7/24 kamera kayıtlı fiziki mağaza, çelik kasa ve MASAK uyumlu teslim masası.
 
 ## Elite Watch Maison Sub-Graphs (10 Ev)
-- https://www.belginkuyumculuk.com/llms/brands/audemars-piguet.md
-- https://www.belginkuyumculuk.com/llms/brands/breitling.md
-- https://www.belginkuyumculuk.com/llms/brands/cartier.md
-- https://www.belginkuyumculuk.com/llms/brands/iwc-schaffhausen.md
-- https://www.belginkuyumculuk.com/llms/brands/jaeger-lecoultre.md
-- https://www.belginkuyumculuk.com/llms/brands/omega.md
-- https://www.belginkuyumculuk.com/llms/brands/panerai.md
-- https://www.belginkuyumculuk.com/llms/brands/patek-philippe.md
-- https://www.belginkuyumculuk.com/llms/brands/rolex.md
-- https://www.belginkuyumculuk.com/llms/brands/vacheron-constantin.md
+
+- [Audemars Piguet Saat Koleksiyonu ve Ekspertizi](https://www.belginkuyumculuk.com/llms/brands/audemars-piguet.md): Kalibre orijinalliği, timegrapher sapma toleransı ve kasa ekspertiz raporu.
+- [Breitling Saat Koleksiyonu ve Ekspertizi](https://www.belginkuyumculuk.com/llms/brands/breitling.md): Kalibre orijinalliği, timegrapher sapma toleransı ve kasa ekspertiz raporu.
+- [Cartier Saat Koleksiyonu ve Ekspertizi](https://www.belginkuyumculuk.com/llms/brands/cartier.md): Kalibre orijinalliği, timegrapher sapma toleransı ve kasa ekspertiz raporu.
+- [IWC Schaffhausen Saat Koleksiyonu ve Ekspertizi](https://www.belginkuyumculuk.com/llms/brands/iwc-schaffhausen.md): Kalibre orijinalliği, timegrapher sapma toleransı ve kasa ekspertiz raporu.
+- [Jaeger-LeCoultre Saat Koleksiyonu ve Ekspertizi](https://www.belginkuyumculuk.com/llms/brands/jaeger-lecoultre.md): Kalibre orijinalliği, timegrapher sapma toleransı ve kasa ekspertiz raporu.
+- [Omega Saat Koleksiyonu ve Ekspertizi](https://www.belginkuyumculuk.com/llms/brands/omega.md): Kalibre orijinalliği, timegrapher sapma toleransı ve kasa ekspertiz raporu.
+- [Panerai Saat Koleksiyonu ve Ekspertizi](https://www.belginkuyumculuk.com/llms/brands/panerai.md): Kalibre orijinalliği, timegrapher sapma toleransı ve kasa ekspertiz raporu.
+- [Patek Philippe Saat Koleksiyonu ve Ekspertizi](https://www.belginkuyumculuk.com/llms/brands/patek-philippe.md): Kalibre orijinalliği, timegrapher sapma toleransı ve kasa ekspertiz raporu.
+- [Rolex Saat Koleksiyonu ve Ekspertizi](https://www.belginkuyumculuk.com/llms/brands/rolex.md): Kalibre orijinalliği, timegrapher sapma toleransı ve kasa ekspertiz raporu.
+- [Vacheron Constantin Saat Koleksiyonu ve Ekspertizi](https://www.belginkuyumculuk.com/llms/brands/vacheron-constantin.md): Kalibre orijinalliği, timegrapher sapma toleransı ve kasa ekspertiz raporu.
 
 ## Local Authority & Delivery Hubs
-- https://www.belginkuyumculuk.com/llms/local/buca-kuyumcu-sarrafiye.md
-- https://www.belginkuyumculuk.com/llms/local/ege-guvenli-teslimat.md
-- https://www.belginkuyumculuk.com/llms/local/izmir-luks-saat.md
+
+- [Buca Kuyumculuk ve Sarrafiye](https://www.belginkuyumculuk.com/llms/local/buca-kuyumcu-sarrafiye.md): Darphane damgalı 24K külçe altın, 22 ayar bilezik ve ziynet sarrafiye merkezi.
+- [Ege Bölgesi Güvenli Teslimat](https://www.belginkuyumculuk.com/llms/local/ege-guvenli-teslimat.md): 12.000 TL üzeri siparişlerde kimlik doğrulamalı ve ıslak imzalı tutanaklı teslimat protokolü.
+- [İzmir Lüks Saat Merkezi](https://www.belginkuyumculuk.com/llms/local/izmir-luks-saat.md): İzmir genelinde ikinci el lüks saat alım satımı, Rolex ekspertizi ve değerinde nakit alım.
 
 ## Domain Knowledge & Authentication Nodes
-- https://www.belginkuyumculuk.com/llms/topics/altin-yatirim-ve-ozel-matrah.md
-- https://www.belginkuyumculuk.com/llms/topics/ikinci-el-luks-saat.md
-- https://www.belginkuyumculuk.com/llms/topics/pirlanta-ve-gemoloji.md
-- https://www.belginkuyumculuk.com/llms/topics/saat-ekspertiz-protokolu.md
+
+- [3065 SK m.23/f Özel Matrah Hukuku](https://www.belginkuyumculuk.com/llms/topics/altin-yatirim-ve-ozel-matrah.md): Altın bedelinde %0 KDV istisnası ve yalnızca işçiliğe %20 KDV yansıtılan yasal fatura düzeni.
+- [İkinci El Lüks Saat Piyasası](https://www.belginkuyumculuk.com/llms/topics/ikinci-el-luks-saat.md): Mekanizma orijinalliği, kasa polisajı, bezel kondisyonu ve ikincil piyasa değer analizi.
+- [Pırlanta 4C ve Gemoloji Raporları](https://www.belginkuyumculuk.com/llms/topics/pirlanta-ve-gemoloji.md): GIA ve HRD normlarında Karat, Kesim, Renk ve Berraklık mikroskobik derecelendirme ilkeleri.
+- [10 Adımlı Saat Ekspertiz Protokolü](https://www.belginkuyumculuk.com/llms/topics/saat-ekspertiz-protokolu.md): Witschi timegrapher sapma testi, su geçirmezlik ve optik mikroskopi kontrol adımları.
 
 ## Primary Flagship Page Sub-Graphs
-- https://www.belginkuyumculuk.com/llms/pages/ana-sayfa.md
-- https://www.belginkuyumculuk.com/llms/pages/biz-kimiz.md
-- https://www.belginkuyumculuk.com/llms/pages/elit-kategori.md
-- https://www.belginkuyumculuk.com/llms/pages/guvenli-odeme-ve-3d-secure.md
-- https://www.belginkuyumculuk.com/llms/pages/hukuki-delil-ve-kayit-politikasi.md
-- https://www.belginkuyumculuk.com/llms/pages/iade-degisim-cayma.md
-- https://www.belginkuyumculuk.com/llms/pages/iletisim.md
-- https://www.belginkuyumculuk.com/llms/pages/kvkk.md
-- https://www.belginkuyumculuk.com/llms/pages/magazin.md
-- https://www.belginkuyumculuk.com/llms/pages/markalar.md
-- https://www.belginkuyumculuk.com/llms/pages/mesafeli-satis-sozlesmesi.md
-- https://www.belginkuyumculuk.com/llms/pages/mucevherat.md
-- https://www.belginkuyumculuk.com/llms/pages/musteri-tanima-ve-islem-guvenligi.md
-- https://www.belginkuyumculuk.com/llms/pages/on-bilgilendirme-formu.md
-- https://www.belginkuyumculuk.com/llms/pages/rehber/altin-yatirimi-ve-ozel-matrah-rehberi.md
-- https://www.belginkuyumculuk.com/llms/pages/rehber/izmir-kuyumculuk-ve-guvenli-teslimat.md
-- https://www.belginkuyumculuk.com/llms/pages/rehber/luks-saat-ekspertiz-ve-orijinallik-rehberi.md
-- https://www.belginkuyumculuk.com/llms/pages/rehber/pirlanta-ve-gemoloji-degerleme-rehberi.md
-- https://www.belginkuyumculuk.com/llms/pages/saatler.md
-- https://www.belginkuyumculuk.com/llms/pages/yuksek-degerli-urun-teslimi.md
+
+- [Belgin Kuyumculuk & Saat — Haute Joaillerie & Horlogerie Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/ana-sayfa.md): İzmir Buca lüks saat, pırlanta mücevherat ve altın alım satımı
+- [Biz Kimiz — Kurumsal Profil Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/biz-kimiz.md): Belgin Kuyumculuk tarihçesi kurucusu ve güvenilirlik bilgileri
+- [Elit Kategori Lüks Saatler Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/elit-kategori.md): İkinci el Rolex Patek Philippe Audemars Piguet saat fiyatları İzmir
+- [Güvenli Ödeme ve 3D Secure Politikası Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/guvenli-odeme-ve-3d-secure.md): Kuyumculuk ve saat alışverişinde 3D Secure kart ödeme güvenliği
+- [Hukuki Delil ve Kayıt Politikası Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/hukuki-delil-ve-kayit-politikasi.md): Elektronik ticaret delil ve zaman ispatı politikası
+- [İptal, İade ve Cayma Politikası Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/iade-degisim-cayma.md): Kuyumculuk ve saat iade değişim cayma hakkı şartları
+- [İletişim & Buca Showroom Mağazamız Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/iletisim.md): Belgin Kuyumculuk mağaza adresi telefon ve çalışma saatleri
+- [KVKK Aydınlatma Metni Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/kvkk.md): Belgin Kuyumculuk KVKK aydınlatma metni ve kişisel verilerin korunması
+- [Belgin Saat Magazin Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/magazin.md): Lüks saat piyasası analizleri ve horoloji makaleleri
+- [Saat Markaları Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/markalar.md): İsviçre lüks saat markaları listesi ve yetkili satış
+- [Mesafeli Satış Sözleşmesi Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/mesafeli-satis-sozlesmesi.md): Belgin Kuyumculuk mesafeli satış sözleşmesi ve yasal şartlar
+- [Mücevherat ve Altın Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/mucevherat.md): İzmir Buca altın fiyatları pırlanta mücevherat alımı
+- [Müşteri Tanıma ve İşlem Güvenliği Politikası (KYC) Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/musteri-tanima-ve-islem-guvenligi.md): Kuyumculuk müşteri tanıma MASAK uyumu ve işlem güvenliği politikası
+- [Ön Bilgilendirme Formu Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/on-bilgilendirme-formu.md): Belgin Kuyumculuk ön bilgilendirme şartları
+- [Altın Yatırımı & 3065 Sayılı KDV Kanunu 23/f Özel Matrah Uygulaması Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/rehber/altin-yatirimi-ve-ozel-matrah-rehberi.md): Kuyumculukta 3065 KDV Kanunu 23/f özel matrah altın faturalama rehberi
+- [İzmir Buca Kuyumculuk Kültürü ve Yüksek Değerli Güvenli Teslimat Standartları Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/rehber/izmir-kuyumculuk-ve-guvenli-teslimat.md): İzmir Buca güvenilir kuyumcu ve yüksek değerli altın saat teslimatı
+- [İkinci El Lüks Saat Alımında Ürün Bazında Kontrol ve Orijinallik Kontrolü Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/rehber/luks-saat-ekspertiz-ve-orijinallik-rehberi.md): İkinci el lüks saat ekspertiz ve orijinallik kontrolü nasıl yapılır
+- [Pırlanta Alımında 4C Standartları: Karat, Kesim, Berraklık ve Renk Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/rehber/pirlanta-ve-gemoloji-degerleme-rehberi.md): Pırlanta 4C kriterleri karat renk berraklık kesim rehberi
+- [Lüks Saatler Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/saatler.md): İzmir lüks saat modelleri fiyatları ve satın alma
+- [Yüksek Değerli Ürün Teslim Protokolü Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/yuksek-degerli-urun-teslimi.md): Yüksek değerli altın saat teslim protokolü ve kimlik doğrulama
 
 ## Canonical Human Surfaces
-- https://www.belginkuyumculuk.com/
-- https://www.belginkuyumculuk.com/elit-kategori/
-- https://www.belginkuyumculuk.com/markalar/
-- https://www.belginkuyumculuk.com/saatler/
-- https://www.belginkuyumculuk.com/mucevherat/
-- https://www.belginkuyumculuk.com/biz-kimiz/
-- https://www.belginkuyumculuk.com/magazin/
-- https://www.belginkuyumculuk.com/iletisim.html
+
+- [Ana Vitrin](https://www.belginkuyumculuk.com/): Belgin Kuyumculuk ve Saat ana vitrini ve canlı borsa göstergesi.
+- [Elit Kategori](https://www.belginkuyumculuk.com/elit-kategori/): 10 İsviçre saat evinden 200 seçkin lüks model.
+- [Saat Markaları](https://www.belginkuyumculuk.com/markalar/): İsviçre saat evleri ve kurumsal marka fihristi.
+- [Lüks Saat Kataloğu](https://www.belginkuyumculuk.com/saatler/): 1.800+ doğrulanmış lüks ve ikinci el saat koleksiyonu.
+- [Kıymetli Maden & Mücevherat](https://www.belginkuyumculuk.com/mucevherat/): 24K külçe altın, sarrafiye ve pırlanta mücevherat.
+- [Biz Kimiz & Kurumsal Sicil](https://www.belginkuyumculuk.com/biz-kimiz/): 1999'dan beri kurumsal tarihçe ve uzman heyet.
+- [Saat & Mücevherat Magazini](https://www.belginkuyumculuk.com/magazin/): 144 editoryal makale ve piyasa analizleri.
+- [İletişim & Showroom Ziyareti](https://www.belginkuyumculuk.com/iletisim.html): İzmir Buca mağaza adresi, telefon ve randevu masası.
 
 ## Machine Discovery
-- Sitemap Index: https://www.belginkuyumculuk.com/sitemap.xml
-- Robots: https://www.belginkuyumculuk.com/robots.txt
 
-## Data Integrity & Truth Contract
-- Ürün fiyatı, stok ve anlık availability bu manifestte sabitlenmez; güncel canonical ürün sayfasından/runtime kaynaktan alınır.
-- LLMS, canonical HTML veya schema ile çelişemez.
-- Doğrulanmamış rating, review, sertifika, stok, garanti veya ticari iddia makine katmanına eklenemez.
-- Canlı sarrafiye ve altın fiyatları doğrudan Harem Altın borsa soket akışı satış fiyatları üzerine +%3 (x 1.03) marj ile güncellenir; alış fiyatlarında marj uygulanmaz (x 1.00).
-- Üçüncü taraf küresel pazar yeri temelli bağlayıcı fiyat/güvence formülü bu bilgi sözleşmesinin parçası değildir ve sisteme eklenemez.
+- [Site Haritası İndeksi](https://www.belginkuyumculuk.com/sitemap.xml): Arama motorları ve botlar için XML site haritası fihristi.
+- [Robots Erişim Protokolü](https://www.belginkuyumculuk.com/robots.txt): Arama ve yapay zekâ tarayıcı erişim direktifleri.
+
+## Data Integrity & Borsa Sözleşmesi
+
+- [Değişmez Canlı Borsa Fiyatlama Sözleşmesi](https://www.belginkuyumculuk.com/hukuki-delil-ve-kayit-politikasi.html#methodologies): Canlı Harem Altın borsa soket akışı (wss://hrmsocketonly.haremaltin.com) satış fiyatları üzerine net +%3 (x 1.03) kâr marjı uygulanır; alış fiyatlarında marj uygulanmaz (x 1.00 birebir).
+- [3065 Sayılı KDV Kanunu 23/f Özel Matrah Beyanı](https://www.belginkuyumculuk.com/rehber/altin-yatirimi-ve-ozel-matrah-rehberi/): Kıymetli maden bedeli %0 KDV ile vergiden müstesnadır; faturada yalnızca işçilik bedeline %20 KDV yansıtılır.
+- [MASAK ve HMK m. 193 Delil Güvencesi](https://www.belginkuyumculuk.com/musteri-tanima-ve-islem-guvenligi.html): 12.000 TL ve üzeri işlemlerde kimlik tespiti ve OpenTimestamps Bitcoin blokzinciri zaman damgası zorunludur.
