@@ -2823,7 +2823,7 @@ const App = {
               <tbody>
                 <tr>
                 <td class="td-label">22 AYAR</td>
-                <td class="td-price"><span class="price-num" id="live_22k">6.581</span></td>
+                <td class="td-price"><span class="price-num" id="live_22k">6.646</span></td>
                 <td class="td-right-message" rowspan="5">
                   <div class="right-message-inner">
                     <div class="right-title">BELGİN</div>
@@ -2836,19 +2836,19 @@ const App = {
               </tr>
               <tr>
                 <td class="td-label">18 AYAR</td>
-                <td class="td-price"><span class="price-num" id="live_18k">5.267</span></td>
+                <td class="td-price"><span class="price-num" id="live_18k">5.319</span></td>
               </tr>
               <tr>
                 <td class="td-label">14 AYAR</td>
-                <td class="td-price"><span class="price-num" id="live_14k">5.075</span></td>
+                <td class="td-price"><span class="price-num" id="live_14k">5.125</span></td>
               </tr>
               <tr>
                 <td class="td-label">GRAM ALTIN</td>
-                <td class="td-price"><span class="price-num" id="live_gram">7.023</span></td>
+                <td class="td-price"><span class="price-num" id="live_gram">7.092</span></td>
               </tr>
               <tr>
                 <td class="td-label">CUMHURİYET</td>
-                <td class="td-price"><span class="price-num" id="live_cumhuriyet">46.549</span></td>
+                <td class="td-price"><span class="price-num" id="live_cumhuriyet">47.005</span></td>
               </tr>
               <tr class="tr-sarrafiye-header">
                 <td style="background-color:#fff200; border: 2px solid #000;"></td>
@@ -2857,23 +2857,23 @@ const App = {
               </tr>
               <tr>
                 <td class="td-label">ÇEYREK</td>
-                <td class="td-price"><span class="price-num" id="live_ceyrek_yeni">11.488</span></td>
-                <td class="td-price"><span class="price-num" id="live_ceyrek_eski">11.277</span></td>
+                <td class="td-price"><span class="price-num" id="live_ceyrek_yeni">11.601</span></td>
+                <td class="td-price"><span class="price-num" id="live_ceyrek_eski">11.388</span></td>
               </tr>
               <tr>
                 <td class="td-label">YARIM</td>
-                <td class="td-price"><span class="price-num" id="live_yarim_yeni">22.948</span></td>
-                <td class="td-price"><span class="price-num" id="live_yarim_eski">22.520</span></td>
+                <td class="td-price"><span class="price-num" id="live_yarim_yeni">23.173</span></td>
+                <td class="td-price"><span class="price-num" id="live_yarim_eski">22.740</span></td>
               </tr>
               <tr>
                 <td class="td-label">ZİYNET</td>
-                <td class="td-price"><span class="price-num" id="live_ziynet_yeni">45.741</span></td>
-                <td class="td-price"><span class="price-num" id="live_ziynet_eski">45.108</span></td>
+                <td class="td-price"><span class="price-num" id="live_ziynet_yeni">46.189</span></td>
+                <td class="td-price"><span class="price-num" id="live_ziynet_eski">45.551</span></td>
               </tr>
               <tr>
                 <td class="td-has-label">HAS ALTIN:</td>
                 <td colspan="2" style="text-align: center; border: 2px solid #000;">
-                  <span class="has-red-box"><span class="price-num" id="live_has_altin">7.023,11</span></span>
+                  <span class="has-red-box"><span class="price-num" id="live_has_altin">7.091,96</span></span>
                 </td>
               </tr>
               </tbody>
@@ -2898,7 +2898,7 @@ const App = {
     };
 
     const rawItems = LIVE_MARKET_DATA.items || {};
-    const BOARD_MARGIN = 1.02; // Sarı Tabela Canlı Satış Kâr Marjı (+%2)
+    const BOARD_MARGIN = 1.03; // Sarı Tabela Canlı Satış Kâr Marjı (+%3)
 
     const baseHas = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.hasAltin || LIVE_MARKET_DATA.gramGold24k || 6885.40;
     const baseGram = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.gramGold24k || baseHas;

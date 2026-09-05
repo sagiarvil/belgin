@@ -2,7 +2,7 @@
 /**
  * BELGIN KUYUMCULUK — HAREM ALTIN %100 BİREBİR SENKRONİZASYON MOTORU
  * 
- * Amaç: Sarı Tabela (#canli-fiyatlar) nihai canlı satış fiyatları (+%2 marj) ile
+ * Amaç: Sarı Tabela (#canli-fiyatlar) nihai canlı satış fiyatları (+%3 marj) ile
  * katalogdaki ve ürün detay sayfalarındaki altın ürünlerini %100 birebir eşlemek.
  */
 
@@ -22,18 +22,18 @@ function syncHaremPricesToCatalog(rates) {
 
   const PRODUCTS = JSON.parse(match[1]);
 
-  const pGram = rates.pGram || 6962;
-  const p22k = rates.p22k || 6524;
-  const p18k = rates.p18k || 5220;
-  const p14k = rates.p14k || 5030;
-  const pCeyrekYeni = rates.pCeyrekYeni || 11381;
-  const pCeyrekEski = rates.pCeyrekEski || 11179;
-  const pYarimYeni = rates.pYarimYeni || 22753;
-  const pYarimEski = rates.pYarimEski || 22322;
-  const pZiynetYeni = rates.pZiynetYeni || 45340;
-  const pZiynetEski = rates.pZiynetEski || 44714;
-  const pAtaYeni = rates.pAtaYeni || 46107;
-  const pAtaEski = rates.pAtaEski || 46037;
+  const pGram = rates.pGram || 7092;
+  const p22k = rates.p22k || 6646;
+  const p18k = rates.p18k || 5319;
+  const p14k = rates.p14k || 5125;
+  const pCeyrekYeni = rates.pCeyrekYeni || 11601;
+  const pCeyrekEski = rates.pCeyrekEski || 11388;
+  const pYarimYeni = rates.pYarimYeni || 23173;
+  const pYarimEski = rates.pYarimEski || 22740;
+  const pZiynetYeni = rates.pZiynetYeni || 46189;
+  const pZiynetEski = rates.pZiynetEski || 45551;
+  const pAtaYeni = rates.pAtaYeni || 47005;
+  const pAtaEski = rates.pAtaEski || 46898;
 
   let updatedCount = 0;
 
@@ -129,20 +129,20 @@ function syncHaremPricesToCatalog(rates) {
   }
 }
 
-// Default Harem Altin Live Rates (+%2 Margin)
+// Default Harem Altin Live Rates (+%3 Margin)
 const defaultRates = {
-  pGram: 7031,
-  p22k: 6589,
-  p18k: 5272,
-  p14k: 5080,
-  pCeyrekYeni: 11494,
-  pCeyrekEski: 11290,
-  pYarimYeni: 22978,
-  pYarimEski: 22543,
-  pZiynetYeni: 45789,
-  pZiynetEski: 45157,
-  pAtaYeni: 46563,
-  pAtaEski: 46493
+  pGram: 7092,
+  p22k: 6646,
+  p18k: 5319,
+  p14k: 5125,
+  pCeyrekYeni: 11601,
+  pCeyrekEski: 11388,
+  pYarimYeni: 23173,
+  pYarimEski: 22740,
+  pZiynetYeni: 46189,
+  pZiynetEski: 45551,
+  pAtaYeni: 47005,
+  pAtaEski: 46898
 };
 
 syncHaremPricesToCatalog(defaultRates);

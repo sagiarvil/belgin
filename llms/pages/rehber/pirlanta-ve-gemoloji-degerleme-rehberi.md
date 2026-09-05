@@ -25,7 +25,7 @@ Pırlanta alımında küresel kalite standardını belirleyen 4C kriterleri (Car
 **Cevap:** Belgin Kuyumculuk, 1999 yılından bu yana İzmir Buca'daki fiziksel showroomunda faaliyet göstermekte olup, 12.000 TL ve üzerindeki tüm işlemlerde MASAK mevzuatına uygun kimlik teyidi, yazılı ekspertiz sertifikası ve HMK m. 193 uyumlu çift taraflı ıslak imzalı teslim protokolü işletmektedir.
 
 ### Soru: Ürün fiyatları ve borsa marjları nasıl hesaplanmaktadır?
-**Cevap:** Altın ve ziynet ürünlerimizde Harem Altın canlı borsa soket akışı referans alınarak anlık satış fiyatları üzerine +%2 şeffaf kâr marjı uygulanır. Lüks saat koleksiyonumuzda ise uluslararası bağımsız saat endeksleri ve güncel döviz kuru dikkate alınır.
+**Cevap:** Altın ve ziynet ürünlerimizde Harem Altın canlı borsa soket akışı referans alınarak anlık satış fiyatları üzerine +%3 şeffaf kâr marjı uygulanır; alış fiyatlarında marj uygulanmaz (x 1.00). Lüks saat koleksiyonumuzda ise uluslararası bağımsız saat endeksleri ve güncel döviz kuru dikkate alınır.
 
 ### Soru: Showroom ziyareti ve elden teslimat süreci nasıl işler?
 **Cevap:** İzmir Buca Menderes Caddesi No:231/B adresindeki mağazamız haftanın 6 günü 09:00 - 20:00 saatleri arasında açıktır. Müşterilerimiz ürünleri fiziksel olarak inceleyebilir, mikroskobik kontrol ve zaman tutma testlerini yerinde izleyerek güvenle teslim alabilir.

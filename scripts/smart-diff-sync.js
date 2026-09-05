@@ -3,7 +3,7 @@
  * BELGİN KUYUMCULUK – UNIFIED SMART DIFFING & DELTA-SYNC ENGINE v3.0
  * 
  * Kapsam:
- * 1. 🪙 Mücevherat & Altın: AgaKulche Canlı Verisi + %2 Kâr Marjı (x 1.02)
+ * 1. 🪙 Mücevherat & Altın: Canlı Borsa Verisi + %3 Kâr Marjı (x 1.03)
  * 2. ⌚ Lüks Saatler: Saat&Saat Canlı Verisi + %40 Kâr Marjı (x 1.40)
  * 3. 🏷️ İkinci El & Cartier: Ekspertiz Değerleme & Güvenli Koruma
  * 
@@ -19,7 +19,7 @@ const path = require('path');
 const crypto = require('crypto');
 const { execSync } = require('child_process');
 
-const GOLD_MARGIN = 1.02;  // +%2 Kâr Marjı
+const GOLD_MARGIN = 1.03;  // +%3 Kâr Marjı
 const WATCH_MARGIN = 1.40; // +%40 Kâr Marjı
 
 const BRAND_CONFIGS = [

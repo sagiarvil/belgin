@@ -3,10 +3,10 @@
 > Standart Kodu: MET-BELGIN-2026-V1
 
 ## 1. Fiyatlama ve Borsa Akışı Formülü (DEĞİŞMEZ KURAL)
-- **Sarı Tabela ve Borsa Bandı**: Harem Altın canlı borsa soket akışı (`wss://hrmsocketonly.haremaltin.com`) referans alınarak, anlık satış fiyatları üzerine her zaman **+%2 (x 1.02)** şeffaf kâr marjı eklenerek hesaplanır.
-- **Katalog Altın Ürünleri**: Agakulche canlı satış fiyatları üzerine istisnasız **+%2 (x 1.02)** eklenir.
+- **Sarı Tabela, Borsa Bandı ve Altın Katalog**: Harem Altın canlı borsa soket akışı (`wss://hrmsocketonly.haremaltin.com`) referans alınarak, anlık satış fiyatları üzerine her zaman **+%3 (x 1.03)** şeffaf kâr marjı eklenerek hesaplanır.
+- **Alış / Geri Alım Fiyatları**: Harem Altın canlı borsa soket akışındaki alış fiyatları kesinlikle marj eklenmeden birebir (1.00 çarpan) yansıtılır.
 - **Elit Kategori Saatler**: Uluslararası döviz kuru (USD) ve küresel likidite endeksleri üzerine **+%80** güvenlik marjı uygulanır.
-- **Borsa Akış Kaynağı**: Fiyatlama doğrudan Harem Altın canlı borsa soketi ve Ağa Külçe verileriyle işletilir.
+- **Borsa Akış Kaynağı**: Fiyatlama doğrudan Harem Altın canlı borsa soketi verileriyle işletilir.
 
 ## 2. 10 Adımlı Saat Doğrulama Standardı
 1. Kasa seri numarası lazer gravür derinliği kontrolü

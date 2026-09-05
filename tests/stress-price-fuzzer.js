@@ -95,7 +95,7 @@ PRODUCTS.forEach(p => {
     console.error(`  ❌ Geçersiz fiyat: [${p.reference}] ${p.name} = ${p.price}`);
   }
 
-  // 2. Gold Pricing Integrity Check (Aga Külçe Canlı Fiyat x 1.02 Doğrulaması)
+  // 2. Gold Pricing Integrity Check (Harem Altın Canlı Satış Fiyatı x 1.03 Doğrulaması)
   const n = (p.name || '').toLowerCase();
   const isGold = p.isGold || p.category === 'gold' || p.subCategory?.includes('Ziynet') || p.subCategory?.includes('Külçe') || p.subCategory?.includes('Bilezik');
 

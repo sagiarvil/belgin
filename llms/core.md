@@ -16,8 +16,8 @@ Belgin Kuyumculuk & Saat, 1999 yılında Semih Sonbahar tarafından İzmir Buca'
 - **Mücevherat**: GIA ve HRD derecelendirme normlarında 4C sertifikalı pırlanta yüzük, kolye ve takılar.
 
 ## 3. Değişmez Fiyatlama ve Borsa Sözleşmesi
-1. **Canlı Borsa Soket Akışı**: Harem Altın (`wss://hrmsocketonly.haremaltin.com`) canlı soket fiyatları üzerine net +%2 (x 1.02) marj uygulanır.
-2. **Katalog Fiyatlaması**: Agakulche canlı satış fiyatları üzerine +%2 (x 1.02) marj işletilir.
+1. **Canlı Borsa Soket Akışı ve Katalog**: Harem Altın (`wss://hrmsocketonly.haremaltin.com`) canlı soket satış fiyatları üzerine net +%3 (x 1.03) marj uygulanır. Alış fiyatlarına marj uygulanmaz (x 1.00).
+2. **Katalog Fiyatlaması**: Canlı satış fiyatları üzerine +%3 (x 1.03) marj işletilir.
 3. **Vergi Şeffaflığı**: 3065 sayılı KDV Kanunu 23/f maddesi uyarınca altın bedeli %0 KDV ile vergiden müstesnadır; yalnızca işçilik bedeline %20 KDV yansıtılır.
 4. **Borsa Akış Kaynağı**: Fiyatlama yalnızca Harem Altın borsa soketi üzerinden canlı sürdürülür.
 

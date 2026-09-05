@@ -178,7 +178,7 @@ function buildLlms() {
   body += `- Ürün fiyatı, stok ve anlık availability bu manifestte sabitlenmez; güncel canonical ürün sayfasından/runtime kaynaktan alınır.\n`;
   body += `- LLMS, canonical HTML veya schema ile çelişemez.\n`;
   body += `- Doğrulanmamış rating, review, sertifika, stok, garanti veya ticari iddia makine katmanına eklenemez.\n`;
-  body += `- Canlı sarrafiye ve altın fiyatları doğrudan Harem Altın borsa soket akışı ve Ağa Külçe verileri üzerine +%2 (x 1.02) marj ile güncellenir.\n`;
+  body += `- Canlı sarrafiye ve altın fiyatları doğrudan Harem Altın borsa soket akışı satış fiyatları üzerine +%3 (x 1.03) marj ile güncellenir; alış fiyatlarında marj uygulanmaz (x 1.00).\n`;
   body += `- Üçüncü taraf küresel pazar yeri temelli bağlayıcı fiyat/güvence formülü bu bilgi sözleşmesinin parçası değildir ve sisteme eklenemez.\n`;
 
   write('llms.txt', body);

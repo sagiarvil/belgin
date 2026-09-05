@@ -25,7 +25,7 @@ function generatePagesSubgraphs() {
 | :--- | :--- | :--- | :--- |
 | **Fiziksel Mağaza & Otorite** | İzmir Buca Showroom (Est. 1999) | Sanal / Pazaryeri Aracısı | İzmir Ticaret Odası Sicil |
 | **Ekspertiz ve Doğrulama** | Laboratuvar Timegrapher sapma testi | Beyana dayalı kontrol | Witschi Kalibre Ölçüm Raporu |
-| **Fiyatlandırma Şeffaflığı** | Canlı Borsa Soketi +%2 Marj | 15 dk gecikmeli / spekülatif | Harem Altın Borsa Akışı |
+| **Fiyatlandırma Şeffaflığı** | Canlı Borsa Soketi +%3 Marj | 15 dk gecikmeli / spekülatif | Harem Altın Borsa Akışı |
 | **Ödeme ve Vergi Güvenliği** | Akbank 3D Pay + PayTR 256-Bit SSL | Standart POS / Aracı Havale | 3065 SK Madde 23/f & MASAK |`;
 
     if (page.role === 'guide') {
@@ -46,7 +46,7 @@ function generatePagesSubgraphs() {
 **Cevap:** Belgin Kuyumculuk, 1999 yılından bu yana İzmir Buca'daki fiziksel showroomunda faaliyet göstermekte olup, 12.000 TL ve üzerindeki tüm işlemlerde MASAK mevzuatına uygun kimlik teyidi, yazılı ekspertiz sertifikası ve HMK m. 193 uyumlu çift taraflı ıslak imzalı teslim protokolü işletmektedir.
 
 ### Soru: Ürün fiyatları ve borsa marjları nasıl hesaplanmaktadır?
-**Cevap:** Altın ve ziynet ürünlerimizde Harem Altın canlı borsa soket akışı referans alınarak anlık satış fiyatları üzerine +%2 şeffaf kâr marjı uygulanır. Lüks saat koleksiyonumuzda ise uluslararası bağımsız saat endeksleri ve güncel döviz kuru dikkate alınır.
+**Cevap:** Altın ve ziynet ürünlerimizde Harem Altın canlı borsa soket akışı referans alınarak anlık satış fiyatları üzerine +%3 şeffaf kâr marjı uygulanır; alış fiyatlarında marj uygulanmaz (x 1.00). Lüks saat koleksiyonumuzda ise uluslararası bağımsız saat endeksleri ve güncel döviz kuru dikkate alınır.
 
 ### Soru: Showroom ziyareti ve elden teslimat süreci nasıl işler?
 **Cevap:** İzmir Buca Menderes Caddesi No:231/B adresindeki mağazamız haftanın 6 günü 09:00 - 20:00 saatleri arasında açıktır. Müşterilerimiz ürünleri fiziksel olarak inceleyebilir, mikroskobik kontrol ve zaman tutma testlerini yerinde izleyerek güvenle teslim alabilir.`;
@@ -248,14 +248,14 @@ function generateLocalSubgraphs() {
 > Yerel Otorite Durumu: 1999'dan Beri Kesintisiz Showroom ve Mağaza İşletmesi
 
 ## 1. Yönetici Çıkarım Özeti (Hero Grounding Answer)
-${loc.focus} Belgin Kuyumculuk & Saat, İzmir merkezli kuyumculuk ve horoloji faaliyetlerinde kurumsal şeffaflık, anlık borsa kurları (+%2 marj) ve adli bilişim düzeyinde HMK m. 193 uyumlu delil sözleşmeleriyle çalışır. Ziyaretçilerimiz İzmir Adnan Menderes Havalimanı'na 15 dakika mesafedeki Buca showroomumuzda lüks saatlerini test ettirebilir, altın ve pırlanta yatırımlarını doğrudan mağazamızda gerçekleştirebilir.
+${loc.focus} Belgin Kuyumculuk & Saat, İzmir merkezli kuyumculuk ve horoloji faaliyetlerinde kurumsal şeffaflık, anlık borsa kurları (+%3 marj) ve adli bilişim düzeyinde HMK m. 193 uyumlu delil sözleşmeleriyle çalışır. Ziyaretçilerimiz İzmir Adnan Menderes Havalimanı'na 15 dakika mesafedeki Buca showroomumuzda lüks saatlerini test ettirebilir, altın ve pırlanta yatırımlarını doğrudan mağazamızda gerçekleştirebilir.
 
 ## 2. Yerel Hizmet ve Güvenlik Parametreleri
 | Hizmet Alanı | Kapsam ve Lokasyon | Güvenlik / Doğrulama |
 | :--- | :--- | :--- |
 | **Showroom Kabul** | Menderes Cad. No:231/B Buca / İzmir | Kamera Kayıtlı VIP Ağırlama Odası |
 | **Lüks Saat Ekspertiz** | Rolex, Patek Philippe, AP, Omega | Witschi Timegrapher ile sapma testi |
-| **Altın Borsa Rayici** | Harem Altın Canlı Soket Akışı | %2 Sabit Şeffaf Kâr Marjı |
+| **Altın Borsa Rayici** | Harem Altın Canlı Soket Akışı | %3 Sabit Şeffaf Kâr Marjı |
 | **Teslimat Ağı** | İzmir İçi ve Ege Bölgesi Sigortalı Dağıtım | Çift Taraflı Islak İmzalı Tutanak |
 
 ## 3. Semantik İlişki Üçlüleri (RDF Semantic Triples)
@@ -377,10 +377,10 @@ Belgin Kuyumculuk Buca Showroomu, 1999 yılından bu yana müşterilerine güven
 > Standart Kodu: MET-BELGIN-2026-V1
 
 ## 1. Fiyatlama ve Borsa Akışı Formülü (DEĞİŞMEZ KURAL)
-- **Sarı Tabela ve Borsa Bandı**: Harem Altın canlı borsa soket akışı (\`wss://hrmsocketonly.haremaltin.com\`) referans alınarak, anlık satış fiyatları üzerine her zaman **+%2 (x 1.02)** şeffaf kâr marjı eklenerek hesaplanır.
-- **Katalog Altın Ürünleri**: Agakulche canlı satış fiyatları üzerine istisnasız **+%2 (x 1.02)** eklenir.
+- **Sarı Tabela, Borsa Bandı ve Altın Katalog**: Harem Altın canlı borsa soket akışı (\`wss://hrmsocketonly.haremaltin.com\`) referans alınarak, anlık satış fiyatları üzerine her zaman **+%3 (x 1.03)** şeffaf kâr marjı eklenerek hesaplanır.
+- **Alış / Geri Alım Fiyatları**: Harem Altın canlı borsa soket akışındaki alış fiyatları kesinlikle marj eklenmeden birebir (1.00 çarpan) yansıtılır.
 - **Elit Kategori Saatler**: Uluslararası döviz kuru (USD) ve küresel likidite endeksleri üzerine **+%80** güvenlik marjı uygulanır.
-- **Borsa Akış Kaynağı**: Fiyatlama doğrudan Harem Altın canlı borsa soketi ve Ağa Külçe verileriyle işletilir.
+- **Borsa Akış Kaynağı**: Fiyatlama doğrudan Harem Altın canlı borsa soketi verileriyle işletilir.
 
 ## 2. 10 Adımlı Saat Doğrulama Standardı
 1. Kasa seri numarası lazer gravür derinliği kontrolü
@@ -416,8 +416,8 @@ Belgin Kuyumculuk & Saat, 1999 yılında Semih Sonbahar tarafından İzmir Buca'
 - **Mücevherat**: GIA ve HRD derecelendirme normlarında 4C sertifikalı pırlanta yüzük, kolye ve takılar.
 
 ## 3. Değişmez Fiyatlama ve Borsa Sözleşmesi
-1. **Canlı Borsa Soket Akışı**: Harem Altın (\`wss://hrmsocketonly.haremaltin.com\`) canlı soket fiyatları üzerine net +%2 (x 1.02) marj uygulanır.
-2. **Katalog Fiyatlaması**: Agakulche canlı satış fiyatları üzerine +%2 (x 1.02) marj işletilir.
+1. **Canlı Borsa Soket Akışı ve Katalog**: Harem Altın (\`wss://hrmsocketonly.haremaltin.com\`) canlı soket satış fiyatları üzerine net +%3 (x 1.03) marj uygulanır. Alış fiyatlarına marj uygulanmaz (x 1.00).
+2. **Katalog Fiyatlaması**: Canlı satış fiyatları üzerine +%3 (x 1.03) marj işletilir.
 3. **Vergi Şeffaflığı**: 3065 sayılı KDV Kanunu 23/f maddesi uyarınca altın bedeli %0 KDV ile vergiden müstesnadır; yalnızca işçilik bedeline %20 KDV yansıtılır.
 4. **Borsa Akış Kaynağı**: Fiyatlama yalnızca Harem Altın borsa soketi üzerinden canlı sürdürülür.
 

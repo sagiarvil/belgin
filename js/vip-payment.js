@@ -33,88 +33,88 @@
       name: '7 Gram 22 Ayar Ajda Altın Bilezik',
       reference: 'BLG-BLZ-110',
       url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-110-2734/',
-      basePrice: 45570,
+      basePrice: 46521,
       weight: 7.0,
       karat: 22,
       priceKey: 'gramGold22k',
-      priceMultiplier: 7.0 * 1.02
+      priceMultiplier: 7.0 * 1.03
     },
     {
       id: '2669',
       name: 'Ata Tam Yeni 22 ayar',
       reference: 'BLG-ZYN-045',
       url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-045-2669/',
-      basePrice: 46107,
+      basePrice: 47005,
       weight: 7.216,
       karat: 22,
       priceKey: 'ataGold',
-      priceMultiplier: 1.02
+      priceMultiplier: 1.03
     },
     {
       id: '2667',
       name: 'Ziynet Çeyrek Altın',
       reference: 'BLG-ZYN-043',
       url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-043-2667/',
-      basePrice: 11070,
+      basePrice: 11601,
       weight: 1.754,
       karat: 22,
       priceKey: 'quarterGold',
-      priceMultiplier: 1.02
+      priceMultiplier: 1.03
     },
     {
       id: '2670',
       name: 'Yarım Altın',
       reference: 'BLG-ZYN-046',
       url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-046-2670/',
-      basePrice: 22322,
+      basePrice: 23173,
       weight: 3.508,
       karat: 22,
       priceKey: 'halfGold',
-      priceMultiplier: 1.02
+      priceMultiplier: 1.03
     },
     {
       id: '2668',
       name: 'Çeyrek Altın',
       reference: 'BLG-ZYN-044',
       url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-044-2668/',
-      basePrice: 11070,
+      basePrice: 11601,
       weight: 1.754,
       karat: 22,
       priceKey: 'quarterGold',
-      priceMultiplier: 1.02
+      priceMultiplier: 1.03
     },
     {
       id: '2741',
       name: '10 gr 22 Ayar Burma Altın Bilezik',
       reference: 'BLG-BLZ-117',
       url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-117-2741/',
-      basePrice: 65240,
+      basePrice: 66459,
       weight: 10.0,
       karat: 22,
       priceKey: 'gramGold22k',
-      priceMultiplier: 10.0 * 1.02
+      priceMultiplier: 10.0 * 1.03
     },
     {
       id: '2748',
       name: '20 gr 22 Ayar Burma Altın Bilezik',
       reference: 'BLG-BLZ-124',
       url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-124-2748/',
-      basePrice: 130480,
+      basePrice: 132917,
       weight: 20.0,
       karat: 22,
       priceKey: 'gramGold22k',
-      priceMultiplier: 20.0 * 1.02
+      priceMultiplier: 20.0 * 1.03
     },
     {
       id: '2753',
       name: '3\'lü Burma 25 gr 22 Ayar Altın Bilezik',
       reference: 'BLG-BLZ-129',
       url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-129-2753/',
-      basePrice: 163100,
+      basePrice: 166146,
       weight: 25.0,
       karat: 22,
       priceKey: 'gramGold22k',
-      priceMultiplier: 25.0 * 1.02
+      priceMultiplier: 25.0 * 1.03
     }
   ]);
 
