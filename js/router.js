@@ -94,6 +94,8 @@ const Router = {
   },
 
   routeForPage(page) {
+    if (page === 'canli-fiyatlar') return '/canli-fiyatlar/';
+    if (page === 'mucevherat') return '/mucevherat/';
     return (window.SEO_CATEGORY_ROUTES || {})[page] || (page === 'ana-sayfa' ? '/' : `/${page}/`);
   },
 
@@ -349,7 +351,7 @@ const Router = {
 
     // 7. History State
     if (pushState && page !== 'urun') {
-      const categoryRoute = (window.SEO_CATEGORY_ROUTES || {})[page];
+      const categoryRoute = (window.SEO_CATEGORY_ROUTES || {})[page] || (page === 'canli-fiyatlar' ? '/canli-fiyatlar/' : (page === 'mucevherat' ? '/mucevherat/' : null));
       if (categoryRoute) {
         const filter = options.filter && options.filter !== 'all' ? String(options.filter) : null;
         const route = page === 'elit-kategori' && filter

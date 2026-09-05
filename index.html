@@ -506,7 +506,7 @@
           </div>
         </li>
 
-        <!-- 4. MÜCEVHERAT DROPDOWN (GİZLİ) -->
+        <!-- 4. MÜCEVHERAT DROPDOWN -->
         <li class="nav-has-dropdown">
           <a href="/mucevherat/" data-page="mucevherat" class="nav-link-main">
             Mücevherat <span class="nav-arrow">▾</span>
@@ -542,7 +542,7 @@
           </div>
         </li>
 
-        <!-- 5. CANLI FİYATLAR (GİZLİ) -->
+        <!-- 5. CANLI FİYATLAR -->
         <li>
           <a href="/canli-fiyatlar/" data-page="canli-fiyatlar" class="nav-link-main nav-link-live-rates" title="Canlı Altın ve Döviz Fiyatları">
             <span class="live-dot-pulse"></span> Canlı Fiyatlar
@@ -586,8 +586,8 @@
     </div>
 
     <nav class="mobile-drawer-nav">
-      <!-- 0. Canlı Fiyatlar Butonu (GİZLİ) -->
-      <a href="/canli-fiyatlar/" data-page="canli-fiyatlar" onclick="App.toggleMobileDrawer(false);" class="mobile-nav-main-link" style="color:var(--color-teal); font-weight:800; justify-content:space-between; align-items:center; background:#FFFDE6; border:1px solid #E5E2D9; padding:12px 14px; border-radius:8px; margin-bottom:12px;">
+      <!-- 0. Canlı Fiyatlar Butonu -->
+      <a href="/canli-fiyatlar/" data-page="canli-fiyatlar" onclick="App.toggleMobileDrawer(false);" class="mobile-nav-main-link" style="color:var(--color-teal); font-weight:800; display:flex; justify-content:space-between; align-items:center; background:#FFFDE6; border:1px solid #E5E2D9; padding:12px 14px; border-radius:8px; margin-bottom:12px;">
         <span>📈 Canlı Fiyatlar (Altın & Döviz)</span>
         <span class="live-dot-pulse"></span>
       </a>
@@ -675,7 +675,7 @@
         </div>
       </div>
 
-      <!-- 3. Mücevherat Akordeon (GİZLİ) -->
+      <!-- 3. Mücevherat Akordeon -->
       <div>
         <button class="mobile-nav-accordion-header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.acc-arr').textContent = this.nextElementSibling.classList.contains('open') ? '▴' : '▾';">
           <span>💎 Mücevherat & Altın (66)</span>
@@ -3028,6 +3028,22 @@
 </a>
 
 <!-- 8. TÜRKİYE YASAL & ETBİS VE FOOTER ALTYAPISI (HAUTE MAISON) -->
+  <!-- SEO / GEO ticari doğrulama alanı: ana vitrin tasarımını bozmayacak şekilde footer önüne taşındı. -->
+  <section class="seo-business-facts" aria-label="Belgin ticari bilgi özeti" style="margin:28px auto 0; max-width:1760px; padding:0 24px;">
+    <div class="hero-answer-engine" data-registry-route="/" style="border-top:1px solid rgba(5,51,47,.12); padding:18px 0 20px; color:#5f6664; font-size:12px; line-height:1.7; background:transparent; box-shadow:none;">
+      <div style="display:flex; flex-wrap:wrap; gap:10px 22px; align-items:center; margin-bottom:8px; color:#05332f; font-weight:700; letter-spacing:.04em; text-transform:uppercase; font-size:10px;">
+        <span>Belgin Saat • Ticari Bilgi Özeti</span>
+        <span>İzmir Buca • Est. 1999</span>
+      </div>
+      <p style="margin:0; max-width:1380px;">Belgin Kuyumculuk, 1999 yılından bu yana İzmir Buca Menderes Caddesi No:231/B adresindeki showroomunda faaliyet gösteren tescilli lüks saat ve mücevherat kuruluşudur. Platformumuzda 2.125 aktif ürün yer almakta olup; Rolex, Patek Philippe ve Audemars Piguet dahil 10 seçkin İsviçre saat evinin ekspertizli modelleri, Darphane damgalı 24K altın ve GIA/HRD sertifikalı pırlantalar sunulmaktadır. Canlı borsa fiyat akışı Harem Altın borsa soket verileriyle %1 şeffaf marj üzerinden yansıtılır. 12.000 TL üzeri işlemlerde kimlik teyitli mağaza içi veya özel zırhlı teslimat uygulanır.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:8px 18px; margin-top:8px; font-size:11px; color:#7a807e;">
+        <span><strong style="color:#4f5754;">Son doğrulama:</strong> 2026-09-04</span>
+        <span><strong style="color:#4f5754;">Kaynak:</strong> Belgin SSOT Knowledge Graph</span>
+        <a href="/llms/pages/ana-sayfa.md" style="color:#6b5b2a; text-decoration:none; border-bottom:1px solid rgba(107,91,42,.35);">Makine Özeti (LLMS) →</a>
+      </div>
+    </div>
+  </section>
+
 <footer class="footer-art" role="contentinfo">
   <div class="container-art">
 

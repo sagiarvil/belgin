@@ -68,8 +68,8 @@
   </script>
 <body class="page-canli-fiyatlar page-is-canli-fiyatlar">
 
-<!-- 3. ANA HEADER (CANLI FİYATLARA ÖZEL İNCELTİLMİŞ) -->
-<header class="header header-compact-live" role="banner">
+<!-- 3. ANA HEADER -->
+<header class="header" role="banner">
   <div class="container-art header-grid">
     
     <!-- Mobil Menü Butonu -->
@@ -191,7 +191,153 @@
           </div>
         </li>
 
-        <!-- 3. MÜCEVHERAT -->
+        <!-- 3. MARKALAR DROPDOWN (TÜM SAAT MARKALARI PRESTİJ DİZİNİ) -->
+        <li class="nav-has-dropdown nav-item-markalar">
+          <a href="/markalar/" data-page="markalar" class="nav-link-main">
+            Markalar <span class="nav-arrow">▾</span>
+          </a>
+          <div class="nav-dropdown-menu nav-dropdown-mega nav-dropdown-markalar">
+            <div class="nav-dropdown-header" style="background:linear-gradient(90deg, #05332F 0%, #111413 100%); color:#FFFFFF; border-bottom:1px solid rgba(194, 167, 104, 0.4); padding:10px 16px; border-radius:8px; margin-bottom:14px;">
+              <span style="letter-spacing:1px; font-size:11px; font-weight:700;">🏷️ BELGİN SAAT — TÜM SAAT MARKALARI DİZİNİ</span>
+              <a href="/saatler/" data-page="saatler" data-filter="all" onclick="App.filterWatchesByBrand('all', this)" style="color:#D8BD7E; font-weight:700; font-size:11.5px;">Tüm Saat Kataloğu (1.925) →</a>
+            </div>
+
+            <div class="brand-dir-columns">
+              <!-- Sütun 1: Haute Horlogerie (10 Saat Evi) -->
+              <div class="brand-dir-col">
+                <div class="brand-dir-col-title">👑 Haute Horlogerie (10 Evi)</div>
+                <div class="brand-dir-list">
+                  <a href="/elit-kategori/?marka=Rolex" data-page="elit-kategori" data-filter="Rolex" onclick="App.filterEliteWatchesByBrand('Rolex', null);" class="brand-dir-link">
+                    <span class="b-name">👑 Rolex</span>
+                    <span class="b-count">20</span>
+                  </a>
+                  <a href="/elit-kategori/?marka=Omega" data-page="elit-kategori" data-filter="Omega" onclick="App.filterEliteWatchesByBrand('Omega', null);" class="brand-dir-link">
+                    <span class="b-name">Omega</span>
+                    <span class="b-count">20</span>
+                  </a>
+                  <a href="/elit-kategori/?marka=Patek%20Philippe" data-page="elit-kategori" data-filter="Patek Philippe" onclick="App.filterEliteWatchesByBrand('Patek Philippe', null);" class="brand-dir-link">
+                    <span class="b-name">Patek Philippe</span>
+                    <span class="b-count">20</span>
+                  </a>
+                  <a href="/elit-kategori/?marka=Audemars%20Piguet" data-page="elit-kategori" data-filter="Audemars Piguet" onclick="App.filterEliteWatchesByBrand('Audemars Piguet', null);" class="brand-dir-link">
+                    <span class="b-name">Audemars Piguet</span>
+                    <span class="b-count">20</span>
+                  </a>
+                  <a href="/elit-kategori/?marka=Breitling" data-page="elit-kategori" data-filter="Breitling" onclick="App.filterEliteWatchesByBrand('Breitling', null);" class="brand-dir-link">
+                    <span class="b-name">Breitling</span>
+                    <span class="b-count">48</span>
+                  </a>
+                  <a href="/elit-kategori/?marka=Cartier" data-page="elit-kategori" data-filter="Cartier" onclick="App.filterEliteWatchesByBrand('Cartier', null);" class="brand-dir-link">
+                    <span class="b-name">Cartier</span>
+                    <span class="b-count">20</span>
+                  </a>
+                  <a href="/elit-kategori/?marka=Tudor" data-page="elit-kategori" data-filter="Tudor" onclick="App.filterEliteWatchesByBrand('Tudor', null);" class="brand-dir-link">
+                    <span class="b-name">Tudor</span>
+                    <span class="b-count">20</span>
+                  </a>
+                  <a href="/elit-kategori/?marka=TAG%20Heuer" data-page="elit-kategori" data-filter="TAG Heuer" onclick="App.filterEliteWatchesByBrand('TAG Heuer', null);" class="brand-dir-link">
+                    <span class="b-name">TAG Heuer</span>
+                    <span class="b-count">34</span>
+                  </a>
+                  <a href="/elit-kategori/?marka=IWC%20Schaffhausen" data-page="elit-kategori" data-filter="IWC Schaffhausen" onclick="App.filterEliteWatchesByBrand('IWC Schaffhausen', null);" class="brand-dir-link">
+                    <span class="b-name">IWC Schaffhausen</span>
+                    <span class="b-count">20</span>
+                  </a>
+                  <a href="/elit-kategori/?marka=Panerai" data-page="elit-kategori" data-filter="Panerai" onclick="App.filterEliteWatchesByBrand('Panerai', null);" class="brand-dir-link">
+                    <span class="b-name">Panerai</span>
+                    <span class="b-count">20</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Sütun 2: İsviçre & Lüks Saatçilik -->
+              <div class="brand-dir-col">
+                <div class="brand-dir-col-title">🇨🇭 İsviçre & Lüks Saatler</div>
+                <div class="brand-dir-list">
+                  <a href="/saatler/?marka=Tissot" data-page="saatler" data-filter="Tissot" onclick="App.filterWatchesByBrand('Tissot', null);" class="brand-dir-link">
+                    <span class="b-name">Tissot</span>
+                    <span class="b-count">53</span>
+                  </a>
+                  <a href="/saatler/?marka=Longines" data-page="saatler" data-filter="Longines" onclick="App.filterWatchesByBrand('Longines', null);" class="brand-dir-link">
+                    <span class="b-name">Longines</span>
+                    <span class="b-count">105</span>
+                  </a>
+                  <a href="/saatler/?marka=Frederique%20Constant" data-page="saatler" data-filter="Frederique Constant" onclick="App.filterWatchesByBrand('Frederique Constant', null);" class="brand-dir-link">
+                    <span class="b-name">Frederique Constant</span>
+                    <span class="b-count">94</span>
+                  </a>
+                  <a href="/saatler/?marka=Rado" data-page="saatler" data-filter="Rado" onclick="App.filterWatchesByBrand('Rado', null);" class="brand-dir-link">
+                    <span class="b-name">Rado</span>
+                    <span class="b-count">58</span>
+                  </a>
+                  <a href="/saatler/?marka=Alpina" data-page="saatler" data-filter="Alpina" onclick="App.filterWatchesByBrand('Alpina', null);" class="brand-dir-link">
+                    <span class="b-name">Alpina</span>
+                    <span class="b-count">20</span>
+                  </a>
+                  <a href="/saatler/?marka=Bell%20%26%20Ross" data-page="saatler" data-filter="Bell & Ross" onclick="App.filterWatchesByBrand('Bell & Ross', null);" class="brand-dir-link">
+                    <span class="b-name">Bell & Ross</span>
+                    <span class="b-count">21</span>
+                  </a>
+                  <a href="/saatler/?marka=Swatch" data-page="saatler" data-filter="Swatch" onclick="App.filterWatchesByBrand('Swatch', null);" class="brand-dir-link">
+                    <span class="b-name">Swatch</span>
+                    <span class="b-count">57</span>
+                  </a>
+                  <a href="/saatler/?marka=Casio" data-page="saatler" data-filter="Casio" onclick="App.filterWatchesByBrand('Casio', null);" class="brand-dir-link">
+                    <span class="b-name">Casio G-Shock & MT-G</span>
+                    <span class="b-count">11</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Sütun 3: İkonik & Lüks Moda -->
+              <div class="brand-dir-col">
+                <div class="brand-dir-col-title">✨ İkonik & Lüks Moda</div>
+                <div class="brand-dir-list">
+                  <a href="/saatler/?marka=Carren" data-page="saatler" data-filter="Carren" onclick="App.filterWatchesByBrand('Carren', null);" class="brand-dir-link">
+                    <span class="b-name">Carren</span>
+                    <span class="b-count">Koleksiyon</span>
+                  </a>
+                  <a href="/saatler/?marka=Versace" data-page="saatler" data-filter="Versace" onclick="App.filterWatchesByBrand('Versace', null);" class="brand-dir-link">
+                    <span class="b-name">Versace</span>
+                    <span class="b-count">241</span>
+                  </a>
+                  <a href="/saatler/?marka=Calvin%20Klein" data-page="saatler" data-filter="Calvin Klein" onclick="App.filterWatchesByBrand('Calvin Klein', null);" class="brand-dir-link">
+                    <span class="b-name">Calvin Klein</span>
+                    <span class="b-count">133</span>
+                  </a>
+                  <a href="/saatler/?marka=Michael%20Kors" data-page="saatler" data-filter="Michael Kors" onclick="App.filterWatchesByBrand('Michael Kors', null);" class="brand-dir-link">
+                    <span class="b-name">Michael Kors</span>
+                    <span class="b-count">186</span>
+                  </a>
+                  <a href="/saatler/?marka=Gc" data-page="saatler" data-filter="Gc" onclick="App.filterWatchesByBrand('Gc', null);" class="brand-dir-link">
+                    <span class="b-name">Gc (Swiss Made)</span>
+                    <span class="b-count">173</span>
+                  </a>
+                  <a href="/saatler/?marka=Guess" data-page="saatler" data-filter="Guess" onclick="App.filterWatchesByBrand('Guess', null);" class="brand-dir-link">
+                    <span class="b-name">Guess</span>
+                    <span class="b-count">292</span>
+                  </a>
+                  <a href="/saatler/?marka=Welder" data-page="saatler" data-filter="Welder" onclick="App.filterWatchesByBrand('Welder', null);" class="brand-dir-link">
+                    <span class="b-name">Welder</span>
+                    <span class="b-count">Moody</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="brand-dir-footer">
+              <div style="color:var(--color-muted); font-size:12px;">
+                Belgin Kuyumculuk & Saat &bull; Orijinallik ve Uluslararası Garanti Sertifikalı
+              </div>
+              <div style="display:flex; gap:10px;">
+                <a href="/elit-kategori/" data-page="elit-kategori">👑 200 Elit Model</a>
+                <a href="/saatler/" data-page="saatler">⌚ 1.925 Saat Kataloğu</a>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <!-- 4. MÜCEVHERAT DROPDOWN -->
         <li class="nav-has-dropdown">
           <a href="/mucevherat/" data-page="mucevherat" class="nav-link-main">
             Mücevherat <span class="nav-arrow">▾</span>
@@ -227,15 +373,16 @@
           </div>
         </li>
 
-        <!-- 4. CANLI FİYATLAR (AKTİF SAYFA) -->
+        <!-- 5. CANLI FİYATLAR (AKTİF SAYFA) -->
         <li>
           <a href="/canli-fiyatlar/" data-page="canli-fiyatlar" class="nav-link-main nav-link-live-rates active" title="Canlı Altın ve Döviz Fiyatları">
             <span class="live-dot-pulse"></span> Canlı Fiyatlar
           </a>
         </li>
 
-        <li><a href="/#hikayemiz" data-page="hikayemiz" class="nav-link-main">Mirasımız</a></li>
+        <li><a href="/biz-kimiz/" data-page="biz-kimiz" class="nav-link-main">Biz Kimiz</a></li>
         <li><a href="/#iletisim" data-page="iletisim" class="nav-link-main">İletişim</a></li>
+        <li><a href="/magazin/" data-page="magazin" class="nav-link-main">Magazin</a></li>
         <li><a href="#" onclick="App.openTradeInModal()" class="nav-link-main" style="color:var(--color-gold-dark);">Takas & Değerleme</a></li>
       </ul>
     </nav>
