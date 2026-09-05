@@ -1,8 +1,7 @@
 // ==========================================================
-// BELGIN KUYUMCULUK — İZMİR KUYUMCULAR ODASI (İZKO) & HAREM ALTIN CANLI PİYASA MOTORU
-// KAYNAKLAR: 
-// 1. https://canlipiyasalar.haremaltin.com/ (WebSocket: wss://hrmsocketonly.haremaltin.com)
-// 2. https://www.izko.org.tr/guncel-kur (İZKO Web API)
+// BELGIN KUYUMCULUK — HAREM ALTIN CANLI BORSA VE PİYASA MOTORU
+// KAYNAK: https://canlipiyasalar.haremaltin.com/ (WebSocket: wss://hrmsocketonly.haremaltin.com)
+// KURAL: Canlı gelen satış fiyatları üzerine her zaman +%2 (x 1.02) marj uygulanır.
 // ==========================================================
 
 let CURRENT_CURRENCY = 'TRY';
@@ -20,38 +19,38 @@ const CURRENCY_SYMBOLS = {
   GBP: '£'
 };
 
-// Detaylı Canlı Piyasa Veri Havuzu (Harem Altın & İZKO)
+// Detaylı Canlı Piyasa Veri Havuzu (Harem Altın Canlı Akışı)
 const LIVE_MARKET_DATA = {
-  hasAltin: 7121.25,
-  gramGold24k: 7121.25,
-  gramGold22k: 6690.00,
-  gramGold18k: 6400.00,
-  gramGold14k: 5950.00,
-  gramGold8k: 3450.00,
-  quarterGold: 11750.00,
-  oldQuarterGold: 11600.00,
-  halfGold: 23500.00,
-  oldHalfGold: 23060.00,
-  fullGold: 47000.00,
-  oldFullGold: 45930.00,
-  ataGold: 47400.00,
-  oldAtaGold: 46800.00,
-  gremeseGold: 117500.00,
-  oldGremeseGold: 115000.00,
-  ata5Gold: 237000.00,
-  oldAta5Gold: 233000.00,
-  packagedGold: 7235.50,
+  hasAltin: 6885.40,
+  gramGold24k: 6885.40,
+  gramGold22k: 6452.28,
+  gramGold18k: 5164.05,
+  gramGold14k: 4975.51,
+  gramGold8k: 2842.00,
+  quarterGold: 11263.00,
+  oldQuarterGold: 11056.00,
+  halfGold: 22498.00,
+  oldHalfGold: 22078.00,
+  fullGold: 44844.00,
+  oldFullGold: 44224.00,
+  ataGold: 45636.00,
+  oldAtaGold: 45532.00,
+  gremeseGold: 111731.00,
+  oldGremeseGold: 110630.00,
+  ata5Gold: 228180.00,
+  oldAta5Gold: 227660.00,
+  packagedGold: 6899.17,
   silverTry: 104.50,
   silverUsd: 38.80,
   ons: 2905.40,
-  usdTry: 48.25,
-  eurTry: 56.21,
+  usdTry: 48.40,
+  eurTry: 56.14,
   gbpTry: 65.40,
   changeGram: "+0.55%",
   change22k: "+0.55%",
   changeQuarter: "+0.55%",
   direction: "up",
-  source: "Harem Altın & İZKO Canlı Akışı",
+  source: "Harem Altın Canlı Borsa Akışı",
   socketConnected: false,
   lastUpdated: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
   lastUpdatedDate: new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric', weekday: 'long' }),
@@ -391,20 +390,20 @@ function updateDynamicGoldProductPrices() {
   const rawItems = LIVE_MARKET_DATA.items || {};
   const BOARD_MARGIN = 1.02; // Sarı Tabela ve Ürün Sayfası Birebir Canlı Satış Marjı (+%2)
 
-  const baseHas = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.hasAltin || LIVE_MARKET_DATA.gramGold24k || 6892.70;
+  const baseHas = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.hasAltin || LIVE_MARKET_DATA.gramGold24k || 6885.40;
   const baseGram = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.gramGold24k || baseHas;
   const base22k = parseFloat(rawItems.AYAR22?.satis) || LIVE_MARKET_DATA.gramGold22k || Math.round(baseHas * 0.937);
   const base18k = parseFloat(rawItems.AYAR18?.satis) || LIVE_MARKET_DATA.gramGold18k || Math.round(baseHas * 0.750);
   const base14k = parseFloat(rawItems.AYAR14?.satis) || LIVE_MARKET_DATA.gramGold14k || Math.round(baseHas * 0.722);
-  const baseAtaYeni = parseFloat(rawItems.ATA_YENI?.satis) || LIVE_MARKET_DATA.ataGold || 45650;
-  const baseAtaEski = parseFloat(rawItems.ATA_ESKI?.satis) || LIVE_MARKET_DATA.oldAtaGold || 45581;
+  const baseAtaYeni = parseFloat(rawItems.ATA_YENI?.satis) || LIVE_MARKET_DATA.ataGold || 45636;
+  const baseAtaEski = parseFloat(rawItems.ATA_ESKI?.satis) || LIVE_MARKET_DATA.oldAtaGold || 45532;
 
-  const baseCeyrekYeni = parseFloat(rawItems.CEYREK_YENI?.satis) || LIVE_MARKET_DATA.quarterGold || 11268;
-  const baseCeyrekEski = parseFloat(rawItems.CEYREK_ESKI?.satis) || LIVE_MARKET_DATA.oldQuarterGold || 11068;
-  const baseYarimYeni = parseFloat(rawItems.YARIM_YENI?.satis) || LIVE_MARKET_DATA.halfGold || 22528;
-  const baseYarimEski = parseFloat(rawItems.YARIM_ESKI?.satis) || LIVE_MARKET_DATA.oldHalfGold || 22101;
-  const baseZiynetYeni = parseFloat(rawItems.TEK_YENI?.satis) || LIVE_MARKET_DATA.fullGold || 44891;
-  const baseZiynetEski = parseFloat(rawItems.TEK_ESKI?.satis) || LIVE_MARKET_DATA.oldFullGold || 44271;
+  const baseCeyrekYeni = parseFloat(rawItems.CEYREK_YENI?.satis) || LIVE_MARKET_DATA.quarterGold || 11263;
+  const baseCeyrekEski = parseFloat(rawItems.CEYREK_ESKI?.satis) || LIVE_MARKET_DATA.oldQuarterGold || 11056;
+  const baseYarimYeni = parseFloat(rawItems.YARIM_YENI?.satis) || LIVE_MARKET_DATA.halfGold || 22498;
+  const baseYarimEski = parseFloat(rawItems.YARIM_ESKI?.satis) || LIVE_MARKET_DATA.oldHalfGold || 22078;
+  const baseZiynetYeni = parseFloat(rawItems.TEK_YENI?.satis) || LIVE_MARKET_DATA.fullGold || 44844;
+  const baseZiynetEski = parseFloat(rawItems.TEK_ESKI?.satis) || LIVE_MARKET_DATA.oldFullGold || 44224;
 
   // Sarı Tabela ile %100 Birebir Eşleşen Nihai Satış Fiyatları
   const pGram = Math.round(baseGram * BOARD_MARGIN);

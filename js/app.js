@@ -2822,60 +2822,60 @@ const App = {
               </thead>
               <tbody>
                 <tr>
-                  <td class="td-label">22 AYAR</td>
-                  <td class="td-price"><span class="price-num" id="live_22k">--</span></td>
-                  <td class="td-right-message" rowspan="5">
-                    <div class="right-message-inner">
-                      <div class="right-title">BELGİN</div>
-                      <div class="right-title">KUYUMCULUK</div>
-                      <div class="right-sub">CANLI</div>
-                      <div class="right-sub">SATIŞ</div>
-                      <div class="right-sub">FİYATLARIDIR!</div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="td-label">18 AYAR</td>
-                  <td class="td-price"><span class="price-num" id="live_18k">--</span></td>
-                </tr>
-                <tr>
-                  <td class="td-label">14 AYAR</td>
-                  <td class="td-price"><span class="price-num" id="live_14k">--</span></td>
-                </tr>
-                <tr>
-                  <td class="td-label">GRAM ALTIN</td>
-                  <td class="td-price"><span class="price-num" id="live_gram">--</span></td>
-                </tr>
-                <tr>
-                  <td class="td-label">CUMHURİYET</td>
-                  <td class="td-price"><span class="price-num" id="live_cumhuriyet">--</span></td>
-                </tr>
-                <tr class="tr-sarrafiye-header">
-                  <td style="background-color:#fff200; border: 2px solid #000;"></td>
-                  <th style="border: 2px solid #000;">YENİ</th>
-                  <th style="border: 2px solid #000;">ESKİ</th>
-                </tr>
-                <tr>
-                  <td class="td-label">ÇEYREK</td>
-                  <td class="td-price"><span class="price-num" id="live_ceyrek_yeni">--</span></td>
-                  <td class="td-price"><span class="price-num" id="live_ceyrek_eski">--</span></td>
-                </tr>
-                <tr>
-                  <td class="td-label">YARIM</td>
-                  <td class="td-price"><span class="price-num" id="live_yarim_yeni">--</span></td>
-                  <td class="td-price"><span class="price-num" id="live_yarim_eski">--</span></td>
-                </tr>
-                <tr>
-                  <td class="td-label">ZİYNET</td>
-                  <td class="td-price"><span class="price-num" id="live_ziynet_yeni">--</span></td>
-                  <td class="td-price"><span class="price-num" id="live_ziynet_eski">--</span></td>
-                </tr>
-                <tr>
-                  <td class="td-has-label">HAS ALTIN:</td>
-                  <td colspan="2" style="text-align: center; border: 2px solid #000;">
-                    <span class="has-red-box"><span class="price-num" id="live_has_altin">--</span></span>
-                  </td>
-                </tr>
+                <td class="td-label">22 AYAR</td>
+                <td class="td-price"><span class="price-num" id="live_22k">6.581</span></td>
+                <td class="td-right-message" rowspan="5">
+                  <div class="right-message-inner">
+                    <div class="right-title">BELGİN</div>
+                    <div class="right-title">KUYUMCULUK</div>
+                    <div class="right-sub">CANLI</div>
+                    <div class="right-sub">SATIŞ</div>
+                    <div class="right-sub">FİYATLARIDIR!</div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="td-label">18 AYAR</td>
+                <td class="td-price"><span class="price-num" id="live_18k">5.267</span></td>
+              </tr>
+              <tr>
+                <td class="td-label">14 AYAR</td>
+                <td class="td-price"><span class="price-num" id="live_14k">5.075</span></td>
+              </tr>
+              <tr>
+                <td class="td-label">GRAM ALTIN</td>
+                <td class="td-price"><span class="price-num" id="live_gram">7.023</span></td>
+              </tr>
+              <tr>
+                <td class="td-label">CUMHURİYET</td>
+                <td class="td-price"><span class="price-num" id="live_cumhuriyet">46.549</span></td>
+              </tr>
+              <tr class="tr-sarrafiye-header">
+                <td style="background-color:#fff200; border: 2px solid #000;"></td>
+                <th style="border: 2px solid #000;">YENİ</th>
+                <th style="border: 2px solid #000;">ESKİ</th>
+              </tr>
+              <tr>
+                <td class="td-label">ÇEYREK</td>
+                <td class="td-price"><span class="price-num" id="live_ceyrek_yeni">11.488</span></td>
+                <td class="td-price"><span class="price-num" id="live_ceyrek_eski">11.277</span></td>
+              </tr>
+              <tr>
+                <td class="td-label">YARIM</td>
+                <td class="td-price"><span class="price-num" id="live_yarim_yeni">22.948</span></td>
+                <td class="td-price"><span class="price-num" id="live_yarim_eski">22.520</span></td>
+              </tr>
+              <tr>
+                <td class="td-label">ZİYNET</td>
+                <td class="td-price"><span class="price-num" id="live_ziynet_yeni">45.741</span></td>
+                <td class="td-price"><span class="price-num" id="live_ziynet_eski">45.108</span></td>
+              </tr>
+              <tr>
+                <td class="td-has-label">HAS ALTIN:</td>
+                <td colspan="2" style="text-align: center; border: 2px solid #000;">
+                  <span class="has-red-box"><span class="price-num" id="live_has_altin">7.023,11</span></span>
+                </td>
+              </tr>
               </tbody>
             </table>
 
@@ -2900,19 +2900,19 @@ const App = {
     const rawItems = LIVE_MARKET_DATA.items || {};
     const BOARD_MARGIN = 1.02; // Sarı Tabela Canlı Satış Kâr Marjı (+%2)
 
-    const baseHas = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.hasAltin || LIVE_MARKET_DATA.gramGold24k || 6892.70;
+    const baseHas = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.hasAltin || LIVE_MARKET_DATA.gramGold24k || 6885.40;
     const baseGram = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.gramGold24k || baseHas;
     const base22k = parseFloat(rawItems.AYAR22?.satis) || LIVE_MARKET_DATA.gramGold22k || Math.round(baseHas * 0.937);
     const base18k = parseFloat(rawItems.AYAR18?.satis) || LIVE_MARKET_DATA.gramGold18k || Math.round(baseHas * 0.750);
     const base14k = parseFloat(rawItems.AYAR14?.satis) || LIVE_MARKET_DATA.gramGold14k || Math.round(baseHas * 0.722);
-    const baseAta = parseFloat(rawItems.ATA_YENI?.satis) || LIVE_MARKET_DATA.ataGold || 45650;
+    const baseAta = parseFloat(rawItems.ATA_YENI?.satis) || LIVE_MARKET_DATA.ataGold || 45636;
     
-    const baseCeyrekYeni = parseFloat(rawItems.CEYREK_YENI?.satis) || LIVE_MARKET_DATA.quarterGold || 11268;
-    const baseCeyrekEski = parseFloat(rawItems.CEYREK_ESKI?.satis) || LIVE_MARKET_DATA.oldQuarterGold || 11068;
-    const baseYarimYeni = parseFloat(rawItems.YARIM_YENI?.satis) || LIVE_MARKET_DATA.halfGold || 22528;
-    const baseYarimEski = parseFloat(rawItems.YARIM_ESKI?.satis) || LIVE_MARKET_DATA.oldHalfGold || 22120;
-    const baseZiynetYeni = parseFloat(rawItems.TEK_YENI?.satis) || LIVE_MARKET_DATA.fullGold || 44891;
-    const baseZiynetEski = parseFloat(rawItems.TEK_ESKI?.satis) || LIVE_MARKET_DATA.oldFullGold || 44200;
+    const baseCeyrekYeni = parseFloat(rawItems.CEYREK_YENI?.satis) || LIVE_MARKET_DATA.quarterGold || 11263;
+    const baseCeyrekEski = parseFloat(rawItems.CEYREK_ESKI?.satis) || LIVE_MARKET_DATA.oldQuarterGold || 11056;
+    const baseYarimYeni = parseFloat(rawItems.YARIM_YENI?.satis) || LIVE_MARKET_DATA.halfGold || 22498;
+    const baseYarimEski = parseFloat(rawItems.YARIM_ESKI?.satis) || LIVE_MARKET_DATA.oldHalfGold || 22078;
+    const baseZiynetYeni = parseFloat(rawItems.TEK_YENI?.satis) || LIVE_MARKET_DATA.fullGold || 44844;
+    const baseZiynetEski = parseFloat(rawItems.TEK_ESKI?.satis) || LIVE_MARKET_DATA.oldFullGold || 44224;
 
     const pHas = Number((baseHas * BOARD_MARGIN).toFixed(2));
     const pGram = Math.round(baseGram * BOARD_MARGIN);
