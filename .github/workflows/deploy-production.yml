@@ -33,6 +33,16 @@ jobs:
           ref: main
           fetch-depth: 1
 
+      - name: Resolve audited release SHA
+        shell: bash
+        run: |
+          set -euo pipefail
+          sha="$(git rev-parse HEAD)"
+          test -n "$sha"
+          echo "RELEASE_SHA=$sha" >> "$GITHUB_ENV"
+          printf '{"commit":"%s","source":"github-main"}\n' "$sha" > release.json
+          echo "RELEASE_PROVENANCE_PREPARED=$sha"
+
       - name: Node 22
         uses: actions/setup-node@v4
         with:
@@ -120,6 +130,17 @@ jobs:
       - name: Deploy Hosting with legacy token
         if: env.FIREBASE_SERVICE_ACCOUNT == '' && env.FIREBASE_TOKEN != ''
         run: npx -y firebase-tools@latest deploy --project "$FIREBASE_PROJECT_ID" --only hosting --non-interactive --token "$FIREBASE_TOKEN"
+
+      - name: Verify live production commit provenance
+        shell: bash
+        run: |
+          set -euo pipefail
+          live_sha="$(curl --fail --silent --show-error --max-time 30 https://www.belginkuyumculuk.com/release.json | node -e "let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{const j=JSON.parse(d);process.stdout.write(String(j.commit||''))})")"
+          if [ "$live_sha" != "$RELEASE_SHA" ]; then
+            echo "LIVE_RELEASE_SHA_MISMATCH expected=$RELEASE_SHA actual=$live_sha"
+            exit 1
+          fi
+          echo "LIVE_RELEASE_SHA=PASS $live_sha"
 
       - name: Live SEO smoke
         env:
