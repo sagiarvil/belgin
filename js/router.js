@@ -115,7 +115,7 @@ const Router = {
       return { page: 'canli-fiyatlar' };
     }
     if (hash === 'mucevherat' || hash === 'jewellery') {
-      history.replaceState({page:'mucevherat'}, '', '/mucevherat/');
+      window.location.replace('/mucevherat/');
       return { page: 'mucevherat' };
     }
     if (hash === 'odeme' || hash === 'checkout') return { page: 'odeme' };
@@ -159,6 +159,16 @@ const Router = {
   },
 
   init() {
+    const initialHash = (location.hash || '').replace(/^#/, '');
+    if (initialHash === 'canli-fiyatlar' || initialHash === 'canlipiyasalar') {
+      window.location.replace('/canli-fiyatlar/');
+      return;
+    }
+    if (initialHash === 'mucevherat' || initialHash === 'jewellery') {
+      window.location.replace('/mucevherat/');
+      return;
+    }
+
     this.activateCommerceNavigation();
 
     window.goToHome = function(e) {
@@ -210,12 +220,16 @@ const Router = {
       const link = e.target.closest('[data-page]');
       if (link) {
         const page = link.getAttribute('data-page');
+        const filterVal = link.getAttribute('data-filter');
         if (page === 'canli-fiyatlar') {
           window.location.href = '/canli-fiyatlar/';
           return;
         }
+        if (page === 'mucevherat' && (!filterVal || filterVal === 'all')) {
+          window.location.href = '/mucevherat/';
+          return;
+        }
         e.preventDefault();
-        const filterVal = link.getAttribute('data-filter');
         this.navigate(page, true, { filter: filterVal });
         return;
       }
@@ -231,6 +245,8 @@ const Router = {
       const hash = location.hash.replace(/^#/, '');
       if (hash === 'canli-fiyatlar' || hash === 'canlipiyasalar') {
         window.location.replace('/canli-fiyatlar/');
+      } else if (hash === 'mucevherat' || hash === 'jewellery') {
+        window.location.replace('/mucevherat/');
       }
     });
 
@@ -249,6 +265,10 @@ const Router = {
 
   navigate(page, pushState = true, options = {}) {
     if (!page) page = 'ana-sayfa';
+    if (page === 'canli-fiyatlar') {
+      window.location.href = '/canli-fiyatlar/';
+      return;
+    }
 
     if (typeof App !== 'undefined') {
       if (App.closeNavDropdowns) App.closeNavDropdowns();
@@ -305,6 +325,11 @@ const Router = {
     let target = document.getElementById('page-' + page);
     if (!target && page === 'iletisim') {
       target = document.getElementById('page-contact');
+    }
+    if (page === 'mucevherat' && !target) {
+      const filter = options.filter && options.filter !== 'all' ? `?kategori=${encodeURIComponent(options.filter)}` : '';
+      window.location.href = '/mucevherat/' + filter;
+      return;
     }
     if (target) {
       target.classList.add('active');
@@ -367,7 +392,7 @@ const Router = {
         const filter = options.filter && options.filter !== 'all' ? String(options.filter) : null;
         const route = page === 'elit-kategori' && filter
           ? `${categoryRoute}?marka=${encodeURIComponent(filter)}`
-          : categoryRoute;
+          : (page === 'mucevherat' && filter ? `${categoryRoute}?kategori=${encodeURIComponent(filter)}` : categoryRoute);
         history.pushState({ page, filter: filter || 'all' }, '', route);
       } else if (page === 'ana-sayfa') {
         history.pushState({ page }, '', '/');

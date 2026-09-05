@@ -517,10 +517,13 @@ const App = {
     const pagEl = document.getElementById('homeJewelryPagination');
     if (!el) return;
 
-    const total = JEWELLERY.length;
+    const jewelleryList = (typeof JEWELLERY !== 'undefined' && Array.isArray(JEWELLERY))
+      ? JEWELLERY
+      : (typeof PRODUCTS !== 'undefined' ? PRODUCTS.filter(p => (p.category === 'jewelry' || p.category === 'jewellery') && !p.isPreOwned) : []);
+    const total = jewelleryList.length;
     const start = (page - 1) * this.JEWELRY_PAGE_SIZE;
     const end = start + this.JEWELRY_PAGE_SIZE;
-    const pageItems = JEWELLERY.slice(start, end);
+    const pageItems = jewelleryList.slice(start, end);
 
     el.innerHTML = pageItems.map(p => this.renderProductCard(p)).join('');
 
@@ -951,15 +954,16 @@ const App = {
   renderJewellery(filter = 'all') {
     this.currentJewelleryCategory = filter;
     const el = document.getElementById('allJewelleryGrid');
-    if (!el) return;
-
-    let items = JEWELLERY;
+    const jewelleryList = (typeof JEWELLERY !== 'undefined' && Array.isArray(JEWELLERY))
+      ? JEWELLERY
+      : (typeof PRODUCTS !== 'undefined' ? PRODUCTS.filter(p => (p.category === 'jewelry' || p.category === 'jewellery') && !p.isPreOwned) : []);
+    let items = jewelleryList;
     if (filter === 'Ziynet & Sarrafiye' || filter === 'ziynet') {
-      items = JEWELLERY.filter(p => p.subCategory === 'Ziynet & Sarrafiye' || p.name.includes('Ziynet') || p.name.includes('Ata') || p.name.includes('Çeyrek') || p.name.includes('Yarım') || p.name.includes('Tam') || p.name.includes('Gremse'));
+      items = jewelleryList.filter(p => p.subCategory === 'Ziynet & Sarrafiye' || p.name.includes('Ziynet') || p.name.includes('Ata') || p.name.includes('Çeyrek') || p.name.includes('Yarım') || p.name.includes('Tam') || p.name.includes('Gremse'));
     } else if (filter === 'Altın Bilezik' || filter === 'bracelet') {
-      items = JEWELLERY.filter(p => p.subCategory === 'Altın Bilezik' || p.name.includes('Bilezik'));
+      items = jewelleryList.filter(p => p.subCategory === 'Altın Bilezik' || p.name.includes('Bilezik'));
     } else if (filter === 'design' || filter === 'Tasarım Mücevher') {
-      items = JEWELLERY.filter(p => p.brand === 'Cartier' || p.category === 'jewelry' && !p.subCategory);
+      items = jewelleryList.filter(p => p.brand === 'Cartier' || p.category === 'jewelry' && !p.subCategory);
     }
 
     if (items.length === 0) {

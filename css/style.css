@@ -7743,7 +7743,17 @@ body.page-is-canli-fiyatlar .vip-whatsapp-float-compact,
 body.page-canli-fiyatlar-mode .vip-whatsapp-float-compact,
 body.page-canli-fiyatlar .vip-whatsapp-float,
 body.page-is-canli-fiyatlar .vip-whatsapp-float,
-body.page-canli-fiyatlar-mode .vip-whatsapp-float {
+body.page-canli-fiyatlar-mode .vip-whatsapp-float,
+#page-canli-fiyatlar.active ~ .seo-business-facts,
+#page-canli-fiyatlar.active ~ footer,
+#page-canli-fiyatlar.active ~ .footer-art,
+#page-canli-fiyatlar.active ~ .footer-trust-ribbon,
+#page-canli-fiyatlar.active ~ .footer-machine-summary,
+#page-canli-fiyatlar.active ~ .mobile-bottom-dock,
+#page-canli-fiyatlar.active ~ .vip-whatsapp-float-compact,
+#page-canli-fiyatlar.active ~ .vip-whatsapp-float,
+#page-canli-fiyatlar.active ~ aside,
+#page-canli-fiyatlar.active ~ .cookie-banner {
   display: none !important;
 }
 
