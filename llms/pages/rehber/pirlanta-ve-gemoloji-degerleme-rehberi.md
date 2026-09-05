@@ -1,3 +1,16 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/rehber/pirlanta-ve-gemoloji-degerleme-rehberi/"
+primaryEntity: "Gemolojik Pırlanta Değerleme Rehberi"
+primaryIntent: "Pırlanta 4C kriterleri karat renk berraklık kesim rehberi"
+parentNode: "https://www.belginkuyumculuk.com/llms/core.md"
+lastVerified: "2026-09-04T12:00:00+03:00"
+evidence: "Birinci El Saha Verisi / Tescilli Metodoloji (Est. 1999)"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/core.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/showroom.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/methodologies.md"
+---
+
 # Pırlanta Alımında 4C Standartları: Karat, Kesim, Berraklık ve Renk
 > Canonical Web URL: https://www.belginkuyumculuk.com/rehber/pirlanta-ve-gemoloji-degerleme-rehberi/
 > Son Semantik Doğrulama: 2026-09-04T12:00:00+03:00

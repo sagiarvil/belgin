@@ -1,3 +1,16 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/musteri-tanima-ve-islem-guvenligi.html"
+primaryEntity: "Müşteri Tanıma Politikası"
+primaryIntent: "Kuyumculuk müşteri tanıma MASAK uyumu ve işlem güvenliği politikası"
+parentNode: "https://www.belginkuyumculuk.com/llms/core.md"
+lastVerified: "2026-09-04T12:00:00+03:00"
+evidence: "Birinci El Saha Verisi / Tescilli Metodoloji (Est. 1999)"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/core.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/showroom.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/methodologies.md"
+---
+
 # Müşteri Tanıma ve İşlem Güvenliği Politikası (KYC)
 > Canonical Web URL: https://www.belginkuyumculuk.com/musteri-tanima-ve-islem-guvenligi.html
 > Son Semantik Doğrulama: 2026-09-04T12:00:00+03:00

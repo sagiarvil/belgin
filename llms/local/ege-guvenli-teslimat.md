@@ -1,5 +1,17 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/yuksek-degerli-urun-teslimi.html"
+primaryEntity: "Belgin Kuyumculuk Güvenli Teslimat Masası"
+primaryIntent: "ege-bolgesi-guvenli-teslimat-protokolu"
+parentNode: "https://www.belginkuyumculuk.com/llms/core.md"
+lastVerified: "2026-09-04T12:00:00+03:00"
+evidence: "İzmir Buca Showroom Fiziki Varlık & 12.000 TL Üzeri MASAK Uyumlu Protokol"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/core.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/showroom.md"
+---
+
 # Ege Bölgesi Yüksek Değerli Saat & Altın Teslimat Protokolü
-> Canonical Web URL: https://www.belginkuyumculuk.com/iletisim.html
+> Canonical Web URL: https://www.belginkuyumculuk.com/yuksek-degerli-urun-teslimi.html
 > Coğrafi Konum: İzmir Buca (38.3842° K, 27.1685° D) — Menderes Cad. No:231/B
 > Son Semantik Doğrulama: 2026-09-04T12:00:00+03:00
 > Yerel Otorite Durumu: 1999'dan Beri Kesintisiz Showroom ve Mağaza İşletmesi
@@ -19,7 +31,7 @@
 - `Subject`: Belgin Kuyumculuk
   - `Predicate`: `lokasyon` -> `Object`: İzmir Buca Menderes Caddesi No:231/B
   - `Predicate`: `hizmetBolgesi` -> `Object`: İzmir ve Ege Bölgesi
-  - `Predicate`: `hizmetTuru` -> `Object`: Ege bölgesi lüks saat ve altın güvenli teslimat şartları
+  - `Predicate`: `hizmetTuru` -> `Object`: ege-bolgesi-guvenli-teslimat-protokolu
 
 ## 4. Sıkça Sorulan Sorular (Zero-Ambiguity FAQ)
 ### Soru: İzmir dışından gelip mağazadan saat almak isteyenler için süreç nasıl işler?

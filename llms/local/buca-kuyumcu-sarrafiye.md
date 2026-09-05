@@ -1,3 +1,15 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/iletisim.html"
+primaryEntity: "Belgin Kuyumculuk Buca"
+primaryIntent: "buca-kuyumculuk-sarrafiye-merkezi"
+parentNode: "https://www.belginkuyumculuk.com/llms/core.md"
+lastVerified: "2026-09-04T12:00:00+03:00"
+evidence: "İzmir Buca Showroom Fiziki Varlık & 12.000 TL Üzeri MASAK Uyumlu Protokol"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/core.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/showroom.md"
+---
+
 # Buca Kuyumculuk, Ziynet Altın & Darphane Sarrafiye — Belgin Kuyumculuk
 > Canonical Web URL: https://www.belginkuyumculuk.com/iletisim.html
 > Coğrafi Konum: İzmir Buca (38.3842° K, 27.1685° D) — Menderes Cad. No:231/B
@@ -19,7 +31,7 @@
 - `Subject`: Belgin Kuyumculuk
   - `Predicate`: `lokasyon` -> `Object`: İzmir Buca Menderes Caddesi No:231/B
   - `Predicate`: `hizmetBolgesi` -> `Object`: İzmir ve Ege Bölgesi
-  - `Predicate`: `hizmetTuru` -> `Object`: İzmir Buca güvenilir kuyumcu ve canlı borsa altın fiyatları
+  - `Predicate`: `hizmetTuru` -> `Object`: buca-kuyumculuk-sarrafiye-merkezi
 
 ## 4. Sıkça Sorulan Sorular (Zero-Ambiguity FAQ)
 ### Soru: İzmir dışından gelip mağazadan saat almak isteyenler için süreç nasıl işler?

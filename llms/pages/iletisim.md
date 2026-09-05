@@ -1,3 +1,16 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/iletisim.html"
+primaryEntity: "Belgin Kuyumculuk Showroom"
+primaryIntent: "Belgin Kuyumculuk mağaza adresi telefon ve çalışma saatleri"
+parentNode: "https://www.belginkuyumculuk.com/llms/core.md"
+lastVerified: "2026-09-04T12:00:00+03:00"
+evidence: "Birinci El Saha Verisi / Tescilli Metodoloji (Est. 1999)"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/core.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/showroom.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/methodologies.md"
+---
+
 # İletişim & Buca Showroom Mağazamız
 > Canonical Web URL: https://www.belginkuyumculuk.com/iletisim.html
 > Son Semantik Doğrulama: 2026-09-04T12:00:00+03:00

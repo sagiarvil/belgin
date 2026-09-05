@@ -1,3 +1,16 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/elit-kategori/"
+primaryEntity: "Breitling"
+primaryIntent: "breitling-saat-ekspertiz-ve-koleksiyon"
+parentNode: "https://www.belginkuyumculuk.com/llms/pages/elit-kategori.md"
+lastVerified: "2026-09-04T12:00:00+03:00"
+evidence: "Timegrapher Kalibre Doğrulaması & Fiziksel Kasa Seri No Teyidi"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/core.md"
+  - "https://www.belginkuyumculuk.com/llms/pages/elit-kategori.md"
+  - "https://www.belginkuyumculuk.com/llms/topics/saat-ekspertiz-protokolu.md"
+---
+
 # Breitling — Lüks Saat Koleksiyonu & Ekspertiz Raporu
 > Canonical Web URL: https://www.belginkuyumculuk.com/elit-kategori/
 > Marka Kimliği: Breitling (Manüfaktür: İsviçre (Grenchen), Kuruluş: 1884)

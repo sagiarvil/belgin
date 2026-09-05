@@ -1,5 +1,17 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/rehber/luks-saat-ekspertiz-ve-orijinallik-rehberi/"
+primaryEntity: "Belgin Saat 10 Adımlı Ekspertiz Protokolü"
+primaryIntent: "10-adimli-profesyonel-saat-ekspertiz-protokolu"
+parentNode: "https://www.belginkuyumculuk.com/llms/core.md"
+lastVerified: "2026-09-04T12:00:00+03:00"
+evidence: "1. El Laboratuvar & Kuyumculuk Saha Tecrübesi (Est. 1999)"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/core.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/methodologies.md"
+---
+
 # Belgin Saat 10 Adımlı Profesyonel Saat Ekspertiz Protokolü
-> Canonical Web URL: https://www.belginkuyumculuk.com/rehber/
+> Canonical Web URL: https://www.belginkuyumculuk.com/rehber/luks-saat-ekspertiz-ve-orijinallik-rehberi/
 > Son Semantik Doğrulama: 2026-09-04T12:00:00+03:00
 > Bilgi Kazancı Standardı: 1. El Laboratuvar & Kuyumculuk Saha Tecrübesi
 

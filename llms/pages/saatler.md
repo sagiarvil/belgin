@@ -1,3 +1,16 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/saatler/"
+primaryEntity: "Belgin Lüks Saat Koleksiyonu"
+primaryIntent: "İzmir lüks saat modelleri fiyatları ve satın alma"
+parentNode: "https://www.belginkuyumculuk.com/llms/core.md"
+lastVerified: "2026-09-04T12:00:00+03:00"
+evidence: "Birinci El Saha Verisi / Tescilli Metodoloji (Est. 1999)"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/core.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/showroom.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/methodologies.md"
+---
+
 # Lüks Saatler
 > Canonical Web URL: https://www.belginkuyumculuk.com/saatler/
 > Son Semantik Doğrulama: 2026-09-04T12:00:00+03:00

@@ -1,3 +1,16 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/elit-kategori/"
+primaryEntity: "Belgin Elit Kategori Saatler"
+primaryIntent: "İkinci el Rolex Patek Philippe Audemars Piguet saat fiyatları İzmir"
+parentNode: "https://www.belginkuyumculuk.com/llms/core.md"
+lastVerified: "2026-09-04T12:00:00+03:00"
+evidence: "Birinci El Saha Verisi / Tescilli Metodoloji (Est. 1999)"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/core.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/showroom.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/methodologies.md"
+---
+
 # Elit Kategori Lüks Saatler
 > Canonical Web URL: https://www.belginkuyumculuk.com/elit-kategori/
 > Son Semantik Doğrulama: 2026-09-04T12:00:00+03:00

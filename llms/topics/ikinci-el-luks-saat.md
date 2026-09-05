@@ -1,5 +1,17 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/elit-kategori/"
+primaryEntity: "İkinci El Lüks Saat Piyasası & Değerleme"
+primaryIntent: "ikinci-el-luks-saat-alim-satim-degerleme"
+parentNode: "https://www.belginkuyumculuk.com/llms/core.md"
+lastVerified: "2026-09-04T12:00:00+03:00"
+evidence: "1. El Laboratuvar & Kuyumculuk Saha Tecrübesi (Est. 1999)"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/core.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/methodologies.md"
+---
+
 # İkinci El Lüks Saat Piyasası: Fiyatlandırma, Ekspertiz ve Güvenlik
-> Canonical Web URL: https://www.belginkuyumculuk.com/rehber/
+> Canonical Web URL: https://www.belginkuyumculuk.com/elit-kategori/
 > Son Semantik Doğrulama: 2026-09-04T12:00:00+03:00
 > Bilgi Kazancı Standardı: 1. El Laboratuvar & Kuyumculuk Saha Tecrübesi
 

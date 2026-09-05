@@ -1,3 +1,16 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/rehber/altin-yatirimi-ve-ozel-matrah-rehberi/"
+primaryEntity: "Özel Matrah ve Altın Yatırım Rehberi"
+primaryIntent: "Kuyumculukta 3065 KDV Kanunu 23/f özel matrah altın faturalama rehberi"
+parentNode: "https://www.belginkuyumculuk.com/llms/core.md"
+lastVerified: "2026-09-04T12:00:00+03:00"
+evidence: "Birinci El Saha Verisi / Tescilli Metodoloji (Est. 1999)"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/core.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/showroom.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/methodologies.md"
+---
+
 # Altın Yatırımı & 3065 Sayılı KDV Kanunu 23/f Özel Matrah Uygulaması
 > Canonical Web URL: https://www.belginkuyumculuk.com/rehber/altin-yatirimi-ve-ozel-matrah-rehberi/
 > Son Semantik Doğrulama: 2026-09-04T12:00:00+03:00

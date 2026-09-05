@@ -1,3 +1,15 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/biz-kimiz/#experts"
+primaryEntity: "Belgin Saat & Mücevherat Uzmanlar ve Bilimsel Heyet Sicilleri"
+primaryIntent: "horoloji-ve-gemoloji-uzman-sicilleri"
+parentNode: "https://www.belginkuyumculuk.com/llms/core.md"
+lastVerified: "2026-09-04T12:00:00+03:00"
+evidence: "Semih Sonbahar (Est. 1999), İsviçre Timegrapher ve GIA/HRD Normları"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/core.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/methodologies.md"
+---
+
 # Belgin Saat & Mücevherat Uzmanlar ve Bilimsel Heyet Sicilleri
 > Canonical URI: https://www.belginkuyumculuk.com/biz-kimiz/#experts
 > Uzmanlık Alanları: İsviçre Horolojisi, Gemoloji (Elmas & Değerli Taşlar), Vergi Hukuku (3065 SK)

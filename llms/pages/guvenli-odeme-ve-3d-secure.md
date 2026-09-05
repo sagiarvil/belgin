@@ -1,3 +1,16 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/guvenli-odeme-ve-3d-secure.html"
+primaryEntity: "Güvenli Ödeme Politikası"
+primaryIntent: "Kuyumculuk ve saat alışverişinde 3D Secure kart ödeme güvenliği"
+parentNode: "https://www.belginkuyumculuk.com/llms/core.md"
+lastVerified: "2026-09-04T12:00:00+03:00"
+evidence: "Birinci El Saha Verisi / Tescilli Metodoloji (Est. 1999)"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/core.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/showroom.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/methodologies.md"
+---
+
 # Güvenli Ödeme ve 3D Secure Politikası
 > Canonical Web URL: https://www.belginkuyumculuk.com/guvenli-odeme-ve-3d-secure.html
 > Son Semantik Doğrulama: 2026-09-04T12:00:00+03:00

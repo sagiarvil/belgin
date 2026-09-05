@@ -1,3 +1,15 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/hukuki-delil-ve-kayit-politikasi.html#methodologies"
+primaryEntity: "Belgin Kuyumculuk & Saat Tescilli İşlem Metodolojileri"
+primaryIntent: "fiyatlama-ve-10-adimli-saat-dogrulama"
+parentNode: "https://www.belginkuyumculuk.com/llms/core.md"
+lastVerified: "2026-09-04T12:00:00+03:00"
+evidence: "Harem Altın Borsa Akışı (+%3 Marj) & 10 Adımlı Ekspertiz Protokolü"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/core.md"
+  - "https://www.belginkuyumculuk.com/llms/topics/saat-ekspertiz-protokolu.md"
+---
+
 # Belgin Kuyumculuk & Saat Tescilli İşlem Metodolojileri
 > Canonical URI: https://www.belginkuyumculuk.com/hukuki-delil-ve-kayit-politikasi.html#methodologies
 > Standart Kodu: MET-BELGIN-2026-V1

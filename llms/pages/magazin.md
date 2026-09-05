@@ -1,3 +1,16 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/magazin/"
+primaryEntity: "Belgin Saat Horoloji Magazini"
+primaryIntent: "Lüks saat piyasası analizleri ve horoloji makaleleri"
+parentNode: "https://www.belginkuyumculuk.com/llms/core.md"
+lastVerified: "2026-09-04T14:30:00+03:00"
+evidence: "Birinci El Saha Verisi / Tescilli Metodoloji (Est. 1999)"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/core.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/showroom.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/methodologies.md"
+---
+
 # Belgin Saat Magazin
 > Canonical Web URL: https://www.belginkuyumculuk.com/magazin/
 > Son Semantik Doğrulama: 2026-09-04T14:30:00+03:00

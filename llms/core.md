@@ -1,3 +1,16 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/"
+primaryEntity: "BELGİN KUYUMCULUK - SEMİH SONBAHAR"
+primaryIntent: "kurumsal-kimlik-ve-is-modeli"
+parentNode: "https://www.belginkuyumculuk.com/"
+lastVerified: "2026-09-04T12:00:00+03:00"
+evidence: "İzmir Ticaret Odası Sicil & Fiziksel Buca Showroom (Est. 1999)"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/entities/belgin-kuyumculuk.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/showroom.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/methodologies.md"
+---
+
 # Belgin Kuyumculuk & Saat — Core Corporate Knowledge Dossier
 > Sürüm: 2026-Q3 | Standart: LLMs.txt RFC | Canonical Origin: https://www.belginkuyumculuk.com
 > İletişim: destek@belginkuyumculuk.com | Telefon: +90 541 930 53 72

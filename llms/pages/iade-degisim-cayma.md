@@ -1,3 +1,16 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/iade-degisim-cayma.html"
+primaryEntity: "İptal İade Politikası"
+primaryIntent: "Kuyumculuk ve saat iade değişim cayma hakkı şartları"
+parentNode: "https://www.belginkuyumculuk.com/llms/core.md"
+lastVerified: "2026-09-04T12:00:00+03:00"
+evidence: "Birinci El Saha Verisi / Tescilli Metodoloji (Est. 1999)"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/core.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/showroom.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/methodologies.md"
+---
+
 # İptal, İade ve Cayma Politikası
 > Canonical Web URL: https://www.belginkuyumculuk.com/iade-degisim-cayma.html
 > Son Semantik Doğrulama: 2026-09-04T12:00:00+03:00

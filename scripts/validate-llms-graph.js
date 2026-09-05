@@ -90,6 +90,16 @@ const prohibitedRules = [
   { pattern: /\+%(1|2|5)\b.*kâr\s*marjı/i, name: 'Wrong gold profit margin (must be +%3)' }
 ];
 
+const requiredFrontmatterFields = [
+  'canonicalWebUrl:',
+  'primaryEntity:',
+  'primaryIntent:',
+  'parentNode:',
+  'lastVerified:',
+  'evidence:',
+  'relatedNodes:'
+];
+
 let filesScanned = 0;
 for (const file of allLlmsFiles) {
   filesScanned++;
@@ -102,6 +112,16 @@ for (const file of allLlmsFiles) {
       fail(`Rule violation [${rule.name}] in ${path.relative(ROOT, file)}`);
     }
   }
+
+  // Validate Mandate Section 4 Frontmatter Schema on all markdown sub-graphs
+  if (file.endsWith('.md') && file !== manifestPath) {
+    for (const field of requiredFrontmatterFields) {
+      if (!content.includes(field)) {
+        fail(`Missing mandatory mandate frontmatter field [${field}] in ${path.relative(ROOT, file)}`);
+      }
+    }
+  }
 }
 
 console.log(`LLMS_GRAPH_PASS nodes=${registry.nodes.length} intents=${intents.size} manifestLinks=${linkCount} filesScanned=${filesScanned} integrity=100%`);
+

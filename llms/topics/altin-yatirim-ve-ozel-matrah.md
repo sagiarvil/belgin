@@ -1,5 +1,17 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/rehber/altin-yatirimi-ve-ozel-matrah-rehberi/"
+primaryEntity: "3065 SK m.23/f Özel Matrah Vergi Rejimi"
+primaryIntent: "3065-kdv-madde-23f-ozel-matrah-altin-faturasi"
+parentNode: "https://www.belginkuyumculuk.com/llms/core.md"
+lastVerified: "2026-09-04T12:00:00+03:00"
+evidence: "1. El Laboratuvar & Kuyumculuk Saha Tecrübesi (Est. 1999)"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/core.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/methodologies.md"
+---
+
 # Kuyumculukta 3065 KDV Kanunu 23/f Özel Matrah Hukuku ve Fatura Düzeni
-> Canonical Web URL: https://www.belginkuyumculuk.com/rehber/
+> Canonical Web URL: https://www.belginkuyumculuk.com/rehber/altin-yatirimi-ve-ozel-matrah-rehberi/
 > Son Semantik Doğrulama: 2026-09-04T12:00:00+03:00
 > Bilgi Kazancı Standardı: 1. El Laboratuvar & Kuyumculuk Saha Tecrübesi
 

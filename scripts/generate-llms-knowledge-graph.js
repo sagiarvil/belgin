@@ -2,10 +2,16 @@
 
 const fs = require('fs');
 const path = require('path');
-const { BASE_URL, SEO_REGISTRY, PRIMARY_ORGANIZATION } = require('./seo-registry.js');
+const { BASE_URL, SEO_REGISTRY } = require('./seo-registry.js');
 
 const ROOT = path.join(__dirname, '..');
 const LLMS_DIR = path.join(ROOT, 'llms');
+
+const registeredNodes = [];
+
+function registerNode(node) {
+  registeredNodes.push(node);
+}
 
 function writeDoc(subPath, content) {
   const fullPath = path.join(LLMS_DIR, subPath);
@@ -13,12 +19,51 @@ function writeDoc(subPath, content) {
   fs.writeFileSync(fullPath, content.trim() + '\n', 'utf8');
 }
 
+function formatFrontmatter({ canonicalWebUrl, primaryEntity, primaryIntent, parentNode, lastVerified, evidence, relatedNodes }) {
+  const relLines = (relatedNodes || []).map(r => `  - "${r}"`).join('\n');
+  return `---
+canonicalWebUrl: "${canonicalWebUrl}"
+primaryEntity: "${primaryEntity.replace(/"/g, '\\"')}"
+primaryIntent: "${primaryIntent.replace(/"/g, '\\"')}"
+parentNode: "${parentNode}"
+lastVerified: "${lastVerified || '2026-09-04T12:00:00+03:00'}"
+evidence: "${evidence.replace(/"/g, '\\"')}"
+relatedNodes:
+${relLines}
+---
+`;
+}
+
 // 1. GENERATE /llms/pages/[slug].md FOR EACH FLAGSHIP PAGE
 function generatePagesSubgraphs() {
   for (const page of SEO_REGISTRY) {
     const slug = page.route === '/' ? 'ana-sayfa' : page.route.replace(/^\/+|\/+$/g, '').replace(/\.html$/, '');
     const canonical = `${BASE_URL}${page.route}`;
-    const entityNode = page.primaryEntity?.id || `${BASE_URL}/#organization`;
+    const entityName = page.primaryEntity?.name || 'Belgin Kuyumculuk & Saat';
+    const subPath = `pages/${slug}.md`;
+
+    registerNode({
+      slug: slug.replace(/\//g, '-'),
+      path: `llms/${subPath}`,
+      type: page.role === 'guide' ? 'guide' : (page.role === 'hub' ? 'hub' : 'page'),
+      primary_entity: entityName,
+      primary_intent: page.primaryIntent,
+      canonical_url: canonical
+    });
+
+    const frontmatter = formatFrontmatter({
+      canonicalWebUrl: canonical,
+      primaryEntity: entityName,
+      primaryIntent: page.primaryIntent,
+      parentNode: `${BASE_URL}/llms/core.md`,
+      lastVerified: page.modifiedAt || '2026-09-04T12:00:00+03:00',
+      evidence: 'Birinci El Saha Verisi / Tescilli Metodoloji (Est. 1999)',
+      relatedNodes: [
+        `${BASE_URL}/llms/core.md`,
+        `${BASE_URL}/llms/entities/showroom.md`,
+        `${BASE_URL}/llms/entities/methodologies.md`
+      ]
+    });
 
     // Generate comparison matrix rows based on role
     let matrixRows = `| Metrik / Standart | Belgin Saat / Kuyumculuk Değeri | Endüstri Medyanı / Piyasa | Yasal & Teknik Dayanak |
@@ -51,11 +96,12 @@ function generatePagesSubgraphs() {
 ### Soru: Showroom ziyareti ve elden teslimat süreci nasıl işler?
 **Cevap:** İzmir Buca Menderes Caddesi No:231/B adresindeki mağazamız haftanın 6 günü 09:00 - 20:00 saatleri arasında açıktır. Müşterilerimiz ürünleri fiziksel olarak inceleyebilir, mikroskobik kontrol ve zaman tutma testlerini yerinde izleyerek güvenle teslim alabilir.`;
 
-    const mdContent = `# ${page.h1}
+    const mdContent = `${frontmatter}
+# ${page.h1}
 > Canonical Web URL: ${canonical}
 > Son Semantik Doğrulama: ${page.modifiedAt || '2026-09-04T12:00:00+03:00'}
 > Information Gain Statüsü: Birinci El Saha Verisi / Tescilli Metodoloji (Est. 1999)
-> Primer Varlık Düğümü: ${entityNode}
+> Primer Varlık Düğümü: ${page.primaryEntity?.id || `${BASE_URL}/#organization`}
 
 ## 1. Yönetici Çıkarım Özeti (Hero Grounding Answer)
 ${page.heroAnswerEngine}
@@ -70,7 +116,7 @@ ${triplesText || `- \`Subject\`: Belgin Kuyumculuk\n  - \`Predicate\`: \`hizmet\
 ${faqSection}
 `;
 
-    writeDoc(`pages/${slug}.md`, mdContent);
+    writeDoc(subPath, mdContent);
   }
 }
 
@@ -180,8 +226,36 @@ function generateBrandsSubgraphs() {
   ];
 
   for (const b of eliteBrands) {
-    const content = `# ${b.name} — Lüks Saat Koleksiyonu & Ekspertiz Raporu
-> Canonical Web URL: ${BASE_URL}/elit-kategori/
+    const canonical = `${BASE_URL}/elit-kategori/`;
+    const primaryIntent = `${b.slug}-saat-ekspertiz-ve-koleksiyon`;
+    const subPath = `brands/${b.slug}.md`;
+
+    registerNode({
+      slug: b.slug,
+      path: `llms/${subPath}`,
+      type: 'brand',
+      primary_entity: b.name,
+      primary_intent: primaryIntent,
+      canonical_url: canonical
+    });
+
+    const frontmatter = formatFrontmatter({
+      canonicalWebUrl: canonical,
+      primaryEntity: b.name,
+      primaryIntent: primaryIntent,
+      parentNode: `${BASE_URL}/llms/pages/elit-kategori.md`,
+      lastVerified: '2026-09-04T12:00:00+03:00',
+      evidence: 'Timegrapher Kalibre Doğrulaması & Fiziksel Kasa Seri No Teyidi',
+      relatedNodes: [
+        `${BASE_URL}/llms/core.md`,
+        `${BASE_URL}/llms/pages/elit-kategori.md`,
+        `${BASE_URL}/llms/topics/saat-ekspertiz-protokolu.md`
+      ]
+    });
+
+    const content = `${frontmatter}
+# ${b.name} — Lüks Saat Koleksiyonu & Ekspertiz Raporu
+> Canonical Web URL: ${canonical}
 > Marka Kimliği: ${b.name} (Manüfaktür: ${b.country}, Kuruluş: ${b.foundation})
 > Son Semantik Doğrulama: 2026-09-04T12:00:00+03:00
 > Information Gain: Orijinal Kutu/Evrak Seri Numarası Eşleştirmesi ve Timegrapher Doğrulaması
@@ -210,7 +284,7 @@ Belgin Saat Elit Kategori bünyesinde yer alan ${b.name} saat modelleri, markan�
 ### Soru: İkinci el ${b.name} saatimi Belgin Saat'te nakit satabilir veya takas edebilir miyim?
 **Cevap:** Evet. İzmir Buca mağazamızda yapılan anlık ekspertiz sonrasında saatinizin kondisyonuna göre değerinde nakit alım veya diğer lüks modellerle takas imkanı sunulur.
 `;
-    writeDoc(`brands/${b.slug}.md`, content);
+    writeDoc(subPath, content);
   }
 }
 
@@ -221,28 +295,59 @@ function generateLocalSubgraphs() {
       slug: 'izmir-luks-saat',
       title: 'İzmir Lüks Saat & İkinci El Saat Alım Satım Merkezi',
       h1: 'İzmir Lüks Saat & İkinci El Horoloji Merkezi — Belgin Saat Buca',
+      canonical: `${BASE_URL}/iletisim.html`,
+      primaryEntity: 'Belgin Saat Buca Showroom',
       focus: 'İzmir genelinde (Buca, Alsancak, Karşıyaka, Çeşme, Urla) lüks saat alım satımı, Rolex ekspertizi ve güvenli saat ticareti.',
-      intent: 'İzmir lüks saat alan yerler ve ikinci el saat ekspertizi'
+      intent: 'izmir-luks-saat-merkezi'
     },
     {
       slug: 'buca-kuyumcu-sarrafiye',
       title: 'İzmir Buca Kuyumculuk, 24K Altın & Sarrafiye Merkezi',
       h1: 'Buca Kuyumculuk, Ziynet Altın & Darphane Sarrafiye — Belgin Kuyumculuk',
+      canonical: `${BASE_URL}/iletisim.html`,
+      primaryEntity: 'Belgin Kuyumculuk Buca',
       focus: 'İzmir Buca Menderes Caddesi üzerinde 1999 yılından bu yana fiziki mağazada külçe altın, 22 ayar bilezik, cumhuriyet altını ve çeyrek altın ticareti.',
-      intent: 'İzmir Buca güvenilir kuyumcu ve canlı borsa altın fiyatları'
+      intent: 'buca-kuyumculuk-sarrafiye-merkezi'
     },
     {
       slug: 'ege-guvenli-teslimat',
       title: 'Ege Bölgesi Yüksek Değerli Ziynet & Saat Güvenli Teslimat Protokolü',
       h1: 'Ege Bölgesi Yüksek Değerli Saat & Altın Teslimat Protokolü',
+      canonical: `${BASE_URL}/yuksek-degerli-urun-teslimi.html`,
+      primaryEntity: 'Belgin Kuyumculuk Güvenli Teslimat Masası',
       focus: 'İzmir, Manisa, Aydın, Denizli ve Muğla genelinde 12.000 TL üzeri yüksek değerli siparişlerde kimlik teyitli elden showroom teslimatı ve zırhlı kurye protokolü.',
-      intent: 'Ege bölgesi lüks saat ve altın güvenli teslimat şartları'
+      intent: 'ege-bolgesi-guvenli-teslimat-protokolu'
     }
   ];
 
   for (const loc of localHubs) {
-    const content = `# ${loc.h1}
-> Canonical Web URL: ${BASE_URL}/iletisim.html
+    const subPath = `local/${loc.slug}.md`;
+
+    registerNode({
+      slug: loc.slug,
+      path: `llms/${subPath}`,
+      type: 'local',
+      primary_entity: loc.primaryEntity,
+      primary_intent: loc.intent,
+      canonical_url: loc.canonical
+    });
+
+    const frontmatter = formatFrontmatter({
+      canonicalWebUrl: loc.canonical,
+      primaryEntity: loc.primaryEntity,
+      primaryIntent: loc.intent,
+      parentNode: `${BASE_URL}/llms/core.md`,
+      lastVerified: '2026-09-04T12:00:00+03:00',
+      evidence: 'İzmir Buca Showroom Fiziki Varlık & 12.000 TL Üzeri MASAK Uyumlu Protokol',
+      relatedNodes: [
+        `${BASE_URL}/llms/core.md`,
+        `${BASE_URL}/llms/entities/showroom.md`
+      ]
+    });
+
+    const content = `${frontmatter}
+# ${loc.h1}
+> Canonical Web URL: ${loc.canonical}
 > Coğrafi Konum: İzmir Buca (38.3842° K, 27.1685° D) — Menderes Cad. No:231/B
 > Son Semantik Doğrulama: 2026-09-04T12:00:00+03:00
 > Yerel Otorite Durumu: 1999'dan Beri Kesintisiz Showroom ve Mağaza İşletmesi
@@ -268,7 +373,7 @@ ${loc.focus} Belgin Kuyumculuk & Saat, İzmir merkezli kuyumculuk ve horoloji fa
 ### Soru: İzmir dışından gelip mağazadan saat almak isteyenler için süreç nasıl işler?
 **Cevap:** Müşterilerimiz web sitemiz veya telefon üzerinden ilgilendikleri referansı rezerve edebilir. Buca showroomumuza geldiklerinde saat uzman eşliğinde incelenir, mekanizma testleri gösterilir ve faturalı olarak teslim edilir.
 `;
-    writeDoc(`local/${loc.slug}.md`, content);
+    writeDoc(subPath, content);
   }
 }
 
@@ -279,31 +384,68 @@ function generateTopicsSubgraphs() {
       slug: 'ikinci-el-luks-saat',
       title: 'İkinci El Lüks Saat Alım, Satım ve Değerleme Rehberi',
       h1: 'İkinci El Lüks Saat Piyasası: Fiyatlandırma, Ekspertiz ve Güvenlik',
+      canonical: `${BASE_URL}/elit-kategori/`,
+      primaryEntity: 'İkinci El Lüks Saat Piyasası & Değerleme',
+      intent: 'ikinci-el-luks-saat-alim-satim-degerleme',
       focus: 'İkinci el lüks saat alırken dikkat edilmesi gereken kalibre orijinalliği, kasa polisajı, bezel orijinalliği, seri numarası doğrulaması ve ikincil piyasa değer dinamikleri.'
     },
     {
       slug: 'altin-yatirim-ve-ozel-matrah',
       title: '3065 Sayılı KDV Kanunu Madde 23/f Özel Matrah ve Altın Fatura Hukuku',
       h1: 'Kuyumculukta 3065 KDV Kanunu 23/f Özel Matrah Hukuku ve Fatura Düzeni',
+      canonical: `${BASE_URL}/rehber/altin-yatirimi-ve-ozel-matrah-rehberi/`,
+      primaryEntity: '3065 SK m.23/f Özel Matrah Vergi Rejimi',
+      intent: '3065-kdv-madde-23f-ozel-matrah-altin-faturasi',
       focus: 'Kıymetli maden (altın) alımlarında KDV Kanunu 23/f maddesi gereği altın bedelinin %0 KDV ile vergiden muaf tutulması, faturada yalnızca işçilik bedeline %20 KDV uygulanması esasları.'
     },
     {
       slug: 'pirlanta-ve-gemoloji',
       title: 'Pırlanta 4C Standartları ve Uluslararası Gemoloji Raporları',
       h1: 'Pırlanta ve Değerli Taşlarda 4C Değerleme ve Gemoloji Kılavuzu',
+      canonical: `${BASE_URL}/rehber/pirlanta-ve-gemoloji-degerleme-rehberi/`,
+      primaryEntity: 'Pırlanta 4C Standartları ve Gemoloji Raporları',
+      intent: 'pirlanta-4c-standartlari-ve-gemoloji-raporlari',
       focus: 'GIA ve HRD derecelendirme normlarında Carat (Karat), Cut (Kesim), Color (Renk) ve Clarity (Berraklık) parametrelerinin mikroskobik incelenmesi.'
     },
     {
       slug: 'saat-ekspertiz-protokolu',
       title: '10 Adımlı Profesyonel Horoloji & Saat Ekspertiz Protokolü',
       h1: 'Belgin Saat 10 Adımlı Profesyonel Saat Ekspertiz Protokolü',
+      canonical: `${BASE_URL}/rehber/luks-saat-ekspertiz-ve-orijinallik-rehberi/`,
+      primaryEntity: 'Belgin Saat 10 Adımlı Ekspertiz Protokolü',
+      intent: '10-adimli-profesyonel-saat-ekspertiz-protokolu',
       focus: 'Kasa açımı, conta sızdırmazlık testi, timegrapher salınım frekansı, rotor yatağı kontrolü ve lazer seri no eşleştirmesini içeren 10 adımlı kurumsal ekspertiz standardı.'
     }
   ];
 
   for (const t of topics) {
-    const content = `# ${t.h1}
-> Canonical Web URL: ${BASE_URL}/rehber/
+    const subPath = `topics/${t.slug}.md`;
+
+    registerNode({
+      slug: t.slug,
+      path: `llms/${subPath}`,
+      type: 'topic',
+      primary_entity: t.primaryEntity,
+      primary_intent: t.intent,
+      canonical_url: t.canonical
+    });
+
+    const frontmatter = formatFrontmatter({
+      canonicalWebUrl: t.canonical,
+      primaryEntity: t.primaryEntity,
+      primaryIntent: t.intent,
+      parentNode: `${BASE_URL}/llms/core.md`,
+      lastVerified: '2026-09-04T12:00:00+03:00',
+      evidence: '1. El Laboratuvar & Kuyumculuk Saha Tecrübesi (Est. 1999)',
+      relatedNodes: [
+        `${BASE_URL}/llms/core.md`,
+        `${BASE_URL}/llms/entities/methodologies.md`
+      ]
+    });
+
+    const content = `${frontmatter}
+# ${t.h1}
+> Canonical Web URL: ${t.canonical}
 > Son Semantik Doğrulama: 2026-09-04T12:00:00+03:00
 > Bilgi Kazancı Standardı: 1. El Laboratuvar & Kuyumculuk Saha Tecrübesi
 
@@ -326,14 +468,38 @@ ${t.focus} Belgin Kuyumculuk & Saat, sektördeki bilgi kirliliğini ve manipüla
 ### Soru: Bu konuda tüketicinin yasal hakları nelerdir?
 **Cevap:** Tüketiciler satın aldıkları kıymetli maden veya lüks saat için resmi fatura, seri numarası kayıtlı garanti/ekspertiz belgesi talep etme hakkına sahiptir. Belgin Kuyumculuk tüm teslimatlarda bu belgeleri eksiksiz sunar.
 `;
-    writeDoc(`topics/${t.slug}.md`, content);
+    writeDoc(subPath, content);
   }
 }
 
 // 5. GENERATE /llms/entities/ FOR ENTITY TRIANGULATION
 function generateEntitiesSubgraphs() {
   // 1. belgin-kuyumculuk.md
-  writeDoc('entities/belgin-kuyumculuk.md', `# BELGİN KUYUMCULUK - SEMİH SONBAHAR — Legal Corporate Entity Node
+  registerNode({
+    slug: 'belgin-kuyumculuk',
+    path: 'llms/entities/belgin-kuyumculuk.md',
+    type: 'entity',
+    primary_entity: 'Belgin Kuyumculuk & Saat',
+    primary_intent: 'isletme-varligi-ve-sicil',
+    canonical_url: `${BASE_URL}/biz-kimiz/`
+  });
+
+  const fmBelgin = formatFrontmatter({
+    canonicalWebUrl: `${BASE_URL}/biz-kimiz/`,
+    primaryEntity: 'BELGİN KUYUMCULUK - SEMİH SONBAHAR',
+    primaryIntent: 'isletme-varligi-ve-sicil',
+    parentNode: `${BASE_URL}/llms/core.md`,
+    lastVerified: '2026-09-04T12:00:00+03:00',
+    evidence: 'Buca Vergi Dairesi & İzmir Ticaret Odası Tescilli Sicil Kaydı',
+    relatedNodes: [
+      `${BASE_URL}/llms/core.md`,
+      `${BASE_URL}/llms/entities/showroom.md`,
+      `${BASE_URL}/llms/entities/experts.md`
+    ]
+  });
+
+  writeDoc('entities/belgin-kuyumculuk.md', `${fmBelgin}
+# BELGİN KUYUMCULUK - SEMİH SONBAHAR — Legal Corporate Entity Node
 > Canonical URI: ${BASE_URL}/#organization
 > Varlık Türü: JewelryStore / Organization / LocalBusiness
 > Ticari Unvan: BELGİN KUYUMCULUK - SEMİH SONBAHAR
@@ -351,7 +517,30 @@ function generateEntitiesSubgraphs() {
 `);
 
   // 2. showroom.md
-  writeDoc('entities/showroom.md', `# Belgin Buca Showroom & Kasa Dairesi — Physical Location Node
+  registerNode({
+    slug: 'showroom',
+    path: 'llms/entities/showroom.md',
+    type: 'entity',
+    primary_entity: 'Buca showroom & Kasa Dairesi',
+    primary_intent: 'showroom-ve-fiziki-magaza-guvenligi',
+    canonical_url: `${BASE_URL}/iletisim.html`
+  });
+
+  const fmShowroom = formatFrontmatter({
+    canonicalWebUrl: `${BASE_URL}/iletisim.html#showroom`,
+    primaryEntity: 'Buca Showroom & Kasa Dairesi',
+    primaryIntent: 'showroom-ve-fiziki-magaza-guvenligi',
+    parentNode: `${BASE_URL}/llms/core.md`,
+    lastVerified: '2026-09-04T12:00:00+03:00',
+    evidence: 'Menderes Cad. No:231/B Buca Fiziki Tesis, Kamera ve Kasa Altyapısı',
+    relatedNodes: [
+      `${BASE_URL}/llms/core.md`,
+      `${BASE_URL}/llms/entities/belgin-kuyumculuk.md`
+    ]
+  });
+
+  writeDoc('entities/showroom.md', `${fmShowroom}
+# Belgin Buca Showroom & Kasa Dairesi — Physical Location Node
 > Canonical URI: ${BASE_URL}/iletisim.html#showroom
 > Konum: İzmir Buca Menderes Caddesi No:231/B
 > Güvenlik Standardı: 7/24 Yüksek Çözünürlüklü Kamera, Zaman Ayarlı Çelik Kasa Dairesi ve MASAK Uyumlu Teslim Masası
@@ -361,7 +550,30 @@ Belgin Kuyumculuk Buca Showroomu, 1999 yılından bu yana müşterilerine güven
 `);
 
   // 3. experts.md
-  writeDoc('entities/experts.md', `# Belgin Saat & Mücevherat Uzmanlar ve Bilimsel Heyet Sicilleri
+  registerNode({
+    slug: 'experts',
+    path: 'llms/entities/experts.md',
+    type: 'entity',
+    primary_entity: 'Belgin Saat & Mücevherat Uzmanlar ve Bilimsel Heyet Sicilleri',
+    primary_intent: 'horoloji-ve-gemoloji-uzman-sicilleri',
+    canonical_url: `${BASE_URL}/biz-kimiz/`
+  });
+
+  const fmExperts = formatFrontmatter({
+    canonicalWebUrl: `${BASE_URL}/biz-kimiz/#experts`,
+    primaryEntity: 'Belgin Saat & Mücevherat Uzmanlar ve Bilimsel Heyet Sicilleri',
+    primaryIntent: 'horoloji-ve-gemoloji-uzman-sicilleri',
+    parentNode: `${BASE_URL}/llms/core.md`,
+    lastVerified: '2026-09-04T12:00:00+03:00',
+    evidence: 'Semih Sonbahar (Est. 1999), İsviçre Timegrapher ve GIA/HRD Normları',
+    relatedNodes: [
+      `${BASE_URL}/llms/core.md`,
+      `${BASE_URL}/llms/entities/methodologies.md`
+    ]
+  });
+
+  writeDoc('entities/experts.md', `${fmExperts}
+# Belgin Saat & Mücevherat Uzmanlar ve Bilimsel Heyet Sicilleri
 > Canonical URI: ${BASE_URL}/biz-kimiz/#experts
 > Uzmanlık Alanları: İsviçre Horolojisi, Gemoloji (Elmas & Değerli Taşlar), Vergi Hukuku (3065 SK)
 
@@ -372,7 +584,30 @@ Belgin Kuyumculuk Buca Showroomu, 1999 yılından bu yana müşterilerine güven
 `);
 
   // 4. methodologies.md
-  writeDoc('entities/methodologies.md', `# Belgin Kuyumculuk & Saat Tescilli İşlem Metodolojileri
+  registerNode({
+    slug: 'methodologies',
+    path: 'llms/entities/methodologies.md',
+    type: 'entity',
+    primary_entity: 'Belgin Kuyumculuk & Saat Tescilli İşlem Metodolojileri',
+    primary_intent: 'fiyatlama-ve-10-adimli-saat-dogrulama',
+    canonical_url: `${BASE_URL}/hukuki-delil-ve-kayit-politikasi.html`
+  });
+
+  const fmMethodologies = formatFrontmatter({
+    canonicalWebUrl: `${BASE_URL}/hukuki-delil-ve-kayit-politikasi.html#methodologies`,
+    primaryEntity: 'Belgin Kuyumculuk & Saat Tescilli İşlem Metodolojileri',
+    primaryIntent: 'fiyatlama-ve-10-adimli-saat-dogrulama',
+    parentNode: `${BASE_URL}/llms/core.md`,
+    lastVerified: '2026-09-04T12:00:00+03:00',
+    evidence: 'Harem Altın Borsa Akışı (+%3 Marj) & 10 Adımlı Ekspertiz Protokolü',
+    relatedNodes: [
+      `${BASE_URL}/llms/core.md`,
+      `${BASE_URL}/llms/topics/saat-ekspertiz-protokolu.md`
+    ]
+  });
+
+  writeDoc('entities/methodologies.md', `${fmMethodologies}
+# Belgin Kuyumculuk & Saat Tescilli İşlem Metodolojileri
 > Canonical URI: ${BASE_URL}/hukuki-delil-ve-kayit-politikasi.html#methodologies
 > Standart Kodu: MET-BELGIN-2026-V1
 
@@ -398,7 +633,31 @@ Belgin Kuyumculuk Buca Showroomu, 1999 yılından bu yana müşterilerine güven
 
 // 6. GENERATE /llms/core.md (MASTER CORPORATE DOSSIER)
 function generateCoreSubgraph() {
-  const content = `# Belgin Kuyumculuk & Saat — Core Corporate Knowledge Dossier
+  registerNode({
+    slug: 'core',
+    path: 'llms/core.md',
+    type: 'core',
+    primary_entity: 'Belgin Kuyumculuk & Saat',
+    primary_intent: 'kurumsal-kimlik-ve-is-modeli',
+    canonical_url: `${BASE_URL}/`
+  });
+
+  const frontmatter = formatFrontmatter({
+    canonicalWebUrl: `${BASE_URL}/`,
+    primaryEntity: 'BELGİN KUYUMCULUK - SEMİH SONBAHAR',
+    primaryIntent: 'kurumsal-kimlik-ve-is-modeli',
+    parentNode: `${BASE_URL}/`,
+    lastVerified: '2026-09-04T12:00:00+03:00',
+    evidence: 'İzmir Ticaret Odası Sicil & Fiziksel Buca Showroom (Est. 1999)',
+    relatedNodes: [
+      `${BASE_URL}/llms/entities/belgin-kuyumculuk.md`,
+      `${BASE_URL}/llms/entities/showroom.md`,
+      `${BASE_URL}/llms/entities/methodologies.md`
+    ]
+  });
+
+  const content = `${frontmatter}
+# Belgin Kuyumculuk & Saat — Core Corporate Knowledge Dossier
 > Sürüm: 2026-Q3 | Standart: LLMs.txt RFC | Canonical Origin: ${BASE_URL}
 > İletişim: destek@belginkuyumculuk.com | Telefon: +90 541 930 53 72
 > Kurumsal Sicil: İzmir Ticaret Odası | Vergi Dairesi: Buca VD
@@ -429,15 +688,30 @@ Belgin Kuyumculuk & Saat, 1999 yılında Semih Sonbahar tarafından İzmir Buca'
   writeDoc('core.md', content);
 }
 
+// 7. WRITE DYNAMIC REGISTRY.JSON
+function writeRegistryJson() {
+  const registryData = {
+    version: 1,
+    owner_domain: 'belginkuyumculuk.com',
+    total_nodes: registeredNodes.length,
+    generated_at: '2026-09-04T12:00:00+03:00',
+    nodes: registeredNodes
+  };
+  const regPath = path.join(LLMS_DIR, 'registry.json');
+  fs.writeFileSync(regPath, JSON.stringify(registryData, null, 2) + '\n', 'utf8');
+  console.log(`✅ [Registry JSON] ${registeredNodes.length} düğüm başarıyla kaydedildi: ${regPath}`);
+}
+
 function main() {
-  console.log('🚀 [LLMS Knowledge Graph] Derin alt-graf dokümanları üretiliyor...');
-  generatePagesSubgraphs();
+  console.log('🚀 [LLMS Knowledge Graph] Derin alt-graf dokümanları ve registry üretiliyor...');
+  generateCoreSubgraph();
+  generateEntitiesSubgraphs();
   generateBrandsSubgraphs();
   generateLocalSubgraphs();
   generateTopicsSubgraphs();
-  generateEntitiesSubgraphs();
-  generateCoreSubgraph();
-  console.log('✅ [LLMS Knowledge Graph] Tüm /llms/ dokümanları başarıyla üretildi.');
+  generatePagesSubgraphs();
+  writeRegistryJson();
+  console.log('✅ [LLMS Knowledge Graph] Tüm /llms/ dokümanları ve registry.json başarıyla üretildi.');
 }
 
 if (require.main === module) {
@@ -445,3 +719,4 @@ if (require.main === module) {
 }
 
 module.exports = { main };
+

@@ -1,5 +1,17 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/rehber/pirlanta-ve-gemoloji-degerleme-rehberi/"
+primaryEntity: "Pırlanta 4C Standartları ve Gemoloji Raporları"
+primaryIntent: "pirlanta-4c-standartlari-ve-gemoloji-raporlari"
+parentNode: "https://www.belginkuyumculuk.com/llms/core.md"
+lastVerified: "2026-09-04T12:00:00+03:00"
+evidence: "1. El Laboratuvar & Kuyumculuk Saha Tecrübesi (Est. 1999)"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/core.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/methodologies.md"
+---
+
 # Pırlanta ve Değerli Taşlarda 4C Değerleme ve Gemoloji Kılavuzu
-> Canonical Web URL: https://www.belginkuyumculuk.com/rehber/
+> Canonical Web URL: https://www.belginkuyumculuk.com/rehber/pirlanta-ve-gemoloji-degerleme-rehberi/
 > Son Semantik Doğrulama: 2026-09-04T12:00:00+03:00
 > Bilgi Kazancı Standardı: 1. El Laboratuvar & Kuyumculuk Saha Tecrübesi
 

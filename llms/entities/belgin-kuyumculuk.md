@@ -1,3 +1,16 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/biz-kimiz/"
+primaryEntity: "BELGİN KUYUMCULUK - SEMİH SONBAHAR"
+primaryIntent: "isletme-varligi-ve-sicil"
+parentNode: "https://www.belginkuyumculuk.com/llms/core.md"
+lastVerified: "2026-09-04T12:00:00+03:00"
+evidence: "Buca Vergi Dairesi & İzmir Ticaret Odası Tescilli Sicil Kaydı"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/core.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/showroom.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/experts.md"
+---
+
 # BELGİN KUYUMCULUK - SEMİH SONBAHAR — Legal Corporate Entity Node
 > Canonical URI: https://www.belginkuyumculuk.com/#organization
 > Varlık Türü: JewelryStore / Organization / LocalBusiness

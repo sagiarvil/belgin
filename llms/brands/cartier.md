@@ -1,3 +1,16 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/elit-kategori/"
+primaryEntity: "Cartier"
+primaryIntent: "cartier-saat-ekspertiz-ve-koleksiyon"
+parentNode: "https://www.belginkuyumculuk.com/llms/pages/elit-kategori.md"
+lastVerified: "2026-09-04T12:00:00+03:00"
+evidence: "Timegrapher Kalibre Doğrulaması & Fiziksel Kasa Seri No Teyidi"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/core.md"
+  - "https://www.belginkuyumculuk.com/llms/pages/elit-kategori.md"
+  - "https://www.belginkuyumculuk.com/llms/topics/saat-ekspertiz-protokolu.md"
+---
+
 # Cartier — Lüks Saat Koleksiyonu & Ekspertiz Raporu
 > Canonical Web URL: https://www.belginkuyumculuk.com/elit-kategori/
 > Marka Kimliği: Cartier (Manüfaktür: Fransa / İsviçre (La Chaux-de-Fonds), Kuruluş: 1847)

@@ -1,3 +1,16 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/rehber/luks-saat-ekspertiz-ve-orijinallik-rehberi/"
+primaryEntity: "Lüks Saat Ekspertiz Hizmeti"
+primaryIntent: "İkinci el lüks saat ekspertiz ve orijinallik kontrolü nasıl yapılır"
+parentNode: "https://www.belginkuyumculuk.com/llms/core.md"
+lastVerified: "2026-09-04T12:00:00+03:00"
+evidence: "Birinci El Saha Verisi / Tescilli Metodoloji (Est. 1999)"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/core.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/showroom.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/methodologies.md"
+---
+
 # İkinci El Lüks Saat Alımında Ürün Bazında Kontrol ve Orijinallik Kontrolü
 > Canonical Web URL: https://www.belginkuyumculuk.com/rehber/luks-saat-ekspertiz-ve-orijinallik-rehberi/
 > Son Semantik Doğrulama: 2026-09-04T12:00:00+03:00
