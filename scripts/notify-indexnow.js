@@ -2,9 +2,9 @@
 
 const fs = require('fs');
 const path = require('path');
-const { BASE_URL } = require('./seo-routes.js');
+const { BASE_URL, productUrl } = require('./seo-routes.js');
 const { PRODUCTS: products } = require('../js/data.js');
-const { productUrl } = require('./seo-routes.js');
+const { SEO_REGISTRY } = require('./seo-registry.js');
 
 const INDEXNOW_KEY = '9d980417475ac56c8ad72ef2c743e1e5';
 const HOST = 'www.belginkuyumculuk.com';
@@ -15,22 +15,33 @@ const ENDPOINTS = [
   'https://yandex.com/indexnow'
 ];
 
-async function pushToIndexNow(urls) {
-  const urlList = urls && urls.length > 0 ? urls : [
-    `${BASE_URL}/`,
-    `${BASE_URL}/elit-kategori/`,
-    `${BASE_URL}/saatler/`,
-    `${BASE_URL}/mucevherat/`,
+function getDefaultUrlList() {
+  const regUrls = SEO_REGISTRY
+    .filter(p => p.indexDirective === 'index' && !String(p.route).includes('#'))
+    .map(p => `${BASE_URL}${p.route}`);
+
+  const topProducts = products.slice(0, 150).map(p => productUrl(p));
+
+  const list = [
+    ...regUrls,
     `${BASE_URL}/llms.txt`,
-    `${BASE_URL}/llms/saatler.md`,
-    `${BASE_URL}/llms/mucevherat.md`,
-    `${BASE_URL}/llms/altin-yatirim-ve-ozel-matrah.md`,
-    `${BASE_URL}/llms/hukuki-delil-ve-guvenlik.md`,
-    `${BASE_URL}/llms/kurumsal-kimlik-ve-iletisim.md`,
-    `${BASE_URL}/iletisim.html`,
-    `${BASE_URL}/mesafeli-satis-sozlesmesi.html`,
-    ...products.slice(0, 100).map(p => productUrl(p))
+    `${BASE_URL}/llms-full.txt`,
+    `${BASE_URL}/llms/core.md`,
+    `${BASE_URL}/llms/pages/ana-sayfa.md`,
+    `${BASE_URL}/llms/pages/elit-kategori.md`,
+    `${BASE_URL}/llms/pages/biz-kimiz.md`,
+    `${BASE_URL}/llms/brands/rolex.md`,
+    `${BASE_URL}/llms/brands/patek-philippe.md`,
+    `${BASE_URL}/llms/local/izmir-luks-saat.md`,
+    `${BASE_URL}/llms/topics/ikinci-el-luks-saat.md`,
+    ...topProducts
   ];
+
+  return Array.from(new Set(list));
+}
+
+async function pushToIndexNow(urls) {
+  const urlList = urls && urls.length > 0 ? urls : getDefaultUrlList();
 
   const payload = {
     host: HOST,

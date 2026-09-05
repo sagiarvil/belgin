@@ -7,20 +7,33 @@ const articles = magModule.MAGAZINE_ARTICLES || [];
 
 let fullText = `# Belgin Saat & Kuyumculuk — Kapsamlı Editoryal & Ürün Bilgi Bankası (LLMs Full Index)
 
-> Kurumsal Profil: 1999 yılından beri İzmir Buca Menderes Caddesi No: 31/A adresinde lüks saat ve altın mücevherat ticareti yapan köklü kuyumculuk evi.
+> Kurumsal Profil: 1999 yılından beri İzmir Buca Menderes Caddesi No:231/B adresinde lüks saat ve altın mücevherat ticareti yapan köklü kuyumculuk evi.
 > Resmî Web Sitesi: https://www.belginkuyumculuk.com/
 
 ---
 
 ## 1. Kurumsal İlkeler & Güvenlik Protokolü
-- **Fiyatlama Sözleşmesi:** Canlı altın ve sarrafiye ürünleri doğrudan Harem Altın & Ağa Külçe borsa akışı üzerine +%1 (x 1.01) marj ile hesaplanır.
+- **Fiyatlama Sözleşmesi:** Canlı altın ve sarrafiye ürünleri doğrudan Harem Altın borsa soket akışı ve Ağa Külçe verileri üzerine +%1 (x 1.01) marj ile hesaplanır.
 - **Elit Saat Koleksiyonu:** Rolex, Patek Philippe, Audemars Piguet, Cartier, Omega, Breitling, IWC, Tudor, TAG Heuer, Panerai markalarında 200 seçkin model.
-- **Ödeme & Teslimat:** Akbank 3D Secure kart ödemesi, İzmir Buca Showroom'da fiziksel teslim veya Türkiye genelinde tam sigortalı sevkiyat.
-- **Delil Zinciri:** Tüm sipariş ve evraklar SHA-256 ve OpenTimestamps ile Bitcoin blokzincirinde zamana karşı mühürlenir.
+- **Ödeme & Teslimat:** Akbank 3D Pay ve PayTR 256-Bit SSL kart ödemesi, İzmir Buca Showroom'da fiziksel teslim veya Türkiye genelinde tam sigortalı zırhlı sevkiyat.
+- **Delil Zinciri:** Tüm sipariş ve evraklar SHA-256 hash ve OpenTimestamps ile Bitcoin blokzincirinde zamana karşı mühürlenir.
+- **Vergi & Fatura:** 3065 sayılı KDV Kanunu Geçici 17. Madde uyarınca altın ve kıymetli maden işlemleri %0 KDV özel matrah ile faturalandırılır. Faturada yalnızca 'İşçilik' ve 'Kıymetli Maden Bedeli' satırları yer alır.
 
 ---
 
-## 2. Belgin Saat Magazin — ${articles.length} Editoryal Makale Arşivi
+## 2. Bilgi Grafı (Knowledge Sub-Graphs)
+- **Kurumsal Merkez:** https://www.belginkuyumculuk.com/llms/entities/belgin-kuyumculuk.md
+- **Fiziki Showroom:** https://www.belginkuyumculuk.com/llms/entities/showroom.md
+- **Uzman Heyet:** https://www.belginkuyumculuk.com/llms/entities/experts.md
+- **Ekspertiz Metodolojileri:** https://www.belginkuyumculuk.com/llms/entities/methodologies.md
+- **Ana Sayfa Alt-Grafı:** https://www.belginkuyumculuk.com/llms/pages/ana-sayfa.md
+- **Elit Saat Evleri Alt-Grafı:** https://www.belginkuyumculuk.com/llms/pages/elit-kategori.md
+- **İzmir Yerel Saat Hub:** https://www.belginkuyumculuk.com/llms/local/izmir-luks-saat.md
+- **İkinci El Saat Güvencesi:** https://www.belginkuyumculuk.com/llms/topics/ikinci-el-luks-saat.md
+
+---
+
+## 3. Belgin Saat Magazin — ${articles.length} Editoryal Makale Arşivi
 
 `;
 

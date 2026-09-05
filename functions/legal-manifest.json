@@ -1,7 +1,7 @@
 {
   "schema": "belgin-legal-evidence-manifest-v3",
   "version": "2026-08-25-v3.1",
-  "generatedAt": "2026-09-04T11:38:28.661Z",
+  "generatedAt": "2026-09-05T11:27:42.597Z",
   "algorithm": "SHA-256",
   "manifestRootSha256": "5c97f4d0dd6c812f3f1b43c20b194db1bf9b4f47c51d00e1c7f80304115fe1de",
   "externalTimestampModel": "OpenTimestamps/Bitcoin auxiliary proof",

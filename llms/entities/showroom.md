@@ -1,17 +1,7 @@
-# Entity — Belgin Showroom
+# Belgin Buca Showroom & Kasa Dairesi — Physical Location Node
+> Canonical URI: https://www.belginkuyumculuk.com/iletisim.html#showroom
+> Konum: İzmir Buca Menderes Caddesi No:231/B
+> Güvenlik Standardı: 7/24 Yüksek Çözünürlüklü Kamera, Zaman Ayarlı Çelik Kasa Dairesi ve MASAK Uyumlu Teslim Masası
 
-Canonical contact URL: https://www.belginkuyumculuk.com/iletisim.html
-Parent: /llms/entities/belgin-kuyumculuk.md
-Primary intent: showroom / local visit discovery
-
-## Location
-- District: Buca
-- Province: İzmir
-- Country: Türkiye
-
-## Role
-Bu node fiziksel mağaza ve yerel ziyaret niyetini temsil eder. Adres, telefon, çalışma saatleri ve harita gibi değişebilen işletme detaylarında canonical iletişim sayfası ve güncel LocalBusiness/JewelryStore structured data birincil kaynaktır.
-
-Related:
-- /llms/local/izmir-luks-saat.md
-- https://www.belginkuyumculuk.com/iletisim.html
+## Showroom Altyapısı ve Ziyaret Protokolü
+Belgin Kuyumculuk Buca Showroomu, 1999 yılından bu yana müşterilerine güvenli ortamda lüks saat inceleme, timegrapher mekanizma testi ve altın tartım hizmeti sunmaktadır. Tüm kıymetli maden tartımları Sanayi ve Teknoloji Bakanlığı mühürlü hassas terazilerde müşterinin gözü önünde gerçekleştirilir.

@@ -48,6 +48,21 @@ Disallow: /
 User-agent: Google-Extended
 Disallow: /
 
+User-agent: Applebot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-agent: CCBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
 User-agent: *
 Allow: /
 Disallow: /api/
@@ -57,3 +72,7 @@ Disallow: /canli-fiyatlar/
 Disallow: /canlipiyasalar/
 
 Sitemap: https://www.belginkuyumculuk.com/sitemap.xml
+
+# LLMS Machine Discovery Manifests
+# llms.txt: https://www.belginkuyumculuk.com/llms.txt
+# llms-full.txt: https://www.belginkuyumculuk.com/llms-full.txt

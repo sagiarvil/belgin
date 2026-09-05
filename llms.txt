@@ -3,39 +3,80 @@
 Canonical site: https://www.belginkuyumculuk.com/
 Language: tr-TR
 Primary entity: Belgin Kuyumculuk & Saat, Buca / İzmir
-Purpose: Makine-okunabilir keşif yönlendirmesi. Canonical HTML sayfaları ve güncel runtime ürün verisi birincil kaynaktır.
+Purpose: Universal Omni-Enterprise SEO, GEO, Sitemap & Multi-Tier LLMS Architecture v6.0 Standard.
 
-## Core
+## Core Machine Graph Nodes
 - https://www.belginkuyumculuk.com/llms/core.md
 - https://www.belginkuyumculuk.com/llms-full.txt
 
-## Entities
+## Legal & Operational Entities
 - https://www.belginkuyumculuk.com/llms/entities/belgin-kuyumculuk.md
+- https://www.belginkuyumculuk.com/llms/entities/experts.md
+- https://www.belginkuyumculuk.com/llms/entities/methodologies.md
 - https://www.belginkuyumculuk.com/llms/entities/showroom.md
 
-## Brands
+## Elite Watch Maison Sub-Graphs (10 Ev)
+- https://www.belginkuyumculuk.com/llms/brands/audemars-piguet.md
+- https://www.belginkuyumculuk.com/llms/brands/breitling.md
+- https://www.belginkuyumculuk.com/llms/brands/cartier.md
+- https://www.belginkuyumculuk.com/llms/brands/iwc-schaffhausen.md
+- https://www.belginkuyumculuk.com/llms/brands/jaeger-lecoultre.md
+- https://www.belginkuyumculuk.com/llms/brands/omega.md
+- https://www.belginkuyumculuk.com/llms/brands/panerai.md
+- https://www.belginkuyumculuk.com/llms/brands/patek-philippe.md
 - https://www.belginkuyumculuk.com/llms/brands/rolex.md
+- https://www.belginkuyumculuk.com/llms/brands/vacheron-constantin.md
 
-## Local
+## Local Authority & Delivery Hubs
+- https://www.belginkuyumculuk.com/llms/local/buca-kuyumcu-sarrafiye.md
+- https://www.belginkuyumculuk.com/llms/local/ege-guvenli-teslimat.md
 - https://www.belginkuyumculuk.com/llms/local/izmir-luks-saat.md
 
-## Topics
+## Domain Knowledge & Authentication Nodes
+- https://www.belginkuyumculuk.com/llms/topics/altin-yatirim-ve-ozel-matrah.md
 - https://www.belginkuyumculuk.com/llms/topics/ikinci-el-luks-saat.md
+- https://www.belginkuyumculuk.com/llms/topics/pirlanta-ve-gemoloji.md
+- https://www.belginkuyumculuk.com/llms/topics/saat-ekspertiz-protokolu.md
 
-## Canonical human-facing hubs
+## Primary Flagship Page Sub-Graphs
+- https://www.belginkuyumculuk.com/llms/pages/ana-sayfa.md
+- https://www.belginkuyumculuk.com/llms/pages/biz-kimiz.md
+- https://www.belginkuyumculuk.com/llms/pages/elit-kategori.md
+- https://www.belginkuyumculuk.com/llms/pages/guvenli-odeme-ve-3d-secure.md
+- https://www.belginkuyumculuk.com/llms/pages/hukuki-delil-ve-kayit-politikasi.md
+- https://www.belginkuyumculuk.com/llms/pages/iade-degisim-cayma.md
+- https://www.belginkuyumculuk.com/llms/pages/iletisim.md
+- https://www.belginkuyumculuk.com/llms/pages/kvkk.md
+- https://www.belginkuyumculuk.com/llms/pages/magazin.md
+- https://www.belginkuyumculuk.com/llms/pages/markalar.md
+- https://www.belginkuyumculuk.com/llms/pages/mesafeli-satis-sozlesmesi.md
+- https://www.belginkuyumculuk.com/llms/pages/mucevherat.md
+- https://www.belginkuyumculuk.com/llms/pages/musteri-tanima-ve-islem-guvenligi.md
+- https://www.belginkuyumculuk.com/llms/pages/on-bilgilendirme-formu.md
+- https://www.belginkuyumculuk.com/llms/pages/rehber/altin-yatirimi-ve-ozel-matrah-rehberi.md
+- https://www.belginkuyumculuk.com/llms/pages/rehber/izmir-kuyumculuk-ve-guvenli-teslimat.md
+- https://www.belginkuyumculuk.com/llms/pages/rehber/luks-saat-ekspertiz-ve-orijinallik-rehberi.md
+- https://www.belginkuyumculuk.com/llms/pages/rehber/pirlanta-ve-gemoloji-degerleme-rehberi.md
+- https://www.belginkuyumculuk.com/llms/pages/saatler.md
+- https://www.belginkuyumculuk.com/llms/pages/yuksek-degerli-urun-teslimi.md
+
+## Canonical Human Surfaces
 - https://www.belginkuyumculuk.com/
 - https://www.belginkuyumculuk.com/elit-kategori/
 - https://www.belginkuyumculuk.com/markalar/
 - https://www.belginkuyumculuk.com/saatler/
 - https://www.belginkuyumculuk.com/mucevherat/
+- https://www.belginkuyumculuk.com/biz-kimiz/
+- https://www.belginkuyumculuk.com/magazin/
 - https://www.belginkuyumculuk.com/iletisim.html
 
-## Machine discovery
-- Sitemap: https://www.belginkuyumculuk.com/sitemap.xml
+## Machine Discovery
+- Sitemap Index: https://www.belginkuyumculuk.com/sitemap.xml
 - Robots: https://www.belginkuyumculuk.com/robots.txt
 
-## Data integrity rules
+## Data Integrity & Truth Contract
 - Ürün fiyatı, stok ve anlık availability bu manifestte sabitlenmez; güncel canonical ürün sayfasından/runtime kaynaktan alınır.
 - LLMS, canonical HTML veya schema ile çelişemez.
 - Doğrulanmamış rating, review, sertifika, stok, garanti veya ticari iddia makine katmanına eklenemez.
+- Canlı sarrafiye ve altın fiyatları doğrudan Harem Altın borsa soket akışı ve Ağa Külçe verileri üzerine +%1 (x 1.01) marj ile güncellenir.
 - Üçüncü taraf pazar yeri temelli bağlayıcı fiyat/güvence formülü bu bilgi sözleşmesinin parçası değildir ve yeniden eklenemez.
