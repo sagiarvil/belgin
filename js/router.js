@@ -28,6 +28,36 @@ const PAGE_TITLES = {
 const Router = {
   currentPage: 'ana-sayfa',
 
+  // Mücevherat ve Canlı Fiyatlar daha önce HTML'de korunup yalnızca görünürlük
+  // katmanında kapatılmıştı. Route yeniden aktif edildiğinde mevcut markup'ı
+  // değiştirmeden desktop/mobile navigasyonu ve ilgili SPA sayfalarını açar.
+  activateCommerceNavigation() {
+    const show = (el) => {
+      if (el && el.style) el.style.removeProperty('display');
+    };
+
+    document.querySelectorAll('.nav-desktop [data-page="mucevherat"], .nav-desktop [data-page="canli-fiyatlar"]').forEach((link) => {
+      show(link.closest('li'));
+    });
+
+    document.querySelectorAll('.mobile-drawer-nav [data-page="canli-fiyatlar"], .mobile-bottom-dock [data-page="mucevherat"]').forEach(show);
+
+    document.querySelectorAll('.mobile-drawer-nav [data-page="mucevherat"]').forEach((link) => {
+      let node = link.parentElement;
+      while (node && !node.classList.contains('mobile-drawer-nav')) {
+        if (node.style && node.style.getPropertyValue('display') === 'none') {
+          show(node);
+          break;
+        }
+        node = node.parentElement;
+      }
+    });
+
+    ['page-mucevherat', 'page-canli-fiyatlar'].forEach((id) => {
+      show(document.getElementById(id));
+    });
+  },
+
   resolveLocation() {
     const path = location.pathname.replace(/\/+$/, '') || '/';
     if (path === '/' || path === '/index.html' || path === '/index.php') return { page: 'ana-sayfa' };
@@ -38,8 +68,8 @@ const Router = {
     if (path === '/markalar' || path === '/saat-markalari') return { page: 'markalar' };
     if (path === '/biz-kimiz' || path === '/kurumsal-profil' || path === '/hakkimizda') return { page: 'biz-kimiz' };
     if (path === '/magazin' || path === '/magazine' || path === '/saat-magazin') return { page: 'magazin' };
-    if (path === '/canli-fiyatlar' || path === '/canlipiyasalar') return { page: 'ana-sayfa' };
-    if (path === '/mucevherat') return { page: 'ana-sayfa' };
+    if (path === '/canli-fiyatlar' || path === '/canlipiyasalar') return { page: 'canli-fiyatlar' };
+    if (path === '/mucevherat') return { page: 'mucevherat' };
     if (path === '/saatler') {
       const brand = new URLSearchParams(location.search).get('marka');
       return { page: 'saatler', filter: brand || 'all' };
@@ -74,9 +104,17 @@ const Router = {
   migrateLegacyHash() {
     const hash = location.hash.replace(/^#/, '');
     if (!hash) return null;
-    if (hash === 'ana-sayfa' || hash === 'home' || hash === 'canli-fiyatlar' || hash === 'canlipiyasalar' || hash === 'mucevherat') {
+    if (hash === 'ana-sayfa' || hash === 'home') {
       history.replaceState({page:'ana-sayfa'}, '', '/');
       return { page: 'ana-sayfa' };
+    }
+    if (hash === 'canli-fiyatlar' || hash === 'canlipiyasalar') {
+      history.replaceState({page:'canli-fiyatlar'}, '', '/canli-fiyatlar/');
+      return { page: 'canli-fiyatlar' };
+    }
+    if (hash === 'mucevherat' || hash === 'jewellery') {
+      history.replaceState({page:'mucevherat'}, '', '/mucevherat/');
+      return { page: 'mucevherat' };
     }
     if (hash === 'odeme' || hash === 'checkout') return { page: 'odeme' };
     if (hash === 'sepet' || hash === 'cart') return { page: 'sepet' };
@@ -94,12 +132,12 @@ const Router = {
     const old = {
       'ana-sayfa': '/',
       'home': '/',
-      'canli-fiyatlar': '/',
-      'canlipiyasalar': '/',
+      'canli-fiyatlar': '/canli-fiyatlar/',
+      'canlipiyasalar': '/canli-fiyatlar/',
       'saatler': '/saatler/',
       'watches': '/saatler/',
-      'mucevherat': '/',
-      'jewellery': '/',
+      'mucevherat': '/mucevherat/',
+      'jewellery': '/mucevherat/',
       'seckin-urunler': '/elit-kategori/',
       'ikinci-el': '/elit-kategori/',
       'preowned': '/elit-kategori/',
@@ -119,6 +157,8 @@ const Router = {
   },
 
   init() {
+    this.activateCommerceNavigation();
+
     window.goToHome = function(e) {
       if (e) {
         if (typeof e.preventDefault === 'function') e.preventDefault();
@@ -241,13 +281,11 @@ const Router = {
     if (page === 'hikayemiz') {
       page = 'biz-kimiz';
     }
-    if (page === 'canli-fiyatlar' || page === 'canlipiyasalar' || page === 'mucevherat') {
-      page = 'ana-sayfa';
-    }
 
+    this.activateCommerceNavigation();
     this.currentPage = page;
-    document.body.classList.toggle('page-canli-fiyatlar', false);
-    document.body.classList.toggle('page-is-canli-fiyatlar', false);
+    document.body.classList.toggle('page-canli-fiyatlar', page === 'canli-fiyatlar');
+    document.body.classList.toggle('page-is-canli-fiyatlar', page === 'canli-fiyatlar');
 
     // 1. Sayfa Görünürlüğü
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
