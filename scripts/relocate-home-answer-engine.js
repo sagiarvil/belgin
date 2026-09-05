@@ -41,7 +41,7 @@ function buildCompactSeoSection() {
   return `
   <!-- SEO / GEO ticari doğrulama alanı: ana vitrin tasarımını bozmayacak şekilde footer önüne taşındı. -->
   <section class="seo-business-facts" aria-label="Belgin ticari bilgi özeti" style="margin:28px auto 0; max-width:1760px; padding:0 24px;">
-    <div style="border-top:1px solid rgba(5,51,47,.12); padding:18px 0 20px; color:#5f6664; font-size:12px; line-height:1.7;">
+    <div class="hero-answer-engine" data-registry-route="/" style="border-top:1px solid rgba(5,51,47,.12); padding:18px 0 20px; color:#5f6664; font-size:12px; line-height:1.7; background:transparent; box-shadow:none;">
       <div style="display:flex; flex-wrap:wrap; gap:10px 22px; align-items:center; margin-bottom:8px; color:#05332f; font-weight:700; letter-spacing:.04em; text-transform:uppercase; font-size:10px;">
         <span>Belgin Saat • Ticari Bilgi Özeti</span>
         <span>İzmir Buca • Est. 1999</span>
