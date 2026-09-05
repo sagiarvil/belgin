@@ -103,10 +103,6 @@ function buildSitemaps() {
   write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <sitemap><loc>${BASE_URL}/sitemap-pages.xml</loc></sitemap>\n  <sitemap><loc>${BASE_URL}/sitemap-categories.xml</loc></sitemap>\n  <sitemap><loc>${BASE_URL}/sitemap-products.xml</loc></sitemap>\n  <sitemap><loc>${BASE_URL}/sitemap-magazine.xml</loc></sitemap>\n</sitemapindex>\n`);
 }
 
-<<<<<<< HEAD
-function buildLlms() {
-  write('llms.txt', `# Belgin Kuyumculuk & Saat — LLM Discovery Manifest\n\nCanonical site: ${BASE_URL}/\nLanguage: tr-TR\nPrimary entity: Belgin Kuyumculuk & Saat, Buca / İzmir\nPurpose: Makine-okunabilir keşif yönlendirmesi. Canonical HTML sayfaları ve güncel runtime ürün verisi birincil kaynaktır.\n\n## Core\n- ${BASE_URL}/llms/core.md\n- ${BASE_URL}/llms-full.txt\n\n## Entities\n- ${BASE_URL}/llms/entities/belgin-kuyumculuk.md\n- ${BASE_URL}/llms/entities/showroom.md\n\n## Brands\n- ${BASE_URL}/llms/brands/rolex.md\n\n## Local\n- ${BASE_URL}/llms/local/izmir-luks-saat.md\n\n## Topics\n- ${BASE_URL}/llms/topics/ikinci-el-luks-saat.md\n\n## Canonical human-facing hubs\n- ${BASE_URL}/\n- ${BASE_URL}/elit-kategori/\n- ${BASE_URL}/markalar/\n- ${BASE_URL}/saatler/\n- ${BASE_URL}/mucevherat/\n- ${BASE_URL}/iletisim.html\n\n## Machine discovery\n- Sitemap: ${BASE_URL}/sitemap.xml\n- Robots: ${BASE_URL}/robots.txt\n\n## Data integrity rules\n- Ürün fiyatı, stok ve anlık availability bu manifestte sabitlenmez; güncel canonical ürün sayfasından/runtime kaynaktan alınır.\n- LLMS, canonical HTML veya schema ile çelişemez.\n- Doğrulanmamış rating, review, sertifika, stok, garanti veya ticari iddia makine katmanına eklenemez.\n- Üçüncü taraf pazar yeri temelli bağlayıcı fiyat/güvence formülü bu bilgi sözleşmesinin parçası değildir ve yeniden eklenemez.\n`);
-=======
 function getLlmsFiles() {
   const llmsDir = path.join(ROOT, 'llms');
   const files = [];
@@ -124,7 +120,6 @@ function getLlmsFiles() {
   walk(llmsDir);
   return files.sort();
 }
->>>>>>> 34fa9116b9 (feat(seo-llms): MANDATE-SEO-GEO-2026-V6 tam mimari kurulumu, Hero Answer Engine ve multi-tier LLMS graph)
 
 function buildLlms() {
   const allMd = getLlmsFiles();
@@ -184,7 +179,7 @@ function buildLlms() {
   body += `- LLMS, canonical HTML veya schema ile çelişemez.\n`;
   body += `- Doğrulanmamış rating, review, sertifika, stok, garanti veya ticari iddia makine katmanına eklenemez.\n`;
   body += `- Canlı sarrafiye ve altın fiyatları doğrudan Harem Altın borsa soket akışı ve Ağa Külçe verileri üzerine +%1 (x 1.01) marj ile güncellenir.\n`;
-  body += `- Chrono24 marka adı veya Chrono24 temelli bağlayıcı fiyat/güvence formülü sistemde yer almaz.\n`;
+  body += `- Üçüncü taraf küresel pazar yeri temelli bağlayıcı fiyat/güvence formülü bu bilgi sözleşmesinin parçası değildir ve sisteme eklenemez.\n`;
 
   write('llms.txt', body);
 }
