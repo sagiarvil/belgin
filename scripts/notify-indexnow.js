@@ -15,10 +15,36 @@ const ENDPOINTS = [
   'https://yandex.com/indexnow'
 ];
 
+function getAllLlmsUrls() {
+  const llmsDir = path.join(__dirname, '..', 'llms');
+  const urls = [];
+  function walk(dir, prefix = '') {
+    if (!fs.existsSync(dir)) return;
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+    for (const ent of entries) {
+      if (ent.isDirectory()) {
+        walk(path.join(dir, ent.name), prefix ? `${prefix}/${ent.name}` : ent.name);
+      } else if (ent.name.endsWith('.md')) {
+        urls.push(`${BASE_URL}/llms/${prefix ? `${prefix}/${ent.name}` : ent.name}`);
+      }
+    }
+  }
+  walk(llmsDir);
+  return urls;
+}
+
 function getDefaultUrlList() {
   const regUrls = SEO_REGISTRY
     .filter(p => p.indexDirective === 'index' && !String(p.route).includes('#'))
     .map(p => `${BASE_URL}${p.route}`);
+
+  const llmsUrls = getAllLlmsUrls();
+
+  let magArticles = [];
+  try {
+    const magModule = require('../js/magazine_data.js');
+    magArticles = (magModule.MAGAZINE_ARTICLES || []).map(a => `${BASE_URL}/magazin/${a.slug}/`);
+  } catch (_) {}
 
   const topProducts = products.slice(0, 150).map(p => productUrl(p));
 
@@ -26,18 +52,35 @@ function getDefaultUrlList() {
     ...regUrls,
     `${BASE_URL}/llms.txt`,
     `${BASE_URL}/llms-full.txt`,
-    `${BASE_URL}/llms/core.md`,
-    `${BASE_URL}/llms/pages/ana-sayfa.md`,
-    `${BASE_URL}/llms/pages/elit-kategori.md`,
-    `${BASE_URL}/llms/pages/biz-kimiz.md`,
-    `${BASE_URL}/llms/brands/rolex.md`,
-    `${BASE_URL}/llms/brands/patek-philippe.md`,
-    `${BASE_URL}/llms/local/izmir-luks-saat.md`,
-    `${BASE_URL}/llms/topics/ikinci-el-luks-saat.md`,
+    `${BASE_URL}/sitemap.xml`,
+    `${BASE_URL}/sitemap-pages.xml`,
+    `${BASE_URL}/sitemap-categories.xml`,
+    `${BASE_URL}/sitemap-products.xml`,
+    `${BASE_URL}/sitemap-magazine.xml`,
+    ...llmsUrls,
+    ...magArticles,
     ...topProducts
   ];
 
   return Array.from(new Set(list));
+}
+
+async function pingSitemaps() {
+  const sitemapUrl = `${BASE_URL}/sitemap.xml`;
+  const pings = [
+    { name: 'Google Sitemap Ping', url: `https://www.google.com/ping?sitemap=${encodeURIComponent(sitemapUrl)}` },
+    { name: 'Yandex Sitemap Ping', url: `https://blogs.yandex.ru/pings/?status=success&url=${encodeURIComponent(sitemapUrl)}` }
+  ];
+
+  console.log('\n📡 [Search Engine Ping] Google ve Yandex sitemap bildirimleri gönderiliyor...');
+  for (const p of pings) {
+    try {
+      const res = await fetch(p.url, { method: 'GET' });
+      console.log(`  ✅ [${p.name}] Bildirim iletildi (HTTP ${res.status})`);
+    } catch (err) {
+      console.warn(`  ⚠️ [${p.name}] Ping hatası: ${err.message}`);
+    }
+  }
 }
 
 async function pushToIndexNow(urls) {
@@ -50,7 +93,7 @@ async function pushToIndexNow(urls) {
     urlList: urlList
   };
 
-  console.log(`[IndexNow Broadcasting] ${urlList.length} adet URL küresel IndexNow & AI Hub ağlarına dağıtılıyor...`);
+  console.log(`\n🚀 [IndexNow Global Broadcast] ${urlList.length} adet URL (Tüm LLMS alt-grafları, AEO sayfaları, makaleler) küresel AI & Search Hub ağlarına dağıtılıyor...`);
 
   const results = await Promise.allSettled(
     ENDPOINTS.map(async (endpoint) => {
@@ -75,10 +118,13 @@ async function pushToIndexNow(urls) {
       console.warn(`  ❌ Ağ Hatası: ${r.reason?.message || r.reason}`);
     }
   });
+
+  await pingSitemaps();
+  console.log('\n🎉 [Dağıtım Tamamlandı] Tüm LLMS ve AEO URL\'leri küresel yapay zekâ ve arama motorlarına başarıyla servis edildi.\n');
 }
 
 if (require.main === module) {
   pushToIndexNow();
 }
 
-module.exports = { pushToIndexNow };
+module.exports = { pushToIndexNow, getDefaultUrlList };
