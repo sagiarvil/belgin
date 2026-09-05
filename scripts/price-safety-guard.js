@@ -165,6 +165,21 @@ ELITE_BRANDS.forEach(b => {
 });
 assert(brandDistributionValid, `10 Lüks Saat Evinin her birinde tam 20'şer aktif ürün bulunmalıdır.`);
 
+// 7. Değişmez Fiyatlama & Borsa Sözleşmesi (SATIŞ: +%3 (x 1.03) / ALIŞ: 0% / İZKO: YASAK)
+console.log('\n--- 7. DEĞİŞMEZ FİYATLAMA & BORSA SÖZLEŞMESİ (SATIŞ +%3 / ALIŞ %0) ---');
+const utilsContent = fs.readFileSync(path.join(ROOT_DIR, 'js/utils.js'), 'utf8');
+const appContent = fs.readFileSync(path.join(ROOT_DIR, 'js/app.js'), 'utf8');
+const syncStockContent = fs.readFileSync(path.join(ROOT_DIR, 'scripts/sync-prices-and-stock.js'), 'utf8');
+const smartDiffContent = fs.readFileSync(path.join(ROOT_DIR, 'scripts/smart-diff-sync.js'), 'utf8');
+const agentsContent = fs.readFileSync(path.join(ROOT_DIR, 'AGENTS.md'), 'utf8');
+
+assert(utilsContent.includes('BOARD_MARGIN = 1.03'), 'js/utils.js içinde BOARD_MARGIN = 1.03 (+%3 kâr marjı) sabit olmalıdır.');
+assert(appContent.includes('BOARD_MARGIN = 1.03'), 'js/app.js içinde BOARD_MARGIN = 1.03 (+%3 kâr marjı) sabit olmalıdır.');
+assert(syncStockContent.includes('GOLD_MARGIN = 1.03'), 'scripts/sync-prices-and-stock.js içinde GOLD_MARGIN = 1.03 (+%3 kâr marjı) sabit olmalıdır.');
+assert(smartDiffContent.includes('GOLD_MARGIN = 1.03'), 'scripts/smart-diff-sync.js içinde GOLD_MARGIN = 1.03 (+%3 kâr marjı) sabit olmalıdır.');
+assert(agentsContent.includes('+%3 (x 1.03)'), 'AGENTS.md içinde değişmez kural olarak +%3 (x 1.03) sabitlenmiş olmalıdır.');
+assert(agentsContent.includes('ALIŞ / GERİ ALIM FİYATLARI (ALIŞ MARJI KESİNLİKLE YOKTUR - 0% / 1.00x BİREBİR)'), 'AGENTS.md içinde alış marjsızlığı (0%) kuralı sabitlenmiş olmalıdır.');
+
 console.log('\n====================================================');
 if (failureCount === 0) {
   console.log('✅ TÜM FİYAT GÜVENLİK KAPILARI VE DEVRE KESİCİLER BAŞARIYLA GEÇİLDİ.');
