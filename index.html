@@ -507,7 +507,7 @@
         </li>
 
         <!-- 4. MÜCEVHERAT DROPDOWN (GİZLİ) -->
-        <li class="nav-has-dropdown" style="display:none;">
+        <li class="nav-has-dropdown">
           <a href="/mucevherat/" data-page="mucevherat" class="nav-link-main">
             Mücevherat <span class="nav-arrow">▾</span>
           </a>
@@ -543,7 +543,7 @@
         </li>
 
         <!-- 5. CANLI FİYATLAR (GİZLİ) -->
-        <li style="display:none;">
+        <li>
           <a href="/canli-fiyatlar/" data-page="canli-fiyatlar" class="nav-link-main nav-link-live-rates" title="Canlı Altın ve Döviz Fiyatları">
             <span class="live-dot-pulse"></span> Canlı Fiyatlar
           </a>
@@ -587,7 +587,7 @@
 
     <nav class="mobile-drawer-nav">
       <!-- 0. Canlı Fiyatlar Butonu (GİZLİ) -->
-      <a href="/canli-fiyatlar/" data-page="canli-fiyatlar" onclick="App.toggleMobileDrawer(false);" class="mobile-nav-main-link" style="display:none; color:var(--color-teal); font-weight:800; justify-content:space-between; align-items:center; background:#FFFDE6; border:1px solid #E5E2D9; padding:12px 14px; border-radius:8px; margin-bottom:12px;">
+      <a href="/canli-fiyatlar/" data-page="canli-fiyatlar" onclick="App.toggleMobileDrawer(false);" class="mobile-nav-main-link" style="color:var(--color-teal); font-weight:800; justify-content:space-between; align-items:center; background:#FFFDE6; border:1px solid #E5E2D9; padding:12px 14px; border-radius:8px; margin-bottom:12px;">
         <span>📈 Canlı Fiyatlar (Altın & Döviz)</span>
         <span class="live-dot-pulse"></span>
       </a>
@@ -676,7 +676,7 @@
       </div>
 
       <!-- 3. Mücevherat Akordeon (GİZLİ) -->
-      <div style="display:none;">
+      <div>
         <button class="mobile-nav-accordion-header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.acc-arr').textContent = this.nextElementSibling.classList.contains('open') ? '▴' : '▾';">
           <span>💎 Mücevherat & Altın (66)</span>
           <span class="acc-arr">▾</span>
@@ -2360,7 +2360,7 @@
   </section>
 
   <!-- 4. TÜM MÜCEVHERLER SAYFASI (GİZLİ) -->
-  <section id="page-mucevherat" class="page" style="display:none !important;">
+  <section id="page-mucevherat" class="page">
     <div class="container-art section-art">
       <div class="section-header-flex">
         <div>
@@ -2378,7 +2378,7 @@
   </section>
 
   <!-- 4.1 CANLI PİYASALAR & ALTIN FİYATLARI (GİZLİ) -->
-  <section id="page-canli-fiyatlar" class="page" style="display:none !important;">
+  <section id="page-canli-fiyatlar" class="page">
     <!-- App.renderLivePricesPage() tarafından dinamik basılacak -->
   </section>
 
@@ -3262,7 +3262,7 @@
     <span>Saatler</span>
   </a>
 
-  <a href="/mucevherat/" data-page="mucevherat" class="mobile-dock-btn" style="display:none;">
+  <a href="/mucevherat/" data-page="mucevherat" class="mobile-dock-btn">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M10 3v6l-4 6"/><path d="M14 3v6l4 6"/><path d="M2 9h20"/></svg>
     <span>Mücevher</span>
   </a>
