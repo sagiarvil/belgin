@@ -4,7 +4,7 @@
   "description": "Belgin Kuyumculuk — Enterprise & Exclusive Luxury Jewellery & Watches Platform",
   "main": "index.html",
   "scripts": {
-    "build": "node scripts/ensure-index-canonical-redirect.mjs && node scripts/generate-luxury-biz-kimiz-pdf.js && node scripts/magazine-safety-filter.js && node scripts/sanitize-public-magazine-provenance.js && node scripts/generate-llms-knowledge-graph.js && node scripts/generate-llms-full.js && node scripts/harden-public-claims.js && node scripts/bank-pos-hardening.js && node scripts/harden-legal-pages.js && node scripts/generate-static-seo-pages.js && node scripts/inject-seo-schemas.js && node scripts/generate-payment-catalog.js && node scripts/generate-seo-assets.js && node scripts/sync-seo-redirects.js && node scripts/inject-growth.js && node scripts/generate-legal-manifest.js && node scripts/validate-llms-graph.js && node scripts/growth-contract.js",
+    "build": "node scripts/ensure-index-canonical-redirect.mjs && node scripts/generate-luxury-biz-kimiz-pdf.js && node scripts/magazine-safety-filter.js && node scripts/sanitize-public-magazine-provenance.js && node scripts/generate-llms-knowledge-graph.js && node scripts/generate-llms-full.js && node scripts/harden-public-claims.js && node scripts/bank-pos-hardening.js && node scripts/harden-legal-pages.js && node scripts/generate-static-seo-pages.js && node scripts/inject-seo-schemas.js && node scripts/generate-payment-catalog.js && node scripts/generate-seo-assets.js && node scripts/sync-seo-redirects.js && node scripts/inject-growth.js && node scripts/generate-legal-manifest.js && node scripts/validate-llms-graph.js && node scripts/growth-contract.js && node scripts/relocate-home-answer-engine.js",
     "public:harden": "node scripts/harden-public-claims.js && node scripts/bank-pos-hardening.js",
     "legal:harden": "node scripts/harden-legal-pages.js",
     "legal:manifest": "node scripts/generate-legal-manifest.js",
@@ -13,7 +13,7 @@
     "seo:redirects": "node scripts/sync-seo-redirects.js",
     "seo:gate": "node scripts/seo-ci-gate.js",
     "seo:live": "node scripts/live-seo-smoke.js",
-    "seo:generate": "node scripts/ensure-index-canonical-redirect.mjs && node scripts/sanitize-public-magazine-provenance.js && node scripts/generate-static-seo-pages.js && node scripts/inject-seo-schemas.js && node scripts/generate-seo-assets.js && node scripts/sync-seo-redirects.js && node scripts/inject-growth.js",
+    "seo:generate": "node scripts/ensure-index-canonical-redirect.mjs && node scripts/sanitize-public-magazine-provenance.js && node scripts/generate-static-seo-pages.js && node scripts/inject-seo-schemas.js && node scripts/generate-seo-assets.js && node scripts/sync-seo-redirects.js && node scripts/inject-growth.js && node scripts/relocate-home-answer-engine.js",
     "llms:validate": "node scripts/validate-llms-graph.js",
     "growth:verify": "node scripts/growth-contract.js",
     "canonical:verify": "node scripts/ensure-index-canonical-redirect.mjs --dry-run",
