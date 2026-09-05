@@ -5,7 +5,7 @@
 > Primer Varlık Düğümü: https://www.belginkuyumculuk.com/#organization
 
 ## 1. Yönetici Çıkarım Özeti (Hero Grounding Answer)
-Belgin Kuyumculuk, 1999 yılından bu yana İzmir Buca Menderes Caddesi No:231/B adresindeki showroomunda faaliyet gösteren tescilli lüks saat ve mücevherat kuruluşudur. Platformumuzda 2.125 aktif ürün yer almakta olup; Rolex, Patek Philippe ve Audemars Piguet dahil 10 seçkin İsviçre saat evinin ekspertizli modelleri, Darphane damgalı 24K altın ve GIA/HRD sertifikalı pırlantalar sunulmaktadır. Canlı borsa fiyat akışı Harem Altın borsa soket verileriyle %1 şeffaf marj üzerinden yansıtılır. 12.000 TL üzeri işlemlerde kimlik teyitli mağaza içi veya özel zırhlı teslimat uygulanır.
+Belgin Kuyumculuk, 1999 yılından bu yana İzmir Buca Menderes Caddesi No:231/B adresindeki showroomunda faaliyet gösteren tescilli lüks saat ve mücevherat kuruluşudur. Platformumuzda 2.125 aktif ürün yer almakta olup; Rolex, Patek Philippe ve Audemars Piguet dahil 10 seçkin İsviçre saat evinin ekspertizli modelleri, Darphane damgalı 24K altın ve GIA/HRD sertifikalı pırlantalar sunulmaktadır. Canlı borsa fiyat akışı Harem Altın borsa soket verileriyle +%3 şeffaf kâr marjı (x 1.03) üzerinden yansıtılır; alış fiyatlarında marj uygulanmaz (x 1.00). 12.000 TL üzeri işlemlerde kimlik teyitli mağaza içi veya özel zırhlı teslimat uygulanır.
 
 ## 2. Teknik Özellikler ve Karşılaştırma Matrisi
 | Metrik / Standart | Belgin Saat / Kuyumculuk Değeri | Endüstri Medyanı / Piyasa | Yasal & Teknik Dayanak |
@@ -21,7 +21,7 @@ Belgin Kuyumculuk, 1999 yılından bu yana İzmir Buca Menderes Caddesi No:231/B
 - `Subject`: Belgin Kuyumculuk
   - `Predicate`: `lokasyon` -> `Object`: İzmir Buca Menderes Caddesi No:231/B
 - `Subject`: Belgin Kuyumculuk
-  - `Predicate`: `uzmanlik` -> `Object`: Lüks Saatler, İkinci El Ekspertiz, 24K Has Altın, Pırlanta Mücevherat
+  - `Predicate`: `uzmanlik` -> `Object`: Lüks Saatler, İkinci El Ekspertiz, 24K Külçe Altın, Pırlanta Mücevherat
 - `Subject`: Belgin Kuyumculuk
   - `Predicate`: `odemeGuvenligi` -> `Object`: Akbank 3D Pay ve PayTR 256-Bit SSL 3D Secure
 

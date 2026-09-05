@@ -3,12 +3,12 @@
   "owner_domain": "belginkuyumculuk.com",
   "nodes": [
     {"slug":"core","path":"llms/core.md","type":"core","primary_entity":"Belgin Kuyumculuk & Saat","primary_intent":"kurumsal-kimlik","canonical_url":"https://www.belginkuyumculuk.com/"},
-    {"slug":"belgin-kuyumculuk","path":"llms/entities/belgin-kuyumculuk.md","type":"entity","primary_entity":"Belgin Kuyumculuk & Saat","primary_intent":"isletme-varligi","canonical_url":"https://www.belginkuyumculuk.com/hakkimizda.html"},
+    {"slug":"belgin-kuyumculuk","path":"llms/entities/belgin-kuyumculuk.md","type":"entity","primary_entity":"Belgin Kuyumculuk & Saat","primary_intent":"isletme-varligi","canonical_url":"https://www.belginkuyumculuk.com/biz-kimiz/"},
     {"slug":"showroom","path":"llms/entities/showroom.md","type":"entity","primary_entity":"Buca showroom","primary_intent":"showroom-bilgisi","canonical_url":"https://www.belginkuyumculuk.com/iletisim.html"},
     {"slug":"rolex","path":"llms/brands/rolex.md","type":"brand","primary_entity":"Rolex","primary_intent":"rolex-saat","canonical_url":"https://www.belginkuyumculuk.com/elit-kategori/"},
     {"slug":"izmir-luks-saat","path":"llms/local/izmir-luks-saat.md","type":"local","primary_entity":"Belgin Kuyumculuk & Saat","primary_intent":"izmir-luks-saat","canonical_url":"https://www.belginkuyumculuk.com/iletisim.html"},
     {"slug":"ikinci-el-luks-saat","path":"llms/topics/ikinci-el-luks-saat.md","type":"topic","primary_entity":"lüks saat","primary_intent":"ikinci-el-luks-saat","canonical_url":"https://www.belginkuyumculuk.com/elit-kategori/"},
-    {"slug":"saatler","path":"llms/saatler.md","type":"hub","primary_entity":"lüks saat","primary_intent":"saat-katalogu","canonical_url":"https://www.belginkuyumculuk.com/saatler/"},
-    {"slug":"mucevherat","path":"llms/mucevherat.md","type":"hub","primary_entity":"mücevherat","primary_intent":"mucevherat-katalogu","canonical_url":"https://www.belginkuyumculuk.com/mucevherat/"}
+    {"slug":"saatler","path":"llms/pages/saatler.md","type":"hub","primary_entity":"lüks saat","primary_intent":"saat-katalogu","canonical_url":"https://www.belginkuyumculuk.com/saatler/"},
+    {"slug":"mucevherat","path":"llms/pages/mucevherat.md","type":"hub","primary_entity":"mücevherat","primary_intent":"mucevherat-katalogu","canonical_url":"https://www.belginkuyumculuk.com/mucevherat/"}
   ]
 }

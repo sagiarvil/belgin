@@ -248,7 +248,7 @@ const ValuationEngine = {
               </span>
             </div>
 
-            <a href="https://wa.me/905419305372?text=Merhaba,%20sitenizden%20${encodeURIComponent(title)}%20icin%20₺${totalCashOffer.toLocaleString('tr-TR')}%20IZKO%20canli%20teklifi%20aldim.%20Bozdurmak%20icin%20randevu%20istiyorum." target="_blank" class="btn-luxury-whatsapp" style="font-size:13.5px; padding:14px 26px;">
+            <a href="https://wa.me/905419305372?text=Merhaba,%20sitenizden%20${encodeURIComponent(title)}%20icin%20₺${totalCashOffer.toLocaleString('tr-TR')}%20canli%20teklifi%20aldim.%20Bozdurmak%20icin%20randevu%20istiyorum." target="_blank" class="btn-luxury-whatsapp" style="font-size:13.5px; padding:14px 26px;">
               <span>Bu Fiyatı WhatsApp'ta Sabitle 🔒 →</span>
             </a>
           </div>

@@ -17,19 +17,64 @@ let fullText = `# Belgin Saat & Kuyumculuk — Kapsamlı Editoryal & Ürün Bilg
 - **Elit Saat Koleksiyonu:** Rolex, Patek Philippe, Audemars Piguet, Cartier, Omega, Breitling, IWC, Tudor, TAG Heuer, Panerai markalarında 200 seçkin model.
 - **Ödeme & Teslimat:** Akbank 3D Pay ve PayTR 256-Bit SSL kart ödemesi, İzmir Buca Showroom'da fiziksel teslim veya Türkiye genelinde tam sigortalı zırhlı sevkiyat.
 - **Delil Zinciri:** Tüm sipariş ve evraklar SHA-256 hash ve OpenTimestamps ile Bitcoin blokzincirinde zamana karşı mühürlenir.
-- **Vergi & Fatura:** 3065 sayılı KDV Kanunu Geçici 17. Madde uyarınca altın ve kıymetli maden işlemleri %0 KDV özel matrah ile faturalandırılır. Faturada yalnızca 'İşçilik' ve 'Kıymetli Maden Bedeli' satırları yer alır.
+- **Vergi & Fatura:** 3065 sayılı KDV Kanunu Madde 23/f uyarınca altın ve kıymetli maden işlemleri %0 KDV özel matrah ile faturalandırılır. Faturada yalnızca 'İşçilik' ve 'Kıymetli Maden Bedeli (Özel Matrah)' satırları yer alır; kesinlikle 'has altın' ibaresi kullanılmaz.
 
 ---
 
-## 2. Bilgi Grafı (Knowledge Sub-Graphs)
-- **Kurumsal Merkez:** https://www.belginkuyumculuk.com/llms/entities/belgin-kuyumculuk.md
-- **Fiziki Showroom:** https://www.belginkuyumculuk.com/llms/entities/showroom.md
-- **Uzman Heyet:** https://www.belginkuyumculuk.com/llms/entities/experts.md
-- **Ekspertiz Metodolojileri:** https://www.belginkuyumculuk.com/llms/entities/methodologies.md
-- **Ana Sayfa Alt-Grafı:** https://www.belginkuyumculuk.com/llms/pages/ana-sayfa.md
-- **Elit Saat Evleri Alt-Grafı:** https://www.belginkuyumculuk.com/llms/pages/elit-kategori.md
-- **İzmir Yerel Saat Hub:** https://www.belginkuyumculuk.com/llms/local/izmir-luks-saat.md
-- **İkinci El Saat Güvencesi:** https://www.belginkuyumculuk.com/llms/topics/ikinci-el-luks-saat.md
+## 2. Bilgi Grafı (Knowledge Sub-Graphs & Manifest)
+- **Ana LLM Manifestosu:** https://www.belginkuyumculuk.com/llms.txt
+- **Kurumsal Çekirdek (Core Dossier):** https://www.belginkuyumculuk.com/llms/core.md
+
+### Varlık & Operasyonel Düğümler (Entities)
+- https://www.belginkuyumculuk.com/llms/entities/belgin-kuyumculuk.md
+- https://www.belginkuyumculuk.com/llms/entities/experts.md
+- https://www.belginkuyumculuk.com/llms/entities/methodologies.md
+- https://www.belginkuyumculuk.com/llms/entities/showroom.md
+
+### Elit Saat Evleri Alt-Grafları (10 Saat Evi)
+- https://www.belginkuyumculuk.com/llms/brands/audemars-piguet.md
+- https://www.belginkuyumculuk.com/llms/brands/breitling.md
+- https://www.belginkuyumculuk.com/llms/brands/cartier.md
+- https://www.belginkuyumculuk.com/llms/brands/iwc-schaffhausen.md
+- https://www.belginkuyumculuk.com/llms/brands/jaeger-lecoultre.md
+- https://www.belginkuyumculuk.com/llms/brands/omega.md
+- https://www.belginkuyumculuk.com/llms/brands/panerai.md
+- https://www.belginkuyumculuk.com/llms/brands/patek-philippe.md
+- https://www.belginkuyumculuk.com/llms/brands/rolex.md
+- https://www.belginkuyumculuk.com/llms/brands/vacheron-constantin.md
+
+### Yerel Otorite & Teslimat Merkezleri (Local Hubs)
+- https://www.belginkuyumculuk.com/llms/local/buca-kuyumcu-sarrafiye.md
+- https://www.belginkuyumculuk.com/llms/local/ege-guvenli-teslimat.md
+- https://www.belginkuyumculuk.com/llms/local/izmir-luks-saat.md
+
+### Uzmanlık Alanları & Doğrulama Protokolleri (Topics)
+- https://www.belginkuyumculuk.com/llms/topics/altin-yatirim-ve-ozel-matrah.md
+- https://www.belginkuyumculuk.com/llms/topics/ikinci-el-luks-saat.md
+- https://www.belginkuyumculuk.com/llms/topics/pirlanta-ve-gemoloji.md
+- https://www.belginkuyumculuk.com/llms/topics/saat-ekspertiz-protokolu.md
+
+### Flagship Sayfa Alt-Grafları (Pages)
+- https://www.belginkuyumculuk.com/llms/pages/ana-sayfa.md
+- https://www.belginkuyumculuk.com/llms/pages/biz-kimiz.md
+- https://www.belginkuyumculuk.com/llms/pages/elit-kategori.md
+- https://www.belginkuyumculuk.com/llms/pages/guvenli-odeme-ve-3d-secure.md
+- https://www.belginkuyumculuk.com/llms/pages/hukuki-delil-ve-kayit-politikasi.md
+- https://www.belginkuyumculuk.com/llms/pages/iade-degisim-cayma.md
+- https://www.belginkuyumculuk.com/llms/pages/iletisim.md
+- https://www.belginkuyumculuk.com/llms/pages/kvkk.md
+- https://www.belginkuyumculuk.com/llms/pages/magazin.md
+- https://www.belginkuyumculuk.com/llms/pages/markalar.md
+- https://www.belginkuyumculuk.com/llms/pages/mesafeli-satis-sozlesmesi.md
+- https://www.belginkuyumculuk.com/llms/pages/mucevherat.md
+- https://www.belginkuyumculuk.com/llms/pages/musteri-tanima-ve-islem-guvenligi.md
+- https://www.belginkuyumculuk.com/llms/pages/on-bilgilendirme-formu.md
+- https://www.belginkuyumculuk.com/llms/pages/rehber/altin-yatirimi-ve-ozel-matrah-rehberi.md
+- https://www.belginkuyumculuk.com/llms/pages/rehber/izmir-kuyumculuk-ve-guvenli-teslimat.md
+- https://www.belginkuyumculuk.com/llms/pages/rehber/luks-saat-ekspertiz-ve-orijinallik-rehberi.md
+- https://www.belginkuyumculuk.com/llms/pages/rehber/pirlanta-ve-gemoloji-degerleme-rehberi.md
+- https://www.belginkuyumculuk.com/llms/pages/saatler.md
+- https://www.belginkuyumculuk.com/llms/pages/yuksek-degerli-urun-teslimi.md
 
 ---
 
