@@ -1,0 +1,70 @@
+name: one-time-relocate-homepage-verification
+
+on:
+  push:
+    paths:
+      - '.github/workflows/one-time-relocate-homepage-verification.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Remove hero verification block and preserve a compact footer reference
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          path = Path('index.html')
+          text = path.read_text(encoding='utf-8')
+          original = text
+
+          # Remove only the oversized AEO/verification block placed above the actual hero.
+          pattern = re.compile(
+              r'\n\s*<!-- AEO & NAVBOOST DİNAMİK CEVAP MOTORU \(HERO ANSWER ENGINE - MANDATE V6\) -->\s*'
+              r'<div class="container-art" style="padding-top:14px; padding-bottom:6px;">\s*'
+              r'<div class="hero-answer-engine" data-registry-route="/">.*?'
+              r'</div>\s*</div>\s*',
+              re.S,
+          )
+          text, removed = pattern.subn('\n    ', text, count=1)
+          if removed != 1:
+              raise SystemExit(f'Expected exactly one homepage hero verification block, removed={removed}')
+
+          # Keep the machine-readable SEO/LLMS endpoint discoverable without disturbing the visual hierarchy.
+          compact = '''\n      <div class="footer-machine-summary" style="margin-top:14px; padding-top:12px; border-top:1px solid rgba(255,255,255,.08); font-size:11px; line-height:1.5; letter-spacing:.02em; opacity:.52; text-align:center;">\n        <a href="/llms/pages/ana-sayfa.md" style="color:inherit; text-decoration:none;" aria-label="Belgin kurumsal bilgi ve makine okunabilir özet">Kurumsal bilgi · Makine okunabilir özet →</a>\n      </div>\n'''
+
+          footer_anchor = '\n  </div>\n</footer>'
+          if 'footer-machine-summary' not in text:
+              if footer_anchor not in text:
+                  raise SystemExit('Footer closing anchor not found')
+              text = text.replace(footer_anchor, compact + footer_anchor, 1)
+
+          path.write_text(text, encoding='utf-8')
+
+          # Verification: the large hero block must be gone; LLMS must remain available via footer.
+          check = path.read_text(encoding='utf-8')
+          assert 'CANLI DOĞRULANMIŞ TİCARİ BİLGİ' not in check
+          assert 'hero-answer-engine' not in check
+          assert '/llms/pages/ana-sayfa.md' in check
+          assert 'footer-machine-summary' in check
+
+      - name: Commit patch and remove one-time workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'sagi arvil'
+          git config user.email 'teb232@gmail.com'
+          git rm .github/workflows/one-time-relocate-homepage-verification.yml
+          git add index.html
+          git commit -m 'fix(home): move verification content out of hero'
+          git push origin HEAD:main
