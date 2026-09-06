@@ -235,6 +235,7 @@ function renderSeoProductCard(p) {
   const image = productImage(p);
   const ref = p.reference || p.ref || p.id;
   const isCarren = p.brand === 'Carren';
+  const isJewellery = categoryKey(p) === 'mucevherat';
 
   return `
     <a
@@ -245,6 +246,7 @@ function renderSeoProductCard(p) {
     >
       <div class="product-art-thumb">
         ${isCarren ? '<span class="badge-shipping-pill" style="position:absolute; top:10px; left:10px; background:rgba(0,48,87,0.92); color:#FFFFFF; padding:4px 8px; border-radius:4px; font-size:10px; font-weight:700; letter-spacing:0.5px; z-index:2; backdrop-filter:blur(4px); border:1px solid rgba(255,255,255,0.2);">📦 Kargo ile Teslimat</span>' : ''}
+        ${isJewellery ? '<span class="badge-shipping-pill" style="position:absolute; top:10px; left:10px; background:#B91C1C; color:#FFFFFF; padding:5px 9px; border-radius:4px; font-size:10.5px; font-weight:800; letter-spacing:0.5px; z-index:2; box-shadow:0 2px 8px rgba(185,28,28,0.4); border:1px solid rgba(255,255,255,0.4);">🔒 KREDİ KARTINA KAPALIDIR</span>' : ''}
         <img
           class="img-primary"
           src="${esc(image)}"
@@ -258,6 +260,7 @@ function renderSeoProductCard(p) {
         <p class="prod-model-name">${esc(p.name || '')}</p>
         <p class="prod-ref-size">${esc(ref)}</p>
         <div class="prod-price-tag">${esc(money(p.price))}</div>
+        ${isJewellery ? '<div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>' : ''}
       </div>
     </a>
   `;
@@ -441,7 +444,7 @@ function prerenderPdpContent(p) {
       <!-- PDP HERO ANSWER ENGINE (AEO / SSOT KÜNYE) -->
       <div class="hero-answer-engine" data-registry-route="${esc(productRoute(p))}" style="margin:0 0 24px;">
         <div class="hero-answer-engine-badge"><span class="dot"></span> ONAYLI ÜRÜN KÜNYESİ &amp; EKSPERTİZ BİLGİSİ</div>
-        <p class="hero-answer-engine-text">Bu ${esc(p.brand || 'lüks saat')} ${esc(p.name || '')} (Ref: ${esc(ref)}) modeli, Belgin Kuyumculuk İzmir Buca showroom stok ve temin ağı güvencesiyle sunulmaktadır. ${isUsed(p) ? 'Fiziksel ekspertiz ve mekanizma tolerans testi tamamlanmış olup orijinallik sertifikası ile teslim edilir.' : 'Sıfır distribütör garantili ve tescilli kutu-belge tam set olarak sağlanır.'} 12.000 TL üzeri alımlarda kimlik teyitli VIP teslimat ve Akbank 3D Pay 256-bit SSL ödeme altyapısı geçerlidir.</p>
+        <p class="hero-answer-engine-text">${catKey === 'mucevherat' ? `Bu ${esc(p.brand || 'Belgin Kuyumculuk')} ${esc(p.name || '')} (Ref: ${esc(ref)}) modeli, Belgin Kuyumculuk İzmir Buca showroom stok ve temin ağı güvencesiyle sunulmaktadır. Sıfır tescilli ve resmi ayar garantili olarak sağlanır. Mevzuat ve şirket politikalarımız gereğince Altın ve Mücevherat ürünlerinde KREDİ KARTI ile satış yapılmamaktadır; siparişler kurumsal Banka Havalesi / EFT / FAST veya İzmir Buca showroomumuzda bizzat teslim alınarak tamamlanmaktadır.` : `Bu ${esc(p.brand || 'lüks saat')} ${esc(p.name || '')} (Ref: ${esc(ref)}) modeli, Belgin Kuyumculuk İzmir Buca showroom stok ve temin ağı güvencesiyle sunulmaktadır. ${isUsed(p) ? 'Fiziksel ekspertiz ve mekanizma tolerans testi tamamlanmış olup orijinallik sertifikası ile teslim edilir.' : 'Sıfır distribütör garantili ve tescilli kutu-belge tam set olarak sağlanır.'} 12.000 TL üzeri alımlarda kimlik teyitli VIP teslimat ve Akbank 3D Pay 256-bit SSL ödeme altyapısı geçerlidir.`}</p>
         <div class="hero-answer-engine-meta">
           <span><strong>Fiziki Konum:</strong> İzmir Buca Showroom</span>
           <span><strong>Fiyat Durumu:</strong> ${esc(money(p.price))} (Canlı Kur)</span>
@@ -465,15 +468,41 @@ function prerenderPdpContent(p) {
           <h1 style="font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0;color:#fff;">${esc(`${p.brand || ''} ${p.name || ''}`.trim())}</h1>
           <p class="pdp-art-ref" style="font-size:13px;color:#8fa099;margin:0;">Ref: ${esc(ref)} • Durum: ${isUsed(p) ? 'Ekspertiz Onaylı İkinci El' : 'Sıfır Distribütör Garantili'}</p>
           <div class="pdp-art-price" style="font-size:32px;font-weight:800;color:#34D399;margin:8px 0;">${esc(money(p.price))}</div>
+          ${catKey === 'mucevherat' ? `
+          <!-- KURUMSAL BİLGİLENDİRME (KREDİ KARTI KAPALI) -->
+          <div class="pdp-no-cc-notice" style="display:flex;align-items:flex-start;gap:14px;background:#FFFDF7;border:2px solid #C2A768;border-left:6px solid #B91C1C;border-radius:10px;padding:16px 20px;margin:10px 0 16px;box-shadow:0 4px 14px rgba(194,167,104,0.15);">
+            <span style="font-size:24px;line-height:1.2;flex-shrink:0;">🛡️</span>
+            <div>
+              <strong style="color:#B91C1C;display:block;margin-bottom:4px;font-size:13.5px;font-weight:800;letter-spacing:0.4px;text-transform:uppercase;">KURUMSAL BİLGİLENDİRME</strong>
+              <p style="font-size:13.5px;font-weight:700;color:#1F2937;line-height:1.55;margin:0 0 4px;">
+                Mevzuat ve şirket politikalarımız gereğince <span style="color:#B91C1C;">Altın ve Mücevherat ürünlerinde KREDİ KARTI ile satış yapılmamaktadır</span>.
+              </p>
+              <p style="font-size:12.5px;color:#4B5563;line-height:1.5;margin:0;">
+                Tüm altın, ziynet ve bilezik siparişlerinizi kurumsal <strong>Banka Havalesi / EFT / FAST</strong> yöntemiyle güvenle gerçekleştirebilir veya <strong>İzmir Buca showroom</strong> mağazamızda bizzat teslim alabilirsiniz.
+              </p>
+            </div>
+          </div>
+          ` : ''}
           <div class="pdp-special-order-info" style="background:rgba(194,167,104,0.1);border:1px solid rgba(194,167,104,0.3);border-radius:8px;padding:12px 16px;margin:4px 0 10px;font-size:13px;line-height:1.5;color:#f0e6d2;">
             <strong style="color:#C2A768;display:block;margin-bottom:2px;font-size:13.5px;">📦 Özel Sipariş ile Temin Edilir</strong>
             <span style="color:#d5e2dc;">Ürün, talebiniz üzerine özel olarak temin edilir. Güncel temin süresi için bizimle iletişime geçebilirsiniz.</span>
           </div>
           <p class="pdp-art-description" style="font-size:14px;line-height:1.7;color:#d5e2dc;">${esc(fullDesc)}</p>
+          ${catKey === 'mucevherat' ? `
+          <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;">
+            <a href="https://wa.me/905419305372?text=${encodeURIComponent(`Merhaba, ${p.brand || ''} ${p.name || ''} (${ref}) hakkında Havale/EFT ve Showroom siparişi oluşturmak istiyorum.`)}" target="_blank" style="background:linear-gradient(135deg,#006039,#004D2C);color:#fff;font-weight:700;padding:15px 28px;border:none;border-radius:10px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 14px rgba(0,96,57,0.3);font-size:14.5px;">
+              <span>🏛️ Havale / EFT ile Sipariş Ver</span>
+            </a>
+            <a href="https://wa.me/905419305372?text=${encodeURIComponent(`${p.brand || ''} ${p.name || ''} (${ref}) hakkında bilgi almak istiyorum.`)}" target="_blank" style="background:#25D366;color:#fff;font-weight:700;padding:15px 24px;border:none;border-radius:10px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;font-size:14px;box-shadow:0 4px 14px rgba(37,211,102,0.3);">
+              <span>💬 WhatsApp ile Sipariş</span>
+            </a>
+          </div>
+          ` : `
           <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;">
             <button onclick="Cart.addItem('${esc(p.id)}')" style="background:linear-gradient(135deg,#C2A768,#9E8548);color:#070A09;font-weight:700;padding:14px 28px;border:none;border-radius:10px;cursor:pointer;">Sepete Ekle &amp; Satın Al</button>
             <a href="https://wa.me/905419305372?text=${encodeURIComponent(`${p.brand || ''} ${p.name || ''} (${ref}) hakkında bilgi almak istiyorum.`)}" target="_blank" style="background:rgba(255,255,255,0.08);color:#fff;padding:14px 24px;border:1px solid rgba(255,255,255,0.2);border-radius:10px;text-decoration:none;display:inline-flex;align-items:center;">WhatsApp ile İletişim</a>
           </div>
+          `}
         </div>
       </div>
     </article>

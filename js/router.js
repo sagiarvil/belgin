@@ -67,7 +67,10 @@ const Router = {
     }
     if (path === '/markalar' || path === '/saat-markalari') return { page: 'markalar' };
     if (path === '/biz-kimiz' || path === '/kurumsal-profil' || path === '/hakkimizda') return { page: 'biz-kimiz' };
-    if (path === '/magazin' || path === '/magazine' || path === '/saat-magazin') return { page: 'magazin' };
+    if (path === '/magazin' || path === '/magazine' || path === '/saat-magazin') {
+      const cat = new URLSearchParams(location.search).get('kategori') || new URLSearchParams(location.search).get('category') || new URLSearchParams(location.search).get('filter');
+      return { page: 'magazin', filter: cat || 'all' };
+    }
     if (path === '/canli-fiyatlar' || path === '/canlipiyasalar') return { page: 'canli-fiyatlar' };
     if (path === '/mucevherat') return { page: 'mucevherat' };
     if (path === '/saatler') {
@@ -229,6 +232,11 @@ const Router = {
           window.location.href = '/mucevherat/';
           return;
         }
+        if (page === 'magazin' && !document.getElementById('page-magazin')) {
+          const filterParam = filterVal && filterVal !== 'all' ? `?kategori=${encodeURIComponent(filterVal)}` : '';
+          window.location.href = '/magazin/' + filterParam;
+          return;
+        }
         e.preventDefault();
         this.navigate(page, true, { filter: filterVal });
         return;
@@ -379,7 +387,7 @@ const Router = {
       setTimeout(() => {
         const pageEl = document.getElementById('page-' + page) || target;
         if (pageEl) {
-          const targetSection = pageEl.querySelector('.products-grid-4') || pageEl.querySelector('.section-header-flex') || pageEl;
+          const targetSection = pageEl.querySelector('.products-grid-4') || pageEl.querySelector('.magazine-grid') || pageEl.querySelector('#magazineArticlesGrid') || pageEl.querySelector('.section-header-flex') || pageEl;
           Router.scrollToTarget(targetSection);
         }
       }, 80);
@@ -387,12 +395,12 @@ const Router = {
 
     // 7. History State
     if (pushState && page !== 'urun') {
-      const categoryRoute = (window.SEO_CATEGORY_ROUTES || {})[page] || (page === 'canli-fiyatlar' ? '/canli-fiyatlar/' : (page === 'mucevherat' ? '/mucevherat/' : null));
+      const categoryRoute = (window.SEO_CATEGORY_ROUTES || {})[page] || (page === 'canli-fiyatlar' ? '/canli-fiyatlar/' : (page === 'mucevherat' ? '/mucevherat/' : (page === 'magazin' ? '/magazin/' : null)));
       if (categoryRoute) {
         const filter = options.filter && options.filter !== 'all' ? String(options.filter) : null;
         const route = page === 'elit-kategori' && filter
           ? `${categoryRoute}?marka=${encodeURIComponent(filter)}`
-          : (page === 'mucevherat' && filter ? `${categoryRoute}?kategori=${encodeURIComponent(filter)}` : categoryRoute);
+          : ((page === 'mucevherat' || page === 'magazin') && filter ? `${categoryRoute}?kategori=${encodeURIComponent(filter)}` : categoryRoute);
         history.pushState({ page, filter: filter || 'all' }, '', route);
       } else if (page === 'ana-sayfa') {
         history.pushState({ page }, '', '/');

@@ -198,6 +198,21 @@ function runBelginSearch(items, query) {
 }
 
 const App = {
+  isJewelleryProduct(p) {
+    if (!p) return false;
+    const cat = String(p.category || '').toLowerCase();
+    const brand = String(p.brand || '').toLowerCase();
+    const name = String(p.name || '').toLowerCase();
+    const subCat = String(p.subCategory || '').toLowerCase();
+    if (cat === 'elit-saatler' || cat === 'saat' || cat === 'watch' || cat === 'watches') return false;
+    if (brand && ['rolex', 'omega', 'patek philippe', 'audemars piguet', 'breitling', 'cartier', 'tudor', 'tag heuer', 'iwc schaffhausen', 'panerai', 'tissot', 'longines', 'frederique constant', 'rado', 'alpina', 'bell & ross', 'swatch', 'casio', 'carren', 'versace', 'calvin klein', 'michael kors', 'gc', 'guess', 'welder'].includes(brand)) return false;
+    return cat === 'jewelry' || cat === 'jewellery' || cat === 'mucevherat' || cat === 'altin' || cat === 'gold'
+      || brand.includes('belgin kuyumculuk')
+      || p.isGold === true
+      || subCat.includes('altın') || subCat.includes('ziynet') || subCat.includes('külçe')
+      || /altın|altin|külçe|kulce|bilezik|çeyrek|ceyrek|yarım\s+altın|tam\s+altın|ata\s+altın|reşat|resat|ziynet|sarrafiye|gremse/i.test(name);
+  },
+
   goToHome(e) {
     if (typeof window.goToHome === 'function') {
       return window.goToHome(e);
@@ -350,6 +365,11 @@ const App = {
           Cart.renderCheckout();
         }
         this.initCheckoutAutoSync();
+        break;
+      case 'magazin':
+        const magFilter = (options.filter !== undefined && options.filter !== null) ? options.filter : (this.currentMagazineFilter || 'all');
+        this.currentMagazineFilter = magFilter;
+        this.filterMagazineCategory(magFilter, null);
         break;
     }
   },
@@ -1062,6 +1082,7 @@ const App = {
         <div class="product-art-thumb">
           ${isPreOwned ? '<span class="badge-cond-gold">İkinci El</span>' : ''}
           ${p.brand === 'Carren' ? '<span class="badge-shipping-pill" style="position:absolute; top:10px; left:10px; background:rgba(0,48,87,0.92); color:#FFFFFF; padding:4px 8px; border-radius:4px; font-size:10px; font-weight:700; letter-spacing:0.5px; z-index:2; backdrop-filter:blur(4px); border:1px solid rgba(255,255,255,0.2);">📦 Kargo ile Teslimat</span>' : ''}
+          ${this.isJewelleryProduct(p) ? '<span class="badge-shipping-pill" style="position:absolute; top:10px; left:10px; background:#B91C1C; color:#FFFFFF; padding:5px 9px; border-radius:4px; font-size:10.5px; font-weight:800; letter-spacing:0.5px; z-index:2; box-shadow:0 2px 8px rgba(185,28,28,0.4); border:1px solid rgba(255,255,255,0.4);">🔒 KREDİ KARTINA KAPALIDIR</span>' : ''}
           <img class="img-primary" src="${p.image}" alt="${p.brand} ${p.name}" loading="lazy">
         </div>
         <div class="product-art-info">
@@ -1069,6 +1090,7 @@ const App = {
           <p class="prod-model-name">${p.name}</p>
           <p class="prod-ref-size">${p.reference}</p>
           ${priceHtml}
+          ${this.isJewelleryProduct(p) ? '<div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>' : ''}
         </div>
       </a>
     `;
@@ -1131,7 +1153,12 @@ const App = {
         ${p.hallmark ? `<tr><td>Darphane Damgası</td><td><strong>${p.hallmark}</strong></td></tr>` : ''}
       </table>
 
-      ${isHighVal ? `
+      ${this.isJewelleryProduct(p) ? `
+        <div style="font-size:12px; color:#2B261D; background:#FFFDF7; border:1.5px solid #C2A768; padding:10px 12px; border-radius:6px; margin-bottom:14px; line-height:1.55;">
+          <strong style="color:var(--color-teal); display:block; margin-bottom:3px; font-weight:800;">🛡️ KURUMSAL BİLGİLENDİRME</strong>
+          Mevzuat ve şirket politikalarımız gereğince Altın ve Mücevherat ürünlerinde <strong>KREDİ KARTI ile online satış yapılmamaktadır</strong>. Siparişlerinizi kurumsal <strong>Banka Havalesi / EFT / FAST</strong> yöntemiyle verebilirsiniz.
+        </div>
+      ` : (isHighVal ? `
         <div style="font-size:11.5px; color:#5D4411; background:#FFF9EE; border:1px solid #E6D2A8; padding:10px 12px; border-radius:6px; margin-bottom:16px; line-height:1.5;">
           <strong>🏛️ Yalnız Mağazadan Teslim (03):</strong> 12.000 TL üzerindeki ürünler güvenlik gereği kimlik ibrazı ve imza ile yalnızca Buca mağazamızdan teslim edilir. Kargo/kurye ile gönderilmez.
         </div>
@@ -1140,14 +1167,23 @@ const App = {
           <span style="font-size:16px;">📦</span>
           <span><strong>Sigortalı Hızlı Kargo:</strong> Siparişiniz özel korumalı ambalajında sigortalı kargo ile adresinize teslim edilir.</span>
         </div>
-      `}
+      `)}
 
       <div style="display:flex; flex-direction:column; gap:10px; margin-top:auto;">
-        <button class="btn-art-buy" onclick="Cart.add('${p.id}'); App.updateHeaderCartCount(); App.closeQuickDrawer(); Router.navigate('cart');">
-          Sepete Ekle & Satın Al
+        ${this.isJewelleryProduct(p) ? `
+        <button class="btn-art-buy" onclick="App.closeQuickDrawer(); App.openWireOrderModal('${p.id}');" style="background:linear-gradient(135deg, #006039 0%, #004D2C 100%) !important; color:#fff !important; font-weight:800; box-shadow:0 4px 14px rgba(0,96,57,0.35) !important;">
+          🏛️ Havale / EFT ile Sipariş Ver
         </button>
+        <a href="https://wa.me/905419305372?text=Merhaba%2C%20${encodeURIComponent(p.brand + ' ' + p.name)}%20(${p.ref || p.reference})%20hakk%C4%B1nda%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" class="btn-hero-outline" style="text-align:center; padding:12px; text-decoration:none; display:block; color:#25D366; border-color:#25D366; font-weight:700;">
+          💬 WhatsApp ile Sipariş Hattı
+        </a>
+        ` : `
+        <button class="btn-art-buy" onclick="Cart.add('${p.id}'); App.updateHeaderCartCount(); App.closeQuickDrawer(); Router.navigate('cart');">
+          Sepete Ekle &amp; Satın Al
+        </button>
+        `}
         <button class="btn-hero-outline" style="text-align:center; padding:12px;" onclick="App.closeQuickDrawer(); App.openProduct('${p.id}');">
-          Detaylı Ekspertiz Sayfası & Şartlar (10x Loupe)
+          Detaylı Ekspertiz Sayfası &amp; Şartlar (10x Loupe)
         </button>
       </div>
     `;
@@ -1162,6 +1198,102 @@ const App = {
     document.body.style.overflow = '';
   },
 
+  // ALTIN & MÜCEVHERAT KURUMSAL HAVALE / EFT SİPARİŞ MODALI
+  openWireOrderModal(productId) {
+    const p = typeof findProduct === 'function' ? findProduct(productId) : null;
+    if (!p) return;
+    let modal = document.getElementById('wireOrderModal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'wireOrderModal';
+      modal.style.cssText = 'position:fixed; inset:0; z-index:99999; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.75); backdrop-filter:blur(6px); padding:16px;';
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) App.closeWireOrderModal();
+      });
+      document.body.appendChild(modal);
+    }
+    const formattedPrice = typeof formatPrice === 'function' ? formatPrice(p.price) : `₺${Number(p.price).toLocaleString('tr-TR')}`;
+    const refCode = p.reference || p.ref || p.id;
+    const waText = encodeURIComponent(`Merhaba, Belgin Kuyumculuk ${p.brand || 'Belgin'} ${p.name} (Ref: ${refCode}) modeli için Havale/EFT ve Showroom teslim siparişi oluşturmak istiyorum. Güncel Tutar: ${formattedPrice}`);
+    modal.innerHTML = `
+      <div style="background:#FFFFFF; max-width:520px; width:100%; border-radius:14px; border:2px solid #C2A768; box-shadow:0 20px 50px rgba(0,0,0,0.4); overflow:hidden; position:relative; font-family:var(--font-sans, sans-serif); animation:fadeInScale 0.2s ease-out;">
+        <div style="background:linear-gradient(135deg, #05332F 0%, #0A4D46 100%); color:#FFFFFF; padding:18px 22px; display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #C2A768;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span style="font-size:22px;">🏛️</span>
+            <div>
+              <h3 style="margin:0; font-size:15px; font-weight:800; letter-spacing:0.5px; text-transform:uppercase; color:#E8D8A8;">Kurumsal Havale / EFT Siparişi</h3>
+              <span style="font-size:11px; opacity:0.85; display:block; margin-top:2px;">Belgin Kuyumculuk · Buca Showroom</span>
+            </div>
+          </div>
+          <button onclick="App.closeWireOrderModal()" style="background:rgba(255,255,255,0.15); border:none; color:#FFFFFF; font-size:22px; cursor:pointer; line-height:1; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center;" aria-label="Kapat">&times;</button>
+        </div>
+
+        <div style="padding:20px; max-height:82vh; overflow-y:auto;">
+          <!-- Ürün Kartı Özeti -->
+          <div style="display:flex; gap:14px; align-items:center; background:#FBF9F5; border:1px solid #EAE5D9; border-radius:10px; padding:12px 14px; margin-bottom:14px;">
+            <img src="${p.image}" alt="${p.name}" style="width:64px; height:64px; object-fit:contain; border-radius:6px; background:#fff; border:1px solid #EAE5D9; padding:4px;">
+            <div style="flex:1;">
+              <span style="font-size:10.5px; color:#C2A768; font-weight:800; text-transform:uppercase; letter-spacing:0.5px;">${p.brand || 'Belgin Kuyumculuk'}</span>
+              <strong style="display:block; font-size:13.5px; color:#1F2937; margin-bottom:2px; line-height:1.3;">${p.name}</strong>
+              <span style="font-size:11.5px; color:#6B7280;">Ref: ${refCode}</span>
+            </div>
+            <div style="text-align:right;">
+              <span style="font-size:10px; color:#6B7280; display:block; text-transform:uppercase; font-weight:600;">Satış Tutarı</span>
+              <strong style="font-size:17px; font-weight:800; color:#05332F;">${formattedPrice}</strong>
+            </div>
+          </div>
+
+          <!-- Kırmızı & Altın Vurgulu Kesin Uyarı -->
+          <div style="background:#FFFDF7; border:1.5px solid #C2A768; border-left:5px solid #B91C1C; border-radius:8px; padding:14px 16px; margin-bottom:14px;">
+            <strong style="color:#B91C1C; font-size:12.5px; font-weight:800; display:block; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.3px;">
+              🛡️ KURUMSAL SATIŞ VE ÖDEME BİLDİRİMİ
+            </strong>
+            <p style="font-size:12.5px; font-weight:600; color:#1F2937; line-height:1.55; margin:0 0 4px;">
+              Mevzuat ve şirket politikalarımız gereğince <span style="color:#B91C1C;">Altın ve Mücevherat ürünlerinde KREDİ KARTI ile satış yapılmamaktadır</span>.
+            </p>
+            <p style="font-size:12px; color:#4B5563; line-height:1.5; margin:0;">
+              Siparişinizi resmi kurumsal banka hesabımıza <strong>Havale / EFT / FAST</strong> yöntemiyle güvenle gerçekleştirebilir veya <strong>İzmir Buca showroom</strong> mağazamızda bizzat teslim alabilirsiniz.
+            </p>
+          </div>
+
+          <!-- Kurumsal Banka Bilgileri -->
+          <div style="background:#F9FAFB; border:1px solid #E5E7EB; border-radius:8px; padding:14px 16px; font-size:12px; color:#374151; margin-bottom:16px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:6px; border-bottom:1px dashed #E5E7EB; padding-bottom:6px;">
+              <span style="color:#6B7280;">Firma Unvanı:</span>
+              <strong style="color:#111827;">BELGİN KUYUMCULUK - SEMİH SONBAHAR</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:6px; border-bottom:1px dashed #E5E7EB; padding-bottom:6px;">
+              <span style="color:#6B7280;">Banka:</span>
+              <strong style="color:#111827;">Kuveyt Türk Katılım Bankası</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="color:#6B7280;">Showroom:</span>
+              <span style="color:#111827; font-weight:600;">Menderes Cad. No:231/B Buca / İzmir</span>
+            </div>
+          </div>
+
+          <!-- Sipariş Butonları -->
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <a href="https://wa.me/905419305372?text=${waText}" target="_blank" rel="noopener" style="background:#25D366; color:#FFFFFF; font-weight:800; font-size:14.5px; padding:14px; border-radius:10px; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 14px rgba(37,211,102,0.35);">
+              <span>💬 WhatsApp ile Siparişi Oluştur</span>
+            </a>
+            <button onclick="App.closeWireOrderModal()" style="background:#F3F4F6; color:#374151; font-weight:700; font-size:13px; padding:12px; border-radius:8px; border:1px solid #D1D5DB; cursor:pointer;">
+              Pencereyi Kapat
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  },
+
+  closeWireOrderModal() {
+    const modal = document.getElementById('wireOrderModal');
+    if (modal) modal.style.display = 'none';
+    document.body.style.overflow = '';
+  },
+
   // ==========================================================
   // ÜRÜN DETAY SAYFASI (SAAT&SAAT ENTERPRISE PDP MİMARİSİ)
   // ==========================================================
@@ -1173,7 +1305,7 @@ const App = {
     const container = document.getElementById('productDetailView');
     if (!container) return;
 
-    const isGoldProduct = (p.category === 'jewelry' || p.category === 'jewellery' || p.isGold);
+    const isGoldProduct = this.isJewelleryProduct(p);
     const isHighVal = (typeof isHighValueSecureDelivery === 'function' ? isHighValueSecureDelivery(p) : p.price >= 12000);
     const specs = p.specs || {};
 
@@ -1192,8 +1324,12 @@ const App = {
     const discountPercent = hasDiscount ? Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100) : 0;
     const monthlyInstallment = Math.round(p.price / 3);
 
-    // Güvenli Ödeme Bannerı (Tek Çekim & 3D Secure Güvencesi)
-    const secureBannerHtml = `
+    // Güvenli Ödeme Bannerı (Havale/EFT vs Tek Çekim 3D Secure)
+    const secureBannerHtml = isGoldProduct ? `
+      <div class="pdp-installment-banner" style="background:#FFFDF7; border:1.5px solid #C2A768; color:#3D2F12; padding:12px 14px; border-radius:6px; font-size:12.5px; margin-top:14px; line-height:1.55;">
+        <span>🏛️ <strong>Ödeme &amp; Teslimat:</strong> Altın ve Mücevherat ürünlerinde <strong>yalnızca kurumsal Banka Havalesi / EFT / FAST</strong> ve İzmir Buca showroom mağazadan teslimat geçerlidir. Kredi kartı ile satış yapılmamaktadır.</span>
+      </div>
+    ` : `
       <div class="pdp-installment-banner" style="background:#FAF8F5; border:1px solid #EAE5D9; color:#4A3B18; padding:10px 14px; border-radius:6px; font-size:12.5px; margin-top:14px; line-height:1.5;">
         <span>🔒 <strong>Güvenli Ödeme:</strong> 256-bit SSL ve 3D Secure ile <strong>tek çekim</strong> veya havale/EFT güvencesi.</span>
       </div>
@@ -1282,10 +1418,10 @@ const App = {
           </div>
         </div>
         <div class="pdp-trust-item">
-          <span class="pdp-trust-item-icon">💳</span>
+          <span class="pdp-trust-item-icon">🏦</span>
           <div class="pdp-trust-item-text">
-            <strong>BDDK Lisanslı 3D Secure</strong>
-            <span>PayTR 256-bit SSL korumalı banka altyapısı & tek çekim.</span>
+            <strong>Kurumsal Havale / EFT & FAST</strong>
+            <span>Kredi kartı geçerli değildir. Kurumsal hesap güvencesiyle transfer.</span>
           </div>
         </div>
         <div class="pdp-trust-item">
@@ -1408,7 +1544,7 @@ const App = {
             <div class="pdp-spec-rows">
               <div class="pdp-spec-row"><span class="pdp-spec-key">Teslimat Kuralı</span><span class="pdp-spec-value">12.000 TL+ Showroom Güvenli Teslim</span></div>
               <div class="pdp-spec-row"><span class="pdp-spec-key">Geri Alım</span><span class="pdp-spec-value">Anlık Kapalıçarşı Kuruyla Nakit Alım</span></div>
-              <div class="pdp-spec-row"><span class="pdp-spec-key">Ödeme Şekli</span><span class="pdp-spec-value">BDDK Uyumlu Tek Çekim / 3D Secure</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Ödeme Şekli</span><span class="pdp-spec-value">Kurumsal Havale / EFT &amp; Showroom (Kredi Kartına Kapalı)</span></div>
               <div class="pdp-spec-row"><span class="pdp-spec-key">Menşei</span><span class="pdp-spec-value">Türkiye (T.C. Darphane Tescilli)</span></div>
             </div>
           </div>
@@ -1590,6 +1726,24 @@ const App = {
               </div>
             </div>
 
+            ${isGoldProduct ? `
+            <!-- KURUMSAL BİLGİLENDİRME (KREDİ KARTI KAPALI) -->
+            <div class="pdp-no-cc-notice" style="display:flex; align-items:flex-start; gap:14px; background:#FFFDF7; border:2px solid #C2A768; border-left:6px solid #B91C1C; border-radius:10px; padding:16px 20px; margin:0 0 16px; box-shadow:0 4px 14px rgba(194,167,104,0.15);">
+              <span style="font-size:24px; line-height:1.2; flex-shrink:0;">🛡️</span>
+              <div>
+                <strong style="color:#B91C1C; display:block; margin-bottom:4px; font-size:13.5px; font-weight:800; letter-spacing:0.4px; text-transform:uppercase;">
+                  Kurumsal Satış ve Ödeme Bildirimi
+                </strong>
+                <p style="font-size:13.5px; font-weight:700; color:#1F2937; line-height:1.55; margin:0 0 4px;">
+                  Mevzuat ve şirket politikalarımız gereğince <span style="color:#B91C1C;">Altın ve Mücevherat ürünlerinde KREDİ KARTI ile satış yapılmamaktadır</span>.
+                </p>
+                <p style="font-size:12.5px; color:#4B5563; line-height:1.5; margin:0;">
+                  Tüm altın, ziynet ve bilezik siparişlerinizi kurumsal <strong>Banka Havalesi / EFT / FAST</strong> yöntemiyle güvenle gerçekleştirebilir veya <strong>İzmir Buca showroom</strong> mağazamızda bizzat teslim alabilirsiniz.
+                </p>
+              </div>
+            </div>
+            ` : ''}
+
             <!-- Fiyat Kutusu -->
             <div class="pdp-price-wrap ${p.isPreOwned ? 'pdp-dual-price-wrap' : ''}">
               ${p.isPreOwned ? `
@@ -1623,6 +1777,14 @@ const App = {
 
             <!-- Aksiyon Butonları -->
             <div class="pdp-actions-row">
+              ${isGoldProduct ? `
+              <button class="pdp-btn-fast pdp-btn-wire" onclick="App.openWireOrderModal('${p.id}');" style="background:linear-gradient(135deg, #006039 0%, #004D2C 100%) !important; color:#fff !important; font-weight:800; padding:15px 28px; border-radius:10px; border:none; cursor:pointer; display:inline-flex; align-items:center; gap:8px; box-shadow:0 4px 14px rgba(0,96,57,0.35); font-size:14.5px;">
+                <span>🏛️ Kurumsal Havale / EFT ile Sipariş Ver</span>
+              </button>
+              <a class="pdp-btn-whatsapp pdp-btn-whatsapp-labeled" href="https://wa.me/905419305372?text=Merhaba,%20${encodeURIComponent(p.brand + ' ' + p.name)}%20(${p.ref || p.reference})%20hakkinda%20Havale/EFT%20ve%20Showroom%20siparis%20bilgisi%20almak%20istiyorum." target="_blank" rel="noopener" style="background:#25D366; color:#fff; font-weight:700; padding:14px 22px; border-radius:10px; text-decoration:none; display:inline-flex; align-items:center; gap:8px; font-size:14px; box-shadow:0 4px 14px rgba(37,211,102,0.3);" aria-label="WhatsApp Satış Danışmanı">
+                <span>💬 WhatsApp ile Sipariş</span>
+              </a>
+              ` : `
               <button class="pdp-btn-cart" onclick="Cart.add('${p.id}'); App.updateHeaderCartCount(); Router.navigate('sepet');">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                 <span>Sepete Ekle</span>
@@ -1630,9 +1792,10 @@ const App = {
               <button class="pdp-btn-fast" onclick="Cart.add('${p.id}'); App.updateHeaderCartCount(); Router.navigate('odeme');">
                 <span>Hemen Satın Al</span>
               </button>
-              <a class="pdp-btn-whatsapp" href="https://wa.me/905419305372?text=Merhaba,%20${encodeURIComponent(p.brand + ' ' + p.name)}%20(${p.ref || p.reference})%20modeli%20hakkinda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener" aria-label="WhatsApp Satış Danışmanı">
+              <a class="pdp-btn-whatsapp" href="https://wa.me/905419305372?text=Merhaba,%20${encodeURIComponent(p.brand + ' ' + p.name)}%20(${p.ref || p.reference})%20hakkinda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener" aria-label="WhatsApp Satış Danışmanı">
                 <span>💬</span>
               </a>
+              `}
             </div>
 
             <!-- 4'lü Kurumsal Güvence Kutusu -->
@@ -1651,7 +1814,7 @@ const App = {
               <span>⚙️ Teknik Özellikler Tablosu</span>
             </button>
             <button class="pdp-tab-btn" onclick="App.switchPdpTab('tab-installments', this)" role="tab">
-              <span>💳 3D Secure Güvenli Ödeme (Tek Çekim)</span>
+              <span>${isGoldProduct ? '🏛️ Havale/EFT & Showroom Ödeme' : '💳 3D Secure Güvenli Ödeme (Tek Çekim)'}</span>
             </button>
             <button class="pdp-tab-btn" onclick="App.switchPdpTab('tab-delivery', this)" role="tab">
               <span>🚚 Teslimat, Güvenlik & İade Koşulları</span>
@@ -2312,6 +2475,10 @@ const App = {
     const discount = Cart.getDiscountAmount();
     const grandTotal = Cart.getTotal();
     const hasHighValue = Cart.items.some(item => (typeof isHighValueSecureDelivery === 'function' ? isHighValueSecureDelivery(item) : item.price > 12000));
+    const hasJewellery = Cart.items.some(item => {
+      const p = (typeof findProduct === 'function' ? findProduct(item.id) : null) || item;
+      return this.isJewelleryProduct(p);
+    });
 
     container.innerHTML = `
       <div class="cart-items-wrapper" style="display:flex; flex-direction:column; gap:14px;">
@@ -2374,6 +2541,13 @@ const App = {
           </div>
         ` : ''}
 
+        ${hasJewellery ? `
+          <div class="cart-jewellery-notice" style="background:#FFFDF7; border:1.5px solid #C2A768; border-radius:8px; padding:14px 16px; margin-top:6px; font-size:12.5px; color:#2B261D; line-height:1.55; box-shadow:0 2px 8px rgba(194,167,104,0.08);">
+            <strong style="color:var(--color-teal); display:block; margin-bottom:4px; font-weight:800; text-transform:uppercase; letter-spacing:0.3px;">🛡️ Kurumsal Satış ve Ödeme Politikası</strong>
+            Mevzuat ve şirket politikalarımız gereğince <strong>Altın ve Mücevherat ürünlerinde web sitemiz üzerinden KREDİ KARTI ile online satış yapılmamaktadır</strong>. Siparişlerinizi kurumsal <strong>Banka Havalesi / EFT / FAST</strong> yöntemiyle güvenle gerçekleştirebilir veya İzmir Buca showroom mağazamızda teslim alabilirsiniz.
+          </div>
+        ` : ''}
+
         <!-- Fiyat Özeti -->
         <div style="background:#FFF; border:1px solid #EAE5D9; border-radius:10px; padding:20px; margin-top:10px;">
           <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:13.5px; color:var(--color-muted);">
@@ -2396,7 +2570,7 @@ const App = {
           </div>
 
           <button type="button" class="btn-art-buy" style="width:100%; padding:15px; font-size:15px; font-weight:800; border-radius:8px; cursor:pointer;" onclick="Router.navigate('odeme')">
-            🔒 Güvenli Ödeme Adımına Geç (${formatPrice(grandTotal)})
+            ${hasJewellery ? `Havale / EFT Sipariş Adımına Geç (${formatPrice(grandTotal)})` : `🔒 Güvenli Ödeme Adımına Geç (${formatPrice(grandTotal)})`}
           </button>
         </div>
       </div>
@@ -3148,6 +3322,7 @@ const App = {
     const radio = document.querySelector('input[name="paymentOption"][value="card"]');
     if (radio) radio.checked = true;
     if (submitBtnText) submitBtnText.textContent = `3D Secure ile Güvenli Öde (${formattedTotal})`;
+    this.syncCheckoutPaymentUI();
   },
 
   setFieldError(inputId, errorMsg) {
@@ -3401,6 +3576,45 @@ const App = {
 
     const customerFullName = `${fn} ${ln}`;
 
+    const hasJewellery = items.some(item => {
+      const p = (typeof findProduct === 'function' ? findProduct(item.id) : null) || item;
+      return this.isJewelleryProduct(p);
+    });
+
+    if (hasJewellery) {
+      // ALTIN & MÜCEVHERAT: KREDİ KARTI KESİNLİKLE KAPALIDIR. KURUMSAL HAVALE / EFT PROTOKOLÜ ÇALIŞTIRILIR.
+      const orderId = 'BLG-HV-' + Date.now().toString().slice(-6) + Math.floor(100 + Math.random() * 900);
+      const grandTotal = typeof Cart !== 'undefined' ? Cart.getTotal() : 0;
+      const formattedTotal = typeof formatPrice === 'function' ? formatPrice(grandTotal) : `₺${grandTotal.toLocaleString('tr-TR')}`;
+
+      const orderDraft = {
+        orderId,
+        paymentMethod: 'HAVALE_EFT',
+        customerName: customerFullName,
+        customerPhone: phone,
+        customerEmail: email,
+        customerIdentity: identity || '',
+        customerAddress: customerAddress,
+        deliveryMethod: selectedMethod === 'showroom' ? 'showroom' : 'carrier',
+        items: items.map(i => ({ id: i.id, name: i.name, qty: i.qty, price: i.price })),
+        totalAmount: grandTotal,
+        formattedTotal,
+        createdAt: new Date().toISOString()
+      };
+      try {
+        localStorage.setItem('belgin_last_order', JSON.stringify(orderDraft));
+        sessionStorage.setItem('belgin_last_order', JSON.stringify(orderDraft));
+      } catch (_) {}
+
+      if (typeof Cart !== 'undefined') {
+        Cart.clear();
+      }
+      this.updateHeaderCartCount();
+
+      this.openWireOrderSuccessModal(orderDraft);
+      return;
+    }
+
     const rawCardNum = (document.getElementById('checkoutCardNumber')?.value || '').replace(/\D/g, '');
     const rawCardExp = (document.getElementById('checkoutCardExpiry')?.value || '').trim();
     const rawCardCvc = (document.getElementById('checkoutCardCvc')?.value || '').replace(/\D/g, '');
@@ -3531,6 +3745,7 @@ const App = {
   // ÖDEME FORMU GERÇEK ZAMANLI OTOMATİK SENKRONİZASYON
   initCheckoutAutoSync() {
     this.renderCheckoutDeliveryOptions();
+    this.syncCheckoutPaymentUI();
     const form = document.getElementById('checkoutForm') || document.querySelector('#page-odeme form');
     if (!form) return;
 
@@ -3595,6 +3810,133 @@ const App = {
     });
   },
 
+  syncCheckoutPaymentUI() {
+    const items = (typeof Cart !== 'undefined' && Cart.items) ? Cart.items : [];
+    const hasJewellery = items.some(item => {
+      const p = (typeof findProduct === 'function' ? findProduct(item.id) : null) || item;
+      return this.isJewelleryProduct(p);
+    });
+
+    const cardFields = document.getElementById('cardPaymentFields');
+    let noticeBox = document.getElementById('jewelleryCheckoutNotice');
+    const submitBtnText = document.getElementById('checkoutSubmitBtnText');
+    const submitBtn = document.getElementById('checkoutSubmitBtn');
+    const grandTotal = typeof Cart !== 'undefined' ? Cart.getTotal() : 0;
+    const formattedTotal = typeof formatPrice === 'function' ? formatPrice(grandTotal) : `₺${grandTotal.toLocaleString('tr-TR')}`;
+
+    if (hasJewellery) {
+      if (cardFields) cardFields.style.display = 'none';
+      if (!noticeBox && cardFields && cardFields.parentNode) {
+        noticeBox = document.createElement('div');
+        noticeBox.id = 'jewelleryCheckoutNotice';
+        noticeBox.style.cssText = 'background:#FFFDF7; border:1.5px solid #C2A768; border-radius:12px; padding:18px 20px; box-shadow:0 4px 16px rgba(194,167,104,0.12); margin-bottom:12px;';
+        noticeBox.innerHTML = `
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px; border-bottom:1px solid #F0ECE4; padding-bottom:8px;">
+            <span style="font-size:22px;">🛡️</span>
+            <div>
+              <h3 style="font-size:13px; font-weight:800; color:var(--color-teal); text-transform:uppercase; letter-spacing:0.4px; margin:0;">
+                3. Kurumsal Banka Havalesi / EFT / FAST
+              </h3>
+              <span style="font-size:11px; color:#666;">Altın ve Mücevherat Güvenli Sipariş Protokolü</span>
+            </div>
+          </div>
+          <div style="font-size:13px; color:#2B261D; line-height:1.6; margin-bottom:14px;">
+            <p style="margin:0 0 8px;">
+              Mevzuat ve şirket politikalarımız gereğince <strong>Altın ve Mücevherat ürünlerinde web sitemiz üzerinden KREDİ KARTI ile online satış yapılmamaktadır</strong>.
+            </p>
+            <p style="margin:0;">
+              Siparişinizi oluşturduktan sonra verilecek sipariş referans numarası ile ödemenizi kurumsal <strong>Banka Havalesi / EFT / FAST</strong> üzerinden tamamlayabilir veya İzmir Buca showroom mağazamızda teslim alabilirsiniz.
+            </p>
+          </div>
+          <div style="background:#FBF9F5; border:1px solid #EAE5D9; border-radius:8px; padding:12px 14px; font-size:12px; color:#333; line-height:1.6;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+              <span style="color:#666;">Yetkili Kurum:</span>
+              <strong style="color:var(--color-ink);">Belgin Kuyumculuk ve Saat</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+              <span style="color:#666;">Ödeme Türü:</span>
+              <strong style="color:var(--color-teal);">Banka Havalesi / EFT / FAST</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between;">
+              <span style="color:#666;">Teslimat &amp; Destek:</span>
+              <span style="color:#444;">Buca Showroom &amp; Sigortalı Teslimat</span>
+            </div>
+          </div>
+        `;
+        cardFields.parentNode.insertBefore(noticeBox, cardFields);
+      } else if (noticeBox) {
+        noticeBox.style.display = 'block';
+      }
+
+      if (submitBtnText) {
+        submitBtnText.textContent = `Havale / EFT ile Siparişi Onayla (${formattedTotal})`;
+      }
+      if (submitBtn) {
+        const iconSpan = submitBtn.querySelector('.btn-checkout-icon');
+        if (iconSpan) iconSpan.textContent = '🏛️';
+      }
+    } else {
+      if (cardFields) cardFields.style.display = 'block';
+      if (noticeBox) noticeBox.style.display = 'none';
+      if (submitBtnText) {
+        submitBtnText.textContent = `3D Secure ile Güvenli Öde (${formattedTotal})`;
+      }
+      if (submitBtn) {
+        const iconSpan = submitBtn.querySelector('.btn-checkout-icon');
+        if (iconSpan) iconSpan.textContent = '🔒';
+      }
+    }
+  },
+
+  openWireOrderSuccessModal(orderDraft) {
+    const waText = encodeURIComponent(`Merhaba, ${orderDraft.orderId} numaralı altın/mücevher siparişim için havale/EFT ödeme teyidi yapmak istiyorum. Sipariş Tutarı: ${orderDraft.formattedTotal}`);
+    const modalHtml = `
+      <div class="modal-dialog-header">
+        <h3 style="display:flex; align-items:center; gap:8px; color:var(--color-teal); font-size:16px;">
+          <span>🏛️</span>
+          <span>Siparişiniz Başarıyla Alındı</span>
+        </h3>
+        <button class="modal-dialog-close" onclick="App.closeModal(); Router.navigate('ana-sayfa');">×</button>
+      </div>
+      <div style="padding:4px 0 10px;">
+        <div style="background:#FFFDF7; border:1.5px solid #C2A768; border-radius:10px; padding:16px; margin-bottom:16px; text-align:left;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #F0ECE4; padding-bottom:8px;">
+            <span style="font-size:12px; color:#666; font-weight:700;">SİPARİŞ REFERANS NUMARASI:</span>
+            <span style="font-family:monospace; font-weight:800; font-size:15px; color:var(--color-teal); background:#E6F4F1; padding:3px 8px; border-radius:4px;">${orderDraft.orderId}</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <span style="font-size:13px; color:#555;">Toplam Sipariş Tutarı:</span>
+            <strong style="font-size:18px; color:var(--color-ink);">${orderDraft.formattedTotal}</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:13px; color:#555;">Teslimat Şekli:</span>
+            <strong style="font-size:12.5px; color:#222;">${orderDraft.deliveryMethod === 'showroom' ? 'İzmir Buca Showroom Teslimat' : 'Sigortalı Adrese Teslim'}</strong>
+          </div>
+        </div>
+
+        <div style="background:#FBF9F5; border:1px solid #EAE5D9; border-radius:8px; padding:14px; margin-bottom:18px; text-align:left; font-size:12.5px; color:#333; line-height:1.6;">
+          <strong style="color:var(--color-teal); display:block; margin-bottom:6px; font-size:13px;">🏦 Kurumsal Havale / EFT / FAST Bilgilendirmesi:</strong>
+          <p style="margin:0 0 6px;">
+            Mevzuat ve şirket politikalarımız gereğince Altın ve Mücevherat ürünlerinde kredi kartı ile online satış yapılmamaktadır. Sipariş tutarınızı kurumsal banka hesaplarımıza açıklama alanına <strong>${orderDraft.orderId}</strong> yazarak transfer edebilirsiniz.
+          </p>
+          <p style="margin:0; font-size:11.5px; color:#666;">
+            📍 Buca Showroom: Menderes Cad. No:231/B Buca / İzmir · Tel: +90 232 448 83 23
+          </p>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <a href="https://wa.me/905419305372?text=${waText}" target="_blank" rel="noopener" class="btn-action-vip" style="display:flex; align-items:center; justify-content:center; gap:8px; padding:13px; font-size:14px; text-decoration:none;">
+            <span>💬 WhatsApp İle Havale / EFT Bilgisi Al & Dekont İlet</span>
+          </a>
+          <button type="button" class="btn-hero-outline" style="padding:11px; text-align:center;" onclick="App.closeModal(); Router.navigate('ana-sayfa');">
+            Alışverişe Devam Et
+          </button>
+        </div>
+      </div>
+    `;
+    this.openModal(modalHtml);
+  },
+
   // ==========================================================
   // 📸 HERO MULTI-SLIDE AMBIENT ROTATOR
   // ==========================================================
@@ -3644,6 +3986,18 @@ const App = {
     if (btn) {
       document.querySelectorAll('.mag-filter-pill, .mag-tab-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
+    } else {
+      document.querySelectorAll('.mag-filter-pill, .mag-tab-btn').forEach(b => {
+        const txt = (b.textContent || '').trim().toLowerCase();
+        const catLow = String(category).trim().toLowerCase();
+        if (category === 'all' && (txt.includes('tümü') || txt.includes('all'))) {
+          b.classList.add('active');
+        } else if (category !== 'all' && (txt.includes(catLow) || catLow.includes(txt.replace(/^[^\wçğıöşüa-z]+/i, '').trim()))) {
+          b.classList.add('active');
+        } else {
+          b.classList.remove('active');
+        }
+      });
     }
     this.renderMagazineGrid(category, 1);
   },

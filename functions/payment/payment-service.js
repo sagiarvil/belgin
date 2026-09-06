@@ -154,6 +154,16 @@ function normalizeCart(clientItems, isVipPayment = false, vipToken = null, produ
         error.code = 'PRODUCT_OUT_OF_STOCK';
         throw error;
       }
+      const prodCat = String(product.category || '').toLowerCase();
+      const prodBrand = String(product.brand || '').toLowerCase();
+      const prodName = String(product.name || '').toLowerCase();
+      const isWatch = (prodCat === 'elit-saatler' || prodCat === 'saat' || prodCat === 'watch' || prodCat === 'watches');
+      const isGoldJewellery = !isWatch && (prodCat === 'jewelry' || prodCat === 'jewellery' || prodCat === 'mucevherat' || prodCat === 'altin' || prodCat === 'gold' || prodBrand.includes('belgin kuyumculuk') || product.isGold === true || /altın|altin|külçe|kulce|bilezik|çeyrek|ceyrek|yarım\s+altın|tam\s+altın|ata\s+altın|reşat|resat|ziynet|sarrafiye|gremse/i.test(prodName));
+      if (!isVipPayment && isGoldJewellery) {
+        const error = new Error('Mevzuat ve şirket politikalarımız gereğince Altın ve Mücevherat ürünlerinde web sitesi üzerinden doğrudan kredi kartı ile satış yapılmamaktadır. Ödemelerinizi Banka Havalesi / EFT ile tamamlayabilir veya showroom mağazamızdan teslim alabilirsiniz.');
+        error.code = 'JEWELLERY_CC_NOT_ALLOWED';
+        throw error;
+      }
       return {
         id: String(product.id),
         name: `${product.brand} ${product.name}`.trim(),

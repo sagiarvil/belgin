@@ -2243,6 +2243,23 @@
           <button class="hero-tab-btn jewellery-filter-btn" data-filter="Altın Bilezik" onclick="App.filterJewelleryCategory('Altın Bilezik', this)">Altın Bilezikler</button>
         </div>
       </div>
+
+      <!-- KURUMSAL BİLGİLENDİRME (KREDİ KARTI KAPALI) -->
+      <div class="mucevherat-payment-notice" style="background:#FFFDF7; border:2px solid #C2A768; border-left:6px solid #B91C1C; border-radius:10px; padding:18px 22px; margin:16px 0 24px; box-shadow:0 4px 14px rgba(194,167,104,0.15); display:flex; align-items:flex-start; gap:16px;">
+        <span style="font-size:28px; line-height:1; flex-shrink:0;">🛡️</span>
+        <div>
+          <strong style="color:#B91C1C; font-size:14px; display:block; margin-bottom:5px; font-weight:800; letter-spacing:0.4px; text-transform:uppercase;">
+            Kurumsal Satış ve Ödeme Politikası
+          </strong>
+          <p style="font-size:13.5px; font-weight:700; color:#1F2937; line-height:1.6; margin:0 0 4px;">
+            Mevzuat ve şirket politikalarımız gereğince <span style="color:#B91C1C;">Altın ve Mücevherat ürünlerinde KREDİ KARTI ile satış yapılmamaktadır</span>.
+          </p>
+          <p style="font-size:12.5px; color:#4B5563; line-height:1.5; margin:0;">
+            Tüm altın, ziynet ve bilezik siparişlerinizi kurumsal <strong>Banka Havalesi / EFT / FAST</strong> yöntemiyle güvenle gerçekleştirebilir veya <strong>İzmir Buca showroom</strong> mağazamızda bizzat teslim alabilirsiniz.
+          </p>
+        </div>
+      </div>
+
       <div class="products-grid-4" id="allJewelleryGrid"></div>
     </div>
   </section>
@@ -2693,15 +2710,18 @@
           <h1 style="font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0;color:#fff;">Versace VRSCVEVI00320 Kol Saati</h1>
           <p class="pdp-art-ref" style="font-size:13px;color:#8fa099;margin:0;">Ref: VRSCVEVI00320 • Durum: Sıfır Distribütör Garantili</p>
           <div class="pdp-art-price" style="font-size:32px;font-weight:800;color:#34D399;margin:8px 0;">₺90.650</div>
+          
           <div class="pdp-special-order-info" style="background:rgba(194,167,104,0.1);border:1px solid rgba(194,167,104,0.3);border-radius:8px;padding:12px 16px;margin:4px 0 10px;font-size:13px;line-height:1.5;color:#f0e6d2;">
             <strong style="color:#C2A768;display:block;margin-bottom:2px;font-size:13.5px;">📦 Özel Sipariş ile Temin Edilir</strong>
             <span style="color:#d5e2dc;">Ürün, talebiniz üzerine özel olarak temin edilir. Güncel temin süresi için bizimle iletişime geçebilirsiniz.</span>
           </div>
           <p class="pdp-art-description" style="font-size:14px;line-height:1.7;color:#d5e2dc;">Versace VRSCVEVI00320 Kol Saati , 41 mm kasa çapı, Quartz mekanizma hassasiyeti ve Safir cam korumasıyla üretilmiş orijinal lüks saat modelidir. 5 ATM su geçirmezlik derecesine, Çelik kordon yapısına ve Altın Rengi, Metalik Gri kasaya sahiptir. Türkiye distribütörlüğü ve Belgin Kuyumculuk uzmanlığı ile 2 Yıl garantili olarak orijinal kutusunda, sertifikasıyla birlikte teslim edilmektedir.</p>
+          
           <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;">
             <button onclick="Cart.addItem('1100')" style="background:linear-gradient(135deg,#C2A768,#9E8548);color:#070A09;font-weight:700;padding:14px 28px;border:none;border-radius:10px;cursor:pointer;">Sepete Ekle &amp; Satın Al</button>
             <a href="https://wa.me/905419305372?text=Versace%20VRSCVEVI00320%20Kol%20Saati%20(VRSCVEVI00320)%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" style="background:rgba(255,255,255,0.08);color:#fff;padding:14px 24px;border:1px solid rgba(255,255,255,0.2);border-radius:10px;text-decoration:none;display:inline-flex;align-items:center;">WhatsApp ile İletişim</a>
           </div>
+          
         </div>
       </div>
     </article>
@@ -3135,15 +3155,18 @@
         </div>
       </div>
 
-      <!-- Kolon 2: Koleksiyonlar -->
+      <!-- Kolon 2: Koleksiyonlar & İletişim -->
       <div class="footer-art-col">
-        <h5>Koleksiyonlar</h5>
+        <h5>Koleksiyon & İletişim</h5>
         <ul>
           <li><a href="/elit-kategori/" data-page="elit-kategori">👑 Elit Kategori (Haute Horlogerie)</a></li>
           <li><a href="/saatler/" data-page="saatler">Lüks Saatler</a></li>
           <li style="display:none;"><a href="/mucevherat/" data-page="mucevherat">Mücevherat & Altın</a></li>
           <li><a href="#" onclick="App.scrollToValuation(); return false;">Saat Ekspertizi & Değerleme</a></li>
+          <li><a href="/rehber/luks-saat-ekspertiz-ve-orijinallik-rehberi/">Saat Ekspertiz Rehberi</a></li>
           <li><a href="#" onclick="App.openVipModal(); return false;">VIP Randevu Al</a></li>
+          <li><a href="https://wa.me/905419305372" target="_blank" rel="noopener">VIP WhatsApp Danışmanı</a></li>
+          <li><a href="https://www.instagram.com/belginmucevherat/" target="_blank" rel="noopener">Instagram @belginmucevherat</a></li>
         </ul>
       </div>
 
@@ -3179,18 +3202,84 @@
         </ul>
       </div>
 
-      <!-- Kolon 5: Uzman Rehberler & İletişim -->
+      <!-- Kolon 5: Belgin Saat Magazin & Kategoriler -->
       <div class="footer-art-col">
-        <h5>Rehberler & İletişim</h5>
+        <h5><a href="/magazin/" data-page="magazin" class="footer-heading-link">Belgin Saat Magazin ↗</a></h5>
         <ul>
-          <li><a href="/magazin/" data-page="magazin">Belgin Saat Magazin</a></li>
-          <li style="display:none;"><a href="/rehber/altin-yatirimi-ve-ozel-matrah-rehberi/">Altın & Özel Matrah Rehberi</a></li>
-          <li><a href="/rehber/luks-saat-ekspertiz-ve-orijinallik-rehberi/">Saat Ekspertiz & Orijinallik</a></li>
-          <li style="display:none;"><a href="/rehber/izmir-kuyumculuk-ve-guvenli-teslimat/">İzmir Buca & Güvenli Teslimat</a></li>
-          <li style="display:none;"><a href="/rehber/pirlanta-ve-gemoloji-degerleme-rehberi/">Pırlanta & 4C Değerleme</a></li>
-          <li><a href="https://wa.me/905419305372" target="_blank" rel="noopener">VIP WhatsApp Danışmanı</a></li>
-          <li><a href="https://www.instagram.com/belginmucevherat/" target="_blank" rel="noopener">Instagram @belginmucevherat</a></li>
+          <li><a href="/magazin/?kategori=Rolex%20%26%20Piyasa" data-page="magazin" data-filter="Rolex & Piyasa">👑 Rolex & Piyasa</a></li>
+          <li><a href="/magazin/?kategori=Saat%20D%C3%BCnyas%C4%B1%20%26%20Analiz" data-page="magazin" data-filter="Saat Dünyası & Analiz">⏱️ Saat Dünyası & Analiz</a></li>
+          <li><a href="/magazin/?kategori=Omega%20%26%20Koleksiyon" data-page="magazin" data-filter="Omega & Koleksiyon">🪐 Omega & Koleksiyon</a></li>
+          <li><a href="/magazin/?kategori=Haute%20Horlogerie" data-page="magazin" data-filter="Haute Horlogerie">🏛️ Haute Horlogerie</a></li>
+          <li><a href="/magazin/?kategori=%C4%B0svi%C3%A7re%20Saat%C3%A7ili%C4%9Fi" data-page="magazin" data-filter="İsviçre Saatçiliği">🇨🇭 İsviçre Saatçiliği</a></li>
+          <li><a href="/magazin/?kategori=Al%C4%B1c%C4%B1%20Rehberi" data-page="magazin" data-filter="Alıcı Rehberi">📖 Alıcı Rehberi</a></li>
+          <li><a href="/magazin/?kategori=Piyasa%20%26%20De%C4%9Fer%20Trendi" data-page="magazin" data-filter="Piyasa & Değer Trendi">📈 Piyasa & Değer Trendi</a></li>
+          <li><a href="/magazin/?kategori=Dal%C4%B1%C5%9F%20Saatleri" data-page="magazin" data-filter="Dalış Saatleri">🌊 Dalış Saatleri</a></li>
+          <li><a href="/magazin/" data-page="magazin" data-filter="all" style="font-weight: 600; color: #D8BD7E;">⭐ Tüm Magazin Yazıları (144) →</a></li>
         </ul>
+      </div>
+    </div>
+
+    <!-- 2.1 BELGİN SAAT MAGAZİN & EDİTORYAL MERKEZİ -->
+    <div class="footer-magazine-hub">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; border-bottom: 1px solid rgba(194, 167, 104, 0.2); padding-bottom: 12px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 20px;">📰</span>
+          <div>
+            <a href="/magazin/" data-page="magazin" style="font-family: 'Cinzel', serif; font-size: 15px; font-weight: 700; color: #D8BD7E; text-decoration: none; letter-spacing: 0.04em;">
+              BELGİN SAAT MAGAZİN — EDİTORYAL & ANALİZ MERKEZİ
+            </a>
+            <div style="font-size: 11.5px; color: #9AAFB0; margin-top: 2px;">
+              İsviçre saatçiliği, koleksiyon rehberleri, piyasa analizleri ve bağımsız saat incelemeleri
+            </div>
+          </div>
+        </div>
+        <a href="/magazin/" data-page="magazin" data-filter="all" class="footer-mag-chip" style="background: rgba(194, 167, 104, 0.15); border-color: #D8BD7E; color: #FFFFFF;">
+          Tüm Arşivi İncele (144 Yazı) →
+        </a>
+      </div>
+
+      <!-- Kategori Hapları -->
+      <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
+        <a href="/magazin/?kategori=Rolex%20%26%20Piyasa" data-page="magazin" data-filter="Rolex & Piyasa" class="footer-mag-chip">👑 Rolex & Piyasa (20)</a>
+        <a href="/magazin/?kategori=Saat%20D%C3%BCnyas%C4%B1%20%26%20Analiz" data-page="magazin" data-filter="Saat Dünyası & Analiz" class="footer-mag-chip">⏱️ Saat Dünyası & Analiz (97)</a>
+        <a href="/magazin/?kategori=Omega%20%26%20Koleksiyon" data-page="magazin" data-filter="Omega & Koleksiyon" class="footer-mag-chip">🪐 Omega & Koleksiyon (9)</a>
+        <a href="/magazin/?kategori=Haute%20Horlogerie" data-page="magazin" data-filter="Haute Horlogerie" class="footer-mag-chip">🏛️ Haute Horlogerie (7)</a>
+        <a href="/magazin/?kategori=Al%C4%B1c%C4%B1%20Rehberi" data-page="magazin" data-filter="Alıcı Rehberi" class="footer-mag-chip">📖 Alıcı Rehberi (4)</a>
+        <a href="/magazin/?kategori=Dal%C4%B1%C5%9F%20Saatleri" data-page="magazin" data-filter="Dalış Saatleri" class="footer-mag-chip">🌊 Dalış Saatleri (2)</a>
+        <a href="/magazin/?kategori=Piyasa%20%26%20De%C4%9Fer%20Trendi" data-page="magazin" data-filter="Piyasa & Değer Trendi" class="footer-mag-chip">📈 Piyasa & Değer Trendi (2)</a>
+        <a href="/magazin/?kategori=Piyasa%20%26%20Yat%C4%B1r%C4%B1m" data-page="magazin" data-filter="Piyasa & Yatırım" class="footer-mag-chip">💎 Piyasa & Yatırım (2)</a>
+        <a href="/magazin/?kategori=%C4%B0svi%C3%A7re%20Saat%C3%A7ili%C4%9Fi" data-page="magazin" data-filter="İsviçre Saatçiliği" class="footer-mag-chip">🇨🇭 İsviçre Saatçiliği (1)</a>
+      </div>
+
+      <!-- Seçme Magazin Makaleleri -->
+      <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #C2A768; margin-bottom: 10px;">
+        Öne Çıkan Editoryal İncelemeler
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10px;">
+        <a href="/magazin/cenevre-saat-gunleri-2026-2-gunden-one-cikanlarimiz/" class="footer-mag-article-link">
+          <span class="f-mag-bullet">◆</span>
+          <span>Cenevre Saat Günleri 2026: 2. Günden Öne Çıkanlar</span>
+        </a>
+        <a href="/magazin/omega-swatch-moonswatch-trend-ve-piyasa-degeri/" class="footer-mag-article-link">
+          <span class="f-mag-bullet">◆</span>
+          <span>Omega x Swatch MoonSwatch: Trend ve Piyasa Değeri</span>
+        </a>
+        <a href="/magazin/cenevre-saat-gunleri-2026-ozet-ve-yenilikler/" class="footer-mag-article-link">
+          <span class="f-mag-bullet">◆</span>
+          <span>Cenevre Saat Günleri 2026: Özet ve Yenilikler</span>
+        </a>
+        <a href="/magazin/doxa-okyanuslarin-cagrisi-ve-profesyonel-dalis-saatleri/" class="footer-mag-article-link">
+          <span class="f-mag-bullet">◆</span>
+          <span>DOXA: Okyanusların Çağrısı ve Profesyonel Dalış Saatleri</span>
+        </a>
+        <a href="/magazin/koleksiyonluk-rolex-saatler-bu-modeller-kullanildi/" class="footer-mag-article-link">
+          <span class="f-mag-bullet">◆</span>
+          <span>Koleksiyonluk Rolex Saatler: İkonik Referanslar</span>
+        </a>
+        <a href="/magazin/audemars-piguet-s-yatirim-ve-deger-artisi-son-5-yildaki-gelisim/" class="footer-mag-article-link">
+          <span class="f-mag-bullet">◆</span>
+          <span>Audemars Piguet Yatırım ve Değer Artışı: 5 Yıllık Gelişim</span>
+        </a>
       </div>
     </div>
 

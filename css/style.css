@@ -5657,6 +5657,78 @@ p, span, li, td, th, label, input, button, select, textarea {
   color: #D8BD7E;
   transform: translateX(3px);
 }
+.footer-heading-link {
+  color: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s ease;
+}
+.footer-heading-link:hover {
+  color: #D8BD7E;
+}
+
+/* 2.1 FOOTER MAGAZINE HUB */
+.footer-magazine-hub {
+  background: rgba(4, 35, 32, 0.7);
+  border: 1px solid rgba(194, 167, 104, 0.25);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-bottom: 36px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+.footer-mag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(194, 167, 104, 0.28);
+  border-radius: 20px;
+  padding: 6px 13px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #D5E2DC;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.footer-mag-chip:hover {
+  background: rgba(194, 167, 104, 0.18);
+  border-color: #D8BD7E;
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
+.footer-mag-article-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: #B8CBD9;
+  text-decoration: none;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.22);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.2s ease;
+  line-height: 1.4;
+}
+.footer-mag-article-link:hover {
+  color: #FFFFFF;
+  border-color: rgba(194, 167, 104, 0.45);
+  background: rgba(194, 167, 104, 0.09);
+  transform: translateX(2px);
+}
+.f-mag-bullet {
+  color: #D8BD7E;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+@media (max-width: 768px) {
+  .footer-magazine-hub {
+    padding: 18px 16px;
+    margin-bottom: 28px;
+  }
+}
 
 /* 3. INTEGRATED COMPLIANCE & PAYMENT MATRIX */
 .footer-compliance-strip {

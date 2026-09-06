@@ -16,6 +16,12 @@ const Cart = {
       const name = String(item.name || '').trim();
       if (!id || id === 'undefined' || id === 'null') return false;
       if (!name || name === 'undefined' || name === 'null') return false;
+      // Altın ve Mücevherat doğrudan web sitesinden kredi kartı/sepet satışına kapalıdır
+      const prod = typeof findProduct === 'function' ? findProduct(item.id) : item;
+      const isJewel = (typeof App !== 'undefined' && typeof App.isJewelleryProduct === 'function')
+        ? App.isJewelleryProduct(prod)
+        : Boolean(item.isGold || ['altin', 'gold', 'mucevherat', 'jewelry', 'jewellery'].includes(String(item.category || '').toLowerCase()));
+      if (isJewel) return false;
       return true;
     }).map(item => {
       let p = Number(item.price);
@@ -71,6 +77,21 @@ const Cart = {
     const product = findProduct(productId);
     if (!product) return;
 
+    // Altın ve Mücevherat ürünlerinde doğrudan kredi kartı/sepet satışı kapalıdır
+    const isJewel = (typeof App !== 'undefined' && typeof App.isJewelleryProduct === 'function')
+      ? App.isJewelleryProduct(product)
+      : Boolean(product.isGold || ['altin', 'gold', 'mucevherat', 'jewelry', 'jewellery'].includes(String(product.category || '').toLowerCase()));
+
+    if (isJewel) {
+      if (typeof showToast === 'function') {
+        showToast('Mevzuat ve şirket politikalarımız gereğince Altın ve Mücevherat ürünlerinde KREDİ KARTI ile satış yapılmamaktadır.', 'warning');
+      }
+      if (typeof App !== 'undefined' && typeof App.openWireOrderModal === 'function') {
+        App.openWireOrderModal(product.id);
+      }
+      return false;
+    }
+
     const ringSize = options.ringSize || null;
     const itemKey = ringSize ? `${product.id}_${ringSize}` : `${product.id}`;
     const cleanPrice = Number(product.price || 0);
@@ -86,10 +107,12 @@ const Cart = {
         itemKey: itemKey,
         id: product.id,
         name: product.name,
+        brand: product.brand || '',
         price: cleanPrice,
         image: product.image || '',
         desc: product.desc || '',
         category: product.category || '',
+        isGold: product.isGold === true,
         certificate: product.certificate || '',
         ringSize: ringSize,
         qty: Math.max(1, Number(qty) || 1)
@@ -322,12 +345,23 @@ const Cart = {
     if (subtotalEl) subtotalEl.textContent = formatPrice(subtotal);
     if (totalEl) totalEl.textContent = formatPrice(grandTotal);
     
+    const hasJewellery = this.items.some(item => {
+      const p = (typeof findProduct === 'function' ? findProduct(item.id) : null) || item;
+      return (typeof App !== 'undefined' && typeof App.isJewelleryProduct === 'function')
+        ? App.isJewelleryProduct(p)
+        : Boolean(p.isGold || ['altin', 'gold', 'mucevherat', 'jewelry', 'jewellery'].includes(String(p.category || '').toLowerCase()));
+    });
+
+    const submitLabel = hasJewellery
+      ? `Havale / EFT ile Siparişi Onayla (${formatPrice(grandTotal)})`
+      : `3D Secure ile Güvenli Öde (${formatPrice(grandTotal)})`;
+
     if (submitBtnText) {
-      submitBtnText.textContent = `3D Secure ile Güvenli Öde (${formatPrice(grandTotal)})`;
+      submitBtnText.textContent = submitLabel;
     } else if (submitBtn) {
       const span = submitBtn.querySelector('span:last-child');
       if (span) {
-        span.textContent = `3D Secure ile Güvenli Öde (${formatPrice(grandTotal)})`;
+        span.textContent = submitLabel;
       }
     }
 
@@ -340,8 +374,13 @@ const Cart = {
       }
     }
 
-    if (typeof App !== 'undefined' && typeof App.renderCheckoutDeliveryOptions === 'function') {
-      App.renderCheckoutDeliveryOptions();
+    if (typeof App !== 'undefined') {
+      if (typeof App.renderCheckoutDeliveryOptions === 'function') {
+        App.renderCheckoutDeliveryOptions();
+      }
+      if (typeof App.syncCheckoutPaymentUI === 'function') {
+        App.syncCheckoutPaymentUI();
+      }
     }
   }
 };
