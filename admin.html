@@ -2154,6 +2154,341 @@
         border-radius: 10px !important;
       }
     } /* End of @media (max-width: 880px) */
+    /* ========================================================
+       4. SİSTEM GÜNCELLEMELERİ & SENKRONİZASYON MERKEZİ (UPDATES TAB)
+       ======================================================== */
+    .updates-container {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .updates-header-banner {
+      background: linear-gradient(135deg, #02221F 0%, #053B36 50%, #084C47 100%);
+      color: #FFFFFF;
+      border: 1.5px solid rgba(212, 175, 55, 0.4);
+      border-radius: var(--admin-radius-lg, 20px);
+      padding: 24px 28px;
+      box-shadow: 0 10px 30px rgba(4, 42, 39, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .updates-header-banner::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .updates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 20px;
+    }
+
+    .update-card {
+      background: #FFFFFF;
+      border: 1.5px solid var(--admin-border, #E2E8F0);
+      border-radius: var(--admin-radius, 14px);
+      padding: 22px;
+      box-shadow: var(--admin-shadow-card);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .update-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--admin-shadow-hover);
+      border-color: #CBD5E1;
+    }
+
+    .update-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .update-card-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .update-card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      background: #F1F5F4;
+      border: 1px solid #E2E8F0;
+      flex-shrink: 0;
+    }
+
+    .update-card-title {
+      font-size: 15.5px;
+      font-weight: 800;
+      color: var(--admin-ink, #0F172A);
+      margin: 0 0 3px 0;
+      line-height: 1.3;
+    }
+
+    .update-card-category {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--admin-muted-light, #64748B);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .update-pill {
+      font-size: 10.5px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .update-pill-ready {
+      background: #ECFDF5;
+      color: #059669;
+      border: 1px solid #A7F3D0;
+    }
+    .update-pill-running {
+      background: #EFF6FF;
+      color: #2563EB;
+      border: 1px solid #BFDBFE;
+    }
+    .update-pill-manual {
+      background: #FFFBEB;
+      color: #D97706;
+      border: 1px solid #FDE68A;
+    }
+
+    .update-card-desc {
+      font-size: 12.8px;
+      color: #475569;
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .update-card-rules {
+      background: #F8FAFC;
+      border: 1px dashed #CBD5E1;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 11.8px;
+      color: #334155;
+      line-height: 1.45;
+    }
+
+    .update-card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11.5px;
+      color: #64748B;
+      border-top: 1px solid #F1F5F9;
+      padding-top: 12px;
+    }
+
+    .update-card-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .btn-update-action {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 16px;
+      background: linear-gradient(135deg, #084C47 0%, #053B36 100%);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 13px;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      text-align: center;
+      text-decoration: none;
+      box-shadow: 0 2px 6px rgba(8, 76, 71, 0.15);
+    }
+
+    .btn-update-action:hover:not(:disabled) {
+      background: linear-gradient(135deg, #0B5B55 0%, #084C47 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(8, 76, 71, 0.25);
+      border-color: rgba(212, 175, 55, 0.8);
+      color: #FFFDF5;
+    }
+
+    .btn-update-action:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .btn-update-action:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      filter: grayscale(0.4);
+    }
+
+    .btn-update-secondary {
+      background: #FFFFFF;
+      color: #0F172A;
+      border: 1.5px solid #CBD5E1;
+      font-weight: 700;
+      font-size: 12px;
+      min-height: 38px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-update-secondary:hover:not(:disabled) {
+      background: #F8FAFC;
+      border-color: #94A3B8;
+      color: #084C47;
+    }
+
+    /* Live Terminal Console Component */
+    .update-terminal-card {
+      background: #090D16;
+      border: 1px solid #1E293B;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .update-terminal-topbar {
+      background: #0F172A;
+      padding: 12px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #1E293B;
+    }
+
+    .terminal-dots {
+      display: flex;
+      gap: 7px;
+      align-items: center;
+    }
+
+    .terminal-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+    }
+    .terminal-dot-red { background: #EF4444; }
+    .terminal-dot-yellow { background: #F59E0B; }
+    .terminal-dot-green { background: #10B981; }
+
+    .terminal-title {
+      font-size: 12px;
+      color: #94A3B8;
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .terminal-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-terminal-action {
+      background: rgba(255, 255, 255, 0.08);
+      color: #E2E8F0;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-terminal-action:hover {
+      background: rgba(255, 255, 255, 0.16);
+      color: #FFFFFF;
+    }
+
+    .update-terminal-body {
+      padding: 16px 20px;
+      max-height: 420px;
+      overflow-y: auto;
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      color: #D1D5DB;
+      background: #090D16;
+      scrollbar-width: thin;
+      scrollbar-color: #334155 #090D16;
+    }
+
+    .update-terminal-body::-webkit-scrollbar {
+      width: 6px;
+    }
+    .update-terminal-body::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 3px;
+    }
+
+    .log-line {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 4px;
+      word-break: break-word;
+    }
+
+    .log-ts {
+      color: #64748B;
+      flex-shrink: 0;
+    }
+
+    .log-badge {
+      font-size: 10px;
+      font-weight: 800;
+      padding: 1px 6px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .log-badge-info { background: rgba(59, 130, 246, 0.2); color: #60A5FA; }
+    .log-badge-success { background: rgba(16, 185, 129, 0.2); color: #34D399; }
+    .log-badge-warn { background: rgba(245, 158, 11, 0.2); color: #FBBF24; }
+    .log-badge-error { background: rgba(239, 68, 68, 0.2); color: #F87171; }
+    .log-badge-action { background: rgba(168, 85, 247, 0.2); color: #C084FC; }
+
+    .log-text {
+      flex: 1;
+    }
   </style>
   <script src="/js/growth.js" defer></script>
 </head>
@@ -2227,6 +2562,11 @@
       <span style="font-size:16px;">🏪</span>
       <span>Mağaza Fatura Kesimi</span>
       <span class="tab-btn-badge" id="tabBadgeStoreInvoices" style="background:#DCFCE7; color:#15803D; border:1px solid #86EFAC;">0</span>
+    </button>
+    <button type="button" class="admin-tab-btn" id="tabBtnUpdates" onclick="AdminApp.switchTab('updates')">
+      <span style="font-size:16px;">🔄</span>
+      <span>Sistem Güncellemeleri & Senkronizasyon</span>
+      <span class="tab-btn-badge" id="tabBadgeUpdates" style="background:#FEF3C7; color:#92400E; border:1px solid #FDE68A;">Kontrol Sizde</span>
     </button>
   </nav>
 
@@ -2602,7 +2942,7 @@
               <th style="text-align:left;">İşlem & Açıklama</th>
               <th style="width:95px; text-align:right;">POS (₺)</th>
               <th style="width:75px; text-align:center; color:#92400E;">Banka Oranı</th>
-              <th style="width:140px; text-align:center; color:#B45309;">Banka Blokesi & Vade<br><span style="font-size:9px; font-weight:700; opacity:0.9;">(3 Gün / Sabah 09:00)</span></th>
+              <th style="width:140px; text-align:center; color:#B45309;">Banka Blokesi & Vade<br><span style="font-size:9px; font-weight:700; opacity:0.9;">(3 Gün / İş Günü 09:00)</span></th>
               <th style="width:105px; text-align:right; color:#0369A1;">Hakediş (₺)<br><span style="font-size:9px; font-weight:700; opacity:0.9;">(%92 Net)</span></th>
               <th style="width:90px; text-align:right; color:#15803D;">Ödenen (₺)</th>
               <th style="width:105px; text-align:right; color:#991B1B;">Kalan Bakiye (₺)</th>
@@ -3355,6 +3695,496 @@
     </section>
 
   </div><!-- /storeInvoicesTabContent -->
+
+  <!-- ======================================================== -->
+  <!-- 4. SEKME: SİSTEM GÜNCELLEMELERİ & SENKRONİZASYON MERKEZİ  -->
+  <!-- ======================================================== -->
+  <div id="updatesTabContent" style="display:none;">
+
+    <div class="updates-container">
+      
+      <!-- Üst Başlık & Kontrol Merkezi Banner'ı -->
+      <div class="updates-header-banner">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; position:relative; z-index:2;">
+          <div>
+            <div style="display:inline-flex; align-items:center; gap:6px; background:rgba(212,175,55,0.2); color:#FDE68A; border:1px solid rgba(212,175,55,0.45); padding:4px 12px; border-radius:20px; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:10px;">
+              <span>⚡</span> SİSTEM SENKRONİZASYON & KONTROL MERKEZİ
+            </div>
+            <h2 style="font-size:24px; color:#FFFFFF; font-family:'Playfair Display',serif; font-weight:800; margin:0 0 6px;">
+              <span>🔄</span> Sistem Güncellemeleri & Canlı Senkronizasyon
+            </h2>
+            <div style="font-size:13px; color:#E2E8F0; max-width:850px; line-height:1.5;">
+              Tüm ürün katalogları, canlı Harem Altın borsa kurları (+%3 kâr marjı), lüks saat magazin içerikleri, SEO derlemeleri ve güvenlik kalkanlarını dilediğiniz an tek tıkla manuel tetikleyip yönetebilirsiniz.
+            </div>
+          </div>
+
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button type="button" class="btn-update-action" style="background:linear-gradient(135deg, #D4AF37 0%, #B8860B 100%); color:#042A27; font-weight:800; border:1px solid #FFE082; box-shadow:0 4px 14px rgba(212,175,55,0.4);" onclick="AdminApp.runSystemUpdate('all')">
+              <span>⚡</span> TÜM SİSTEMİ TEK TIKLA EŞİTLE
+            </button>
+            <button type="button" class="btn-terminal-action" style="padding:10px 16px; font-size:12px; min-height:44px;" onclick="AdminApp.clearTerminalLog()">
+              <span>🧹</span> Konsolu Temizle
+            </button>
+          </div>
+        </div>
+
+        <!-- Yönetici Kontrol Güvencesi Notu -->
+        <div style="margin-top:18px; background:rgba(0,0,0,0.25); border:1px solid rgba(212,175,55,0.3); border-radius:12px; padding:14px 18px; font-size:12.5px; color:#F8FAFC; line-height:1.5; display:flex; align-items:center; gap:12px;">
+          <span style="font-size:24px; flex-shrink:0;">🛡️</span>
+          <div>
+            <strong style="color:#FDE68A;">YÖNETİCİ GÜVENCESİ & KONTROLÜ:</strong> 
+            Dış kaynaklı kontrolsüz otomatik akışlar yerine; tüm güncelleme, filtreleme ve yayınlama yetkisi tamamen sizin elinizdedir. İlgili butonlara basarak her bir güncellemeyi doğrudan çalıştırabilir, çıktısını aşağıdaki Canlı Konsoldan anlık takip edebilirsiniz.
+          </div>
+        </div>
+      </div>
+
+      <!-- Güncelleme Kartları Grid Düzeni (11 Kategori) -->
+      <div class="updates-grid">
+
+        <!-- 1. Magazin ve İçerik Güncellemesi -->
+        <div class="update-card" id="card-update-magazine">
+          <div>
+            <div class="update-card-header">
+              <div class="update-card-title-group">
+                <div class="update-card-icon" style="background:#FEF3C7; color:#B45309; border-color:#FDE68A;">📰</div>
+                <div>
+                  <div class="update-card-category">HOROLOJİ & BLOG KÜTÜPHANESİ</div>
+                  <h4 class="update-card-title">Lüks Saat Magazin & İçerik Güncellemesi</h4>
+                </div>
+              </div>
+              <span class="update-pill update-pill-manual" id="pill-sync-magazine">Manuel Kontrol</span>
+            </div>
+
+            <p class="update-card-desc" style="margin:12px 0;">
+              Saat dünyasındaki en güncel makaleleri, horoloji trendlerini ve koleksiyon analizlerini işler; başlıkları ve paragrafları Belgin Saat editoryal standartlarında Türkçeleştirip <code>/magazin/</code> kütüphanesine aktarır.
+            </p>
+
+            <div class="update-card-rules">
+              <strong>🛡️ Editoryal & Güvenlik Kalkanı:</strong> Üçüncü taraf marka/pazar yeri isimleri, personel röportajları veya logoları içermez. %100 yerel Türkçe saatçilik içeriğine dönüştürülür.
+            </div>
+          </div>
+
+          <div>
+            <div class="update-card-meta">
+              <span>🕒 Son Güncelleme: <strong id="time-sync-magazine">Henüz çalıştırılmadı</strong></span>
+              <span style="color:#059669; font-weight:700;">146+ Makale Yayında</span>
+            </div>
+            <div class="update-card-actions" style="margin-top:10px;">
+              <button type="button" class="btn-update-action" onclick="AdminApp.runSystemUpdate('magazine')">
+                <span>📰</span> Magazin Makaleleri & Yeni İçerik Senkronizasyonunu Başlat
+              </button>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                <button type="button" class="btn-update-secondary" onclick="AdminApp.runSystemUpdate('magazine_safety')">
+                  <span>🛡️</span> Güvenlik Filtresini Çalıştır
+                </button>
+                <button type="button" class="btn-update-secondary" onclick="AdminApp.runSystemUpdate('magazine_enhance')">
+                  <span>✨</span> Editoryal Alıntıları Biçimlendir
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Altın ve Borsa Canlı Fiyat Güncellemesi -->
+        <div class="update-card" id="card-update-gold">
+          <div>
+            <div class="update-card-header">
+              <div class="update-card-title-group">
+                <div class="update-card-icon" style="background:#FEF3C7; color:#B45309; border-color:#FDE68A;">🪙</div>
+                <div>
+                  <div class="update-card-category">CANLI BORSA & ALTIN</div>
+                  <h4 class="update-card-title">Harem Altın Borsa & +%3 Marj Güncellemesi</h4>
+                </div>
+              </div>
+              <span class="update-pill update-pill-ready" id="pill-sync-gold">Değişmez Sözleşme</span>
+            </div>
+
+            <p class="update-card-desc" style="margin:12px 0;">
+              Harem Altın canlı borsa soket akışını (<code>wss://hrmsocketonly.haremaltin.com</code>) sorgular. Satış fiyatlarına kesin sözleşmeyle <strong>+%3 kâr marjı (x 1.03)</strong> uygular, alış fiyatlarını marjsız (1.00x) yansıtır. Ağa Külçe stoklarını eşitler.
+            </p>
+
+            <div class="update-card-rules">
+              <strong>🔒 Değişmez Fiyat Kuralı:</strong> Satış Fiyatı = Canlı Borsa x 1.03 (+%3 Marj). Alış = Birebir x 1.00. İZKO referansı kesinlikle yasaktır ve devre dışıdır.
+            </div>
+          </div>
+
+          <div>
+            <div class="update-card-meta">
+              <span>🕒 Son Güncelleme: <strong id="time-sync-gold">Canlı Soket Aktif</strong></span>
+              <span style="color:#059669; font-weight:700;">+%3 Marj Korumalı</span>
+            </div>
+            <div class="update-card-actions" style="margin-top:10px;">
+              <button type="button" class="btn-update-action" onclick="AdminApp.runSystemUpdate('gold_prices')">
+                <span>🪙</span> Canlı Altın ve Borsa Fiyatlarını Güncelle (+%3 Satış Marjı)
+              </button>
+              <button type="button" class="btn-update-secondary" onclick="AdminApp.runSystemUpdate('gold_stock')">
+                <span>📦</span> Altın, Külçe ve Sarrafiye Stok Durumlarını Doğrula ve Eşitle
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Saat ve Saat Katalog Güncellemesi -->
+        <div class="update-card" id="card-update-saatvesaat">
+          <div>
+            <div class="update-card-header">
+              <div class="update-card-title-group">
+                <div class="update-card-icon" style="background:#EFF6FF; color:#1D4ED8; border-color:#BFDBFE;">⌚</div>
+                <div>
+                  <div class="update-card-category">DİSTRİBÜTÖR ENTEGRASYONU</div>
+                  <h4 class="update-card-title">Saat ve Saat Distribütör Kataloğu Senkronizasyonu</h4>
+                </div>
+              </div>
+              <span class="update-pill update-pill-ready" id="pill-sync-saatvesaat">1.000+ Ürün</span>
+            </div>
+
+            <p class="update-card-desc" style="margin:12px 0;">
+              Saat ve Saat resmi distribütör kataloğundaki 1.000+ modelin canlı perakende satış fiyatlarını, stok durumlarını, taksit parametrelerini ve varyantlarını sistemle 1:1 eşitler.
+            </p>
+
+            <div class="update-card-rules">
+              <strong>📦 Stok ve Fiyat Emniyeti:</strong> Kaynakta tükenen modeller anında "Tükendi"ye çekilir, fiyat güncellemeleri anında katalog ve PayTR dosyalarına yansır.
+            </div>
+          </div>
+
+          <div>
+            <div class="update-card-meta">
+              <span>🕒 Son Güncelleme: <strong id="time-sync-saatvesaat">Katalog Senkron</strong></span>
+              <span style="color:#2563EB; font-weight:700;">Distribütör Doğrulamalı</span>
+            </div>
+            <div class="update-card-actions" style="margin-top:10px;">
+              <button type="button" class="btn-update-action" onclick="AdminApp.runSystemUpdate('saatvesaat')">
+                <span>⌚</span> Saat ve Saat Kataloğunu, Stoklarını ve Fiyatlarını Eşitle
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Carren Saat Kataloğu Güncellemesi -->
+        <div class="update-card" id="card-update-carren">
+          <div>
+            <div class="update-card-header">
+              <div class="update-card-title-group">
+                <div class="update-card-icon" style="background:#FDF4FF; color:#A21CAF; border-color:#F5D0FE;">💎</div>
+                <div>
+                  <div class="update-card-category">CARREN LUXURY WATCHES</div>
+                  <h4 class="update-card-title">Carren Saat Koleksiyonu ve Fiyat Güncellemesi</h4>
+                </div>
+              </div>
+              <span class="update-pill update-pill-ready" id="pill-sync-carren">Aktif</span>
+            </div>
+
+            <p class="update-card-desc" style="margin:12px 0;">
+              Carren marka lüks saatlerin güncel koleksiyon modellerini, kasa/kordon varyantlarını, stok durumlarını ve taksitli fiyatlandırmasını günceller.
+            </p>
+
+            <div class="update-card-rules">
+              <strong>💎 Koleksiyon Bütünlüğü:</strong> Otomatik mekanizmalı ve safir camlı Carren modellerinin tüm varyantları tek adımda taranır ve kaydedilir.
+            </div>
+          </div>
+
+          <div>
+            <div class="update-card-meta">
+              <span>🕒 Son Güncelleme: <strong id="time-sync-carren">Güncel</strong></span>
+              <span style="color:#A21CAF; font-weight:700;">Orijinal Garanti</span>
+            </div>
+            <div class="update-card-actions" style="margin-top:10px;">
+              <button type="button" class="btn-update-action" onclick="AdminApp.runSystemUpdate('carren')">
+                <span>💎</span> Carren Saat Kataloğunu ve Model Varyantlarını Güncelle
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Elite Lüks Saatler Portföyü -->
+        <div class="update-card" id="card-update-elite">
+          <div>
+            <div class="update-card-header">
+              <div class="update-card-title-group">
+                <div class="update-card-icon" style="background:#FFFBEB; color:#B45309; border-color:#FDE68A;">👑</div>
+                <div>
+                  <div class="update-card-category">HAUTE HORLOGERIE & PORTFÖY</div>
+                  <h4 class="update-card-title">Elite Koleksiyon Lüks Saatler (Rolex, Patek, AP)</h4>
+                </div>
+              </div>
+              <span class="update-pill update-pill-ready" id="pill-sync-elite">200 Elit Model</span>
+            </div>
+
+            <p class="update-card-desc" style="margin:12px 0;">
+              200 adet seçkin Elit Saat modelinin küresel piyasa referans değerlerini, USD kur korumasını (+%80 marj / kur sabitleme) ve koleksiyon mevcudiyetini günceller.
+            </p>
+
+            <div class="update-card-rules">
+              <strong>👑 Yatırım Emniyeti:</strong> 10 büyük saat evinin (Rolex, Patek, Audemars Piguet, Vacheron Constantin vb.) her birinde tam 20'şer aktif ürün kuralı korunur.
+            </div>
+          </div>
+
+          <div>
+            <div class="update-card-meta">
+              <span>🕒 Son Güncelleme: <strong id="time-sync-elite">Korumalı</strong></span>
+              <span style="color:#D97706; font-weight:700;">+%80 Marj / USD Korumalı</span>
+            </div>
+            <div class="update-card-actions" style="margin-top:10px;">
+              <button type="button" class="btn-update-action" onclick="AdminApp.runSystemUpdate('elite_watches')">
+                <span>👑</span> Elite Lüks Saat Portföyünü ve Fiyatlarını Güncelle
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Smart-Diff Master Senkronizasyon -->
+        <div class="update-card" id="card-update-smartdiff">
+          <div>
+            <div class="update-card-header">
+              <div class="update-card-title-group">
+                <div class="update-card-icon" style="background:#ECFDF5; color:#047857; border-color:#A7F3D0;">⚡</div>
+                <div>
+                  <div class="update-card-category">BİRLEŞİK AKILLI MOTOR</div>
+                  <h4 class="update-card-title">Smart-Diff Master Sync (Altın + Tüm Saatler)</h4>
+                </div>
+              </div>
+              <span class="update-pill update-pill-ready" id="pill-sync-smartdiff">Master Sync</span>
+            </div>
+
+            <p class="update-card-desc" style="margin:12px 0;">
+              Tüm altın, ziynet, külçe ve saat kataloglarını tek seferde akıllı fark kontrolüyle (yalnızca değişen ürünler) günceller; gereksiz veritabanı yükü yaratmadan tüm mağazayı canlı tutar.
+            </p>
+
+            <div class="update-card-rules">
+              <strong>⚡ Akıllı Delta Mekanizması:</strong> Yalnızca fiyat veya stokta değişiklik tespit edilen ürünler güncellenir, sıfır delta durumunda gereksiz yazma yapılmaz.
+            </div>
+          </div>
+
+          <div>
+            <div class="update-card-meta">
+              <span>🕒 Son Güncelleme: <strong id="time-sync-smartdiff">Tam Uyumlu</strong></span>
+              <span style="color:#059669; font-weight:700;">2.125 Ürün Yönetiliyor</span>
+            </div>
+            <div class="update-card-actions" style="margin-top:10px;">
+              <button type="button" class="btn-update-action" style="background:linear-gradient(135deg, #059669 0%, #047857 100%);" onclick="AdminApp.runSystemUpdate('smart_diff')">
+                <span>⚡</span> TÜM SİSTEMİ TEK TIKLA EŞİTLE (Smart-Diff Master Sync)
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. Statik SEO ve Şema Derlemesi -->
+        <div class="update-card" id="card-update-seo">
+          <div>
+            <div class="update-card-header">
+              <div class="update-card-title-group">
+                <div class="update-card-icon" style="background:#F0FDF4; color:#15803D; border-color:#BBF7D0;">🔍</div>
+                <div>
+                  <div class="update-card-category">ARAMA MOTORU (SEO & RICH SNIPPETS)</div>
+                  <h4 class="update-card-title">Statik SEO Sayfaları & Schema Derlemesi</h4>
+                </div>
+              </div>
+              <span class="update-pill update-pill-ready" id="pill-sync-seo">SEO Hazır</span>
+            </div>
+
+            <p class="update-card-desc" style="margin:12px 0;">
+              Google, Bing ve Yandex için statik SEO HTML sayfalarını, Product, Breadcrumb, JewelryStore ve Article JSON-LD şemalarını yeniden derleyerek sayfa yüklenme hızını ve sıralamayı maksimize eder.
+            </p>
+
+            <div class="update-card-rules">
+              <strong>🎯 Zengin Sonuçlar:</strong> Her ürün için fiyat, stok, orijinal görsel ve satıcı bilgileri Google zengin snippet standartlarına uygun biçimlendirilir.
+            </div>
+          </div>
+
+          <div>
+            <div class="update-card-meta">
+              <span>🕒 Son Güncelleme: <strong id="time-sync-seo">Derlenmiş</strong></span>
+              <span style="color:#15803D; font-weight:700;">JSON-LD %100 Uyum</span>
+            </div>
+            <div class="update-card-actions" style="margin-top:10px;">
+              <button type="button" class="btn-update-action" onclick="AdminApp.runSystemUpdate('seo_build')">
+                <span>🔍</span> Statik SEO Sayfalarını ve Arama Şemalarını Derle
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8. XML Site Haritaları ve Robots.txt -->
+        <div class="update-card" id="card-update-sitemap">
+          <div>
+            <div class="update-card-header">
+              <div class="update-card-title-group">
+                <div class="update-card-icon" style="background:#F8FAFC; color:#334155; border-color:#CBD5E1;">🗺️</div>
+                <div>
+                  <div class="update-card-category">TARAMA VE İNDEKS PROTOKOLÜ</div>
+                  <h4 class="update-card-title">XML Site Haritaları & Robots.txt Güncellemesi</h4>
+                </div>
+              </div>
+              <span class="update-pill update-pill-ready" id="pill-sync-sitemap">İndeks Hazır</span>
+            </div>
+
+            <p class="update-card-desc" style="margin:12px 0;">
+              Google Search Console için <code>sitemap.xml</code>, <code>sitemap-products.xml</code>, <code>sitemap-magazine.xml</code> dosyalarını ve <code>robots.txt</code> arama motoru direktiflerini güncel katalogla 1:1 senkronize eder.
+            </p>
+
+            <div class="update-card-rules">
+              <strong>🧭 Tam İndeksleme:</strong> Tüm aktif ürünler, magazin sayfaları ve yasal bağlantılar güncel son değiştirilme (lastmod) tarihleriyle haritalandırılır.
+            </div>
+          </div>
+
+          <div>
+            <div class="update-card-meta">
+              <span>🕒 Son Güncelleme: <strong id="time-sync-sitemap">Haritalar Güncel</strong></span>
+              <span style="color:#334155; font-weight:700;">Google News & Search</span>
+            </div>
+            <div class="update-card-actions" style="margin-top:10px;">
+              <button type="button" class="btn-update-action" onclick="AdminApp.runSystemUpdate('sitemap')">
+                <span>🗺️</span> XML Site Haritalarını ve Robots.txt Dosyasını Güncelle
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9. AI & LLMS Knowledge Graph (AEO/GEO) -->
+        <div class="update-card" id="card-update-llms">
+          <div>
+            <div class="update-card-header">
+              <div class="update-card-title-group">
+                <div class="update-card-icon" style="background:#EEF2FF; color:#4338CA; border-color:#C7D2FE;">🤖</div>
+                <div>
+                  <div class="update-card-category">YENİ NESİL AI ARAMA MOTORLARI</div>
+                  <h4 class="update-card-title">AI & LLMS Knowledge Graph (llms.txt)</h4>
+                </div>
+              </div>
+              <span class="update-pill update-pill-ready" id="pill-sync-llms">42 Niyet / %100</span>
+            </div>
+
+            <p class="update-card-desc" style="margin:12px 0;">
+              Perplexity, Gemini, ChatGPT ve Claude gibi yeni nesil yapay zeka arama motorları için <code>llms.txt</code>, <code>llms-full.txt</code> ve semantik ürün/hizmet bilgi grafiğini 42 niyet ve 44 dosya üzerinde doğrular ve günceller.
+            </p>
+
+            <div class="update-card-rules">
+              <strong>🤖 AEO / GEO Mimarisi:</strong> Yapay zeka sistemlerinin Belgin Kuyumculuk marka yetkisini, ürünlerini ve mağaza güvenliğini kusursuz tanıması sağlanır.
+            </div>
+          </div>
+
+          <div>
+            <div class="update-card-meta">
+              <span>🕒 Son Güncelleme: <strong id="time-sync-llms">Graf Doğrulandı</strong></span>
+              <span style="color:#4338CA; font-weight:700;">AEO/GEO Tam Uyum</span>
+            </div>
+            <div class="update-card-actions" style="margin-top:10px;">
+              <button type="button" class="btn-update-action" onclick="AdminApp.runSystemUpdate('llms')">
+                <span>🤖</span> AI & LLMS Knowledge Graph'ı (llms.txt) Güncelle
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10. Hukuki Sözleşmeler ve SHA-256 Delil Manifestosu -->
+        <div class="update-card" id="card-update-legal">
+          <div>
+            <div class="update-card-header">
+              <div class="update-card-title-group">
+                <div class="update-card-icon" style="background:#FEF2F2; color:#B91C1C; border-color:#FECACA;">⚖️</div>
+                <div>
+                  <div class="update-card-category">YASAL DELİL & MASAK UYUMU</div>
+                  <h4 class="update-card-title">Hukuki Manifestosu & SHA-256 Delil Zinciri</h4>
+                </div>
+              </div>
+              <span class="update-pill update-pill-ready" id="pill-sync-legal">19 Resmi Belge</span>
+            </div>
+
+            <p class="update-card-desc" style="margin:12px 0;">
+              19 resmi hukuki belgeyi (Mesafeli Satış, Ön Bilgilendirme, MASAK, KVKK) bayt seviyesinde tarar; SHA-256 kriptografik özetlerini çıkarıp OpenTimestamps Bitcoin zaman kanıtı zincirini günceller.
+            </p>
+
+            <div class="update-card-rules">
+              <strong>⚖️ Mahkeme ve Banka Geçerliliği:</strong> Hiçbir sözleşmede tahrifat yapılamaz; her değişiklik SHA-256 ve Bitcoin zaman damgasıyla mühürlenir.
+            </div>
+          </div>
+
+          <div>
+            <div class="update-card-meta">
+              <span>🕒 Son Güncelleme: <strong id="time-sync-legal">Delil Zinciri Tam</strong></span>
+              <span style="color:#B91C1C; font-weight:700;">SHA-256 Korumalı</span>
+            </div>
+            <div class="update-card-actions" style="margin-top:10px;">
+              <button type="button" class="btn-update-action" onclick="AdminApp.runSystemUpdate('legal')">
+                <span>⚖️</span> Hukuki Manifest ve Delil Zincirini Doğrula/Güncelle
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 11. Güvenlik, Fiyat ve POS Korumaları (Guard Gates) -->
+        <div class="update-card" id="card-update-guard">
+          <div>
+            <div class="update-card-header">
+              <div class="update-card-title-group">
+                <div class="update-card-icon" style="background:#F0FDF4; color:#166534; border-color:#86EFAC;">🛡️</div>
+                <div>
+                  <div class="update-card-category">GÜVENLİK & FİYAT KİLİDİ</div>
+                  <h4 class="update-card-title">Sistem Güvenlik & Fiyat Korumaları (Guard Gates)</h4>
+                </div>
+              </div>
+              <span class="update-pill update-pill-ready" id="pill-sync-guard">37/37 Yeşil</span>
+            </div>
+
+            <p class="update-card-desc" style="margin:12px 0;">
+              Tüm fiyat devre kesicilerini, fatura Özel Matrah kurallarını, 3 günlük POS zamanlayıcısını, BKM/Visa kurallarını ve üretim güvenlik kapılarını tam denetimden geçirir.
+            </p>
+
+            <div class="update-card-rules">
+              <strong>🛡️ Fail-Closed Emniyeti:</strong> Fiyat emniyet kilidini veya güvenlik kurallarını ihlal eden tek bir satır dahi sisteme giremez.
+            </div>
+          </div>
+
+          <div>
+            <div class="update-card-meta">
+              <span>🕒 Son Güncelleme: <strong id="time-sync-guard">Tüm Testler Geçti</strong></span>
+              <span style="color:#166534; font-weight:700;">100% Onaylı</span>
+            </div>
+            <div class="update-card-actions" style="margin-top:10px;">
+              <button type="button" class="btn-update-action" style="background:linear-gradient(135deg, #15803D 0%, #166534 100%);" onclick="AdminApp.runSystemUpdate('guard')">
+                <span>🛡️</span> Tüm Güvenlik ve Fiyat Marjı Korumalarını (Guard Gates) Çalıştır
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /updates-grid -->
+
+      <!-- CANLI TERMİNAL / İŞLEM KONSOLU (CANVAS / TERMINAL LOG) -->
+      <div class="update-terminal-card" style="margin-top:10px;">
+        <div class="update-terminal-topbar">
+          <div style="display:flex; align-items:center; gap:14px;">
+            <div class="terminal-dots">
+              <div class="terminal-dot terminal-dot-red"></div>
+              <div class="terminal-dot terminal-dot-yellow"></div>
+              <div class="terminal-dot terminal-dot-green"></div>
+            </div>
+            <span class="terminal-title">
+              <span>💻</span> CANLI GÜNCELLEME & SENKRONİZASYON TERMİNALİ (LIVE STREAM)
+            </span>
+          </div>
+          <div class="terminal-actions">
+            <button type="button" class="btn-terminal-action" onclick="AdminApp.copyTerminalLog()">
+              <span>📋</span> Logları Kopyala
+            </button>
+            <button type="button" class="btn-terminal-action" onclick="AdminApp.clearTerminalLog()">
+              <span>🧹</span> Temizle
+            </button>
+          </div>
+        </div>
+
+        <div class="update-terminal-body" id="updateTerminalOutput">
+          <div class="log-line">
+            <span class="log-ts">[SİSTEM]</span>
+            <span class="log-badge log-badge-info">HAZIR</span>
+            <span class="log-text">Belgin Kuyumculuk Senkronizasyon Konsolu başlatıldı. Yönetici yetkisi aktif. İstediğiniz güncellemeyi başlatabilirsiniz.</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /updates-container -->
+
+  </div><!-- /updatesTabContent -->
 
 </main>
 
