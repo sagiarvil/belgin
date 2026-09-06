@@ -1198,135 +1198,346 @@
        ======================================================== */
     .statement-header-banner {
       background: linear-gradient(135deg, #FFF5F5 0%, #FED7D7 40%, #FFFBF0 100%);
-      border: 2px solid #FEB2B2;
-      border-radius: var(--admin-radius);
-      padding: 18px 24px;
-      margin-bottom: 18px;
+      border: 1.5px solid #FEB2B2;
+      border-radius: 12px;
+      padding: 12px 18px;
+      margin-bottom: 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 16px;
-      box-shadow: 0 4px 20px rgba(229, 62, 62, 0.08);
+      gap: 12px;
+      box-shadow: 0 4px 16px rgba(229, 62, 62, 0.06);
     }
     .statement-title-block {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 2px;
     }
     .statement-main-title {
       font-family: 'Playfair Display', serif;
-      font-size: 22px;
+      font-size: 18px;
       font-weight: 700;
       color: #742A2A;
       margin: 0;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
     .statement-subtitle {
-      font-size: 12.5px;
+      font-size: 11.5px;
       color: #9B2C2C;
       font-weight: 600;
+      line-height: 1.35;
     }
     .statement-hero-remaining-box {
       background: linear-gradient(135deg, #9B1C1C 0%, #C81E1E 60%, #991B1B 100%);
       color: #FFFFFF;
-      padding: 14px 28px;
-      border-radius: 12px;
+      padding: 8px 18px;
+      border-radius: 10px;
       border: 1.5px solid #FCA5A5;
-      box-shadow: 0 6px 18px rgba(200, 30, 30, 0.35);
+      box-shadow: 0 4px 14px rgba(200, 30, 30, 0.28);
       text-align: right;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
     }
     .statement-hero-label {
-      font-size: 11px;
-      letter-spacing: 1.5px;
+      font-size: 9.5px;
+      letter-spacing: 1.2px;
       text-transform: uppercase;
       color: #FEE2E2;
       font-weight: 800;
+      margin-bottom: 2px;
     }
     .statement-hero-val {
-      font-size: 28px;
+      font-size: 22px;
       font-weight: 800;
       color: #FFFFFF;
       font-family: 'Plus Jakarta Sans', sans-serif;
-      line-height: 1.2;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      line-height: 1.15;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      font-variant-numeric: tabular-nums;
     }
     .statement-hero-sub {
-      font-size: 11px;
+      font-size: 9.5px;
       color: #FECACA;
-      margin-top: 3px;
+      margin-top: 2px;
       font-weight: 600;
     }
 
+    /* Ekstre Hızlı İşlem Butonları (Ölçeklendirilmiş Kompakt) */
+    .statement-quick-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .statement-quick-actions button {
+      min-height: 38px !important;
+      font-size: 12px !important;
+      padding: 6px 14px !important;
+      border-radius: 9px !important;
+      cursor: pointer;
+    }
+
+    /* Ekstre 5'li KPI Kartları (5 Kolonlu Kompakt Fintech Strip) */
+    .stmt-kpi-grid {
+      display: grid !important;
+      grid-template-columns: repeat(5, 1fr) !important;
+      gap: 10px !important;
+      margin-bottom: 14px !important;
+    }
+    .stmt-kpi-grid .admin-kpi-card {
+      padding: 10px 14px !important;
+      border-radius: 10px !important;
+      min-width: 0 !important;
+      box-sizing: border-box !important;
+    }
+    .stmt-kpi-grid .kpi-label {
+      font-size: 10px !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.5px !important;
+      margin-bottom: 3px !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+    .stmt-kpi-grid .kpi-value {
+      font-size: 18px !important;
+      font-weight: 800 !important;
+      line-height: 1.15 !important;
+      font-variant-numeric: tabular-nums !important;
+    }
+    .stmt-kpi-grid .kpi-subtext {
+      font-size: 9.5px !important;
+      margin-top: 3px !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    /* Ekstre Filtre Çubuğu (Kırılmasız Esnek Flex Grid) */
+    .stmt-filter-row {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+      gap: 8px 12px !important;
+    }
+    .stmt-filter-row .date-input-box label {
+      font-size: 10.5px !important;
+      font-weight: 700 !important;
+      color: #475569 !important;
+      margin-bottom: 2px !important;
+    }
+    .stmt-filter-row input[type="date"],
+    .stmt-filter-row select {
+      font-size: 11.5px !important;
+      padding: 4px 8px !important;
+      height: 34px !important;
+      box-sizing: border-box !important;
+      border-radius: 7px !important;
+    }
+    .stmt-filter-row .pos-rate-box {
+      padding: 4px 8px !important;
+      min-height: 34px !important;
+      gap: 6px !important;
+      box-sizing: border-box !important;
+      border-radius: 8px !important;
+    }
+    .stmt-filter-row .admin-search-input {
+      height: 34px !important;
+      font-size: 11.5px !important;
+      padding: 4px 10px !important;
+      min-width: 180px !important;
+      flex: 1 1 180px !important;
+      box-sizing: border-box !important;
+      border-radius: 7px !important;
+    }
+    .stmt-filter-row .admin-action-btn-group {
+      display: flex !important;
+      gap: 6px !important;
+      align-items: center !important;
+    }
+    .stmt-filter-row .admin-action-btn-group button {
+      height: 34px !important;
+      padding: 4px 10px !important;
+      font-size: 11.5px !important;
+      border-radius: 7px !important;
+      white-space: nowrap !important;
+    }
+
+    /* Ekstre Tablosu Tipografi & Sütun Yerleşimi */
+    .statement-table {
+      width: 100% !important;
+      border-collapse: collapse !important;
+      font-size: 11.5px !important;
+      min-width: 980px !important;
+      table-layout: auto !important;
+    }
     .statement-table th {
-      background: #F1F5F9;
-      color: #1E293B;
-      font-weight: 800;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
+      background: linear-gradient(180deg, #F8FAF9 0%, #EEF4F2 100%) !important;
+      color: #064E3B !important;
+      font-weight: 800 !important;
+      font-size: 10px !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.4px !important;
+      padding: 7px 8px !important;
+      border-bottom: 1.5px solid #CBD5E1 !important;
+      white-space: nowrap !important;
+      line-height: 1.25 !important;
+      vertical-align: middle !important;
+    }
+    .statement-table td {
+      padding: 6px 8px !important;
+      font-size: 11.5px !important;
+      border-bottom: 1px solid #EDF2F7 !important;
+      line-height: 1.35 !important;
+      vertical-align: middle !important;
+      font-variant-numeric: tabular-nums !important;
     }
     .col-pos {
       font-weight: 700;
       color: #1E293B;
+      font-variant-numeric: tabular-nums;
     }
     .col-pos-rate {
       text-align: center;
       background: rgba(254, 243, 199, 0.25);
     }
+    .col-pos-bloke {
+      text-align: center;
+      background: rgba(254, 243, 199, 0.15);
+      white-space: nowrap;
+    }
     .stmt-inline-pos-box {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 3px;
+      gap: 2px;
       background: #FFFFFF;
-      border: 1.5px solid #CBD5E1;
-      border-radius: 8px;
-      padding: 3px 6px;
+      border: 1px solid #CBD5E1;
+      border-radius: 6px;
+      padding: 1px 4px;
       transition: all 0.2s ease;
     }
     .stmt-inline-pos-box.has-custom {
       background: #FEF3C7;
       border-color: #F59E0B;
-      box-shadow: 0 1px 4px rgba(245, 158, 11, 0.15);
+      box-shadow: 0 1px 3px rgba(245, 158, 11, 0.15);
     }
     .stmt-inline-pos-box:focus-within {
       border-color: #D97706;
-      box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.2);
+      box-shadow: 0 0 0 2px rgba(217, 119, 6, 0.2);
     }
     .col-hakedis {
       font-weight: 800;
       color: #0369A1;
       background: rgba(224, 242, 254, 0.35);
+      font-variant-numeric: tabular-nums;
     }
     .col-paid {
       font-weight: 800;
       color: #15803D;
       background: rgba(220, 252, 231, 0.35);
+      font-variant-numeric: tabular-nums;
     }
     .col-remaining {
       font-weight: 800;
-      font-size: 13.5px;
+      font-size: 12.5px;
       color: #991B1B;
       background: rgba(254, 226, 226, 0.45);
+      font-variant-numeric: tabular-nums;
     }
+    .col-profit {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* 3 GÜNLÜK BANKA BLOKESİ & SAAT SAYACI ROZETLERİ */
+    .stmt-pos-countdown-cell {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+    }
+    .stmt-badge-locked {
+      background: #FEF3C7;
+      border: 1px solid #F59E0B;
+      color: #92400E;
+      font-size: 10.5px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      letter-spacing: 0.3px;
+      box-shadow: 0 1px 3px rgba(245, 158, 11, 0.12);
+      white-space: nowrap;
+    }
+    .stmt-badge-unlocked {
+      background: #DCFCE7;
+      border: 1px solid #86EFAC;
+      color: #15803D;
+      font-size: 10.5px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      letter-spacing: 0.3px;
+      box-shadow: 0 1px 3px rgba(22, 163, 74, 0.1);
+      white-space: nowrap;
+    }
+    .stmt-badge-nonpos {
+      color: #94A3B8;
+      font-size: 11px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .stmt-countdown-date {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: #64748B;
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+    .stmt-countdown-timer {
+      font-variant-numeric: tabular-nums;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
+      letter-spacing: 0.3px;
+    }
+
+    .stmt-mobile-bloke-box {
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin-bottom: 8px;
+    }
+    .stmt-mobile-bloke-box.is-locked {
+      background: #FFFBEB;
+      border: 1px solid #FCD34D;
+    }
+    .stmt-mobile-bloke-box.is-unlocked {
+      background: #F0FDF4;
+      border: 1px solid #86EFAC;
+    }
+
     .payment-tag-item {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
       background: #ECFDF5;
       border: 1px solid #A7F3D0;
       color: #065F46;
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 6px;
-      margin: 2px 0;
+      padding: 2px 6px;
+      border-radius: 5px;
+      margin: 1px 0;
     }
     .payment-tag-desc {
       color: #047857;
@@ -1337,15 +1548,15 @@
       background: linear-gradient(135deg, #047857 0%, #059669 100%);
       color: #FFF;
       border: none;
-      padding: 5px 12px;
+      padding: 4px 10px;
       border-radius: 6px;
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.15s;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
     }
     .btn-quick-pay:hover {
       background: #065F46;
@@ -2264,7 +2475,7 @@
         <button class="btn-preset" data-stmt-preset="last7" onclick="AdminApp.selectStmtPreset('last7', this)">Son 7 Gün</button>
       </div>
 
-      <div class="admin-filter-row">
+      <div class="admin-filter-row stmt-filter-row">
         <!-- Hızlı Ay / Dönem Seçici Dropdown -->
         <div class="date-input-box" style="min-width:170px;">
           <label for="stmtMonthSelector">🗓️ Ay Seçimi (01 - Son Gün)</label>
@@ -2331,7 +2542,7 @@
     </section>
 
     <!-- 3. EKSTRE 5'Lİ KPI ÖZET KARTLARI (STRIPE FINANCIAL METRIC CARDS) -->
-    <section class="admin-kpi-grid">
+    <section class="admin-kpi-grid stmt-kpi-grid">
       
       <!-- 1. POS CİROSU -->
       <div class="admin-kpi-card kpi-indigo" style="border:1.5px solid #312E81;">
@@ -2387,20 +2598,21 @@
         <table class="admin-orders-table statement-table">
           <thead>
             <tr>
-              <th style="width:125px; text-align:center;">Tarih & Saat</th>
+              <th style="width:95px; text-align:center;">Tarih & Saat</th>
               <th style="text-align:left;">İşlem & Açıklama</th>
-              <th style="width:115px; text-align:right;">POS (₺)</th>
-              <th style="width:115px; text-align:center; color:#92400E;">POS Oranı (%)<br><span style="font-size:9.5px; font-weight:700; opacity:0.9;">(Kuv %2.99 / Tosla %3.79)</span></th>
-              <th style="width:130px; text-align:right; color:#0369A1;">Hakediş (₺)<br><span style="font-size:10px; font-weight:700; opacity:0.9;">(POS - %8 Kesinti)</span></th>
-              <th style="width:110px; text-align:right; color:#15803D;">Ödenen (₺)</th>
-              <th style="width:130px; text-align:right; color:#991B1B;">Kalan Bakiye (₺)<br><span style="font-size:10px; font-weight:700; opacity:0.9;">(Güncel Tutar)</span></th>
-              <th style="width:135px; text-align:right; color:#166534;">Kâr (₺)<br><span style="font-size:10px; font-weight:700; opacity:0.9;">(Net Kazanç)</span></th>
-              <th style="width:125px; text-align:center;">İşlemler</th>
+              <th style="width:95px; text-align:right;">POS (₺)</th>
+              <th style="width:75px; text-align:center; color:#92400E;">Banka Oranı</th>
+              <th style="width:140px; text-align:center; color:#B45309;">Banka Blokesi & Vade<br><span style="font-size:9px; font-weight:700; opacity:0.9;">(3 Gün / Sabah 09:00)</span></th>
+              <th style="width:105px; text-align:right; color:#0369A1;">Hakediş (₺)<br><span style="font-size:9px; font-weight:700; opacity:0.9;">(%92 Net)</span></th>
+              <th style="width:90px; text-align:right; color:#15803D;">Ödenen (₺)</th>
+              <th style="width:105px; text-align:right; color:#991B1B;">Kalan Bakiye (₺)</th>
+              <th style="width:105px; text-align:right; color:#166534;">Net Kâr (₺)</th>
+              <th style="width:95px; text-align:center;">İşlemler</th>
             </tr>
           </thead>
           <tbody id="statementTableBody">
             <tr>
-              <td colspan="9" style="text-align:center; padding:36px; color:#334155; font-weight:600;">
+              <td colspan="10" style="text-align:center; padding:32px; color:#334155; font-weight:600;">
                 Ekstre hareketleri yükleniyor...
               </td>
             </tr>

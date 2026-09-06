@@ -3467,14 +3467,20 @@ const AdminApp = {
       if (tabBtnStmt) tabBtnStmt.classList.add('active');
       if (stmtContent) stmtContent.style.display = 'block';
       this.loadStatement();
-    } else if (tab === 'storeInvoices') {
-      if (tabBtnStore) tabBtnStore.classList.add('active');
-      if (storeContent) storeContent.style.display = 'block';
-      this.loadStoreInvoices();
     } else {
-      if (tabBtnOrders) tabBtnOrders.classList.add('active');
-      if (ordersContent) ordersContent.style.display = 'block';
-      this.loadOrders();
+      if (this._posCountdownTimerInterval) {
+        clearInterval(this._posCountdownTimerInterval);
+        this._posCountdownTimerInterval = null;
+      }
+      if (tab === 'storeInvoices') {
+        if (tabBtnStore) tabBtnStore.classList.add('active');
+        if (storeContent) storeContent.style.display = 'block';
+        this.loadStoreInvoices();
+      } else {
+        if (tabBtnOrders) tabBtnOrders.classList.add('active');
+        if (ordersContent) ordersContent.style.display = 'block';
+        this.loadOrders();
+      }
     }
   },
 
@@ -4007,6 +4013,93 @@ const AdminApp = {
     this.renderStatementTable(this.filteredStatementRows);
   },
 
+  // 5.1. POS BANKA BLOKESİ VE HESABA GEÇİŞ HESABI (3 GÜN — SABAH 09:00 VADESİ)
+  getPosUnlockInfo(dateStr) {
+    if (!dateStr) return null;
+    try {
+      const parts = String(dateStr).split('-');
+      if (parts.length < 3) return null;
+      const y = parseInt(parts[0], 10);
+      const m = parseInt(parts[1], 10) - 1;
+      const d = parseInt(parts[2], 10);
+      if (isNaN(y) || isNaN(m) || isNaN(d)) return null;
+
+      // POS çekim tarihine 3 takvim günü ekle, 3. günün sabahı saat 09:00:00
+      const unlockDate = new Date(y, m, d + 3, 9, 0, 0, 0);
+      const unlockTs = unlockDate.getTime();
+      const nowTs = Date.now();
+      const isUnlocked = nowTs >= unlockTs;
+      const diffMs = Math.max(0, unlockTs - nowTs);
+
+      const dayStr = String(unlockDate.getDate()).padStart(2, '0');
+      const monStr = String(unlockDate.getMonth() + 1).padStart(2, '0');
+      const yrStr = unlockDate.getFullYear();
+      const unlockDateFormatted = `${dayStr}.${monStr}.${yrStr} 09:00`;
+
+      return {
+        unlockDate,
+        unlockTs,
+        isUnlocked,
+        diffMs,
+        unlockDateFormatted
+      };
+    } catch (_) {
+      return null;
+    }
+  },
+
+  // CANLI SAYAÇ ZAMAN FORMATLAYICI (Xg SS:DD:SS veya SS:DD:SS)
+  formatCountdown(diffMs) {
+    if (diffMs <= 0) return '00:00:00';
+    const totalSec = Math.floor(diffMs / 1000);
+    const days = Math.floor(totalSec / 86400);
+    const hours = Math.floor((totalSec % 86400) / 3600);
+    const minutes = Math.floor((totalSec % 3600) / 60);
+    const seconds = totalSec % 60;
+
+    const hh = String(hours).padStart(2, '0');
+    const mm = String(minutes).padStart(2, '0');
+    const ss = String(seconds).padStart(2, '0');
+
+    if (days > 0) {
+      return `${days}g ${hh}:${mm}:${ss}`;
+    }
+    return `${hh}:${mm}:${ss}`;
+  },
+
+  // 5.2. CANLI SAAT SAYACINI BAŞLAT (HER SANİYE GÜNCELLE)
+  startPosCountdownTimer() {
+    if (this._posCountdownTimerInterval) {
+      clearInterval(this._posCountdownTimerInterval);
+      this._posCountdownTimerInterval = null;
+    }
+
+    this._posCountdownTimerInterval = setInterval(() => {
+      const timerEls = document.querySelectorAll('.stmt-countdown-timer[data-timer-ts]');
+      if (!timerEls || timerEls.length === 0) return;
+
+      const now = Date.now();
+      let hasJustUnlocked = false;
+
+      timerEls.forEach(el => {
+        const ts = parseInt(el.getAttribute('data-timer-ts'), 10);
+        if (isNaN(ts)) return;
+        const diffMs = ts - now;
+
+        if (diffMs <= 0) {
+          hasJustUnlocked = true;
+        } else {
+          el.textContent = '⏱️ ' + this.formatCountdown(diffMs);
+        }
+      });
+
+      // Süresi dolan kayıt varsa tabloyu tazeleyerek "Hesaba Geçti" durumuna geçir
+      if (hasJustUnlocked) {
+        this.renderStatementTable(this.filteredStatementRows || this.statementRows);
+      }
+    }, 1000);
+  },
+
   // 6. EKSTRE TABLOSUNU TEK TEK İŞLEM HAREKETLERİYLE RENDER ET (YENİDEN ESKİYE)
   renderStatementTable(rows) {
     const tbody = document.getElementById('statementTableBody');
@@ -4016,9 +4109,9 @@ const AdminApp = {
     if (!rows || rows.length === 0) {
       const emptyHtml = `
         <tr>
-          <td colspan="9" style="text-align:center; padding:40px 16px; color:var(--admin-muted);">
-            <div style="font-size:32px; margin-bottom:8px;">📊</div>
-            <div style="font-weight:700; font-size:14px; color:#334155;">Bu tarih aralığında ekstre hareketi bulunamadı.</div>
+          <td colspan="10" style="text-align:center; padding:36px 16px; color:var(--admin-muted);">
+            <div style="font-size:28px; margin-bottom:6px;">📊</div>
+            <div style="font-weight:700; font-size:13.5px; color:#334155;">Bu tarih aralığında ekstre hareketi bulunamadı.</div>
           </td>
         </tr>`;
       tbody.innerHTML = emptyHtml;
@@ -4037,7 +4130,7 @@ const AdminApp = {
       const isManualPos = r.type === 'POS_MANUAL';
 
       const dateFormatted = this.formatDateTr(r.date);
-      const timeStr = r.time && r.time !== '12:00' ? ` <span style="font-size:11px; color:#94A3B8;">${r.time}</span>` : '';
+      const timeStr = r.time && r.time !== '12:00' ? ` <span style="font-size:10.5px; color:#64748B;">${r.time}</span>` : '';
 
       let typeBadge = '';
       let descHtml = '';
@@ -4045,18 +4138,18 @@ const AdminApp = {
       let mainAmountColor = '#0F172A';
 
       if (isPosSale) {
-        typeBadge = `<span style="background:#E0F2FE; color:#0369A1; border:1px solid #7DD3FC; font-size:11px; font-weight:800; padding:3px 8px; border-radius:6px; display:inline-flex; align-items:center; gap:4px;">💳 POS Satış</span>`;
-        descHtml = `<strong style="color:#0F172A; font-size:13.5px;">${r.orderId}</strong> — <span style="font-weight:700; color:#1E293B;">${this.escapeHtml(r.customerName || 'Müşteri')}</span> ${this.getBankTag(r.provider || 'KUVEYTTURK')}`;
+        typeBadge = `<span style="background:#E0F2FE; color:#0369A1; border:1px solid #7DD3FC; font-size:10.5px; font-weight:800; padding:2px 6px; border-radius:5px; display:inline-flex; align-items:center; gap:3px;">💳 POS</span>`;
+        descHtml = `<strong style="color:#0F172A; font-size:12.5px;">${r.orderId}</strong> — <span style="font-weight:700; color:#1E293B;">${this.escapeHtml(r.customerName || 'Müşteri')}</span> ${this.getBankTag(r.provider || 'KUVEYTTURK')}`;
         mainAmountStr = `+${fmt(r.pos)}`;
         mainAmountColor = '#0369A1';
       } else if (isPayment) {
-        typeBadge = `<span style="background:#DCFCE7; color:#15803D; border:1px solid #86EFAC; font-size:11px; font-weight:800; padding:3px 8px; border-radius:6px; display:inline-flex; align-items:center; gap:4px;">🟢 Ödeme Çıkışı</span>`;
-        descHtml = `<strong style="color:#15803D; font-size:13.5px;">${this.escapeHtml(r.description || 'Ödeme')}</strong> ${this.getBankTag(r.paymentType || 'Banka')}`;
+        typeBadge = `<span style="background:#DCFCE7; color:#15803D; border:1px solid #86EFAC; font-size:10.5px; font-weight:800; padding:2px 6px; border-radius:5px; display:inline-flex; align-items:center; gap:3px;">🟢 Ödeme</span>`;
+        descHtml = `<strong style="color:#15803D; font-size:12.5px;">${this.escapeHtml(r.description || 'Ödeme')}</strong> ${this.getBankTag(r.paymentType || 'Banka')}`;
         mainAmountStr = `-${fmt(r.paid)}`;
         mainAmountColor = '#15803D';
       } else if (isManualPos) {
-        typeBadge = `<span style="background:#FEF3C7; color:#92400E; border:1px solid #FCD34D; font-size:11px; font-weight:800; padding:3px 8px; border-radius:6px; display:inline-flex; align-items:center; gap:4px;">➕ Manuel POS</span>`;
-        descHtml = `<strong style="color:#92400E; font-size:13.5px;">${this.escapeHtml(r.description || 'Manuel POS')}</strong>`;
+        typeBadge = `<span style="background:#FEF3C7; color:#92400E; border:1px solid #FCD34D; font-size:10.5px; font-weight:800; padding:2px 6px; border-radius:5px; display:inline-flex; align-items:center; gap:3px;">➕ M.POS</span>`;
+        descHtml = `<strong style="color:#92400E; font-size:12.5px;">${this.escapeHtml(r.description || 'Manuel POS')}</strong>`;
         mainAmountStr = `+${fmt(r.pos)}`;
         mainAmountColor = '#B45309';
       }
@@ -4075,30 +4168,30 @@ const AdminApp = {
 
         posRateCellHtml = `
           <div class="stmt-inline-pos-box ${hasCustomRate ? 'has-custom' : ''}" id="stmtPosRateBox_${r.id}">
-            <span style="font-size:11.5px; font-weight:800; color:${hasCustomRate ? '#B45309' : '#64748B'};">%</span>
+            <span style="font-size:10.5px; font-weight:800; color:${hasCustomRate ? '#B45309' : '#64748B'};">%</span>
             <input type="text" 
                    inputmode="decimal"
                    id="stmtInlinePosRate_${r.id}"
                    value="${hasCustomRate ? Number(r.posRate) : ''}" 
                    placeholder="${effectiveRate.toFixed(2)}" 
                    title="Banka POS Komisyon Oranı (%): Kuveyt Türk %${(this.posRateKuveytTurk || 2.99).toFixed(2)}, Tosla %${(this.posRateTosla || 3.79).toFixed(2)}. Noktalı veya virgüllü girebilirsiniz."
-                   style="width:52px; border:none; background:transparent; font-size:12.5px; font-weight:800; color:${hasCustomRate ? '#92400E' : '#334155'}; text-align:center; outline:none; padding:1px 0;" 
+                   style="width:44px; border:none; background:transparent; font-size:11.5px; font-weight:800; color:${hasCustomRate ? '#92400E' : '#334155'}; text-align:center; outline:none; padding:1px 0;" 
                    oninput="AdminApp.onInlinePosRateInput('${this.escapeHtml(r.id)}', this.value)" 
                    onchange="AdminApp.saveInlinePosRate('${this.escapeHtml(r.id)}', '${r.type}', this.value, '${this.escapeHtml(r.orderId || '')}', '${this.escapeHtml(r.entryId || '')}')">
           </div>
         `;
 
         mobilePosRateHtml = `
-          <div style="display:flex; align-items:center; justify-content:space-between; background:#FEF9E7; border:1px solid ${hasCustomRate ? '#F59E0B' : '#CBD5E1'}; padding:6px 10px; border-radius:8px; margin-bottom:10px;" id="stmtMobilePosRateBox_${r.id}">
-            <span style="font-size:11.5px; font-weight:800; color:#92400E;">🏦 Banka POS Oranı:</span>
-            <div style="display:flex; align-items:center; gap:4px;">
-              <span style="font-size:12px; font-weight:800; color:#B45309;">%</span>
+          <div style="display:flex; align-items:center; justify-content:space-between; background:#FEF9E7; border:1px solid ${hasCustomRate ? '#F59E0B' : '#CBD5E1'}; padding:5px 8px; border-radius:7px; margin-bottom:8px;" id="stmtMobilePosRateBox_${r.id}">
+            <span style="font-size:11px; font-weight:800; color:#92400E;">🏦 Banka POS Oranı:</span>
+            <div style="display:flex; align-items:center; gap:3px;">
+              <span style="font-size:11px; font-weight:800; color:#B45309;">%</span>
               <input type="text" 
                      inputmode="decimal"
                      value="${hasCustomRate ? Number(r.posRate) : ''}" 
                      placeholder="${effectiveRate.toFixed(2)}" 
                      title="Kuveyt Türk %${(this.posRateKuveytTurk || 2.99).toFixed(2)}, Tosla %${(this.posRateTosla || 3.79).toFixed(2)}"
-                     style="width:62px; height:32px; border:1.5px solid #D97706; border-radius:6px; font-size:13px; font-weight:800; color:#92400E; text-align:center; background:#FFF;" 
+                     style="width:54px; height:28px; border:1.5px solid #D97706; border-radius:5px; font-size:12px; font-weight:800; color:#92400E; text-align:center; background:#FFF;" 
                      oninput="AdminApp.onInlinePosRateInput('${this.escapeHtml(r.id)}', this.value)" 
                      onchange="AdminApp.saveInlinePosRate('${this.escapeHtml(r.id)}', '${r.type}', this.value, '${this.escapeHtml(r.orderId || '')}', '${this.escapeHtml(r.entryId || '')}')">
             </div>
@@ -4106,17 +4199,79 @@ const AdminApp = {
         `;
 
         profitHtml = `
-          <div style="font-size:14px; font-weight:800; color:#15803D;" id="stmtProfitAmount_${r.id}">${fmt(profit)}</div>
-          <div style="font-size:10px; color:#166534; font-weight:700;" id="stmtProfitSub_${r.id}">Net Kâr (%${profitRate}) <span style="color:#B45309;">(%${effectiveRate.toFixed(2)})</span></div>
+          <div style="font-size:12px; font-weight:800; color:#15803D;" id="stmtProfitAmount_${r.id}">${fmt(profit)}</div>
+          <div style="font-size:9.5px; color:#166534; font-weight:700;" id="stmtProfitSub_${r.id}">Net (%${profitRate}) <span style="color:#B45309;">(%${effectiveRate.toFixed(2)})</span></div>
         `;
         profitMobileHtml = `
-          <span id="stmtMobileProfit_${r.id}"><strong style="color:#15803D; font-size:13.5px;">${fmt(profit)}</strong> <span style="font-size:10.5px; color:#166534; font-weight:700;">(%${profitRate})</span></span>
+          <span id="stmtMobileProfit_${r.id}"><strong style="color:#15803D; font-size:12.5px;">${fmt(profit)}</strong> <span style="font-size:10px; color:#166534; font-weight:700;">(%${profitRate})</span></span>
         `;
       } else {
         posRateCellHtml = `<span style="color:#94A3B8; font-weight:600;">—</span>`;
         profitHtml = `<span style="color:#64748B; font-weight:600;">—</span>`;
         profitMobileHtml = `
-          <span style="color:#64748B; font-weight:700; font-size:13px;">—</span>
+          <span style="color:#64748B; font-weight:700; font-size:12px;">—</span>
+        `;
+      }
+
+      // 3 Günlük Banka Bloke Durumu & Canlı Geri Sayım Sayacı
+      let blokeCellHtml = '';
+      let mobileBlokeHtml = '';
+
+      if (r.pos > 0) {
+        const unlockInfo = this.getPosUnlockInfo(r.date);
+        if (unlockInfo) {
+          const { isUnlocked, diffMs, unlockDateFormatted, unlockTs } = unlockInfo;
+          const countdownStr = this.formatCountdown(diffMs);
+
+          if (isUnlocked) {
+            blokeCellHtml = `
+              <div class="stmt-pos-countdown-cell">
+                <span class="stmt-badge-unlocked" title="Banka 3 günlük blokeyi kaldırdı, para hesaba geçti.">
+                  <span>✅</span> <span>Hesaba Geçti</span>
+                </span>
+                <span class="stmt-countdown-date">${unlockDateFormatted}'da Aktarıldı</span>
+              </div>
+            `;
+            mobileBlokeHtml = `
+              <div class="stmt-mobile-bloke-box is-unlocked">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3px;">
+                  <span style="font-size:10.5px; font-weight:800; color:#15803D;">🏦 Banka Blokesi (3 Gün — 09:00):</span>
+                  <span style="font-size:9.5px; font-weight:700; color:#166534;">Aktarım: ${unlockDateFormatted}</span>
+                </div>
+                <div class="stmt-badge-unlocked" style="width:100%; justify-content:center; padding:4px 8px; box-sizing:border-box;">
+                  <span>✅ 3 Günlük Bloke Doldu — Para Hesaba Geçti</span>
+                </div>
+              </div>
+            `;
+          } else {
+            blokeCellHtml = `
+              <div class="stmt-pos-countdown-cell">
+                <span class="stmt-badge-locked" title="Banka ile 3 gün blokeli çalışılmaktadır. Sabah 09:00'da hesaba geçecektir.">
+                  <span>⏳</span> <span class="stmt-countdown-timer" data-timer-ts="${unlockTs}">⏱️ ${countdownStr}</span>
+                </span>
+                <span class="stmt-countdown-date">Vade: ${unlockDateFormatted}</span>
+              </div>
+            `;
+            mobileBlokeHtml = `
+              <div class="stmt-mobile-bloke-box is-locked">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3px;">
+                  <span style="font-size:10.5px; font-weight:800; color:#92400E;">🏦 Banka Blokesi (3 Gün — 09:00):</span>
+                  <span style="font-size:9.5px; font-weight:700; color:#78350F;">Vade: ${unlockDateFormatted}</span>
+                </div>
+                <div class="stmt-badge-locked" style="width:100%; justify-content:space-between; padding:4px 8px; box-sizing:border-box;">
+                  <span>⏳ Hesaba Geçişe Kalan:</span>
+                  <span class="stmt-countdown-timer" data-timer-ts="${unlockTs}">⏱️ ${countdownStr}</span>
+                </div>
+              </div>
+            `;
+          }
+        }
+      } else {
+        blokeCellHtml = `
+          <div class="stmt-pos-countdown-cell">
+            <span class="stmt-badge-nonpos" title="Nakit veya Banka ödeme transferlerinde bloke yoktur.">—</span>
+            <span class="stmt-countdown-date" style="color:#94A3B8;">Bloke Yok</span>
+          </div>
         `;
       }
 
@@ -4125,39 +4280,39 @@ const AdminApp = {
 
       if (isPosSale) {
         actionsHtml = `
-          <div style="display:flex; justify-content:center; align-items:center; gap:4px;">
-            <button type="button" class="btn-admin-secondary" style="padding:5px 9px; font-size:11.5px; font-weight:700; color:#064E3B;" onclick="AdminApp.openOrderModal('${r.orderId}')" title="Sipariş detayını görüntüle / yönet">
+          <div style="display:flex; justify-content:center; align-items:center; gap:3px;">
+            <button type="button" class="btn-admin-secondary" style="padding:4px 7px; font-size:11px; font-weight:700; color:#064E3B; border-radius:5px;" onclick="AdminApp.openOrderModal('${r.orderId}')" title="Sipariş detayını görüntüle / yönet">
               ✏️ Düzenle
             </button>
-            <button type="button" style="background:#FEE2E2; border:1px solid #FCA5A5; color:#991B1B; border-radius:6px; padding:5px 9px; font-size:11.5px; font-weight:800; cursor:pointer;" onclick="AdminApp.deleteOrder('${r.orderId}')" title="Bu siparişi sil">
+            <button type="button" style="background:#FEE2E2; border:1px solid #FCA5A5; color:#991B1B; border-radius:5px; padding:4px 7px; font-size:11px; font-weight:800; cursor:pointer;" onclick="AdminApp.deleteOrder('${r.orderId}')" title="Bu siparişi sil">
               🗑️ Sil
             </button>
           </div>
         `;
         mobileActionsHtml = `
-          <button type="button" class="btn-admin-secondary" style="width:100%; min-height:44px; justify-content:center; font-size:13px; font-weight:800; color:#064E3B; border-radius:8px;" onclick="AdminApp.openOrderModal('${r.orderId}')">
+          <button type="button" class="btn-admin-secondary" style="width:100%; min-height:38px; justify-content:center; font-size:12px; font-weight:800; color:#064E3B; border-radius:7px;" onclick="AdminApp.openOrderModal('${r.orderId}')">
             ✏️ Sipariş Detayını Düzenle
           </button>
-          <button type="button" style="min-height:44px; padding:0 14px; background:#FEE2E2; border:1.5px solid #FCA5A5; color:#991B1B; border-radius:8px; font-size:13px; font-weight:800; cursor:pointer;" onclick="AdminApp.deleteOrder('${r.orderId}')" title="Siparişi Sil">
+          <button type="button" style="min-height:38px; padding:0 12px; background:#FEE2E2; border:1.5px solid #FCA5A5; color:#991B1B; border-radius:7px; font-size:12px; font-weight:800; cursor:pointer;" onclick="AdminApp.deleteOrder('${r.orderId}')" title="Siparişi Sil">
             🗑️ Sil
           </button>
         `;
       } else if (isPayment) {
         actionsHtml = `
-          <div style="display:flex; justify-content:center; align-items:center; gap:4px;">
-            <button type="button" class="btn-admin-secondary" style="padding:5px 9px; font-size:11.5px; font-weight:700; color:#064E3B;" onclick="AdminApp.openPaymentModal('${r.date}', '${r.id}', ${r.paid || 0}, '${this.escapeHtml(r.description || '')}', '${r.paymentType || 'Banka/Havale'}')" title="Ödeme tutarı veya açıklamasını düzenle">
+          <div style="display:flex; justify-content:center; align-items:center; gap:3px;">
+            <button type="button" class="btn-admin-secondary" style="padding:4px 7px; font-size:11px; font-weight:700; color:#064E3B; border-radius:5px;" onclick="AdminApp.openPaymentModal('${r.date}', '${r.id}', ${r.paid || 0}, '${this.escapeHtml(r.description || '')}', '${r.paymentType || 'Banka/Havale'}')" title="Ödeme tutarı veya açıklamasını düzenle">
               ✏️ Düzenle
             </button>
-            <button type="button" style="background:#FEE2E2; border:1px solid #FCA5A5; color:#991B1B; border-radius:6px; padding:5px 9px; font-size:11.5px; font-weight:800; cursor:pointer;" onclick="AdminApp.deletePayment('${r.id}')" title="Bu ödeme kaydını sil">
+            <button type="button" style="background:#FEE2E2; border:1px solid #FCA5A5; color:#991B1B; border-radius:5px; padding:4px 7px; font-size:11px; font-weight:800; cursor:pointer;" onclick="AdminApp.deletePayment('${r.id}')" title="Bu ödeme kaydını sil">
               🗑️ Sil
             </button>
           </div>
         `;
         mobileActionsHtml = `
-          <button type="button" class="btn-admin-secondary" style="width:100%; min-height:44px; justify-content:center; font-size:13px; font-weight:800; color:#064E3B; border-radius:8px;" onclick="AdminApp.openPaymentModal('${r.date}', '${r.id}', ${r.paid || 0}, '${this.escapeHtml(r.description || '')}', '${r.paymentType || 'Banka/Havale'}')">
+          <button type="button" class="btn-admin-secondary" style="width:100%; min-height:38px; justify-content:center; font-size:12px; font-weight:800; color:#064E3B; border-radius:7px;" onclick="AdminApp.openPaymentModal('${r.date}', '${r.id}', ${r.paid || 0}, '${this.escapeHtml(r.description || '')}', '${r.paymentType || 'Banka/Havale'}')">
             ✏️ Ödeme Kaydını Düzenle
           </button>
-          <button type="button" style="min-height:44px; padding:0 14px; background:#FEE2E2; border:1.5px solid #FCA5A5; color:#991B1B; border-radius:8px; font-size:13px; font-weight:800; cursor:pointer;" onclick="AdminApp.deletePayment('${r.id}')" title="Ödemeyi Sil">
+          <button type="button" style="min-height:38px; padding:0 12px; background:#FEE2E2; border:1.5px solid #FCA5A5; color:#991B1B; border-radius:7px; font-size:12px; font-weight:800; cursor:pointer;" onclick="AdminApp.deletePayment('${r.id}')" title="Ödemeyi Sil">
             🗑️ Sil
           </button>
         `;
@@ -4165,20 +4320,20 @@ const AdminApp = {
         const entryId = r.entryId || (r.id && r.id.startsWith('MANUAL-POS-') ? r.id.replace('MANUAL-POS-', '') : r.id) || '';
         const curRate = (r.posRate !== undefined && r.posRate !== null) ? r.posRate : '';
         actionsHtml = `
-          <div style="display:flex; justify-content:center; align-items:center; gap:4px;">
-            <button type="button" class="btn-admin-secondary" style="padding:5px 9px; font-size:11.5px; font-weight:700; color:#064E3B;" onclick="AdminApp.openManualPosModal('${entryId}', '${r.date}', ${r.pos || 0}, '${this.escapeHtml(r.manualNote || '')}', '${curRate}')" title="Manuel POS tutarını ve oranını düzenle">
+          <div style="display:flex; justify-content:center; align-items:center; gap:3px;">
+            <button type="button" class="btn-admin-secondary" style="padding:4px 7px; font-size:11px; font-weight:700; color:#064E3B; border-radius:5px;" onclick="AdminApp.openManualPosModal('${entryId}', '${r.date}', ${r.pos || 0}, '${this.escapeHtml(r.manualNote || '')}', '${curRate}')" title="Manuel POS tutarını ve oranını düzenle">
               ✏️ Düzenle
             </button>
-            <button type="button" style="background:#FEE2E2; border:1px solid #FCA5A5; color:#991B1B; border-radius:6px; padding:5px 9px; font-size:11.5px; font-weight:800; cursor:pointer;" onclick="AdminApp.deleteManualPos('${entryId}', '${r.date}')" title="Manuel POS kaydını sil">
+            <button type="button" style="background:#FEE2E2; border:1px solid #FCA5A5; color:#991B1B; border-radius:5px; padding:4px 7px; font-size:11px; font-weight:800; cursor:pointer;" onclick="AdminApp.deleteManualPos('${entryId}', '${r.date}')" title="Manuel POS kaydını sil">
               🗑️ Sil
             </button>
           </div>
         `;
         mobileActionsHtml = `
-          <button type="button" class="btn-admin-secondary" style="width:100%; min-height:44px; justify-content:center; font-size:13px; font-weight:800; color:#064E3B; border-radius:8px;" onclick="AdminApp.openManualPosModal('${entryId}', '${r.date}', ${r.pos || 0}, '${this.escapeHtml(r.manualNote || '')}', '${curRate}')">
+          <button type="button" class="btn-admin-secondary" style="width:100%; min-height:38px; justify-content:center; font-size:12px; font-weight:800; color:#064E3B; border-radius:7px;" onclick="AdminApp.openManualPosModal('${entryId}', '${r.date}', ${r.pos || 0}, '${this.escapeHtml(r.manualNote || '')}', '${curRate}')">
             ✏️ Manuel POS Düzenle
           </button>
-          <button type="button" style="min-height:44px; padding:0 14px; background:#FEE2E2; border:1.5px solid #FCA5A5; color:#991B1B; border-radius:8px; font-size:13px; font-weight:800; cursor:pointer;" onclick="AdminApp.deleteManualPos('${entryId}', '${r.date}')" title="Manuel POS Sil">
+          <button type="button" style="min-height:38px; padding:0 12px; background:#FEE2E2; border:1.5px solid #FCA5A5; color:#991B1B; border-radius:7px; font-size:12px; font-weight:800; cursor:pointer;" onclick="AdminApp.deleteManualPos('${entryId}', '${r.date}')" title="Manuel POS Sil">
             🗑️ Sil
           </button>
         `;
@@ -4186,29 +4341,32 @@ const AdminApp = {
 
       html += `
         <tr style="${isPayment ? 'background:#F0FDF4;' : ''}">
-          <td style="text-align:center; font-weight:800; color:#0F172A; font-size:12px; white-space:nowrap;">
+          <td style="text-align:center; font-weight:800; color:#0F172A; font-size:11.5px; white-space:nowrap;">
             ${dateFormatted}${timeStr}
           </td>
-          <td style="text-align:left; font-size:12.5px;">
-            <div style="display:flex; align-items:flex-start; gap:8px;">
+          <td style="text-align:left; font-size:12px;">
+            <div style="display:flex; align-items:flex-start; gap:6px;">
               <div style="margin-top:2px;">${typeBadge}</div>
               <div style="flex:1;">${descHtml}</div>
             </div>
           </td>
           <td style="text-align:right;" class="col-pos">
-            ${r.pos > 0 ? `<span style="font-weight:800; font-size:13px; color:#0F172A;">${fmt(r.pos)}</span>` : '<span style="color:#64748B;">—</span>'}
+            ${r.pos > 0 ? `<span style="font-weight:800; font-size:12px; color:#0F172A;">${fmt(r.pos)}</span>` : '<span style="color:#64748B;">—</span>'}
           </td>
           <td style="text-align:center; white-space:nowrap;" class="col-pos-rate">
             ${posRateCellHtml}
           </td>
+          <td style="text-align:center; white-space:nowrap;" class="col-pos-bloke">
+            ${blokeCellHtml}
+          </td>
           <td style="text-align:right;" class="col-hakedis">
-            ${r.hakedis > 0 ? `<div style="font-weight:800; font-size:13.5px; color:#0369A1;">${fmt(r.hakedis)}</div><div style="font-size:10px; color:#0284C7; font-weight:700;">%92 Net</div>` : '<span style="color:#64748B;">—</span>'}
+            ${r.hakedis > 0 ? `<div style="font-weight:800; font-size:12px; color:#0369A1;">${fmt(r.hakedis)}</div><div style="font-size:9.5px; color:#0284C7; font-weight:700;">%92 Net</div>` : '<span style="color:#64748B;">—</span>'}
           </td>
           <td style="text-align:right;" class="col-paid">
-            ${r.paid > 0 ? `<span style="font-weight:800; font-size:13.5px; color:#15803D;">${fmt(r.paid)}</span>` : '<span style="color:#64748B;">—</span>'}
+            ${r.paid > 0 ? `<span style="font-weight:800; font-size:12px; color:#15803D;">${fmt(r.paid)}</span>` : '<span style="color:#64748B;">—</span>'}
           </td>
           <td style="text-align:right;" class="col-remaining">
-            <div style="font-size:14px; font-weight:800; color:${isZeroRemaining ? '#15803D' : (isPositiveRemaining ? '#B91C1C' : '#D97706')};">
+            <div style="font-size:12.5px; font-weight:800; color:${isZeroRemaining ? '#15803D' : (isPositiveRemaining ? '#B91C1C' : '#D97706')};">
               ${fmt(r.remaining)}
             </div>
           </td>
@@ -4223,52 +4381,55 @@ const AdminApp = {
 
       // 📱 MOBİL ULTRA LÜKS VE KULLANIŞLI İŞLEM KARTI (REVOLUT BUSINESS / APPLE CARD)
       mobileHtml += `
-        <article class="admin-mobile-card" style="border-left: 6px solid ${isPayment ? '#10B981' : (isManualPos ? '#F59E0B' : '#0284C7')}; margin-bottom:14px; padding:16px; background:#FFFFFF; border-radius:14px; box-shadow:0 4px 14px rgba(8,76,71,0.06); border:1px solid #CBD5E1;">
+        <article class="admin-mobile-card" style="border-left: 5px solid ${isPayment ? '#10B981' : (isManualPos ? '#F59E0B' : '#0284C7')}; margin-bottom:10px; padding:12px; background:#FFFFFF; border-radius:12px; box-shadow:0 2px 10px rgba(8,76,71,0.05); border:1px solid #CBD5E1;">
           
           <!-- 1. Üst Satır: Rozet + Tarih -->
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; padding-bottom:8px; border-bottom:1px solid #EDF2F7; flex-wrap:wrap; gap:6px;">
-            <div style="display:flex; align-items:center; gap:6px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; padding-bottom:6px; border-bottom:1px solid #EDF2F7; flex-wrap:wrap; gap:4px;">
+            <div style="display:flex; align-items:center; gap:4px;">
               ${typeBadge}
             </div>
-            <time style="font-size:12px; font-weight:700; color:#334155;">📅 ${dateFormatted}${timeStr}</time>
+            <time style="font-size:11px; font-weight:700; color:#334155;">📅 ${dateFormatted}${timeStr}</time>
           </div>
 
           <!-- 2. Ana Açıklama & Büyük Tutar Satırı -->
-          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:12px;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px; margin-bottom:8px;">
             <div style="flex:1;">
-              <div style="font-size:13.5px; font-weight:800; color:#0F172A; line-height:1.4;">${descHtml}</div>
+              <div style="font-size:12.5px; font-weight:800; color:#0F172A; line-height:1.35;">${descHtml}</div>
             </div>
             <div style="text-align:right; white-space:nowrap;">
-              <span style="font-size:10px; font-weight:800; color:#475569; text-transform:uppercase; letter-spacing:0.5px; display:block;">İşlem Tutarı</span>
-              <span style="font-size:18px; font-weight:800; color:${mainAmountColor}; letter-spacing:-0.5px;">${mainAmountStr}</span>
+              <span style="font-size:9.5px; font-weight:800; color:#475569; text-transform:uppercase; letter-spacing:0.5px; display:block;">İşlem Tutarı</span>
+              <span style="font-size:16px; font-weight:800; color:${mainAmountColor}; letter-spacing:-0.5px;">${mainAmountStr}</span>
             </div>
           </div>
 
           <!-- 2.1. Mobil POS Komisyon Oranı Alanı -->
           ${mobilePosRateHtml}
 
+          <!-- 2.2. Mobil 3 Günlük Banka Bloke & Saat Sayacı Alanı -->
+          ${mobileBlokeHtml}
+
           <!-- 3. Finansal Döküm Matrisi (4 Kutu) -->
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; background:#F8FAFB; padding:10px 12px; border-radius:10px; border:1px solid #CBD5E1; margin-bottom:12px;">
-            <div style="border-right:1px solid #E2E8F0; padding-right:6px;">
-              <span style="font-size:10.5px; color:#0369A1; font-weight:800; display:block;">🔵 Net Hakediş (%92):</span>
-              <strong style="font-size:13.5px; color:#0284C7;">${r.hakedis > 0 ? fmt(r.hakedis) : '—'}</strong>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px; background:#F8FAFB; padding:8px 10px; border-radius:8px; border:1px solid #CBD5E1; margin-bottom:10px;">
+            <div style="border-right:1px solid #E2E8F0; padding-right:4px;">
+              <span style="font-size:10px; color:#0369A1; font-weight:800; display:block;">🔵 Net Hakediş (%92):</span>
+              <strong style="font-size:12.5px; color:#0284C7;">${r.hakedis > 0 ? fmt(r.hakedis) : '—'}</strong>
             </div>
             <div style="padding-left:4px;">
-              <span style="font-size:10.5px; color:${isZeroRemaining ? '#15803D' : '#991B1B'}; font-weight:800; display:block;">🔴 Kalan Bakiye:</span>
-              <strong style="font-size:13.5px; color:${isZeroRemaining ? '#15803D' : '#DC2626'};">${fmt(r.remaining)}</strong>
+              <span style="font-size:10px; color:${isZeroRemaining ? '#15803D' : '#991B1B'}; font-weight:800; display:block;">🔴 Kalan Bakiye:</span>
+              <strong style="font-size:12.5px; color:${isZeroRemaining ? '#15803D' : '#DC2626'};">${fmt(r.remaining)}</strong>
             </div>
-            <div style="border-right:1px solid #E2E8F0; padding-right:6px; border-top:1px solid #E2E8F0; padding-top:6px;">
-              <span style="font-size:10.5px; color:#166534; font-weight:800; display:block;">💎 Net Kâr:</span>
+            <div style="border-right:1px solid #E2E8F0; padding-right:4px; border-top:1px solid #E2E8F0; padding-top:4px;">
+              <span style="font-size:10px; color:#166534; font-weight:800; display:block;">💎 Net Kâr:</span>
               ${profitMobileHtml}
             </div>
-            <div style="padding-left:4px; border-top:1px solid #E2E8F0; padding-top:6px;">
-              <span style="font-size:10.5px; color:#15803D; font-weight:800; display:block;">🟢 Ödenen Tutar:</span>
-              <strong style="font-size:13.5px; color:#16A34A;">${r.paid > 0 ? fmt(r.paid) : '—'}</strong>
+            <div style="padding-left:4px; border-top:1px solid #E2E8F0; padding-top:4px;">
+              <span style="font-size:10px; color:#15803D; font-weight:800; display:block;">🟢 Ödenen Tutar:</span>
+              <strong style="font-size:12.5px; color:#16A34A;">${r.paid > 0 ? fmt(r.paid) : '—'}</strong>
             </div>
           </div>
 
           <!-- 4. Aksiyon Butonları (Geniş Dokunmatik) -->
-          <div style="display:grid; grid-template-columns: 1fr auto; gap:8px;">
+          <div style="display:grid; grid-template-columns: 1fr auto; gap:6px;">
             ${mobileActionsHtml}
           </div>
 
@@ -4278,6 +4439,9 @@ const AdminApp = {
 
     tbody.innerHTML = html;
     if (mobileList) mobileList.innerHTML = mobileHtml;
+
+    // Canlı 1 saniyelik saat sayaçlarını aktif et
+    this.startPosCountdownTimer();
   },
 
   // 7. ÖDEME MODALI KONTROLLERİ
@@ -5670,12 +5834,16 @@ const AdminApp = {
         profitVal = fmt(profit);
       }
 
+      const unlockInfo = r.pos > 0 ? this.getPosUnlockInfo(r.date) : null;
+      const blokeExcelVal = unlockInfo ? (unlockInfo.isUnlocked ? `Hesaba Geçti (${unlockInfo.unlockDateFormatted})` : `Blokeli (${unlockInfo.unlockDateFormatted})`) : '—';
+
       tableRowsHtml += `
         <tr>
           <td style="text-align:center; padding:6px; border:1px solid #CBD5E1;">${dateFormatted}</td>
           <td style="text-align:left; padding:6px; border:1px solid #CBD5E1;">${this.escapeHtml(descVal)}</td>
           <td style="text-align:right; padding:6px; border:1px solid #CBD5E1; mso-number-format:'\\#,\\#\\#0\\.00';">${posVal}</td>
           <td style="text-align:center; padding:6px; border:1px solid #CBD5E1; color:#92400E; font-weight:bold;">${rateVal}</td>
+          <td style="text-align:center; padding:6px; border:1px solid #CBD5E1; color:#B45309; font-weight:bold;">${blokeExcelVal}</td>
           <td style="text-align:right; padding:6px; border:1px solid #CBD5E1; color:#0369A1; mso-number-format:'\\#,\\#\\#0\\.00';">${hakVal}</td>
           <td style="text-align:right; padding:6px; border:1px solid #CBD5E1; color:#15803D; mso-number-format:'\\#,\\#\\#0\\.00';">${payVal}</td>
           <td style="text-align:right; padding:6px; border:1px solid #CBD5E1; font-weight:bold; color:#991B1B; mso-number-format:'\\#,\\#\\#0\\.00';">${fmt(r.remaining)}</td>
@@ -5700,25 +5868,26 @@ const AdminApp = {
         <table style="width:100%; margin-bottom:15px;">
           <tr>
             <td colspan="5" class="header-title">BELGİN KUYUMCULUK — CARİ HESAP & KÂR EKSTRESİ</td>
-            <td colspan="3" class="remaining-hero">GÜNCEL ÖDENECEK TUTAR: ${fmt(s.totalRemaining)} ₺</td>
+            <td colspan="4" class="remaining-hero">GÜNCEL ÖDENECEK TUTAR: ${fmt(s.totalRemaining)} ₺</td>
           </tr>
           <tr>
-            <td colspan="5" style="color:#64748B; font-size:10pt;">Rapor Tarihi: ${todayStr} | Kesinti Oranı: %8 | Banka POS Oranı: Satır / Dönem Bazlı</td>
-            <td colspan="3" style="text-align:right; color:#166534; font-size:10pt; font-weight:bold;">Toplam Net Kâr: ${fmt(totalProfit)} ₺</td>
+            <td colspan="5" style="color:#64748B; font-size:10pt;">Rapor Tarihi: ${todayStr} | Kesinti Oranı: %8 | Banka POS Blokesi: 3 Gün (09:00)</td>
+            <td colspan="4" style="text-align:right; color:#166534; font-size:10pt; font-weight:bold;">Toplam Net Kâr: ${fmt(totalProfit)} ₺</td>
           </tr>
         </table>
 
         <table border="1" style="border-collapse:collapse; width:100%;">
           <thead>
             <tr>
-              <th style="width:125px;">Tarih</th>
-              <th style="width:250px; text-align:left;">İşlem / Açıklama</th>
-              <th style="width:120px; text-align:right;">POS</th>
-              <th style="width:100px; text-align:center;">POS Oranı (%)</th>
-              <th style="width:140px; text-align:right;">Hakediş<br><span style="font-size:8.5pt; font-weight:normal;">POS - %8 Kesinti</span></th>
-              <th style="width:120px; text-align:right;">Ödenen</th>
-              <th style="width:140px; text-align:right;">Kalan Tutar</th>
-              <th style="width:140px; text-align:right;">Kâr<br><span style="font-size:8.5pt; font-weight:normal;">Net Kazanç</span></th>
+              <th style="width:115px;">Tarih</th>
+              <th style="width:230px; text-align:left;">İşlem / Açıklama</th>
+              <th style="width:110px; text-align:right;">POS</th>
+              <th style="width:90px; text-align:center;">POS Oranı (%)</th>
+              <th style="width:150px; text-align:center;">Banka Blokesi (3 Gün — 09:00)</th>
+              <th style="width:130px; text-align:right;">Hakediş<br><span style="font-size:8.5pt; font-weight:normal;">POS - %8 Kesinti</span></th>
+              <th style="width:110px; text-align:right;">Ödenen</th>
+              <th style="width:130px; text-align:right;">Kalan Tutar</th>
+              <th style="width:130px; text-align:right;">Kâr<br><span style="font-size:8.5pt; font-weight:normal;">Net Kazanç</span></th>
             </tr>
           </thead>
           <tbody>
@@ -5728,6 +5897,7 @@ const AdminApp = {
               <td></td>
               <td style="text-align:right;">${fmt(s.totalPos)} ₺</td>
               <td></td>
+              <td style="text-align:center;">—</td>
               <td style="text-align:right; color:#0369A1;">${fmt(s.totalHakedis)} ₺</td>
               <td style="text-align:left; color:#15803D;">${fmt(s.totalPaid)} ₺</td>
               <td style="text-align:right; color:#991B1B; font-size:12pt;">${fmt(s.totalRemaining)} ₺</td>
