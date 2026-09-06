@@ -469,17 +469,22 @@ function prerenderPdpContent(p) {
           <p class="pdp-art-ref" style="font-size:13px;color:#8fa099;margin:0;">Ref: ${esc(ref)} • Durum: ${isUsed(p) ? 'Ekspertiz Onaylı İkinci El' : 'Sıfır Distribütör Garantili'}</p>
           <div class="pdp-art-price" style="font-size:32px;font-weight:800;color:#34D399;margin:8px 0;">${esc(money(p.price))}</div>
           ${catKey === 'mucevherat' ? `
-          <!-- KURUMSAL BİLGİLENDİRME (KREDİ KARTI KAPALI) -->
+          <!-- KURUMSAL BİLGİLENDİRME (KREDİ KARTI KAPALI & RESMİ BANKA BİLGİLERİ) -->
           <div class="pdp-no-cc-notice" style="display:flex;align-items:flex-start;gap:14px;background:#FFFDF7;border:2px solid #C2A768;border-left:6px solid #B91C1C;border-radius:10px;padding:16px 20px;margin:10px 0 16px;box-shadow:0 4px 14px rgba(194,167,104,0.15);">
             <span style="font-size:24px;line-height:1.2;flex-shrink:0;">🛡️</span>
             <div>
               <strong style="color:#B91C1C;display:block;margin-bottom:4px;font-size:13.5px;font-weight:800;letter-spacing:0.4px;text-transform:uppercase;">KURUMSAL BİLGİLENDİRME</strong>
-              <p style="font-size:13.5px;font-weight:700;color:#1F2937;line-height:1.55;margin:0 0 4px;">
+              <p style="font-size:13.5px;font-weight:700;color:#1F2937;line-height:1.55;margin:0 0 6px;">
                 Mevzuat ve şirket politikalarımız gereğince <span style="color:#B91C1C;">Altın ve Mücevherat ürünlerinde KREDİ KARTI ile satış yapılmamaktadır</span>.
               </p>
-              <p style="font-size:12.5px;color:#4B5563;line-height:1.5;margin:0;">
+              <p style="font-size:12.5px;color:#4B5563;line-height:1.5;margin:0 0 10px;">
                 Tüm altın, ziynet ve bilezik siparişlerinizi kurumsal <strong>Banka Havalesi / EFT / FAST</strong> yöntemiyle güvenle gerçekleştirebilir veya <strong>İzmir Buca showroom</strong> mağazamızda bizzat teslim alabilirsiniz.
               </p>
+              <div style="background:#F9FAFB;border:1px solid #E5E7EB;border-radius:6px;padding:10px 12px;font-size:12px;color:#1F2937;line-height:1.6;">
+                <div><strong>Banka:</strong> Kuveyt Türk</div>
+                <div><strong>Alıcı:</strong> SEMİH SONBAHAR BELGİN KUYUMCULUK</div>
+                <div><strong>TL IBAN:</strong> <code style="font-family:monospace;font-weight:800;color:#004D2C;font-size:12.5px;">TR050020500009275715800001</code></div>
+              </div>
             </div>
           </div>
           ` : ''}

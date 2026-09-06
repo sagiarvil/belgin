@@ -1154,9 +1154,14 @@ const App = {
       </table>
 
       ${this.isJewelleryProduct(p) ? `
-        <div style="font-size:12px; color:#2B261D; background:#FFFDF7; border:1.5px solid #C2A768; padding:10px 12px; border-radius:6px; margin-bottom:14px; line-height:1.55;">
-          <strong style="color:var(--color-teal); display:block; margin-bottom:3px; font-weight:800;">🛡️ KURUMSAL BİLGİLENDİRME</strong>
-          Mevzuat ve şirket politikalarımız gereğince Altın ve Mücevherat ürünlerinde <strong>KREDİ KARTI ile online satış yapılmamaktadır</strong>. Siparişlerinizi kurumsal <strong>Banka Havalesi / EFT / FAST</strong> yöntemiyle verebilirsiniz.
+        <div style="font-size:12px; color:#2B261D; background:#FFFDF7; border:1.5px solid #C2A768; padding:12px 14px; border-radius:8px; margin-bottom:14px; line-height:1.55;">
+          <strong style="color:#B91C1C; display:block; margin-bottom:4px; font-weight:800;">🛡️ KURUMSAL SATIŞ &amp; BANKA BİLGİLERİ</strong>
+          Mevzuat ve şirket politikalarımız gereğince Altın ve Mücevherat ürünlerinde <strong>KREDİ KARTI ile online satış yapılmamaktadır</strong>.
+          <div style="margin-top:8px; padding-top:8px; border-top:1px dashed #C2A768; font-size:11.5px; color:#1F2937;">
+            <div><strong>Banka:</strong> Kuveyt Türk</div>
+            <div><strong>Hesap Sahibi:</strong> SEMİH SONBAHAR BELGİN KUYUMCULUK</div>
+            <div style="margin-top:3px;"><strong>TL IBAN:</strong> <code style="font-family:monospace; font-weight:800; color:#004D2C;">TR050020500009275715800001</code></div>
+          </div>
         </div>
       ` : (isHighVal ? `
         <div style="font-size:11.5px; color:#5D4411; background:#FFF9EE; border:1px solid #E6D2A8; padding:10px 12px; border-radius:6px; margin-bottom:16px; line-height:1.5;">
@@ -1257,17 +1262,26 @@ const App = {
           </div>
 
           <!-- Kurumsal Banka Bilgileri -->
-          <div style="background:#F9FAFB; border:1px solid #E5E7EB; border-radius:8px; padding:14px 16px; font-size:12px; color:#374151; margin-bottom:16px;">
-            <div style="display:flex; justify-content:space-between; margin-bottom:6px; border-bottom:1px dashed #E5E7EB; padding-bottom:6px;">
-              <span style="color:#6B7280;">Firma Unvanı:</span>
-              <strong style="color:#111827;">BELGİN KUYUMCULUK - SEMİH SONBAHAR</strong>
+          <div style="background:#F9FAFB; border:1.5px solid #C2A768; border-radius:10px; padding:16px 18px; font-size:12.5px; color:#374151; margin-bottom:16px; box-shadow:0 2px 8px rgba(194,167,104,0.1);">
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px; border-bottom:1px dashed #E5E7EB; padding-bottom:8px;">
+              <span style="color:#6B7280; font-weight:600;">Banka:</span>
+              <strong style="color:#111827; font-size:13.5px;">Kuveyt Türk</strong>
             </div>
-            <div style="display:flex; justify-content:space-between; margin-bottom:6px; border-bottom:1px dashed #E5E7EB; padding-bottom:6px;">
-              <span style="color:#6B7280;">Banka:</span>
-              <strong style="color:#111827;">Kuveyt Türk Katılım Bankası</strong>
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px; border-bottom:1px dashed #E5E7EB; padding-bottom:8px;">
+              <span style="color:#6B7280; font-weight:600;">Hesap Sahibi / Alıcı:</span>
+              <strong style="color:#111827; font-size:13.5px;">SEMİH SONBAHAR BELGİN KUYUMCULUK</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px dashed #E5E7EB; padding-bottom:8px; flex-wrap:wrap; gap:8px;">
+              <span style="color:#6B7280; font-weight:600;">TL IBAN:</span>
+              <div style="display:flex; align-items:center; gap:6px;">
+                <code style="background:#E6F4EA; color:#004D2C; font-family:monospace; font-size:13px; font-weight:800; padding:4px 8px; border-radius:5px; border:1px solid #CEEAD6; user-select:all;">TR050020500009275715800001</code>
+                <button type="button" onclick="navigator.clipboard.writeText('TR050020500009275715800001'); if(typeof showToast==='function'){showToast('Kuveyt Türk IBAN kopyalandı.','success');}else{alert('Kuveyt Türk IBAN kopyalandı: TR050020500009275715800001');}" style="background:#004D2C; color:#FFFFFF; border:none; padding:5px 12px; border-radius:5px; font-size:11.5px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
+                  📋 Kopyala
+                </button>
+              </div>
             </div>
             <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span style="color:#6B7280;">Showroom:</span>
+              <span style="color:#6B7280; font-weight:600;">Fiziki Showroom:</span>
               <span style="color:#111827; font-weight:600;">Menderes Cad. No:231/B Buca / İzmir</span>
             </div>
           </div>
@@ -1326,8 +1340,18 @@ const App = {
 
     // Güvenli Ödeme Bannerı (Havale/EFT vs Tek Çekim 3D Secure)
     const secureBannerHtml = isGoldProduct ? `
-      <div class="pdp-installment-banner" style="background:#FFFDF7; border:1.5px solid #C2A768; color:#3D2F12; padding:12px 14px; border-radius:6px; font-size:12.5px; margin-top:14px; line-height:1.55;">
+      <div class="pdp-installment-banner" style="background:#FFFDF7; border:1.5px solid #C2A768; color:#3D2F12; padding:14px 16px; border-radius:8px; font-size:12.5px; margin-top:14px; line-height:1.55;">
         <span>🏛️ <strong>Ödeme &amp; Teslimat:</strong> Altın ve Mücevherat ürünlerinde <strong>yalnızca kurumsal Banka Havalesi / EFT / FAST</strong> ve İzmir Buca showroom mağazadan teslimat geçerlidir. Kredi kartı ile satış yapılmamaktadır.</span>
+        <div style="margin-top:10px; padding-top:10px; border-top:1px dashed #C2A768; font-size:12px; color:#1F2937; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px;">
+          <div>
+            <strong>Banka:</strong> Kuveyt Türk · <strong>Alıcı:</strong> SEMİH SONBAHAR BELGİN KUYUMCULUK
+          </div>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <strong>TL IBAN:</strong>
+            <code style="font-family:monospace; font-weight:800; color:#004D2C; background:#E6F4EA; padding:3px 6px; border-radius:4px; border:1px solid #CEEAD6;">TR050020500009275715800001</code>
+            <button type="button" onclick="navigator.clipboard.writeText('TR050020500009275715800001'); if(typeof showToast==='function'){showToast('Kuveyt Türk IBAN kopyalandı.','success');}else{alert('Kuveyt Türk IBAN kopyalandı: TR050020500009275715800001');}" style="background:#004D2C; color:#fff; border:none; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;">Kopyala</button>
+          </div>
+        </div>
       </div>
     ` : `
       <div class="pdp-installment-banner" style="background:#FAF8F5; border:1px solid #EAE5D9; color:#4A3B18; padding:10px 14px; border-radius:6px; font-size:12.5px; margin-top:14px; line-height:1.5;">
@@ -1420,8 +1444,8 @@ const App = {
         <div class="pdp-trust-item">
           <span class="pdp-trust-item-icon">🏦</span>
           <div class="pdp-trust-item-text">
-            <strong>Kurumsal Havale / EFT & FAST</strong>
-            <span>Kredi kartı geçerli değildir. Kurumsal hesap güvencesiyle transfer.</span>
+            <strong>Kuveyt Türk Havale / EFT & FAST</strong>
+            <span>IBAN: TR050020500009275715800001 · SEMİH SONBAHAR BELGİN KUYUMCULUK</span>
           </div>
         </div>
         <div class="pdp-trust-item">
@@ -1544,7 +1568,7 @@ const App = {
             <div class="pdp-spec-rows">
               <div class="pdp-spec-row"><span class="pdp-spec-key">Teslimat Kuralı</span><span class="pdp-spec-value">12.000 TL+ Showroom Güvenli Teslim</span></div>
               <div class="pdp-spec-row"><span class="pdp-spec-key">Geri Alım</span><span class="pdp-spec-value">Anlık Kapalıçarşı Kuruyla Nakit Alım</span></div>
-              <div class="pdp-spec-row"><span class="pdp-spec-key">Ödeme Şekli</span><span class="pdp-spec-value">Kurumsal Havale / EFT &amp; Showroom (Kredi Kartına Kapalı)</span></div>
+              <div class="pdp-spec-row"><span class="pdp-spec-key">Ödeme Şekli</span><span class="pdp-spec-value">Kuveyt Türk Havale / EFT (TR050020500009275715800001 - SEMİH SONBAHAR BELGİN KUYUMCULUK) &amp; Showroom</span></div>
               <div class="pdp-spec-row"><span class="pdp-spec-key">Menşei</span><span class="pdp-spec-value">Türkiye (T.C. Darphane Tescilli)</span></div>
             </div>
           </div>
