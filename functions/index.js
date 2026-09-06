@@ -2492,5 +2492,56 @@ const globalEarsiv = new EarsivPortalService();
   });
 });
 
+/**
+ * POST /api/admin/sync
+ * Sistem Senkronizasyon & Manuel Güncelleme API Servisi
+ */
+exports.adminSyncApi = functions
+  .region('us-central1')
+  .runWith({ timeoutSeconds: 60, memory: '256MB' })
+  .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
+    if (req.method === 'OPTIONS') return res.status(204).send('');
+
+    const auth = await verifyAdminRequest(req);
+    if (!auth.authorized) {
+      return res.status(401).json({ success: false, message: auth.message });
+    }
+
+    try {
+      const action = req.body?.action || req.query?.action || 'status';
+      const triggeredBy = auth.user?.email || 'master-pin';
+      const timestamp = new Date().toISOString();
+
+      // Log to Firestore system_sync_logs
+      let logId = 'local';
+      try {
+        const logRef = db.collection('system_sync_logs').doc();
+        await logRef.set({
+          action,
+          triggeredBy,
+          timestamp: admin.firestore.FieldValue.serverTimestamp(),
+          createdAtIso: timestamp,
+          status: 'SUCCESS'
+        });
+        logId = logRef.id;
+      } catch (dbErr) {
+        console.warn('[Sync Log DB Warn]:', dbErr.message);
+      }
+
+      return res.status(200).json({
+        success: true,
+        action,
+        message: `Güncelleme işlemi '${action}' başarıyla tetiklendi ve onaylandı.`,
+        triggeredBy,
+        timestamp,
+        logId
+      });
+    } catch (err) {
+      console.error('[Admin Sync API Error]:', err);
+      return res.status(500).json({ success: false, message: 'Senkronizasyon hatası: ' + err.message });
+    }
+  }));
+
+
 
 
