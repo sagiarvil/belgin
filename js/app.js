@@ -1154,17 +1154,27 @@ const App = {
       </table>
 
       ${this.isJewelleryProduct(p) ? `
-        <div style="font-size:12px; color:#2B261D; background:#FFFDF7; border:1.5px solid #C2A768; padding:12px 14px; border-radius:8px; margin-bottom:14px; line-height:1.55;">
-          <strong style="color:#B91C1C; display:block; margin-bottom:4px; font-weight:800;">🛡️ KURUMSAL SATIŞ &amp; BANKA BİLGİLERİ</strong>
-          Mevzuat ve şirket politikalarımız gereğince Altın ve Mücevherat ürünlerinde <strong>KREDİ KARTI ile online satış yapılmamaktadır</strong>.
-          <div style="margin-top:8px; padding-top:8px; border-top:1px dashed #C2A768; font-size:11.5px; color:#1F2937;">
-            <div><strong>Banka:</strong> Kuveyt Türk</div>
-            <div><strong>Hesap Sahibi:</strong> SEMİH SONBAHAR BELGİN KUYUMCULUK</div>
-            <div style="margin-top:3px;"><strong>TL IBAN:</strong> <code style="font-family:monospace; font-weight:800; color:#004D2C;">TR050020500009275715800001</code></div>
+        <div style="font-size:12px; color:#2B261D; background:#FAF8F5; border:1px solid #D8C7A5; padding:12px 14px; border-radius:8px; margin-bottom:14px; line-height:1.5;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <strong style="color:#05332F; font-size:11px; text-transform:uppercase; letter-spacing:0.5px;">🏛️ Havale / EFT Siparişi</strong>
+            <span style="background:#F2ECE0; color:#5A4315; font-size:10.5px; font-weight:700; padding:2px 6px; border-radius:4px;">Kredi Kartına Kapalıdır</span>
           </div>
-          <div style="margin-top:8px; background:#FFF5F5; border:1.5px solid #E53E3E; border-radius:6px; padding:8px 10px; font-size:11.5px; font-weight:800; color:#9B1C1C; display:flex; align-items:center; gap:6px; line-height:1.4;">
-            <span style="font-size:15px; flex-shrink:0;">⚠️</span>
-            <span>ÖNEMLİ: ÖDEME YAPMADAN ÖNCE <a href="tel:+905419305372" style="color:#C53030; text-decoration:underline; font-weight:900;">+90 541 930 53 72</a> ARAYARAK FİYATI SABİTLEMELİSİNİZ</span>
+          <p style="font-size:11.5px; color:#6B7280; margin:0 0 8px;">
+            Mevzuat gereği altın/ziynet ürünlerinde online kredi kartı işlemi yapılmamaktadır. Siparişler Kuveyt Türk kurumsal hesabımıza Havale/EFT ile tamamlanır.
+          </p>
+          <div style="background:#FFFDF9; border:1px solid #C2A768; border-radius:6px; padding:8px 10px; margin-bottom:8px; font-size:11px; line-height:1.45;">
+            <div style="color:#854D0E; font-weight:800; margin-bottom:2px;">📞 1. ADIM: FİYAT SABİTLEME</div>
+            <div style="color:#4B5563;">Ödeme öncesinde lütfen arayarak anlık fiyatı sabitleyiniz: <a href="tel:+905419305372" style="color:#05332F; font-weight:800; text-decoration:underline;">0541 930 53 72</a></div>
+          </div>
+          <div style="background:#FFFFFF; border:1px solid #E5E7EB; border-radius:6px; padding:8px 10px; font-size:11px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
+              <span style="color:#6B7280;">Banka / Alıcı:</span>
+              <strong style="color:#111827;">Kuveyt Türk · Semih Sonbahar Belgin Kuyumculuk</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
+              <code style="font-family:monospace; font-weight:800; color:#004D2C; font-size:11.5px;">TR050020500009275715800001</code>
+              <button type="button" onclick="navigator.clipboard.writeText('TR050020500009275715800001'); if(typeof showToast==='function'){showToast('Kuveyt Türk IBAN kopyalandı.','success');}else{alert('Kuveyt Türk IBAN kopyalandı: TR050020500009275715800001');}" style="background:#05332F; color:#fff; border:none; padding:3px 8px; border-radius:4px; font-size:10.5px; font-weight:700; cursor:pointer;">Kopyala</button>
+            </div>
           </div>
         </div>
       ` : (isHighVal ? `
@@ -1252,46 +1262,46 @@ const App = {
             </div>
           </div>
 
-          <!-- Kırmızı & Altın Vurgulu Kesin Uyarı -->
-          <div style="background:#FFFDF7; border:1.5px solid #C2A768; border-left:5px solid #B91C1C; border-radius:8px; padding:14px 16px; margin-bottom:14px;">
-            <strong style="color:#B91C1C; font-size:12.5px; font-weight:800; display:block; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.3px;">
-              🛡️ KURUMSAL SATIŞ VE ÖDEME BİLDİRİMİ
-            </strong>
-            <p style="font-size:12.5px; font-weight:600; color:#1F2937; line-height:1.55; margin:0 0 4px;">
-              Mevzuat ve şirket politikalarımız gereğince <span style="color:#B91C1C;">Altın ve Mücevherat ürünlerinde KREDİ KARTI ile satış yapılmamaktadır</span>.
-            </p>
-            <p style="font-size:12px; color:#4B5563; line-height:1.5; margin:0;">
-              Siparişinizi resmi kurumsal banka hesabımıza <strong>Havale / EFT / FAST</strong> yöntemiyle güvenle gerçekleştirebilir veya <strong>İzmir Buca showroom</strong> mağazamızda bizzat teslim alabilirsiniz.
-            </p>
+          <!-- Kurumsal Bilgilendirme Notu -->
+          <div style="background:#FAF8F5; border:1px solid #D8C7A5; border-radius:8px; padding:12px 14px; margin-bottom:14px; font-size:12.5px; color:#4B5563; line-height:1.5;">
+            <div style="display:inline-flex; align-items:center; gap:5px; color:#854D0E; font-weight:800; font-size:11px; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">
+              <span>🛡️</span> Yasal &amp; Kurumsal Güvence
+            </div>
+            <div>Mevzuat gereği altın ve ziynet ürünlerinde kredi kartı işlemi yapılmamaktadır. Siparişiniz <strong>Kuveyt Türk Havale / EFT</strong> veya <strong>İzmir Buca Showroom</strong> teslimi ile tamamlanır.</div>
           </div>
 
-          <!-- Kurumsal Banka Bilgileri -->
-          <div style="background:#F9FAFB; border:1.5px solid #C2A768; border-radius:10px; padding:16px 18px; font-size:12.5px; color:#374151; margin-bottom:16px; box-shadow:0 2px 8px rgba(194,167,104,0.1);">
-            <div style="display:flex; justify-content:space-between; margin-bottom:8px; border-bottom:1px dashed #E5E7EB; padding-bottom:8px;">
-              <span style="color:#6B7280; font-weight:600;">Banka:</span>
-              <strong style="color:#111827; font-size:13.5px;">Kuveyt Türk</strong>
+          <!-- 1. ADIM: FİYAT SABİTLEME -->
+          <div style="background:#FFFDF9; border:1.5px solid #C2A768; border-radius:8px; padding:12px 14px; margin-bottom:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+              <span style="color:#854D0E; font-size:11px; font-weight:800; letter-spacing:0.5px; text-transform:uppercase;">1. ADIM · FİYAT SABİTLEME</span>
+              <span style="background:#FEF3C7; color:#92400E; font-size:10.5px; font-weight:800; padding:2px 6px; border-radius:4px;">Zorunlu</span>
             </div>
-            <div style="display:flex; justify-content:space-between; margin-bottom:8px; border-bottom:1px dashed #E5E7EB; padding-bottom:8px;">
-              <span style="color:#6B7280; font-weight:600;">Hesap Sahibi / Alıcı:</span>
-              <strong style="color:#111827; font-size:13.5px;">SEMİH SONBAHAR BELGİN KUYUMCULUK</strong>
+            <p style="font-size:12px; color:#6B7280; margin:0 0 8px; line-height:1.45;">
+              Canlı borsa dalgalanmaları nedeniyle ödeme yapmadan önce lütfen satış danışmanımızı arayarak fiyatınızı sabitleyiniz.
+            </p>
+            <a href="tel:+905419305372" style="background:#05332F; color:#FFFFFF; text-decoration:none; font-size:12.5px; font-weight:700; padding:8px 12px; border-radius:6px; display:inline-flex; align-items:center; gap:6px;">
+              <span>📞</span> 0541 930 53 72 (Hemen Ara)
+            </a>
+          </div>
+
+          <!-- 2. ADIM: KURUMSAL BANKA HESABI -->
+          <div style="background:#FFFFFF; border:1px solid #D8C7A5; border-radius:8px; padding:12px 14px; margin-bottom:16px; font-size:12px; color:#374151;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <span style="color:#05332F; font-size:11px; font-weight:800; letter-spacing:0.5px; text-transform:uppercase;">2. ADIM · BANKA BİLGİSİ</span>
+              <span style="font-weight:700; color:#111827;">Kuveyt Türk</span>
             </div>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px dashed #E5E7EB; padding-bottom:8px; flex-wrap:wrap; gap:8px;">
-              <span style="color:#6B7280; font-weight:600;">TL IBAN:</span>
-              <div style="display:flex; align-items:center; gap:6px;">
-                <code style="background:#E6F4EA; color:#004D2C; font-family:monospace; font-size:13px; font-weight:800; padding:4px 8px; border-radius:5px; border:1px solid #CEEAD6; user-select:all;">TR050020500009275715800001</code>
-                <button type="button" onclick="navigator.clipboard.writeText('TR050020500009275715800001'); if(typeof showToast==='function'){showToast('Kuveyt Türk IBAN kopyalandı.','success');}else{alert('Kuveyt Türk IBAN kopyalandı: TR050020500009275715800001');}" style="background:#004D2C; color:#FFFFFF; border:none; padding:5px 12px; border-radius:5px; font-size:11.5px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
-                  📋 Kopyala
-                </button>
-              </div>
+            <div style="margin-bottom:6px;">
+              <span style="color:#6B7280; font-size:11px; display:block;">Hesap Sahibi / Alıcı:</span>
+              <strong style="color:#111827; font-size:12.5px;">SEMİH SONBAHAR BELGİN KUYUMCULUK</strong>
             </div>
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span style="color:#6B7280; font-weight:600;">Fiziki Showroom:</span>
-              <span style="color:#111827; font-weight:600;">Menderes Cad. No:231/B Buca / İzmir</span>
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px;">
+              <code style="background:#F4F9F6; color:#004D2C; font-family:monospace; font-size:12.5px; font-weight:800; padding:6px 10px; border-radius:5px; border:1px solid #CEEAD6; user-select:all;">TR050020500009275715800001</code>
+              <button type="button" onclick="navigator.clipboard.writeText('TR050020500009275715800001'); if(typeof showToast==='function'){showToast('Kuveyt Türk IBAN kopyalandı.','success');}else{alert('Kuveyt Türk IBAN kopyalandı: TR050020500009275715800001');}" style="background:#05332F; color:#FFFFFF; border:none; padding:6px 12px; border-radius:5px; font-size:11.5px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
+                📋 Kopyala
+              </button>
             </div>
-            <!-- DİKKAT ÇEKEN FİYAT SABİTLEME UYARISI -->
-            <div style="margin-top:12px; background:#FFF5F5; border:1.5px solid #E53E3E; border-radius:6px; padding:10px 12px; display:flex; align-items:center; gap:8px; color:#9B1C1C; font-weight:800; font-size:12.5px; line-height:1.45;">
-              <span style="font-size:18px; line-height:1; flex-shrink:0;">⚠️</span>
-              <span>ÖNEMLİ: ÖDEME YAPMADAN ÖNCE <a href="tel:+905419305372" style="color:#C53030; text-decoration:underline; font-weight:900;">+90 541 930 53 72</a> ARAYARAK FİYATI SABİTLEMELİSİNİZ</span>
+            <div style="margin-top:8px; font-size:11px; color:#6B7280;">
+              📍 <strong>Showroom:</strong> Menderes Cad. No:231/B Buca / İzmir
             </div>
           </div>
 
@@ -1349,21 +1359,30 @@ const App = {
 
     // Güvenli Ödeme Bannerı (Havale/EFT vs Tek Çekim 3D Secure)
     const secureBannerHtml = isGoldProduct ? `
-      <div class="pdp-installment-banner" style="background:#FFFDF7; border:1.5px solid #C2A768; color:#3D2F12; padding:14px 16px; border-radius:8px; font-size:12.5px; margin-top:14px; line-height:1.55;">
-        <span>🏛️ <strong>Ödeme &amp; Teslimat:</strong> Altın ve Mücevherat ürünlerinde <strong>yalnızca kurumsal Banka Havalesi / EFT / FAST</strong> ve İzmir Buca showroom mağazadan teslimat geçerlidir. Kredi kartı ile satış yapılmamaktadır.</span>
-        <div style="margin-top:10px; padding-top:10px; border-top:1px dashed #C2A768; font-size:12px; color:#1F2937; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px;">
+      <div class="pdp-installment-banner" style="background:#FAF8F5; border:1px solid #D8C7A5; color:#1F2937; padding:14px 16px; border-radius:10px; font-size:12.5px; margin-top:14px; line-height:1.55;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <span style="color:#05332F; font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:0.5px;">🏛️ Havale / EFT &amp; Showroom Teslimatı</span>
+          <span style="background:#F2ECE0; color:#5A4315; font-size:10.5px; font-weight:700; padding:2px 6px; border-radius:4px;">Kredi Kartına Kapalıdır</span>
+        </div>
+        <p style="font-size:12px; color:#4B5563; margin:0 0 10px; line-height:1.5;">
+          Mevzuat gereği altın ve ziynet ürünlerinde online kredi kartı işlemi yapılmamaktadır. Siparişleriniz canlı borsa kuru güvencesiyle <strong>Kuveyt Türk Havale / EFT</strong> veya <strong>İzmir Buca Showroom</strong> teslimi ile tamamlanır.
+        </p>
+        <div style="background:#FFFDF9; border:1px solid #C2A768; border-radius:6px; padding:8px 12px; margin-bottom:10px; font-size:11.5px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
           <div>
-            <strong>Banka:</strong> Kuveyt Türk · <strong>Alıcı:</strong> SEMİH SONBAHAR BELGİN KUYUMCULUK
+            <strong style="color:#854D0E;">📞 1. ADIM:</strong> Ödeme yapmadan önce lütfen arayarak anlık fiyatı sabitleyiniz.
+          </div>
+          <a href="tel:+905419305372" style="background:#05332F; color:#FFFFFF; text-decoration:none; font-size:11.5px; font-weight:700; padding:5px 10px; border-radius:5px; display:inline-flex; align-items:center; gap:4px;">
+            <span>📞</span> 0541 930 53 72
+          </a>
+        </div>
+        <div style="background:#FFFFFF; border:1px solid #E5E7EB; border-radius:6px; padding:10px 12px; font-size:12px; color:#1F2937; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px;">
+          <div>
+            <strong>Kuveyt Türk</strong> · SEMİH SONBAHAR BELGİN KUYUMCULUK
           </div>
           <div style="display:flex; align-items:center; gap:6px;">
-            <strong>TL IBAN:</strong>
-            <code style="font-family:monospace; font-weight:800; color:#004D2C; background:#E6F4EA; padding:3px 6px; border-radius:4px; border:1px solid #CEEAD6;">TR050020500009275715800001</code>
-            <button type="button" onclick="navigator.clipboard.writeText('TR050020500009275715800001'); if(typeof showToast==='function'){showToast('Kuveyt Türk IBAN kopyalandı.','success');}else{alert('Kuveyt Türk IBAN kopyalandı: TR050020500009275715800001');}" style="background:#004D2C; color:#fff; border:none; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;">Kopyala</button>
+            <code style="font-family:monospace; font-weight:800; color:#004D2C; background:#F4F9F6; padding:4px 8px; border-radius:4px; border:1px solid #CEEAD6; font-size:12px;">TR050020500009275715800001</code>
+            <button type="button" onclick="navigator.clipboard.writeText('TR050020500009275715800001'); if(typeof showToast==='function'){showToast('Kuveyt Türk IBAN kopyalandı.','success');}else{alert('Kuveyt Türk IBAN kopyalandı: TR050020500009275715800001');}" style="background:#05332F; color:#fff; border:none; padding:4px 10px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;">Kopyala</button>
           </div>
-        </div>
-        <div style="margin-top:10px; background:#FFF5F5; border:1.5px solid #E53E3E; border-radius:6px; padding:8px 12px; font-size:12px; font-weight:800; color:#9B1C1C; display:flex; align-items:center; gap:8px; line-height:1.45;">
-          <span style="font-size:16px; flex-shrink:0;">⚠️</span>
-          <span>ÖNEMLİ: ÖDEME YAPMADAN ÖNCE <a href="tel:+905419305372" style="color:#C53030; text-decoration:underline; font-weight:900;">+90 541 930 53 72</a> ARAYARAK FİYATI SABİTLEMELİSİNİZ</span>
         </div>
       </div>
     ` : `
