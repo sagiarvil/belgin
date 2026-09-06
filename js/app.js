@@ -3102,33 +3102,42 @@ const App = {
     const pZiynetEski = Math.round(baseZiynetEski * BOARD_MARGIN);
 
     const setPriceCell = (id, text, numVal) => {
-      const el = document.getElementById(id);
-      if (!el) return;
+      const targets = document.querySelectorAll('#' + id);
+      if (!targets || targets.length === 0) return;
       
       const prev = this._prevBoardValues[id];
-      el.textContent = text;
 
-      // SADECE değeri gerçekten değişen ürünün fiyat kutusunun arkasındaki renkli bandı 2 saniye boyunca yanıp söndür
-      if (prev !== undefined && prev !== numVal) {
-        const boxEl = el.closest('.has-red-box') || el.closest('.td-price') || el;
-        const flashClass = numVal > prev ? 'price-flash-up' : 'price-flash-down';
+      if (this._activeAnimationTimers[id]) {
+        clearTimeout(this._activeAnimationTimers[id]);
+        delete this._activeAnimationTimers[id];
+      }
 
-        if (this._activeAnimationTimers[id]) {
-          clearTimeout(this._activeAnimationTimers[id]);
-          delete this._activeAnimationTimers[id];
+      targets.forEach(el => {
+        el.textContent = text;
+
+        // SADECE değeri gerçekten değişen ürünün fiyat kutusunun arkasındaki renkli bandı 2 saniye boyunca yanıp söndür
+        if (prev !== undefined && prev !== numVal) {
+          const boxEl = el.closest('.has-red-box') || el.closest('.td-price') || el;
+          const flashClass = numVal > prev ? 'price-flash-up' : 'price-flash-down';
+
+          // Önceki animasyon sınıflarını temizle ve reflow tetikle
+          boxEl.classList.remove('price-flash-up', 'price-flash-down', 'price-changed-active');
+          void boxEl.offsetWidth; // Reflow tetikle
+          boxEl.classList.add(flashClass);
         }
+      });
 
-        // Önceki animasyon sınıflarını temizle ve reflow tetikle
-        boxEl.classList.remove('price-flash-up', 'price-flash-down', 'price-changed-active');
-        void boxEl.offsetWidth; // Reflow tetikle
-        boxEl.classList.add(flashClass);
-
+      if (prev !== undefined && prev !== numVal) {
         // Tam 2 saniye (2000 ms) sonra yanıp sönmeyi durdur ve temizle
         this._activeAnimationTimers[id] = setTimeout(() => {
-          boxEl.classList.remove('price-flash-up', 'price-flash-down', 'price-changed-active');
+          targets.forEach(el => {
+            const boxEl = el.closest('.has-red-box') || el.closest('.td-price') || el;
+            boxEl.classList.remove('price-flash-up', 'price-flash-down', 'price-changed-active');
+          });
           delete this._activeAnimationTimers[id];
         }, 2000); // 2 saniye süre ile yanıp söner
       }
+
       this._prevBoardValues[id] = numVal;
     };
 

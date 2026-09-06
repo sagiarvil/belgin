@@ -108,31 +108,38 @@ test('JS Simülasyonu: 22 Ayar Fiyat Yükseldiğinde ve Düştüğünde Doğru D
   const td = new MockElement('td_22k');
   td.classList.add('td-price');
   const span = new MockElement('live_22k', td);
+  const elements = [span];
 
   const mockApp = {
     _prevBoardValues: {},
     _activeAnimationTimers: {}
   };
 
-  const setPriceCell = (el, id, text, numVal) => {
+  const setPriceCell = (targets, id, text, numVal) => {
     const prev = mockApp._prevBoardValues[id];
-    el.textContent = text;
+
+    if (mockApp._activeAnimationTimers[id]) {
+      clearTimeout(mockApp._activeAnimationTimers[id]);
+      delete mockApp._activeAnimationTimers[id];
+    }
+
+    targets.forEach(el => {
+      el.textContent = text;
+      if (prev !== undefined && prev !== numVal) {
+        const boxEl = el.closest('.has-red-box') || el.closest('.td-price') || el;
+        const flashClass = numVal > prev ? 'price-flash-up' : 'price-flash-down';
+        boxEl.classList.remove('price-flash-up', 'price-flash-down', 'price-changed-active');
+        void boxEl.offsetWidth;
+        boxEl.classList.add(flashClass);
+      }
+    });
 
     if (prev !== undefined && prev !== numVal) {
-      const boxEl = el.closest('.has-red-box') || el.closest('.td-price') || el;
-      const flashClass = numVal > prev ? 'price-flash-up' : 'price-flash-down';
-
-      if (mockApp._activeAnimationTimers[id]) {
-        clearTimeout(mockApp._activeAnimationTimers[id]);
-        delete mockApp._activeAnimationTimers[id];
-      }
-
-      boxEl.classList.remove('price-flash-up', 'price-flash-down', 'price-changed-active');
-      void boxEl.offsetWidth;
-      boxEl.classList.add(flashClass);
-
       mockApp._activeAnimationTimers[id] = setTimeout(() => {
-        boxEl.classList.remove('price-flash-up', 'price-flash-down', 'price-changed-active');
+        targets.forEach(el => {
+          const boxEl = el.closest('.has-red-box') || el.closest('.td-price') || el;
+          boxEl.classList.remove('price-flash-up', 'price-flash-down', 'price-changed-active');
+        });
         delete mockApp._activeAnimationTimers[id];
       }, 2000);
     }
@@ -140,23 +147,23 @@ test('JS Simülasyonu: 22 Ayar Fiyat Yükseldiğinde ve Düştüğünde Doğru D
   };
 
   // 1. İlk Yükleme (Baseline set - yanıp sönmemeli)
-  setPriceCell(span, 'live_22k', '6.646', 6646);
+  setPriceCell(elements, 'live_22k', '6.646', 6646);
   assert.strictEqual(td.classList.contains('price-flash-up'), false);
   assert.strictEqual(td.classList.contains('price-flash-down'), false);
 
   // 2. Fiyat Yükseldi (6646 -> 6655) => price-flash-up tetiklenmeli
-  setPriceCell(span, 'live_22k', '6.655', 6655);
+  setPriceCell(elements, 'live_22k', '6.655', 6655);
   assert.strictEqual(td.classList.contains('price-flash-up'), true, 'Fiyat yükseldiğinde price-flash-up olmalıdır');
   assert.strictEqual(td.classList.contains('price-flash-down'), false);
 
   // 3. Fiyat Düştü (6655 -> 6640) => price-flash-down tetiklenmeli
-  setPriceCell(span, 'live_22k', '6.640', 6640);
+  setPriceCell(elements, 'live_22k', '6.640', 6640);
   assert.strictEqual(td.classList.contains('price-flash-down'), true, 'Fiyat düştüğünde price-flash-down olmalıdır');
   assert.strictEqual(td.classList.contains('price-flash-up'), false);
 
   // 4. Fiyat Değişmedi (6640 -> 6640) => yeni animasyon tetiklenmemeli
   td.classList.remove('price-flash-down');
-  setPriceCell(span, 'live_22k', '6.640', 6640);
+  setPriceCell(elements, 'live_22k', '6.640', 6640);
   assert.strictEqual(td.classList.contains('price-flash-down'), false, 'Fiyat değişmediğinde yanıp sönmemelidir');
 
   // Temizle
