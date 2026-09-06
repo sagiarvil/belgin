@@ -249,12 +249,12 @@ const App = {
     this.updateHeaderCartCount();
     this.checkCookieBanner();
 
-    // Canlı İZKO Altın Kurlarını & Harem Altın Soketini Başlat
+    // Canlı Harem Altın Canlı Borsa Soketini Başlat
     if (typeof fetchLiveMarketRates === 'function') {
       fetchLiveMarketRates();
       setInterval(fetchLiveMarketRates, 15 * 60 * 1000);
     }
-    if (typeof initHaremAltinSocket === 'function') {
+    if (typeof initHaremAltinSocket === 'function' && !LIVE_MARKET_DATA?.socketConnected) {
       initHaremAltinSocket();
     }
     // Canlı Saat & Tarih Sayacı (1 Saniyede Bir Kesintisiz Akan Saat)
@@ -3108,19 +3108,26 @@ const App = {
       const prev = this._prevBoardValues[id];
       el.textContent = text;
 
-      // SADECE değeri gerçekten değişen hücreyi 5 saniye boyunca yaylandır / yanıp söndür
+      // SADECE değeri gerçekten değişen ürünün fiyat kutusunun arkasındaki renkli bandı 2 saniye boyunca yanıp söndür
       if (prev !== undefined && prev !== numVal) {
+        const boxEl = el.closest('.has-red-box') || el.closest('.td-price') || el;
+        const flashClass = numVal > prev ? 'price-flash-up' : 'price-flash-down';
+
         if (this._activeAnimationTimers[id]) {
           clearTimeout(this._activeAnimationTimers[id]);
-        }
-        el.classList.remove('price-changed-active');
-        void el.offsetWidth; // Reflow tetikle
-        el.classList.add('price-changed-active');
-
-        this._activeAnimationTimers[id] = setTimeout(() => {
-          el.classList.remove('price-changed-active');
           delete this._activeAnimationTimers[id];
-        }, 5000); // 5 saniye boyunca aktif kalır
+        }
+
+        // Önceki animasyon sınıflarını temizle ve reflow tetikle
+        boxEl.classList.remove('price-flash-up', 'price-flash-down', 'price-changed-active');
+        void boxEl.offsetWidth; // Reflow tetikle
+        boxEl.classList.add(flashClass);
+
+        // Tam 2 saniye (2000 ms) sonra yanıp sönmeyi durdur ve temizle
+        this._activeAnimationTimers[id] = setTimeout(() => {
+          boxEl.classList.remove('price-flash-up', 'price-flash-down', 'price-changed-active');
+          delete this._activeAnimationTimers[id];
+        }, 2000); // 2 saniye süre ile yanıp söner
       }
       this._prevBoardValues[id] = numVal;
     };

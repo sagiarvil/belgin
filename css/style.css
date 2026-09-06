@@ -8041,65 +8041,87 @@ body.page-canli-fiyatlar-mode {
 }
 
 /* ==========================================================
-   CANLI FİYAT DEĞİŞİM & 30 SANİYE YAYLANMA / YANIP SÖNME EFEKTİ
-   (SADECE RAKAM YAYLANIR — ÇİZGİLER/KENARLIKLAR SABİT KALIR)
+   CANLI FİYAT DEĞİŞİM — ARKA PLAN RENKLİ BANT 2 SANİYE YANIP SÖNME
+   (SADECE ARKA PLAN RENKLİ BANT YANIP SÖNER — YAZI TİPİ/BOYUTU/KENARLIKLAR SABİT KALIR)
+   Fiyat Yükseldi: Açık Yeşil (#86efac / #bbf7d0)
+   Fiyat Düştü: Açık Kırmızı (#fca5a5 / #fecaca)
    ========================================================== */
-@keyframes priceSpringBlink {
+@keyframes priceBandFlashGreen {
   0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-    color: #D80000;
+    background-color: #fff200 !important;
   }
-  25% {
-    transform: scale(1.14);
-    opacity: 0.85;
-    color: #b91c1c;
+  25%, 75% {
+    background-color: #86efac !important; /* Açık Yeşil */
   }
   50% {
-    transform: scale(0.97);
-    opacity: 1;
-    color: #D80000;
-  }
-  75% {
-    transform: scale(1.1);
-    opacity: 0.9;
-    color: #b91c1c;
+    background-color: #bbf7d0 !important;
   }
 }
 
-@keyframes priceSpringBlinkWhite {
+@keyframes priceBandFlashRed {
   0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-    color: #FFFFFF;
+    background-color: #fff200 !important;
   }
-  25% {
-    transform: scale(1.14);
-    opacity: 0.85;
-    color: #FFFFFF;
+  25%, 75% {
+    background-color: #fca5a5 !important; /* Açık Kırmızı */
   }
   50% {
-    transform: scale(0.97);
-    opacity: 1;
-    color: #FFFFFF;
+    background-color: #fecaca !important;
   }
-  75% {
-    transform: scale(1.1);
-    opacity: 0.9;
-    color: #FFFFFF;
+}
+
+/* Has Altın Kırmızı Kutusu İçin Özel Bant Animasyonu */
+@keyframes priceBandFlashGreenHas {
+  0%, 100% {
+    background-color: #E60000 !important;
   }
+  25%, 75% {
+    background-color: #16a34a !important; /* Canlı Yeşil Vurgusu */
+  }
+  50% {
+    background-color: #22c55e !important;
+  }
+}
+
+@keyframes priceBandFlashRedHas {
+  0%, 100% {
+    background-color: #E60000 !important;
+  }
+  25%, 75% {
+    background-color: #f87171 !important; /* Açık Kırmızı Vurgusu */
+  }
+  50% {
+    background-color: #ef4444 !important;
+  }
+}
+
+.board-exact-table td.td-price.price-flash-up,
+.board-exact-table td.price-flash-up,
+.price-flash-up {
+  animation: priceBandFlashGreen 0.5s ease-in-out infinite !important;
+  will-change: background-color;
+}
+
+.board-exact-table td.td-price.price-flash-down,
+.board-exact-table td.price-flash-down,
+.price-flash-down {
+  animation: priceBandFlashRed 0.5s ease-in-out infinite !important;
+  will-change: background-color;
+}
+
+.has-red-box.price-flash-up {
+  animation: priceBandFlashGreenHas 0.5s ease-in-out infinite !important;
+  will-change: background-color;
+}
+
+.has-red-box.price-flash-down {
+  animation: priceBandFlashRedHas 0.5s ease-in-out infinite !important;
+  will-change: background-color;
 }
 
 .price-changed-active {
-  animation: priceSpringBlink 1.4s ease-in-out infinite !important;
-  display: inline-block !important;
-  will-change: transform, opacity;
-}
-
-.has-red-box .price-changed-active,
-#live_has_altin.price-changed-active {
-  animation: priceSpringBlinkWhite 1.4s ease-in-out infinite !important;
-  color: #FFFFFF !important;
+  animation: priceBandFlashGreen 0.5s ease-in-out infinite !important;
+  will-change: background-color;
 }
 
 /* Mobil Responsive */

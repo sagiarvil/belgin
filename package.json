@@ -20,7 +20,7 @@
     "payments:catalog": "node scripts/generate-payment-catalog.js",
     "catalog:verify": "node scripts/verify-product-catalog.js",
     "guard": "node scripts/prohibited-vendor-guard.js && node scripts/ensure-index-canonical-redirect.mjs --dry-run && node scripts/html-script-syntax-guard.js && node scripts/price-safety-guard.js && node scripts/production-guard.js && node scripts/bank-pos-guard.js && node scripts/evidence-guard.js && node scripts/validate-llms-graph.js && node scripts/growth-contract.js",
-    "test": "npm run build && npm run catalog:verify && npm run seo:gate && node tests/stress-price-fuzzer.js && node tests/test-suite.js && node tests/adversarial-suite.js && node tests/cross-browser-stress.js && node tests/n8n-workflow-reverse-engineering.js && node tests/chargeback-pipeline-integrity.js",
+    "test": "npm run build && npm run catalog:verify && npm run seo:gate && node tests/stress-price-fuzzer.js && node tests/test-suite.js && node tests/adversarial-suite.js && node tests/cross-browser-stress.js && node tests/n8n-workflow-reverse-engineering.js && node tests/chargeback-pipeline-integrity.js && node tests/test-price-band-animation.js",
     "ci": "npm run test && npm run guard",
     "deploy": "node scripts/safe-deploy.js",
     "deploy:hosting": "node scripts/safe-deploy.js hosting",

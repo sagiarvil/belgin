@@ -135,7 +135,7 @@ function handleHaremAltinPriceUpdate(payload) {
   LIVE_MARKET_DATA.lastUpdatedDate = getLiveDateString();
   LIVE_MARKET_DATA.lastUpdatedTime = getLiveTimeString();
   LIVE_MARKET_DATA.lastUpdated = LIVE_MARKET_DATA.lastUpdatedTime;
-  LIVE_MARKET_DATA.source = "Harem Altın & İZKO Canlı Akışı";
+  LIVE_MARKET_DATA.source = "Harem Altın Canlı Borsa Akışı";
 
   // Gelen tüm kalemleri `LIVE_MARKET_DATA.items` içine işle
   for (const [code, valObj] of Object.entries(rawData)) {
@@ -256,16 +256,14 @@ function handleHaremAltinPriceUpdate(payload) {
   updateMarketTickerDOM();
   updateDynamicGoldProductPrices();
 
-  if (typeof updateLivePricesTableDOM === 'function') {
-    updateLivePricesTableDOM();
-  }
-
   if (typeof ValuationEngine !== 'undefined' && ValuationEngine.calculateGold) {
     ValuationEngine.calculateGold();
   }
 
   if (typeof App !== 'undefined' && typeof App.onLivePricesUpdated === 'function') {
     App.onLivePricesUpdated();
+  } else if (typeof updateLivePricesTableDOM === 'function') {
+    updateLivePricesTableDOM();
   }
 }
 
@@ -275,45 +273,58 @@ function handleHaremAltinPriceUpdate(payload) {
  */
 let _haremSocket = null;
 let _haremNativeWs = null;
+let _isSocketConnecting = false;
 
 function initHaremAltinSocket() {
   if (typeof io !== 'undefined') {
     if (_haremSocket && _haremSocket.connected) {
       return;
     }
+    if (_isSocketConnecting) {
+      return;
+    }
+    _isSocketConnecting = true;
+
     try {
-      _haremSocket = io('https://hrmsocketonly.haremaltin.com', {
-        transports: ['websocket'],
-        reconnection: true,
-        reconnectionDelay: 1000,
-        reconnectionDelayMax: 4000,
-        reconnectionAttempts: Infinity,
-        timeout: 10000
-      });
+      if (!_haremSocket) {
+        _haremSocket = io('wss://hrmsocketonly.haremaltin.com', {
+          transports: ['websocket'],
+          reconnection: true,
+          reconnectionDelay: 1000,
+          reconnectionDelayMax: 3000,
+          reconnectionAttempts: Infinity,
+          timeout: 10000
+        });
 
-      _haremSocket.on('connect', () => {
-        LIVE_MARKET_DATA.socketConnected = true;
-        LIVE_MARKET_DATA.source = 'Harem Altın (Canlı WebSocket)';
-        updateMarketTickerDOM();
-        if (typeof App !== 'undefined' && typeof App.updateLivePricesTableDOM === 'function') {
-          App.updateLivePricesTableDOM();
-        }
-      });
+        _haremSocket.on('connect', () => {
+          _isSocketConnecting = false;
+          LIVE_MARKET_DATA.socketConnected = true;
+          LIVE_MARKET_DATA.source = 'Harem Altın (Canlı WebSocket)';
+          updateMarketTickerDOM();
+          if (typeof App !== 'undefined' && typeof App.updateLivePricesTableDOM === 'function') {
+            App.updateLivePricesTableDOM();
+          }
+        });
 
-      _haremSocket.on('price_changed', (data) => {
-        handleHaremAltinPriceUpdate(data);
-      });
+        _haremSocket.on('price_changed', (data) => {
+          handleHaremAltinPriceUpdate(data);
+        });
 
-      _haremSocket.on('disconnect', () => {
-        LIVE_MARKET_DATA.socketConnected = false;
-      });
+        _haremSocket.on('disconnect', () => {
+          LIVE_MARKET_DATA.socketConnected = false;
+        });
 
-      _haremSocket.on('connect_error', () => {
-        LIVE_MARKET_DATA.socketConnected = false;
-        initNativeHaremWebSocket();
-      });
+        _haremSocket.on('connect_error', () => {
+          _isSocketConnecting = false;
+          LIVE_MARKET_DATA.socketConnected = false;
+          initNativeHaremWebSocket();
+        });
+      } else if (!_haremSocket.connected) {
+        _haremSocket.connect();
+      }
       return;
     } catch (err) {
+      _isSocketConnecting = false;
       console.warn('[HaremAltin Socket] Socket.IO bağlantısı kurulamadı, native ws deneniyor:', err.message);
     }
   }
