@@ -484,6 +484,9 @@ function prerenderPdpContent(p) {
                 <div><strong>Banka:</strong> Kuveyt Türk</div>
                 <div><strong>Alıcı:</strong> SEMİH SONBAHAR BELGİN KUYUMCULUK</div>
                 <div><strong>TL IBAN:</strong> <code style="font-family:monospace;font-weight:800;color:#004D2C;font-size:12.5px;">TR050020500009275715800001</code></div>
+                <div style="margin-top:8px;background:#FFF5F5;border:1.5px solid #E53E3E;border-radius:6px;padding:8px 10px;font-size:12px;font-weight:800;color:#9B1C1C;line-height:1.45;">
+                  ⚠️ <strong>ÖNEMLİ:</strong> ÖDEME YAPMADAN ÖNCE <a href="tel:+905419305372" style="color:#C53030;text-decoration:underline;font-weight:900;">+90 541 930 53 72</a> ARAYARAK FİYATI SABİTLEMELİSİNİZ
+                </div>
               </div>
             </div>
           </div>

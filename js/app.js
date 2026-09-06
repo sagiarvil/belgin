@@ -1162,6 +1162,10 @@ const App = {
             <div><strong>Hesap Sahibi:</strong> SEMİH SONBAHAR BELGİN KUYUMCULUK</div>
             <div style="margin-top:3px;"><strong>TL IBAN:</strong> <code style="font-family:monospace; font-weight:800; color:#004D2C;">TR050020500009275715800001</code></div>
           </div>
+          <div style="margin-top:8px; background:#FFF5F5; border:1.5px solid #E53E3E; border-radius:6px; padding:8px 10px; font-size:11.5px; font-weight:800; color:#9B1C1C; display:flex; align-items:center; gap:6px; line-height:1.4;">
+            <span style="font-size:15px; flex-shrink:0;">⚠️</span>
+            <span>ÖNEMLİ: ÖDEME YAPMADAN ÖNCE <a href="tel:+905419305372" style="color:#C53030; text-decoration:underline; font-weight:900;">+90 541 930 53 72</a> ARAYARAK FİYATI SABİTLEMELİSİNİZ</span>
+          </div>
         </div>
       ` : (isHighVal ? `
         <div style="font-size:11.5px; color:#5D4411; background:#FFF9EE; border:1px solid #E6D2A8; padding:10px 12px; border-radius:6px; margin-bottom:16px; line-height:1.5;">
@@ -1219,7 +1223,7 @@ const App = {
     }
     const formattedPrice = typeof formatPrice === 'function' ? formatPrice(p.price) : `₺${Number(p.price).toLocaleString('tr-TR')}`;
     const refCode = p.reference || p.ref || p.id;
-    const waText = encodeURIComponent(`Merhaba, Belgin Kuyumculuk ${p.brand || 'Belgin'} ${p.name} (Ref: ${refCode}) modeli için Havale/EFT ve Showroom teslim siparişi oluşturmak istiyorum. Güncel Tutar: ${formattedPrice}`);
+    const waText = encodeURIComponent(`Merhaba, Belgin Kuyumculuk ${p.brand || 'Belgin'} ${p.name} (Ref: ${refCode}) modeli için Havale/EFT yapmadan önce fiyatı sabitlemek istiyorum. Tutar: ${formattedPrice} - Kuveyt Türk IBAN: TR050020500009275715800001`);
     modal.innerHTML = `
       <div style="background:#FFFFFF; max-width:520px; width:100%; border-radius:14px; border:2px solid #C2A768; box-shadow:0 20px 50px rgba(0,0,0,0.4); overflow:hidden; position:relative; font-family:var(--font-sans, sans-serif); animation:fadeInScale 0.2s ease-out;">
         <div style="background:linear-gradient(135deg, #05332F 0%, #0A4D46 100%); color:#FFFFFF; padding:18px 22px; display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #C2A768;">
@@ -1283,6 +1287,11 @@ const App = {
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <span style="color:#6B7280; font-weight:600;">Fiziki Showroom:</span>
               <span style="color:#111827; font-weight:600;">Menderes Cad. No:231/B Buca / İzmir</span>
+            </div>
+            <!-- DİKKAT ÇEKEN FİYAT SABİTLEME UYARISI -->
+            <div style="margin-top:12px; background:#FFF5F5; border:1.5px solid #E53E3E; border-radius:6px; padding:10px 12px; display:flex; align-items:center; gap:8px; color:#9B1C1C; font-weight:800; font-size:12.5px; line-height:1.45;">
+              <span style="font-size:18px; line-height:1; flex-shrink:0;">⚠️</span>
+              <span>ÖNEMLİ: ÖDEME YAPMADAN ÖNCE <a href="tel:+905419305372" style="color:#C53030; text-decoration:underline; font-weight:900;">+90 541 930 53 72</a> ARAYARAK FİYATI SABİTLEMELİSİNİZ</span>
             </div>
           </div>
 
@@ -1351,6 +1360,10 @@ const App = {
             <code style="font-family:monospace; font-weight:800; color:#004D2C; background:#E6F4EA; padding:3px 6px; border-radius:4px; border:1px solid #CEEAD6;">TR050020500009275715800001</code>
             <button type="button" onclick="navigator.clipboard.writeText('TR050020500009275715800001'); if(typeof showToast==='function'){showToast('Kuveyt Türk IBAN kopyalandı.','success');}else{alert('Kuveyt Türk IBAN kopyalandı: TR050020500009275715800001');}" style="background:#004D2C; color:#fff; border:none; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;">Kopyala</button>
           </div>
+        </div>
+        <div style="margin-top:10px; background:#FFF5F5; border:1.5px solid #E53E3E; border-radius:6px; padding:8px 12px; font-size:12px; font-weight:800; color:#9B1C1C; display:flex; align-items:center; gap:8px; line-height:1.45;">
+          <span style="font-size:16px; flex-shrink:0;">⚠️</span>
+          <span>ÖNEMLİ: ÖDEME YAPMADAN ÖNCE <a href="tel:+905419305372" style="color:#C53030; text-decoration:underline; font-weight:900;">+90 541 930 53 72</a> ARAYARAK FİYATI SABİTLEMELİSİNİZ</span>
         </div>
       </div>
     ` : `
