@@ -5,6 +5,7 @@ const path = require('path');
 const { BASE_URL, SEO_REGISTRY } = require('./seo-registry.js');
 const { PRODUCTS: products } = require('../js/data.js');
 const { CATEGORY_ROUTES, productUrl } = require('./seo-routes.js');
+const { MAGAZINE_ARTICLES: magazineArticles = [] } = require('../js/magazine_data.js');
 
 const ROOT = path.join(__dirname, '..');
 
@@ -163,7 +164,7 @@ function buildLlms() {
 
   body += `## Core Machine Graph Nodes\n\n`;
   body += `- [Kurumsal Çekirdek Dokümanı](${BASE_URL}/llms/core.md): Kurumsal kimlik, mağaza altyapısı, canlı borsa sözleşmesi ve güvenlik mimarisi.\n`;
-  body += `- [Tam Metin Bilgi Bankası](${BASE_URL}/llms-full.txt): 144 editoryal makale, teknik rehberler ve tüm alt-grafların konsolide metni.\n\n`;
+  body += `- [Tam Metin Bilgi Bankası](${BASE_URL}/llms-full.txt): ${magazineArticles.length} editoryal makale, teknik rehberler ve tüm alt-grafların konsolide metni.\n\n`;
 
   if (entityFiles.length > 0) {
     body += `## Legal & Operational Entities\n\n`;
@@ -224,7 +225,7 @@ function buildLlms() {
   body += `- [Lüks Saat Kataloğu](${BASE_URL}/saatler/): 1.800+ doğrulanmış lüks ve ikinci el saat koleksiyonu.\n`;
   body += `- [Kıymetli Maden & Mücevherat](${BASE_URL}/mucevherat/): 24K külçe altın, sarrafiye ve pırlanta mücevherat.\n`;
   body += `- [Biz Kimiz & Kurumsal Sicil](${BASE_URL}/biz-kimiz/): 1999'dan beri kurumsal tarihçe ve uzman heyet.\n`;
-  body += `- [Saat & Mücevherat Magazini](${BASE_URL}/magazin/): 144 editoryal makale ve piyasa analizleri.\n`;
+  body += `- [Saat & Mücevherat Magazini](${BASE_URL}/magazin/): ${magazineArticles.length} editoryal makale ve piyasa analizleri.\n`;
   body += `- [İletişim & Showroom Ziyareti](${BASE_URL}/iletisim.html): İzmir Buca mağaza adresi, telefon ve randevu masası.\n\n`;
 
   body += `## Machine Discovery\n\n`;
@@ -245,8 +246,8 @@ function publicBot(agent, extra = '') {
 
 function buildRobots() {
   write('robots.txt', [
-    publicBot('Googlebot', 'Disallow: /node_modules/\nDisallow: /canli-fiyatlar/\nDisallow: /canlipiyasalar/\n'),
-    publicBot('Bingbot', 'Disallow: /node_modules/\nDisallow: /canli-fiyatlar/\nDisallow: /canlipiyasalar/\n'),
+    publicBot('Googlebot', 'Disallow: /node_modules/\n'),
+    publicBot('Bingbot', 'Disallow: /node_modules/\n'),
     publicBot('OAI-SearchBot'),
     publicBot('ChatGPT-User'),
     publicBot('PerplexityBot'),
@@ -257,9 +258,9 @@ function buildRobots() {
     publicBot('Applebot'),
     publicBot('Applebot-Extended'),
     publicBot('CCBot'),
-    `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /node_modules/\nDisallow: /canli-fiyatlar/\nDisallow: /canlipiyasalar/\n`,
+    `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /node_modules/\n`,
     `Sitemap: ${BASE_URL}/sitemap.xml`,
-    `\n# LLMS Machine Discovery Manifests\n# llms.txt: ${BASE_URL}/llms.txt\n# llms-full.txt: ${BASE_URL}/llms-full.txt\n`
+    `\n# LLMS Machine Discovery Manifests\n# llms.txt: ${BASE_URL}/llms.txt\n# llms-full.txt: ${BASE_URL}/llms-full.txt\n# agent-card.json: ${BASE_URL}/agent-card.json\n`
   ].join('\n'));
 }
 

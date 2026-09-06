@@ -239,12 +239,15 @@ const App = {
     Router.init();
 
     this.renderHome();
-    this.renderEliteWatches();
-    this.renderWatches();
-    this.renderJewellery();
-    this.renderPreOwned();
-    this.renderMagazineGrid('all', 1);
-    this.renderFlipbook();
+    const deferViews = (typeof window !== 'undefined' && window.requestIdleCallback) ? window.requestIdleCallback : ((fn) => setTimeout(fn, 120));
+    deferViews(() => {
+      this.renderEliteWatches();
+      this.renderWatches();
+      this.renderJewellery();
+      this.renderPreOwned();
+      this.renderMagazineGrid('all', 1);
+      this.renderFlipbook();
+    });
     this.initHeroRotator();
     this.updateHeaderCartCount();
     this.checkCookieBanner();
@@ -451,6 +454,9 @@ const App = {
     // Yeni Eklenen Mücevherler (5 Sıra = 20 Ürün Sayfalamalı)
     this.renderHomeJewelry(1);
 
+    // Ana Sayfa En Son Magazin Makaleleri (En Yeni 3 Makale Canlı Senkronizasyon)
+    this.renderHomeMagazine();
+
     // Profesyonel Kapalıçarşı Değerleme Simülatörünü Render Et
     if (typeof ValuationEngine !== 'undefined' && ValuationEngine.renderSimulator) {
       ValuationEngine.renderSimulator();
@@ -560,6 +566,49 @@ const App = {
         Router.scrollToTarget(target);
       }
     }, 40);
+  },
+
+  // ANA SAYFA EN YENİ 3 MAGAZİN MAKALESİ (CANLI DİNAMİK RENDER)
+  renderHomeMagazine() {
+    const grid = document.querySelector('.home-mag-cards-grid');
+    if (!grid) return;
+    const articles = (typeof window.MAGAZINE_ARTICLES !== 'undefined') ? [...window.MAGAZINE_ARTICLES] : [];
+    if (!articles || articles.length === 0) return;
+
+    // En son yazılan/yayınlanan makaleler her zaman en başta (descending) sıralansın
+    articles.sort((a, b) => {
+      const dateA = a.raw_date || '';
+      const dateB = b.raw_date || '';
+      if (dateB !== dateA) return dateB.localeCompare(dateA);
+      return (b.id || '').localeCompare(a.id || '');
+    });
+
+    const top3 = articles.slice(0, 3);
+    grid.innerHTML = top3.map((art, idx) => {
+      const isLead = idx === 0;
+      const imgSrc = art.image || '/images/hero/hero-rolex-lineup.jpg';
+      const cat = (art.category || 'Saat Dünyası & Analiz').toUpperCase();
+      const escTitle = typeof escapeHtml === 'function' ? escapeHtml(art.title) : art.title;
+      const escSummary = typeof escapeHtml === 'function' ? escapeHtml(art.summary) : art.summary;
+      return `
+        <div class="home-mag-featured-card" role="article" aria-label="${escTitle}" tabindex="0" onclick="App.openMagazineArticle('${art.id}')">
+          <img src="${imgSrc}" alt="${escTitle}" class="home-mag-featured-bg" loading="lazy" onerror="this.src='/images/hero/hero-rolex-lineup.jpg'">
+          <div class="home-mag-featured-overlay"></div>
+          <div class="home-mag-featured-content">
+            <span class="mag-card-badge" style="position:static; display:inline-block; margin-bottom:8px;">${typeof escapeHtml === 'function' ? escapeHtml(cat) : cat}</span>
+            <h3 style="font-family:var(--font-heading); font-size:${isLead ? '20px' : '17px'}; font-weight:700; line-height:1.3; margin:0 0 8px 0;">
+              ${escTitle}
+            </h3>
+            <p style="font-size:${isLead ? '12.5px' : '12px'}; color:#DDD; margin:0 0 ${isLead ? '12px' : '10px'} 0; line-height:1.45;">
+              ${escSummary}
+            </p>
+            <span style="color:var(--color-gold-bright); font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:4px;">
+              ${isLead ? 'Makaleyi Oku →' : 'Detayları İncele →'}
+            </span>
+          </div>
+        </div>
+      `;
+    }).join('');
   },
 
   // EVRENSEL SAAT FİLTRELEME & ARAMA MOTORU (UNIVERSAL FILTER ENGINE)
@@ -4093,11 +4142,41 @@ const App = {
       return (b.id || '').localeCompare(a.id || '');
     });
 
-    // Dinamik filtre sekmesi sayacı (146+ makale için canlı otomatik senkronizasyon)
+    // Dinamik filtre sekmesi ve altbilgi sayaçları (canlı otomatik senkronizasyon)
     const allTabBtn = document.querySelector('#magazineFilterTabs .mag-filter-pill[onclick*="\'all\'"]') ||
                      document.querySelector('#magazineFilterTabs .mag-filter-pill:first-child');
     if (allTabBtn) {
       allTabBtn.textContent = `⭐ Tümü (${articles.length})`;
+    }
+    document.querySelectorAll('a[href="/magazin/"], a[data-page="magazin"]').forEach(link => {
+      const txt = (link.textContent || '').trim();
+      if (txt.includes('Tüm Magazin Yazıları')) {
+        link.textContent = `⭐ Tüm Magazin Yazıları (${articles.length}) →`;
+      } else if (txt.includes('Tüm Arşivi İncele')) {
+        link.textContent = `Tüm Arşivi İncele (${articles.length} Yazı) →`;
+      }
+    });
+
+    // Kapak başyazısını her zaman en yeni makaleyle canlı senkronize et
+    const featuredCard = document.querySelector('.mag-featured-card');
+    if (featuredCard && articles.length > 0) {
+      const topArt = articles[0];
+      const featThumb = featuredCard.querySelector('.mag-featured-thumb img');
+      if (featThumb) {
+        featThumb.src = topArt.image || '/images/hero/hero-rolex-lineup.jpg';
+        featThumb.alt = topArt.title;
+      }
+      const featTag = featuredCard.querySelector('.mag-featured-meta-top .mag-tag-pill');
+      if (featTag) featTag.textContent = topArt.category;
+      const featTime = featuredCard.querySelector('.mag-featured-meta-top .mag-read-time');
+      if (featTime) featTime.textContent = `⏱️ ${topArt.read_time || '10 dk okuma'}`;
+      const featDate = featuredCard.querySelector('.mag-featured-meta-top .mag-date-pill');
+      if (featDate) featDate.textContent = `📅 ${topArt.publish_date}`;
+      const featTitle = featuredCard.querySelector('.mag-featured-title');
+      if (featTitle) featTitle.textContent = topArt.title;
+      const featExcerpt = featuredCard.querySelector('.mag-featured-excerpt');
+      if (featExcerpt) featExcerpt.textContent = topArt.summary;
+      featuredCard.setAttribute('onclick', `App.openMagazineArticle('${topArt.id}')`);
     }
 
     let filtered = articles;
@@ -4116,7 +4195,7 @@ const App = {
       const readTime = art.read_time || '8 dk okuma';
       const imgSrc = art.image || '/images/hero/hero-rolex-lineup.jpg';
       return `
-        <article class="magazine-card" onclick="App.openMagazineArticle('${art.id}')" data-article-id="${art.id}">
+        <article class="magazine-card" role="article" aria-label="${typeof escapeHtml === 'function' ? escapeHtml(art.title) : art.title}" tabindex="0" onclick="App.openMagazineArticle('${art.id}')" data-article-id="${art.id}">
           <div class="mag-card-media">
             <img src="${imgSrc}" alt="${typeof escapeHtml === 'function' ? escapeHtml(art.title) : art.title}" loading="lazy" decoding="async" onerror="this.src='/images/hero/hero-rolex-lineup.jpg'">
           </div>

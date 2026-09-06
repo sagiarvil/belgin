@@ -29,6 +29,7 @@
     "sync:carren": "node scripts/sync-carren.js",
     "sync:elite": "node scripts/sync-elite-watch-prices.js",
     "sync:gold": "node scripts/sync-prices-and-stock.js",
+    "sync:magazine": "python3 scripts/sync-magazine-articles.py",
     "sync:all": "node scripts/smart-diff-sync.js",
     "serve": "npx serve . -l 3000"
   },

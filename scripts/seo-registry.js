@@ -248,10 +248,10 @@ const SEO_REGISTRY = [
       sameAs: []
     },
     semanticTriples: [
-      { subject: 'Belgin Saat Magazin', predicate: 'icerikSayisi', object: '144 Tam Kapsamlı Editoryal İnceleme' },
+      { subject: 'Belgin Saat Magazin', predicate: 'icerikSayisi', object: '186 Tam Kapsamlı Editoryal İnceleme' },
       { subject: 'Magazin Kurulu', predicate: 'editoryalStandart', object: '3. Taraf Logo ve Manipülasyondan Arındırılmış Özgün Horoloji Analizi' }
     ],
-    heroAnswerEngine: 'Belgin Saat Magazin, horoloji tutkunları ve koleksiyonerler için hazırlanan 144 kapsamlı teknik makale ve küresel piyasa raporunu barındırır. Rolex, Patek Philippe, Audemars Piguet ve Omega kalibrelerinin çalışma prensipleri, ikincil piyasa değer gelişimleri, açık artırma rekorları ve Cenevre Saat Günleri yenilikleri uzman editoryal kurulumuz tarafından titizlikle analiz edilir. İçeriklerimiz spekülasyondan uzak, bağımsız saatçilik verileriyle zenginleştirilmiştir.',
+    heroAnswerEngine: 'Belgin Saat Magazin, horoloji tutkunları ve koleksiyonerler için hazırlanan 186 kapsamlı teknik makale ve küresel piyasa raporunu barındırır. Rolex, Patek Philippe, Audemars Piguet ve Omega kalibrelerinin çalışma prensipleri, ikincil piyasa değer gelişimleri, açık artırma rekorları ve Cenevre Saat Günleri yenilikleri uzman editoryal kurulumuz tarafından titizlikle analiz edilir. İçeriklerimiz spekülasyondan uzak, bağımsız saatçilik verileriyle zenginleştirilmiştir.',
     publishedAt: '2026-01-01T09:00:00+03:00',
     modifiedAt: '2026-09-04T14:30:00+03:00',
     llmSubGraphRoute: '/llms/pages/magazin.md',

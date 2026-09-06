@@ -252,18 +252,35 @@ function handleHaremAltinPriceUpdate(payload) {
     }
   }
 
-  // DOM ve Fiyat Güncelleme Tetikleyicileri
-  updateMarketTickerDOM();
-  updateDynamicGoldProductPrices();
+  // DOM ve Fiyat Güncelleme Tetikleyicileri (Throttled via requestAnimationFrame)
+  triggerPriceDomUpdates();
+}
 
-  if (typeof ValuationEngine !== 'undefined' && ValuationEngine.calculateGold) {
-    ValuationEngine.calculateGold();
-  }
+let _priceDomUpdatePending = false;
+function triggerPriceDomUpdates() {
+  if (_priceDomUpdatePending) return;
+  _priceDomUpdatePending = true;
 
-  if (typeof App !== 'undefined' && typeof App.onLivePricesUpdated === 'function') {
-    App.onLivePricesUpdated();
-  } else if (typeof updateLivePricesTableDOM === 'function') {
-    updateLivePricesTableDOM();
+  const runUpdates = () => {
+    _priceDomUpdatePending = false;
+    updateMarketTickerDOM();
+    updateDynamicGoldProductPrices();
+
+    if (typeof ValuationEngine !== 'undefined' && ValuationEngine.calculateGold) {
+      ValuationEngine.calculateGold();
+    }
+
+    if (typeof App !== 'undefined' && typeof App.onLivePricesUpdated === 'function') {
+      App.onLivePricesUpdated();
+    } else if (typeof updateLivePricesTableDOM === 'function') {
+      updateLivePricesTableDOM();
+    }
+  };
+
+  if (typeof requestAnimationFrame === 'function') {
+    requestAnimationFrame(runUpdates);
+  } else {
+    setTimeout(runUpdates, 60);
   }
 }
 
@@ -390,6 +407,28 @@ async function fetchLiveMarketRates() {
   }
 }
 
+let _cachedGoldProducts = null;
+let _productByIdMap = null;
+
+function getProductById(id) {
+  if (!_productByIdMap && typeof PRODUCTS !== 'undefined' && Array.isArray(PRODUCTS)) {
+    _productByIdMap = new Map();
+    for (let i = 0; i < PRODUCTS.length; i++) {
+      _productByIdMap.set(PRODUCTS[i].id, PRODUCTS[i]);
+    }
+  }
+  return _productByIdMap ? _productByIdMap.get(id) : null;
+}
+
+function getGoldProducts() {
+  if (_cachedGoldProducts) return _cachedGoldProducts;
+  if (typeof PRODUCTS === 'undefined' || !Array.isArray(PRODUCTS)) return [];
+  _cachedGoldProducts = PRODUCTS.filter(p =>
+    p.isGold || p.category === 'gold' || p.subCategory?.includes('Ziynet') || p.subCategory?.includes('Külçe') || p.subCategory?.includes('Bilezik')
+  );
+  return _cachedGoldProducts;
+}
+
 /**
  * TÜM ALTIN ÜRÜNLERİNİN FİYATINI SARI TABELA İLE %100 BİREBİR SENKRONİZE ET
  * Kaynak: Harem Altın Canlı Borsa Soketi (wss://hrmsocketonly.haremaltin.com)
@@ -431,12 +470,9 @@ function updateDynamicGoldProductPrices() {
   const pAtaEski = Math.round(baseAtaEski * BOARD_MARGIN);
 
   let updatedCount = 0;
+  const goldProducts = getGoldProducts();
 
-  for (const p of PRODUCTS) {
-    if (!p.isGold && p.category !== 'gold' && !p.subCategory?.includes('Ziynet') && !p.subCategory?.includes('Külçe') && !p.subCategory?.includes('Bilezik')) {
-      continue;
-    }
-
+  for (const p of goldProducts) {
     const name = (p.name || '').toLowerCase();
     let exactTargetPrice = null;
 
@@ -515,7 +551,7 @@ function updateDynamicGoldProductPrices() {
     const priceElements = document.querySelectorAll('[data-product-price-id]');
     priceElements.forEach(el => {
       const id = parseInt(el.getAttribute('data-product-price-id'), 10);
-      const prod = PRODUCTS.find(x => x.id === id);
+      const prod = getProductById(id);
       if (prod) {
         el.textContent = typeof formatPrice === 'function' ? formatPrice(prod.price) : '₺' + prod.price.toLocaleString('tr-TR');
       }
@@ -525,7 +561,7 @@ function updateDynamicGoldProductPrices() {
     const cardElements = document.querySelectorAll('.product-art-card[data-product-id]');
     cardElements.forEach(card => {
       const id = parseInt(card.getAttribute('data-product-id'), 10);
-      const prod = PRODUCTS.find(x => x.id === id);
+      const prod = getProductById(id);
       if (prod && (prod.isGold || prod.category === 'jewelry' || prod.category === 'gold')) {
         const tag = card.querySelector('.prod-price-tag, .prod-price-value');
         if (tag) {
@@ -537,7 +573,7 @@ function updateDynamicGoldProductPrices() {
     // 3. PDP (Ürün Detay Sayfası) aktif ise
     const pdpPrice = document.querySelector('.pdp-current-price');
     if (pdpPrice && window.currentOpenProductId) {
-      const activeProd = PRODUCTS.find(x => x.id === window.currentOpenProductId);
+      const activeProd = getProductById(window.currentOpenProductId);
       if (activeProd && (activeProd.isGold || activeProd.category === 'jewelry' || activeProd.category === 'gold')) {
         pdpPrice.textContent = typeof formatPrice === 'function' ? formatPrice(activeProd.price) : '₺' + activeProd.price.toLocaleString('tr-TR');
       }
@@ -547,7 +583,7 @@ function updateDynamicGoldProductPrices() {
     if (typeof Cart !== 'undefined' && Array.isArray(Cart.items)) {
       let cartChanged = false;
       Cart.items.forEach(ci => {
-        const pr = PRODUCTS.find(x => x.id === ci.id);
+        const pr = getProductById(ci.id);
         if (pr && (pr.isGold || pr.category === 'jewelry' || pr.category === 'gold') && ci.price !== pr.price) {
           ci.price = pr.price;
           cartChanged = true;

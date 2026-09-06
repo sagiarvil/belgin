@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Belgin Kuyumculuk & Saat AI Agent Card",
+  "description": "Autonomous AI Agent & LLM Discovery Profile for Belgin Kuyumculuk & Saat (Est. 1999, İzmir Buca). Certified luxury watches, bullion gold, and fine jewelry.",
+  "url": "https://www.belginkuyumculuk.com/",
+  "version": "1.0.0",
+  "entity": {
+    "name": "BELGİN KUYUMCULUK - SEMİH SONBAHAR",
+    "legalName": "BELGİN KUYUMCULUK - SEMİH SONBAHAR",
+    "tradeName": "Belgin Kuyumculuk & Saat",
+    "nace": "47.77.03",
+    "address": {
+      "street": "Menderes Caddesi No:231/B",
+      "district": "Buca",
+      "city": "İzmir",
+      "country": "TR",
+      "postalCode": "35380"
+    },
+    "geo": {
+      "latitude": 38.3842,
+      "longitude": 27.1685
+    },
+    "telephone": "+90-541-930-53-72",
+    "email": "destek@belginkuyumculuk.com",
+    "foundedYear": 1999
+  },
+  "capabilities": {
+    "livePriceEngine": {
+      "provider": "Harem Altın Canlı Borsa Soket Akışı",
+      "socketUri": "wss://hrmsocketonly.haremaltin.com",
+      "salesMargin": "+3% (x 1.03)",
+      "buyingMargin": "0% (x 1.00 net)",
+      "izkoDisabled": true
+    },
+    "taxation": {
+      "vatRule": "3065 SK m.23/f Özel Matrah",
+      "preciousMetalVat": "%0",
+      "workmanshipVat": "%20",
+      "invoiceDescription": "Kıymetli Maden Bedeli (Özel Matrah)"
+    },
+    "compliance": {
+      "masakLimitTry": 12000,
+      "kycRequired": true,
+      "pciDssLevel": 1,
+      "bankPos": "Kuveyt Türk Sanal POS 3D Secure"
+    },
+    "catalogs": {
+      "eliteWatchCount": 200,
+      "totalWatchCount": 1925,
+      "magazineArticleCount": 186
+    }
+  },
+  "endpoints": {
+    "manifest": "https://www.belginkuyumculuk.com/llms.txt",
+    "fullKnowledgeGraph": "https://www.belginkuyumculuk.com/llms-full.txt",
+    "sitemap": "https://www.belginkuyumculuk.com/sitemap.xml",
+    "magazineSitemap": "https://www.belginkuyumculuk.com/sitemap-magazine.xml",
+    "liveRates": "https://www.belginkuyumculuk.com/canli-fiyatlar/",
+    "legalManifest": "https://www.belginkuyumculuk.com/legal-manifest.json",
+    "otsStatus": "https://www.belginkuyumculuk.com/legal-proofs/status.json"
+  }
+}

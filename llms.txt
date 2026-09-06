@@ -5,7 +5,7 @@
 ## Core Machine Graph Nodes
 
 - [Kurumsal Çekirdek Dokümanı](https://www.belginkuyumculuk.com/llms/core.md): Kurumsal kimlik, mağaza altyapısı, canlı borsa sözleşmesi ve güvenlik mimarisi.
-- [Tam Metin Bilgi Bankası](https://www.belginkuyumculuk.com/llms-full.txt): 144 editoryal makale, teknik rehberler ve tüm alt-grafların konsolide metni.
+- [Tam Metin Bilgi Bankası](https://www.belginkuyumculuk.com/llms-full.txt): 186 editoryal makale, teknik rehberler ve tüm alt-grafların konsolide metni.
 
 ## Legal & Operational Entities
 
@@ -71,7 +71,7 @@
 - [Lüks Saat Kataloğu](https://www.belginkuyumculuk.com/saatler/): 1.800+ doğrulanmış lüks ve ikinci el saat koleksiyonu.
 - [Kıymetli Maden & Mücevherat](https://www.belginkuyumculuk.com/mucevherat/): 24K külçe altın, sarrafiye ve pırlanta mücevherat.
 - [Biz Kimiz & Kurumsal Sicil](https://www.belginkuyumculuk.com/biz-kimiz/): 1999'dan beri kurumsal tarihçe ve uzman heyet.
-- [Saat & Mücevherat Magazini](https://www.belginkuyumculuk.com/magazin/): 144 editoryal makale ve piyasa analizleri.
+- [Saat & Mücevherat Magazini](https://www.belginkuyumculuk.com/magazin/): 186 editoryal makale ve piyasa analizleri.
 - [İletişim & Showroom Ziyareti](https://www.belginkuyumculuk.com/iletisim.html): İzmir Buca mağaza adresi, telefon ve randevu masası.
 
 ## Machine Discovery

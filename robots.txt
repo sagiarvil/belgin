@@ -3,16 +3,12 @@ Allow: /
 Disallow: /api/
 Disallow: /admin/
 Disallow: /node_modules/
-Disallow: /canli-fiyatlar/
-Disallow: /canlipiyasalar/
 
 User-agent: Bingbot
 Allow: /
 Disallow: /api/
 Disallow: /admin/
 Disallow: /node_modules/
-Disallow: /canli-fiyatlar/
-Disallow: /canlipiyasalar/
 
 User-agent: OAI-SearchBot
 Allow: /
@@ -69,11 +65,10 @@ Allow: /
 Disallow: /api/
 Disallow: /admin/
 Disallow: /node_modules/
-Disallow: /canli-fiyatlar/
-Disallow: /canlipiyasalar/
 
 Sitemap: https://www.belginkuyumculuk.com/sitemap.xml
 
 # LLMS Machine Discovery Manifests
 # llms.txt: https://www.belginkuyumculuk.com/llms.txt
 # llms-full.txt: https://www.belginkuyumculuk.com/llms-full.txt
+# agent-card.json: https://www.belginkuyumculuk.com/agent-card.json
