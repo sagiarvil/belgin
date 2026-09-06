@@ -258,6 +258,10 @@ function handleHaremAltinPriceUpdate(payload) {
 
 let _priceDomUpdatePending = false;
 function triggerPriceDomUpdates() {
+  if (typeof PriceUpdateAutomator !== 'undefined' && typeof PriceUpdateAutomator.scheduleUpdate === 'function') {
+    PriceUpdateAutomator.scheduleUpdate();
+    return;
+  }
   if (_priceDomUpdatePending) return;
   _priceDomUpdatePending = true;
 
@@ -280,7 +284,7 @@ function triggerPriceDomUpdates() {
   if (typeof requestAnimationFrame === 'function') {
     requestAnimationFrame(runUpdates);
   } else {
-    setTimeout(runUpdates, 60);
+    setTimeout(runUpdates, 50);
   }
 }
 
@@ -407,26 +411,186 @@ async function fetchLiveMarketRates() {
   }
 }
 
+// ==========================================================
+// CANLI FİYAT VE ÜRÜN OTOMASYON MOTORU (PriceUpdateAutomator)
+// - requestAnimationFrame Throttling (Gereksiz render birleştirme)
+// - _cachedGoldProducts İzolasyonu (2.125 ürün yerine yalnızca altın/mücevher)
+// - _productByIdMap ile O(1) Anlık Erişim
+// - Otomatik DOM Element & Link Takibi (Tüm güncelleme alan linkler ve kartlar)
+// ==========================================================
+
 let _cachedGoldProducts = null;
 let _productByIdMap = null;
 
-function getProductById(id) {
-  if (!_productByIdMap && typeof PRODUCTS !== 'undefined' && Array.isArray(PRODUCTS)) {
-    _productByIdMap = new Map();
+const PriceUpdateAutomator = {
+  _productByIdMap: null,
+  _productBySlugMap: null,
+  _productByRefMap: null,
+  _cachedGoldProducts: null,
+  _goldProductIds: null,
+  _cachedAllProducts: null,
+  _isScheduled: false,
+  _observer: null,
+  _lastProductsLength: 0,
+
+  initIndices() {
+    if (typeof PRODUCTS === 'undefined' || !Array.isArray(PRODUCTS)) return;
+    if (this._productByIdMap && this._lastProductsLength === PRODUCTS.length) return;
+
+    this._productByIdMap = new Map();
+    this._productBySlugMap = new Map();
+    this._productByRefMap = new Map();
+    this._goldProductIds = new Set();
+    this._cachedGoldProducts = [];
+    this._lastProductsLength = PRODUCTS.length;
+
     for (let i = 0; i < PRODUCTS.length; i++) {
-      _productByIdMap.set(PRODUCTS[i].id, PRODUCTS[i]);
+      const p = PRODUCTS[i];
+      if (!p) continue;
+
+      this._productByIdMap.set(p.id, p);
+      this._productByIdMap.set(String(p.id), p);
+
+      if (p.slug) this._productBySlugMap.set(p.slug, p);
+      if (p.reference) this._productByRefMap.set(String(p.reference).toLowerCase(), p);
+      if (p.ref) this._productByRefMap.set(String(p.ref).toLowerCase(), p);
+
+      const isGold = Boolean(
+        p.isGold ||
+        p.category === 'gold' ||
+        p.subCategory?.includes('Ziynet') ||
+        p.subCategory?.includes('Külçe') ||
+        p.subCategory?.includes('Bilezik')
+      );
+
+      if (isGold) {
+        this._cachedGoldProducts.push(p);
+        this._goldProductIds.add(p.id);
+        this._goldProductIds.add(String(p.id));
+      }
+    }
+
+    _cachedGoldProducts = this._cachedGoldProducts;
+    _productByIdMap = this._productByIdMap;
+  },
+
+  getProductById(id) {
+    if (id === undefined || id === null || id === '') return null;
+    this.initIndices();
+    if (!this._productByIdMap) return null;
+    return this._productByIdMap.get(id) || this._productByIdMap.get(String(id)) || null;
+  },
+
+  findProduct(id) {
+    if (id === undefined || id === null || id === '') return undefined;
+    this.initIndices();
+    if (!this._productByIdMap) return undefined;
+
+    const strId = String(id).trim();
+    let p = this._productByIdMap.get(strId);
+    if (p) return p;
+
+    const numId = parseInt(strId, 10);
+    if (!isNaN(numId)) {
+      p = this._productByIdMap.get(numId);
+      if (p) return p;
+    }
+
+    p = this._productBySlugMap.get(strId);
+    if (p) return p;
+
+    p = this._productByRefMap.get(strId.toLowerCase());
+    if (p) return p;
+
+    return undefined;
+  },
+
+  getGoldProducts() {
+    this.initIndices();
+    return this._cachedGoldProducts || [];
+  },
+
+  isGoldProduct(id) {
+    this.initIndices();
+    return this._goldProductIds ? (this._goldProductIds.has(id) || this._goldProductIds.has(String(id))) : false;
+  },
+
+  scheduleUpdate() {
+    if (this._isScheduled) return;
+    this._isScheduled = true;
+
+    const runBatch = () => {
+      this._isScheduled = false;
+      this.executeUpdates();
+    };
+
+    if (typeof requestAnimationFrame === 'function') {
+      requestAnimationFrame(runBatch);
+    } else {
+      setTimeout(runBatch, 50);
+    }
+  },
+
+  executeUpdates() {
+    updateMarketTickerDOM();
+    updateDynamicGoldProductPrices();
+
+    if (typeof ValuationEngine !== 'undefined' && ValuationEngine.calculateGold) {
+      ValuationEngine.calculateGold();
+    }
+
+    if (typeof App !== 'undefined' && typeof App.onLivePricesUpdated === 'function') {
+      App.onLivePricesUpdated();
+    } else if (typeof updateLivePricesTableDOM === 'function') {
+      updateLivePricesTableDOM();
+    }
+  },
+
+  startObserver() {
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+    if (this._observer || typeof MutationObserver === 'undefined') return;
+
+    this._observer = new MutationObserver((mutations) => {
+      let shouldUpdate = false;
+      for (const m of mutations) {
+        if (m.addedNodes && m.addedNodes.length > 0) {
+          for (const node of m.addedNodes) {
+            if (node.nodeType === 1) {
+              if (
+                node.hasAttribute?.('data-product-price-id') ||
+                node.hasAttribute?.('data-product-id') ||
+                node.querySelector?.('[data-product-price-id], [data-product-id]')
+              ) {
+                shouldUpdate = true;
+                break;
+              }
+            }
+          }
+        }
+        if (shouldUpdate) break;
+      }
+      if (shouldUpdate) {
+        this.scheduleUpdate();
+      }
+    });
+
+    try {
+      this._observer.observe(document.body || document.documentElement, {
+        childList: true,
+        subtree: true
+      });
+    } catch (e) {
+      // sessiz geç
     }
   }
-  return _productByIdMap ? _productByIdMap.get(id) : null;
+};
+
+function getProductById(id) {
+  return PriceUpdateAutomator.getProductById(id);
 }
 
 function getGoldProducts() {
-  if (_cachedGoldProducts) return _cachedGoldProducts;
-  if (typeof PRODUCTS === 'undefined' || !Array.isArray(PRODUCTS)) return [];
-  _cachedGoldProducts = PRODUCTS.filter(p =>
-    p.isGold || p.category === 'gold' || p.subCategory?.includes('Ziynet') || p.subCategory?.includes('Külçe') || p.subCategory?.includes('Bilezik')
-  );
-  return _cachedGoldProducts;
+  return PriceUpdateAutomator.getGoldProducts();
 }
 
 /**
@@ -728,6 +892,9 @@ function showToast(message, type = 'success') {
 }
 
 function getAllProducts() {
+  if (typeof PriceUpdateAutomator !== 'undefined' && PriceUpdateAutomator._cachedAllProducts && PriceUpdateAutomator._lastProductsLength === (typeof PRODUCTS !== 'undefined' ? PRODUCTS.length : 0)) {
+    return PriceUpdateAutomator._cachedAllProducts;
+  }
   const prods = typeof PRODUCTS !== 'undefined' && Array.isArray(PRODUCTS) ? PRODUCTS : [];
   const elite = typeof ELITE_WATCHES !== 'undefined' && Array.isArray(ELITE_WATCHES) ? ELITE_WATCHES : [];
   const watches = typeof WATCHES !== 'undefined' && Array.isArray(WATCHES) ? WATCHES : [];
@@ -736,10 +903,18 @@ function getAllProducts() {
   prods.forEach(p => { if (p && p.id !== undefined) map.set(String(p.id), p); });
   elite.forEach(p => { if (p && p.id !== undefined && !map.has(String(p.id))) map.set(String(p.id), p); });
   watches.forEach(p => { if (p && p.id !== undefined && !map.has(String(p.id))) map.set(String(p.id), p); });
-  return Array.from(map.values());
+  const all = Array.from(map.values());
+  if (typeof PriceUpdateAutomator !== 'undefined') {
+    PriceUpdateAutomator._cachedAllProducts = all;
+  }
+  return all;
 }
 
 function findProduct(id) {
+  if (typeof PriceUpdateAutomator !== 'undefined' && typeof PriceUpdateAutomator.findProduct === 'function') {
+    const res = PriceUpdateAutomator.findProduct(id);
+    if (res) return res;
+  }
   if (id === undefined || id === null || id === '') return undefined;
   const strId = String(id).trim();
   const numId = parseInt(strId, 10);
@@ -851,7 +1026,26 @@ function isValidCardCvv(cvv) {
 }
 
 if (typeof document !== 'undefined') {
-  document.addEventListener('DOMContentLoaded', initMarqueeTouchSupport);
+  document.addEventListener('DOMContentLoaded', () => {
+    initMarqueeTouchSupport();
+    if (typeof PriceUpdateAutomator !== 'undefined') {
+      PriceUpdateAutomator.startObserver();
+    }
+  });
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    if (typeof PriceUpdateAutomator !== 'undefined') {
+      PriceUpdateAutomator.startObserver();
+    }
+  }
+}
+
+if (typeof window !== 'undefined') {
+  window.PriceUpdateAutomator = PriceUpdateAutomator;
+  window.getProductById = getProductById;
+  window.getGoldProducts = getGoldProducts;
+  window.findProduct = findProduct;
+  window.triggerPriceDomUpdates = triggerPriceDomUpdates;
+  window.updateDynamicGoldProductPrices = updateDynamicGoldProductPrices;
 }
 
 if (typeof module !== 'undefined' && module.exports) {
@@ -865,7 +1059,13 @@ if (typeof module !== 'undefined' && module.exports) {
     isHighValueSecureDelivery,
     isValidLuhn,
     isValidCardExpiry,
-    isValidCardCvv
+    isValidCardCvv,
+    PriceUpdateAutomator,
+    getProductById,
+    getGoldProducts,
+    findProduct,
+    triggerPriceDomUpdates,
+    updateDynamicGoldProductPrices
   };
 }
 

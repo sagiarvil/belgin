@@ -238,6 +238,11 @@ const App = {
     Wishlist.init();
     Router.init();
 
+    if (typeof PriceUpdateAutomator !== 'undefined') {
+      PriceUpdateAutomator.initIndices();
+      PriceUpdateAutomator.startObserver();
+    }
+
     this.renderHome();
     const deferViews = (typeof window !== 'undefined' && window.requestIdleCallback) ? window.requestIdleCallback : ((fn) => setTimeout(fn, 120));
     deferViews(() => {

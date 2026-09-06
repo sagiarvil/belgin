@@ -86,7 +86,7 @@ const SeoManager = {
       }
       
       if (typeof PRODUCTS !== 'undefined') {
-        const p = PRODUCTS.find(x => x.id === prodId);
+        const p = (typeof getProductById === 'function' ? getProductById(prodId) : null) || (PRODUCTS.find ? PRODUCTS.find(x => x.id === prodId) : null);
         if (p) {
           title = `${p.brand} ${p.name} | Belgin Kuyumculuk`;
           desc = `${p.brand} ${p.name} (${p.reference || p.ref || p.id}) - ${p.desc || p.description || ''}`.slice(0, 280);
