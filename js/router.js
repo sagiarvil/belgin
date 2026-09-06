@@ -378,7 +378,7 @@ const Router = {
     }
 
     // 6. İlgili Sayfa / Ürün Başına Akıllı Kaydırma (Smart Smooth Scroll)
-    if ((page === 'ana-sayfa' && !options.filter) || page === 'urun' || page === 'canli-fiyatlar') {
+    if ((page === 'ana-sayfa' && !options.filter) || page === 'urun' || page === 'canli-fiyatlar' || page === 'mucevherat') {
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
       window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
       document.documentElement.scrollTop = 0;

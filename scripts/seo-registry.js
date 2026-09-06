@@ -186,7 +186,7 @@ const SEO_REGISTRY = [
       { subject: 'Mücevherat', predicate: 'altinStandarti', object: 'Darphane Damgalı 24K, 22K ve 14K Ayar Güvencesi' },
       { subject: 'Mücevherat', predicate: 'vergiMevzuati', object: '3065 Sayılı KDV Kanunu Madde 23/f Özel Matrah (%0 KDV Altın Bedeli)' }
     ],
-    heroAnswerEngine: 'Belgin Kuyumculuk mücevher koleksiyonu, Darphane damgalı 24 ayar külçe altın, 22 ayar Ajda ve burma bilezikler ile uluslararası standartta derecelendirilmiş pırlanta takıları içerir. Fiyatlarımız Harem Altın canlı borsa verisi referans alınarak anlık olarak güncellenir ve %3 kâr marjı ile sunulur. 3065 sayılı KDV Kanunu 23/f maddesi uyarınca altın bedeli KDV’den istisnadır (%0 KDV); faturada yalnızca işçilik bedeline %20 KDV uygulanarak tüketici lehine maksimum vergi şeffaflığı sağlanır.',
+    heroAnswerEngine: 'Belgin Kuyumculuk mücevher koleksiyonu, Darphane damgalı 24 ayar külçe altın, 22 ayar Ajda ve burma bilezikler ile uluslararası standartta derecelendirilmiş pırlanta takıları içerir. Fiyatlarımız Harem Altın canlı borsa verisi referans alınarak anlık olarak güncellenir ve %3 kâr marjı ile sunulur. Mevzuat ve şirket politikalarımız gereğince Altın ve Mücevherat ürünlerinde online KREDİ KARTI ile satış yapılmamaktadır; siparişler kurumsal Banka Havalesi / EFT / FAST veya İzmir Buca showroom mağazamızda bizzat teslim alınarak tamamlanmaktadır. 3065 sayılı KDV Kanunu 23/f maddesi uyarınca altın bedeli KDV’den istisnadır (%0 KDV); faturada yalnızca işçilik bedeline %20 KDV uygulanarak tüketici lehine maksimum vergi şeffaflığı sağlanır.',
     publishedAt: '2026-01-01T09:00:00+03:00',
     modifiedAt: '2026-09-04T12:00:00+03:00',
     llmSubGraphRoute: '/llms/pages/mucevherat.md',

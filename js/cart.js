@@ -127,7 +127,8 @@ const Cart = {
   },
 
   addItem(productId, qty = 1, options = {}) {
-    this.add(productId, qty, options);
+    const res = this.add(productId, qty, options);
+    if (res === false) return false;
     if (typeof App !== 'undefined' && App.updateHeaderCartCount) {
       App.updateHeaderCartCount();
     }
