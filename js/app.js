@@ -3371,8 +3371,11 @@ const App = {
             </div>
           </div>
 
-          <div style="background:#FFF9EE; border:1px solid #E6D2A8; padding:10px; border-radius:4px; margin-bottom:14px; font-size:11px; color:#6B531C;">
-            "Söz konusu altın / saat ürününü eksiksiz, ayıpsız ve orijinal belgeleriyle bizzat teslim aldım."
+          <div style="background:#FFF9EE; border:1px solid #E6D2A8; padding:10px; border-radius:4px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; gap:12px;">
+            <div style="font-size:11px; color:#6B531C; line-height:1.4;">
+              "Söz konusu altın / saat ürününü eksiksiz, ayıpsız ve orijinal belgeleriyle bizzat teslim aldım."
+            </div>
+            <img src="/images/belgin-kase-imza.png" alt="Belgin Kuyumculuk Kaşe ve İmza" style="max-height:44px; width:auto; mix-blend-mode:multiply;" loading="eager">
           </div>
 
           <button type="submit" class="btn-art-buy" style="width:100%; padding:12px; font-size:13px;">✓ Teslimatı Onayla ve Arşivle (13 Formu)</button>

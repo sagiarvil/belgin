@@ -181,6 +181,10 @@
             <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;">
               <strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">Satıcı / Hizmet Sağlayıcı:</strong>
               <span style="color:#222;font-weight:600;">Belgin Kuyumculuk & Saat (Semih Sonbahar)</span>
+              <div style="margin-top:8px;padding-top:6px;border-top:1px dashed #d1c7b7;display:flex;align-items:center;gap:10px;">
+                <img src="/images/belgin-kase-imza.png" alt="Belgin Kuyumculuk Semih Sonbahar Kaşe ve İmza" style="max-height:50px;width:auto;mix-blend-mode:multiply;display:block;" loading="eager">
+                <span style="font-size:9.5px;color:#555;font-weight:600;">Yetkili Satış Kaşesi & Islak İmza</span>
+              </div>
             </div>
             <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;">
               <strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">Ödeme Sağlayıcısı & Güvenlik:</strong>
@@ -252,6 +256,17 @@
           <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;"><strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">Yasal Belge Dosyası</strong>${escapeHtml(file)}</div>
           <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;"><strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">Resmi Belge Sürümü</strong><strong style="color:#084c47;">${escapeHtml(version)}</strong></div>
           <div style="background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 14px;"><strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">Manifest Üretim Zamanı</strong>${escapeHtml(generatedAt)}</div>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;background:#fbf9f6;border:1px solid #efeae1;border-radius:8px;padding:12px 16px;margin-bottom:18px;">
+          <div>
+            <strong style="display:block;font-size:11px;color:#666;text-transform:uppercase;margin-bottom:3px;">Resmi Belge Sahibi / Satıcı:</strong>
+            <span style="color:#084c47;font-weight:700;font-size:13px;">Belgin Kuyumculuk & Saat — Semih Sonbahar</span>
+            <div style="font-size:11px;color:#555;margin-top:2px;">Menderes Cad. No:231/B Buca / İzmir · Şirinyer V.D. 62764066838</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <img src="/images/belgin-kase-imza.png" alt="Belgin Kuyumculuk Semih Sonbahar Kaşe ve İmza" style="max-height:52px;width:auto;mix-blend-mode:multiply;display:block;" loading="eager">
+          </div>
         </div>
 
         <div style="background:#eef6f4;border:1px solid #cfe2de;border-radius:8px;padding:14px 16px;margin-bottom:16px;overflow-wrap:anywhere;">
