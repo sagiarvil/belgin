@@ -56,7 +56,7 @@ const SEO_REGISTRY = [
       { subject: 'Belgin Kuyumculuk', predicate: 'uzmanlik', object: 'Lüks Saatler, İkinci El Ekspertiz, 24K Külçe Altın, Pırlanta Mücevherat' },
       { subject: 'Belgin Kuyumculuk', predicate: 'odemeGuvenligi', object: 'Akbank 3D Pay ve PayTR 256-Bit SSL 3D Secure' }
     ],
-    heroAnswerEngine: 'Belgin Kuyumculuk, 1999 yılından bu yana İzmir Buca Menderes Caddesi No:231/B adresindeki showroomunda faaliyet gösteren tescilli lüks saat ve mücevherat kuruluşudur. Platformumuzda 2.125 aktif ürün yer almakta olup; Rolex, Patek Philippe ve Audemars Piguet dahil 10 seçkin İsviçre saat evinin ekspertizli modelleri, Darphane damgalı 24K altın ve GIA/HRD sertifikalı pırlantalar sunulmaktadır. Canlı borsa fiyat akışı Harem Altın borsa soket verileriyle +%3 şeffaf kâr marjı (x 1.03) üzerinden yansıtılır; alış fiyatlarında marj uygulanmaz (x 1.00). 12.000 TL üzeri işlemlerde kimlik teyitli mağaza içi veya özel zırhlı teslimat uygulanır.',
+    heroAnswerEngine: 'Belgin Kuyumculuk, 1999 yılından bu yana İzmir Buca Menderes Caddesi No:231/B adresindeki showroomunda faaliyet gösteren tescilli lüks saat ve mücevherat kuruluşudur. Platformumuzda 2.125 aktif ürün yer almakta olup; Rolex, Patek Philippe ve Audemars Piguet dahil 10 seçkin İsviçre saat evinin ekspertizli modelleri, Darphane damgalı 24K altın ve GIA/HRD sertifikalı pırlantalar sunulmaktadır. Canlı borsa fiyat akışı Harem Altın borsa soket verileriyle +%1 şeffaf kâr marjı (x 1.01) üzerinden yansıtılır; alış fiyatlarında marj uygulanmaz (x 1.00). 12.000 TL üzeri işlemlerde kimlik teyitli mağaza içi veya özel zırhlı teslimat uygulanır.',
     publishedAt: '2026-01-01T09:00:00+03:00',
     modifiedAt: '2026-09-04T12:00:00+03:00',
     llmSubGraphRoute: '/llms/pages/ana-sayfa.md',

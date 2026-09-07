@@ -1,7 +1,7 @@
 // ==========================================================
 // BELGIN KUYUMCULUK — HAREM ALTIN CANLI BORSA VE PİYASA MOTORU
 // KAYNAK: https://canlipiyasalar.haremaltin.com/ (WebSocket: wss://hrmsocketonly.haremaltin.com)
-// KURAL: Canlı gelen satış fiyatları üzerine her zaman +%3 (x 1.03) marj uygulanır. Alış fiyatlarına marj eklenmez (x 1.00).
+// KURAL: Canlı gelen satış fiyatları üzerine her zaman +%1 (x 1.01) marj uygulanır. Alış fiyatlarına marj eklenmez (x 1.00).
 // ==========================================================
 
 let CURRENT_CURRENCY = 'TRY';
@@ -620,7 +620,7 @@ function updateDynamicGoldProductPrices() {
   if (typeof PRODUCTS === 'undefined' || !Array.isArray(PRODUCTS)) return;
 
   const rawItems = LIVE_MARKET_DATA.items || {};
-  const BOARD_MARGIN = 1.03; // Sarı Tabela ve Ürün Sayfası Birebir Canlı Satış Marjı (+%3)
+  const BOARD_MARGIN = 1.01; // Sarı Tabela ve Ürün Sayfası Birebir Canlı Satış Marjı (+%1)
 
   const baseHas = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.hasAltin || LIVE_MARKET_DATA.gramGold24k || 6885.40;
   const baseGram = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.gramGold24k || baseHas;
@@ -773,7 +773,7 @@ function updateDynamicGoldProductPrices() {
  */
 function updateMarketTickerDOM() {
   const rawItems = LIVE_MARKET_DATA.items || {};
-  const BOARD_MARGIN = 1.03; // Sarı Tabela, Ürün Sayfası ve Kayan Bant %100 Birebir Eşleşme Marjı (+%3)
+  const BOARD_MARGIN = 1.01; // Sarı Tabela, Ürün Sayfası ve Kayan Bant %100 Birebir Eşleşme Marjı (+%1)
 
   const baseHas = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.hasAltin || LIVE_MARKET_DATA.gramGold24k || 6892.70;
   const baseGram = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.gramGold24k || baseHas;

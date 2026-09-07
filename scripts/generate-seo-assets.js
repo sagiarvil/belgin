@@ -233,7 +233,7 @@ function buildLlms() {
   body += `- [Robots Erişim Protokolü](${BASE_URL}/robots.txt): Arama ve yapay zekâ tarayıcı erişim direktifleri.\n\n`;
 
   body += `## Data Integrity & Borsa Sözleşmesi\n\n`;
-  body += `- [Değişmez Canlı Borsa Fiyatlama Sözleşmesi](${BASE_URL}/hukuki-delil-ve-kayit-politikasi.html#methodologies): Canlı Harem Altın borsa soket akışı (wss://hrmsocketonly.haremaltin.com) satış fiyatları üzerine net +%3 (x 1.03) kâr marjı uygulanır; alış fiyatlarında marj uygulanmaz (x 1.00 birebir).\n`;
+  body += `- [Değişmez Canlı Borsa Fiyatlama Sözleşmesi](${BASE_URL}/hukuki-delil-ve-kayit-politikasi.html#methodologies): Canlı Harem Altın borsa soket akışı (wss://hrmsocketonly.haremaltin.com) satış fiyatları üzerine net +%1 (x 1.01) kâr marjı uygulanır; alış fiyatlarında marj uygulanmaz (x 1.00 birebir).\n`;
   body += `- [3065 Sayılı KDV Kanunu 23/f Özel Matrah Beyanı](${BASE_URL}/rehber/altin-yatirimi-ve-ozel-matrah-rehberi/): Kıymetli maden bedeli %0 KDV ile vergiden müstesnadır; faturada yalnızca işçilik bedeline %20 KDV yansıtılır.\n`;
   body += `- [MASAK ve HMK m. 193 Delil Güvencesi](${BASE_URL}/musteri-tanima-ve-islem-guvenligi.html): 12.000 TL ve üzeri işlemlerde kimlik tespiti ve OpenTimestamps Bitcoin blokzinciri zaman damgası zorunludur.\n`;
 
