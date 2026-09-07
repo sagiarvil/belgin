@@ -47,28 +47,28 @@ for (const p of goldItems) {
 
   // Gram Altın (1 gr)
   if (name.includes('1 gr') && name.includes('külçe') && !name.includes('bilezik')) {
-    if (price < 6800 || price > 12000) {
+    if (price < 6500 || price > 12000) {
       console.error(`    ⚠️ [FLOOR-BREACH]: 1 gr Külçe Altın anormal fiyatta: [${p.reference}] ${p.name} = ${price} TL`);
       floorBreaches++;
     }
   }
   // Çeyrek Altın
   if (name.includes('çeyrek altın')) {
-    if (price < 11000 || price > 18000) {
+    if (price < 10500 || price > 18000) {
       console.error(`    ⚠️ [FLOOR-BREACH]: Çeyrek Altın anormal fiyatta: [${p.reference}] ${p.name} = ${price} TL`);
       floorBreaches++;
     }
   }
   // Yarım Altın
   if (name.includes('yarım altın') && !name.includes('bileklik') && !name.includes('kolye')) {
-    if (price < 22000 || price > 35000) {
+    if (price < 21000 || price > 35000) {
       console.error(`    ⚠️ [FLOOR-BREACH]: Yarım Altın anormal fiyatta: [${p.reference}] ${p.name} = ${price} TL`);
       floorBreaches++;
     }
   }
   // Tam Altın / Ziynet Tam
   if ((name.includes('tam altın') || name.includes('reşat') || name.includes('ata tam')) && !name.includes('bileklik') && !name.includes('kolye')) {
-    if (price < 44000 || price > 70000) {
+    if (price < 42000 || price > 70000) {
       console.error(`    ⚠️ [FLOOR-BREACH]: Tam/Ata/Reşat Altın anormal fiyatta: [${p.reference}] ${p.name} = ${price} TL`);
       floorBreaches++;
     }
@@ -165,19 +165,19 @@ ELITE_BRANDS.forEach(b => {
 });
 assert(brandDistributionValid, `10 Lüks Saat Evinin her birinde tam 20'şer aktif ürün bulunmalıdır.`);
 
-// 7. Değişmez Fiyatlama & Borsa Sözleşmesi (SATIŞ: +%1 (x 1.01) / ALIŞ: 0% / İZKO: YASAK)
-console.log('\n--- 7. DEĞİŞMEZ FİYATLAMA & BORSA SÖZLEŞMESİ (SATIŞ +%1 / ALIŞ %0) ---');
+// 7. Değişmez Fiyatlama & Borsa Sözleşmesi (SATIŞ: +%0.5 (x 1.005) / ALIŞ: 0% / İZKO: YASAK)
+console.log('\n--- 7. DEĞİŞMEZ FİYATLAMA & BORSA SÖZLEŞMESİ (SATIŞ +%0.5 / ALIŞ %0) ---');
 const utilsContent = fs.readFileSync(path.join(ROOT_DIR, 'js/utils.js'), 'utf8');
 const appContent = fs.readFileSync(path.join(ROOT_DIR, 'js/app.js'), 'utf8');
 const syncStockContent = fs.readFileSync(path.join(ROOT_DIR, 'scripts/sync-prices-and-stock.js'), 'utf8');
 const smartDiffContent = fs.readFileSync(path.join(ROOT_DIR, 'scripts/smart-diff-sync.js'), 'utf8');
 const agentsContent = fs.readFileSync(path.join(ROOT_DIR, 'AGENTS.md'), 'utf8');
 
-assert(utilsContent.includes('BOARD_MARGIN = 1.01'), 'js/utils.js içinde BOARD_MARGIN = 1.01 (+%1 kâr marjı) sabit olmalıdır.');
-assert(appContent.includes('BOARD_MARGIN = 1.01'), 'js/app.js içinde BOARD_MARGIN = 1.01 (+%1 kâr marjı) sabit olmalıdır.');
-assert(syncStockContent.includes('GOLD_MARGIN = 1.01'), 'scripts/sync-prices-and-stock.js içinde GOLD_MARGIN = 1.01 (+%1 kâr marjı) sabit olmalıdır.');
-assert(smartDiffContent.includes('GOLD_MARGIN = 1.01'), 'scripts/smart-diff-sync.js içinde GOLD_MARGIN = 1.01 (+%1 kâr marjı) sabit olmalıdır.');
-assert(agentsContent.includes('+%1 (x 1.01)'), 'AGENTS.md içinde değişmez kural olarak +%1 (x 1.01) sabitlenmiş olmalıdır.');
+assert(utilsContent.includes('BOARD_MARGIN = 1.005'), 'js/utils.js içinde BOARD_MARGIN = 1.005 (+%0.5 kâr marjı) sabit olmalıdır.');
+assert(appContent.includes('BOARD_MARGIN = 1.005'), 'js/app.js içinde BOARD_MARGIN = 1.005 (+%0.5 kâr marjı) sabit olmalıdır.');
+assert(syncStockContent.includes('GOLD_MARGIN = 1.005'), 'scripts/sync-prices-and-stock.js içinde GOLD_MARGIN = 1.005 (+%0.5 kâr marjı) sabit olmalıdır.');
+assert(smartDiffContent.includes('GOLD_MARGIN = 1.005'), 'scripts/smart-diff-sync.js içinde GOLD_MARGIN = 1.005 (+%0.5 kâr marjı) sabit olmalıdır.');
+assert(agentsContent.includes('+%0,5 (x 1.005)') || agentsContent.includes('+%0.5 (x 1.005)'), 'AGENTS.md içinde değişmez kural olarak +%0.5 (x 1.005) sabitlenmiş olmalıdır.');
 assert(agentsContent.includes('ALIŞ / GERİ ALIM FİYATLARI (ALIŞ MARJI KESİNLİKLE YOKTUR - 0% / 1.00x BİREBİR)'), 'AGENTS.md içinde alış marjsızlığı (0%) kuralı sabitlenmiş olmalıdır.');
 
 console.log('\n====================================================');

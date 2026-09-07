@@ -3,7 +3,7 @@
  * Belgin Kuyumculuk – 5 Dakikalık Canlı Fiyat ve Stok Senkronizasyon Motoru
  * 
  * Kurallar:
- * 1. Altın / Mücevherat: Canlı satış fiyatı üzerine +%1 kâr marjı (x 1.01)
+ * 1. Altın / Mücevherat: Canlı satış fiyatı üzerine +%0.5 kâr marjı (x 1.005)
  * 2. Stok Kontrolü: Kaynakta tükenen ürünler "Tükendi" durumuna geçer (fail-closed)
  * 3. Akıllı Delta: Yalnızca fiyat veya stok değiştiğinde katalog dosyalarını günceller
  */
@@ -13,7 +13,7 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-const GOLD_MARGIN = 1.01; // +%1 Kâr Marjı
+const GOLD_MARGIN = 1.005; // +%0.5 Kâr Marjı
 
 function decodeHtmlEntities(str) {
   return str

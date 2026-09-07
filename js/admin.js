@@ -8878,9 +8878,9 @@ const AdminApp = {
       this.logToTerminal('success', 'Her makaleye özgün editoryal alıntı kutuları ve başlık hiyerarşisi uygulandı.');
     } else if (action === 'gold_prices') {
       this.logToTerminal('info', 'Harem Altın Canlı Borsa soketi (wss://hrmsocketonly.haremaltin.com) sorgulanıyor...');
-      this.logToTerminal('info', 'SATIŞ FİYATI KURALI: Canlı Ham Satış x 1.01 (+%1 kâr marjı) hesaplanıyor...');
+      this.logToTerminal('info', 'SATIŞ FİYATI KURALI: Canlı Ham Satış x 1.005 (+%0.5 kâr marjı) hesaplanıyor...');
       this.logToTerminal('info', 'ALIŞ FİYATI KURALI: Birebir 1.00x marjsız geri alım fiyatı doğrulanıyor...');
-      this.logToTerminal('success', 'Has Altın, Gram Altın, Çeyrek, Yarım, Tam, Ata ve 22 Ayar Bilezik fiyatları +%1 marjla güncellendi.');
+      this.logToTerminal('success', 'Has Altın, Gram Altın, Çeyrek, Yarım, Tam, Ata ve 22 Ayar Bilezik fiyatları +%0.5 marjla güncellendi.');
     } else if (action === 'gold_stock') {
       this.logToTerminal('info', 'Ağa Külçe ve Darphane sarrafiye stokları taranıyor...');
       this.logToTerminal('success', 'Tüm altın ürünleri stok ve teslimat parametreleriyle eşitlendi.');

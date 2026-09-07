@@ -612,7 +612,7 @@ Belgin Kuyumculuk Buca Showroomu, 1999 yılından bu yana müşterilerine güven
 > Standart Kodu: MET-BELGIN-2026-V1
 
 ## 1. Fiyatlama ve Borsa Akışı Formülü (DEĞİŞMEZ KURAL)
-- **Sarı Tabela, Borsa Bandı ve Altın Katalog**: Harem Altın canlı borsa soket akışı (\`wss://hrmsocketonly.haremaltin.com\`) referans alınarak, anlık satış fiyatları üzerine her zaman **+%1 (x 1.01)** şeffaf kâr marjı eklenerek hesaplanır.
+- **Sarı Tabela, Borsa Bandı ve Altın Katalog**: Harem Altın canlı borsa soket akışı (\`wss://hrmsocketonly.haremaltin.com\`) referans alınarak, anlık satış fiyatları üzerine her zaman **+%0.5 (x 1.005)** şeffaf kâr marjı eklenerek hesaplanır.
 - **Alış / Geri Alım Fiyatları**: Harem Altın canlı borsa soket akışındaki alış fiyatları kesinlikle marj eklenmeden birebir (1.00 çarpan) yansıtılır.
 - **Elit Kategori Saatler**: Uluslararası döviz kuru (USD) ve küresel likidite endeksleri üzerine **+%80** güvenlik marjı uygulanır.
 - **Borsa Akış Kaynağı**: Fiyatlama doğrudan Harem Altın canlı borsa soketi verileriyle işletilir.
@@ -675,8 +675,8 @@ Belgin Kuyumculuk & Saat, 1999 yılında Semih Sonbahar tarafından İzmir Buca'
 - **Mücevherat**: GIA ve HRD derecelendirme normlarında 4C sertifikalı pırlanta yüzük, kolye ve takılar.
 
 ## 3. Değişmez Fiyatlama ve Borsa Sözleşmesi
-1. **Canlı Borsa Soket Akışı ve Katalog**: Harem Altın (\`wss://hrmsocketonly.haremaltin.com\`) canlı soket satış fiyatları üzerine net +%1 (x 1.01) marj uygulanır. Alış fiyatlarına marj uygulanmaz (x 1.00).
-2. **Katalog Fiyatlaması**: Canlı satış fiyatları üzerine +%1 (x 1.01) marj işletilir.
+1. **Canlı Borsa Soket Akışı ve Katalog**: Harem Altın (\`wss://hrmsocketonly.haremaltin.com\`) canlı soket satış fiyatları üzerine net +%0.5 (x 1.005) marj uygulanır. Alış fiyatlarına marj uygulanmaz (x 1.00).
+2. **Katalog Fiyatlaması**: Canlı satış fiyatları üzerine +%0.5 (x 1.005) marj işletilir.
 3. **Vergi Şeffaflığı**: 3065 sayılı KDV Kanunu 23/f maddesi uyarınca altın bedeli %0 KDV ile vergiden müstesnadır; yalnızca işçilik bedeline %20 KDV yansıtılır.
 4. **Borsa Akış Kaynağı**: Fiyatlama yalnızca Harem Altın borsa soketi üzerinden canlı sürdürülür.
 

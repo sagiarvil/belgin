@@ -28,7 +28,7 @@
     "livePriceEngine": {
       "provider": "Harem Altın Canlı Borsa Soket Akışı",
       "socketUri": "wss://hrmsocketonly.haremaltin.com",
-      "salesMargin": "+1% (x 1.01)",
+      "salesMargin": "+0.5% (x 1.005)",
       "buyingMargin": "0% (x 1.00 net)",
       "izkoDisabled": true
     },
