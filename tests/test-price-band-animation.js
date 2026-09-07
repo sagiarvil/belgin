@@ -227,6 +227,48 @@ test('JS: Harem Altın WebSocket tekil singleton ve wss://hrmsocketonly protokol
   assert(utilsJs.includes('_isSocketConnecting'), 'Socket yarış koşulu kilidi mevcut olmalıdır');
 });
 
+// 7. CSS: Kapanışa Göre Yüzde Değişim Rozeti Stilleri
+test('CSS: .price-change-tag yeşil (.up) ve kırmızı (.down) renk tanımları eksiksiz olmalıdır', () => {
+  const css = fs.readFileSync(styleCssPath, 'utf8');
+  assert(css.includes('.board-exact-table .price-change-tag'), '.board-exact-table .price-change-tag tanımı eksik');
+  assert(css.includes('.board-exact-table .price-change-tag.up'), '.price-change-tag.up sınıfı eksik');
+  assert(css.includes('.board-exact-table .price-change-tag.down'), '.price-change-tag.down sınıfı eksik');
+  assert(css.includes('#008800') || css.includes('#008000') || css.includes('#009900'), 'Yeşil renk kodu eksik');
+  assert(css.includes('#cc0000') || css.includes('#d60000') || css.includes('#e60000'), 'Kırmızı renk kodu eksik');
+});
+
+// 8. CSS: 1 Saniyelik Yanıp Sönme Sırasında Beyaz Rozet Kontrastı
+test('CSS: price-flash-up ve price-flash-down sırasında .price-change-tag beyaz ve yüksek kontrastlı olmalıdır', () => {
+  const css = fs.readFileSync(styleCssPath, 'utf8');
+  assert(css.includes('price-flash-up .price-change-tag'), 'price-flash-up rozet kontrast kuralı eksik');
+  assert(css.includes('price-flash-down .price-change-tag'), 'price-flash-down rozet kontrast kuralı eksik');
+});
+
+// 9. JS: updateLivePricesTableDOM içinde Kapanışa Göre Değişim Oranı ve DOM Entegrasyonu
+test('JS: Kapanışa göre yüzde değişim formülü ve DOM rozet güncelleme kodu mevcut olmalıdır', () => {
+  const appJs = fs.readFileSync(appJsPath, 'utf8');
+  assert(appJs.includes('calcChangePct'), 'calcChangePct fonksiyonu eksik');
+  assert(appJs.includes('((satis - kapanis) / kapanis) * 100'), 'Yüzde değişim formülü eksik');
+  assert(appJs.includes('changeId = id.replace(\'live_\', \'change_\')'), 'changeId eşleme kodu eksik');
+  assert(appJs.includes('tag.classList.add(isUp ? \'up\' : \'down\')'), 'Rozet yön sınıfı atama kodu eksik');
+});
+
+// 10. HTML: canli-fiyatlar/index.html ve index.html içinde #change_* elemanları eksiksiz olmalıdır
+test('HTML: canli-fiyatlar/index.html ve index.html sayfalarında #change_* elemanları tam tanımlı olmalıdır', () => {
+  const canliHtml = fs.readFileSync(path.join(ROOT_DIR, 'canli-fiyatlar/index.html'), 'utf8');
+  const indexHtml = fs.readFileSync(path.join(ROOT_DIR, 'index.html'), 'utf8');
+  const requiredIds = [
+    'change_22k', 'change_18k', 'change_14k', 'change_gram', 'change_cumhuriyet',
+    'change_ceyrek_yeni', 'change_ceyrek_eski', 'change_yarim_yeni', 'change_yarim_eski',
+    'change_ziynet_yeni', 'change_ziynet_eski', 'change_has_altin'
+  ];
+
+  requiredIds.forEach(id => {
+    assert(canliHtml.includes(`id="${id}"`), `canli-fiyatlar/index.html içinde #${id} eksik`);
+    assert(indexHtml.includes(`id="${id}"`), `index.html içinde #${id} eksik`);
+  });
+});
+
 console.log(`\n====================================================================`);
 console.log(`🎉 ALL ${passCount}/${totalCount} UNIT & SIMULATION TESTS PASSED!`);
 console.log(`====================================================================\n`);
