@@ -3107,7 +3107,7 @@ const App = {
               <tbody>
                 <tr>
                 <td class="td-label">22 AYAR</td>
-                <td class="td-price"><span class="price-num" id="live_22k">6.646</span></td>
+                <td class="td-price"><span class="price-num" id="live_22k">6.646</span><span class="price-change-tag" id="change_22k">+0.00%</span></td>
                 <td class="td-right-message" rowspan="5">
                   <div class="right-message-inner">
                     <div class="right-title">BELGİN</div>
@@ -3120,19 +3120,19 @@ const App = {
               </tr>
               <tr>
                 <td class="td-label">18 AYAR</td>
-                <td class="td-price"><span class="price-num" id="live_18k">5.319</span></td>
+                <td class="td-price"><span class="price-num" id="live_18k">5.319</span><span class="price-change-tag" id="change_18k">+0.00%</span></td>
               </tr>
               <tr>
                 <td class="td-label">14 AYAR</td>
-                <td class="td-price"><span class="price-num" id="live_14k">5.125</span></td>
+                <td class="td-price"><span class="price-num" id="live_14k">5.125</span><span class="price-change-tag" id="change_14k">+0.00%</span></td>
               </tr>
               <tr>
                 <td class="td-label">GRAM ALTIN</td>
-                <td class="td-price"><span class="price-num" id="live_gram">7.092</span></td>
+                <td class="td-price"><span class="price-num" id="live_gram">7.092</span><span class="price-change-tag" id="change_gram">+0.00%</span></td>
               </tr>
               <tr>
                 <td class="td-label">CUMHURİYET</td>
-                <td class="td-price"><span class="price-num" id="live_cumhuriyet">47.005</span></td>
+                <td class="td-price"><span class="price-num" id="live_cumhuriyet">47.005</span><span class="price-change-tag" id="change_cumhuriyet">+0.00%</span></td>
               </tr>
               <tr class="tr-sarrafiye-header">
                 <td style="background-color:#fff200; border: 2px solid #000;"></td>
@@ -3141,23 +3141,23 @@ const App = {
               </tr>
               <tr>
                 <td class="td-label">ÇEYREK</td>
-                <td class="td-price"><span class="price-num" id="live_ceyrek_yeni">11.601</span></td>
-                <td class="td-price"><span class="price-num" id="live_ceyrek_eski">11.388</span></td>
+                <td class="td-price"><span class="price-num" id="live_ceyrek_yeni">11.601</span><span class="price-change-tag" id="change_ceyrek_yeni">+0.00%</span></td>
+                <td class="td-price"><span class="price-num" id="live_ceyrek_eski">11.388</span><span class="price-change-tag" id="change_ceyrek_eski">+0.00%</span></td>
               </tr>
               <tr>
                 <td class="td-label">YARIM</td>
-                <td class="td-price"><span class="price-num" id="live_yarim_yeni">23.173</span></td>
-                <td class="td-price"><span class="price-num" id="live_yarim_eski">22.740</span></td>
+                <td class="td-price"><span class="price-num" id="live_yarim_yeni">23.173</span><span class="price-change-tag" id="change_yarim_yeni">+0.00%</span></td>
+                <td class="td-price"><span class="price-num" id="live_yarim_eski">22.740</span><span class="price-change-tag" id="change_yarim_eski">+0.00%</span></td>
               </tr>
               <tr>
                 <td class="td-label">ZİYNET</td>
-                <td class="td-price"><span class="price-num" id="live_ziynet_yeni">46.189</span></td>
-                <td class="td-price"><span class="price-num" id="live_ziynet_eski">45.551</span></td>
+                <td class="td-price"><span class="price-num" id="live_ziynet_yeni">46.189</span><span class="price-change-tag" id="change_ziynet_yeni">+0.00%</span></td>
+                <td class="td-price"><span class="price-num" id="live_ziynet_eski">45.551</span><span class="price-change-tag" id="change_ziynet_eski">+0.00%</span></td>
               </tr>
               <tr>
                 <td class="td-has-label">HAS ALTIN:</td>
                 <td colspan="2" style="text-align: center; border: 2px solid #000;">
-                  <span class="has-red-box"><span class="price-num" id="live_has_altin">7.091,96</span></span>
+                  <span class="has-red-box"><span class="price-num" id="live_has_altin">7.091,96</span><span class="price-change-tag" id="change_has_altin">+0.00%</span></span>
                 </td>
               </tr>
               </tbody>
@@ -3211,7 +3211,35 @@ const App = {
     const pZiynetYeni = Math.round(baseZiynetYeni * BOARD_MARGIN);
     const pZiynetEski = Math.round(baseZiynetEski * BOARD_MARGIN);
 
-    const setPriceCell = (id, text, numVal) => {
+    // Bir önceki gün kapanışına göre değişim yüzdesi hesaplama (+%3 kâr marjı hem satışta hem kapanışta pay/paydada birbirini götürür)
+    const calcChangePct = (item, fallbackItem) => {
+      const target = item || fallbackItem;
+      if (!target) return 0;
+      const satis = parseFloat(target.satis);
+      const kapanis = parseFloat(target.kapanis);
+      if (satis > 0 && kapanis > 0) {
+        return ((satis - kapanis) / kapanis) * 100;
+      }
+      if (target.fark !== undefined && target.fark !== null && !isNaN(target.fark)) {
+        return parseFloat(target.fark);
+      }
+      return 0;
+    };
+
+    const chgHas = calcChangePct(rawItems.ALTIN);
+    const chgGram = calcChangePct(rawItems.ALTIN);
+    const chg22k = calcChangePct(rawItems.AYAR22, rawItems.ALTIN);
+    const chg18k = calcChangePct(rawItems.AYAR18, rawItems.ALTIN);
+    const chg14k = calcChangePct(rawItems.AYAR14, rawItems.ALTIN);
+    const chgAta = calcChangePct(rawItems.ATA_YENI);
+    const chgCeyrekYeni = calcChangePct(rawItems.CEYREK_YENI);
+    const chgCeyrekEski = calcChangePct(rawItems.CEYREK_ESKI);
+    const chgYarimYeni = calcChangePct(rawItems.YARIM_YENI);
+    const chgYarimEski = calcChangePct(rawItems.YARIM_ESKI);
+    const chgZiynetYeni = calcChangePct(rawItems.TEK_YENI);
+    const chgZiynetEski = calcChangePct(rawItems.TEK_ESKI);
+
+    const setPriceCell = (id, text, numVal, changePct) => {
       const targets = document.querySelectorAll('#' + id);
       if (!targets || targets.length === 0) return;
       
@@ -3247,22 +3275,38 @@ const App = {
         });
       }
 
+      // Kapanışa göre günlük yüzde değişim rozetini güncelle
+      if (changePct !== undefined && changePct !== null && !isNaN(changePct)) {
+        const changeId = id.replace('live_', 'change_');
+        const changeTags = document.querySelectorAll('#' + changeId);
+        if (changeTags && changeTags.length > 0) {
+          const numPct = Number(changePct);
+          const isUp = numPct >= 0;
+          const tagText = (isUp ? '+' : '') + numPct.toFixed(2) + '%';
+          changeTags.forEach(tag => {
+            tag.textContent = tagText;
+            tag.classList.remove('up', 'down');
+            tag.classList.add(isUp ? 'up' : 'down');
+          });
+        }
+      }
+
       this._prevBoardValues[id] = numVal;
     };
 
-    setPriceCell('live_22k', formatIntOrDec(p22k, 0), p22k);
-    setPriceCell('live_18k', formatIntOrDec(p18k, 0), p18k);
-    setPriceCell('live_14k', formatIntOrDec(p14k, 0), p14k);
-    setPriceCell('live_gram', formatIntOrDec(pGram, 0), pGram);
-    setPriceCell('live_cumhuriyet', formatIntOrDec(pAta, 0), pAta);
+    setPriceCell('live_22k', formatIntOrDec(p22k, 0), p22k, chg22k);
+    setPriceCell('live_18k', formatIntOrDec(p18k, 0), p18k, chg18k);
+    setPriceCell('live_14k', formatIntOrDec(p14k, 0), p14k, chg14k);
+    setPriceCell('live_gram', formatIntOrDec(pGram, 0), pGram, chgGram);
+    setPriceCell('live_cumhuriyet', formatIntOrDec(pAta, 0), pAta, chgAta);
 
-    setPriceCell('live_ceyrek_yeni', formatIntOrDec(pCeyrekYeni, 0), pCeyrekYeni);
-    setPriceCell('live_ceyrek_eski', formatIntOrDec(pCeyrekEski, 0), pCeyrekEski);
-    setPriceCell('live_yarim_yeni', formatIntOrDec(pYarimYeni, 0), pYarimYeni);
-    setPriceCell('live_yarim_eski', formatIntOrDec(pYarimEski, 0), pYarimEski);
-    setPriceCell('live_ziynet_yeni', formatIntOrDec(pZiynetYeni, 0), pZiynetYeni);
-    setPriceCell('live_ziynet_eski', formatIntOrDec(pZiynetEski, 0), pZiynetEski);
-    setPriceCell('live_has_altin', formatIntOrDec(pHas, 2), pHas);
+    setPriceCell('live_ceyrek_yeni', formatIntOrDec(pCeyrekYeni, 0), pCeyrekYeni, chgCeyrekYeni);
+    setPriceCell('live_ceyrek_eski', formatIntOrDec(pCeyrekEski, 0), pCeyrekEski, chgCeyrekEski);
+    setPriceCell('live_yarim_yeni', formatIntOrDec(pYarimYeni, 0), pYarimYeni, chgYarimYeni);
+    setPriceCell('live_yarim_eski', formatIntOrDec(pYarimEski, 0), pYarimEski, chgYarimEski);
+    setPriceCell('live_ziynet_yeni', formatIntOrDec(pZiynetYeni, 0), pZiynetYeni, chgZiynetYeni);
+    setPriceCell('live_ziynet_eski', formatIntOrDec(pZiynetEski, 0), pZiynetEski, chgZiynetEski);
+    setPriceCell('live_has_altin', formatIntOrDec(pHas, 2), pHas, chgHas);
   },
 
   onLivePricesUpdated() {

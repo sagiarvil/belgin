@@ -7948,6 +7948,7 @@ body.page-canli-fiyatlar-mode {
 
 /* FİYAT DEĞERLERİ — ÇOK OKUNAKLI NET ULTRA BOLD 1 TIK BÜYÜK KIRMIZI RAKAMLAR */
 .board-exact-table .td-price {
+  position: relative;
   font-size: clamp(25px, 4.3vh, 48px);
   font-weight: 900 !important;
   color: #D80000 !important;
@@ -7957,6 +7958,39 @@ body.page-canli-fiyatlar-mode {
   width: 34%;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
   transition: none !important;
+}
+
+/* Günlük Kapanışa Göre Yüzde Değişim Rozeti (Fiyat Hücresi Sağ Bölümü) */
+.board-exact-table .price-change-tag {
+  position: absolute;
+  right: clamp(4px, 0.9vw, 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: clamp(10px, 1.4vh, 15px);
+  font-weight: 800;
+  line-height: 1;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+/* Kapanışa göre artış (Saf Yeşil #008800) */
+.board-exact-table .price-change-tag.up {
+  color: #008800 !important;
+  background-color: rgba(0, 136, 0, 0.08);
+  border: 1px solid rgba(0, 136, 0, 0.28);
+}
+
+/* Kapanışa göre düşüş (Saf Kırmızı #cc0000) */
+.board-exact-table .price-change-tag.down {
+  color: #cc0000 !important;
+  background-color: rgba(204, 0, 0, 0.08);
+  border: 1px solid rgba(204, 0, 0, 0.28);
 }
 
 /* Sağ Hoşgeldiniz Alanı */
@@ -8009,17 +8043,43 @@ body.page-canli-fiyatlar-mode {
 }
 
 .has-red-box {
+  position: relative;
   background-color: #E60000;
   color: #FFFFFF !important;
   font-size: clamp(25px, 4.3vh, 48px);
   font-weight: 900 !important;
-  padding: 2px 32px;
+  padding: 2px 48px 2px 32px;
   display: inline-block;
   letter-spacing: 1px;
   font-variant-numeric: tabular-nums;
   border-radius: 3px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
   transition: none !important;
+}
+
+.has-red-box .price-change-tag {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: clamp(10px, 1.4vh, 15px);
+  font-weight: 800;
+  line-height: 1;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.has-red-box .price-change-tag.up {
+  background-color: #ffffff !important;
+  color: #008800 !important;
+  border: none;
+}
+
+.has-red-box .price-change-tag.down {
+  background-color: #ffffff !important;
+  color: #cc0000 !important;
+  border: none;
 }
 
 .has-red-box .price-num,
@@ -8135,6 +8195,17 @@ body.page-canli-fiyatlar-mode {
   will-change: background-color;
 }
 
+/* 1 SANİYELİK YANIP SÖNME SIRASINDA BANT İÇİ ROZET KONTRASTI (BEYAZ YAZI) */
+.board-exact-table td.td-price.price-flash-up .price-change-tag,
+.board-exact-table td.td-price.price-flash-down .price-change-tag,
+.has-red-box.price-flash-up .price-change-tag,
+.has-red-box.price-flash-down .price-change-tag {
+  color: #ffffff !important;
+  background-color: rgba(0, 0, 0, 0.35) !important;
+  border-color: rgba(255, 255, 255, 0.45) !important;
+  transition: none !important;
+}
+
 .price-changed-active {
   background-color: #009900 !important;
   transition: none !important;
@@ -8172,6 +8243,11 @@ body.page-canli-fiyatlar-mode {
     font-size: 17px;
     padding: 4px 2px;
   }
+  .board-exact-table .price-change-tag {
+    font-size: clamp(8px, 2.2vw, 10px);
+    padding: 1px 3px;
+    right: 2px;
+  }
   .right-title {
     font-size: 14px;
   }
@@ -8185,6 +8261,11 @@ body.page-canli-fiyatlar-mode {
   .has-red-box {
     font-size: 17px;
     padding: 2px 10px;
+  }
+  .has-red-box .price-change-tag {
+    font-size: clamp(8px, 2.2vw, 10px);
+    padding: 1px 3px;
+    right: 4px;
   }
 }
 
