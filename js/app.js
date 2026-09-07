@@ -3092,73 +3092,83 @@ const App = {
             
             <!-- Üst Kırmızı Başlık Metni -->
             <div class="board-exact-top-bar">
-              Belgin Kuyumculuk Canlı Satış Fiyatlarıdır.
+              Belgin Kuyumculuk Canlı Satış ve Alış Fiyatlarıdır.
             </div>
 
-            <!-- Birebir Tablo -->
+            <!-- Birebir 3 Sütunlu Tablo: Ürün | ALIŞ | SATIŞ -->
             <table class="board-exact-table">
               <thead>
                 <tr>
-                  <th style="width: 38%;">ALTIN</th>
-                  <th style="width: 31%;">SATIŞ</th>
-                  <th style="width: 31%;">HOŞGELDİNİZ</th>
+                  <th class="th-product">Ürün</th>
+                  <th class="th-alis">ALIŞ</th>
+                  <th class="th-satis">SATIŞ</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td class="td-label">22 AYAR</td>
-                  <td class="td-price"><span class="price-num" id="live_22k">6.409</span><span class="price-change-tag" id="change_22k">+0.00%</span></td>
-                  <td class="td-right-message" rowspan="5">
-                    <div class="right-message-inner">
-                      <div class="right-title">BELGİN</div>
-                      <div class="right-title">KUYUMCULUK</div>
-                      <div class="right-sub">CANLI</div>
-                      <div class="right-sub">SATIŞ</div>
-                      <div class="right-sub">FİYATLARIDIR!</div>
-                    </div>
-                  </td>
+                  <td class="td-label">22 Ayar Bilezik / gr</td>
+                  <td class="td-price td-price-alis"><span class="price-num" id="live_22k_alis">6.377</span></td>
+                  <td class="td-price td-price-satis"><span class="price-num" id="live_22k">6.409</span><span class="price-change-tag" id="change_22k">+0.00%</span></td>
                 </tr>
                 <tr>
-                  <td class="td-label">18 AYAR</td>
-                  <td class="td-price"><span class="price-num" id="live_18k">5.127</span><span class="price-change-tag" id="change_18k">+0.00%</span></td>
+                  <td class="td-label">18 Ayar / gr</td>
+                  <td class="td-price td-price-alis"><span class="price-num" id="live_18k_alis">5.101</span></td>
+                  <td class="td-price td-price-satis"><span class="price-num" id="live_18k">5.127</span><span class="price-change-tag" id="change_18k">+0.00%</span></td>
                 </tr>
                 <tr>
-                  <td class="td-label">14 AYAR</td>
-                  <td class="td-price"><span class="price-num" id="live_14k">4.948</span><span class="price-change-tag" id="change_14k">+0.00%</span></td>
+                  <td class="td-label">14 Ayar / gr</td>
+                  <td class="td-price td-price-alis"><span class="price-num" id="live_14k_alis">4.923</span></td>
+                  <td class="td-price td-price-satis"><span class="price-num" id="live_14k">4.948</span><span class="price-change-tag" id="change_14k">+0.00%</span></td>
                 </tr>
                 <tr>
-                  <td class="td-label">GRAM ALTIN</td>
-                  <td class="td-price"><span class="price-num" id="live_gram">6.839</span><span class="price-change-tag" id="change_gram">+0.00%</span></td>
+                  <td class="td-label">Gram Altın 24 Ayar / gr</td>
+                  <td class="td-price td-price-alis"><span class="price-num" id="live_gram_alis">6.805</span></td>
+                  <td class="td-price td-price-satis"><span class="price-num" id="live_gram">6.839</span><span class="price-change-tag" id="change_gram">+0.00%</span></td>
                 </tr>
                 <tr>
-                  <td class="td-label">CUMHURİYET</td>
-                  <td class="td-price"><span class="price-num" id="live_cumhuriyet">45.326</span><span class="price-change-tag" id="change_cumhuriyet">+0.00%</span></td>
-                </tr>
-                <tr class="tr-sarrafiye-header">
-                  <td style="background-color:#fff200; border: 2px solid #000;"></td>
-                  <th style="border: 2px solid #000;">YENİ</th>
-                  <th style="border: 2px solid #000;">ESKİ</th>
+                  <td class="td-label">Yeni Çeyrek</td>
+                  <td class="td-price td-price-alis"><span class="price-num" id="live_ceyrek_yeni_alis">11.132</span></td>
+                  <td class="td-price td-price-satis"><span class="price-num" id="live_ceyrek_yeni">11.188</span><span class="price-change-tag" id="change_ceyrek_yeni">+0.00%</span></td>
                 </tr>
                 <tr>
-                  <td class="td-label">ÇEYREK</td>
-                  <td class="td-price"><span class="price-num" id="live_ceyrek_yeni">11.188</span><span class="price-change-tag" id="change_ceyrek_yeni">+0.00%</span></td>
-                  <td class="td-price"><span class="price-num" id="live_ceyrek_eski">10.981</span><span class="price-change-tag" id="change_ceyrek_eski">+0.00%</span></td>
+                  <td class="td-label">Eski Çeyrek</td>
+                  <td class="td-price td-price-alis"><span class="price-num" id="live_ceyrek_eski_alis">10.926</span></td>
+                  <td class="td-price td-price-satis"><span class="price-num" id="live_ceyrek_eski">10.981</span><span class="price-change-tag" id="change_ceyrek_eski">+0.00%</span></td>
                 </tr>
                 <tr>
-                  <td class="td-label">YARIM</td>
-                  <td class="td-price"><span class="price-num" id="live_yarim_yeni">22.351</span><span class="price-change-tag" id="change_yarim_yeni">+0.00%</span></td>
-                  <td class="td-price"><span class="price-num" id="live_yarim_eski">21.928</span><span class="price-change-tag" id="change_yarim_eski">+0.00%</span></td>
+                  <td class="td-label">Yeni Yarım</td>
+                  <td class="td-price td-price-alis"><span class="price-num" id="live_yarim_yeni_alis">22.240</span></td>
+                  <td class="td-price td-price-satis"><span class="price-num" id="live_yarim_yeni">22.351</span><span class="price-change-tag" id="change_yarim_yeni">+0.00%</span></td>
                 </tr>
                 <tr>
-                  <td class="td-label">ZİYNET</td>
-                  <td class="td-price"><span class="price-num" id="live_ziynet_yeni">44.540</span><span class="price-change-tag" id="change_ziynet_yeni">+0.00%</span></td>
-                  <td class="td-price"><span class="price-num" id="live_ziynet_eski">43.924</span><span class="price-change-tag" id="change_ziynet_eski">+0.00%</span></td>
+                  <td class="td-label">Eski Yarım</td>
+                  <td class="td-price td-price-alis"><span class="price-num" id="live_yarim_eski_alis">21.819</span></td>
+                  <td class="td-price td-price-satis"><span class="price-num" id="live_yarim_eski">21.928</span><span class="price-change-tag" id="change_yarim_eski">+0.00%</span></td>
                 </tr>
                 <tr>
-                  <td class="td-has-label">HAS ALTIN:</td>
-                  <td colspan="2" style="text-align: center; border: 2px solid #000;">
-                    <span class="has-red-box"><span class="price-num" id="live_has_altin">6.839,29</span><span class="price-change-tag" id="change_has_altin">+0.00%</span></span>
-                  </td>
+                  <td class="td-label">Yeni Tam (Ziynet)</td>
+                  <td class="td-price td-price-alis"><span class="price-num" id="live_ziynet_yeni_alis">44.318</span></td>
+                  <td class="td-price td-price-satis"><span class="price-num" id="live_ziynet_yeni">44.540</span><span class="price-change-tag" id="change_ziynet_yeni">+0.00%</span></td>
+                </tr>
+                <tr>
+                  <td class="td-label">Eski Tam (Ziynet)</td>
+                  <td class="td-price td-price-alis"><span class="price-num" id="live_ziynet_eski_alis">43.705</span></td>
+                  <td class="td-price td-price-satis"><span class="price-num" id="live_ziynet_eski">43.924</span><span class="price-change-tag" id="change_ziynet_eski">+0.00%</span></td>
+                </tr>
+                <tr>
+                  <td class="td-label">Yeni Ata (Cumhuriyet)</td>
+                  <td class="td-price td-price-alis"><span class="price-num" id="live_cumhuriyet_alis">45.100</span></td>
+                  <td class="td-price td-price-satis"><span class="price-num" id="live_cumhuriyet">45.326</span><span class="price-change-tag" id="change_cumhuriyet">+0.00%</span></td>
+                </tr>
+                <tr>
+                  <td class="td-label">Eski Ata (Cumhuriyet)</td>
+                  <td class="td-price td-price-alis"><span class="price-num" id="live_ata_eski_alis">44.998</span></td>
+                  <td class="td-price td-price-satis"><span class="price-num" id="live_ata_eski_satis">45.223</span><span class="price-change-tag" id="change_ata_eski">+0.00%</span></td>
+                </tr>
+                <tr>
+                  <td class="td-label">Has Altın 24 Ayar / gr</td>
+                  <td class="td-price td-price-alis"><span class="price-num" id="live_has_altin_alis">6.805,26</span></td>
+                  <td class="td-price td-price-satis"><span class="price-num" id="live_has_altin">6.839,29</span><span class="price-change-tag" id="change_has_altin">+0.00%</span></td>
                 </tr>
               </tbody>
             </table>
@@ -3184,12 +3194,29 @@ const App = {
     const rawItems = LIVE_MARKET_DATA.items || {};
     const BOARD_MARGIN = 1.005; // Sarı Tabela Canlı Satış Kâr Marjı (+%0.5)
 
+    // Ham Alış Referansları (1.000x - Birebir marjsız borsa kuru)
+    const baseHasAlis = parseFloat(rawItems.ALTIN?.alis) || (LIVE_MARKET_DATA.hasAltin ? LIVE_MARKET_DATA.hasAltin * 0.995 : 6805.26);
+    const baseGramAlis = parseFloat(rawItems.ALTIN?.alis) || baseHasAlis;
+    const base22kAlis = parseFloat(rawItems.AYAR22?.alis) || Math.round(baseHasAlis * 0.937);
+    const base18kAlis = parseFloat(rawItems.AYAR18?.alis) || Math.round(baseHasAlis * 0.750);
+    const base14kAlis = parseFloat(rawItems.AYAR14?.alis) || Math.round(baseHasAlis * 0.722);
+    const baseAtaYeniAlis = parseFloat(rawItems.ATA_YENI?.alis) || 45100;
+    const baseAtaEskiAlis = parseFloat(rawItems.ATA_ESKI?.alis) || 44998;
+    const baseCeyrekYeniAlis = parseFloat(rawItems.CEYREK_YENI?.alis) || 11132;
+    const baseCeyrekEskiAlis = parseFloat(rawItems.CEYREK_ESKI?.alis) || 10926;
+    const baseYarimYeniAlis = parseFloat(rawItems.YARIM_YENI?.alis) || 22240;
+    const baseYarimEskiAlis = parseFloat(rawItems.YARIM_ESKI?.alis) || 21819;
+    const baseZiynetYeniAlis = parseFloat(rawItems.TEK_YENI?.alis) || 44318;
+    const baseZiynetEskiAlis = parseFloat(rawItems.TEK_ESKI?.alis) || 43705;
+
+    // Ham Satış Referansları (Harem Altın Borsa Kuru)
     const baseHas = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.hasAltin || LIVE_MARKET_DATA.gramGold24k || 6885.40;
     const baseGram = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.gramGold24k || baseHas;
     const base22k = parseFloat(rawItems.AYAR22?.satis) || LIVE_MARKET_DATA.gramGold22k || Math.round(baseHas * 0.937);
     const base18k = parseFloat(rawItems.AYAR18?.satis) || LIVE_MARKET_DATA.gramGold18k || Math.round(baseHas * 0.750);
     const base14k = parseFloat(rawItems.AYAR14?.satis) || LIVE_MARKET_DATA.gramGold14k || Math.round(baseHas * 0.722);
-    const baseAta = parseFloat(rawItems.ATA_YENI?.satis) || LIVE_MARKET_DATA.ataGold || 45636;
+    const baseAtaYeni = parseFloat(rawItems.ATA_YENI?.satis) || LIVE_MARKET_DATA.ataGold || 45636;
+    const baseAtaEski = parseFloat(rawItems.ATA_ESKI?.satis) || LIVE_MARKET_DATA.oldAtaGold || 45532;
     
     const baseCeyrekYeni = parseFloat(rawItems.CEYREK_YENI?.satis) || LIVE_MARKET_DATA.quarterGold || 11263;
     const baseCeyrekEski = parseFloat(rawItems.CEYREK_ESKI?.satis) || LIVE_MARKET_DATA.oldQuarterGold || 11056;
@@ -3198,12 +3225,14 @@ const App = {
     const baseZiynetYeni = parseFloat(rawItems.TEK_YENI?.satis) || LIVE_MARKET_DATA.fullGold || 44844;
     const baseZiynetEski = parseFloat(rawItems.TEK_ESKI?.satis) || LIVE_MARKET_DATA.oldFullGold || 44224;
 
+    // Nihai Satış Fiyatları (+%0.5 kâr marjı)
     const pHas = Number((baseHas * BOARD_MARGIN).toFixed(2));
     const pGram = Math.round(baseGram * BOARD_MARGIN);
     const p22k = Math.round(base22k * BOARD_MARGIN);
     const p18k = Math.round(base18k * BOARD_MARGIN);
     const p14k = Math.round(base14k * BOARD_MARGIN);
-    const pAta = Math.round(baseAta * BOARD_MARGIN);
+    const pAtaYeni = Math.round(baseAtaYeni * BOARD_MARGIN);
+    const pAtaEski = Math.round(baseAtaEski * BOARD_MARGIN);
     const pCeyrekYeni = Math.round(baseCeyrekYeni * BOARD_MARGIN);
     const pCeyrekEski = Math.round(baseCeyrekEski * BOARD_MARGIN);
     const pYarimYeni = Math.round(baseYarimYeni * BOARD_MARGIN);
@@ -3211,7 +3240,22 @@ const App = {
     const pZiynetYeni = Math.round(baseZiynetYeni * BOARD_MARGIN);
     const pZiynetEski = Math.round(baseZiynetEski * BOARD_MARGIN);
 
-    // Bir önceki gün kapanışına göre değişim yüzdesi hesaplama (+%3 kâr marjı hem satışta hem kapanışta pay/paydada birbirini götürür)
+    // Nihai Alış Fiyatları (Birebir 1.000x marjsız)
+    const aHas = Number(baseHasAlis.toFixed(2));
+    const aGram = Math.round(baseGramAlis);
+    const a22k = Math.round(base22kAlis);
+    const a18k = Math.round(base18kAlis);
+    const a14k = Math.round(base14kAlis);
+    const aAtaYeni = Math.round(baseAtaYeniAlis);
+    const aAtaEski = Math.round(baseAtaEskiAlis);
+    const aCeyrekYeni = Math.round(baseCeyrekYeniAlis);
+    const aCeyrekEski = Math.round(baseCeyrekEskiAlis);
+    const aYarimYeni = Math.round(baseYarimYeniAlis);
+    const aYarimEski = Math.round(baseYarimEskiAlis);
+    const aZiynetYeni = Math.round(baseZiynetYeniAlis);
+    const aZiynetEski = Math.round(baseZiynetEskiAlis);
+
+    // Bir önceki gün kapanışına göre değişim yüzdesi hesaplama
     const calcChangePct = (item, fallbackItem) => {
       const target = item || fallbackItem;
       if (!target) return 0;
@@ -3231,7 +3275,8 @@ const App = {
     const chg22k = calcChangePct(rawItems.AYAR22, rawItems.ALTIN);
     const chg18k = calcChangePct(rawItems.AYAR18, rawItems.ALTIN);
     const chg14k = calcChangePct(rawItems.AYAR14, rawItems.ALTIN);
-    const chgAta = calcChangePct(rawItems.ATA_YENI);
+    const chgAtaYeni = calcChangePct(rawItems.ATA_YENI);
+    const chgAtaEski = calcChangePct(rawItems.ATA_ESKI, rawItems.ATA_YENI);
     const chgCeyrekYeni = calcChangePct(rawItems.CEYREK_YENI);
     const chgCeyrekEski = calcChangePct(rawItems.CEYREK_ESKI);
     const chgYarimYeni = calcChangePct(rawItems.YARIM_YENI);
@@ -3294,18 +3339,34 @@ const App = {
       this._prevBoardValues[id] = numVal;
     };
 
+    // 1. ALIŞ Sütunları (Birebir 1.000x)
+    setPriceCell('live_22k_alis', formatIntOrDec(a22k, 0), a22k);
+    setPriceCell('live_18k_alis', formatIntOrDec(a18k, 0), a18k);
+    setPriceCell('live_14k_alis', formatIntOrDec(a14k, 0), a14k);
+    setPriceCell('live_gram_alis', formatIntOrDec(aGram, 0), aGram);
+    setPriceCell('live_ceyrek_yeni_alis', formatIntOrDec(aCeyrekYeni, 0), aCeyrekYeni);
+    setPriceCell('live_ceyrek_eski_alis', formatIntOrDec(aCeyrekEski, 0), aCeyrekEski);
+    setPriceCell('live_yarim_yeni_alis', formatIntOrDec(aYarimYeni, 0), aYarimYeni);
+    setPriceCell('live_yarim_eski_alis', formatIntOrDec(aYarimEski, 0), aYarimEski);
+    setPriceCell('live_ziynet_yeni_alis', formatIntOrDec(aZiynetYeni, 0), aZiynetYeni);
+    setPriceCell('live_ziynet_eski_alis', formatIntOrDec(aZiynetEski, 0), aZiynetEski);
+    setPriceCell('live_cumhuriyet_alis', formatIntOrDec(aAtaYeni, 0), aAtaYeni);
+    setPriceCell('live_ata_eski_alis', formatIntOrDec(aAtaEski, 0), aAtaEski);
+    setPriceCell('live_has_altin_alis', formatIntOrDec(aHas, 2), aHas);
+
+    // 2. SATIŞ Sütunları (+%0.5 Marj / x 1.005)
     setPriceCell('live_22k', formatIntOrDec(p22k, 0), p22k, chg22k);
     setPriceCell('live_18k', formatIntOrDec(p18k, 0), p18k, chg18k);
     setPriceCell('live_14k', formatIntOrDec(p14k, 0), p14k, chg14k);
     setPriceCell('live_gram', formatIntOrDec(pGram, 0), pGram, chgGram);
-    setPriceCell('live_cumhuriyet', formatIntOrDec(pAta, 0), pAta, chgAta);
-
     setPriceCell('live_ceyrek_yeni', formatIntOrDec(pCeyrekYeni, 0), pCeyrekYeni, chgCeyrekYeni);
     setPriceCell('live_ceyrek_eski', formatIntOrDec(pCeyrekEski, 0), pCeyrekEski, chgCeyrekEski);
     setPriceCell('live_yarim_yeni', formatIntOrDec(pYarimYeni, 0), pYarimYeni, chgYarimYeni);
     setPriceCell('live_yarim_eski', formatIntOrDec(pYarimEski, 0), pYarimEski, chgYarimEski);
     setPriceCell('live_ziynet_yeni', formatIntOrDec(pZiynetYeni, 0), pZiynetYeni, chgZiynetYeni);
     setPriceCell('live_ziynet_eski', formatIntOrDec(pZiynetEski, 0), pZiynetEski, chgZiynetEski);
+    setPriceCell('live_cumhuriyet', formatIntOrDec(pAtaYeni, 0), pAtaYeni, chgAtaYeni);
+    setPriceCell('live_ata_eski_satis', formatIntOrDec(pAtaEski, 0), pAtaEski, chgAtaEski);
     setPriceCell('live_has_altin', formatIntOrDec(pHas, 2), pHas, chgHas);
   },
 
