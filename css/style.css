@@ -7829,24 +7829,83 @@ body.page-canli-fiyatlar-mode .vip-whatsapp-float,
   display: none !important;
 }
 
+/* CANLI FİYATLAR İNCE HEADER (SADECE BELGİN LOGOSU) */
+body.page-canli-fiyatlar .header,
+body.page-is-canli-fiyatlar .header,
+.header.header-canli-fiyatlar {
+  height: 44px !important;
+  min-height: 44px !important;
+  max-height: 44px !important;
+  padding: 0 16px !important;
+  background: #052621 !important;
+  border-bottom: 1px solid rgba(194, 167, 104, 0.4) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 1000 !important;
+}
+
+body.page-canli-fiyatlar .header .header-grid,
+body.page-canli-fiyatlar .header-canli-fiyatlar-inner,
+.header-canli-fiyatlar-inner {
+  height: 100% !important;
+  padding: 0 !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+}
+
+body.page-canli-fiyatlar .header .btn-hamburger,
+body.page-canli-fiyatlar .header .nav-desktop,
+body.page-canli-fiyatlar .header .header-actions,
+body.page-is-canli-fiyatlar .header .btn-hamburger,
+body.page-is-canli-fiyatlar .header .nav-desktop,
+body.page-is-canli-fiyatlar .header .header-actions {
+  display: none !important;
+}
+
+body.page-canli-fiyatlar .brand-logo-link,
+.header-canli-fiyatlar .brand-logo-link {
+  height: 32px !important;
+  max-height: 32px !important;
+  width: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+}
+
+body.page-canli-fiyatlar .brand-logo-header,
+.header-canli-fiyatlar .brand-logo-header {
+  height: 30px !important;
+  max-height: 30px !important;
+  width: auto !important;
+  object-fit: contain !important;
+}
+
 body.page-canli-fiyatlar,
 body.page-is-canli-fiyatlar,
 body.page-canli-fiyatlar-mode {
+  height: 100vh !important;
+  max-height: 100vh !important;
   min-height: 100vh !important;
   margin: 0 !important;
   padding: 0 !important;
   background-color: #fff200 !important;
-  overflow-x: hidden !important;
-  overflow-y: auto !important;
-  scrollbar-gutter: stable !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
 }
 
 .page-canli-fiyatlar-wrapper {
   background-color: #fff200 !important;
-  height: calc(100vh - 72px) !important;
-  max-height: calc(100vh - 72px) !important;
+  height: calc(100vh - 44px) !important;
+  max-height: calc(100vh - 44px) !important;
   width: 100% !important;
-  padding: 6px 16px !important;
+  padding: clamp(2px, 0.5vh, 6px) clamp(6px, 1.2vw, 16px) !important;
   margin: 0 !important;
   overflow: hidden !important;
   display: flex !important;
@@ -8260,18 +8319,18 @@ body.page-canli-fiyatlar-mode {
 @media (max-width: 768px) {
   body.page-canli-fiyatlar,
   body.page-is-canli-fiyatlar {
-    overflow: auto !important;
-    height: auto !important;
+    overflow: hidden !important;
+    height: 100vh !important;
   }
   .page-canli-fiyatlar-wrapper {
-    height: auto !important;
-    max-height: none !important;
-    overflow: visible !important;
-    padding: 0 !important;
+    height: calc(100vh - 44px) !important;
+    max-height: calc(100vh - 44px) !important;
+    overflow: hidden !important;
+    padding: 2px 4px !important;
   }
   .board-exact-frame {
-    height: auto !important;
-    max-height: none !important;
+    height: 100% !important;
+    max-height: 100% !important;
     border-radius: 0;
   }
   .board-exact-table th {
@@ -8512,9 +8571,6 @@ body.page-canli-fiyatlar-mode .gold-ticker-strip,
 }
 
 @media (max-width: 768px) {
-  .page-canli-fiyatlar-wrapper {
-    padding: 16px 0 50px 0;
-  }
   .live-header-banner {
     padding: 18px;
     flex-direction: column;
