@@ -1108,6 +1108,16 @@ async function getInvoiceTargetDoc(id, fallbackData = null) {
 
   // MGS ile başlayan mağaza faturalarında doküman yoksa otomatik oluştur
   if (cleanId.startsWith('MGS-') || fallbackData) {
+    const rawFallback = Object.assign({}, fallbackData || {});
+    // Firestore 1MB doküman limiti koruması: Dev base64 dosyalarını veritabanına yazmadan önce temizle
+    const sanitizedFallback = {};
+    for (const [k, v] of Object.entries(rawFallback)) {
+      if (typeof v === 'string' && v.length > 500000 && (v.startsWith('data:') || k.toLowerCase().includes('doc') || k.toLowerCase().includes('identity'))) {
+        continue;
+      }
+      sanitizedFallback[k] = v;
+    }
+
     const dataToSave = Object.assign({
       orderId: cleanId,
       id: cleanId,
@@ -1117,7 +1127,8 @@ async function getInvoiceTargetDoc(id, fallbackData = null) {
       invoiceStatus: 'PENDING',
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
       updatedAt: admin.firestore.FieldValue.serverTimestamp()
-    }, fallbackData || {});
+    }, sanitizedFallback);
+
     await storeRef.set(dataToSave, { merge: true });
     return { ref: storeRef, doc: null, isStore: true, data: dataToSave };
   }
@@ -1864,7 +1875,12 @@ async function handleStoreInvoicesRequest(req, res) {
       const cleanPhone = String(customerPhone || '').trim();
       const cleanEmail = String(customerEmail || '').trim();
       const cleanDate = String(invoiceDate || new Date().toISOString().slice(0, 10)).trim();
-      const cleanDeclarationDoc = declarationDoc || identityDoc || (existingDoc?.exists ? existingDoc.data().declarationDoc : null) || null;
+      const rawDoc = declarationDoc || identityDoc || (existingDoc?.exists ? existingDoc.data().declarationDoc : null) || null;
+      let cleanDeclarationDoc = rawDoc;
+      if (typeof cleanDeclarationDoc === 'string' && cleanDeclarationDoc.length > 700000) {
+        // Firestore 1MB sınırını korumak için 700KB üzeri base64 belgeleri sunucuda doküman içine doğrudan gömmüyoruz
+        cleanDeclarationDoc = '[ATTACHED_LOCALLY_CLIENT_DOC]';
+      }
 
       const itemsList = Array.isArray(items) && items.length > 0 ? items : [
         { name: '22 Ayar Altın / Mücevherat', qty: 1, unitPrice: Number(totalAmount || 0), lineTotal: Number(totalAmount || 0) }

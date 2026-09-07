@@ -7838,6 +7838,7 @@ body.page-canli-fiyatlar-mode {
   background-color: #fff200 !important;
   overflow-x: hidden !important;
   overflow-y: auto !important;
+  scrollbar-gutter: stable !important;
 }
 
 .page-canli-fiyatlar-wrapper {
@@ -8047,80 +8048,80 @@ body.page-canli-fiyatlar-mode {
    Fiyat Düştü: Açık Kırmızı (#fca5a5 / #fecaca)
    ========================================================== */
 @keyframes priceBandFlashGreen {
-  0%, 100% {
+  0% {
     background-color: #fff200 !important;
   }
-  25%, 75% {
+  30% {
     background-color: #86efac !important; /* Açık Yeşil */
   }
-  50% {
-    background-color: #bbf7d0 !important;
+  100% {
+    background-color: #fff200 !important;
   }
 }
 
 @keyframes priceBandFlashRed {
-  0%, 100% {
+  0% {
     background-color: #fff200 !important;
   }
-  25%, 75% {
+  30% {
     background-color: #fca5a5 !important; /* Açık Kırmızı */
   }
-  50% {
-    background-color: #fecaca !important;
+  100% {
+    background-color: #fff200 !important;
   }
 }
 
 /* Has Altın Kırmızı Kutusu İçin Özel Bant Animasyonu */
 @keyframes priceBandFlashGreenHas {
-  0%, 100% {
+  0% {
     background-color: #E60000 !important;
   }
-  25%, 75% {
+  30% {
     background-color: #16a34a !important; /* Canlı Yeşil Vurgusu */
   }
-  50% {
-    background-color: #22c55e !important;
+  100% {
+    background-color: #E60000 !important;
   }
 }
 
 @keyframes priceBandFlashRedHas {
-  0%, 100% {
+  0% {
     background-color: #E60000 !important;
   }
-  25%, 75% {
-    background-color: #f87171 !important; /* Açık Kırmızı Vurgusu */
+  30% {
+    background-color: #991b1b !important; /* Koyu Kırmızı Vurgusu */
   }
-  50% {
-    background-color: #ef4444 !important;
+  100% {
+    background-color: #E60000 !important;
   }
 }
 
 .board-exact-table td.td-price.price-flash-up,
 .board-exact-table td.price-flash-up,
 .price-flash-up {
-  animation: priceBandFlashGreen 1.8s ease-in-out 1 !important;
+  animation: priceBandFlashGreen 1.8s ease-out 1 !important;
   will-change: background-color;
 }
 
 .board-exact-table td.td-price.price-flash-down,
 .board-exact-table td.price-flash-down,
 .price-flash-down {
-  animation: priceBandFlashRed 1.8s ease-in-out 1 !important;
+  animation: priceBandFlashRed 1.8s ease-out 1 !important;
   will-change: background-color;
 }
 
 .has-red-box.price-flash-up {
-  animation: priceBandFlashGreenHas 1.8s ease-in-out 1 !important;
+  animation: priceBandFlashGreenHas 1.8s ease-out 1 !important;
   will-change: background-color;
 }
 
 .has-red-box.price-flash-down {
-  animation: priceBandFlashRedHas 1.8s ease-in-out 1 !important;
+  animation: priceBandFlashRedHas 1.8s ease-out 1 !important;
   will-change: background-color;
 }
 
 .price-changed-active {
-  animation: priceBandFlashGreen 1.8s ease-in-out 1 !important;
+  animation: priceBandFlashGreen 1.8s ease-out 1 !important;
   will-change: background-color;
 }
 

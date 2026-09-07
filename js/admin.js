@@ -1406,7 +1406,7 @@ const AdminApp = {
     if (file) this.handleDeclarationFile(file);
   },
 
-  handleDeclarationFile(file) {
+  async handleDeclarationFile(file) {
     if (!file || !this.activeDeclarationOrderId) return;
 
     if (file.size > 15 * 1024 * 1024) {
@@ -1414,10 +1414,16 @@ const AdminApp = {
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const dataUrl = e.target.result;
-      const orderId = this.activeDeclarationOrderId;
+    const dataUrl = (typeof this.compressImageFile === 'function') 
+      ? await this.compressImageFile(file, 1080, 80000) 
+      : await new Promise(r => { const rd = new FileReader(); rd.onload = (e) => r(e.target.result); rd.readAsDataURL(file); });
+
+    if (!dataUrl) {
+      alert('⚠️ Dosya okunamadı.');
+      return;
+    }
+
+    const orderId = this.activeDeclarationOrderId;
       
       const order = this.orders && this.orders.find(o => o && (o.orderId === orderId || o.id === orderId));
       const storeInv = this.storeInvoices && this.storeInvoices.find(o => o && (o.orderId === orderId || o.id === orderId));
@@ -1466,16 +1472,13 @@ const AdminApp = {
         } catch (_) {}
       }
 
-      // 3. Fatura sihirbazı açıksa önizlemeyi eşitle
-      this.setStoreIdentityDoc(dataUrl, file.name);
+    // 3. Fatura sihirbazı açıksa önizlemeyi eşitle
+    this.setStoreIdentityDoc(dataUrl, file.name);
 
-      if (typeof this.filterTable === 'function') this.filterTable();
-      if (typeof this.filterStoreTable === 'function') this.filterStoreTable();
-      this.openDeclarationModal(this.activeDeclarationOrderId);
-      alert('✅ Müşteri kimlik / beyan belgesi başarıyla kaydedildi! Yasal evraklar dosyasından anında görüntülenebilir ve yazdırılabilir.');
-    };
-
-    reader.readAsDataURL(file);
+    if (typeof this.filterTable === 'function') this.filterTable();
+    if (typeof this.filterStoreTable === 'function') this.filterStoreTable();
+    this.openDeclarationModal(this.activeDeclarationOrderId);
+    alert('✅ Müşteri kimlik / beyan belgesi başarıyla kaydedildi! Yasal evraklar dosyasından anında görüntülenebilir ve yazdırılabilir.');
   },
 
   removeDeclaration() {
@@ -6229,6 +6232,37 @@ const AdminApp = {
     this.renderStoreInvoiceItems();
     this.calculateStoreInvoiceLiveSummary();
     this.handleFreeItemChange(false);
+    this.autoSanitizeBloatedLocalInvoices();
+  },
+
+  // Eski 1MB+ Base64 kalıntılarını otomatik tespit edip küçülten koruma
+  autoSanitizeBloatedLocalInvoices() {
+    try {
+      const stored = localStorage.getItem('belgin_store_invoices');
+      if (!stored) return;
+      let list = JSON.parse(stored);
+      let changed = false;
+      if (Array.isArray(list)) {
+        list = list.map(inv => {
+          if (!inv) return inv;
+          // Eğer 300KB üzeri eski ham Base64 görsel varsa küçültülmüş işaret koy veya temizle
+          if (typeof inv.identityDoc === 'string' && inv.identityDoc.length > 400000) {
+            delete inv.identityDoc;
+            changed = true;
+          }
+          if (typeof inv.declarationDoc === 'string' && inv.declarationDoc.length > 400000) {
+            delete inv.declarationDoc;
+            changed = true;
+          }
+          return inv;
+        });
+        if (changed) {
+          localStorage.setItem('belgin_store_invoices', JSON.stringify(list));
+          this.storeInvoices = list;
+          if (typeof this.filterStoreTable === 'function') this.filterStoreTable();
+        }
+      }
+    } catch (_) {}
   },
 
   currentStoreIdentityDoc: null,
@@ -6246,21 +6280,85 @@ const AdminApp = {
     this.processStoreIdentityFile(file);
   },
 
-  processStoreIdentityFile(file) {
-    if (file.size > 10 * 1024 * 1024) {
-      alert('Dosya boyutu 10MB\'dan büyük olamaz.');
+  compressImageFile(file, maxDimension = 1080, targetMaxBytes = 85000) {
+    return new Promise((resolve) => {
+      // PDF veya resim dışı dosyalarda sıkıştırma yapma, doğrudan oku
+      if (!file.type || !file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve(e.target.result);
+        reader.onerror = () => resolve(null);
+        reader.readAsDataURL(file);
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          let width = img.width;
+          let height = img.height;
+
+          // Belge ve kimlik kartları için 1080px çözünürlük TCKN/seri no için kristal netliktedir
+          if (width > maxDimension || height > maxDimension) {
+            if (width > height) {
+              height = Math.round((height * maxDimension) / width);
+              width = maxDimension;
+            } else {
+              width = Math.round((width * maxDimension) / height);
+              height = maxDimension;
+            }
+          }
+
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // WebP formatı desteğini kontrol et, yoksa JPEG kullan
+          const isWebPSupported = canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+          const mimeType = isWebPSupported ? 'image/webp' : 'image/jpeg';
+
+          // Kademeli otomatik kalite döngüsü (< 80KB hedefi)
+          let quality = 0.72;
+          let dataUrl = canvas.toDataURL(mimeType, quality);
+
+          // Eğer boyut hedeften büyükse, netliği koruyarak kademeli indir
+          const qualities = [0.60, 0.50, 0.40, 0.32];
+          let qIdx = 0;
+          while (dataUrl.length > targetMaxBytes * 1.33 && qIdx < qualities.length) {
+            quality = qualities[qIdx++];
+            dataUrl = canvas.toDataURL(mimeType, quality);
+          }
+
+          resolve(dataUrl);
+        };
+        img.onerror = () => resolve(e.target.result);
+        img.src = e.target.result;
+      };
+      reader.onerror = () => resolve(null);
+      reader.readAsDataURL(file);
+    });
+  },
+
+  async processStoreIdentityFile(file) {
+    if (file.size > 20 * 1024 * 1024) {
+      alert('Dosya boyutu 20MB\'dan büyük olamaz.');
       return;
     }
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const dataUrl = e.target.result;
-      this.setStoreIdentityDoc(dataUrl, file.name);
-      this.showToast('✅ Müşteri kimlik belgesi başarıyla eklendi.');
-    };
-    reader.onerror = () => {
-      alert('Dosya okunamadı. Lütfen geçerli bir görsel veya PDF seçiniz.');
-    };
-    reader.readAsDataURL(file);
+    try {
+      // 1080px genişlik, ~75-80 KB hedef boyut (WebP)
+      const dataUrl = await this.compressImageFile(file, 1080, 80000);
+      if (!dataUrl) {
+        alert('Dosya okunamadı. Lütfen geçerli bir görsel veya PDF seçiniz.');
+        return;
+      }
+      const approxKb = Math.round((dataUrl.length * 0.75) / 1024);
+      this.setStoreIdentityDoc(dataUrl, `${file.name} (${approxKb} KB)`);
+      this.showToast(`✅ Müşteri kimlik belgesi optimize edildi (${approxKb} KB).`);
+    } catch (err) {
+      alert('Dosya işlenirken hata oluştu: ' + err.message);
+    }
   },
 
   setStoreIdentityDoc(dataUrl, fileName = 'Kimlik Belgesi') {
@@ -6284,7 +6382,9 @@ const AdminApp = {
         if (pdfIcon) pdfIcon.style.display = isPdf ? 'block' : 'none';
         if (nameEl) nameEl.textContent = fileName || 'Belge Eklendi';
         if (badgeEl) {
-          badgeEl.innerHTML = '<span style="color:#059669; font-weight:800;">✅ Kimlik Yüklendi</span>';
+          const approxKb = typeof dataUrl === 'string' ? Math.round((dataUrl.length * 0.75) / 1024) : 0;
+          const sizeText = approxKb > 0 ? ` (${approxKb} KB)` : '';
+          badgeEl.innerHTML = `<span style="color:#059669; font-weight:800;">✅ Kimlik Yüklendi${sizeText}</span>`;
         }
       } else {
         previewBox.style.display = 'none';
@@ -8292,13 +8392,19 @@ const AdminApp = {
 
     try {
       if (submitBtn) submitBtn.innerHTML = '<span>⏳ GİB Taslak & SMS Hazırlanıyor...</span>';
+
+      // GİB taslağı ve veritabanı için dev base64 eklerini çıkartarak gönder (Firestore 1MB limit koruması)
+      const cleanOrderData = Object.assign({}, inv);
+      delete cleanOrderData.identityDoc;
+      delete cleanOrderData.declarationDoc;
+
       const draftRes = await fetch('/api/admin/invoice/draft', {
         method: 'POST',
         headers: this.getAuthHeaders(),
         body: JSON.stringify({
           orderId: inv.orderId,
           totalAmount: Number(inv.totalAmount || 0),
-          orderData: inv,
+          orderData: cleanOrderData,
           adminKey: this.adminPin
         })
       });

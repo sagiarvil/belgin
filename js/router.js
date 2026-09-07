@@ -230,8 +230,11 @@ const Router = {
         const page = link.getAttribute('data-page');
         const filterVal = link.getAttribute('data-filter');
         if (page === 'canli-fiyatlar') {
-          window.location.href = '/canli-fiyatlar/';
-          return;
+          const isAlreadyOnCanli = window.location.pathname.replace(/\/+$/, '') === '/canli-fiyatlar';
+          if (!isAlreadyOnCanli && !document.getElementById('page-canli-fiyatlar')) {
+            window.location.href = '/canli-fiyatlar/';
+            return;
+          }
         }
         if (page === 'mucevherat' && (!filterVal || filterVal === 'all')) {
           window.location.href = '/mucevherat/';
@@ -279,8 +282,12 @@ const Router = {
   navigate(page, pushState = true, options = {}) {
     if (!page) page = 'ana-sayfa';
     if (page === 'canli-fiyatlar') {
-      window.location.href = '/canli-fiyatlar/';
-      return;
+      const hasCanliDOM = Boolean(document.getElementById('page-canli-fiyatlar'));
+      const isAlreadyOnCanli = window.location.pathname.replace(/\/+$/, '') === '/canli-fiyatlar';
+      if (!hasCanliDOM && !isAlreadyOnCanli) {
+        window.location.href = '/canli-fiyatlar/';
+        return;
+      }
     }
 
     if (typeof App !== 'undefined') {

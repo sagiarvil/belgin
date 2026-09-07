@@ -3223,27 +3223,22 @@ const App = {
         el.textContent = text;
 
         // SADECE değeri gerçekten değişen ürünün fiyat kutusunun arkasındaki renkli bandı sakin, lüks ve titreşimsiz vurgula
-        if (hasChanged && flashClass) {
+        if (hasChanged && flashClass && !this._activeAnimationTimers[id]) {
           const boxEl = el.closest('.has-red-box') || el.closest('.td-price') || el;
-
-          if (!boxEl.classList.contains(flashClass)) {
-            boxEl.classList.remove('price-flash-up', 'price-flash-down', 'price-changed-active');
-            boxEl.classList.add(flashClass);
-          }
+          boxEl.classList.remove('price-flash-up', 'price-flash-down', 'price-changed-active');
+          boxEl.classList.add(flashClass);
         }
       });
 
-      if (hasChanged) {
-        if (!this._activeAnimationTimers[id]) {
-          // Tam 2 saniye (2000 ms) sonra yanıp sönmeyi durdur ve temizle
-          this._activeAnimationTimers[id] = setTimeout(() => {
-            targets.forEach(el => {
-              const boxEl = el.closest('.has-red-box') || el.closest('.td-price') || el;
-              boxEl.classList.remove('price-flash-up', 'price-flash-down', 'price-changed-active');
-            });
-            delete this._activeAnimationTimers[id];
-          }, 2000); // 2 saniye süre ile yanıp söner
-        }
+      if (hasChanged && !this._activeAnimationTimers[id]) {
+        // Tam 2 saniye (2000 ms) sonra yanıp sönmeyi durdur ve temizle
+        this._activeAnimationTimers[id] = setTimeout(() => {
+          targets.forEach(el => {
+            const boxEl = el.closest('.has-red-box') || el.closest('.td-price') || el;
+            boxEl.classList.remove('price-flash-up', 'price-flash-down', 'price-changed-active');
+          });
+          delete this._activeAnimationTimers[id];
+        }, 2000); // 2 saniye süre ile yanıp söner
       }
 
       this._prevBoardValues[id] = numVal;
