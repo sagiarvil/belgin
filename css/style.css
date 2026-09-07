@@ -8098,29 +8098,29 @@ body.page-canli-fiyatlar-mode {
 .board-exact-table td.td-price.price-flash-up,
 .board-exact-table td.price-flash-up,
 .price-flash-up {
-  animation: priceBandFlashGreen 0.5s ease-in-out infinite !important;
+  animation: priceBandFlashGreen 1.8s ease-in-out 1 !important;
   will-change: background-color;
 }
 
 .board-exact-table td.td-price.price-flash-down,
 .board-exact-table td.price-flash-down,
 .price-flash-down {
-  animation: priceBandFlashRed 0.5s ease-in-out infinite !important;
+  animation: priceBandFlashRed 1.8s ease-in-out 1 !important;
   will-change: background-color;
 }
 
 .has-red-box.price-flash-up {
-  animation: priceBandFlashGreenHas 0.5s ease-in-out infinite !important;
+  animation: priceBandFlashGreenHas 1.8s ease-in-out 1 !important;
   will-change: background-color;
 }
 
 .has-red-box.price-flash-down {
-  animation: priceBandFlashRedHas 0.5s ease-in-out infinite !important;
+  animation: priceBandFlashRedHas 1.8s ease-in-out 1 !important;
   will-change: background-color;
 }
 
 .price-changed-active {
-  animation: priceBandFlashGreen 0.5s ease-in-out infinite !important;
+  animation: priceBandFlashGreen 1.8s ease-in-out 1 !important;
   will-change: background-color;
 }
 

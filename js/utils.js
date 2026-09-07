@@ -430,6 +430,7 @@ const PriceUpdateAutomator = {
   _goldProductIds: null,
   _cachedAllProducts: null,
   _isScheduled: false,
+  _isExecuting: false,
   _observer: null,
   _lastProductsLength: 0,
 
@@ -542,17 +543,23 @@ const PriceUpdateAutomator = {
   },
 
   executeUpdates() {
-    updateMarketTickerDOM();
-    updateDynamicGoldProductPrices();
+    if (this._isExecuting) return;
+    this._isExecuting = true;
+    try {
+      updateMarketTickerDOM();
+      updateDynamicGoldProductPrices();
 
-    if (typeof ValuationEngine !== 'undefined' && ValuationEngine.calculateGold) {
-      ValuationEngine.calculateGold();
-    }
+      if (typeof ValuationEngine !== 'undefined' && ValuationEngine.calculateGold) {
+        ValuationEngine.calculateGold();
+      }
 
-    if (typeof App !== 'undefined' && typeof App.onLivePricesUpdated === 'function') {
-      App.onLivePricesUpdated();
-    } else if (typeof updateLivePricesTableDOM === 'function') {
-      updateLivePricesTableDOM();
+      if (typeof App !== 'undefined' && typeof App.onLivePricesUpdated === 'function') {
+        App.onLivePricesUpdated();
+      } else if (typeof updateLivePricesTableDOM === 'function') {
+        updateLivePricesTableDOM();
+      }
+    } finally {
+      this._isExecuting = false;
     }
   },
 
@@ -561,6 +568,7 @@ const PriceUpdateAutomator = {
     if (this._observer || typeof MutationObserver === 'undefined') return;
 
     this._observer = new MutationObserver((mutations) => {
+      if (this._isExecuting) return;
       let shouldUpdate = false;
       for (const m of mutations) {
         if (m.addedNodes && m.addedNodes.length > 0) {
