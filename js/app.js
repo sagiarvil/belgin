@@ -3219,26 +3219,32 @@ const App = {
       const hasChanged = prev !== undefined && prev !== numVal;
       const flashClass = hasChanged ? (numVal > prev ? 'price-flash-up' : 'price-flash-down') : null;
 
-      targets.forEach(el => {
-        el.textContent = text;
+      if (hasChanged && flashClass) {
+        if (this._activeAnimationTimers[id]) {
+          clearTimeout(this._activeAnimationTimers[id]);
+          delete this._activeAnimationTimers[id];
+        }
 
-        // SADECE değeri gerçekten değişen ürünün fiyat kutusunun arkasındaki renkli bandı sakin, lüks ve titreşimsiz vurgula
-        if (hasChanged && flashClass && !this._activeAnimationTimers[id]) {
+        targets.forEach(el => {
+          el.textContent = text;
           const boxEl = el.closest('.has-red-box') || el.closest('.td-price') || el;
           boxEl.classList.remove('price-flash-up', 'price-flash-down', 'price-changed-active');
+          void boxEl.offsetWidth; // Reflow tetikle
           boxEl.classList.add(flashClass);
-        }
-      });
+        });
 
-      if (hasChanged && !this._activeAnimationTimers[id]) {
-        // Tam 2 saniye (2000 ms) sonra yanıp sönmeyi durdur ve temizle
+        // Tam 1 saniye (1000 ms) sonra yanıp sönmeyi durdur ve temizle
         this._activeAnimationTimers[id] = setTimeout(() => {
           targets.forEach(el => {
             const boxEl = el.closest('.has-red-box') || el.closest('.td-price') || el;
             boxEl.classList.remove('price-flash-up', 'price-flash-down', 'price-changed-active');
           });
           delete this._activeAnimationTimers[id];
-        }, 2000); // 2 saniye süre ile yanıp söner
+        }, 1000); // 1 saniye süre ile yanıp söner
+      } else {
+        targets.forEach(el => {
+          el.textContent = text;
+        });
       }
 
       this._prevBoardValues[id] = numVal;

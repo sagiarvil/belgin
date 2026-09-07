@@ -67,11 +67,11 @@ test('CSS: Rakam yazı tipi ve boyutu sabit kalmalı, transform/scale içermemel
   assert(!redBody.includes('transform: scale'), 'priceBandFlashRed içinde transform scale OLMAMALIDIR (yalnızca arka plan yanıp sönmeli)');
 });
 
-// 3. JS: setPriceCell 2000ms Süre ve Yön Algılama Mantığı
-test('JS: Fiyat artışında price-flash-up, düşüşünde price-flash-down 2000ms atanmalıdır', () => {
+// 3. JS: setPriceCell 1000ms Süre ve Yön Algılama Mantığı
+test('JS: Fiyat artışında price-flash-up, düşüşünde price-flash-down 1000ms atanmalıdır', () => {
   const appJs = fs.readFileSync(appJsPath, 'utf8');
   assert(appJs.includes('numVal > prev ? \'price-flash-up\' : \'price-flash-down\''), 'Yön ayrımı kodu eksik');
-  assert(appJs.includes('2000); // 2 saniye süre ile yanıp söner') || appJs.includes('2000);'), '2000ms zamanlayıcı eksik');
+  assert(appJs.includes('1000); // 1 saniye süre ile yanıp söner') || appJs.includes('1000);'), '1000ms zamanlayıcı eksik');
   assert(appJs.includes('boxEl.classList.add(flashClass)'), 'flashClass ekleme eksik');
 });
 
@@ -141,7 +141,7 @@ test('JS Simülasyonu: 22 Ayar Fiyat Yükseldiğinde ve Düştüğünde Doğru D
           boxEl.classList.remove('price-flash-up', 'price-flash-down', 'price-changed-active');
         });
         delete mockApp._activeAnimationTimers[id];
-      }, 2000);
+      }, 1000);
     }
     mockApp._prevBoardValues[id] = numVal;
   };
