@@ -126,7 +126,8 @@ setTimeout(() => {
   LIVE_MARKET_DATA.items = {
     ALTIN: { satis: 7200, alis: 7100 },
     AYAR22: { satis: 6600, alis: 6500 },
-    CEYREK_YENI: { satis: 11800, alis: 11600 }
+    CEYREK_YENI: { satis: 11800, alis: 11600 },
+    CEYREK_ESKI: { satis: 11500, alis: 11300 }
   };
 
   updateDynamicGoldProductPrices();

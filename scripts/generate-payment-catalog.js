@@ -29,4 +29,15 @@ const catalog = Object.fromEntries(
 
 const outputPath = path.join(__dirname, '..', 'functions', 'product-catalog.json');
 fs.writeFileSync(outputPath, `${JSON.stringify(catalog, null, 2)}\n`, 'utf8');
-console.log(`✅ Ödeme kataloğu üretildi: ${Object.keys(catalog).length} ürün`);
+
+const paytrPath = path.join(__dirname, '..', 'paytr_products.json');
+const paytrList = PRODUCTS.map((product) => ({
+  id: product.id,
+  name: String(product.name || 'Ürün'),
+  brand: String(product.brand || ''),
+  price: Number(product.price),
+  inStock: product.inStock !== false
+}));
+fs.writeFileSync(paytrPath, `${JSON.stringify(paytrList, null, 2)}\n`, 'utf8');
+
+console.log(`✅ Ödeme kataloğu üretildi: ${Object.keys(catalog).length} ürün (functions/product-catalog.json & paytr_products.json)`);

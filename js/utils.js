@@ -21,25 +21,25 @@ const CURRENCY_SYMBOLS = {
 
 // Detaylı Canlı Piyasa Veri Havuzu (Harem Altın Canlı Akışı)
 const LIVE_MARKET_DATA = {
-  hasAltin: 6885.40,
-  gramGold24k: 6885.40,
-  gramGold22k: 6452.28,
-  gramGold18k: 5164.05,
-  gramGold14k: 4975.51,
+  hasAltin: 6805.26,
+  gramGold24k: 6805.26,
+  gramGold22k: 6377.39,
+  gramGold18k: 5101.40,
+  gramGold14k: 4922.95,
   gramGold8k: 2842.00,
-  quarterGold: 11263.00,
-  oldQuarterGold: 11056.00,
-  halfGold: 22498.00,
-  oldHalfGold: 22078.00,
-  fullGold: 44844.00,
-  oldFullGold: 44224.00,
-  ataGold: 45636.00,
-  oldAtaGold: 45532.00,
-  gremeseGold: 111731.00,
-  oldGremeseGold: 110630.00,
-  ata5Gold: 228180.00,
-  oldAta5Gold: 227660.00,
-  packagedGold: 6899.17,
+  quarterGold: 11132.00,
+  oldQuarterGold: 10926.00,
+  halfGold: 22240.00,
+  oldHalfGold: 21819.00,
+  fullGold: 44318.00,
+  oldFullGold: 43705.00,
+  ataGold: 45100.00,
+  oldAtaGold: 44998.00,
+  gremeseGold: 110420.00,
+  oldGremeseGold: 109331.00,
+  ata5Gold: 227322.00,
+  oldAta5Gold: 225621.00,
+  packagedGold: 6805.26,
   silverTry: 104.50,
   silverUsd: 38.80,
   ons: 2905.40,
@@ -780,7 +780,7 @@ function updateMarketTickerDOM() {
   const base22k = parseFloat(rawItems.AYAR22?.satis) || LIVE_MARKET_DATA.gramGold22k || Math.round(baseHas * 0.937);
   const baseAtaYeni = parseFloat(rawItems.ATA_YENI?.satis) || LIVE_MARKET_DATA.ataGold || 45650;
   const baseCeyrekYeni = parseFloat(rawItems.CEYREK_YENI?.satis) || LIVE_MARKET_DATA.quarterGold || 11268;
-  const basePackaged = parseFloat(rawItems.KULCEALTIN?.satis) || LIVE_MARKET_DATA.packagedGold || Math.round(baseHas * 1.015);
+  const basePackaged = parseFloat(rawItems.KULCEALTIN?.satis) || LIVE_MARKET_DATA.packagedGold || baseHas;
 
   const currentGram = Math.round(baseGram * BOARD_MARGIN);
   const current22k = Math.round(base22k * BOARD_MARGIN);

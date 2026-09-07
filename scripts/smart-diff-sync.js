@@ -189,9 +189,13 @@ async function runSmartDiffSync() {
   const deltas = [];
 
   // ==========================================================
-  // 2. MÜCEVHERAT & ALTIN SENKRONİZASYONU (+%5 MARJ)
+  // 2. MÜCEVHERAT & ALTIN SENKRONİZASYONU (HAREM ALTIN +%1 MARJ)
   // ==========================================================
-  console.log('[SMART-DIFF] 🪙 1. Altın & Sarrafiye Canlı Verisi Taranıyor...');
+  console.log('[SMART-DIFF] 🪙 1. Altın & Sarrafiye Harem Canlı Borsa Verisi ile Eşitleniyor...');
+  const { syncHaremPricesToCatalog, defaultRates } = require('./sync-harem-prices.js');
+  syncHaremPricesToCatalog(defaultRates);
+
+  // Stok kontrolü için kaynak taraması
   const goldUrls = [
     'https://www.agakulche.com/ziynet-ata-altin',
     'https://www.agakulche.com/ziynet-ata-altin?page=2',
@@ -213,10 +217,15 @@ async function runSmartDiffSync() {
       scrapedGold.push(...items);
     } catch (e) {}
   }
-  console.log(`  ✓ ${scrapedGold.length} canlı altın ürünü tespit edildi.`);
+  console.log(`  ✓ ${scrapedGold.length} canlı altın ürünü stok kontrolü için tarandı.`);
 
   for (const p of PRODUCTS) {
     if (p.isPreOwned || (p.category !== 'jewelry' && p.category !== 'jewellery' && !p.isGold)) continue;
+
+    const snap = initialSnapshot.get(p.id);
+    if (snap && snap.price !== p.price) {
+      deltas.push(`🪙 [ALTIN FİYAT DEĞİŞİMİ] ${p.name}: ${snap.price.toLocaleString('tr-TR')} TL ➔ ${p.price.toLocaleString('tr-TR')} TL (+%1 marj)`);
+    }
 
     const match = scrapedGold.find(item => {
       const cleanScraped = item.cleanName.toLowerCase().replace(/\s+/g, '');
@@ -224,15 +233,8 @@ async function runSmartDiffSync() {
       return cleanScraped === cleanBelgin || cleanBelgin.includes(cleanScraped) || cleanScraped.includes(cleanBelgin);
     });
 
-    if (match && match.sourcePrice > 0) {
-      const targetPrice = Math.round(match.sourcePrice * GOLD_MARGIN);
-      const snap = initialSnapshot.get(p.id);
-
-      if (snap.price !== targetPrice) {
-        deltas.push(`🪙 [ALTIN FİYAT DEĞİŞİMİ] ${p.name}: ${snap.price.toLocaleString('tr-TR')} TL ➔ ${targetPrice.toLocaleString('tr-TR')} TL (+%1 marj)`);
-        p.price = targetPrice;
-      }
-      if (snap.inStock !== match.inStock) {
+    if (match) {
+      if (snap && snap.inStock !== match.inStock) {
         deltas.push(`🪙 [ALTIN STOK DEĞİŞİMİ] ${p.name}: ${snap.inStock ? 'Stokta' : 'Tükendi'} ➔ ${match.inStock ? 'Stokta' : 'Tükendi'}`);
         p.inStock = match.inStock;
         p.statusBadge = match.inStock ? 'Stokta' : 'Tükendi';

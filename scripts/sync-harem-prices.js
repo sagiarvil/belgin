@@ -2,7 +2,7 @@
 /**
  * BELGIN KUYUMCULUK — HAREM ALTIN %100 BİREBİR SENKRONİZASYON MOTORU
  * 
- * Amaç: Sarı Tabela (#canli-fiyatlar) nihai canlı satış fiyatları (+%3 marj) ile
+ * Amaç: Sarı Tabela (#canli-fiyatlar) nihai canlı satış fiyatları (+%1 marj / x 1.01) ile
  * katalogdaki ve ürün detay sayfalarındaki altın ürünlerini %100 birebir eşlemek.
  */
 
@@ -15,25 +15,26 @@ const dataJsPath = path.join(ROOT_DIR, 'js/data.js');
 
 function syncHaremPricesToCatalog(rates) {
   let content = fs.readFileSync(dataJsPath, 'utf8');
-  const match = content.match(/const PRODUCTS = (\[[\s\S]*?\n\]);/);
-  if (!match) {
+  const startIdx = content.indexOf('const PRODUCTS = [');
+  if (startIdx === -1) {
     throw new Error('PRODUCTS array not found in js/data.js');
   }
+  const endIdx = content.indexOf('\n];', startIdx) + 3;
+  const jsonStr = content.substring(startIdx + 'const PRODUCTS = '.length, endIdx - 1);
+  const PRODUCTS = JSON.parse(jsonStr);
 
-  const PRODUCTS = JSON.parse(match[1]);
-
-  const pGram = rates.pGram || 7092;
-  const p22k = rates.p22k || 6646;
-  const p18k = rates.p18k || 5319;
-  const p14k = rates.p14k || 5125;
-  const pCeyrekYeni = rates.pCeyrekYeni || 11601;
-  const pCeyrekEski = rates.pCeyrekEski || 11388;
-  const pYarimYeni = rates.pYarimYeni || 23173;
-  const pYarimEski = rates.pYarimEski || 22740;
-  const pZiynetYeni = rates.pZiynetYeni || 46189;
-  const pZiynetEski = rates.pZiynetEski || 45551;
-  const pAtaYeni = rates.pAtaYeni || 47005;
-  const pAtaEski = rates.pAtaEski || 46898;
+  const pGram = rates.pGram || 6873;
+  const p22k = rates.p22k || 6441;
+  const p18k = rates.p18k || 5152;
+  const p14k = rates.p14k || 4972;
+  const pCeyrekYeni = rates.pCeyrekYeni || 11243;
+  const pCeyrekEski = rates.pCeyrekEski || 11035;
+  const pYarimYeni = rates.pYarimYeni || 22462;
+  const pYarimEski = rates.pYarimEski || 22037;
+  const pZiynetYeni = rates.pZiynetYeni || 44761;
+  const pZiynetEski = rates.pZiynetEski || 44142;
+  const pAtaYeni = rates.pAtaYeni || 45551;
+  const pAtaEski = rates.pAtaEski || 45448;
 
   let updatedCount = 0;
 
@@ -61,7 +62,18 @@ function syncHaremPricesToCatalog(rates) {
         exactTargetPrice = name.includes('eski') ? pYarimEski : pYarimYeni;
       }
     }
-    // 3. Ziynet / Tam Altın / Reşat / Beşli / Gremse
+    // 3. Ata Altın (Tam, Beşli, 2.5'luk vb.)
+    else if (name.includes('ata')) {
+      const isEski = name.includes('eski');
+      if (name.includes('beşli')) {
+        exactTargetPrice = 5 * (isEski ? pAtaEski : pAtaYeni);
+      } else if (name.includes('2.5') || name.includes('gremse')) {
+        exactTargetPrice = Math.round(2.5 * (isEski ? pAtaEski : pAtaYeni));
+      } else {
+        exactTargetPrice = isEski ? pAtaEski : pAtaYeni;
+      }
+    }
+    // 4. Ziynet / Tam Altın / Reşat / Beşli / Gremse
     else if (name.includes('tam altın') || name.includes('ziynet') || name.includes('reşat')) {
       const isEski = name.includes('eski');
       if (name.includes('beşli') || name.includes('5 tam')) {
@@ -72,17 +84,6 @@ function syncHaremPricesToCatalog(rates) {
         exactTargetPrice = 3 * pZiynetYeni;
       } else {
         exactTargetPrice = isEski ? pZiynetEski : pZiynetYeni;
-      }
-    }
-    // 4. Ata Altın
-    else if (name.includes('ata')) {
-      const isEski = name.includes('eski');
-      if (name.includes('beşli')) {
-        exactTargetPrice = 5 * (isEski ? pAtaEski : pAtaYeni);
-      } else if (name.includes('2.5') || name.includes('gremse')) {
-        exactTargetPrice = Math.round(2.5 * (isEski ? pAtaEski : pAtaYeni));
-      } else {
-        exactTargetPrice = isEski ? pAtaEski : pAtaYeni;
       }
     }
     // 5. 22 Ayar Bilezikler
@@ -115,7 +116,7 @@ function syncHaremPricesToCatalog(rates) {
   }
 
   const updatedProductsBlock = `const PRODUCTS = ${JSON.stringify(PRODUCTS, null, 2)};`;
-  const updatedDataJs = content.replace(/const PRODUCTS = \[[\\s\\S]*?\\n\];/, updatedProductsBlock);
+  const updatedDataJs = content.substring(0, startIdx) + updatedProductsBlock + content.substring(endIdx);
   fs.writeFileSync(dataJsPath, updatedDataJs, 'utf8');
 
   console.log(`[HAREM-SYNC] ${updatedCount} altın ürününün fiyatı Sarı Tabela ile 1:1 senkronize edildi.`);
@@ -129,20 +130,22 @@ function syncHaremPricesToCatalog(rates) {
   }
 }
 
-// Default Harem Altin Live Rates (+%3 Margin)
+// Default Harem Altin Live Rates (+%1 Margin / x 1.01)
 const defaultRates = {
-  pGram: 7092,
-  p22k: 6646,
-  p18k: 5319,
-  p14k: 5125,
-  pCeyrekYeni: 11601,
-  pCeyrekEski: 11388,
-  pYarimYeni: 23173,
-  pYarimEski: 22740,
-  pZiynetYeni: 46189,
-  pZiynetEski: 45551,
-  pAtaYeni: 47005,
-  pAtaEski: 46898
+  pGram: 6873,
+  p22k: 6441,
+  p18k: 5152,
+  p14k: 4972,
+  pCeyrekYeni: 11243,
+  pCeyrekEski: 11035,
+  pYarimYeni: 22462,
+  pYarimEski: 22037,
+  pZiynetYeni: 44761,
+  pZiynetEski: 44142,
+  pAtaYeni: 45551,
+  pAtaEski: 45448
 };
 
 syncHaremPricesToCatalog(defaultRates);
+
+module.exports = { syncHaremPricesToCatalog, defaultRates };

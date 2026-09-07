@@ -167,44 +167,41 @@ async function syncAll() {
 
   let updatedCount = 0;
 
-  // Altın ürünlerini tam eşleşme ile güncelle ve +%1 marj uygula (Canlı Satış Fiyatı x 1.01)
+  // Altın ürünlerinin stok durumunu güncelle (Fiyatlar ASLA aracı perakendeciden alınmaz, doğrudan Harem Altın +%1 borsa akışından gelir)
   for (const p of PRODUCTS) {
     if (p.isPreOwned || (p.category !== 'jewelry' && p.category !== 'jewellery' && !p.isGold)) continue;
 
     const normBelgin = normalizeName(p.name);
     const match = scrapedItems.find(item => normalizeName(item.cleanName) === normBelgin);
 
-    if (match && match.sourcePrice > 0) {
-      const newPriceWithMargin = Math.round(match.sourcePrice * GOLD_MARGIN);
-      if (p.price !== newPriceWithMargin) {
-        p.price = newPriceWithMargin;
+    if (match) {
+      if (p.inStock !== match.inStock) {
+        p.inStock = match.inStock;
+        p.statusBadge = match.inStock ? 'Stokta' : 'Tükendi';
         updatedCount++;
       }
-      p.inStock = match.inStock;
-      p.statusBadge = match.inStock ? 'Stokta' : 'Tükendi';
     }
   }
 
-  console.log(`[SYNC-ENGINE] Güncellenen altın/mücevher ürün sayısı: ${updatedCount}`);
+  console.log(`[SYNC-ENGINE] Güncellenen altın stok durum sayısı: ${updatedCount}`);
 
-  // js/data.js Header ve Footer'ını dinamik ayrıştır
-  const productsMatch = currentDataRaw.match(/const PRODUCTS = \[[\s\S]*?\n\];/);
-  if (!productsMatch) {
+  // js/data.js kaydet
+  const startIdx = currentDataRaw.indexOf('const PRODUCTS = [');
+  if (startIdx === -1) {
     throw new Error('js/data.js içinde const PRODUCTS dizisi bulunamadı.');
   }
-
-  const headerPart = currentDataRaw.substring(0, productsMatch.index);
-  const footerPart = currentDataRaw.substring(productsMatch.index + productsMatch[0].length);
+  const endIdx = currentDataRaw.indexOf('\n];', startIdx) + 3;
+  const headerPart = currentDataRaw.substring(0, startIdx);
+  const footerPart = currentDataRaw.substring(endIdx);
 
   const updatedProductsBlock = `const PRODUCTS = ${JSON.stringify(PRODUCTS, null, 2)};`;
   fs.writeFileSync(dataJsPath, headerPart + updatedProductsBlock + footerPart, 'utf8');
   console.log(`[SYNC-ENGINE] js/data.js başarıyla güncellendi (Kalan Tekil Ürün: ${PRODUCTS.length}).`);
 
-  // Ödeme kataloğunu ve SEO varlıklarını doğrudan güncelle
-  console.log(`[SYNC-ENGINE] Ödeme ve SEO katalogları senkronize ediliyor...`);
-  execSync('node scripts/generate-payment-catalog.js', { stdio: 'inherit' });
-  execSync('node scripts/generate-seo-assets.js', { stdio: 'inherit' });
-  execSync('node scripts/verify-product-catalog.js', { stdio: 'inherit' });
+  // Harem Altın +%1 Canlı Borsa Senkronizasyonunu zorunlu uygula
+  console.log(`[SYNC-ENGINE] Harem Altın +%1 canlı borsa fiyatları uygulanıyor...`);
+  const { syncHaremPricesToCatalog, defaultRates } = require('./sync-harem-prices.js');
+  syncHaremPricesToCatalog(defaultRates);
 
   console.log(`[SYNC-ENGINE] ✅ Fiyat & Stok Senkronizasyonu Başarıyla Tamamlandı.`);
 }
