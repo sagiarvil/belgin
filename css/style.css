@@ -7920,7 +7920,7 @@ body.page-canli-fiyatlar-mode {
   vertical-align: middle;
   background-color: #fff200;
   line-height: 1.1;
-  transition: background-color 0.25s ease-out;
+  transition: none !important;
 }
 
 /* Başlıklar (ALTIN, SATIŞ, HOŞGELDİNİZ, YENİ, ESKİ) */
@@ -7956,7 +7956,7 @@ body.page-canli-fiyatlar-mode {
   text-align: center;
   width: 34%;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
-  transition: background-color 0.2s ease-out, color 0.2s ease-out;
+  transition: none !important;
 }
 
 /* Sağ Hoşgeldiniz Alanı */
@@ -8019,7 +8019,7 @@ body.page-canli-fiyatlar-mode {
   font-variant-numeric: tabular-nums;
   border-radius: 3px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
-  transition: background-color 0.25s ease-out;
+  transition: none !important;
 }
 
 .has-red-box .price-num,
@@ -8046,31 +8046,25 @@ body.page-canli-fiyatlar-mode {
 
 /* ==========================================================
    CANLI FİYAT DEĞİŞİM — ARKA PLAN RENKLİ BANT 1 SANİYE YANIP SÖNME
-   (SAF YEŞİL & SAF KIRMIZI — MAVİ VE MOR TONLARI SIFIRLANMIŞ NET BORSA RENKLERİ)
+   (SAF YEŞİL & SAF KIRMIZI — MAVİ/MOR/PEMBE ARA TONLARI VE GEÇİŞLERİ %100 SIFIRLANMIŞ)
    Fiyat Yükseldi: Saf Yeşil (#009900 / RGB 0, 153, 0 — Sıfır Mavi / Sıfır Mor)
-   Fiyat Düştü: Saf Kırmızı (#e60000 / RGB 230, 0, 0 — Sıfır Mavi / Sıfır Mor)
+   Fiyat Düştü: Saf Kırmızı (#e60000 / RGB 230, 0, 0 — Sıfır Mavi / Sıfır Pembe)
    ========================================================== */
 @keyframes priceBandFlashGreen {
   0% {
     background-color: #009900; /* Saf Yeşil (Sıfır Mavi/Mor) */
   }
-  70% {
-    background-color: #009900; /* Saf Yeşil */
-  }
   100% {
-    background-color: #fff200; /* Normal Sarı */
+    background-color: #009900; /* Saf Yeşil */
   }
 }
 
 @keyframes priceBandFlashRed {
   0% {
-    background-color: #e60000; /* Saf Kırmızı (Sıfır Mavi/Mor) */
-  }
-  70% {
-    background-color: #e60000; /* Saf Kırmızı */
+    background-color: #e60000; /* Saf Kırmızı (Sıfır Mavi/Pembe) */
   }
   100% {
-    background-color: #fff200; /* Normal Sarı */
+    background-color: #e60000; /* Saf Kırmızı */
   }
 }
 
@@ -8079,11 +8073,8 @@ body.page-canli-fiyatlar-mode {
   0% {
     background-color: #009900; /* Saf Yeşil */
   }
-  70% {
-    background-color: #009900;
-  }
   100% {
-    background-color: #E60000;
+    background-color: #009900;
   }
 }
 
@@ -8091,58 +8082,63 @@ body.page-canli-fiyatlar-mode {
   0% {
     background-color: #ff2222; /* Saf Parlak Kırmızı */
   }
-  70% {
-    background-color: #ff2222;
-  }
   100% {
-    background-color: #E60000;
+    background-color: #ff2222;
   }
 }
 
 .board-exact-table td.td-price.price-flash-up,
 .board-exact-table td.price-flash-up,
 .price-flash-up {
-  background-color: #009900;
+  background-color: #009900 !important;
   color: #ffffff !important;
-  animation: priceBandFlashGreen 1s ease-out 1 !important;
+  transition: none !important;
+  animation: priceBandFlashGreen 1s steps(1, end) 1 !important;
   will-change: background-color, color;
 }
 
 .board-exact-table td.td-price.price-flash-up span,
 .board-exact-table td.td-price.price-flash-up .price-num {
   color: #ffffff !important;
+  transition: none !important;
 }
 
 .board-exact-table td.td-price.price-flash-down,
 .board-exact-table td.price-flash-down,
 .price-flash-down {
-  background-color: #e60000;
+  background-color: #e60000 !important;
   color: #ffffff !important;
-  animation: priceBandFlashRed 1s ease-out 1 !important;
+  transition: none !important;
+  animation: priceBandFlashRed 1s steps(1, end) 1 !important;
   will-change: background-color, color;
 }
 
 .board-exact-table td.td-price.price-flash-down span,
 .board-exact-table td.td-price.price-flash-down .price-num {
   color: #ffffff !important;
+  transition: none !important;
 }
 
 .has-red-box.price-flash-up {
-  background-color: #009900;
+  background-color: #009900 !important;
   color: #ffffff !important;
-  animation: priceBandFlashGreenHas 1s ease-out 1 !important;
+  transition: none !important;
+  animation: priceBandFlashGreenHas 1s steps(1, end) 1 !important;
   will-change: background-color;
 }
 
 .has-red-box.price-flash-down {
-  background-color: #ff2222;
+  background-color: #ff2222 !important;
   color: #ffffff !important;
-  animation: priceBandFlashRedHas 1s ease-out 1 !important;
+  transition: none !important;
+  animation: priceBandFlashRedHas 1s steps(1, end) 1 !important;
   will-change: background-color;
 }
 
 .price-changed-active {
-  animation: priceBandFlashGreen 1s ease-out 1 !important;
+  background-color: #009900 !important;
+  transition: none !important;
+  animation: none !important;
   will-change: background-color;
 }
 
