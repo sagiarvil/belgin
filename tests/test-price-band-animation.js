@@ -41,12 +41,12 @@ function test(name, fn) {
 }
 
 // 1. CSS Kuralları ve Keyframe Doğrulaması
-test('CSS: Açık Yeşil ve Açık Kırmızı bant keyframeleri eksiksiz tanımlı olmalıdır', () => {
+test('CSS: Saf Yeşil ve Saf Kırmızı bant keyframeleri eksiksiz tanımlı olmalıdır', () => {
   const css = fs.readFileSync(styleCssPath, 'utf8');
   assert(css.includes('@keyframes priceBandFlashGreen'), 'priceBandFlashGreen keyframe eksik');
   assert(css.includes('@keyframes priceBandFlashRed'), 'priceBandFlashRed keyframe eksik');
-  assert(css.includes('#86efac') || css.includes('#bbf7d0'), 'Açık yeşil renk eksik');
-  assert(css.includes('#fca5a5') || css.includes('#fecaca'), 'Açık kırmızı renk eksik');
+  assert(css.includes('#009900') || css.includes('#00a651') || css.includes('#16a34a') || css.includes('#86efac'), 'Saf yeşil renk eksik');
+  assert(css.includes('#e60000') || css.includes('#dc2626') || css.includes('#fca5a5'), 'Saf kırmızı renk eksik');
   assert(css.includes('.price-flash-up'), '.price-flash-up sınıfı eksik');
   assert(css.includes('.price-flash-down'), '.price-flash-down sınıfı eksik');
   assert(css.includes('.has-red-box.price-flash-up'), '.has-red-box.price-flash-up sınıfı eksik');

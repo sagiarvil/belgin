@@ -7956,6 +7956,7 @@ body.page-canli-fiyatlar-mode {
   text-align: center;
   width: 34%;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  transition: background-color 0.2s ease-out, color 0.2s ease-out;
 }
 
 /* Sağ Hoşgeldiniz Alanı */
@@ -8045,19 +8046,16 @@ body.page-canli-fiyatlar-mode {
 
 /* ==========================================================
    CANLI FİYAT DEĞİŞİM — ARKA PLAN RENKLİ BANT 1 SANİYE YANIP SÖNME
-   (SADECE ARKA PLAN RENKLİ BANT YANIP SÖNER — YAZI TİPİ/BOYUTU/KENARLIKLAR SABİT KALIR)
-   Fiyat Yükseldi: Açık Yeşil (#86efac / #bbf7d0)
-   Fiyat Düştü: Açık Kırmızı (#fca5a5 / #fecaca)
+   (SAF YEŞİL & SAF KIRMIZI — MAVİ VE MOR TONLARI SIFIRLANMIŞ NET BORSA RENKLERİ)
+   Fiyat Yükseldi: Saf Yeşil (#009900 / RGB 0, 153, 0 — Sıfır Mavi / Sıfır Mor)
+   Fiyat Düştü: Saf Kırmızı (#e60000 / RGB 230, 0, 0 — Sıfır Mavi / Sıfır Mor)
    ========================================================== */
 @keyframes priceBandFlashGreen {
   0% {
-    background-color: #86efac; /* Açık Yeşil */
-  }
-  35% {
-    background-color: #bbf7d0; /* Canlı Açık Yeşil */
+    background-color: #009900; /* Saf Yeşil (Sıfır Mavi/Mor) */
   }
   70% {
-    background-color: #86efac; /* Açık Yeşil */
+    background-color: #009900; /* Saf Yeşil */
   }
   100% {
     background-color: #fff200; /* Normal Sarı */
@@ -8066,13 +8064,10 @@ body.page-canli-fiyatlar-mode {
 
 @keyframes priceBandFlashRed {
   0% {
-    background-color: #fca5a5; /* Açık Kırmızı */
-  }
-  35% {
-    background-color: #fecaca; /* Canlı Açık Kırmızı */
+    background-color: #e60000; /* Saf Kırmızı (Sıfır Mavi/Mor) */
   }
   70% {
-    background-color: #fca5a5; /* Açık Kırmızı */
+    background-color: #e60000; /* Saf Kırmızı */
   }
   100% {
     background-color: #fff200; /* Normal Sarı */
@@ -8082,13 +8077,10 @@ body.page-canli-fiyatlar-mode {
 /* Has Altın Kırmızı Kutusu İçin Özel Bant Animasyonu */
 @keyframes priceBandFlashGreenHas {
   0% {
-    background-color: #86efac; /* Açık Yeşil */
-  }
-  35% {
-    background-color: #bbf7d0;
+    background-color: #009900; /* Saf Yeşil */
   }
   70% {
-    background-color: #86efac;
+    background-color: #009900;
   }
   100% {
     background-color: #E60000;
@@ -8097,13 +8089,10 @@ body.page-canli-fiyatlar-mode {
 
 @keyframes priceBandFlashRedHas {
   0% {
-    background-color: #fca5a5; /* Açık Kırmızı */
-  }
-  35% {
-    background-color: #fecaca;
+    background-color: #ff2222; /* Saf Parlak Kırmızı */
   }
   70% {
-    background-color: #fca5a5;
+    background-color: #ff2222;
   }
   100% {
     background-color: #E60000;
@@ -8113,27 +8102,41 @@ body.page-canli-fiyatlar-mode {
 .board-exact-table td.td-price.price-flash-up,
 .board-exact-table td.price-flash-up,
 .price-flash-up {
-  background-color: #86efac;
+  background-color: #009900;
+  color: #ffffff !important;
   animation: priceBandFlashGreen 1s ease-out 1 !important;
-  will-change: background-color;
+  will-change: background-color, color;
+}
+
+.board-exact-table td.td-price.price-flash-up span,
+.board-exact-table td.td-price.price-flash-up .price-num {
+  color: #ffffff !important;
 }
 
 .board-exact-table td.td-price.price-flash-down,
 .board-exact-table td.price-flash-down,
 .price-flash-down {
-  background-color: #fca5a5;
+  background-color: #e60000;
+  color: #ffffff !important;
   animation: priceBandFlashRed 1s ease-out 1 !important;
-  will-change: background-color;
+  will-change: background-color, color;
+}
+
+.board-exact-table td.td-price.price-flash-down span,
+.board-exact-table td.td-price.price-flash-down .price-num {
+  color: #ffffff !important;
 }
 
 .has-red-box.price-flash-up {
-  background-color: #86efac;
+  background-color: #009900;
+  color: #ffffff !important;
   animation: priceBandFlashGreenHas 1s ease-out 1 !important;
   will-change: background-color;
 }
 
 .has-red-box.price-flash-down {
-  background-color: #fca5a5;
+  background-color: #ff2222;
+  color: #ffffff !important;
   animation: priceBandFlashRedHas 1s ease-out 1 !important;
   will-change: background-color;
 }
