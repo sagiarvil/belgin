@@ -111,7 +111,10 @@ function buildLegalEmailHtml(order) {
         </tr>
         <tr>
           <td class="label">Satıcı (Hizmet Sağlayıcı):</td>
-          <td class="val">Belgin Kuyumculuk - Semih Sonbahar (Menderes Cad. No:231/B Buca/İzmir)</td>
+          <td class="val">
+            Belgin Kuyumculuk - Semih Sonbahar (Menderes Cad. No:231/B Buca/İzmir)<br>
+            <img src="https://www.belginkuyumculuk.com/images/belgin-kase-imza.png" alt="Belgin Kuyumculuk Semih Sonbahar Kaşe ve İmza" style="max-height:50px; width:auto; margin-top:6px; display:block;">
+          </td>
         </tr>
         <tr>
           <td class="label">Ödeme Altyapısı:</td>

@@ -49,7 +49,18 @@
     const d = r.kycAndDelivery?.deliveryVerification;
     receiptEl.innerHTML = `
       <div class="seller-buyer">
-        <div class="party"><h3>Satıcı</h3><strong>${esc(r.seller.tradeName)}</strong><div>${esc(r.seller.address)}</div><div>${esc(r.seller.phone)} · ${esc(r.seller.secondaryPhone)}</div><div>${esc(r.seller.email)}</div><div class="small">${esc(r.seller.note)}</div></div>
+        <div class="party">
+          <h3>Satıcı</h3>
+          <strong>${esc(r.seller.tradeName)}</strong>
+          <div>${esc(r.seller.address)}</div>
+          <div>${esc(r.seller.phone)} · ${esc(r.seller.secondaryPhone)}</div>
+          <div>${esc(r.seller.email)}</div>
+          <div class="small">${esc(r.seller.note)}</div>
+          <div style="margin-top:10px;padding-top:8px;border-top:1px dashed #cfc8be;text-align:center;">
+            <img src="images/belgin-kase-imza.png" alt="Belgin Kuyumculuk Kaşe ve İmza" style="max-width:160px;height:auto;mix-blend-mode:multiply;display:inline-block;">
+            <div style="font-size:9px;color:#666;margin-top:2px;">Resmi Şirket Kaşesi & Islak İmza</div>
+          </div>
+        </div>
         <div class="party"><h3>Alıcı</h3><strong>${esc(r.buyer.name)}</strong><div>${esc(r.buyer.email)}</div><div>${esc(r.buyer.phone)}</div><div class="small">Kişisel veriler bu görüntüde ölçülü biçimde maskelenmiştir.</div></div>
       </div>
 
