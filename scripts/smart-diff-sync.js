@@ -3,7 +3,7 @@
  * BELGİN KUYUMCULUK – UNIFIED SMART DIFFING & DELTA-SYNC ENGINE v3.0
  * 
  * Kapsam:
- * 1. 🪙 Mücevherat & Altın: Canlı Borsa Verisi + %3 Kâr Marjı (x 1.03)
+ * 1. 🪙 Mücevherat & Altın: Canlı Borsa Verisi + %1 Kâr Marjı (x 1.01)
  * 2. ⌚ Lüks Saatler: Saat&Saat Canlı Verisi + %40 Kâr Marjı (x 1.40)
  * 3. 🏷️ İkinci El & Cartier: Ekspertiz Değerleme & Güvenli Koruma
  * 
@@ -19,7 +19,7 @@ const path = require('path');
 const crypto = require('crypto');
 const { execSync } = require('child_process');
 
-const GOLD_MARGIN = 1.03;  // +%3 Kâr Marjı
+const GOLD_MARGIN = 1.01;  // +%1 Kâr Marjı
 const WATCH_MARGIN = 1.40; // +%40 Kâr Marjı
 
 const BRAND_CONFIGS = [
@@ -229,7 +229,7 @@ async function runSmartDiffSync() {
       const snap = initialSnapshot.get(p.id);
 
       if (snap.price !== targetPrice) {
-        deltas.push(`🪙 [ALTIN FİYAT DEĞİŞİMİ] ${p.name}: ${snap.price.toLocaleString('tr-TR')} TL ➔ ${targetPrice.toLocaleString('tr-TR')} TL (+%2 marj)`);
+        deltas.push(`🪙 [ALTIN FİYAT DEĞİŞİMİ] ${p.name}: ${snap.price.toLocaleString('tr-TR')} TL ➔ ${targetPrice.toLocaleString('tr-TR')} TL (+%1 marj)`);
         p.price = targetPrice;
       }
       if (snap.inStock !== match.inStock) {

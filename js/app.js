@@ -3182,7 +3182,7 @@ const App = {
     };
 
     const rawItems = LIVE_MARKET_DATA.items || {};
-    const BOARD_MARGIN = 1.03; // Sarı Tabela Canlı Satış Kâr Marjı (+%3)
+    const BOARD_MARGIN = 1.01; // Sarı Tabela Canlı Satış Kâr Marjı (+%1)
 
     const baseHas = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.hasAltin || LIVE_MARKET_DATA.gramGold24k || 6885.40;
     const baseGram = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.gramGold24k || baseHas;

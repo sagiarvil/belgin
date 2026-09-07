@@ -110,8 +110,8 @@ const prohibitedRules = [
   { pattern: /Ağa\s*Külçe/i, name: 'Ağa Külçe prohibited supplier claim' },
   { pattern: /hakkimizda\.html/i, name: 'hakkimizda.html broken 404 URL' },
   { pattern: /24K\s*Has\s*Altın/i, name: 'has altın forbidden (must use 24K Külçe Altın)' },
-  { pattern: /\b(1\.01|1\.02)\b/, name: 'Stale 1% or 2% gold margin (must be 1.03 / +%3)' },
-  { pattern: /\+%(1|2|5)\b.*kâr\s*marjı/i, name: 'Wrong gold profit margin (must be +%3)' }
+  { pattern: /\b(1\.02|1\.03)\b/, name: 'Stale 2% or 3% gold margin (must be 1.01 / +%1)' },
+  { pattern: /\+%(2|3|5)\b.*kâr\s*marjı/i, name: 'Wrong gold profit margin (must be +%1)' }
 ];
 
 const requiredFrontmatterFields = [
