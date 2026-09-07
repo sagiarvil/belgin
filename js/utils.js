@@ -456,11 +456,21 @@ const PriceUpdateAutomator = {
       if (p.ref) this._productByRefMap.set(String(p.ref).toLowerCase(), p);
 
       const isGold = Boolean(
-        p.isGold ||
-        p.category === 'gold' ||
-        p.subCategory?.includes('Ziynet') ||
-        p.subCategory?.includes('Külçe') ||
-        p.subCategory?.includes('Bilezik')
+        !p.isElite && p.category !== 'elit-saatler' && (
+          p.category === 'gold' ||
+          p.subCategory?.includes('Ziynet') ||
+          p.subCategory?.includes('Külçe') ||
+          p.subCategory?.includes('Sarrafiye') ||
+          ((p.name || '').toLowerCase().includes('çeyrek')) ||
+          ((p.name || '').toLowerCase().includes('yarım')) ||
+          ((p.name || '').toLowerCase().includes('tam altın')) ||
+          ((p.name || '').toLowerCase().includes('ziynet')) ||
+          ((p.name || '').toLowerCase().includes('ata')) ||
+          ((p.name || '').toLowerCase().includes('22 ayar') && (p.name || '').toLowerCase().includes('bilezik')) ||
+          ((p.name || '').toLowerCase().includes('14 ayar') && (p.name || '').toLowerCase().includes('bilezik')) ||
+          ((p.name || '').toLowerCase().includes('külçe')) ||
+          ((p.name || '').toLowerCase().includes('gram altın'))
+        )
       );
 
       if (isGold) {
@@ -633,7 +643,7 @@ function updateDynamicGoldProductPrices() {
   const pAtaYeni = Math.round(baseAtaYeni * BOARD_MARGIN);
   const pAtaEski = Math.round(baseAtaEski * BOARD_MARGIN);
 
-  let updatedCount = 0;
+  const changedMap = new Map();
   const goldProducts = getGoldProducts();
 
   for (const p of goldProducts) {
@@ -704,52 +714,41 @@ function updateDynamicGoldProductPrices() {
     if (exactTargetPrice && exactTargetPrice > 0) {
       if (p.price !== exactTargetPrice) {
         p.price = exactTargetPrice;
-        updatedCount++;
+        changedMap.set(p.id, exactTargetPrice);
       }
     }
   }
 
-  // DOM üzerindeki tüm fiyat alanlarını anlık yenile
-  if (updatedCount > 0 && typeof document !== 'undefined') {
-    // 1. data-product-price-id taşıyan tüm etiketler
-    const priceElements = document.querySelectorAll('[data-product-price-id]');
-    priceElements.forEach(el => {
-      const id = parseInt(el.getAttribute('data-product-price-id'), 10);
-      const prod = getProductById(id);
-      if (prod) {
-        el.textContent = typeof formatPrice === 'function' ? formatPrice(prod.price) : '₺' + prod.price.toLocaleString('tr-TR');
-      }
-    });
-
-    // 2. Ürün kartları (data-product-id)
-    const cardElements = document.querySelectorAll('.product-art-card[data-product-id]');
-    cardElements.forEach(card => {
-      const id = parseInt(card.getAttribute('data-product-id'), 10);
-      const prod = getProductById(id);
-      if (prod && (prod.isGold || prod.category === 'jewelry' || prod.category === 'gold')) {
-        const tag = card.querySelector('.prod-price-tag, .prod-price-value');
-        if (tag) {
-          tag.textContent = typeof formatPrice === 'function' ? formatPrice(prod.price) : '₺' + prod.price.toLocaleString('tr-TR');
+  // DOM üzerindeki yalnızca değişen altın ürünlerinin fiyat alanlarını nokta atışı yenile
+  if (changedMap.size > 0 && typeof document !== 'undefined') {
+    for (const [prodId, newPrice] of changedMap.entries()) {
+      const formatted = typeof formatPrice === 'function' ? formatPrice(newPrice) : '₺' + newPrice.toLocaleString('tr-TR');
+      const elements = document.querySelectorAll(`[data-product-price-id="${prodId}"]`);
+      elements.forEach(el => {
+        const vat = el.querySelector?.('.vat-text');
+        if (vat) {
+          el.innerHTML = `${formatted} <small class="vat-text">${vat.textContent}</small>`;
+        } else {
+          el.textContent = formatted;
         }
-      }
-    });
+      });
+    }
 
-    // 3. PDP (Ürün Detay Sayfası) aktif ise
-    const pdpPrice = document.querySelector('.pdp-current-price');
-    if (pdpPrice && window.currentOpenProductId) {
-      const activeProd = getProductById(window.currentOpenProductId);
-      if (activeProd && (activeProd.isGold || activeProd.category === 'jewelry' || activeProd.category === 'gold')) {
-        pdpPrice.textContent = typeof formatPrice === 'function' ? formatPrice(activeProd.price) : '₺' + activeProd.price.toLocaleString('tr-TR');
+    // 2. PDP (Ürün Detay Sayfası) aktif ve açık ürün değişenler arasında ise
+    if (window.currentOpenProductId && changedMap.has(window.currentOpenProductId)) {
+      const pdpPrice = document.querySelector('.pdp-current-price');
+      if (pdpPrice) {
+        const pVal = changedMap.get(window.currentOpenProductId);
+        pdpPrice.textContent = typeof formatPrice === 'function' ? formatPrice(pVal) : '₺' + pVal.toLocaleString('tr-TR');
       }
     }
 
-    // 4. Sepetteki altın ürünlerinin fiyatlarını da senkronize et
+    // 3. Sepetteki altın ürünlerinin fiyatlarını senkronize et
     if (typeof Cart !== 'undefined' && Array.isArray(Cart.items)) {
       let cartChanged = false;
       Cart.items.forEach(ci => {
-        const pr = getProductById(ci.id);
-        if (pr && (pr.isGold || pr.category === 'jewelry' || pr.category === 'gold') && ci.price !== pr.price) {
-          ci.price = pr.price;
+        if (changedMap.has(ci.id)) {
+          ci.price = changedMap.get(ci.id);
           cartChanged = true;
         }
       });

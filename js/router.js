@@ -81,11 +81,16 @@ const Router = {
     if (path === '/sepet' || path === '/cart') return { page: 'sepet' };
     if (path === '/odeme' || path === '/checkout') return { page: 'odeme' };
     if (path.startsWith('/urun/')) {
-      const match = Object.entries(window.SEO_ROUTE_MAP || {}).find(([,route]) => route.replace(/\/+$/, '') === path);
-      if (match) {
-        const rawId = match[0];
+      if (!this._routeToIdMap && window.SEO_ROUTE_MAP) {
+        this._routeToIdMap = new Map();
+        for (const [id, route] of Object.entries(window.SEO_ROUTE_MAP)) {
+          this._routeToIdMap.set(route.replace(/\/+$/, ''), id);
+        }
+      }
+      const rawId = this._routeToIdMap ? this._routeToIdMap.get(path) : null;
+      if (rawId !== null && rawId !== undefined) {
         const numId = parseInt(rawId, 10);
-        const productId = (!isNaN(numId) && String(numId) === rawId) ? numId : rawId;
+        const productId = (!isNaN(numId) && String(numId) === String(rawId)) ? numId : rawId;
         return { page: 'urun', productId };
       }
       const idMatch = path.match(/-(\d+)\/?$/);

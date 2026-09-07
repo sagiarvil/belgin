@@ -116,7 +116,9 @@ setTimeout(() => {
   ];
 
   document.querySelectorAll = (selector) => {
-    if (selector === '[data-product-price-id]') return mockElements;
+    if (selector.startsWith('[data-product-price-id')) {
+      return mockElements.filter(el => selector.includes(String(el.id)) || selector === '[data-product-price-id]');
+    }
     return [];
   };
 
@@ -148,6 +150,7 @@ setTimeout(() => {
   LIVE_MARKET_DATA.items.ALTIN.satis = 7800;
   LIVE_MARKET_DATA.items.AYAR22.satis = 7200;
   LIVE_MARKET_DATA.items.CEYREK_YENI.satis = 12500;
+  LIVE_MARKET_DATA.items.CEYREK_ESKI = { satis: 12200 };
 
   updateDynamicGoldProductPrices();
   assert.strictEqual(global.Cart.updated, true, 'Sepetteki altın ürününün fiyatı değiştiğinde Cart.updateUI tetiklenmelidir');
