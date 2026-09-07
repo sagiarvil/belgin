@@ -7918,8 +7918,9 @@ body.page-canli-fiyatlar-mode {
   border: 2px solid #000000 !important;
   padding: 1px 10px;
   vertical-align: middle;
-  background-color: #fff200 !important;
+  background-color: #fff200;
   line-height: 1.1;
+  transition: background-color 0.25s ease-out;
 }
 
 /* Başlıklar (ALTIN, SATIŞ, HOŞGELDİNİZ, YENİ, ESKİ) */
@@ -8007,7 +8008,7 @@ body.page-canli-fiyatlar-mode {
 }
 
 .has-red-box {
-  background-color: #E60000 !important;
+  background-color: #E60000;
   color: #FFFFFF !important;
   font-size: clamp(25px, 4.3vh, 48px);
   font-weight: 900 !important;
@@ -8017,6 +8018,7 @@ body.page-canli-fiyatlar-mode {
   font-variant-numeric: tabular-nums;
   border-radius: 3px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  transition: background-color 0.25s ease-out;
 }
 
 .has-red-box .price-num,
@@ -8042,63 +8044,76 @@ body.page-canli-fiyatlar-mode {
 }
 
 /* ==========================================================
-   CANLI FİYAT DEĞİŞİM — ARKA PLAN RENKLİ BANT 2 SANİYE YANIP SÖNME
+   CANLI FİYAT DEĞİŞİM — ARKA PLAN RENKLİ BANT 1 SANİYE YANIP SÖNME
    (SADECE ARKA PLAN RENKLİ BANT YANIP SÖNER — YAZI TİPİ/BOYUTU/KENARLIKLAR SABİT KALIR)
    Fiyat Yükseldi: Açık Yeşil (#86efac / #bbf7d0)
    Fiyat Düştü: Açık Kırmızı (#fca5a5 / #fecaca)
    ========================================================== */
 @keyframes priceBandFlashGreen {
   0% {
-    background-color: #fff200 !important;
+    background-color: #86efac; /* Açık Yeşil */
   }
-  30% {
-    background-color: #86efac !important; /* Açık Yeşil */
+  35% {
+    background-color: #bbf7d0; /* Canlı Açık Yeşil */
+  }
+  70% {
+    background-color: #86efac; /* Açık Yeşil */
   }
   100% {
-    background-color: #fff200 !important;
+    background-color: #fff200; /* Normal Sarı */
   }
 }
 
 @keyframes priceBandFlashRed {
   0% {
-    background-color: #fff200 !important;
+    background-color: #fca5a5; /* Açık Kırmızı */
   }
-  30% {
-    background-color: #fca5a5 !important; /* Açık Kırmızı */
+  35% {
+    background-color: #fecaca; /* Canlı Açık Kırmızı */
+  }
+  70% {
+    background-color: #fca5a5; /* Açık Kırmızı */
   }
   100% {
-    background-color: #fff200 !important;
+    background-color: #fff200; /* Normal Sarı */
   }
 }
 
 /* Has Altın Kırmızı Kutusu İçin Özel Bant Animasyonu */
 @keyframes priceBandFlashGreenHas {
   0% {
-    background-color: #E60000 !important;
+    background-color: #86efac; /* Açık Yeşil */
   }
-  30% {
-    background-color: #86efac !important; /* Açık Yeşil */
+  35% {
+    background-color: #bbf7d0;
+  }
+  70% {
+    background-color: #86efac;
   }
   100% {
-    background-color: #E60000 !important;
+    background-color: #E60000;
   }
 }
 
 @keyframes priceBandFlashRedHas {
   0% {
-    background-color: #E60000 !important;
+    background-color: #fca5a5; /* Açık Kırmızı */
   }
-  30% {
-    background-color: #fca5a5 !important; /* Açık Kırmızı */
+  35% {
+    background-color: #fecaca;
+  }
+  70% {
+    background-color: #fca5a5;
   }
   100% {
-    background-color: #E60000 !important;
+    background-color: #E60000;
   }
 }
 
 .board-exact-table td.td-price.price-flash-up,
 .board-exact-table td.price-flash-up,
 .price-flash-up {
+  background-color: #86efac;
   animation: priceBandFlashGreen 1s ease-out 1 !important;
   will-change: background-color;
 }
@@ -8106,16 +8121,19 @@ body.page-canli-fiyatlar-mode {
 .board-exact-table td.td-price.price-flash-down,
 .board-exact-table td.price-flash-down,
 .price-flash-down {
+  background-color: #fca5a5;
   animation: priceBandFlashRed 1s ease-out 1 !important;
   will-change: background-color;
 }
 
 .has-red-box.price-flash-up {
+  background-color: #86efac;
   animation: priceBandFlashGreenHas 1s ease-out 1 !important;
   will-change: background-color;
 }
 
 .has-red-box.price-flash-down {
+  background-color: #fca5a5;
   animation: priceBandFlashRedHas 1s ease-out 1 !important;
   will-change: background-color;
 }
