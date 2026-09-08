@@ -617,11 +617,12 @@ exports.createAdminOrder = functions
       if (!customerIdentity) customerIdentity = '11111111111';
       if (!customerPhone) customerPhone = '05000000000';
 
-      const provider = String(body.provider || 'TOSLA_ISIM').toUpperCase();
-      const authCode = String(body.authCode || body.posAuthCode || body.posRef || `TSL-${Math.floor(100000 + Math.random() * 900000)}`).trim();
+      const isManualEft = Boolean(body.isManualEft || body.isEft || body.paymentMethod === 'HAVALE_EFT');
+      const provider = String(body.provider || (isManualEft ? 'KUVEYTTURK' : 'TOSLA_ISIM')).toUpperCase();
+      const authCode = String(body.authCode || body.posAuthCode || body.posRef || (isManualEft ? `EFT-${Math.floor(100000 + Math.random() * 900000)}` : `TSL-${Math.floor(100000 + Math.random() * 900000)}`)).trim();
       const rrn = String(body.rrn || body.slipNumber || `RRN-${Date.now().toString().slice(-8)}`).trim();
       const cardLast4 = String(body.cardLast4 || '****').replace(/\D/g, '').slice(-4) || '****';
-      const cardScheme = String(body.cardScheme || 'TROY / VISA / MASTERCARD').trim();
+      const cardScheme = String(body.cardScheme || (isManualEft ? 'BANKA HAVALESI / EFT' : 'TROY / VISA / MASTERCARD')).trim();
       const note = String(body.note || body.description || '').trim();
 
       // Tarih belirleme (Geriye dönük veya şimdiki tarih/saat)
@@ -635,7 +636,7 @@ exports.createAdminOrder = functions
 
       const timestampHex = Date.now().toString(16);
       const randHex = crypto.randomBytes(4).toString('hex');
-      const orderId = body.orderId || `BLG-${Date.now()}-${randHex}`;
+      const orderId = body.orderId || (isManualEft ? `BLG-EFT-${Date.now()}-${randHex}` : `BLG-${Date.now()}-${randHex}`);
       const evidenceId = body.evidenceId || orderId;
 
       // Ürün Kalemleri & Fatura Matrah Ayrımı (Altın Özel Matrah veya Saat %20 KDV)
@@ -701,8 +702,10 @@ exports.createAdminOrder = functions
         deliveryStatus: 'STORE_PICKUP_REQUIRED',
         deliveryMethod: body.deliveryMethod || 'showroom',
         provider: provider,
-        source: 'MANUAL_POS',
-        isManualPos: true,
+        paymentMethod: isManualEft ? 'HAVALE_EFT' : 'CREDIT_CARD_POS',
+        source: isManualEft ? 'MANUAL_EFT' : 'MANUAL_POS',
+        isManualPos: !isManualEft,
+        isManualEft: isManualEft,
         customer: {
           name: customerName,
           identity: customerIdentity,
@@ -725,6 +728,7 @@ exports.createAdminOrder = functions
           rrn,
           cardLast4,
           cardScheme,
+          method: isManualEft ? 'HAVALE_EFT' : 'CREDIT_CARD_POS',
           paidAt: transactionDate.toISOString(),
           createdAt: transactionDate.toISOString()
         },
@@ -744,12 +748,12 @@ exports.createAdminOrder = functions
 
       await orderRef.collection('auditEvents').add({
         schema: 'belgin-order-evidence-v3',
-        eventType: 'MANUAL_ORDER_CREATED_BY_ADMIN',
+        eventType: isManualEft ? 'MANUAL_EFT_ORDER_CREATED_BY_ADMIN' : 'MANUAL_ORDER_CREATED_BY_ADMIN',
         provider,
         authCode,
         rrn,
         totalAmount,
-        note: note || `Yönetici tarafından manuel POS (${provider}) tahsilatı olarak sisteme işlendi`,
+        note: note || (isManualEft ? `Yönetici tarafından manuel banka havale/EFT (${provider}) tahsilatı olarak sisteme işlendi` : `Yönetici tarafından manuel POS (${provider}) tahsilatı olarak sisteme işlendi`),
         serverAt: admin.firestore.FieldValue.serverTimestamp()
       });
 
@@ -2325,31 +2329,36 @@ async function handleStatementRequest(req, res) {
         const dateKey = isoString.slice(0, 10);
         const timeKey = isoString.slice(11, 16);
 
+        const isEft = Boolean(data.isManualEft || data.paymentMethod === 'HAVALE_EFT' || data.source === 'MANUAL_EFT');
         const posAmount = Number(data.total || (data.payment && data.payment.amount) || 0);
-        const hakedisAmount = Math.round(posAmount * 0.92 * 100) / 100;
+        // EFT/Havale kuralı: %5 kesinti bizim net kârımız, kalan %95 borcumuz (Net Hakediş)
+        const hakedisRate = isEft ? 0.95 : 0.92;
+        const commissionRate = isEft ? 0.05 : 0.08;
+        const hakedisAmount = Math.round(posAmount * hakedisRate * 100) / 100;
         const customerName = (data.customer && data.customer.name) || data.customerName || 'Müşteri';
         const orderId = data.orderId || docId;
-        const customPosRate = (data.posRate !== undefined && data.posRate !== null && !isNaN(Number(data.posRate))) 
+        const customPosRate = isEft ? 0 : ((data.posRate !== undefined && data.posRate !== null && !isNaN(Number(data.posRate))) 
           ? Number(data.posRate) 
-          : ((data.payment && data.payment.posRate !== undefined && data.payment.posRate !== null && !isNaN(Number(data.payment.posRate))) ? Number(data.payment.posRate) : null);
+          : ((data.payment && data.payment.posRate !== undefined && data.payment.posRate !== null && !isNaN(Number(data.payment.posRate))) ? Number(data.payment.posRate) : null));
 
         rawTransactions.push({
           id: orderId,
-          type: 'POS_SALE',
+          type: isEft ? 'EFT_SALE' : 'POS_SALE',
           timestamp: trDate.getTime(),
           date: dateKey,
           time: timeKey,
           fullDate: `${dateKey} ${timeKey}`,
-          description: `Sipariş: ${orderId} (${customerName})`,
+          description: isEft ? `Havale/EFT: ${orderId} (${customerName})` : `Sipariş: ${orderId} (${customerName})`,
           customerName,
           orderId,
           provider: (data.payment && data.payment.provider) || data.provider || 'KUVEYTTURK',
           pos: posAmount,
           posRate: customPosRate,
-          commissionRate: 0.08,
+          commissionRate: commissionRate,
           hakedis: hakedisAmount,
           paid: 0,
-          rawDate: isoString
+          rawDate: isoString,
+          isManualEft: isEft
         });
       });
 
