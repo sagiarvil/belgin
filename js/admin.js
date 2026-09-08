@@ -7201,7 +7201,7 @@ const AdminApp = {
 
     this.renderStoreInvoiceItems();
     this.calculateStoreInvoiceLiveSummary();
-    this.showToast(`⚡ ${itemsToAdd.length} kalemli gerçek fiyatlı akıllı sepet (₺${totalAmount.toLocaleString('tr-TR')}) başarıyla faturaya aktarıldı.`);
+    this.showToast(`⚡ 22 Ayar Bilezik ve İşçilik kalemleri (₺${totalAmount.toLocaleString('tr-TR')}) başarıyla faturaya aktarıldı.`);
   },
 
   // İşçilik Kalemi Ekle (Altın Tutarı İçinden Otomatik Düşerek Toplamı Sabit Tutar)
@@ -8775,7 +8775,7 @@ const AdminApp = {
       'magazine': 'Lüks Saat Magazin Makaleleri Güncellemesi',
       'magazine_safety': 'Magazin Güvenlik ve Dil Filtresi Taraması',
       'magazine_enhance': 'Magazin Editoryal Alıntı ve Başlık Biçimlendirme',
-      'gold_prices': 'Harem Altın Canlı Borsa & +%3 Marj Güncellemesi',
+      'gold_prices': 'Harem Altın Canlı Borsa & +%0.5 Marj Güncellemesi',
       'gold_stock': 'Altın, Külçe ve Sarrafiye Stok Doğrulaması',
       'saatvesaat': 'Saat ve Saat Distribütör Kataloğu Senkronizasyonu',
       'carren': 'Carren Saat Kataloğu ve Model Güncellemesi',
@@ -8898,7 +8898,7 @@ const AdminApp = {
     } else if (action === 'smart_diff') {
       this.logToTerminal('info', 'Smart-Diff birleşik akıllı tarama motoru çalışıyor...');
       this.logToTerminal('info', '2.125 ürünün fiyat ve stok deltaları hesaplanıyor...');
-      this.logToTerminal('success', 'Smart-Diff tamamlandı: Altın (+%3) ve Saat kataloğu PayTR sunucu kataloğuyla 1:1 eşitlendi.');
+      this.logToTerminal('success', 'Smart-Diff tamamlandı: Altın (+%0.5) ve Saat kataloğu PayTR sunucu kataloğuyla 1:1 eşitlendi.');
     } else if (action === 'seo_build') {
       this.logToTerminal('info', 'Statik SEO sayfaları ve Google zengin snippet JSON-LD şemaları derleniyor...');
       this.logToTerminal('success', 'Tüm ürün, kategori ve magazin statik HTML sayfaları derlendi.');

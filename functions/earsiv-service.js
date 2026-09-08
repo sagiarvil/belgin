@@ -11,87 +11,23 @@ const crypto = require('crypto');
 const GIB_PROD_URL = 'https://earsivportal.efatura.gov.tr/earsiv-services';
 const GIB_TEST_URL = 'https://earsivportaltest.efatura.gov.tr/earsiv-services';
 
-// 8 ADET 22 AYAR ALTIN SABİT ÜRÜN KATALOĞU VE LİNKLERİ
+/// 22 AYAR BİLEZİK — /22 KISAYOLU İÇİN TEK VE DEĞİŞMEZ ÜRÜN
 const VIP_22_CATALOG = Object.freeze([
   {
-    id: '2734',
-    name: '7 Gram 22 Ayar Ajda Altın Bilezik',
-    reference: 'BLG-BLZ-110',
-    url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-110-2734/',
-    basePrice: 45570,
-    weight: 7.0,
-    karat: 22
-  },
-  {
-    id: '2669',
-    name: 'Ata Tam Yeni 22 ayar',
-    reference: 'BLG-ZYN-045',
-    url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-045-2669/',
-    basePrice: 46107,
-    weight: 7.216,
-    karat: 22
-  },
-  {
-    id: '2667',
-    name: 'Ziynet Çeyrek Altın',
-    reference: 'BLG-ZYN-043',
-    url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-043-2667/',
-    basePrice: 11070,
-    weight: 1.754,
-    karat: 22
-  },
-  {
-    id: '2670',
-    name: 'Yarım Altın',
-    reference: 'BLG-ZYN-046',
-    url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-046-2670/',
-    basePrice: 22322,
-    weight: 3.508,
-    karat: 22
-  },
-  {
-    id: '2668',
-    name: 'Çeyrek Altın',
-    reference: 'BLG-ZYN-044',
-    url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-zyn-044-2668/',
-    basePrice: 11070,
-    weight: 1.754,
-    karat: 22
-  },
-  {
-    id: '2741',
-    name: '10 gr 22 Ayar Burma Altın Bilezik',
-    reference: 'BLG-BLZ-117',
-    url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-117-2741/',
-    basePrice: 65240,
-    weight: 10.0,
-    karat: 22
-  },
-  {
-    id: '2748',
-    name: '20 gr 22 Ayar Burma Altın Bilezik',
-    reference: 'BLG-BLZ-124',
-    url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-124-2748/',
-    basePrice: 130480,
-    weight: 20.0,
-    karat: 22
-  },
-  {
-    id: '2753',
-    name: '3\'lü Burma 25 gr 22 Ayar Altın Bilezik',
-    reference: 'BLG-BLZ-129',
-    url: 'https://www.belginkuyumculuk.com/urun/belgin-kuyumculuk-blg-blz-129-2753/',
-    basePrice: 163100,
-    weight: 25.0,
-    karat: 22
+    id: '22-ayar-bilezik',
+    name: '22 Ayar Bilezik',
+    reference: 'BLG-BLZ-22K',
+    url: 'https://www.belginkuyumculuk.com/urun/22-ayar-bilezik/',
+    basePrice: 65000,
+    karat: 22,
+    priceKey: 'gramGold22k'
   }
 ]);
 
 /**
- * /22 Kısayolu ve Akıllı Baremli 22 Ayar Özel Matrah Ayrıştırma Motoru
- * Web sitesindeki gerçek ürün fiyatlarına sadık kalır.
- * Fatura tutarı arttıkça katalogdaki 8 temel 22 ayar ürünümüzden (Ajda, Burma, Ata, Yarım, Çeyrek)
- * her seferinde dinamik ve çeşitli gerçek kuyumcu sepetleri oluşturur; kuruş farkını son üründe mikro fiyata yedirir.
+ * /22 Kısayolu ve 22 Ayar Bilezik Özel Matrah Ayrıştırma Motoru
+ * VIP link ve siparişlerde /22 kısayolu kullanıldığında istisnasız ve yalnızca "22 Ayar Bilezik" üretir.
+ * Toplam tutarı Kıymetli Maden Bedeli (%0 KDV Özel Matrah) ve %1.25 İşçilik Bedeli (%20 KDV) olarak ayrıştırır.
  */
 function calculateVip22Breakdown(totalAmount) {
   const total = Number(totalAmount) || 0;
@@ -106,225 +42,66 @@ function calculateVip22Breakdown(totalAmount) {
   const exactWorkmanshipGross = Math.round((workmanshipNet + workmanshipKdv) * 100) / 100;
   const goldNetPool = Math.round((total - exactWorkmanshipGross) * 100) / 100;
 
-  // 8 Temel Ürünü Fiyat Kategorilerine Göre Dinamik ve Güvenli Şekilde Dağıt
-  const availableProds = [...VIP_22_CATALOG].sort((a, b) => b.basePrice - a.basePrice);
-  let rawBasket = [];
-  let remainingPool = goldNetPool;
-
-  for (const prod of availableProds) {
-    if (remainingPool >= prod.basePrice) {
-      const maxQty = Math.floor(remainingPool / prod.basePrice);
-      if (maxQty > 0) {
-        const rem = remainingPool - (maxQty * prod.basePrice);
-        let qtyToPick = maxQty;
-        if (rem > 0 && rem < 5000 && maxQty > 1) {
-          qtyToPick = maxQty - 1;
-        } else if (rem > 0 && rem < 5000 && maxQty === 1 && prod.basePrice > 30000) {
-          // Bu ürünü atla, kalan havuz daha küçük ürünlerle pozitif dağılsın
-          continue;
-        }
-        rawBasket.push({ prod, qty: qtyToPick, unitPrice: prod.basePrice });
-        remainingPool -= qtyToPick * prod.basePrice;
-      }
+  const items = [
+    {
+      id: '22-ayar-bilezik',
+      name: '22 Ayar Bilezik',
+      malHizmet: '22 Ayar Bilezik (Kıymetli Maden Bedeli - Özel Matrah)',
+      miktar: 1,
+      qty: 1,
+      birim: 'C62',
+      birimFiyat: goldNetPool.toFixed(2),
+      unitPrice: goldNetPool,
+      fiyat: goldNetPool.toFixed(2),
+      lineTotal: goldNetPool,
+      iskontoArttirim: 'İskonto',
+      iskontoOrani: 0,
+      iskontoTutari: '0.00',
+      iskontoNedeni: '',
+      malHizmetTutari: goldNetPool.toFixed(2),
+      kdvOrani: 0,
+      kdvRate: 0,
+      kdvTutari: '0.00',
+      vatAmount: 0,
+      vergiOrani: 0,
+      ozelMatrahNedeni: '351',
+      ozelMatrahTutari: goldNetPool.toFixed(2),
+      tevkifatKodu: 0
+    },
+    {
+      id: 'WORKMANSHIP-22K',
+      name: 'İşçilik',
+      malHizmet: 'İşçilik',
+      miktar: 1,
+      qty: 1,
+      birim: 'C62',
+      birimFiyat: workmanshipNet.toFixed(2),
+      unitPrice: workmanshipNet,
+      fiyat: workmanshipNet.toFixed(2),
+      lineTotal: workmanshipNet,
+      iskontoArttirim: 'İskonto',
+      iskontoOrani: 0,
+      iskontoTutari: '0.00',
+      iskontoNedeni: '',
+      malHizmetTutari: workmanshipNet.toFixed(2),
+      kdvOrani: 20,
+      kdvRate: 20,
+      kdvTutari: workmanshipKdv.toFixed(2),
+      vatAmount: workmanshipKdv,
+      vergiOrani: 0,
+      ozelMatrahNedeni: '',
+      ozelMatrahTutari: 0,
+      tevkifatKodu: 0
     }
-  }
-
-  // Eğer hala pozitif artık kaldıysa en küçük ürüne (Çeyrek Altın) ekle
-  if (remainingPool > 0) {
-    const smallProduct = VIP_22_CATALOG.find(p => p.id === '2668' || p.id === '2667') || VIP_22_CATALOG[2];
-    const existing = rawBasket.find(b => b.prod.id === smallProduct.id);
-    if (!existing) {
-      rawBasket.push({ prod: smallProduct, qty: 1, unitPrice: smallProduct.basePrice });
-    }
-  }
-
-  if (rawBasket.length === 0) {
-    const defaultProd = VIP_22_CATALOG[0];
-    rawBasket.push({ prod: defaultProd, qty: 1, unitPrice: goldNetPool });
-  }
-
-  // Satırları GİB e-Arşiv Standartlarına Göre Oluştur (Tüm farkı son ürüne mikro yedirerek %100 eşitlik sağla)
-  const items = [];
-  let calculatedGoldTotal = 0;
-
-  for (let idx = 0; idx < rawBasket.length; idx++) {
-    const bItem = rawBasket[idx];
-    const isLast = idx === rawBasket.length - 1;
-
-    if (!isLast) {
-      const lineTotal = Math.round(bItem.qty * bItem.unitPrice * 100) / 100;
-      calculatedGoldTotal = Math.round((calculatedGoldTotal + lineTotal) * 100) / 100;
-      items.push({
-        name: bItem.prod.name,
-        malHizmet: `${bItem.prod.name} (Kıymetli Maden Bedeli - Özel Matrah)`,
-        miktar: bItem.qty,
-        qty: bItem.qty,
-        birim: 'C62',
-        birimFiyat: bItem.unitPrice.toFixed(2),
-        unitPrice: bItem.unitPrice,
-        fiyat: lineTotal.toFixed(2),
-        lineTotal: lineTotal,
-        iskontoArttirim: 'İskonto',
-        iskontoOrani: 0,
-        iskontoTutari: '0.00',
-        iskontoNedeni: '',
-        malHizmetTutari: lineTotal.toFixed(2),
-        kdvOrani: 0,
-        kdvRate: 0,
-        kdvTutari: '0.00',
-        vatAmount: 0,
-        vergiOrani: 0,
-        ozelMatrahNedeni: '351',
-        ozelMatrahTutari: lineTotal.toFixed(2),
-        tevkifatKodu: 0
-      });
-    } else {
-      // Son ürün: Kalan tam farkı al
-      const lastLineTotal = Math.round((goldNetPool - calculatedGoldTotal) * 100) / 100;
-      const candidateUnit = Math.round((lastLineTotal / bItem.qty) * 100) / 100;
-      const displayName = `${bItem.prod.name} (Kıymetli Maden Bedeli - Özel Matrah)`;
-
-      if (Math.round(candidateUnit * bItem.qty * 100) === Math.round(lastLineTotal * 100)) {
-        items.push({
-          name: bItem.prod.name,
-          malHizmet: displayName,
-          miktar: bItem.qty,
-          qty: bItem.qty,
-          birim: 'C62',
-          birimFiyat: candidateUnit.toFixed(2),
-          unitPrice: candidateUnit,
-          fiyat: lastLineTotal.toFixed(2),
-          lineTotal: lastLineTotal,
-          iskontoArttirim: 'İskonto',
-          iskontoOrani: 0,
-          iskontoTutari: '0.00',
-          iskontoNedeni: '',
-          malHizmetTutari: lastLineTotal.toFixed(2),
-          kdvOrani: 0,
-          kdvRate: 0,
-          kdvTutari: '0.00',
-          vatAmount: 0,
-          vergiOrani: 0,
-          ozelMatrahNedeni: '351',
-          ozelMatrahTutari: lastLineTotal.toFixed(2),
-          tevkifatKodu: 0
-        });
-      } else if (bItem.qty > 1) {
-        const baseQty = bItem.qty - 1;
-        const baseUnit = Math.floor((lastLineTotal / bItem.qty) * 100) / 100;
-        const baseTotal = Math.round(baseQty * baseUnit * 100) / 100;
-        const remTotal = Math.round((lastLineTotal - baseTotal) * 100) / 100;
-
-        items.push({
-          name: bItem.prod.name,
-          malHizmet: displayName,
-          miktar: baseQty,
-          qty: baseQty,
-          birim: 'C62',
-          birimFiyat: baseUnit.toFixed(2),
-          unitPrice: baseUnit,
-          fiyat: baseTotal.toFixed(2),
-          lineTotal: baseTotal,
-          iskontoArttirim: 'İskonto',
-          iskontoOrani: 0,
-          iskontoTutari: '0.00',
-          iskontoNedeni: '',
-          malHizmetTutari: baseTotal.toFixed(2),
-          kdvOrani: 0,
-          kdvRate: 0,
-          kdvTutari: '0.00',
-          vatAmount: 0,
-          vergiOrani: 0,
-          ozelMatrahNedeni: '351',
-          ozelMatrahTutari: baseTotal.toFixed(2),
-          tevkifatKodu: 0
-        });
-
-        items.push({
-          name: bItem.prod.name,
-          malHizmet: displayName,
-          miktar: 1,
-          qty: 1,
-          birim: 'C62',
-          birimFiyat: remTotal.toFixed(2),
-          unitPrice: remTotal,
-          fiyat: remTotal.toFixed(2),
-          lineTotal: remTotal,
-          iskontoArttirim: 'İskonto',
-          iskontoOrani: 0,
-          iskontoTutari: '0.00',
-          iskontoNedeni: '',
-          malHizmetTutari: remTotal.toFixed(2),
-          kdvOrani: 0,
-          kdvRate: 0,
-          kdvTutari: '0.00',
-          vatAmount: 0,
-          vergiOrani: 0,
-          ozelMatrahNedeni: '351',
-          ozelMatrahTutari: remTotal.toFixed(2),
-          tevkifatKodu: 0
-        });
-      } else {
-        items.push({
-          name: bItem.prod.name,
-          malHizmet: displayName,
-          miktar: 1,
-          qty: 1,
-          birim: 'C62',
-          birimFiyat: lastLineTotal.toFixed(2),
-          unitPrice: lastLineTotal,
-          fiyat: lastLineTotal.toFixed(2),
-          lineTotal: lastLineTotal,
-          iskontoArttirim: 'İskonto',
-          iskontoOrani: 0,
-          iskontoTutari: '0.00',
-          iskontoNedeni: '',
-          malHizmetTutari: lastLineTotal.toFixed(2),
-          kdvOrani: 0,
-          kdvRate: 0,
-          kdvTutari: '0.00',
-          vatAmount: 0,
-          vergiOrani: 0,
-          ozelMatrahNedeni: '351',
-          ozelMatrahTutari: lastLineTotal.toFixed(2),
-          tevkifatKodu: 0
-        });
-      }
-    }
-  }
-
-  // İşçilik Bedeli Satırı (%20 KDV dahil)
-  items.push({
-    name: 'İşçilik',
-    malHizmet: 'İşçilik',
-    miktar: 1,
-    qty: 1,
-    birim: 'C62',
-    birimFiyat: workmanshipNet.toFixed(2),
-    unitPrice: workmanshipNet,
-    fiyat: workmanshipNet.toFixed(2),
-    lineTotal: workmanshipNet,
-    iskontoArttirim: 'İskonto',
-    iskontoOrani: 0,
-    iskontoTutari: '0.00',
-    iskontoNedeni: '',
-    malHizmetTutari: workmanshipNet.toFixed(2),
-    kdvOrani: 20,
-    kdvRate: 20,
-    kdvTutari: workmanshipKdv.toFixed(2),
-    vatAmount: workmanshipKdv,
-    vergiOrani: 0,
-    ozelMatrahNedeni: '',
-    ozelMatrahTutari: 0,
-    tevkifatKodu: 0
-  });
+  ];
 
   const totalMatrah = Math.round((goldNetPool + workmanshipNet) * 100) / 100;
   const finalGrandTotal = Math.round((totalMatrah + workmanshipKdv) * 100) / 100;
 
   return {
     isVip22: true,
-    productName: items.filter(i => !i.malHizmet.includes('İşçilik')).map(i => `${i.malHizmet.split('(')[0].trim()} (x${i.miktar})`).join(' + '),
+    tag: '/22',
+    productName: '22 Ayar Bilezik',
     hasGoldAmount: goldNetPool.toFixed(2),
     workmanshipNet: workmanshipNet.toFixed(2),
     workmanshipKdv: workmanshipKdv.toFixed(2),

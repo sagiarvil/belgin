@@ -1,0 +1,97 @@
+# ==========================================================
+# BELGİN SAAT — MAGAZİN OTOMATİK SENKRONİZASYON & SEO CRON
+# ==========================================================
+# Günde 2 kez (09:00 ve 21:00 Türkiye Saati / UTC+3) çalışır.
+# Yeni çıkan lüks saat makalelerini çeker, Türkçeleştirir,
+# güvenlik/pazar yeri filtrelerinden geçirir ve siteye yansıtır.
+# ==========================================================
+
+name: Magazine Live Editorial Sync (Twice Daily at 09:00 & 21:00 TRT)
+
+on:
+  schedule:
+    # 06:00 & 18:00 UTC = 09:00 & 21:00 Turkey Time (TRT / UTC+3)
+    - cron: '0 6,18 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: sync-magazine
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  sync-magazine:
+    name: Sync Horology Articles, Compile SEO & Deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      FIREBASE_PROJECT_ID: carbon-web-1265b
+      FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CARBON_WEB_1265B }}
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install curl_cffi beautifulsoup4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install site dependencies
+        run: npm ci
+
+      - name: Run Magazine Sync Engine
+        run: python3 scripts/sync-magazine-articles.py
+
+      - name: Run Quality Gate & Compliance Guard
+        run: |
+          node scripts/magazine-safety-filter.js
+          node scripts/sanitize-public-magazine-provenance.js
+          npm test
+          npm run guard
+
+      - name: Commit updated magazine data & SEO pages
+        run: |
+          git config --global user.name "Belgin Magazine Bot"
+          git config --global user.email "bot@belginkuyumculuk.com"
+          git add -A js/magazine_data.js images/magazine/ magazin/ sitemap-magazine.xml sitemap.xml llms.txt llms-full.txt robots.txt firebase.json legal-manifest.json functions/legal-manifest.json
+          if ! git diff --staged --quiet; then
+            git commit -m "chore(magazine): automated daily horology article sync & static SEO compilation"
+            git push origin HEAD:${{ github.ref }}
+          else
+            echo "No new magazine articles or changes detected."
+          fi
+
+      - name: Authenticate with Google service account
+        if: env.FIREBASE_SERVICE_ACCOUNT != ''
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CARBON_WEB_1265B }}
+
+      - name: Deploy to Firebase Hosting (Service Account)
+        if: env.FIREBASE_SERVICE_ACCOUNT != ''
+        run: |
+          npx -y firebase-tools@latest deploy --project "$FIREBASE_PROJECT_ID" --only hosting --non-interactive
+
+      - name: Deploy to Firebase Hosting (Legacy Token Fallback)
+        if: env.FIREBASE_SERVICE_ACCOUNT == '' && env.FIREBASE_TOKEN != ''
+        run: |
+          npx -y firebase-tools@latest deploy --project "$FIREBASE_PROJECT_ID" --only hosting --non-interactive --token "$FIREBASE_TOKEN"
