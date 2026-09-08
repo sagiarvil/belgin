@@ -1,22 +1,23 @@
 # ==========================================================
 # BELGİN SAAT — MAGAZİN OTOMATİK SENKRONİZASYON & SEO CRON
 # ==========================================================
-# Günde 2 kez (09:00 ve 21:00 Türkiye Saati / UTC+3) çalışır.
+# Her 4 saatte bir 7/24 çalışır.
 # Yeni çıkan lüks saat makalelerini çeker, Türkçeleştirir,
-# güvenlik/pazar yeri filtrelerinden geçirir ve siteye yansıtır.
+# güvenlik/pazar yeri filtrelerinden geçirir, statik SEO
+# sayfalarını derler, git'e kaydeder ve doğrudan canlıya yayınlar.
 # ==========================================================
 
-name: Magazine Live Editorial Sync (Twice Daily at 09:00 & 21:00 TRT)
+name: Magazine Live Editorial Sync (Every 4 Hours)
 
 on:
   schedule:
-    # 06:00 & 18:00 UTC = 09:00 & 21:00 Turkey Time (TRT / UTC+3)
-    - cron: '0 6,18 * * *'
+    # Runs every 4 hours 24/7 (00:00, 04:00, 08:00, 12:00, 16:00, 20:00 UTC)
+    - cron: '0 */4 * * *'
   workflow_dispatch:
 
 concurrency:
   group: sync-magazine
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -74,24 +75,38 @@ jobs:
           git config --global user.email "bot@belginkuyumculuk.com"
           git add -A js/magazine_data.js images/magazine/ magazin/ sitemap-magazine.xml sitemap.xml llms.txt llms-full.txt robots.txt firebase.json legal-manifest.json functions/legal-manifest.json
           if ! git diff --staged --quiet; then
-            git commit -m "chore(magazine): automated daily horology article sync & static SEO compilation"
-            git push origin HEAD:${{ github.ref }}
+            git commit -m "chore(magazine): automated horology article sync & static SEO compilation"
+            for i in 1 2 3 4 5; do
+              git pull --rebase origin main && git push origin HEAD:main && break
+              echo "Push contention detected; retrying rebase in 3s... (attempt $i)"
+              sleep 3
+            done
+            echo "HAS_CHANGES=true" >> "$GITHUB_ENV"
           else
             echo "No new magazine articles or changes detected."
+            echo "HAS_CHANGES=false" >> "$GITHUB_ENV"
           fi
 
-      - name: Authenticate with Google service account
-        if: env.FIREBASE_SERVICE_ACCOUNT != ''
-        uses: google-github-actions/auth@v2
-        with:
-          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CARBON_WEB_1265B }}
-
-      - name: Deploy to Firebase Hosting (Service Account)
-        if: env.FIREBASE_SERVICE_ACCOUNT != ''
+      - name: Deploy to Firebase Hosting (only if new articles or manual trigger)
+        if: env.HAS_CHANGES == 'true' || github.event_name == 'workflow_dispatch'
         run: |
-          npx -y firebase-tools@latest deploy --project "$FIREBASE_PROJECT_ID" --only hosting --non-interactive
+          node scripts/ensure-index-canonical-redirect.mjs
+          if [ -n "${FIREBASE_SERVICE_ACCOUNT:-}" ]; then
+            echo "Deploying to Firebase Hosting via Google Service Account..."
+            npx -y firebase-tools@latest deploy --project "$FIREBASE_PROJECT_ID" --only hosting --non-interactive
+          elif [ -n "${FIREBASE_TOKEN:-}" ]; then
+            echo "Deploying to Firebase Hosting via Firebase Token..."
+            npx -y firebase-tools@latest deploy --project "$FIREBASE_PROJECT_ID" --only hosting --non-interactive --token "$FIREBASE_TOKEN"
+          else
+            echo "::error title=Missing Credentials::Neither FIREBASE_SERVICE_ACCOUNT nor FIREBASE_TOKEN is available."
+            exit 1
+          fi
 
-      - name: Deploy to Firebase Hosting (Legacy Token Fallback)
-        if: env.FIREBASE_SERVICE_ACCOUNT == '' && env.FIREBASE_TOKEN != ''
+      - name: Verify Live Magazine Health
+        if: env.HAS_CHANGES == 'true' || github.event_name == 'workflow_dispatch'
         run: |
-          npx -y firebase-tools@latest deploy --project "$FIREBASE_PROJECT_ID" --only hosting --non-interactive --token "$FIREBASE_TOKEN"
+          set -euo pipefail
+          echo "Verifying live production magazine endpoint..."
+          curl --fail --silent --show-error --max-time 30 https://www.belginkuyumculuk.com/magazin/ -o /tmp/magazin.html
+          grep -qi "Belgin" /tmp/magazin.html
+          echo "LIVE_MAGAZINE_HEALTH=PASS"
