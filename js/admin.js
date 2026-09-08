@@ -1145,6 +1145,20 @@ const AdminApp = {
     return raw ? `<span style="background:#F1F5F9; color:#475569; border:1px solid #CBD5E1; font-size:11px; font-weight:800; padding:2px 8px; border-radius:6px; display:inline-flex; align-items:center; letter-spacing:0.3px; vertical-align:middle; margin-left:4px;">${this.escapeHtml(raw)}</span>` : `<span style="background:#E0F2FE; color:#0284C7; border:1px solid #BAE6FD; font-size:11px; font-weight:800; padding:2px 8px; border-radius:6px; display:inline-flex; align-items:center; letter-spacing:0.3px; vertical-align:middle; margin-left:4px;">KUVEYT TÜRK</span>`;
   },
 
+  getBankName(provider) {
+    const raw = String(provider || '').trim();
+    const p = raw.toUpperCase();
+    if (p.includes('TOSLA')) return 'Tosla';
+    if (p.includes('KUVEYT')) return 'Kuveyt Türk';
+    if (p.includes('AKBANK')) return 'Akbank';
+    if (p.includes('VAKIF')) return 'VakıfBank';
+    if (p.includes('ZIRAAT') || p.includes('ZİRAAT')) return 'Ziraat Katılım';
+    if (p.includes('PAYTR')) return 'PayTR';
+    if (p.includes('YAPIKREDI') || p.includes('YAPI KREDİ')) return 'Yapı Kredi';
+    if (p.includes('HALKBANK')) return 'Halkbank';
+    return raw || 'Kuveyt Türk';
+  },
+
   // KUYUMCULUK ÖZEL MATRAH VEYA SAAT %20 KDV HESAPLAMA
   calculateJewelryBreakdown(totalAmount, order = null) {
     const total = Number(totalAmount) || 0;
@@ -1233,22 +1247,37 @@ const AdminApp = {
 
   // HUKUKİ DELİL & SÖZLEŞME ÇIKTISI AÇ (10/10 BANKA-READY)
   printLegalDocument(orderId, tab = null) {
-    const adminKey = this.adminPin || sessionStorage.getItem('belgin_admin_pin') || localStorage.getItem('belgin_admin_pin') || '1999';
+    const adminKey = this.adminPin || sessionStorage.getItem('belgin_admin_pin') || localStorage.getItem('belgin_admin_pin') || '';
+    const order = (this.orders || []).find(o => o.orderId === orderId) ||
+                  (this.filteredOrders || []).find(o => o.orderId === orderId) ||
+                  (this.storeInvoices || []).find(o => o && (o.orderId === orderId || o.id === orderId));
     let url = `/hukuki-evrak-yazdir.html?orderId=${encodeURIComponent(orderId)}&adminKey=${encodeURIComponent(adminKey)}`;
+    const isEft = order && (order.isManualEft || order.source === 'MANUAL_EFT' || order.paymentMethod === 'HAVALE_EFT' || String(order.orderId || '').startsWith('BLG-EFT-') || !!order.bankEft || (order.isStoreManual && order.paymentMethod !== 'KREDI_KARTI'));
+    if (isEft) {
+      url += `&paymentMethod=HAVALE_EFT`;
+    }
     if (tab) url += `&tab=${encodeURIComponent(tab)}`;
     window.open(url, '_blank');
   },
 
   // CHARGEBACK SAVUNMA PAKETİ ÇIKTISI AÇ (10.4 veya 13.1)
   printChargebackPack(orderId, reasonCode = '10.4') {
-    const adminKey = this.adminPin || sessionStorage.getItem('belgin_admin_pin') || localStorage.getItem('belgin_admin_pin') || '1999';
+    const adminKey = this.adminPin || sessionStorage.getItem('belgin_admin_pin') || localStorage.getItem('belgin_admin_pin') || '';
     window.open(`/hukuki-evrak-yazdir.html?orderId=${encodeURIComponent(orderId)}&reasonPack=${encodeURIComponent(reasonCode)}&adminKey=${encodeURIComponent(adminKey)}`, '_blank');
   },
 
   // ÜRÜN TESLİM, KONTROL VE ÖDEME İŞLEMİ TEYİT BEYANI AÇ
   printDeliveryStatement(orderId) {
-    const adminKey = this.adminPin || sessionStorage.getItem('belgin_admin_pin') || localStorage.getItem('belgin_admin_pin') || '1999';
-    window.open(`/hukuki-evrak-yazdir.html?orderId=${encodeURIComponent(orderId)}&tab=delivery-statement&adminKey=${encodeURIComponent(adminKey)}`, '_blank');
+    const adminKey = this.adminPin || sessionStorage.getItem('belgin_admin_pin') || localStorage.getItem('belgin_admin_pin') || '';
+    const order = (this.orders || []).find(o => o.orderId === orderId) ||
+                  (this.filteredOrders || []).find(o => o.orderId === orderId) ||
+                  (this.storeInvoices || []).find(o => o && (o.orderId === orderId || o.id === orderId));
+    let url = `/hukuki-evrak-yazdir.html?orderId=${encodeURIComponent(orderId)}&tab=delivery-statement&adminKey=${encodeURIComponent(adminKey)}`;
+    const isEft = order && (order.isManualEft || order.source === 'MANUAL_EFT' || order.paymentMethod === 'HAVALE_EFT' || String(order.orderId || '').startsWith('BLG-EFT-') || !!order.bankEft || (order.isStoreManual && order.paymentMethod !== 'KREDI_KARTI'));
+    if (isEft) {
+      url += `&paymentMethod=HAVALE_EFT`;
+    }
+    window.open(url, '_blank');
   },
 
   // MÜŞTERİ ISLAK İMZALI BEYAN YÖNETİMİ
@@ -1307,9 +1336,9 @@ const AdminApp = {
       } catch (_) {}
 
       // 3. Form açıksa oradaki canlı alanları oku
-      const formName = document.getElementById('storeCustomerName')?.value?.trim();
-      const formTckn = document.getElementById('storeCustomerIdentity')?.value?.trim();
-      const formPhone = document.getElementById('storeCustomerPhone')?.value?.trim();
+      const formName = (document.getElementById('storeCustName') || document.getElementById('storeCustomerName'))?.value?.trim();
+      const formTckn = (document.getElementById('storeCustIdentity') || document.getElementById('storeCustomerIdentity'))?.value?.trim();
+      const formPhone = (document.getElementById('storeCustPhone') || document.getElementById('storeCustomerPhone'))?.value?.trim();
       const formTotal = (typeof this.calculateStoreGrandTotal === 'function') ? this.calculateStoreGrandTotal() : 0;
 
       const custName = (order && order.customerName) || (storedDecl && storedDecl.customerName) || formName || (String(orderId).includes('9820') ? 'Dilek İnan' : 'Müşteri');
@@ -1440,9 +1469,9 @@ const AdminApp = {
       const order = this.orders && this.orders.find(o => o && (o.orderId === orderId || o.id === orderId));
       const storeInv = this.storeInvoices && this.storeInvoices.find(o => o && (o.orderId === orderId || o.id === orderId));
       
-      const formName = document.getElementById('storeCustomerName')?.value?.trim();
-      const formTckn = document.getElementById('storeCustomerIdentity')?.value?.trim();
-      const formPhone = document.getElementById('storeCustomerPhone')?.value?.trim();
+      const formName = (document.getElementById('storeCustName') || document.getElementById('storeCustomerName'))?.value?.trim();
+      const formTckn = (document.getElementById('storeCustIdentity') || document.getElementById('storeCustomerIdentity'))?.value?.trim();
+      const formPhone = (document.getElementById('storeCustPhone') || document.getElementById('storeCustomerPhone'))?.value?.trim();
       const formTotal = (typeof this.calculateStoreGrandTotal === 'function') ? this.calculateStoreGrandTotal() : 0;
 
       const custName = (storeInv ? storeInv.customerName : (order ? order.customerName : '')) || formName || (String(orderId).includes('9820') ? 'Dilek İnan' : 'Müşteri');
@@ -1540,9 +1569,9 @@ const AdminApp = {
       if (declRaw) storedDecl = JSON.parse(declRaw);
     } catch (_) {}
 
-    const formName = document.getElementById('storeCustomerName')?.value?.trim();
-    const formTckn = document.getElementById('storeCustomerIdentity')?.value?.trim();
-    const formPhone = document.getElementById('storeCustomerPhone')?.value?.trim();
+    const formName = (document.getElementById('storeCustName') || document.getElementById('storeCustomerName'))?.value?.trim();
+    const formTckn = (document.getElementById('storeCustIdentity') || document.getElementById('storeCustomerIdentity'))?.value?.trim();
+    const formPhone = (document.getElementById('storeCustPhone') || document.getElementById('storeCustomerPhone'))?.value?.trim();
     const formTotal = (typeof this.calculateStoreGrandTotal === 'function') ? this.calculateStoreGrandTotal() : 0;
 
     const custName = (order && order.customerName) || (storedDecl && storedDecl.customerName) || formName || (String(orderId).includes('9820') ? 'Dilek İnan' : '');
@@ -1560,7 +1589,7 @@ const AdminApp = {
       } catch (_) {}
     }
 
-    const adminKey = this.adminPin || sessionStorage.getItem('belgin_admin_pin') || localStorage.getItem('belgin_admin_pin') || '1999';
+    const adminKey = this.adminPin || sessionStorage.getItem('belgin_admin_pin') || localStorage.getItem('belgin_admin_pin') || '';
     window.open(`/hukuki-evrak-yazdir.html?orderId=${encodeURIComponent(orderId)}&tab=declaration&adminKey=${encodeURIComponent(adminKey)}`, '_blank');
   },
 
@@ -1572,6 +1601,9 @@ const AdminApp = {
     const modal = document.getElementById('orderDetailModal');
     const content = document.getElementById('modalOrderContent');
     if (!modal || !content) return;
+
+    const isEftOrder = !!(order.isManualEft || order.source === 'MANUAL_EFT' || order.paymentMethod === 'HAVALE_EFT' || String(order.orderId || '').startsWith('BLG-EFT-') || order.bankEft);
+    const eftBankName = order.bankName || (order.bankEft ? (order.bankEft.bank || order.bankEft) : '') || 'Banka';
 
     const prodName = order.productName || (Array.isArray(order.items) && order.items[0]?.name) || '';
     const bd = this.calculateJewelryBreakdown(order.totalAmount, order);
@@ -1618,11 +1650,12 @@ const AdminApp = {
         <div><strong>Teslimat Şekli:</strong> İzmir Buca Showroom Mağazadan Teslim (Kimlik Kontrolü ile yapılmıştır)</div>
       </div>
 
-      <h4 style="margin:14px 0 8px; font-size:14px; color:var(--admin-teal-dark);">Tahsilat & POS Bilgileri</h4>
+      <h4 style="margin:14px 0 8px; font-size:14px; color:var(--admin-teal-dark);">${isEftOrder ? 'Tahsilat & Banka Transfer Bilgileri' : 'Tahsilat & POS Bilgileri'}</h4>
       <div style="font-size:13px; line-height:1.6; margin-bottom:16px;">
-        <div><strong>POS Kanalı:</strong> ${this.getBankTag(order.provider || 'KUVEYTTURK')} Sanal POS 3D Secure</div>
-        <div><strong>Ödeme Durumu:</strong> ${order.isPaid && order.paymentStatus === 'PAID' ? '✅ Tahsil Edildi (Kuveyt Türk 3D Onaylı)' : (order.status === 'FAILED' || order.paymentStatus === 'FAILED' ? '❌ Başarısız' : '⏳ Beklemede (Ödeme Tamamlanmadı)')}</div>
+        <div><strong>${isEftOrder ? 'Ödeme Kanalı:' : 'POS Kanalı:'}</strong> ${isEftOrder ? `<span style="background:#E0F2FE; color:#0369A1; padding:2px 8px; border-radius:5px; font-weight:800; border:1px solid #7DD3FC;">🏛️ ${this.escapeHtml(eftBankName)} Banka Havalesi / FAST Transferi</span>` : `${this.getBankTag(order.provider || 'KUVEYTTURK')} Sanal POS 3D Secure`}</div>
+        <div><strong>Ödeme Durumu:</strong> ${isEftOrder ? '✅ Tahsil Edildi (Banka Havalesi / FAST Onaylı)' : (order.isPaid && order.paymentStatus === 'PAID' ? '✅ Tahsil Edildi (Kuveyt Türk 3D Onaylı)' : (order.status === 'FAILED' || order.paymentStatus === 'FAILED' ? '❌ Başarısız' : '⏳ Beklemede (Ödeme Tamamlanmadı)'))}</div>
         <div><strong>Toplam Tutar:</strong> <span style="font-size:16px; font-weight:800; color:var(--admin-teal);">₺${Number(order.totalAmount || 0).toLocaleString('tr-TR')}</span></div>
+        ${!isEftOrder ? `
         <div style="display:flex; align-items:center; gap:8px; margin-top:8px; background:#FEF9E7; border:1px solid #FCD34D; padding:6px 10px; border-radius:8px;">
           <strong style="color:#92400E; font-size:12.5px;">🏦 Banka POS Oranı:</strong>
           <div style="display:flex; align-items:center; gap:3px;">
@@ -1633,6 +1666,11 @@ const AdminApp = {
             💾 Kaydet
           </button>
         </div>
+        ` : `
+        <div style="margin-top:6px; font-size:11.5px; color:#059669; font-weight:800;">
+          ✅ Banka komisyonu %0.00'dır (Doğrudan ticari banka hesabına intikal etmiştir, bloke yoktur).
+        </div>
+        `}
       </div>
 
       <h4 style="margin:16px 0 8px; font-size:14px; color:var(--admin-teal-dark); display:flex; justify-content:space-between; align-items:center;">
@@ -1711,8 +1749,8 @@ const AdminApp = {
         <button class="btn-admin-secondary" style="background:#F0F7F5; border-color:#084C47; color:#084C47; font-weight:700;" onclick="AdminApp.printDeliveryStatement('${order.orderId}')" title="Ürün Teslim, Kontrol ve Ödeme İşlemi Teyit Beyanını Aç">
           🛡️ Ürün Teslim Beyanı (28.08.2026)
         </button>
-        <button class="btn-admin-secondary" style="background:#FAF8F2; border-color:#C2A768; color:#084C47; font-weight:700;" onclick="AdminApp.printLegalDocument('${order.orderId}')">
-          📜 Zaman Damgalı Sözleşme & Delil Çıktısı Al
+        <button class="btn-admin-secondary" style="background:${isEftOrder ? '#EFF6FF' : '#FAF8F2'}; border-color:${isEftOrder ? '#3B82F6' : '#C2A768'}; color:${isEftOrder ? '#1D4ED8' : '#084C47'}; font-weight:800;" onclick="AdminApp.printLegalDocument('${order.orderId}')">
+          📜 ${isEftOrder ? 'Banka Havalesi Yasal Dosyası & Talimatı Aç' : 'Zaman Damgalı Sözleşme & Delil Çıktısı Al'}
         </button>
         <button class="btn-admin-secondary" onclick="window.print()">🖨️ Dekont Yazdır</button>
         <button class="btn-admin-primary" onclick="AdminApp.closeModal()">Kapat</button>
@@ -4180,8 +4218,21 @@ const AdminApp = {
       let mainAmountColor = '#0F172A';
 
       if (isEftSale) {
-        typeBadge = `<span style="background:#E0F2FE; color:#0284C7; border:1px solid #7DD3FC; font-size:10.5px; font-weight:800; padding:2px 6px; border-radius:5px; display:inline-flex; align-items:center; gap:3px;">🏛️ EFT/Havale</span>`;
-        descHtml = `<strong style="color:#0369A1; font-size:12.5px;">${r.orderId}</strong> — <span style="font-weight:700; color:#1E293B;">${this.escapeHtml(r.customerName || 'Müşteri')}</span> ${this.getBankTag(r.provider || 'KUVEYTTURK')}`;
+        typeBadge = `<span style="background:#E0F2FE; color:#0284C7; border:1px solid #7DD3FC; font-size:10.5px; font-weight:800; padding:2px 6px; border-radius:5px; display:inline-flex; align-items:center; gap:3px;">🏛️ Banka Havalesi</span>`;
+        const senderName = r.customerName || 'Müşteri';
+        const bankTag = this.getBankTag(r.provider || 'KUVEYTTURK');
+        descHtml = `
+          <div style="line-height:1.4;">
+            <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+              <strong style="color:#0369A1; font-size:12.5px;">Banka Havalesi</strong>
+              ${bankTag}
+            </div>
+            <div style="font-size:11.5px; color:#334155; margin-top:2px;">
+              Gönderen: <strong style="color:#0F172A; font-weight:800;">${this.escapeHtml(senderName)}</strong>
+              <span style="font-size:10.5px; font-family:monospace; color:#64748B; margin-left:6px;" title="İşlem No">(${r.orderId})</span>
+            </div>
+          </div>
+        `;
         mainAmountStr = `+${fmt(r.pos)}`;
         mainAmountColor = '#0369A1';
       } else if (isPosSale) {
@@ -4366,6 +4417,11 @@ const AdminApp = {
             <button type="button" class="btn-admin-secondary" style="padding:4px 7px; font-size:11px; font-weight:700; color:#064E3B; border-radius:5px;" onclick="AdminApp.openOrderModal('${r.orderId}')" title="Sipariş detayını görüntüle / yönet">
               ✏️ Düzenle
             </button>
+            ${isEftSale ? `
+              <button type="button" class="btn-admin-secondary" style="padding:4px 6px; font-size:11px; font-weight:800; background:#EFF6FF; border-color:#3B82F6; color:#1D4ED8; border-radius:5px;" onclick="AdminApp.printLegalDocument('${r.orderId}')" title="Banka Havalesi Yasal Dosyası ve Teslimat Taahhütnamesini Aç">
+                📜 Yasal
+              </button>
+            ` : ''}
             <button type="button" style="background:#FEE2E2; border:1px solid #FCA5A5; color:#991B1B; border-radius:5px; padding:4px 7px; font-size:11px; font-weight:800; cursor:pointer;" onclick="AdminApp.deleteOrder('${r.orderId}')" title="Bu siparişi sil">
               🗑️ Sil
             </button>
@@ -4375,6 +4431,11 @@ const AdminApp = {
           <button type="button" class="btn-admin-secondary" style="width:100%; min-height:38px; justify-content:center; font-size:12px; font-weight:800; color:#064E3B; border-radius:7px;" onclick="AdminApp.openOrderModal('${r.orderId}')">
             ✏️ Sipariş Detayını Düzenle
           </button>
+          ${isEftSale ? `
+            <button type="button" class="btn-admin-secondary" style="width:100%; min-height:38px; justify-content:center; font-size:12px; font-weight:800; background:#EFF6FF; border-color:#3B82F6; color:#1D4ED8; border-radius:7px;" onclick="AdminApp.printLegalDocument('${r.orderId}')">
+              📜 Banka Havalesi Yasal Dosyası & Talimatı Aç
+            </button>
+          ` : ''}
           <button type="button" style="min-height:38px; padding:0 12px; background:#FEE2E2; border:1.5px solid #FCA5A5; color:#991B1B; border-radius:7px; font-size:12px; font-weight:800; cursor:pointer;" onclick="AdminApp.deleteOrder('${r.orderId}')" title="Siparişi Sil">
             🗑️ Sil
           </button>
@@ -5426,7 +5487,7 @@ const AdminApp = {
         price: amountVal
       }],
       totalAmount: amountVal,
-      note: refNo ? `${bankDisplay} Dekont No: ${refNo}` : `${bankDisplay} ile tahsil edildi`
+      note: `Banka Havalesi (${bankDisplay}) - Gönderen: ${customerName || 'Müşteri'}${refNo ? ` - Dekont/Ref: ${refNo}` : ''}`
     };
 
     if (btnSubmit) {
@@ -5617,10 +5678,11 @@ const AdminApp = {
       const unitPriceEl = rows[0].querySelector('.edit-item-unit-price');
       const qtyEl = rows[0].querySelector('.edit-item-qty');
       if (priceEl) priceEl.value = val > 0 ? val.toFixed(2) : '';
-      const unitPrice = parseFloat(unitPriceEl?.value) || 0;
-      if (unitPrice > 0 && val > 0 && qtyEl) {
-        const rawQty = val / unitPrice;
-        qtyEl.value = Math.abs(rawQty - Math.round(rawQty)) < 0.0001 ? Math.round(rawQty) : parseFloat(rawQty.toFixed(4));
+      const rawQty = parseFloat(qtyEl?.value);
+      const qty = (rawQty && rawQty > 0) ? Math.max(1, Math.round(rawQty)) : 1;
+      if (qtyEl) qtyEl.value = qty;
+      if (val > 0 && qty > 0 && unitPriceEl) {
+        unitPriceEl.value = (val / qty).toFixed(2);
       }
     }
     this.recalculateEditCustomerTotal();
@@ -5661,18 +5723,24 @@ const AdminApp = {
     currentTotal = Math.round(currentTotal * 100) / 100;
     if (quickTotalInput) quickTotalInput.value = currentTotal.toFixed(2);
 
-    // İlk ürün adını ve birim fiyatını koru
+    // İlk ürün adını ve ADEDİNİ koru (Adet tam sayı olmalı, asla küsuratlı olamaz!)
     let firstProdName = '22 Ayar İşçilikli Altın Bilezik';
-    let savedUnitPrice = 0;
+    let savedQty = 1;
 
     if (rows.length > 0) {
       const candidateName = rows[0].querySelector('.edit-item-name')?.value?.trim();
       if (candidateName && !candidateName.toLowerCase().includes('işçilik')) {
         firstProdName = candidateName;
       }
-      savedUnitPrice = parseFloat(rows[0].querySelector('.edit-item-unit-price')?.value) || 0;
+      const rawQty = parseFloat(rows[0].querySelector('.edit-item-qty')?.value);
+      if (rawQty && rawQty > 0) {
+        savedQty = Math.max(1, Math.round(rawQty));
+      }
     } else if (order && order.productName) {
       firstProdName = order.productName;
+      if (order.qty && parseFloat(order.qty) > 0) {
+        savedQty = Math.max(1, Math.round(parseFloat(order.qty)));
+      }
     }
 
     // Listeyi temizle
@@ -5680,30 +5748,22 @@ const AdminApp = {
 
     if (rate <= 0) {
       // Sadece %0 Özel Matrah Tek Satır
-      let calcQty = 1;
-      if (savedUnitPrice > 0) {
-        const rawQty = currentTotal / savedUnitPrice;
-        calcQty = Math.abs(rawQty - Math.round(rawQty)) < 0.0001 ? Math.round(rawQty) : parseFloat(rawQty.toFixed(4));
-      }
-      this.addEditCustomerItemRow(firstProdName, calcQty, savedUnitPrice > 0 ? savedUnitPrice : currentTotal, currentTotal, 0);
-      this.showToast(`✅ ${this.formatCurrency(currentTotal)} tutarı işçiliksiz tek satır (%0 Özel Matrah) olarak ayarlandı.`);
+      const goldUnitPrice = Math.round((currentTotal / savedQty) * 100) / 100;
+      this.addEditCustomerItemRow(firstProdName, savedQty, goldUnitPrice, currentTotal, 0);
+      this.showToast(`✅ ${this.formatCurrency(currentTotal)} tutarı işçiliksiz tek satır (%0 Özel Matrah, ${savedQty} Adet) olarak ayarlandı.`);
     } else {
       // İşçilik payını ve altın matrahını hesapla (İşçilik toplam tutarın içinde kalır, asla üzerine eklenmez)
       const laborTotal = Math.max(0.01, Math.round(currentTotal * (rate / 100) * 100) / 100);
       const goldTotal = Math.round((currentTotal - laborTotal) * 100) / 100;
 
-      // 1. Satır: Altın Ürünü (%0 Özel Matrah)
-      let calcGoldQty = 1;
-      if (savedUnitPrice > 0) {
-        const rawQty = goldTotal / savedUnitPrice;
-        calcGoldQty = Math.abs(rawQty - Math.round(rawQty)) < 0.0001 ? Math.round(rawQty) : parseFloat(rawQty.toFixed(4));
-      }
-      this.addEditCustomerItemRow(firstProdName, calcGoldQty, savedUnitPrice > 0 ? savedUnitPrice : goldTotal, goldTotal, 0);
+      // 1. Satır: Altın Ürünü (%0 Özel Matrah) — Adet tam sayı korunur, birim fiyat = goldTotal / savedQty
+      const goldUnitPrice = Math.round((goldTotal / savedQty) * 100) / 100;
+      this.addEditCustomerItemRow(firstProdName, savedQty, goldUnitPrice, goldTotal, 0);
 
       // 2. Satır: İşçilik (AGENTS kuralı: açıklama doğrudan ve yalnızca 'İşçilik', %20 KDV)
       this.addEditCustomerItemRow('İşçilik', 1, laborTotal, laborTotal, 20);
 
-      this.showToast(`⚡ %${rate} İşçilik İçeriden Ayrıştırıldı: ${this.formatCurrency(goldTotal)} Altın (%0 Özel Matrah) + ${this.formatCurrency(laborTotal)} İşçilik (%20 KDV) = ${this.formatCurrency(currentTotal)}`);
+      this.showToast(`⚡ %${rate} İşçilik Ayrıştırıldı: ${this.formatCurrency(goldTotal)} Altın (${savedQty} Adet x ${this.formatCurrency(goldUnitPrice)}) + ${this.formatCurrency(laborTotal)} İşçilik = ${this.formatCurrency(currentTotal)}`);
     }
 
     this.recalculateEditCustomerTotal();
@@ -5715,11 +5775,11 @@ const AdminApp = {
 
     const rowDiv = document.createElement('div');
     rowDiv.className = 'edit-item-row';
-    rowDiv.style.cssText = 'display:grid; grid-template-columns: 1fr 75px 105px 115px 145px 30px; gap:6px; align-items:center; background:#FFF; border:1px solid #CBD5E1; border-radius:6px; padding:6px 8px;';
+    rowDiv.style.cssText = 'display:grid; grid-template-columns: 1fr 85px 105px 120px 145px 30px; gap:6px; align-items:center; background:#FFF; border:1px solid #CBD5E1; border-radius:6px; padding:6px 8px;';
 
     const safeName = String(name || '').replace(/"/g, '&quot;');
-    const rawQ = Math.max(0.001, parseFloat(qty) || 1);
-    const q = Math.abs(rawQ - Math.round(rawQ)) < 0.0001 ? Math.round(rawQ) : parseFloat(rawQ.toFixed(4));
+    const rawQ = parseFloat(qty);
+    const q = (rawQ && rawQ > 0) ? Math.max(1, Math.round(rawQ)) : 1;
     const pr = (price !== '' && price !== undefined && price !== null) ? Number(price).toFixed(2) : '';
     const upr = (unitPrice !== '' && unitPrice !== undefined && unitPrice !== null && Number(unitPrice) > 0)
       ? Number(unitPrice).toFixed(2)
@@ -5728,16 +5788,16 @@ const AdminApp = {
 
     rowDiv.innerHTML = `
       <div>
-        <input type="text" class="edit-item-name" value="${safeName}" placeholder="Kalem / Gramaj / Ürün Adı" style="width:100%; border:1px solid #CBD5E1; padding:6px 8px; border-radius:5px; font-size:12px; font-weight:700; color:#0F172A;" oninput="AdminApp.onEditCustomerItemNameChange(this)" required>
+        <input type="text" class="edit-item-name" value="${safeName}" placeholder="Kalem / Ürün Adı" style="width:100%; border:1px solid #CBD5E1; padding:6px 8px; border-radius:5px; font-size:12px; font-weight:700; color:#0F172A;" oninput="AdminApp.onEditCustomerItemNameChange(this)" required>
       </div>
       <div>
-        <input type="number" step="any" min="0.001" class="edit-item-qty" value="${q}" placeholder="Adet" style="width:100%; border:1px solid #CBD5E1; padding:6px 2px; border-radius:5px; font-size:12px; font-weight:800; text-align:center; color:#0F172A;" oninput="AdminApp.onEditCustomerItemQtyChange(this)">
+        <input type="number" step="1" min="1" class="edit-item-qty" value="${q}" placeholder="Adet" style="width:100%; border:2px solid #F59E0B; background:#FEF9C3; padding:6px 2px; border-radius:5px; font-size:12.5px; font-weight:900; text-align:center; color:#78350F;" oninput="AdminApp.onEditCustomerItemQtyChange(this)" title="🟡 MANUEL GİRİŞ: Ürün Adedi (Tam sayı)">
       </div>
       <div>
-        <input type="number" step="0.01" min="0" class="edit-item-unit-price" value="${upr}" placeholder="Birim ₺" style="width:100%; border:1px solid #CBD5E1; padding:6px 4px; border-radius:5px; font-size:12px; font-weight:700; text-align:right; color:#334155;" oninput="AdminApp.onEditCustomerItemUnitPriceChange(this)">
+        <input type="number" step="0.01" min="0" class="edit-item-unit-price" value="${upr}" placeholder="⚡ Otomatik" style="width:100%; border:1.5px solid #94A3B8; background:#F8FAFC; padding:6px 4px; border-radius:5px; font-size:12px; font-weight:800; text-align:right; color:#0F172A;" oninput="AdminApp.onEditCustomerItemUnitPriceChange(this)" title="⚡ OTOMATİK: Tutar / Adet">
       </div>
       <div>
-        <input type="number" step="0.01" min="0" class="edit-item-price" value="${pr}" placeholder="Tutar ₺" style="width:100%; border:1.5px solid #059669; padding:6px 4px; border-radius:5px; font-size:12.5px; font-weight:800; text-align:right; color:#064E3B;" oninput="AdminApp.onEditCustomerItemPriceChange(this)" required>
+        <input type="number" step="0.01" min="0" class="edit-item-price" value="${pr}" placeholder="Tutar ₺" style="width:100%; border:2px solid #F59E0B; background:#FEF9C3; padding:6px 4px; border-radius:5px; font-size:12.5px; font-weight:900; text-align:right; color:#78350F;" oninput="AdminApp.onEditCustomerItemPriceChange(this)" title="🟡 MANUEL GİRİŞ: Kalem Tutarı" required>
       </div>
       <div>
         <select class="edit-item-kdv" style="width:100%; border:1.5px solid ${isVat20 ? '#059669' : '#CBD5E1'}; padding:5px 2px; border-radius:5px; font-size:11px; font-weight:700; color:#0F172A; background:#FFF;" onchange="AdminApp.recalculateEditCustomerTotal()">
@@ -5820,13 +5880,23 @@ const AdminApp = {
   onEditCustomerItemQtyChange(input) {
     const row = input.closest('.edit-item-row');
     if (!row) return;
-    const qty = Math.max(0.001, parseFloat(input.value) || 1);
+    const rawQty = parseFloat(input.value);
+    const qty = (rawQty && rawQty > 0) ? Math.max(1, Math.round(rawQty)) : 1;
+    if (input.value && rawQty && Math.abs(rawQty - qty) > 0.0001) {
+      input.value = qty;
+    }
     const unitPriceEl = row.querySelector('.edit-item-unit-price');
     const priceEl = row.querySelector('.edit-item-price');
-    const unitPrice = parseFloat(unitPriceEl?.value) || 0;
-    // Kullanıcı adeti elle değiştirdiğinde, birim fiyat varsa Tutar = Adet x Birim Fiyat
-    if (unitPrice > 0 && priceEl) {
-      priceEl.value = (unitPrice * qty).toFixed(2);
+    const currentPrice = parseFloat(priceEl?.value) || 0;
+
+    // KULLANICI KURALI: Adet ve Fatura Tutarı girildiğinde Birim Fiyat otomatik hesaplanır!
+    if (currentPrice > 0 && qty > 0) {
+      if (unitPriceEl) unitPriceEl.value = (currentPrice / qty).toFixed(2);
+    } else {
+      const unitPrice = parseFloat(unitPriceEl?.value) || 0;
+      if (unitPrice > 0 && priceEl) {
+        priceEl.value = (unitPrice * qty).toFixed(2);
+      }
     }
     this.recalculateEditCustomerTotal();
   },
@@ -5839,17 +5909,15 @@ const AdminApp = {
     const qtyEl = row.querySelector('.edit-item-qty');
     const currentPrice = parseFloat(priceEl?.value) || 0;
 
-    // KULLANICI KURALI: Tutar girilmişse (örn: 1.150.000 TL), Birim Fiyat girildiğinde
-    // Adet = Tutar / Birim Fiyat olarak otomatik hesaplanır. Tutar bozulmaz ve sabit kalır!
+    // KULLANICI KURALI: Birim Fiyat girilirse, Adet'in küsuratlı çıkmasını ENGELEMEK için:
+    // Adet tam sayıya yuvarlanır (Math.round) ve Tutar tam eşleşir
     if (currentPrice > 0 && unitPrice > 0) {
-      const rawQty = currentPrice / unitPrice;
-      const isNearInt = Math.abs(rawQty - Math.round(rawQty)) < 0.0001;
-      const formattedQty = isNearInt ? Math.round(rawQty) : parseFloat(rawQty.toFixed(4));
-      if (qtyEl) {
-        qtyEl.value = formattedQty;
-      }
+      const targetQty = Math.max(1, Math.round(currentPrice / unitPrice));
+      if (qtyEl) qtyEl.value = targetQty;
+      input.value = (currentPrice / targetQty).toFixed(2);
     } else if (unitPrice > 0 && (!currentPrice || currentPrice === 0)) {
-      const currentQty = Math.max(0.001, parseFloat(qtyEl?.value) || 1);
+      const rawQ = parseFloat(qtyEl?.value);
+      const currentQty = (rawQ && rawQ > 0) ? Math.max(1, Math.round(rawQ)) : 1;
       if (priceEl) {
         priceEl.value = (unitPrice * currentQty).toFixed(2);
       }
@@ -5863,19 +5931,12 @@ const AdminApp = {
     const price = parseFloat(input.value) || 0;
     const unitPriceEl = row.querySelector('.edit-item-unit-price');
     const qtyEl = row.querySelector('.edit-item-qty');
-    const unitPrice = parseFloat(unitPriceEl?.value) || 0;
+    const rawQ = parseFloat(qtyEl?.value);
+    const qty = (rawQ && rawQ > 0) ? Math.max(1, Math.round(rawQ)) : 1;
 
-    // Eğer Birim Fiyat girilmişse ve Tutar değişirse -> Adet'i güncelle
-    if (unitPrice > 0 && price > 0) {
-      const rawQty = price / unitPrice;
-      const isNearInt = Math.abs(rawQty - Math.round(rawQty)) < 0.0001;
-      const formattedQty = isNearInt ? Math.round(rawQty) : parseFloat(rawQty.toFixed(4));
-      if (qtyEl) qtyEl.value = formattedQty;
-    } else {
-      const qty = Math.max(0.001, parseFloat(qtyEl?.value) || 1);
-      if (unitPriceEl && qty > 0 && price > 0) {
-        unitPriceEl.value = (price / qty).toFixed(2);
-      }
+    // KULLANICI KURALI: Tutar girildiğinde Adet tam sayı olarak kalır, Birim Fiyat otomatik hesaplanır
+    if (qty > 0 && price > 0 && unitPriceEl) {
+      unitPriceEl.value = (price / qty).toFixed(2);
     }
     this.recalculateEditCustomerTotal();
   },
@@ -6253,7 +6314,12 @@ const AdminApp = {
       const posVal = r.pos > 0 ? fmt(r.pos) : '—';
       const hakVal = r.hakedis > 0 ? fmt(r.hakedis) : '—';
       const payVal = r.paid > 0 ? fmt(r.paid) : '—';
-      const descVal = r.description || '';
+      const isEft = r.type === 'EFT_SALE' || Boolean(r.isManualEft) || r.paymentMethod === 'HAVALE_EFT' || (r.id && String(r.id).startsWith('BLG-EFT-'));
+      const bankDisplay = this.getBankName(r.provider || 'KUVEYTTURK');
+      const senderName = r.customerName || 'Müşteri';
+      const descVal = isEft 
+        ? `Banka Havalesi (${bankDisplay}) - Gönderen: ${senderName} (${r.orderId || r.id})`
+        : (r.description || '');
 
       let rateVal = '—';
       let profitVal = '—';
@@ -6264,7 +6330,6 @@ const AdminApp = {
         profitVal = fmt(profit);
       }
 
-      const isEft = r.type === 'EFT_SALE' || Boolean(r.isManualEft) || r.paymentMethod === 'HAVALE_EFT';
       const unlockInfo = (r.pos > 0 && !isEft) ? this.getPosUnlockInfo(r.date) : null;
       const blokeExcelVal = isEft ? 'Hesapta (Bloke Yok)' : (unlockInfo ? (unlockInfo.isUnlocked ? `Hesaba Geçti (${unlockInfo.unlockDateFormatted})` : `Blokeli (${unlockInfo.unlockDateFormatted})`) : '—');
 
@@ -6382,8 +6447,13 @@ const AdminApp = {
             ${dateFormatted}
           </td>
           <td style="padding: 7px 9px; text-align: left; font-size: 11px; color: #0F172A;">
-            <div style="font-weight: 700;">${this.escapeHtml(r.description || 'İşlem')}</div>
-            ${r.customerName && (r.type === 'POS_SALE' || r.type === 'EFT_SALE') ? `<div style="font-size: 10px; color: #64748B; margin-top:2px;">Müşteri: <strong>${this.escapeHtml(r.customerName)}</strong> ${this.getBankTag(r.provider || 'KUVEYTTURK')}</div>` : ''}
+            ${(r.type === 'EFT_SALE' || Boolean(r.isManualEft) || r.paymentMethod === 'HAVALE_EFT' || (r.id && String(r.id).startsWith('BLG-EFT-'))) ? `
+              <div style="font-weight: 700; color: #0369A1;">Banka Havalesi ${this.getBankTag(r.provider || 'KUVEYTTURK')}</div>
+              <div style="font-size: 10px; color: #334155; margin-top:2px;">Gönderen: <strong>${this.escapeHtml(r.customerName || 'Müşteri')}</strong> <span style="color:#64748B;">(${r.orderId || r.id})</span></div>
+            ` : `
+              <div style="font-weight: 700;">${this.escapeHtml(r.description || 'İşlem')}</div>
+              ${r.customerName && r.type === 'POS_SALE' ? `<div style="font-size: 10px; color: #64748B; margin-top:2px;">Müşteri: <strong>${this.escapeHtml(r.customerName)}</strong> ${this.getBankTag(r.provider || 'KUVEYTTURK')}</div>` : ''}
+            `}
           </td>
           <td style="padding: 7px 9px; text-align: right; font-weight: 700; font-size: 11px; color: #1E293B;">
             ${posVal}
@@ -6865,7 +6935,7 @@ const AdminApp = {
   // MAĞAZA YASAL DOKÜMANTASYON & HUKUKİ EVRAK İNDİRME / YAZDIRMA
   printStoreFormDoc(docType = 'delivery-tutanak', targetOrderId = null) {
     let orderId = targetOrderId || this.editingStoreOrderId;
-    const adminKey = this.adminPin || sessionStorage.getItem('belgin_admin_pin') || localStorage.getItem('belgin_admin_pin') || '1999';
+    const adminKey = this.adminPin || sessionStorage.getItem('belgin_admin_pin') || localStorage.getItem('belgin_admin_pin') || '';
 
     let invoiceData = null;
     if (orderId) {
@@ -6878,11 +6948,15 @@ const AdminApp = {
     const posProvider = invoiceData?.posProvider || document.getElementById('storePosProvider')?.value || 'KUVEYT_TURK';
 
     if (!invoiceData) {
-      const custName = (document.getElementById('storeCustomerName')?.value || '').trim() || 'Bireysel Mağaza Müşterisi';
-      const custIdentity = (document.getElementById('storeCustomerIdentity')?.value || '').trim();
-      const custPhone = (document.getElementById('storeCustomerPhone')?.value || '').trim();
-      const custCity = (document.getElementById('storeCustomerCity')?.value || '').trim() || 'İzmir';
-      const custAddress = (document.getElementById('storeCustomerAddress')?.value || '').trim() || 'Menderes Cad. No:231/B Buca / İzmir';
+      const custName = ((document.getElementById('storeCustName') || document.getElementById('storeCustomerName'))?.value || '').trim() || 'Bireysel Mağaza Müşterisi';
+      const custIdentity = ((document.getElementById('storeCustIdentity') || document.getElementById('storeCustomerIdentity'))?.value || '').trim();
+      const custPhone = ((document.getElementById('storeCustPhone') || document.getElementById('storeCustomerPhone'))?.value || '').trim();
+      const custCity = ((document.getElementById('storeCustomerCity'))?.value || '').trim() || 'İzmir';
+      const custAddress = ((document.getElementById('storeCustAddress') || document.getElementById('storeCustomerAddress'))?.value || '').trim() || 'Menderes Cad. No:231/B Buca / İzmir';
+      const custEmail = ((document.getElementById('storeCustEmail') || document.getElementById('storeCustomerEmail'))?.value || '').trim();
+      const cleanDigits = custIdentity.replace(/\D/g, '');
+      const isVkn = cleanDigits.length === 10;
+      const isTckn = cleanDigits.length === 11;
       const summary = (typeof this.calculateStoreInvoiceLiveSummary === 'function') ? this.calculateStoreInvoiceLiveSummary() : { grandTotal: 0 };
       const grandTotal = summary.grandTotal || 0;
 
@@ -6911,16 +6985,21 @@ const AdminApp = {
         orderId: orderId,
         id: orderId,
         customerName: custName,
-        customerIdentity: custIdentity,
+        customerIdentity: custIdentity || (payMethod === 'HAVALE_EFT' ? 'BANKA_HESABI_TEYITLI' : '11111111111'),
+        vkn: isVkn ? cleanDigits : null,
+        taxNumber: isVkn ? cleanDigits : null,
+        tckn: isTckn ? cleanDigits : null,
         customerPhone: custPhone,
         customerCity: custCity,
         customerAddress: custAddress,
+        customerEmail: custEmail,
         totalAmount: grandTotal,
         paymentMethod: payMethod,
         paymentChannel: payMethod,
         bankName: payMethod === 'HAVALE_EFT' ? bankName : null,
         receiptNo: payMethod === 'HAVALE_EFT' ? receiptNo : null,
         posProvider: payMethod === 'KREDI_KARTI' ? posProvider : null,
+        provider: payMethod === 'KREDI_KARTI' ? posProvider : (payMethod === 'HAVALE_EFT' ? bankName : 'NAKIT'),
         items: items,
         productName: items.map(i => i.name).join(', '),
         deliveryMethod: 'showroom',
@@ -7928,13 +8007,49 @@ const AdminApp = {
       }
       this.storeItems[idx].kdvRate = newRate;
     } else if (field === 'qty') {
-      this.storeItems[idx].qty = Math.max(1, parseInt(val, 10) || 1);
-      const p = Number(this.storeItems[idx].unitPrice || 0);
-      this.storeItems[idx].lineTotal = Math.round(this.storeItems[idx].qty * p * 100) / 100;
+      const q = Math.max(1, parseInt(val, 10) || 1);
+      this.storeItems[idx].qty = q;
+      // Adet değiştirildiğinde: Eğer kullanıcı satır tutarını sabitlemişse Birim Fiyatı tekrar hesapla, aksi halde Satır Tutarını güncelle
+      if (this.storeItems[idx]._lastEdited === 'lineTotal' && Number(this.storeItems[idx].lineTotal) > 0) {
+        const tot = Number(this.storeItems[idx].lineTotal);
+        const p = Math.round((tot / q) * 100) / 100;
+        this.storeItems[idx].unitPrice = p;
+        const unitEl = document.getElementById(`storeItemUnitPrice_${idx}`);
+        if (unitEl && document.activeElement !== unitEl) {
+          unitEl.value = p;
+        }
+      } else {
+        const p = Number(this.storeItems[idx].unitPrice || 0);
+        const lineTot = Math.round(q * p * 100) / 100;
+        this.storeItems[idx].lineTotal = lineTot;
+        const lineTotEl = document.getElementById(`storeItemLineTotal_${idx}`);
+        if (lineTotEl && document.activeElement !== lineTotEl) {
+          lineTotEl.value = lineTot;
+        }
+      }
     } else if (field === 'unitPrice') {
-      this.storeItems[idx].unitPrice = Math.max(0, parseFloat(val) || 0);
-      const q = Number(this.storeItems[idx].qty || 1);
-      this.storeItems[idx].lineTotal = Math.round(q * this.storeItems[idx].unitPrice * 100) / 100;
+      this.storeItems[idx]._lastEdited = 'unitPrice';
+      const p = Math.max(0, parseFloat(val) || 0);
+      this.storeItems[idx].unitPrice = p;
+      const q = Math.max(1, Number(this.storeItems[idx].qty || 1));
+      const lineTot = Math.round(q * p * 100) / 100;
+      this.storeItems[idx].lineTotal = lineTot;
+      const lineTotEl = document.getElementById(`storeItemLineTotal_${idx}`);
+      if (lineTotEl && document.activeElement !== lineTotEl) {
+        lineTotEl.value = lineTot;
+      }
+    } else if (field === 'lineTotal') {
+      this.storeItems[idx]._lastEdited = 'lineTotal';
+      const lineTot = Math.max(0, parseFloat(val) || 0);
+      this.storeItems[idx].lineTotal = lineTot;
+      const q = Math.max(1, Number(this.storeItems[idx].qty || 1));
+      // Adet ve Fatura Tutarı girildiğinde Birim Fiyatı kuruş hatası olmaksızın tam hesapla!
+      const p = Math.round((lineTot / q) * 100) / 100;
+      this.storeItems[idx].unitPrice = p;
+      const unitEl = document.getElementById(`storeItemUnitPrice_${idx}`);
+      if (unitEl && document.activeElement !== unitEl) {
+        unitEl.value = p;
+      }
     }
 
     const q = Number(this.storeItems[idx].qty || 1);
@@ -7949,10 +8064,6 @@ const AdminApp = {
     this.storeItems[idx].lineTotal = lineTot;
     this.storeItems[idx].kdvAmount = kdvAmt;
 
-    const lineTotalEl = document.getElementById(`storeItemLineTotal_${idx}`);
-    if (lineTotalEl) {
-      lineTotalEl.textContent = '₺' + lineTot.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    }
     const kdvAmountEl = document.getElementById(`storeItemKdvAmount_${idx}`);
     if (kdvAmountEl) {
       kdvAmountEl.textContent = '₺' + kdvAmt.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -7975,14 +8086,18 @@ const AdminApp = {
                  oninput="AdminApp.updateStoreItem(${idx}, 'name', this.value)" required>
         </td>
         <td style="text-align:center;">
-          <input type="number" min="1" step="1" class="form-field-input" style="padding:6px 4px; font-size:12px; width:60px; text-align:center; font-weight:700;" 
+          <input type="number" min="1" step="1" id="storeItemQty_${idx}" class="form-field-input" 
+                 style="padding:6px 4px; font-size:12px; width:60px; text-align:center; font-weight:800; background:#FEF9C3; border:1.5px solid #F59E0B; color:#78350F; border-radius:6px;" 
                  value="${item.qty || 1}" 
+                 title="Adet (Manuel Giriş)"
                  oninput="AdminApp.updateStoreItem(${idx}, 'qty', this.value)" required>
         </td>
         <td style="text-align:right;">
-          <input type="number" min="0" step="0.01" class="form-field-input" style="padding:6px 6px; font-size:12px; width:110px; text-align:right; font-weight:700;" 
-                 value="${item.unitPrice || ''}" 
+          <input type="number" min="0" step="0.01" id="storeItemUnitPrice_${idx}" class="form-field-input" 
+                 style="padding:6px 6px; font-size:12px; width:115px; text-align:right; font-weight:800; background:#FEF9C3; border:1.5px solid #F59E0B; color:#78350F; border-radius:6px;" 
+                 value="${item.unitPrice !== undefined && item.unitPrice !== null ? item.unitPrice : ''}" 
                  placeholder="0.00" 
+                 title="Birim Fiyat (Manuel yazılabilir veya Fatura Tutarı / Adet ile otomatik hesaplanır)"
                  oninput="AdminApp.updateStoreItem(${idx}, 'unitPrice', this.value)" required>
         </td>
         <td style="text-align:center;">
@@ -7999,8 +8114,13 @@ const AdminApp = {
         <td style="text-align:right; font-weight:700; font-size:12px; color:#0284C7;" id="storeItemKdvAmount_${idx}">
           ₺${Number(item.kdvAmount || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
         </td>
-        <td style="text-align:right; font-weight:800; font-size:12.5px; color:#047857;" id="storeItemLineTotal_${idx}">
-          ₺${Number(item.lineTotal || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+        <td style="text-align:right;">
+          <input type="number" min="0" step="0.01" id="storeItemLineTotal_${idx}" class="form-field-input" 
+                 style="padding:6px 6px; font-size:12.5px; width:125px; text-align:right; font-weight:800; background:#FEF9C3; border:1.5px solid #F59E0B; color:#78350F; border-radius:6px;" 
+                 value="${item.lineTotal !== undefined && item.lineTotal !== null ? item.lineTotal : ''}" 
+                 placeholder="0.00" 
+                 title="Satır Tutarı (Fatura Tutarını buraya yazabilirsiniz, Adete bölünerek Birim Fiyat anında hesaplanır)"
+                 oninput="AdminApp.updateStoreItem(${idx}, 'lineTotal', this.value)" required>
         </td>
         <td style="text-align:center;">
           <button type="button" style="background:none; border:none; color:#DC2626; font-size:15px; cursor:pointer; padding:4px;" 
@@ -8096,10 +8216,11 @@ const AdminApp = {
 
   // 2. MAĞAZA FATURASI KAYDETME (TASLAK VEYA ANINDA GİB SMS)
   async submitStoreInvoice(autoStartGibSms = false) {
-    const name = (document.getElementById('storeCustName')?.value || '').trim();
-    let identity = (document.getElementById('storeCustIdentity')?.value || '').trim().replace(/\D/g, '');
+    const name = ((document.getElementById('storeCustName') || document.getElementById('storeCustomerName'))?.value || '').trim();
+    let rawIdentity = ((document.getElementById('storeCustIdentity') || document.getElementById('storeCustomerIdentity'))?.value || '').trim();
+    let identity = rawIdentity.replace(/\D/g, '');
     if (identity.length !== 10 && identity.length !== 11) {
-      identity = '11111111111';
+      identity = identity || '11111111111';
     }
     const date = (document.getElementById('storeInvoiceDate')?.value || '').trim();
     const address = (document.getElementById('storeCustAddress')?.value || '').trim();
@@ -8178,6 +8299,9 @@ const AdminApp = {
     const receiptNo = (document.getElementById('storeReceiptNo')?.value || '').trim();
     const posProvider = document.getElementById('storePosProvider')?.value || 'KUVEYT_TURK';
 
+    const isVkn = identity.length === 10;
+    const isTckn = identity.length === 11;
+
     const invoiceDoc = {
       orderId: invoiceId,
       id: invoiceId,
@@ -8185,6 +8309,9 @@ const AdminApp = {
       source: 'STORE_MANUAL',
       customerName: name,
       customerIdentity: identity,
+      vkn: isVkn ? identity : null,
+      taxNumber: isVkn ? identity : null,
+      tckn: isTckn ? identity : null,
       invoiceDate: date,
       customerAddress: address || 'Menderes Cad. No:231/B Buca İzmir',
       customerPhone: phone,

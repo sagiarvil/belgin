@@ -3034,8 +3034,8 @@
 
                 <div class="form-field-group">
                   <label class="form-field-label" for="storeCustIdentity" style="color:#1E293B; font-weight:800;">TCKN / VKN: *</label>
-                  <input type="text" id="storeCustIdentity" class="form-field-input" placeholder="11 haneli TCKN veya 10 haneli VKN" maxlength="11" value="11111111111" style="font-weight:700; color:#0F172A; font-family:monospace;" required>
-                  <span style="font-size:10.5px; color:#475569; font-weight:600; margin-top:2px;">ℹ️ TC bilinmiyorsa <b>11111111111</b> kalabilir.</span>
+                  <input type="text" id="storeCustIdentity" class="form-field-input" placeholder="11 haneli TCKN veya 10 haneli VKN" maxlength="11" style="font-weight:700; color:#0F172A; font-family:monospace;" required>
+                  <span style="font-size:10.5px; color:#475569; font-weight:600; margin-top:2px;">ℹ️ Bireysel TCKN (11 hane), Kurumsal Vergi No (10 hane) veya Nihai Tüketici için <b>11111111111</b> giriniz.</span>
                 </div>
 
                 <div class="form-field-group">
@@ -3269,7 +3269,7 @@
                     <label style="display:block; font-size:11.5px; font-weight:800; color:#0F172A; margin-bottom:4px; text-align:center;" for="freeItemQty">
                       2. Adet: *
                     </label>
-                    <input type="number" id="freeItemQty" min="1" step="1" value="1" class="form-field-input" style="font-size:13.5px; font-weight:800; text-align:center; color:#3730A3; background:#EEF2FF; border:1.5px solid #818CF8; border-radius:6px; width:100%;" oninput="AdminApp.handleFreeItemChange()">
+                    <input type="number" id="freeItemQty" min="1" step="1" value="1" class="form-field-input" style="font-size:13.5px; font-weight:800; text-align:center; color:#78350F; background:#FEF9C3; border:1.5px solid #F59E0B; border-radius:6px; width:100%;" oninput="AdminApp.handleFreeItemChange()">
                   </div>
                 </div>
 
@@ -3281,8 +3281,8 @@
                       3. Fatura Tutarı (₺): *
                     </label>
                     <div style="position:relative;">
-                      <input type="text" id="freeItemPrice" class="form-field-input" placeholder="Örn: 96.000 veya 96000" style="font-size:14px; font-weight:800; color:#0369A1; padding-left:26px; border:2px solid #0284C7; width:100%;" oninput="AdminApp.handleFreeItemChange()">
-                      <span style="position:absolute; left:8px; top:50%; transform:translateY(-50%); font-weight:800; color:#0284C7; font-size:14px;">₺</span>
+                      <input type="text" id="freeItemPrice" class="form-field-input" placeholder="Örn: 96.000 veya 96000" style="font-size:14px; font-weight:800; color:#78350F; padding-left:26px; border:2px solid #F59E0B; background:#FEF9C3; width:100%;" oninput="AdminApp.handleFreeItemChange()">
+                      <span style="position:absolute; left:8px; top:50%; transform:translateY(-50%); font-weight:800; color:#B45309; font-size:14px;">₺</span>
                     </div>
                   </div>
 
@@ -3450,11 +3450,11 @@
                     <tr style="background:#F1F5F4;">
                       <th style="width:36px; text-align:center; color:#042A27; font-weight:800;">#</th>
                       <th style="text-align:left; color:#042A27; font-weight:800;">Ürün / Hizmet Açıklaması</th>
-                      <th style="width:75px; text-align:center; color:#042A27; font-weight:800;">Adet</th>
-                      <th style="width:130px; text-align:right; color:#042A27; font-weight:800;">Birim Fiyat (₺)</th>
+                      <th style="width:75px; text-align:center; color:#92400E; font-weight:800; background:#FEF3C7; border-bottom:2px solid #F59E0B;" title="Adet (Manuel Değiştirilebilir)">Adet ✏️</th>
+                      <th style="width:130px; text-align:right; color:#92400E; font-weight:800; background:#FEF3C7; border-bottom:2px solid #F59E0B;" title="Birim Fiyat (Manuel Giriş veya Otomatik Hesaplama)">Birim Fiyat (₺) ⚡/✏️</th>
                       <th style="width:115px; text-align:center; color:#042A27; font-weight:800;">KDV (%)</th>
                       <th style="width:120px; text-align:right; color:#042A27; font-weight:800;">KDV (₺)</th>
-                      <th style="width:130px; text-align:right; color:#042A27; font-weight:800;">Satır Toplamı (₺)</th>
+                      <th style="width:145px; text-align:right; color:#92400E; font-weight:800; background:#FEF3C7; border-bottom:2px solid #F59E0B;" title="Fatura Tutarını buraya yazabilirsiniz, Adete bölünerek Birim Fiyat anında hesaplanır">Satır Tutarı (₺) ⚡/✏️</th>
                       <th style="width:40px; text-align:center; color:#042A27; font-weight:800;">Sil</th>
                     </tr>
                   </thead>
@@ -4856,9 +4856,9 @@
         <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:10px; margin-bottom:10px;">
           <div>
             <label style="display:block; font-size:11px; font-weight:700; color:#475569; margin-bottom:2px;">
-              Müşteri Adı Soyadı: *
+              Müşteri / Gönderen Adı Soyadı: *
             </label>
-            <input type="text" id="manualEftCustomerName" required placeholder="Örn: Ahmet Yılmaz" style="width:100%; border:1px solid #CBD5E1; padding:8px 10px; border-radius:6px; font-size:12.5px; font-weight:700; color:#0F172A;">
+            <input type="text" id="manualEftCustomerName" required placeholder="Örn: Ahmet Yılmaz (Gönderen Kişi / Şirket)" style="width:100%; border:1px solid #CBD5E1; padding:8px 10px; border-radius:6px; font-size:12.5px; font-weight:700; color:#0F172A;">
           </div>
           <div>
             <label style="display:block; font-size:11px; font-weight:700; color:#475569; margin-bottom:2px;">
@@ -5097,21 +5097,22 @@
           </div>
         </div>
 
-        <!-- 💰 EFT / TAHSİLAT TUTARI & İŞÇİLİK KESİNTİSİ PANELİ -->
-        <div style="display:grid; grid-template-columns: 1.3fr 1fr; gap:10px; margin-bottom:12px; background:#FFF; border:1.5px solid #86EFAC; padding:10px 14px; border-radius:8px; align-items:center;">
+        <!-- 🟡 EFT / TAHSİLAT TUTARI & İŞÇİLİK KESİNTİSİ PANELİ (MANUEL GİRİŞ) -->
+        <div style="display:grid; grid-template-columns: 1.3fr 1fr; gap:10px; margin-bottom:12px; background:#FEF9C3; border:2px solid #F59E0B; padding:10px 14px; border-radius:8px; align-items:center; box-shadow:0 1px 4px rgba(245,158,11,0.15);">
           <div>
-            <label style="display:block; font-size:11px; font-weight:800; color:#064E3B; margin-bottom:3px;">
-              EFT / Havale / Fatura Toplam Tutarı (₺):
+            <label style="display:flex; align-items:center; gap:6px; font-size:11.5px; font-weight:900; color:#78350F; margin-bottom:4px;">
+              <span>🟡 MANUEL GİRİŞ: Fatura / Havale Toplam Tutarı (₺):</span>
+              <span style="background:#F59E0B; color:#FFF; font-size:9.5px; padding:1px 6px; border-radius:4px; font-weight:900;">MANUEL ALAN</span>
             </label>
             <div style="display:flex; gap:6px; align-items:center;">
-              <input type="number" id="editCustomerQuickTotal" step="0.01" min="0" placeholder="Örn: 1150000" style="width:100%; border:1.5px solid #059669; padding:7px 10px; border-radius:6px; font-size:13.5px; font-weight:900; color:#064E3B; font-family:monospace;" oninput="AdminApp.onEditCustomerQuickTotalChange(this)">
-              <button type="button" onclick="AdminApp.autoApplyLaborSplit(1.5)" style="white-space:nowrap; background:#065F46; color:#FFF; border:none; padding:7px 12px; border-radius:6px; font-size:11px; font-weight:800; cursor:pointer;" title="%1.5 İşçiliği tutar içinden keser">
+              <input type="number" id="editCustomerQuickTotal" step="0.01" min="0" placeholder="Örn: 1150000" style="width:100%; border:2px solid #D97706; background:#FEF08A; padding:7px 10px; border-radius:6px; font-size:14px; font-weight:900; color:#78350F; font-family:monospace;" oninput="AdminApp.onEditCustomerQuickTotalChange(this)" title="🟡 MANUEL GİRİŞ: Fatura tutarını buraya giriniz">
+              <button type="button" onclick="AdminApp.autoApplyLaborSplit(1.5)" style="white-space:nowrap; background:#065F46; color:#FFF; border:none; padding:7px 12px; border-radius:6px; font-size:11px; font-weight:800; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.15);" title="%1.5 İşçiliği tutar içinden keser">
                 ⚡ %1,5 Ayır
               </button>
             </div>
-            <div style="font-size:10px; color:#475569; margin-top:2px;">Gelen ödeme tutarını girip birim fiyatı yazarak adeti otomatik hesaplatabilirsiniz.</div>
+            <div style="font-size:10px; color:#92400E; margin-top:3px; font-weight:700;">💡 Fatura tutarını ve satırdaki <strong>Adet</strong>'i girdiğinizde sistem <strong>Birim Fiyat</strong>'ı otomatik hesaplar (Adet asla küsuratlı çıkmaz).</div>
           </div>
-          <div style="display:flex; flex-direction:column; justify-content:center; align-items:flex-end; border-left:1px dashed #CBD5E1; padding-left:12px;">
+          <div style="display:flex; flex-direction:column; justify-content:center; align-items:flex-end; border-left:1px dashed #D97706; padding-left:12px;">
             <div style="font-size:10.5px; font-weight:700; color:#64748B;">Kalemler Genel Toplamı:</div>
             <div id="editCustomerLiveTotalBadge" style="font-size:17px; font-weight:900; color:#064E3B; font-family:monospace;">₺0,00</div>
             <div id="editCustomerDiffBadge" style="font-size:10.5px; font-weight:700; color:#059669;">Tam Uyumlu ✅</div>
@@ -5142,11 +5143,11 @@
         </div>
 
         <!-- Kalemler Tablo Başlıkları -->
-        <div style="display:grid; grid-template-columns: 1fr 75px 105px 115px 145px 30px; gap:6px; font-size:10px; font-weight:800; color:#334155; text-transform:uppercase; padding:0 8px 4px;">
+        <div style="display:grid; grid-template-columns: 1fr 85px 105px 120px 145px 30px; gap:6px; font-size:10px; font-weight:800; color:#334155; text-transform:uppercase; padding:0 8px 4px;">
           <span>Ürün / Kalem Açıklaması</span>
-          <span style="text-align:center;">Adet</span>
-          <span style="text-align:right;">Birim (₺)</span>
-          <span style="text-align:right;">Tutar (₺)</span>
+          <span style="text-align:center; background:#FEF9C3; border:1px solid #F59E0B; border-radius:4px; padding:2px 0; color:#92400E;">🟡 ADET (MANUEL)</span>
+          <span style="text-align:right; background:#F1F5F9; border:1px solid #CBD5E1; border-radius:4px; padding:2px 4px; color:#475569;">⚡ BİRİM (OTO)</span>
+          <span style="text-align:right; background:#FEF9C3; border:1px solid #F59E0B; border-radius:4px; padding:2px 4px; color:#92400E;">🟡 TUTAR (MANUEL)</span>
           <span style="text-align:center;">KDV / Vergi Tipi</span>
           <span></span>
         </div>

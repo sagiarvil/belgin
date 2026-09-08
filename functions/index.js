@@ -1869,23 +1869,28 @@ async function handleStoreInvoicesRequest(req, res) {
         orderId: customOrderId,
         id: customId,
         invoiceId: customInvoiceId,
+        paymentMethod,
+        paymentChannel,
+        bankName,
+        receiptNo,
+        posProvider,
+        provider,
+        vkn,
+        taxNumber,
+        tckn,
         createdAt: clientCreatedAt,
         updatedAt: clientUpdatedAt
       } = req.body || {};
 
       const cleanName = String(customerName || 'Nihai Tüketici').trim();
-      let rawId = String(customerIdentity || '11111111111').replace(/\D/g, '');
-      const cleanIdentity = (rawId.length === 10 || rawId.length === 11) ? rawId : '11111111111';
+      let rawId = String(customerIdentity || vkn || taxNumber || tckn || '11111111111').replace(/\D/g, '');
+      const cleanIdentity = (rawId.length === 10 || rawId.length === 11) ? rawId : (rawId || '11111111111');
+      const isVkn = cleanIdentity.length === 10;
+      const isTckn = cleanIdentity.length === 11;
       const cleanAddress = String(customerAddress || 'Menderes Cad. No:231/B Buca İzmir').trim();
       const cleanPhone = String(customerPhone || '').trim();
       const cleanEmail = String(customerEmail || '').trim();
       const cleanDate = String(invoiceDate || new Date().toISOString().slice(0, 10)).trim();
-      const rawDoc = declarationDoc || identityDoc || (existingDoc?.exists ? existingDoc.data().declarationDoc : null) || null;
-      let cleanDeclarationDoc = rawDoc;
-      if (typeof cleanDeclarationDoc === 'string' && cleanDeclarationDoc.length > 700000) {
-        // Firestore 1MB sınırını korumak için 700KB üzeri base64 belgeleri sunucuda doküman içine doğrudan gömmüyoruz
-        cleanDeclarationDoc = '[ATTACHED_LOCALLY_CLIENT_DOC]';
-      }
 
       const itemsList = Array.isArray(items) && items.length > 0 ? items : [
         { name: '22 Ayar Altın / Mücevherat', qty: 1, unitPrice: Number(totalAmount || 0), lineTotal: Number(totalAmount || 0) }
@@ -1901,11 +1906,23 @@ async function handleStoreInvoicesRequest(req, res) {
       const randPart = Math.floor(1000 + Math.random() * 9000);
       const invoiceId = customOrderId || customInvoiceId || customId || `MGS-${datePart}-${randPart}`;
 
+      const storeRef = db.collection('storeInvoices').doc(invoiceId);
+      const existingDoc = await storeRef.get();
+
+      const rawDoc = declarationDoc || identityDoc || (existingDoc.exists ? existingDoc.data().declarationDoc : null) || null;
+      let cleanDeclarationDoc = rawDoc;
+      if (typeof cleanDeclarationDoc === 'string' && cleanDeclarationDoc.length > 700000) {
+        // Firestore 1MB sınırını korumak için 700KB üzeri base64 belgeleri sunucuda doküman içine doğrudan gömmüyoruz
+        cleanDeclarationDoc = '[ATTACHED_LOCALLY_CLIENT_DOC]';
+      }
+
       const itemsSummary = itemsList.map(i => `${i.name || 'Ürün'} (x${i.qty || 1})`).join(', ');
       const breakdown = calculateJewelryInvoiceBreakdown(rawTotal, itemsSummary, { items: itemsList, isStoreManual: true });
 
-      const storeRef = db.collection('storeInvoices').doc(invoiceId);
-      const existingDoc = await storeRef.get();
+      const resolvedPayMethod = String(paymentMethod || paymentChannel || (existingDoc.exists ? existingDoc.data().paymentMethod : 'HAVALE_EFT')).toUpperCase();
+      const resolvedBankName = bankName || (existingDoc.exists ? existingDoc.data().bankName : (resolvedPayMethod === 'HAVALE_EFT' ? 'Kuveyt Türk Katılım Bankası A.Ş.' : null));
+      const resolvedReceiptNo = receiptNo || (existingDoc.exists ? existingDoc.data().receiptNo : null);
+      const resolvedProvider = provider || (resolvedPayMethod === 'KREDI_KARTI' ? (posProvider || 'AKBANK_POS') : (resolvedPayMethod === 'HAVALE_EFT' ? (resolvedBankName || 'KUVEYT_TURK') : 'NAKIT'));
 
       const invoiceDocData = {
         orderId: invoiceId,
@@ -1914,10 +1931,19 @@ async function handleStoreInvoicesRequest(req, res) {
         source: 'STORE_MANUAL',
         customerName: cleanName,
         customerIdentity: cleanIdentity,
+        vkn: isVkn ? cleanIdentity : (vkn || null),
+        taxNumber: isVkn ? cleanIdentity : (taxNumber || null),
+        tckn: isTckn ? cleanIdentity : (tckn || null),
         customerAddress: cleanAddress,
         customerPhone: cleanPhone,
         customerEmail: cleanEmail,
         invoiceDate: cleanDate,
+        paymentMethod: resolvedPayMethod,
+        paymentChannel: resolvedPayMethod,
+        bankName: resolvedBankName,
+        receiptNo: resolvedReceiptNo,
+        posProvider: resolvedPayMethod === 'KREDI_KARTI' ? (posProvider || 'AKBANK_POS') : null,
+        provider: resolvedProvider,
         declarationDoc: cleanDeclarationDoc,
         identityDoc: cleanDeclarationDoc,
         items: itemsList,
@@ -1932,7 +1958,6 @@ async function handleStoreInvoicesRequest(req, res) {
         status: 'PAID',
         paymentStatus: 'PAID',
         isPaid: true,
-        provider: 'MAGAZA_NAKIT_POS',
         note: String(note || '').trim(),
         createdAt: existingDoc.exists ? (existingDoc.data().createdAt || admin.firestore.FieldValue.serverTimestamp()) : (clientCreatedAt ? new Date(clientCreatedAt) : admin.firestore.FieldValue.serverTimestamp()),
         updatedAt: admin.firestore.FieldValue.serverTimestamp()
@@ -2342,6 +2367,20 @@ async function handleStatementRequest(req, res) {
           ? Number(data.posRate) 
           : ((data.payment && data.payment.posRate !== undefined && data.payment.posRate !== null && !isNaN(Number(data.payment.posRate))) ? Number(data.payment.posRate) : null));
 
+        const bankKey = (data.payment && data.payment.provider) || data.provider || 'KUVEYTTURK';
+        const bankNames = {
+          'KUVEYTTURK': 'Kuveyt Türk',
+          'AKBANK': 'Akbank',
+          'VAKIFBANK': 'VakıfBank',
+          'ZIRAAT': 'Ziraat Katılım',
+          'ZIRAAT_KATILIM': 'Ziraat Katılım',
+          'TOSLA': 'Tosla',
+          'PAYTR': 'PayTR',
+          'YAPIKREDI': 'Yapı Kredi',
+          'HALKBANK': 'Halkbank'
+        };
+        const bankLabel = bankNames[bankKey] || bankKey;
+
         rawTransactions.push({
           id: orderId,
           type: isEft ? 'EFT_SALE' : 'POS_SALE',
@@ -2349,10 +2388,10 @@ async function handleStatementRequest(req, res) {
           date: dateKey,
           time: timeKey,
           fullDate: `${dateKey} ${timeKey}`,
-          description: isEft ? `Havale/EFT: ${orderId} (${customerName})` : `Sipariş: ${orderId} (${customerName})`,
+          description: isEft ? `Banka Havalesi (${bankLabel}) - Gönderen: ${customerName} (${orderId})` : `Sipariş: ${orderId} (${customerName})`,
           customerName,
           orderId,
-          provider: (data.payment && data.payment.provider) || data.provider || 'KUVEYTTURK',
+          provider: bankKey,
           pos: posAmount,
           posRate: customPosRate,
           commissionRate: commissionRate,
@@ -2582,6 +2621,10 @@ exports.getIzkoRates = functions.https.onRequest((req, res) => {
     }
   });
 });
+
+const { cashBankEvidenceApi } = require('./cash-bank-evidence/api');
+exports.cashBankEvidenceApi = cashBankEvidenceApi;
+
 
 
 
