@@ -6163,8 +6163,9 @@ const AdminApp = {
         profitVal = fmt(profit);
       }
 
-      const unlockInfo = r.pos > 0 ? this.getPosUnlockInfo(r.date) : null;
-      const blokeExcelVal = unlockInfo ? (unlockInfo.isUnlocked ? `Hesaba Geçti (${unlockInfo.unlockDateFormatted})` : `Blokeli (${unlockInfo.unlockDateFormatted})`) : '—';
+      const isEft = r.type === 'EFT_SALE' || Boolean(r.isManualEft) || r.paymentMethod === 'HAVALE_EFT';
+      const unlockInfo = (r.pos > 0 && !isEft) ? this.getPosUnlockInfo(r.date) : null;
+      const blokeExcelVal = isEft ? 'Hesapta (Bloke Yok)' : (unlockInfo ? (unlockInfo.isUnlocked ? `Hesaba Geçti (${unlockInfo.unlockDateFormatted})` : `Blokeli (${unlockInfo.unlockDateFormatted})`) : '—');
 
       tableRowsHtml += `
         <tr>
@@ -6281,7 +6282,7 @@ const AdminApp = {
           </td>
           <td style="padding: 7px 9px; text-align: left; font-size: 11px; color: #0F172A;">
             <div style="font-weight: 700;">${this.escapeHtml(r.description || 'İşlem')}</div>
-            ${r.customerName && r.type === 'POS_SALE' ? `<div style="font-size: 10px; color: #64748B; margin-top:2px;">Müşteri: <strong>${this.escapeHtml(r.customerName)}</strong> ${this.getBankTag(r.provider || 'KUVEYTTURK')}</div>` : ''}
+            ${r.customerName && (r.type === 'POS_SALE' || r.type === 'EFT_SALE') ? `<div style="font-size: 10px; color: #64748B; margin-top:2px;">Müşteri: <strong>${this.escapeHtml(r.customerName)}</strong> ${this.getBankTag(r.provider || 'KUVEYTTURK')}</div>` : ''}
           </td>
           <td style="padding: 7px 9px; text-align: right; font-weight: 700; font-size: 11px; color: #1E293B;">
             ${posVal}
