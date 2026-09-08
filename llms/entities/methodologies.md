@@ -17,7 +17,7 @@ relatedNodes:
 ## 1. Fiyatlama ve Borsa Akışı Formülü (DEĞİŞMEZ KURAL)
 - **Sarı Tabela, Borsa Bandı ve Altın Katalog**: Müşteri satış fiyatları birincil olarak İZKO normal Satış (fallback Harem Satış) referansı ile marjsız (1.00x) yansıtılır.
 - **Alış / Geri Alım Fiyatları**: Harem Altın canlı borsa soket akışındaki alış fiyatları kesinlikle marj eklenmeden birebir (1.00 çarpan) yansıtılır.
-- **Elit Kategori Saatler**: Uluslararası döviz kuru (USD) ve küresel likidite endeksleri üzerine **+%80** güvenlik marjı uygulanır.
+- **Elit Kategori Lüks Saatler (Global Piyasa Endeksi Marjı)**: Uluslararası küresel piyasa referans fiyatı (USD) ve serbest piyasa kuru üzerine **+%80** kâr marjı (USD Ref × USD Kuru × 1.80) uygulanır; lüks saat fiyatlama formülü eksiksiz devam eder.
 - **Borsa Akış Kaynağı**: Fiyatlama İZKO resmi kurları ve Harem Altın canlı borsa soketi üzerinden canlı sürdürülür.
 
 ## 2. 10 Adımlı Saat Doğrulama Standardı

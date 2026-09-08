@@ -670,7 +670,7 @@ exports.createAdminOrder = functions
             }))
           };
         } else {
-          const laborRate = Number(body.laborRate !== undefined ? body.laborRate : 1.25);
+          const laborRate = Number(body.laborRate !== undefined ? body.laborRate : 1.5);
           const workmanshipTotal = Math.max(0, Math.round(totalAmount * (laborRate / 100) * 100) / 100);
           const workmanshipNet = Math.round((workmanshipTotal / 1.20) * 100) / 100;
           const workmanshipKdv = Math.round((workmanshipTotal - workmanshipNet) * 100) / 100;
@@ -956,7 +956,8 @@ exports.updateAdminOrderCustomer = functions
 
       if (Array.isArray(body.items) && body.items.length > 0) {
         const cleanedItems = body.items.map(it => {
-          const qty = Math.max(1, parseInt(it.qty || it.quantity || it.miktar || 1, 10) || 1);
+          const rawQty = Math.max(0.001, parseFloat(it.qty || it.quantity || it.miktar || 1) || 1);
+          const qty = Math.abs(rawQty - Math.round(rawQty)) < 0.0001 ? Math.round(rawQty) : parseFloat(rawQty.toFixed(4));
           const price = Number(it.price || it.lineTotal || it.fiyat || 0);
           const unitPrice = Number(it.unitPrice || it.birimFiyat || (qty > 0 ? price / qty : price) || 0);
           const kdvRate = (it.kdvRate !== undefined) ? Number(it.kdvRate) : ((it.kdvOrani !== undefined) ? Number(it.kdvOrani) : null);

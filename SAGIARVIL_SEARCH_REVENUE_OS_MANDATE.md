@@ -22,7 +22,7 @@ SEO/GEO/LLMS/search-growth konusunda öncelik sırası:
 5. Belgin'in ürün, fiyat, stok, mağaza, yasal, ödeme, tasarım ve güvenlik gibi kendi alanındaki kanonik proje belgeleri.
 6. Eski SEO/GEO/LLMS notları yalnız tarihsel bağlamdır; bu mandate ile çelişemez.
 
-SEO çalışması ürün/fiyat/stok/yasal gerçekliği uyduramaz veya ezemez. Kullanıcının açık kuralı gereği **Chrono24 marka adı veya Chrono24 temelli bağlayıcı fiyat/güvence formülü yeniden eklenemez.**
+SEO çalışması ürün/fiyat/stok/yasal gerçekliği uyduramaz veya ezemez. Kullanıcının açık kuralı gereği **Lüks saatlerde (Elit Kategori) Chrono24 küresel piyasa referansı ve +%80 kâr marjı formülü devam eder; komisyon ve marj kaldırma kuralı yalnızca altın, ziynet ve mücevherat satışlarına uygulanır.**
 
 Bir AI ajanı, geliştirici veya otomasyon; sayfa, routing, metadata, canonical, schema, sitemap, robots, LLMS, içerik, internal link, redirect veya search ölçümü değiştirmeden önce bu mandate'i okumak zorundadır.
 
@@ -370,7 +370,7 @@ Kesinlikle yasak:
 - düşük değerli AI seri üretimi,
 - fake freshness,
 - sahte stok/fiyat/rating/review/certificate,
-- Chrono24 marka adı veya Chrono24 temelli bağlayıcı fiyat/güvence formülünü yeniden eklemek,
+- altın/mücevheratta marj veya komisyon uygulamak (yalnızca lüks saatlerde Chrono24 +%80 marjı geçerlidir),
 - robots/sitemap/canonical çatışması,
 - preview/staging indexlenmesi,
 - ölçülmemiş metriği ölçülmüş gibi raporlamak,

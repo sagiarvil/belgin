@@ -105,7 +105,6 @@ const allLlmsFiles = walkDir(path.join(ROOT, 'llms'));
 allLlmsFiles.push(manifestPath);
 
 const prohibitedRules = [
-  { pattern: /Chrono24/i, name: 'Chrono24 prohibited term' },
   { pattern: /Ağa\s*Külçe/i, name: 'Ağa Külçe prohibited supplier claim' },
   { pattern: /hakkimizda\.html/i, name: 'hakkimizda.html broken 404 URL' },
   { pattern: /24K\s*Has\s*Altın/i, name: 'has altın forbidden (must use 24K Külçe Altın)' },

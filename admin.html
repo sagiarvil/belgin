@@ -5081,18 +5081,41 @@
       </div>
 
       <!-- 2. FATURA ÜRÜN BİLGİLERİ & SATIŞ KALEMLERİ (PARTİ / ÇOKLU ÜRÜN) -->
+      <!-- 2. FATURA ÜRÜN BİLGİLERİ & SATIŞ KALEMLERİ (PARTİ / ÇOKLU ÜRÜN) -->
       <div style="background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:10px; padding:14px; margin-bottom:14px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
           <div style="font-size:11.5px; font-weight:800; color:#166534; text-transform:uppercase; display:flex; align-items:center; gap:5px;">
             <span>📦</span> Fatura Ürün Bilgileri & Satış Kalemleri (Parti Satış)
           </div>
-          <button type="button" onclick="AdminApp.addEditCustomerItemRow()" style="display:inline-flex; align-items:center; gap:4px; background:#059669; color:#FFF; border:none; padding:5px 12px; border-radius:6px; font-size:11.5px; font-weight:800; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.15);">
-            <span>➕ Yeni Satır Ekle</span>
-          </button>
+          <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+            <button type="button" onclick="AdminApp.autoApplyLaborSplit(1.5)" style="display:inline-flex; align-items:center; gap:5px; background:linear-gradient(135deg, #065F46 0%, #047857 100%); color:#FFF; border:none; padding:6px 12px; border-radius:6px; font-size:11.5px; font-weight:800; cursor:pointer; box-shadow:0 2px 4px rgba(6,95,70,0.25);" title="Toplam tutarın içinden %1,5 işçilik kesintisi satırı ayırır (Genel toplam değişmez)">
+              <span>🔨 %1,5 İşçilik Kesintisi Satırı Ekle</span>
+            </button>
+            <button type="button" onclick="AdminApp.addEditCustomerItemRow()" style="display:inline-flex; align-items:center; gap:4px; background:#059669; color:#FFF; border:none; padding:6px 12px; border-radius:6px; font-size:11.5px; font-weight:800; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.15);">
+              <span>➕ Yeni Satır Ekle</span>
+            </button>
+          </div>
         </div>
 
-        <div style="font-size:11px; color:#475569; margin-bottom:10px; line-height:1.4;">
-          Bu faturaya ait tüm ürün kalemlerini düzenleyebilir, yeni satır ekleyerek faturayı çok parçalı parti satışı olarak yeniden yapılandırabilirsiniz.
+        <!-- 💰 EFT / TAHSİLAT TUTARI & İŞÇİLİK KESİNTİSİ PANELİ -->
+        <div style="display:grid; grid-template-columns: 1.3fr 1fr; gap:10px; margin-bottom:12px; background:#FFF; border:1.5px solid #86EFAC; padding:10px 14px; border-radius:8px; align-items:center;">
+          <div>
+            <label style="display:block; font-size:11px; font-weight:800; color:#064E3B; margin-bottom:3px;">
+              EFT / Havale / Fatura Toplam Tutarı (₺):
+            </label>
+            <div style="display:flex; gap:6px; align-items:center;">
+              <input type="number" id="editCustomerQuickTotal" step="0.01" min="0" placeholder="Örn: 1150000" style="width:100%; border:1.5px solid #059669; padding:7px 10px; border-radius:6px; font-size:13.5px; font-weight:900; color:#064E3B; font-family:monospace;" oninput="AdminApp.onEditCustomerQuickTotalChange(this)">
+              <button type="button" onclick="AdminApp.autoApplyLaborSplit(1.5)" style="white-space:nowrap; background:#065F46; color:#FFF; border:none; padding:7px 12px; border-radius:6px; font-size:11px; font-weight:800; cursor:pointer;" title="%1.5 İşçiliği tutar içinden keser">
+                ⚡ %1,5 Ayır
+              </button>
+            </div>
+            <div style="font-size:10px; color:#475569; margin-top:2px;">Gelen ödeme tutarını girip birim fiyatı yazarak adeti otomatik hesaplatabilirsiniz.</div>
+          </div>
+          <div style="display:flex; flex-direction:column; justify-content:center; align-items:flex-end; border-left:1px dashed #CBD5E1; padding-left:12px;">
+            <div style="font-size:10.5px; font-weight:700; color:#64748B;">Kalemler Genel Toplamı:</div>
+            <div id="editCustomerLiveTotalBadge" style="font-size:17px; font-weight:900; color:#064E3B; font-family:monospace;">₺0,00</div>
+            <div id="editCustomerDiffBadge" style="font-size:10.5px; font-weight:700; color:#059669;">Tam Uyumlu ✅</div>
+          </div>
         </div>
 
         <!-- 🔨 ALTIN & İŞÇİLİK OTOMASYONU (TEK TIKLA AYIR) -->
@@ -5111,15 +5134,15 @@
           <div style="display:flex; align-items:center; gap:5px; flex-wrap:wrap;">
             <span style="font-size:11px; font-weight:700; color:#064E3B;">Hızlı Oran:</span>
             <button type="button" class="btn-template-chip" style="padding:4px 8px; font-size:11px; font-weight:800; background:#FFF; border:1.5px solid #10B981; color:#065F46; border-radius:5px; cursor:pointer;" onclick="AdminApp.autoApplyLaborSplit(1)" title="%1 İşçilik (%20 KDV) olarak hesaplar">%1</button>
-            <button type="button" class="btn-template-chip" style="padding:4px 10px; font-size:11.5px; font-weight:900; background:#065F46; border:1.5px solid #065F46; color:#FFF; border-radius:5px; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.15);" onclick="AdminApp.autoApplyLaborSplit(1.25)" title="%1,25 Standart Kuyumcu İşçiliği (Önerilen)">%1,25 (Standart)</button>
-            <button type="button" class="btn-template-chip" style="padding:4px 8px; font-size:11px; font-weight:800; background:#FFF; border:1.5px solid #10B981; color:#065F46; border-radius:5px; cursor:pointer;" onclick="AdminApp.autoApplyLaborSplit(1.5)" title="%1,5 İşçilik">%1,5</button>
+            <button type="button" class="btn-template-chip" style="padding:4px 8px; font-size:11px; font-weight:800; background:#FFF; border:1.5px solid #10B981; color:#065F46; border-radius:5px; cursor:pointer;" onclick="AdminApp.autoApplyLaborSplit(1.25)" title="%1,25 İşçilik">%1,25</button>
+            <button type="button" class="btn-template-chip" style="padding:4px 10px; font-size:11.5px; font-weight:900; background:#065F46; border:1.5px solid #065F46; color:#FFF; border-radius:5px; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.15);" onclick="AdminApp.autoApplyLaborSplit(1.5)" title="%1,5 Standart Kuyumcu İşçiliği (Önerilen)">%1,5 (Standart / Önerilen)</button>
             <button type="button" class="btn-template-chip" style="padding:4px 8px; font-size:11px; font-weight:800; background:#FFF; border:1.5px solid #10B981; color:#065F46; border-radius:5px; cursor:pointer;" onclick="AdminApp.autoApplyLaborSplit(2)" title="%2 İşçilik">%2</button>
             <button type="button" class="btn-template-chip" style="padding:4px 8px; font-size:11px; font-weight:700; background:#FFF; border:1.5px solid #CBD5E1; color:#475569; border-radius:5px; cursor:pointer;" onclick="AdminApp.autoApplyLaborSplit(0)" title="İşçilik satırını kaldırır, tek satır %0 altın yapar">%0 (İşçiliksiz)</button>
           </div>
         </div>
 
         <!-- Kalemler Tablo Başlıkları -->
-        <div style="display:grid; grid-template-columns: 1fr 60px 105px 110px 145px 30px; gap:6px; font-size:10px; font-weight:800; color:#334155; text-transform:uppercase; padding:0 8px 4px;">
+        <div style="display:grid; grid-template-columns: 1fr 75px 105px 115px 145px 30px; gap:6px; font-size:10px; font-weight:800; color:#334155; text-transform:uppercase; padding:0 8px 4px;">
           <span>Ürün / Kalem Açıklaması</span>
           <span style="text-align:center;">Adet</span>
           <span style="text-align:right;">Birim (₺)</span>
@@ -5274,10 +5297,10 @@
             <div style="display:flex; gap:4px; align-items:center;">
               <button type="button" class="btn-template-chip" style="padding:3px 8px; font-size:11px; font-weight:700; background:#FFF; color:#92400E;" onclick="AdminApp.setOrderInvoiceLaborRate(0)">%0</button>
               <button type="button" class="btn-template-chip" style="padding:3px 8px; font-size:11px; font-weight:700; background:#FFF; color:#92400E;" onclick="AdminApp.setOrderInvoiceLaborRate(1)">%1</button>
-              <button type="button" class="btn-template-chip active" style="padding:3px 8px; font-size:11px; font-weight:800; background:#92400E; color:#FFF;" onclick="AdminApp.setOrderInvoiceLaborRate(1.25)">%1,25</button>
-              <button type="button" class="btn-template-chip" style="padding:3px 8px; font-size:11px; font-weight:700; background:#FFF; color:#92400E;" onclick="AdminApp.setOrderInvoiceLaborRate(1.5)">%1,5</button>
+              <button type="button" class="btn-template-chip" style="padding:3px 8px; font-size:11px; font-weight:700; background:#FFF; color:#92400E;" onclick="AdminApp.setOrderInvoiceLaborRate(1.25)">%1,25</button>
+              <button type="button" class="btn-template-chip active" style="padding:3px 8px; font-size:11px; font-weight:800; background:#92400E; color:#FFF;" onclick="AdminApp.setOrderInvoiceLaborRate(1.5)">%1,5</button>
               <button type="button" class="btn-template-chip" style="padding:3px 8px; font-size:11px; font-weight:700; background:#FFF; color:#92400E;" onclick="AdminApp.setOrderInvoiceLaborRate(2)">%2</button>
-              <input type="number" id="cfgLaborRateInput" step="0.01" min="0" max="100" value="1.25" style="width:60px; border:1.5px solid #D97706; border-radius:6px; padding:4px 6px; font-size:12px; font-weight:800; text-align:center; color:#92400E;" oninput="AdminApp.updateOrderInvoiceLiveSummary()">
+              <input type="number" id="cfgLaborRateInput" step="0.01" min="0" max="100" value="1.5" style="width:60px; border:1.5px solid #D97706; border-radius:6px; padding:4px 6px; font-size:12px; font-weight:800; text-align:center; color:#92400E;" oninput="AdminApp.updateOrderInvoiceLiveSummary()">
               <span style="font-size:12px; font-weight:800; color:#92400E;">%</span>
             </div>
           </div>
