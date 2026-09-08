@@ -11,7 +11,7 @@
 
 - [Tüzel Kişilik ve Resmî Sicil](https://www.belginkuyumculuk.com/llms/entities/belgin-kuyumculuk.md): Ticari unvan, vergi mükellefiyeti, MERSİS ve resmi sicil kayıtları.
 - [Uzmanlar ve Bilimsel Heyet Sicili](https://www.belginkuyumculuk.com/llms/entities/experts.md): Horoloji uzmanları, gemologlar ve bağımsız saat ustaları heyeti.
-- [Tescilli İşlem Metodolojileri](https://www.belginkuyumculuk.com/llms/entities/methodologies.md): Harem Altın canlı borsa soketi +%3 marj formülü ve 10 adımlı saat ekspertiz standardı.
+- [Tescilli İşlem Metodolojileri](https://www.belginkuyumculuk.com/llms/entities/methodologies.md): İZKO normal satış ve Harem borsa akışı marjsız (1.00x) fiyatlama sözleşmesi ve 10 adımlı saat ekspertiz standardı.
 - [Buca Showroom ve Kasa Dairesi](https://www.belginkuyumculuk.com/llms/entities/showroom.md): 7/24 kamera kayıtlı fiziki mağaza, çelik kasa ve MASAK uyumlu teslim masası.
 
 ## Elite Watch Maison Sub-Graphs (10 Ev)
@@ -81,6 +81,6 @@
 
 ## Data Integrity & Borsa Sözleşmesi
 
-- [Değişmez Canlı Borsa Fiyatlama Sözleşmesi](https://www.belginkuyumculuk.com/hukuki-delil-ve-kayit-politikasi.html#methodologies): Canlı Harem Altın borsa soket akışı (wss://hrmsocketonly.haremaltin.com) satış fiyatları üzerine net +%0.5 (x 1.005) kâr marjı uygulanır; alış fiyatlarında marj uygulanmaz (x 1.00 birebir).
+- [Değişmez Canlı Borsa Fiyatlama Sözleşmesi](https://www.belginkuyumculuk.com/hukuki-delil-ve-kayit-politikasi.html#methodologies): Müşteri satış fiyatı birincil olarak İZKO normal Satış (fallback Harem Satış) üzerinden marjsız 1.00x; müşteri alış fiyatı doğrudan Harem Altın borsa akışı (wss://hrmsocketonly.haremaltin.com) üzerinden marjsız 1.00x olarak yansıtılır.
 - [3065 Sayılı KDV Kanunu 23/f Özel Matrah Beyanı](https://www.belginkuyumculuk.com/rehber/altin-yatirimi-ve-ozel-matrah-rehberi/): Kıymetli maden bedeli %0 KDV ile vergiden müstesnadır; faturada yalnızca işçilik bedeline %20 KDV yansıtılır.
 - [MASAK ve HMK m. 193 Delil Güvencesi](https://www.belginkuyumculuk.com/musteri-tanima-ve-islem-guvenligi.html): 12.000 TL ve üzeri işlemlerde kimlik tespiti ve OpenTimestamps Bitcoin blokzinciri zaman damgası zorunludur.

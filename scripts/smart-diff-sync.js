@@ -3,7 +3,7 @@
  * BELGİN KUYUMCULUK – UNIFIED SMART DIFFING & DELTA-SYNC ENGINE v3.0
  * 
  * Kapsam:
- * 1. 🪙 Mücevherat & Altın: Canlı Borsa Verisi + %0.5 Kâr Marjı (x 1.005)
+ * 1. 🪙 Mücevherat & Altın: İZKO Primary Satış / Harem Fallback Satış (0% Marj / 1.00x)
  * 2. ⌚ Lüks Saatler: Saat&Saat Canlı Verisi + %40 Kâr Marjı (x 1.40)
  * 3. 🏷️ İkinci El & Cartier: Ekspertiz Değerleme & Güvenli Koruma
  * 
@@ -19,7 +19,7 @@ const path = require('path');
 const crypto = require('crypto');
 const { execSync } = require('child_process');
 
-const GOLD_MARGIN = 1.005;  // +%0.5 Kâr Marjı
+const GOLD_MARGIN = 1.0;  // Sıfır Marj (1.00x) — İZKO Primary Satış / Harem Fallback Satış
 const WATCH_MARGIN = 1.40; // +%40 Kâr Marjı
 
 const BRAND_CONFIGS = [
@@ -224,7 +224,7 @@ async function runSmartDiffSync() {
 
     const snap = initialSnapshot.get(p.id);
     if (snap && snap.price !== p.price) {
-      deltas.push(`🪙 [ALTIN FİYAT DEĞİŞİMİ] ${p.name}: ${snap.price.toLocaleString('tr-TR')} TL ➔ ${p.price.toLocaleString('tr-TR')} TL (+%1 marj)`);
+      deltas.push(`🪙 [ALTIN FİYAT DEĞİŞİMİ] ${p.name}: ${snap.price.toLocaleString('tr-TR')} TL ➔ ${p.price.toLocaleString('tr-TR')} TL (İZKO/Harem 1.00x)`);
     }
 
     const match = scrapedGold.find(item => {

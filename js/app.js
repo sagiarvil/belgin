@@ -3092,7 +3092,11 @@ const App = {
             
             <!-- Üst Kırmızı Başlık Metni -->
             <div class="board-exact-top-bar">
-              Belgin Kuyumculuk Canlı Satış ve Alış Fiyatlarıdır.
+              <span>Belgin Kuyumculuk Canlı Satış ve Alış Fiyatlarıdır.</span>
+              <div class="board-status-live-chip" id="board_status_live_chip" aria-live="polite">
+                <span class="board-chip-dot"></span>
+                <span class="board-chip-text" id="board_chip_source_name">İZKO Nakit Satış (1.00x)</span>
+              </div>
             </div>
 
             <!-- Birebir 3 Sütunlu Tablo: Ürün | ALIŞ | SATIŞ -->
@@ -3192,9 +3196,10 @@ const App = {
     };
 
     const rawItems = LIVE_MARKET_DATA.items || {};
-    const BOARD_MARGIN = 1.005; // Sarı Tabela Canlı Satış Kâr Marjı (+%0.5)
+    const izko = LIVE_MARKET_DATA.izkoRates || {};
+    const BOARD_MARGIN = 1.0; // Sıfır Marj (1.00x) — İZKO Primary Satış / Harem Fallback Satış
 
-    // Ham Alış Referansları (1.000x - Birebir marjsız borsa kuru)
+    // Ham Alış Referansları (1.000x - Harem borsa kuru birebir)
     const baseHasAlis = parseFloat(rawItems.ALTIN?.alis) || (LIVE_MARKET_DATA.hasAltin ? LIVE_MARKET_DATA.hasAltin * 0.995 : 6805.26);
     const baseGramAlis = parseFloat(rawItems.ALTIN?.alis) || baseHasAlis;
     const base22kAlis = parseFloat(rawItems.AYAR22?.alis) || Math.round(baseHasAlis * 0.937);
@@ -3209,23 +3214,23 @@ const App = {
     const baseZiynetYeniAlis = parseFloat(rawItems.TEK_YENI?.alis) || 44318;
     const baseZiynetEskiAlis = parseFloat(rawItems.TEK_ESKI?.alis) || 43705;
 
-    // Ham Satış Referansları (Harem Altın Borsa Kuru)
-    const baseHas = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.hasAltin || LIVE_MARKET_DATA.gramGold24k || 6885.40;
-    const baseGram = parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.gramGold24k || baseHas;
-    const base22k = parseFloat(rawItems.AYAR22?.satis) || LIVE_MARKET_DATA.gramGold22k || Math.round(baseHas * 0.937);
-    const base18k = parseFloat(rawItems.AYAR18?.satis) || LIVE_MARKET_DATA.gramGold18k || Math.round(baseHas * 0.750);
-    const base14k = parseFloat(rawItems.AYAR14?.satis) || LIVE_MARKET_DATA.gramGold14k || Math.round(baseHas * 0.722);
-    const baseAtaYeni = parseFloat(rawItems.ATA_YENI?.satis) || LIVE_MARKET_DATA.ataGold || 45636;
-    const baseAtaEski = parseFloat(rawItems.ATA_ESKI?.satis) || LIVE_MARKET_DATA.oldAtaGold || 45532;
+    // Satış Referansları (Primary = İZKO normal Satış / Fallback = Harem Satış)
+    const baseHas = izko.hasAltin || parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.hasAltin || LIVE_MARKET_DATA.gramGold24k || 6826.16;
+    const baseGram = izko.gramGold24k || izko.gram || izko.hasAltin || parseFloat(rawItems.ALTIN?.satis) || LIVE_MARKET_DATA.gramGold24k || baseHas;
+    const base22k = izko.gramGold22k || parseFloat(rawItems.AYAR22?.satis) || LIVE_MARKET_DATA.gramGold22k || Math.round(baseHas * 0.937);
+    const base18k = izko.gramGold18k || parseFloat(rawItems.AYAR18?.satis) || LIVE_MARKET_DATA.gramGold18k || Math.round(baseHas * 0.750);
+    const base14k = izko.gramGold14k || parseFloat(rawItems.AYAR14?.satis) || LIVE_MARKET_DATA.gramGold14k || Math.round(baseHas * 0.722);
+    const baseAtaYeni = izko.ataGold || parseFloat(rawItems.ATA_YENI?.satis) || LIVE_MARKET_DATA.ataGold || 45450;
+    const baseAtaEski = parseFloat(rawItems.ATA_ESKI?.satis) || izko.ataGold || LIVE_MARKET_DATA.oldAtaGold || 45159;
     
-    const baseCeyrekYeni = parseFloat(rawItems.CEYREK_YENI?.satis) || LIVE_MARKET_DATA.quarterGold || 11263;
-    const baseCeyrekEski = parseFloat(rawItems.CEYREK_ESKI?.satis) || LIVE_MARKET_DATA.oldQuarterGold || 11056;
-    const baseYarimYeni = parseFloat(rawItems.YARIM_YENI?.satis) || LIVE_MARKET_DATA.halfGold || 22498;
-    const baseYarimEski = parseFloat(rawItems.YARIM_ESKI?.satis) || LIVE_MARKET_DATA.oldHalfGold || 22078;
-    const baseZiynetYeni = parseFloat(rawItems.TEK_YENI?.satis) || LIVE_MARKET_DATA.fullGold || 44844;
-    const baseZiynetEski = parseFloat(rawItems.TEK_ESKI?.satis) || LIVE_MARKET_DATA.oldFullGold || 44224;
+    const baseCeyrekYeni = izko.quarterGold || parseFloat(rawItems.CEYREK_YENI?.satis) || LIVE_MARKET_DATA.quarterGold || 11300;
+    const baseCeyrekEski = izko.oldQuarterGold || parseFloat(rawItems.CEYREK_ESKI?.satis) || LIVE_MARKET_DATA.oldQuarterGold || 11100;
+    const baseYarimYeni = izko.halfGold || parseFloat(rawItems.YARIM_YENI?.satis) || LIVE_MARKET_DATA.halfGold || 22600;
+    const baseYarimEski = izko.oldHalfGold || parseFloat(rawItems.YARIM_ESKI?.satis) || LIVE_MARKET_DATA.oldHalfGold || 22200;
+    const baseZiynetYeni = izko.fullGold || parseFloat(rawItems.TEK_YENI?.satis) || LIVE_MARKET_DATA.fullGold || 45200;
+    const baseZiynetEski = izko.oldFullGold || parseFloat(rawItems.TEK_ESKI?.satis) || LIVE_MARKET_DATA.oldFullGold || 44400;
 
-    // Nihai Satış Fiyatları (+%0.5 kâr marjı)
+    // Nihai Satış Fiyatları (Marj: 1.00x)
     const pHas = Number((baseHas * BOARD_MARGIN).toFixed(2));
     const pGram = Math.round(baseGram * BOARD_MARGIN);
     const p22k = Math.round(base22k * BOARD_MARGIN);
@@ -3368,6 +3373,22 @@ const App = {
     setPriceCell('live_cumhuriyet', formatIntOrDec(pAtaYeni, 0), pAtaYeni, chgAtaYeni);
     setPriceCell('live_ata_eski_satis', formatIntOrDec(pAtaEski, 0), pAtaEski, chgAtaEski);
     setPriceCell('live_has_altin', formatIntOrDec(pHas, 2), pHas, chgHas);
+
+    // Canlı Kaynak Rozeti Durum Güncellemesi
+    const chipSourceEl = document.getElementById('board_chip_source_name');
+    const chipBoxEl = document.getElementById('board_status_live_chip');
+    if (chipSourceEl && chipBoxEl) {
+      const isIzkoLive = izko && (izko.hasAltin || izko.quarterGold);
+      if (isIzkoLive) {
+        chipSourceEl.textContent = 'İZKO Nakit Satış (1.00x)';
+        chipBoxEl.classList.remove('chip-fallback');
+        chipBoxEl.classList.add('chip-izko');
+      } else {
+        chipSourceEl.textContent = 'Harem Borsa Satış (1.00x)';
+        chipBoxEl.classList.remove('chip-izko');
+        chipBoxEl.classList.add('chip-fallback');
+      }
+    }
   },
 
   onLivePricesUpdated() {

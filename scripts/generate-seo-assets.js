@@ -136,7 +136,7 @@ function buildLlms() {
     'entities/belgin-kuyumculuk.md': { title: 'Tüzel Kişilik ve Resmî Sicil', desc: 'Ticari unvan, vergi mükellefiyeti, MERSİS ve resmi sicil kayıtları.' },
     'entities/showroom.md': { title: 'Buca Showroom ve Kasa Dairesi', desc: '7/24 kamera kayıtlı fiziki mağaza, çelik kasa ve MASAK uyumlu teslim masası.' },
     'entities/experts.md': { title: 'Uzmanlar ve Bilimsel Heyet Sicili', desc: 'Horoloji uzmanları, gemologlar ve bağımsız saat ustaları heyeti.' },
-    'entities/methodologies.md': { title: 'Tescilli İşlem Metodolojileri', desc: 'Harem Altın canlı borsa soketi +%3 marj formülü ve 10 adımlı saat ekspertiz standardı.' },
+    'entities/methodologies.md': { title: 'Tescilli İşlem Metodolojileri', desc: 'İZKO normal satış ve Harem borsa akışı marjsız (1.00x) fiyatlama sözleşmesi ve 10 adımlı saat ekspertiz standardı.' },
     'local/izmir-luks-saat.md': { title: 'İzmir Lüks Saat Merkezi', desc: 'İzmir genelinde ikinci el lüks saat alım satımı, Rolex ekspertizi ve değerinde nakit alım.' },
     'local/buca-kuyumcu-sarrafiye.md': { title: 'Buca Kuyumculuk ve Sarrafiye', desc: 'Darphane damgalı 24K külçe altın, 22 ayar bilezik ve ziynet sarrafiye merkezi.' },
     'local/ege-guvenli-teslimat.md': { title: 'Ege Bölgesi Güvenli Teslimat', desc: '12.000 TL üzeri siparişlerde kimlik doğrulamalı ve ıslak imzalı tutanaklı teslimat protokolü.' },
@@ -233,7 +233,7 @@ function buildLlms() {
   body += `- [Robots Erişim Protokolü](${BASE_URL}/robots.txt): Arama ve yapay zekâ tarayıcı erişim direktifleri.\n\n`;
 
   body += `## Data Integrity & Borsa Sözleşmesi\n\n`;
-  body += `- [Değişmez Canlı Borsa Fiyatlama Sözleşmesi](${BASE_URL}/hukuki-delil-ve-kayit-politikasi.html#methodologies): Canlı Harem Altın borsa soket akışı (wss://hrmsocketonly.haremaltin.com) satış fiyatları üzerine net +%0.5 (x 1.005) kâr marjı uygulanır; alış fiyatlarında marj uygulanmaz (x 1.00 birebir).\n`;
+  body += `- [Değişmez Canlı Borsa Fiyatlama Sözleşmesi](${BASE_URL}/hukuki-delil-ve-kayit-politikasi.html#methodologies): Müşteri satış fiyatı birincil olarak İZKO normal Satış (fallback Harem Satış) üzerinden marjsız 1.00x; müşteri alış fiyatı doğrudan Harem Altın borsa akışı (wss://hrmsocketonly.haremaltin.com) üzerinden marjsız 1.00x olarak yansıtılır.\n`;
   body += `- [3065 Sayılı KDV Kanunu 23/f Özel Matrah Beyanı](${BASE_URL}/rehber/altin-yatirimi-ve-ozel-matrah-rehberi/): Kıymetli maden bedeli %0 KDV ile vergiden müstesnadır; faturada yalnızca işçilik bedeline %20 KDV yansıtılır.\n`;
   body += `- [MASAK ve HMK m. 193 Delil Güvencesi](${BASE_URL}/musteri-tanima-ve-islem-guvenligi.html): 12.000 TL ve üzeri işlemlerde kimlik tespiti ve OpenTimestamps Bitcoin blokzinciri zaman damgası zorunludur.\n`;
 

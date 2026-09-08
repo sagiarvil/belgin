@@ -7952,15 +7952,55 @@ body.page-canli-fiyatlar-mode {
 .board-exact-top-bar {
   background-color: #fff200;
   border-bottom: 2px solid #000000;
-  padding: clamp(2px, 0.4vh, 5px) 10px;
+  padding: clamp(3px, 0.5vh, 6px) 10px;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-wrap: wrap;
+  gap: 8px;
   text-align: center;
-  font-size: clamp(14px, 2.1vh, 22px);
+  font-size: clamp(13px, 2vh, 20px);
   font-weight: 900 !important;
   color: #D80000;
   letter-spacing: 0.5px;
   text-transform: uppercase !important;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
   flex: 0 0 auto;
+}
+
+.board-status-live-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 999px;
+  padding: 1px 8px;
+  font-size: clamp(10px, 1.3vh, 12px);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: #000000;
+  text-transform: none !important;
+}
+
+.board-chip-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #00A86B;
+  box-shadow: 0 0 5px rgba(0, 168, 107, 0.6);
+  display: inline-block;
+  animation: boardDotPulse 2s infinite ease-in-out;
+}
+
+.board-status-live-chip.chip-fallback .board-chip-dot {
+  background-color: #E67E22;
+  box-shadow: 0 0 5px rgba(230, 126, 34, 0.6);
+}
+
+@keyframes boardDotPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.2); }
 }
 
 /* Birebir Tablo */

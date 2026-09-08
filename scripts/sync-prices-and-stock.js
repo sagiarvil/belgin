@@ -3,7 +3,7 @@
  * Belgin Kuyumculuk – 5 Dakikalık Canlı Fiyat ve Stok Senkronizasyon Motoru
  * 
  * Kurallar:
- * 1. Altın / Mücevherat: Canlı satış fiyatı üzerine +%0.5 kâr marjı (x 1.005)
+ * 1. Altın / Mücevherat: İZKO Primary Satış / Harem Fallback Satış (0% Marj / 1.00x)
  * 2. Stok Kontrolü: Kaynakta tükenen ürünler "Tükendi" durumuna geçer (fail-closed)
  * 3. Akıllı Delta: Yalnızca fiyat veya stok değiştiğinde katalog dosyalarını günceller
  */
@@ -13,7 +13,7 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-const GOLD_MARGIN = 1.005; // +%0.5 Kâr Marjı
+const GOLD_MARGIN = 1.0; // Sıfır Marj (1.00x) — İZKO Primary Satış / Harem Fallback Satış
 
 function decodeHtmlEntities(str) {
   return str
@@ -198,8 +198,8 @@ async function syncAll() {
   fs.writeFileSync(dataJsPath, headerPart + updatedProductsBlock + footerPart, 'utf8');
   console.log(`[SYNC-ENGINE] js/data.js başarıyla güncellendi (Kalan Tekil Ürün: ${PRODUCTS.length}).`);
 
-  // Harem Altın +%1 Canlı Borsa Senkronizasyonunu zorunlu uygula
-  console.log(`[SYNC-ENGINE] Harem Altın +%1 canlı borsa fiyatları uygulanıyor...`);
+  // İZKO Primary Satış / Harem Fallback Senkronizasyonunu zorunlu uygula
+  console.log(`[SYNC-ENGINE] İZKO Primary / Harem Fallback marjsız canlı borsa fiyatları uygulanıyor...`);
   const { syncHaremPricesToCatalog, defaultRates } = require('./sync-harem-prices.js');
   syncHaremPricesToCatalog(defaultRates);
 

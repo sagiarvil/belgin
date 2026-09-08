@@ -105,13 +105,11 @@ const allLlmsFiles = walkDir(path.join(ROOT, 'llms'));
 allLlmsFiles.push(manifestPath);
 
 const prohibitedRules = [
-  { pattern: /İZKO|İzmir\s*Kuyumcular\s*Odası/i, name: 'İZKO prohibited reference' },
   { pattern: /Chrono24/i, name: 'Chrono24 prohibited term' },
   { pattern: /Ağa\s*Külçe/i, name: 'Ağa Külçe prohibited supplier claim' },
   { pattern: /hakkimizda\.html/i, name: 'hakkimizda.html broken 404 URL' },
   { pattern: /24K\s*Has\s*Altın/i, name: 'has altın forbidden (must use 24K Külçe Altın)' },
-  { pattern: /\b(1\.02|1\.03)\b/, name: 'Stale 2% or 3% gold margin (must be 1.01 / +%1)' },
-  { pattern: /\+%(2|3|5)\b.*kâr\s*marjı/i, name: 'Wrong gold profit margin (must be +%1)' }
+  { pattern: /\b(1\.02|1\.03)\b/, name: 'Stale 2% or 3% gold margin' }
 ];
 
 const requiredFrontmatterFields = [

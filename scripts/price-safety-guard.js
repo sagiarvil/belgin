@@ -165,20 +165,21 @@ ELITE_BRANDS.forEach(b => {
 });
 assert(brandDistributionValid, `10 Lüks Saat Evinin her birinde tam 20'şer aktif ürün bulunmalıdır.`);
 
-// 7. Değişmez Fiyatlama & Borsa Sözleşmesi (SATIŞ: +%0.5 (x 1.005) / ALIŞ: 0% / İZKO: YASAK)
-console.log('\n--- 7. DEĞİŞMEZ FİYATLAMA & BORSA SÖZLEŞMESİ (SATIŞ +%0.5 / ALIŞ %0) ---');
+// 7. Değişmez Fiyatlama Sözleşmesi (SATIŞ: İZKO PRIMARY / HAREM FALLBACK / MARJSIZ 1.00x / ALIŞ: HAREM BİREBİR)
+console.log('\n--- 7. DEĞİŞMEZ FİYATLAMA SÖZLEŞMESİ (İZKO SATIŞ / HAREM ALIŞ / MARJSIZ 1.00x) ---');
 const utilsContent = fs.readFileSync(path.join(ROOT_DIR, 'js/utils.js'), 'utf8');
 const appContent = fs.readFileSync(path.join(ROOT_DIR, 'js/app.js'), 'utf8');
 const syncStockContent = fs.readFileSync(path.join(ROOT_DIR, 'scripts/sync-prices-and-stock.js'), 'utf8');
 const smartDiffContent = fs.readFileSync(path.join(ROOT_DIR, 'scripts/smart-diff-sync.js'), 'utf8');
 const agentsContent = fs.readFileSync(path.join(ROOT_DIR, 'AGENTS.md'), 'utf8');
 
-assert(utilsContent.includes('BOARD_MARGIN = 1.005'), 'js/utils.js içinde BOARD_MARGIN = 1.005 (+%0.5 kâr marjı) sabit olmalıdır.');
-assert(appContent.includes('BOARD_MARGIN = 1.005'), 'js/app.js içinde BOARD_MARGIN = 1.005 (+%0.5 kâr marjı) sabit olmalıdır.');
-assert(syncStockContent.includes('GOLD_MARGIN = 1.005'), 'scripts/sync-prices-and-stock.js içinde GOLD_MARGIN = 1.005 (+%0.5 kâr marjı) sabit olmalıdır.');
-assert(smartDiffContent.includes('GOLD_MARGIN = 1.005'), 'scripts/smart-diff-sync.js içinde GOLD_MARGIN = 1.005 (+%0.5 kâr marjı) sabit olmalıdır.');
-assert(agentsContent.includes('+%0,5 (x 1.005)') || agentsContent.includes('+%0.5 (x 1.005)'), 'AGENTS.md içinde değişmez kural olarak +%0.5 (x 1.005) sabitlenmiş olmalıdır.');
-assert(agentsContent.includes('ALIŞ / GERİ ALIM FİYATLARI (ALIŞ MARJI KESİNLİKLE YOKTUR - 0% / 1.00x BİREBİR)'), 'AGENTS.md içinde alış marjsızlığı (0%) kuralı sabitlenmiş olmalıdır.');
+assert(utilsContent.includes('BOARD_MARGIN = 1.0'), 'js/utils.js içinde BOARD_MARGIN = 1.0 (marjsız 1.00x) olmalıdır.');
+assert(appContent.includes('BOARD_MARGIN = 1.0'), 'js/app.js içinde BOARD_MARGIN = 1.0 (marjsız 1.00x) olmalıdır.');
+assert(syncStockContent.includes('GOLD_MARGIN = 1.0'), 'scripts/sync-prices-and-stock.js içinde GOLD_MARGIN = 1.0 (marjsız 1.00x) olmalıdır.');
+assert(smartDiffContent.includes('GOLD_MARGIN = 1.0'), 'scripts/smart-diff-sync.js içinde GOLD_MARGIN = 1.0 (marjsız 1.00x) olmalıdır.');
+assert(agentsContent.includes('MÜŞTERİ SATIŞ FİYATI: PRIMARY = İZKO normal "Satış"'), 'AGENTS.md içinde değişmez kural olarak İZKO normal Satış sabitlenmiş olmalıdır.');
+assert(agentsContent.includes('ALIŞ FİYATI: PRIMARY = Harem "Alış"'), 'AGENTS.md içinde alış referansı olarak Harem Alış sabitlenmiş olmalıdır.');
+assert(agentsContent.includes('SATIŞ FALLBACK: Harem "Satış"'), 'AGENTS.md içinde satış fallback referansı olarak Harem Satış sabitlenmiş olmalıdır.');
 
 console.log('\n====================================================');
 if (failureCount === 0) {

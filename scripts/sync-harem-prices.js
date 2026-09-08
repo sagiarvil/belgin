@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * BELGIN KUYUMCULUK — HAREM ALTIN %100 BİREBİR SENKRONİZASYON MOTORU
+ * BELGIN KUYUMCULUK — ALTIN FİYAT SENKRONİZASYON MOTORU
  * 
- * Amaç: Sarı Tabela (#canli-fiyatlar) nihai canlı satış fiyatları (+%0.5 marj / x 1.005) ile
+ * Amaç: Sarı Tabela (#canli-fiyatlar) nihai canlı satış fiyatları (Primary: İZKO Satış, Fallback: Harem) ile
  * katalogdaki ve ürün detay sayfalarındaki altın ürünlerini %100 birebir eşlemek.
  */
 
@@ -126,24 +126,32 @@ function syncHaremPricesToCatalog(rates) {
     execSync('node scripts/generate-payment-catalog.js', { stdio: 'inherit' });
     execSync('node scripts/generate-seo-assets.js', { stdio: 'inherit' });
   } catch (err) {
-    console.warn('[HAREM-SYNC] Katalog üretimi uyarısı:', err.message);
+    console.warn('[PRICING-SYNC] Katalog üretimi uyarısı:', err.message);
   }
 }
 
-// Default Harem Altin Live Rates (+%0.5 Margin / x 1.005)
+// Canonical Rates (Primary: İZKO Satış / Fallback: Harem Satış - Marjsız 1.00x)
+let cacheRates = null;
+const cacheFile = path.join(ROOT_DIR, 'izko-rates-cache.json');
+if (fs.existsSync(cacheFile)) {
+  try {
+    cacheRates = JSON.parse(fs.readFileSync(cacheFile, 'utf8'));
+  } catch (e) {}
+}
+
 const defaultRates = {
-  pGram: 6839,
-  p22k: 6409,
-  p18k: 5127,
-  p14k: 4948,
-  pCeyrekYeni: 11188,
-  pCeyrekEski: 10981,
-  pYarimYeni: 22351,
-  pYarimEski: 21928,
-  pZiynetYeni: 44540,
-  pZiynetEski: 43924,
-  pAtaYeni: 45326,
-  pAtaEski: 45223
+  pGram: cacheRates?.gramGold24k || cacheRates?.hasAltin || 6826,
+  p22k: cacheRates?.gramGold22k || 6420,
+  p18k: cacheRates?.gramGold18k || 6150,
+  p14k: cacheRates?.gramGold14k || 5700,
+  pCeyrekYeni: cacheRates?.quarterGold || 11300,
+  pCeyrekEski: cacheRates?.oldQuarterGold || 11100,
+  pYarimYeni: cacheRates?.halfGold || 22600,
+  pYarimEski: cacheRates?.oldHalfGold || 22200,
+  pZiynetYeni: cacheRates?.fullGold || 45200,
+  pZiynetEski: cacheRates?.oldFullGold || 44400,
+  pAtaYeni: cacheRates?.ataGold || 45450,
+  pAtaEski: cacheRates?.oldAtaGold || cacheRates?.ataGold || 45159
 };
 
 syncHaremPricesToCatalog(defaultRates);

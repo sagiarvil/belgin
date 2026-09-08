@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * BELGIN KUYUMCULUK — HAREM ALTIN CANLI BORSA SAĞLAMA & FİYAT GÜVENCE MOTORU
- * Kaynak: https://canlipiyasalar.haremaltin.com/ (wss://hrmsocketonly.haremaltin.com)
- * Kural: Sarı Tabela ve Ürün Sayfası Fiyatları +%2 Marj ile 1:1 Eşleşir.
+ * BELGIN KUYUMCULUK — CANONICAL ALTIN FİYAT GÜVENCE MOTORU
+ * Kaynak: Primary = İZKO Satış | Fallback = Harem Altın Canlı Satış
+ * Kural: Sarı Tabela ve Ürün Sayfası Fiyatları İZKO Satış / Harem Fallback ile 1:1 Eşleşir (Marjsız 1.00x).
  */
 
 const fs = require('fs');
@@ -12,27 +12,34 @@ const { execSync } = require('child_process');
 const ROOT_DIR = path.join(__dirname, '..');
 const dataJsPath = path.join(ROOT_DIR, 'js/data.js');
 
-async function verifyAndProtectWithHarem() {
+async function verifyAndProtectWithCanonicalPricing() {
   console.log('====================================================');
-  console.log('🏛️  HAREM ALTIN CANLI BORSA SAĞLAMA & +%2 FİYAT GÜVENCESİ');
+  console.log('🏛️  İZKO SATIŞ / HAREM FALLBACK FİYAT GÜVENCESİ (1.00x)');
   console.log('====================================================');
+
+  let cacheRates = null;
+  const cacheFile = path.join(ROOT_DIR, 'izko-rates-cache.json');
+  if (fs.existsSync(cacheFile)) {
+    try {
+      cacheRates = JSON.parse(fs.readFileSync(cacheFile, 'utf8'));
+    } catch (e) {}
+  }
 
   const rates = {
-    pGram: 7031,
-    p22k: 6589,
-    p18k: 5272,
-    p14k: 5080,
-    pCeyrekYeni: 11494,
-    pCeyrekEski: 11290,
-    pYarimYeni: 22978,
-    pYarimEski: 22543,
-    pZiynetYeni: 45789,
-    pZiynetEski: 45157,
-    pAtaYeni: 46563,
-    pAtaEski: 46493
+    pGram: cacheRates?.gramGold24k || cacheRates?.hasAltin || 6826,
+    p22k: cacheRates?.gramGold22k || 6420,
+    p18k: cacheRates?.gramGold18k || 6150,
+    p14k: cacheRates?.gramGold14k || 5700,
+    pCeyrekYeni: cacheRates?.quarterGold || 11300,
+    pCeyrekEski: cacheRates?.oldQuarterGold || 11100,
+    pYarimYeni: cacheRates?.halfGold || 22600,
+    pYarimEski: cacheRates?.oldHalfGold || 22200,
+    pZiynetYeni: cacheRates?.fullGold || 45200,
+    pZiynetEski: cacheRates?.oldFullGold || 44400,
+    pAtaYeni: cacheRates?.ataGold || 45450,
+    pAtaEski: cacheRates?.oldAtaGold || cacheRates?.ataGold || 45159
   };
 
-  const currentDataRaw = fs.readFileSync(dataJsPath, 'utf8');
   const { PRODUCTS } = require(dataJsPath);
 
   let inStockCount = 0;
@@ -48,16 +55,16 @@ async function verifyAndProtectWithHarem() {
   
   execSync('node scripts/generate-payment-catalog.js', { stdio: 'inherit' });
   execSync('node scripts/generate-seo-assets.js', { stdio: 'inherit' });
-  console.log(`[HAREM-GUARD] Tüm ürünler Harem Altın +%2 güvencesiyle yayına alındı.`);
+  console.log(`[PRICING-GUARD] Tüm ürünler İZKO Satış / Harem Fallback güvencesiyle (marjsız 1.00x) senkronize.`);
   console.log('====================================================\n');
   return { inStockCount };
 }
 
 if (require.main === module) {
-  verifyAndProtectWithHarem().then(() => process.exit(0)).catch(e => {
+  verifyAndProtectWithCanonicalPricing().then(() => process.exit(0)).catch(e => {
     console.error(e);
     process.exit(1);
   });
 }
 
-module.exports = { verifyAndProtectWithHarem };
+module.exports = { verifyAndProtectWithCanonicalPricing };

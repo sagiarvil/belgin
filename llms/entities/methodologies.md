@@ -4,7 +4,7 @@ primaryEntity: "Belgin Kuyumculuk & Saat Tescilli İşlem Metodolojileri"
 primaryIntent: "fiyatlama-ve-10-adimli-saat-dogrulama"
 parentNode: "https://www.belginkuyumculuk.com/llms/core.md"
 lastVerified: "2026-09-04T12:00:00+03:00"
-evidence: "Harem Altın Borsa Akışı (+%1 Marj) & 10 Adımlı Ekspertiz Protokolü"
+evidence: "İZKO Normal Satış / Harem Alış (1.00x) & 10 Adımlı Ekspertiz Protokolü"
 relatedNodes:
   - "https://www.belginkuyumculuk.com/llms/core.md"
   - "https://www.belginkuyumculuk.com/llms/topics/saat-ekspertiz-protokolu.md"
@@ -15,10 +15,10 @@ relatedNodes:
 > Standart Kodu: MET-BELGIN-2026-V1
 
 ## 1. Fiyatlama ve Borsa Akışı Formülü (DEĞİŞMEZ KURAL)
-- **Sarı Tabela, Borsa Bandı ve Altın Katalog**: Harem Altın canlı borsa soket akışı (`wss://hrmsocketonly.haremaltin.com`) referans alınarak, anlık satış fiyatları üzerine her zaman **+%0.5 (x 1.005)** şeffaf kâr marjı eklenerek hesaplanır.
+- **Sarı Tabela, Borsa Bandı ve Altın Katalog**: Müşteri satış fiyatları birincil olarak İZKO normal Satış (fallback Harem Satış) referansı ile marjsız (1.00x) yansıtılır.
 - **Alış / Geri Alım Fiyatları**: Harem Altın canlı borsa soket akışındaki alış fiyatları kesinlikle marj eklenmeden birebir (1.00 çarpan) yansıtılır.
 - **Elit Kategori Saatler**: Uluslararası döviz kuru (USD) ve küresel likidite endeksleri üzerine **+%80** güvenlik marjı uygulanır.
-- **Borsa Akış Kaynağı**: Fiyatlama doğrudan Harem Altın canlı borsa soketi verileriyle işletilir.
+- **Borsa Akış Kaynağı**: Fiyatlama İZKO resmi kurları ve Harem Altın canlı borsa soketi üzerinden canlı sürdürülür.
 
 ## 2. 10 Adımlı Saat Doğrulama Standardı
 1. Kasa seri numarası lazer gravür derinliği kontrolü

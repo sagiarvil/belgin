@@ -2558,6 +2558,22 @@ exports.adminSyncApi = functions
     }
   }));
 
+const { fetchIzkoRates } = require('./izko-scraper');
+
+exports.getIzkoRates = functions.https.onRequest((req, res) => {
+  return corsMiddleware(req, res, async () => {
+    try {
+      const rates = await fetchIzkoRates();
+      res.set('Cache-Control', 'public, max-age=60, s-maxage=120');
+      return res.status(200).json(rates);
+    } catch (error) {
+      console.error('[getIzkoRates Error]:', error);
+      return res.status(500).json({ success: false, error: error.message });
+    }
+  });
+});
+
+
 
 
 

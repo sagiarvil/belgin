@@ -155,18 +155,18 @@ function runQualityGates() {
     }
   }
 
-  // G7: Chrono24 & İZKO Kısıtlama Denetimi
-  if (/İZKO|İzmir\s*Kuyumcular\s*Odası\s*(kuru|fiyatı|referansı|canlı|borsa|tarifesi)/i.test(indexHtml)) {
-    errors.push('[G7 PROHIBITED TERM] index.html içinde İZKO fiyatlama referansı tespit edildi!');
+  // G7: Chrono24 Kısıtlama Denetimi (Mandate Sözleşmesi)
+  if (/Chrono24/i.test(indexHtml)) {
+    errors.push('[G7 PROHIBITED TERM] index.html içinde Chrono24 referansı tespit edildi!');
   }
   const registryStr = fs.readFileSync(path.join(ROOT_DIR, 'scripts', 'seo-registry.js'), 'utf8');
-  if (registryStr.includes('İZKO') || registryStr.includes('İzmir Kuyumcular Odası')) {
-    errors.push('[G7 PROHIBITED TERM] scripts/seo-registry.js içinde İZKO referansı tespit edildi!');
+  if (/Chrono24/i.test(registryStr)) {
+    errors.push('[G7 PROHIBITED TERM] scripts/seo-registry.js içinde Chrono24 referansı tespit edildi!');
   }
   if (fs.existsSync(llmsPath)) {
     const llmsTxt = fs.readFileSync(llmsPath, 'utf8');
-    if (llmsTxt.includes('İZKO')) {
-      errors.push('[G7 PROHIBITED TERM] llms.txt içinde İZKO referansı tespit edildi!');
+    if (/Chrono24/i.test(llmsTxt)) {
+      errors.push('[G7 PROHIBITED TERM] llms.txt içinde Chrono24 referansı tespit edildi!');
     }
   }
 

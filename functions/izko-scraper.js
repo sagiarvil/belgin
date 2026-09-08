@@ -1,263 +1,140 @@
 /**
  * BELGIN KUYUMCULUK — İZMİR KUYUMCULAR ODASI (İZKO) CANLI KUR SERVİSİ
  * Kaynak: https://www.izko.org.tr/guncel-kur / https://www.izko.org.tr/api/web/v1/gold-prices
- * 15 dakikalık periyotlarla otomatik güncellenir.
+ * 
+ * Güvenlik Kuralları:
+ * 1. Müşteri Satış Fiyatı: İZKO normal Satış (Discount / sell_price) kolonu
+ * 2. K.K Satış (Regular) kolonu: Normal satış kur motoruna KESİNLİKLE karışmaz
+ * 3. Harem Fallback: İZKO başarısız olduğunda Harem Satış fiyatına güvenle geçiş
  */
 
-const https = require('https');
+let fetchIzkoPrices, fetchHaremSnapshot, PRODUCT_IDS;
+try {
+  ({ fetchIzkoPrices } = require('./lib/providers/izko'));
+  ({ fetchHaremSnapshot } = require('./lib/providers/harem'));
+  ({ PRODUCT_IDS } = require('./lib/pricing/types'));
+} catch (e) {
+  ({ fetchIzkoPrices } = require('../lib/providers/izko'));
+  ({ fetchHaremSnapshot } = require('../lib/providers/harem'));
+  ({ PRODUCT_IDS } = require('../lib/pricing/types'));
+}
 
 let cachedRates = {
   success: true,
-  source: 'https://www.izko.org.tr/guncel-kur',
-  lastUpdated: '2026-08-27T17:15:00.000Z',
-  lastUpdatedFormatted: '27.08.2026 20:15',
-  hasAltin: 7110.05,
-  gramGold24k: 7110.05,
-  gramGold22k: 6680.00,
-  gramGold18k: 6400.00,
-  gramGold14k: 5940.00,
-  gramGold8k: 3440.00,
-  quarterGold: 11740.00,
-  oldQuarterGold: 11570.00,
-  halfGold: 23500.00,
-  oldHalfGold: 23060.00,
-  fullGold: 46710.00,
-  oldFullGold: 45930.00,
-  ataGold: 47330.00,
-  packagedGold: 7224.27,
-  changeGram: '+0.04%',
-  change22k: '+0.04%',
-  changeQuarter: '+0.04%',
-  direction: 'up'
+  source: 'https://www.izko.org.tr/api/web/v1/gold-prices',
+  lastUpdated: new Date().toISOString(),
+  lastUpdatedFormatted: new Date().toLocaleString('tr-TR'),
+  hasAltin: 6826.16,
+  gramGold24k: 6420.00,
+  gramGold22k: 6420.00,
+  gramGold18k: 6150.00,
+  gramGold14k: 5700.00,
+  gramGold8k: 3300.00,
+  quarterGold: 11300.00,
+  oldQuarterGold: 11100.00,
+  halfGold: 22600.00,
+  oldHalfGold: 22200.00,
+  fullGold: 45200.00,
+  oldFullGold: 44400.00,
+  ataGold: 45450.00,
+  packagedGold: 6939.81,
+  changeGram: '-0.24%',
+  change22k: '-0.24%',
+  changeQuarter: '-0.24%',
+  direction: 'down',
+  creditCardRates: {}
 };
-
-function fetchHttpsJson(url, options = {}) {
-  return new Promise((resolve, reject) => {
-    const req = https.get(url, {
-      timeout: options.timeout || 8000,
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept': 'application/json, text/plain, */*',
-        'Referer': 'https://www.izko.org.tr/guncel-kur'
-      }
-    }, (res) => {
-      let data = '';
-      res.on('data', (chunk) => { data += chunk; });
-      res.on('end', () => {
-        if (res.statusCode >= 200 && res.statusCode < 300) {
-          try {
-            resolve(JSON.parse(data));
-          } catch (e) {
-            reject(new Error(`JSON Parse Error: ${e.message}`));
-          }
-        } else {
-          reject(new Error(`HTTP ${res.statusCode}`));
-        }
-      });
-    });
-
-    req.on('error', reject);
-    req.on('timeout', () => {
-      req.destroy();
-      reject(new Error('İstek zaman aşımına uğradı (Timeout)'));
-    });
-  });
-}
-
-function fetchHttpsHtml(url, options = {}) {
-  return new Promise((resolve, reject) => {
-    const req = https.get(url, {
-      timeout: options.timeout || 8000,
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
-      }
-    }, (res) => {
-      let data = '';
-      res.on('data', (chunk) => { data += chunk; });
-      res.on('end', () => {
-        if (res.statusCode >= 200 && res.statusCode < 300) {
-          resolve(data);
-        } else {
-          reject(new Error(`HTTP ${res.statusCode}`));
-        }
-      });
-    });
-
-    req.on('error', reject);
-    req.on('timeout', () => {
-      req.destroy();
-      reject(new Error('İstek zaman aşımına uğradı (Timeout)'));
-    });
-  });
-}
 
 /**
  * İZKO resmi web servisinden ve /guncel-kur sayfasından altın kurlarını çeker.
+ * Başarısızlık halinde Harem Altın fallback'e başvurur.
  */
 async function fetchIzkoRates() {
   const now = new Date();
   const formattedTime = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
   const formattedDate = now.toLocaleDateString('tr-TR');
 
-  // 1. TIER: İZKO Resmi API Endpoint
   try {
-    const json = await fetchHttpsJson('https://www.izko.org.tr/api/web/v1/gold-prices', { timeout: 7000 });
-    if (json && json.success && Array.isArray(json.data) && json.data.length > 0) {
-      const rates = {
-        success: true,
-        source: 'https://www.izko.org.tr/guncel-kur',
-        lastUpdated: now.toISOString(),
-        lastUpdatedFormatted: `${formattedDate} ${formattedTime}`,
-        changeGram: '+0.04%',
-        change22k: '+0.04%',
-        changeQuarter: '+0.04%',
-        direction: 'up'
+    const izkoRes = await fetchIzkoPrices();
+    if (izkoRes.success && izkoRes.prices.size > 0) {
+      const p = izkoRes.prices;
+      const getVal = (prodId) => {
+        const item = p.get(prodId);
+        return item && typeof item.sell === 'number' && item.sell > 0 ? item.sell : null;
       };
 
-      json.data.forEach(item => {
-        const price = parseFloat(item.sell_price || item.buy_price) || 0;
-        if (price > 0) {
-          switch (item.key) {
-            case 'hasaltin':
-              rates.hasAltin = price;
-              rates.gramGold24k = price;
-              break;
-            case 'yirmiiki':
-            case 'gram':
-              rates.gramGold22k = price;
-              break;
-            case 'onsekiz':
-              rates.gramGold18k = price;
-              break;
-            case 'ondort':
-              rates.gramGold14k = price;
-              break;
-            case 'sekizayar':
-              rates.gramGold8k = price;
-              break;
-            case 'yeniceyrek':
-              rates.quarterGold = price;
-              break;
-            case 'eskiceyrek':
-              rates.oldQuarterGold = price;
-              break;
-            case 'yeniyarim':
-              rates.halfGold = price;
-              break;
-            case 'eskiyarim':
-              rates.oldHalfGold = price;
-              break;
-            case 'yenitam':
-              rates.fullGold = price;
-              break;
-            case 'eskitam':
-              rates.oldFullGold = price;
-              break;
-            case 'ata':
-              rates.ataGold = price;
-              break;
-            case 'paketlihas':
-              rates.packagedGold = price;
-              break;
-          }
-        }
-      });
-
-      if (json.data[0] && json.data[0].percent_change !== undefined) {
-        const chgNum = parseFloat(json.data[0].percent_change) || 0;
-        const chg = (chgNum >= 0 ? '+' : '') + chgNum.toFixed(2) + '%';
-        rates.changeGram = chg;
-        rates.change22k = chg;
-        rates.changeQuarter = chg;
-        rates.direction = json.data[0].direction || (chgNum >= 0 ? 'up' : 'down');
-      }
-
-      cachedRates = { ...cachedRates, ...rates };
-      return cachedRates;
-    }
-  } catch (apiErr) {
-    console.warn('[IZKO Scraper] API denemesi başarısız, HTML fallback deneniyor:', apiErr.message);
-  }
-
-  // 2. TIER: İZKO /guncel-kur HTML Ayrıştırma
-  try {
-    const html = await fetchHttpsHtml('https://www.izko.org.tr/guncel-kur', { timeout: 7000 });
-    const matchHasAltin = html.match(/id="hasaltinDiscount"[^>]*>([\d\.,]+)<\/span>/i);
-    const match22k = html.match(/id="yirmiikiDiscount"[^>]*>([\d\.,]+)<\/span>/i);
-    const matchQuarter = html.match(/id="yeniceyrekDiscount"[^>]*>([\d\.,]+)<\/span>/i);
-
-    const parseTrNum = (str) => {
-      if (!str) return 0;
-      return parseFloat(str.replace(/\./g, '').replace(',', '.')) || 0;
-    };
-
-    if (matchHasAltin || match22k || matchQuarter) {
-      const parsed = {
+      const updated = {
         success: true,
-        source: 'https://www.izko.org.tr/guncel-kur (HTML)',
+        source: izkoRes.source,
         lastUpdated: now.toISOString(),
         lastUpdatedFormatted: `${formattedDate} ${formattedTime}`,
+        hasAltin: getVal(PRODUCT_IDS.HAS_24K) || cachedRates.hasAltin,
+        gramGold24k: getVal(PRODUCT_IDS.GRAM_24K) || cachedRates.gramGold24k,
+        gramGold22k: getVal(PRODUCT_IDS.GOLD_22K) || cachedRates.gramGold22k,
+        gramGold18k: getVal(PRODUCT_IDS.GOLD_18K) || cachedRates.gramGold18k,
+        gramGold14k: getVal(PRODUCT_IDS.GOLD_14K) || cachedRates.gramGold14k,
+        gramGold8k: getVal(PRODUCT_IDS.GOLD_8K) || cachedRates.gramGold8k,
+        quarterGold: getVal(PRODUCT_IDS.CEYREK_NEW) || cachedRates.quarterGold,
+        oldQuarterGold: getVal(PRODUCT_IDS.CEYREK_OLD) || cachedRates.oldQuarterGold,
+        halfGold: getVal(PRODUCT_IDS.YARIM_NEW) || cachedRates.halfGold,
+        oldHalfGold: getVal(PRODUCT_IDS.YARIM_OLD) || cachedRates.oldHalfGold,
+        fullGold: getVal(PRODUCT_IDS.ZIYNET_NEW) || cachedRates.fullGold,
+        oldFullGold: getVal(PRODUCT_IDS.ZIYNET_OLD) || cachedRates.oldFullGold,
+        ataGold: getVal(PRODUCT_IDS.ATA_NEW) || cachedRates.ataGold,
+        packagedGold: getVal(PRODUCT_IDS.PACKAGED_24K) || cachedRates.packagedGold,
+        creditCardRates: {}
       };
-      if (matchHasAltin) {
-        const val = parseTrNum(matchHasAltin[1]);
-        if (val > 1000) {
-          parsed.hasAltin = val;
-          parsed.gramGold24k = val;
+
+      // K.K Satış kolonunu sadece izleme meta olarak sakla (normal fiyata asla karışmaz)
+      for (const [prodId, norm] of p.entries()) {
+        if (norm.creditCardSell) {
+          updated.creditCardRates[prodId] = norm.creditCardSell;
         }
       }
-      if (match22k) {
-        const val = parseTrNum(match22k[1]);
-        if (val > 1000) parsed.gramGold22k = val;
-      }
-      if (matchQuarter) {
-        const val = parseTrNum(matchQuarter[1]);
-        if (val > 1000) parsed.quarterGold = val;
-      }
 
-      cachedRates = { ...cachedRates, ...parsed };
+      cachedRates = { ...cachedRates, ...updated };
       return cachedRates;
     }
-  } catch (htmlErr) {
-    console.warn('[IZKO Scraper] HTML ayrıştırma başarısız:', htmlErr.message);
+  } catch (err) {
+    console.warn('[IZKO Scraper] İZKO çağrısı başarısız, Harem fallback devrede:', err.message);
   }
 
-  // 3. TIER: Harem Altın Canlı Piyasa HTTP API Fallback
+  // Fallback: Harem Altın Canlı Satış Fiyatları
   try {
-    const haremData = await fetchHttpsJson('https://canlipiyasalar.haremaltin.com/tmp/altin.json?dir=both', { timeout: 7000 });
-    if (haremData && haremData.data) {
-      const d = haremData.data;
-      const parseNum = (v) => parseFloat(String(v || '').replace(',', '.')) || 0;
-      
-      const parsedHarem = {
-        success: true,
-        source: 'https://canlipiyasalar.haremaltin.com/ (Harem Altın)',
-        lastUpdated: now.toISOString(),
-        lastUpdatedFormatted: `${formattedDate} ${formattedTime}`,
+    const haremRes = await fetchHaremSnapshot(5000);
+    if (haremRes.success && haremRes.prices.size > 0) {
+      const hp = haremRes.prices;
+      const getHaremVal = (prodId) => {
+        const item = hp.get(prodId);
+        return item && typeof item.sell === 'number' && item.sell > 0 ? item.sell : null;
       };
 
-      if (d.ALTIN && parseNum(d.ALTIN.satis) > 1000) {
-        parsedHarem.hasAltin = parseNum(d.ALTIN.satis);
-        parsedHarem.gramGold24k = parsedHarem.hasAltin;
-      }
-      if (d.AYAR22 && parseNum(d.AYAR22.satis) > 1000) parsedHarem.gramGold22k = parseNum(d.AYAR22.satis);
-      if (d.AYAR18 && parseNum(d.AYAR18.satis) > 1000) parsedHarem.gramGold18k = parseNum(d.AYAR18.satis);
-      if (d.AYAR14 && parseNum(d.AYAR14.satis) > 1000) parsedHarem.gramGold14k = parseNum(d.AYAR14.satis);
-      if (d.AYAR8 && parseNum(d.AYAR8.satis) > 1000) parsedHarem.gramGold8k = parseNum(d.AYAR8.satis);
-      if (d.CEYREK_YENI && parseNum(d.CEYREK_YENI.satis) > 1000) parsedHarem.quarterGold = parseNum(d.CEYREK_YENI.satis);
-      if (d.CEYREK_ESKI && parseNum(d.CEYREK_ESKI.satis) > 1000) parsedHarem.oldQuarterGold = parseNum(d.CEYREK_ESKI.satis);
-      if (d.YARIM_YENI && parseNum(d.YARIM_YENI.satis) > 1000) parsedHarem.halfGold = parseNum(d.YARIM_YENI.satis);
-      if (d.TEK_YENI && parseNum(d.TEK_YENI.satis) > 1000) parsedHarem.fullGold = parseNum(d.TEK_YENI.satis);
-      if (d.ATA_YENI && parseNum(d.ATA_YENI.satis) > 1000) parsedHarem.ataGold = parseNum(d.ATA_YENI.satis);
-      if (d.KULCEALTIN && parseNum(d.KULCEALTIN.satis) > 1000) parsedHarem.packagedGold = parseNum(d.KULCEALTIN.satis);
-      if (d.USDTRY && parseNum(d.USDTRY.satis) > 10) parsedHarem.usdTry = parseNum(d.USDTRY.satis);
-      if (d.EURTRY && parseNum(d.EURTRY.satis) > 10) parsedHarem.eurTry = parseNum(d.EURTRY.satis);
+      const fallback = {
+        success: true,
+        source: 'https://canlipiyasalar.haremaltin.com/ (Harem Fallback)',
+        lastUpdated: now.toISOString(),
+        lastUpdatedFormatted: `${formattedDate} ${formattedTime}`,
+        hasAltin: getHaremVal(PRODUCT_IDS.HAS_24K) || cachedRates.hasAltin,
+        gramGold24k: getHaremVal(PRODUCT_IDS.GRAM_24K) || cachedRates.gramGold24k,
+        gramGold22k: getHaremVal(PRODUCT_IDS.GOLD_22K) || cachedRates.gramGold22k,
+        gramGold18k: getHaremVal(PRODUCT_IDS.GOLD_18K) || cachedRates.gramGold18k,
+        gramGold14k: getHaremVal(PRODUCT_IDS.GOLD_14K) || cachedRates.gramGold14k,
+        gramGold8k: getHaremVal(PRODUCT_IDS.GOLD_8K) || cachedRates.gramGold8k,
+        quarterGold: getHaremVal(PRODUCT_IDS.CEYREK_NEW) || cachedRates.quarterGold,
+        oldQuarterGold: getHaremVal(PRODUCT_IDS.CEYREK_OLD) || cachedRates.oldQuarterGold,
+        halfGold: getHaremVal(PRODUCT_IDS.YARIM_NEW) || cachedRates.halfGold,
+        oldHalfGold: getHaremVal(PRODUCT_IDS.YARIM_OLD) || cachedRates.oldHalfGold,
+        fullGold: getHaremVal(PRODUCT_IDS.ZIYNET_NEW) || cachedRates.fullGold,
+        oldFullGold: getHaremVal(PRODUCT_IDS.ZIYNET_OLD) || cachedRates.oldFullGold,
+        ataGold: getHaremVal(PRODUCT_IDS.ATA_NEW) || cachedRates.ataGold,
+        packagedGold: getHaremVal(PRODUCT_IDS.PACKAGED_24K) || cachedRates.packagedGold
+      };
 
-      cachedRates = { ...cachedRates, ...parsedHarem };
+      cachedRates = { ...cachedRates, ...fallback };
       return cachedRates;
     }
   } catch (haremErr) {
-    // Fallback korunur
+    console.warn('[IZKO Scraper] Harem fallback çağrısı başarısız:', haremErr.message);
   }
 
   return cachedRates;

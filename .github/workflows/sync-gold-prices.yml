@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   smart-sync:
-    name: Smart Diffing Catalog Sync (Watches +40% / Gold +2%)
+    name: Smart Diffing Catalog Sync (Watches +40% / İZKO Gold Primary)
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -37,6 +37,9 @@ jobs:
       - name: Install Functions dependencies
         run: npm ci --prefix functions --ignore-scripts --no-audit --no-fund
 
+      - name: Sync İZKO & Harem Canonical Gold Rates
+        run: node scripts/sync-izko-rates.js && node scripts/sync-harem-prices.js
+
       - name: Run Unified Smart Diffing Engine
         run: node scripts/smart-diff-sync.js
 
@@ -47,9 +50,9 @@ jobs:
         run: |
           git config --global user.name "Belgin Smart Sync Bot"
           git config --global user.email "bot@belginkuyumculuk.com"
-          git add js/data.js functions/product-catalog.json sitemap.xml llms.txt llms-full.txt robots.txt
+          git add js/data.js functions/product-catalog.json paytr_products.json izko-rates-cache.json sitemap.xml llms.txt llms-full.txt robots.txt
           if ! git diff --staged --quiet; then
-            git commit -m "chore(sync): automated smart-diff update (gold +2% / watches +40%)"
+            git commit -m "chore(sync): automated smart-diff update (IZKO gold primary / watches +40%)"
             git push origin HEAD:${{ github.ref }}
           else
             echo "Zero delta detected. No commit needed."
