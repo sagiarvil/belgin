@@ -1090,6 +1090,12 @@ const AdminApp = {
     if (p.includes('AKBANK')) {
       return `<div style="margin-top:3px;"><span style="background:#FFEDD5; color:#EA580C; border:1px solid #FED7AA; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🟠 AKBANK</span></div>`;
     }
+    if (p.includes('VAKIF')) {
+      return `<div style="margin-top:3px;"><span style="background:#FEF9C3; color:#854D0E; border:1px solid #FDE047; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🟡 VAKIFBANK</span></div>`;
+    }
+    if (p.includes('ZIRAAT') || p.includes('ZİRAAT')) {
+      return `<div style="margin-top:3px;"><span style="background:#DCFCE7; color:#166534; border:1px solid #86EFAC; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🟢 ZİRAAT KATILIM</span></div>`;
+    }
     if (p.includes('PAYTR')) {
       return `<div style="margin-top:3px;"><span style="background:#EDE9FE; color:#6D28D9; border:1px solid #DDD6FE; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🟣 PAYTR</span></div>`;
     }
@@ -1117,6 +1123,12 @@ const AdminApp = {
     }
     if (p.includes('AKBANK')) {
       return `<span style="background:#FFEDD5; color:#EA580C; border:1px solid #FED7AA; font-size:11px; font-weight:800; padding:2px 8px; border-radius:6px; display:inline-flex; align-items:center; letter-spacing:0.3px; vertical-align:middle; margin-left:4px;">AKBANK</span>`;
+    }
+    if (p.includes('VAKIF')) {
+      return `<span style="background:#FEF9C3; color:#854D0E; border:1px solid #FDE047; font-size:11px; font-weight:800; padding:2px 8px; border-radius:6px; display:inline-flex; align-items:center; letter-spacing:0.3px; vertical-align:middle; margin-left:4px;">VAKIFBANK</span>`;
+    }
+    if (p.includes('ZIRAAT') || p.includes('ZİRAAT')) {
+      return `<span style="background:#DCFCE7; color:#166534; border:1px solid #86EFAC; font-size:11px; font-weight:800; padding:2px 8px; border-radius:6px; display:inline-flex; align-items:center; letter-spacing:0.3px; vertical-align:middle; margin-left:4px;">ZİRAAT KATILIM</span>`;
     }
     if (p.includes('PAYTR')) {
       return `<span style="background:#EDE9FE; color:#6D28D9; border:1px solid #DDD6FE; font-size:11px; font-weight:800; padding:2px 8px; border-radius:6px; display:inline-flex; align-items:center; letter-spacing:0.3px; vertical-align:middle; margin-left:4px;">PAYTR</span>`;
@@ -3900,6 +3912,12 @@ const AdminApp = {
     if (!r || !r.pos || r.pos <= 0) {
       return { profit: 0, profitRate: '0.00', effectiveRate: 0, hasCustomRate: false };
     }
+    // Gelen EFT/Havale Tahsilatı: %5 kesinti kârımız, kalan %95 borcumuz (Net Hakediş)
+    if (r.type === 'EFT_SALE' || Boolean(r.isManualEft) || r.paymentMethod === 'HAVALE_EFT' || (r.id && String(r.id).startsWith('BLG-EFT-'))) {
+      const pos = Number(r.pos || 0);
+      const profit = Math.round(pos * 0.05 * 100) / 100;
+      return { profit, profitRate: '5.00', effectiveRate: 0, hasCustomRate: false };
+    }
     const hasCustomRate = (r.posRate !== undefined && r.posRate !== null && !isNaN(Number(r.posRate)) && Number(r.posRate) >= 0);
     const effectiveRate = hasCustomRate ? Number(r.posRate) : this.getRateForDate(r.date, r.provider, r.description);
     const bankFee = r.pos * (effectiveRate / 100);
@@ -4148,7 +4166,8 @@ const AdminApp = {
     let mobileHtml = '';
 
     rows.forEach(r => {
-      const isPosSale = r.type === 'POS_SALE';
+      const isEftSale = r.type === 'EFT_SALE' || Boolean(r.isManualEft) || r.paymentMethod === 'HAVALE_EFT' || (r.id && String(r.id).startsWith('BLG-EFT-'));
+      const isPosSale = !isEftSale && r.type === 'POS_SALE';
       const isPayment = r.type === 'PAYMENT';
       const isManualPos = r.type === 'POS_MANUAL';
 
@@ -4160,7 +4179,12 @@ const AdminApp = {
       let mainAmountStr = '';
       let mainAmountColor = '#0F172A';
 
-      if (isPosSale) {
+      if (isEftSale) {
+        typeBadge = `<span style="background:#E0F2FE; color:#0284C7; border:1px solid #7DD3FC; font-size:10.5px; font-weight:800; padding:2px 6px; border-radius:5px; display:inline-flex; align-items:center; gap:3px;">🏛️ EFT/Havale</span>`;
+        descHtml = `<strong style="color:#0369A1; font-size:12.5px;">${r.orderId}</strong> — <span style="font-weight:700; color:#1E293B;">${this.escapeHtml(r.customerName || 'Müşteri')}</span> ${this.getBankTag(r.provider || 'KUVEYTTURK')}`;
+        mainAmountStr = `+${fmt(r.pos)}`;
+        mainAmountColor = '#0369A1';
+      } else if (isPosSale) {
         typeBadge = `<span style="background:#E0F2FE; color:#0369A1; border:1px solid #7DD3FC; font-size:10.5px; font-weight:800; padding:2px 6px; border-radius:5px; display:inline-flex; align-items:center; gap:3px;">💳 POS</span>`;
         descHtml = `<strong style="color:#0F172A; font-size:12.5px;">${r.orderId}</strong> — <span style="font-weight:700; color:#1E293B;">${this.escapeHtml(r.customerName || 'Müşteri')}</span> ${this.getBankTag(r.provider || 'KUVEYTTURK')}`;
         mainAmountStr = `+${fmt(r.pos)}`;
@@ -4180,7 +4204,7 @@ const AdminApp = {
       const isPositiveRemaining = (r.remaining || 0) > 0;
       const isZeroRemaining = Math.abs(r.remaining || 0) < 0.01;
 
-      // POS Oranı ve Kâr Hesabı
+      // POS / EFT Oranı ve Kâr Hesabı
       let posRateCellHtml = '';
       let mobilePosRateHtml = '';
       let profitHtml = '';
@@ -4189,45 +4213,64 @@ const AdminApp = {
       if (r.pos > 0) {
         const { profit, profitRate, effectiveRate, hasCustomRate } = this.calculateRowProfit(r);
 
-        posRateCellHtml = `
-          <div class="stmt-inline-pos-box ${hasCustomRate ? 'has-custom' : ''}" id="stmtPosRateBox_${r.id}">
-            <span style="font-size:10.5px; font-weight:800; color:${hasCustomRate ? '#B45309' : '#64748B'};">%</span>
-            <input type="text" 
-                   inputmode="decimal"
-                   id="stmtInlinePosRate_${r.id}"
-                   value="${hasCustomRate ? Number(r.posRate) : ''}" 
-                   placeholder="${effectiveRate.toFixed(2)}" 
-                   title="Banka POS Komisyon Oranı (%): Kuveyt Türk %${(this.posRateKuveytTurk || 2.99).toFixed(2)}, Tosla %${(this.posRateTosla || 3.79).toFixed(2)}. Noktalı veya virgüllü girebilirsiniz."
-                   style="width:44px; border:none; background:transparent; font-size:11.5px; font-weight:800; color:${hasCustomRate ? '#92400E' : '#334155'}; text-align:center; outline:none; padding:1px 0;" 
-                   oninput="AdminApp.onInlinePosRateInput('${this.escapeHtml(r.id)}', this.value)" 
-                   onchange="AdminApp.saveInlinePosRate('${this.escapeHtml(r.id)}', '${r.type}', this.value, '${this.escapeHtml(r.orderId || '')}', '${this.escapeHtml(r.entryId || '')}')">
-          </div>
-        `;
-
-        mobilePosRateHtml = `
-          <div style="display:flex; align-items:center; justify-content:space-between; background:#FEF9E7; border:1px solid ${hasCustomRate ? '#F59E0B' : '#CBD5E1'}; padding:5px 8px; border-radius:7px; margin-bottom:8px;" id="stmtMobilePosRateBox_${r.id}">
-            <span style="font-size:11px; font-weight:800; color:#92400E;">🏦 Banka POS Oranı:</span>
-            <div style="display:flex; align-items:center; gap:3px;">
-              <span style="font-size:11px; font-weight:800; color:#B45309;">%</span>
+        if (isEftSale) {
+          posRateCellHtml = `
+            <div style="font-size:11px; font-weight:800; color:#059669; text-align:center;" title="Havale/EFT işlemlerinde banka komisyonu %0'dır">%0.00</div>
+          `;
+          mobilePosRateHtml = `
+            <div style="display:flex; align-items:center; justify-content:space-between; background:#F0FDF4; border:1px solid #BBF7D0; padding:5px 8px; border-radius:7px; margin-bottom:8px;">
+              <span style="font-size:11px; font-weight:800; color:#166534;">🏦 Komisyon:</span>
+              <span style="font-size:11.5px; font-weight:800; color:#059669;">%0.00 (Havale)</span>
+            </div>
+          `;
+          profitHtml = `
+            <div style="font-size:12px; font-weight:800; color:#15803D;" id="stmtProfitAmount_${r.id}">${fmt(profit)}</div>
+            <div style="font-size:9.5px; color:#166534; font-weight:700;" id="stmtProfitSub_${r.id}">Net (%5.00 Kâr)</div>
+          `;
+          profitMobileHtml = `
+            <span id="stmtMobileProfit_${r.id}"><strong style="color:#15803D; font-size:12.5px;">${fmt(profit)}</strong> <span style="font-size:10px; color:#166534; font-weight:700;">(Net %5.00)</span></span>
+          `;
+        } else {
+          posRateCellHtml = `
+            <div class="stmt-inline-pos-box ${hasCustomRate ? 'has-custom' : ''}" id="stmtPosRateBox_${r.id}">
+              <span style="font-size:10.5px; font-weight:800; color:${hasCustomRate ? '#B45309' : '#64748B'};">%</span>
               <input type="text" 
                      inputmode="decimal"
+                     id="stmtInlinePosRate_${r.id}"
                      value="${hasCustomRate ? Number(r.posRate) : ''}" 
                      placeholder="${effectiveRate.toFixed(2)}" 
-                     title="Kuveyt Türk %${(this.posRateKuveytTurk || 2.99).toFixed(2)}, Tosla %${(this.posRateTosla || 3.79).toFixed(2)}"
-                     style="width:54px; height:28px; border:1.5px solid #D97706; border-radius:5px; font-size:12px; font-weight:800; color:#92400E; text-align:center; background:#FFF;" 
+                     title="Banka POS Komisyon Oranı (%): Kuveyt Türk %${(this.posRateKuveytTurk || 2.99).toFixed(2)}, Tosla %${(this.posRateTosla || 3.79).toFixed(2)}. Noktalı veya virgüllü girebilirsiniz."
+                     style="width:44px; border:none; background:transparent; font-size:11.5px; font-weight:800; color:${hasCustomRate ? '#92400E' : '#334155'}; text-align:center; outline:none; padding:1px 0;" 
                      oninput="AdminApp.onInlinePosRateInput('${this.escapeHtml(r.id)}', this.value)" 
                      onchange="AdminApp.saveInlinePosRate('${this.escapeHtml(r.id)}', '${r.type}', this.value, '${this.escapeHtml(r.orderId || '')}', '${this.escapeHtml(r.entryId || '')}')">
             </div>
-          </div>
-        `;
+          `;
 
-        profitHtml = `
-          <div style="font-size:12px; font-weight:800; color:#15803D;" id="stmtProfitAmount_${r.id}">${fmt(profit)}</div>
-          <div style="font-size:9.5px; color:#166534; font-weight:700;" id="stmtProfitSub_${r.id}">Net (%${profitRate}) <span style="color:#B45309;">(%${effectiveRate.toFixed(2)})</span></div>
-        `;
-        profitMobileHtml = `
-          <span id="stmtMobileProfit_${r.id}"><strong style="color:#15803D; font-size:12.5px;">${fmt(profit)}</strong> <span style="font-size:10px; color:#166534; font-weight:700;">(%${profitRate})</span></span>
-        `;
+          mobilePosRateHtml = `
+            <div style="display:flex; align-items:center; justify-content:space-between; background:#FEF9E7; border:1px solid ${hasCustomRate ? '#F59E0B' : '#CBD5E1'}; padding:5px 8px; border-radius:7px; margin-bottom:8px;" id="stmtMobilePosRateBox_${r.id}">
+              <span style="font-size:11px; font-weight:800; color:#92400E;">🏦 Banka POS Oranı:</span>
+              <div style="display:flex; align-items:center; gap:3px;">
+                <span style="font-size:11px; font-weight:800; color:#B45309;">%</span>
+                <input type="text" 
+                       inputmode="decimal"
+                       value="${hasCustomRate ? Number(r.posRate) : ''}" 
+                       placeholder="${effectiveRate.toFixed(2)}" 
+                       title="Kuveyt Türk %${(this.posRateKuveytTurk || 2.99).toFixed(2)}, Tosla %${(this.posRateTosla || 3.79).toFixed(2)}"
+                       style="width:54px; height:28px; border:1.5px solid #D97706; border-radius:5px; font-size:12px; font-weight:800; color:#92400E; text-align:center; background:#FFF;" 
+                       oninput="AdminApp.onInlinePosRateInput('${this.escapeHtml(r.id)}', this.value)" 
+                       onchange="AdminApp.saveInlinePosRate('${this.escapeHtml(r.id)}', '${r.type}', this.value, '${this.escapeHtml(r.orderId || '')}', '${this.escapeHtml(r.entryId || '')}')">
+              </div>
+            </div>
+          `;
+
+          profitHtml = `
+            <div style="font-size:12px; font-weight:800; color:#15803D;" id="stmtProfitAmount_${r.id}">${fmt(profit)}</div>
+            <div style="font-size:9.5px; color:#166534; font-weight:700;" id="stmtProfitSub_${r.id}">Net (%${profitRate}) <span style="color:#B45309;">(%${effectiveRate.toFixed(2)})</span></div>
+          `;
+          profitMobileHtml = `
+            <span id="stmtMobileProfit_${r.id}"><strong style="color:#15803D; font-size:12.5px;">${fmt(profit)}</strong> <span style="font-size:10px; color:#166534; font-weight:700;">(%${profitRate})</span></span>
+          `;
+        }
       } else {
         posRateCellHtml = `<span style="color:#94A3B8; font-weight:600;">—</span>`;
         profitHtml = `<span style="color:#64748B; font-weight:600;">—</span>`;
@@ -4240,7 +4283,23 @@ const AdminApp = {
       let blokeCellHtml = '';
       let mobileBlokeHtml = '';
 
-      if (r.pos > 0) {
+      if (isEftSale) {
+        blokeCellHtml = `
+          <div class="stmt-pos-countdown-cell">
+            <span class="stmt-badge-unlocked" title="Banka hesabına doğrudan geçti, bloke yoktur.">
+              <span>✅</span> <span>Hesapta</span>
+            </span>
+            <span class="stmt-countdown-date" style="color:#15803D;">Bloke Yok</span>
+          </div>
+        `;
+        mobileBlokeHtml = `
+          <div class="stmt-mobile-bloke-box is-unlocked">
+            <div class="stmt-badge-unlocked" style="width:100%; justify-content:center; padding:4px 8px; box-sizing:border-box;">
+              <span>✅ Doğrudan Banka Hesabına Geçti (Bloke Yok)</span>
+            </div>
+          </div>
+        `;
+      } else if (r.pos > 0) {
         const unlockInfo = this.getPosUnlockInfo(r.date);
         if (unlockInfo) {
           const { isUnlocked, diffMs, unlockDateFormatted, unlockTs } = unlockInfo;
@@ -4301,7 +4360,7 @@ const AdminApp = {
       let actionsHtml = '';
       let mobileActionsHtml = '';
 
-      if (isPosSale) {
+      if (isPosSale || isEftSale) {
         actionsHtml = `
           <div style="display:flex; justify-content:center; align-items:center; gap:3px;">
             <button type="button" class="btn-admin-secondary" style="padding:4px 7px; font-size:11px; font-weight:700; color:#064E3B; border-radius:5px;" onclick="AdminApp.openOrderModal('${r.orderId}')" title="Sipariş detayını görüntüle / yönet">
@@ -5186,6 +5245,253 @@ const AdminApp = {
       if (btnSubmit) {
         btnSubmit.disabled = false;
         btnSubmit.innerHTML = '<span>✅ Siparişi & Hukuki Dosyayı Oluştur</span>';
+      }
+    }
+  },
+
+  // 10.75 MANUEL MÜŞTERİ EFT / HAVALE GİRİŞİ MODALI (BANKA SEÇİMLİ & OTOMATİK EKSTRE ENTEGRASYONLU)
+  openManualEftModal() {
+    const modal = document.getElementById('manualEftModal');
+    if (!modal) return;
+
+    // Şu anki yerel tarih ve saati YYYY-MM-DDTHH:mm formatında hazırla
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    const nowIsoLocal = now.toISOString().slice(0, 16);
+
+    const dtInput = document.getElementById('manualEftDateTime');
+    if (dtInput) dtInput.value = nowIsoLocal;
+
+    // Varsayılan banka: KUVEYTTURK (Kuveyt Türk nakit/havale)
+    this.selectEftBank('KUVEYTTURK');
+
+    const amountInput = document.getElementById('manualEftAmount');
+    if (amountInput) amountInput.value = '';
+
+    const nameInput = document.getElementById('manualEftCustomerName');
+    if (nameInput) nameInput.value = '';
+
+    const phoneInput = document.getElementById('manualEftCustomerPhone');
+    if (phoneInput) phoneInput.value = '';
+
+    const idInput = document.getElementById('manualEftCustomerIdentity');
+    if (idInput) idInput.value = '';
+
+    const refInput = document.getElementById('manualEftRefNo');
+    if (refInput) refInput.value = '';
+
+    const prodInput = document.getElementById('manualEftProductName');
+    if (prodInput) prodInput.value = '22 Ayar İşçilikli Altın Bilezik';
+
+    const errDiv = document.getElementById('manualEftErrorMsg');
+    if (errDiv) {
+      errDiv.style.display = 'none';
+      errDiv.textContent = '';
+    }
+
+    this.updateManualEftBreakdownPreview();
+    modal.style.display = 'flex';
+    setTimeout(() => {
+      if (amountInput) amountInput.focus();
+    }, 150);
+  },
+
+  closeManualEftModal() {
+    const modal = document.getElementById('manualEftModal');
+    if (modal) modal.style.display = 'none';
+  },
+
+  selectEftBank(bankKey) {
+    const cleanKey = String(bankKey || 'KUVEYTTURK').toUpperCase();
+    const hidden = document.getElementById('manualEftBankValue');
+    if (hidden) hidden.value = cleanKey;
+
+    const cards = {
+      'KUVEYTTURK': document.getElementById('btnBankKuveyt'),
+      'AKBANK': document.getElementById('btnBankAkbank'),
+      'VAKIFBANK': document.getElementById('btnBankVakif'),
+      'ZIRAAT_KATILIM': document.getElementById('btnBankZiraat')
+    };
+
+    const styles = {
+      'KUVEYTTURK': { activeBg: '#E0F2FE', activeColor: '#0369A1', activeBorder: '#0284C7' },
+      'AKBANK': { activeBg: '#FFEDD5', activeColor: '#C2410C', activeBorder: '#F97316' },
+      'VAKIFBANK': { activeBg: '#FEF9C3', activeColor: '#854D0E', activeBorder: '#EAB308' },
+      'ZIRAAT_KATILIM': { activeBg: '#DCFCE7', activeColor: '#166534', activeBorder: '#22C55E' }
+    };
+
+    Object.keys(cards).forEach(k => {
+      const card = cards[k];
+      if (!card) return;
+      if (k === cleanKey) {
+        card.classList.add('active');
+        const st = styles[k] || styles['KUVEYTTURK'];
+        card.style.background = st.activeBg;
+        card.style.color = st.activeColor;
+        card.style.borderColor = st.activeBorder;
+        card.style.borderWidth = '2px';
+      } else {
+        card.classList.remove('active');
+        card.style.background = '#FFFFFF';
+        card.style.color = '#334155';
+        card.style.borderColor = '#CBD5E1';
+        card.style.borderWidth = '1.5px';
+      }
+    });
+  },
+
+  updateManualEftBreakdownPreview() {
+    const amountVal = parseFloat(document.getElementById('manualEftAmount')?.value || 0);
+    const total = isNaN(amountVal) || amountVal < 0 ? 0 : amountVal;
+
+    // Kural: %5 Belgin Kuyumculuk Kârı, %95 Borcumuz (Net Hakediş)
+    const profit = Math.round(total * 0.05 * 100) / 100;
+    const hakedis = Math.round(total * 0.95 * 100) / 100;
+
+    const fmt = val => '₺' + Number(val || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    const pProfit = document.getElementById('previewEftProfit');
+    const pHakedis = document.getElementById('previewEftHakedis');
+
+    if (pProfit) pProfit.textContent = fmt(profit);
+    if (pHakedis) pHakedis.textContent = fmt(hakedis);
+  },
+
+  async submitManualEftOrder() {
+    const errDiv = document.getElementById('manualEftErrorMsg');
+    const btnSubmit = document.getElementById('btnSubmitManualEft');
+    if (errDiv) { errDiv.style.display = 'none'; errDiv.textContent = ''; }
+
+    const bankKey = document.getElementById('manualEftBankValue')?.value?.trim() || 'KUVEYTTURK';
+    const dateTimeVal = document.getElementById('manualEftDateTime')?.value?.trim();
+    const amountVal = parseFloat(document.getElementById('manualEftAmount')?.value || 0);
+    const customerName = document.getElementById('manualEftCustomerName')?.value?.trim();
+    const customerPhone = document.getElementById('manualEftCustomerPhone')?.value?.trim();
+    const customerIdentity = document.getElementById('manualEftCustomerIdentity')?.value?.trim();
+    const refNo = document.getElementById('manualEftRefNo')?.value?.trim();
+    const productName = document.getElementById('manualEftProductName')?.value?.trim() || '22 Ayar İşçilikli Altın Bilezik';
+
+    if (isNaN(amountVal) || amountVal <= 0) {
+      if (errDiv) {
+        errDiv.textContent = 'Lütfen geçerli bir tahsilat tutarı girin (0 ₺\'den büyük olmalıdır).';
+        errDiv.style.display = 'block';
+      }
+      return;
+    }
+
+    if (!customerName) {
+      if (errDiv) {
+        errDiv.textContent = 'Lütfen müşteri adı ve soyadını girin.';
+        errDiv.style.display = 'block';
+      }
+      return;
+    }
+
+    let transactionDate = new Date();
+    if (dateTimeVal) {
+      const parsed = new Date(dateTimeVal);
+      if (!isNaN(parsed.getTime())) transactionDate = parsed;
+    }
+
+    const bankLabels = {
+      'KUVEYTTURK': 'Kuveyt Türk (Nakit/Havale)',
+      'AKBANK': 'Akbank Havale',
+      'VAKIFBANK': 'VakıfBank Havale',
+      'ZIRAAT_KATILIM': 'Ziraat Katılım Havale'
+    };
+    const bankDisplay = bankLabels[bankKey] || bankKey;
+
+    const payload = {
+      isManualEft: true,
+      paymentMethod: 'HAVALE_EFT',
+      provider: bankKey,
+      transactionDate: transactionDate.toISOString(),
+      authCode: refNo || `EFT-${Math.floor(100000 + Math.random() * 900000)}`,
+      rrn: refNo || `REF-${Date.now().toString().slice(-8)}`,
+      cardLast4: '****',
+      cardScheme: `${bankDisplay} EFT / FAST`,
+      customerName: customerName || 'Bireysel Mağaza Müşterisi',
+      customerIdentity: customerIdentity || '11111111111',
+      customerPhone: customerPhone || '05000000000',
+      customerEmail: null,
+      customerAddress: 'İzmir Buca Showroom Mağazadan Teslim',
+      invoiceType: 'GOLD',
+      laborRate: 1.25,
+      productName: productName,
+      qty: 1,
+      items: [{
+        name: productName,
+        qty: 1,
+        unitPrice: amountVal,
+        price: amountVal
+      }],
+      totalAmount: amountVal,
+      note: refNo ? `${bankDisplay} Dekont No: ${refNo}` : `${bankDisplay} ile tahsil edildi`
+    };
+
+    if (btnSubmit) {
+      btnSubmit.disabled = true;
+      btnSubmit.innerHTML = '<span>⏳ Kaydediliyor ve Ekstreye İşleniyor...</span>';
+    }
+
+    try {
+      const res = await fetch('/api/admin/orders/create', {
+        method: 'POST',
+        headers: this.getAuthHeaders(),
+        body: JSON.stringify(payload)
+      });
+
+      if (res.status === 401) {
+        this.showAuthGate();
+        return;
+      }
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || 'EFT siparişi oluşturulamadı.');
+      }
+
+      const createdOrder = data.order || {
+        orderId: data.orderId,
+        totalAmount: amountVal,
+        customerName: customerName,
+        customerPhone: customerPhone,
+        customerIdentity: customerIdentity,
+        provider: bankKey,
+        isPaid: true,
+        status: 'PAID',
+        paymentMethod: 'HAVALE_EFT',
+        isManualEft: true,
+        createdAt: transactionDate.toISOString(),
+        invoiceStatus: 'PENDING'
+      };
+
+      if (!Array.isArray(this.orders)) this.orders = [];
+      this.orders = [createdOrder, ...this.orders.filter(o => o.orderId !== createdOrder.orderId)];
+
+      try {
+        const cached = localStorage.getItem('belgin_admin_cached_data');
+        let cData = cached ? JSON.parse(cached) : { orders: [] };
+        cData.orders = [createdOrder, ...(cData.orders || []).filter(o => o.orderId !== createdOrder.orderId)];
+        localStorage.setItem('belgin_admin_cached_data', JSON.stringify(cData));
+      } catch (_) {}
+
+      this.closeManualEftModal();
+      this.filterTable();
+      this.loadStatement();
+
+      this.showToast(`✅ ${bankDisplay} tahsilatı (₺${amountVal.toLocaleString('tr-TR')}) kaydedildi ve %5 kâr ile Ekstreye otomatik işlendi!`);
+
+    } catch (err) {
+      console.error('[AdminApp] submitManualEftOrder error:', err);
+      if (errDiv) {
+        errDiv.textContent = 'Hata: ' + err.message;
+        errDiv.style.display = 'block';
+      }
+    } finally {
+      if (btnSubmit) {
+        btnSubmit.disabled = false;
+        btnSubmit.innerHTML = '<span>💾 Tahsilatı Kaydet & Ekstreye Otomatik İşle</span>';
       }
     }
   },

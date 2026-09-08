@@ -4736,6 +4736,198 @@
 </div>
 
 <!-- ======================================================== -->
+<!-- MANUEL MÜŞTERİ EFT / HAVALE GİRİŞİ MODALI                -->
+<!-- ======================================================== -->
+<div class="admin-modal-overlay" id="manualEftModal" onclick="if(event.target===this) AdminApp.closeManualEftModal();" style="display:none;">
+  <div class="admin-modal-box" style="max-width:650px; padding:0; overflow:hidden; border-radius:14px; border:2px solid #0284C7; box-shadow:0 20px 40px rgba(2, 132, 199, 0.18);">
+    
+    <!-- Modal Üst Başlık -->
+    <div style="background:linear-gradient(135deg, #0C4A6E 0%, #0284C7 55%, #0369A1 100%); color:#FFF; padding:16px 20px; display:flex; justify-content:space-between; align-items:center;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span style="font-size:26px; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.25));">🏦</span>
+        <div>
+          <h3 style="margin:0; font-family:'Playfair Display',serif; font-size:18.5px; font-weight:800; color:#FFF; letter-spacing:0.3px;">
+            Müşteri EFT / Havale Tahsilatı Girişi
+          </h3>
+          <span style="font-size:11.5px; color:#E0F2FE; font-weight:600;">
+            Banka hesaplarına gelen havale/EFT ödemesi • %5 Kâr & %95 Net Hakediş ile Ekstreye Otomatik İşlenir
+          </span>
+        </div>
+      </div>
+      <button type="button" style="background:none; border:none; color:#FFF; font-size:22px; cursor:pointer; line-height:1;" onclick="AdminApp.closeManualEftModal()">✕</button>
+    </div>
+
+    <!-- Modal Form İçeriği -->
+    <form id="manualEftForm" onsubmit="event.preventDefault(); AdminApp.submitManualEftOrder();" style="padding:20px; max-height:82vh; overflow-y:auto;">
+      
+      <!-- 1. BÖLÜM: HANGİ BANKAYA GELDİ? (BANKA SEÇİMİ) -->
+      <div style="background:#F0F9FF; border:1.5px solid #BAE6FD; border-radius:10px; padding:14px; margin-bottom:16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <div style="font-size:12px; font-weight:800; color:#0369A1; text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:6px;">
+            <span>🏛️</span> 1. Havale / EFT Hangi Bankaya Geldi? *
+          </div>
+          <span style="font-size:11px; font-weight:700; color:#0284C7; background:#E0F2FE; padding:2px 8px; border-radius:12px;">Para Hangi Bankadaysa Seçin</span>
+        </div>
+
+        <!-- Banka Hızlı Seçim Buton Kartları (4 Banka) -->
+        <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:8px; margin-bottom:12px;" id="manualEftBankCardGroup">
+          <button type="button" class="btn-eft-bank-card active" id="btnBankKuveyt" onclick="AdminApp.selectEftBank('KUVEYTTURK')" style="display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:8px; border:2px solid #0284C7; background:#E0F2FE; color:#0369A1; font-weight:800; font-size:12.5px; cursor:pointer; text-align:left; transition:all 0.15s ease;">
+            <span style="font-size:18px;">🔵</span>
+            <div>
+              <div style="line-height:1.2;">KUVEYT TÜRK</div>
+              <span style="font-size:10px; opacity:0.85; font-weight:600;">Nakit / Havale Ödemeleri</span>
+            </div>
+          </button>
+
+          <button type="button" class="btn-eft-bank-card" id="btnBankAkbank" onclick="AdminApp.selectEftBank('AKBANK')" style="display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:8px; border:1.5px solid #CBD5E1; background:#FFF; color:#334155; font-weight:800; font-size:12.5px; cursor:pointer; text-align:left; transition:all 0.15s ease;">
+            <span style="font-size:18px;">🟠</span>
+            <div>
+              <div style="line-height:1.2;">AKBANK</div>
+              <span style="font-size:10px; opacity:0.85; font-weight:600;">Akbank Hesabı</span>
+            </div>
+          </button>
+
+          <button type="button" class="btn-eft-bank-card" id="btnBankVakif" onclick="AdminApp.selectEftBank('VAKIFBANK')" style="display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:8px; border:1.5px solid #CBD5E1; background:#FFF; color:#334155; font-weight:800; font-size:12.5px; cursor:pointer; text-align:left; transition:all 0.15s ease;">
+            <span style="font-size:18px;">🟡</span>
+            <div>
+              <div style="line-height:1.2;">VAKIFBANK</div>
+              <span style="font-size:10px; opacity:0.85; font-weight:600;">VakıfBank Hesabı</span>
+            </div>
+          </button>
+
+          <button type="button" class="btn-eft-bank-card" id="btnBankZiraat" onclick="AdminApp.selectEftBank('ZIRAAT_KATILIM')" style="display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:8px; border:1.5px solid #CBD5E1; background:#FFF; color:#334155; font-weight:800; font-size:12.5px; cursor:pointer; text-align:left; transition:all 0.15s ease;">
+            <span style="font-size:18px;">🟢</span>
+            <div>
+              <div style="line-height:1.2;">ZİRAAT KATILIM</div>
+              <span style="font-size:10px; opacity:0.85; font-weight:600;">Ziraat Katılım Hesabı</span>
+            </div>
+          </button>
+        </div>
+
+        <input type="hidden" id="manualEftBankValue" value="KUVEYTTURK">
+
+        <!-- İşlem Tarihi & Saati -->
+        <div>
+          <label style="display:block; font-size:11px; font-weight:800; color:#0369A1; margin-bottom:3px;">
+            📅 Hesaba Geçiş Tarihi & Saati: *
+          </label>
+          <input type="datetime-local" id="manualEftDateTime" required style="width:100%; border:1.5px solid #CBD5E1; padding:8px 10px; border-radius:6px; font-size:12.5px; font-weight:700; color:#1E293B;">
+        </div>
+      </div>
+
+      <!-- 2. BÖLÜM: TAHSİLAT TUTARI & CANLI KÂRLILIK ÖNİZLEMESİ -->
+      <div style="background:#FFFDF5; border:1.5px solid #FDE68A; border-radius:10px; padding:14px; margin-bottom:16px;">
+        <div style="font-size:12px; font-weight:800; color:#92400E; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px; display:flex; align-items:center; justify-content:space-between;">
+          <span style="display:flex; align-items:center; gap:6px;">💰 2. Tahsilat Tutarı & Kârlılık Dağılımı</span>
+          <span style="background:#FEF3C7; color:#92400E; border:1px solid #FCD34D; font-size:10px; padding:2px 7px; border-radius:5px;">%5 Net Kâr Kuralı</span>
+        </div>
+
+        <div style="margin-bottom:12px;">
+          <label style="display:block; font-size:11.5px; font-weight:800; color:#78350F; margin-bottom:4px;">
+            Müşteriden Gelen Tutar (₺): *
+          </label>
+          <div style="position:relative;">
+            <input type="number" step="0.01" min="0.01" id="manualEftAmount" required placeholder="Örn: 100000" style="width:100%; border:2px solid #059669; padding:10px 14px 10px 36px; border-radius:8px; font-size:17px; font-weight:800; color:#065F46; background:#FFF;" oninput="AdminApp.updateManualEftBreakdownPreview()">
+            <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); font-size:16px; font-weight:800; color:#059669;">₺</span>
+          </div>
+        </div>
+
+        <!-- Canlı Kârlılık & Ekstre Dağılım Kartı -->
+        <div style="background:#FFF; border:1px solid #E2E8F0; border-radius:8px; padding:12px; display:grid; grid-template-columns: 1fr 1fr; gap:10px; font-size:12px;">
+          <div style="border-right:1px dashed #E2E8F0; padding-right:8px;">
+            <div style="color:#64748B; font-size:11px; font-weight:700; text-transform:uppercase;">Kârımız (%5 Kesinti)</div>
+            <div id="previewEftProfit" style="font-size:18px; font-weight:800; color:#15803D; margin-top:2px;">₺0,00</div>
+            <div style="font-size:10px; color:#166534; font-weight:600; margin-top:2px;">📈 Ekstre Toplam Net Kâr'a eklenir</div>
+          </div>
+          <div>
+            <div style="color:#64748B; font-size:11px; font-weight:700; text-transform:uppercase;">Net Hakediş (%95 Borcumuz)</div>
+            <div id="previewEftHakedis" style="font-size:18px; font-weight:800; color:#B45309; margin-top:2px;">₺0,00</div>
+            <div style="font-size:10px; color:#92400E; font-weight:600; margin-top:2px;">📊 Güncel Ödenecek Bakiye'ye eklenir</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. BÖLÜM: MÜŞTERİ BİLGİLERİ -->
+      <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px; padding:14px; margin-bottom:16px;">
+        <div style="font-size:12px; font-weight:800; color:#334155; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+          <span>👤</span> 3. Müşteri Bilgileri
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:10px; margin-bottom:10px;">
+          <div>
+            <label style="display:block; font-size:11px; font-weight:700; color:#475569; margin-bottom:2px;">
+              Müşteri Adı Soyadı: *
+            </label>
+            <input type="text" id="manualEftCustomerName" required placeholder="Örn: Ahmet Yılmaz" style="width:100%; border:1px solid #CBD5E1; padding:8px 10px; border-radius:6px; font-size:12.5px; font-weight:700; color:#0F172A;">
+          </div>
+          <div>
+            <label style="display:block; font-size:11px; font-weight:700; color:#475569; margin-bottom:2px;">
+              Telefon Numarası:
+            </label>
+            <input type="tel" id="manualEftCustomerPhone" placeholder="05XXXXXXXXX" style="width:100%; border:1px solid #CBD5E1; padding:8px 10px; border-radius:6px; font-size:12.5px; font-weight:600; color:#0F172A;">
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+          <div>
+            <label style="display:block; font-size:11px; font-weight:700; color:#475569; margin-bottom:2px;">
+              T.C. Kimlik No / VKN (Opsiyonel):
+            </label>
+            <input type="text" id="manualEftCustomerIdentity" maxlength="11" placeholder="11 haneli TCKN (Fatura için)" style="width:100%; border:1px solid #CBD5E1; padding:8px 10px; border-radius:6px; font-size:12.5px; font-weight:600; font-family:monospace;">
+          </div>
+          <div>
+            <label style="display:block; font-size:11px; font-weight:700; color:#475569; margin-bottom:2px;">
+              Dekont / Referans No:
+            </label>
+            <input type="text" id="manualEftRefNo" placeholder="Örn: Dekont / Slip No" style="width:100%; border:1px solid #CBD5E1; padding:8px 10px; border-radius:6px; font-size:12.5px; font-weight:600;">
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. BÖLÜM: ÜRÜN KALEMİ (FATURA & ÖZEL MATRAH İÇİN) -->
+      <div style="background:#F0FDF4; border:1px solid #BBF7D0; border-radius:10px; padding:14px; margin-bottom:16px;">
+        <div style="font-size:12px; font-weight:800; color:#166534; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px; display:flex; align-items:center; gap:6px;">
+          <span>⚖️</span> 4. Fatura & Ürün Kalemi
+        </div>
+        <div>
+          <label style="display:block; font-size:11px; font-weight:700; color:#166534; margin-bottom:2px;">
+            Ürün / Kalem Açıklaması:
+          </label>
+          <input type="text" id="manualEftProductName" value="22 Ayar İşçilikli Altın Bilezik" placeholder="Örn: 22 Ayar İşçilikli Altın Bilezik" style="width:100%; border:1px solid #86EFAC; padding:8px 10px; border-radius:6px; font-size:12.5px; font-weight:700; color:#064E3B;">
+          <span style="font-size:10.5px; color:#15803D; margin-top:3px; display:block;">ℹ️ Faturada 'Kıymetli Maden Bedeli (Özel Matrah %0 KDV)' ve 'İşçilik' olarak ayrıştırılacaktır.</span>
+        </div>
+      </div>
+
+      <!-- 5. BÖLÜM: OTOMATİK EKSTRE KAYDI BİLDİRİMİ -->
+      <div style="background:linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%); border:1.5px solid #86EFAC; border-radius:10px; padding:12px; margin-bottom:16px; display:flex; align-items:center; gap:10px;">
+        <span style="font-size:24px;">📊</span>
+        <div>
+          <div style="font-size:12.5px; font-weight:800; color:#166534;">Otomatik Ekstre Kaydı Aktif</div>
+          <div style="font-size:11.5px; color:#15803D; line-height:1.4;">
+            Bu tahsilatı kaydettiğinizde, <strong>%5 Kâr</strong> Ekstre Toplam Kârına, <strong>%95 Borç</strong> ise Cari Hesap Ekstresi'ne ve Güncel Ödenecek Bakiye'ye otomatik olarak işlenecektir. Ekstrede mükerrer giriş yapmanıza gerek kalmaz.
+          </div>
+        </div>
+      </div>
+
+      <!-- Hata Mesajı -->
+      <div id="manualEftErrorMsg" style="display:none; background:#FEE2E2; border:1px solid #FCA5A5; color:#991B1B; padding:10px 12px; border-radius:8px; font-size:12.5px; font-weight:700; margin-bottom:14px;"></div>
+
+      <!-- Butonlar -->
+      <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid #E2E8F0; padding-top:14px;">
+        <button type="button" class="btn-admin-secondary" onclick="AdminApp.closeManualEftModal()">
+          Vazgeç
+        </button>
+
+        <button type="submit" id="btnSubmitManualEft" class="btn-admin-primary" style="background:linear-gradient(135deg, #0284C7 0%, #0369A1 100%); border-color:#0284C7; font-size:13.5px; font-weight:800; padding:10px 22px; box-shadow:0 4px 14px rgba(2,132,199,0.3);">
+          <span>💾 Tahsilatı Kaydet & Ekstreye Otomatik İşle</span>
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<!-- ======================================================== -->
 <!-- EXCEL (.XLS) DIŞA AKTARMA VE TARİH ARALIĞI MODALI       -->
 <!-- ======================================================== -->
 <div class="admin-modal-overlay" id="excelExportModal" onclick="if(event.target===this) AdminApp.closeExcelExportModal();">
