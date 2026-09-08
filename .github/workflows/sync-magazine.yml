@@ -58,6 +58,9 @@ jobs:
       - name: Install site dependencies
         run: npm ci
 
+      - name: Install Functions dependencies
+        run: npm ci --prefix functions --ignore-scripts --no-audit --no-fund
+
       - name: Run Magazine Sync Engine
         run: python3 scripts/sync-magazine-articles.py
 
