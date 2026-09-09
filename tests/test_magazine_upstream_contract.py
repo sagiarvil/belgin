@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 import magazine_upstream_contract as contract
+import repair_magazine_expected_articles as repair
 
 
 class MagazineUpstreamContractTests(unittest.TestCase):
@@ -44,6 +45,35 @@ class MagazineUpstreamContractTests(unittest.TestCase):
             path.write_text("const MAGAZINE_ARTICLES = " + json.dumps(payload) + ";\n", encoding="utf-8")
             parsed = contract.parse_local_articles(path)
             self.assertEqual(parsed[0]["id"], "mag-182342")
+
+    def test_rss_editorial_fallback_is_original_turkish_and_substantial(self):
+        meta = {
+            "id": "mag-182399",
+            "headline": "The Top 10 Luxury Watches for Newcomers Under $10,000",
+            "published": "2026-09-08",
+            "description_html": (
+                "<p>With a budget between $4,000 and $10,000, the selection of luxury watches "
+                "gets broader and offers newcomers more choice across established brands and complications.</p>"
+            ),
+            "image_url": "https://static.chrono24.com/example.jpg",
+        }
+        payload = repair.build_rss_editorial_payload(meta)
+        self.assertEqual(payload["ingest_mode"], "rss_editorial")
+        self.assertEqual(payload["raw_date"], "2026-09-08")
+        self.assertIn("10.000 Dolar", payload["raw_title"])
+        self.assertGreaterEqual(len(payload["raw_paras"]), 4)
+        self.assertGreater(len(" ".join(payload["raw_paras"])), 1000)
+        self.assertNotIn("Chrono24", " ".join(payload["raw_paras"]))
+
+    def test_rss_editorial_fallback_rejects_thin_evidence(self):
+        meta = {
+            "id": "mag-182407",
+            "headline": "My Top 10 Novelties From Geneva Watch Days 2026",
+            "published": "2026-09-09",
+            "description_html": "<p>Too short.</p>",
+        }
+        with self.assertRaises(RuntimeError):
+            repair.build_rss_editorial_payload(meta)
 
 
 if __name__ == "__main__":
