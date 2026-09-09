@@ -17,7 +17,7 @@ const unique = [...new Set(names)].sort();
 
 // bootstrap.js is the configured Functions entrypoint and may add deliberately isolated
 // exports on top of index.js. Keep this allowlist explicit so deploy scope never expands by accident.
-const bootstrapAllowlist = ['ziraatPaymentCallback'];
+const bootstrapAllowlist = ['ziraatPaymentCallback', 'magazineFetchArticle'];
 for (const name of bootstrapAllowlist) {
   const imported = new RegExp(`\\b${name}\\b`).test(bootstrapSource);
   const exported = new RegExp(`\\b${name}\\s*,`).test(bootstrapSource);
@@ -30,8 +30,10 @@ for (const name of required) {
   if (!unique.includes(name)) throw new Error(`Required Belgin Firebase export missing: ${name}`);
 }
 
-if (bootstrapSource.includes('ziraatPaymentCallback') && !unique.includes('ziraatPaymentCallback')) {
-  throw new Error('Ziraat callback bootstrap export exists but deploy scope cannot prove it.');
+for (const name of bootstrapAllowlist) {
+  if (bootstrapSource.includes(name) && !unique.includes(name)) {
+    throw new Error(`${name} bootstrap export exists but deploy scope cannot prove it.`);
+  }
 }
 
 if (unique.length < required.length) {
