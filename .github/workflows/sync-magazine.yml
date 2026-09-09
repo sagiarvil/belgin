@@ -5,7 +5,7 @@
 # Yeni çıkan lüks saat makalelerini çeker, Türkçeleştirir,
 # güvenlik/pazar yeri filtrelerinden geçirir, statik SEO
 # sayfalarını derler, git'e kaydeder ve doğrudan canlıya yayınlar.
-# Fail-closed contract: upstream -> import -> static -> sitemap -> live.
+# Fail-closed + self-healing contract: upstream -> import/recover -> static -> sitemap -> live.
 # ==========================================================
 
 name: Magazine Live Editorial Sync (Every 4 Hours)
@@ -24,6 +24,7 @@ on:
       - '.github/workflows/sync-magazine.yml'
       - 'scripts/sync-magazine-articles.py'
       - 'scripts/magazine_upstream_contract.py'
+      - 'scripts/repair_magazine_expected_articles.py'
       - 'tests/test_magazine_upstream_contract.py'
 
 concurrency:
@@ -78,8 +79,11 @@ jobs:
       - name: Install Functions dependencies
         run: npm ci --prefix functions --ignore-scripts --no-audit --no-fund
 
-      - name: Run Magazine Sync Engine
+      - name: Run Primary Magazine Sync Engine
         run: python3 scripts/sync-magazine-articles.py
+
+      - name: Self-Heal Independently Discovered Missing Articles
+        run: python3 scripts/repair_magazine_expected_articles.py
 
       - name: Run Quality Gate & Compliance Guard
         run: |
