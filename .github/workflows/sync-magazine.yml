@@ -31,7 +31,8 @@ on:
 
 concurrency:
   group: sync-magazine
-  cancel-in-progress: false
+  # A newer run re-evaluates the same first-party RSS against newer main, so stale runs are unsafe.
+  cancel-in-progress: true
 
 permissions:
   contents: write
