@@ -7,6 +7,7 @@
  * - Kuveyt Türk adapter/config/callback flow is not imported or modified here.
  * - Ziraat credentials are read only from server environment variables.
  * - Card PAN/CVV/expiry are never requested by this adapter; 3DHost collects them on bank page.
+ * - MerchantPass is used only server-side for request/response hashing and is never posted to the browser.
  * - Fail-closed if API password, MerchantPass or callback endpoint cannot be resolved.
  */
 
@@ -24,6 +25,18 @@ function safeEqualBase64(left, right) {
   const a = Buffer.from(String(left || '').replace(/ /g, '+').trim(), 'utf8');
   const b = Buffer.from(String(right || '').replace(/ /g, '+').trim(), 'utf8');
   return a.length > 0 && a.length === b.length && crypto.timingSafeEqual(a, b);
+}
+
+/**
+ * PayFor uses the natural decimal representation in its current public/open-source
+ * implementations: 199.90 -> "199.9", 100.00 -> "100".
+ * Work in minor units first so binary float noise never reaches the bank/hash input.
+ */
+function formatPayForAmount(value) {
+  const amount = Number(value);
+  if (!Number.isFinite(amount)) return '';
+  const minor = Math.round((amount + Number.EPSILON) * 100);
+  return String(minor / 100);
 }
 
 function resolveCallbackUrl() {
@@ -86,6 +99,14 @@ function normalizeOrderId(body, order) {
   ).trim();
 }
 
+function callbackAmountInKurus(body) {
+  const raw = body?.PurchAmount ?? body?.purchAmount ?? body?.TxnAmount ?? body?.txnAmount;
+  if (raw === undefined || raw === null || String(raw).trim() === '') return null;
+  const numeric = Number(String(raw).replace(',', '.'));
+  if (!Number.isFinite(numeric) || numeric < 0) return null;
+  return String(Math.round((numeric + Number.EPSILON) * 100));
+}
+
 class ZiraatKatilimProvider {
   constructor() {
     this.name = PROVIDERS.ZIRAATKATILIM;
@@ -115,14 +136,15 @@ class ZiraatKatilimProvider {
       throw error;
     }
 
-    // PayFor dokümanındaki alan sırası ve 3DHost hash sözleşmesi.
-    const purchAmount = total.toFixed(2);
+    const purchAmount = formatPayForAmount(total);
     const txnType = 'Auth';
     const installmentCount = '0';
     const rnd = crypto.randomBytes(16).toString('hex');
     const okUrl = config.callbackUrl;
     const failUrl = config.callbackUrl;
 
+    // PayFor request hash contract:
+    // MbrId + OrderId + PurchAmount + OkUrl + FailUrl + TxnType + InstallmentCount + Rnd + MerchantPass
     const hashInput = [
       config.mbrId,
       orderId,
@@ -147,6 +169,8 @@ class ZiraatKatilimProvider {
         MbrId: config.mbrId,
         MerchantID: config.merchantId,
         UserCode: config.userCode,
+        // Legacy/current Ziraat/PayFor 3DHost documentation includes UserPass in the posted form.
+        // It is the API-role password, never the admin password. MerchantPass is NOT posted.
         UserPass: config.userPass,
         SecureType: config.secureType,
         TxnType: txnType,
@@ -182,6 +206,7 @@ class ZiraatKatilimProvider {
 
     const procReturnCode = String(body.ProcReturnCode ?? body.procReturnCode ?? '').trim();
     const authCode = String(body.AuthCode ?? body.authCode ?? '').trim();
+    const threeDStatus = String(body['3DStatus'] ?? body.threeDStatus ?? body.mdStatus ?? '').trim();
     const responseRnd = String(body.ResponseRnd ?? body.responseRnd ?? '').trim();
     const responseHash = String(body.ResponseHash ?? body.responseHash ?? '').replace(/ /g, '+').trim();
     const txnResult = String(body.TxnResult ?? body.txnResult ?? '').trim();
@@ -196,11 +221,22 @@ class ZiraatKatilimProvider {
       };
     }
 
-    const expectedHash = sha1Base64Ascii(
+    // There are two PayFor response-hash contracts in circulation.
+    // 1) Legacy Ziraat/PayFor docs: MerchantID + MerchantPass + OrderId + AuthCode + ProcReturnCode + ResponseRnd
+    // 2) Current PayFor implementations: + 3DStatus + ResponseRnd + UserCode
+    // Never disable hash verification. Accept only a cryptographically matching known contract.
+    const expectedLegacyHash = sha1Base64Ascii(
       `${config.merchantId}${config.merchantPass}${orderId}${authCode}${procReturnCode}${responseRnd}`
     );
+    const expectedExtendedHash = sha1Base64Ascii(
+      `${config.merchantId}${config.merchantPass}${orderId}${authCode}${procReturnCode}${threeDStatus}${responseRnd}${config.userCode}`
+    );
 
-    if (!safeEqualBase64(responseHash, expectedHash)) {
+    let hashVariant = null;
+    if (safeEqualBase64(responseHash, expectedExtendedHash)) hashVariant = 'EXTENDED';
+    else if (safeEqualBase64(responseHash, expectedLegacyHash)) hashVariant = 'LEGACY';
+
+    if (!hashVariant) {
       return {
         isValid: false,
         isSuccess: false,
@@ -209,8 +245,22 @@ class ZiraatKatilimProvider {
       };
     }
 
+    // If the gateway supplies 3DStatus, PayFor considers 1-4 authenticated/successful states.
+    const threeDOk = !threeDStatus || ['1', '2', '3', '4'].includes(threeDStatus);
     const txnOk = !txnResult || /^(success|approved|ok)$/i.test(txnResult);
-    const isSuccess = procReturnCode === '00' && txnOk;
+
+    const expectedAmountInKurus = String(order.amountInKurus || Math.round(Number(order.total || order.totalAmount || 0) * 100));
+    const receivedAmountInKurus = callbackAmountInKurus(body);
+    if (receivedAmountInKurus !== null && receivedAmountInKurus !== expectedAmountInKurus) {
+      return {
+        isValid: false,
+        isSuccess: false,
+        orderId,
+        reason: 'CALLBACK_AMOUNT_MISMATCH',
+      };
+    }
+
+    const isSuccess = procReturnCode === '00' && txnOk && threeDOk;
 
     return {
       isValid: true,
@@ -219,16 +269,19 @@ class ZiraatKatilimProvider {
       authCode: authCode || null,
       provider: PROVIDERS.ZIRAATKATILIM,
       terminalId: config.merchantId,
-      totalAmountReceived: String(order.amountInKurus || Math.round(Number(order.total || order.totalAmount || 0) * 100)),
-      failReasonCode: isSuccess ? null : (procReturnCode || 'PAYMENT_FAILED'),
-      failReasonMsg: isSuccess ? null : (errorMessage || txnResult || 'Ziraat Katılım işlemi onaylanmadı.'),
+      totalAmountReceived: receivedAmountInKurus || expectedAmountInKurus,
+      failReasonCode: isSuccess ? null : (procReturnCode || (!threeDOk ? '3D_AUTH_FAILED' : 'PAYMENT_FAILED')),
+      failReasonMsg: isSuccess ? null : (errorMessage || txnResult || (!threeDOk ? `3D doğrulama durumu başarısız: ${threeDStatus}` : 'Ziraat Katılım işlemi onaylanmadı.')),
       rawPaymentDetails: {
         authCode: authCode || null,
         orderId,
         procReturnCode,
+        threeDStatus: threeDStatus || null,
         txnResult: txnResult || null,
         responseRnd,
         responseHashVerified: true,
+        responseHashVariant: hashVariant,
+        amountSource: receivedAmountInKurus !== null ? 'BANK_CALLBACK' : 'IMMUTABLE_ORDER',
         errorMessage: errorMessage || null,
         callbackTimestamp: new Date().toISOString(),
       },
@@ -238,11 +291,12 @@ class ZiraatKatilimProvider {
 
 const provider = new ZiraatKatilimProvider();
 
-// Test/gate helpers contain no credentials and make the deterministic bank contract auditable.
 provider.__test = Object.freeze({
   MAX_TRANSACTION_TRY,
   sha1Base64Ascii,
   safeEqualBase64,
+  formatPayForAmount,
+  callbackAmountInKurus,
 });
 
 module.exports = provider;
