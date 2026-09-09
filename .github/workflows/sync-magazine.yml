@@ -7,6 +7,7 @@
 # Full-body erişim 403 ile engellenirse, yalnız yeterli first-party RSS kanıtıyla özgün Belgin
 # editoryal fallback devreye girer. Güvenlik/SEO kapıları sonrası git'e kaydedilir ve canlıya alınır.
 # Fail-closed + self-healing: RSS -> cloud/full or RSS/editorial -> transform -> static -> sitemap -> live.
+# Release guard repo/canlı driftini de doğrular; repo güncel ama hosting eskiyse otomatik redeploy eder.
 # Sessiz "yeni haber yok" başarısı yasaktır.
 # ==========================================================
 
@@ -23,11 +24,13 @@ on:
       - '.github/workflows/sync-magazine.yml'
       - 'scripts/sync-magazine-articles.py'
       - 'scripts/magazine_upstream_contract.py'
+      - 'scripts/magazine_release_guard.py'
       - 'scripts/repair_magazine_expected_articles.py'
       - 'scripts/firebase-function-scope.mjs'
       - 'functions/magazine-fetch.js'
       - 'functions/bootstrap.js'
       - 'tests/test_magazine_upstream_contract.py'
+      - 'tests/test_magazine_release_guard.py'
 
 concurrency:
   group: sync-magazine
@@ -66,8 +69,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Test Magazine Freshness Contract
-        run: python3 -m unittest tests/test_magazine_upstream_contract.py
+      - name: Test Magazine Contracts
+        run: |
+          python3 -m unittest tests/test_magazine_upstream_contract.py
+          python3 -m unittest tests/test_magazine_release_guard.py
 
       - name: Verify Chrono24 RSS & Capture Expected Articles
         run: python3 scripts/magazine_upstream_contract.py pre
@@ -134,7 +139,9 @@ jobs:
           npm run guard
 
       - name: Verify Imported Article Contract
-        run: python3 scripts/magazine_upstream_contract.py post
+        run: |
+          python3 scripts/magazine_upstream_contract.py post
+          python3 scripts/magazine_release_guard.py local
 
       - name: Commit updated magazine data & SEO pages
         run: |
@@ -170,14 +177,32 @@ jobs:
             echo "HAS_CHANGES=false" >> "$GITHUB_ENV"
           fi
 
+      - name: Detect stale live hosting when repo has no new changes
+        if: env.HAS_CHANGES != 'true'
+        shell: bash
+        run: |
+          set +e
+          python3 scripts/magazine_release_guard.py live
+          rc=$?
+          set -e
+          if [ "$rc" -eq 0 ]; then
+            echo "FORCE_DEPLOY=false" >> "$GITHUB_ENV"
+            echo "MAGAZINE_LIVE_DRIFT=false"
+          elif [ "$rc" -eq 3 ]; then
+            echo "FORCE_DEPLOY=true" >> "$GITHUB_ENV"
+            echo "::warning title=Magazine Live Drift::Repository is healthy but Firebase Hosting is stale; forcing self-heal deploy."
+          else
+            exit "$rc"
+          fi
+
       - name: Authenticate hosting deploy with Google service account
-        if: (env.HAS_CHANGES == 'true' || github.event_name == 'workflow_dispatch') && env.FIREBASE_SERVICE_ACCOUNT != ''
+        if: (env.HAS_CHANGES == 'true' || env.FORCE_DEPLOY == 'true' || github.event_name == 'workflow_dispatch') && env.FIREBASE_SERVICE_ACCOUNT != ''
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CARBON_WEB_1265B }}
 
-      - name: Deploy to Firebase Hosting (only if new articles or manual trigger)
-        if: env.HAS_CHANGES == 'true' || github.event_name == 'workflow_dispatch'
+      - name: Deploy to Firebase Hosting when changed, drifted or manually requested
+        if: env.HAS_CHANGES == 'true' || env.FORCE_DEPLOY == 'true' || github.event_name == 'workflow_dispatch'
         run: |
           set -euo pipefail
           node scripts/ensure-index-canonical-redirect.mjs
@@ -193,7 +218,7 @@ jobs:
           fi
 
       - name: Verify Live Magazine Contract
-        if: env.HAS_CHANGES == 'true' || github.event_name == 'workflow_dispatch'
         run: |
           set -euo pipefail
           python3 scripts/magazine_upstream_contract.py live
+          python3 scripts/magazine_release_guard.py live
