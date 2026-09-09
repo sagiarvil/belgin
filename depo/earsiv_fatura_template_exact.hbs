@@ -246,7 +246,13 @@
                 <table border="0" align="center">
                 <tbody>
                     <tr><td align="left" style="width:469px; "><span style="font-weight:bold; ">SAYIN</span></td></tr>
+                    {{#if buyer.unvan}}
+                    <tr><td align="left" style="width:469px; font-weight:bold;">{{buyer.unvan}}&nbsp;</td></tr>
+                    {{/if}}
                     <tr><td align="left" style="width:469px; ">{{buyer.name}}&nbsp;</td></tr>
+                    {{#if buyer.taxOffice}}
+                    <tr align="left"><td align="left" style="width:469px;">Vergi Dairesi: {{buyer.taxOffice}}&nbsp;</td></tr>
+                    {{/if}}
                     <tr>
                         <td align="left" style="width:469px; ">
                             {{buyer.addressLine1}}&nbsp;<br>
