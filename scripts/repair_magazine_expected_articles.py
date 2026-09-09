@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Self-heal fresh Chrono24 articles discovered by the independent RSS contract.
+"""Self-heal fresh Chrono24 articles through Belgin's cloud extractor.
 
-Discovery/freshness comes from Chrono24's first-party static RSS. The canonical article parser is
-reused unchanged. For full article HTML the session tries the canonical .com URL first and then
-the user-facing first-party Turkish locale (.com.tr). No third-party relay/proxy is used.
+Discovery/freshness is fixed to Chrono24's first-party static RSS. GitHub shared runners never
+fetch full Chrono24 article pages. Instead they request a numeric article ID from Belgin's
+allowlisted Cloud Function, then reuse the canonical Python transformation functions already used
+by the primary magazine engine.
 """
 
 from __future__ import annotations
@@ -18,6 +19,12 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA_JS = ROOT / "js" / "magazine_data.js"
 SYNC_ENGINE = ROOT / "scripts" / "sync-magazine-articles.py"
 SNAPSHOT = Path(os.environ.get("MAGAZINE_CONTRACT_SNAPSHOT", "/tmp/magazine-upstream-contract.json"))
+PROJECT_ID = os.environ.get("FIREBASE_PROJECT_ID", "carbon-web-1265b")
+EXTRACTOR_URL = os.environ.get(
+    "MAGAZINE_EXTRACTOR_URL",
+    f"https://us-central1-{PROJECT_ID}.cloudfunctions.net/magazineFetchArticle",
+)
+EXTRACT_SCHEMA = "belgin-magazine-extract-v1"
 
 
 def fail(detail: str) -> "None":
@@ -46,7 +53,7 @@ def write_articles(articles: list[dict]) -> None:
     payload = json.dumps(articles, ensure_ascii=False, indent=2)
     content = f"""// ==========================================================
 // BELGİN SAAT MAGAZİN — 100% EDİTORYAL SAAT İÇERİKLERİ
-// Sürüm: 2026-09-09 (Fail-Closed + First-Party Self-Healing Sync)
+// Sürüm: 2026-09-09 (Fail-Closed + Cloud Self-Healing Sync)
 // ==========================================================
 
 const MAGAZINE_ARTICLES = {payload};
@@ -61,59 +68,115 @@ if (typeof module !== 'undefined' && module.exports) {{
     DATA_JS.write_text(content, encoding="utf-8")
 
 
-class FirstPartyLocaleSession:
-    """Session facade for the canonical scraper with a fixed Chrono24 locale fallback.
+def extract_numeric_id(article_id: str) -> str:
+    match = re.fullmatch(r"mag-(\d{5,7})", article_id or "")
+    return match.group(1) if match else ""
 
-    This is not a generic proxy and cannot fetch arbitrary alternate hosts. Only
-    https://www.chrono24.com/magazine/* is rewritten to the matching
-    https://www.chrono24.com.tr/magazine/* URL after a failed canonical request.
-    """
 
-    def __init__(self, requests_module):
-        self._session = requests_module.Session()
-        self.headers = self._session.headers
-        self.headers.update({
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.7,en;q=0.6",
-            "Cache-Control": "no-cache",
-            "Pragma": "no-cache",
-        })
-        self.last_article_transport = "none"
-        self.last_article_statuses: list[str] = []
+def request_cloud_extract(session, article_id: str) -> dict:
+    numeric_id = extract_numeric_id(article_id)
+    if not numeric_id:
+        fail(f"Invalid expected article id: {article_id}")
+    try:
+        response = session.post(
+            EXTRACTOR_URL,
+            json={"articleId": numeric_id},
+            headers={
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "User-Agent": "BelginMagazineSync/2.0",
+            },
+            timeout=70,
+        )
+    except Exception as exc:
+        raise RuntimeError(f"extractor request failed: {type(exc).__name__}: {exc}") from exc
 
-    def get(self, url, *args, **kwargs):
-        target = str(url)
-        is_article = target.startswith("https://www.chrono24.com/magazine/") and "-p_" in target
-        if not is_article:
-            return self._session.get(url, *args, **kwargs)
+    body = ""
+    try:
+        payload = response.json()
+    except Exception:
+        body = str(getattr(response, "text", ""))[:500]
+        raise RuntimeError(f"extractor returned non-JSON HTTP {response.status_code}: {body}")
 
-        request_kwargs = dict(kwargs)
-        request_kwargs.setdefault("timeout", 20)
-        statuses: list[str] = []
+    if response.status_code != 200 or not payload.get("ok"):
+        raise RuntimeError(
+            f"extractor HTTP {response.status_code}: {payload.get('error') or 'UNKNOWN'} "
+            f"{payload.get('message') or ''}".strip()
+        )
+    if payload.get("schema") != EXTRACT_SCHEMA:
+        raise RuntimeError(f"unexpected extractor schema: {payload.get('schema')}")
+    if str(payload.get("articleId")) != numeric_id:
+        raise RuntimeError(f"extractor id mismatch: expected={numeric_id} actual={payload.get('articleId')}")
 
+    raw_title = str(payload.get("raw_title") or "").strip()
+    raw_date = str(payload.get("raw_date") or "").strip()[:10]
+    raw_paras = payload.get("raw_paras") or []
+    if not raw_title or not isinstance(raw_paras, list):
+        raise RuntimeError("extractor payload missing title/paragraphs")
+    raw_paras = [str(p).strip() for p in raw_paras if isinstance(p, str) and len(p.strip()) >= 35]
+    body_chars = len(" ".join(raw_paras))
+    if len(raw_paras) < 3 or body_chars < 600:
+        raise RuntimeError(f"extractor payload too thin: paragraphs={len(raw_paras)} body_chars={body_chars}")
+    payload["raw_paras"] = raw_paras
+    return payload
+
+
+def build_article(lib: dict, session, article_id: str, payload: dict) -> dict:
+    clean_and_translate_text = lib.get("clean_and_translate_text")
+    determine_category_and_slug = lib.get("determine_category_and_slug")
+    translate_article_content = lib.get("translate_article_content")
+    format_date_tr = lib.get("format_date_tr")
+    download_image = lib.get("download_image")
+    if not all(callable(fn) for fn in [
+        clean_and_translate_text,
+        determine_category_and_slug,
+        translate_article_content,
+        format_date_tr,
+        download_image,
+    ]):
+        fail("Canonical magazine transformation functions could not be loaded")
+
+    raw_title = payload["raw_title"]
+    if re.search(
+        r"(?i)favorite\s*watches|staff\s*picks|steiert|gehrlein|breining|team\s*member|employee|rolex-report|chronopulse",
+        raw_title,
+    ):
+        raise RuntimeError("cloud-extracted article is blocked by magazine content policy")
+
+    title = clean_and_translate_text(raw_title)
+    category, slug = determine_category_and_slug(title, raw_title)
+    raw_date = payload.get("raw_date") or "2026-09-09"
+    publish_date = format_date_tr(raw_date)
+    content_html = translate_article_content(title, payload["raw_paras"])
+    summary_match = re.search(r'<p class="mag-lead-para">(.*?)</p>', content_html, re.DOTALL)
+    summary = summary_match.group(1) if summary_match else f"{title} hakkında detaylı saatçilik analizi."
+    read_time = f"{max(4, round(len(content_html) / 450))} dk okuma"
+
+    hero_img_url = str(payload.get("hero_img_url") or "").strip()
+    final_img = None
+    if hero_img_url.startswith("https://"):
+        img_filename = f"{slug[:45]}.jpg"
         try:
-            direct = self._session.get(target, *args, **request_kwargs)
-            statuses.append(f"com={direct.status_code}")
-            if direct.status_code == 200 and direct.text:
-                self.last_article_transport = "chrono24.com"
-                self.last_article_statuses = statuses
-                return direct
-        except Exception as exc:
-            statuses.append(f"com={type(exc).__name__}")
+            final_img = download_image(session, hero_img_url, img_filename)
+        except Exception:
+            final_img = None
+    if not final_img:
+        final_img = "images/magazine/cenevre-saat-gunleri-2026-ozet-ve-yenilikler.jpg"
 
-        tr_target = re.sub(r"^https://www\.chrono24\.com/", "https://www.chrono24.com.tr/", target)
-        try:
-            tr_response = self._session.get(tr_target, *args, **request_kwargs)
-            statuses.append(f"com.tr={tr_response.status_code}")
-            self.last_article_transport = "chrono24.com.tr" if tr_response.status_code == 200 else "blocked"
-            self.last_article_statuses = statuses
-            return tr_response
-        except Exception as exc:
-            statuses.append(f"com.tr={type(exc).__name__}")
-            self.last_article_transport = "failed"
-            self.last_article_statuses = statuses
-            raise
+    return {
+        "id": article_id,
+        "slug": slug,
+        "title": title,
+        "category": category,
+        "publish_date": publish_date,
+        "raw_date": raw_date,
+        "author": "Belgin Saat & Mücevherat Editoryal Kurulu",
+        "read_time": read_time,
+        "image": final_img,
+        "summary": summary,
+        "content_html": content_html,
+        "source_url": "",
+    }
 
 
 def main() -> None:
@@ -135,43 +198,29 @@ def main() -> None:
         fail(f"Primary sync engine missing: {SYNC_ENGINE}")
 
     lib = runpy.run_path(str(SYNC_ENGINE), run_name="belgin_magazine_sync_lib")
-    scrape = lib.get("scrape_single_article")
     requests_module = lib.get("requests")
-    if not callable(scrape) or requests_module is None:
-        fail("Primary scraper function could not be loaded")
+    if requests_module is None:
+        fail("Canonical requests implementation could not be loaded")
+    session = requests_module.Session()
+    session.headers.update({"User-Agent": "BelginMagazineSync/2.0"})
 
-    session = FirstPartyLocaleSession(requests_module)
     repaired: list[str] = []
     failures: list[str] = []
     for meta in missing:
         aid = str(meta.get("id") or "unknown")
-        url = str(meta.get("url") or "")
-        if not url:
-            failures.append(f"{aid}: RSS snapshot URL missing")
-            continue
         try:
-            article = scrape(session, url)
+            extracted = request_cloud_extract(session, aid)
+            article = build_article(lib, session, aid, extracted)
         except Exception as exc:
-            failures.append(
-                f"{aid}: canonical scraper exception {type(exc).__name__}: {exc}; "
-                f"transport={session.last_article_transport}; statuses={','.join(session.last_article_statuses)}"
-            )
+            failures.append(f"{aid}: {type(exc).__name__}: {exc}")
             continue
-        if not article:
-            failures.append(
-                f"{aid}: canonical scraper returned no article; "
-                f"transport={session.last_article_transport}; statuses={','.join(session.last_article_statuses)}"
-            )
-            continue
-        if str(article.get("id")) != aid:
-            failures.append(f"{aid}: scraper returned mismatched id {article.get('id')}")
-            continue
+
         articles.append(article)
         existing_ids.add(aid)
         repaired.append(aid)
         print(
-            f"  REPAIRED {aid} | transport={session.last_article_transport} | "
-            f"{article.get('title', '')}"
+            f"  REPAIRED {aid} | cloud_transport={extracted.get('transport', '?')} | "
+            f"paragraphs={len(extracted.get('raw_paras') or [])} | {article.get('title', '')}"
         )
 
     if failures:
