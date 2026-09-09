@@ -321,6 +321,266 @@ ${shortUrl}
     }
   };
 
+  // ---------------------------------------------------------------------------
+  // ZİRAAT KATILIM 3DHOST — İZOLE ADD-ON
+  // Kuveyt Türk varsayılan sağlayıcı, token biçimi ve ödeme fonksiyonları değiştirilmez.
+  // ---------------------------------------------------------------------------
+  const ZIRAAT_PROVIDER = 'ZIRAATKATILIM';
+  const ZIRAAT_MAX_TRY = 200000;
+
+  function getPayloadFromLocation() {
+    try {
+      const sp = new URLSearchParams(global.location?.search || '');
+      const param = sp.get('p') || sp.get('token') || sp.get('amount') || sp.get('tutar');
+      return VipEngine.resolvePayload(param, global.location?.pathname || '', global.location?.search || '');
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function updateBankSelectionTags(cards) {
+    cards.forEach((card) => {
+      const radio = card.querySelector('input[name="posProvider"]');
+      const tag = card.querySelector('.bank-active-tag');
+      if (!radio || !tag) return;
+      if (radio.checked) {
+        tag.textContent = '✓ Seçili POS';
+      } else if (radio.value === 'KUVEYTTURK') {
+        tag.textContent = 'Kuveyt POS';
+      } else if (radio.value === ZIRAAT_PROVIDER) {
+        tag.textContent = '3DHost';
+      }
+    });
+  }
+
+  function installZiraatLinkCreator() {
+    if (typeof document === 'undefined') return;
+    const grid = document.getElementById('bankSelectorGrid');
+    if (!grid) return;
+
+    if (!document.getElementById('bankCardZiraat')) {
+      const card = document.createElement('label');
+      card.className = 'bank-card';
+      card.id = 'bankCardZiraat';
+      card.innerHTML = `
+        <input type="radio" name="posProvider" value="${ZIRAAT_PROVIDER}">
+        <div class="bank-card-inner">
+          <div class="bank-emblem-wrap" style="background:#0B6B3A;color:#fff;font-weight:900;font-size:16px;letter-spacing:-1px;">ZK</div>
+          <div class="bank-info">
+            <div class="bank-name-row">
+              <span class="bank-title">Ziraat Katılım Bankası</span>
+              <span class="bank-active-tag">3DHost</span>
+            </div>
+            <div class="bank-desc">3D Secure Ortak Ödeme Sayfası • Kart bilgisi bankada girilir</div>
+          </div>
+        </div>`;
+      grid.appendChild(card);
+    }
+
+    const cards = Array.from(document.querySelectorAll('.bank-card, .pos-card'));
+    // Eski inline reset kodundaki global referansı güvenli şekilde karşıla; Kuveyt mantığına dokunma.
+    global.posCards = cards;
+
+    cards.forEach((card) => {
+      card.addEventListener('click', () => {
+        const radio = card.querySelector('input[name="posProvider"]');
+        if (radio) radio.checked = true;
+        setTimeout(() => updateBankSelectionTags(cards), 0);
+      });
+    });
+
+    try {
+      const sp = new URLSearchParams(global.location?.search || '');
+      const requested = String(sp.get('posProvider') || sp.get('pos') || sp.get('provider') || '').toUpperCase();
+      if (requested === ZIRAAT_PROVIDER) {
+        const z = document.querySelector(`input[name="posProvider"][value="${ZIRAAT_PROVIDER}"]`);
+        if (z) {
+          cards.forEach((c) => c.classList.remove('active'));
+          z.checked = true;
+          z.closest('.bank-card')?.classList.add('active');
+        }
+      }
+    } catch (_) {}
+
+    updateBankSelectionTags(cards);
+
+    const form = document.getElementById('linkForm');
+    const amountInput = document.getElementById('productAmount');
+    const amountShell = document.getElementById('amountShell');
+    const amountError = document.getElementById('amountError');
+    if (form && !form.dataset.ziraatGuardBound) {
+      form.dataset.ziraatGuardBound = '1';
+      form.addEventListener('submit', (event) => {
+        const selected = document.querySelector('input[name="posProvider"]:checked')?.value || 'KUVEYTTURK';
+        const amount = Number(amountInput?.dataset?.raw || String(amountInput?.value || '').replace(/\D/g, '')) || 0;
+        if (selected === ZIRAAT_PROVIDER && amount > ZIRAAT_MAX_TRY) {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          amountShell?.classList.add('error');
+          if (amountError) {
+            amountError.textContent = '⚠ Ziraat Katılım tek işlem üst limiti ₺200.000’dir.';
+            amountError.classList.add('show');
+          }
+          amountInput?.focus();
+        } else if (amountError && selected !== ZIRAAT_PROVIDER) {
+          amountError.textContent = '⚠ Lütfen geçerli bir satış tutarı giriniz (min. ₺100).';
+        }
+      }, true);
+    }
+  }
+
+  async function startZiraatHostedPayment(payload) {
+    const name = document.getElementById('custName')?.value?.trim() || '';
+    const phone = document.getElementById('custPhone')?.value?.trim() || '';
+    const identity = document.getElementById('custIdentity')?.value?.trim() || '';
+    const address = document.getElementById('custAddress')?.value?.trim() || '';
+
+    if (!name || !phone) {
+      alert('Lütfen adınızı, soyadınızı ve telefon numaranızı eksiksiz doldurunuz.');
+      document.getElementById('custName')?.focus();
+      return;
+    }
+    if (!identity) {
+      alert('Lütfen fatura ve güvenlik doğrulaması için T.C. Kimlik / Pasaport / Vergi numaranızı giriniz.');
+      document.getElementById('custIdentity')?.focus();
+      return;
+    }
+    if (!address || address.length < 5) {
+      alert('Lütfen fatura ve yasal teslimat için açık adresinizi giriniz.');
+      document.getElementById('custAddress')?.focus();
+      return;
+    }
+
+    const totalAmt = Number(payload?.amount || 0);
+    if (!Number.isFinite(totalAmt) || totalAmt <= 0 || totalAmt > ZIRAAT_MAX_TRY) {
+      alert('Ziraat Katılım tek işlem tutarı en fazla ₺200.000 olabilir.');
+      return;
+    }
+
+    const btn = document.getElementById('btnCompletePayment');
+    const originalHtml = btn?.innerHTML || '';
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = '<span>🔒</span> Ziraat Katılım güvenli 3DHost ödeme sayfasına geçiliyor...';
+    }
+
+    try {
+      const cleanPhone = phone.replace(/\D/g, '');
+      const token = payload.rawToken || VipEngine.encodeCompact(payload);
+      const is22 = Boolean(payload.isVip22 || VipEngine.isVip22Tag(payload.title));
+      const orderItems = [{
+        id: payload.orderId || `VIP-${Date.now()}`,
+        name: payload.title || 'Lüks Showroom Siparişi',
+        price: totalAmt,
+        qty: 1,
+        isVipCustom: true,
+        vipToken: token,
+        brand: 'Belgin Kuyumculuk',
+        category: 'luxury'
+      }];
+
+      const response = await fetch('/api/payment/create?_t=' + Date.now(), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        cache: 'no-store',
+        body: JSON.stringify({
+          provider: ZIRAAT_PROVIDER,
+          isVipPayment: true,
+          isVip22: is22,
+          vipToken: token,
+          user_name: name,
+          user_phone: phone,
+          email: cleanPhone ? `musteri_${cleanPhone}@belginkuyumculuk.com` : `vip_${Date.now()}@belginkuyumculuk.com`,
+          customerIdentity: identity,
+          customerAddress: address,
+          user_address: address,
+          address,
+          deliveryMethod: 'showroom',
+          termsAccepted: true,
+          preInformationAccepted: true,
+          highValueDeliveryAccepted: true,
+          deliveryStatementAccepted: true,
+          marketingConsent: true,
+          items: orderItems
+        })
+      });
+
+      let data = {};
+      try { data = await response.json(); } catch (_) { data = {}; }
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || 'Ziraat Katılım Sanal POS bağlantısı kurulamadı.');
+      }
+
+      if (!data.gatewayUrl || !data.formData) {
+        throw new Error('Ziraat Katılım 3DHost yönlendirme formu alınamadı.');
+      }
+
+      const postForm = document.createElement('form');
+      postForm.method = 'POST';
+      postForm.action = data.gatewayUrl;
+      postForm.enctype = 'application/x-www-form-urlencoded';
+      postForm.acceptCharset = 'UTF-8';
+      postForm.style.display = 'none';
+      Object.entries(data.formData).forEach(([key, value]) => {
+        if (value === undefined || value === null) return;
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = String(value);
+        postForm.appendChild(input);
+      });
+      document.body.appendChild(postForm);
+      HTMLFormElement.prototype.submit.call(postForm);
+    } catch (error) {
+      console.error('Ziraat Katılım VIP ödeme hatası:', error);
+      alert('Ödeme başlatılamadı: ' + error.message);
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = originalHtml;
+      }
+    }
+  }
+
+  function installZiraatHostedCheckout() {
+    if (typeof document === 'undefined' || !document.getElementById('cardFieldsWrap')) return;
+    const payload = getPayloadFromLocation();
+    if (!payload || String(payload.provider || 'KUVEYTTURK').toUpperCase() !== ZIRAAT_PROVIDER) return;
+
+    const cardWrap = document.getElementById('cardFieldsWrap');
+    if (cardWrap) cardWrap.style.display = 'none';
+
+    if (!document.getElementById('ziraatHostNotice')) {
+      const notice = document.createElement('div');
+      notice.id = 'ziraatHostNotice';
+      notice.style.cssText = 'background:#0B1917;border:1.5px solid #1E3B36;border-radius:12px;padding:16px;margin-bottom:18px;color:#F3E5AB;font-size:12.5px;line-height:1.55;';
+      notice.innerHTML = '<strong style="display:block;margin-bottom:5px;">Ziraat Katılım 3D Secure Ortak Ödeme</strong><span style="color:#8EAAA5;">Kart numarası, son kullanma tarihi ve CVV bilgileri Belgin ekranında alınmaz. “Güvenli Öde” sonrası Ziraat Katılım’ın 3DHost sayfasında girilir.</span>';
+      cardWrap?.parentNode?.insertBefore(notice, cardWrap);
+    }
+
+    const originalProcess = global.processVipPayment;
+    if (typeof originalProcess === 'function' && !originalProcess.__ziraatWrapped) {
+      const wrapped = async function () {
+        const livePayload = getPayloadFromLocation();
+        if (!livePayload || String(livePayload.provider || 'KUVEYTTURK').toUpperCase() !== ZIRAAT_PROVIDER) {
+          return originalProcess.apply(this, arguments);
+        }
+        return startZiraatHostedPayment(livePayload);
+      };
+      wrapped.__ziraatWrapped = true;
+      global.processVipPayment = wrapped;
+    }
+  }
+
+  // Link oluşturucu DOM'u bu script yüklendiğinde hazırdır; Ziraat kartını inline handler kurulmadan ekle.
+  installZiraatLinkCreator();
+
+  // Checkout inline scripti daha sonra processVipPayment'i tanımlar; event döngüsünün sonunda sadece Ziraat yolunu sar.
+  if (typeof global.addEventListener === 'function') {
+    global.addEventListener('DOMContentLoaded', () => {
+      setTimeout(installZiraatHostedCheckout, 0);
+    });
+  }
+
   global.VipEngine = VipEngine;
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = { VipEngine, VIP_22_CATALOG };
