@@ -5,6 +5,7 @@
 # Yeni çıkan lüks saat makalelerini çeker, Türkçeleştirir,
 # güvenlik/pazar yeri filtrelerinden geçirir, statik SEO
 # sayfalarını derler, git'e kaydeder ve doğrudan canlıya yayınlar.
+# Fail-closed contract: upstream -> import -> static -> sitemap -> live.
 # ==========================================================
 
 name: Magazine Live Editorial Sync (Every 4 Hours)
@@ -14,6 +15,16 @@ on:
     # Runs every 4 hours 24/7 (00:00, 04:00, 08:00, 12:00, 16:00, 20:00 UTC)
     - cron: '0 */4 * * *'
   workflow_dispatch:
+  # A sync-engine/contract fix must exercise production immediately once merged to main.
+  # Generated magazine commits do not match these paths, preventing recursion.
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/sync-magazine.yml'
+      - 'scripts/sync-magazine-articles.py'
+      - 'scripts/magazine_upstream_contract.py'
+      - 'tests/test_magazine_upstream_contract.py'
 
 concurrency:
   group: sync-magazine
@@ -27,7 +38,7 @@ jobs:
   sync-magazine:
     name: Sync Horology Articles, Compile SEO & Deploy
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     env:
       FIREBASE_PROJECT_ID: carbon-web-1265b
       FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CARBON_WEB_1265B }}
@@ -48,6 +59,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
+      - name: Test Magazine Freshness Contract
+        run: python3 -m unittest tests/test_magazine_upstream_contract.py
+
+      - name: Verify Chrono24 Upstream & Capture Expected Articles
+        run: python3 scripts/magazine_upstream_contract.py pre
 
       - name: Setup Node.js 22
         uses: actions/setup-node@v4
@@ -71,27 +88,46 @@ jobs:
           npm test
           npm run guard
 
+      - name: Verify Imported Article Contract
+        run: python3 scripts/magazine_upstream_contract.py post
+
       - name: Commit updated magazine data & SEO pages
         run: |
+          set -euo pipefail
           git config --global user.name "Belgin Magazine Bot"
           git config --global user.email "bot@belginkuyumculuk.com"
           git add -A js/magazine_data.js images/magazine/ magazin/ sitemap-magazine.xml sitemap.xml llms.txt llms-full.txt robots.txt firebase.json legal-manifest.json functions/legal-manifest.json
           if ! git diff --staged --quiet; then
             git commit -m "chore(magazine): automated horology article sync & static SEO compilation"
+            PUSHED=false
             for i in 1 2 3 4 5; do
-              git pull --rebase origin main && git push origin HEAD:main && break
+              if git pull --rebase origin main && git push origin HEAD:main; then
+                PUSHED=true
+                break
+              fi
               echo "Push contention detected; retrying rebase in 3s... (attempt $i)"
               sleep 3
             done
+            if [ "$PUSHED" != "true" ]; then
+              echo "::error title=Magazine Git Push Failed::Generated magazine changes could not be pushed after 5 attempts."
+              exit 1
+            fi
             echo "HAS_CHANGES=true" >> "$GITHUB_ENV"
           else
             echo "No new magazine articles or changes detected."
             echo "HAS_CHANGES=false" >> "$GITHUB_ENV"
           fi
 
+      - name: Authenticate with Google service account
+        if: (env.HAS_CHANGES == 'true' || github.event_name == 'workflow_dispatch') && env.FIREBASE_SERVICE_ACCOUNT != ''
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CARBON_WEB_1265B }}
+
       - name: Deploy to Firebase Hosting (only if new articles or manual trigger)
         if: env.HAS_CHANGES == 'true' || github.event_name == 'workflow_dispatch'
         run: |
+          set -euo pipefail
           node scripts/ensure-index-canonical-redirect.mjs
           if [ -n "${FIREBASE_SERVICE_ACCOUNT:-}" ]; then
             echo "Deploying to Firebase Hosting via Google Service Account..."
@@ -104,11 +140,8 @@ jobs:
             exit 1
           fi
 
-      - name: Verify Live Magazine Health
+      - name: Verify Live Magazine Contract
         if: env.HAS_CHANGES == 'true' || github.event_name == 'workflow_dispatch'
         run: |
           set -euo pipefail
-          echo "Verifying live production magazine endpoint..."
-          curl --fail --silent --show-error --max-time 30 https://www.belginkuyumculuk.com/magazin/ -o /tmp/magazin.html
-          grep -qi "Belgin" /tmp/magazin.html
-          echo "LIVE_MAGAZINE_HEALTH=PASS"
+          python3 scripts/magazine_upstream_contract.py live
