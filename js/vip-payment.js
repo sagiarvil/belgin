@@ -1,4 +1,4 @@
-// BELGIN KUYUMCULUK — VIP ÖDEME LİNKİ & CHECKOUT MOTORU
+﻿// BELGIN KUYUMCULUK — VIP ÖDEME LİNKİ & CHECKOUT MOTORU
 // Güvenli Kompakt Maskeli Token (?p=...) ve WhatsApp Entegrasyonu
 (function (global) {
   'use strict';
@@ -64,11 +64,18 @@
     isVip22Tag,
 
     // /22 OTOMATİK 22 AYAR BİLEZİK AYRIŞTIRMA VE HESAPLAMA MOTORU
-    calculateVip22Breakdown(totalAmount) {
+    calculateVip22Breakdown(totalAmount, customProductName = '') {
       const total = Number(totalAmount) || 0;
       if (total <= 0) {
         return null;
       }
+
+      let rawName = String(customProductName || '').trim();
+      if (!rawName || rawName === '/22' || rawName === '22' || rawName === '#22') {
+        rawName = '22 Ayar Bilezik';
+      }
+      const cleanProdName = rawName.replace(/\s*\(Kıymetli Maden Bedeli\s*-\s*Özel Matrah\)/gi, '').replace(/\s*\(Özel Matrah 351\)/gi, '').trim() || '22 Ayar Bilezik';
+      const malHizmetDesc = cleanProdName;
 
       // %1.25 İşçilik ve %20 KDV hesaplaması (Fiyatın içinde)
       const workmanshipTotal = Math.max(1, Math.round(total * 0.0125 * 100) / 100);
@@ -80,8 +87,8 @@
       const items = [
         {
           id: '22-ayar-bilezik',
-          name: '22 Ayar Bilezik',
-          malHizmet: '22 Ayar Bilezik (Kıymetli Maden Bedeli - Özel Matrah)',
+          name: cleanProdName,
+          malHizmet: malHizmetDesc,
           reference: 'BLG-BLZ-22K',
           url: 'https://www.belginkuyumculuk.com/urun/22-ayar-bilezik/',
           qty: 1,
@@ -127,7 +134,7 @@
       return {
         isVip22: true,
         tag: '/22',
-        productName: '22 Ayar Bilezik',
+        productName: cleanProdName,
         hasGoldAmount: goldNetPool.toFixed(2),
         workmanshipNet: workmanshipNet.toFixed(2),
         workmanshipKdv: workmanshipKdv.toFixed(2),

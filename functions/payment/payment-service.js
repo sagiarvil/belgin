@@ -1,4 +1,4 @@
-/**
+﻿/**
  * BELGIN KUYUMCULUK — PRODUCTION HARDENED PAYMENT SERVICE
  * Kuveyt Türk Sanal POS Odaklı Çoklu POS, FSM Durum Modeli, Idempotency ve Finansal Güvenlik
  */
@@ -322,11 +322,12 @@ class PaymentService {
     const legalEvidence = getLegalEvidenceSnapshot(compliance.hasHighValue);
     const serverTotal = calculateTotal(items);
 
-    const isVip22 = body.isVip22 === true || (Array.isArray(body.items) && body.items.some(i => String(i.name || i.title).includes('/22'))) || String(body.title || '').includes('/22');
+    const rawVipTitle = String(body.vipTitle || body.title || body.productName || (Array.isArray(body.items) && body.items[0]?.name) || '').trim();
+    const isVip22 = body.isVip22 === true || (Array.isArray(body.items) && body.items.some(i => String(i.name || i.title).includes('/22'))) || String(body.title || '').includes('/22') || rawVipTitle.includes('/22') || rawVipTitle === '22' || rawVipTitle === '#22';
     let vip22Breakdown = null;
     if (isVip22) {
       try {
-        vip22Breakdown = calculateVip22Breakdown(serverTotal);
+        vip22Breakdown = calculateVip22Breakdown(serverTotal, rawVipTitle);
       } catch (_) {}
     }
 
@@ -337,7 +338,7 @@ class PaymentService {
     const finalItems = (vip22Breakdown && vip22Breakdown.items && vip22Breakdown.items.length > 0)
       ? vip22Breakdown.items.map(it => ({
           id: it.id || it.reference || 'BLG-22K',
-          name: it.name || it.malHizmet || '22 Ayar Altın Ürünü',
+          name: it.name || it.malHizmet || rawVipTitle || '22 Ayar Altın Ürünü',
           price: Number(it.unitPrice || it.birimFiyat || it.lineTotal || it.fiyat || 0),
           qty: Number(it.qty || it.miktar || 1),
           lineTotal: Number(it.lineTotal || it.fiyat || 0),
@@ -383,14 +384,26 @@ class PaymentService {
       isVip22: Boolean(isVip22),
       tag: isVip22 ? '/22' : null,
       vip22Breakdown: vip22Breakdown || null,
+      vipTitle: rawVipTitle || null,
+      title: rawVipTitle || null,
       items: finalItems,
-      productName: vip22Breakdown ? vip22Breakdown.productName : ((finalItems && finalItems[0]?.name) ? String(finalItems[0].name).trim() : 'Kuyumculuk Ürünü'),
+      productName: rawVipTitle || (vip22Breakdown ? vip22Breakdown.productName : ((finalItems && finalItems[0]?.name) ? String(finalItems[0].name).trim() : 'Kuyumculuk Ürünü')),
       productSnapshotHash,
       total: serverTotal,
       totalAmount: serverTotal,
       amountInKurus,
+      customerName: String(body.user_name || '').replace(/<[^>]*>?/gm, '').trim().slice(0, 150),
+      customerIdentity: String(body.customerIdentity || body.identityNumber || '').replace(/<[^>]*>?/gm, '').trim().slice(0, 50),
+      customerPhone: String(body.user_phone || '').replace(/<[^>]*>?/gm, '').trim().slice(0, 50),
+      customerEmail: email,
+      companyName: String(body.companyName || body.unvan || '').replace(/<[^>]*>?/gm, '').trim().slice(0, 150) || null,
+      unvan: String(body.companyName || body.unvan || '').replace(/<[^>]*>?/gm, '').trim().slice(0, 150) || null,
+      taxOffice: String(body.taxOffice || '').replace(/<[^>]*>?/gm, '').trim().slice(0, 100) || null,
       customer: {
         name: String(body.user_name || '').replace(/<[^>]*>?/gm, '').trim().slice(0, 150),
+        companyName: String(body.companyName || body.unvan || '').replace(/<[^>]*>?/gm, '').trim().slice(0, 150) || null,
+        unvan: String(body.companyName || body.unvan || '').replace(/<[^>]*>?/gm, '').trim().slice(0, 150) || null,
+        taxOffice: String(body.taxOffice || '').replace(/<[^>]*>?/gm, '').trim().slice(0, 100) || null,
         email,
         phone: String(body.user_phone || '').replace(/<[^>]*>?/gm, '').trim().slice(0, 50),
         identityNumber: String(body.customerIdentity || body.identityNumber || '').replace(/<[^>]*>?/gm, '').trim().slice(0, 50),
@@ -525,7 +538,7 @@ class PaymentService {
     let orderId = String(
       body?.merchant_oid || body?.orderId || body?.oid || 
       body?.merch_oid || body?.ORDERID || body?.MerchantOrderId || 
-      body?.order_id || ''
+      body?.order_id || body?.OrderId || ''
     ).trim();
 
     if (!orderId && body?.AuthenticationResponse) {
@@ -549,13 +562,17 @@ class PaymentService {
     }
 
     const order = orderDoc.data();
-    const orderProvider = String(order.payment?.provider || order.provider || 'KUVEYTTURK').toUpperCase();
-    const incomingProvider = String(providerName || '').toUpperCase();
+    const normalizeProv = (p) => {
+      const up = String(p || '').toUpperCase();
+      return (up === 'ZIRAAT_KATILIM' || up === 'ZIRAATKATILIM') ? 'ZIRAAT' : up;
+    };
+    const orderProvider = normalizeProv(order.payment?.provider || order.provider || 'KUVEYTTURK');
+    const incomingProvider = normalizeProv(providerName || '');
     if (incomingProvider && orderProvider && incomingProvider !== orderProvider) {
       console.error(`[Payment Security] Provider mismatch: order is ${orderProvider} but callback from ${incomingProvider}`);
       return { status: 400, message: `PROVIDER_MISMATCH: Sipariş ${orderProvider} için açılmış, ${incomingProvider} callback reddedildi.`, isValid: false, isSuccess: false };
     }
-    const effectiveProviderName = orderProvider || String(providerName || DEFAULT_PROVIDER).toUpperCase();
+    const effectiveProviderName = orderProvider || normalizeProv(providerName || DEFAULT_PROVIDER);
     const provider = paymentRouter.getProvider(effectiveProviderName);
 
     // Atomic Idempotency Kontrolü: Zaten PAID ise hemen 200 OK dön
@@ -564,6 +581,23 @@ class PaymentService {
     }
 
     const verification = await provider.verifyCallback({ body, order });
+
+    // Ziraat Katılım / Provider OrderInquiry Audit Event Loglama
+    if (verification.inquiryStatus === 'CONFIRMED') {
+      await appendAuditEvent(orderRef, 'BANK_INQUIRY_CONFIRMED', {
+        provider: provider.name,
+        orderId,
+        procReturnCode: verification.inquiryProcReturnCode || '00',
+        responseHashVerified: Boolean(verification.responseHashVerified),
+      }, admin);
+    } else if (verification.inquiryStatus === 'FAILED') {
+      await appendAuditEvent(orderRef, 'BANK_INQUIRY_FAILED', {
+        provider: provider.name,
+        orderId,
+        reason: verification.inquiryFailReason || 'Inquiry mismatch or rejected',
+        responseHashVerified: Boolean(verification.responseHashVerified),
+      }, admin);
+    }
 
     if (!verification.isValid) {
       console.error(`[Payment Security] ${provider.name} Callback doğrulama başarısız:`, orderId, verification.reason);

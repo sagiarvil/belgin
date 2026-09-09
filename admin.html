@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260831-lion-max-gold-v5">
@@ -473,7 +473,7 @@
        ======================================================== */
     .admin-kpi-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 16px;
       margin-bottom: 20px;
     }
@@ -522,6 +522,16 @@
     .admin-kpi-card.kpi-indigo .kpi-label { color: #C7D2FE; letter-spacing: 1.1px; }
     .admin-kpi-card.kpi-indigo .kpi-value { color: #E0E7FF; }
     .admin-kpi-card.kpi-indigo .kpi-subtext { color: #A5B4FC; }
+
+    .admin-kpi-card.kpi-blue {
+      background: linear-gradient(135deg, #0C4A6E 0%, #0369A1 45%, #0284C7 100%);
+      color: #FFFFFF;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      box-shadow: 0 8px 24px -4px rgba(2, 132, 199, 0.3);
+    }
+    .admin-kpi-card.kpi-blue .kpi-label { color: #BAE6FD; letter-spacing: 1.1px; }
+    .admin-kpi-card.kpi-blue .kpi-value { color: #F0F9FF; }
+    .admin-kpi-card.kpi-blue .kpi-subtext { color: #E0F2FE; }
 
     .kpi-label {
       font-size: 11px;
@@ -1980,7 +1990,8 @@
       }
       .admin-kpi-card:nth-child(3),
       .admin-kpi-card:nth-child(5),
-      .admin-kpi-card.kpi-indigo {
+      .admin-kpi-card.kpi-indigo,
+      .admin-kpi-card.kpi-blue {
         grid-column: span 2 !important;
       }
       .kpi-label {
@@ -2546,17 +2557,12 @@
 
 <main class="admin-container" style="display:none;">
 
-  <!-- ANA NAVİGASYON SEKMELERİ (1. SİPARİŞ & TAHSİLAT | 2. EKSTRE - CARİ HESAP | 3. MAĞAZA FATURALARI) -->
+  <!-- ANA NAVİGASYON SEKMELERİ (1. SİPARİŞ & TAHSİLAT | 2. MAĞAZA FATURALARI | 3. SİSTEM GÜNCELLEMELERİ) -->
   <nav class="admin-tab-nav">
     <button type="button" class="admin-tab-btn active" id="tabBtnOrders" onclick="AdminApp.switchTab('orders')">
       <span style="font-size:16px;">📋</span>
       <span>Sipariş & Tahsilat</span>
       <span class="tab-btn-badge" id="tabBadgeOrders">0</span>
-    </button>
-    <button type="button" class="admin-tab-btn" id="tabBtnStatement" onclick="AdminApp.switchTab('statement')">
-      <span style="font-size:16px;">📊</span>
-      <span>EKSTRE (Cari Hesap)</span>
-      <span class="tab-btn-badge-gold" id="tabBadgeStatement">₺0</span>
     </button>
     <button type="button" class="admin-tab-btn" id="tabBtnStoreInvoices" onclick="AdminApp.switchTab('storeInvoices')">
       <span style="font-size:16px;">🏪</span>
@@ -2689,9 +2695,17 @@
     <div class="admin-kpi-card kpi-indigo">
       <div class="kpi-label">POS Kanal Dağılımı</div>
       <div class="kpi-value" style="font-size:15px; font-weight:700; margin-top:4px;" id="kpiProviderStats">
-        Kuveyt Türk: ₺0<br>POS Linki: ₺0
+        KUVEYTTURK: ₺0
       </div>
       <div class="kpi-subtext" style="margin-top:4px;">Kanal bazında tahsilat</div>
+    </div>
+
+    <div class="admin-kpi-card kpi-blue">
+      <div class="kpi-label">Havale / Banka Dağılımı</div>
+      <div class="kpi-value" style="font-size:15px; font-weight:700; margin-top:4px;" id="kpiBankTransferStats">
+        KUVEYTTURK: ₺0
+      </div>
+      <div class="kpi-subtext" style="margin-top:4px;">Banka bazında havale / FAST tahsilatı</div>
     </div>
 
   </section>
@@ -2761,219 +2775,6 @@
   </div><!-- /ordersTabContent -->
 
   <!-- ======================================================== -->
-  <!-- 2. SEKME: EKSTRE (CARİ HESAP EKSTRESİ & HAKEDİŞ TAKİBİ)  -->
-  <!-- ======================================================== -->
-  <div id="statementTabContent" style="display:none;">
-
-    <!-- 1. ÜST HERO & GÜNCEL ÖDENECEK TUTAR BANNERI (FINTECH MOBILE HERO COCKPIT) -->
-    <div class="statement-header-banner" style="background:linear-gradient(135deg, #FFF5F5 0%, #FED7D7 40%, #FFFDF5 100%); border:2px solid #FEB2B2; box-shadow:0 8px 30px rgba(220, 38, 38, 0.08);">
-      
-      <!-- Üst Başlık & Hızlı Rozet -->
-      <div class="statement-title-block">
-        <div style="display:inline-flex; align-items:center; gap:6px; background:#FEE2E2; color:#991B1B; border:1px solid #FECACA; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:0.8px; width:fit-content; margin-bottom:8px;">
-          <span>🏛️</span> CARİ HESAP & MUTABAKAT PORTALI
-        </div>
-        <h2 class="statement-main-title" style="font-size:22px; color:#742A2A; font-family:'Playfair Display',serif; font-weight:800; margin:0 0 4px;">
-          <span>📊</span>
-          <span>Cari Hesap Ekstresi & Hakediş Defteri</span>
-        </h2>
-        <div class="statement-subtitle" style="font-size:12.5px; color:#7F1D1D; font-weight:600; line-height:1.4;">
-          POS Ciroları, %8 Komisyon Kesintili Net Hakedişler (%92 Net) ve Tahsilat / Ödeme Hareketleri
-        </div>
-      </div>
-      
-      <!-- SAĞ / ÜST KIRMIZI KALAN TOPLAM TUTAR KUTUSU -->
-      <div class="statement-hero-remaining-box" style="background:linear-gradient(135deg, #7F1D1D 0%, #B91C1C 60%, #991B1B 100%); border:2px solid #FCA5A5; box-shadow:0 8px 25px rgba(185, 28, 28, 0.35); padding:16px 24px; border-radius:14px; text-align:center;">
-        <span class="statement-hero-label" style="color:#FEE2E2; font-size:11px; font-weight:800; letter-spacing:1.5px; display:block; margin-bottom:4px;">GÜNCEL ÖDENECEK BAKİYE</span>
-        <span class="statement-hero-val" id="stmtHeroRemaining" style="font-size:32px; font-weight:800; color:#FFFFFF; letter-spacing:-0.5px; display:block; line-height:1.1;">₺0</span>
-        <span class="statement-hero-sub" style="color:#FECACA; font-size:11px; font-weight:600; display:block; margin-top:4px;">Hakediş — Ödenen Net Tutar</span>
-      </div>
-
-    </div>
-
-    <!-- 1.1 MOBİL BİRİNCİL HIZLI İŞLEM BUTONLARI (INSTANT MOBILE ACTION BAR) -->
-    <div class="statement-quick-actions">
-      <button type="button" class="btn-admin-primary" style="background:linear-gradient(135deg, #059669 0%, #10B981 100%); border-color:#059669; color:#FFF; font-weight:800; font-size:13.5px; min-height:46px; border-radius:12px; box-shadow:0 4px 14px rgba(16,185,129,0.25);" onclick="AdminApp.openPaymentModal()" title="Yeni Ödeme / Tahsilat Kaydı Ekle">
-        <span>💳 + Yeni Ödeme Ekle</span>
-      </button>
-      <button type="button" class="btn-admin-secondary" style="background:#FFFDF7; border:1.5px solid #D4AF37; color:#92400E; font-weight:800; font-size:13px; min-height:46px; border-radius:12px;" onclick="AdminApp.openManualPosModal()" title="Belirli bir güne manuel POS cirosu ekle veya güncelle">
-        <span>➕ Manuel POS Ekle</span>
-      </button>
-      <button type="button" class="btn-admin-secondary" style="background:#FFFFFF; border:1.5px solid #CBD5E1; color:#064E3B; font-weight:800; font-size:12.5px; min-height:46px; border-radius:12px;" onclick="AdminApp.openAllPaymentsModal()" title="Kayıtlı Tüm Ödemeleri Listele ve Yönet">
-        <span>📑 Ödeme Geçmişi (<span id="stmtTotalPaymentsBadge">0</span>)</span>
-      </button>
-    </div>
-
-    <!-- 2. EKSTRE FİLTRE VE EYLEM ÇUBUĞU -->
-    <section class="admin-filter-panel">
-      
-      <!-- Hızlı Dönem Seçiciler (Yatay Kaydırılabilir Haplar) -->
-      <div class="admin-presets">
-        <button class="btn-preset active" data-stmt-preset="all" onclick="AdminApp.selectStmtPreset('all', this)">Tüm Zamanlar</button>
-        <button class="btn-preset" data-stmt-preset="thisMonth" onclick="AdminApp.selectStmtPreset('thisMonth', this)" title="İçinde bulunulan tam ayı (01 - 30/31) seçer">Bu Ay</button>
-        <button class="btn-preset" data-stmt-preset="lastMonth" onclick="AdminApp.selectStmtPreset('lastMonth', this)" title="Önceki tam ayı (01 - 30/31) seçer">Geçen Ay</button>
-        <button class="btn-preset" data-stmt-preset="last30" onclick="AdminApp.selectStmtPreset('last30', this)">Son 30 Gün</button>
-        <button class="btn-preset" data-stmt-preset="today" onclick="AdminApp.selectStmtPreset('today', this)">Bugün</button>
-        <button class="btn-preset" data-stmt-preset="yesterday" onclick="AdminApp.selectStmtPreset('yesterday', this)">Dün</button>
-        <button class="btn-preset" data-stmt-preset="last7" onclick="AdminApp.selectStmtPreset('last7', this)">Son 7 Gün</button>
-      </div>
-
-      <div class="admin-filter-row stmt-filter-row">
-        <!-- Hızlı Ay / Dönem Seçici Dropdown -->
-        <div class="date-input-box" style="min-width:170px;">
-          <label for="stmtMonthSelector">🗓️ Ay Seçimi (01 - Son Gün)</label>
-          <select id="stmtMonthSelector" onchange="AdminApp.onStmtMonthSelect(this.value)" style="border:1.5px solid #059669; border-radius:8px; padding:7px 10px; font-weight:800; color:#064E3B; background:#FFF; font-size:12px; cursor:pointer;">
-            <option value="">-- Ay Seçiniz --</option>
-            <option value="2026-09">Eylül 2026 (01.09 - 30.09)</option>
-            <option value="2026-08">Ağustos 2026 (01.08 - 31.08)</option>
-            <option value="2026-07">Temmuz 2026 (01.07 - 31.07)</option>
-            <option value="2026-06">Haziran 2026 (01.06 - 30.06)</option>
-            <option value="2026-05">Mayıs 2026 (01.05 - 31.05)</option>
-            <option value="2026-04">Nisan 2026 (01.04 - 30.04)</option>
-            <option value="2026-03">Mart 2026 (01.03 - 31.03)</option>
-            <option value="2026-02">Şubat 2026 (01.02 - 28.02)</option>
-            <option value="2026-01">Ocak 2026 (01.01 - 31.01)</option>
-          </select>
-        </div>
-
-        <div class="date-inputs-group">
-          <div class="date-input-box">
-            <label for="stmtStartDate">📅 Başlangıç Tarihi</label>
-            <input type="date" id="stmtStartDate" onchange="AdminApp.onStmtCustomDateChange()">
-          </div>
-          <div class="date-input-box">
-            <label for="stmtEndDate">📅 Bitiş Tarihi</label>
-            <input type="date" id="stmtEndDate" onchange="AdminApp.onStmtCustomDateChange()">
-          </div>
-        </div>
-
-        <!-- POS KOMİSYON ORANLARI: KUVEYT TÜRK (%2.99) & TOSLA (%3.79) -->
-        <div class="pos-rate-box" style="display:flex; align-items:center; gap:8px; background:#FEF3C7; border:2px solid #F59E0B; padding:6px 10px; border-radius:10px; min-height:46px; flex-wrap:wrap;">
-          <div style="display:flex; align-items:center; gap:4px;">
-            <span style="font-size:11px; font-weight:800; background:#E0F2FE; color:#0284C7; border:1px solid #BAE6FD; padding:2px 6px; border-radius:5px; white-space:nowrap;">🏛️ Kuveyt Türk</span>
-            <label for="posBankCommissionRate" style="font-size:11.5px; font-weight:800; color:#0284C7; margin:0;">%</label>
-            <input type="number" id="posBankCommissionRate" value="2.99" step="0.01" min="0" max="100" style="width:58px; padding:3px 4px; font-weight:800; font-size:13px; color:#0284C7; border:1.5px solid #0284C7; border-radius:6px; background:#FFF; text-align:center;" oninput="AdminApp.onPosCommissionRateChange(this.value, 'kuveyt')" title="Kuveyt Türk POS Cihazı Komisyon Oranı (%2.99)">
-          </div>
-
-          <div style="display:flex; align-items:center; gap:4px;">
-            <span style="font-size:11px; font-weight:800; background:#FEE2E2; color:#DC2626; border:1px solid #FECACA; padding:2px 6px; border-radius:5px; white-space:nowrap;">🔴 Tosla</span>
-            <label for="posRateTosla" style="font-size:11.5px; font-weight:800; color:#DC2626; margin:0;">%</label>
-            <input type="number" id="posRateTosla" value="3.79" step="0.01" min="0" max="100" style="width:58px; padding:3px 4px; font-weight:800; font-size:13px; color:#DC2626; border:1.5px solid #DC2626; border-radius:6px; background:#FFF; text-align:center;" oninput="AdminApp.onPosCommissionRateChange(this.value, 'tosla')" title="Tosla POS Komisyon Oranı (%3.79)">
-          </div>
-
-          <button type="button" class="btn-admin-secondary" style="background:#FFF; border:1.5px solid #D97706; color:#92400E; font-size:11px; font-weight:800; padding:4px 8px; border-radius:6px; cursor:pointer; white-space:nowrap;" onclick="AdminApp.openPosRatesModal()" title="Zaman içinde değişen dönemsel POS oranlarını yönet">
-            📅 Oranlar (<span id="posRatePeriodsCountBadge">0</span>)
-          </button>
-        </div>
-
-        <div>
-          <input type="text" id="stmtSearchInput" class="admin-search-input" placeholder="🔍 İşlem, sipariş no veya açıklama ara..." oninput="AdminApp.filterStatementTable()">
-        </div>
-
-        <div class="admin-action-btn-group">
-          <button class="btn-admin-secondary" onclick="AdminApp.exportStatementPdf()" title="Cari Hesap Ekstresini Kâr Bilgisi Olmadan Resmi PDF Formatında Al / Yazdır">
-            <span>📄 PDF Al</span>
-          </button>
-          <button class="btn-admin-secondary" onclick="AdminApp.exportStatementExcel()" title="Excel Şablonuna Birebir Uygun .xls Formatında İndir">
-            <span>📊 Excel İndir</span>
-          </button>
-          <button class="btn-admin-primary" onclick="AdminApp.loadStatement()" title="Ekstre Verilerini Canlı Yenile">
-            <span>🔄 Yenile</span>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3. EKSTRE 5'Lİ KPI ÖZET KARTLARI (STRIPE FINANCIAL METRIC CARDS) -->
-    <section class="admin-kpi-grid stmt-kpi-grid">
-      
-      <!-- 1. POS CİROSU -->
-      <div class="admin-kpi-card kpi-indigo" style="border:1.5px solid #312E81;">
-        <div class="kpi-label" style="color:#C7D2FE;">Toplam POS Cirosu</div>
-        <div class="kpi-value" id="stmtKpiTotalPos" style="color:#FFFFFF;">₺0</div>
-        <div class="kpi-subtext" id="stmtKpiPosSubtext" style="color:#E0E7FF; font-weight:700; font-size:11.5px;">📅 Dönem: 01.08.2016 — Bugün</div>
-      </div>
-
-      <!-- 2. NET HAKEDİŞ -->
-      <div class="admin-kpi-card" style="border:2px solid #7DD3FC; background:linear-gradient(145deg, #FFFFFF 0%, #F0F9FF 100%);">
-        <div class="kpi-label" style="color:#0369A1; font-weight:800;">Net Hakediş (%92 Net)</div>
-        <div class="kpi-value" id="stmtKpiTotalHakedis" style="color:#0284C7;">₺0</div>
-        <div class="kpi-subtext" id="stmtKpiHakedisSubtext" style="color:#0369A1; font-weight:700; font-size:11.5px;">📅 Dönem: 01.08.2016 — Bugün</div>
-      </div>
-
-      <!-- 3. TOPLAM YAPILAN ÖDEMELER -->
-      <div class="admin-kpi-card kpi-emerald" style="border:1.5px solid #047857;">
-        <div class="kpi-label" style="color:#A7F3D0;">Toplam Yapılan Ödemeler</div>
-        <div class="kpi-value" id="stmtKpiTotalPaid" style="color:#FDE68A;">₺0</div>
-        <div class="kpi-subtext" id="stmtKpiPaidSubtext" style="color:#ECFDF5; font-weight:700; font-size:11.5px;">📅 Dönem: 01.08.2016 — Bugün</div>
-      </div>
-
-      <!-- 4. GÜNCEL ÖDENECEK TUTAR -->
-      <div class="admin-kpi-card" style="border:2px solid #FECACA; background:linear-gradient(145deg, #FFFFFF 0%, #FEF2F2 100%);">
-        <div class="kpi-label" style="color:#991B1B; font-weight:800;">Güncel Ödenecek Bakiye</div>
-        <div class="kpi-value" id="stmtKpiTotalRemaining" style="color:#DC2626;">₺0</div>
-        <div class="kpi-subtext" id="stmtKpiRemainingSubtext" style="color:#991B1B; font-weight:700; font-size:11.5px;">📅 Dönem: 01.08.2016 — Bugün</div>
-      </div>
-
-      <!-- 5. TOPLAM NET KÂR -->
-      <div class="admin-kpi-card" style="border:2px solid #86EFAC; background:linear-gradient(145deg, #FFFFFF 0%, #F0FDF4 100%);">
-        <div class="kpi-label" style="color:#166534; font-weight:800;">Toplam Net Kâr</div>
-        <div class="kpi-value" id="stmtKpiTotalProfit" style="color:#15803D;">₺0</div>
-        <div class="kpi-subtext" id="stmtKpiProfitSubtext" style="color:#14532D; font-weight:700; font-size:11.5px;">📅 Dönem: 01.08.2016 — Bugün</div>
-      </div>
-    </section>
-
-    <!-- 4. EKSTRE TABLOSU & MOBİL İŞLEM AKIŞI -->
-    <section class="admin-table-card">
-      <div class="admin-table-header" style="padding:14px 18px;">
-        <h3 class="admin-table-title" style="margin:0;">
-          <span>📋</span>
-          <span>Cari Hesap Ekstresi & Kâr Hesaplama Tablosu</span>
-          <span style="font-size:12.5px; font-weight:700; color:#0F172A;" id="stmtTableCountBadge">(0 Hareket)</span>
-        </h3>
-        <div style="font-size:12px; font-weight:700; color:#334155;" id="stmtLastSyncTime">
-          Son Güncelleme: --:--:--
-        </div>
-      </div>
-
-      <!-- Masaüstü Ekstre Tablosu -->
-      <div class="admin-table-wrapper">
-        <table class="admin-orders-table statement-table">
-          <thead>
-            <tr>
-              <th style="width:95px; text-align:center;">Tarih & Saat</th>
-              <th style="text-align:left;">İşlem & Açıklama</th>
-              <th style="width:95px; text-align:right;">POS (₺)</th>
-              <th style="width:75px; text-align:center; color:#92400E;">Banka Oranı</th>
-              <th style="width:140px; text-align:center; color:#B45309;">Banka Blokesi & Vade<br><span style="font-size:9px; font-weight:700; opacity:0.9;">(3 Gün / İş Günü 09:00)</span></th>
-              <th style="width:105px; text-align:right; color:#0369A1;">Hakediş (₺)<br><span style="font-size:9px; font-weight:700; opacity:0.9;">(%92 Net)</span></th>
-              <th style="width:90px; text-align:right; color:#15803D;">Ödenen (₺)</th>
-              <th style="width:105px; text-align:right; color:#991B1B;">Kalan Bakiye (₺)</th>
-              <th style="width:105px; text-align:right; color:#166534;">Net Kâr (₺)</th>
-              <th style="width:95px; text-align:center;">İşlemler</th>
-            </tr>
-          </thead>
-          <tbody id="statementTableBody">
-            <tr>
-              <td colspan="10" style="text-align:center; padding:32px; color:#334155; font-weight:600;">
-                Ekstre hareketleri yükleniyor...
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Mobil Ekstre Listesi (Revolut / Apple Card Tarzı Kart Akışı) -->
-      <div class="admin-orders-mobile-list" id="statementMobileList" style="padding:12px; gap:12px; background:#F8FAF9;">
-        <div style="text-align:center; padding:32px 16px; color:#334155; font-weight:600;">
-          Ekstre hareketleri yükleniyor...
-        </div>
-      </div>
-    </section>
-
-  </div><!-- /statementTabContent -->
-
-  <!-- ======================================================== -->
   <!-- 3. SEKME: MAĞAZA VE MANUEL FATURA KESİMİ (GİB E-ARŞİV)    -->
   <!-- ======================================================== -->
   <div id="storeInvoicesTabContent" style="display:none;">
@@ -3028,14 +2829,17 @@
 
               <div class="form-grid-3" style="margin-bottom:10px;">
                 <div class="form-field-group">
-                  <label class="form-field-label" for="storeCustName" style="color:#1E293B; font-weight:800;">Alıcı Ad Soyad / Şirket: *</label>
-                  <input type="text" id="storeCustName" class="form-field-input" placeholder="Örn: Mehmet Demir veya XYZ A.Ş." style="font-weight:700; color:#0F172A;" required>
+                  <label class="form-field-label" for="storeCustName" style="color:#1E293B; font-weight:800;">Alıcı Ad Soyad / Yetkili: *</label>
+                  <input type="text" id="storeCustName" class="form-field-input" placeholder="Örn: Mehmet Demir veya Firma Yetkilisi" style="font-weight:700; color:#0F172A;" required oninput="AdminApp.handleStoreCustIdentityInput()">
                 </div>
 
                 <div class="form-field-group">
-                  <label class="form-field-label" for="storeCustIdentity" style="color:#1E293B; font-weight:800;">TCKN / VKN: *</label>
-                  <input type="text" id="storeCustIdentity" class="form-field-input" placeholder="11 haneli TCKN veya 10 haneli VKN" maxlength="11" style="font-weight:700; color:#0F172A; font-family:monospace;" required>
-                  <span style="font-size:10.5px; color:#475569; font-weight:600; margin-top:2px;">ℹ️ Bireysel TCKN (11 hane), Kurumsal Vergi No (10 hane) veya Nihai Tüketici için <b>11111111111</b> giriniz.</span>
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <label class="form-field-label" for="storeCustIdentity" style="color:#1E293B; font-weight:800; margin:0;">TCKN / VKN: *</label>
+                    <span id="storeCustIdentityTypeBadge" style="font-size:10px; font-weight:800; padding:1px 6px; border-radius:4px; background:#F1F5F9; color:#475569;">Bireysel / Kurumsal</span>
+                  </div>
+                  <input type="text" id="storeCustIdentity" class="form-field-input" placeholder="11 haneli TCKN veya 10 haneli VKN" maxlength="11" style="font-weight:700; color:#0F172A; font-family:monospace; margin-top:3px;" required oninput="AdminApp.handleStoreCustIdentityInput()">
+                  <span style="font-size:10.5px; color:#475569; font-weight:600; margin-top:2px;">ℹ️ Bireysel TCKN (11 hane), Kurumsal Vergi No (10 hane) veya Nihai Tüketici için <b>11111111111</b>.</span>
                 </div>
 
                 <div class="form-field-group">
@@ -3044,11 +2848,30 @@
                 </div>
               </div>
 
-              <!-- 🌟 YENİ: Alıcı Adres Satırı & İletişim Bilgileri -->
+              <!-- 🏢 KURUMSAL FATURA BİLGİLERİ (FİRMA ÜNVANI & VERGİ DAİRESİ) -->
+              <div style="display:grid; grid-template-columns:1.4fr 1fr; gap:12px; margin-top:10px; margin-bottom:10px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:10px 12px;">
+                <div class="form-field-group">
+                  <label class="form-field-label" for="storeCustCompanyName" style="color:#0F172A; font-weight:800;">
+                    🏢 Firma / Şirket Ticari Unvanı (VKN Faturalarında Resmi Başlık):
+                  </label>
+                  <input type="text" id="storeCustCompanyName" class="form-field-input" placeholder="Örn: ABC Kuyumculuk Mücevherat San. ve Tic. Ltd. Şti." style="font-weight:700; color:#0F172A; background:#FFF;">
+                  <span style="font-size:10.5px; color:#64748B; font-weight:600;">10 haneli VKN girildiğinde GİB e-Arşiv faturasının "SAYIN" başlığı altına bu resmi unvan basılır.</span>
+                </div>
+
+                <div class="form-field-group">
+                  <label class="form-field-label" for="storeCustTaxOffice" style="color:#0F172A; font-weight:800;">
+                    🏛️ Vergi Dairesi (VKN / Kurumsal):
+                  </label>
+                  <input type="text" id="storeCustTaxOffice" class="form-field-input" placeholder="Örn: Mevlana Vergi Dairesi" style="font-weight:700; color:#0F172A; background:#FFF;">
+                  <span style="font-size:10.5px; color:#64748B; font-weight:600;">Fatura çıktısında "Vergi Dairesi" satırına eklenir.</span>
+                </div>
+              </div>
+
+              <!-- 🌟 Alıcı Adres Satırı & İletişim Bilgileri -->
               <div style="display:grid; grid-template-columns:1.8fr 1fr 1fr; gap:12px; margin-top:10px;">
                 <div class="form-field-group">
                   <label class="form-field-label" for="storeCustAddress" style="color:#1E293B; font-weight:800;">Alıcı Açık Adresi (Fatura Adresi): *</label>
-                  <input type="text" id="storeCustAddress" class="form-field-input" placeholder="Örn: Menderes Cad. No:231/B Buca / İzmir" value="Menderes Cad. No:231/B Buca İzmir" style="font-weight:600; color:#0F172A;">
+                  <input type="text" id="storeCustAddress" class="form-field-input" placeholder="Örn: Fevziçakmak Mah. 10432. Sk. No:2 Karatay / Konya" value="Menderes Cad. No:231/B Buca İzmir" style="font-weight:600; color:#0F172A;">
                 </div>
 
                 <div class="form-field-group">
@@ -5270,6 +5093,42 @@
         </div>
       </div>
 
+      <!-- 🏢 / 👤 ALICI & FATURA BAŞLIK BİLGİLERİ DÜZENLEME -->
+      <div style="background:#F8FAFC; border:1.5px solid #CBD5E1; border-radius:10px; padding:12px 14px; margin-bottom:16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <div style="font-size:12px; font-weight:800; color:#0F172A; text-transform:uppercase; display:flex; align-items:center; gap:6px;">
+            <span>🏢</span> Fatura Alıcı / Ünvan Bilgileri (GİB e-Arşiv Resmi Başlık):
+          </div>
+          <span id="cfgCustIdTypeBadge" style="font-size:10.5px; font-weight:800; padding:2px 8px; border-radius:4px; background:#E0F2FE; color:#0369A1;">10 Haneli VKN / 11 Haneli TCKN</span>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:8px; margin-bottom:8px;">
+          <div>
+            <label style="display:block; font-size:11px; font-weight:700; color:#334155; margin-bottom:2px;">Alıcı Ad Soyad / Şahıs Adı: *</label>
+            <input type="text" id="cfgModalCustNameInput" class="form-field-input" placeholder="Müşteri Ad Soyad" style="font-size:12px; font-weight:700; padding:6px 8px; border:1px solid #CBD5E1; border-radius:6px;" oninput="AdminApp.handleCfgCustIdentityChange()">
+          </div>
+          <div>
+            <label style="display:block; font-size:11px; font-weight:700; color:#334155; margin-bottom:2px;">TCKN / VKN: *</label>
+            <input type="text" id="cfgModalCustIdentityInput" class="form-field-input" placeholder="11 hane TCKN veya 10 hane VKN" maxlength="11" style="font-size:12px; font-weight:800; font-family:monospace; padding:6px 8px; border:1px solid #CBD5E1; border-radius:6px;" oninput="AdminApp.handleCfgCustIdentityChange()">
+          </div>
+          <div>
+            <label style="display:block; font-size:11px; font-weight:700; color:#334155; margin-bottom:2px;">Vergi Dairesi (VKN için):</label>
+            <input type="text" id="cfgModalTaxOfficeInput" class="form-field-input" placeholder="Örn: Mevlana V.D." style="font-size:12px; font-weight:700; padding:6px 8px; border:1px solid #CBD5E1; border-radius:6px;">
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1.5fr 1.5fr; gap:8px;">
+          <div>
+            <label style="display:block; font-size:11px; font-weight:700; color:#334155; margin-bottom:2px;">Firma / Şirket Ticari Unvanı (10 Haneli VKN'de Resmi Başlık):</label>
+            <input type="text" id="cfgModalCompanyNameInput" class="form-field-input" placeholder="Örn: ABC Kuyumculuk Ltd. Şti." style="font-size:12px; font-weight:700; padding:6px 8px; border:1px solid #CBD5E1; border-radius:6px;">
+          </div>
+          <div>
+            <label style="display:block; font-size:11px; font-weight:700; color:#334155; margin-bottom:2px;">Fatura Adresi:</label>
+            <input type="text" id="cfgModalAddressInput" class="form-field-input" placeholder="Fatura adresi" style="font-size:12px; font-weight:600; padding:6px 8px; border:1px solid #CBD5E1; border-radius:6px;">
+          </div>
+        </div>
+      </div>
+
       <!-- 2. FATURA KESİM TÜRÜNÜ SEÇİN (ALTIN vs SAAT vs SERBEST) -->
       <div style="background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:12px; padding:16px; margin-bottom:16px;">
         <div style="font-size:12px; font-weight:800; color:#0F172A; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
@@ -5290,6 +5149,12 @@
 
         <!-- Altın Ayarları: İşçilik Oranı -->
         <div id="cfgGoldSettingsBlock" style="background:#FFFDF7; border:1.5px solid #FCD34D; border-radius:8px; padding:12px; margin-bottom:12px;">
+          <div style="margin-bottom:10px;">
+            <label for="cfgGoldItemName" style="display:block; font-size:11.5px; font-weight:800; color:#92400E; margin-bottom:3px;">
+              🏷️ Altın / Ziynet / VIP Ürün Açıklaması: * <small style="font-weight:600; color:#B45309;">(VIP Linkte Girdiğiniz Ürün Adı)</small>
+            </label>
+            <input type="text" id="cfgGoldItemName" value="22 Ayar Bilezik" placeholder="Örn: 22 Ayar Burma Bilezik / 24 Ayar Külçe Altın" style="width:100%; border:1.5px solid #D97706; border-radius:6px; padding:8px 10px; font-size:13px; font-weight:700; color:#78350F; background:#FFF;" oninput="AdminApp.updateOrderInvoiceLiveSummary()">
+          </div>
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
             <div>
               <span style="font-size:12px; font-weight:800; color:#92400E;">🔨 İşçilik Oranı (%20 KDV Dahil):</span>

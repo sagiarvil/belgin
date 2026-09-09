@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260831-lion-max-gold-v5">
@@ -355,13 +355,28 @@
           titleEl.textContent = 'Showroom Sipariş Bedeli';
         }
 
+        const provider = (currentPayload?.provider || 'KUVEYTTURK').toUpperCase();
+        const isZiraat = provider.includes('ZIRAAT');
+        const cardWrap = document.getElementById('cardFieldsWrap');
+        if (isZiraat && cardWrap) {
+          cardWrap.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px solid #162E2A; padding-bottom:8px;">
+              <span style="font-size:12px; font-weight:800; color:var(--gold-light); text-transform:uppercase; letter-spacing:0.5px;">🏦 Banka Ortak Ödeme Kapısı</span>
+              <span style="background:#C4122F; color:#FFF; font-size:10px; font-weight:900; padding:2px 7px; border-radius:4px;">ZİRAAT KATILIM</span>
+            </div>
+            <div style="font-size:12px; color:var(--text-muted); line-height:1.5;">
+              Kart bilgileriniz doğrudan <strong>Ziraat Katılım Bankası 3DHost Ortak Ödeme Sayfası</strong> üzerinden 256-Bit SSL şifrelemeyle güvenle alınacaktır.
+            </div>
+          `;
+        }
+
         const amtFormatted = '₺' + Number(currentPayload.amount || 0).toLocaleString('tr-TR');
         if (amountEl) amountEl.textContent = amtFormatted;
         if (btn) {
           btn.disabled = false;
         }
         if (btnTextEl) {
-          btnTextEl.textContent = `${amtFormatted} GÜVENLİ ÖDE ➔`;
+          btnTextEl.textContent = isZiraat ? `${amtFormatted} ZİRAAT KATILIM İLE ÖDE ➔` : `${amtFormatted} GÜVENLİ ÖDE ➔`;
         }
         
         syncDraft();
@@ -377,6 +392,14 @@
       const address = document.getElementById('custAddress')?.value?.trim() || '';
       const amt = Number(currentPayload?.amount || 0);
       const isPaytr = currentPayload?.provider === 'PAYTR';
+      const isZiraat = (currentPayload?.provider || '').toUpperCase().includes('ZIRAAT');
+
+      let paymentMethodName = 'Kuveyt Türk Sanal POS 256-Bit SSL 3D Secure / Kredi Kartı';
+      if (isZiraat) {
+        paymentMethodName = 'Ziraat Katılım Sanal POS 256-Bit SSL 3DHost / Kredi Kartı';
+      } else if (isPaytr) {
+        paymentMethodName = 'PayTR 256-Bit SSL 3D Secure / Kredi Kartı';
+      }
 
       const draft = {
         orderId: currentPayload?.orderId,
@@ -387,7 +410,7 @@
         totalAmount: amt > 0 ? amt : 100,
         formattedAmount: '₺' + (amt > 0 ? amt : 100).toLocaleString('tr-TR'),
         termsAcceptedAt: new Date().toISOString(),
-        paymentMethod: isPaytr ? 'PayTR 256-Bit SSL 3D Secure / Kredi Kartı' : 'Kuveyt Türk Sanal POS 256-Bit SSL 3D Secure / Kredi Kartı'
+        paymentMethod: paymentMethodName
       };
       sessionStorage.setItem('belgin_checkout_draft', JSON.stringify(draft));
       localStorage.setItem('belgin_checkout_draft', JSON.stringify(draft));
@@ -467,38 +490,49 @@
         return;
       }
 
-      // Kart Bilgileri Doğrulaması
-      const cardHolder = (cardHolderInput?.value || name).trim().toLocaleUpperCase('tr-TR');
-      const rawCardNum = (cardNumInput?.value || '').replace(/\D/g, '');
-      const rawCardExp = (cardExpInput?.value || '').trim();
-      const rawCardCvc = (cardCvcInput?.value || '').replace(/\D/g, '');
-
-      if (!rawCardNum || rawCardNum.length < 15) {
-        alert('Lütfen geçerli 16 haneli kart numaranızı giriniz.');
-        cardNumInput?.focus();
-        return;
-      }
-
-      if (!rawCardExp.includes('/') || rawCardExp.length < 4) {
-        alert('Lütfen kartınızın son kullanma tarihini AA/YY formatında giriniz (Örn: 08/28).');
-        cardExpInput?.focus();
-        return;
-      }
-
-      if (!rawCardCvc || rawCardCvc.length < 3) {
-        alert('Lütfen kartınızın arka yüzündeki 3 haneli güvenlik kodunu (CVV) giriniz.');
-        cardCvcInput?.focus();
-        return;
-      }
-
       syncDraft();
 
       const provider = (currentPayload?.provider || 'KUVEYTTURK').toUpperCase();
+      const isZiraat = provider.includes('ZIRAAT');
+
+      let cardHolder = '';
+      let rawCardNum = '';
+      let rawCardExp = '';
+      let rawCardCvc = '';
+
+      if (!isZiraat) {
+        // Kuveyt Türk için kart bilgileri zorunludur
+        cardHolder = (cardHolderInput?.value || name).trim().toLocaleUpperCase('tr-TR');
+        rawCardNum = (cardNumInput?.value || '').replace(/\D/g, '');
+        rawCardExp = (cardExpInput?.value || '').trim();
+        rawCardCvc = (cardCvcInput?.value || '').replace(/\D/g, '');
+
+        if (!rawCardNum || rawCardNum.length < 15) {
+          alert('Lütfen geçerli 16 haneli kart numaranızı giriniz.');
+          cardNumInput?.focus();
+          return;
+        }
+
+        if (!rawCardExp.includes('/') || rawCardExp.length < 4) {
+          alert('Lütfen kartınızın son kullanma tarihini AA/YY formatında giriniz (Örn: 08/28).');
+          cardExpInput?.focus();
+          return;
+        }
+
+        if (!rawCardCvc || rawCardCvc.length < 3) {
+          alert('Lütfen kartınızın arka yüzündeki 3 haneli güvenlik kodunu (CVV) giriniz.');
+          cardCvcInput?.focus();
+          return;
+        }
+      }
+
       const btn = document.getElementById('btnCompletePayment');
       const originalHtml = btn ? btn.innerHTML : '';
       if (btn) {
         btn.disabled = true;
-        btn.innerHTML = '<span>🔒</span> Kuveyt Türk 3D Secure SMS Doğrulamasına Geçiliyor...';
+        btn.innerHTML = isZiraat
+          ? '<span>🔒</span> Ziraat Katılım 3DHost Sayfasına Yönlendiriliyorsunuz...'
+          : '<span>🔒</span> Kuveyt Türk 3D Secure SMS Doğrulamasına Geçiliyor...';
       }
 
       try {
@@ -525,6 +559,9 @@
           isVipPayment: true,
           isVip22: is22,
           vipToken: token,
+          title: currentPayload.title || 'Lüks Showroom Siparişi',
+          productName: currentPayload.title || 'Lüks Showroom Siparişi',
+          vipTitle: currentPayload.title || null,
           user_name: name,
           user_phone: phone,
           email: cleanPhone ? `musteri_${cleanPhone}@belginkuyumculuk.com` : `vip_${Date.now()}@belginkuyumculuk.com`,

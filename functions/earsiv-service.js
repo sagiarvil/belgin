@@ -1,4 +1,4 @@
-/**
+﻿/**
  * BELGIN KUYUMCULUK — GİB E-ARŞİV PORTAL ENTEGRASYON SERVİSİ
  * Kuyumculuk Özel Matrahı (KDV Kanunu 23/f - Has Altın %0 KDV + İşçilik %20 KDV)
  * SMS Onay Kodu ile Doğrulama ve İmzalama Modülü
@@ -29,11 +29,18 @@ const VIP_22_CATALOG = Object.freeze([
  * VIP link ve siparişlerde /22 kısayolu kullanıldığında istisnasız ve yalnızca "22 Ayar Bilezik" üretir.
  * Toplam tutarı Kıymetli Maden Bedeli (%0 KDV Özel Matrah) ve %1.25 İşçilik Bedeli (%20 KDV) olarak ayrıştırır.
  */
-function calculateVip22Breakdown(totalAmount) {
+function calculateVip22Breakdown(totalAmount, customProductName = '') {
   const total = Number(totalAmount) || 0;
   if (total <= 0) {
     throw new Error('Geçersiz fatura tutarı');
   }
+
+  let rawName = String(customProductName || '').trim();
+  if (!rawName || rawName === '/22' || rawName === '22' || rawName === '#22') {
+    rawName = '22 Ayar Bilezik';
+  }
+  const cleanProdName = rawName.replace(/\s*\(Kıymetli Maden Bedeli\s*-\s*Özel Matrah\)/gi, '').replace(/\s*\(Özel Matrah 351\)/gi, '').trim() || '22 Ayar Bilezik';
+  const malHizmetDesc = cleanProdName;
 
   // %1.25 İşçilik ve %20 KDV Dahil
   const workmanshipTotal = Math.max(1, Math.round(total * 0.0125 * 100) / 100);
@@ -45,8 +52,8 @@ function calculateVip22Breakdown(totalAmount) {
   const items = [
     {
       id: '22-ayar-bilezik',
-      name: '22 Ayar Bilezik',
-      malHizmet: '22 Ayar Bilezik (Kıymetli Maden Bedeli - Özel Matrah)',
+      name: cleanProdName,
+      malHizmet: malHizmetDesc,
       miktar: 1,
       qty: 1,
       birim: 'C62',
@@ -101,7 +108,7 @@ function calculateVip22Breakdown(totalAmount) {
   return {
     isVip22: true,
     tag: '/22',
-    productName: '22 Ayar Bilezik',
+    productName: cleanProdName,
     hasGoldAmount: goldNetPool.toFixed(2),
     workmanshipNet: workmanshipNet.toFixed(2),
     workmanshipKdv: workmanshipKdv.toFixed(2),
@@ -125,10 +132,10 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
   }
 
   const resolvedProductName = String(productName || 'Kuyumculuk Ürünü').trim();
-  const is22 = options.isVip22 === true || resolvedProductName === '/22' || resolvedProductName.includes('/22');
+  const is22 = (options.isVip22 === true || resolvedProductName === '/22' || resolvedProductName.includes('/22')) && (!options.items || options.items.length === 0);
 
   if (is22) {
-    return calculateVip22Breakdown(total);
+    return calculateVip22Breakdown(total, resolvedProductName);
   }
 
   // Çoklu Kalem Desteği (Mağaza ve Sepet Kalemleri)
@@ -615,17 +622,41 @@ class EarsivPortalService {
     const resolvedTotal = Number(orderData.totalAmount || orderData.total || (orderData.payment && orderData.payment.amount) || (orderData.amountInKurus ? orderData.amountInKurus / 100 : 0) || 0);
     const breakdown = customBreakdown || calculateJewelryInvoiceBreakdown(resolvedTotal, itemsSummary);
 
-    // Müşteri T.C. Kimlik No veya Vergi No kontrolü (Öncelik: customerIdentity, customer.identityNumber, customer.tckn, tc)
+    // Müşteri T.C. Kimlik No veya Vergi No kontrolü (Öncelik: customerIdentity, customer.identityNumber, customer.tckn, tc, vkn, taxNumber)
     const customerObj = (orderData && typeof orderData.customer === 'object' && orderData.customer !== null) ? orderData.customer : {};
-    let vknTckn = String(orderData.customerIdentity || customerObj.identityNumber || customerObj.tckn || customerObj.vkn || customerObj.tc || customerObj.identity || '').replace(/\D/g, '');
+    let vknTckn = String(orderData.customerIdentity || customerObj.identityNumber || customerObj.tckn || customerObj.vkn || customerObj.tc || customerObj.identity || orderData.vkn || orderData.taxNumber || '').replace(/\D/g, '');
     if (vknTckn.length !== 10 && vknTckn.length !== 11) {
       vknTckn = '11111111111'; // Nihai tüketici fallback
     }
 
-    const rawCustName = String(orderData.customerName || customerObj.name || customerObj.fullName || 'Nihai Tüketici').trim();
-    const nameParts = rawCustName.split(/\s+/);
-    const aliciSoyadi = nameParts.length > 1 ? nameParts.pop() : '';
-    const aliciAdi = nameParts.join(' ') || 'Sayın Müşteri';
+    const isCompanyVkn = (vknTckn.length === 10);
+    const companyTitle = String(orderData.companyName || customerObj.companyName || orderData.unvan || customerObj.unvan || orderData.company || '').trim();
+    const rawCustName = String(orderData.customerName || customerObj.name || customerObj.fullName || (isCompanyVkn ? companyTitle : '') || 'Nihai Tüketici').trim();
+    const taxOffice = String(orderData.taxOffice || customerObj.taxOffice || orderData.vergiDairesi || customerObj.vergiDairesi || '').trim();
+
+    let aliciUnvan = '';
+    let aliciAdi = '';
+    let aliciSoyadi = '';
+
+    if (isCompanyVkn) {
+      // 10 Haneli VKN = Kurumsal / Şirket Faturası
+      // GİB e-Arşiv sisteminde 10 haneli VKN için aliciUnvan zorunludur. aliciAdi ve aliciSoyadi boş olmalıdır.
+      aliciUnvan = (companyTitle || rawCustName || 'Kurumsal Müşteri').trim();
+      if (!aliciUnvan || aliciUnvan === 'Nihai Tüketici') {
+        aliciUnvan = 'Kurumsal Müşteri';
+      }
+      aliciAdi = '';
+      aliciSoyadi = '';
+    } else {
+      // 11 Haneli TCKN = Bireysel veya Şahıs İşletmesi
+      if (companyTitle) {
+        aliciUnvan = companyTitle;
+      }
+      const nameParts = rawCustName.split(/\s+/);
+      aliciSoyadi = nameParts.length > 1 ? nameParts.pop() : '';
+      aliciAdi = nameParts.join(' ') || 'Sayın Müşteri';
+    }
+
     const rawAddress = String(orderData.customerAddress || customerObj.address || '').trim();
     const customerAddress = (rawAddress && rawAddress !== '—' && !rawAddress.includes('Yok')) ? rawAddress : 'Menderes Cad. No:231/B Buca İzmir';
     const customerPhone = orderData.customerPhone || customerObj.phone || '';
@@ -634,6 +665,48 @@ class EarsivPortalService {
     if (customerWebsite.toLowerCase().includes('belginkuyumculuk.com')) {
       customerWebsite = '';
     }
+
+    // İl ve İlçe Çıkarımı (Konya gibi şehirlerin Buca/İzmir olarak basılmasını engeller)
+    const citiesList = [
+      'Adana', 'Adıyaman', 'Afyonkarahisar', 'Ağrı', 'Aksaray', 'Amasya', 'Ankara', 'Antalya', 'Ardahan',
+      'Artvin', 'Aydın', 'Balıkesir', 'Bartın', 'Batman', 'Bayburt', 'Bilecik', 'Bingöl', 'Bitlis',
+      'Bolu', 'Burdur', 'Bursa', 'Çanakkale', 'Çankırı', 'Çorum', 'Denizli', 'Diyarbakır', 'Düzce',
+      'Edirne', 'Elazığ', 'Erzincan', 'Erzurum', 'Eskişehir', 'Gaziantep', 'Giresun', 'Gümüşhane',
+      'Hakkari', 'Hatay', 'Iğdır', 'Isparta', 'İstanbul', 'İzmir', 'Kahramanmaraş', 'Karabük',
+      'Karaman', 'Kars', 'Kastamonu', 'Kayseri', 'Kırıkkale', 'Kırklareli', 'Kırşehir', 'Kilis',
+      'Kocaeli', 'Konya', 'Kütahya', 'Malatya', 'Manisa', 'Mardin', 'Mersin', 'Muğla', 'Muş',
+      'Nevşehir', 'Niğde', 'Ordu', 'Osmaniye', 'Rize', 'Sakarya', 'Samsun', 'Siirt', 'Sinop',
+      'Sivas', 'Şanlıurfa', 'Şırnak', 'Tekirdağ', 'Tokat', 'Trabzon', 'Tunceli', 'Uşak', 'Van',
+      'Yalova', 'Yozgat', 'Zonguldak'
+    ];
+
+    let resolvedCity = orderData.city || customerObj.city || '';
+    let resolvedDistrict = orderData.district || customerObj.district || '';
+
+    if (!resolvedCity && customerAddress) {
+      const upperAddr = customerAddress.toLocaleUpperCase('tr-TR');
+      for (const c of citiesList) {
+        const cUpper = c.toLocaleUpperCase('tr-TR');
+        const reg = new RegExp(`(?:[/\\s,-]|^)${cUpper}(?:[/\\s,-]|$)`, 'i');
+        if (reg.test(upperAddr)) {
+          resolvedCity = c;
+          break;
+        }
+      }
+    }
+
+    if (resolvedCity && !resolvedDistrict && customerAddress) {
+      const cUpper = resolvedCity.toLocaleUpperCase('tr-TR');
+      const slashReg = new RegExp(`([A-ZÇĞİÖŞÜa-zçğıöşü]+)\\s*[/\\\\]\\s*${cUpper}`, 'i');
+      const m = customerAddress.match(slashReg);
+      if (m && m[1]) {
+        const rawDist = m[1].trim();
+        resolvedDistrict = rawDist.charAt(0).toLocaleUpperCase('tr-TR') + rawDist.slice(1).toLocaleLowerCase('tr-TR');
+      }
+    }
+
+    if (!resolvedCity) resolvedCity = 'İzmir';
+    if (!resolvedDistrict) resolvedDistrict = (resolvedCity === 'İzmir' ? 'Buca' : 'Merkez');
 
     const invoicePayload = {
       belgeNumarasi: '',
@@ -644,18 +717,18 @@ class EarsivPortalService {
       faturaTipi: 'SATIS',
       hangiTip: '5000/30000',
       vknTckn: vknTckn,
-      aliciUnvan: '',
+      aliciUnvan: aliciUnvan,
       aliciAdi: aliciAdi,
       aliciSoyadi: aliciSoyadi,
       binaAdi: '',
       binaNo: '',
       kapiNo: '',
       kasabaKoy: '',
-      vergiDairesi: '',
+      vergiDairesi: taxOffice,
       ulke: 'Türkiye',
       bulvarcaddesokak: customerAddress,
-      mahalleSemtIlce: 'Buca',
-      sehir: 'İzmir',
+      mahalleSemtIlce: resolvedDistrict,
+      sehir: resolvedCity,
       postaKodu: '',
       tel: customerPhone,
       fax: '',
@@ -703,6 +776,15 @@ class EarsivPortalService {
       okcSeriNo: '',
       tip: 'İskonto'
     };
+
+    // Sert Değişmez Güvenlik Katmanı: 10 haneli VKN durumunda aliciUnvan ASLA boş olamaz, ad/soyad boş olmalıdır.
+    if (String(invoicePayload.vknTckn || '').replace(/\D/g, '').length === 10) {
+      if (!invoicePayload.aliciUnvan || !invoicePayload.aliciUnvan.trim() || invoicePayload.aliciUnvan === 'Nihai Tüketici') {
+        invoicePayload.aliciUnvan = 'Kurumsal Müşteri';
+      }
+      invoicePayload.aliciAdi = '';
+      invoicePayload.aliciSoyadi = '';
+    }
 
     if (token.startsWith('MOCK_GIB_TOKEN')) {
       return {

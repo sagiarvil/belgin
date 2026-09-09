@@ -1,4 +1,4 @@
-const fs = require('fs');
+﻿const fs = require('fs');
 const path = require('path');
 const Handlebars = require('handlebars');
 
@@ -31,9 +31,13 @@ function renderOfficialGibHtml(data) {
     bd = {}
   } = data;
 
-  const customerName = (data.customerName || customerObj.name || customerObj.fullName || 'Nihai Tüketici').trim();
-  const rawId = String(data.customerIdentity || customerObj.identityNumber || customerObj.tckn || customerObj.vkn || customerObj.tc || customerObj.identity || '11111111111').replace(/\D/g, '');
+  const rawId = String(data.customerIdentity || customerObj.identityNumber || customerObj.tckn || customerObj.vkn || customerObj.tc || customerObj.identity || data.vkn || data.taxNumber || '11111111111').replace(/\D/g, '');
   const customerIdentity = (rawId.length === 10 || rawId.length === 11) ? rawId : '11111111111';
+  const isVkn = (customerIdentity.length === 10);
+  const companyTitle = String(data.companyName || customerObj.companyName || data.unvan || customerObj.unvan || data.company || '').trim();
+  const rawCustName = String(data.customerName || customerObj.name || customerObj.fullName || (isVkn ? companyTitle : '') || 'Nihai Tüketici').trim();
+  const unvanToDisplay = isVkn ? (companyTitle || rawCustName) : companyTitle;
+  const taxOffice = String(data.taxOffice || customerObj.taxOffice || data.vergiDairesi || customerObj.vergiDairesi || '').trim();
   const customerAddress = String(data.customerAddress || customerObj.address || '').trim();
   const customerPhone = String(data.customerPhone || customerObj.phone || '').trim();
   const customerEmail = String(data.customerEmail || customerObj.email || '').trim();
@@ -56,10 +60,12 @@ function renderOfficialGibHtml(data) {
     id: '62764066838'
   };
 
-  const buyerIdLabel = (customerIdentity.length === 10) ? 'VKN' : 'TCKN';
+  const buyerIdLabel = isVkn ? 'VKN' : 'TCKN';
   
   const buyer = {
-    name: customerName,
+    name: isVkn ? (companyTitle || rawCustName) : rawCustName,
+    unvan: unvanToDisplay,
+    taxOffice: taxOffice,
     addressLine1: customerAddress,
     addressLine2: '',
     website: customerWebsite,
@@ -180,10 +186,7 @@ function renderOfficialGibHtml(data) {
       goodsServicesTotal = Math.round((goodsServicesTotal + finalLineTotal) * 100) / 100;
 
       const unitNet = Math.round((finalLineTotal / r.qty) * 100) / 100;
-      let desc = r.name;
-      if (!desc.includes('Özel Matrah')) {
-        desc += ' (Kıymetli Maden Bedeli - Özel Matrah)';
-      }
+      let desc = String(r.name || 'Kuyumculuk Ürünü').replace(/\s*\(Kıymetli Maden Bedeli\s*-\s*Özel Matrah\)/gi, '').replace(/\s*\(Özel Matrah 351\)/gi, '').trim();
 
       displayLines.push({
         seq: displayLines.length + 1,

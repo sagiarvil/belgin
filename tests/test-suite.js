@@ -1,4 +1,4 @@
-// BELGIN KUYUMCULUK — production legal/compliance regression suite
+﻿// BELGIN KUYUMCULUK — production legal/compliance regression suite
 process.env.NODE_ENV = 'test';
 const fs = require('fs');
 const path = require('path');
@@ -169,7 +169,107 @@ assert(failPage.includes('Ödeme Tamamlanamadı') && !failPage.includes('cvv') &
 const clientPayment = read('js/belgin-payment.js');
 assert(clientPayment.includes('/payment/create') && clientPayment.includes('BelginPayment'), 'js/belgin-payment.js çoklu POS istemci katmanı hazır');
 
-console.log('\n========================================');
-console.log(`SONUÇ: ${passed} TEST BAŞARILI, ${failed} TEST BAŞARISIZ`);
-console.log('========================================\n');
-if (failed > 0) process.exit(1);
+console.log('\n--- 9. Kurumsal e-Arşiv Fatura, Ünvan, VKN ve Vergi Dairesi Değişmezleri ---');
+const gibTemplate = require('../functions/gib-template');
+const earsivModule = require('../functions/earsiv-service');
+const adminHtml = read('admin.html');
+const adminJs = read('js/admin.js');
+const hbsTemplate = read('functions/earsiv_fatura_template_exact.hbs');
+const depoHbsTemplate = read('depo/earsiv_fatura_template_exact.hbs');
+
+// 9.1 GİB Template Kurumsal & Bireysel Doğrulaması
+const corpRender = gibTemplate.renderOfficialGibHtml({
+  invoiceNumber: 'GIB2026000000099',
+  ettn: 'TEST-ETTN-CORP-001',
+  customerIdentity: '1234567890',
+  companyName: 'KONYA SARRAFİYE VE KUYUMCULUK LTD. ŞTİ.',
+  taxOffice: 'Mevlana Vergi Dairesi',
+  customerAddress: 'Aziziye Mah. Mevlana Cad. No:42 Karatay / KONYA',
+  customerPhone: '05321112233',
+  totalAmount: 150000,
+  bd: { hasGoldAmount: 140000, workmanshipNet: 8333.33, workmanshipKdv: 1666.67, grandTotal: 150000 }
+});
+assert(corpRender.includes('KONYA SARRAFİYE VE KUYUMCULUK LTD. ŞTİ.'), 'GİB şablonunda şirket ünvanı eksiksiz basılıyor');
+assert(corpRender.includes('Mevlana Vergi Dairesi'), 'GİB şablonunda vergi dairesi eksiksiz basılıyor');
+assert(corpRender.includes('VKN: 1234567890'), '10 haneli alıcı için VKN etiketi basılıyor');
+
+// 9.2 Bireysel TCKN Doğrulaması
+const indivRender = gibTemplate.renderOfficialGibHtml({
+  invoiceNumber: 'GIB2026000000100',
+  ettn: 'TEST-ETTN-INDIV-001',
+  customerIdentity: '32395613664',
+  customerName: 'Ahmet Yılmaz',
+  customerAddress: 'Moda Cad. No:12 Kadıköy / İSTANBUL',
+  totalAmount: 50000,
+  bd: { hasGoldAmount: 48000, workmanshipNet: 1666.67, workmanshipKdv: 333.33, grandTotal: 50000 }
+});
+assert(indivRender.includes('Ahmet Yılmaz'), 'Bireysel faturada müşteri adı basılıyor');
+assert(indivRender.includes('TCKN: 32395613664'), '11 haneli alıcı için TCKN etiketi basılıyor');
+
+// 9.3 Şablon Değişmezleri (HBS)
+assert(hbsTemplate.includes('{{#if buyer.unvan}}') && hbsTemplate.includes('Vergi Dairesi: {{buyer.taxOffice}}'), 'functions/earsiv_fatura_template_exact.hbs ünvan ve vergi dairesi koşulunu içeriyor');
+assert(depoHbsTemplate.includes('{{#if buyer.unvan}}') && depoHbsTemplate.includes('Vergi Dairesi: {{buyer.taxOffice}}'), 'depo/earsiv_fatura_template_exact.hbs ünvan ve vergi dairesi koşulunu içeriyor');
+
+// 9.4 Admin Panel Inputları ve Senkronizasyonu
+assert(adminHtml.includes('id="storeCustCompanyName"') && adminHtml.includes('id="storeCustTaxOffice"'), 'admin.html mağaza faturası şirket ünvanı ve vergi dairesi inputlarını içeriyor');
+assert(adminHtml.includes('id="cfgModalCompanyNameInput"') && adminHtml.includes('id="cfgModalTaxOfficeInput"'), 'admin.html sipariş fatura modalı kurumsal alanları içeriyor');
+assert(adminJs.includes('storeCustCompanyName') && adminJs.includes('storeCustTaxOffice'), 'js/admin.js mağaza faturası kurumsal alanları okuyor');
+assert(adminJs.includes('cfgModalCompanyNameInput') && adminJs.includes('cfgModalTaxOfficeInput'), 'js/admin.js sipariş fatura ayar modalı kurumsal alanları okuyor');
+
+// 9.5 Dinamik İl/İlçe & GİB 10 Haneli VKN aliciUnvan Sözleşmesi
+const earsivCode = read('functions/earsiv-service.js');
+assert(earsivCode.includes('aliciUnvan = (companyTitle || rawCustName') || earsivCode.includes('aliciUnvan = companyTitle || rawCustName'), 'earsiv-service kurumsal faturada aliciUnvan atamasını garanti ediyor');
+assert(earsivCode.includes('vergiDairesi: taxOffice'), 'earsiv-service vergi dairesini GİB yüküne iletiyor');
+assert(earsivCode.includes('citiesList') && earsivCode.includes('resolvedCity'), 'earsiv-service 81 ili dinamik çözümlüyor ve Buca/İzmir dayatmasını engelliyor');
+
+// --- 10. VIP Ödeme Linki Ürün Açıklaması & GİB Fatura 1:1 Entegrasyonu ---
+console.log('\n--- 10. VIP Ödeme Linki Ürün Açıklaması & GİB Fatura 1:1 Entegrasyonu ---');
+const { calculateVip22Breakdown, calculateJewelryInvoiceBreakdown } = require('../functions/earsiv-service.js');
+const customVipTitle = '22 Ayar Burma Bilezik 30 Gr';
+const testVipBd = calculateVip22Breakdown(99000, customVipTitle);
+assert(testVipBd.productName === customVipTitle, 'calculateVip22Breakdown özel ürün adını 1:1 koruyor');
+assert(testVipBd.items[0].name === customVipTitle, 'Fatura 1. Kalem ürün adı VIP link açıklaması ile birebir aynı');
+assert(testVipBd.items[0].malHizmet === customVipTitle, 'GİB fatura malHizmet açıklaması saf ürün adıdır, vergi muafiyeti şerhi ürün adına eklenmez');
+assert(!testVipBd.items[0].malHizmet.includes('Özel Matrah'), 'Ürün adında vergi muafiyeti şerhi bulunmaz');
+
+const testJewelryBd = calculateJewelryInvoiceBreakdown(99000, customVipTitle, { isVip22: true });
+assert(testJewelryBd.productName === customVipTitle, 'calculateJewelryInvoiceBreakdown VIP ürün adını calculateVip22Breakdown motoruna iletiyor');
+
+const paymentCode = read('functions/payment/payment-service.js');
+assert(paymentCode.includes('calculateVip22Breakdown(serverTotal, rawVipTitle)'), 'payment-service.js VIP link ürün adını hesaplama motoruna iletiyor');
+assert(paymentCode.includes('vipTitle: rawVipTitle') && paymentCode.includes('title: rawVipTitle'), 'payment-service.js sipariş dokümanına VIP ürün adını kaydediyor');
+
+const vipHtml = read('vip-odeme.html');
+assert(vipHtml.includes('title: currentPayload.title') && vipHtml.includes('productName: currentPayload.title'), 'vip-odeme.html sipariş isteğine VIP ürün adını root seviyede ekliyor');
+
+assert(adminHtml.includes('id="cfgGoldItemName"'), 'admin.html altın fatura modalında düzenlenebilir cfgGoldItemName inputu içeriyor');
+assert(adminJs.includes('cfgGoldItemName') && adminJs.includes('effectiveProductName'), 'js/admin.js GİB taslak isteğine yöneticinin girdiği ürün açıklamasını iletiyor');
+
+// 9.6 EarsivPortalService Doğrudan Payload Doğrulaması
+const { EarsivPortalService } = require('../functions/earsiv-service');
+const earsivSvc = new EarsivPortalService();
+earsivSvc.createDraftInvoice('MOCK_GIB_TOKEN_TEST', {
+  orderId: 'MGS-CORP-TEST',
+  customerName: 'Firma Yetkilisi',
+  companyName: 'KONYA İPEK YOLU SARRAFİYE LTD. ŞTİ.',
+  customerIdentity: '1234567890',
+  taxOffice: 'Mevlana VD',
+  customerAddress: 'Karatay / KONYA',
+  totalAmount: 100000
+}).then(res => {
+  const p = res.invoicePayload;
+  assert(p.vknTckn === '1234567890', 'GİB payload VKN doğru');
+  assert(p.aliciUnvan === 'KONYA İPEK YOLU SARRAFİYE LTD. ŞTİ.', 'GİB payload aliciUnvan dolu');
+  assert(p.aliciAdi === '' && p.aliciSoyadi === '', 'GİB payload ad/soyad boş');
+  assert(p.vergiDairesi === 'Mevlana VD', 'GİB payload vergi dairesi doğru');
+  assert(p.sehir === 'Konya' && p.mahalleSemtIlce === 'Karatay', 'GİB payload şehir/ilçe doğru');
+
+  console.log('\n========================================');
+  console.log(`SONUÇ: ${passed} TEST BAŞARILI, ${failed} TEST BAŞARISIZ`);
+  console.log('========================================\n');
+  if (failed > 0) process.exit(1);
+}).catch(err => {
+  console.error('❌ FAIL: EarsivPortalService createDraftInvoice testi çöktü:', err.message);
+  process.exit(1);
+});
+

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * BELGIN KUYUMCULUK — FIREBASE CLOUD FUNCTIONS
  * Enterprise Multi-POS Payment Architecture (PayTR, QNB, Akbank, Yapı Kredi)
  * Legal evidence chain / KYC delivery enforcement: 25.08.2026-v2
@@ -148,6 +148,7 @@ exports.paymentCallback = functions
     else if (fullUrl.includes('yapikredi')) providerParam = 'YAPIKREDI';
     else if (fullUrl.includes('akbank')) providerParam = 'AKBANK';
     else if (fullUrl.includes('kuveytturk')) providerParam = 'KUVEYTTURK';
+    else if (fullUrl.includes('ziraat')) providerParam = 'ZIRAAT';
     else if (req.query.provider) providerParam = String(req.query.provider).toUpperCase();
 
     console.log(`[Payment Callback] Detected Provider: ${providerParam}, URL: ${fullUrl}`);
@@ -161,10 +162,10 @@ exports.paymentCallback = functions
         mailer,
       });
 
-      // KUVEYTTURK 3D Gate veya Browser POST durumunda tarayıcıyı doğrudan sonuç sayfasına yönlendir
-      const isBrowserCallback = providerParam === 'KUVEYTTURK' || providerParam === 'AKBANK' || req.headers['accept']?.includes('text/html') || Boolean(req.body?.AuthenticationResponse || req.body?.mdStatus !== undefined || req.body?.oid || req.body?.orderId || req.body?.responseCode);
+      // KUVEYTTURK, ZIRAAT 3D Gate veya Browser POST durumunda tarayıcıyı doğrudan sonuç sayfasına yönlendir
+      const isBrowserCallback = providerParam === 'KUVEYTTURK' || providerParam === 'ZIRAAT' || providerParam === 'ZIRAAT_KATILIM' || providerParam === 'AKBANK' || req.headers['accept']?.includes('text/html') || Boolean(req.body?.AuthenticationResponse || req.body?.mdStatus !== undefined || req.body?.oid || req.body?.orderId || req.body?.OrderId || req.body?.responseCode || req.body?.ProcReturnCode);
       if (isBrowserCallback) {
-        let orderId = encodeURIComponent(outcome?.orderId || req.body?.orderId || req.body?.oid || req.body?.MerchantOrderId || req.query?.oid || '');
+        let orderId = encodeURIComponent(outcome?.orderId || req.body?.orderId || req.body?.OrderId || req.body?.oid || req.body?.MerchantOrderId || req.query?.oid || '');
         if (!orderId && req.body?.AuthenticationResponse) {
           let rawAuth = String(req.body.AuthenticationResponse);
           try {
@@ -452,7 +453,10 @@ exports.getAdminOrders = functions
           invoiceUuid: data.invoiceUuid || null,
           declarationDoc: data.declarationDoc || ((orderIdVal === 'BLG-1787933146963-8ab15dc828f9325b') ? '/images/declarations/beyan_idris_emre_buk_1200.jpg' : ((orderIdVal === 'BLG-1787933807000-9cd26eb919a8417c' || orderIdVal === 'BLG-1787906878142-03da073a5aec9f6e' || String(orderIdVal).includes('03da073a') || String(orderIdVal).includes('1787906878142')) ? '/images/declarations/beyan_idris_emre_buk_1211.jpg' : null)),
           declarationTime: data.declarationTime || ((orderIdVal === 'BLG-1787933146963-8ab15dc828f9325b') ? '28.08.2026 12:00' : ((orderIdVal === 'BLG-1787933807000-9cd26eb919a8417c' || orderIdVal === 'BLG-1787906878142-03da073a5aec9f6e' || String(orderIdVal).includes('03da073a') || String(orderIdVal).includes('1787906878142')) ? '28.08.2026 12:11' : null)),
-          declarationNote: data.declarationNote || ((orderIdVal === 'BLG-1787933146963-8ab15dc828f9325b') ? '28.08.2026 saat: 12:00 sıralarında 120.000 TL alışveriş beyanı (Halkbank Paraf VISA)' : ((orderIdVal === 'BLG-1787933807000-9cd26eb919a8417c' || orderIdVal === 'BLG-1787906878142-03da073a5aec9f6e' || String(orderIdVal).includes('03da073a') || String(orderIdVal).includes('1787906878142')) ? '28.08.2026 saat: 12:11 sıralarında 120.000 TL alışveriş beyanı (YapıKredi TLcard Troy)' : null))
+          declarationNote: data.declarationNote || ((orderIdVal === 'BLG-1787933146963-8ab15dc828f9325b') ? '28.08.2026 saat: 12:00 sıralarında 120.000 TL alışveriş beyanı (Halkbank Paraf VISA)' : ((orderIdVal === 'BLG-1787933807000-9cd26eb919a8417c' || orderIdVal === 'BLG-1787906878142-03da073a5aec9f6e' || String(orderIdVal).includes('03da073a') || String(orderIdVal).includes('1787906878142')) ? '28.08.2026 saat: 12:11 sıralarında 120.000 TL alışveriş beyanı (YapıKredi TLcard Troy)' : null)),
+          isManualEft: Boolean(data.isManualEft || data.paymentMethod === 'HAVALE_EFT' || data.paymentMethod === 'HAVALE' || data.paymentMethod === 'EFT' || data.paymentChannel === 'HAVALE_EFT' || String(orderIdVal).startsWith('BLG-EFT-') || data.bankEft),
+          paymentMethod: (data.isManualEft || data.paymentMethod === 'HAVALE_EFT' || data.paymentMethod === 'HAVALE' || data.paymentMethod === 'EFT' || String(orderIdVal).startsWith('BLG-EFT-')) ? 'HAVALE_EFT' : (data.paymentMethod || 'KREDI_KARTI'),
+          bankName: data.bankName || (data.payment && data.payment.bankName) || (data.bankEft && (data.bankEft.bank || data.bankEft)) || ((data.isManualEft || data.paymentMethod === 'HAVALE_EFT') ? (data.provider || 'KUVEYTTURK') : null)
         };
 
         orders.push(orderItem);
@@ -535,29 +539,81 @@ exports.getAdminOrders = functions
         orders = orders.filter(o => o.status === 'FAILED' || o.paymentStatus === 'FAILED');
       }
 
-      // KPI ve Toplam Ciro Hesaplama (Yalnızca GERÇEKTEN tahsil edilmiş işlemler)
+      // KPI, Toplam Ciro ve Banka / POS Kanal Dağılımı Hesaplama
       let totalVolume = 0;
       let successfulCount = 0;
       let pendingCount = 0;
       let failedCount = 0;
+      let posVolume = 0;
+      let havaleVolume = 0;
       const providerBreakdown = {};
+      const bankTransferBreakdown = {};
+
+      const normalizeBank = (raw) => {
+        if (!raw) return 'KUVEYTTURK';
+        const s = String(raw).toUpperCase().replace(/[^A-Z0-9ĞÜŞİÖÇ_]/g, ' ').trim();
+        if (s.includes('KUVEYT') || s.includes('KT')) return 'KUVEYTTURK';
+        if (s.includes('AKBANK')) return 'AKBANK';
+        if (s.includes('ZIRAAT') || s.includes('ZİRAAT')) return 'ZIRAAT';
+        if (s.includes('VAKIF') || s.includes('VAKIFBANK')) return 'VAKIFBANK';
+        if (s.includes('YAPI') || s.includes('YKB')) return 'YAPIKREDI';
+        if (s.includes('GARANTI') || s.includes('GARANTİ')) return 'GARANTI';
+        if (s.includes('İŞ') || s.includes('ISBANK') || s.includes('IS BANK')) return 'ISBANK';
+        if (s.includes('HALK')) return 'HALKBANK';
+        if (s.includes('DENIZ') || s.includes('DENİZ')) return 'DENIZBANK';
+        if (s.includes('QNB') || s.includes('FINANS')) return 'QNB';
+        if (s.includes('TEB')) return 'TEB';
+        if (s.includes('TOSLA')) return 'TOSLA';
+        if (s.includes('PAYTR')) return 'PAYTR';
+        return s.replace(/\s+/g, '_');
+      };
 
       orders.forEach(o => {
+        const isHavale = Boolean(
+          o.isManualEft || 
+          o.paymentMethod === 'HAVALE_EFT' || 
+          o.paymentMethod === 'HAVALE' || 
+          o.paymentMethod === 'EFT' || 
+          o.paymentChannel === 'HAVALE_EFT' || 
+          String(o.orderId || '').startsWith('BLG-EFT-') || 
+          Boolean(o.bankEft) || 
+          (o.isStoreManual && o.paymentMethod === 'HAVALE_EFT')
+        );
+
         if (o.isPaid && o.paymentStatus === 'PAID') {
           totalVolume += o.totalAmount;
           successfulCount++;
+          if (isHavale) {
+            havaleVolume += o.totalAmount;
+          } else {
+            posVolume += o.totalAmount;
+          }
         } else if (o.status === 'FAILED' || o.paymentStatus === 'FAILED') {
           failedCount++;
         } else {
           pendingCount++;
         }
 
-        const prov = o.provider || 'KUVEYTTURK';
-        if (!providerBreakdown[prov]) {
-          providerBreakdown[prov] = { count: 0, sum: 0 };
+        if (isHavale) {
+          const rawBank = o.bankName || (o.bankEft && (o.bankEft.bank || o.bankEft)) || o.provider || 'KUVEYTTURK';
+          const bKey = normalizeBank(rawBank);
+          if (!bankTransferBreakdown[bKey]) {
+            bankTransferBreakdown[bKey] = { count: 0, sum: 0 };
+          }
+          bankTransferBreakdown[bKey].count++;
+          if (o.isPaid && o.paymentStatus === 'PAID') {
+            bankTransferBreakdown[bKey].sum += o.totalAmount;
+          }
+        } else {
+          const prov = (o.provider || 'KUVEYTTURK').toUpperCase();
+          if (!providerBreakdown[prov]) {
+            providerBreakdown[prov] = { count: 0, sum: 0 };
+          }
+          providerBreakdown[prov].count++;
+          if (o.isPaid && o.paymentStatus === 'PAID') {
+            providerBreakdown[prov].sum += o.totalAmount;
+          }
         }
-        providerBreakdown[prov].count++;
-        if (o.isPaid && o.paymentStatus === 'PAID') providerBreakdown[prov].sum += o.totalAmount;
       });
 
       const averageOrderValue = successfulCount > 0 ? Math.round(totalVolume / successfulCount) : 0;
@@ -573,7 +629,12 @@ exports.getAdminOrders = functions
           failedCount,
           averageOrderValue,
           formattedAverageOrderValue: '₺' + averageOrderValue.toLocaleString('tr-TR'),
+          posVolume,
+          formattedPosVolume: '₺' + posVolume.toLocaleString('tr-TR'),
+          havaleVolume,
+          formattedHavaleVolume: '₺' + havaleVolume.toLocaleString('tr-TR'),
           providerBreakdown,
+          bankTransferBreakdown,
           startDate: startDateStr || null,
           endDate: endDateStr || null,
         },
@@ -606,7 +667,9 @@ exports.createAdminOrder = functions
       let customerIdentity = String(body.customerIdentity || body.identity || body.tckn || body.vkn || '').trim();
       let customerPhone = String(body.customerPhone || body.phone || '').trim();
       const customerAddress = String(body.customerAddress || body.address || 'İzmir Buca Showroom Mağazadan Teslim').trim();
-      const customerEmail = String(body.customerEmail || body.email || '').trim() || null;
+      let customerEmail = String(body.customerEmail || body.email || '').trim() || null;
+      let companyName = String(body.companyName || body.unvan || '').trim() || null;
+      let taxOffice = String(body.taxOffice || body.vergiDairesi || '').trim() || null;
       
       const totalAmount = Number(body.totalAmount || body.amount || body.total || 0);
       if (isNaN(totalAmount) || totalAmount <= 0) {
@@ -616,6 +679,11 @@ exports.createAdminOrder = functions
       if (!customerName) customerName = 'Bireysel Mağaza Müşterisi';
       if (!customerIdentity) customerIdentity = '11111111111';
       if (!customerPhone) customerPhone = '05000000000';
+
+      const cleanIdentity = customerIdentity.replace(/\D/g, '');
+      if (cleanIdentity.length === 10 && !companyName) {
+        companyName = customerName !== 'Bireysel Mağaza Müşterisi' ? customerName : 'Kurumsal Müşteri';
+      }
 
       const isManualEft = Boolean(body.isManualEft || body.isEft || body.paymentMethod === 'HAVALE_EFT');
       const provider = String(body.provider || (isManualEft ? 'KUVEYTTURK' : 'TOSLA_ISIM')).toUpperCase();
@@ -708,6 +776,9 @@ exports.createAdminOrder = functions
         isManualEft: isManualEft,
         customer: {
           name: customerName,
+          companyName: companyName,
+          unvan: companyName,
+          taxOffice: taxOffice,
           identity: customerIdentity,
           identityNumber: customerIdentity,
           phone: customerPhone,
@@ -716,6 +787,9 @@ exports.createAdminOrder = functions
         },
         customerName,
         customerIdentity,
+        companyName: companyName,
+        unvan: companyName,
+        taxOffice: taxOffice,
         customerPhone,
         customerEmail,
         customerAddress,
@@ -951,6 +1025,9 @@ exports.updateAdminOrderCustomer = functions
         customerPhone: updatedCustomer.phone,
         customerEmail: updatedCustomer.email,
         customerAddress: updatedCustomer.address,
+        companyName: companyName || updatedCustomer.companyName || null,
+        taxOffice: taxOffice || updatedCustomer.taxOffice || null,
+        unvan: companyName || updatedCustomer.companyName || null,
         updatedAt: admin.firestore.FieldValue.serverTimestamp()
       };
 
@@ -1169,8 +1246,16 @@ async function handleInvoiceRequest(req, res) {
       const order = target ? target.data : (req.body.orderData || { orderId });
       const rawTotal = Number(req.body.totalAmount || order.totalAmount || order.total || (order.payment && order.payment.amount) || (order.amountInKurus ? order.amountInKurus / 100 : 0) || 0);
 
+      if (req.body.productName) {
+        order.productName = req.body.productName;
+        order.title = req.body.productName;
+      }
+      const resolvedProdName = req.body.productName || order.vipTitle || order.title || order.productName || '22 Ayar Bilezik';
+
       let customBreakdown = req.body.customBreakdown || null;
-      if (req.body.items && Array.isArray(req.body.items) && req.body.items.length > 0) {
+      if (customBreakdown && Array.isArray(customBreakdown.items) && customBreakdown.items.length > 0) {
+        // Admin modalından canlı düzenlenen kalemleri ve ürün adını birebir koru
+      } else if (req.body.items && Array.isArray(req.body.items) && req.body.items.length > 0) {
         const itemsSummary = req.body.items.map(i => `${i.name || i.malHizmet || 'Ürün'} (x${i.qty || i.quantity || 1})`).join(', ');
         customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, itemsSummary, {
           items: req.body.items,
@@ -1186,14 +1271,13 @@ async function handleInvoiceRequest(req, res) {
         } else if (order.vip22Breakdown || order.breakdown || order.invoiceBreakdown) {
           customBreakdown = order.vip22Breakdown || order.breakdown || order.invoiceBreakdown;
         } else if (hasGoldAmount !== undefined && workmanshipAmount !== undefined) {
-          const itemsSummary = order.productName || '22 Ayar Kuyumculuk Ürünü';
-          customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, itemsSummary, {
+          customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, resolvedProdName, {
             hasGoldAmount,
             workmanshipAmount,
             isVip22: order.isVip22 === true
           });
         } else {
-          customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, order.productName || '22 Ayar Kuyumculuk Ürünü', {
+          customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, resolvedProdName, {
             isVip22: order.isVip22 === true
           });
         }
@@ -1202,13 +1286,22 @@ async function handleInvoiceRequest(req, res) {
       const { renderOfficialGibHtml } = require('./gib-template');
       const customerIdentityRaw = String(req.body.customerIdentity || order.customerIdentity || order.customer?.identityNumber || '11111111111').replace(/\D/g, '');
       const customerIdentity = (customerIdentityRaw.length === 10 || customerIdentityRaw.length === 11) ? customerIdentityRaw : '11111111111';
+      const isCleanVknPreview = customerIdentity.length === 10;
+      const previewCustName = req.body.customerName || order.customerName || order.customer?.name || 'Nihai Tüketici';
+      let previewCompany = req.body.companyName || order.companyName || order.customer?.companyName || req.body.unvan || order.unvan || '';
+      if (isCleanVknPreview && !previewCompany) {
+        previewCompany = (previewCustName && previewCustName !== 'Nihai Tüketici') ? previewCustName : 'Kurumsal Müşteri';
+      }
 
       const previewHtml = renderOfficialGibHtml({
         invoiceNumber: 'GİB TASLAK (MÜHÜR ÖNCESİ ÖNİZLEME)',
         ettn: 'TASLAK-MÜHÜR-ÖNCESİ-KONTROL',
         invoiceDate: new Date().toISOString().split('T')[0],
         invoiceTime: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }),
-        customerName: req.body.customerName || order.customerName || order.customer?.name || 'Nihai Tüketici',
+        customerName: previewCustName,
+        companyName: previewCompany,
+        unvan: previewCompany,
+        taxOffice: req.body.taxOffice || order.taxOffice || order.customer?.taxOffice || req.body.vergiDairesi || order.vergiDairesi || '',
         customerIdentity,
         customerAddress: req.body.customerAddress || order.customerAddress || order.customer?.address || 'Menderes Cad. No:231/B Buca İzmir',
         customerPhone: req.body.customerPhone || order.customerPhone || order.customer?.phone || '',
@@ -1250,12 +1343,36 @@ async function handleInvoiceRequest(req, res) {
       const rawTotal = Number(req.body.totalAmount || order.totalAmount || order.total || (order.payment && order.payment.amount) || (order.amountInKurus ? order.amountInKurus / 100 : 0) || 0);
       order.totalAmount = rawTotal;
 
+      // İstekten gelen güncel müşteri bilgilerini order nesnesine yansıt
+      if (req.body.customerName) order.customerName = req.body.customerName;
+      if (req.body.customerIdentity) order.customerIdentity = req.body.customerIdentity;
+      if (req.body.taxOffice) order.taxOffice = req.body.taxOffice;
+      if (req.body.companyName) order.companyName = req.body.companyName;
+      if (req.body.unvan) order.unvan = req.body.unvan;
+      if (req.body.customerAddress) order.customerAddress = req.body.customerAddress;
+      if (req.body.customerPhone) order.customerPhone = req.body.customerPhone;
+      if (req.body.customerEmail) order.customerEmail = req.body.customerEmail;
+      if (req.body.productName) {
+        order.productName = req.body.productName;
+        order.title = req.body.productName;
+      }
+      const resolvedProdName = req.body.productName || order.vipTitle || order.title || order.productName || '22 Ayar Bilezik';
+
+      const cleanOrderIdentity = String(order.customerIdentity || '').replace(/\D/g, '');
+      const isOrderVkn = cleanOrderIdentity.length === 10;
+      if (isOrderVkn && !order.companyName && !order.unvan) {
+        order.companyName = (order.customerName && order.customerName !== 'Nihai Tüketici') ? order.customerName : 'Kurumsal Müşteri';
+        order.unvan = order.companyName;
+      }
+
       const authData = await earsiv.login();
       activeToken = authData.token;
       activeCookie = authData.cookie || '';
 
       let customBreakdown = req.body.customBreakdown || null;
-      if (req.body.items && Array.isArray(req.body.items) && req.body.items.length > 0) {
+      if (customBreakdown && Array.isArray(customBreakdown.items) && customBreakdown.items.length > 0) {
+        // Admin modalından canlı düzenlenen kalemleri ve ürün adını birebir koru
+      } else if (req.body.items && Array.isArray(req.body.items) && req.body.items.length > 0) {
         const itemsSummary = req.body.items.map(i => `${i.name || i.malHizmet || 'Ürün'} (x${i.qty || i.quantity || 1})`).join(', ');
         customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, itemsSummary, {
           items: req.body.items,
@@ -1271,17 +1388,14 @@ async function handleInvoiceRequest(req, res) {
         } else if (order.vip22Breakdown || order.breakdown || order.invoiceBreakdown) {
           customBreakdown = order.vip22Breakdown || order.breakdown || order.invoiceBreakdown;
         } else if (hasGoldAmount !== undefined && workmanshipAmount !== undefined) {
-          const itemsSummary = (order.items && order.items.length > 0)
-            ? order.items.map(i => i.name || i.title).join(', ')
-            : (order.productName || '22 Ayar Kuyumculuk Ürünü');
-          customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, itemsSummary, {
+          customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, resolvedProdName, {
             hasGoldAmount,
             workmanshipAmount,
             isVip22: order.isVip22 === true
           });
-        } else if (order.isVip22 || String(order.productName || '').includes('/22')) {
-          customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, order.productName || '22 Ayar Kuyumculuk Ürünü', {
-            isVip22: true
+        } else {
+          customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, resolvedProdName, {
+            isVip22: order.isVip22 === true || String(order.productName || '').includes('/22')
           });
         }
       }
@@ -1293,6 +1407,14 @@ async function handleInvoiceRequest(req, res) {
         invoiceStatus: 'DRAFT',
         invoiceUuid: draftResult.invoiceUuid,
         invoiceBreakdown: draftResult.breakdown,
+        productName: order.productName || null,
+        title: order.title || null,
+        customerName: order.customerName,
+        customerIdentity: order.customerIdentity,
+        companyName: order.companyName || null,
+        taxOffice: order.taxOffice || null,
+        unvan: order.unvan || null,
+        customerAddress: order.customerAddress,
         gibSessionOid: smsResult.oid || '',
         invoiceDraftCreatedAt: admin.firestore.FieldValue.serverTimestamp(),
         updatedAt: admin.firestore.FieldValue.serverTimestamp()
@@ -1794,6 +1916,9 @@ async function handleInvoiceRequest(req, res) {
         invoiceDate: order?.invoiceDate || new Date().toISOString().split('T')[0],
         invoiceTime: order?.invoiceTime || '12:00',
         customerName,
+        companyName: order?.companyName || order?.customer?.companyName || order?.unvan || '',
+        unvan: order?.companyName || order?.customer?.companyName || order?.unvan || '',
+        taxOffice: order?.taxOffice || order?.customer?.taxOffice || order?.vergiDairesi || '',
         customerIdentity,
         customerAddress,
         customerPhone,

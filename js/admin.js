@@ -1,4 +1,4 @@
-// ==========================================================
+﻿// ==========================================================
 // BELGIN KUYUMCULUK — YÖNETİCİ VE TAHSİLAT PANELİ JS MOTORU
 // ==========================================================
 
@@ -623,6 +623,25 @@ const AdminApp = {
     if (syncEl) syncEl.textContent = 'Son Güncelleme: ' + new Date().toLocaleTimeString('tr-TR');
   },
 
+  normalizeBankKey(raw) {
+    if (!raw) return 'KUVEYTTURK';
+    const s = String(raw).toUpperCase().replace(/[^A-Z0-9ĞÜŞİÖÇ_]/g, ' ').trim();
+    if (s.includes('KUVEYT') || s.includes('KT')) return 'KUVEYTTURK';
+    if (s.includes('AKBANK')) return 'AKBANK';
+    if (s.includes('ZIRAAT') || s.includes('ZİRAAT')) return 'ZIRAAT';
+    if (s.includes('VAKIF') || s.includes('VAKIFBANK')) return 'VAKIFBANK';
+    if (s.includes('YAPI') || s.includes('YKB')) return 'YAPIKREDI';
+    if (s.includes('GARANTI') || s.includes('GARANTİ')) return 'GARANTI';
+    if (s.includes('İŞ') || s.includes('ISBANK') || s.includes('IS BANK')) return 'ISBANK';
+    if (s.includes('HALK')) return 'HALKBANK';
+    if (s.includes('DENIZ') || s.includes('DENİZ')) return 'DENIZBANK';
+    if (s.includes('QNB') || s.includes('FINANS')) return 'QNB';
+    if (s.includes('TEB')) return 'TEB';
+    if (s.includes('TOSLA')) return 'TOSLA';
+    if (s.includes('PAYTR')) return 'PAYTR';
+    return s.replace(/\s+/g, '_');
+  },
+
   renderEmptyState() {
     this.orders = [];
     const summary = {
@@ -632,7 +651,8 @@ const AdminApp = {
       successfulCount: 0,
       averageOrderValue: 0,
       formattedAverageOrderValue: '₺0',
-      providerBreakdown: {}
+      providerBreakdown: {},
+      bankTransferBreakdown: {}
     };
     this.renderData(summary, []);
   },
@@ -644,15 +664,60 @@ const AdminApp = {
     const kpiCount = document.getElementById('kpiSuccessCount');
     const kpiAov = document.getElementById('kpiAov');
     const kpiProv = document.getElementById('kpiProviderStats');
+    const kpiBank = document.getElementById('kpiBankTransferStats');
     const countBadge = document.getElementById('tableCountBadge');
 
     if (kpiVol) kpiVol.textContent = summary?.formattedTotalVolume || '₺0';
     if (kpiCount) kpiCount.textContent = summary?.successfulCount || 0;
     if (kpiAov) kpiAov.textContent = summary?.formattedAverageOrderValue || '₺0';
 
-    if (kpiProv && summary?.providerBreakdown) {
-      const provLines = Object.entries(summary.providerBreakdown).map(([k, v]) => `${k}: ₺${(v.sum || 0).toLocaleString('tr-TR')}`);
-      kpiProv.innerHTML = provLines.join('<br>') || '—';
+    // POS / Sanal POS Kanal Dağılımı (Kuveyt Türk, Tosla, Akbank vb.)
+    if (kpiProv) {
+      let provMap = summary?.providerBreakdown || {};
+      if (!Object.keys(provMap).length && Array.isArray(orders)) {
+        provMap = {};
+        orders.forEach(o => {
+          const isEft = Boolean(o.isManualEft || o.paymentMethod === 'HAVALE_EFT' || o.paymentMethod === 'HAVALE' || o.paymentMethod === 'EFT' || String(o.orderId || '').startsWith('BLG-EFT-') || o.bankEft);
+          if (!isEft && o.isPaid && o.paymentStatus === 'PAID') {
+            const p = (o.provider || 'KUVEYTTURK').toUpperCase();
+            if (!provMap[p]) provMap[p] = { count: 0, sum: 0 };
+            provMap[p].count++;
+            provMap[p].sum += Number(o.totalAmount || 0);
+          }
+        });
+      }
+      const provEntries = Object.entries(provMap).sort((a, b) => (b[1].sum || 0) - (a[1].sum || 0));
+      if (provEntries.length > 0) {
+        const provLines = provEntries.map(([k, v]) => `${k}: ₺${Number(v.sum || 0).toLocaleString('tr-TR')}`);
+        kpiProv.innerHTML = provLines.join('<br>');
+      } else {
+        kpiProv.innerHTML = 'KUVEYTTURK: ₺0';
+      }
+    }
+
+    // Havale / Banka Dağılımı (Kuveyt Türk, Akbank, Ziraat, VakıfBank vb. — Dinamik artan banka sayısı)
+    if (kpiBank) {
+      let bankMap = summary?.bankTransferBreakdown || {};
+      if (!Object.keys(bankMap).length && Array.isArray(orders)) {
+        bankMap = {};
+        orders.forEach(o => {
+          const isEft = Boolean(o.isManualEft || o.paymentMethod === 'HAVALE_EFT' || o.paymentMethod === 'HAVALE' || o.paymentMethod === 'EFT' || o.paymentChannel === 'HAVALE_EFT' || String(o.orderId || '').startsWith('BLG-EFT-') || o.bankEft);
+          if (isEft && o.isPaid && o.paymentStatus === 'PAID') {
+            const rawBank = o.bankName || (o.bankEft && (o.bankEft.bank || o.bankEft)) || o.provider || 'KUVEYTTURK';
+            const normBank = this.normalizeBankKey(rawBank);
+            if (!bankMap[normBank]) bankMap[normBank] = { count: 0, sum: 0 };
+            bankMap[normBank].count++;
+            bankMap[normBank].sum += Number(o.totalAmount || 0);
+          }
+        });
+      }
+      const bankEntries = Object.entries(bankMap).sort((a, b) => (b[1].sum || 0) - (a[1].sum || 0));
+      if (bankEntries.length > 0) {
+        const bankLines = bankEntries.map(([k, v]) => `${k}: ₺${Number(v.sum || 0).toLocaleString('tr-TR')}`);
+        kpiBank.innerHTML = bankLines.join('<br>');
+      } else {
+        kpiBank.innerHTML = 'KUVEYTTURK: ₺0';
+      }
     }
 
     if (countBadge) countBadge.textContent = `(${orders.length} Kayıt)`;
@@ -1216,7 +1281,7 @@ const AdminApp = {
     }
 
     if (is22 && typeof VipEngine !== 'undefined' && VipEngine.calculateVip22Breakdown) {
-      const v22 = VipEngine.calculateVip22Breakdown(total);
+      const v22 = VipEngine.calculateVip22Breakdown(total, order.vipTitle || order.title || order.productName || prodName);
       if (v22) {
         return {
           isVip22: true,
@@ -1692,8 +1757,8 @@ const AdminApp = {
           </div>
         `).join('') : `
           <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-            <span><strong>1. Kalem:</strong> Kıymetli Maden Bedeli (%0 KDV / Özel Matrah 351)</span>
-            <strong>₺${bd.hasGoldAmount.toLocaleString('tr-TR', {minimumFractionDigits:2})}</strong>
+            <span><strong>1. Kalem:</strong> ${this.escapeHtml((order.vipTitle || order.title || order.productName || (order.items && order.items[0]?.name) || '22 Ayar Bilezik').replace(/\s*\(Kıymetli Maden Bedeli\s*-\s*Özel Matrah\)/gi, '').replace(/\s*\(Özel Matrah 351\)/gi, '').trim())}</span>
+            <strong>₺${bd.hasGoldAmount.toLocaleString('tr-TR', {minimumFractionDigits:2})} (%0 KDV Özel Matrah)</strong>
           </div>
           <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
             <span><strong>2. Kalem:</strong> İşçilik Bedeli (₺${bd.workmanshipNet.toLocaleString('tr-TR', {minimumFractionDigits:2})} Matrah + ₺${bd.workmanshipKdv.toLocaleString('tr-TR', {minimumFractionDigits:2})} KDV)</span>
@@ -2048,7 +2113,7 @@ const AdminApp = {
     if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
 
     // Ürün Adını ve Tipini Otomatik Analiz Et
-    const prodName = order.productName || (Array.isArray(order.items) && order.items[0]?.name) || '';
+    const prodName = order.vipTitle || order.title || order.productName || (Array.isArray(order.items) && order.items[0]?.name) || '';
     const pLower = String(prodName || '').toLowerCase().trim();
     const isWatch = (this.isWatchProduct && this.isWatchProduct(prodName)) && 
       !pLower.includes('altın') && 
@@ -2056,6 +2121,11 @@ const AdminApp = {
       !pLower.includes('bilezik') && 
       !pLower.includes('kuyumculuk') && 
       !pLower.includes('mücevherat');
+
+    const goldInput = document.getElementById('cfgGoldItemName');
+    if (goldInput) {
+      goldInput.value = prodName.replace(/\s*\(Kıymetli Maden Bedeli\s*-\s*Özel Matrah\)/gi, '').replace(/\s*\(Özel Matrah 351\)/gi, '').trim() || '22 Ayar Bilezik';
+    }
 
     if (isWatch) {
       const watchInput = document.getElementById('cfgWatchItemName');
@@ -2088,7 +2158,58 @@ const AdminApp = {
       }
     }
 
+    // 🏢 Alıcı / Ünvan ve Vergi Dairesi Canlı Alanlarını Doldur
+    const custNameInp = document.getElementById('cfgModalCustNameInput');
+    const custIdInp = document.getElementById('cfgModalCustIdentityInput');
+    const compNameInp = document.getElementById('cfgModalCompanyNameInput');
+    const taxOffInp = document.getElementById('cfgModalTaxOfficeInput');
+    const addrInp = document.getElementById('cfgModalAddressInput');
+
+    const initCustName = order.customerName || order.customer?.name || 'Nihai Tüketici';
+    const initCustId = String(order.customerIdentity || order.customer?.identityNumber || order.customer?.tckn || order.customer?.vkn || '11111111111').replace(/\D/g, '');
+    const initCompName = order.companyName || order.customer?.companyName || order.unvan || (initCustId.length === 10 ? initCustName : '');
+    const initTaxOff = order.taxOffice || order.customer?.taxOffice || order.vergiDairesi || '';
+    const initAddr = order.customerAddress || order.customer?.address || 'Menderes Cad. No:231/B Buca İzmir';
+
+    if (custNameInp) custNameInp.value = initCustName;
+    if (custIdInp) custIdInp.value = initCustId;
+    if (compNameInp) compNameInp.value = initCompName;
+    if (taxOffInp) taxOffInp.value = initTaxOff;
+    if (addrInp) addrInp.value = initAddr;
+
+    this.handleCfgCustIdentityChange();
+
     modal.style.display = 'flex';
+  },
+
+  handleCfgCustIdentityChange() {
+    const idInput = document.getElementById('cfgModalCustIdentityInput');
+    const badge = document.getElementById('cfgCustIdTypeBadge');
+    if (!idInput || !badge) return;
+    const clean = idInput.value.replace(/\D/g, '');
+    if (clean.length === 10) {
+      badge.textContent = '🏢 10 Haneli VKN (Kurumsal / Şirket Faturası)';
+      badge.style.background = '#E0F2FE';
+      badge.style.color = '#0369A1';
+      badge.style.border = '1px solid #BAE6FD';
+    } else if (clean.length === 11) {
+      if (clean === '11111111111') {
+        badge.textContent = '🏛️ 11111111111 (Nihai Tüketici Faturası)';
+        badge.style.background = '#F1F5F9';
+        badge.style.color = '#475569';
+        badge.style.border = '1px solid #CBD5E1';
+      } else {
+        badge.textContent = '👤 11 Haneli TCKN (Bireysel Fatura)';
+        badge.style.background = '#DCFCE7';
+        badge.style.color = '#15803D';
+        badge.style.border = '1px solid #86EFAC';
+      }
+    } else {
+      badge.textContent = '10 Haneli VKN / 11 Haneli TCKN';
+      badge.style.background = '#F1F5F9';
+      badge.style.color = '#475569';
+      badge.style.border = 'none';
+    }
   },
 
   closeOrderInvoiceModal() {
@@ -2163,18 +2284,17 @@ const AdminApp = {
         laborKdv = Math.round((laborGross - laborNet) * 100) / 100;
       }
 
-      const rawProdName = order.productName || (Array.isArray(order.items) && order.items[0]?.name) || '';
+      const goldItemInputVal = document.getElementById('cfgGoldItemName')?.value?.trim();
+      const rawProdName = goldItemInputVal || order.vipTitle || order.title || order.productName || (Array.isArray(order.items) && order.items[0]?.name) || '';
       const prodName = (rawProdName && !rawProdName.includes('Saat / Mücevherat')) 
-        ? rawProdName 
-        : '22 Ayar Altın / Ziynet';
+        ? rawProdName.replace(/\s*\(Kıymetli Maden Bedeli\s*-\s*Özel Matrah\)/gi, '').replace(/\s*\(Özel Matrah 351\)/gi, '').trim()
+        : '22 Ayar Bilezik';
 
-      const goldDisplayName = prodName.includes('Özel Matrah') 
-        ? prodName 
-        : `${prodName} (Kıymetli Maden Bedeli - Özel Matrah)`;
+      const goldDisplayName = prodName;
       
       items.push({
-        name: goldDisplayName,
-        malHizmet: goldDisplayName,
+        name: prodName,
+        malHizmet: prodName,
         qty: 1,
         miktar: 1,
         unitPrice: goldGross,
@@ -2208,6 +2328,7 @@ const AdminApp = {
 
       breakdown = {
         isVip22: true,
+        productName: prodName,
         hasGoldAmount: goldGross.toFixed(2),
         workmanshipNet: laborNet.toFixed(2),
         workmanshipKdv: laborKdv.toFixed(2),
@@ -2321,12 +2442,28 @@ const AdminApp = {
     }
 
     try {
+      const custName = document.getElementById('cfgModalCustNameInput')?.value?.trim() || order.customerName || 'Nihai Tüketici';
+      const custId = document.getElementById('cfgModalCustIdentityInput')?.value?.trim() || order.customerIdentity || '11111111111';
+      const compName = document.getElementById('cfgModalCompanyNameInput')?.value?.trim() || order.companyName || order.customer?.companyName || '';
+      const taxOffice = document.getElementById('cfgModalTaxOfficeInput')?.value?.trim() || order.taxOffice || order.customer?.taxOffice || '';
+      const address = document.getElementById('cfgModalAddressInput')?.value?.trim() || order.customerAddress || 'Menderes Cad. No:231/B Buca İzmir';
+
+      const effectiveProductName = (this.orderInvoiceConfigType === 'GOLD'
+        ? (document.getElementById('cfgGoldItemName')?.value?.trim() || order.vipTitle || order.title || order.productName)
+        : (this.orderInvoiceConfigType === 'WATCH'
+          ? (document.getElementById('cfgWatchItemName')?.value?.trim() || order.productName)
+          : (document.getElementById('cfgCustomItemName')?.value?.trim() || order.productName))) || '22 Ayar Bilezik';
+
       const payload = {
         orderId: order.orderId,
+        productName: effectiveProductName,
         totalAmount: Number(order.totalAmount || order.total || (order.payment && order.payment.amount) || 0),
-        customerName: order.customerName || 'Nihai Tüketici',
-        customerIdentity: order.customerIdentity || '11111111111',
-        customerAddress: order.customerAddress || 'Menderes Cad. No:231/B Buca İzmir',
+        customerName: custName,
+        customerIdentity: custId,
+        companyName: compName,
+        unvan: compName || (custId.length === 10 ? custName : ''),
+        taxOffice: taxOffice,
+        customerAddress: address,
         customerPhone: order.customerPhone || '',
         customerEmail: order.customerEmail || '',
         items: this.activeCustomInvoiceItems,
@@ -2388,12 +2525,27 @@ const AdminApp = {
 
     if (!orderId) return;
 
+    const custName = document.getElementById('cfgModalCustNameInput')?.value?.trim();
+    const custId = document.getElementById('cfgModalCustIdentityInput')?.value?.trim();
+    const compName = document.getElementById('cfgModalCompanyNameInput')?.value?.trim();
+    const taxOffice = document.getElementById('cfgModalTaxOfficeInput')?.value?.trim();
+    const addr = document.getElementById('cfgModalAddressInput')?.value?.trim();
+
+    const customerOverrides = {
+      customerName: custName,
+      customerIdentity: custId,
+      companyName: compName,
+      unvan: compName || (custId && custId.length === 10 ? custName : ''),
+      taxOffice: taxOffice,
+      customerAddress: addr
+    };
+
     this.closeOrderInvoiceModal();
-    this.startInvoiceSigning(orderId, items, breakdown);
+    this.startInvoiceSigning(orderId, items, breakdown, customerOverrides);
   },
 
   // GİB E-ARŞİV FATURA İMZALAMA AKIŞINI BAŞLAT (TASLAK OLUŞTUR & SMS GÖNDER)
-  async startInvoiceSigning(orderId, customItems = null, customBreakdown = null) {
+  async startInvoiceSigning(orderId, customItems = null, customBreakdown = null, customerOverrides = null) {
     this.isBatchInvoice = false;
     const order = this.orders.find(o => o.orderId === orderId);
     if (!order) return;
@@ -2409,6 +2561,13 @@ const AdminApp = {
     this.activeInvoiceOrderId = orderId;
     const bd = customBreakdown || this.calculateJewelryBreakdown(order.totalAmount, order);
     this.activeInvoiceBreakdown = bd;
+
+    const effectiveCustName = customerOverrides?.customerName || order.customerName || 'Nihai Tüketici';
+    const effectiveCustId = customerOverrides?.customerIdentity || order.customerIdentity || '11111111111';
+    const effectiveCompany = customerOverrides?.companyName || order.companyName || order.customer?.companyName || '';
+    const effectiveUnvan = customerOverrides?.unvan || effectiveCompany || (effectiveCustId.length === 10 ? effectiveCustName : '');
+    const effectiveTaxOffice = customerOverrides?.taxOffice || order.taxOffice || order.customer?.taxOffice || '';
+    const effectiveAddress = customerOverrides?.customerAddress || order.customerAddress || 'Menderes Cad. No:231/B Buca İzmir';
 
     const summaryBox = document.getElementById('smsModalOrderSummary');
     if (summaryBox) {
@@ -2430,8 +2589,13 @@ const AdminApp = {
       summaryBox.innerHTML = `
         <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
           <span><strong>Sipariş No:</strong> ${order.orderId}</span>
-          <span><strong>Müşteri:</strong> ${order.customerName || 'Nihai Tüketici'}</span>
+          <span><strong>Alıcı / Ünvan:</strong> ${this.escapeHtml(effectiveUnvan || effectiveCustName)}</span>
         </div>
+        ${effectiveTaxOffice ? `
+        <div style="display:flex; justify-content:space-between; margin-bottom:3px; font-size:11.5px; color:#475569;">
+          <span><strong>Vergi Dairesi:</strong> ${this.escapeHtml(effectiveTaxOffice)}</span>
+          <span><strong>VKN/TCKN:</strong> <span style="font-family:monospace;">${effectiveCustId}</span></span>
+        </div>` : ''}
         ${lines}
         <div style="display:flex; justify-content:space-between; font-weight:800; color:var(--admin-teal); border-top:1px solid #D1E5E1; padding-top:3px; margin-top:3px;">
           <span>Toplam Fatura Tutarı:</span>
@@ -2451,9 +2615,22 @@ const AdminApp = {
     try {
       if (submitBtn) submitBtn.innerHTML = '<span>⏳ GİB Taslak & SMS Hazırlanıyor...</span>';
       
+      const effectiveProductName = (this.orderInvoiceConfigType === 'GOLD'
+        ? (document.getElementById('cfgGoldItemName')?.value?.trim() || order.vipTitle || order.title || order.productName)
+        : (this.orderInvoiceConfigType === 'WATCH'
+          ? (document.getElementById('cfgWatchItemName')?.value?.trim() || order.productName)
+          : (document.getElementById('cfgCustomItemName')?.value?.trim() || order.productName))) || '22 Ayar Bilezik';
+
       const payload = {
         orderId: order.orderId,
+        productName: effectiveProductName,
         totalAmount: Number(order.totalAmount || order.total || (order.payment && order.payment.amount) || (order.amountInKurus ? order.amountInKurus / 100 : 0) || 0),
+        customerName: effectiveCustName,
+        customerIdentity: effectiveCustId,
+        companyName: effectiveCompany,
+        unvan: effectiveUnvan,
+        taxOffice: effectiveTaxOffice,
+        customerAddress: effectiveAddress,
         adminKey: this.adminPin
       };
 
@@ -3520,11 +3697,7 @@ const AdminApp = {
     if (storeContent) storeContent.style.display = 'none';
     if (updatesContent) updatesContent.style.display = 'none';
 
-    if (tab === 'statement') {
-      if (tabBtnStmt) tabBtnStmt.classList.add('active');
-      if (stmtContent) stmtContent.style.display = 'block';
-      this.loadStatement();
-    } else if (tab === 'storeInvoices') {
+    if (tab === 'storeInvoices') {
       if (this._posCountdownTimerInterval) {
         clearInterval(this._posCountdownTimerInterval);
         this._posCountdownTimerInterval = null;
@@ -7036,6 +7209,8 @@ const AdminApp = {
     this.editingStoreInvoiceId = inv.orderId;
 
     const nameEl = document.getElementById('storeCustName');
+    const compEl = document.getElementById('storeCustCompanyName');
+    const taxOffEl = document.getElementById('storeCustTaxOffice');
     const idEl = document.getElementById('storeCustIdentity');
     const dateEl = document.getElementById('storeInvoiceDate');
     const addrEl = document.getElementById('storeCustAddress');
@@ -7045,6 +7220,8 @@ const AdminApp = {
     const errEl = document.getElementById('storeInvoiceFormError');
 
     if (nameEl) nameEl.value = inv.customerName || '';
+    if (compEl) compEl.value = inv.companyName || inv.unvan || '';
+    if (taxOffEl) taxOffEl.value = inv.taxOffice || '';
     if (idEl) idEl.value = inv.customerIdentity || '11111111111';
     if (dateEl) dateEl.value = inv.invoiceDate || new Date().toISOString().slice(0, 10);
     if (addrEl) addrEl.value = inv.customerAddress || 'Menderes Cad. No:231/B Buca İzmir';
@@ -7052,6 +7229,8 @@ const AdminApp = {
     if (emailEl) emailEl.value = inv.customerEmail || '';
     if (noteEl) noteEl.value = inv.note || '';
     if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
+
+    this.handleStoreCustIdentityInput();
 
     if (inv.declarationDoc || inv.identityDoc) {
       this.setStoreIdentityDoc(inv.declarationDoc || inv.identityDoc, 'Mevcut Kimlik Belgesi');
@@ -7083,7 +7262,7 @@ const AdminApp = {
       ];
     }
 
-    this.renderStoreInvoiceItems();
+    this.renderStoreItemsTable();
     this.calculateStoreInvoiceLiveSummary();
 
     if (this.storeItems && this.storeItems.length > 0) {
@@ -7100,17 +7279,47 @@ const AdminApp = {
     }
 
     const banner = document.getElementById('storeEditModeBanner');
-    const textEl = document.getElementById('storeEditInvoiceIdText');
-    if (banner) banner.style.display = 'flex';
-    if (textEl) textEl.textContent = inv.orderId;
+    const idDisplay = document.getElementById('storeEditInvoiceId');
+    if (banner) banner.style.display = 'block';
+    if (idDisplay) idDisplay.textContent = inv.orderId;
 
     const saveDraftBtn = document.getElementById('btnSaveStoreDraft');
     const saveGibBtn = document.getElementById('btnSaveAndGibStore');
-    if (saveDraftBtn) saveDraftBtn.innerHTML = '<span>💾 Değişiklikleri Güncelle (Taslak)</span>';
-    if (saveGibBtn) saveGibBtn.innerHTML = '<span>🧾 Güncelle & GİB SMS Başlat</span>';
+    if (saveDraftBtn) saveDraftBtn.innerHTML = '<span>💾 Faturayı Güncelle (Taslak)</span>';
+    if (saveGibBtn) saveGibBtn.innerHTML = '<span>🧾 Güncelle & GİB e-Arşiv Kes (SMS)</span>';
 
-    document.getElementById('storeInvoiceForm')?.scrollIntoView({ behavior: 'smooth' });
-    this.showToast(`✏️ Fatura (${inv.orderId}) düzenleme moduna alındı.`);
+    const formSec = document.getElementById('storeInvoiceFormSection');
+    if (formSec) formSec.scrollIntoView({ behavior: 'smooth' });
+  },
+
+  handleStoreCustIdentityInput() {
+    const idEl = document.getElementById('storeCustIdentity');
+    const badge = document.getElementById('storeCustIdentityTypeBadge');
+    if (!idEl || !badge) return;
+    const clean = (idEl.value || '').replace(/\D/g, '');
+    if (clean.length === 10) {
+      badge.textContent = '🏢 10 Haneli VKN (Kurumsal)';
+      badge.style.background = '#E0F2FE';
+      badge.style.color = '#0369A1';
+      badge.style.border = '1px solid #BAE6FD';
+    } else if (clean.length === 11) {
+      if (clean === '11111111111') {
+        badge.textContent = '🏛️ 11111111111 (Nihai Tüketici)';
+        badge.style.background = '#F1F5F9';
+        badge.style.color = '#475569';
+        badge.style.border = '1px solid #CBD5E1';
+      } else {
+        badge.textContent = '👤 11 Haneli TCKN (Bireysel)';
+        badge.style.background = '#DCFCE7';
+        badge.style.color = '#15803D';
+        badge.style.border = '1px solid #86EFAC';
+      }
+    } else {
+      badge.textContent = 'Bireysel / Kurumsal';
+      badge.style.background = '#F1F5F9';
+      badge.style.color = '#475569';
+      badge.style.border = 'none';
+    }
   },
 
   cancelStoreInvoiceEdit() {
@@ -7131,6 +7340,8 @@ const AdminApp = {
     if (saveGibBtn) saveGibBtn.innerHTML = '<span>🧾 Resmi GİB e-Arşiv Faturası Kes (SMS Onayı)</span>';
 
     const nameEl = document.getElementById('storeCustName');
+    const compEl = document.getElementById('storeCustCompanyName');
+    const taxOffEl = document.getElementById('storeCustTaxOffice');
     const idEl = document.getElementById('storeCustIdentity');
     const dateEl = document.getElementById('storeInvoiceDate');
     const addrEl = document.getElementById('storeCustAddress');
@@ -7140,6 +7351,8 @@ const AdminApp = {
     const errEl = document.getElementById('storeInvoiceFormError');
 
     if (nameEl) nameEl.value = '';
+    if (compEl) compEl.value = '';
+    if (taxOffEl) taxOffEl.value = '';
     if (idEl) idEl.value = '11111111111';
     if (dateEl) dateEl.value = new Date().toISOString().slice(0, 10);
     if (addrEl) addrEl.value = 'Menderes Cad. No:231/B Buca İzmir';
@@ -7147,6 +7360,8 @@ const AdminApp = {
     if (emailEl) emailEl.value = '';
     if (noteEl) noteEl.value = '';
     if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
+
+    this.handleStoreCustIdentityInput();
 
     const defRadio = document.querySelector('input[name="storePaymentChannel"][value="HAVALE_EFT"]');
     if (defRadio) {
@@ -8217,6 +8432,8 @@ const AdminApp = {
   // 2. MAĞAZA FATURASI KAYDETME (TASLAK VEYA ANINDA GİB SMS)
   async submitStoreInvoice(autoStartGibSms = false) {
     const name = ((document.getElementById('storeCustName') || document.getElementById('storeCustomerName'))?.value || '').trim();
+    const companyName = (document.getElementById('storeCustCompanyName')?.value || '').trim();
+    const taxOffice = (document.getElementById('storeCustTaxOffice')?.value || '').trim();
     let rawIdentity = ((document.getElementById('storeCustIdentity') || document.getElementById('storeCustomerIdentity'))?.value || '').trim();
     let identity = rawIdentity.replace(/\D/g, '');
     if (identity.length !== 10 && identity.length !== 11) {
@@ -8229,7 +8446,7 @@ const AdminApp = {
     const note = (document.getElementById('storeInvoiceNote')?.value || '').trim();
     const errEl = document.getElementById('storeInvoiceFormError');
 
-    if (!name) {
+    if (!name && !companyName) {
       if (errEl) { errEl.style.display = 'block'; errEl.textContent = 'Lütfen alıcı müşteri adı / unvanını giriniz.'; }
       return;
     }
@@ -8301,13 +8518,17 @@ const AdminApp = {
 
     const isVkn = identity.length === 10;
     const isTckn = identity.length === 11;
+    const officialUnvan = isVkn ? (companyName || name) : companyName;
 
     const invoiceDoc = {
       orderId: invoiceId,
       id: invoiceId,
       isStoreManual: true,
       source: 'STORE_MANUAL',
-      customerName: name,
+      customerName: name || officialUnvan,
+      companyName: officialUnvan || null,
+      unvan: officialUnvan || null,
+      taxOffice: taxOffice || null,
       customerIdentity: identity,
       vkn: isVkn ? identity : null,
       taxNumber: isVkn ? identity : null,
@@ -8898,11 +9119,18 @@ const AdminApp = {
 
     const summaryBox = document.getElementById('smsModalOrderSummary');
     if (summaryBox) {
+      const isVkn = String(inv.customerIdentity || '').replace(/\D/g, '').length === 10;
+      const displayTitle = inv.companyName || inv.unvan || (isVkn ? inv.customerName : '') || inv.customerName || 'Nihai Tüketici';
       summaryBox.innerHTML = `
         <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
           <span><strong>Fatura No:</strong> ${inv.orderId}</span>
-          <span><strong>Müşteri:</strong> ${this.escapeHtml(inv.customerName || 'Nihai Tüketici')}</span>
+          <span><strong>Alıcı / Ünvan:</strong> ${this.escapeHtml(displayTitle)}</span>
         </div>
+        ${inv.taxOffice ? `
+        <div style="display:flex; justify-content:space-between; margin-bottom:3px; font-size:11.5px; color:#475569;">
+          <span><strong>Vergi Dairesi:</strong> ${this.escapeHtml(inv.taxOffice)}</span>
+          <span><strong>VKN/TCKN:</strong> <span style="font-family:monospace;">${inv.customerIdentity}</span></span>
+        </div>` : ''}
         ${Number(bd.hasGoldAmount || 0) > 0 ? `
         <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
           <span><strong>Kıymetli Maden (%0 KDV):</strong> ₺${Number(bd.hasGoldAmount || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</span>
