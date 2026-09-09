@@ -272,15 +272,15 @@
                     <tr><td align="left" style="width:469px; font-weight:bold;">{{buyer.unvan}}&nbsp;</td></tr>
                     {{/if}}
                     <tr><td align="left" style="width:469px; ">{{buyer.name}}&nbsp;</td></tr>
-                    {{#if buyer.taxOffice}}
-                    <tr align="left"><td align="left" style="width:469px;">Vergi Dairesi: {{buyer.taxOffice}}&nbsp;</td></tr>
-                    {{/if}}
                     {{#if buyer.addressLine1}}
                     <tr>
                         <td align="left" style="width:469px; ">
                             {{buyer.addressLine1}}&nbsp;{{#if buyer.addressLine2}}<br>&nbsp;{{buyer.addressLine2}}&nbsp;{{/if}}
                         </td>
                     </tr>
+                    {{/if}}
+                    {{#if buyer.taxOffice}}
+                    <tr align="left"><td>Vergi Dairesi: {{buyer.taxOffice}}</td></tr>
                     {{/if}}
                     {{#if buyer.website}}
                     <tr align="left"><td>Web Sitesi: {{buyer.website}}</td></tr>
