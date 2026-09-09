@@ -4,8 +4,9 @@
 # Her 4 saatte bir 7/24 çalışır.
 # Chrono24 first-party RSS yeni içerik kontratıdır.
 # Full article extraction GitHub shared runner'dan yapılmaz; Belgin Cloud Function kullanılır.
-# Güvenlik/SEO kapıları sonrası git'e kaydedilir ve doğrudan canlıya yayınlanır.
-# Fail-closed + self-healing: RSS -> cloud extract -> transform -> static -> sitemap -> live.
+# Full-body erişim 403 ile engellenirse, yalnız yeterli first-party RSS kanıtıyla özgün Belgin
+# editoryal fallback devreye girer. Güvenlik/SEO kapıları sonrası git'e kaydedilir ve canlıya alınır.
+# Fail-closed + self-healing: RSS -> cloud/full or RSS/editorial -> transform -> static -> sitemap -> live.
 # Sessiz "yeni haber yok" başarısı yasaktır.
 # ==========================================================
 
@@ -51,7 +52,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          # Two commits are sufficient for push-diff detection; pull/rebase fetches origin/main explicitly.
+          fetch-depth: 2
 
       - name: Setup Python 3.11
         uses: actions/setup-python@v5
@@ -81,14 +83,31 @@ jobs:
       - name: Install Functions dependencies
         run: npm ci --prefix functions --ignore-scripts --no-audit --no-fund
 
+      - name: Resolve isolated extractor deployment need
+        shell: bash
+        run: |
+          set -euo pipefail
+          needs=false
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            needs=true
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            changed="$(git diff --name-only HEAD^ HEAD || true)"
+            printf '%s\n' "$changed"
+            if printf '%s\n' "$changed" | grep -Eq '^(functions/magazine-fetch\.js|functions/bootstrap\.js|scripts/firebase-function-scope\.mjs)$'; then
+              needs=true
+            fi
+          fi
+          echo "NEEDS_EXTRACTOR_DEPLOY=$needs" >> "$GITHUB_ENV"
+          echo "MAGAZINE_EXTRACTOR_DEPLOY_NEEDED=$needs"
+
       - name: Authenticate extractor deploy with Google service account
-        if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && env.FIREBASE_SERVICE_ACCOUNT != ''
+        if: env.NEEDS_EXTRACTOR_DEPLOY == 'true' && env.FIREBASE_SERVICE_ACCOUNT != ''
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CARBON_WEB_1265B }}
 
       - name: Deploy/Refresh Isolated Magazine Extractor
-        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        if: env.NEEDS_EXTRACTOR_DEPLOY == 'true'
         run: |
           set -euo pipefail
           if [ -n "${FIREBASE_SERVICE_ACCOUNT:-}" ]; then
@@ -124,17 +143,24 @@ jobs:
           git add -A js/magazine_data.js images/magazine/ magazin/ sitemap-magazine.xml sitemap.xml llms.txt llms-full.txt robots.txt firebase.json legal-manifest.json functions/legal-manifest.json
           if ! git diff --staged --quiet; then
             git commit -m "chore(magazine): automated horology article sync & static SEO compilation"
+
+            # npm/build gates intentionally regenerate unrelated derived files. They are not part of
+            # the magazine publication transaction and must never block pull --rebase or leak into it.
+            git reset --hard HEAD
+
             PUSHED=false
             for i in 1 2 3 4 5; do
-              if git pull --rebase origin main && git push origin HEAD:main; then
+              git fetch origin main
+              if git rebase origin/main && git push origin HEAD:main; then
                 PUSHED=true
                 break
               fi
-              echo "Push contention detected; retrying rebase in 3s... (attempt $i)"
+              git rebase --abort >/dev/null 2>&1 || true
+              echo "Push contention detected; retrying clean rebase in 3s... (attempt $i)"
               sleep 3
             done
             if [ "$PUSHED" != "true" ]; then
-              echo "::error title=Magazine Git Push Failed::Generated magazine changes could not be pushed after 5 attempts."
+              echo "::error title=Magazine Git Push Failed::Generated magazine changes could not be pushed after 5 clean rebase attempts."
               exit 1
             fi
             echo "HAS_CHANGES=true" >> "$GITHUB_ENV"
