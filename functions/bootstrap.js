@@ -2,6 +2,7 @@ const base = require('./index');
 const { completeHighValueDelivery } = require('./delivery');
 const { onOrderEvidenceFinalize, issueEvidenceAccessToken, getOrderEvidence } = require('./evidence');
 const { dispatchOrderEvidenceEmails } = require('./mailer');
+const { ziraatPaymentCallback } = require('./ziraat-callback');
 
 module.exports = {
   ...base,
@@ -10,4 +11,5 @@ module.exports = {
   issueEvidenceAccessToken,
   getOrderEvidence,
   dispatchOrderEvidenceEmails,
+  ziraatPaymentCallback,
 };
