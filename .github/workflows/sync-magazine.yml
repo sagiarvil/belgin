@@ -6,6 +6,7 @@
 # güvenlik/pazar yeri filtrelerinden geçirir, statik SEO
 # sayfalarını derler, git'e kaydeder ve doğrudan canlıya yayınlar.
 # Fail-closed + self-healing contract: upstream -> import/recover -> static -> sitemap -> live.
+# Chrono24 runner erişimi engellendiğinde rendered fallback devreye girer; sessiz başarı yasaktır.
 # ==========================================================
 
 name: Magazine Live Editorial Sync (Every 4 Hours)
