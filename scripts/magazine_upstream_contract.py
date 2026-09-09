@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """Fail-closed contract for Chrono24 -> Belgin Magazine synchronization.
 
-Phases:
-  pre  : prove upstream is reachable, discover fresh eligible articles and persist snapshot
-  post : prove every expected article was imported, statically generated and added to sitemap
-  live : prove deployed production serves the imported data and article routes
+The contract deliberately does not trust the primary scraper. Chrono24 currently returns HTTP
+403 to GitHub-hosted runners, so Chrono24 reads use two transports in order:
+  1) direct curl-impersonated request
+  2) Jina Reader (https://r.jina.ai/<target-url>) as a rendered read-through fallback
 
-This guard is intentionally independent from the sync engine so a parser/discovery regression
-cannot silently report success.
+Phases:
+  pre  : discover fresh eligible articles and persist the exact expected set
+  post : prove every expected article exists in data + static SEO page + sitemap
+  live : prove the deployed production data and article routes contain the expected set
 """
 
 from __future__ import annotations
@@ -16,7 +18,6 @@ import argparse
 import json
 import os
 import re
-import sys
 import time
 from datetime import date
 from pathlib import Path
@@ -31,6 +32,7 @@ SITEMAP = ROOT / "sitemap-magazine.xml"
 SNAPSHOT = Path(os.environ.get("MAGAZINE_CONTRACT_SNAPSHOT", "/tmp/magazine-upstream-contract.json"))
 BASE = "https://www.chrono24.com"
 LIVE_BASE = "https://www.belginkuyumculuk.com"
+READER_BASE = "https://r.jina.ai/"
 
 SOURCES = [
     f"{BASE}/magazine/",
@@ -47,6 +49,10 @@ BLOCKED_RE = re.compile(
     r"(?i)staff|picks|team|author|employee|favorite-watches|steiert|gehrlein|breining|gtg|rolex-report|chronopulse"
 )
 ARTICLE_ID_RE = re.compile(r"-p_(\d+)(?:/|$|[?#])")
+ABS_ARTICLE_RE = re.compile(
+    r"https?://(?:www\.)?chrono24\.com/magazine/[^\s\]\)\"'<>]+?-p_\d+/?(?:\?[^\s\]\)]*)?",
+    re.I,
+)
 
 
 def fail(title: str, detail: str, code: int = 2) -> "None":
@@ -54,16 +60,11 @@ def fail(title: str, detail: str, code: int = 2) -> "None":
     raise SystemExit(code)
 
 
-def warn(title: str, detail: str) -> None:
-    print(f"::warning title={title}::{detail}")
-
-
 def make_session():
     session = requests.Session()
     session.headers.update(
         {
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
             "Accept-Language": "en-US,en;q=0.9",
             "Cache-Control": "no-cache",
             "Pragma": "no-cache",
@@ -72,19 +73,55 @@ def make_session():
     return session
 
 
-def fetch_text(session, url: str, attempts: int = 3, timeout: int = 20) -> str:
+def _request(session, url: str, attempts: int, timeout: int, impersonate: bool = False, headers=None) -> str:
     last = "unknown"
     for attempt in range(1, attempts + 1):
         try:
-            response = session.get(url, impersonate="chrome124", timeout=timeout)
+            kwargs = {"timeout": timeout, "headers": headers or {}}
+            if impersonate:
+                kwargs["impersonate"] = "chrome124"
+            response = session.get(url, **kwargs)
             if response.status_code == 200 and response.text:
                 return response.text
             last = f"HTTP {response.status_code}"
-        except Exception as exc:  # network failure must not become a green workflow
+        except Exception as exc:
             last = f"{type(exc).__name__}: {exc}"
         if attempt < attempts:
             time.sleep(attempt * 2)
     raise RuntimeError(f"{url} -> {last}")
+
+
+def fetch_document(session, url: str, attempts: int = 3, timeout: int = 25) -> tuple[str, str]:
+    """Fetch a URL and return (body, transport).
+
+    Belgin production URLs are always read directly. Chrono24 gets a direct attempt first, then
+    the rendered Reader fallback. This makes a GitHub IP block a recoverable transport issue
+    rather than an editorial outage.
+    """
+    is_chrono = url.startswith("https://www.chrono24.com/") or url.startswith("http://www.chrono24.com/")
+    try:
+        body = _request(session, url, 1 if is_chrono else attempts, timeout, impersonate=True)
+        return body, "direct"
+    except Exception as direct_exc:
+        if not is_chrono:
+            raise
+        reader_url = f"{READER_BASE}{url}"
+        try:
+            body = _request(
+                session,
+                reader_url,
+                attempts,
+                max(timeout, 30),
+                impersonate=False,
+                headers={"Accept": "text/plain", "X-No-Cache": "true", "X-Engine": "browser"},
+            )
+            return body, "reader"
+        except Exception as reader_exc:
+            raise RuntimeError(f"direct={direct_exc}; reader={reader_exc}") from reader_exc
+
+
+def fetch_text(session, url: str, attempts: int = 3, timeout: int = 25) -> str:
+    return fetch_document(session, url, attempts=attempts, timeout=timeout)[0]
 
 
 def article_id_from_url(url: str) -> str | None:
@@ -97,19 +134,42 @@ def numeric_id(article_id: str) -> int:
     return int(match.group(1)) if match else -1
 
 
-def extract_article_urls(html: str) -> list[str]:
-    soup = BeautifulSoup(html, "html.parser")
+def _normalize_article_url(value: str) -> str | None:
+    if not value:
+        return None
+    value = value.strip().rstrip(".,;:!\"")
+    full = urljoin(BASE, value).split("#", 1)[0]
+    if "/magazine/" not in full or not article_id_from_url(full):
+        return None
+    return full
+
+
+def extract_article_urls(document: str) -> list[str]:
+    """Extract Chrono24 article URLs from either source HTML or Reader Markdown."""
     found: list[str] = []
     seen: set[str] = set()
+
+    soup = BeautifulSoup(document, "html.parser")
     for anchor in soup.find_all("a", href=True):
-        href = anchor.get("href", "")
-        if "/magazine/" not in href or "-p_" not in href:
-            continue
-        full = urljoin(BASE, href).split("#", 1)[0]
-        if not article_id_from_url(full) or full in seen:
-            continue
-        seen.add(full)
-        found.append(full)
+        full = _normalize_article_url(anchor.get("href", ""))
+        if full and full not in seen:
+            seen.add(full)
+            found.append(full)
+
+    for match in ABS_ARTICLE_RE.finditer(document):
+        full = _normalize_article_url(match.group(0))
+        if full and full not in seen:
+            seen.add(full)
+            found.append(full)
+
+    # Reader markdown sometimes escapes or percent-encodes punctuation but keeps absolute links
+    # inside markdown parentheses; this permissive pass catches those without accepting categories.
+    for raw in re.findall(r"\((https?://[^)]+)\)", document):
+        full = _normalize_article_url(raw)
+        if full and full not in seen:
+            seen.add(full)
+            found.append(full)
+
     return found
 
 
@@ -129,11 +189,10 @@ def parse_local_articles(path: Path = DATA_JS) -> list[dict]:
     return data
 
 
-def metadata_from_article_html(url: str, html: str) -> dict:
-    soup = BeautifulSoup(html, "html.parser")
+def _metadata_from_html(url: str, document: str) -> tuple[str, str]:
+    soup = BeautifulSoup(document, "html.parser")
     headline = ""
     published = ""
-
     for script in soup.find_all("script", type="application/ld+json"):
         try:
             payload = json.loads(script.string or "null")
@@ -154,23 +213,52 @@ def metadata_from_article_html(url: str, html: str) -> dict:
                 headline = str(item.get("headline") or headline).strip()
                 published = str(item.get("datePublished") or published)[:10]
                 if headline:
-                    break
-        if headline:
-            break
+                    return headline, published
+    h1 = soup.find("h1")
+    if h1:
+        headline = h1.get_text(" ", strip=True)
+    time_tag = soup.find("time", attrs={"datetime": True})
+    if time_tag:
+        published = str(time_tag.get("datetime", ""))[:10]
+    return headline, published
 
+
+def _metadata_from_reader(document: str) -> tuple[str, str]:
+    headline = ""
+    published = ""
+    title_match = re.search(r"(?im)^Title:\s*(.+?)\s*$", document)
+    if title_match:
+        headline = title_match.group(1).strip()
+        headline = re.sub(r"\s*[-–|]\s*Chrono24(?:\s+Magazine)?\s*$", "", headline, flags=re.I).strip()
     if not headline:
-        h1 = soup.find("h1")
-        headline = h1.get_text(" ", strip=True) if h1 else ""
-    if not published:
-        time_tag = soup.find("time", attrs={"datetime": True})
-        if time_tag:
-            published = str(time_tag.get("datetime", ""))[:10]
+        h1 = re.search(r"(?m)^#\s+(.+?)\s*$", document)
+        if h1:
+            headline = h1.group(1).strip()
 
+    date_match = re.search(r"(?im)^(?:Published Time|Published|Date):\s*(.+?)\s*$", document)
+    if date_match:
+        iso = re.search(r"\b(20\d{2}-\d{2}-\d{2})\b", date_match.group(1))
+        if iso:
+            published = iso.group(1)
+    if not published:
+        iso = re.search(r"\b(20\d{2}-\d{2}-\d{2})\b", document[:2500])
+        if iso:
+            published = iso.group(1)
+    return headline, published
+
+
+def metadata_from_article_document(url: str, document: str, transport: str = "direct") -> dict:
+    headline, published = _metadata_from_html(url, document)
+    if not headline or transport == "reader":
+        reader_headline, reader_published = _metadata_from_reader(document)
+        headline = reader_headline or headline
+        published = reader_published or published
     return {
         "id": article_id_from_url(url),
         "url": url,
         "headline": headline,
         "published": published,
+        "transport": transport,
     }
 
 
@@ -202,9 +290,9 @@ def preflight() -> None:
 
     for source in SOURCES:
         try:
-            html = fetch_text(session, source)
-            urls = extract_article_urls(html)
-            source_health.append({"url": source, "ok": True, "count": len(urls)})
+            document, transport = fetch_document(session, source)
+            urls = extract_article_urls(document)
+            source_health.append({"url": source, "ok": True, "count": len(urls), "transport": transport})
             for url in urls:
                 if url not in seen:
                     seen.add(url)
@@ -212,55 +300,41 @@ def preflight() -> None:
         except Exception as exc:
             source_health.append({"url": source, "ok": False, "error": str(exc)})
 
-    healthy = [item for item in source_health if item.get("ok")]
-    if len(healthy) < 2:
-        fail("Chrono24 upstream unavailable", f"Only {len(healthy)}/{len(SOURCES)} discovery sources were reachable: {source_health}")
+    healthy = [item for item in source_health if item.get("ok") and item.get("count", 0) > 0]
+    if not healthy:
+        fail("Chrono24 upstream unavailable", f"No discovery source produced article URLs: {source_health}")
     if len(discovered) < 5:
         fail("Chrono24 discovery regression", f"Only {len(discovered)} article URLs discovered; expected at least 5")
 
-    # Evaluate genuinely fresh/missing candidates. IDs are monotonic in Chrono24 today,
-    # while publication date is a second independent signal if IDs ever stop being monotonic.
-    missing_urls = [url for url in discovered if article_id_from_url(url) not in local_ids]
+    # Freshness is based on Chrono24's monotonic article ID. This avoids re-importing intentionally
+    # omitted historical articles while still catching every article newer than our local frontier.
     priority_urls = []
-    for url in missing_urls:
+    for url in discovered:
         aid = article_id_from_url(url) or ""
-        if numeric_id(aid) > local_numeric_max or url in discovered[:15]:
+        if aid not in local_ids and numeric_id(aid) > local_numeric_max:
             priority_urls.append(url)
 
     expected: list[dict] = []
     inspection_errors: list[str] = []
-    inspected: set[str] = set()
-
     for url in priority_urls[:30]:
-        if url in inspected:
-            continue
-        inspected.add(url)
+        aid = article_id_from_url(url) or "unknown"
         try:
-            meta = metadata_from_article_html(url, fetch_text(session, url))
+            document, transport = fetch_document(session, url)
+            meta = metadata_from_article_document(url, document, transport)
         except Exception as exc:
-            aid = article_id_from_url(url) or "unknown"
-            # A new/high ID that cannot be fetched is exactly the silent failure we must stop.
-            if numeric_id(aid) > local_numeric_max:
-                inspection_errors.append(f"{aid}: {exc}")
+            inspection_errors.append(f"{aid}: {exc}")
             continue
-
         if not meta.get("headline"):
-            if numeric_id(meta.get("id") or "") > local_numeric_max:
-                inspection_errors.append(f"{meta.get('id')}: missing headline")
+            inspection_errors.append(f"{aid}: missing headline")
             continue
         if is_blocked_candidate(meta):
             continue
-
-        published = iso_date(meta.get("published", ""))
-        is_fresh = numeric_id(meta.get("id") or "") > local_numeric_max
-        if latest_local_date and published:
-            is_fresh = is_fresh or published >= latest_local_date
-        if is_fresh:
-            expected.append(meta)
+        expected.append(meta)
 
     if inspection_errors:
         fail("Chrono24 article fetch regression", "; ".join(inspection_errors))
 
+    expected.sort(key=lambda item: numeric_id(item.get("id") or ""), reverse=True)
     snapshot = {
         "created_at_epoch": int(time.time()),
         "latest_local_date": latest_local_date.isoformat() if latest_local_date else None,
@@ -271,9 +345,10 @@ def preflight() -> None:
         "live_targets": [],
     }
     SNAPSHOT.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"MAGAZINE_UPSTREAM_PRE=PASS discovered={len(discovered)} expected_new={len(expected)}")
+    transports = sorted({item.get("transport") for item in source_health if item.get("ok")})
+    print(f"MAGAZINE_UPSTREAM_PRE=PASS discovered={len(discovered)} expected_new={len(expected)} transports={','.join(transports)}")
     for meta in expected:
-        print(f"  EXPECT {meta['id']} | {meta.get('published') or '?'} | {meta.get('headline')}")
+        print(f"  EXPECT {meta['id']} | {meta.get('published') or '?'} | {meta.get('transport')} | {meta.get('headline')}")
 
 
 def postflight() -> None:
