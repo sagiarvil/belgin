@@ -7,10 +7,12 @@ const { PROVIDERS, DEFAULT_PROVIDER } = require('./payment-constants');
 const paytrProvider = require('./providers/paytr');
 const qnbProvider = require('./providers/qnb');
 const kuveytTurkProvider = require('./providers/kuveytturk');
+const ziraatKatilimProvider = require('./providers/ziraatkatilim');
 const yapiKrediProvider = require('./providers/yapikredi');
 
 const PROVIDER_REGISTRY = Object.freeze({
   [PROVIDERS.KUVEYTTURK]: kuveytTurkProvider,
+  [PROVIDERS.ZIRAATKATILIM]: ziraatKatilimProvider,
   [PROVIDERS.PAYTR]: paytrProvider,
   [PROVIDERS.QNB]: qnbProvider,
   [PROVIDERS.YAPIKREDI]: yapiKrediProvider,
