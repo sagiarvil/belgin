@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const root = path.resolve(path.dirname(new URL(import.meta.url).pathname, '..'));
+const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const entry = path.join(root, 'functions', 'index.js');
 const bootstrapEntry = path.join(root, 'functions', 'bootstrap.js');
 const source = fs.readFileSync(entry, 'utf8');
