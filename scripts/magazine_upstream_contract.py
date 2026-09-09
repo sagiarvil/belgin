@@ -4,7 +4,7 @@
 The contract deliberately does not trust the primary scraper. Chrono24 currently returns HTTP
 403 to GitHub-hosted runners, so Chrono24 reads use two transports in order:
   1) direct curl-impersonated request
-  2) Jina Reader (https://r.jina.ai/<target-url>) as a rendered read-through fallback
+  2) Jina Reader (https://r.jina.ai/<target-url>) rendered-HTML read-through fallback
 
 Phases:
   pre  : discover fresh eligible articles and persist the exact expected set
@@ -92,11 +92,11 @@ def _request(session, url: str, attempts: int, timeout: int, impersonate: bool =
 
 
 def fetch_document(session, url: str, attempts: int = 3, timeout: int = 25) -> tuple[str, str]:
-    """Fetch a URL and return (body, transport).
+    """Fetch a URL and return (HTML body, transport).
 
-    Belgin production URLs are always read directly. Chrono24 gets a direct attempt first, then
-    the rendered Reader fallback. This makes a GitHub IP block a recoverable transport issue
-    rather than an editorial outage.
+    Belgin production URLs are always read directly. Chrono24 gets one direct attempt, then
+    Reader returns documentElement.outerHTML through a browser-rendered fetch. Keeping the
+    fallback in HTML means the canonical BeautifulSoup parser stays unchanged.
     """
     is_chrono = url.startswith("https://www.chrono24.com/") or url.startswith("http://www.chrono24.com/")
     try:
@@ -113,9 +113,16 @@ def fetch_document(session, url: str, attempts: int = 3, timeout: int = 25) -> t
                 attempts,
                 max(timeout, 30),
                 impersonate=False,
-                headers={"Accept": "text/plain", "X-No-Cache": "true", "X-Engine": "browser"},
+                headers={
+                    "X-Respond-With": "html",
+                    "X-No-Cache": "true",
+                    "X-Engine": "browser",
+                    "X-Respond-Timing": "resource-idle",
+                },
             )
-            return body, "reader"
+            if "<html" not in body.lower() and "<body" not in body.lower():
+                raise RuntimeError("Reader returned non-HTML payload")
+            return body, "reader-html"
         except Exception as reader_exc:
             raise RuntimeError(f"direct={direct_exc}; reader={reader_exc}") from reader_exc
 
@@ -145,31 +152,20 @@ def _normalize_article_url(value: str) -> str | None:
 
 
 def extract_article_urls(document: str) -> list[str]:
-    """Extract Chrono24 article URLs from either source HTML or Reader Markdown."""
     found: list[str] = []
     seen: set[str] = set()
-
     soup = BeautifulSoup(document, "html.parser")
     for anchor in soup.find_all("a", href=True):
         full = _normalize_article_url(anchor.get("href", ""))
         if full and full not in seen:
             seen.add(full)
             found.append(full)
-
+    # Defensive fallback in case a relay preserves raw absolute URLs outside anchors.
     for match in ABS_ARTICLE_RE.finditer(document):
         full = _normalize_article_url(match.group(0))
         if full and full not in seen:
             seen.add(full)
             found.append(full)
-
-    # Reader markdown sometimes escapes or percent-encodes punctuation but keeps absolute links
-    # inside markdown parentheses; this permissive pass catches those without accepting categories.
-    for raw in re.findall(r"\((https?://[^)]+)\)", document):
-        full = _normalize_article_url(raw)
-        if full and full not in seen:
-            seen.add(full)
-            found.append(full)
-
     return found
 
 
@@ -189,7 +185,7 @@ def parse_local_articles(path: Path = DATA_JS) -> list[dict]:
     return data
 
 
-def _metadata_from_html(url: str, document: str) -> tuple[str, str]:
+def metadata_from_article_document(url: str, document: str, transport: str = "direct") -> dict:
     soup = BeautifulSoup(document, "html.parser")
     headline = ""
     published = ""
@@ -213,46 +209,16 @@ def _metadata_from_html(url: str, document: str) -> tuple[str, str]:
                 headline = str(item.get("headline") or headline).strip()
                 published = str(item.get("datePublished") or published)[:10]
                 if headline:
-                    return headline, published
-    h1 = soup.find("h1")
-    if h1:
-        headline = h1.get_text(" ", strip=True)
-    time_tag = soup.find("time", attrs={"datetime": True})
-    if time_tag:
-        published = str(time_tag.get("datetime", ""))[:10]
-    return headline, published
-
-
-def _metadata_from_reader(document: str) -> tuple[str, str]:
-    headline = ""
-    published = ""
-    title_match = re.search(r"(?im)^Title:\s*(.+?)\s*$", document)
-    if title_match:
-        headline = title_match.group(1).strip()
-        headline = re.sub(r"\s*[-–|]\s*Chrono24(?:\s+Magazine)?\s*$", "", headline, flags=re.I).strip()
+                    break
+        if headline:
+            break
     if not headline:
-        h1 = re.search(r"(?m)^#\s+(.+?)\s*$", document)
-        if h1:
-            headline = h1.group(1).strip()
-
-    date_match = re.search(r"(?im)^(?:Published Time|Published|Date):\s*(.+?)\s*$", document)
-    if date_match:
-        iso = re.search(r"\b(20\d{2}-\d{2}-\d{2})\b", date_match.group(1))
-        if iso:
-            published = iso.group(1)
+        h1 = soup.find("h1")
+        headline = h1.get_text(" ", strip=True) if h1 else ""
     if not published:
-        iso = re.search(r"\b(20\d{2}-\d{2}-\d{2})\b", document[:2500])
-        if iso:
-            published = iso.group(1)
-    return headline, published
-
-
-def metadata_from_article_document(url: str, document: str, transport: str = "direct") -> dict:
-    headline, published = _metadata_from_html(url, document)
-    if not headline or transport == "reader":
-        reader_headline, reader_published = _metadata_from_reader(document)
-        headline = reader_headline or headline
-        published = reader_published or published
+        time_tag = soup.find("time", attrs={"datetime": True})
+        if time_tag:
+            published = str(time_tag.get("datetime", ""))[:10]
     return {
         "id": article_id_from_url(url),
         "url": url,
@@ -287,7 +253,6 @@ def preflight() -> None:
     discovered: list[str] = []
     seen: set[str] = set()
     source_health: list[dict] = []
-
     for source in SOURCES:
         try:
             document, transport = fetch_document(session, source)
@@ -306,8 +271,8 @@ def preflight() -> None:
     if len(discovered) < 5:
         fail("Chrono24 discovery regression", f"Only {len(discovered)} article URLs discovered; expected at least 5")
 
-    # Freshness is based on Chrono24's monotonic article ID. This avoids re-importing intentionally
-    # omitted historical articles while still catching every article newer than our local frontier.
+    # Chrono24's numeric article ID is our freshness frontier. Historical intentionally-omitted
+    # articles below the frontier never become false-positive recovery targets.
     priority_urls = []
     for url in discovered:
         aid = article_id_from_url(url) or ""
@@ -359,7 +324,6 @@ def postflight() -> None:
     local = parse_local_articles()
     by_id = {str(item.get("id", "")): item for item in local}
     sitemap = SITEMAP.read_text(encoding="utf-8") if SITEMAP.exists() else ""
-
     failures: list[str] = []
     live_targets: list[dict] = []
     for meta in expected:
@@ -378,10 +342,8 @@ def postflight() -> None:
         if f"/magazin/{slug}/" not in sitemap:
             failures.append(f"{aid}: missing from sitemap-magazine.xml")
         live_targets.append({"id": aid, "slug": slug})
-
     if failures:
         fail("Magazine post-sync contract failed", "; ".join(failures))
-
     snapshot["live_targets"] = live_targets
     SNAPSHOT.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"MAGAZINE_POST_SYNC=PASS expected={len(expected)} verified={len(live_targets)}")
@@ -394,23 +356,19 @@ def liveflight() -> None:
     targets = snapshot.get("live_targets") or []
     session = make_session()
     cache_buster = int(time.time())
-
     try:
         listing = fetch_text(session, f"{LIVE_BASE}/magazin/?contract={cache_buster}", attempts=4, timeout=30)
     except Exception as exc:
         fail("Live magazine unavailable", str(exc))
     if "Belgin" not in listing:
         fail("Live magazine invalid", "Production /magazin/ returned 200 but expected Belgin marker is absent")
-
     if not targets:
         print("MAGAZINE_LIVE=PASS no_new_targets=1")
         return
-
     try:
         live_data = fetch_text(session, f"{LIVE_BASE}/js/magazine_data.js?contract={cache_buster}", attempts=4, timeout=30)
     except Exception as exc:
         fail("Live magazine data unavailable", str(exc))
-
     failures: list[str] = []
     for target in targets:
         aid = target["id"]
@@ -424,7 +382,6 @@ def liveflight() -> None:
                 failures.append(f"{aid}: live article payload invalid")
         except Exception as exc:
             failures.append(f"{aid}: live route failed: {exc}")
-
     if failures:
         fail("Magazine live contract failed", "; ".join(failures))
     print(f"MAGAZINE_LIVE=PASS verified={len(targets)}")
