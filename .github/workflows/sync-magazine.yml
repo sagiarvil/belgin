@@ -2,22 +2,19 @@
 # BELGİN SAAT — MAGAZİN OTOMATİK SENKRONİZASYON & SEO CRON
 # ==========================================================
 # Her 4 saatte bir 7/24 çalışır.
-# Yeni çıkan lüks saat makalelerini çeker, Türkçeleştirir,
-# güvenlik/pazar yeri filtrelerinden geçirir, statik SEO
-# sayfalarını derler, git'e kaydeder ve doğrudan canlıya yayınlar.
-# Fail-closed + self-healing contract: upstream -> import/recover -> static -> sitemap -> live.
-# Chrono24 runner erişimi engellendiğinde rendered fallback devreye girer; sessiz başarı yasaktır.
+# Chrono24 first-party RSS yeni içerik kontratıdır.
+# Full article extraction GitHub shared runner'dan yapılmaz; Belgin Cloud Function kullanılır.
+# Güvenlik/SEO kapıları sonrası git'e kaydedilir ve doğrudan canlıya yayınlanır.
+# Fail-closed + self-healing: RSS -> cloud extract -> transform -> static -> sitemap -> live.
+# Sessiz "yeni haber yok" başarısı yasaktır.
 # ==========================================================
 
 name: Magazine Live Editorial Sync (Every 4 Hours)
 
 on:
   schedule:
-    # Runs every 4 hours 24/7 (00:00, 04:00, 08:00, 12:00, 16:00, 20:00 UTC)
     - cron: '0 */4 * * *'
   workflow_dispatch:
-  # A sync-engine/contract fix must exercise production immediately once merged to main.
-  # Generated magazine commits do not match these paths, preventing recursion.
   push:
     branches:
       - main
@@ -26,6 +23,9 @@ on:
       - 'scripts/sync-magazine-articles.py'
       - 'scripts/magazine_upstream_contract.py'
       - 'scripts/repair_magazine_expected_articles.py'
+      - 'scripts/firebase-function-scope.mjs'
+      - 'functions/magazine-fetch.js'
+      - 'functions/bootstrap.js'
       - 'tests/test_magazine_upstream_contract.py'
 
 concurrency:
@@ -45,6 +45,7 @@ jobs:
       FIREBASE_PROJECT_ID: carbon-web-1265b
       FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CARBON_WEB_1265B }}
       FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      MAGAZINE_EXTRACTOR_URL: https://us-central1-carbon-web-1265b.cloudfunctions.net/magazineFetchArticle
 
     steps:
       - name: Checkout repository
@@ -65,7 +66,7 @@ jobs:
       - name: Test Magazine Freshness Contract
         run: python3 -m unittest tests/test_magazine_upstream_contract.py
 
-      - name: Verify Chrono24 Upstream & Capture Expected Articles
+      - name: Verify Chrono24 RSS & Capture Expected Articles
         run: python3 scripts/magazine_upstream_contract.py pre
 
       - name: Setup Node.js 22
@@ -79,6 +80,25 @@ jobs:
 
       - name: Install Functions dependencies
         run: npm ci --prefix functions --ignore-scripts --no-audit --no-fund
+
+      - name: Authenticate extractor deploy with Google service account
+        if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && env.FIREBASE_SERVICE_ACCOUNT != ''
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CARBON_WEB_1265B }}
+
+      - name: Deploy/Refresh Isolated Magazine Extractor
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        run: |
+          set -euo pipefail
+          if [ -n "${FIREBASE_SERVICE_ACCOUNT:-}" ]; then
+            npx -y firebase-tools@latest deploy --project "$FIREBASE_PROJECT_ID" --only functions:magazineFetchArticle --non-interactive
+          elif [ -n "${FIREBASE_TOKEN:-}" ]; then
+            npx -y firebase-tools@latest deploy --project "$FIREBASE_PROJECT_ID" --only functions:magazineFetchArticle --non-interactive --token "$FIREBASE_TOKEN"
+          else
+            echo "::error title=Magazine Extractor Deploy Blocked::Firebase deployment credential missing."
+            exit 1
+          fi
 
       - name: Run Primary Magazine Sync Engine
         run: python3 scripts/sync-magazine-articles.py
@@ -123,7 +143,7 @@ jobs:
             echo "HAS_CHANGES=false" >> "$GITHUB_ENV"
           fi
 
-      - name: Authenticate with Google service account
+      - name: Authenticate hosting deploy with Google service account
         if: (env.HAS_CHANGES == 'true' || github.event_name == 'workflow_dispatch') && env.FIREBASE_SERVICE_ACCOUNT != ''
         uses: google-github-actions/auth@v2
         with:
