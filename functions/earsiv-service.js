@@ -54,15 +54,19 @@ function cleanInvoiceProductName(name, fallback = '22 Ayar Bilezik') {
   return clean;
 }
 
+function isPureLaborItem(name) {
+  if (!name || typeof name !== 'string') return false;
+  return /^[,\+\s]*[iİıI][şs][çc][iİıI]l[iİıI]k(?:\s*\([xX]?\d+[^)]*\))?[,\+\s]*$/i.test(name.trim());
+}
+
 function getCleanInvoiceItemsSummary(items, fallback = '22 Ayar Bilezik') {
   if (!Array.isArray(items) || items.length === 0) return fallback;
-  const isLabor = (name) => /[iİıI][şs][çc][iİıI]l[iİıI]k/i.test(String(name || ''));
-  const realItems = items.filter(i => !isLabor(i.name) && !isLabor(i.malHizmet) && !isLabor(i.title));
+  const realItems = items.filter(i => !isPureLaborItem(i.name) && !isPureLaborItem(i.malHizmet) && !isPureLaborItem(i.title));
   const targetItems = realItems.length > 0 ? realItems : items;
   const names = targetItems
     .map(i => cleanInvoiceProductName(i.name || i.malHizmet || i.title))
-    .filter(name => Boolean(name) && !isLabor(name));
-  return names.length > 0 ? names.join(', ') : fallback;
+    .filter(name => Boolean(name) && !isPureLaborItem(name));
+  return names.length > 0 ? Array.from(new Set(names)).join(', ') : fallback;
 }
 
 const VIP_22_CATALOG = Object.freeze([

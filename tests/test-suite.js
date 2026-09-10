@@ -245,6 +245,26 @@ assert(vipHtml.includes('title: currentPayload.title') && vipHtml.includes('prod
 assert(adminHtml.includes('id="cfgGoldItemName"'), 'admin.html altın fatura modalında düzenlenebilir cfgGoldItemName inputu içeriyor');
 assert(adminJs.includes('cfgGoldItemName') && adminJs.includes('effectiveProductName'), 'js/admin.js GİB taslak isteğine yöneticinin girdiği ürün açıklamasını iletiyor');
 
+// --- 11. Fatura Ürün Adı Temizlik & İşçilik İzolasyonu (Enterprise v3.0) ---
+console.log('\n--- 11. Fatura Ürün Adı Temizlik & İşçilik İzolasyonu (Enterprise v3.0) ---');
+const { cleanInvoiceProductName, getCleanInvoiceItemsSummary } = require('../functions/earsiv-service');
+assert(cleanInvoiceProductName('22 Ayar Bilezik (x1) + İşçilik (x1)') === '22 Ayar Bilezik', 'Fatura ürün adından (x1) ve + İşçilik kalıntıları temizleniyor');
+assert(getCleanInvoiceItemsSummary([
+  { name: '22 Ayar Bilezik (x1) + İşçilik (x1)', qty: 1 },
+  { name: 'İşçilik', qty: 1 }
+]) === '22 Ayar Bilezik', 'getCleanInvoiceItemsSummary sepet kalemlerinde işçilik izolasyonunu garanti ediyor');
+
+const bdCleanTest = calculateVip22Breakdown(99000, '22 Ayar Bilezik (x1) + İşçilik (x1)');
+assert(bdCleanTest.items[0].name === '22 Ayar Bilezik', 'Fatura 1. kalem saf ürün adıdır');
+assert(bdCleanTest.items[1].name === 'İşçilik', 'Fatura 2. kalem müstakil İşçilik satırıdır');
+
+const htmlProof = gibTemplate.renderOfficialGibHtml({
+  productName: '22 Ayar Bilezik (x1) + İşçilik (x1)',
+  totalAmount: 99000
+});
+assert(htmlProof.includes('22 Ayar Bilezik (Kıymetli Maden Bedeli - Özel Matrah)'), 'Resmi GİB fatura HTML çıktısında 1. kalem net ürün adıdır');
+assert(!htmlProof.includes('22 Ayar Bilezik (x1) + İşçilik (x1)'), 'Resmi GİB fatura HTML çıktısında asla (x1) + İşçilik (x1) bulunmaz');
+
 // 9.6 EarsivPortalService Doğrudan Payload Doğrulaması
 const { EarsivPortalService } = require('../functions/earsiv-service');
 const earsivSvc = new EarsivPortalService();
