@@ -2738,7 +2738,7 @@ const LegalApp = {
           <tr><td class="label-col">Satıcı (Ticari Unvan):</td><td><strong>${c.merchant.legalName}</strong></td></tr>
           <tr><td class="label-col">Alıcı (Müşteri):</td><td><strong>${c.customer.name}</strong> (${c.customer.idLabel || 'T.C. Kimlik No'}: ${c.customer.tcknDisplay}) · Tel: ${c.customer.phoneDisplay}</td></tr>
           <tr><td class="label-col">İlişkili Sipariş / Fatura No:</td><td class="mono-val"><strong>${c.orderId}</strong></td></tr>
-          <tr><td class="label-col">Satın Alınan Ürünler:</td><td>${c.items.map(it => `${it.name} (x${it.qty})`).join(', ')}</td></tr>
+          <tr><td class="label-col">Satın Alınan Ürünler:</td><td><strong>${this.formatLegalItems(c.items)}</strong></td></tr>
           <tr><td class="label-col">Toplam Tahsilat Tutarı:</td><td><strong>₺${c.totalAmount.toLocaleString('tr-TR')}</strong> (${isHavale ? 'Banka Havalesi / EFT ile Kesinleşti' : 'Mağazada Nakit Ödeme ile Kesinleşti'})</td></tr>
         </table>
 
@@ -2808,7 +2808,7 @@ const LegalApp = {
           <tr><td class="label-col">Satıcı (Ticari Unvan):</td><td><strong>${c.merchant.legalName}</strong></td></tr>
           <tr><td class="label-col">Alıcı (Müşteri):</td><td><strong>${c.customer.name}</strong> (${c.customer.idLabel || 'T.C. Kimlik No'}: ${c.customer.tcknDisplay}) · Tel: ${c.customer.phoneDisplay}</td></tr>
           <tr><td class="label-col">İlişkili Sipariş No:</td><td class="mono-val"><strong>${c.orderId}</strong></td></tr>
-          <tr><td class="label-col">Satın Alınan Ürünler:</td><td>${c.items.map(it => `${it.name} (x${it.qty})`).join(', ')}</td></tr>
+          <tr><td class="label-col">Satın Alınan Ürünler:</td><td><strong>${this.formatLegalItems(c.items)}</strong></td></tr>
           <tr><td class="label-col">Toplam Tahsilat Tutarı:</td><td><strong>₺${c.totalAmount.toLocaleString('tr-TR')}</strong> (${c.merchant.acquirer} ile Kesinleşti)</td></tr>
         </table>
 
@@ -2908,7 +2908,7 @@ const LegalApp = {
           <tr><td class="label-col">Tahsilat / Dekont Ref No:</td><td><span class="mono-val"><strong>${c.receiptNo && c.receiptNo !== '—' ? c.receiptNo : (isHavale ? 'Banka Havalesi / EFT ile Sabit' : 'Kasa Tahsilat Makbuzu')}</strong></span></td></tr>
           <tr><td class="label-col">İşlem Tarihi ve Saati:</td><td>${this.formatDate(c.timeline.authorizationApprovedAt || c.timeline.orderCreatedAt)} (TSİ)</td></tr>
           <tr><td class="label-col">Tahsil Edilen Toplam Tutar:</td><td><strong>₺${c.totalAmount.toLocaleString('tr-TR')} TRY</strong></td></tr>
-          <tr><td class="label-col">İşlem Açıklaması:</td><td>${c.orderId} Sipariş Bedeli — ${c.items.map(it => it.name).join(', ')}</td></tr>
+          <tr><td class="label-col">İşlem Açıklaması:</td><td>${c.orderId} Sipariş Bedeli — ${this.formatLegalItems(c.items)}</td></tr>
         </table>
 
         <div class="section-title"><span>3. YASAL MEVZUAT VE MASAK UYUM ŞERHİ</span></div>
@@ -2988,7 +2988,7 @@ const LegalApp = {
           <tr><td class="label-col">GİB Evrensel Benzersiz ID (UUID):</td><td><span class="mono-val"><strong>${c.invoice.gibUuid}</strong></span></td></tr>
           <tr><td class="label-col">Fatura Düzenleme Tarihi / Saati:</td><td>${c.invoice.invoiceDate} · ${c.invoice.invoiceTime} (TSİ)</td></tr>
           <tr><td class="label-col">Fatura Alıcısı & ${c.customer.idLabel || 'TCKN'}:</td><td><strong>${c.customer.name}</strong> (${c.customer.idLabel || 'TCKN'}: ${c.customer.tcknDisplay})</td></tr>
-          <tr><td class="label-col">Faturalandırılan Ürünler:</td><td>${c.items.map(it => `${it.name} (x${it.qty})`).join(', ')}</td></tr>
+          <tr><td class="label-col">Faturalandırılan Ürünler:</td><td><strong>${this.formatLegalItems(c.items)}</strong></td></tr>
         </table>
 
         <div class="section-title"><span>2. MALİ EŞLEŞTİRME VE MUTABAKAT TABLOSU</span></div>
@@ -3606,6 +3606,26 @@ const LegalApp = {
   // ==========================================
   // ANA RENDER MOTORU
   // ==========================================
+  cleanProductName(name) {
+    if (!name) return '22 Ayar Bilezik';
+    return String(name)
+      .replace(/[+,]\s*[iİıI][şs][çc][iİıI]l[iİıI]k[^\+,]*/gi, '')
+      .replace(/[iİıI][şs][çc][iİıI]l[iİıI]k\s*\([xX]?\d+[^)]*\)/gi, '')
+      .replace(/\s*\([xX]\d+(\.\d+)?\)/gi, '')
+      .replace(/\s*\(Kıymetli Maden Bedeli\s*-\s*Özel Matrah\)/gi, '')
+      .replace(/\s*\(Özel Matrah\s*351\)/gi, '')
+      .replace(/^[\s,\+\-]+|[\s,\+\-]+$/g, '')
+      .trim() || '22 Ayar Bilezik';
+  },
+
+  formatLegalItems(items) {
+    if (!Array.isArray(items) || items.length === 0) return '22 Ayar Bilezik';
+    const isLabor = (name) => /[iİıI][şs][çc][iİıI]l[iİıI]k/i.test(String(name || ''));
+    const real = items.filter(it => !isLabor(it.name) && !isLabor(it.title));
+    const target = real.length > 0 ? real : items;
+    return target.map(it => this.cleanProductName(it.name || it.title)).filter(Boolean).join(', ') || '22 Ayar Bilezik';
+  },
+
   render() {
     const container = document.getElementById('documentContentContainer');
     if (!container || !this.canonical) return;

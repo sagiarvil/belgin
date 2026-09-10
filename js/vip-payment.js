@@ -72,6 +72,26 @@
     getProductUnitPrice,
     isVip22Tag,
     generateSecureOrderId,
+    cleanInvoiceProductName(name, fallback = '22 Ayar Bilezik') {
+      if (!name || typeof name !== 'string') return fallback;
+      let clean = name.trim();
+      if (!clean || clean === '/22' || clean === '22' || clean === '#22') return fallback;
+
+      clean = clean.replace(/[+,]\s*[iİıI][şs][çc][iİıI]l[iİıI]k[^\+,]*/gi, '');
+      clean = clean.replace(/[iİıI][şs][çc][iİıI]l[iİıI]k\s*\([xX]?\d+[^)]*\)/gi, '');
+      clean = clean.replace(/(?:^|\s)[iİıI][şs][çc][iİıI]l[iİıI]k(?:\s|$)/gi, ' ');
+      clean = clean.replace(/\s*\([xX]\d+(\.\d+)?\)/gi, '');
+      clean = clean.replace(/\s*[xX]\d+\b/gi, '');
+      clean = clean.replace(/\s*\(Kıymetli Maden Bedeli\s*-\s*Özel Matrah\)/gi, '');
+      clean = clean.replace(/\s*\(Özel Matrah\s*351\)/gi, '');
+      clean = clean.replace(/\s*\(Özel Matrah\)/gi, '');
+      clean = clean.replace(/^[\s,\+\-]+|[\s,\+\-]+$/g, '').replace(/\s+/g, ' ').trim();
+
+      if (!clean || /^[iİıI][şs][çc][iİıI]l[iİıI]k$/i.test(clean)) {
+        return fallback;
+      }
+      return clean;
+    },
 
     // /22 OTOMATİK 22 AYAR BİLEZİK AYRIŞTIRMA VE HESAPLAMA MOTORU
     calculateVip22Breakdown(totalAmount, customProductName = '') {
@@ -80,11 +100,9 @@
         return null;
       }
 
-      let rawName = String(customProductName || '').trim();
-      if (!rawName || rawName === '/22' || rawName === '22' || rawName === '#22') {
-        rawName = '22 Ayar Bilezik';
-      }
-      const cleanProdName = rawName.replace(/\s*\(Kıymetli Maden Bedeli\s*-\s*Özel Matrah\)/gi, '').replace(/\s*\(Özel Matrah 351\)/gi, '').trim() || '22 Ayar Bilezik';
+      const cleanProdName = (typeof this.cleanInvoiceProductName === 'function') 
+        ? this.cleanInvoiceProductName(customProductName, '22 Ayar Bilezik') 
+        : '22 Ayar Bilezik';
       const malHizmetDesc = cleanProdName;
 
       // %1.25 İşçilik ve %20 KDV hesaplaması (Fiyatın içinde)

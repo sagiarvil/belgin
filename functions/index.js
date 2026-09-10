@@ -12,7 +12,7 @@ const PRODUCT_CATALOG = require('./product-catalog.json');
 const paymentService = require('./payment/payment-service');
 const mailer = require('./mailer');
 const notifier = require('./notifier');
-const { EarsivPortalService, calculateJewelryInvoiceBreakdown } = require('./earsiv-service');
+const { EarsivPortalService, calculateJewelryInvoiceBreakdown, cleanInvoiceProductName, getCleanInvoiceItemsSummary } = require('./earsiv-service');
 const gibLogoSvg = require('./gib_logo_svg');
 
 let LEGAL_MANIFEST = { schema: 'missing', documents: {} };
@@ -1050,7 +1050,7 @@ exports.updateAdminOrderCustomer = functions
         });
 
         updatePayload.items = cleanedItems;
-        updatePayload.productName = cleanedItems.map(i => `${i.name} (x${i.qty})`).join(' + ');
+        updatePayload.productName = getCleanInvoiceItemsSummary(cleanedItems, '22 Ayar Bilezik');
 
         if (body.totalAmount !== undefined && Number(body.totalAmount) > 0) {
           updatePayload.totalAmount = Math.round(Number(body.totalAmount) * 100) / 100;
@@ -1248,23 +1248,24 @@ async function handleInvoiceRequest(req, res) {
       const rawTotal = Number(req.body.totalAmount || order.totalAmount || order.total || (order.payment && order.payment.amount) || (order.amountInKurus ? order.amountInKurus / 100 : 0) || 0);
 
       if (req.body.productName) {
-        order.productName = req.body.productName;
-        order.title = req.body.productName;
+        order.productName = cleanInvoiceProductName(req.body.productName);
+        order.title = order.productName;
       }
-      const resolvedProdName = req.body.productName || order.vipTitle || order.title || order.productName || '22 Ayar Bilezik';
+      const resolvedProdName = req.body.productName || order.vipTitle || order.title || order.productName ? cleanInvoiceProductName(req.body.productName || order.vipTitle || order.title || order.productName) : '22 Ayar Bilezik';
+      order.productName = resolvedProdName;
 
       let customBreakdown = req.body.customBreakdown || null;
       if (customBreakdown && Array.isArray(customBreakdown.items) && customBreakdown.items.length > 0) {
         // Admin modalından canlı düzenlenen kalemleri ve ürün adını birebir koru
       } else if (req.body.items && Array.isArray(req.body.items) && req.body.items.length > 0) {
-        const itemsSummary = req.body.items.map(i => `${i.name || i.malHizmet || 'Ürün'} (x${i.qty || i.quantity || 1})`).join(', ');
+        const itemsSummary = getCleanInvoiceItemsSummary(req.body.items, resolvedProdName);
         customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, itemsSummary, {
           items: req.body.items,
           isStoreManual: true
         });
       } else if (!customBreakdown) {
         if (Array.isArray(order.items) && order.items.length > 0) {
-          const itemsSummary = order.items.map(i => `${i.name} (x${i.qty || 1})`).join(', ');
+          const itemsSummary = getCleanInvoiceItemsSummary(order.items, resolvedProdName);
           customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, itemsSummary, {
             items: order.items,
             isStoreManual: Boolean(target?.isStore || order.isStoreManual || order.source === 'STORE_MANUAL')
@@ -1353,12 +1354,6 @@ async function handleInvoiceRequest(req, res) {
       if (req.body.customerAddress) order.customerAddress = req.body.customerAddress;
       if (req.body.customerPhone) order.customerPhone = req.body.customerPhone;
       if (req.body.customerEmail) order.customerEmail = req.body.customerEmail;
-      if (req.body.productName) {
-        order.productName = req.body.productName;
-        order.title = req.body.productName;
-      }
-      const resolvedProdName = req.body.productName || order.vipTitle || order.title || order.productName || '22 Ayar Bilezik';
-
       const cleanOrderIdentity = String(order.customerIdentity || '').replace(/\D/g, '');
       const isOrderVkn = cleanOrderIdentity.length === 10;
       if (isOrderVkn && !order.companyName && !order.unvan) {
@@ -1370,18 +1365,26 @@ async function handleInvoiceRequest(req, res) {
       activeToken = authData.token;
       activeCookie = authData.cookie || '';
 
+      if (req.body.productName) {
+        order.productName = cleanInvoiceProductName(req.body.productName);
+        order.title = order.productName;
+      }
+      const rawDraftProdName = req.body.productName || order.vipTitle || order.title || order.productName || '22 Ayar Bilezik';
+      const resolvedDraftProdName = cleanInvoiceProductName(rawDraftProdName, '22 Ayar Bilezik');
+      order.productName = resolvedDraftProdName;
+
       let customBreakdown = req.body.customBreakdown || null;
       if (customBreakdown && Array.isArray(customBreakdown.items) && customBreakdown.items.length > 0) {
         // Admin modalından canlı düzenlenen kalemleri ve ürün adını birebir koru
       } else if (req.body.items && Array.isArray(req.body.items) && req.body.items.length > 0) {
-        const itemsSummary = req.body.items.map(i => `${i.name || i.malHizmet || 'Ürün'} (x${i.qty || i.quantity || 1})`).join(', ');
+        const itemsSummary = getCleanInvoiceItemsSummary(req.body.items, resolvedDraftProdName);
         customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, itemsSummary, {
           items: req.body.items,
           isStoreManual: true
         });
       } else if (!customBreakdown) {
         if (Array.isArray(order.items) && order.items.length > 0) {
-          const itemsSummary = order.items.map(i => `${i.name} (x${i.qty || 1})`).join(', ');
+          const itemsSummary = getCleanInvoiceItemsSummary(order.items, resolvedDraftProdName);
           customBreakdown = calculateJewelryInvoiceBreakdown(rawTotal, itemsSummary, {
             items: order.items,
             isStoreManual: Boolean(target.isStore || order.isStoreManual || order.source === 'STORE_MANUAL')
@@ -1864,7 +1867,7 @@ async function handleInvoiceRequest(req, res) {
       const isStoreInvoice = Boolean(targetDocObj?.isStore || order?.isStoreManual || order?.source === 'STORE_MANUAL' || (order?.orderId && String(order.orderId).startsWith('MGS-')));
 
       // Her zaman güncel ve kuruşu kuruşuna %100 eşitliği sağlayan dökümü üret (kayıtlı breakdown veya items varsa öncelikle koru)
-      const resolvedBreakdown = order?.breakdown || order?.invoiceBreakdown || calculateJewelryInvoiceBreakdown(rawTotal, order?.productName || '22 Ayar Kuyumculuk Ürünü', {
+      const resolvedBreakdown = order?.breakdown || order?.invoiceBreakdown || calculateJewelryInvoiceBreakdown(rawTotal, cleanInvoiceProductName(order?.productName || '22 Ayar Bilezik'), {
         items: order?.items,
         isStoreManual: isStoreInvoice,
         skipAutoLabor: isStoreInvoice,
@@ -2042,7 +2045,7 @@ async function handleStoreInvoicesRequest(req, res) {
         cleanDeclarationDoc = '[ATTACHED_LOCALLY_CLIENT_DOC]';
       }
 
-      const itemsSummary = itemsList.map(i => `${i.name || 'Ürün'} (x${i.qty || 1})`).join(', ');
+      const itemsSummary = getCleanInvoiceItemsSummary(itemsList, '22 Ayar Bilezik');
       const breakdown = calculateJewelryInvoiceBreakdown(rawTotal, itemsSummary, { items: itemsList, isStoreManual: true });
 
       const resolvedPayMethod = String(paymentMethod || paymentChannel || (existingDoc.exists ? existingDoc.data().paymentMethod : 'HAVALE_EFT')).toUpperCase();

@@ -78,6 +78,39 @@ const AdminApp = {
     return headers;
   },
 
+  cleanInvoiceProductName(name, fallback = '22 Ayar Bilezik') {
+    if (!name || typeof name !== 'string') return fallback;
+    let clean = name.trim();
+    if (!clean || clean === '/22' || clean === '22' || clean === '#22') return fallback;
+
+    clean = clean.replace(/[+,]\s*[iİıI][şs][çc][iİıI]l[iİıI]k[^\+,]*/gi, '');
+    clean = clean.replace(/[iİıI][şs][çc][iİıI]l[iİıI]k\s*\([xX]?\d+[^)]*\)/gi, '');
+    clean = clean.replace(/(?:^|\s)[iİıI][şs][çc][iİıI]l[iİıI]k(?:\s|$)/gi, ' ');
+    clean = clean.replace(/\s*\([xX]\d+(\.\d+)?\)/gi, '');
+    clean = clean.replace(/\s*[xX]\d+\b/gi, '');
+    clean = clean.replace(/\s*\(Kıymetli Maden Bedeli\s*-\s*Özel Matrah\)/gi, '');
+    clean = clean.replace(/\s*\(Özel Matrah\s*351\)/gi, '');
+    clean = clean.replace(/\s*\(Özel Matrah\)/gi, '');
+    clean = clean.replace(/^[\s,\+\-]+|[\s,\+\-]+$/g, '').replace(/\s+/g, ' ').trim();
+
+    if (!clean || /^[iİıI][şs][çc][iİıI]l[iİıI]k$/i.test(clean)) {
+      return fallback;
+    }
+    return clean;
+  },
+
+  getCleanInvoiceItemsSummary(items, fallback = '22 Ayar Bilezik') {
+    if (!Array.isArray(items) || items.length === 0) return fallback;
+    const isLabor = (name) => /[iİıI][şs][çc][iİıI]l[iİıI]k/i.test(String(name || ''));
+    const realItems = items.filter(i => !isLabor(i.name) && !isLabor(i.malHizmet) && !isLabor(i.title));
+    const targetItems = realItems.length > 0 ? realItems : items;
+    const names = targetItems
+      .map(i => this.cleanInvoiceProductName(i.name || i.malHizmet || i.title))
+      .filter(name => Boolean(name) && !isLabor(name));
+    return names.length > 0 ? names.join(', ') : fallback;
+  },
+
+
   init() {
     this.startClock();
     // Kuveyt Türk POS oranı (Varsayılan: 2.99)
@@ -2113,7 +2146,8 @@ const AdminApp = {
     if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
 
     // Ürün Adını ve Tipini Otomatik Analiz Et
-    const prodName = order.vipTitle || order.title || order.productName || (Array.isArray(order.items) && order.items[0]?.name) || '';
+    let prodName = order.vipTitle || order.title || order.productName || (Array.isArray(order.items) && order.items[0]?.name) || '';
+    prodName = this.cleanInvoiceProductName(prodName);
     const pLower = String(prodName || '').toLowerCase().trim();
     const isWatch = (this.isWatchProduct && this.isWatchProduct(prodName)) && 
       !pLower.includes('altın') && 
@@ -2124,7 +2158,7 @@ const AdminApp = {
 
     const goldInput = document.getElementById('cfgGoldItemName');
     if (goldInput) {
-      goldInput.value = prodName.replace(/\s*\(Kıymetli Maden Bedeli\s*-\s*Özel Matrah\)/gi, '').replace(/\s*\(Özel Matrah 351\)/gi, '').trim() || '22 Ayar Bilezik';
+      goldInput.value = prodName;
     }
 
     if (isWatch) {
@@ -2287,7 +2321,7 @@ const AdminApp = {
       const goldItemInputVal = document.getElementById('cfgGoldItemName')?.value?.trim();
       const rawProdName = goldItemInputVal || order.vipTitle || order.title || order.productName || (Array.isArray(order.items) && order.items[0]?.name) || '';
       const prodName = (rawProdName && !rawProdName.includes('Saat / Mücevherat')) 
-        ? rawProdName.replace(/\s*\(Kıymetli Maden Bedeli\s*-\s*Özel Matrah\)/gi, '').replace(/\s*\(Özel Matrah 351\)/gi, '').trim()
+        ? this.cleanInvoiceProductName(rawProdName)
         : '22 Ayar Bilezik';
 
       const goldDisplayName = prodName;
@@ -2448,11 +2482,11 @@ const AdminApp = {
       const taxOffice = document.getElementById('cfgModalTaxOfficeInput')?.value?.trim() || order.taxOffice || order.customer?.taxOffice || '';
       const address = document.getElementById('cfgModalAddressInput')?.value?.trim() || order.customerAddress || 'Menderes Cad. No:231/B Buca İzmir';
 
-      const effectiveProductName = (this.orderInvoiceConfigType === 'GOLD'
+      const effectiveProductName = this.cleanInvoiceProductName((this.orderInvoiceConfigType === 'GOLD'
         ? (document.getElementById('cfgGoldItemName')?.value?.trim() || order.vipTitle || order.title || order.productName)
         : (this.orderInvoiceConfigType === 'WATCH'
           ? (document.getElementById('cfgWatchItemName')?.value?.trim() || order.productName)
-          : (document.getElementById('cfgCustomItemName')?.value?.trim() || order.productName))) || '22 Ayar Bilezik';
+          : (document.getElementById('cfgCustomItemName')?.value?.trim() || order.productName))) || '22 Ayar Bilezik');
 
       const payload = {
         orderId: order.orderId,
@@ -2615,11 +2649,11 @@ const AdminApp = {
     try {
       if (submitBtn) submitBtn.innerHTML = '<span>⏳ GİB Taslak & SMS Hazırlanıyor...</span>';
       
-      const effectiveProductName = (this.orderInvoiceConfigType === 'GOLD'
+      const effectiveProductName = this.cleanInvoiceProductName((this.orderInvoiceConfigType === 'GOLD'
         ? (document.getElementById('cfgGoldItemName')?.value?.trim() || order.vipTitle || order.title || order.productName)
         : (this.orderInvoiceConfigType === 'WATCH'
           ? (document.getElementById('cfgWatchItemName')?.value?.trim() || order.productName)
-          : (document.getElementById('cfgCustomItemName')?.value?.trim() || order.productName))) || '22 Ayar Bilezik';
+          : (document.getElementById('cfgCustomItemName')?.value?.trim() || order.productName))) || '22 Ayar Bilezik');
 
       const payload = {
         orderId: order.orderId,
@@ -6262,7 +6296,7 @@ const AdminApp = {
       };
 
       const finalItems = data.items || items;
-      const finalProductName = data.productName || items.map(i => `${i.name} (x${i.qty})`).join(' + ');
+      const finalProductName = data.productName ? this.cleanInvoiceProductName(data.productName) : this.getCleanInvoiceItemsSummary(items);
       const finalTotal = data.totalAmount || itemsTotal;
 
       if (Array.isArray(this.orders)) {
@@ -7174,7 +7208,7 @@ const AdminApp = {
         posProvider: payMethod === 'KREDI_KARTI' ? posProvider : null,
         provider: payMethod === 'KREDI_KARTI' ? posProvider : (payMethod === 'HAVALE_EFT' ? bankName : 'NAKIT'),
         items: items,
-        productName: items.map(i => i.name).join(', '),
+        productName: this.getCleanInvoiceItemsSummary(items),
         deliveryMethod: 'showroom',
         status: 'SUCCESS',
         createdAt: new Date().toISOString(),
@@ -8548,7 +8582,7 @@ const AdminApp = {
       items: validItems,
       totalAmount: totalAmount,
       total: totalAmount,
-      productName: validItems.map(i => `${i.name} (x${i.qty || 1})`).join(', '),
+      productName: this.getCleanInvoiceItemsSummary(validItems),
       breakdown: summaryData,
       invoiceStatus: existingDoc?.invoiceStatus || 'PENDING',
       invoiceNumber: existingDoc?.invoiceNumber || null,
@@ -9333,7 +9367,7 @@ const AdminApp = {
 
     const rowsHtml = this.storeInvoices.map((inv, idx) => {
       totalSum += Number(inv.totalAmount || 0);
-      const itemsStr = Array.isArray(inv.items) ? inv.items.map(i => `${i.name} (x${i.qty})`).join(', ') : inv.productName;
+      const itemsStr = Array.isArray(inv.items) ? this.getCleanInvoiceItemsSummary(inv.items, inv.productName) : this.cleanInvoiceProductName(inv.productName);
       return `
         <tr>
           <td style="text-align:center;">${idx + 1}</td>

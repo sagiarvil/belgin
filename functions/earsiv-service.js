@@ -12,6 +12,59 @@ const GIB_PROD_URL = 'https://earsivportal.efatura.gov.tr/earsiv-services';
 const GIB_TEST_URL = 'https://earsivportaltest.efatura.gov.tr/earsiv-services';
 
 /// 22 AYAR BİLEZİK — /22 KISAYOLU İÇİN TEK VE DEĞİŞMEZ ÜRÜN
+
+/**
+ * Fatura Ürün Adı Temizleyici ve Standardizasyon Motoru
+ * '(x1) + İşçilik (x1)', '(x1)', '+ İşçilik' gibi satır kirliliklerini kalıcı olarak arındırır.
+ * Faturada ürün adının münhasıran ve net olarak görünmesini sağlar.
+ */
+
+function isLaborItemName(name) {
+  if (!name || typeof name !== 'string') return false;
+  return /[iİıI][şs][çc][iİıI]l[iİıI]k/i.test(name);
+}
+
+function cleanInvoiceProductName(name, fallback = '22 Ayar Bilezik') {
+  if (!name || typeof name !== 'string') return fallback;
+  let clean = name.trim();
+  if (!clean || clean === '/22' || clean === '22' || clean === '#22') return fallback;
+
+  // 1. '+ İşçilik...' veya ', İşçilik...' uzantılarını kaldır
+  clean = clean.replace(/[+,]\s*[iİıI][şs][çc][iİıI]l[iİıI]k[^\+,]*/gi, '');
+  // 2. 'İşçilik (x1)' veya bağımsız 'İşçilik' kaldır
+  clean = clean.replace(/[iİıI][şs][çc][iİıI]l[iİıI]k\s*\([xX]?\d+[^)]*\)/gi, '');
+  clean = clean.replace(/(?:^|\s)[iİıI][şs][çc][iİıI]l[iİıI]k(?:\s|$)/gi, ' ');
+
+  // 3. '(x1)', '(x2)', 'x1' gibi adet takılarını kaldır
+  clean = clean.replace(/\s*\([xX]\d+(\.\d+)?\)/gi, '');
+  clean = clean.replace(/\s*[xX]\d+\b/gi, '');
+
+  // 4. Parantez içindeki özel matrah ibarelerini temizle
+  clean = clean.replace(/\s*\(Kıymetli Maden Bedeli\s*-\s*Özel Matrah\)/gi, '');
+  clean = clean.replace(/\s*\(Özel Matrah\s*351\)/gi, '');
+  clean = clean.replace(/\s*\(Özel Matrah\)/gi, '');
+
+  // 5. Kenar işaretlerini ve fazla boşlukları temizle
+  clean = clean.replace(/^[\s,\+\-]+|[\s,\+\-]+$/g, '').replace(/\s+/g, ' ').trim();
+
+  // Eğer geriye sadece geçersiz bir metin kaldıysa fallback dön
+  if (!clean || /^[iİıI][şs][çc][iİıI]l[iİıI]k$/i.test(clean)) {
+    return fallback;
+  }
+  return clean;
+}
+
+function getCleanInvoiceItemsSummary(items, fallback = '22 Ayar Bilezik') {
+  if (!Array.isArray(items) || items.length === 0) return fallback;
+  const isLabor = (name) => /[iİıI][şs][çc][iİıI]l[iİıI]k/i.test(String(name || ''));
+  const realItems = items.filter(i => !isLabor(i.name) && !isLabor(i.malHizmet) && !isLabor(i.title));
+  const targetItems = realItems.length > 0 ? realItems : items;
+  const names = targetItems
+    .map(i => cleanInvoiceProductName(i.name || i.malHizmet || i.title))
+    .filter(name => Boolean(name) && !isLabor(name));
+  return names.length > 0 ? names.join(', ') : fallback;
+}
+
 const VIP_22_CATALOG = Object.freeze([
   {
     id: '22-ayar-bilezik',
@@ -35,11 +88,7 @@ function calculateVip22Breakdown(totalAmount, customProductName = '') {
     throw new Error('Geçersiz fatura tutarı');
   }
 
-  let rawName = String(customProductName || '').trim();
-  if (!rawName || rawName === '/22' || rawName === '22' || rawName === '#22') {
-    rawName = '22 Ayar Bilezik';
-  }
-  const cleanProdName = rawName.replace(/\s*\(Kıymetli Maden Bedeli\s*-\s*Özel Matrah\)/gi, '').replace(/\s*\(Özel Matrah 351\)/gi, '').trim() || '22 Ayar Bilezik';
+  const cleanProdName = cleanInvoiceProductName(customProductName, '22 Ayar Bilezik');
   const malHizmetDesc = cleanProdName;
 
   // %1.25 İşçilik ve %20 KDV Dahil
@@ -131,7 +180,7 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
     throw new Error('Geçersiz fatura tutarı');
   }
 
-  const resolvedProductName = String(productName || 'Kuyumculuk Ürünü').trim();
+  const resolvedProductName = cleanInvoiceProductName(productName, 'Kuyumculuk Ürünü');
   const is22 = (options.isVip22 === true || resolvedProductName === '/22' || resolvedProductName.includes('/22')) && (!options.items || options.items.length === 0);
 
   if (is22) {
@@ -190,7 +239,7 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
       } else if (it.kdvOrani !== undefined && it.kdvOrani !== null && !isNaN(Number(it.kdvOrani))) {
         kdvRate = Number(it.kdvOrani);
       } else {
-        kdvRate = (itName.toLowerCase().includes('işçilik')) ? 20 : 0;
+        kdvRate = isLaborItemName(itName) ? 20 : 0;
       }
 
       if (kdvRate === 0) {
@@ -215,8 +264,8 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
         totalKdv = Math.round((totalKdv + kdvAmount) * 100) / 100;
 
         taxableItems.push({
-          name: itName.toLowerCase().includes('işçilik') ? 'İşçilik' : itName,
-          malHizmet: itName.toLowerCase().includes('işçilik') ? 'İşçilik' : itName,
+          name: isLaborItemName(itName) ? 'İşçilik' : itName,
+          malHizmet: isLaborItemName(itName) ? 'İşçilik' : itName,
           miktar: itQty,
           qty: itQty,
           birim: 'C62',
@@ -304,10 +353,10 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
 
         currentGoldSum = Math.round((currentGoldSum + lTotal) * 100) / 100;
         const uPrice = Math.round((lTotal / gIt.qty) * 100) / 100;
-        const displayName = gIt.name.includes('Özel Matrah') ? gIt.name : `${gIt.name} (Kıymetli Maden Bedeli - Özel Matrah)`;
+        const displayName = cleanInvoiceProductName(gIt.name);
 
         gibItems.push({
-          name: gIt.name,
+          name: displayName,
           malHizmet: displayName,
           miktar: gIt.qty,
           qty: gIt.qty,
@@ -380,6 +429,7 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
 
   const resItems = [
     {
+      name: resolvedProductName,
       malHizmet: `${resolvedProductName} (Kıymetli Maden Bedeli - Özel Matrah)`,
       miktar: 1,
       birim: 'C62', // Adet
@@ -401,6 +451,7 @@ function calculateJewelryInvoiceBreakdown(totalAmount, productName = 'Kuyumculuk
 
   if (workmanshipTotal > 0) {
     resItems.push({
+      name: 'İşçilik',
       malHizmet: 'İşçilik',
       miktar: 1,
       birim: 'C62', // Adet
@@ -616,8 +667,8 @@ class EarsivPortalService {
     const formattedTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
 
     const itemsSummary = (orderData.items && orderData.items.length > 0 && orderData.items[0]?.name)
-      ? orderData.items.map(i => i.name || i.title).join(', ')
-      : (orderData.productName || 'Kuyumculuk Ürünü');
+      ? getCleanInvoiceItemsSummary(orderData.items, cleanInvoiceProductName(orderData.productName))
+      : cleanInvoiceProductName(orderData.productName || '22 Ayar Bilezik');
 
     const resolvedTotal = Number(orderData.totalAmount || orderData.total || (orderData.payment && orderData.payment.amount) || (orderData.amountInKurus ? orderData.amountInKurus / 100 : 0) || 0);
     const breakdown = customBreakdown || calculateJewelryInvoiceBreakdown(resolvedTotal, itemsSummary);
@@ -1298,5 +1349,7 @@ module.exports = {
   EarsivPortalService,
   calculateJewelryInvoiceBreakdown,
   calculateVip22Breakdown,
+  cleanInvoiceProductName,
+  getCleanInvoiceItemsSummary,
   VIP_22_CATALOG
 };

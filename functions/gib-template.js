@@ -2,6 +2,13 @@
 const path = require('path');
 const Handlebars = require('handlebars');
 
+const { cleanInvoiceProductName } = require('./earsiv-service');
+
+function isLaborItemName(name) {
+  if (!name || typeof name !== 'string') return false;
+  return /[iİıI][şs][çc][iİıI]l[iİıI]k/i.test(name);
+}
+
 let compiledTemplate = null;
 
 function getCompiledTemplate() {
@@ -112,7 +119,7 @@ function renderOfficialGibHtml(data) {
       const qty = Math.max(1, Number(item.qty || item.quantity || item.miktar || 1));
       const unitPrice = Number(item.unitPrice || item.birimFiyat || item.price || 0);
       const rawLine = Number(item.lineTotal || item.malHizmetTutari || item.fiyat || item.total || (unitPrice > 0 ? unitPrice * qty : 0) || 0);
-      const vatRate = item.kdvRate !== undefined ? Number(item.kdvRate) : (item.kdvOrani !== undefined ? Number(item.kdvOrani) : (item.vatRate !== undefined ? Number(item.vatRate) : (String(item.name || item.malHizmet || '').toLowerCase().includes('işçilik') ? 20 : 0)));
+      const vatRate = item.kdvRate !== undefined ? Number(item.kdvRate) : (item.kdvOrani !== undefined ? Number(item.kdvOrani) : (item.vatRate !== undefined ? Number(item.vatRate) : (isLaborItemName(item.name || item.malHizmet) ? 20 : 0)));
 
       let grossLine = rawLine;
       let netLine = rawLine;
@@ -186,7 +193,7 @@ function renderOfficialGibHtml(data) {
       goodsServicesTotal = Math.round((goodsServicesTotal + finalLineTotal) * 100) / 100;
 
       const unitNet = Math.round((finalLineTotal / r.qty) * 100) / 100;
-      let desc = String(r.name || 'Kuyumculuk Ürünü').replace(/\s*\(Kıymetli Maden Bedeli\s*-\s*Özel Matrah\)/gi, '').replace(/\s*\(Özel Matrah 351\)/gi, '').trim();
+      let desc = cleanInvoiceProductName(r.name, '22 Ayar Bilezik');
 
       displayLines.push({
         seq: displayLines.length + 1,
@@ -211,7 +218,7 @@ function renderOfficialGibHtml(data) {
       goodsServicesTotal = Math.round((goodsServicesTotal + r.netLine) * 100) / 100;
 
       const unitNet = Math.round((r.netLine / r.qty) * 100) / 100;
-      let desc = r.name.toLowerCase().includes('işçilik') ? 'İşçilik' : r.name;
+      let desc = isLaborItemName(r.name) ? 'İşçilik' : cleanInvoiceProductName(r.name, 'İşçilik');
 
       displayLines.push({
         seq: displayLines.length + 1,
@@ -242,7 +249,8 @@ function renderOfficialGibHtml(data) {
     totalKdv20Amount = workKdv;
     grandTotal = Number(bd.grandTotal || (goodsServicesTotal + workKdv));
 
-    const resolvedProductName = data.productName || (bd && bd.productName) || (items && items[0]?.name ? items[0]?.name : 'Kuyumculuk Satışı');
+    const rawProdName = data.productName || (bd && bd.productName) || (items && items[0]?.name ? items[0]?.name : '22 Ayar Bilezik');
+    const resolvedProductName = cleanInvoiceProductName(rawProdName, '22 Ayar Bilezik');
 
     displayLines = [
       {
