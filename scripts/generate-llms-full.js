@@ -13,9 +13,9 @@ let fullText = `# Belgin Saat & Kuyumculuk — Kapsamlı Editoryal & Ürün Bilg
 ---
 
 ## 1. Kurumsal İlkeler & Güvenlik Protokolü
-- **Fiyatlama Sözleşmesi:** Canlı altın ve sarrafiye ürünleri doğrudan Harem Altın borsa soket akışı satış fiyatları üzerine +%1 (x 1.01) marj ile hesaplanır; alış fiyatlarında marj uygulanmaz (x 1.00).
+- **Fiyatlama Sözleşmesi:** Müşteri satış fiyatı birincil olarak İZKO normal Satış (fallback Harem Satış) üzerinden hiçbir kâr marjı eklenmeksizin birebir (1.00x) yansıtılır; müşteri alış fiyatlarında doğrudan Harem Altın canlı borsa soket akışı (1.00x birebir) uygulanır. Lüks saatlerde uluslararası piyasa referansı ve +%80 kâr marjı formülü geçerlidir.
 - **Elit Saat Koleksiyonu:** Rolex, Patek Philippe, Audemars Piguet, Cartier, Omega, Breitling, IWC, Tudor, TAG Heuer, Panerai markalarında 200 seçkin model.
-- **Ödeme & Teslimat:** Akbank 3D Pay ve PayTR 256-Bit SSL kart ödemesi, İzmir Buca Showroom'da fiziksel teslim veya Türkiye genelinde tam sigortalı zırhlı sevkiyat.
+- **Ödeme & Teslimat:** Kuveyt Türk Katılım Bankası (3D Secure 2.0) ve Ziraat Katılım Bankası (PayFor 3DHost) 256-Bit SSL lisanslı Sanal POS altyapısı, BKM TROY, Visa ve Mastercard kart şeması takas desteği, VIP WhatsApp /22 tahsilatı (22 Ayar Bilezik özel matrah ve işçilik ayrımı), İzmir Buca Showroom'da fiziksel teslim veya güvenli sevkiyat.
 - **Delil Zinciri:** Tüm sipariş ve evraklar SHA-256 hash ve OpenTimestamps ile Bitcoin blokzincirinde zamana karşı mühürlenir.
 - **Vergi & Fatura:** 3065 sayılı KDV Kanunu Madde 23/f uyarınca altın ve kıymetli maden işlemleri %0 KDV özel matrah ile faturalandırılır. Faturada yalnızca 'İşçilik' ve 'Kıymetli Maden Bedeli (Özel Matrah)' satırları yer alır; kesinlikle 'has altın' ibaresi kullanılmaz.
 

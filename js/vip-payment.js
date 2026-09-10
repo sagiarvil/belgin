@@ -58,10 +58,20 @@
     return clean === '/22' || clean.includes('/22') || clean === '22' || clean === '#22' || clean.includes('22 ayar bilezik') || clean === '22 ayar';
   }
 
+  function generateSecureOrderId(prefix = 'VIP-') {
+    if (typeof window !== 'undefined' && window.crypto && window.crypto.getRandomValues) {
+      const buf = new Uint32Array(1);
+      window.crypto.getRandomValues(buf);
+      return prefix + (100000 + (buf[0] % 900000));
+    }
+    return prefix + (Date.now() % 900000 + 100000);
+  }
+
   const VipEngine = {
     VIP_22_CATALOG,
     getProductUnitPrice,
     isVip22Tag,
+    generateSecureOrderId,
 
     // /22 OTOMATİK 22 AYAR BİLEZİK AYRIŞTIRMA VE HESAPLAMA MOTORU
     calculateVip22Breakdown(totalAmount, customProductName = '') {
@@ -255,7 +265,7 @@
           const numAmt = Number(String(rawAmt).replace(/\D/g, '')) || Number(rawAmt) || 0;
           if (numAmt > 0) {
             const rawTitle = sp.get('title') || sp.get('baslik') || sp.get('urun') || sp.get('name') || 'Lüks Özel Sipariş';
-            const orderId = sp.get('orderId') || sp.get('oid') || ('VIP-' + Math.floor(100000 + Math.random() * 900000));
+            const orderId = sp.get('orderId') || sp.get('oid') || generateSecureOrderId('VIP-');
             const is22 = isVip22Tag(rawTitle) || sp.get('tag') === '22';
             const provider = (sp.get('provider') || sp.get('pos') || 'KUVEYTTURK').toUpperCase();
             const payload = {
@@ -287,7 +297,7 @@
             .join(' ');
           const is22 = isVip22Tag(title) || rawSlug === '22';
           const payload = {
-            orderId: 'VIP-' + Math.floor(100000 + Math.random() * 900000),
+            orderId: generateSecureOrderId('VIP-'),
             title,
             amount,
             isVip22: is22
@@ -345,10 +355,13 @@ ${shortUrl}
       if (!radio || !tag) return;
       if (radio.checked) {
         tag.textContent = '✓ Seçili POS';
+        card.classList.add('active');
       } else if (radio.value === 'KUVEYTTURK') {
-        tag.textContent = 'Kuveyt POS';
+        tag.textContent = '3D Secure';
+        card.classList.remove('active');
       } else if (radio.value === ZIRAAT_PROVIDER) {
         tag.textContent = '3DHost';
+        card.classList.remove('active');
       }
     });
   }

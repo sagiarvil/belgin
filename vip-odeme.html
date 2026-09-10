@@ -330,8 +330,11 @@
 
         if (!currentPayload || !currentPayload.amount) {
           const fallbackAmt = Number(urlParams.get('amount') || urlParams.get('tutar') || 100);
+          const fallbackOrderId = (typeof VipEngine !== 'undefined' && VipEngine.generateSecureOrderId)
+            ? VipEngine.generateSecureOrderId('VIP-')
+            : ((typeof window !== 'undefined' && window.crypto && window.crypto.getRandomValues) ? ('VIP-' + (100000 + (window.crypto.getRandomValues(new Uint32Array(1))[0] % 900000))) : ('VIP-' + (Date.now() % 900000 + 100000)));
           currentPayload = {
-            orderId: 'VIP-' + Math.floor(100000 + Math.random() * 900000),
+            orderId: fallbackOrderId,
             title: urlParams.get('title') || urlParams.get('baslik') || 'Lüks Showroom Siparişi',
             amount: fallbackAmt,
             orderNote: 'Showroom Özel Siparişi'

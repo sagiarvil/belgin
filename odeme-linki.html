@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260831-lion-max-gold-v5">
@@ -195,18 +195,25 @@
     .field-error.show { display: flex; }
 
     /* BANKA & POS SEÇİM ALTYAPISI */
+    /* BANKA & POS SEÇİM ALTYAPISI (İKİLİ YAN YANA SEÇİM) */
     .bank-selector-grid {
       display: grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr 1fr;
       gap: 10px;
       margin-top: 4px;
+    }
+    @media (max-width: 440px) {
+      .bank-selector-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
     }
     .bank-card {
       position: relative;
       background: var(--input-bg);
       border: 1.5px solid var(--input-border);
       border-radius: var(--radius-md);
-      padding: 12px 14px;
+      padding: 12px 10px;
       cursor: pointer;
       transition: all .2s ease;
       user-select: none;
@@ -228,11 +235,11 @@
     .bank-card-inner {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
     .bank-emblem-wrap {
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       overflow: hidden;
       flex-shrink: 0;
@@ -255,32 +262,39 @@
     }
     .bank-name-row {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 3px;
     }
     .bank-title {
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 800;
       color: var(--gold-light);
       letter-spacing: 0.2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
     }
     .bank-active-tag {
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 800;
       color: #25D366;
       background: rgba(37,211,102,0.12);
       border: 1px solid rgba(37,211,102,0.3);
-      padding: 2px 7px;
-      border-radius: 20px;
+      padding: 1px 6px;
+      border-radius: 12px;
       text-transform: uppercase;
       letter-spacing: 0.3px;
     }
     .bank-desc {
-      font-size: 11px;
+      font-size: 10.5px;
       color: var(--text-muted);
-      margin-top: 3px;
-      line-height: 1.35;
+      margin-top: 2px;
+      line-height: 1.25;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .btn-submit {
@@ -544,13 +558,8 @@
               <span>⚡ /22:</span> <strong>22 Ayar Bilezik</strong> <span style="font-size:10.5px; color:var(--text-faint);">(Tıkla ve Seç)</span>
             </button>
           </div>
-          <div id="tag22Badge" style="display:none; margin-top:8px; background:linear-gradient(135deg, rgba(23,131,112,0.2) 0%, rgba(212,175,55,0.15) 100%); border:1px solid var(--gold-dim); border-radius:8px; padding:8px 12px; font-size:12px; color:var(--gold-light);">
-            <div style="font-weight:700; display:flex; align-items:center; gap:6px;">
-              <span>🏷️ /22 Kısayolu Aktif: 22 Ayar Bilezik</span>
-            </div>
-            <div style="font-size:11px; color:var(--text-muted); margin-top:3px; line-height:1.4;">
-              Faturada ve siparişte ürün adı doğrudan <strong>"22 Ayar Bilezik"</strong> olarak işlenecek; Kıymetli Maden Bedeli (%0 KDV Özel Matrah) ve %1.25 İşçilik Bedeli (%20 KDV) satırları otomatik hesaplanacaktır.
-            </div>
+          <div id="tag22Badge" style="display:none; margin-top:8px; background:linear-gradient(135deg, rgba(23,131,112,0.2) 0%, rgba(212,175,55,0.15) 100%); border:1px solid var(--gold-dim); border-radius:8px; padding:7px 12px; font-size:11.5px; color:var(--gold-light); font-weight:700;">
+            ⚡ /22 Aktif: 22 Ayar Bilezik (Özel Matrah &amp; İşçilik Otomatik)
           </div>
           <div class="field-error" id="titleError">⚠ Lütfen ürün veya model adını giriniz.</div>
         </div>
@@ -567,7 +576,7 @@
         <div class="field">
           <label class="field-label">Tahsilat / Banka Sanal POS Kapısı <span class="req">*</span></label>
           <div class="bank-selector-grid" id="bankSelectorGrid">
-            <!-- 1. KUVEYT TÜRK (AKTİF VE KANONİK SANAL POS) -->
+            <!-- 1. KUVEYT TÜRK (3D SECURE 2.0) -->
             <label class="bank-card active" id="bankCardKuveyt">
               <input type="radio" name="posProvider" value="KUVEYTTURK" checked>
               <div class="bank-card-inner">
@@ -576,16 +585,28 @@
                 </div>
                 <div class="bank-info">
                   <div class="bank-name-row">
-                    <span class="bank-title">Kuveyt Türk Katılım Bankası</span>
+                    <span class="bank-title">Kuveyt Türk</span>
                     <span class="bank-active-tag">✓ Seçili POS</span>
                   </div>
-                  <div class="bank-desc">Resmi 3D Secure 2.0 Doğrudan Tahsilat Protokolü</div>
+                  <div class="bank-desc">3D Secure 2.0</div>
                 </div>
               </div>
             </label>
-          </div>
-          <div style="font-size:10.5px; color:var(--text-faint); margin-top:6px; padding-left:2px;">
-            🔒 VIP linki müşteriye iletildiğinde tahsilat doğrudan seçili bankanın 3D Secure ekranında gerçekleşir.
+
+            <!-- 2. ZİRAAT KATILIM (3DHOST) -->
+            <label class="bank-card" id="bankCardZiraat">
+              <input type="radio" name="posProvider" value="ZIRAATKATILIM">
+              <div class="bank-card-inner">
+                <div class="bank-emblem-wrap" style="background:#0B6B3A;color:#fff;font-weight:900;font-size:15px;letter-spacing:-0.5px;">ZK</div>
+                <div class="bank-info">
+                  <div class="bank-name-row">
+                    <span class="bank-title">Ziraat Katılım</span>
+                    <span class="bank-active-tag">3DHost</span>
+                  </div>
+                  <div class="bank-desc">3D Ortak Ödeme</div>
+                </div>
+              </div>
+            </label>
           </div>
         </div>
 
@@ -640,10 +661,10 @@
       </div>
 
       <!-- ÖDEME VE GÜVENLİK BİLGİLENDİRMESİ -->
-      <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(212,175,55,0.25); border-radius:10px; padding:10px 14px; margin-top:20px; display:flex; align-items:center; justify-content:center; gap:8px; font-size:12px; color:var(--gold-light); font-weight:700;">
-        <span>🔒 256-Bit EV SSL</span>
+      <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(212,175,55,0.2); border-radius:10px; padding:9px 12px; margin-top:16px; display:flex; align-items:center; justify-content:center; gap:8px; font-size:11.5px; color:var(--gold-light); font-weight:700;">
+        <span>🔒 256-Bit SSL</span>
         <span>•</span>
-        <span>Kuveyt Türk 3D Secure 2.0</span>
+        <span>Banka 3D Secure</span>
         <span>•</span>
         <span>GİB e-Arşiv Uyumlu</span>
       </div>
@@ -678,14 +699,33 @@
     let currentUrl = '';
     let currentMsg = '';
 
-    // --- Banka / POS Kart Seçim Olayları (Gelecekteki Çoklu Banka Altyapısına Uyumlu) ---
+    // --- Banka / POS Kart Seçim Olayları ---
+    function syncBankSelection() {
+      const allCards = document.querySelectorAll('.bank-card, .pos-card');
+      allCards.forEach(c => {
+        const radio = c.querySelector('input[name="posProvider"]');
+        const tag = c.querySelector('.bank-active-tag');
+        if (!radio) return;
+        if (radio.checked) {
+          c.classList.add('active');
+          if (tag) tag.textContent = '✓ Seçili POS';
+        } else {
+          c.classList.remove('active');
+          if (tag) {
+            tag.textContent = (radio.value === 'ZIRAATKATILIM') ? '3DHost' : '3D Secure';
+          }
+        }
+      });
+    }
+
     const bankCards = document.querySelectorAll('.bank-card, .pos-card');
     bankCards.forEach(card => {
-      card.addEventListener('click', (e) => {
-        bankCards.forEach(c => c.classList.remove('active'));
-        card.classList.add('active');
+      card.addEventListener('click', () => {
         const radio = card.querySelector('input[type="radio"]');
-        if (radio) radio.checked = true;
+        if (radio) {
+          radio.checked = true;
+          syncBankSelection();
+        }
       });
     });
 
@@ -983,8 +1023,11 @@
       setTimeout(() => {
         const is22 = typeof VipEngine !== 'undefined' && VipEngine.isVip22Tag ? VipEngine.isVip22Tag(rawTitle) : (rawTitle === '/22' || rawTitle.includes('/22') || rawTitle === '22' || rawTitle.toLowerCase().includes('22 ayar bilezik'));
         const title = (is22 && (rawTitle === '/22' || rawTitle === '22' || rawTitle === '#22' || rawTitle.toLowerCase() === '/22')) ? '22 Ayar Bilezik' : rawTitle;
+        const generatedOrderId = (typeof VipEngine !== 'undefined' && VipEngine.generateSecureOrderId) 
+          ? VipEngine.generateSecureOrderId('VIP-') 
+          : ((typeof window !== 'undefined' && window.crypto && window.crypto.getRandomValues) ? ('VIP-' + (100000 + (window.crypto.getRandomValues(new Uint32Array(1))[0] % 900000))) : ('VIP-' + (Date.now() % 900000 + 100000)));
         const payload = {
-          orderId: 'VIP-' + Math.floor(100000 + Math.random() * 900000),
+          orderId: generatedOrderId,
           title,
           amount,
           provider,
@@ -1025,13 +1068,15 @@
       if (resultSection) resultSection.style.display = 'none';
 
       // Reset POS selector back to Kuveyt Türk
-      posCards.forEach(c => c.classList.remove('active'));
-      const ktCard = document.getElementById('posCardKuveyt');
+      const allCards = document.querySelectorAll('.bank-card, .pos-card');
+      allCards.forEach(c => c.classList.remove('active'));
+      const ktCard = document.getElementById('bankCardKuveyt');
       if (ktCard) {
         ktCard.classList.add('active');
         const r = ktCard.querySelector('input[type="radio"]');
         if (r) r.checked = true;
       }
+      if (typeof syncBankSelection === 'function') syncBankSelection();
 
       // Clean browser address bar query parameters (remove ?posProvider=... etc.)
       try {

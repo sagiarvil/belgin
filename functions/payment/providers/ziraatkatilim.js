@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 /**
  * BELGIN KUYUMCULUK — ZIRAAT KATILIM PAYFOR 3DHOST ADAPTER
@@ -81,31 +81,69 @@ function extractXmlTag(xml, names) {
   return '';
 }
 
-function parsePayForInquiryXml(xml) {
-  const source = String(xml || '').trim();
-  if (!source || !source.includes('<')) return null;
+function parsePayForInquiryXml(raw) {
+  const source = String(raw || '').trim();
+  if (!source) return null;
 
-  const responseCode = extractXmlTag(source, ['ProcReturnCode', 'ResponseCode']);
-  const orderId = extractXmlTag(source, ['OrderId']);
-  const orgOrderId = extractXmlTag(source, ['OrgOrderId']);
-  const purchAmount = extractXmlTag(source, ['PurchAmount', 'TxnAmount']);
+  // 1. PayCore Standart ';;' ile ayrılmış anahtar-değer metin formatı
+  if (source.includes(';;') || source.includes('ProcReturnCode=')) {
+    const map = {};
+    const pairs = source.split(';;');
+    for (const pair of pairs) {
+      const idx = pair.indexOf('=');
+      if (idx > 0) {
+        const k = pair.slice(0, idx).trim();
+        const v = pair.slice(idx + 1).trim();
+        map[k] = v;
+      }
+    }
+    return {
+      responseCode: map.ProcReturnCode || map.ResponseCode || '',
+      responseMessage: map.ErrMsg || map.ErrorMessage || map.ReturnMessage || map.IrcDet || '',
+      orderId: map.OrderId || '',
+      orgOrderId: map.OrgOrderId || '',
+      purchAmount: map.PurchAmount || map.TxnAmount || '',
+      txnType: map.TxnType || '',
+      authCode: map.AuthCode || '',
+      hostRefNum: map.HostRefNum || map.RRN || map.F37 || '',
+      cardMask: map.CardMask || '',
+      voidDate: map.VoidDate || '',
+      isVoided: map.IsVoided || '',
+      refundedAmount: map.RefundedAmount || map.ReturnedAmount || '',
+      isRefunded: map.IsRefunded || '',
+      transactionDate: map.InsertDatetime || map.TxnDateTime || map.TransactionDate || '',
+      ircCode: map.IrcCode || '',
+      ircDet: map.IrcDet || '',
+      rawMap: map,
+    };
+  }
 
-  return {
-    responseCode,
-    responseMessage: extractXmlTag(source, ['ResponseMessage', 'ErrMsg', 'ErrorMessage']),
-    orderId,
-    orgOrderId,
-    purchAmount,
-    txnType: extractXmlTag(source, ['TxnType']),
-    authCode: extractXmlTag(source, ['AuthCode']),
-    hostRefNum: extractXmlTag(source, ['HostRefNum', 'RRN', 'F37']),
-    cardMask: extractXmlTag(source, ['CardMask']),
-    voidDate: extractXmlTag(source, ['VoidDate']),
-    isVoided: extractXmlTag(source, ['IsVoided']),
-    refundedAmount: extractXmlTag(source, ['RefundedAmount', 'ReturnedAmount']),
-    isRefunded: extractXmlTag(source, ['IsRefunded']),
-    transactionDate: extractXmlTag(source, ['InsertDatetime', 'TxnDateTime', 'TransactionDate']),
-  };
+  // 2. Standart XML formatı
+  if (source.includes('<')) {
+    const responseCode = extractXmlTag(source, ['ProcReturnCode', 'ResponseCode']);
+    const orderId = extractXmlTag(source, ['OrderId']);
+    const orgOrderId = extractXmlTag(source, ['OrgOrderId']);
+    const purchAmount = extractXmlTag(source, ['PurchAmount', 'TxnAmount']);
+
+    return {
+      responseCode,
+      responseMessage: extractXmlTag(source, ['ResponseMessage', 'ErrMsg', 'ErrorMessage', 'ReturnMessage']),
+      orderId,
+      orgOrderId,
+      purchAmount,
+      txnType: extractXmlTag(source, ['TxnType']),
+      authCode: extractXmlTag(source, ['AuthCode']),
+      hostRefNum: extractXmlTag(source, ['HostRefNum', 'RRN', 'F37']),
+      cardMask: extractXmlTag(source, ['CardMask']),
+      voidDate: extractXmlTag(source, ['VoidDate']),
+      isVoided: extractXmlTag(source, ['IsVoided']),
+      refundedAmount: extractXmlTag(source, ['RefundedAmount', 'ReturnedAmount']),
+      isRefunded: extractXmlTag(source, ['IsRefunded']),
+      transactionDate: extractXmlTag(source, ['InsertDatetime', 'TxnDateTime', 'TransactionDate']),
+    };
+  }
+
+  return null;
 }
 
 function validatePaymentApiUrl(value) {
@@ -140,7 +178,7 @@ function resolveCallbackUrl() {
     process.env.GCLOUD_PROJECT ||
     process.env.GOOGLE_CLOUD_PROJECT ||
     process.env.GCP_PROJECT ||
-    ''
+    'carbon-web-1265b'
   ).trim();
 
   if (!projectId) {
@@ -283,6 +321,7 @@ function evaluateInquiry(inquiry, order) {
       confirmed: false,
       reason: 'BANK_INQUIRY_NOT_APPROVED',
       responseCode: String(inquiry?.responseCode || '').trim() || null,
+      responseMessage: String(inquiry?.responseMessage || inquiry?.ircDet || '').trim() || null,
     };
   }
 
@@ -291,6 +330,7 @@ function evaluateInquiry(inquiry, order) {
       confirmed: false,
       reason: 'BANK_INQUIRY_ORDER_MISMATCH',
       responseCode: inquiry.responseCode,
+      responseMessage: inquiry.responseMessage,
     };
   }
 
@@ -300,6 +340,7 @@ function evaluateInquiry(inquiry, order) {
       confirmed: false,
       reason: 'BANK_INQUIRY_AMOUNT_MISSING',
       responseCode: inquiry.responseCode,
+      responseMessage: inquiry.responseMessage,
     };
   }
 
@@ -308,6 +349,7 @@ function evaluateInquiry(inquiry, order) {
       confirmed: false,
       reason: 'BANK_INQUIRY_AMOUNT_MISMATCH',
       responseCode: inquiry.responseCode,
+      responseMessage: inquiry.responseMessage,
       amountInKurus,
     };
   }
@@ -318,6 +360,7 @@ function evaluateInquiry(inquiry, order) {
       confirmed: false,
       reason: 'BANK_INQUIRY_TXN_TYPE_MISMATCH',
       responseCode: inquiry.responseCode,
+      responseMessage: inquiry.responseMessage,
       amountInKurus,
     };
   }
@@ -328,6 +371,7 @@ function evaluateInquiry(inquiry, order) {
       confirmed: false,
       reason: state.voided ? 'BANK_INQUIRY_VOIDED' : 'BANK_INQUIRY_REFUNDED',
       responseCode: inquiry.responseCode,
+      responseMessage: inquiry.responseMessage,
       amountInKurus,
     };
   }
@@ -336,6 +380,7 @@ function evaluateInquiry(inquiry, order) {
     confirmed: true,
     reason: null,
     responseCode: inquiry.responseCode,
+    responseMessage: inquiry.responseMessage,
     amountInKurus,
   };
 }
@@ -356,6 +401,7 @@ async function queryBankOrder(config, order, httpClient = axios) {
       attempts.push({
         mode,
         responseCode: inquiry.responseCode || null,
+        responseMessage: evaluation.responseMessage || inquiry.responseMessage || null,
         returnedOrderId: inquiry.orderId || inquiry.orgOrderId || null,
         amountInKurus: amountToKurus(inquiry.purchAmount),
         confirmed: evaluation.confirmed,
@@ -369,6 +415,15 @@ async function queryBankOrder(config, order, httpClient = axios) {
           attempts,
         };
       }
+
+      // Eğer ilk modda işlem bulunduysa ve banka spesifik bir ret kodu (örn. MR15) döndüyse,
+      // ikinci moda geçip hatayı "V013 Seçili İşlem Bulunamadı" ile ezme.
+      const isNotFound = inquiry.responseCode === 'V013' || 
+        inquiry.responseCode === 'V001' || 
+        String(inquiry.responseMessage || '').toLowerCase().includes('bulunamad');
+      if (mode === 'CURRENT' && !isNotFound && inquiry.responseCode) {
+        break;
+      }
     } catch (error) {
       const reason = error?.code === 'ECONNABORTED'
         ? 'BANK_INQUIRY_TIMEOUT'
@@ -379,12 +434,17 @@ async function queryBankOrder(config, order, httpClient = axios) {
         mode,
         confirmed: false,
         reason,
+        responseCode: error.responseCode || null,
+        responseMessage: error.responseMessage || error.message || null,
       });
     }
   }
 
-  const error = new Error('Ziraat Katılım ödeme sonucu bankadan doğrulanamadı.');
-  error.code = attempts[attempts.length - 1]?.reason || 'BANK_INQUIRY_FAILED';
+  const lastAttempt = attempts[attempts.length - 1];
+  const error = new Error(lastAttempt?.responseMessage || 'Ziraat Katılım ödeme sonucu bankadan doğrulanamadı.');
+  error.code = lastAttempt?.reason || 'BANK_INQUIRY_FAILED';
+  error.responseCode = lastAttempt?.responseCode || null;
+  error.responseMessage = lastAttempt?.responseMessage || null;
   error.inquiryAttempts = attempts;
   throw error;
 }
@@ -535,9 +595,13 @@ class ZiraatKatilimProvider {
         isSuccess: false,
         orderId,
         reason: error.code || 'BANK_INQUIRY_FAILED',
+        failReasonCode: error.responseCode || procReturnCode || error.code || 'BANK_INQUIRY_FAILED',
+        failReasonMsg: error.responseMessage || errorMessage || 'Banka ödeme sorgusu onaylanmadı.',
         bankInquiry: {
           confirmed: false,
           reason: error.code || 'BANK_INQUIRY_FAILED',
+          responseCode: error.responseCode || null,
+          responseMessage: error.responseMessage || null,
           attempts: Array.isArray(error.inquiryAttempts) ? error.inquiryAttempts : [],
         },
         rawPaymentDetails: {

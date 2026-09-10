@@ -1,0 +1,13 @@
+{
+  "id": "d48f23c8-1d4b-4edd-80f5-c41be5ce7433",
+  "name": "laragon",
+  "projectResources": {
+    "resources": [
+      {
+        "folderUri": "file:///c%3A/laragon"
+      }
+    ]
+  },
+  "settings": {},
+  "isWorkspaceOnly": false
+}

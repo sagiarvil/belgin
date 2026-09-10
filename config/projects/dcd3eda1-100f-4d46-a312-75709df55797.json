@@ -1,0 +1,13 @@
+{
+  "id":  "dcd3eda1-100f-4d46-a312-75709df55797",
+  "name":  "AiEditorhtml",
+  "projectResources":  {
+    "resources":  [
+      {
+        "folderUri":  "file:///c%3A/Prolocal/www/aieditor/docs/AiEditor"
+      }
+    ]
+  },
+  "settings":  {},
+  "isWorkspaceOnly":  false
+}

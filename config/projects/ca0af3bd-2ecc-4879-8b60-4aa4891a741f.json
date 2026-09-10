@@ -1,0 +1,14 @@
+{
+  "id": "ca0af3bd-2ecc-4879-8b60-4aa4891a741f",
+  "name": "emlak",
+  "projectResources": {
+    "resources": [
+      {
+        "folderUri": "file:///c%3A/laragon/www/emlak"
+      }
+    ]
+  },
+  "settings": {},
+  "updatedAt": "2026-08-17T23:12:37.927443700Z",
+  "isWorkspaceOnly": false
+}

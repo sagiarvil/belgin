@@ -977,7 +977,7 @@ class EarsivPortalService {
 
     if (token.startsWith('MOCK_GIB_TOKEN')) {
       const year = new Date().getFullYear();
-      const mockInvoiceNo = `GIB${year}${Math.floor(100000000 + Math.random() * 900000000)}`;
+      const mockInvoiceNo = `GIB${year}${crypto.randomInt ? crypto.randomInt(100000000, 1000000000) : (Date.now() % 900000000 + 100000000)}`;
       return {
         success: true,
         isMock: true,

@@ -1,0 +1,29 @@
+{
+  "agent-surgical-guard": {
+    "enabled": true,
+    "PreToolUse": [
+      {
+        "matcher": "write_to_file|replace_file_content",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .agents/scripts/pre_tool_guard.js",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "write_to_file|replace_file_content",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .agents/scripts/ensure_utf8_bom.js",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

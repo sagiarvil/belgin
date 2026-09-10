@@ -1,0 +1,13 @@
+{
+  "id":  "a7917ab2-93d4-49bb-9565-701ad64a2445",
+  "name":  "editor",
+  "projectResources":  {
+    "resources":  [
+      {
+        "folderUri":  "file:///c%3A/Prolocal/www/editor"
+      }
+    ]
+  },
+  "settings":  {},
+  "isWorkspaceOnly":  false
+}

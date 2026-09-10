@@ -1,0 +1,13 @@
+{
+  "id": "721af6e2-d51f-4394-85ae-c91f75f15d7b",
+  "name": "bildirim",
+  "projectResources": {
+    "resources": [
+      {
+        "folderUri": "file:///c%3A/Prolocal/www/bildirim"
+      }
+    ]
+  },
+  "settings": {},
+  "isWorkspaceOnly": false
+}

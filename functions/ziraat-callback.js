@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 /**
  * Dedicated Ziraat Katılım callback boundary.
@@ -69,7 +69,7 @@ const ziraatPaymentCallback = functions
       const isSuccess = outcome?.isSuccess === true;
       const targetUrl = isSuccess
         ? `https://www.belginkuyumculuk.com/odeme-basarili.html?orderId=${resolvedOrderId}&authCode=${encodeURIComponent(outcome?.authCode || '')}&provider=ZIRAATKATILIM`
-        : `https://www.belginkuyumculuk.com/odeme-basarisiz.html?orderId=${resolvedOrderId}&code=${encodeURIComponent(outcome?.failReasonCode || 'ZIRAAT_PAYMENT_FAILED')}&reason=${encodeURIComponent(outcome?.failReasonMsg || 'Ziraat Katılım ödeme işlemi tamamlanamadı.')}&provider=ZIRAATKATILIM`;
+        : `https://www.belginkuyumculuk.com/odeme-basarisiz.html?orderId=${resolvedOrderId}&code=${encodeURIComponent(outcome?.failReasonCode || 'ZIRAAT_PAYMENT_FAILED')}&reason=${encodeURIComponent(outcome?.failReasonMsg || 'Ziraat Katılım ödeme işlemi tamamlanamadı.')}&provider=ZIRAATKATILIM${outcome?.vipToken ? `&token=${encodeURIComponent(outcome.vipToken)}` : ''}`;
 
       res.set('Location', targetUrl);
       return res.status(200).send(redirectHtml(targetUrl, isSuccess));

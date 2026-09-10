@@ -1,0 +1,14 @@
+{
+  "id": "2cab60a3-773d-4333-9166-e1b95618c2be",
+  "name": "epin",
+  "projectResources": {
+    "resources": [
+      {
+        "folderUri": "file:///c%3A/laragon/www/epin"
+      }
+    ]
+  },
+  "settings": {},
+  "updatedAt": "2026-08-17T23:13:18.351572Z",
+  "isWorkspaceOnly": false
+}

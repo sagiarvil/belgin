@@ -1,0 +1,13 @@
+{
+  "id": "2cf2eeb7-249d-4512-aebf-df427efd54b6",
+  "name": "betaeditor",
+  "projectResources": {
+    "resources": [
+      {
+        "folderUri": "file:///c%3A/laragon/www/editor"
+      }
+    ]
+  },
+  "settings": {},
+  "isWorkspaceOnly": false
+}

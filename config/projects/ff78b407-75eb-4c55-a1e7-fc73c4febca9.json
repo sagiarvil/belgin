@@ -1,0 +1,13 @@
+{
+  "id":  "ff78b407-75eb-4c55-a1e7-fc73c4febca9",
+  "name":  "haber1",
+  "projectResources":  {
+    "resources":  [
+      {
+        "folderUri":  "file:///c%3A/laragon/www/haber1"
+      }
+    ]
+  },
+  "settings":  {},
+  "isWorkspaceOnly":  false
+}

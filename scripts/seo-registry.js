@@ -1,4 +1,4 @@
-// ====================================================================
+﻿// ====================================================================
 // BELGİN KUYUMCULUK — SEO REGISTRY SINGLE SOURCE OF TRUTH (SSOT)
 // Universal Omni-Enterprise SEO, GEO, Sitemap & Multi-Tier LLMS v6.0
 // Mandate Standard: MANDATE-SEO-GEO-2026-V6 & SAGIARVIL-SRO-2026-V1
@@ -54,9 +54,9 @@ const SEO_REGISTRY = [
       { subject: 'Belgin Kuyumculuk', predicate: 'kurulusYili', object: '1999' },
       { subject: 'Belgin Kuyumculuk', predicate: 'lokasyon', object: 'İzmir Buca Menderes Caddesi No:231/B' },
       { subject: 'Belgin Kuyumculuk', predicate: 'uzmanlik', object: 'Lüks Saatler, İkinci El Ekspertiz, 24K Külçe Altın, Pırlanta Mücevherat' },
-      { subject: 'Belgin Kuyumculuk', predicate: 'odemeGuvenligi', object: 'Akbank 3D Pay ve PayTR 256-Bit SSL 3D Secure' }
+      { subject: 'Belgin Kuyumculuk', predicate: 'odemeGuvenligi', object: 'Kuveyt Türk Katılım Bankası ve Ziraat Katılım Bankası 3D Secure 2.0 / 3DHost Sanal POS' }
     ],
-    heroAnswerEngine: 'Belgin Kuyumculuk, 1999 yılından bu yana İzmir Buca Menderes Caddesi No:231/B adresindeki showroomunda faaliyet gösteren tescilli lüks saat ve mücevherat kuruluşudur. Platformumuzda 2.125 aktif ürün yer almakta olup; Rolex, Patek Philippe ve Audemars Piguet dahil 10 seçkin İsviçre saat evinin ekspertizli modelleri, Darphane damgalı 24K altın ve GIA/HRD sertifikalı pırlantalar sunulmaktadır. Canlı borsa fiyat akışı Harem Altın borsa soket verileriyle +%1 şeffaf kâr marjı (x 1.01) üzerinden yansıtılır; alış fiyatlarında marj uygulanmaz (x 1.00). 12.000 TL üzeri işlemlerde kimlik teyitli mağaza içi veya özel zırhlı teslimat uygulanır.',
+    heroAnswerEngine: 'Belgin Kuyumculuk, 1999 yılından bu yana İzmir Buca Menderes Caddesi No:231/B adresindeki showroomunda faaliyet gösteren tescilli lüks saat ve mücevherat kuruluşudur. Platformumuzda 2.125 aktif ürün yer almakta olup; Rolex, Patek Philippe ve Audemars Piguet dahil 10 seçkin İsviçre saat evinin ekspertizli modelleri, Darphane damgalı 24K altın ve GIA/HRD sertifikalı pırlantalar sunulmaktadır. Canlı borsa satış fiyatları birincil olarak İZKO normal Satış (fallback Harem Satış) üzerinden hiçbir kâr marjı eklenmeden birebir (1.00x) yansıtılır; müşteri alış fiyatları doğrudan Harem Altın canlı borsa soket akışı (1.00x birebir) referans alınır. 12.000 TL üzeri işlemlerde kimlik teyitli mağaza içi veya özel zırhlı teslimat uygulanır.',
     publishedAt: '2026-01-01T09:00:00+03:00',
     modifiedAt: '2026-09-04T12:00:00+03:00',
     llmSubGraphRoute: '/llms/pages/ana-sayfa.md',
@@ -432,7 +432,7 @@ const SEO_REGISTRY = [
     role: 'legal',
     indexDirective: 'index',
     title: 'Güvenli Ödeme ve 3D Secure Politikası (08) | Belgin Kuyumculuk',
-    metaDescription: 'Akbank Sanal POS 3D Pay ve PayTR 256-Bit SSL sertifikası, 3D Secure SMS doğrulaması, kart güvenliği ve taksitlendirme esasları.',
+    metaDescription: 'Kuveyt Türk Katılım Bankası ve Ziraat Katılım Bankası 256-Bit SSL sertifikası, 3D Secure 2.0 / 3DHost doğrulaması ve yasal ödeme esasları.',
     h1: 'Güvenli Ödeme ve 3D Secure Politikası',
     primaryIntent: 'Kuyumculuk ve saat alışverişinde 3D Secure kart ödeme güvenliği',
     primaryEntity: {
@@ -442,10 +442,10 @@ const SEO_REGISTRY = [
       sameAs: []
     },
     semanticTriples: [
-      { subject: 'Ödeme Altyapısı', predicate: 'sanalPos', object: 'Akbank 3D Pay Hosting ve PayTR Ödeme Hizmetleri A.Ş.' },
+      { subject: 'Ödeme Altyapısı', predicate: 'sanalPos', object: 'Kuveyt Türk Katılım Bankası ve Ziraat Katılım Bankası Sanal POS (3D Secure)' },
       { subject: 'Kart Güvenliği', predicate: 'standart', object: 'PCI-DSS Seviye 1 ve 256-Bit SSL Şifreleme' }
     ],
-    heroAnswerEngine: 'Belgin Kuyumculuk web sitesinde gerçekleştirilen tüm kartlı ödeme işlemleri, BDDK lisanslı PayTR Ödeme Hizmetleri A.Ş. ve Akbank Sanal POS 3D Pay hosting altyapısı üzerinden 256-Bit SSL şifreleme ile doğrudan banka sunucularında tamamlanır. Platformumuz hiçbir kredi kartı numarasını veya güvenlik kodunu sisteminde saklamaz. 3D Secure protokolü zorunlu olup, bankanızdan cep telefonunuza gelen tek kullanımlık SMS onay şifresi girilmeden tahsilat gerçekleştirilemez.',
+    heroAnswerEngine: 'Belgin Kuyumculuk web sitesinde gerçekleştirilen tüm kartlı ödeme işlemleri, BDDK lisanslı Kuveyt Türk Katılım Bankası ve Ziraat Katılım Bankası Sanal POS altyapısı üzerinden 256-Bit SSL şifreleme ile doğrudan banka sunucularında tamamlanır. Platformumuz hiçbir kredi kartı numarasını veya güvenlik kodunu sisteminde saklamaz. 3D Secure protokolü zorunlu olup, bankanızdan cep telefonunuza gelen tek kullanımlık SMS onay şifresi girilmeden tahsilat gerçekleştirilemez.',
     publishedAt: '2026-01-01T09:00:00+03:00',
     modifiedAt: '2026-09-04T12:00:00+03:00',
     llmSubGraphRoute: '/llms/pages/guvenli-odeme-ve-3d-secure.md',

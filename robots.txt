@@ -2,68 +2,94 @@ User-agent: Googlebot
 Allow: /
 Disallow: /api/
 Disallow: /admin/
+Disallow: /odeme-linki.html
+Disallow: /vip-odeme.html
 Disallow: /node_modules/
 
 User-agent: Bingbot
 Allow: /
 Disallow: /api/
 Disallow: /admin/
+Disallow: /odeme-linki.html
+Disallow: /vip-odeme.html
 Disallow: /node_modules/
 
 User-agent: OAI-SearchBot
 Allow: /
 Disallow: /api/
 Disallow: /admin/
+Disallow: /odeme-linki.html
+Disallow: /vip-odeme.html
 
 User-agent: ChatGPT-User
 Allow: /
 Disallow: /api/
 Disallow: /admin/
+Disallow: /odeme-linki.html
+Disallow: /vip-odeme.html
 
 User-agent: PerplexityBot
 Allow: /
 Disallow: /api/
 Disallow: /admin/
+Disallow: /odeme-linki.html
+Disallow: /vip-odeme.html
 
 User-agent: Claude-SearchBot
 Allow: /
 Disallow: /api/
 Disallow: /admin/
+Disallow: /odeme-linki.html
+Disallow: /vip-odeme.html
 
 User-agent: GPTBot
 Allow: /
 Disallow: /api/
 Disallow: /admin/
+Disallow: /odeme-linki.html
+Disallow: /vip-odeme.html
 
 User-agent: ClaudeBot
 Allow: /
 Disallow: /api/
 Disallow: /admin/
+Disallow: /odeme-linki.html
+Disallow: /vip-odeme.html
 
 User-agent: Google-Extended
 Allow: /
 Disallow: /api/
 Disallow: /admin/
+Disallow: /odeme-linki.html
+Disallow: /vip-odeme.html
 
 User-agent: Applebot
 Allow: /
 Disallow: /api/
 Disallow: /admin/
+Disallow: /odeme-linki.html
+Disallow: /vip-odeme.html
 
 User-agent: Applebot-Extended
 Allow: /
 Disallow: /api/
 Disallow: /admin/
+Disallow: /odeme-linki.html
+Disallow: /vip-odeme.html
 
 User-agent: CCBot
 Allow: /
 Disallow: /api/
 Disallow: /admin/
+Disallow: /odeme-linki.html
+Disallow: /vip-odeme.html
 
 User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /admin/
+Disallow: /odeme-linki.html
+Disallow: /vip-odeme.html
 Disallow: /node_modules/
 
 Sitemap: https://www.belginkuyumculuk.com/sitemap.xml

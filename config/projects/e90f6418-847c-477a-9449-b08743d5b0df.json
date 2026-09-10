@@ -1,0 +1,13 @@
+{
+  "id": "e90f6418-847c-477a-9449-b08743d5b0df",
+  "name": "insaat",
+  "projectResources": {
+    "resources": [
+      {
+        "folderUri": "file:///c%3A/laragon/www/insaat"
+      }
+    ]
+  },
+  "settings": {},
+  "isWorkspaceOnly": false
+}

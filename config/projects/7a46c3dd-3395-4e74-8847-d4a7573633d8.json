@@ -1,0 +1,14 @@
+{
+  "id": "7a46c3dd-3395-4e74-8847-d4a7573633d8",
+  "name": "lisans",
+  "projectResources": {
+    "resources": [
+      {
+        "folderUri": "file:///c%3A/laragon/www/lisans"
+      }
+    ]
+  },
+  "settings": {},
+  "updatedAt": "2026-08-17T23:12:59.635556500Z",
+  "isWorkspaceOnly": false
+}

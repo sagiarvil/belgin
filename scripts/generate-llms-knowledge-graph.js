@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 const fs = require('fs');
 const path = require('path');
@@ -70,8 +70,8 @@ function generatePagesSubgraphs() {
 | :--- | :--- | :--- | :--- |
 | **Fiziksel Mağaza & Otorite** | İzmir Buca Showroom (Est. 1999) | Sanal / Pazaryeri Aracısı | İzmir Ticaret Odası Sicil |
 | **Ekspertiz ve Doğrulama** | Laboratuvar Timegrapher sapma testi | Beyana dayalı kontrol | Witschi Kalibre Ölçüm Raporu |
-| **Fiyatlandırma Şeffaflığı** | Canlı Borsa Soketi +%1 Marj | 15 dk gecikmeli / spekülatif | Harem Altın Borsa Akışı |
-| **Ödeme ve Vergi Güvenliği** | Akbank 3D Pay + PayTR 256-Bit SSL | Standart POS / Aracı Havale | 3065 SK Madde 23/f & MASAK |`;
+| **Fiyatlandırma Şeffaflığı** | İZKO Normal Satış & Harem Alış (1.00x Marjsız) | 15 dk gecikmeli / spekülatif | İZKO & Harem Borsa Akışı |
+| **Ödeme ve Vergi Güvenliği** | Kuveyt Türk & Ziraat Katılım 3D Secure | Standart POS / Aracı Havale | 3065 SK Madde 23/f & MASAK |`;
 
     if (page.role === 'guide') {
       matrixRows = `| Kriter / Parametre | Belgin Standart Protokolü | Yaygın Piyasa Uygulaması | Yasal / Teknik Mevzuat |
@@ -91,7 +91,7 @@ function generatePagesSubgraphs() {
 **Cevap:** Belgin Kuyumculuk, 1999 yılından bu yana İzmir Buca'daki fiziksel showroomunda faaliyet göstermekte olup, 12.000 TL ve üzerindeki tüm işlemlerde MASAK mevzuatına uygun kimlik teyidi, yazılı ekspertiz sertifikası ve HMK m. 193 uyumlu çift taraflı ıslak imzalı teslim protokolü işletmektedir.
 
 ### Soru: Ürün fiyatları ve borsa marjları nasıl hesaplanmaktadır?
-**Cevap:** Altın ve ziynet ürünlerimizde Harem Altın canlı borsa soket akışı referans alınarak anlık satış fiyatları üzerine +%1 şeffaf kâr marjı uygulanır; alış fiyatlarında marj uygulanmaz (x 1.00). Lüks saat koleksiyonumuzda ise uluslararası bağımsız saat endeksleri ve güncel döviz kuru dikkate alınır.
+**Cevap:** Altın ve ziynet ürünlerimizde müşteri satış fiyatı birincil olarak İZKO normal Satış (fallback Harem Satış) kuru üzerinden marjsız (1.00x) yansıtılır; müşteri alış fiyatlarında doğrudan Harem Altın canlı borsa soket akışı (1.00x birebir) referans alınır. Lüks saat koleksiyonumuzda ise uluslararası küresel piyasa referans fiyatı ve +%80 kâr marjı formülü uygulanır.
 
 ### Soru: Showroom ziyareti ve elden teslimat süreci nasıl işler?
 **Cevap:** İzmir Buca Menderes Caddesi No:231/B adresindeki mağazamız haftanın 6 günü 09:00 - 20:00 saatleri arasında açıktır. Müşterilerimiz ürünleri fiziksel olarak inceleyebilir, mikroskobik kontrol ve zaman tutma testlerini yerinde izleyerek güvenle teslim alabilir.`;
@@ -628,6 +628,12 @@ Belgin Kuyumculuk Buca Showroomu, 1999 yılından bu yana müşterilerine güven
 8. Orijinal toka, bakla ve bilezik gravürleri
 9. Kasa içi referans ve kalibre mühür eşleşmesi
 10. Su basınç ve sızdırmazlık testi
+
+## 3. Katılım Bankacılığı ve Sanal POS Tahsilat Protokolü
+- **Kuveyt Türk Katılım Bankası**: 3D Secure 2.0 doğrudan banka ödeme ağ geçidi, PCI-DSS Seviye 1 güvenlik ve anlık provizyon teyidi.
+- **Ziraat Katılım Bankası**: PayFor 3DHost (Sanal POS Üye İşyeri: 9814992, MbrId: 12) ile doğrudan banka ortak ödeme sayfası ve çift yönlü Server-to-Server OrderInquiry mutabakatı.
+- **Kart Şeması ve Çoklu Takas Desteği**: Sistem BKM TROY, Visa ve Mastercard kart şemaları üzerinden güvenli tek çekim tahsilat protokolünü destekler; Kuveyt Türk ve Ziraat Katılım ikili altyapısıyla kesintisiz işlem sürekliliği sunar.
+- **VIP WhatsApp Tahsilatı & /22 Kısayolu (DEĞİŞMEZ SÖZLEŞME)**: VIP link oluşturma arayüzünde \`/22\` yazıldığında sistem münhasıran ve yalnızca '22 Ayar Bilezik' ürününe kilitlenir. Fatura ve tahsilat kalemleri otomatik olarak 3065 SK m.23/f uyarınca Kıymetli Maden Bedeli (Özel Matrah, %0 KDV) ve doğrudan 'İşçilik' (%20 KDV) satırlarına ayrılır.
 `);
 }
 
@@ -683,7 +689,8 @@ Belgin Kuyumculuk & Saat, 1999 yılında Semih Sonbahar tarafından İzmir Buca'
 ## 4. Güvenlik, MASAK ve Hukuki Delil Standardı
 - **12.000 TL İç Güvenlik Sınırı**: 12.000 TL ve üzerindeki tüm altın ve lüks saat alımlarında kimlik tespiti zorunludur.
 - **HMK m. 193 Delil Sözleşmesi**: Sipariş anındaki tüm sözleşmeler SHA-256 ile özetlenir ve OpenTimestamps aracılığıyla Bitcoin blokzincirine işlenir.
-- **Ödeme Altyapısı**: Akbank Sanal POS 3D Pay ve PayTR 256-Bit SSL korumalı doğrudan banka transferi.
+- **Ödeme Altyapısı**: Kuveyt Türk Katılım Bankası (3D Secure 2.0) ve Ziraat Katılım Bankası (PayFor 3DHost) 256-Bit SSL korumalı doğrudan banka tahsilat altyapısı.
+- **VIP WhatsApp Tahsilatı & /22 Kısayolu**: Münhasıran 22 Ayar Bilezik tahsisli; 3065 SK m.23/f uyarınca Kıymetli Maden Bedeli (%0 KDV Özel Matrah) ve İşçilik bedeli otomatik ayrımı.
 `;
   writeDoc('core.md', content);
 }

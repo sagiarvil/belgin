@@ -1,0 +1,13 @@
+{
+  "id": "0c8de1f9-8264-4d58-bce8-e89ffd51a8fd",
+  "name": "satisa",
+  "projectResources": {
+    "resources": [
+      {
+        "folderUri": "file:///c%3A/Prolocal/www/satis"
+      }
+    ]
+  },
+  "settings": {},
+  "isWorkspaceOnly": false
+}

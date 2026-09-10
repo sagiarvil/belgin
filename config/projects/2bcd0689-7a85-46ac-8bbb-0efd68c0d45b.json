@@ -1,0 +1,13 @@
+{
+  "id": "2bcd0689-7a85-46ac-8bbb-0efd68c0d45b",
+  "name": "satis",
+  "projectResources": {
+    "resources": [
+      {
+        "folderUri": "file:///c%3A/laragon/www/satis"
+      }
+    ]
+  },
+  "settings": {},
+  "isWorkspaceOnly": false
+}

@@ -78,13 +78,14 @@ function verifyVipToken(token, expectedId = '') {
           metal: 'Özel Tasarım',
           category: 'luxury',
           isGold: true,
+          provider: payload.provider ? String(payload.provider).trim().toUpperCase() : null,
           highValueSecureDelivery: price >= HIGH_VALUE_SECURE_DELIVERY_THRESHOLD,
         };
       } catch (_) {}
     }
   }
 
-  // Format 2: Base64URL Compact Token (orderId|title|amount)
+  // Format 2: Base64URL Compact Token (orderId|title|amount[|provider])
   try {
     const base64 = token.replace(/-/g, '+').replace(/_/g, '/');
     const decoded = Buffer.from(base64, 'base64').toString('utf8');
@@ -93,6 +94,7 @@ function verifyVipToken(token, expectedId = '') {
       const orderId = pipeParts[0].trim();
       const title = pipeParts[1].trim();
       const price = Number(pipeParts[2]);
+      const provider = pipeParts.length >= 4 && pipeParts[3] ? pipeParts[3].trim().toUpperCase() : null;
       if (Number.isFinite(price) && price >= 10) {
         return {
           id: orderId || `VIP-${Date.now()}`,
@@ -103,6 +105,7 @@ function verifyVipToken(token, expectedId = '') {
           metal: 'Özel Tasarım',
           category: 'luxury',
           isGold: true,
+          provider: provider || null,
           highValueSecureDelivery: price >= HIGH_VALUE_SECURE_DELIVERY_THRESHOLD,
         };
       }
@@ -196,6 +199,7 @@ function normalizeCart(clientItems, isVipPayment = false, vipToken = null, produ
         qty,
         category: verifiedVip.category,
         isGold: verifiedVip.isGold,
+        provider: verifiedVip.provider || null,
         highValueSecureDelivery: verifiedVip.highValueSecureDelivery,
       };
     }
@@ -276,6 +280,10 @@ async function appendAuditEvent(orderRef, eventType, data = {}, admin) {
 }
 
 class PaymentService {
+  constructor() {
+    this.inFlightIdempotency = inFlightIdempotency;
+  }
+
   async createPaymentSession({ body, reqContext, db, admin, productCatalog, getLegalEvidenceSnapshot }) {
     const clientIp = reqContext.clientIp || '127.0.0.1';
     const userAgent = reqContext.userAgent || '';
@@ -360,7 +368,8 @@ class PaymentService {
         ? 'Showroom / Mağazadan Teslim'
         : 'İzmir');
 
-    const providerName = String(body.provider || DEFAULT_PROVIDER).toUpperCase();
+    const vipItemProvider = items.find(i => i.provider)?.provider;
+    const providerName = String(body.provider || vipItemProvider || DEFAULT_PROVIDER).toUpperCase();
     const provider = paymentRouter.getProvider(providerName);
 
     const orderRef = db.collection('orders').doc(merchant_oid);
@@ -605,7 +614,16 @@ class PaymentService {
         provider: provider.name,
         reason: verification.reason,
       }, admin);
-      return { status: 400, message: `Callback verification failed: ${verification.reason}`, isValid: false, isSuccess: false };
+      return { 
+        status: 400, 
+        message: `Callback verification failed: ${verification.reason}`, 
+        isValid: false, 
+        isSuccess: false,
+        failReasonCode: verification.failReasonCode || verification.reason || 'VERIFICATION_FAILED',
+        failReasonMsg: verification.failReasonMsg || 'Ödeme doğrulanamadı.',
+        orderId,
+        vipToken: order?.vipToken || (order?.items?.[0]?.vipToken) || null,
+      };
     }
 
     if (verification.isSuccess) {
@@ -707,5 +725,8 @@ class PaymentService {
   }
 }
 
-module.exports = new PaymentService();
+const paymentServiceInstance = new PaymentService();
+paymentServiceInstance.__test = { normalizeCart, verifyVipToken, isHighValueCatalogProduct, calculateTotal };
+
+module.exports = paymentServiceInstance;
 

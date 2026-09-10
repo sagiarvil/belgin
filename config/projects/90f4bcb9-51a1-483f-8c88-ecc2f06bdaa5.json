@@ -1,0 +1,21 @@
+{
+  "id": "90f4bcb9-51a1-483f-8c88-ecc2f06bdaa5",
+  "name": "haber",
+  "projectResources": {
+    "resources": [
+      {
+        "folderUri": "file:///c%3A/laragon/www/haber"
+      }
+    ]
+  },
+  "permissionGrants": {
+    "permissionGrants": {
+      "allow": [
+        "read_file(C:\\laragon\\www\\lisans\\app\\Controllers\\SifrelemeController.php)"
+      ]
+    }
+  },
+  "settings": {},
+  "updatedAt": "2026-08-17T23:16:52.867319700Z",
+  "isWorkspaceOnly": false
+}

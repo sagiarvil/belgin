@@ -1,4 +1,4 @@
-/**
+﻿/**
  * BELGIN KUYUMCULUK — PAYMENT PROVIDER ROUTER
  * Çoklu POS Yönlendiricisi & Güvenlik Kapısı
  */
@@ -13,6 +13,8 @@ const yapiKrediProvider = require('./providers/yapikredi');
 const PROVIDER_REGISTRY = Object.freeze({
   [PROVIDERS.KUVEYTTURK]: kuveytTurkProvider,
   [PROVIDERS.ZIRAATKATILIM]: ziraatKatilimProvider,
+  'ZIRAAT': ziraatKatilimProvider,
+  'ZIRAAT_KATILIM': ziraatKatilimProvider,
   [PROVIDERS.PAYTR]: paytrProvider,
   [PROVIDERS.QNB]: qnbProvider,
   [PROVIDERS.YAPIKREDI]: yapiKrediProvider,
@@ -21,8 +23,11 @@ const PROVIDER_REGISTRY = Object.freeze({
 class PaymentRouter {
   getProvider(providerName = DEFAULT_PROVIDER) {
     if (!providerName) return PROVIDER_REGISTRY[DEFAULT_PROVIDER];
-    const key = String(providerName).trim().toUpperCase();
-    const provider = PROVIDER_REGISTRY[key];
+    let key = String(providerName).trim().toUpperCase();
+    if (key === 'ZIRAAT' || key === 'ZIRAAT_KATILIM') {
+      key = PROVIDERS.ZIRAATKATILIM;
+    }
+    const provider = PROVIDER_REGISTRY[key] || PROVIDER_REGISTRY[providerName];
     if (!provider) {
       const error = new Error(`Desteklenmeyen veya geçersiz ödeme sağlayıcısı: ${providerName}`);
       error.code = 'UNKNOWN_PROVIDER';

@@ -37,4 +37,5 @@ Belgin Kuyumculuk & Saat, 1999 yılında Semih Sonbahar tarafından İzmir Buca'
 ## 4. Güvenlik, MASAK ve Hukuki Delil Standardı
 - **12.000 TL İç Güvenlik Sınırı**: 12.000 TL ve üzerindeki tüm altın ve lüks saat alımlarında kimlik tespiti zorunludur.
 - **HMK m. 193 Delil Sözleşmesi**: Sipariş anındaki tüm sözleşmeler SHA-256 ile özetlenir ve OpenTimestamps aracılığıyla Bitcoin blokzincirine işlenir.
-- **Ödeme Altyapısı**: Akbank Sanal POS 3D Pay ve PayTR 256-Bit SSL korumalı doğrudan banka transferi.
+- **Ödeme Altyapısı**: Kuveyt Türk Katılım Bankası (3D Secure 2.0) ve Ziraat Katılım Bankası (PayFor 3DHost) 256-Bit SSL korumalı doğrudan banka tahsilat altyapısı.
+- **VIP WhatsApp Tahsilatı & /22 Kısayolu**: Münhasıran 22 Ayar Bilezik tahsisli; 3065 SK m.23/f uyarınca Kıymetli Maden Bedeli (%0 KDV Özel Matrah) ve İşçilik bedeli otomatik ayrımı.

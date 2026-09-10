@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 const fs = require('fs');
 const path = require('path');
@@ -241,7 +241,7 @@ function buildLlms() {
 }
 
 function publicBot(agent, extra = '') {
-  return `User-agent: ${agent}\nAllow: /\nDisallow: /api/\nDisallow: /admin/\n${extra}`;
+  return `User-agent: ${agent}\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /odeme-linki.html\nDisallow: /vip-odeme.html\n${extra}`;
 }
 
 function buildRobots() {
@@ -258,7 +258,7 @@ function buildRobots() {
     publicBot('Applebot'),
     publicBot('Applebot-Extended'),
     publicBot('CCBot'),
-    `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /node_modules/\n`,
+    `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /odeme-linki.html\nDisallow: /vip-odeme.html\nDisallow: /node_modules/\n`,
     `Sitemap: ${BASE_URL}/sitemap.xml`,
     `\n# LLMS Machine Discovery Manifests\n# llms.txt: ${BASE_URL}/llms.txt\n# llms-full.txt: ${BASE_URL}/llms-full.txt\n# agent-card.json: ${BASE_URL}/agent-card.json\n`
   ].join('\n'));

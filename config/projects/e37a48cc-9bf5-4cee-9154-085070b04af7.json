@@ -1,0 +1,16 @@
+{
+  "id": "e37a48cc-9bf5-4cee-9154-085070b04af7",
+  "name": "html+jwebmail",
+  "projectResources": {
+    "resources": [
+      {
+        "folderUri": "file:///c%3A/Users/webtasarimofisim/Desktop/webmailyedek/html"
+      },
+      {
+        "folderUri": "file:///c%3A/Users/webtasarimofisim/Desktop/webmailyedek/skins/jwebmail"
+      }
+    ]
+  },
+  "settings": {},
+  "isWorkspaceOnly": false
+}

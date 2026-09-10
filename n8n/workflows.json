@@ -1,0 +1,78 @@
+{
+  "name": "belgin-18-engine-automation",
+  "version": "3.0.0",
+  "description": "N8N Orchestration for 18 Deterministic Search & AI Engines, Daily 03:00 Drift Remediation & Multi-Hub IndexNow Broadcast",
+  "workflows": [
+    {
+      "id": "wf-01-daily-maintenance",
+      "name": "03:00 UTC Daily Semantic Drift & IndexNow Remediation",
+      "active": true,
+      "nodes": [
+        {
+          "name": "Cron Trigger",
+          "type": "n8n-nodes-base.cron",
+          "parameters": {
+            "triggerTimes": {
+              "item": [
+                {
+                  "hour": 3,
+                  "minute": 0
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Run Health & Drift Check",
+          "type": "n8n-nodes-base.httpRequest",
+          "parameters": {
+            "url": "https://www.belginkuyumculuk.com/api/health",
+            "method": "GET"
+          }
+        },
+        {
+          "name": "Broadcast IndexNow",
+          "type": "n8n-nodes-base.executeCommand",
+          "parameters": {
+            "command": "node scripts/notify-indexnow.mjs"
+          }
+        }
+      ]
+    },
+    {
+      "id": "wf-02-engine-chain-evaluation",
+      "name": "18-Engine Composable Execution & DLQ",
+      "active": true,
+      "nodes": [
+        {
+          "name": "Scan Input Webhook",
+          "type": "n8n-nodes-base.webhook",
+          "parameters": {
+            "path": "scan-trigger",
+            "httpMethod": "POST"
+          }
+        },
+        {
+          "name": "Pre-Training Chain (ENG 01-03)",
+          "type": "n8n-nodes-base.function"
+        },
+        {
+          "name": "Retrieval Chain (ENG 04-12)",
+          "type": "n8n-nodes-base.function"
+        },
+        {
+          "name": "Entity Lock Chain (ENG 13-15)",
+          "type": "n8n-nodes-base.function"
+        },
+        {
+          "name": "Defense Layer Chain (ENG 16-18)",
+          "type": "n8n-nodes-base.function"
+        },
+        {
+          "name": "Dead Letter Queue on Error",
+          "type": "n8n-nodes-base.function"
+        }
+      ]
+    }
+  ]
+}

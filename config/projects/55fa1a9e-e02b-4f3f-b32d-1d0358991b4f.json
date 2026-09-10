@@ -1,0 +1,13 @@
+{
+  "id": "55fa1a9e-e02b-4f3f-b32d-1d0358991b4f",
+  "name": "hostinghtml",
+  "projectResources": {
+    "resources": [
+      {
+        "folderUri": "file:///c%3A/hostinghtml"
+      }
+    ]
+  },
+  "settings": {},
+  "isWorkspaceOnly": false
+}

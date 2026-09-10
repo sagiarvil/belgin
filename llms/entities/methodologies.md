@@ -31,3 +31,9 @@ relatedNodes:
 8. Orijinal toka, bakla ve bilezik gravürleri
 9. Kasa içi referans ve kalibre mühür eşleşmesi
 10. Su basınç ve sızdırmazlık testi
+
+## 3. Katılım Bankacılığı ve Sanal POS Tahsilat Protokolü
+- **Kuveyt Türk Katılım Bankası**: 3D Secure 2.0 doğrudan banka ödeme ağ geçidi, PCI-DSS Seviye 1 güvenlik ve anlık provizyon teyidi.
+- **Ziraat Katılım Bankası**: PayFor 3DHost (Sanal POS Üye İşyeri: 9814992, MbrId: 12) ile doğrudan banka ortak ödeme sayfası ve çift yönlü Server-to-Server OrderInquiry mutabakatı.
+- **Kart Şeması ve Çoklu Takas Desteği**: Sistem BKM TROY, Visa ve Mastercard kart şemaları üzerinden güvenli tek çekim tahsilat protokolünü destekler; Kuveyt Türk ve Ziraat Katılım ikili altyapısıyla kesintisiz işlem sürekliliği sunar.
+- **VIP WhatsApp Tahsilatı & /22 Kısayolu (DEĞİŞMEZ SÖZLEŞME)**: VIP link oluşturma arayüzünde `/22` yazıldığında sistem münhasıran ve yalnızca '22 Ayar Bilezik' ürününe kilitlenir. Fatura ve tahsilat kalemleri otomatik olarak 3065 SK m.23/f uyarınca Kıymetli Maden Bedeli (Özel Matrah, %0 KDV) ve doğrudan 'İşçilik' (%20 KDV) satırlarına ayrılır.

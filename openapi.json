@@ -1,0 +1,25 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Belgin Kuyumculuk API",
+    "version": "2.0.0",
+    "description": "Belgin Kuyumculuk \u00fcr\u00fcn katalo\u011fu, m\u00fccevher ve alt\u0131n koleksiyonlar\u0131 API"
+  },
+  "servers": [
+    {
+      "url": "https://www.belginkuyumculuk.com"
+    }
+  ],
+  "paths": {
+    "/api/products": {
+      "get": {
+        "summary": "\u00dcr\u00fcn ve m\u00fccevher katalo\u011fu sorgusu",
+        "responses": {
+          "200": {
+            "description": "\u00dcr\u00fcn listesi"
+          }
+        }
+      }
+    }
+  }
+}

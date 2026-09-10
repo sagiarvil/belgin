@@ -1,0 +1,13 @@
+{
+  "id": "939368e1-96dc-487d-b68c-02f62c9d608d",
+  "name": "pushbildirim",
+  "projectResources": {
+    "resources": [
+      {
+        "folderUri": "file:///c%3A/laragon/www/pushbildirim"
+      }
+    ]
+  },
+  "settings": {},
+  "isWorkspaceOnly": false
+}

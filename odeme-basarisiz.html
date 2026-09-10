@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260831-lion-max-gold-v5">
@@ -166,12 +166,12 @@
       • Banka kartınızla tek çekim yaparak ödemeyi tamamlayabilirsiniz.
     </div>
 
-    <div class="security-badge">
-      🔒 256-Bit EV SSL & Kuveyt Türk Sanal POS Güvenlik Katmanı
+    <div class="security-badge" id="securityBadge">
+      🔒 256-Bit EV SSL & Lisanslı Katılım Bankacılığı 3D Secure Güvenlik Katmanı
     </div>
 
-    <div class="btn-group">
-      <a href="javascript:history.back()" class="btn-primary">Tekrar Dene</a>
+    <div class="btn-group" id="btnGroup">
+      <a href="javascript:history.back()" class="btn-primary" id="btnRetry">Tekrar Dene</a>
       <a href="https://wa.me/905419305372?text=Merhaba,%20%C3%B6deme%20i%C5%9Fleminde%20yard%C4%B1m%20almak%20istiyorum." target="_blank" rel="noopener" class="btn-secondary">💬 Müşteri Temsilcisine Bağlan</a>
       <a href="/" class="btn-secondary">Ana Sayfaya Dön</a>
     </div>
@@ -183,6 +183,8 @@
       const orderId = params.get('orderId');
       const code = params.get('code') || params.get('errorCode') || 'BANK-REJECT';
       const reason = params.get('reason');
+      const provider = (params.get('provider') || '').toUpperCase();
+      const token = params.get('token');
 
       if (orderId) {
         const el = document.getElementById('failOrderId');
@@ -195,6 +197,53 @@
       if (reason) {
         const el = document.getElementById('failReasonText');
         if (el) el.textContent = decodeURIComponent(reason);
+      }
+
+      // Dinamik Güvenlik Rozeti
+      const badgeEl = document.getElementById('securityBadge');
+      if (badgeEl) {
+        if (provider === 'ZIRAATKATILIM') {
+          badgeEl.textContent = '🔒 256-Bit EV SSL & Ziraat Katılım PayFor 3DHost Güvenlik Katmanı';
+        } else if (provider === 'KUVEYTTURK') {
+          badgeEl.textContent = '🔒 256-Bit EV SSL & Kuveyt Türk Sanal POS 3D Secure Katmanı';
+        } else {
+          badgeEl.textContent = '🔒 256-Bit EV SSL & Lisanslı Katılım Bankacılığı 3D Secure Güvenlik Katmanı';
+        }
+      }
+
+      // Banka Yönlendirme / Terminal Yetki Hatası (MR15 / code:22) İyileştirmesi
+      const isSwitchRoutingError = code === 'MR15' || 
+        (reason && (reason.includes('code:22') || reason.includes('Invalid merchant ID') || reason.includes('MR15')));
+
+      if (isSwitchRoutingError) {
+        const subEl = document.getElementById('failSubtitle');
+        if (subEl) {
+          subEl.textContent = 'Kartınızdan herhangi bir tahsilat yapılmamıştır. Kullandığınız kartın bankalar arası takas yönlendirmesi (BKM) güncellenmektedir.';
+        }
+        const errCodeEl = document.getElementById('failErrorCode');
+        if (errCodeEl) {
+          errCodeEl.textContent = 'MR15 (BKM / Banka Yönlendirme)';
+        }
+        const errReasonEl = document.getElementById('failReasonText');
+        if (errReasonEl) {
+          errReasonEl.textContent = 'Kart şeması (Mastercard/Visa) BKM aktivasyon aşamasındadır. Kuveyt Türk Sanal POS ile tüm kartlar anında tahsilat almaktadır.';
+        }
+
+        // Akıllı Alternatif Ödeme Butonu Ekleme
+        const btnGroup = document.getElementById('btnGroup');
+        if (btnGroup) {
+          const fallbackUrl = token 
+            ? `/vip-odeme.html?token=${encodeURIComponent(token)}&provider=KUVEYTTURK`
+            : `/odeme-linki.html?provider=KUVEYTTURK`;
+          const altBtn = document.createElement('a');
+          altBtn.href = fallbackUrl;
+          altBtn.className = 'btn-primary';
+          altBtn.style.background = 'linear-gradient(135deg, #10B981 0%, #059669 100%)';
+          altBtn.style.color = '#FFFFFF';
+          altBtn.style.marginBottom = '6px';
+          altBtn.innerHTML = '⚡ Kuveyt Türk ile Güvenli Öde';
+          btnGroup.insertBefore(altBtn, btnGroup.firstChild);
+        }
       }
     })();
   </script>

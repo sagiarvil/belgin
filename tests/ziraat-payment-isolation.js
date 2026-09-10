@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 const assert = require('assert');
 
@@ -227,6 +227,22 @@ async function main() {
     () => ziraat.createPayment({ order: { ...order, orderId: 'BLG-TEST-ZIRAAT-OVER', total: 200000.01 } }),
     (error) => error && error.code === 'ZIRAAT_AMOUNT_LIMIT'
   );
+
+  // PayCore ';;' delimited inquiry response parsing test
+  const payCoreSample = 'RequestGuid=1000;;MbrId=12;;MerchantID=9814992;;OrderId=BLG-TEST-ZIRAAT-0001;;PurchAmount=200000;;ProcReturnCode=00;;AuthCode=AUTH-999;;TxnType=Auth;;';
+  const payCoreParsed = ziraat.__test.parsePayForInquiryXml(payCoreSample);
+  assert.strictEqual(payCoreParsed.responseCode, '00');
+  assert.strictEqual(payCoreParsed.orderId, 'BLG-TEST-ZIRAAT-0001');
+  assert.strictEqual(payCoreParsed.authCode, 'AUTH-999');
+
+  const payCoreSuccessHttp = mockHttp([payCoreSample]);
+  const payCoreVerified = await ziraat.verifyCallback({
+    order,
+    httpClient: payCoreSuccessHttp,
+    body: { OrderId: order.orderId, ProcReturnCode: '00', TxnResult: 'Success' },
+  });
+  assert.strictEqual(payCoreVerified.isSuccess, true);
+  assert.strictEqual(payCoreVerified.authCode, 'AUTH-999');
 
   console.log('ZIRAAT_PAYMENT_ISOLATION=PASS');
 }

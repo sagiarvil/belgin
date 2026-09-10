@@ -687,7 +687,8 @@ exports.createAdminOrder = functions
 
       const isManualEft = Boolean(body.isManualEft || body.isEft || body.paymentMethod === 'HAVALE_EFT');
       const provider = String(body.provider || (isManualEft ? 'KUVEYTTURK' : 'TOSLA_ISIM')).toUpperCase();
-      const authCode = String(body.authCode || body.posAuthCode || body.posRef || (isManualEft ? `EFT-${Math.floor(100000 + Math.random() * 900000)}` : `TSL-${Math.floor(100000 + Math.random() * 900000)}`)).trim();
+      const authRand = crypto.randomInt ? crypto.randomInt(100000, 1000000) : (Date.now() % 900000 + 100000);
+      const authCode = String(body.authCode || body.posAuthCode || body.posRef || (isManualEft ? `EFT-${authRand}` : `TSL-${authRand}`)).trim();
       const rrn = String(body.rrn || body.slipNumber || `RRN-${Date.now().toString().slice(-8)}`).trim();
       const cardLast4 = String(body.cardLast4 || '****').replace(/\D/g, '').slice(-4) || '****';
       const cardScheme = String(body.cardScheme || (isManualEft ? 'BANKA HAVALESI / EFT' : 'TROY / VISA / MASTERCARD')).trim();
@@ -2028,7 +2029,7 @@ async function handleStoreInvoicesRequest(req, res) {
 
       // Benzersiz mağaza fatura numarası
       const datePart = cleanDate.replace(/-/g, '');
-      const randPart = Math.floor(1000 + Math.random() * 9000);
+      const randPart = crypto.randomInt ? crypto.randomInt(1000, 10000) : (Date.now() % 9000 + 1000);
       const invoiceId = customOrderId || customInvoiceId || customId || `MGS-${datePart}-${randPart}`;
 
       const storeRef = db.collection('storeInvoices').doc(invoiceId);

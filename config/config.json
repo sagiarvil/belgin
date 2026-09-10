@@ -1,0 +1,18 @@
+{
+  "userSettings": {
+    "artifactReviewMode": "ARTIFACT_REVIEW_MODE_TURBO",
+    "autoExecutionPolicy": "CASCADE_COMMANDS_AUTO_EXECUTION_EAGER",
+    "conversationWidth": "CONVERSATION_WIDTH_WIDE",
+    "enableTerminalSandbox": false,
+    "globalPermissionGrants": {
+      "allow": [
+        "command(curl.exe -s \"http://proxycheck.io/v2/172.68.22.1?vpn=1\")"
+      ]
+    },
+    "nonWorkspaceFileAccessPolicy": "AGENT_SETTING_POLICY_ALLOW",
+    "queuedMessageDeliveryStrategy": "MESSAGE_DELIVERY_STRATEGY_WHEN_IDLE",
+    "remoteControlEnabled": false,
+    "remoteControlHostname": "webtasarim-pc-warp-orbit",
+    "useAiCredits": true
+  }
+}
