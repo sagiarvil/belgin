@@ -792,24 +792,50 @@ class EarsivPortalService {
       iadeTable: [],
       ozelMatrahTutari: Number(breakdown.hasGoldAmount) || 0,
       vergiCesidi: 'SIFIR',
-      malHizmetTable: breakdown.items.map(item => ({
-        malHizmet: item.malHizmet,
-        miktar: item.miktar || 1,
-        birim: item.birim || 'C62',
-        birimFiyat: Number(item.birimFiyat) || 0,
-        fiyat: Number(item.fiyat) || 0,
-        iskontoArttm: 'İskonto',
-        iskontoOrani: 0,
-        iskontoTutari: 0,
-        iskontoNedeni: '',
-        malHizmetTutari: Number(item.malHizmetTutari) || 0,
-        kdvOrani: Number(item.kdvOrani) || 0,
-        kdvTutari: Number(item.kdvTutari) || 0,
-        vergiOrani: 0,
-        ozelMatrahNedeni: item.ozelMatrahNedeni || (item.kdvOrani === 0 ? '351' : ''),
-        ozelMatrahTutari: Number(item.ozelMatrahTutari) || (item.kdvOrani === 0 ? Number(item.fiyat) : 0),
-        tevkifatKodu: 0
-      })),
+      malHizmetTable: breakdown.items.map(item => {
+        const itemQty = Math.max(1, Number(item.miktar || item.qty || 1));
+        const explicitUnitPrice = Number(item.birimFiyat !== undefined ? item.birimFiyat : item.unitPrice);
+        const explicitLineTotal = Number(item.malHizmetTutari !== undefined ? item.malHizmetTutari : (item.fiyat !== undefined ? item.fiyat : item.lineTotal));
+
+        let lineNet = 0;
+        if (!isNaN(explicitLineTotal) && explicitLineTotal > 0) {
+          lineNet = explicitLineTotal;
+        } else if (!isNaN(explicitUnitPrice) && explicitUnitPrice > 0) {
+          lineNet = Math.round(explicitUnitPrice * itemQty * 100) / 100;
+        }
+
+        let unitNet = 0;
+        if (!isNaN(explicitUnitPrice) && explicitUnitPrice > 0) {
+          unitNet = explicitUnitPrice;
+        } else if (lineNet > 0) {
+          unitNet = Math.round((lineNet / itemQty) * 100) / 100;
+        }
+
+        const kdvRate = Number(item.kdvOrani !== undefined ? item.kdvOrani : (item.kdvRate !== undefined ? item.kdvRate : (isLaborItemName(item.name || item.malHizmet) ? 20 : 0))) || 0;
+        let kdvTutari = Number(item.kdvTutari !== undefined ? item.kdvTutari : item.vatAmount);
+        if (isNaN(kdvTutari) || (kdvTutari === 0 && kdvRate > 0)) {
+          kdvTutari = Math.round(lineNet * (kdvRate / 100) * 100) / 100;
+        }
+
+        return {
+          malHizmet: item.malHizmet || item.name || '22 Ayar Altın Bilezik',
+          miktar: itemQty,
+          birim: item.birim || 'C62',
+          birimFiyat: unitNet,
+          fiyat: lineNet,
+          iskontoArttm: 'İskonto',
+          iskontoOrani: 0,
+          iskontoTutari: 0,
+          iskontoNedeni: '',
+          malHizmetTutari: lineNet,
+          kdvOrani: kdvRate,
+          kdvTutari: kdvTutari,
+          vergiOrani: 0,
+          ozelMatrahNedeni: item.ozelMatrahNedeni || (kdvRate === 0 ? '351' : ''),
+          ozelMatrahTutari: Number(item.ozelMatrahTutari) || (kdvRate === 0 ? lineNet : 0),
+          tevkifatKodu: 0
+        };
+      }),
       matrah: Number(breakdown.totalMatrah) || 0,
       malhizmetToplamTutari: Number(breakdown.totalMatrah) || 0,
       toplamIskonto: 0,

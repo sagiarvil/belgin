@@ -1220,6 +1220,111 @@ async function getInvoiceTargetDoc(id, fallbackData = null) {
 }
 
 /**
+ * Fatura kalemlerindeki Mal Hizmet Tutarı, Birim Fiyat ve Fiyat değerlerinin
+ * mevzuata uygun şekilde tam ve hatasız olmasını garanti eder.
+ */
+function ensureValidInvoiceBreakdown(bd, fallbackTotal = 0) {
+  if (!bd) return bd;
+  if (Array.isArray(bd.items) && bd.items.length > 0) {
+    bd.items = bd.items.map(it => {
+      const itQty = Math.max(1, Number(it.miktar || it.qty || 1));
+      const explicitUnitPrice = Number(it.birimFiyat !== undefined ? it.birimFiyat : it.unitPrice);
+      const explicitLineTotal = Number(it.malHizmetTutari !== undefined ? it.malHizmetTutari : (it.fiyat !== undefined ? it.fiyat : it.lineTotal));
+
+      let lineNet = 0;
+      if (!isNaN(explicitLineTotal) && explicitLineTotal > 0) {
+        lineNet = explicitLineTotal;
+      } else if (!isNaN(explicitUnitPrice) && explicitUnitPrice > 0) {
+        lineNet = Math.round(explicitUnitPrice * itQty * 100) / 100;
+      }
+
+      let unitNet = 0;
+      if (!isNaN(explicitUnitPrice) && explicitUnitPrice > 0) {
+        unitNet = explicitUnitPrice;
+      } else if (lineNet > 0) {
+        unitNet = Math.round((lineNet / itQty) * 100) / 100;
+      }
+
+      const isLabor = /[iİıI][şs][çc][iİıI]l[iİıI]k/i.test(it.name || it.malHizmet);
+      const kdvRate = Number(it.kdvOrani !== undefined ? it.kdvOrani : (it.kdvRate !== undefined ? it.kdvRate : (isLabor ? 20 : 0))) || 0;
+      let kdvTutari = Number(it.kdvTutari !== undefined ? it.kdvTutari : it.vatAmount);
+      if (isNaN(kdvTutari) || (kdvTutari === 0 && kdvRate > 0)) {
+        kdvTutari = Math.round(lineNet * (kdvRate / 100) * 100) / 100;
+      }
+
+      return {
+        ...it,
+        miktar: itQty,
+        qty: itQty,
+        birimFiyat: typeof it.birimFiyat === 'string' ? unitNet.toFixed(2) : unitNet,
+        unitPrice: unitNet,
+        fiyat: typeof it.fiyat === 'string' ? lineNet.toFixed(2) : lineNet,
+        lineTotal: lineNet,
+        malHizmetTutari: typeof it.malHizmetTutari === 'string' ? lineNet.toFixed(2) : lineNet,
+        kdvOrani: kdvRate,
+        kdvRate: kdvRate,
+        kdvTutari: typeof it.kdvTutari === 'string' ? kdvTutari.toFixed(2) : kdvTutari,
+        vatAmount: kdvTutari,
+        ozelMatrahNedeni: it.ozelMatrahNedeni || (kdvRate === 0 ? '351' : ''),
+        ozelMatrahTutari: it.ozelMatrahTutari || (kdvRate === 0 ? lineNet : 0)
+      };
+    });
+  }
+  return bd;
+}
+
+/**
+ * GİB e-Arşiv tablosundaki Mal Hizmet Tutarı hücrelerini denetler;
+ * 0,00 TL veya boş olan satırları Birim Fiyat ve Miktar üzerinden hesaplayıp onarır.
+ */
+function healGibInvoiceHtml(rawHtml) {
+  if (!rawHtml || typeof rawHtml !== 'string') return rawHtml;
+  let cleaned = rawHtml.replace(/Has Altın Bedeli/gi, 'Kıymetli Maden Bedeli')
+                       .replace(/Has Altın/gi, 'Kıymetli Maden');
+
+  const rowRegex = /<tr[^>]*class=["']lineTableTr["'][^>]*>([\s\S]*?)<\/tr>/gi;
+  cleaned = cleaned.replace(rowRegex, (fullRow, rowInner) => {
+    if (rowInner.includes('Mal Hizmet') && rowInner.includes('Birim Fiyat') && rowInner.includes('Sıra No')) {
+      return fullRow;
+    }
+
+    const tdRegex = /<td([^>]*)>([\s\S]*?)<\/td>/gi;
+    const tds = [];
+    let m;
+    while ((m = tdRegex.exec(fullRow)) !== null) {
+      tds.push({ full: m[0], attrs: m[1], inner: m[2], index: m.index });
+    }
+
+    if (tds.length >= 11) {
+      const lastTd = tds[10];
+      const cleanLast = lastTd.inner.replace(/&nbsp;/g, '').replace(/TL/gi, '').replace(/\s/g, '').replace(/\./g, '').replace(',', '.');
+      const lastVal = parseFloat(cleanLast);
+
+      if (isNaN(lastVal) || lastVal <= 0.001) {
+        const qtyClean = tds[2].inner.replace(/&nbsp;/g, '').replace(/Adet/gi, '').replace(/\s/g, '').replace(/\./g, '').replace(',', '.');
+        const qty = Math.max(1, parseFloat(qtyClean) || 1);
+
+        const priceClean = tds[3].inner.replace(/&nbsp;/g, '').replace(/TL/gi, '').replace(/\s/g, '').replace(/\./g, '').replace(',', '.');
+        const unitPrice = parseFloat(priceClean) || 0;
+
+        const discClean = tds[5].inner.replace(/&nbsp;/g, '').replace(/TL/gi, '').replace(/\s/g, '').replace(/\./g, '').replace(',', '.');
+        const discount = parseFloat(discClean) || 0;
+
+        const calc = Math.max(0, Math.round(((unitPrice * qty) - discount) * 100) / 100);
+        if (calc > 0) {
+          const formatted = calc.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' TL';
+          const newTd = '<td' + lastTd.attrs + '>&nbsp;' + formatted + '</td>';
+          return fullRow.substring(0, lastTd.index) + newTd + fullRow.substring(lastTd.index + lastTd.full.length);
+        }
+      }
+    }
+    return fullRow;
+  });
+
+  return cleaned;
+}
+
+/**
  * GİB E-Arşiv Fatura İşlemleri Merkezi API Yönlendiricisi
  */
 async function handleInvoiceRequest(req, res) {
@@ -1284,6 +1389,8 @@ async function handleInvoiceRequest(req, res) {
           });
         }
       }
+
+      customBreakdown = ensureValidInvoiceBreakdown(customBreakdown, rawTotal);
 
       const { renderOfficialGibHtml } = require('./gib-template');
       const customerIdentityRaw = String(req.body.customerIdentity || order.customerIdentity || order.customer?.identityNumber || '11111111111').replace(/\D/g, '');
@@ -1403,6 +1510,8 @@ async function handleInvoiceRequest(req, res) {
           });
         }
       }
+
+      customBreakdown = ensureValidInvoiceBreakdown(customBreakdown, rawTotal);
 
       const draftResult = await earsiv.createDraftInvoice(activeToken, order, customBreakdown, { cookie: activeCookie });
       const smsResult = await earsiv.sendSmsOtp(activeToken, { cookie: activeCookie });
@@ -1803,8 +1912,7 @@ async function handleInvoiceRequest(req, res) {
 
       function wrapInvoiceHtmlWithPdfToolbar(rawHtml, invNumber, targetEttn) {
         if (!rawHtml || typeof rawHtml !== 'string') return rawHtml;
-        let cleaned = rawHtml.replace(/Has Altın Bedeli/gi, 'Kıymetli Maden Bedeli')
-                             .replace(/Has Altın/gi, 'Kıymetli Maden');
+        let cleaned = healGibInvoiceHtml(rawHtml);
         if (cleaned.includes('invoice-print-header')) return cleaned;
 
         const effectiveInvoiceName = String(invNumber || 'GIB2026000000021').trim();
@@ -1867,18 +1975,22 @@ async function handleInvoiceRequest(req, res) {
       const isStoreInvoice = Boolean(targetDocObj?.isStore || order?.isStoreManual || order?.source === 'STORE_MANUAL' || (order?.orderId && String(order.orderId).startsWith('MGS-')));
 
       // Her zaman güncel ve kuruşu kuruşuna %100 eşitliği sağlayan dökümü üret (kayıtlı breakdown veya items varsa öncelikle koru)
-      const resolvedBreakdown = order?.breakdown || order?.invoiceBreakdown || calculateJewelryInvoiceBreakdown(rawTotal, cleanInvoiceProductName(order?.productName || '22 Ayar Bilezik'), {
+      const resolvedBreakdown = ensureValidInvoiceBreakdown(order?.breakdown || order?.invoiceBreakdown || calculateJewelryInvoiceBreakdown(rawTotal, cleanInvoiceProductName(order?.productName || '22 Ayar Bilezik'), {
         items: order?.items,
         isStoreManual: isStoreInvoice,
         skipAutoLabor: isStoreInvoice,
         isVip22: order?.isVip22 === true || String(order?.productName || '').includes('/22')
-      });
+      }), rawTotal);
 
       // 1. Eğer dokümanda orijinal GİB HTML'i varsa ve tutar siparişle uyuşuyorsa doğrudan döndür
       const isFakeInvoiceNo = !order?.invoiceNumber || order.invoiceNumber.length > 15 || order.invoiceNumber.startsWith('GIB20263') || order.invoiceNumber === 'GIB2026000000004';
       if (order?.officialGibHtml && typeof order.officialGibHtml === 'string' && order.officialGibHtml.includes('<html') && !isFakeInvoiceNo) {
         res.setHeader('Content-Type', 'text/html; charset=utf-8');
-        return res.status(200).send(wrapInvoiceHtmlWithPdfToolbar(order.officialGibHtml, order.invoiceNumber, targetUuid));
+        const healedStored = healGibInvoiceHtml(order.officialGibHtml);
+        if (healedStored !== order.officialGibHtml && targetDocObj?.ref) {
+          targetDocObj.ref.set({ officialGibHtml: healedStored }, { merge: true }).catch(() => {});
+        }
+        return res.status(200).send(wrapInvoiceHtmlWithPdfToolbar(healedStored, order.invoiceNumber, targetUuid));
       }
 
       // 2. GİB portalından gerçek resmi HTML ve Belge No canlı senkronize et
@@ -1894,7 +2006,7 @@ async function handleInvoiceRequest(req, res) {
             
             const updateDoc = {};
             if (gibHtml && typeof gibHtml === 'string' && gibHtml.includes('<html')) {
-              updateDoc.officialGibHtml = gibHtml;
+              updateDoc.officialGibHtml = healGibInvoiceHtml(gibHtml);
             }
             if (signedDetails?.belgeNumarasi) {
               updateDoc.invoiceNumber = signedDetails.belgeNumarasi;
@@ -1905,7 +2017,8 @@ async function handleInvoiceRequest(req, res) {
 
             if (gibHtml && typeof gibHtml === 'string' && gibHtml.includes('<html')) {
               res.setHeader('Content-Type', 'text/html; charset=utf-8');
-              return res.status(200).send(wrapInvoiceHtmlWithPdfToolbar(gibHtml, signedDetails?.belgeNumarasi || order?.invoiceNumber || invoiceNumber, targetUuid));
+              const healedGib = healGibInvoiceHtml(gibHtml);
+              return res.status(200).send(wrapInvoiceHtmlWithPdfToolbar(healedGib, signedDetails?.belgeNumarasi || order?.invoiceNumber || invoiceNumber, targetUuid));
             }
           }
         } catch (syncErr) {
@@ -2753,6 +2866,33 @@ exports.getIzkoRates = functions.https.onRequest((req, res) => {
 
 const { cashBankEvidenceApi } = require('./cash-bank-evidence/api');
 exports.cashBankEvidenceApi = cashBankEvidenceApi;
+
+const { handleMcpRequest, TOOLS: MCP_TOOLS } = require('./mcp');
+exports.mcpApi = functions.https.onRequest((req, res) => {
+  return corsMiddleware(req, res, async () => {
+    if (req.method === 'GET') {
+      res.set('Content-Type', 'application/json; charset=utf-8');
+      res.set('Cache-Control', 'public, max-age=3600');
+      return res.status(200).json({
+        mcpVersion: "2024-11-05",
+        name: "www.belginkuyumculuk.com-tool-server",
+        protocol: "Model Context Protocol (MCP) Standard V1.0",
+        capabilities: { tools: true, resources: true, prompts: true },
+        tools: MCP_TOOLS
+      });
+    }
+    if (req.method === 'POST') {
+      try {
+        const response = await handleMcpRequest(req.body);
+        return res.status(200).json(response);
+      } catch (err) {
+        return res.status(500).json({ jsonrpc: "2.0", id: null, error: { code: -32603, message: err.message } });
+      }
+    }
+    return res.status(405).json({ error: "Method not allowed" });
+  });
+});
+
 
 
 
