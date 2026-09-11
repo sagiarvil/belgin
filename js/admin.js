@@ -10516,9 +10516,6 @@ const AdminApp = {
       if (!tbody) return;
 
       const marginRatio = (this.feasibilityMargin || 5.0) / 100;
-      const now = new Date();
-      const daysLeftYear = this.countRemainingBusinessDaysInYear(now);
-      const thisYearReal = this.thisYearRealVolume || 0;
 
       const scenarios = [
         {
@@ -10583,8 +10580,8 @@ const AdminApp = {
         const daily = s.daily;
         const weekly = daily * 5;   // 5 iş günü
         const monthly = daily * 20; // 20 iş günü
-        const yearEnd = thisYearReal + (daysLeftYear * daily);
-        const yearProfit = yearEnd * marginRatio;
+        const yearly = daily * 240; // 240 iş günü
+        const yearProfit = yearly * marginRatio;
 
         const bgStyle = s.highlight ? 'background:rgba(254,243,199,0.35); font-weight:700; border-left:4px solid #D4AF37;' : '';
 
@@ -10604,7 +10601,7 @@ const AdminApp = {
               ₺${Math.round(monthly).toLocaleString('tr-TR')}
             </td>
             <td style="padding:12px 14px; text-align:right; font-family:monospace; font-weight:800; color:#0F172A;">
-              ₺${Math.round(yearEnd).toLocaleString('tr-TR')}
+              ₺${Math.round(yearly).toLocaleString('tr-TR')}
             </td>
             <td style="padding:12px 14px; text-align:right; font-family:monospace; font-weight:800; color:#B45309; background:rgba(212,175,55,0.08);">
               ₺${Math.round(yearProfit).toLocaleString('tr-TR')}
