@@ -4173,10 +4173,36 @@
       </div>
 
       <!-- ZAMAN BAZLI REEL ORTALAMALAR & PERİYOT KARTLARI (GÜNLÜK, HAFTALIK, AYLIK, YILLIK) -->
-      <div class="admin-table-card" style="padding:16px; border-radius:14px; background:#FFF;">
-        <div style="font-size:13px; font-weight:800; color:#1E293B; margin-bottom:12px; display:flex; align-items:center; gap:6px;">
-          <span>⏱️</span> <strong>Zaman Bazlı Reel Ortalamalar & Dönemsel Gerçekleşenler</strong>
-          <span style="font-size:11.5px; font-weight:600; color:#64748B; margin-left:auto;" id="feasActiveDaysText">Aktif Süre: -- gün</span>
+      <div class="admin-table-card" style="padding:18px; border-radius:14px; background:#FFF;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
+          <div style="font-size:14px; font-weight:800; color:#1E293B; display:flex; align-items:center; gap:6px;">
+            <span>⏱️</span> <strong>Zaman Bazlı Reel Ortalamalar & Dönemsel Gerçekleşenler</strong>
+          </div>
+          
+          <!-- TARİH ARALIĞI & KISAYOL FİLTRE ÇUBUĞU -->
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <!-- Kısayol Butonları -->
+            <div style="display:flex; align-items:center; gap:4px; flex-wrap:wrap;" id="feasPeriodPresetButtons">
+              <button type="button" class="btn-preset active" data-feas-preset="all" onclick="AdminApp.setFeasDatePreset('all', this)">Tümü</button>
+              <button type="button" class="btn-preset" data-feas-preset="today" onclick="AdminApp.setFeasDatePreset('today', this)">Bugün</button>
+              <button type="button" class="btn-preset" data-feas-preset="week" onclick="AdminApp.setFeasDatePreset('week', this)">Bu Hafta</button>
+              <button type="button" class="btn-preset" data-feas-preset="month" onclick="AdminApp.setFeasDatePreset('month', this)">Bu Ay</button>
+              <button type="button" class="btn-preset" data-feas-preset="year" onclick="AdminApp.setFeasDatePreset('year', this)">Bu Yıl</button>
+            </div>
+            
+            <!-- Manuel Tarih Seçiciler -->
+            <div style="display:inline-flex; align-items:center; gap:6px; background:#F8FAFC; border:1.5px solid #CBD5E1; border-radius:8px; padding:3px 10px;">
+              <span style="font-size:11px; color:#64748B; font-weight:700;">Aralık:</span>
+              <input type="date" id="feasFilterStartDate" style="border:none; background:transparent; font-size:12px; font-weight:700; color:#0F172A; outline:none; font-family:monospace;" onchange="AdminApp.onFeasCustomDateChange()">
+              <span style="color:#94A3B8; font-weight:700;">—</span>
+              <input type="date" id="feasFilterEndDate" style="border:none; background:transparent; font-size:12px; font-weight:700; color:#0F172A; outline:none; font-family:monospace;" onchange="AdminApp.onFeasCustomDateChange()">
+            </div>
+
+            <!-- Rozet: Hesaplanan Dönem İş Günü -->
+            <span style="font-size:12px; font-weight:800; color:#047857; background:#DCFCE7; border:1px solid #86EFAC; padding:4px 10px; border-radius:8px; display:inline-flex; align-items:center; gap:4px;" id="feasActiveDaysText">
+              <span>📅</span> Hesaplanan Dönem: -- İş Günü
+            </span>
+          </div>
         </div>
 
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
@@ -6002,6 +6028,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 <script src="js/data.js"></script>
 <script src="js/vip-payment.js?v=2.8.8"></script>
-<script src="js/admin.js?v=20260911-business-days-v4"></script>
+<script src="js/admin.js?v=20260911-business-days-v5"></script>
 </body>
 </html>

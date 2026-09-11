@@ -9777,6 +9777,9 @@ const AdminApp = {
   simDailyRate: 250000,
   goalTargetMode: 'month',
   goalTargetAmount: 10000000,
+  feasDatePreset: 'all',
+  feasFilterStart: null,
+  feasFilterEnd: null,
   _feasibilityInitialized: false,
 
   // 1. Sekme Açılışı ve İlk Yükleme
@@ -9811,6 +9814,111 @@ const AdminApp = {
       }
     } catch (err) {
       console.error('[AdminApp] initFeasibilityTab error:', err);
+    }
+  },
+
+  // Tarih Aralığı Kısayol Butonları (Tümü, Bugün, Bu Hafta, Bu Ay, Bu Yıl)
+  setFeasDatePreset(preset, btnEl) {
+    try {
+      this.feasDatePreset = preset;
+      const now = new Date();
+      const todayStr = this.formatLocalDate(now);
+      const startInput = document.getElementById('feasFilterStartDate');
+      const endInput = document.getElementById('feasFilterEndDate');
+
+      let startDate = null;
+      let endDate = now;
+
+      if (preset === 'today') {
+        startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
+        endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
+        if (startInput) startInput.value = todayStr;
+        if (endInput) endInput.value = todayStr;
+      } else if (preset === 'week') {
+        // Bu hafta (Pazartesi 00:00:00'dan şu ana kadar)
+        const day = now.getDay();
+        const diffToMonday = (day === 0 ? -6 : 1) - day;
+        startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + diffToMonday, 0, 0, 0, 0);
+        endDate = now;
+        if (startInput) startInput.value = this.formatLocalDate(startDate);
+        if (endInput) endInput.value = todayStr;
+      } else if (preset === 'month') {
+        // Bu ay (Ayın 1'inden şu ana kadar)
+        startDate = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0);
+        endDate = now;
+        if (startInput) startInput.value = this.formatLocalDate(startDate);
+        if (endInput) endInput.value = todayStr;
+      } else if (preset === 'year') {
+        // Bu yıl (1 Ocak'tan şu ana kadar)
+        startDate = new Date(now.getFullYear(), 0, 1, 0, 0, 0, 0);
+        endDate = now;
+        if (startInput) startInput.value = this.formatLocalDate(startDate);
+        if (endInput) endInput.value = todayStr;
+      } else { // 'all'
+        startDate = null;
+        endDate = null;
+        if (startInput) startInput.value = '';
+        if (endInput) endInput.value = '';
+      }
+
+      this.feasFilterStart = startDate;
+      this.feasFilterEnd = endDate;
+
+      // Buton aktifliklerini güncelle
+      const container = document.getElementById('feasPeriodPresetButtons');
+      if (container) {
+        container.querySelectorAll('.btn-preset').forEach(b => {
+          b.classList.remove('active');
+          b.style.borderColor = '';
+          b.style.fontWeight = '';
+        });
+        if (btnEl) {
+          btnEl.classList.add('active');
+          btnEl.style.borderColor = '#084C47';
+          btnEl.style.fontWeight = '800';
+        }
+      }
+
+      this.renderFeasibility();
+    } catch (err) {
+      console.error('[AdminApp] setFeasDatePreset error:', err);
+    }
+  },
+
+  // Manuel Tarih Girişi (Başlangıç - Bitiş)
+  onFeasCustomDateChange() {
+    try {
+      const startInput = document.getElementById('feasFilterStartDate');
+      const endInput = document.getElementById('feasFilterEndDate');
+      if (!startInput || !endInput) return;
+
+      if (startInput.value) {
+        const parts = startInput.value.split('-');
+        this.feasFilterStart = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]), 0, 0, 0, 0);
+      } else {
+        this.feasFilterStart = null;
+      }
+
+      if (endInput.value) {
+        const parts = endInput.value.split('-');
+        this.feasFilterEnd = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]), 23, 59, 59, 999);
+      } else {
+        this.feasFilterEnd = null;
+      }
+
+      this.feasDatePreset = 'custom';
+      const container = document.getElementById('feasPeriodPresetButtons');
+      if (container) {
+        container.querySelectorAll('.btn-preset').forEach(b => {
+          b.classList.remove('active');
+          b.style.borderColor = '';
+          b.style.fontWeight = '';
+        });
+      }
+
+      this.renderFeasibility();
+    } catch (err) {
+      console.error('[AdminApp] onFeasCustomDateChange error:', err);
     }
   },
 
@@ -10116,10 +10224,40 @@ const AdminApp = {
       const cardShare = totalVol > 0 ? ((cardVol / totalVol) * 100).toFixed(1) : '0';
       const eftShare = totalVol > 0 ? ((eftVol / totalVol) * 100).toFixed(1) : '0';
 
-      // Geçen aktif iş günü sayısı hesabı (Pazartesi-Cuma)
-      const elapsedBusinessDays = this.countElapsedBusinessDays(minDate, now);
+      // 2. Zaman Bazlı Reel Ortalamalar (Kullanıcının Seçtiği Tarih Aralığı veya Kısayol)
+      let filterStartDate = minDate;
+      let filterEndDate = now;
 
-      const dailyAvg = totalVol / elapsedBusinessDays;
+      if (this.feasFilterStart) {
+        filterStartDate = this.feasFilterStart;
+      }
+      if (this.feasFilterEnd) {
+        filterEndDate = this.feasFilterEnd;
+      }
+
+      // Tarih input kutularını kullanıcı görmesi için senkronize tut
+      const startInput = document.getElementById('feasFilterStartDate');
+      const endInput = document.getElementById('feasFilterEndDate');
+      if (startInput && !startInput.value && this.feasDatePreset === 'all') {
+        startInput.value = this.formatLocalDate(minDate);
+      }
+      if (endInput && !endInput.value && this.feasDatePreset === 'all') {
+        endInput.value = this.formatLocalDate(now);
+      }
+
+      // Seçilen dönemdeki siparişlerin toplam hacmi
+      let periodVol = 0;
+      paidOrders.forEach(o => {
+        const oDate = o.paidAt ? new Date(o.paidAt) : (o.createdAt ? new Date(o.createdAt) : now);
+        if (oDate >= filterStartDate && oDate <= filterEndDate) {
+          periodVol += Number(o.totalAmount || 0);
+        }
+      });
+
+      // Seçilen dönemdeki net iş günü sayısı (Pazartesi-Cuma)
+      const elapsedBusinessDays = this.countElapsedBusinessDays(filterStartDate, filterEndDate);
+
+      const dailyAvg = elapsedBusinessDays > 0 ? (periodVol / elapsedBusinessDays) : 0;
       const weeklyAvg = dailyAvg * 5;   // 1 iş haftası = 5 gün
       const monthlyAvg = dailyAvg * 20; // 1 ticari ay = 20 iş günü
       const yearlyAvg = dailyAvg * 240; // 1 ticari yıl = 240 iş günü
@@ -10209,7 +10347,7 @@ const AdminApp = {
       if (elThisYrReal) elThisYrReal.textContent = `₺${Math.round(thisYearVol).toLocaleString('tr-TR')}`;
 
       const elActiveDays = document.getElementById('feasActiveDaysText');
-      if (elActiveDays) elActiveDays.textContent = `Hesaplanan Dönem: ${elapsedBusinessDays} İş Günü`;
+      if (elActiveDays) elActiveDays.innerHTML = `<span>📅</span> Hesaplanan Dönem: ${elapsedBusinessDays} İş Günü`;
 
       const elDateRange = document.getElementById('feasDateRangeText');
       if (elDateRange) {
