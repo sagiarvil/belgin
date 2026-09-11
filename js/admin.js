@@ -1,4 +1,4 @@
-﻿// ==========================================================
+// ==========================================================
 // BELGIN KUYUMCULUK — YÖNETİCİ VE TAHSİLAT PANELİ JS MOTORU
 // ==========================================================
 
@@ -10319,32 +10319,46 @@ const AdminApp = {
       if (elAov) elAov.textContent = `₺${Math.round(aov).toLocaleString('tr-TR')}`;
       if (elTotPrf) elTotPrf.textContent = `₺${Math.round(totalVol * marginRatio).toLocaleString('tr-TR')}`;
 
-      // 3. Zaman Bazlı Reel Ortalamalar (İş Günü Esaslı)
+      // 3. Zaman Bazlı Reel Ortalamalar (Günlük Reel ve Buna Göre Haftalık, Aylık, Yıllık Simülasyon)
       const elDailyAvg = document.getElementById('feasDailyAvgVolume');
       const elDailyPrf = document.getElementById('feasDailyAvgProfit');
+      const elDailyBadge = document.getElementById('feasDailyCardBadge');
+      const elDailyHint = document.getElementById('feasDailyHintText');
+
       if (elDailyAvg) elDailyAvg.textContent = `₺${Math.round(dailyAvg).toLocaleString('tr-TR')}`;
       if (elDailyPrf) elDailyPrf.textContent = `₺${Math.round(dailyAvg * marginRatio).toLocaleString('tr-TR')}`;
 
+      if (elDailyBadge) {
+        if (this.feasDatePreset === 'today') elDailyBadge.textContent = 'BUGÜN REEL';
+        else if (this.feasDatePreset === 'week') elDailyBadge.textContent = 'BU HAFTA ORT.';
+        else if (this.feasDatePreset === 'month') elDailyBadge.textContent = 'BU AY ORT.';
+        else if (this.feasDatePreset === 'year') elDailyBadge.textContent = 'BU YIL ORT.';
+        else if (this.feasDatePreset === 'custom') elDailyBadge.textContent = 'ÖZEL ARALIK';
+        else elDailyBadge.textContent = 'REEL KASA';
+      }
+
+      if (elDailyHint) {
+        if (this.feasDatePreset === 'today') elDailyHint.textContent = 'Bugün kasaya giren reel ciro & net kârı';
+        else if (this.feasDatePreset === 'week') elDailyHint.textContent = 'Bu hafta iş günü başına düşen reel ciro & kârı';
+        else if (this.feasDatePreset === 'month') elDailyHint.textContent = 'Bu ay iş günü başına düşen reel ciro & kârı';
+        else if (this.feasDatePreset === 'year') elDailyHint.textContent = 'Bu yıl iş günü başına düşen reel ciro & kârı';
+        else elDailyHint.textContent = 'Seçilen dönemde gün başına düşen reel ciro';
+      }
+
       const elWkAvg = document.getElementById('feasWeeklyAvgVolume');
       const elWkPrf = document.getElementById('feasWeeklyAvgProfit');
-      const elLast7Real = document.getElementById('feasLast7RealVolume');
       if (elWkAvg) elWkAvg.textContent = `₺${Math.round(weeklyAvg).toLocaleString('tr-TR')}`;
       if (elWkPrf) elWkPrf.textContent = `₺${Math.round(weeklyAvg * marginRatio).toLocaleString('tr-TR')}`;
-      if (elLast7Real) elLast7Real.textContent = `₺${Math.round(last5BizDaysVol).toLocaleString('tr-TR')}`;
 
       const elMthAvg = document.getElementById('feasMonthlyAvgVolume');
       const elMthPrf = document.getElementById('feasMonthlyAvgProfit');
-      const elThisMthReal = document.getElementById('feasThisMonthRealVolume');
       if (elMthAvg) elMthAvg.textContent = `₺${Math.round(monthlyAvg).toLocaleString('tr-TR')}`;
       if (elMthPrf) elMthPrf.textContent = `₺${Math.round(monthlyAvg * marginRatio).toLocaleString('tr-TR')}`;
-      if (elThisMthReal) elThisMthReal.textContent = `₺${Math.round(thisMonthVol).toLocaleString('tr-TR')}`;
 
       const elYrAvg = document.getElementById('feasYearlyAvgVolume');
       const elYrPrf = document.getElementById('feasYearlyAvgProfit');
-      const elThisYrReal = document.getElementById('feasThisYearRealVolume');
       if (elYrAvg) elYrAvg.textContent = `₺${Math.round(yearlyAvg).toLocaleString('tr-TR')}`;
       if (elYrPrf) elYrPrf.textContent = `₺${Math.round(yearlyAvg * marginRatio).toLocaleString('tr-TR')}`;
-      if (elThisYrReal) elThisYrReal.textContent = `₺${Math.round(thisYearVol).toLocaleString('tr-TR')}`;
 
       const elActiveDays = document.getElementById('feasActiveDaysText');
       if (elActiveDays) elActiveDays.innerHTML = `<span>📅</span> Hesaplanan Dönem: ${elapsedBusinessDays} İş Günü`;
