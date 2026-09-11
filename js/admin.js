@@ -10495,47 +10495,70 @@ const AdminApp = {
     }
   },
 
-  // 15. Çoklu Senaryo Karşılaştırma Matrisi Tablosu (5 İş Günü, 20 İş Günü, 240 İş Günü)
+  // 15. Çoklu Senaryo Karşılaştırma Matrisi Tablosu (₺250.000 - ₺3.000.000 Kademeli Simülasyon)
   renderScenariosTable() {
     try {
       const tbody = document.getElementById('feasibilityScenariosTableBody');
       if (!tbody) return;
 
       const marginRatio = (this.feasibilityMargin || 5.0) / 100;
-      const baseDaily = this.realDailyAverage && this.realDailyAverage > 0 ? this.realDailyAverage : 250000;
       const now = new Date();
       const daysLeftYear = this.countRemainingBusinessDaysInYear(now);
       const thisYearReal = this.thisYearRealVolume || 0;
 
       const scenarios = [
         {
-          name: '📉 Temkinli / Düşük Hacim (-%25)',
-          desc: 'Reel iş günü temposunun %25 altında seyretmesi durumu',
-          daily: baseDaily * 0.75,
-          badge: '<span style="background:#FEE2E2; color:#991B1B; padding:3px 8px; border-radius:6px; font-weight:700; font-size:11px;">-%25 Düşüş</span>'
+          name: '🌱 ₺250.000 / Gün (Başlangıç Temposu)',
+          desc: 'Ayda 20 iş gününde ₺5.000.000 hacim üreten temel seviye',
+          daily: 250000,
+          badge: '<span style="background:#F1F5F9; color:#334155; padding:3px 8px; border-radius:6px; font-weight:700; font-size:11px;">₺250K / Gün</span>'
         },
         {
-          name: '⚖️ Mevcut Reel Tempo (Run-Rate)',
-          desc: 'Şu anki gerçek sipariş hızının aynen sürmesi',
-          daily: baseDaily,
-          badge: '<span style="background:#E0F2FE; color:#0369A1; padding:3px 8px; border-radius:6px; font-weight:800; font-size:11px;">Reel Baz Durum</span>'
+          name: '📈 ₺500.000 / Gün (1. Büyüme Eşiği)',
+          desc: 'Ayda 20 iş gününde ₺10.000.000 hacim sağlayan büyüme bandı',
+          daily: 500000,
+          badge: '<span style="background:#E0F2FE; color:#0369A1; padding:3px 8px; border-radius:6px; font-weight:700; font-size:11px;">₺500K / Gün</span>'
         },
         {
-          name: '📈 Ilımlı Büyüme (+%25)',
-          desc: 'Pazarlama veya mevsimsel etkiyle %25 artış',
-          daily: baseDaily * 1.25,
-          badge: '<span style="background:#DCFCE7; color:#15803D; padding:3px 8px; border-radius:6px; font-weight:700; font-size:11px;">+%25 Büyüme</span>'
+          name: '⚡ ₺750.000 / Gün (İvmelenme Temposu)',
+          desc: 'Ayda 20 iş gününde ₺15.000.000 hacim sağlayan ivmeli satış hızı',
+          daily: 750000,
+          badge: '<span style="background:#DCFCE7; color:#15803D; padding:3px 8px; border-radius:6px; font-weight:700; font-size:11px;">₺750K / Gün</span>'
         },
         {
-          name: '🚀 Yüksek Sezon / Agresif (+%60)',
-          desc: 'Düğün/yılbaşı/bayram veya özel kampanya ivmesi',
-          daily: baseDaily * 1.60,
-          badge: '<span style="background:#FEF3C7; color:#92400E; padding:3px 8px; border-radius:6px; font-weight:800; font-size:11px;">+%60 Zirve</span>'
+          name: '🎯 ₺1.000.000 / Gün (Milyonluk Günlük Akış)',
+          desc: 'Ayda 20 iş gününde ₺20.000.000 ciro üreten kritik dönüm noktası',
+          daily: 1000000,
+          badge: '<span style="background:#D1FAE5; color:#065F46; padding:3px 8px; border-radius:6px; font-weight:800; font-size:11px;">₺1.0M / Gün</span>'
         },
         {
-          name: '🎯 Sizin Simülasyonunuz',
-          desc: 'Yukarıdaki panelde belirlediğiniz özel iş günü hedefi',
-          daily: this.simDailyRate || baseDaily,
+          name: '🚀 ₺1.500.000 / Gün (Yüksek Hacim Segmenti)',
+          desc: 'Ayda 20 iş gününde ₺30.000.000 ciro üreten güçlü satış temposu',
+          daily: 1500000,
+          badge: '<span style="background:#FEF3C7; color:#92400E; padding:3px 8px; border-radius:6px; font-weight:800; font-size:11px;">₺1.5M / Gün</span>'
+        },
+        {
+          name: '💎 ₺2.000.000 / Gün (Büyük Operasyon & Kampanya)',
+          desc: 'Ayda 20 iş gününde ₺40.000.000 ciro üreten kurumsal / yoğun dönem hacmi',
+          daily: 2000000,
+          badge: '<span style="background:#FDE68A; color:#854D0E; padding:3px 8px; border-radius:6px; font-weight:800; font-size:11px;">₺2.0M / Gün</span>'
+        },
+        {
+          name: '🔥 ₺2.500.000 / Gün (Agresif Büyüme Seviyesi)',
+          desc: 'Ayda 20 iş gününde ₺50.000.000 ciro üreten yüksek sezon seviyesi',
+          daily: 2500000,
+          badge: '<span style="background:#FED7AA; color:#9A3412; padding:3px 8px; border-radius:6px; font-weight:800; font-size:11px;">₺2.5M / Gün</span>'
+        },
+        {
+          name: '👑 ₺3.000.000 / Gün (Maksimum Skala)',
+          desc: 'Ayda 20 iş gününde ₺60.000.000 ciro üreten tavan simülasyon kapasitesi',
+          daily: 3000000,
+          badge: '<span style="background:#FEE2E2; color:#991B1B; padding:3px 8px; border-radius:6px; font-weight:800; font-size:11px;">₺3.0M / Gün (Zirve)</span>'
+        },
+        {
+          name: '✨ Sizin Simülasyonunuz (Özel Ayarınız)',
+          desc: 'Yukarıdaki simülatör panelinde belirlediğiniz özel iş günü satış hızınız',
+          daily: this.simDailyRate || 250000,
           badge: '<span style="background:#F3E8FF; color:#6B21A8; border:1px solid #D8B4FE; padding:3px 8px; border-radius:6px; font-weight:800; font-size:11px;">Özel Simülasyon</span>',
           highlight: true
         }
@@ -10549,7 +10572,7 @@ const AdminApp = {
         const yearEnd = thisYearReal + (daysLeftYear * daily);
         const yearProfit = yearEnd * marginRatio;
 
-        const bgStyle = s.highlight ? 'background:rgba(254,243,199,0.3); font-weight:700;' : '';
+        const bgStyle = s.highlight ? 'background:rgba(254,243,199,0.35); font-weight:700; border-left:4px solid #D4AF37;' : '';
 
         rowsHtml += `
           <tr style="${bgStyle} border-bottom:1px solid #EDF2F7;">
