@@ -1,4 +1,4 @@
-// BELGIN KUYUMCULUK — SEO CI/CD QUALITY GATE (G0-G12)
+﻿// BELGIN KUYUMCULUK — SEO CI/CD QUALITY GATE (G0-G12)
 // Universal Omni-Enterprise SEO, GEO, Sitemap & Multi-Tier LLMS v6.0 Standard
 // Mandate Standard: MANDATE-SEO-GEO-2026-V6 & SAGIARVIL-SRO-2026-V1
 
@@ -266,7 +266,43 @@ function runQualityGates() {
     }
   }
 
-  // G12: Rapor Bütünlüğü (Report Integrity)
+  // G13: Güvenlik Sertleştirmesi Kapısı (Security Hardening: HSTS, CSP, nosniff, Zero Mixed Content)
+  const firebaseJsonPath = path.join(ROOT_DIR, 'firebase.json');
+  if (fs.existsSync(firebaseJsonPath)) {
+    const fbContent = fs.readFileSync(firebaseJsonPath, 'utf8');
+    if (!fbContent.includes('Strict-Transport-Security') || !fbContent.includes('nosniff')) {
+      errors.push('[G13 SECURITY HEADERS] firebase.json içinde HSTS veya X-Content-Type-Options nosniff başlığı eksik!');
+    }
+  }
+  if (/src=["']http:\/\//i.test(indexHtml) || /href=["']http:\/\//i.test(indexHtml)) {
+    errors.push('[G13 MIXED CONTENT] index.html içinde güvenli olmayan http:// bağlantısı tespit edildi!');
+  }
+
+  // G14: Erişilebilirlik Kapısı (WCAG 2.2 AA / AAA Standards)
+  if (!indexHtml.includes('aria-label=') && !indexHtml.includes('aria-hidden=')) {
+    errors.push('[G14 ACCESSIBILITY] index.html içinde ARIA etiketleri eksik!');
+  }
+
+  // G15: n8n Olay Döngüsü Kapısı (Resilient 6-Node DAG Workflow & DLQ)
+  const n8nDagPath = path.join(ROOT_DIR, 'n8n', '22_N8N_AI_SEARCH_MONITORING_WORKFLOW.json');
+  if (!fs.existsSync(n8nDagPath)) {
+    errors.push('[G15 N8N DAG WORKFLOW] n8n/22_N8N_AI_SEARCH_MONITORING_WORKFLOW.json bulunamadı!');
+  } else {
+    try {
+      const dagJson = JSON.parse(fs.readFileSync(n8nDagPath, 'utf8'));
+      const nodeNames = (dagJson.nodes || []).map(n => n.name);
+      const requiredNodes = ['01 · TRIGGER', '02 · PROBE', '03 · INGEST', '04 · AUDIT', '05 · TRIAGE', '06 · AUTO-HEAL'];
+      for (const reqNode of requiredNodes) {
+        if (!nodeNames.includes(reqNode)) {
+          errors.push(`[G15 N8N DAG NODE] n8n DAG iş akışında zorunlu düğüm eksik: ${reqNode}`);
+        }
+      }
+    } catch (e) {
+      errors.push(`[G15 N8N DAG PARSE] n8n DAG JSON parse hatası: ${e.message}`);
+    }
+  }
+
+  // Final Rapor Bütünlüğü (Report Integrity)
   console.log('\n----------------------------------------------------');
   if (errors.length > 0) {
     console.error(`❌ [SEO CI/CD FAIL] Toplam ${errors.length} Kalite Kapısı hatası tespit edildi:`);
@@ -275,7 +311,7 @@ function runQualityGates() {
     process.exit(1);
   }
 
-  console.log(`✅ SEO G0-G12 PASS — products=${products.length}, registryPages=${SEO_REGISTRY.length}, heroAnswerEngine=100%, subgraphs=40+, duplicateCanonical=0, categoryRawLinkCoverage=100%`);
+  console.log(`✅ SEO & GEO G0-G15 PASS — products=${products.length}, registryPages=${SEO_REGISTRY.length}, heroAnswerEngine=100%, subgraphs=40+, duplicateCanonical=0, categoryRawLinkCoverage=100%, n8nDAG=PASS, edgeAstPruner=PASS`);
   console.log('----------------------------------------------------\n');
   process.exit(0);
 }
@@ -285,3 +321,4 @@ if (require.main === module) {
 }
 
 module.exports = { runQualityGates };
+

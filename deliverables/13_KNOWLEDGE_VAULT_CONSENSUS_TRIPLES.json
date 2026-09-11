@@ -1,0 +1,18 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "Organization",
+        "JewelryStore"
+      ],
+      "@id": "https://www.belginkuyumculuk.com/#organization",
+      "name": "Belgin Kuyumculuk & Saat",
+      "url": "https://www.belginkuyumculuk.com/",
+      "sameAs": [
+        "https://www.wikidata.org/wiki/Q131371162",
+        "https://www.instagram.com/belginmucevherat/"
+      ]
+    }
+  ]
+}

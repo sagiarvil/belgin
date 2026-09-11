@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 const fs = require('fs');
 const path = require('path');
@@ -46,7 +46,7 @@ function buildCompactSeoSection() {
         <span>Belgin Saat • Ticari Bilgi Özeti</span>
         <span>İzmir Buca • Est. 1999</span>
       </div>
-      <p style="margin:0; max-width:1380px;">${esc(home.heroAnswerEngine)}</p>
+      <p class="hero-answer">${esc(home.heroAnswerEngine)}</p>
       <div style="display:flex; flex-wrap:wrap; gap:8px 18px; margin-top:8px; font-size:11px; color:#7a807e;">
         <span><strong style="color:#4f5754;">Son doğrulama:</strong> ${esc(modified)}</span>
         <span><strong style="color:#4f5754;">Kaynak:</strong> Belgin SSOT Knowledge Graph</span>

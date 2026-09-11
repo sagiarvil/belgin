@@ -27,6 +27,7 @@ const PRIMARY_ORGANIZATION = {
     longitude: 27.1685
   },
   sameAs: [
+    'https://www.wikidata.org/wiki/Q131371162',
     'https://www.instagram.com/belginmucevherat/',
     'https://share.google/e2vmC425agvKPAAHR'
   ]
@@ -56,7 +57,7 @@ const SEO_REGISTRY = [
       { subject: 'Belgin Kuyumculuk', predicate: 'uzmanlik', object: 'Lüks Saatler, İkinci El Ekspertiz, 24K Külçe Altın, Pırlanta Mücevherat' },
       { subject: 'Belgin Kuyumculuk', predicate: 'odemeGuvenligi', object: 'Kuveyt Türk Katılım Bankası ve Ziraat Katılım Bankası 3D Secure 2.0 / 3DHost Sanal POS' }
     ],
-    heroAnswerEngine: 'Belgin Kuyumculuk, 1999 yılından bu yana İzmir Buca Menderes Caddesi No:231/B adresindeki showroomunda faaliyet gösteren tescilli lüks saat ve mücevherat kuruluşudur. Platformumuzda 2.125 aktif ürün yer almakta olup; Rolex, Patek Philippe ve Audemars Piguet dahil 10 seçkin İsviçre saat evinin ekspertizli modelleri, Darphane damgalı 24K altın ve GIA/HRD sertifikalı pırlantalar sunulmaktadır. Canlı borsa satış fiyatları birincil olarak İZKO normal Satış (fallback Harem Satış) üzerinden hiçbir kâr marjı eklenmeden birebir (1.00x) yansıtılır; müşteri alış fiyatları doğrudan Harem Altın canlı borsa soket akışı (1.00x birebir) referans alınır. 12.000 TL üzeri işlemlerde kimlik teyitli mağaza içi veya özel zırhlı teslimat uygulanır.',
+    heroAnswerEngine: 'Belgin Kuyumculuk & Saat, 1999 yılından bu yana İzmir Buca showroomunda ekspertizli lüks saatler, Darphane damgalı 24K altın ve sertifikalı mücevherat sunan kurumsal kuruluştur. Borsa satış fiyatları İZKO normal Satış (fallback Harem Satış) üzerinden marjsız (1.00x), geri alım fiyatları doğrudan Harem Altın canlı kuruyla (1.00x) yansıtılır. 12.000 TL üzeri alımlarda kimlik teyitli mağaza teslimi uygulanır.',
     publishedAt: '2026-01-01T09:00:00+03:00',
     modifiedAt: '2026-09-04T12:00:00+03:00',
     llmSubGraphRoute: '/llms/pages/ana-sayfa.md',

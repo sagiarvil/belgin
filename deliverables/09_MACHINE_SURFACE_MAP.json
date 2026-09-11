@@ -1,0 +1,13 @@
+{
+  "manifest": "https://www.belginkuyumculuk.com/llms.txt",
+  "core": "https://www.belginkuyumculuk.com/llms/core.md",
+  "entities": [
+    "https://www.belginkuyumculuk.com/llms/entities/showroom.md",
+    "https://www.belginkuyumculuk.com/llms/entities/methodologies.md"
+  ],
+  "categories": [
+    "https://www.belginkuyumculuk.com/llms/pages/elit-kategori.md",
+    "https://www.belginkuyumculuk.com/llms/pages/saatler.md",
+    "https://www.belginkuyumculuk.com/llms/pages/mucevherat.md"
+  ]
+}

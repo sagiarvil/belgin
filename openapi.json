@@ -1,22 +1,151 @@
 {
-  "openapi": "3.0.3",
+  "openapi": "3.1.0",
   "info": {
-    "title": "Belgin Kuyumculuk API",
-    "version": "2.0.0",
-    "description": "Belgin Kuyumculuk \u00fcr\u00fcn katalo\u011fu, m\u00fccevher ve alt\u0131n koleksiyonlar\u0131 API"
+    "title": "Belgin Kuyumculuk & Saat Autonomous Agent API",
+    "version": "3.0.0",
+    "description": "Enterprise machine-readable API and tool discovery interface for Belgin Kuyumculuk & Saat (Est. 1999, İzmir Buca). Certified luxury horlogerie, bullion gold, and fine jewelry."
   },
   "servers": [
     {
-      "url": "https://www.belginkuyumculuk.com"
+      "url": "https://www.belginkuyumculuk.com",
+      "description": "Production Edge CDN Server"
     }
   ],
   "paths": {
     "/api/products": {
       "get": {
-        "summary": "\u00dcr\u00fcn ve m\u00fccevher katalo\u011fu sorgusu",
+        "summary": "Query Luxury Watch & Jewelry Catalog",
+        "operationId": "queryCatalog",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "brand",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 50
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "\u00dcr\u00fcn listesi"
+            "description": "List of active verified products",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "products": {
+                      "type": "array"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/rates": {
+      "get": {
+        "summary": "Get Live Gold Board Rates (İZKO Satış / Harem Alış)",
+        "operationId": "getGoldRates",
+        "responses": {
+          "200": {
+            "description": "Real-time bullion and jewelry rates with 1.00x margin",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mcp": {
+      "post": {
+        "summary": "Model Context Protocol (MCP) JSON-RPC 2.0 Endpoint",
+        "operationId": "handleMcp",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "jsonrpc": {
+                    "type": "string",
+                    "enum": [
+                      "2.0"
+                    ]
+                  },
+                  "method": {
+                    "type": "string"
+                  },
+                  "params": {
+                    "type": "object"
+                  },
+                  "id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "jsonrpc",
+                  "method"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "MCP JSON-RPC response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/.well-known/agent-card.json": {
+      "get": {
+        "summary": "Autonomous Agent Protocol (A2A) Agent Card v1.0",
+        "operationId": "getAgentCard",
+        "responses": {
+          "200": {
+            "description": "Signed Agent Card Profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
           }
         }
       }

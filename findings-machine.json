@@ -1,0 +1,284 @@
+{
+  "scanId": "scan-1789091352588",
+  "timestamp": "2026-09-11T01:49:12.588Z",
+  "domain": "https://www.belginkuyumculuk.com",
+  "engines": {
+    "ENG-01": {
+      "name": "KV-Cache Optimization Engine",
+      "weight": 5,
+      "score": 100,
+      "badge": "PASS",
+      "details": {
+        "hasCacheControl": true,
+        "hasAssetVersion": true,
+        "hasEdgeWorker": true
+      }
+    },
+    "ENG-02": {
+      "name": "Edge TTFB Engine",
+      "weight": 6,
+      "score": 100,
+      "badge": "PASS",
+      "details": {
+        "hasFirebaseCdn": true,
+        "hasWorkerEdge": true,
+        "hasPreconnect": true
+      }
+    },
+    "ENG-03": {
+      "name": "Provenance Engine",
+      "weight": 6,
+      "score": 100,
+      "badge": "PASS",
+      "details": {
+        "hasAuthor": true,
+        "hasIsoDate": true,
+        "hasOtsProof": true
+      }
+    },
+    "ENG-04": {
+      "name": "SEO Engine",
+      "weight": 12,
+      "score": 100,
+      "badge": "PASS",
+      "details": {
+        "hasTitle": true,
+        "hasDesc": true,
+        "hasCanonical": true,
+        "hasLang": true,
+        "noForbiddenNoindex": true,
+        "hasRobots": true,
+        "hasSitemap": true
+      }
+    },
+    "ENG-05": {
+      "name": "GEO Engine",
+      "weight": 10,
+      "score": 100,
+      "badge": "PASS",
+      "details": {
+        "byteLength": 241308,
+        "payloadOk": true,
+        "noHttp": true,
+        "hasPreferredSources": true,
+        "hasSub14KbWorker": true
+      }
+    },
+    "ENG-06": {
+      "name": "AEO Engine",
+      "weight": 9,
+      "score": 100,
+      "badge": "PASS",
+      "details": {
+        "singleH1": true,
+        "h1Count": 1,
+        "hasHeroAnswer": true,
+        "heroWords": 55,
+        "heroLengthOk": true,
+        "hasFaq": true
+      }
+    },
+    "ENG-07": {
+      "name": "LLMO Engine",
+      "weight": 8,
+      "score": 100,
+      "badge": "PASS",
+      "details": {
+        "hasLlms": true,
+        "hasH1": true,
+        "hasBlockquote": true,
+        "hasLinks": true,
+        "hasDescribedby": true,
+        "hasMarkdownAlt": true
+      }
+    },
+    "ENG-08": {
+      "name": "Entity Graph Engine",
+      "weight": 8,
+      "score": 100,
+      "badge": "PASS",
+      "details": {
+        "validSchemas": 1,
+        "hasPrimaryType": true,
+        "hasStableId": true
+      }
+    },
+    "ENG-09": {
+      "name": "Semantic Coherence Heuristics",
+      "weight": 7,
+      "score": 100,
+      "badge": "PASS",
+      "details": {
+        "hasMain": true,
+        "hasArticle": true,
+        "hasFooter": true,
+        "hasStats": true
+      }
+    },
+    "ENG-10": {
+      "name": "Retrieval Chunking Heuristics",
+      "weight": 7,
+      "score": 100,
+      "badge": "PASS",
+      "details": {
+        "hCount": 77,
+        "headingFreqOk": true,
+        "hasChunkId": true,
+        "hasImgAlt": true
+      }
+    },
+    "ENG-11": {
+      "name": "Content Quality Heuristics",
+      "weight": 6,
+      "score": 100,
+      "badge": "PASS",
+      "details": {
+        "hasContact": true,
+        "hasAddress": true,
+        "pufferyClean": true
+      }
+    },
+    "ENG-12": {
+      "name": "Citation Readiness Engine",
+      "weight": 7,
+      "score": 100,
+      "badge": "PASS",
+      "details": {
+        "hasInternalLinks": true,
+        "hasDescriptiveAnchors": true,
+        "hasLlmsLinks": true
+      }
+    },
+    "ENG-13": {
+      "name": "AAO Engine",
+      "weight": 6,
+      "score": 100,
+      "badge": "PASS",
+      "details": {
+        "hasAgentCard": true,
+        "hasOpenApi": true,
+        "hasMcp": true
+      }
+    },
+    "ENG-14": {
+      "name": "EEAT Scoring Engine",
+      "weight": 8,
+      "score": 100,
+      "badge": "PASS",
+      "details": {
+        "hasAbout": true,
+        "hasContact": true,
+        "hasPrivacy": true,
+        "hasTerms": true,
+        "hasAuthority": true
+      }
+    },
+    "ENG-15": {
+      "name": "Entity Consistency Structured Knowledge",
+      "weight": 7,
+      "score": 100,
+      "badge": "PASS",
+      "details": {
+        "hasQid": true,
+        "hasTriples": true,
+        "hasSameAs": true
+      }
+    },
+    "ENG-16": {
+      "name": "Claim Consistency Heuristics",
+      "weight": 6,
+      "score": 100,
+      "badge": "PASS",
+      "details": {
+        "hasBoardRates": true,
+        "hasHttpsAction": true,
+        "hasZeroMargin": true
+      }
+    },
+    "ENG-17": {
+      "name": "Discovery Coverage Engine",
+      "weight": 6,
+      "score": 100,
+      "badge": "PASS",
+      "details": {
+        "hasGoogle": true,
+        "hasOai": true,
+        "hasClaude": true,
+        "hasPerplexity": true
+      }
+    },
+    "ENG-18": {
+      "name": "Freshness Revision Signals",
+      "weight": 5,
+      "score": 100,
+      "badge": "PASS",
+      "details": {
+        "datesValid": true,
+        "hasManifest": true
+      }
+    }
+  },
+  "lenses": {
+    "Lens 1: SEO": {
+      "score": 100,
+      "core": 100,
+      "intelligence": 100
+    },
+    "Lens 2: GEO": {
+      "score": 100,
+      "core": 100,
+      "intelligence": 100
+    },
+    "Lens 3: AEO": {
+      "score": 100,
+      "core": 100,
+      "intelligence": 100
+    },
+    "Lens 4: LLMO": {
+      "score": 100,
+      "core": 100,
+      "intelligence": 100
+    },
+    "Lens 5: AAO-Pro": {
+      "score": 100,
+      "core": 100,
+      "intelligence": 100
+    },
+    "Lens 6: RAG": {
+      "score": 100,
+      "core": 100,
+      "intelligence": 100
+    },
+    "Lens 7: E-E-A-T": {
+      "score": 100,
+      "core": 100,
+      "intelligence": 100
+    }
+  },
+  "intelligenceAudits": {
+    "intent_cannibalization": "PASS (Tekil ve benzersiz primaryIntent eşleşmesi)",
+    "information_gain": "PASS (Witschi kalibre, tescilli ekspertiz, darphane menşei)",
+    "answer_extractability": "PASS (Hero Answer Engine ilk 100px içinde 56 kelime)",
+    "entity_graph_integrity": "PASS (Stabil @id, JewelryStore / Organization hiyerarşisi)",
+    "freshness_integrity": "PASS (Gelecek tarih yok, gerçek ISO 8601 %15 delta kuralı)",
+    "render_parity": "PASS (Kritik başlık, şema ve kanonik etiketleri statik HTML içinde)",
+    "llm_knowledge_surface": "PASS (/llms.txt + /llms-full.txt + 42 derin subgraph düğümü)",
+    "internal_link_semantic_alignment": "PASS (Yüksek bilgi yoğunluklu betimleyici bağlantı metinleri)",
+    "orphan_pages": "PASS (0 adet yetim indekslenebilir ticari sayfa)",
+    "discovery_path": "PASS (robots.txt, sitemap.xml, canonical ve llms.txt tam uyumlu)",
+    "indexnow_readiness": "PASS (32 karakterlik 9d980417475ac56c8ad72ef2c743e1e5.txt hazır)",
+    "structured_graph_consistency": "PASS (JSON-LD blokları tekil @graph kökü altında)",
+    "codebase_seo_governance": "PASS (SSOT Registry + CI/CD Kalite Kapıları G0-G15)"
+  },
+  "blackBoxRisks": {
+    "query_fanout_coverage": "LOW_RISK (Dual Sanal POS ve 22 Ayar Bilezik fanout tam kapsanmıştır)",
+    "citation_volatility": "LOW_RISK (DPO puffery temizliği yapılmış, determinizm kilitlenmiştir)",
+    "crawler_policy_divergence": "LOW_RISK (Ödeme sayfaları noindex, ticari sayfalar Allow)",
+    "render_retrieval_gap": "LOW_RISK (Sub-14KB AST Worker ile JS bağımsız semantik sunum)",
+    "entity_identity_drift": "LOW_RISK (Wikidata Q131371162 ve Google MID konsensüsü tamdır)",
+    "agent_action_friction": "LOW_RISK (A2A Agent Card, OpenAPI 3.1 ve MCP JSON-RPC 2.0 aktiftir)"
+  },
+  "overallScore": 100,
+  "totalWeight": 129,
+  "status": "PASS"
+}

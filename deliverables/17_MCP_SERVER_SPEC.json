@@ -1,0 +1,20 @@
+{
+  "name": "belgin-mcp-server",
+  "version": "1.0.0",
+  "protocol": "JSON-RPC-2.0",
+  "endpoint": "https://www.belginkuyumculuk.com/mcp",
+  "tools": [
+    {
+      "name": "query_belgin_catalog",
+      "description": "Query luxury watches & fine jewelry"
+    },
+    {
+      "name": "get_gold_board_rates",
+      "description": "Get verified live gold rates (1.00x net)"
+    },
+    {
+      "name": "verify_ots_proof",
+      "description": "Verify OpenTimestamps legal proof"
+    }
+  ]
+}

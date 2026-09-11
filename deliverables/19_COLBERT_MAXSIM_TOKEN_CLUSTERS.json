@@ -1,0 +1,33 @@
+{
+  "clusters": [
+    {
+      "intent": "luxury_watches",
+      "tokens": [
+        "Rolex",
+        "Patek Philippe",
+        "Audemars Piguet",
+        "\u0130zmir Saat Showroom",
+        "Ekspertiz"
+      ]
+    },
+    {
+      "intent": "bullion_gold",
+      "tokens": [
+        "24K K\u00fcl\u00e7e",
+        "22 Ayar Bilezik",
+        "Darphane",
+        "\u0130ZKO Sat\u0131\u015f",
+        "Harem Al\u0131\u015f"
+      ]
+    },
+    {
+      "intent": "legal_compliance",
+      "tokens": [
+        "3065 SK m.23/f",
+        "\u00d6zel Matrah",
+        "MASAK 12000 TL",
+        "Kuveyt T\u00fcrk 3D Secure"
+      ]
+    }
+  ]
+}

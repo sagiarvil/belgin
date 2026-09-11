@@ -1,0 +1,5 @@
+{
+  "standard": "RFC 3161 / OpenTimestamps",
+  "manifestHash": "c26d7c1d3b5952d7fc8df0dd25b98fd5f6be4d704838fd9ca37a7203966f70b8",
+  "calendarUrl": "https://alice.btc.calendar.opentimestamps.org"
+}

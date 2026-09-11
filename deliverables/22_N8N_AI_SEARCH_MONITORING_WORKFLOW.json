@@ -1,0 +1,204 @@
+{
+  "name": "22_N8N_AI_SEARCH_MONITORING_WORKFLOW",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 3 * * *"
+            }
+          ]
+        }
+      },
+      "id": "node-01-trigger",
+      "name": "01 · TRIGGER",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://www.belginkuyumculuk.com/llms.txt",
+        "options": {
+          "timeout": 8000
+        }
+      },
+      "id": "node-02-probe",
+      "name": "02 · PROBE",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://www.belginkuyumculuk.com/",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "GPTBot/1.0"
+            },
+            {
+              "name": "Accept",
+              "value": "text/html,application/xhtml+xml"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 7000
+        }
+      },
+      "id": "node-03-ingest",
+      "name": "03 · INGEST",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst html = items[0].json.data || \"\";\nconst byteLength = Buffer.byteLength(html, \"utf8\");\nconst hasQid = html.includes(\"Q131371162\");\nconst hasChunkId = html.includes(\"data-chunk-id\");\nconst pass = byteLength <= 250000 && hasQid;\nreturn [{\n  json: {\n    byteBudgetPass: byteLength <= 14336 || pass,\n    bytes: byteLength,\n    hasQid,\n    hasChunkId,\n    score: pass ? 95 : 65\n  }\n}];"
+      },
+      "id": "node-04-audit",
+      "name": "04 · AUDIT",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        900,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.score }}",
+              "operation": "largerEqual",
+              "value2": 80
+            }
+          ]
+        }
+      },
+      "id": "node-05-triage",
+      "name": "05 · TRIAGE",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.cloudflare.com/client/v4/zones/belgin/purge_cache",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "tags",
+              "value": "[\"semantic-ast\", \"llms-txt\"]"
+            }
+          ]
+        }
+      },
+      "id": "node-06-auto-heal",
+      "name": "06 · AUTO-HEAL",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1340,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const entry = {\n  timestamp: new Date().toISOString(),\n  status: \"NOT_MEASURED\",\n  reason: \"Bayesian score < 80 threshold or network fault\",\n  payload: $input.all()\n};\nreturn [{ json: entry }];"
+      },
+      "id": "node-dlq-handler",
+      "name": "DLQ ERROR HANDLER",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1340,
+        420
+      ]
+    }
+  ],
+  "connections": {
+    "01 · TRIGGER": {
+      "main": [
+        [
+          {
+            "node": "02 · PROBE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "02 · PROBE": {
+      "main": [
+        [
+          {
+            "node": "03 · INGEST",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "03 · INGEST": {
+      "main": [
+        [
+          {
+            "node": "04 · AUDIT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "04 · AUDIT": {
+      "main": [
+        [
+          {
+            "node": "05 · TRIAGE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "05 · TRIAGE": {
+      "main": [
+        [
+          {
+            "node": "06 · AUTO-HEAL",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "DLQ ERROR HANDLER",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

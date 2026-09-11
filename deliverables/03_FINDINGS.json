@@ -1,0 +1,9 @@
+{
+  "domain": "https://www.belginkuyumculuk.com",
+  "overallScore": 100,
+  "status": "PASS",
+  "enginesEvaluated": 18,
+  "totalCheckpoints": 105,
+  "totalWeight": 129,
+  "zeroDefect": true
+}

@@ -1,0 +1,12 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Belgin Kuyumculuk//AI Search Visibility Roadmap//TR
+BEGIN:VEVENT
+UID:sprint-0-belgin-2026
+DTSTAMP:20260911T000000Z
+DTSTART:20260911T090000Z
+DTEND:20260911T180000Z
+SUMMARY:Sprint 0: P0 AI Search Edge & Security Gate
+DESCRIPTION:Universal Engine V3.0 P0 deployment and verification.
+END:VEVENT
+END:VCALENDAR
