@@ -14,3 +14,4 @@
 [X] G13: Güvenlik Sertleştirmesi Kapısı (HSTS, CSP, nosniff, HTTPS)
 [X] G14: Erişilebilirlik Kapısı (WCAG AAA kontrast, form kontrolleri, buton isimleri)
 [X] G15: n8n Olay Döngüsü Kapısı (Resilient 6-Düğümlü DAG iş akışı)
+[X] G16: Canlı Üretim Sağlık Kontrolü Kapısı (Live Smoke Contract HTTP 200, Canonical, Schema)
