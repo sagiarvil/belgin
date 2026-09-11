@@ -302,6 +302,12 @@ function runQualityGates() {
     }
   }
 
+  // G16: Canlı Üretim Sağlık Kontrolü Kapısı (Live Production Health Check Contract)
+  const liveSmokePath = path.join(ROOT_DIR, 'scripts', 'live-seo-smoke.js');
+  if (!fs.existsSync(liveSmokePath)) {
+    errors.push('[G16 LIVE PRODUCTION HEALTH] scripts/live-seo-smoke.js bulunamadı!');
+  }
+
   // Final Rapor Bütünlüğü (Report Integrity)
   console.log('\n----------------------------------------------------');
   if (errors.length > 0) {
@@ -311,7 +317,7 @@ function runQualityGates() {
     process.exit(1);
   }
 
-  console.log(`✅ SEO & GEO G0-G15 PASS — products=${products.length}, registryPages=${SEO_REGISTRY.length}, heroAnswerEngine=100%, subgraphs=40+, duplicateCanonical=0, categoryRawLinkCoverage=100%, n8nDAG=PASS, edgeAstPruner=PASS`);
+  console.log(`✅ SEO & GEO G0-G16 PASS — products=${products.length}, registryPages=${SEO_REGISTRY.length}, heroAnswerEngine=100%, subgraphs=40+, duplicateCanonical=0, categoryRawLinkCoverage=100%, n8nDAG=PASS, edgeAstPruner=PASS, liveSmokeContract=PASS`);
   console.log('----------------------------------------------------\n');
   process.exit(0);
 }

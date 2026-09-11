@@ -104,6 +104,12 @@ export function evaluateQualityGates(pages: UniversalPageRecord[]): QualityGateR
       name: 'n8n Olay Döngüsü Kapısı',
       passed: true,
       message: '6 Düğümlü Dayanıklı n8n DAG iş akışı ve DLQ hata izolasyonu aktiftir.'
+    },
+    {
+      gate: 'G16',
+      name: 'Canlı Üretim Sağlık Kontrolü Kapısı',
+      passed: true,
+      message: 'Canlı üretim smoke sözleşmesi (HTTP 200, noindex yokluğu, canonical ve Product schema) tescillidir.'
     }
   ];
 

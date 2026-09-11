@@ -1,4 +1,4 @@
-/**
+﻿/**
  * BELGIN KUYUMCULUK — UNIVERSAL ENGINE V3.0 FORMAL VERIFICATION SUITE
  * Mandate Code: MANDATE-SUPER-UNIVERSAL-2026-V3
  * Sürüm: 3.6.0 Universal Enterprise Exclusive Master Mandate
@@ -101,10 +101,10 @@ it('6 RISKS: 6 İleri Seviye Kara Kutu Risk Analizinin tamamı LOW_RISK olmalıd
   }
 });
 
-// 5. CI/CD QUALITY GATES G0–G15
-it('G0–G15 GATES: Tüm 16 kalite kapısı (G0-G15) biçimsel doğrulama testini geçmelidir', () => {
+// 5. CI/CD QUALITY GATES G0–G16
+it('G0–G16 GATES: Tüm 17 kalite kapısı (G0-G16) biçimsel doğrulama testini geçmelidir', () => {
   const gateResults = evaluateQualityGates(SEO_REGISTRY);
-  assert.strictEqual(gateResults.length, 16, `16 kapı bekleniyordu, ${gateResults.length} bulundu`);
+  assert.strictEqual(gateResults.length, 17, `17 kapı bekleniyordu, ${gateResults.length} bulundu`);
   for (const gate of gateResults) {
     assert.strictEqual(gate.passed, true, `Kapı ${gate.gate} (${gate.name}) başarısız: ${gate.message}`);
   }
