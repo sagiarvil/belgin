@@ -4195,7 +4195,7 @@
           <div style="background:#F8FAFB; border:1px solid #E2E8F0; border-radius:10px; padding:14px;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <span style="font-size:11px; font-weight:800; color:#475569; text-transform:uppercase;">🗓️ Haftalık Ortalama Tempo</span>
-              <span style="font-size:10px; background:#DCFCE7; color:#15803D; padding:1px 6px; border-radius:4px; font-weight:700;">7 GÜNLÜK</span>
+              <span style="font-size:10px; background:#DCFCE7; color:#15803D; padding:1px 6px; border-radius:4px; font-weight:700;">5 İŞ GÜNÜ</span>
             </div>
             <div style="font-size:19px; font-weight:800; color:#0F172A; font-family:monospace; margin:4px 0;" id="feasWeeklyAvgVolume">₺0</div>
             <div style="font-size:11.5px; color:#059669; font-weight:700;">
@@ -4207,8 +4207,8 @@
           <!-- AYLIK GERÇEKLEŞEN & ORTALAMA -->
           <div style="background:#F8FAFB; border:1px solid #E2E8F0; border-radius:10px; padding:14px;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span style="font-size:11px; font-weight:800; color:#475569; text-transform:uppercase;">📆 Aylık Ortalama (30 Gün)</span>
-              <span style="font-size:10px; background:#FEF3C7; color:#92400E; padding:1px 6px; border-radius:4px; font-weight:700;">30 GÜNLÜK</span>
+              <span style="font-size:11px; font-weight:800; color:#475569; text-transform:uppercase;">📆 Aylık Ortalama (20 İş Günü)</span>
+              <span style="font-size:10px; background:#FEF3C7; color:#92400E; padding:1px 6px; border-radius:4px; font-weight:700;">20 İŞ GÜNÜ</span>
             </div>
             <div style="font-size:19px; font-weight:800; color:#0F172A; font-family:monospace; margin:4px 0;" id="feasMonthlyAvgVolume">₺0</div>
             <div style="font-size:11.5px; color:#059669; font-weight:700;">
@@ -4220,8 +4220,8 @@
           <!-- YILLIK GERÇEKLEŞEN & ORTALAMA -->
           <div style="background:#F8FAFB; border:1px solid #E2E8F0; border-radius:10px; padding:14px;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span style="font-size:11px; font-weight:800; color:#475569; text-transform:uppercase;">🏛️ Yıllık Projeksiyon (365 Gün)</span>
-              <span style="font-size:10px; background:#E0F2FE; color:#0369A1; padding:1px 6px; border-radius:4px; font-weight:700;">365 GÜN</span>
+              <span style="font-size:11px; font-weight:800; color:#475569; text-transform:uppercase;">🏛️ Yıllık Projeksiyon (240 İş Günü)</span>
+              <span style="font-size:10px; background:#E0F2FE; color:#0369A1; padding:1px 6px; border-radius:4px; font-weight:700;">240 İŞ GÜNÜ</span>
             </div>
             <div style="font-size:19px; font-weight:800; color:#0F172A; font-family:monospace; margin:4px 0;" id="feasYearlyAvgVolume">₺0</div>
             <div style="font-size:11.5px; color:#059669; font-weight:700;">
@@ -4238,9 +4238,9 @@
     <div style="margin-bottom:26px;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
         <h3 style="margin:0; font-size:17px; font-weight:800; color:#B45309; display:flex; align-items:center; gap:8px;">
-          <span>⚡</span> 2. CANLI ÖNGÖRÜ SİMÜLATÖRÜ ("Günde X / Haftada X Geçerse Ne Olur?")
+          <span>⚡</span> 2. CANLI ÖNGÖRÜ SİMÜLATÖRÜ (İş Günü Esaslı: Ay = 20 Gün, Yıl = 240 Gün)
         </h3>
-        <span style="font-size:12px; color:#475569; font-weight:600;">Değerleri değiştirin, aylık ve yıllık sonuçlar anında hesaplansın</span>
+        <span style="font-size:12px; color:#475569; font-weight:600;">Tamamı iş günü (20 gün/ay) üzerinden hesaplanır</span>
       </div>
 
       <!-- SİMÜLASYON GİRİŞ VE HESAPLAMA PANELİ -->
@@ -4253,9 +4253,9 @@
           <div style="background:#FFF; border:2px solid #084C47; border-radius:12px; padding:16px; box-shadow:0 3px 10px rgba(8,76,71,0.06);">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
               <label for="simDailyRateInput" style="font-size:13px; font-weight:800; color:#084C47;">
-                👉 Her Gün Ortalama Geçecek Satış (₺ / Gün):
+                👉 Her İş Günü Geçecek Ortalama Satış (₺ / Gün):
               </label>
-              <button type="button" class="btn-preset" style="font-size:10.5px; padding:2px 8px;" onclick="AdminApp.useRealDailyAverage()" title="Sistemin hesapladığı reel günlük ortalama tutarı yükle">Reel Ortalama Yap</button>
+              <button type="button" class="btn-preset" style="font-size:10.5px; padding:2px 8px;" onclick="AdminApp.useRealDailyAverage()" title="Sistemin hesapladığı reel iş günü ortalamasını yükle">Reel İş Günü Yap</button>
             </div>
             <div style="display:flex; align-items:center; gap:8px;">
               <span style="font-size:20px; font-weight:800; color:#084C47;">₺</span>
@@ -4272,20 +4272,20 @@
             </div>
           </div>
 
-          <!-- HAFTALIK AKIŞ GİRDİSİ (GÜNLÜK İLE TAM SENKRONİZE) -->
+          <!-- HAFTALIK AKIŞ GİRDİSİ (GÜNLÜK İLE TAM SENKRONİZE - 5 İŞ GÜNÜ) -->
           <div style="background:#FFF; border:2px solid #D97706; border-radius:12px; padding:16px; box-shadow:0 3px 10px rgba(217,119,6,0.06);">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
               <label for="simWeeklyRateInput" style="font-size:13px; font-weight:800; color:#B45309;">
-                👉 Her Hafta Ortalama Geçecek Satış (₺ / Hafta):
+                👉 Her Hafta Geçecek Satış (₺ / Hafta):
               </label>
-              <span style="font-size:11px; color:#92400E; background:#FEF3C7; padding:2px 8px; border-radius:6px; font-weight:700;">Günlük × 7 Gün</span>
+              <span style="font-size:11px; color:#92400E; background:#FEF3C7; padding:2px 8px; border-radius:6px; font-weight:700;">Günlük × 5 İş Günü</span>
             </div>
             <div style="display:flex; align-items:center; gap:8px;">
               <span style="font-size:20px; font-weight:800; color:#D97706;">₺</span>
-              <input type="number" id="simWeeklyRateInput" min="0" step="70000" value="1750000" style="width:100%; font-size:20px; font-weight:800; color:#0F172A; border:1.5px solid #CBD5E1; border-radius:8px; padding:8px 12px; font-family:monospace;" oninput="AdminApp.onSimWeeklyChange(this.value)">
+              <input type="number" id="simWeeklyRateInput" min="0" step="50000" value="1250000" style="width:100%; font-size:20px; font-weight:800; color:#0F172A; border:1.5px solid #CBD5E1; border-radius:8px; padding:8px 12px; font-family:monospace;" oninput="AdminApp.onSimWeeklyChange(this.value)">
             </div>
             <div style="font-size:11.5px; color:#64748B; margin-top:10px;">
-              Haftalık tutarı değiştirdiğinizde günlük tutar otomatik olarak <strong>/ 7</strong> şeklinde güncellenir.
+              Haftalık tutarı değiştirdiğinizde günlük tutar otomatik olarak <strong>/ 5 iş günü</strong> şeklinde güncellenir.
             </div>
           </div>
 
@@ -4294,50 +4294,50 @@
         <!-- SİMÜLASYON SONUÇ KARTLARI (HAFTALIK, AYLIK, VE KÜMÜLATİF YIL SONU) -->
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:14px; margin-bottom:18px;">
           
-          <!-- 1 HAFTA ÇIKTISI -->
+          <!-- 1 HAFTA ÇIKTISI (5 İŞ GÜNÜ) -->
           <div style="background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:12px; padding:16px;">
-            <div style="font-size:11px; font-weight:800; color:#15803D; text-transform:uppercase;">📅 1 Haftalık Yeni Ciro</div>
+            <div style="font-size:11px; font-weight:800; color:#15803D; text-transform:uppercase;">📅 1 Haftalık Ciro (5 İş Günü)</div>
             <div style="font-size:22px; font-weight:800; color:#064E3B; font-family:monospace; margin:4px 0;" id="simOutWeekVolume">₺0</div>
             <div style="font-size:13px; font-weight:800; color:#059669;">
               Net Kâr (<span class="feasCurrentMarginText">%5</span>): <span id="simOutWeekProfit">₺0</span>
             </div>
-            <div style="font-size:11px; color:#64748B; margin-top:4px;">Günde belirlenen tutar geçerse</div>
+            <div style="font-size:11px; color:#64748B; margin-top:4px;">Günde belirlenen tutar geçerse (5 gün)</div>
           </div>
 
-          <!-- 1 AY (30 GÜN) ÇIKTISI -->
+          <!-- 1 AY (20 İŞ GÜNÜ) ÇIKTISI -->
           <div style="background:#FEF3C7; border:1.5px solid #FCD34D; border-radius:12px; padding:16px;">
-            <div style="font-size:11px; font-weight:800; color:#92400E; text-transform:uppercase;">📆 1 Aylık (30 Gün) Yeni Ciro</div>
+            <div style="font-size:11px; font-weight:800; color:#92400E; text-transform:uppercase;">📆 1 Aylık Ciro (20 İş Günü)</div>
             <div style="font-size:22px; font-weight:800; color:#78350F; font-family:monospace; margin:4px 0;" id="simOutMonthVolume">₺0</div>
             <div style="font-size:13px; font-weight:800; color:#B45309;">
               Net Kâr (<span class="feasCurrentMarginText">%5</span>): <span id="simOutMonthProfit">₺0</span>
             </div>
-            <div style="font-size:11px; color:#64748B; margin-top:4px;">30 tam günlük standart dönem</div>
+            <div style="font-size:11px; color:#64748B; margin-top:4px;">20 iş günlük standart ticari ay</div>
           </div>
 
           <!-- AY SONU KÜMÜLATİF BEKLENTİ -->
           <div style="background:#F0F9FF; border:1.5px solid #BAE6FD; border-radius:12px; padding:16px;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <span style="font-size:11px; font-weight:800; color:#0369A1; text-transform:uppercase;">🏁 Ay Sonu Kümülatif Ciro</span>
-              <span style="font-size:10.5px; background:#BAE6FD; color:#0369A1; padding:1px 6px; border-radius:4px; font-weight:700;" id="simDaysLeftMonthBadge">Kalan: 0 gün</span>
+              <span style="font-size:10.5px; background:#BAE6FD; color:#0369A1; padding:1px 6px; border-radius:4px; font-weight:700;" id="simDaysLeftMonthBadge">Kalan: 0 iş günü</span>
             </div>
             <div style="font-size:22px; font-weight:800; color:#0C4A6E; font-family:monospace; margin:4px 0;" id="simOutMonthEndTotalVolume">₺0</div>
             <div style="font-size:13px; font-weight:800; color:#0284C7;">
               Ay Sonu Net Kâr: <span id="simOutMonthEndTotalProfit">₺0</span>
             </div>
-            <div style="font-size:11px; color:#64748B; margin-top:4px;">Şu anki ay gerçekleşen + kalan günlerin simülasyonu</div>
+            <div style="font-size:11px; color:#64748B; margin-top:4px;">Şu anki ay gerçekleşen + kalan iş günleri</div>
           </div>
 
-          <!-- YIL SONU KÜMÜLATİF BEKLENTİ -->
+          <!-- YIL SONU KÜMÜLATİF BEKLENTİ (240 İŞ GÜNÜ ESASI) -->
           <div style="background:linear-gradient(135deg, #02221F 0%, #084C47 100%); color:#FFF; border:1.5px solid #D4AF37; border-radius:12px; padding:16px; box-shadow:0 4px 12px rgba(8,76,71,0.2);">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span style="font-size:11px; font-weight:800; color:#FDE68A; text-transform:uppercase;">🏆 Yıl Sonu Toplam Kümülatif</span>
-              <span style="font-size:10.5px; background:rgba(212,175,55,0.3); color:#FDE68A; padding:1px 6px; border-radius:4px; font-weight:700;" id="simDaysLeftYearBadge">Kalan: 0 gün</span>
+              <span style="font-size:11px; font-weight:800; color:#FDE68A; text-transform:uppercase;">🏆 Yıl Sonu Kümülatif (240 Gün)</span>
+              <span style="font-size:10.5px; background:rgba(212,175,55,0.3); color:#FDE68A; padding:1px 6px; border-radius:4px; font-weight:700;" id="simDaysLeftYearBadge">Kalan: 0 iş günü</span>
             </div>
             <div style="font-size:22px; font-weight:800; color:#FDE68A; font-family:monospace; margin:4px 0;" id="simOutYearEndTotalVolume">₺0</div>
             <div style="font-size:13px; font-weight:800; color:#86EFAC;">
               Yıl Sonu Net Kâr: <span id="simOutYearEndTotalProfit">₺0</span>
             </div>
-            <div style="font-size:11px; color:rgba(255,255,255,0.7); margin-top:4px;">Şu anki yıl gerçekleşen + kalan günlerin simülasyonu</div>
+            <div style="font-size:11px; color:rgba(255,255,255,0.7); margin-top:4px;">Şu anki yıl gerçekleşen + kalan iş günleri</div>
           </div>
 
         </div>
@@ -4427,9 +4427,9 @@
             <tr style="background:#F1F5F4; border-bottom:2px solid #CBD5E1;">
               <th style="text-align:left; padding:12px 16px;">Senaryo Adı</th>
               <th style="text-align:right; padding:12px 14px;">Günlük Hacim</th>
-              <th style="text-align:right; padding:12px 14px;">Haftalık Hacim</th>
-              <th style="text-align:right; padding:12px 14px;">Aylık Ciro (30 Gün)</th>
-              <th style="text-align:right; padding:12px 14px;">Yıl Sonu Kümülatif</th>
+              <th style="text-align:right; padding:12px 14px;">Haftalık Hacim (5 İş Günü)</th>
+              <th style="text-align:right; padding:12px 14px;">Aylık Ciro (20 İş Günü)</th>
+              <th style="text-align:right; padding:12px 14px;">Yıl Sonu Kümülatif (240 İş Günü)</th>
               <th style="text-align:right; padding:12px 14px; background:rgba(212,175,55,0.12); color:#92400E;">Yıllık Net Kâr (<span class="feasCurrentMarginText">%5</span>)</th>
               <th style="text-align:center; padding:12px 14px;">Durum / Büyüme</th>
             </tr>
@@ -6002,6 +6002,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 <script src="js/data.js"></script>
 <script src="js/vip-payment.js?v=2.8.8"></script>
-<script src="js/admin.js?v=20260911-feasibility-v2"></script>
+<script src="js/admin.js?v=20260911-business-days-v3"></script>
 </body>
 </html>

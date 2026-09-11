@@ -9867,22 +9867,73 @@ const AdminApp = {
     });
   },
 
-  // 4. Günlük Simülasyon Akışı Değişimi
+  // 4. İş Günü (Pazartesi-Cuma) Yardımcı Hesaplayıcıları (Ay = 20 İş Günü, Yıl = 240 İş Günü, Hafta = 5 İş Günü)
+  countElapsedBusinessDays(startDate, endDate) {
+    try {
+      const cur = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+      const end = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
+      let count = 0;
+      while (cur <= end) {
+        const day = cur.getDay();
+        if (day !== 0 && day !== 6) count++; // 0: Pazar, 6: Cumartesi
+        cur.setDate(cur.getDate() + 1);
+      }
+      return Math.max(1, count);
+    } catch (_) {
+      return 1;
+    }
+  },
+
+  countRemainingBusinessDaysInMonth(date) {
+    try {
+      const cur = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
+      const end = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+      let count = 0;
+      while (cur <= end) {
+        const day = cur.getDay();
+        if (day !== 0 && day !== 6) count++;
+        cur.setDate(cur.getDate() + 1);
+      }
+      return Math.min(20, Math.max(0, count));
+    } catch (_) {
+      return 0;
+    }
+  },
+
+  countRemainingBusinessDaysInYear(date) {
+    try {
+      const cur = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
+      const end = new Date(date.getFullYear(), 11, 31);
+      let count = 0;
+      while (cur <= end) {
+        const day = cur.getDay();
+        if (day !== 0 && day !== 6) count++;
+        cur.setDate(cur.getDate() + 1);
+      }
+      return Math.min(240, Math.max(0, count));
+    } catch (_) {
+      return 0;
+    }
+  },
+
+  // 5. Günlük Simülasyon Akışı Değişimi
   onSimDailyChange(val) {
     const parsed = parseFloat(val) || 0;
     this.simDailyRate = Math.max(0, parsed);
+    this._userCustomizedDaily = true;
     const weeklyInput = document.getElementById('simWeeklyRateInput');
     if (weeklyInput) {
-      weeklyInput.value = Math.round(this.simDailyRate * 7);
+      weeklyInput.value = Math.round(this.simDailyRate * 5);
     }
     this.renderFeasibilityOutputs();
     this.renderScenariosTable();
   },
 
-  // 5. Haftalık Simülasyon Akışı Değişimi (Günlük ile Çift Yönlü Bağlı)
+  // 6. Haftalık Simülasyon Akışı Değişimi (Günlük ile Çift Yönlü Bağlı - 5 İş Günü)
   onSimWeeklyChange(val) {
     const parsed = parseFloat(val) || 0;
-    this.simDailyRate = Math.max(0, parsed / 7);
+    this.simDailyRate = Math.max(0, parsed / 5);
+    this._userCustomizedDaily = true;
     const dailyInput = document.getElementById('simDailyRateInput');
     if (dailyInput) {
       dailyInput.value = Math.round(this.simDailyRate);
@@ -9891,25 +9942,26 @@ const AdminApp = {
     this.renderScenariosTable();
   },
 
-  // 6. Hızlı Günlük Tutar Butonları
+  // 7. Hızlı Günlük Tutar Butonları
   setSimDaily(amount) {
     this.simDailyRate = amount;
+    this._userCustomizedDaily = true;
     const dailyInput = document.getElementById('simDailyRateInput');
     const weeklyInput = document.getElementById('simWeeklyRateInput');
     if (dailyInput) dailyInput.value = amount;
-    if (weeklyInput) weeklyInput.value = Math.round(amount * 7);
+    if (weeklyInput) weeklyInput.value = Math.round(amount * 5);
     this.renderFeasibilityOutputs();
     this.renderScenariosTable();
   },
 
-  // 7. Reel Ortalama Hızını Kullan Butonu
+  // 8. Reel Ortalama Hızını Kullan Butonu
   useRealDailyAverage() {
     if (this.realDailyAverage && this.realDailyAverage > 0) {
       this.setSimDaily(Math.round(this.realDailyAverage));
     }
   },
 
-  // 8. Hedef Ciro Modu Seçimi (Aylık / Yıllık)
+  // 9. Hedef Ciro Modu Seçimi (Aylık / Yıllık)
   setGoalMode(mode) {
     this.goalTargetMode = mode;
     const mBtn = document.getElementById('goalTargetModeMonthBtn');
@@ -9949,9 +10001,10 @@ const AdminApp = {
     this.renderGoalOutputs();
   },
 
-  // 9. Varsayılan Ayarlara Dön
+  // 10. Varsayılan Ayarlara Dön
   resetFeasibilityDefaults() {
     this.setFeasibilityMargin(5.0);
+    this._userCustomizedDaily = false;
     if (this.realDailyAverage && this.realDailyAverage > 0) {
       this.setSimDaily(Math.round(this.realDailyAverage));
     } else {
@@ -9962,13 +10015,13 @@ const AdminApp = {
     this.renderFeasibility();
   },
 
-  // 10. Canlı Veri Yenileme
+  // 11. Canlı Veri Yenileme
   async refreshFeasibilityData() {
     await this.loadOrders();
     this.renderFeasibility();
   },
 
-  // 11. Ana Fizibilite Hesaplama ve Render Motoru
+  // 12. Ana Fizibilite Hesaplama ve Render Motoru (Tamamı 20 İş Günü Modeli)
   renderFeasibility() {
     try {
       const orders = Array.isArray(this.orders) ? this.orders : [];
@@ -10046,14 +10099,13 @@ const AdminApp = {
       const cardShare = totalVol > 0 ? ((cardVol / totalVol) * 100).toFixed(1) : '0';
       const eftShare = totalVol > 0 ? ((eftVol / totalVol) * 100).toFixed(1) : '0';
 
-      // Geçen aktif gün sayısı hesabı
-      const diffMs = now.getTime() - minDate.getTime();
-      const elapsedDays = Math.max(1, Math.ceil(diffMs / (1000 * 60 * 60 * 24)));
+      // Geçen aktif iş günü sayısı hesabı (Pazartesi-Cuma)
+      const elapsedBusinessDays = this.countElapsedBusinessDays(minDate, now);
 
-      const dailyAvg = totalVol / elapsedDays;
-      const weeklyAvg = dailyAvg * 7;
-      const monthlyAvg = dailyAvg * 30;
-      const yearlyAvg = dailyAvg * 365;
+      const dailyAvg = totalVol / elapsedBusinessDays;
+      const weeklyAvg = dailyAvg * 5;   // 1 iş haftası = 5 gün
+      const monthlyAvg = dailyAvg * 20; // 1 ticari ay = 20 iş günü
+      const yearlyAvg = dailyAvg * 240; // 1 ticari yıl = 240 iş günü
 
       // Sınıf özelliklerine ata
       this.totalRealVolume = totalVol;
@@ -10068,7 +10120,7 @@ const AdminApp = {
           this.simDailyRate = Math.round(dailyAvg);
           dailyInput.value = this.simDailyRate;
           const weeklyInput = document.getElementById('simWeeklyRateInput');
-          if (weeklyInput) weeklyInput.value = Math.round(this.simDailyRate * 7);
+          if (weeklyInput) weeklyInput.value = Math.round(this.simDailyRate * 5);
         }
       }
 
@@ -10112,7 +10164,7 @@ const AdminApp = {
       if (elAov) elAov.textContent = `₺${Math.round(aov).toLocaleString('tr-TR')}`;
       if (elTotPrf) elTotPrf.textContent = `₺${Math.round(totalVol * marginRatio).toLocaleString('tr-TR')}`;
 
-      // 3. Zaman Bazlı Reel Ortalamalar
+      // 3. Zaman Bazlı Reel Ortalamalar (İş Günü Esaslı)
       const elDailyAvg = document.getElementById('feasDailyAvgVolume');
       const elDailyPrf = document.getElementById('feasDailyAvgProfit');
       if (elDailyAvg) elDailyAvg.textContent = `₺${Math.round(dailyAvg).toLocaleString('tr-TR')}`;
@@ -10140,7 +10192,7 @@ const AdminApp = {
       if (elThisYrReal) elThisYrReal.textContent = `₺${Math.round(thisYearVol).toLocaleString('tr-TR')}`;
 
       const elActiveDays = document.getElementById('feasActiveDaysText');
-      if (elActiveDays) elActiveDays.textContent = `Hesaplanan Dönem: ${elapsedDays} Gün`;
+      if (elActiveDays) elActiveDays.textContent = `Hesaplanan Dönem: ${elapsedBusinessDays} İş Günü`;
 
       const elDateRange = document.getElementById('feasDateRangeText');
       if (elDateRange) {
@@ -10181,23 +10233,20 @@ const AdminApp = {
     }
   },
 
-  // 12. Simülasyon Çıktıları ve Öngörü Metni
+  // 13. Simülasyon Çıktıları ve Öngörü Metni (İş Günü Esaslı)
   renderFeasibilityOutputs() {
     try {
       const simDaily = this.simDailyRate || 0;
       const marginRatio = (this.feasibilityMargin || 5.0) / 100;
       const now = new Date();
 
-      // Takvim Kalan Gün Hesaplamaları
-      const daysInCurrentMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
-      const daysLeftMonth = Math.max(0, daysInCurrentMonth - now.getDate());
+      // Kalan İş Günleri (Hafta sonları hariç; Ay max 20, Yıl max 240)
+      const daysLeftMonth = this.countRemainingBusinessDaysInMonth(now);
+      const daysLeftYear = this.countRemainingBusinessDaysInYear(now);
 
-      const endOfYear = new Date(now.getFullYear(), 11, 31, 23, 59, 59);
-      const daysLeftYear = Math.max(0, Math.ceil((endOfYear.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)));
-
-      // Hacimler
-      const simWeekVol = simDaily * 7;
-      const simMonthVol = simDaily * 30;
+      // Hacimler (5 iş günü / hafta, 20 iş günü / ay)
+      const simWeekVol = simDaily * 5;
+      const simMonthVol = simDaily * 20;
 
       const monthEndTotalVol = (this.thisMonthRealVolume || 0) + (daysLeftMonth * simDaily);
       const yearEndTotalVol = (this.thisYearRealVolume || 0) + (daysLeftYear * simDaily);
@@ -10216,14 +10265,14 @@ const AdminApp = {
       const elMonthEndBadge = document.getElementById('simDaysLeftMonthBadge');
       const elMonthEndVol = document.getElementById('simOutMonthEndTotalVolume');
       const elMonthEndPrf = document.getElementById('simOutMonthEndTotalProfit');
-      if (elMonthEndBadge) elMonthEndBadge.textContent = `Kalan: ${daysLeftMonth} gün`;
+      if (elMonthEndBadge) elMonthEndBadge.textContent = `Kalan: ${daysLeftMonth} iş günü`;
       if (elMonthEndVol) elMonthEndVol.textContent = `₺${Math.round(monthEndTotalVol).toLocaleString('tr-TR')}`;
       if (elMonthEndPrf) elMonthEndPrf.textContent = `₺${Math.round(monthEndTotalVol * marginRatio).toLocaleString('tr-TR')}`;
 
       const elYearEndBadge = document.getElementById('simDaysLeftYearBadge');
       const elYearEndVol = document.getElementById('simOutYearEndTotalVolume');
       const elYearEndPrf = document.getElementById('simOutYearEndTotalProfit');
-      if (elYearEndBadge) elYearEndBadge.textContent = `Kalan: ${daysLeftYear} gün`;
+      if (elYearEndBadge) elYearEndBadge.textContent = `Kalan: ${daysLeftYear} iş günü`;
       if (elYearEndVol) elYearEndVol.textContent = `₺${Math.round(yearEndTotalVol).toLocaleString('tr-TR')}`;
       if (elYearEndPrf) elYearEndPrf.textContent = `₺${Math.round(yearEndTotalVol * marginRatio).toLocaleString('tr-TR')}`;
 
@@ -10233,13 +10282,13 @@ const AdminApp = {
         const marginStr = `%${this.feasibilityMargin.toFixed(1).replace('.0', '')}`;
         elBox.innerHTML = `
           <div style="font-weight:800; color:#B45309; margin-bottom:4px; font-size:14px;">
-            💡 Yönetici Finansal Öngörü & Simülasyon Raporu (${marginStr} Kâr Marjı İle):
+            💡 Yönetici Finansal Öngörü & Simülasyon Raporu (${marginStr} Kâr Marjı | 20 İş Günü Modeli):
           </div>
           <div>
             Bugüne kadar kasaya giren reel <strong>₺${Math.round(this.totalRealVolume || 0).toLocaleString('tr-TR')}</strong> cironun üzerine; 
-            her gün ortalama <strong>₺${Math.round(simDaily).toLocaleString('tr-TR')}</strong> (haftada <strong>₺${Math.round(simWeekVol).toLocaleString('tr-TR')}</strong>) ciro geçmesi halinde;
-            bu ayın kalan <strong>${daysLeftMonth} gününde ₺${Math.round(daysLeftMonth * simDaily).toLocaleString('tr-TR')}</strong> ek ciro sağlanarak ay sonu toplam ciro <strong>₺${Math.round(monthEndTotalVol).toLocaleString('tr-TR')}</strong> (<strong>₺${Math.round(monthEndTotalVol * marginRatio).toLocaleString('tr-TR')}</strong> net kâr), 
-            yılın kalan <strong>${daysLeftYear} gününde ₺${Math.round(daysLeftYear * simDaily).toLocaleString('tr-TR')}</strong> ek ciro sağlanarak yıl sonu kümülatif ciro <strong>₺${Math.round(yearEndTotalVol).toLocaleString('tr-TR')}</strong> (<strong>₺${Math.round(yearEndTotalVol * marginRatio).toLocaleString('tr-TR')}</strong> net kâr) seviyesine ulaşacaktır.
+            her iş günü ortalama <strong>₺${Math.round(simDaily).toLocaleString('tr-TR')}</strong> (haftada 5 iş günü <strong>₺${Math.round(simWeekVol).toLocaleString('tr-TR')}</strong>) ciro geçmesi halinde;
+            bu ayın kalan <strong>${daysLeftMonth} iş gününde ₺${Math.round(daysLeftMonth * simDaily).toLocaleString('tr-TR')}</strong> ek ciro sağlanarak ay sonu toplam ciro <strong>₺${Math.round(monthEndTotalVol).toLocaleString('tr-TR')}</strong> (<strong>₺${Math.round(monthEndTotalVol * marginRatio).toLocaleString('tr-TR')}</strong> net kâr), 
+            yılın kalan <strong>${daysLeftYear} iş gününde ₺${Math.round(daysLeftYear * simDaily).toLocaleString('tr-TR')}</strong> ek ciro sağlanarak yıl sonu kümülatif ciro <strong>₺${Math.round(yearEndTotalVol).toLocaleString('tr-TR')}</strong> (<strong>₺${Math.round(yearEndTotalVol * marginRatio).toLocaleString('tr-TR')}</strong> net kâr) seviyesine ulaşacaktır.
           </div>
         `;
       }
@@ -10248,7 +10297,7 @@ const AdminApp = {
     }
   },
 
-  // 13. Hedef Ciro Çıktıları (Goal Seek)
+  // 14. Hedef Ciro Çıktıları (Goal Seek - İş Günü Esaslı)
   renderGoalOutputs() {
     try {
       const marginRatio = (this.feasibilityMargin || 5.0) / 100;
@@ -10258,23 +10307,21 @@ const AdminApp = {
 
       let currentReal = 0;
       let daysLeft = 1;
-      let modeLabel = 'Ay';
+      let modeLabel = 'Aylık (20 İş Günü)';
 
       if (mode === 'month') {
         currentReal = this.thisMonthRealVolume || 0;
-        const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
-        daysLeft = Math.max(1, daysInMonth - now.getDate());
-        modeLabel = 'Aylık';
+        daysLeft = Math.max(1, this.countRemainingBusinessDaysInMonth(now));
+        modeLabel = 'Aylık (20 İş Günü)';
       } else {
         currentReal = this.thisYearRealVolume || 0;
-        const endOfYear = new Date(now.getFullYear(), 11, 31);
-        daysLeft = Math.max(1, Math.ceil((endOfYear.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)));
-        modeLabel = 'Yıllık';
+        daysLeft = Math.max(1, this.countRemainingBusinessDaysInYear(now));
+        modeLabel = 'Yıllık (240 İş Günü)';
       }
 
       const remaining = Math.max(0, target - currentReal);
       const reqDaily = remaining / daysLeft;
-      const reqWeekly = reqDaily * 7;
+      const reqWeekly = reqDaily * 5; // 1 iş haftası = 5 gün
       const targetProfit = target * marginRatio;
 
       const elTitle = document.getElementById('goalResultTitle');
@@ -10283,9 +10330,9 @@ const AdminApp = {
       const elRemVol = document.getElementById('goalRemainingVolume');
       const elTgtProfit = document.getElementById('goalTargetProfit');
 
-      if (elTitle) elTitle.textContent = `🎯 ${modeLabel.toUpperCase()} HEDEFE ULAŞMAK İÇİN GEREKEN AKIŞ (Kalan ${daysLeft} Gün)`;
-      if (elReqDaily) elReqDaily.textContent = `₺${Math.round(reqDaily).toLocaleString('tr-TR')} / gün`;
-      if (elReqWeekly) elReqWeekly.textContent = `₺${Math.round(reqWeekly).toLocaleString('tr-TR')} / hafta`;
+      if (elTitle) elTitle.textContent = `🎯 ${modeLabel.toUpperCase()} HEDEFE ULAŞMAK İÇİN GEREKEN AKIŞ (Kalan ${daysLeft} İş Günü)`;
+      if (elReqDaily) elReqDaily.textContent = `₺${Math.round(reqDaily).toLocaleString('tr-TR')} / iş günü`;
+      if (elReqWeekly) elReqWeekly.textContent = `₺${Math.round(reqWeekly).toLocaleString('tr-TR')} / hafta (5 gün)`;
       if (elRemVol) elRemVol.textContent = `₺${Math.round(remaining).toLocaleString('tr-TR')}`;
       if (elTgtProfit) elTgtProfit.textContent = `₺${Math.round(targetProfit).toLocaleString('tr-TR')}`;
     } catch (err) {
@@ -10293,7 +10340,7 @@ const AdminApp = {
     }
   },
 
-  // 14. Çoklu Senaryo Karşılaştırma Matrisi Tablosu
+  // 15. Çoklu Senaryo Karşılaştırma Matrisi Tablosu (5 İş Günü, 20 İş Günü, 240 İş Günü)
   renderScenariosTable() {
     try {
       const tbody = document.getElementById('feasibilityScenariosTableBody');
@@ -10302,14 +10349,13 @@ const AdminApp = {
       const marginRatio = (this.feasibilityMargin || 5.0) / 100;
       const baseDaily = this.realDailyAverage && this.realDailyAverage > 0 ? this.realDailyAverage : 250000;
       const now = new Date();
-      const endOfYear = new Date(now.getFullYear(), 11, 31);
-      const daysLeftYear = Math.max(0, Math.ceil((endOfYear.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)));
+      const daysLeftYear = this.countRemainingBusinessDaysInYear(now);
       const thisYearReal = this.thisYearRealVolume || 0;
 
       const scenarios = [
         {
           name: '📉 Temkinli / Düşük Hacim (-%25)',
-          desc: 'Reel temponun %25 altında seyretmesi durumu',
+          desc: 'Reel iş günü temposunun %25 altında seyretmesi durumu',
           daily: baseDaily * 0.75,
           badge: '<span style="background:#FEE2E2; color:#991B1B; padding:3px 8px; border-radius:6px; font-weight:700; font-size:11px;">-%25 Düşüş</span>'
         },
@@ -10333,7 +10379,7 @@ const AdminApp = {
         },
         {
           name: '🎯 Sizin Simülasyonunuz',
-          desc: 'Yukarıdaki panelde belirlediğiniz özel hedef',
+          desc: 'Yukarıdaki panelde belirlediğiniz özel iş günü hedefi',
           daily: this.simDailyRate || baseDaily,
           badge: '<span style="background:#F3E8FF; color:#6B21A8; border:1px solid #D8B4FE; padding:3px 8px; border-radius:6px; font-weight:800; font-size:11px;">Özel Simülasyon</span>',
           highlight: true
@@ -10343,8 +10389,8 @@ const AdminApp = {
       let rowsHtml = '';
       scenarios.forEach(s => {
         const daily = s.daily;
-        const weekly = daily * 7;
-        const monthly = daily * 30;
+        const weekly = daily * 5;   // 5 iş günü
+        const monthly = daily * 20; // 20 iş günü
         const yearEnd = thisYearReal + (daysLeftYear * daily);
         const yearProfit = yearEnd * marginRatio;
 
