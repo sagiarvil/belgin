@@ -336,6 +336,9 @@ const AdminApp = {
             if (o && o.orderId) this.knownPaidOrderIds.add(o.orderId);
           });
           this.renderData(parsed.summary, parsed.orders);
+          if (typeof this.renderFeasibility === 'function') {
+            this.renderFeasibility();
+          }
           return;
         }
       }
@@ -646,6 +649,9 @@ const AdminApp = {
         this.renderData(data.summary, data.orders);
         // Otomasyon: Siparişler güncellendiğinde ekstre ve %8 hakediş hesaplarını da anlık senkronize et
         this.loadStatement();
+        if (typeof this.renderFeasibility === 'function') {
+          this.renderFeasibility();
+        }
       } else {
         throw new Error(data.message || 'Veri formatı geçersiz.');
       }
@@ -3724,20 +3730,24 @@ const AdminApp = {
     const tabBtnStmt = document.getElementById('tabBtnStatement');
     const tabBtnStore = document.getElementById('tabBtnStoreInvoices');
     const tabBtnUpdates = document.getElementById('tabBtnUpdates');
+    const tabBtnFeasibility = document.getElementById('tabBtnFeasibility');
     const ordersContent = document.getElementById('ordersTabContent');
     const stmtContent = document.getElementById('statementTabContent');
     const storeContent = document.getElementById('storeInvoicesTabContent');
     const updatesContent = document.getElementById('updatesTabContent');
+    const feasibilityContent = document.getElementById('feasibilityTabContent');
 
     if (tabBtnOrders) tabBtnOrders.classList.remove('active');
     if (tabBtnStmt) tabBtnStmt.classList.remove('active');
     if (tabBtnStore) tabBtnStore.classList.remove('active');
     if (tabBtnUpdates) tabBtnUpdates.classList.remove('active');
+    if (tabBtnFeasibility) tabBtnFeasibility.classList.remove('active');
 
     if (ordersContent) ordersContent.style.display = 'none';
     if (stmtContent) stmtContent.style.display = 'none';
     if (storeContent) storeContent.style.display = 'none';
     if (updatesContent) updatesContent.style.display = 'none';
+    if (feasibilityContent) feasibilityContent.style.display = 'none';
 
     if (tab === 'storeInvoices') {
       if (this._posCountdownTimerInterval) {
@@ -3755,6 +3765,14 @@ const AdminApp = {
       if (tabBtnUpdates) tabBtnUpdates.classList.add('active');
       if (updatesContent) updatesContent.style.display = 'block';
       this.initUpdatesTab();
+    } else if (tab === 'feasibility') {
+      if (this._posCountdownTimerInterval) {
+        clearInterval(this._posCountdownTimerInterval);
+        this._posCountdownTimerInterval = null;
+      }
+      if (tabBtnFeasibility) tabBtnFeasibility.classList.add('active');
+      if (feasibilityContent) feasibilityContent.style.display = 'block';
+      this.initFeasibilityTab();
     } else {
       if (this._posCountdownTimerInterval) {
         clearInterval(this._posCountdownTimerInterval);
@@ -9730,6 +9748,596 @@ const AdminApp = {
     }
 
     this.logToTerminal('success', `✓ ${actionLabel} başarıyla tamamlandı [${timestampStr}]`);
+  },
+
+  // ========================================================
+  // ÖNGÖRÜ, SİMÜLASYON & FİNANSAL FİZİBİLİTE MOTORU
+  // ========================================================
+
+  feasibilityMargin: 5.0,
+  simDailyRate: 250000,
+  goalTargetMode: 'month',
+  goalTargetAmount: 10000000,
+  _feasibilityInitialized: false,
+
+  // 1. Sekme Açılışı ve İlk Yükleme
+  initFeasibilityTab() {
+    if (!this._feasibilityInitialized) {
+      const savedMargin = localStorage.getItem('belgin_feasibility_margin');
+      if (savedMargin !== null && !isNaN(parseFloat(savedMargin))) {
+        this.feasibilityMargin = parseFloat(savedMargin);
+      } else {
+        this.feasibilityMargin = 5.0;
+      }
+      this._feasibilityInitialized = true;
+    }
+
+    const marginInput = document.getElementById('feasibilityMarginInput');
+    if (marginInput) marginInput.value = this.feasibilityMargin;
+    this.updateFeasibilityMarginPresetButtons();
+
+    // Siparişler henüz yüklenmemişse yükle, yüklüyse doğrudan render et
+    if (!this.orders || this.orders.length === 0) {
+      this.loadOrders().then(() => {
+        this.renderFeasibility();
+      });
+    } else {
+      this.renderFeasibility();
+    }
+  },
+
+  // 2. Kâr Marjı Değiştirme (Hızlı Butonlar)
+  setFeasibilityMargin(margin, btnEl) {
+    const val = parseFloat(margin);
+    if (isNaN(val) || val <= 0) return;
+    this.feasibilityMargin = val;
+
+    const marginInput = document.getElementById('feasibilityMarginInput');
+    if (marginInput) marginInput.value = val;
+
+    this.updateFeasibilityMarginPresetButtons(btnEl);
+    try {
+      localStorage.setItem('belgin_feasibility_margin', String(val));
+    } catch (_) {}
+
+    this.renderFeasibility();
+  },
+
+  // 3. Kâr Marjı Manuel Girişi (Input onChange / onInput)
+  onFeasibilityMarginChange(val) {
+    const parsed = parseFloat(val);
+    if (!isNaN(parsed) && parsed > 0 && parsed <= 100) {
+      this.feasibilityMargin = parsed;
+      this.updateFeasibilityMarginPresetButtons();
+      try {
+        localStorage.setItem('belgin_feasibility_margin', String(parsed));
+      } catch (_) {}
+      this.renderFeasibility();
+    }
+  },
+
+  updateFeasibilityMarginPresetButtons(activeBtn) {
+    const container = document.getElementById('feasibilityMarginPresets');
+    if (!container) return;
+    const buttons = container.querySelectorAll('.btn-preset');
+    buttons.forEach(b => {
+      if (activeBtn && b === activeBtn) {
+        b.classList.add('active');
+        b.style.borderColor = '#D4AF37';
+        b.style.fontWeight = '800';
+      } else {
+        b.classList.remove('active');
+        b.style.borderColor = '';
+        b.style.fontWeight = '';
+        const match = b.textContent.match(/%([\d\.]+)/);
+        if (match && parseFloat(match[1]) === this.feasibilityMargin && !activeBtn) {
+          b.classList.add('active');
+          b.style.borderColor = '#D4AF37';
+          b.style.fontWeight = '800';
+        }
+      }
+    });
+  },
+
+  // 4. Günlük Simülasyon Akışı Değişimi
+  onSimDailyChange(val) {
+    const parsed = parseFloat(val) || 0;
+    this.simDailyRate = Math.max(0, parsed);
+    const weeklyInput = document.getElementById('simWeeklyRateInput');
+    if (weeklyInput) {
+      weeklyInput.value = Math.round(this.simDailyRate * 7);
+    }
+    this.renderFeasibilityOutputs();
+    this.renderScenariosTable();
+  },
+
+  // 5. Haftalık Simülasyon Akışı Değişimi (Günlük ile Çift Yönlü Bağlı)
+  onSimWeeklyChange(val) {
+    const parsed = parseFloat(val) || 0;
+    this.simDailyRate = Math.max(0, parsed / 7);
+    const dailyInput = document.getElementById('simDailyRateInput');
+    if (dailyInput) {
+      dailyInput.value = Math.round(this.simDailyRate);
+    }
+    this.renderFeasibilityOutputs();
+    this.renderScenariosTable();
+  },
+
+  // 6. Hızlı Günlük Tutar Butonları
+  setSimDaily(amount) {
+    this.simDailyRate = amount;
+    const dailyInput = document.getElementById('simDailyRateInput');
+    const weeklyInput = document.getElementById('simWeeklyRateInput');
+    if (dailyInput) dailyInput.value = amount;
+    if (weeklyInput) weeklyInput.value = Math.round(amount * 7);
+    this.renderFeasibilityOutputs();
+    this.renderScenariosTable();
+  },
+
+  // 7. Reel Ortalama Hızını Kullan Butonu
+  useRealDailyAverage() {
+    if (this.realDailyAverage && this.realDailyAverage > 0) {
+      this.setSimDaily(Math.round(this.realDailyAverage));
+    }
+  },
+
+  // 8. Hedef Ciro Modu Seçimi (Aylık / Yıllık)
+  setGoalMode(mode) {
+    this.goalTargetMode = mode;
+    const mBtn = document.getElementById('goalTargetModeMonthBtn');
+    const yBtn = document.getElementById('goalTargetModeYearBtn');
+    const input = document.getElementById('goalTargetAmountInput');
+
+    if (mBtn && yBtn) {
+      if (mode === 'month') {
+        mBtn.classList.add('active');
+        yBtn.classList.remove('active');
+        if (input && (input.value == '100000000' || this.goalTargetAmount == 100000000)) {
+          this.goalTargetAmount = 10000000;
+          input.value = 10000000;
+        }
+      } else {
+        yBtn.classList.add('active');
+        mBtn.classList.remove('active');
+        if (input && (input.value == '10000000' || this.goalTargetAmount == 10000000)) {
+          this.goalTargetAmount = 100000000;
+          input.value = 100000000;
+        }
+      }
+    }
+    this.renderGoalOutputs();
+  },
+
+  onGoalTargetChange(val) {
+    const parsed = parseFloat(val) || 0;
+    this.goalTargetAmount = Math.max(0, parsed);
+    this.renderGoalOutputs();
+  },
+
+  setGoalAmount(amount) {
+    this.goalTargetAmount = amount;
+    const input = document.getElementById('goalTargetAmountInput');
+    if (input) input.value = amount;
+    this.renderGoalOutputs();
+  },
+
+  // 9. Varsayılan Ayarlara Dön
+  resetFeasibilityDefaults() {
+    this.setFeasibilityMargin(5.0);
+    if (this.realDailyAverage && this.realDailyAverage > 0) {
+      this.setSimDaily(Math.round(this.realDailyAverage));
+    } else {
+      this.setSimDaily(250000);
+    }
+    this.setGoalMode('month');
+    this.setGoalAmount(10000000);
+    this.renderFeasibility();
+  },
+
+  // 10. Canlı Veri Yenileme
+  async refreshFeasibilityData() {
+    await this.loadOrders();
+    this.renderFeasibility();
+  },
+
+  // 11. Ana Fizibilite Hesaplama ve Render Motoru
+  renderFeasibility() {
+    const orders = Array.isArray(this.orders) ? this.orders : [];
+    const marginRatio = (this.feasibilityMargin || 5.0) / 100;
+    const now = new Date();
+
+    // Sadece ödemesi tamamlanmış geçerli satışlar
+    const paidOrders = orders.filter(o => {
+      const isPaidFlag = o.isPaid === true || o.paymentStatus === 'PAID' || o.status === 'PAID';
+      return isPaidFlag && Number(o.totalAmount || 0) > 0;
+    });
+
+    let cardVol = 0;
+    let cardCnt = 0;
+    let eftVol = 0;
+    let eftCnt = 0;
+
+    let todayVol = 0;
+    let last7Vol = 0;
+    let thisMonthVol = 0;
+    let thisYearVol = 0;
+
+    const sevenDaysAgo = new Date(now.getTime() - (7 * 24 * 60 * 60 * 1000));
+    let minDate = now;
+
+    paidOrders.forEach(o => {
+      const amt = Number(o.totalAmount || 0);
+      const isEft = Boolean(
+        o.isManualEft ||
+        o.paymentMethod === 'HAVALE_EFT' ||
+        o.paymentMethod === 'HAVALE' ||
+        o.paymentMethod === 'EFT' ||
+        o.paymentChannel === 'HAVALE_EFT' ||
+        String(o.orderId || '').startsWith('BLG-EFT-') ||
+        o.bankEft
+      );
+
+      if (isEft) {
+        eftVol += amt;
+        eftCnt++;
+      } else {
+        cardVol += amt;
+        cardCnt++;
+      }
+
+      const oDate = o.paidAt ? new Date(o.paidAt) : (o.createdAt ? new Date(o.createdAt) : now);
+      if (oDate < minDate) {
+        minDate = oDate;
+      }
+
+      // Bugün
+      if (oDate.toDateString() === now.toDateString()) {
+        todayVol += amt;
+      }
+      // Son 7 gün
+      if (oDate >= sevenDaysAgo && oDate <= now) {
+        last7Vol += amt;
+      }
+      // Bu ay
+      if (oDate.getMonth() === now.getMonth() && oDate.getFullYear() === now.getFullYear()) {
+        thisMonthVol += amt;
+      }
+      // Bu yıl
+      if (oDate.getFullYear() === now.getFullYear()) {
+        thisYearVol += amt;
+      }
+    });
+
+    const totalVol = cardVol + eftVol;
+    const totalCnt = cardCnt + eftCnt;
+    const aov = totalCnt > 0 ? (totalVol / totalCnt) : 0;
+    const cardAov = cardCnt > 0 ? (cardVol / cardCnt) : 0;
+    const eftAov = eftCnt > 0 ? (eftVol / eftCnt) : 0;
+
+    const cardShare = totalVol > 0 ? ((cardVol / totalVol) * 100).toFixed(1) : '0';
+    const eftShare = totalVol > 0 ? ((eftVol / totalVol) * 100).toFixed(1) : '0';
+
+    // Geçen aktif gün sayısı hesabı
+    const diffMs = now.getTime() - minDate.getTime();
+    const elapsedDays = Math.max(1, Math.ceil(diffMs / (1000 * 60 * 60 * 24)));
+
+    const dailyAvg = totalVol / elapsedDays;
+    const weeklyAvg = dailyAvg * 7;
+    const monthlyAvg = dailyAvg * 30;
+    const yearlyAvg = dailyAvg * 365;
+
+    // Sınıf özelliklerine ata
+    this.totalRealVolume = totalVol;
+    this.thisMonthRealVolume = thisMonthVol;
+    this.thisYearRealVolume = thisYearVol;
+    this.realDailyAverage = dailyAvg;
+
+    // Eğer simülasyon henüz kullanıcı tarafından özelleştirilmediyse ve reel ortalama varsa güncelle
+    const dailyInput = document.getElementById('simDailyRateInput');
+    if (dailyInput && (!this._userCustomizedDaily)) {
+      if (dailyAvg > 0 && this.simDailyRate === 250000) {
+        this.simDailyRate = Math.round(dailyAvg);
+        dailyInput.value = this.simDailyRate;
+        const weeklyInput = document.getElementById('simWeeklyRateInput');
+        if (weeklyInput) weeklyInput.value = Math.round(this.simDailyRate * 7);
+      }
+    }
+
+    // 1. Kâr Metinlerini ve Rozetlerini Güncelle
+    const marginStr = `%${this.feasibilityMargin.toFixed(1).replace('.0', '')}`;
+    document.querySelectorAll('.feasCurrentMarginText').forEach(el => {
+      el.textContent = marginStr;
+    });
+    document.querySelectorAll('.feasCurrentMarginBadge').forEach(el => {
+      el.textContent = `${marginStr} MARJ`;
+    });
+
+    // 2. 4'lü Reel KPI Kartları
+    const elCardVol = document.getElementById('feasCardVolume');
+    const elCardCnt = document.getElementById('feasCardCount');
+    const elCardPrf = document.getElementById('feasCardProfit');
+    const elCardBadge = document.getElementById('feasCardShareBadge');
+
+    if (elCardVol) elCardVol.textContent = `₺${Math.round(cardVol).toLocaleString('tr-TR')}`;
+    if (elCardCnt) elCardCnt.textContent = `${cardCnt.toLocaleString('tr-TR')} adet`;
+    if (elCardPrf) elCardPrf.textContent = `₺${Math.round(cardVol * marginRatio).toLocaleString('tr-TR')}`;
+    if (elCardBadge) elCardBadge.textContent = `%${cardShare} Pay`;
+
+    const elEftVol = document.getElementById('feasEftVolume');
+    const elEftCnt = document.getElementById('feasEftCount');
+    const elEftPrf = document.getElementById('feasEftProfit');
+    const elEftBadge = document.getElementById('feasEftShareBadge');
+
+    if (elEftVol) elEftVol.textContent = `₺${Math.round(eftVol).toLocaleString('tr-TR')}`;
+    if (elEftCnt) elEftCnt.textContent = `${eftCnt.toLocaleString('tr-TR')} adet`;
+    if (elEftPrf) elEftPrf.textContent = `₺${Math.round(eftVol * marginRatio).toLocaleString('tr-TR')}`;
+    if (elEftBadge) elEftBadge.textContent = `%${eftShare} Pay`;
+
+    const elTotVol = document.getElementById('feasTotalVolume');
+    const elTotCnt = document.getElementById('feasTotalCount');
+    const elAov = document.getElementById('feasAov');
+    const elTotPrf = document.getElementById('feasTotalProfit');
+
+    if (elTotVol) elTotVol.textContent = `₺${Math.round(totalVol).toLocaleString('tr-TR')}`;
+    if (elTotCnt) elTotCnt.textContent = `${totalCnt.toLocaleString('tr-TR')} işlem`;
+    if (elAov) elAov.textContent = `₺${Math.round(aov).toLocaleString('tr-TR')}`;
+    if (elTotPrf) elTotPrf.textContent = `₺${Math.round(totalVol * marginRatio).toLocaleString('tr-TR')}`;
+
+    // 3. Zaman Bazlı Reel Ortalamalar
+    const elDailyAvg = document.getElementById('feasDailyAvgVolume');
+    const elDailyPrf = document.getElementById('feasDailyAvgProfit');
+    if (elDailyAvg) elDailyAvg.textContent = `₺${Math.round(dailyAvg).toLocaleString('tr-TR')}`;
+    if (elDailyPrf) elDailyPrf.textContent = `₺${Math.round(dailyAvg * marginRatio).toLocaleString('tr-TR')}`;
+
+    const elWkAvg = document.getElementById('feasWeeklyAvgVolume');
+    const elWkPrf = document.getElementById('feasWeeklyAvgProfit');
+    const elLast7Real = document.getElementById('feasLast7RealVolume');
+    if (elWkAvg) elWkAvg.textContent = `₺${Math.round(weeklyAvg).toLocaleString('tr-TR')}`;
+    if (elWkPrf) elWkPrf.textContent = `₺${Math.round(weeklyAvg * marginRatio).toLocaleString('tr-TR')}`;
+    if (elLast7Real) elLast7Real.textContent = `₺${Math.round(last7Vol).toLocaleString('tr-TR')}`;
+
+    const elMthAvg = document.getElementById('feasMonthlyAvgVolume');
+    const elMthPrf = document.getElementById('feasMonthlyAvgProfit');
+    const elThisMthReal = document.getElementById('feasThisMonthRealVolume');
+    if (elMthAvg) elMthAvg.textContent = `₺${Math.round(monthlyAvg).toLocaleString('tr-TR')}`;
+    if (elMthPrf) elMthPrf.textContent = `₺${Math.round(monthlyAvg * marginRatio).toLocaleString('tr-TR')}`;
+    if (elThisMthReal) elThisMthReal.textContent = `₺${Math.round(thisMonthVol).toLocaleString('tr-TR')}`;
+
+    const elYrAvg = document.getElementById('feasYearlyAvgVolume');
+    const elYrPrf = document.getElementById('feasYearlyAvgProfit');
+    const elThisYrReal = document.getElementById('feasThisYearRealVolume');
+    if (elYrAvg) elYrAvg.textContent = `₺${Math.round(yearlyAvg).toLocaleString('tr-TR')}`;
+    if (elYrPrf) elYrPrf.textContent = `₺${Math.round(yearlyAvg * marginRatio).toLocaleString('tr-TR')}`;
+    if (elThisYrReal) elThisYrReal.textContent = `₺${Math.round(thisYearVol).toLocaleString('tr-TR')}`;
+
+    const elActiveDays = document.getElementById('feasActiveDaysText');
+    if (elActiveDays) elActiveDays.textContent = `Hesaplanan Dönem: ${elapsedDays} Gün`;
+
+    const elDateRange = document.getElementById('feasDateRangeText');
+    if (elDateRange) {
+      elDateRange.textContent = `${minDate.toLocaleDateString('tr-TR')} - ${now.toLocaleDateString('tr-TR')} (${totalCnt} Başarılı Sipariş)`;
+    }
+
+    // 4. Detay Kartları (Kart vs Havale)
+    const elCDVol = document.getElementById('feasCardDetailVolume');
+    const elCDCnt = document.getElementById('feasCardDetailCount');
+    const elCDAov = document.getElementById('feasCardDetailAov');
+    const elCDPrf = document.getElementById('feasCardDetailProfit');
+    const elCDShare = document.getElementById('feasCardDetailShare');
+
+    if (elCDVol) elCDVol.textContent = `₺${Math.round(cardVol).toLocaleString('tr-TR')}`;
+    if (elCDCnt) elCDCnt.textContent = `${cardCnt.toLocaleString('tr-TR')} adet`;
+    if (elCDAov) elCDAov.textContent = `₺${Math.round(cardAov).toLocaleString('tr-TR')}`;
+    if (elCDPrf) elCDPrf.textContent = `₺${Math.round(cardVol * marginRatio).toLocaleString('tr-TR')}`;
+    if (elCDShare) elCDShare.textContent = `%${cardShare} Pay`;
+
+    const elEDVol = document.getElementById('feasEftDetailVolume');
+    const elEDCnt = document.getElementById('feasEftDetailCount');
+    const elEDAov = document.getElementById('feasEftDetailAov');
+    const elEDPrf = document.getElementById('feasEftDetailProfit');
+    const elEDShare = document.getElementById('feasEftDetailShare');
+
+    if (elEDVol) elEDVol.textContent = `₺${Math.round(eftVol).toLocaleString('tr-TR')}`;
+    if (elEDCnt) elEDCnt.textContent = `${eftCnt.toLocaleString('tr-TR')} adet`;
+    if (elEDAov) elEDAov.textContent = `₺${Math.round(eftAov).toLocaleString('tr-TR')}`;
+    if (elEDPrf) elEDPrf.textContent = `₺${Math.round(eftVol * marginRatio).toLocaleString('tr-TR')}`;
+    if (elEDShare) elEDShare.textContent = `%${eftShare} Pay`;
+
+    // 5. Alt Bölümleri Hesapla
+    this.renderFeasibilityOutputs();
+    this.renderGoalOutputs();
+    this.renderScenariosTable();
+  },
+
+  // 12. Simülasyon Çıktıları ve Öngörü Metni
+  renderFeasibilityOutputs() {
+    const simDaily = this.simDailyRate || 0;
+    const marginRatio = (this.feasibilityMargin || 5.0) / 100;
+    const now = new Date();
+
+    // Takvim Kalan Gün Hesaplamaları
+    const daysInCurrentMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+    const daysLeftMonth = Math.max(0, daysInCurrentMonth - now.getDate());
+
+    const endOfYear = new Date(now.getFullYear(), 11, 31, 23, 59, 59);
+    const daysLeftYear = Math.max(0, Math.ceil((endOfYear.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)));
+
+    // Hacimler
+    const simWeekVol = simDaily * 7;
+    const simMonthVol = simDaily * 30;
+
+    const monthEndTotalVol = (this.thisMonthRealVolume || 0) + (daysLeftMonth * simDaily);
+    const yearEndTotalVol = (this.thisYearRealVolume || 0) + (daysLeftYear * simDaily);
+
+    // DOM'a Yansıt
+    const elWkVol = document.getElementById('simOutWeekVolume');
+    const elWkPrf = document.getElementById('simOutWeekProfit');
+    if (elWkVol) elWkVol.textContent = `₺${Math.round(simWeekVol).toLocaleString('tr-TR')}`;
+    if (elWkPrf) elWkPrf.textContent = `₺${Math.round(simWeekVol * marginRatio).toLocaleString('tr-TR')}`;
+
+    const elMthVol = document.getElementById('simOutMonthVolume');
+    const elMthPrf = document.getElementById('simOutMonthProfit');
+    if (elMthVol) elMthVol.textContent = `₺${Math.round(simMonthVol).toLocaleString('tr-TR')}`;
+    if (elMthPrf) elMthPrf.textContent = `₺${Math.round(simMonthVol * marginRatio).toLocaleString('tr-TR')}`;
+
+    const elMonthEndBadge = document.getElementById('simDaysLeftMonthBadge');
+    const elMonthEndVol = document.getElementById('simOutMonthEndTotalVolume');
+    const elMonthEndPrf = document.getElementById('simOutMonthEndTotalProfit');
+    if (elMonthEndBadge) elMonthEndBadge.textContent = `Kalan: ${daysLeftMonth} gün`;
+    if (elMonthEndVol) elMonthEndVol.textContent = `₺${Math.round(monthEndTotalVol).toLocaleString('tr-TR')}`;
+    if (elMonthEndPrf) elMonthEndPrf.textContent = `₺${Math.round(monthEndTotalVol * marginRatio).toLocaleString('tr-TR')}`;
+
+    const elYearEndBadge = document.getElementById('simDaysLeftYearBadge');
+    const elYearEndVol = document.getElementById('simOutYearEndTotalVolume');
+    const elYearEndPrf = document.getElementById('simOutYearEndTotalProfit');
+    if (elYearEndBadge) elYearEndBadge.textContent = `Kalan: ${daysLeftYear} gün`;
+    if (elYearEndVol) elYearEndVol.textContent = `₺${Math.round(yearEndTotalVol).toLocaleString('tr-TR')}`;
+    if (elYearEndPrf) elYearEndPrf.textContent = `₺${Math.round(yearEndTotalVol * marginRatio).toLocaleString('tr-TR')}`;
+
+    // Canlı Yönetici Özet Metni (Kullanıcının İstediği Dinamik İzah)
+    const elBox = document.getElementById('simExecutiveNarrativeBox');
+    if (elBox) {
+      const marginStr = `%${this.feasibilityMargin.toFixed(1).replace('.0', '')}`;
+      elBox.innerHTML = `
+        <div style="font-weight:800; color:#B45309; margin-bottom:4px; font-size:14px;">
+          💡 Yönetici Finansal Öngörü & Simülasyon Raporu (${marginStr} Kâr Marjı İle):
+        </div>
+        <div>
+          Bugüne kadar kasaya giren reel <strong>₺${Math.round(this.totalRealVolume || 0).toLocaleString('tr-TR')}</strong> cironun üzerine; 
+          her gün ortalama <strong>₺${Math.round(simDaily).toLocaleString('tr-TR')}</strong> (haftada <strong>₺${Math.round(simWeekVol).toLocaleString('tr-TR')}</strong>) ciro geçmesi halinde;
+          bu ayın kalan <strong>${daysLeftMonth} gününde ₺${Math.round(daysLeftMonth * simDaily).toLocaleString('tr-TR')}</strong> ek ciro sağlanarak ay sonu toplam ciro <strong>₺${Math.round(monthEndTotalVol).toLocaleString('tr-TR')}</strong> (<strong>₺${Math.round(monthEndTotalVol * marginRatio).toLocaleString('tr-TR')}</strong> net kâr), 
+          yılın kalan <strong>${daysLeftYear} gününde ₺${Math.round(daysLeftYear * simDaily).toLocaleString('tr-TR')}</strong> ek ciro sağlanarak yıl sonu kümülatif ciro <strong>₺${Math.round(yearEndTotalVol).toLocaleString('tr-TR')}</strong> (<strong>₺${Math.round(yearEndTotalVol * marginRatio).toLocaleString('tr-TR')}</strong> net kâr) seviyesine ulaşacaktır.
+        </div>
+      `;
+    }
+  },
+
+  // 13. Hedef Ciro Çıktıları (Goal Seek)
+  renderGoalOutputs() {
+    const marginRatio = (this.feasibilityMargin || 5.0) / 100;
+    const target = this.goalTargetAmount || 0;
+    const mode = this.goalTargetMode || 'month';
+    const now = new Date();
+
+    let currentReal = 0;
+    let daysLeft = 1;
+    let modeLabel = 'Ay';
+
+    if (mode === 'month') {
+      currentReal = this.thisMonthRealVolume || 0;
+      const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+      daysLeft = Math.max(1, daysInMonth - now.getDate());
+      modeLabel = 'Aylık';
+    } else {
+      currentReal = this.thisYearRealVolume || 0;
+      const endOfYear = new Date(now.getFullYear(), 11, 31);
+      daysLeft = Math.max(1, Math.ceil((endOfYear.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)));
+      modeLabel = 'Yıllık';
+    }
+
+    const remaining = Math.max(0, target - currentReal);
+    const reqDaily = remaining / daysLeft;
+    const reqWeekly = reqDaily * 7;
+    const targetProfit = target * marginRatio;
+
+    const elTitle = document.getElementById('goalResultTitle');
+    const elReqDaily = document.getElementById('goalRequiredDaily');
+    const elReqWeekly = document.getElementById('goalRequiredWeekly');
+    const elRemVol = document.getElementById('goalRemainingVolume');
+    const elTgtProfit = document.getElementById('goalTargetProfit');
+
+    if (elTitle) elTitle.textContent = `🎯 ${modeLabel.toUpperCase()} HEDEFE ULAŞMAK İÇİN GEREKEN AKIŞ (Kalan ${daysLeft} Gün)`;
+    if (elReqDaily) elReqDaily.textContent = `₺${Math.round(reqDaily).toLocaleString('tr-TR')} / gün`;
+    if (elReqWeekly) elReqWeekly.textContent = `₺${Math.round(reqWeekly).toLocaleString('tr-TR')} / hafta`;
+    if (elRemVol) elRemVol.textContent = `₺${Math.round(remaining).toLocaleString('tr-TR')}`;
+    if (elTgtProfit) elTgtProfit.textContent = `₺${Math.round(targetProfit).toLocaleString('tr-TR')}`;
+  },
+
+  // 14. Çoklu Senaryo Karşılaştırma Matrisi Tablosu
+  renderScenariosTable() {
+    const tbody = document.getElementById('feasibilityScenariosTableBody');
+    if (!tbody) return;
+
+    const marginRatio = (this.feasibilityMargin || 5.0) / 100;
+    const baseDaily = this.realDailyAverage && this.realDailyAverage > 0 ? this.realDailyAverage : 250000;
+    const now = new Date();
+    const endOfYear = new Date(now.getFullYear(), 11, 31);
+    const daysLeftYear = Math.max(0, Math.ceil((endOfYear.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)));
+    const thisYearReal = this.thisYearRealVolume || 0;
+
+    const scenarios = [
+      {
+        name: '📉 Temkinli / Düşük Hacim (-%25)',
+        desc: 'Reel temponun %25 altında seyretmesi durumu',
+        daily: baseDaily * 0.75,
+        badge: '<span style="background:#FEE2E2; color:#991B1B; padding:3px 8px; border-radius:6px; font-weight:700; font-size:11px;">-%25 Düşüş</span>'
+      },
+      {
+        name: '⚖️ Mevcut Reel Tempo (Run-Rate)',
+        desc: 'Şu anki gerçek sipariş hızının aynen sürmesi',
+        daily: baseDaily,
+        badge: '<span style="background:#E0F2FE; color:#0369A1; padding:3px 8px; border-radius:6px; font-weight:800; font-size:11px;">Reel Baz Durum</span>'
+      },
+      {
+        name: '📈 Ilımlı Büyüme (+%25)',
+        desc: 'Pazarlama veya mevsimsel etkiyle %25 artış',
+        daily: baseDaily * 1.25,
+        badge: '<span style="background:#DCFCE7; color:#15803D; padding:3px 8px; border-radius:6px; font-weight:700; font-size:11px;">+%25 Büyüme</span>'
+      },
+      {
+        name: '🚀 Yüksek Sezon / Agresif (+%60)',
+        desc: 'Düğün/yılbaşı/bayram veya özel kampanya ivmesi',
+        daily: baseDaily * 1.60,
+        badge: '<span style="background:#FEF3C7; color:#92400E; padding:3px 8px; border-radius:6px; font-weight:800; font-size:11px;">+%60 Zirve</span>'
+      },
+      {
+        name: '🎯 Sizin Simülasyonunuz',
+        desc: 'Yukarıdaki panelde belirlediğiniz özel hedef',
+        daily: this.simDailyRate || baseDaily,
+        badge: '<span style="background:#F3E8FF; color:#6B21A8; border:1px solid #D8B4FE; padding:3px 8px; border-radius:6px; font-weight:800; font-size:11px;">Özel Simülasyon</span>',
+        highlight: true
+      }
+    ];
+
+    let rowsHtml = '';
+    scenarios.forEach(s => {
+      const daily = s.daily;
+      const weekly = daily * 7;
+      const monthly = daily * 30;
+      const yearEnd = thisYearReal + (daysLeftYear * daily);
+      const yearProfit = yearEnd * marginRatio;
+
+      const bgStyle = s.highlight ? 'background:rgba(254,243,199,0.3); font-weight:700;' : '';
+
+      rowsHtml += `
+        <tr style="${bgStyle} border-bottom:1px solid #EDF2F7;">
+          <td style="padding:12px 16px;">
+            <div style="font-weight:800; color:#0F172A; font-size:13.5px;">${s.name}</div>
+            <div style="font-size:11px; color:#64748B;">${s.desc}</div>
+          </td>
+          <td style="padding:12px 14px; text-align:right; font-family:monospace; font-weight:700; color:#1E293B;">
+            ₺${Math.round(daily).toLocaleString('tr-TR')}
+          </td>
+          <td style="padding:12px 14px; text-align:right; font-family:monospace; font-weight:700; color:#1E293B;">
+            ₺${Math.round(weekly).toLocaleString('tr-TR')}
+          </td>
+          <td style="padding:12px 14px; text-align:right; font-family:monospace; font-weight:700; color:#0369A1;">
+            ₺${Math.round(monthly).toLocaleString('tr-TR')}
+          </td>
+          <td style="padding:12px 14px; text-align:right; font-family:monospace; font-weight:800; color:#0F172A;">
+            ₺${Math.round(yearEnd).toLocaleString('tr-TR')}
+          </td>
+          <td style="padding:12px 14px; text-align:right; font-family:monospace; font-weight:800; color:#B45309; background:rgba(212,175,55,0.08);">
+            ₺${Math.round(yearProfit).toLocaleString('tr-TR')}
+          </td>
+          <td style="padding:12px 14px; text-align:center;">
+            ${s.badge}
+          </td>
+        </tr>
+      `;
+    });
+
+    tbody.innerHTML = rowsHtml;
   }
 };
 
