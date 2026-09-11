@@ -9916,6 +9916,23 @@ const AdminApp = {
     }
   },
 
+  getPastBusinessDaysStartDate(numBizDays, fromDate = new Date()) {
+    try {
+      const cur = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate(), 0, 0, 0, 0);
+      let counted = 0;
+      while (counted < numBizDays) {
+        cur.setDate(cur.getDate() - 1);
+        const day = cur.getDay();
+        if (day !== 0 && day !== 6) { // 0: Pazar, 6: Cumartesi
+          counted++;
+        }
+      }
+      return cur;
+    } catch (_) {
+      return new Date(fromDate.getTime() - (5 * 24 * 60 * 60 * 1000));
+    }
+  },
+
   // 5. Günlük Simülasyon Akışı Değişimi
   onSimDailyChange(val) {
     const parsed = parseFloat(val) || 0;
@@ -10040,11 +10057,11 @@ const AdminApp = {
       let eftCnt = 0;
 
       let todayVol = 0;
-      let last7Vol = 0;
+      let last5BizDaysVol = 0;
       let thisMonthVol = 0;
       let thisYearVol = 0;
 
-      const sevenDaysAgo = new Date(now.getTime() - (7 * 24 * 60 * 60 * 1000));
+      const fiveBizDaysAgo = this.getPastBusinessDaysStartDate(5, now);
       let minDate = now;
 
       paidOrders.forEach(o => {
@@ -10076,9 +10093,9 @@ const AdminApp = {
         if (oDate.toDateString() === now.toDateString()) {
           todayVol += amt;
         }
-        // Son 7 gün
-        if (oDate >= sevenDaysAgo && oDate <= now) {
-          last7Vol += amt;
+        // Son 5 iş günü
+        if (oDate >= fiveBizDaysAgo && oDate <= now) {
+          last5BizDaysVol += amt;
         }
         // Bu ay
         if (oDate.getMonth() === now.getMonth() && oDate.getFullYear() === now.getFullYear()) {
@@ -10175,7 +10192,7 @@ const AdminApp = {
       const elLast7Real = document.getElementById('feasLast7RealVolume');
       if (elWkAvg) elWkAvg.textContent = `₺${Math.round(weeklyAvg).toLocaleString('tr-TR')}`;
       if (elWkPrf) elWkPrf.textContent = `₺${Math.round(weeklyAvg * marginRatio).toLocaleString('tr-TR')}`;
-      if (elLast7Real) elLast7Real.textContent = `₺${Math.round(last7Vol).toLocaleString('tr-TR')}`;
+      if (elLast7Real) elLast7Real.textContent = `₺${Math.round(last5BizDaysVol).toLocaleString('tr-TR')}`;
 
       const elMthAvg = document.getElementById('feasMonthlyAvgVolume');
       const elMthPrf = document.getElementById('feasMonthlyAvgProfit');
@@ -10332,7 +10349,7 @@ const AdminApp = {
 
       if (elTitle) elTitle.textContent = `🎯 ${modeLabel.toUpperCase()} HEDEFE ULAŞMAK İÇİN GEREKEN AKIŞ (Kalan ${daysLeft} İş Günü)`;
       if (elReqDaily) elReqDaily.textContent = `₺${Math.round(reqDaily).toLocaleString('tr-TR')} / iş günü`;
-      if (elReqWeekly) elReqWeekly.textContent = `₺${Math.round(reqWeekly).toLocaleString('tr-TR')} / hafta (5 gün)`;
+      if (elReqWeekly) elReqWeekly.textContent = `₺${Math.round(reqWeekly).toLocaleString('tr-TR')} / hafta (5 iş günü)`;
       if (elRemVol) elRemVol.textContent = `₺${Math.round(remaining).toLocaleString('tr-TR')}`;
       if (elTgtProfit) elTgtProfit.textContent = `₺${Math.round(targetProfit).toLocaleString('tr-TR')}`;
     } catch (err) {
