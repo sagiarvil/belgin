@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260831-lion-max-gold-v5">
@@ -197,6 +197,14 @@
       if (reason) {
         const el = document.getElementById('failReasonText');
         if (el) el.textContent = decodeURIComponent(reason);
+      }
+
+      // VIP Link Token ile Tekrar Dene Butonu Senkronizasyonu
+      if (token) {
+        const retryBtn = document.getElementById('btnRetry');
+        if (retryBtn) {
+          retryBtn.href = `/vip-odeme.html?p=${encodeURIComponent(token)}${provider ? `&provider=${encodeURIComponent(provider)}` : ''}`;
+        }
       }
 
       // Dinamik Güvenlik Rozeti

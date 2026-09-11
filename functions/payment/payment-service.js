@@ -1,4 +1,4 @@
-﻿/**
+/**
  * BELGIN KUYUMCULUK — PRODUCTION HARDENED PAYMENT SERVICE
  * Kuveyt Türk Sanal POS Odaklı Çoklu POS, FSM Durum Modeli, Idempotency ve Finansal Güvenlik
  */
@@ -87,7 +87,8 @@ function verifyVipToken(token, expectedId = '') {
 
   // Format 2: Base64URL Compact Token (orderId|title|amount[|provider])
   try {
-    const base64 = token.replace(/-/g, '+').replace(/_/g, '/');
+    let base64 = token.replace(/-/g, '+').replace(/_/g, '/');
+    while (base64.length % 4) base64 += '=';
     const decoded = Buffer.from(base64, 'base64').toString('utf8');
     const pipeParts = decoded.split('|');
     if (pipeParts.length >= 3) {
@@ -105,7 +106,7 @@ function verifyVipToken(token, expectedId = '') {
           metal: 'Özel Tasarım',
           category: 'luxury',
           isGold: true,
-          provider: provider || null,
+          provider: provider || 'KUVEYTTURK',
           highValueSecureDelivery: price >= HIGH_VALUE_SECURE_DELIVERY_THRESHOLD,
         };
       }
@@ -719,7 +720,8 @@ class PaymentService {
         isSuccess: false,
         orderId,
         failReasonCode: verification.failReasonCode || 'BANK_REJECT',
-        failReasonMsg: verification.failReasonMsg || 'Ödeme banka tarafından onaylanmadı.'
+        failReasonMsg: verification.failReasonMsg || 'Ödeme banka tarafından onaylanmadı.',
+        vipToken: order?.vipToken || (order?.items?.[0]?.vipToken) || null,
       };
     }
   }

@@ -2619,11 +2619,11 @@
 
       <!-- SAĞ HIZLI İŞLEM PANELİ -->
       <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-        <button type="button" class="btn-admin-primary" style="background:linear-gradient(135deg, #0284C7 0%, #0369A1 100%); border-color:#0284C7; color:#FFF; font-weight:800; font-size:13px; min-height:44px; border-radius:10px; display:inline-flex; align-items:center; gap:6px; box-shadow:0 4px 14px rgba(2,132,199,0.25);" onclick="AdminApp.openManualEftModal()" title="Kuveyt Türk, Akbank, VakıfBank veya Ziraat Katılım'a gelen EFT/Havale müşteri ödemelerini sisteme işle (%5 kâr / %95 net hakediş ile Ekstreye otomatik kaydedilir)">
+        <button type="button" class="btn-admin-primary" style="background:linear-gradient(135deg, #0284C7 0%, #0369A1 100%); border-color:#0284C7; color:#FFF; font-weight:800; font-size:13px; min-height:44px; border-radius:10px; display:inline-flex; align-items:center; gap:6px; box-shadow:0 4px 14px rgba(2,132,199,0.25);" onclick="AdminApp.openManualEftModal()" title="Kuveyt Türk, Ziraat Katılım veya VakıfBank'a gelen EFT/Havale müşteri ödemelerini sisteme işle (%5 kâr / %95 net hakediş ile Ekstreye otomatik kaydedilir)">
           <span>🏦 ➕ Manuel EFT / Havale Girişi</span>
         </button>
-        <button type="button" class="btn-admin-primary" style="background:linear-gradient(135deg, #DC2626 0%, #EF4444 100%); border-color:#DC2626; color:#FFF; font-weight:800; font-size:13px; min-height:44px; border-radius:10px; display:inline-flex; align-items:center; gap:6px; box-shadow:0 4px 14px rgba(239,68,68,0.25);" onclick="AdminApp.openManualOrderModal()" title="Tosla İşim POS veya fiziki kanallardan geçen tahsilatı manuel sisteme işle">
-          <span>➕ Manuel Tahsilat (Tosla)</span>
+        <button type="button" class="btn-admin-primary" style="background:linear-gradient(135deg, #0284C7 0%, #0B6B3A 100%); border-color:#0B6B3A; color:#FFF; font-weight:800; font-size:13px; min-height:44px; border-radius:10px; display:inline-flex; align-items:center; gap:6px; box-shadow:0 4px 14px rgba(11,107,58,0.25);" onclick="AdminApp.openManualOrderModal()" title="Kuveyt Türk, Ziraat Katılım veya fiziki POS kanallarından geçen tahsilatı sisteme işle">
+          <span>➕ Manuel POS Tahsilatı</span>
         </button>
         <a href="/odeme-linki.html" target="_blank" class="btn-admin-primary" style="background:linear-gradient(135deg, #B45309 0%, #D97706 100%); border-color:#B45309; color:#FFF; font-weight:800; font-size:13px; min-height:44px; border-radius:10px; text-decoration:none; display:inline-flex; align-items:center; gap:6px; box-shadow:0 4px 14px rgba(217,119,6,0.25);" title="Müşteriye özel WhatsApp VIP ödeme linki oluştur">
           <span>🔗 VIP Ödeme Linki</span>
@@ -3688,7 +3688,7 @@
             </p>
 
             <div class="update-card-rules">
-              <strong>📦 Stok ve Fiyat Emniyeti:</strong> Kaynakta tükenen modeller anında "Tükendi"ye çekilir, fiyat güncellemeleri anında katalog ve PayTR dosyalarına yansır.
+              <strong>📦 Stok ve Fiyat Emniyeti:</strong> Kaynakta tükenen modeller anında "Tükendi"ye çekilir, fiyat güncellemeleri anında ürün ve ödeme sistemlerine yansır.
             </div>
           </div>
 
@@ -4140,7 +4140,7 @@
             <span>İşlem: <strong id="feasEftCount" style="color:#0F172A;">0 adet</strong></span>
             <span>Kâr (<span class="feasCurrentMarginText">%5</span>): <strong id="feasEftProfit" style="color:#4F46E5;">₺0</strong></span>
           </div>
-          <div style="margin-top:8px; font-size:11px; color:#94A3B8;">Banka Hesapları (Kuveyt Türk, Akbank, Vakıf, Ziraat vb.)</div>
+          <div style="margin-top:8px; font-size:11px; color:#94A3B8;">Banka Hesapları (Kuveyt Türk, Ziraat Katılım, Vakıf vb.)</div>
         </div>
 
         <!-- 3. GENEL TOPLAM CİRO (REEL HACİM) -->
@@ -4762,9 +4762,8 @@
         </label>
         <select id="payTypeInput" style="width:100%; border:1.5px solid #CBD5E1; padding:9px 12px; border-radius:6px; font-size:13px; font-weight:600; color:#1E293B; background:#FFF;">
           <option value="Kuveyt Türk" selected>🔵 Kuveyt Türk (Nakit / Havale)</option>
-          <option value="Akbank">🟠 Akbank Havale</option>
-          <option value="VakıfBank">🟡 VakıfBank Havale</option>
           <option value="Ziraat Katılım">🟢 Ziraat Katılım Havale</option>
+          <option value="VakıfBank">🟡 VakıfBank Havale</option>
           <option value="Banka/Havale">🏦 Diğer Banka Havalesi / EFT</option>
           <option value="Nakit">💵 Elden Nakit Tahsilat</option>
           <option value="POS Linki">🔗 POS / Sanal Link</option>
@@ -4880,10 +4879,9 @@
             <label style="display:block; font-size:11px; font-weight:800; color:#7F1D1D; margin-bottom:3px;">
               Ödeme Kuruluşu / Kanal: *
             </label>
-            <select id="manualOrderProvider" required style="width:100%; border:1.5px solid #FCA5A5; background:#FFF; padding:8px 10px; border-radius:6px; font-size:12.5px; font-weight:800; color:#991B1B;">
-              <option value="TOSLA_ISIM" selected>🔴 Tosla İşim (Akbank / TÖHÖŞ Fiziki POS)</option>
-              <option value="KUVEYT_POS">🟢 Kuveyt Türk Fiziki POS</option>
-              <option value="PAYTR">🔵 PayTR Sanal POS</option>
+            <select id="manualOrderProvider" required style="width:100%; border:1.5px solid #0284C7; background:#FFF; padding:8px 10px; border-radius:6px; font-size:12.5px; font-weight:800; color:#0369A1;">
+              <option value="KUVEYT_POS" selected>🔵 Kuveyt Türk Fiziki / Sanal POS</option>
+              <option value="ZIRAAT_POS">🟢 Ziraat Katılım Fiziki / Sanal POS</option>
               <option value="HAVALE_EFT">🏛️ Banka Havalesi / FAST / EFT</option>
               <option value="DIGER_POS">💳 Diğer Fiziki POS</option>
             </select>
@@ -5124,29 +5122,13 @@
           <span style="font-size:11px; font-weight:700; color:#0284C7; background:#E0F2FE; padding:2px 8px; border-radius:12px;">Para Hangi Bankadaysa Seçin</span>
         </div>
 
-        <!-- Banka Hızlı Seçim Buton Kartları (4 Banka) -->
-        <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:8px; margin-bottom:12px;" id="manualEftBankCardGroup">
+        <!-- Banka Hızlı Seçim Buton Kartları (Kuveyt Türk, Ziraat Katılım, VakıfBank) -->
+        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:8px; margin-bottom:12px;" id="manualEftBankCardGroup">
           <button type="button" class="btn-eft-bank-card active" id="btnBankKuveyt" onclick="AdminApp.selectEftBank('KUVEYTTURK')" style="display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:8px; border:2px solid #0284C7; background:#E0F2FE; color:#0369A1; font-weight:800; font-size:12.5px; cursor:pointer; text-align:left; transition:all 0.15s ease;">
             <span style="font-size:18px;">🔵</span>
             <div>
               <div style="line-height:1.2;">KUVEYT TÜRK</div>
-              <span style="font-size:10px; opacity:0.85; font-weight:600;">Nakit / Havale Ödemeleri</span>
-            </div>
-          </button>
-
-          <button type="button" class="btn-eft-bank-card" id="btnBankAkbank" onclick="AdminApp.selectEftBank('AKBANK')" style="display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:8px; border:1.5px solid #CBD5E1; background:#FFF; color:#334155; font-weight:800; font-size:12.5px; cursor:pointer; text-align:left; transition:all 0.15s ease;">
-            <span style="font-size:18px;">🟠</span>
-            <div>
-              <div style="line-height:1.2;">AKBANK</div>
-              <span style="font-size:10px; opacity:0.85; font-weight:600;">Akbank Hesabı</span>
-            </div>
-          </button>
-
-          <button type="button" class="btn-eft-bank-card" id="btnBankVakif" onclick="AdminApp.selectEftBank('VAKIFBANK')" style="display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:8px; border:1.5px solid #CBD5E1; background:#FFF; color:#334155; font-weight:800; font-size:12.5px; cursor:pointer; text-align:left; transition:all 0.15s ease;">
-            <span style="font-size:18px;">🟡</span>
-            <div>
-              <div style="line-height:1.2;">VAKIFBANK</div>
-              <span style="font-size:10px; opacity:0.85; font-weight:600;">VakıfBank Hesabı</span>
+              <span style="font-size:10px; opacity:0.85; font-weight:600;">Nakit / Havale</span>
             </div>
           </button>
 
@@ -5155,6 +5137,14 @@
             <div>
               <div style="line-height:1.2;">ZİRAAT KATILIM</div>
               <span style="font-size:10px; opacity:0.85; font-weight:600;">Ziraat Katılım Hesabı</span>
+            </div>
+          </button>
+
+          <button type="button" class="btn-eft-bank-card" id="btnBankVakif" onclick="AdminApp.selectEftBank('VAKIFBANK')" style="display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:8px; border:1.5px solid #CBD5E1; background:#FFF; color:#334155; font-weight:800; font-size:12.5px; cursor:pointer; text-align:left; transition:all 0.15s ease;">
+            <span style="font-size:18px;">🟡</span>
+            <div>
+              <div style="line-height:1.2;">VAKIFBANK</div>
+              <span style="font-size:10px; opacity:0.85; font-weight:600;">VakıfBank Hesabı</span>
             </div>
           </button>
         </div>

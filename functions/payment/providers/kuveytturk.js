@@ -149,8 +149,8 @@ class KuveytTurkProvider {
    * 1. AŞAMA: 3D Secure Ödeme Oturumu Başlatma (ThreeDModelPayGate - Statik IP 35.208.218.109 üzerinden)
    */
   async createPayment(params, req) {
-    const order = params?.order || params;
-    if (!order) {
+    const order = params?.order !== undefined ? params.order : params;
+    if (!order || typeof order !== 'object') {
       const error = new Error('Geçersiz sipariş verisi.');
       error.code = 'INVALID_ORDER';
       throw error;

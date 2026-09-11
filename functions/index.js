@@ -1,4 +1,4 @@
-﻿/**
+/**
  * BELGIN KUYUMCULUK — FIREBASE CLOUD FUNCTIONS
  * Enterprise Multi-POS Payment Architecture (PayTR, QNB, Akbank, Yapı Kredi)
  * Legal evidence chain / KYC delivery enforcement: 25.08.2026-v2
@@ -143,12 +143,10 @@ exports.paymentCallback = functions
 
     const fullUrl = String(req.originalUrl || req.url || req.path || '').toLowerCase();
     let providerParam = 'KUVEYTTURK';
-    if (fullUrl.includes('paytr')) providerParam = 'PAYTR';
+    if (fullUrl.includes('kuveytturk')) providerParam = 'KUVEYTTURK';
+    else if (fullUrl.includes('ziraat')) providerParam = 'ZIRAAT';
     else if (fullUrl.includes('qnb')) providerParam = 'QNB';
     else if (fullUrl.includes('yapikredi')) providerParam = 'YAPIKREDI';
-    else if (fullUrl.includes('akbank')) providerParam = 'AKBANK';
-    else if (fullUrl.includes('kuveytturk')) providerParam = 'KUVEYTTURK';
-    else if (fullUrl.includes('ziraat')) providerParam = 'ZIRAAT';
     else if (req.query.provider) providerParam = String(req.query.provider).toUpperCase();
 
     console.log(`[Payment Callback] Detected Provider: ${providerParam}, URL: ${fullUrl}`);
@@ -178,8 +176,8 @@ exports.paymentCallback = functions
         const authCode = isSuccess ? encodeURIComponent(outcome.authCode || 'KT-AUTH') : '';
         const amount = encodeURIComponent(req.body?.amount || req.body?.Amount || req.body?.totalAmount || '');
         const targetUrl = isSuccess
-          ? `https://www.belginkuyumculuk.com/odeme-basarili.html?orderId=${orderId}&authCode=${authCode}&amount=${amount}`
-          : `https://www.belginkuyumculuk.com/odeme-basarisiz.html?orderId=${orderId}&code=${encodeURIComponent(outcome?.failReasonCode || req.body?.responseCode || 'PROVISION_FAILED')}&reason=${encodeURIComponent(outcome?.failReasonMsg || req.body?.responseMessage || 'Banka onayı alınamadı.')}`;
+          ? `https://www.belginkuyumculuk.com/odeme-basarili.html?orderId=${orderId}&authCode=${authCode}&amount=${amount}&provider=${encodeURIComponent(providerParam)}`
+          : `https://www.belginkuyumculuk.com/odeme-basarisiz.html?orderId=${orderId}&code=${encodeURIComponent(outcome?.failReasonCode || req.body?.responseCode || 'PROVISION_FAILED')}&reason=${encodeURIComponent(outcome?.failReasonMsg || req.body?.responseMessage || 'Banka onayı alınamadı.')}&provider=${encodeURIComponent(providerParam)}${outcome?.vipToken ? `&token=${encodeURIComponent(outcome.vipToken)}` : ''}`;
 
         const htmlRedirect = `<!DOCTYPE html>
 <html lang="tr">
@@ -209,7 +207,7 @@ exports.paymentCallback = functions
       console.error(`[Payment API] paymentCallback Error (${providerParam}):`, error.message);
       if (providerParam === 'KUVEYTTURK' || providerParam === 'AKBANK') {
         const orderId = encodeURIComponent(req.body?.orderId || req.body?.MerchantOrderId || req.body?.oid || '');
-        return res.redirect(303, `https://www.belginkuyumculuk.com/odeme-basarisiz.html?orderId=${orderId}&code=500&reason=${encodeURIComponent('Sunucu işlem hatası veya provizyon reddi')}`);
+        return res.redirect(303, `https://www.belginkuyumculuk.com/odeme-basarisiz.html?orderId=${orderId}&code=500&reason=${encodeURIComponent('Sunucu işlem hatası veya provizyon reddi')}&provider=${encodeURIComponent(providerParam)}`);
       }
       return res.status(500).send('Internal Server Error');
     }
@@ -237,6 +235,7 @@ exports.getPaymentStatus = functions
         success: true,
         orderId,
         provider: data.payment?.provider || 'PAYTR',
+        authCode: data.payment?.authCode || data.payment?.provisionNumber || null,
         paymentStatus: data.paymentStatus || data.payment?.status || null,
         deliveryStatus: data.deliveryStatus || null,
         deliveryMethod: data.deliveryMethod || null,

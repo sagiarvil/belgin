@@ -5621,16 +5621,14 @@ const AdminApp = {
 
     const cards = {
       'KUVEYTTURK': document.getElementById('btnBankKuveyt'),
-      'AKBANK': document.getElementById('btnBankAkbank'),
-      'VAKIFBANK': document.getElementById('btnBankVakif'),
-      'ZIRAAT_KATILIM': document.getElementById('btnBankZiraat')
+      'ZIRAAT_KATILIM': document.getElementById('btnBankZiraat'),
+      'VAKIFBANK': document.getElementById('btnBankVakif')
     };
 
     const styles = {
       'KUVEYTTURK': { activeBg: '#E0F2FE', activeColor: '#0369A1', activeBorder: '#0284C7' },
-      'AKBANK': { activeBg: '#FFEDD5', activeColor: '#C2410C', activeBorder: '#F97316' },
-      'VAKIFBANK': { activeBg: '#FEF9C3', activeColor: '#854D0E', activeBorder: '#EAB308' },
-      'ZIRAAT_KATILIM': { activeBg: '#DCFCE7', activeColor: '#166534', activeBorder: '#22C55E' }
+      'ZIRAAT_KATILIM': { activeBg: '#DCFCE7', activeColor: '#166534', activeBorder: '#22C55E' },
+      'VAKIFBANK': { activeBg: '#FEF9C3', activeColor: '#854D0E', activeBorder: '#EAB308' }
     };
 
     Object.keys(cards).forEach(k => {
@@ -5708,9 +5706,8 @@ const AdminApp = {
 
     const bankLabels = {
       'KUVEYTTURK': 'Kuveyt Türk (Nakit/Havale)',
-      'AKBANK': 'Akbank Havale',
-      'VAKIFBANK': 'VakıfBank Havale',
-      'ZIRAAT_KATILIM': 'Ziraat Katılım Havale'
+      'ZIRAAT_KATILIM': 'Ziraat Katılım Havale',
+      'VAKIFBANK': 'VakıfBank Havale'
     };
     const bankDisplay = bankLabels[bankKey] || bankKey;
 

@@ -1,4 +1,4 @@
-﻿// BELGIN KUYUMCULUK — VIP ÖDEME LİNKİ & CHECKOUT MOTORU
+// BELGIN KUYUMCULUK — VIP ÖDEME LİNKİ & CHECKOUT MOTORU
 // Güvenli Kompakt Maskeli Token (?p=...) ve WhatsApp Entegrasyonu
 (function (global) {
   'use strict';
@@ -36,7 +36,7 @@
       basePrice: 65000,
       karat: 22,
       priceKey: 'gramGold22k',
-      priceMultiplier: 1.005
+      priceMultiplier: 1.0
     }
   ]);
 
@@ -519,6 +519,9 @@ ${shortUrl}
           isVipPayment: true,
           isVip22: is22,
           vipToken: token,
+          title: payload.title || 'Lüks Showroom Siparişi',
+          productName: payload.title || 'Lüks Showroom Siparişi',
+          vipTitle: payload.title || null,
           user_name: name,
           user_phone: phone,
           email: cleanPhone ? `musteri_${cleanPhone}@belginkuyumculuk.com` : `vip_${Date.now()}@belginkuyumculuk.com`,
@@ -574,6 +577,8 @@ ${shortUrl}
 
   function installZiraatHostedCheckout() {
     if (typeof document === 'undefined' || !document.getElementById('cardFieldsWrap')) return;
+    // vip-odeme.html zaten Ziraat 3DHost kart gizleme ve yönlendirmesini yerel olarak yönetmektedir
+    if (document.getElementById('btnPayText')) return;
     const payload = getPayloadFromLocation();
     if (!payload || String(payload.provider || 'KUVEYTTURK').toUpperCase() !== ZIRAAT_PROVIDER) return;
 

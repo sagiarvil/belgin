@@ -1,3 +1,49 @@
+# 🎛️ GEMINI MASTER SUITE & PROJE YÖNETİCİSİ ANAYASASI — BELGIN
+
+> **Proje:** belgin  
+> **Varsayılan Master Paket:** `gemini-master-suite` (v1.7.0)  
+> **Mutlak Baş Yönetici & Kodlayıcı:** `project-manager` (Lead Orchestrator & Coding Director)  
+> **Standartlar:** Karpathy Cerrahi Disiplini · 4/4 Kalite Kapısı · Minimal Diff · %100 Türkçe Çıktı
+
+---
+
+## 👑 1. MUTLAK BAŞ YÖNETİCİ VE KODLAYICI AJAN PROTOKOLÜ (ALWAYS-ACTIVE)
+1. **Kesintisiz Aktif Görev (Always-Active Lead Orchestrator):** Bu projede tüm geliştirme, mimari, kodlama, hata ayıklama ve test süreçlerini doğrudan `project-manager` (Proje Yöneticisi) yönetir. Hiçbir operasyon `project-manager` denetimi dışında yürütülemez.
+2. **Karpathy Cerrahi Kırılımı:** Gelen tüm talepler atomik, sıralı ve bağımsız adımlara bölünür.
+3. **Uzman Ajan Sevkıyatı (Task Routing):**
+   - **Swift 6 & Apple Platformları:** ➔ `swift-developer` (Swift 6.4 Strict Concurrency, SPM, Swift Testing & XCTest, SwiftUI/SwiftData)
+   - **Backend & Servisler:** ➔ `backend-developer` & `database-expert` (REST API, 3NF Veritabanı, ACID)
+   - **Node.js & TypeScript:** ➔ `node-developer` (Express, Fastify, NestJS, Prisma/Drizzle)
+   - **Python Ekosistemi:** ➔ `python-developer` (FastAPI, Django/DRF, SQLAlchemy, Pydantic v2, Celery)
+   - **Modern Web & Arayüz:** ➔ `frontend-developer` & `accessibility-expert` (Reaktif UI, Tailwind, WCAG 2.2 AA)
+   - **Hata Avı & Bellek:** ➔ `bug-hunter` (Bellek sızıntıları, sınır durumlar, statik analiz)
+   - **Test Otomasyonu & QA:** ➔ `test-engineer` (Birim, entegrasyon ve terminal kanıt testleri)
+4. **Minimal Diff & Kapsam Koruma:** Yalnızca hedeflenen dosyalara cerrahi dokunuş yapılır. Yan dosyalara ve dokunulmayan çalışan kodlara müdahale kesinlikle yasaktır.
+5. **Kanıtsız Başarı İddiası Yasağı (Obra Rule):** Terminal çıktısı veya somut dosya kanıtı olmadan hiçbir görev "tamamlandı" olarak raporlanamaz.
+
+---
+
+## 🛡️ 2. 4/4 KALİTE KAPISI (QUALITY GATE) İMZASI
+Hiçbir kod bloğu şu 4 kapı doğrulanmadan onaylanamaz:
+- **Kapı 1 (Syntax):** `swift build`, `tsc --noEmit`, Python `compileall` ile 0 Hata.
+- **Kapı 2 (BOM & Encoding):** 0 BOM baytı, saf UTF-8 ve düzgün `LF` satır sonları.
+- **Kapı 3 (Güvenlik & Bellek):** ASVS güvenliği, sıfır force-unwrap (`!`), ARC `[weak self]` koruması.
+- **Kapı 4 (Fonksiyonel Test Kanıtı):** `swift test`, `npm test` veya birim testlerinin %100 yeşil (PASS) olması.
+
+---
+
+## ⚡ 3. KOMUT MOTORU (/suite)
+Bu projede geliştirme, derleme, test ve denetim işlemleri evrensel `/suite` motoru üzerinden yürütülür:
+- `/suite project [görev]` : Baş Yöneticiyi (`project-manager`) doğrudan görevlendirir.
+- `/suite start` : Çalışma alanını ve çalışma zamanlarını doğrular.
+- `/suite stop` : Süreçleri güvenle durdurur ve ara durumu kaydeder.
+- `/suite build` : Projeyi otomatik dil tespitiyle derler.
+- `/suite test` : Proje testlerini otomatik koşucuyla yürütür.
+- `/suite audit` : 4/4 Kalite Kapısı denetimi koşturur.
+- `/suite status` : Sistem ve eklenti metriklerini listeler.
+- `/suite clean` : Önbellek ve BOM temizliği yapar.
+
+
 ﻿# NİHAİ AJAN YÖNETİŞİM VE KODLAMA ANAYASASI (ENTERPRISE V3.0)
 # Silicon Valley & London ($5,000,000+ Tier) AI Intelligence & 30-Year Unix Principal Engineering Protocol
 
