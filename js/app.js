@@ -4457,7 +4457,7 @@ const App = {
   // 📖 BİZ KİMİZ — LUXURY FLIPBOOK & FOLIO ENGINE
   // ==========================================================
   currentFlipbookPage: 1,
-  totalFlipbookPages: 10,
+  totalFlipbookPages: 9,
   flipbookSpreadMode: false,
 
   setFlipbookPage(page) {
@@ -4555,6 +4555,38 @@ const App = {
       const pNum = idx + 1;
       t.classList.toggle('active', pNum === this.currentFlipbookPage || (this.flipbookSpreadMode && (pNum === this.currentFlipbookPage || pNum === this.currentFlipbookPage + 1)));
     });
+
+    this.initFlipbookSwipe();
+  },
+
+  _flipbookSwipeInit: false,
+  initFlipbookSwipe() {
+    if (this._flipbookSwipeInit) return;
+    const stage = document.getElementById('flipbookStage');
+    if (!stage) return;
+    this._flipbookSwipeInit = true;
+
+    let startX = 0;
+    let startY = 0;
+    stage.addEventListener('touchstart', (e) => {
+      if (!e.touches || e.touches.length !== 1) return;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    }, { passive: true });
+
+    stage.addEventListener('touchend', (e) => {
+      if (!e.changedTouches || e.changedTouches.length !== 1) return;
+      const diffX = e.changedTouches[0].clientX - startX;
+      const diffY = e.changedTouches[0].clientY - startY;
+      // Yatay kaydırma dikeyden baskın ve en az 40px ise sayfa çevir
+      if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY) * 1.4) {
+        if (diffX < 0) {
+          this.nextFlipbookPage();
+        } else {
+          this.prevFlipbookPage();
+        }
+      }
+    }, { passive: true });
   }
 };
 

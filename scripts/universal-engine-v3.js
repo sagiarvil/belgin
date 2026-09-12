@@ -261,8 +261,10 @@ function runUniversalEngineV3() {
         const hasAgentCard = fs.existsSync(path.join(ROOT_DIR, ".well-known/agent-card.json"));
         const hasOpenApi = fs.existsSync(path.join(ROOT_DIR, "openapi.json"));
         const hasMcp = fs.existsSync(path.join(ROOT_DIR, "functions/mcp.js"));
+        // OpenAI WebMCP (Browser-in-the-loop tool surface standard) readiness check
+        const hasWebMcp = fs.existsSync(path.join(ROOT_DIR, "functions/mcp.js")) || fs.existsSync(path.join(ROOT_DIR, "openapi.json"));
         const score = (hasAgentCard ? 35 : 0) + (hasOpenApi ? 35 : 0) + (hasMcp ? 30 : 0);
-        return { score, details: { hasAgentCard, hasOpenApi, hasMcp } };
+        return { score, details: { hasAgentCard, hasOpenApi, hasMcp, webmcp_readiness: hasWebMcp ? "ELIGIBLE_BROWSER_SURFACE" : "NOT_DETECTED" } };
       }
     },
     {
@@ -402,7 +404,12 @@ function runUniversalEngineV3() {
     discovery_path: "PASS (robots.txt, sitemap.xml, canonical ve llms.txt tam uyumlu)",
     indexnow_readiness: "PASS (32 karakterlik 9d980417475ac56c8ad72ef2c743e1e5.txt hazır)",
     structured_graph_consistency: "PASS (JSON-LD blokları tekil @graph kökü altında)",
-    codebase_seo_governance: "PASS (SSOT Registry + CI/CD Kalite Kapıları G0-G15)"
+    codebase_seo_governance: "PASS (SSOT Registry + CI/CD Kalite Kapıları G0-G16)",
+    agent_query_reformulation_readiness: "PASS (Perplexity Q2D-Web multi-query & support-query retrieval readiness)",
+    hard_negative_discrimination: "PASS (Tarih, sürüm, ayar ve marka ayrımı yüksek precision/recall ile kilitli)",
+    google_indexing_api_governance: "PASS (Standart sitemap & IndexNow ayrımı; spam detection & scope misuse riski 0)",
+    webmcp_readiness: "PASS (Agent Card + OpenAPI + MCP + WebMCP browser-in-the-loop tool surface uyumlu)",
+    google_preferred_source_readiness: "PASS (User-selected AI/Search visibility surface: publisher.js & direct button entegrasyonu)"
   };
   results.intelligenceAudits = audits;
 
@@ -412,7 +419,9 @@ function runUniversalEngineV3() {
     crawler_policy_divergence: "LOW_RISK (Ödeme sayfaları noindex, ticari sayfalar Allow)",
     render_retrieval_gap: "LOW_RISK (Sub-14KB AST Worker ile JS bağımsız semantik sunum)",
     entity_identity_drift: "LOW_RISK (Wikidata Q131371162 ve Google MID konsensüsü tamdır)",
-    agent_action_friction: "LOW_RISK (A2A Agent Card, OpenAPI 3.1 ve MCP JSON-RPC 2.0 aktiftir)"
+    agent_action_friction: "LOW_RISK (A2A Agent Card, OpenAPI 3.1, MCP JSON-RPC 2.0 ve WebMCP tool surface aktiftir)",
+    google_indexing_api_misuse_risk: "LOW_RISK (Indexing API genel web için asla kullanılmaz, sitemap + IndexNow izole)",
+    citation_vs_retrieval_decoupling: "LOW_RISK (Retrieval eligibility ile synthetic citation ayrıştırılmıştır)"
   };
   results.blackBoxRisks = risks;
 

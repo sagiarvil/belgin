@@ -1,4 +1,4 @@
-﻿// BELGIN KUYUMCULUK — SEO CI/CD QUALITY GATE (G0-G12)
+// BELGIN KUYUMCULUK — SEO CI/CD QUALITY GATE (G0-G12)
 // Universal Omni-Enterprise SEO, GEO, Sitemap & Multi-Tier LLMS v6.0 Standard
 // Mandate Standard: MANDATE-SEO-GEO-2026-V6 & SAGIARVIL-SRO-2026-V1
 
@@ -308,6 +308,23 @@ function runQualityGates() {
     errors.push('[G16 LIVE PRODUCTION HEALTH] scripts/live-seo-smoke.js bulunamadı!');
   }
 
+  // G17: Google Indexing API Kapsam & Spam Koruması Kapısı (Compliance Gate: Sept 2026 Mandate)
+  // Indexing API genel web/ticari sayfalar için ASLA çağrılamaz veya otomatik reçeteye dahil edilemez.
+  const codeFilesToScan = [
+    'scripts/notify-indexnow.js',
+    'scripts/universal-engine-v3.js',
+    'scripts/generate-universal-deliverables.py'
+  ];
+  for (const rel of codeFilesToScan) {
+    const fullP = path.join(ROOT_DIR, rel);
+    if (fs.existsSync(fullP)) {
+      const code = fs.readFileSync(fullP, 'utf8');
+      if (code.includes('indexing.googleapis.com') || code.includes('urlNotifications:publish')) {
+        errors.push(`[G17 GOOGLE_INDEXING_API_SCOPE_MISUSE] ${rel} içinde genel web sayfaları için yetkisiz Indexing API çağrısı bulundu!`);
+      }
+    }
+  }
+
   // Final Rapor Bütünlüğü (Report Integrity)
   console.log('\n----------------------------------------------------');
   if (errors.length > 0) {
@@ -317,7 +334,7 @@ function runQualityGates() {
     process.exit(1);
   }
 
-  console.log(`✅ SEO & GEO G0-G16 PASS — products=${products.length}, registryPages=${SEO_REGISTRY.length}, heroAnswerEngine=100%, subgraphs=40+, duplicateCanonical=0, categoryRawLinkCoverage=100%, n8nDAG=PASS, edgeAstPruner=PASS, liveSmokeContract=PASS`);
+  console.log(`✅ SEO & GEO G0-G17 PASS — products=${products.length}, registryPages=${SEO_REGISTRY.length}, heroAnswerEngine=100%, subgraphs=40+, duplicateCanonical=0, categoryRawLinkCoverage=100%, n8nDAG=PASS, edgeAstPruner=PASS, liveSmokeContract=PASS, indexingApiGovernance=PASS`);
   console.log('----------------------------------------------------\n');
   process.exit(0);
 }

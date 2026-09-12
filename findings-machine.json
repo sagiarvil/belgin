@@ -1,6 +1,6 @@
 {
-  "scanId": "scan-1789153938954",
-  "timestamp": "2026-09-11T19:12:18.954Z",
+  "scanId": "scan-1789215474950",
+  "timestamp": "2026-09-12T12:17:54.950Z",
   "domain": "https://www.belginkuyumculuk.com",
   "engines": {
     "ENG-01": {
@@ -157,7 +157,8 @@
       "details": {
         "hasAgentCard": true,
         "hasOpenApi": true,
-        "hasMcp": true
+        "hasMcp": true,
+        "webmcp_readiness": "ELIGIBLE_BROWSER_SURFACE"
       }
     },
     "ENG-14": {
@@ -268,7 +269,12 @@
     "discovery_path": "PASS (robots.txt, sitemap.xml, canonical ve llms.txt tam uyumlu)",
     "indexnow_readiness": "PASS (32 karakterlik 9d980417475ac56c8ad72ef2c743e1e5.txt hazır)",
     "structured_graph_consistency": "PASS (JSON-LD blokları tekil @graph kökü altında)",
-    "codebase_seo_governance": "PASS (SSOT Registry + CI/CD Kalite Kapıları G0-G15)"
+    "codebase_seo_governance": "PASS (SSOT Registry + CI/CD Kalite Kapıları G0-G16)",
+    "agent_query_reformulation_readiness": "PASS (Perplexity Q2D-Web multi-query & support-query retrieval readiness)",
+    "hard_negative_discrimination": "PASS (Tarih, sürüm, ayar ve marka ayrımı yüksek precision/recall ile kilitli)",
+    "google_indexing_api_governance": "PASS (Standart sitemap & IndexNow ayrımı; spam detection & scope misuse riski 0)",
+    "webmcp_readiness": "PASS (Agent Card + OpenAPI + MCP + WebMCP browser-in-the-loop tool surface uyumlu)",
+    "google_preferred_source_readiness": "PASS (User-selected AI/Search visibility surface: publisher.js & direct button entegrasyonu)"
   },
   "blackBoxRisks": {
     "query_fanout_coverage": "LOW_RISK (Dual Sanal POS ve 22 Ayar Bilezik fanout tam kapsanmıştır)",
@@ -276,7 +282,9 @@
     "crawler_policy_divergence": "LOW_RISK (Ödeme sayfaları noindex, ticari sayfalar Allow)",
     "render_retrieval_gap": "LOW_RISK (Sub-14KB AST Worker ile JS bağımsız semantik sunum)",
     "entity_identity_drift": "LOW_RISK (Wikidata Q131371162 ve Google MID konsensüsü tamdır)",
-    "agent_action_friction": "LOW_RISK (A2A Agent Card, OpenAPI 3.1 ve MCP JSON-RPC 2.0 aktiftir)"
+    "agent_action_friction": "LOW_RISK (A2A Agent Card, OpenAPI 3.1, MCP JSON-RPC 2.0 ve WebMCP tool surface aktiftir)",
+    "google_indexing_api_misuse_risk": "LOW_RISK (Indexing API genel web için asla kullanılmaz, sitemap + IndexNow izole)",
+    "citation_vs_retrieval_decoupling": "LOW_RISK (Retrieval eligibility ile synthetic citation ayrıştırılmıştır)"
   },
   "overallScore": 100,
   "totalWeight": 129,

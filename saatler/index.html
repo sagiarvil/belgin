@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr" prefix="og: https://ogp.me/ns#">
 <head>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260831-lion-max-gold-v5">
@@ -440,6 +440,42 @@
           </a>
         </li>
 
+        <!-- 6. KURUMSAL (2026 PROFİL & FOLIO & PDF) -->
+        <li class="nav-has-dropdown">
+          <a href="/biz-kimiz/" data-page="biz-kimiz" class="nav-link-main">
+            Kurumsal <span class="nav-arrow">▾</span>
+          </a>
+          <div class="nav-dropdown-menu nav-dropdown-kurumsal">
+            <div class="nav-dropdown-header">
+              <span>🏛️ KURUMSAL PROFİL &amp; MİRAS</span>
+              <a href="/biz-kimiz/" data-page="biz-kimiz">Biz Kimiz →</a>
+            </div>
+            <div class="nav-dropdown-list">
+              <a href="/biz-kimiz/" data-page="biz-kimiz" class="nav-dropdown-single-item nav-all-item">
+                <div class="nav-item-icon">📖</div>
+                <div>
+                  <div class="nav-item-title">Kurumsal Profil &amp; Folio</div>
+                  <div class="nav-item-sub">20+ Yıllık Ticaret Hafızası &amp; You Watch Mirası</div>
+                </div>
+              </a>
+              <a href="/docs/belgin-kurumsal-profil-2026.pdf" target="_blank" download class="nav-dropdown-single-item" style="background:#FAF6EE; border-color:rgba(194, 167, 104, 0.4);">
+                <div class="nav-item-icon">📥</div>
+                <div>
+                  <div class="nav-item-title" style="color:var(--color-gold-dark);">2026 Kurumsal Profil PDF</div>
+                  <div class="nav-item-sub">Resmi 9 Sayfalık Prestij Dokümanı (13.3 MB)</div>
+                </div>
+              </a>
+              <a href="/biz-kimiz/#guven" data-page="biz-kimiz" class="nav-dropdown-single-item">
+                <div class="nav-item-icon">🛡️</div>
+                <div>
+                  <div class="nav-item-title">Güven &amp; Teslim Protokolü</div>
+                  <div class="nav-item-sub">Ekspertiz, Seri No Kontrolü &amp; Doğrulama</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </li>
+
         <li><a href="/#iletisim" data-page="iletisim" class="nav-link-main">İletişim</a></li>
         <li><a href="#" onclick="App.openTradeInModal()" class="nav-link-main" style="color:var(--color-gold-dark);">Takas & Değerleme</a></li>
       </ul>
@@ -573,10 +609,24 @@
         </div>
       </div>
 
+      <!-- 4. Kurumsal Akordeon (2026 PROFİL & MİRAS) -->
+      <div style="margin-bottom:8px;">
+        <button class="mobile-nav-accordion-header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.acc-arr').textContent = this.nextElementSibling.classList.contains('open') ? '▴' : '▾';" style="background:#FAF8F5; border-color:rgba(194,167,104,0.35);">
+          <span>🏛️ Kurumsal Profil (2026 Miras)</span>
+          <span class="acc-arr">▾</span>
+        </button>
+        <div class="mobile-nav-accordion-sub">
+          <a href="/biz-kimiz/" data-page="biz-kimiz" onclick="App.toggleMobileDrawer(false);" class="mobile-nav-sub-link" style="color:var(--color-gold-dark); font-weight:700;">📖 Kurumsal Profil &amp; Folio</a>
+          <a href="/docs/belgin-kurumsal-profil-2026.pdf" target="_blank" download onclick="App.toggleMobileDrawer(false);" class="mobile-nav-sub-link">📥 2026 Kurumsal PDF İndir (13.3 MB)</a>
+          <a href="/biz-kimiz/#guven" data-page="biz-kimiz" onclick="App.toggleMobileDrawer(false);" class="mobile-nav-sub-link">🛡️ Güven &amp; Teslim Protokolü</a>
+        </div>
+      </div>
+
       <a href="#" data-page="iletisim" onclick="App.toggleMobileDrawer(false)">📍 Buca Showroom & İletişim</a>
       <a href="#" onclick="App.toggleMobileDrawer(false); App.openTradeInModal();" style="color:var(--color-gold);">⌚ Saat Takası & Değerleme</a>
     </nav>
-              <div style="font-size:11.5px; color:#A0A0A8; margin-bottom:12px;">
+    <div class="mobile-drawer-footer">
+      <div style="font-size:11.5px; color:#A0A0A8; margin-bottom:12px;">
         <p>📍 Menderes Cad. No:231/B Buca / İzmir</p>
         <p style="margin-top:4px;">⏱️ Pzt - Cmt: 09:00 - 19:00 (Pazar Kapalı)</p>
       </div>

@@ -3,6 +3,16 @@
   "version": "1.0.0",
   "protocol": "JSON-RPC-2.0",
   "endpoint": "https://www.belginkuyumculuk.com/mcp",
+  "webmcp_compatibility": {
+    "status": "EXPERIMENTAL_READY",
+    "standard": "OpenAI WebMCP (August 2026)",
+    "safe_browser_actions": [
+      "search_catalog",
+      "get_exchange_rates",
+      "verify_ots_proof"
+    ],
+    "financial_actions_isolated": true
+  },
   "tools": [
     {
       "name": "query_belgin_catalog",

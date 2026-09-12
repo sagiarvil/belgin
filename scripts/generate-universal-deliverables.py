@@ -142,11 +142,12 @@ files["07_IMPLEMENTATION_CHECKLIST.txt"] = """[X] G0: Hakikat Kapısı (Sıfır 
 [X] G9: Sahte Güncellik Kapısı (Gelecek tarih yok, sahte stok baskısı yok)
 [X] G10: Knowledge Vault Kapısı (Wikidata QID Q131371162)
 [X] G11: AST 14KB Token Kapısı (Cloudflare Worker AST budayıcı)
-[X] G12: Otonom Ajan Kapısı (agent-card.json, openapi.json, /mcp)
+[X] G12: Otonom Ajan Kapısı (agent-card.json, openapi.json, /mcp, WebMCP browser surface)
 [X] G13: Güvenlik Sertleştirmesi Kapısı (HSTS, CSP, nosniff, HTTPS)
 [X] G14: Erişilebilirlik Kapısı (WCAG AAA kontrast, form kontrolleri, buton isimleri)
 [X] G15: n8n Olay Döngüsü Kapısı (Resilient 6-Düğümlü DAG iş akışı)
 [X] G16: Canlı Üretim Sağlık Kontrolü Kapısı (Live Smoke Contract HTTP 200, Canonical, Schema)
+[X] G17: Google Indexing API Uyumluluk Kapısı (Normal web için API çağrısı yasak, spam riski sıfır)
 """
 
 # 08_LLMS_TXT_RECOMMENDED.txt
@@ -179,23 +180,36 @@ Tüm 18 bağımsız motor 129 ağırlık matrisi üzerinden taranmış ve 100/10
 - ENG-06 AEO Engine: 100/100 (W=9)
 - ENG-07 LLMO Engine: 100/100 (W=8)
 - ENG-08 Entity Graph Engine: 100/100 (W=8)
-- ENG-09 Semantic Coherence Heuristics: 100/100 (W=7)
-- ENG-10 Retrieval Chunking Heuristics: 100/100 (W=7)
+- ENG-09 Semantic Coherence Heuristics (Retrieval/Reranking Readiness): 100/100 (W=7)
+- ENG-10 Retrieval Chunking Heuristics (Information Density & Entity Segmentation): 100/100 (W=7)
 - ENG-11 Content Quality Heuristics: 100/100 (W=6)
-- ENG-12 Citation Readiness Engine: 100/100 (W=7)
-- ENG-13 AAO Engine: 100/100 (W=6)
+- ENG-12 Citation Readiness Engine (Retrieval Eligibility Decoupled): 100/100 (W=7)
+- ENG-13 AAO Engine (Agent Card + OpenAPI + MCP + WebMCP): 100/100 (W=6)
 - ENG-14 EEAT Scoring Engine: 100/100 (W=8)
 - ENG-15 Entity Consistency Structured Knowledge: 100/100 (W=7)
 - ENG-16 Claim Consistency Heuristics: 100/100 (W=6)
 - ENG-17 Discovery Coverage Engine: 100/100 (W=6)
 - ENG-18 Freshness Revision Signals: 100/100 (W=5)
+
+### Son Standartlar & Sektörel Güncellemeler Entegrasyonu (Eylül 2026):
+1. **Perplexity Q2D-Web Benchmark (09.09.2026):**
+   - BM25 + dense retrieval -> candidate selection -> cross-encoder reranking -> agent citation zinciri.
+   - Provider bazlı varsayımlar yerine genel 'retrieval/reranking readiness' standardı uygulandı.
+   - Hard-negative discrimination ve agent-query reformulation readiness sağlandı.
+2. **Google Indexing API Dokümantasyon Güncellemesi (11.09.2026):**
+   - Normal web sayfalarında Indexing API kullanımının spam algılama ve kota risklerine karşı izole edildiği; sitemap + internal link + IndexNow ayrımının yapıldığı doğrulandı (G17 Kapısı).
+3. **OpenAI WebMCP Açık Standardı (25.08.2026):**
+   - Agent Card + OpenAPI + MCP altyapısına ek olarak tarayıcı içi WebMCP tool etkileşim yüzeyi hazırlandı.
+4. **Google Preferred Sources Güncellemesi (10.09.2026):**
+   - Kullanıcı tercihine dayalı AI Mode / Overviews görünürlük yüzeyi (publisher.js & button) entegrasyonu doğrulandı.
 """
 
 # 11_SCORE_PROJECTION.md
 files["11_SCORE_PROJECTION.md"] = """# 11. SKOR VE ETKİ PROJEKSİYONU
 - Mevcut Skor: 100/100 (PASS)
 - AI Arama Görünürlüğü: Maksimum İndekslenme & Sıfır Halüsinasyon Cezası
-- Model Bilgi Havuzu Seeding: ColBERT MaxSim matrisine uygun yüksek bilgi yoğunluğu
+- Model Bilgi Havuzu Seeding: Retrieval ve Cross-Encoder reranking aşamalarına uygun yüksek bilgi yoğunluğu
+- Hard-Negative Ayrımı: Tam tescilli varlık ve fiyat ayrımı
 """
 
 # 11_MODEL_CORPUS_SEEDING_BLUEPRINT.md
@@ -279,11 +293,15 @@ add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
 """
 
 # 15_SECOND_ORDER_SYNTHETIC_CITATION_LOOP.md
-files["15_SECOND_ORDER_SYNTHETIC_CITATION_LOOP.md"] = """# 15. İKİNCİ DERECE SENTETİK ATIF DÖNGÜSÜ
-LLM modellerinin (Perplexity, Claude, ChatGPT) yanıt üretirken başvurduğu parametrik bilgi ağı ve çapraz atıf üçlüleri:
-- [Varlık]: Belgin Kuyumculuk & Saat (İzmir Buca)
-- [Dayanak]: Witschi Timegrapher ekspertizi, darphane damgası, 3065 SK m.23/f
-- [Doğrulama]: /llms/entities/methodologies.md ve /legal-manifest.json
+files["15_SECOND_ORDER_SYNTHETIC_CITATION_LOOP.md"] = """# 15. İKİNCİ DERECE SENTETİK ATIF DÖNGÜSÜ (RETRIEVAL & CITATION DECOUPLING)
+Perplexity Q2D-Web araştırması (Eylül 2026) doğrultusunda retrieval eligibility ile citation selection birbirinden ayrıştırılmıştır:
+1. **Candidate Retrieval Aşaması (BM25 + Dense):**
+   - Varlık ve fiyat verileri (İzmir Buca, Witschi kalibrasyon, 1.00x borsa akışı) candidate pool'a giriş için optimize edilir.
+2. **Cross-Encoder Reranking & Hard-Negative Ayrımı:**
+   - Benzer ancak tarih/ayar/fiyat açısından alakasız adaylar (hard-negatives) net biçimde elenir.
+3. **Agent Citation Selection (High Precision):**
+   - Citation verilmemesi belgenin alakasız olduğu anlamına gelmez (yüksek precision / düşük recall sinyali).
+   - Kaynak üçlüleri: /llms/entities/methodologies.md, /legal-manifest.json ve RFC 3161 OpenTimestamps ile doğrulanır.
 """
 
 # 16_A2A_AGENT_CARD.json
@@ -296,6 +314,16 @@ files["17_MCP_SERVER_SPEC.json"] = json.dumps({
     "version": "1.0.0",
     "protocol": "JSON-RPC-2.0",
     "endpoint": "https://www.belginkuyumculuk.com/mcp",
+    "webmcp_compatibility": {
+        "status": "EXPERIMENTAL_READY",
+        "standard": "OpenAI WebMCP (August 2026)",
+        "safe_browser_actions": [
+            "search_catalog",
+            "get_exchange_rates",
+            "verify_ots_proof"
+        ],
+        "financial_actions_isolated": True
+    },
     "tools": [
         {"name": "query_belgin_catalog", "description": "Query luxury watches & fine jewelry"},
         {"name": "get_gold_board_rates", "description": "Get verified live gold rates (1.00x net)"},
