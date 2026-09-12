@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=20260912-invoice-date-v1">
   <style>
     :root {
       --admin-bg: #F8FAF9;
@@ -2799,7 +2799,7 @@
   <div id="storeInvoicesTabContent" style="display:none;">
 
     <!-- 1. YENİ MAĞAZA FATURASI OLUŞTURMA KARTI -->
-    <section class="store-invoice-card" style="border:1.5px solid #CBD5E1; box-shadow:0 8px 30px rgba(8, 76, 71, 0.07);">
+    <section class="store-invoice-card" id="storeInvoiceFormSection" style="border:1.5px solid #CBD5E1; box-shadow:0 8px 30px rgba(8, 76, 71, 0.07);">
       <div class="store-form-header" style="border-bottom:2px solid #E2E8F0; padding-bottom:16px;">
         <div>
           <h2 class="store-form-title" style="font-size:22px; color:#042A27;">
@@ -2864,6 +2864,7 @@
                 <div class="form-field-group">
                   <label class="form-field-label" for="storeInvoiceDate" style="color:#1E293B; font-weight:800;">Fatura Tarihi: *</label>
                   <input type="date" id="storeInvoiceDate" class="form-field-input" style="font-weight:700; color:#0F172A;" required>
+                  <span style="font-size:10.5px; color:#475569; font-weight:600; margin-top:2px;">ℹ️ Resmi GİB e-Arşiv faturasına seçilen bu tarih basılır.</span>
                 </div>
               </div>
 
@@ -5392,6 +5393,22 @@
           <span>👤</span> Alıcı & Kimlik Bilgileri
         </div>
 
+        <!-- 📅 GİB FATURA DÜZENLEME TARİHİ ALANI -->
+        <div style="background:#FEF9C3; border:1.5px solid #F59E0B; border-radius:8px; padding:10px 12px; margin-bottom:12px; display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+          <div>
+            <label for="editCustomerInvoiceDate" style="display:block; font-size:11.5px; font-weight:800; color:#78350F; margin-bottom:2px;">
+              📅 GİB Fatura Düzenleme Tarihi: *
+            </label>
+            <div style="font-size:10.5px; color:#92400E; font-weight:600;">
+              Bu tarih doğrudan GİB e-Arşiv faturasının resmi düzenleme tarihi ile birebir eşitlenir.
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <input type="date" id="editCustomerInvoiceDate" required style="border:1.5px solid #D97706; padding:7px 10px; border-radius:6px; font-size:13px; font-weight:800; color:#0F172A; background:#FFF; font-family:monospace;">
+            <button type="button" class="btn-admin-secondary" style="padding:7px 10px; font-size:11px; font-weight:800; background:#FFF; border:1px solid #D97706; color:#92400E; cursor:pointer;" onclick="document.getElementById('editCustomerInvoiceDate').value = new Date().toISOString().slice(0, 10);" title="Bugünün Tarihine Eşitle">📅 Bugün</button>
+          </div>
+        </div>
+
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:10px;">
           <div>
             <label style="display:block; font-size:11px; font-weight:800; color:#334155; margin-bottom:3px;">
@@ -5621,7 +5638,15 @@
           <div style="font-size:12px; font-weight:800; color:#0F172A; text-transform:uppercase; display:flex; align-items:center; gap:6px;">
             <span>🏢</span> Fatura Alıcı / Ünvan Bilgileri (GİB e-Arşiv Resmi Başlık):
           </div>
-          <span id="cfgCustIdTypeBadge" style="font-size:10.5px; font-weight:800; padding:2px 8px; border-radius:4px; background:#E0F2FE; color:#0369A1;">10 Haneli VKN / 11 Haneli TCKN</span>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; background:#FEF9C3; border:1px solid #F59E0B; padding:8px 12px; border-radius:8px; flex-wrap:wrap; gap:6px;">
+          <div>
+            <label for="cfgModalInvoiceDate" style="display:block; font-size:11.5px; font-weight:800; color:#78350F; margin-bottom:2px;">📅 GİB Fatura Düzenleme Tarihi: *</label>
+            <div style="font-size:10px; color:#92400E; font-weight:600;">GİB e-Arşiv faturasının resmi mühür tarihi ile birebir eşitlenir.</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <input type="date" id="cfgModalInvoiceDate" class="form-field-input" style="font-size:12.5px; font-weight:800; font-family:monospace; padding:5px 8px; border:1.5px solid #D97706; border-radius:6px; background:#FFF; color:#0F172A;">
+            <button type="button" class="btn-admin-secondary" style="padding:5px 8px; font-size:10.5px; font-weight:800; background:#FFF; border:1px solid #D97706; color:#92400E; cursor:pointer;" onclick="document.getElementById('cfgModalInvoiceDate').value = new Date().toISOString().slice(0, 10);" title="Bugünün Tarihine Eşitle">📅 Bugün</button>
+          </div>
         </div>
 
         <div style="display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:8px; margin-bottom:8px;">
@@ -6021,6 +6046,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 <script src="js/data.js"></script>
 <script src="js/vip-payment.js?v=2.8.8"></script>
-<script src="js/admin.js?v=20260911-math-parity-v8"></script>
+<script src="js/admin.js?v=20260912-invoice-date-v1"></script>
 </body>
 </html>

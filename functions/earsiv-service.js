@@ -1,4 +1,4 @@
-﻿/**
+/**
  * BELGIN KUYUMCULUK — GİB E-ARŞİV PORTAL ENTEGRASYON SERVİSİ
  * Kuyumculuk Özel Matrahı (KDV Kanunu 23/f - Has Altın %0 KDV + İşçilik %20 KDV)
  * SMS Onay Kodu ile Doğrulama ve İmzalama Modülü
@@ -57,6 +57,44 @@ function cleanInvoiceProductName(name, fallback = '22 Ayar Bilezik') {
 function isPureLaborItem(name) {
   if (!name || typeof name !== 'string') return false;
   return /^[,\+\s]*[iİıI][şs][çc][iİıI]l[iİıI]k(?:\s*\([xX]?\d+[^)]*\))?[,\+\s]*$/i.test(name.trim());
+}
+
+/**
+ * GİB Tarih Biçimlendirici (DD/MM/YYYY)
+ * Kullanıcının mağaza fatura ekranında seçtiği tarihi (YYYY-MM-DD, DD.MM.YYYY, DD/MM/YYYY)
+ * resmi GİB portalı formatına (DD/MM/YYYY) güvenle dönüştürür.
+ */
+function formatToGibDate(rawDate) {
+  if (!rawDate) {
+    const now = new Date();
+    return `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
+  }
+  const str = String(rawDate).trim().replace(/\s+/g, '');
+
+  // 1. Gün-Ay-Yıl biçimleri: 11.9.2026, 11.09.2026, 1.9.2026, 11/9/2026, 11-9-2026
+  const dmyMatch = str.match(/^(\d{1,2})[./\-](\d{1,2})[./\-](\d{4})$/);
+  if (dmyMatch) {
+    const d = dmyMatch[1].padStart(2, '0');
+    const m = dmyMatch[2].padStart(2, '0');
+    const y = dmyMatch[3];
+    return `${d}/${m}/${y}`;
+  }
+
+  // 2. Yıl-Ay-Gün biçimleri: 2026-09-11, 2026-9-11, 2026/09/11, 2026.9.11
+  const ymdMatch = str.match(/^(\d{4})[./\-](\d{1,2})[./\-](\d{1,2})/);
+  if (ymdMatch) {
+    const y = ymdMatch[1];
+    const m = ymdMatch[2].padStart(2, '0');
+    const d = ymdMatch[3].padStart(2, '0');
+    return `${d}/${m}/${y}`;
+  }
+
+  const parsed = new Date(str);
+  if (!isNaN(parsed.getTime())) {
+    return `${String(parsed.getDate()).padStart(2, '0')}/${String(parsed.getMonth() + 1).padStart(2, '0')}/${parsed.getFullYear()}`;
+  }
+  const now = new Date();
+  return `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
 }
 
 function getCleanInvoiceItemsSummary(items, fallback = '22 Ayar Bilezik') {
@@ -667,7 +705,8 @@ class EarsivPortalService {
 
     const invoiceUuid = crypto.randomUUID();
     const now = new Date();
-    const formattedDate = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
+    const rawInvoiceDate = orderData?.invoiceDate || orderData?.faturaTarihi || orderData?.date || options?.invoiceDate || options?.faturaTarihi || '';
+    const formattedDate = formatToGibDate(rawInvoiceDate);
     const formattedTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
 
     const itemsSummary = (orderData.items && orderData.items.length > 0 && orderData.items[0]?.name)
@@ -764,6 +803,7 @@ class EarsivPortalService {
     if (!resolvedDistrict) resolvedDistrict = (resolvedCity === 'İzmir' ? 'Buca' : 'Merkez');
 
     const invoicePayload = {
+      faturauuid: invoiceUuid,
       belgeNumarasi: '',
       faturaTarihi: formattedDate,
       saat: formattedTime,
@@ -930,7 +970,14 @@ class EarsivPortalService {
 
         const list = listCall.data?.data;
         if (Array.isArray(list) && list.length > 0) {
-          const match = list.find(d => d.aliciVknTckn === vknTckn) || list[list.length - 1];
+          // KESİN VE ZORUNLU GÜVENLİK KURALI:
+          // SADECE ve SADECE bu faturanın ETTN'si veya alıcı kimlik bilgisi + alıcı adı birebir eşleşen kayıt alınabilir!
+          // Asla ve asla list[list.length - 1] (alakasız başka sipariş) alınamaz!
+          const match = list.find(d => 
+            (d.ettn && d.ettn === invoiceUuid) || 
+            (d.faturauuid && d.faturauuid === invoiceUuid) ||
+            (vknTckn !== '11111111111' && d.aliciVknTckn === vknTckn)
+          );
           if (match) {
             realEttn = match.ettn || realEttn;
             realBelgeNo = match.belgeNumarasi || '';
@@ -1078,17 +1125,19 @@ class EarsivPortalService {
 
     // GİB Resmi e-Arşiv SMS İmzalama Protokolü (Toplu & Tekil Destekli)
     const now = new Date();
-    const formattedDate = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
+    const defaultFormattedDate = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
     
     const uuidList = Array.isArray(invoiceUuid) ? invoiceUuid : [invoiceUuid];
     const dataArray = uuidList.map(item => {
       const ettn = typeof item === 'object' ? (item.ettn || item.invoiceUuid) : item;
+      const rawItemDate = typeof item === 'object' ? (item.belgeTarihi || item.invoiceDate || item.faturaTarihi) : (options.belgeTarihi || options.invoiceDate || options.faturaTarihi);
+      const resolvedDate = rawItemDate ? formatToGibDate(rawItemDate) : defaultFormattedDate;
       return {
         belgeTuru: 'FATURA',
         ettn: ettn,
         faturauuid: ettn,
         onayDurumu: 'Onaylanmadı',
-        belgeTarihi: formattedDate
+        belgeTarihi: resolvedDate
       };
     });
 
@@ -1150,7 +1199,10 @@ class EarsivPortalService {
           let officialHtml = '';
 
           try {
-            const signedDetails = await this.getSignedInvoiceDetails(token, invoiceUuid, { cookie });
+            const signedDetails = await this.getSignedInvoiceDetails(token, invoiceUuid, { 
+              cookie, 
+              invoiceDate: options.invoiceDate || options.faturaTarihi || options.belgeTarihi 
+            });
             if (signedDetails && signedDetails.belgeNumarasi) {
               realBelgeNo = signedDetails.belgeNumarasi;
             }
@@ -1214,35 +1266,61 @@ class EarsivPortalService {
       if (cookie) reqHeaders['Cookie'] = cookie;
 
       const d = new Date();
-      const formattedDate = String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0') + '/' + d.getFullYear();
+      const todayFormatted = String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0') + '/' + d.getFullYear();
+      
+      // 7 gün öncesini hesapla (tarih geçmişe dönük girildiyse kaçırmasın)
+      const pastDate = new Date();
+      pastDate.setDate(pastDate.getDate() - 14);
+      const pastFormatted = String(pastDate.getDate()).padStart(2, '0') + '/' + String(pastDate.getMonth() + 1).padStart(2, '0') + '/' + pastDate.getFullYear();
 
-      const listCall = await axios.post(`${this.baseUrl}/dispatch`, qs.stringify({
-        cmd: 'EARSIV_PORTAL_TASLAKLARI_GETIR',
-        callid: crypto.randomUUID(),
-        pageName: 'RG_TASLAKLAR',
-        token: token,
-        jp: JSON.stringify({
-          baslangic: formattedDate,
-          bitis: formattedDate,
-          hangiTip: '5000/30000'
-        })
-      }), {
-        httpsAgent: this.agent,
-        headers: reqHeaders,
-        timeout: 15000
-      });
+      const customDate = options.invoiceDate || options.faturaTarihi || options.belgeTarihi;
+      const targetGibDate = customDate ? formatToGibDate(customDate) : todayFormatted;
 
-      const list = listCall.data?.data;
-      if (Array.isArray(list) && list.length > 0) {
-        const found = list.find(item => item.ettn === invoiceUuid || item.faturauuid === invoiceUuid);
-        if (found) {
-          return {
-            belgeNumarasi: found.belgeNumarasi || found.faturaNo || '',
-            ettn: found.ettn || invoiceUuid,
-            alici: found.aliciUnvanAdSoyad || '',
-            tarih: found.belgeTarihi || '',
-            onayDurumu: found.onayDurumu || 'Onaylandı'
-          };
+      // Sorgulama aralıkları: önce hedef gün, sonra son 14 gün
+      const queryRanges = [
+        { baslangic: targetGibDate, bitis: todayFormatted },
+        { baslangic: pastFormatted, bitis: todayFormatted }
+      ];
+
+      for (let attempt = 0; attempt < 3; attempt++) {
+        if (attempt > 0) {
+          await new Promise(r => setTimeout(r, 1200));
+        }
+
+        for (const range of queryRanges) {
+          try {
+            const listCall = await axios.post(`${this.baseUrl}/dispatch`, qs.stringify({
+              cmd: 'EARSIV_PORTAL_TASLAKLARI_GETIR',
+              callid: crypto.randomUUID(),
+              pageName: 'RG_TASLAKLAR',
+              token: token,
+              jp: JSON.stringify({
+                baslangic: range.baslangic,
+                bitis: range.bitis,
+                hangiTip: '5000/30000'
+              })
+            }), {
+              httpsAgent: this.agent,
+              headers: reqHeaders,
+              timeout: 15000
+            });
+
+            const list = listCall.data?.data;
+            if (Array.isArray(list) && list.length > 0) {
+              const found = list.find(item => item.ettn === invoiceUuid || item.faturauuid === invoiceUuid);
+              if (found) {
+                return {
+                  belgeNumarasi: found.belgeNumarasi || found.faturaNo || '',
+                  ettn: found.ettn || invoiceUuid,
+                  alici: found.aliciUnvanAdSoyad || '',
+                  tarih: found.belgeTarihi || '',
+                  onayDurumu: found.onayDurumu || 'Onaylandı'
+                };
+              }
+            }
+          } catch (qErr) {
+            console.warn('[EarsivService] query range error:', qErr.message);
+          }
         }
       }
       return null;
@@ -1381,5 +1459,6 @@ module.exports = {
   calculateVip22Breakdown,
   cleanInvoiceProductName,
   getCleanInvoiceItemsSummary,
+  formatToGibDate,
   VIP_22_CATALOG
 };

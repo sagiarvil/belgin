@@ -1,4 +1,4 @@
-﻿const fs = require('fs');
+const fs = require('fs');
 const path = require('path');
 const Handlebars = require('handlebars');
 
@@ -83,12 +83,28 @@ function renderOfficialGibHtml(data) {
     id: customerIdentity
   };
 
-  // Tarihi GG-AA-YYYY biçimine dönüştür (eğer YYYY-MM-DD geldiyse)
-  let formattedInvoiceDate = invoiceDate;
-  if (invoiceDate && invoiceDate.includes('-')) {
-    const parts = invoiceDate.split('-');
-    if (parts[0].length === 4) {
-      formattedInvoiceDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+  // Tarihi GG-AA-YYYY biçimine dönüştür (YYYY-MM-DD, DD.MM.YYYY, DD/MM/YYYY, DD-MM-YYYY, boşluklu veya tek basamaklı)
+  let formattedInvoiceDate = '';
+  const dateStr = String(invoiceDate || '').trim().replace(/\s+/g, '');
+  const dmyMatch = dateStr.match(/^(\d{1,2})[./\-](\d{1,2})[./\-](\d{4})$/);
+  if (dmyMatch) {
+    formattedInvoiceDate = `${dmyMatch[1].padStart(2, '0')}-${dmyMatch[2].padStart(2, '0')}-${dmyMatch[3]}`;
+  } else {
+    const ymdMatch = dateStr.match(/^(\d{4})[./\-](\d{1,2})[./\-](\d{1,2})/);
+    if (ymdMatch) {
+      formattedInvoiceDate = `${ymdMatch[3].padStart(2, '0')}-${ymdMatch[2].padStart(2, '0')}-${ymdMatch[1]}`;
+    } else {
+      const d = new Date();
+      formattedInvoiceDate = `${String(d.getDate()).padStart(2, '0')}-${String(d.getMonth() + 1).padStart(2, '0')}-${d.getFullYear()}`;
+    }
+  }
+
+  let resolvedInvoiceTime = invoiceTime || '';
+  if (!resolvedInvoiceTime) {
+    try {
+      resolvedInvoiceTime = new Date().toLocaleTimeString('tr-TR', { timeZone: 'Europe/Istanbul', hour: '2-digit', minute: '2-digit' });
+    } catch (_) {
+      resolvedInvoiceTime = '12:00';
     }
   }
 
@@ -97,7 +113,7 @@ function renderOfficialGibHtml(data) {
     scenario: 'EARSIVFATURA',
     type: 'SATIS',
     number: invoiceNumber,
-    dateDisplay: formattedInvoiceDate + ' ' + (invoiceTime || '12:00'),
+    dateDisplay: formattedInvoiceDate + ' ' + resolvedInvoiceTime,
     ettn: ettn || ''
   };
 
