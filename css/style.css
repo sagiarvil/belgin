@@ -7944,9 +7944,6 @@ body.page-is-canli-fiyatlar .footer-machine-summary,
 body.page-canli-fiyatlar .seo-business-facts,
 body.page-is-canli-fiyatlar .seo-business-facts,
 body.page-canli-fiyatlar-mode .seo-business-facts,
-body.page-canli-fiyatlar .mobile-bottom-dock,
-body.page-is-canli-fiyatlar .mobile-bottom-dock,
-body.page-canli-fiyatlar-mode .mobile-bottom-dock,
 body.page-canli-fiyatlar [data-belgin-defense-layer],
 body.page-is-canli-fiyatlar [data-belgin-defense-layer],
 body.page-canli-fiyatlar #legalEvidenceIntegrityBox,
@@ -7964,7 +7961,6 @@ body.page-canli-fiyatlar-mode .vip-whatsapp-float,
 #page-canli-fiyatlar.active ~ .footer-art,
 #page-canli-fiyatlar.active ~ .footer-trust-ribbon,
 #page-canli-fiyatlar.active ~ .footer-machine-summary,
-#page-canli-fiyatlar.active ~ .mobile-bottom-dock,
 #page-canli-fiyatlar.active ~ .vip-whatsapp-float-compact,
 #page-canli-fiyatlar.active ~ .vip-whatsapp-float,
 #page-canli-fiyatlar.active ~ aside,
@@ -8072,16 +8068,35 @@ body.page-canli-fiyatlar-mode {
   overflow: hidden !important;
 }
 
-/* Dijital Pano Dış Çerçevesi (Alttan Üstten Kompakt & Orantılı) */
+/* ==========================================================
+   BELGİN KUYUMCULUK & SAAT — Cenevre & Haute Horlogerie Borsa Terminali
+   Dünya Standartlarında Elit Canlı Fiyat Panosu (Rolex / Cartier Seviyesi)
+   ========================================================== */
+
+body.page-canli-fiyatlar,
+body.page-is-canli-fiyatlar {
+  background-color: #061311 !important;
+  color: #E8DCC4 !important;
+}
+
+.page-canli-fiyatlar-wrapper {
+  background: radial-gradient(circle at 50% 10%, #0d2622 0%, #061311 80%) !important;
+  min-height: calc(100vh - 60px);
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  padding: 16px 12px !important;
+  box-sizing: border-box;
+}
+
+/* Lüks Pano Dış Çerçevesi */
 .board-exact-frame {
-  background-color: #fff200;
-  border: 3px solid #000000;
-  border-radius: 4px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+  background: linear-gradient(180deg, #091c18 0%, #061412 100%) !important;
+  border: 1px solid rgba(197, 160, 89, 0.45) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
   width: 100% !important;
-  max-width: 1100px !important;
-  height: 100% !important;
-  max-height: 100% !important;
+  max-width: 1120px !important;
   margin: 0 auto !important;
   padding: 0 !important;
   overflow: hidden !important;
@@ -8089,40 +8104,47 @@ body.page-canli-fiyatlar-mode {
   flex-direction: column !important;
   justify-content: stretch !important;
   box-sizing: border-box;
+  backdrop-filter: blur(16px);
 }
 
-/* Üst Kırmızı Başlık Metni */
+/* Üst Lüks Başlık Çubuğu */
 .board-exact-top-bar {
-  background-color: #fff200;
-  border-bottom: 2px solid #000000;
-  padding: clamp(3px, 0.5vh, 6px) 10px;
+  background: linear-gradient(90deg, rgba(8, 76, 71, 0.4) 0%, rgba(197, 160, 89, 0.15) 50%, rgba(8, 76, 71, 0.4) 100%) !important;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.35) !important;
+  padding: 12px 18px !important;
   display: flex !important;
   align-items: center !important;
-  justify-content: center !important;
+  justify-content: space-between !important;
   flex-wrap: wrap;
-  gap: 8px;
-  text-align: center;
-  font-size: clamp(13px, 2vh, 20px);
-  font-weight: 900 !important;
-  color: #D80000;
-  letter-spacing: 0.5px;
+  gap: 10px;
+  text-align: left;
+  font-size: clamp(13px, 1.8vh, 16px);
+  font-weight: 700 !important;
+  color: #E8DCC4 !important;
+  letter-spacing: 0.8px;
   text-transform: uppercase !important;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif) !important;
   flex: 0 0 auto;
+}
+
+.board-exact-top-bar span:first-child {
+  letter-spacing: 1px;
+  color: #F5D061;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
 .board-status-live-chip {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  background: rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(0, 0, 0, 0.25);
+  gap: 6px;
+  background: rgba(16, 185, 129, 0.12) !important;
+  border: 1px solid rgba(16, 185, 129, 0.4) !important;
   border-radius: 999px;
-  padding: 1px 8px;
-  font-size: clamp(10px, 1.3vh, 12px);
-  font-weight: 700;
-  letter-spacing: 0.2px;
-  color: #000000;
+  padding: 3px 10px;
+  font-size: clamp(10.5px, 1.2vh, 12px);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: #34D399 !important;
   text-transform: none !important;
 }
 
@@ -8130,468 +8152,269 @@ body.page-canli-fiyatlar-mode {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background-color: #00A86B;
-  box-shadow: 0 0 5px rgba(0, 168, 107, 0.6);
+  background-color: #10B981;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
   display: inline-block;
   animation: boardDotPulse 2s infinite ease-in-out;
 }
 
+.board-status-live-chip.chip-fallback {
+  background: rgba(245, 158, 11, 0.12) !important;
+  border-color: rgba(245, 158, 11, 0.4) !important;
+  color: #FBBF24 !important;
+}
+
 .board-status-live-chip.chip-fallback .board-chip-dot {
-  background-color: #E67E22;
-  box-shadow: 0 0 5px rgba(230, 126, 34, 0.6);
+  background-color: #F59E0B;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.8);
 }
 
 @keyframes boardDotPulse {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(1.2); }
+  50% { opacity: 0.5; transform: scale(1.25); }
 }
 
-/* Birebir Tablo */
+/* Lüks Canlı Borsa Tablosu */
 .board-exact-table {
   width: 100% !important;
-  height: 100% !important;
+  height: auto !important;
   flex: 1 1 auto !important;
   border-collapse: collapse !important;
-  background-color: #fff200 !important;
+  background-color: transparent !important;
   text-align: center;
   table-layout: fixed;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif) !important;
 }
 
 .board-exact-table thead tr {
-  height: clamp(28px, 4.2vh, 42px);
+  background: rgba(5, 51, 47, 0.5) !important;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.3) !important;
 }
 
-.board-exact-table tbody tr {
-  height: calc((100% - clamp(28px, 4.2vh, 42px)) / 13);
-}
-
-.board-exact-table th,
-.board-exact-table td {
-  border: 2px solid #000000 !important;
-  padding: clamp(1px, 0.28vh, 3px) clamp(4px, 0.8vw, 12px);
-  vertical-align: middle;
-  background-color: #fff200;
-  line-height: 1.08;
-  transition: none !important;
-}
-
-/* Başlıklar (Ürün, ALIŞ, SATIŞ) — Bold ve 1.5 Tık Büyük */
 .board-exact-table th {
-  font-size: clamp(18px, 2.8vh, 30px);
-  font-weight: 900 !important;
-  color: #000000;
-  letter-spacing: 0.5px;
+  border: none !important;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.3) !important;
+  padding: 12px 14px !important;
+  font-size: clamp(12px, 1.6vh, 14px);
+  font-weight: 700 !important;
+  color: #C5A059 !important;
+  letter-spacing: 1px;
   text-transform: uppercase !important;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  background-color: transparent !important;
 }
 
 .board-exact-table th.th-product {
   text-align: left;
-  padding-left: clamp(10px, 1.8vw, 24px);
-  width: 38%;
+  padding-left: clamp(14px, 2.5vw, 28px);
+  width: 40%;
 }
 
 .board-exact-table th.th-alis {
   text-align: center;
-  width: 31%;
+  width: 30%;
+  color: #B5C4BC !important;
 }
 
 .board-exact-table th.th-satis {
   text-align: center;
-  width: 31%;
+  width: 30%;
+  color: #F5D061 !important;
 }
 
-/* Sol Ürün Etiketleri (22 Ayar Bilezik / gr vb.) — Bold ve 1.5 Tık Büyük */
+.board-exact-table tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  transition: background-color 0.2s ease;
+}
+
+.board-exact-table tbody tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.board-exact-table tbody tr:hover {
+  background-color: rgba(197, 160, 89, 0.06);
+}
+
+.board-exact-table th,
+.board-exact-table td {
+  border: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  padding: 10px clamp(8px, 1.5vw, 20px) !important;
+  vertical-align: middle;
+  background-color: transparent;
+  line-height: 1.25;
+}
+
+/* Sol Ürün İsimleri */
 .board-exact-table .td-label {
-  font-size: clamp(15px, 2.25vh, 25px);
-  font-weight: 900 !important;
-  color: #000000;
+  font-size: clamp(13px, 1.8vh, 15px);
+  font-weight: 600 !important;
+  color: #F3F4F6 !important;
   text-align: left;
-  padding-left: clamp(8px, 1.6vw, 22px);
-  width: 38%;
-  text-transform: uppercase !important;
+  padding-left: clamp(14px, 2.5vw, 28px) !important;
+  width: 40%;
+  text-transform: capitalize !important;
   letter-spacing: 0.3px;
   white-space: nowrap;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
 }
 
-/* FİYAT DEĞERLERİ — ALIŞ (Siyah) & SATIŞ (Kırmızı) — Bold ve 1.5 Tık Büyük */
+/* FİYAT DEĞERLERİ — Tabular Rakamlar */
 .board-exact-table .td-price {
   position: relative;
-  font-size: clamp(18px, 2.85vh, 32px);
-  font-weight: 900 !important;
+  font-size: clamp(14px, 2.1vh, 18px);
+  font-weight: 700 !important;
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
   text-align: center;
-  width: 31%;
+  width: 30%;
   white-space: nowrap;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
-  transition: none !important;
 }
 
 .board-exact-table .td-price-alis,
 .board-exact-table .td-price-alis .price-num {
-  color: #000000 !important;
-  font-weight: 900 !important;
+  color: #E2E8F0 !important;
+  font-weight: 700 !important;
 }
 
 .board-exact-table .td-price-satis,
 .board-exact-table .td-price-satis .price-num {
-  color: #D80000 !important;
-  font-weight: 900 !important;
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
 }
 
-/* HAS ALTIN SATIŞ: LACİVERT (#002266) & ÖZEL BOLD 1.5 TIK BÜYÜK */
+/* Has Altın Satırı: Lüks İsviçre Vurgusu */
+.board-exact-table tr:last-child {
+  background: linear-gradient(90deg, rgba(197, 160, 89, 0.18) 0%, rgba(8, 76, 71, 0.3) 100%) !important;
+  border-top: 1px solid rgba(197, 160, 89, 0.6) !important;
+}
+
 .board-exact-table tr:last-child .td-label {
-  font-size: clamp(16px, 2.45vh, 27px) !important;
-  font-weight: 900 !important;
+  font-size: clamp(14px, 2.0vh, 16.5px) !important;
+  font-weight: 700 !important;
+  color: #F8EDD3 !important;
 }
 
-.board-exact-table tr:last-child .td-price,
-.board-exact-table tr:last-child .price-num {
-  font-size: clamp(19px, 3.0vh, 34px) !important;
-  font-weight: 900 !important;
-}
-
-#live_has_altin,
-#live_has,
 .board-exact-table tr:last-child .td-price-satis .price-num,
 .board-exact-table #live_has_altin {
-  color: #002266 !important;
-  font-weight: 900 !important;
+  color: #F5D061 !important;
+  font-weight: 800 !important;
+  text-shadow: 0 0 12px rgba(245, 208, 97, 0.3);
 }
 
-/* Günlük Kapanışa Göre Yüzde Değişim Rozeti (Fiyat Hücresi Sağ Bölümü) */
+/* Günlük Yüzde Değişim Rozeti */
 .board-exact-table .price-change-tag {
-  position: absolute;
-  right: clamp(3px, 0.7vw, 10px);
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: clamp(11px, 1.55vh, 17px);
-  font-weight: 900 !important;
-  line-height: 1;
-  padding: 2px 5px;
-  border-radius: 4px;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0;
-  white-space: nowrap;
-  user-select: none;
-  pointer-events: none;
-  transition: color 0.15s ease, background-color 0.15s ease;
-}
-
-/* Kapanışa göre artış (Saf Yeşil #008800) */
-.board-exact-table .price-change-tag.up {
-  color: #008800 !important;
-  background-color: rgba(0, 136, 0, 0.08);
-  border: 1px solid rgba(0, 136, 0, 0.28);
-}
-
-/* Kapanışa göre düşüş (Saf Kırmızı #cc0000) */
-.board-exact-table .price-change-tag.down {
-  color: #cc0000 !important;
-  background-color: rgba(204, 0, 0, 0.08);
-  border: 1px solid rgba(204, 0, 0, 0.28);
-}
-
-/* Sağ Hoşgeldiniz Alanı */
-.board-exact-table .td-right-message {
-  width: 34%;
-  text-align: center;
-  vertical-align: middle;
-  padding: 2px 10px;
-  background-color: #fff200;
-}
-
-.right-message-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-}
-
-.right-title {
-  font-size: clamp(22px, 3.6vh, 40px);
-  font-weight: 900 !important;
-  color: #000000;
-  line-height: 1.12;
-  text-transform: uppercase !important;
-  letter-spacing: 0.5px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
-}
-
-.right-sub {
-  font-size: clamp(17px, 2.7vh, 30px);
-  font-weight: 900 !important;
-  color: #000000;
-  line-height: 1.2;
-  text-transform: uppercase !important;
-  letter-spacing: 0.5px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
-}
-
-/* Has Altın Satırı */
-.board-exact-table .td-has-label {
-  font-size: clamp(22px, 3.6vh, 40px);
-  font-weight: 900 !important;
-  color: #000000;
-  text-align: left;
-  padding-left: clamp(14px, 2vw, 28px);
-  text-transform: uppercase !important;
-  letter-spacing: 0.5px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
-}
-
-.has-red-box {
-  position: relative;
-  background-color: #E60000;
-  color: #FFFFFF !important;
-  font-size: clamp(25px, 4.3vh, 48px);
-  font-weight: 900 !important;
-  padding: 2px clamp(20px, 2.5vw, 32px);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(14px, 2vw, 24px);
-  letter-spacing: 1px;
-  font-variant-numeric: tabular-nums;
-  border-radius: 4px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
-  transition: none !important;
-}
-
-.has-red-box .price-change-tag {
-  position: static;
-  transform: none;
-  font-size: clamp(10px, 1.4vh, 15px);
-  font-weight: 800;
+  margin-left: 6px;
+  font-size: clamp(9.5px, 1.2vh, 11px);
+  font-weight: 700 !important;
   line-height: 1;
-  padding: 2px 7px;
+  padding: 2.5px 5.5px;
   border-radius: 4px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.2px;
   white-space: nowrap;
-  user-select: none;
-  pointer-events: none;
-}
-
-.has-red-box .price-change-tag.up {
-  background-color: #ffffff !important;
-  color: #008800 !important;
-  border: none;
-}
-
-.has-red-box .price-change-tag.down {
-  background-color: #ffffff !important;
-  color: #cc0000 !important;
-  border: none;
-}
-
-.has-red-box .price-num,
-.has-red-box span {
-  color: #FFFFFF !important;
-  text-shadow: none !important;
-}
-
-#live_has_altin,
-#live_has {
-  color: #002266 !important;
-  text-shadow: none !important;
-  font-weight: 900 !important;
-}
-
-/* En Alttaki Beyaz Alan Kaldırıldı */
-.board-exact-bottom-bar {
-  display: none !important;
-}
-
-.td-price {
-  text-align: center;
   vertical-align: middle;
 }
 
-.price-num {
-  display: inline-block;
-  transform-origin: center center;
+.board-exact-table .price-change-tag.up {
+  color: #34D399 !important;
+  background-color: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.35);
 }
 
-/* ==========================================================
-   CANLI FİYAT DEĞİŞİM — ARKA PLAN RENKLİ BANT 1 SANİYE YANIP SÖNME
-   (SAF YEŞİL & SAF KIRMIZI — MAVİ/MOR/PEMBE ARA TONLARI VE GEÇİŞLERİ %100 SIFIRLANMIŞ)
-   Fiyat Yükseldi: Saf Yeşil (#009900 / RGB 0, 153, 0 — Sıfır Mavi / Sıfır Mor)
-   Fiyat Düştü: Saf Kırmızı (#e60000 / RGB 230, 0, 0 — Sıfır Mavi / Sıfır Pembe)
-   ========================================================== */
-@keyframes priceBandFlashGreen {
-  0% {
-    background-color: #009900; /* Saf Yeşil (Sıfır Mavi/Mor) */
-  }
-  100% {
-    background-color: #009900; /* Saf Yeşil */
-  }
+.board-exact-table .price-change-tag.down {
+  color: #F87171 !important;
+  background-color: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.35);
 }
 
-@keyframes priceBandFlashRed {
-  0% {
-    background-color: #e60000; /* Saf Kırmızı (Sıfır Mavi/Pembe) */
-  }
-  100% {
-    background-color: #e60000; /* Saf Kırmızı */
-  }
+/* Flaş Parlama Efektleri (Canlı Fiyat Değişimi) */
+@keyframes priceLuxeFlashUp {
+  0% { background-color: rgba(16, 185, 129, 0.45); color: #FFFFFF; }
+  100% { background-color: transparent; }
 }
 
-/* Has Altın Kırmızı Kutusu İçin Özel Bant Animasyonu */
-@keyframes priceBandFlashGreenHas {
-  0% {
-    background-color: #009900; /* Saf Yeşil */
-  }
-  100% {
-    background-color: #009900;
-  }
+@keyframes priceLuxeFlashDown {
+  0% { background-color: rgba(239, 68, 68, 0.45); color: #FFFFFF; }
+  100% { background-color: transparent; }
 }
 
-@keyframes priceBandFlashRedHas {
-  0% {
-    background-color: #ff2222; /* Saf Parlak Kırmızı */
-  }
-  100% {
-    background-color: #ff2222;
-  }
+.board-exact-table td.td-price.price-flash-up {
+  animation: priceLuxeFlashUp 1.2s ease-out 1 !important;
 }
 
-.board-exact-table td.td-price.price-flash-up,
-.board-exact-table td.price-flash-up,
-.price-flash-up {
-  background-color: #009900 !important;
-  color: #ffffff !important;
-  transition: none !important;
-  animation: priceBandFlashGreen 1s steps(1, end) 1 !important;
-  will-change: background-color, color;
+.board-exact-table td.td-price.price-flash-down {
+  animation: priceLuxeFlashDown 1.2s ease-out 1 !important;
 }
 
-.board-exact-table td.td-price.price-flash-up span,
-.board-exact-table td.td-price.price-flash-up .price-num {
-  color: #ffffff !important;
-  transition: none !important;
-}
-
-.board-exact-table td.td-price.price-flash-down,
-.board-exact-table td.price-flash-down,
-.price-flash-down {
-  background-color: #e60000 !important;
-  color: #ffffff !important;
-  transition: none !important;
-  animation: priceBandFlashRed 1s steps(1, end) 1 !important;
-  will-change: background-color, color;
-}
-
-.board-exact-table td.td-price.price-flash-down span,
-.board-exact-table td.td-price.price-flash-down .price-num {
-  color: #ffffff !important;
-  transition: none !important;
-}
-
-.has-red-box.price-flash-up {
-  background-color: #009900 !important;
-  color: #ffffff !important;
-  transition: none !important;
-  animation: priceBandFlashGreenHas 1s steps(1, end) 1 !important;
-  will-change: background-color;
-}
-
-.has-red-box.price-flash-down {
-  background-color: #ff2222 !important;
-  color: #ffffff !important;
-  transition: none !important;
-  animation: priceBandFlashRedHas 1s steps(1, end) 1 !important;
-  will-change: background-color;
-}
-
-/* 1 SANİYELİK YANIP SÖNME SIRASINDA BANT İÇİ ROZET KONTRASTI (BEYAZ YAZI) */
-.board-exact-table td.td-price.price-flash-up .price-change-tag,
-.board-exact-table td.td-price.price-flash-down .price-change-tag,
-.has-red-box.price-flash-up .price-change-tag,
-.has-red-box.price-flash-down .price-change-tag {
-  color: #ffffff !important;
-  background-color: rgba(0, 0, 0, 0.35) !important;
-  border-color: rgba(255, 255, 255, 0.45) !important;
-  transition: none !important;
-}
-
-.price-changed-active {
-  background-color: #009900 !important;
-  transition: none !important;
-  animation: none !important;
-  will-change: background-color;
-}
-
-/* Mobil Responsive */
+/* Mobil Tasarım İyileştirmeleri (@media max-width: 768px) */
 @media (max-width: 768px) {
   body.page-canli-fiyatlar,
   body.page-is-canli-fiyatlar {
-    overflow: hidden !important;
-    height: 100vh !important;
+    overflow-x: hidden !important;
+    height: auto !important;
+    min-height: 100vh !important;
   }
   .page-canli-fiyatlar-wrapper {
-    height: calc(100vh - 44px) !important;
-    max-height: calc(100vh - 44px) !important;
-    overflow: hidden !important;
-    padding: 2px 4px !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 10px 8px 30px 8px !important;
   }
   .board-exact-frame {
-    height: 100% !important;
-    max-height: 100% !important;
-    border-radius: 0;
+    border-radius: 8px !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+  .board-exact-top-bar {
+    padding: 10px 12px !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 6px !important;
+    text-align: center !important;
+  }
+  .board-exact-top-bar span:first-child {
+    font-size: 13px !important;
   }
   .board-exact-table th {
-    font-size: clamp(14px, 3.2vw, 18px);
-    font-weight: 900 !important;
-    padding: 2px 2px;
+    font-size: 11.5px !important;
+    padding: 8px 4px !important;
+    letter-spacing: 0.5px !important;
+  }
+  .board-exact-table th.th-product {
+    width: 42% !important;
+    padding-left: 10px !important;
+  }
+  .board-exact-table th.th-alis,
+  .board-exact-table th.th-satis {
+    width: 29% !important;
+  }
+  .board-exact-table td {
+    padding: 9px 4px !important;
   }
   .board-exact-table .td-label {
-    font-size: clamp(12px, 2.7vw, 16px);
-    font-weight: 900 !important;
-    padding-left: clamp(4px, 1.2vw, 8px);
+    font-size: 12.5px !important;
+    padding-left: 10px !important;
+    width: 42% !important;
+    white-space: normal !important;
+    line-height: 1.2 !important;
   }
   .board-exact-table .td-price {
-    font-size: clamp(14px, 3.2vw, 19px);
-    font-weight: 900 !important;
-    padding: 2px 2px;
+    font-size: 13.5px !important;
+    width: 29% !important;
+    padding: 6px 2px !important;
   }
   .board-exact-table .price-change-tag {
-    font-size: clamp(8px, 1.8vw, 11px);
-    font-weight: 900 !important;
-    padding: 1px 2px;
-    right: 2px;
+    font-size: 8.5px !important;
+    padding: 1px 3px !important;
+    margin-left: 3px !important;
   }
   .board-exact-table tr:last-child .td-label {
-    font-size: clamp(13px, 2.9vw, 17px) !important;
-    font-weight: 900 !important;
+    font-size: 13px !important;
   }
-  .board-exact-table tr:last-child .td-price,
-  .board-exact-table tr:last-child .price-num {
-    font-size: clamp(15px, 3.4vw, 20px) !important;
-    font-weight: 900 !important;
-  }
-  .right-title {
-    font-size: 14px;
-  }
-  .right-sub {
-    font-size: 11px;
-  }
-  .board-exact-table .td-has-label {
-    font-size: 15px;
-    padding-left: 8px;
-  }
-  .has-red-box {
-    font-size: 17px;
-    padding: 2px 10px;
-    gap: 8px;
-  }
-  .has-red-box .price-change-tag {
-    font-size: clamp(8px, 2.2vw, 10px);
-    padding: 1px 4px;
-    position: static;
-    transform: none;
+  .board-exact-table tr:last-child .td-price {
+    font-size: 14px !important;
   }
 }
 
@@ -8944,3 +8767,203 @@ body.page-canli-fiyatlar-mode .gold-ticker-strip,
 }
 
 
+
+
+/* ==========================================================
+   👑 BELGİN HAUTE HORLOGERIE & JOAILLERIE — ELİT MOBİL TASARIM SİSTEMİ
+   Dünya devi lüks saat & mücevher markaları (Rolex, Cartier, Patek Philippe)
+   seviyesinde kusursuz mobil tipografi, hiyerarşi ve mikro etkileşimler.
+   ========================================================== */
+
+@media (max-width: 768px) {
+  /* 1. Kök & Sayfa Yapısı — Sıfır Yatay Taşma */
+  html, body {
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* 2. Kredi Kartı Bilgilendirme Şeridi — Lüks & Kompakt */
+  .payment-notice {
+    height: 28px !important;
+    background: #3B0B10 !important;
+    border-bottom: 1px solid rgba(197, 160, 89, 0.3) !important;
+  }
+  .payment-notice__group span {
+    font-size: 10px !important;
+    letter-spacing: 1px !important;
+    color: #F8EDD3 !important;
+    font-weight: 700 !important;
+  }
+
+  /* 3. Mobil Header — Tek Sıra, Rafine Zarafet */
+  .header {
+    background: rgba(4, 24, 21, 0.95) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border-bottom: 1px solid rgba(194, 167, 104, 0.28) !important;
+  }
+  .header-grid {
+    padding: 6px 0 !important;
+  }
+  .btn-hamburger {
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 8px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(194, 167, 104, 0.3) !important;
+    color: #E8DCC4 !important;
+  }
+  .brand-logo-header {
+    max-height: 38px !important;
+    width: auto !important;
+  }
+
+  /* 4. Mobil Menü Çekmecesi (Drawer) — Lüks Haute Maison Deneyimi */
+  .mobile-drawer {
+    background: #071714 !important;
+    color: #E8DCC4 !important;
+    border-right: 1px solid rgba(194, 167, 104, 0.3) !important;
+    box-shadow: 10px 0 40px rgba(0, 0, 0, 0.6) !important;
+    width: 86vw !important;
+    max-width: 360px !important;
+  }
+  .mobile-drawer-header {
+    background: #051310 !important;
+    border-bottom: 1px solid rgba(194, 167, 104, 0.25) !important;
+    padding: 16px 18px !important;
+  }
+  .mobile-drawer-close {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(194, 167, 104, 0.3) !important;
+    color: #E8DCC4 !important;
+    font-size: 18px !important;
+  }
+  .mobile-drawer-nav {
+    padding: 16px !important;
+  }
+  .mobile-nav-accordion-header {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(194, 167, 104, 0.25) !important;
+    border-radius: 8px !important;
+    padding: 12px 14px !important;
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    color: #F8EDD3 !important;
+    min-height: 46px !important;
+  }
+  .mobile-nav-accordion-sub {
+    background: rgba(0, 0, 0, 0.25) !important;
+    border-left: 2px solid var(--color-gold) !important;
+    border-radius: 0 0 8px 8px !important;
+    margin-top: 2px !important;
+    padding: 6px 0 !important;
+  }
+  .mobile-nav-sub-link {
+    font-size: 13px !important;
+    padding: 10px 16px !important;
+    color: #D1D5DB !important;
+    min-height: 42px !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+  .mobile-nav-sub-link:active {
+    background: rgba(194, 167, 104, 0.15) !important;
+    color: #F5D061 !important;
+  }
+
+  /* 5. Mobil Ürün Kartları (Product Cards) — Cenevre & Cartier Standartları */
+  .product-art-card {
+    border-radius: 12px !important;
+    border: 1px solid rgba(218, 212, 200, 0.7) !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
+  }
+  .product-art-thumb {
+    padding-top: 100% !important;
+    background: radial-gradient(circle at 50% 50%, #FFFFFF 30%, #F8F6F0 100%) !important;
+    border-bottom: 1px solid rgba(235, 230, 220, 0.8) !important;
+  }
+  .product-art-info {
+    padding: 12px 10px 14px !important;
+  }
+  .prod-brand-name {
+    font-size: 10.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1.2px !important;
+    color: var(--color-gold-dark, #8A7039) !important;
+    margin-bottom: 3px !important;
+  }
+  .prod-model-name {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    line-height: 1.35 !important;
+    color: #111827 !important;
+    margin-bottom: 6px !important;
+  }
+  .prod-ref-size {
+    font-size: 10.5px !important;
+    color: #6B7280 !important;
+    margin-bottom: 8px !important;
+  }
+  .prod-price-tag {
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    color: var(--color-teal, #05332F) !important;
+    font-variant-numeric: tabular-nums !important;
+    letter-spacing: -0.2px !important;
+  }
+
+  /* 6. Mobil Filtre Sekmeleri (Yatay Kaydırma) */
+  .watch-filter-tabs,
+  .jewellery-filter-tabs,
+  .preowned-filter-tabs {
+    padding: 6px 14px !important;
+    gap: 8px !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .watch-brand-filter-btn,
+  .jewellery-filter-btn,
+  .preowned-filter-btn {
+    padding: 8px 16px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    border-radius: 20px !important;
+    border: 1px solid rgba(194, 167, 104, 0.4) !important;
+    background: #FFFFFF !important;
+    min-height: 38px !important;
+  }
+  .watch-brand-filter-btn.active,
+  .jewellery-filter-btn.active,
+  .preowned-filter-btn.active {
+    background: var(--color-teal, #05332F) !important;
+    color: #FFFFFF !important;
+    border-color: var(--color-teal, #05332F) !important;
+    box-shadow: 0 4px 12px rgba(5, 51, 47, 0.3) !important;
+  }
+
+  /* 7. Mobil Alt Sabit Dock — Elit Görünüm */
+  .mobile-bottom-dock {
+    height: calc(60px + env(safe-area-inset-bottom, 8px)) !important;
+    background: rgba(5, 23, 20, 0.94) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-top: 1px solid rgba(194, 167, 104, 0.35) !important;
+    padding: 6px 8px calc(4px + env(safe-area-inset-bottom, 8px)) !important;
+  }
+  .mobile-dock-btn {
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    color: #9CA3AF !important;
+  }
+  .mobile-dock-btn.active {
+    color: #F5D061 !important;
+  }
+  .mobile-dock-btn.active svg {
+    stroke: #F5D061 !important;
+  }
+}
