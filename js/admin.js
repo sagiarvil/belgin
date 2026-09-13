@@ -10798,6 +10798,7 @@ const AdminApp = {
       // Alt Bölümleri Hesapla
       this.renderFeasibilityOutputs();
       this.renderGoalOutputs();
+      this.renderMatrixOutputs();
       this.renderScenariosTable();
     } catch (err) {
       console.error('[AdminApp] renderFeasibility error:', err);
@@ -10952,6 +10953,130 @@ const AdminApp = {
       }
     } catch (err) {
       console.error('[AdminApp] renderGoalOutputs error:', err);
+    }
+  },
+
+  // 14B. 2A Çapraz Finansal Hesaplama Matrisi (Canlı Orantı Motoru: 1 Gün, 5 Gün, 20 Gün, 240 Gün)
+  onMatrixChange(field, inputEl) {
+    try {
+      const val = this.maskCurrencyInput(inputEl);
+      const margin = this.matrixMargin !== undefined ? this.matrixMargin : (this.feasibilityMargin || 5.0);
+      const marginRatio = (margin || 5.0) / 100;
+
+      // 1 Hafta = 5 Gün | 1 Ay = 20 Gün | 1 Yıl = 240 Gün
+      if (field === 'dailyPos') {
+        this.matrixDailyPos = val;
+        this.matrixDailySale = val;
+      } else if (field === 'dailySale') {
+        this.matrixDailySale = val;
+        this.matrixDailyPos = val;
+      } else if (field === 'dailyProfit') {
+        this.matrixDailySale = marginRatio > 0 ? (val / marginRatio) : 0;
+        this.matrixDailyPos = this.matrixDailySale;
+      } else if (field === 'weeklyPos') {
+        this.matrixDailyPos = val / 5;
+        this.matrixDailySale = this.matrixDailyPos;
+      } else if (field === 'weeklySale') {
+        this.matrixDailySale = val / 5;
+        this.matrixDailyPos = this.matrixDailySale;
+      } else if (field === 'weeklyProfit') {
+        const weekSale = marginRatio > 0 ? (val / marginRatio) : 0;
+        this.matrixDailySale = weekSale / 5;
+        this.matrixDailyPos = this.matrixDailySale;
+      } else if (field === 'monthlyPos') {
+        this.matrixDailyPos = val / 20;
+        this.matrixDailySale = this.matrixDailyPos;
+      } else if (field === 'monthlySale') {
+        this.matrixDailySale = val / 20;
+        this.matrixDailyPos = this.matrixDailySale;
+      } else if (field === 'monthlyProfit') {
+        const monthSale = marginRatio > 0 ? (val / marginRatio) : 0;
+        this.matrixDailySale = monthSale / 20;
+        this.matrixDailyPos = this.matrixDailySale;
+      } else if (field === 'yearlyPos') {
+        this.matrixDailyPos = val / 240;
+        this.matrixDailySale = this.matrixDailyPos;
+      } else if (field === 'yearlySale') {
+        this.matrixDailySale = val / 240;
+        this.matrixDailyPos = this.matrixDailySale;
+      } else if (field === 'yearlyProfit') {
+        const yearSale = marginRatio > 0 ? (val / marginRatio) : 0;
+        this.matrixDailySale = yearSale / 240;
+        this.matrixDailyPos = this.matrixDailySale;
+      }
+
+      this.renderMatrixOutputs(inputEl);
+    } catch (err) {
+      console.error('[AdminApp] onMatrixChange error:', err);
+    }
+  },
+
+  onMatrixMarginChange(val) {
+    const parsed = parseFloat(val);
+    if (!isNaN(parsed) && parsed > 0 && parsed <= 100) {
+      this.matrixMargin = parsed;
+      this.renderMatrixOutputs();
+    }
+  },
+
+  resetMatrixDefaults() {
+    this.matrixDailyPos = 500000;
+    this.matrixDailySale = 500000;
+    this.matrixMargin = 5.0;
+    const marginEl = document.getElementById('matMarginInput');
+    if (marginEl) marginEl.value = '5.0';
+    this.renderMatrixOutputs();
+  },
+
+  renderMatrixOutputs(activeInputEl = null) {
+    try {
+      const dailyPos = this.matrixDailyPos !== undefined ? this.matrixDailyPos : 500000;
+      const dailySale = this.matrixDailySale !== undefined ? this.matrixDailySale : 500000;
+      const margin = this.matrixMargin !== undefined ? this.matrixMargin : (this.feasibilityMargin || 5.0);
+      const marginRatio = (margin || 5.0) / 100;
+
+      const dailyProfit = dailySale * marginRatio;
+
+      const weeklyPos = dailyPos * 5;
+      const weeklySale = dailySale * 5;
+      const weeklyProfit = dailyProfit * 5;
+
+      const monthlyPos = dailyPos * 20;
+      const monthlySale = dailySale * 20;
+      const monthlyProfit = dailyProfit * 20;
+
+      const yearlyPos = dailyPos * 240;
+      const yearlySale = dailySale * 240;
+      const yearlyProfit = dailyProfit * 240;
+
+      const mapping = {
+        matDailyPos: dailyPos,
+        matDailySale: dailySale,
+        matDailyProfit: dailyProfit,
+        matWeeklyPos: weeklyPos,
+        matWeeklySale: weeklySale,
+        matWeeklyProfit: weeklyProfit,
+        matMonthlyPos: monthlyPos,
+        matMonthlySale: monthlySale,
+        matMonthlyProfit: monthlyProfit,
+        matYearlyPos: yearlyPos,
+        matYearlySale: yearlySale,
+        matYearlyProfit: yearlyProfit
+      };
+
+      Object.keys(mapping).forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el !== activeInputEl && document.activeElement !== el) {
+          el.value = this.formatTrCurrency(mapping[id]);
+        }
+      });
+
+      const marginEl = document.getElementById('matMarginInput');
+      if (marginEl && marginEl !== activeInputEl && document.activeElement !== marginEl) {
+        marginEl.value = Number(margin).toFixed(1);
+      }
+    } catch (err) {
+      console.error('[AdminApp] renderMatrixOutputs error:', err);
     }
   },
 

@@ -1783,6 +1783,12 @@
       border: 2px solid #A855F7;
       box-shadow: 0 10px 30px rgba(168, 85, 247, 0.12);
     }
+    /* 2A. BLOK: İNDİGO / ÇAPRAZ HESAPLAMA MATRİSİ */
+    .feas-block-indigo {
+      background: linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 100%);
+      border: 2px solid #6366F1;
+      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.12);
+    }
 
     .feas-pill-badge {
       display: inline-flex;
@@ -4552,6 +4558,182 @@
         </div>
     </div>
 
+    <!-- 2A. BLOK: ÇAPRAZ FİNANSAL HESAPLAMA MATRİSİ (CANLI ORANTI MOTORU) -->
+    <div class="feas-block-section feas-block-indigo" id="block2ASection" style="margin-bottom:24px;">
+        
+        <!-- BAŞLIK & AÇIKLAMA -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px; padding-bottom:12px; border-bottom:1.5px solid #C7D2FE;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div class="feas-icon-bubble" style="background:#EEF2FF; color:#4F46E5;">📊</div>
+            <div>
+              <h3 style="margin:0; font-size:16px; font-weight:800; color:#312E81; display:flex; align-items:center; gap:6px;">
+                2A. ÇAPRAZ FİNANSAL HESAPLAMA MATRİSİ
+                <span class="feas-pill-badge" style="background:#E0E7FF; color:#4338CA; border:1px solid #C7D2FE;">CANLI ORANTI MOTORU</span>
+              </h3>
+              <div style="font-size:11.5px; color:#4F46E5; font-weight:600;">
+                Herhangi bir kutuya tutar girdiğinizde; 5 gün (haftalık), 20 gün (aylık) ve 240 gün (yıllık) orantısıyla diğer tüm alanlar anında otomatik hesaplanır.
+              </div>
+            </div>
+          </div>
+
+          <!-- Kârlılık Oranı Kutusu (Pembe Vurgulu) -->
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div class="feas-input-field" style="display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-color:#F472B6; background:#FDF2F8;" title="Manuel Kârlılık Oranı">
+              <span style="font-size:12px; font-weight:800; color:#9D174D;">📈 Kârlılık Oranı:</span>
+              <span style="font-size:14px; font-weight:800; color:#BE185D;">%</span>
+              <input type="number" id="matMarginInput" class="feas-sync-margin-input" min="0.1" max="100" step="0.1" value="5.0" style="width:48px; border:none; outline:none; background:transparent; font-size:15px; font-weight:800; color:#831843; text-align:center; font-family:monospace;" oninput="AdminApp.onMatrixMarginChange(this.value)">
+            </div>
+            <button type="button" class="feas-chip-btn" onclick="AdminApp.resetMatrixDefaults()" style="font-weight:700;">Sıfırla</button>
+          </div>
+        </div>
+
+        <!-- DİNAMİK MATRİS TABLOSU / KARTLARI -->
+        <div style="overflow-x:auto;">
+          <table style="width:100%; border-collapse:separate; border-spacing:0 8px; font-size:13px; min-width:680px;">
+            <thead>
+              <tr style="text-align:left; color:#475569; font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:0.5px;">
+                <th style="padding:6px 12px; width:170px;">Dönem / Zaman</th>
+                <th style="padding:6px 12px;">💳 POS Cirosu (₺)</th>
+                <th style="padding:6px 12px;">🏷️ Toplam Satış (₺)</th>
+                <th style="padding:6px 12px;">💰 Net Kâr Tutarı (₺)</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              <!-- 1. GÜNLÜK SATIR (SARI VURGULU) -->
+              <tr style="background:#FEF9C3; border:1.5px solid #FACC15; border-radius:10px; box-shadow:0 2px 6px rgba(250,204,21,0.15);">
+                <td style="padding:10px 14px; border-top-left-radius:10px; border-bottom-left-radius:10px; border:1.5px solid #FACC15; border-right:none;">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-size:16px;">🟡</span>
+                    <div>
+                      <strong style="color:#854D0E; font-size:13px;">GÜNLÜK</strong>
+                      <div style="font-size:10.5px; color:#A16207; font-weight:700;">1 İş Günü Temel Hız</div>
+                    </div>
+                  </div>
+                </td>
+                <td style="padding:8px 10px; border-top:1.5px solid #FACC15; border-bottom:1.5px solid #FACC15;">
+                  <div class="feas-input-field" style="display:flex; align-items:center; padding:5px 10px; background:#FFFFFF; border-color:#EAB308;">
+                    <span style="font-weight:800; color:#CA8A04; margin-right:4px;">₺</span>
+                    <input type="text" inputmode="decimal" id="matDailyPos" value="500.000" style="width:100%; border:none; outline:none; font-size:15px; font-weight:800; color:#713F12; font-family:monospace;" oninput="AdminApp.onMatrixChange('dailyPos', this)">
+                  </div>
+                </td>
+                <td style="padding:8px 10px; border-top:1.5px solid #FACC15; border-bottom:1.5px solid #FACC15;">
+                  <div class="feas-input-field" style="display:flex; align-items:center; padding:5px 10px; background:#FFFFFF; border-color:#86EFAC;">
+                    <span style="font-weight:800; color:#16A34A; margin-right:4px;">₺</span>
+                    <input type="text" inputmode="decimal" id="matDailySale" value="500.000" style="width:100%; border:none; outline:none; font-size:15px; font-weight:800; color:#14532D; font-family:monospace;" oninput="AdminApp.onMatrixChange('dailySale', this)">
+                  </div>
+                </td>
+                <td style="padding:8px 14px; border-top-right-radius:10px; border-bottom-right-radius:10px; border:1.5px solid #FACC15; border-left:none;">
+                  <div class="feas-input-field" style="display:flex; align-items:center; padding:5px 10px; background:#FFFFFF; border-color:#86EFAC;">
+                    <span style="font-weight:800; color:#15803D; margin-right:4px;">₺</span>
+                    <input type="text" inputmode="decimal" id="matDailyProfit" value="25.000" style="width:100%; border:none; outline:none; font-size:15px; font-weight:800; color:#15803D; font-family:monospace;" oninput="AdminApp.onMatrixChange('dailyProfit', this)">
+                  </div>
+                </td>
+              </tr>
+
+              <!-- 2. HAFTALIK SATIR (TURUNCU VURGULU - 5 İŞ GÜNÜ) -->
+              <tr style="background:#FFEDD5; border:1.5px solid #FB923C; border-radius:10px; box-shadow:0 2px 6px rgba(251,146,60,0.15);">
+                <td style="padding:10px 14px; border-top-left-radius:10px; border-bottom-left-radius:10px; border:1.5px solid #FB923C; border-right:none;">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-size:16px;">🟠</span>
+                    <div>
+                      <strong style="color:#9A3412; font-size:13px;">HAFTALIK</strong>
+                      <div style="font-size:10.5px; color:#C2410C; font-weight:700;">5 İş Günü (Günlük × 5)</div>
+                    </div>
+                  </div>
+                </td>
+                <td style="padding:8px 10px; border-top:1.5px solid #FB923C; border-bottom:1.5px solid #FB923C;">
+                  <div class="feas-input-field" style="display:flex; align-items:center; padding:5px 10px; background:#FFFFFF; border-color:#F97316;">
+                    <span style="font-weight:800; color:#EA580C; margin-right:4px;">₺</span>
+                    <input type="text" inputmode="decimal" id="matWeeklyPos" value="2.500.000" style="width:100%; border:none; outline:none; font-size:15px; font-weight:800; color:#7C2D12; font-family:monospace;" oninput="AdminApp.onMatrixChange('weeklyPos', this)">
+                  </div>
+                </td>
+                <td style="padding:8px 10px; border-top:1.5px solid #FB923C; border-bottom:1.5px solid #FB923C;">
+                  <div class="feas-input-field" style="display:flex; align-items:center; padding:5px 10px; background:#FFFFFF; border-color:#FDBA74;">
+                    <span style="font-weight:800; color:#EA580C; margin-right:4px;">₺</span>
+                    <input type="text" inputmode="decimal" id="matWeeklySale" value="2.500.000" style="width:100%; border:none; outline:none; font-size:15px; font-weight:800; color:#7C2D12; font-family:monospace;" oninput="AdminApp.onMatrixChange('weeklySale', this)">
+                  </div>
+                </td>
+                <td style="padding:8px 14px; border-top-right-radius:10px; border-bottom-right-radius:10px; border:1.5px solid #FB923C; border-left:none;">
+                  <div class="feas-input-field" style="display:flex; align-items:center; padding:5px 10px; background:#FFFFFF; border-color:#86EFAC;">
+                    <span style="font-weight:800; color:#15803D; margin-right:4px;">₺</span>
+                    <input type="text" inputmode="decimal" id="matWeeklyProfit" value="125.000" style="width:100%; border:none; outline:none; font-size:15px; font-weight:800; color:#15803D; font-family:monospace;" oninput="AdminApp.onMatrixChange('weeklyProfit', this)">
+                  </div>
+                </td>
+              </tr>
+
+              <!-- 3. AYLIK SATIR (KIRMIZI/MERCAN VURGULU - 20 İŞ GÜNÜ) -->
+              <tr style="background:#FEE2E2; border:1.5px solid #F87171; border-radius:10px; box-shadow:0 2px 6px rgba(248,113,113,0.15);">
+                <td style="padding:10px 14px; border-top-left-radius:10px; border-bottom-left-radius:10px; border:1.5px solid #F87171; border-right:none;">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-size:16px;">🔴</span>
+                    <div>
+                      <strong style="color:#991B1B; font-size:13px;">AYLIK</strong>
+                      <div style="font-size:10.5px; color:#B91C1C; font-weight:700;">20 İş Günü (Günlük × 20)</div>
+                    </div>
+                  </div>
+                </td>
+                <td style="padding:8px 10px; border-top:1.5px solid #F87171; border-bottom:1.5px solid #F87171;">
+                  <div class="feas-input-field" style="display:flex; align-items:center; padding:5px 10px; background:#FFFFFF; border-color:#EF4444;">
+                    <span style="font-weight:800; color:#DC2626; margin-right:4px;">₺</span>
+                    <input type="text" inputmode="decimal" id="matMonthlyPos" value="10.000.000" style="width:100%; border:none; outline:none; font-size:15px; font-weight:800; color:#7F1D1D; font-family:monospace;" oninput="AdminApp.onMatrixChange('monthlyPos', this)">
+                  </div>
+                </td>
+                <td style="padding:8px 10px; border-top:1.5px solid #F87171; border-bottom:1.5px solid #F87171;">
+                  <div class="feas-input-field" style="display:flex; align-items:center; padding:5px 10px; background:#FFFFFF; border-color:#FCA5A5;">
+                    <span style="font-weight:800; color:#DC2626; margin-right:4px;">₺</span>
+                    <input type="text" inputmode="decimal" id="matMonthlySale" value="10.000.000" style="width:100%; border:none; outline:none; font-size:15px; font-weight:800; color:#7F1D1D; font-family:monospace;" oninput="AdminApp.onMatrixChange('monthlySale', this)">
+                  </div>
+                </td>
+                <td style="padding:8px 14px; border-top-right-radius:10px; border-bottom-right-radius:10px; border:1.5px solid #F87171; border-left:none;">
+                  <div class="feas-input-field" style="display:flex; align-items:center; padding:5px 10px; background:#FFFFFF; border-color:#86EFAC;">
+                    <span style="font-weight:800; color:#15803D; margin-right:4px;">₺</span>
+                    <input type="text" inputmode="decimal" id="matMonthlyProfit" value="500.000" style="width:100%; border:none; outline:none; font-size:15px; font-weight:800; color:#15803D; font-family:monospace;" oninput="AdminApp.onMatrixChange('monthlyProfit', this)">
+                  </div>
+                </td>
+              </tr>
+
+              <!-- 4. YILLIK SATIR (MAVİ/SAFİR VURGULU - 240 İŞ GÜNÜ) -->
+              <tr style="background:#E0F2FE; border:1.5px solid #38BDF8; border-radius:10px; box-shadow:0 2px 6px rgba(56,189,248,0.15);">
+                <td style="padding:10px 14px; border-top-left-radius:10px; border-bottom-left-radius:10px; border:1.5px solid #38BDF8; border-right:none;">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-size:16px;">🔵</span>
+                    <div>
+                      <strong style="color:#075985; font-size:13px;">YILLIK</strong>
+                      <div style="font-size:10.5px; color:#0284C7; font-weight:700;">240 İş Günü (12 Ay / Günlük × 240)</div>
+                    </div>
+                  </div>
+                </td>
+                <td style="padding:8px 10px; border-top:1.5px solid #38BDF8; border-bottom:1.5px solid #38BDF8;">
+                  <div class="feas-input-field" style="display:flex; align-items:center; padding:5px 10px; background:#FFFFFF; border-color:#0284C7;">
+                    <span style="font-weight:800; color:#0284C7; margin-right:4px;">₺</span>
+                    <input type="text" inputmode="decimal" id="matYearlyPos" value="120.000.000" style="width:100%; border:none; outline:none; font-size:15px; font-weight:800; color:#0C4A6E; font-family:monospace;" oninput="AdminApp.onMatrixChange('yearlyPos', this)">
+                  </div>
+                </td>
+                <td style="padding:8px 10px; border-top:1.5px solid #38BDF8; border-bottom:1.5px solid #38BDF8;">
+                  <div class="feas-input-field" style="display:flex; align-items:center; padding:5px 10px; background:#FFFFFF; border-color:#7DD3FC;">
+                    <span style="font-weight:800; color:#0284C7; margin-right:4px;">₺</span>
+                    <input type="text" inputmode="decimal" id="matYearlySale" value="120.000.000" style="width:100%; border:none; outline:none; font-size:15px; font-weight:800; color:#0C4A6E; font-family:monospace;" oninput="AdminApp.onMatrixChange('yearlySale', this)">
+                  </div>
+                </td>
+                <td style="padding:8px 14px; border-top-right-radius:10px; border-bottom-right-radius:10px; border:1.5px solid #38BDF8; border-left:none;">
+                  <div class="feas-input-field" style="display:flex; align-items:center; padding:5px 10px; background:#FFFFFF; border-color:#86EFAC;">
+                    <span style="font-weight:800; color:#15803D; margin-right:4px;">₺</span>
+                    <input type="text" inputmode="decimal" id="matYearlyProfit" value="6.000.000" style="width:100%; border:none; outline:none; font-size:15px; font-weight:800; color:#15803D; font-family:monospace;" oninput="AdminApp.onMatrixChange('yearlyProfit', this)">
+                  </div>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+        <div style="font-size:11px; color:#6366F1; margin-top:8px; font-weight:700; display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px;">
+          <span>⚡ Çapraz Bağlantı: Herhangi bir hücreyi değiştirdiğinizde diğer tüm satır ve sütunlar oranlanarak anında güncellenir.</span>
+          <span>Formül: 1 Hafta = 5 Gün | 1 Ay = 20 Gün | 1 Yıl = 240 Gün</span>
+        </div>
+    </div>
+
     <!-- 3. BLOK: CANLI ÖNGÖRÜ & FİZİBİLİTE SİMÜLATÖRÜ (ALTIN / KEHRİBAR YARIŞAN BLOK) -->
     <div class="feas-block-section feas-block-amber">
         
@@ -6206,6 +6388,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 <script src="js/data.js"></script>
 <script src="js/vip-payment.js?v=2.8.8"></script>
-<script src="js/admin.js?v=20260913-feasibility-v7"></script>
+<script src="js/admin.js?v=20260913-feasibility-v8"></script>
 </body>
 </html>
