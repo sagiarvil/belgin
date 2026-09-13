@@ -450,3 +450,7 @@ const Router = {
     }, 40);
   }
 };
+
+window.Router = Router;
+window.PAGE_TITLES = PAGE_TITLES;
+

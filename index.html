@@ -835,7 +835,7 @@
             <h1 class="hero-title">Zamanın Başkenti Cenevre'den İzmir'e <span class="hero-title-gold">Asırlık Lüks</span></h1>
             <p class="hero-subtext">Rolex, Patek Philippe ve Audemars Piguet'nin en nadir koleksiyon parçaları; çeyrek asırlık Belgin Saat hafızası, şeffaf borsa değerleri ve kurumsal güvenceyle.</p>
             <div class="hero-actions">
-              <a href="/elit-kategori/" class="btn-hero-primary" onclick="Router.navigate('elit-kategori'); return false;">
+              <a href="/elit-kategori/" class="btn-hero-primary" onclick="event.preventDefault(); Router.navigate('elit-kategori');">
                 <span>👑 200 Elit Modeli Keşfet</span>
                 <span>→</span>
               </a>
@@ -854,11 +854,11 @@
             <h2 class="hero-title">Mühendisliğin ve Lüksün Doruk Noktası: <span class="hero-title-gold">Platin Daytona</span></h2>
             <p class="hero-subtext">Yalnızca masif platine özgü buz mavisi kadran, kestane kahvesi monoblok seramik bezel ve 4130 Superlative Chronometer kalibre.</p>
             <div class="hero-actions">
-              <a href="/elit-kategori/?marka=Rolex" class="btn-hero-primary" onclick="App.filterEliteWatchesByBrand('Rolex', null); Router.navigate('elit-kategori'); return false;">
+              <a href="/elit-kategori/?marka=Rolex" class="btn-hero-primary" onclick="event.preventDefault(); App.filterEliteWatchesByBrand('Rolex', null); Router.navigate('elit-kategori');">
                 <span>👑 Rolex Daytona Vitrini</span>
                 <span>→</span>
               </a>
-              <a href="/magazin/" class="btn-hero-secondary" onclick="Router.navigate('magazin'); return false;">
+              <a href="/magazin/" class="btn-hero-secondary" onclick="event.preventDefault(); Router.navigate('magazin');">
                 <span>📰 Daytona İncelemesi</span>
               </a>
             </div>
@@ -873,11 +873,11 @@
             <h2 class="hero-title">Patek Philippe Nautilus: <span class="hero-title-gold">Kutsal Kase</span></h2>
             <p class="hero-subtext">İkonik sekizgen lumboz kasa geometrisi, yatay kabartmalı Tiffany mavisi kadran ve saat müzayedelerinin en yüksek değerine ulaşan efsanesi.</p>
             <div class="hero-actions">
-              <a href="/elit-kategori/?marka=Patek+Philippe" class="btn-hero-primary" onclick="App.filterEliteWatchesByBrand('Patek Philippe', null); Router.navigate('elit-kategori'); return false;">
+              <a href="/elit-kategori/?marka=Patek+Philippe" class="btn-hero-primary" onclick="event.preventDefault(); App.filterEliteWatchesByBrand('Patek Philippe', null); Router.navigate('elit-kategori');">
                 <span>✨ Patek Koleksiyonunu Gör</span>
                 <span>→</span>
               </a>
-              <a href="#" onclick="App.openTradeInModal(); return false;" class="btn-hero-secondary">
+              <a href="#" onclick="event.preventDefault(); App.openTradeInModal();" class="btn-hero-secondary">
                 <span>🔄 Saat Takası &amp; Değerleme</span>
               </a>
             </div>
@@ -892,7 +892,7 @@
             <h2 class="hero-title">Asırlık Zarafet: Havacılık Tarihinin <span class="hero-title-gold">İlk Kol Saati</span></h2>
             <p class="hero-subtext">Geometrik kare form, Romen rakamlı safir tepe, vidalı bezel tasarımı ve SmartLink entegre ergonomik çelik bilezik konforu.</p>
             <div class="hero-actions">
-              <a href="/elit-kategori/?marka=Cartier" class="btn-hero-primary" onclick="App.filterEliteWatchesByBrand('Cartier', null); Router.navigate('elit-kategori'); return false;">
+              <a href="/elit-kategori/?marka=Cartier" class="btn-hero-primary" onclick="event.preventDefault(); App.filterEliteWatchesByBrand('Cartier', null); Router.navigate('elit-kategori');">
                 <span>💎 Cartier Santos'u İncele</span>
                 <span>→</span>
               </a>
@@ -911,11 +911,11 @@
             <h2 class="hero-title">10 Dünya Markası &amp; <span class="hero-title-gold">1.925 Model Kataloğu</span></h2>
             <p class="hero-subtext">Longines, Rado, Tissot, TAG Heuer, Breitling ve Versace... Orijinal saatler, güvenli teslimat ve takas imkanı.</p>
             <div class="hero-actions">
-              <a href="/saatler/" class="btn-hero-primary" onclick="Router.navigate('saatler'); return false;">
+              <a href="/saatler/" class="btn-hero-primary" onclick="event.preventDefault(); Router.navigate('saatler');">
                 <span>⌚ Tüm Koleksiyonu Gör (1.925 Saat)</span>
                 <span>→</span>
               </a>
-              <a href="/markalar/" class="btn-hero-secondary" onclick="Router.navigate('markalar'); return false;">
+              <a href="/markalar/" class="btn-hero-secondary" onclick="event.preventDefault(); Router.navigate('markalar');">
                 <span>🏷️ Markalar Dizini</span>
               </a>
             </div>
@@ -927,11 +927,11 @@
             <h2 class="hero-title">Altın ve Zümrütün Ebedi Uyumu: <span class="hero-title-gold">Zamansız Yatırım</span></h2>
             <p class="hero-subtext">Koleksiyonerlerin en çok aradığı yeşil kadranlı sarı altın Daytona ve nesiller boyu değerini katlayan lüks saat portföyü.</p>
             <div class="hero-actions">
-              <a href="/elit-kategori/?marka=Rolex" class="btn-hero-primary" onclick="App.filterEliteWatchesByBrand('Rolex', null); Router.navigate('elit-kategori'); return false;">
+              <a href="/elit-kategori/?marka=Rolex" class="btn-hero-primary" onclick="event.preventDefault(); App.filterEliteWatchesByBrand('Rolex', null); Router.navigate('elit-kategori');">
                 <span>👑 Altın Saat Portföyünü İncele</span>
                 <span>→</span>
               </a>
-              <a href="/magazin/" class="btn-hero-secondary" onclick="Router.navigate('magazin'); return false;">
+              <a href="/magazin/" class="btn-hero-secondary" onclick="event.preventDefault(); Router.navigate('magazin');">
                 <span>📰 2026 Saat Raporu</span>
               </a>
             </div>
@@ -957,21 +957,21 @@
       
       <!-- MOBİL HAUTE HORLOGERIE & JOAILLERIE HIZLI KEŞİF HİKAYELERİ (LUXURY STORIES STRIP) -->
       <nav class="haute-stories-strip" aria-label="Mobil Hızlı Koleksiyon Keşfi">
-        <a href="/elit-kategori/" onclick="Router.navigate('elit-kategori'); return false;" class="haute-story-item">
+        <a href="/elit-kategori/" onclick="event.preventDefault(); Router.navigate('elit-kategori');" class="haute-story-item">
           <div class="haute-story-ring story-ring-gold">
             <span class="haute-story-icon">👑</span>
           </div>
           <span class="haute-story-title">Elit Saat</span>
         </a>
 
-        <a href="/saatler/" onclick="Router.navigate('saatler'); return false;" class="haute-story-item">
+        <a href="/saatler/" onclick="event.preventDefault(); Router.navigate('saatler');" class="haute-story-item">
           <div class="haute-story-ring">
             <span class="haute-story-icon">⌚</span>
           </div>
           <span class="haute-story-title">Tüm Saatler</span>
         </a>
 
-        <a href="/canli-fiyatlar/" onclick="Router.navigate('canli-fiyatlar'); return false;" class="haute-story-item">
+        <a href="/canli-fiyatlar/" onclick="event.preventDefault(); Router.navigate('canli-fiyatlar');" class="haute-story-item">
           <div class="haute-story-ring story-ring-live">
             <span class="haute-story-icon">📈</span>
             <span class="story-live-dot"></span>
@@ -979,21 +979,21 @@
           <span class="haute-story-title">Canlı Borsa</span>
         </a>
 
-        <a href="/mucevherat/?kategori=Alt%C4%B1n%20Bilezik" onclick="App.filterJewelleryCategory('Altın Bilezik', null); Router.navigate('mucevherat'); return false;" class="haute-story-item">
+        <a href="/mucevherat/?kategori=Alt%C4%B1n%20Bilezik" onclick="event.preventDefault(); App.filterJewelleryCategory('Altın Bilezik', null); Router.navigate('mucevherat');" class="haute-story-item">
           <div class="haute-story-ring story-ring-gold">
             <span class="haute-story-icon">✨</span>
           </div>
           <span class="haute-story-title">22A Bilezik</span>
         </a>
 
-        <a href="/mucevherat/?kategori=Ziynet%20%26%20Sarrafiye" onclick="App.filterJewelleryCategory('Ziynet & Sarrafiye', null); Router.navigate('mucevherat'); return false;" class="haute-story-item">
+        <a href="/mucevherat/?kategori=Ziynet%20%26%20Sarrafiye" onclick="event.preventDefault(); App.filterJewelleryCategory('Ziynet & Sarrafiye', null); Router.navigate('mucevherat');" class="haute-story-item">
           <div class="haute-story-ring">
             <span class="haute-story-icon">🏅</span>
           </div>
           <span class="haute-story-title">Sarrafiye</span>
         </a>
 
-        <a href="/biz-kimiz/" onclick="Router.navigate('biz-kimiz'); return false;" class="haute-story-item">
+        <a href="/biz-kimiz/" onclick="event.preventDefault(); Router.navigate('biz-kimiz');" class="haute-story-item">
           <div class="haute-story-ring">
             <span class="haute-story-icon">🏛️</span>
           </div>
@@ -1057,7 +1057,7 @@
               <span>Elit Kategori Lüks Saat Koleksiyonu</span>
             </h2>
           </div>
-          <a class="link-see-all" href="/elit-kategori/" data-page="elit-kategori" onclick="Router.navigate('elit-kategori'); return false;" style="color:var(--color-gold-dark); font-weight:700; border:1px solid rgba(194,167,104,0.5); padding:8px 16px; border-radius:6px; background:#FFF; box-shadow:0 2px 8px rgba(0,0,0,0.04);">Tüm Elit Kategoriyi İncele (200 Ürün) →</a>
+          <a class="link-see-all" href="/elit-kategori/" data-page="elit-kategori" onclick="event.preventDefault(); Router.navigate('elit-kategori');" style="color:var(--color-gold-dark); font-weight:700; border:1px solid rgba(194,167,104,0.5); padding:8px 16px; border-radius:6px; background:#FFF; box-shadow:0 2px 8px rgba(0,0,0,0.04);">Tüm Elit Kategoriyi İncele (200 Ürün) →</a>
         </div>
 
         <div class="mobile-quick-filter-bar" style="margin-bottom:20px;">
@@ -1088,7 +1088,7 @@
               İkonik Tasarımlar &amp; Usta İşçilik Detayları
             </h2>
           </div>
-          <a href="/elit-kategori/" onclick="Router.navigate('elit-kategori'); return false;" class="link-see-all" style="font-weight:700; color:var(--color-teal);">
+          <a href="/elit-kategori/" onclick="event.preventDefault(); Router.navigate('elit-kategori');" class="link-see-all" style="font-weight:700; color:var(--color-teal);">
             Elit Saat Koleksiyonunu İncele (200 Ürün) →
           </a>
         </div>
@@ -3459,9 +3459,9 @@
           <li><a href="/elit-kategori/" data-page="elit-kategori">👑 Elit Kategori (Haute Horlogerie)</a></li>
           <li><a href="/saatler/" data-page="saatler">Lüks Saatler</a></li>
           <li style="display:none;"><a href="/mucevherat/" data-page="mucevherat">Mücevherat & Altın</a></li>
-          <li><a href="#" onclick="App.scrollToValuation(); return false;">Saat Ekspertizi & Değerleme</a></li>
+          <li><a href="#" onclick="event.preventDefault(); App.scrollToValuation();">Saat Ekspertizi & Değerleme</a></li>
           <li><a href="/rehber/luks-saat-ekspertiz-ve-orijinallik-rehberi/">Saat Ekspertiz Rehberi</a></li>
-          <li><a href="#" onclick="App.openVipModal(); return false;">VIP Randevu Al</a></li>
+          <li><a href="#" onclick="event.preventDefault(); App.openVipModal();">VIP Randevu Al</a></li>
           <li><a href="https://wa.me/905419305372" target="_blank" rel="noopener">VIP WhatsApp Danışmanı</a></li>
           <li><a href="https://www.instagram.com/belginmucevherat/" target="_blank" rel="noopener">Instagram @belginmucevherat</a></li>
         </ul>
@@ -3476,8 +3476,8 @@
           <li><a href="iade-degisim-cayma.html">İade ve Cayma Rehberi</a></li>
           <li><a href="garanti-ve-satis-sonrasi.html">Garanti ve Satış Sonrası</a></li>
           <li><a href="musteri-tanima-ve-islem-guvenligi.html">Müşteri Tanıma & Güvenlik</a></li>
-          <li><a href="#" onclick="App.openTradeInModal(); return false;">Takas & Değerleme Talebi</a></li>
-          <li><a href="#" onclick="App.openStoreDeliveryReceiptModal('BLG-SAMPLE'); return false;">Mağaza Teslim Formu</a></li>
+          <li><a href="#" onclick="event.preventDefault(); App.openTradeInModal();">Takas & Değerleme Talebi</a></li>
+          <li><a href="#" onclick="event.preventDefault(); App.openStoreDeliveryReceiptModal('BLG-SAMPLE');">Mağaza Teslim Formu</a></li>
         </ul>
       </div>
 
@@ -3570,7 +3570,7 @@
           <span class="f-mag-bullet">◆</span>
           <span>DOXA: Okyanusların Çağrısı ve Profesyonel Dalış Saatleri</span>
         </a>
-        <a href="/magazin/koleksiyonluk-rolex-saatler-bu-modeller-kullanildi/" class="footer-mag-article-link">
+        <a href="/magazin/koleksiyonluk-rolex-saatler-gecmisin-unutulan-efsaneleri/" class="footer-mag-article-link">
           <span class="f-mag-bullet">◆</span>
           <span>Koleksiyonluk Rolex Saatler: İkonik Referanslar</span>
         </a>

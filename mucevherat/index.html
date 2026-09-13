@@ -518,9 +518,18 @@
     </div>
 
     <nav class="mobile-drawer-nav">
+      <!-- Hızlı Arama Tetikleyici (Drawer İçi) -->
+      <button type="button" class="mobile-drawer-search-btn" onclick="App.toggleMobileDrawer(false); App.openSearchModal();">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <span>Model, marka veya referans ara...</span>
+      </button>
+
       <!-- 0. Canlı Fiyatlar Butonu -->
-      <a href="/canli-fiyatlar/" data-page="canli-fiyatlar" onclick="App.toggleMobileDrawer(false);" class="mobile-nav-main-link" style="color:var(--color-teal); font-weight:800; display:flex; justify-content:space-between; align-items:center; background:#FFFDE6; border:1px solid #E5E2D9; padding:12px 14px; border-radius:8px; margin-bottom:12px;">
-        <span>📈 Canlı Fiyatlar (Altın & Döviz)</span>
+      <a href="/canli-fiyatlar/" data-page="canli-fiyatlar" onclick="App.toggleMobileDrawer(false);" class="mobile-nav-main-link mobile-nav-live-highlight">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:16px;">📈</span>
+          <span>Canlı Piyasa (Altın & Döviz)</span>
+        </div>
         <span class="live-dot-pulse"></span>
       </a>
       <!-- 0. Elit Kategori Akordeon (HAUTE HORLOGERIE 200 MODEL) -->
@@ -1577,7 +1586,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Eski Ata Çeyrek Altın</p>
         <p class="prod-ref-size">BLG-ZYN-045</p>
-        <div class="prod-price-tag">₺11.300</div>
+        <div class="prod-price-tag">₺11.325</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -1766,7 +1775,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Eski Ata Yarım Altın</p>
         <p class="prod-ref-size">BLG-ZYN-054</p>
-        <div class="prod-price-tag">₺22.600</div>
+        <div class="prod-price-tag">₺22.650</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -1901,7 +1910,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Eski Ata Tam Altın</p>
         <p class="prod-ref-size">BLG-ZYN-062</p>
-        <div class="prod-price-tag">₺45.200</div>
+        <div class="prod-price-tag">₺45.300</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -1928,7 +1937,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Ata Tam Yeni</p>
         <p class="prod-ref-size">BLG-ZYN-063</p>
-        <div class="prod-price-tag">₺45.200</div>
+        <div class="prod-price-tag">₺45.300</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2063,7 +2072,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Ata 2.5 luk Gremse Altın Eski</p>
         <p class="prod-ref-size">BLG-ZYN-082</p>
-        <div class="prod-price-tag">₺113.000</div>
+        <div class="prod-price-tag">₺113.250</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2198,7 +2207,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Ata Beşli Altın Eski</p>
         <p class="prod-ref-size">BLG-ZYN-097</p>
-        <div class="prod-price-tag">₺226.000</div>
+        <div class="prod-price-tag">₺226.500</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2225,7 +2234,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Ata Beşli Altın Yeni</p>
         <p class="prod-ref-size">BLG-ZYN-099</p>
-        <div class="prod-price-tag">₺226.000</div>
+        <div class="prod-price-tag">₺226.500</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2252,7 +2261,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">14 Ayar 5 Gram Ajda Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-107</p>
-        <div class="prod-price-tag">₺28.250</div>
+        <div class="prod-price-tag">₺28.500</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2279,7 +2288,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">14 Ayar 5 Gram Kibrit Çöpü Ajda Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-108</p>
-        <div class="prod-price-tag">₺28.250</div>
+        <div class="prod-price-tag">₺28.500</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2306,7 +2315,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">14 Ayar 5 Gram Kalemli Ajda Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-109</p>
-        <div class="prod-price-tag">₺28.250</div>
+        <div class="prod-price-tag">₺28.500</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2333,7 +2342,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">5 Gram 22 Ayar Ajda Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-110</p>
-        <div class="prod-price-tag">₺31.900</div>
+        <div class="prod-price-tag">₺31.950</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2360,7 +2369,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">14 Ayar 7 Gram Şarnel Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-111</p>
-        <div class="prod-price-tag">₺39.550</div>
+        <div class="prod-price-tag">₺39.900</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2387,7 +2396,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">7 Gram 22 Ayar Ajda Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-112</p>
-        <div class="prod-price-tag">₺44.660</div>
+        <div class="prod-price-tag">₺44.730</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2414,7 +2423,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">14 Ayar 10 Gram Ajda Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-113</p>
-        <div class="prod-price-tag">₺56.500</div>
+        <div class="prod-price-tag">₺57.000</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2441,7 +2450,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">14 Ayar 10 Gram Kibrit Çöpü Ajda Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-114</p>
-        <div class="prod-price-tag">₺56.500</div>
+        <div class="prod-price-tag">₺57.000</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2468,7 +2477,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">14 Ayar 10 Gram Kalemli Ajda Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-115</p>
-        <div class="prod-price-tag">₺56.500</div>
+        <div class="prod-price-tag">₺57.000</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2495,7 +2504,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">14 Ayar 10 Gram Dalgalı Şarnel Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-116</p>
-        <div class="prod-price-tag">₺56.500</div>
+        <div class="prod-price-tag">₺57.000</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2522,7 +2531,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">10 gr 22 Ayar Burma Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-117</p>
-        <div class="prod-price-tag">₺63.800</div>
+        <div class="prod-price-tag">₺63.900</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2549,7 +2558,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">10 Gram 22 Ayar Ajda Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-118</p>
-        <div class="prod-price-tag">₺63.800</div>
+        <div class="prod-price-tag">₺63.900</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2576,7 +2585,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Müjde Kristal 10 gr 22 Ayar Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-119</p>
-        <div class="prod-price-tag">₺63.800</div>
+        <div class="prod-price-tag">₺63.900</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2603,7 +2612,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Ajda Zik-Zak 10 gr 22 Ayar Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-120</p>
-        <div class="prod-price-tag">₺63.800</div>
+        <div class="prod-price-tag">₺63.900</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2630,7 +2639,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">Ajda Kibrit Çöpü Ray 10 gr 22 Ayar Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-121</p>
-        <div class="prod-price-tag">₺63.800</div>
+        <div class="prod-price-tag">₺63.900</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2657,7 +2666,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">20 Gram 22 Ayar Ajda Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-122</p>
-        <div class="prod-price-tag">₺127.600</div>
+        <div class="prod-price-tag">₺127.800</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2684,7 +2693,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">3&#39;lü Burma 20 gr 22 Ayar Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-123</p>
-        <div class="prod-price-tag">₺127.600</div>
+        <div class="prod-price-tag">₺127.800</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2711,7 +2720,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">20 gr 22 Ayar Burma Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-124</p>
-        <div class="prod-price-tag">₺127.600</div>
+        <div class="prod-price-tag">₺127.800</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2738,7 +2747,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">20 gr 22 Ayar 2&#39;li Ajda Kanal Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-125</p>
-        <div class="prod-price-tag">₺127.600</div>
+        <div class="prod-price-tag">₺127.800</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2765,7 +2774,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">20 gr 22 Ayar 2&#39;li Zikzak Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-126</p>
-        <div class="prod-price-tag">₺127.600</div>
+        <div class="prod-price-tag">₺127.800</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2792,7 +2801,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">20 gr 22 Ayar 2&#39;li Müjde Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-127</p>
-        <div class="prod-price-tag">₺127.600</div>
+        <div class="prod-price-tag">₺127.800</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2819,7 +2828,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">20 gr 22 Ayar 2&#39;li Ajda Kibrit Çöpü Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-128</p>
-        <div class="prod-price-tag">₺127.600</div>
+        <div class="prod-price-tag">₺127.800</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2846,7 +2855,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">3&#39;lü Burma 25 gr 22 Ayar Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-129</p>
-        <div class="prod-price-tag">₺159.500</div>
+        <div class="prod-price-tag">₺159.750</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2873,7 +2882,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">3&#39;lü Burma 30 gr 22 Ayar Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-130</p>
-        <div class="prod-price-tag">₺191.400</div>
+        <div class="prod-price-tag">₺191.700</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2900,7 +2909,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">30 gr 22 Ayar 3&#39;lü Ajda Kanal Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-131</p>
-        <div class="prod-price-tag">₺191.400</div>
+        <div class="prod-price-tag">₺191.700</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2927,7 +2936,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">30 gr 22 Ayar 3&#39;lü Müjde Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-132</p>
-        <div class="prod-price-tag">₺191.400</div>
+        <div class="prod-price-tag">₺191.700</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2954,7 +2963,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">30 gr 22 Ayar 3&#39;lü Zikzak Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-133</p>
-        <div class="prod-price-tag">₺191.400</div>
+        <div class="prod-price-tag">₺191.700</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -2981,7 +2990,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">30 gr 2&#39;li Müjde ve 1 Zikzak 22 Ayar Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-134</p>
-        <div class="prod-price-tag">₺191.400</div>
+        <div class="prod-price-tag">₺191.700</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -3008,7 +3017,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">30 gr 2&#39;li Ajda Kibrit Çöpü ve 1 Zikzak 22 Ayar Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-135</p>
-        <div class="prod-price-tag">₺191.400</div>
+        <div class="prod-price-tag">₺191.700</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -3035,7 +3044,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">30 gr 2&#39;li Ajda Kanallı ve 1 Zikzak 22 Ayar Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-136</p>
-        <div class="prod-price-tag">₺191.400</div>
+        <div class="prod-price-tag">₺191.700</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -3062,7 +3071,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">30 gr 22 Ayar 3&#39;lü Ajda Kibrit Çöpü Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-137</p>
-        <div class="prod-price-tag">₺191.400</div>
+        <div class="prod-price-tag">₺191.700</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -3089,7 +3098,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">50 gr 3&#39;lü Müjde ve 2 Zikzak 22 Ayar Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-138</p>
-        <div class="prod-price-tag">₺319.000</div>
+        <div class="prod-price-tag">₺319.500</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -3116,7 +3125,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">50 gr 3&#39;lü Ajda Kanallı ve 2 Zikzak 22 Ayar Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-139</p>
-        <div class="prod-price-tag">₺319.000</div>
+        <div class="prod-price-tag">₺319.500</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -3143,7 +3152,7 @@
         <h3 class="prod-brand-name">Belgin Kuyumculuk</h3>
         <p class="prod-model-name">50 gr 3&#39;lü Ajda Kibrit Çöpü ve 2 Zikzak 22 Ayar Altın Bilezik</p>
         <p class="prod-ref-size">BLG-BLZ-140</p>
-        <div class="prod-price-tag">₺319.000</div>
+        <div class="prod-price-tag">₺319.500</div>
         <div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>
       </div>
     </a>
@@ -4025,9 +4034,9 @@
           <li><a href="/elit-kategori/" data-page="elit-kategori">👑 Elit Kategori (Haute Horlogerie)</a></li>
           <li><a href="/saatler/" data-page="saatler">Lüks Saatler</a></li>
           <li style="display:none;"><a href="/mucevherat/" data-page="mucevherat">Mücevherat & Altın</a></li>
-          <li><a href="#" onclick="App.scrollToValuation(); return false;">Saat Ekspertizi & Değerleme</a></li>
+          <li><a href="#" onclick="event.preventDefault(); App.scrollToValuation();">Saat Ekspertizi & Değerleme</a></li>
           <li><a href="/rehber/luks-saat-ekspertiz-ve-orijinallik-rehberi/">Saat Ekspertiz Rehberi</a></li>
-          <li><a href="#" onclick="App.openVipModal(); return false;">VIP Randevu Al</a></li>
+          <li><a href="#" onclick="event.preventDefault(); App.openVipModal();">VIP Randevu Al</a></li>
           <li><a href="https://wa.me/905419305372" target="_blank" rel="noopener">VIP WhatsApp Danışmanı</a></li>
           <li><a href="https://www.instagram.com/belginmucevherat/" target="_blank" rel="noopener">Instagram @belginmucevherat</a></li>
         </ul>
@@ -4042,8 +4051,8 @@
           <li><a href="iade-degisim-cayma.html">İade ve Cayma Rehberi</a></li>
           <li><a href="garanti-ve-satis-sonrasi.html">Garanti ve Satış Sonrası</a></li>
           <li><a href="musteri-tanima-ve-islem-guvenligi.html">Müşteri Tanıma & Güvenlik</a></li>
-          <li><a href="#" onclick="App.openTradeInModal(); return false;">Takas & Değerleme Talebi</a></li>
-          <li><a href="#" onclick="App.openStoreDeliveryReceiptModal('BLG-SAMPLE'); return false;">Mağaza Teslim Formu</a></li>
+          <li><a href="#" onclick="event.preventDefault(); App.openTradeInModal();">Takas & Değerleme Talebi</a></li>
+          <li><a href="#" onclick="event.preventDefault(); App.openStoreDeliveryReceiptModal('BLG-SAMPLE');">Mağaza Teslim Formu</a></li>
         </ul>
       </div>
 
@@ -4136,7 +4145,7 @@
           <span class="f-mag-bullet">◆</span>
           <span>DOXA: Okyanusların Çağrısı ve Profesyonel Dalış Saatleri</span>
         </a>
-        <a href="/magazin/koleksiyonluk-rolex-saatler-bu-modeller-kullanildi/" class="footer-mag-article-link">
+        <a href="/magazin/koleksiyonluk-rolex-saatler-gecmisin-unutulan-efsaneleri/" class="footer-mag-article-link">
           <span class="f-mag-bullet">◆</span>
           <span>Koleksiyonluk Rolex Saatler: İkonik Referanslar</span>
         </a>
@@ -4236,9 +4245,10 @@
     <span>Mücevher</span>
   </a>
 
-  <a href="#" onclick="App.scrollToValuation()" class="mobile-dock-btn" style="color:var(--color-gold);">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m16 8-8 8"/><path d="M12 3v3"/><path d="M12 18v3"/></svg>
-    <span>Değerleme</span>
+  <a href="/canli-fiyatlar/" data-page="canli-fiyatlar" class="mobile-dock-btn mobile-dock-btn-live">
+    <span class="dock-live-indicator"></span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+    <span>Canlı Piyasa</span>
   </a>
 
   <a href="#" data-page="sepet" class="mobile-dock-btn" style="position:relative;">

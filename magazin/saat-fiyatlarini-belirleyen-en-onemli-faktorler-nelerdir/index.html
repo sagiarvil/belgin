@@ -518,9 +518,18 @@
     </div>
 
     <nav class="mobile-drawer-nav">
+      <!-- Hızlı Arama Tetikleyici (Drawer İçi) -->
+      <button type="button" class="mobile-drawer-search-btn" onclick="App.toggleMobileDrawer(false); App.openSearchModal();">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <span>Model, marka veya referans ara...</span>
+      </button>
+
       <!-- 0. Canlı Fiyatlar Butonu -->
-      <a href="/canli-fiyatlar/" data-page="canli-fiyatlar" onclick="App.toggleMobileDrawer(false);" class="mobile-nav-main-link" style="color:var(--color-teal); font-weight:800; display:flex; justify-content:space-between; align-items:center; background:#FFFDE6; border:1px solid #E5E2D9; padding:12px 14px; border-radius:8px; margin-bottom:12px;">
-        <span>📈 Canlı Fiyatlar (Altın & Döviz)</span>
+      <a href="/canli-fiyatlar/" data-page="canli-fiyatlar" onclick="App.toggleMobileDrawer(false);" class="mobile-nav-main-link mobile-nav-live-highlight">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:16px;">📈</span>
+          <span>Canlı Piyasa (Altın & Döviz)</span>
+        </div>
         <span class="live-dot-pulse"></span>
       </a>
       <!-- 0. Elit Kategori Akordeon (HAUTE HORLOGERIE 200 MODEL) -->
@@ -2401,9 +2410,9 @@
           <li><a href="/elit-kategori/" data-page="elit-kategori">👑 Elit Kategori (Haute Horlogerie)</a></li>
           <li><a href="/saatler/" data-page="saatler">Lüks Saatler</a></li>
           <li style="display:none;"><a href="/mucevherat/" data-page="mucevherat">Mücevherat & Altın</a></li>
-          <li><a href="#" onclick="App.scrollToValuation(); return false;">Saat Ekspertizi & Değerleme</a></li>
+          <li><a href="#" onclick="event.preventDefault(); App.scrollToValuation();">Saat Ekspertizi & Değerleme</a></li>
           <li><a href="/rehber/luks-saat-ekspertiz-ve-orijinallik-rehberi/">Saat Ekspertiz Rehberi</a></li>
-          <li><a href="#" onclick="App.openVipModal(); return false;">VIP Randevu Al</a></li>
+          <li><a href="#" onclick="event.preventDefault(); App.openVipModal();">VIP Randevu Al</a></li>
           <li><a href="https://wa.me/905419305372" target="_blank" rel="noopener">VIP WhatsApp Danışmanı</a></li>
           <li><a href="https://www.instagram.com/belginmucevherat/" target="_blank" rel="noopener">Instagram @belginmucevherat</a></li>
         </ul>
@@ -2418,8 +2427,8 @@
           <li><a href="iade-degisim-cayma.html">İade ve Cayma Rehberi</a></li>
           <li><a href="garanti-ve-satis-sonrasi.html">Garanti ve Satış Sonrası</a></li>
           <li><a href="musteri-tanima-ve-islem-guvenligi.html">Müşteri Tanıma & Güvenlik</a></li>
-          <li><a href="#" onclick="App.openTradeInModal(); return false;">Takas & Değerleme Talebi</a></li>
-          <li><a href="#" onclick="App.openStoreDeliveryReceiptModal('BLG-SAMPLE'); return false;">Mağaza Teslim Formu</a></li>
+          <li><a href="#" onclick="event.preventDefault(); App.openTradeInModal();">Takas & Değerleme Talebi</a></li>
+          <li><a href="#" onclick="event.preventDefault(); App.openStoreDeliveryReceiptModal('BLG-SAMPLE');">Mağaza Teslim Formu</a></li>
         </ul>
       </div>
 
@@ -2512,7 +2521,7 @@
           <span class="f-mag-bullet">◆</span>
           <span>DOXA: Okyanusların Çağrısı ve Profesyonel Dalış Saatleri</span>
         </a>
-        <a href="/magazin/koleksiyonluk-rolex-saatler-bu-modeller-kullanildi/" class="footer-mag-article-link">
+        <a href="/magazin/koleksiyonluk-rolex-saatler-gecmisin-unutulan-efsaneleri/" class="footer-mag-article-link">
           <span class="f-mag-bullet">◆</span>
           <span>Koleksiyonluk Rolex Saatler: İkonik Referanslar</span>
         </a>
@@ -2612,9 +2621,10 @@
     <span>Mücevher</span>
   </a>
 
-  <a href="#" onclick="App.scrollToValuation()" class="mobile-dock-btn" style="color:var(--color-gold);">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m16 8-8 8"/><path d="M12 3v3"/><path d="M12 18v3"/></svg>
-    <span>Değerleme</span>
+  <a href="/canli-fiyatlar/" data-page="canli-fiyatlar" class="mobile-dock-btn mobile-dock-btn-live">
+    <span class="dock-live-indicator"></span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+    <span>Canlı Piyasa</span>
   </a>
 
   <a href="#" data-page="sepet" class="mobile-dock-btn" style="position:relative;">
@@ -4382,9 +4392,9 @@
           <li><a href="/elit-kategori/" data-page="elit-kategori">👑 Elit Kategori (Haute Horlogerie)</a></li>
           <li><a href="/saatler/" data-page="saatler">Lüks Saatler</a></li>
           <li style="display:none;"><a href="/mucevherat/" data-page="mucevherat">Mücevherat & Altın</a></li>
-          <li><a href="#" onclick="App.scrollToValuation(); return false;">Saat Ekspertizi & Değerleme</a></li>
+          <li><a href="#" onclick="event.preventDefault(); App.scrollToValuation();">Saat Ekspertizi & Değerleme</a></li>
           <li><a href="/rehber/luks-saat-ekspertiz-ve-orijinallik-rehberi/">Saat Ekspertiz Rehberi</a></li>
-          <li><a href="#" onclick="App.openVipModal(); return false;">VIP Randevu Al</a></li>
+          <li><a href="#" onclick="event.preventDefault(); App.openVipModal();">VIP Randevu Al</a></li>
           <li><a href="https://wa.me/905419305372" target="_blank" rel="noopener">VIP WhatsApp Danışmanı</a></li>
           <li><a href="https://www.instagram.com/belginmucevherat/" target="_blank" rel="noopener">Instagram @belginmucevherat</a></li>
         </ul>
@@ -4399,8 +4409,8 @@
           <li><a href="iade-degisim-cayma.html">İade ve Cayma Rehberi</a></li>
           <li><a href="garanti-ve-satis-sonrasi.html">Garanti ve Satış Sonrası</a></li>
           <li><a href="musteri-tanima-ve-islem-guvenligi.html">Müşteri Tanıma & Güvenlik</a></li>
-          <li><a href="#" onclick="App.openTradeInModal(); return false;">Takas & Değerleme Talebi</a></li>
-          <li><a href="#" onclick="App.openStoreDeliveryReceiptModal('BLG-SAMPLE'); return false;">Mağaza Teslim Formu</a></li>
+          <li><a href="#" onclick="event.preventDefault(); App.openTradeInModal();">Takas & Değerleme Talebi</a></li>
+          <li><a href="#" onclick="event.preventDefault(); App.openStoreDeliveryReceiptModal('BLG-SAMPLE');">Mağaza Teslim Formu</a></li>
         </ul>
       </div>
 
@@ -4493,7 +4503,7 @@
           <span class="f-mag-bullet">◆</span>
           <span>DOXA: Okyanusların Çağrısı ve Profesyonel Dalış Saatleri</span>
         </a>
-        <a href="/magazin/koleksiyonluk-rolex-saatler-bu-modeller-kullanildi/" class="footer-mag-article-link">
+        <a href="/magazin/koleksiyonluk-rolex-saatler-gecmisin-unutulan-efsaneleri/" class="footer-mag-article-link">
           <span class="f-mag-bullet">◆</span>
           <span>Koleksiyonluk Rolex Saatler: İkonik Referanslar</span>
         </a>
@@ -4593,9 +4603,10 @@
     <span>Mücevher</span>
   </a>
 
-  <a href="#" onclick="App.scrollToValuation()" class="mobile-dock-btn" style="color:var(--color-gold);">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m16 8-8 8"/><path d="M12 3v3"/><path d="M12 18v3"/></svg>
-    <span>Değerleme</span>
+  <a href="/canli-fiyatlar/" data-page="canli-fiyatlar" class="mobile-dock-btn mobile-dock-btn-live">
+    <span class="dock-live-indicator"></span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+    <span>Canlı Piyasa</span>
   </a>
 
   <a href="#" data-page="sepet" class="mobile-dock-btn" style="position:relative;">
