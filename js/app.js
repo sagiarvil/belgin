@@ -4457,8 +4457,24 @@ const App = {
   // 📖 BİZ KİMİZ — LUXURY FLIPBOOK & FOLIO ENGINE
   // ==========================================================
   currentFlipbookPage: 1,
-  totalFlipbookPages: 9,
+  totalFlipbookPages: 10,
   flipbookSpreadMode: false,
+
+  openFolioOnline(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    const card = document.getElementById('bizKimizFolioCard') || document.getElementById('flipbookStage');
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (typeof this.setFlipbookPage === 'function') {
+        this.setFlipbookPage(1);
+      }
+      card.style.transition = 'box-shadow 0.4s ease';
+      card.style.boxShadow = '0 0 0 3px rgba(194, 167, 104, 0.7), 0 25px 50px rgba(0,0,0,0.2)';
+      setTimeout(() => { card.style.boxShadow = ''; }, 2500);
+    } else {
+      window.location.href = '/biz-kimiz/#bizKimizFolioCard';
+    }
+  },
 
   setFlipbookPage(page) {
     if (page < 1) page = 1;
