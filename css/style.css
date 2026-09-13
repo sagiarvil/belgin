@@ -8340,12 +8340,61 @@ body.page-is-canli-fiyatlar {
   100% { background-color: transparent; }
 }
 
+@keyframes priceBandFlashGreen {
+  0% { background-color: #16a34a; color: #FFFFFF; }
+  100% { background-color: transparent; }
+}
+
+@keyframes priceBandFlashRed {
+  0% { background-color: #dc2626; color: #FFFFFF; }
+  100% { background-color: transparent; }
+}
+
+.price-flash-up {
+  animation: priceBandFlashGreen 1s ease-out 1 !important;
+}
+
+.price-flash-down {
+  animation: priceBandFlashRed 1s ease-out 1 !important;
+}
+
+.has-red-box.price-flash-up {
+  animation: priceBandFlashGreen 1s ease-out 1 !important;
+}
+
+.has-red-box.price-flash-down {
+  animation: priceBandFlashRed 1s ease-out 1 !important;
+}
+
 .board-exact-table td.td-price.price-flash-up {
   animation: priceLuxeFlashUp 1.2s ease-out 1 !important;
 }
 
 .board-exact-table td.td-price.price-flash-down {
   animation: priceLuxeFlashDown 1.2s ease-out 1 !important;
+}
+
+.board-exact-table .price-change-tag {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.board-exact-table .price-change-tag.up {
+  color: #008800;
+}
+
+.board-exact-table .price-change-tag.down {
+  color: #cc0000;
+}
+
+.price-flash-up .price-change-tag {
+  color: #FFFFFF !important;
+}
+
+.price-flash-down .price-change-tag {
+  color: #FFFFFF !important;
 }
 
 /* Mobil Tasarım İyileştirmeleri (@media max-width: 768px) */
