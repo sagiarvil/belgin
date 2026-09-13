@@ -1,63 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.belginkuyumculuk.com/</loc>
-  </url>
-  <url>
-    <loc>https://www.belginkuyumculuk.com/saatler/</loc>
-  </url>
-  <url>
-    <loc>https://www.belginkuyumculuk.com/elit-kategori/</loc>
-  </url>
-  <url>
-    <loc>https://www.belginkuyumculuk.com/markalar/</loc>
-  </url>
-  <url>
-    <loc>https://www.belginkuyumculuk.com/mucevherat/</loc>
-  </url>
-  <url>
-    <loc>https://www.belginkuyumculuk.com/biz-kimiz/</loc>
-  </url>
-  <url>
-    <loc>https://www.belginkuyumculuk.com/magazin/</loc>
+    <lastmod>2026-09-01</lastmod>
   </url>
   <url>
     <loc>https://www.belginkuyumculuk.com/rehber/altin-yatirimi-ve-ozel-matrah-rehberi/</loc>
+    <lastmod>2026-09-01</lastmod>
   </url>
   <url>
     <loc>https://www.belginkuyumculuk.com/rehber/luks-saat-ekspertiz-ve-orijinallik-rehberi/</loc>
+    <lastmod>2026-09-01</lastmod>
   </url>
   <url>
     <loc>https://www.belginkuyumculuk.com/rehber/izmir-kuyumculuk-ve-guvenli-teslimat/</loc>
+    <lastmod>2026-09-01</lastmod>
   </url>
   <url>
     <loc>https://www.belginkuyumculuk.com/rehber/pirlanta-ve-gemoloji-degerleme-rehberi/</loc>
+    <lastmod>2026-09-01</lastmod>
   </url>
   <url>
     <loc>https://www.belginkuyumculuk.com/iletisim.html</loc>
+    <lastmod>2026-09-01</lastmod>
   </url>
   <url>
     <loc>https://www.belginkuyumculuk.com/guvenli-odeme-ve-3d-secure.html</loc>
+    <lastmod>2026-09-01</lastmod>
   </url>
   <url>
     <loc>https://www.belginkuyumculuk.com/yuksek-degerli-urun-teslimi.html</loc>
+    <lastmod>2026-09-01</lastmod>
   </url>
   <url>
     <loc>https://www.belginkuyumculuk.com/musteri-tanima-ve-islem-guvenligi.html</loc>
+    <lastmod>2026-09-01</lastmod>
   </url>
   <url>
     <loc>https://www.belginkuyumculuk.com/hukuki-delil-ve-kayit-politikasi.html</loc>
+    <lastmod>2026-09-01</lastmod>
   </url>
   <url>
     <loc>https://www.belginkuyumculuk.com/mesafeli-satis-sozlesmesi.html</loc>
+    <lastmod>2026-09-01</lastmod>
   </url>
   <url>
     <loc>https://www.belginkuyumculuk.com/on-bilgilendirme-formu.html</loc>
+    <lastmod>2026-09-01</lastmod>
   </url>
   <url>
     <loc>https://www.belginkuyumculuk.com/kvkk.html</loc>
+    <lastmod>2026-09-01</lastmod>
   </url>
   <url>
     <loc>https://www.belginkuyumculuk.com/iade-degisim-cayma.html</loc>
+    <lastmod>2026-09-01</lastmod>
   </url>
 </urlset>

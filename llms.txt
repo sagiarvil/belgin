@@ -78,6 +78,8 @@
 
 - [Site Haritası İndeksi](https://www.belginkuyumculuk.com/sitemap.xml): Arama motorları ve botlar için XML site haritası fihristi.
 - [Robots Erişim Protokolü](https://www.belginkuyumculuk.com/robots.txt): Arama ve yapay zekâ tarayıcı erişim direktifleri.
+- [IndexNow Doğrulama Anahtarı](https://www.belginkuyumculuk.com/9d980417475ac56c8ad72ef2c743e1e5.txt): Bing, Perplexity ve Yandex anlık keşif API anahtarı.
+- [Kurumsal IndexNow Anahtarı](https://www.belginkuyumculuk.com/belgin916428c306504a5bbcae9bb5dd7bcfe9.txt): Çoklu motor anlık keşif anahtarı.
 
 ## Data Integrity & Borsa Sözleşmesi
 

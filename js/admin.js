@@ -10712,23 +10712,6 @@ const AdminApp = {
       if (elYearEndBadge) elYearEndBadge.textContent = `Kalan: ${daysLeftYear} iş günü`;
       if (elYearEndVol) elYearEndVol.textContent = `₺${Math.round(yearEndTotalVol).toLocaleString('tr-TR')}`;
       if (elYearEndPrf) elYearEndPrf.textContent = `₺${Math.round(yearEndTotalVol * marginRatio).toLocaleString('tr-TR')}`;
-
-      // Canlı Yönetici Özet Metni (Kullanıcının İstediği Dinamik İzah)
-      const elBox = document.getElementById('simExecutiveNarrativeBox');
-      if (elBox) {
-        const marginStr = `%${this.feasibilityMargin.toFixed(1).replace('.0', '')}`;
-        elBox.innerHTML = `
-          <div style="font-weight:800; color:#B45309; margin-bottom:4px; font-size:14px;">
-            💡 Yönetici Finansal Öngörü & Simülasyon Raporu (${marginStr} Kâr Marjı | 20 İş Günü Modeli):
-          </div>
-          <div>
-            Bugüne kadar kasaya giren reel <strong>₺${Math.round(this.totalRealVolume || 0).toLocaleString('tr-TR')}</strong> cironun üzerine; 
-            her iş günü ortalama <strong>₺${Math.round(simDaily).toLocaleString('tr-TR')}</strong> (haftada 5 iş günü <strong>₺${Math.round(simWeekVol).toLocaleString('tr-TR')}</strong>) ciro geçmesi halinde;
-            bu ayın kalan <strong>${daysLeftMonth} iş gününde ₺${Math.round(daysLeftMonth * simDaily).toLocaleString('tr-TR')}</strong> ek ciro sağlanarak ay sonu toplam ciro <strong>₺${Math.round(monthEndTotalVol).toLocaleString('tr-TR')}</strong> (<strong>₺${Math.round(monthEndTotalVol * marginRatio).toLocaleString('tr-TR')}</strong> net kâr), 
-            yılın kalan <strong>${daysLeftYear} iş gününde ₺${Math.round(daysLeftYear * simDaily).toLocaleString('tr-TR')}</strong> ek ciro sağlanarak yıl sonu kümülatif ciro <strong>₺${Math.round(yearEndTotalVol).toLocaleString('tr-TR')}</strong> (<strong>₺${Math.round(yearEndTotalVol * marginRatio).toLocaleString('tr-TR')}</strong> net kâr) seviyesine ulaşacaktır.
-          </div>
-        `;
-      }
     } catch (err) {
       console.error('[AdminApp] renderFeasibilityOutputs error:', err);
     }

@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 
 const fs = require('fs');
 const path = require('path');
@@ -57,7 +57,7 @@ function uniqueByLoc(items) {
 }
 
 function urlset(items, withImages = false) {
-  let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+  let xml = '<?xml version="1.0" encoding="UTF-8"?>\n<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>\n';
   xml += withImages
     ? '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n'
     : '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
@@ -78,15 +78,29 @@ function urlset(items, withImages = false) {
 }
 
 function buildSitemaps() {
+  // 1. Kategori URL kümesi
+  const categoryLocs = new Set(Object.keys(CATEGORY_ROUTES).map(k => `${BASE_URL}${CATEGORY_ROUTES[k]}`));
+  
+  // Ana sayfa kategori değil, pages içindedir
+  categoryLocs.delete(`${BASE_URL}/`);
+
+  // 2. Pages: Sadece kanonik kurumsal/bilgi sayfaları (kategoriler ve anasayfa hariç mükerrerlik engellendi)
   const pages = SEO_REGISTRY
     .filter(p => p.indexDirective === 'index' && !String(p.route).includes('#'))
-    .map(p => ({ loc: `${BASE_URL}${p.route}` }));
-  const categories = Object.keys(CATEGORY_ROUTES).map(k => ({ loc: `${BASE_URL}${CATEGORY_ROUTES[k]}` }));
+    .map(p => ({ loc: `${BASE_URL}${p.route}`, lastmod: '2026-09-01' }))
+    .filter(p => p.loc === `${BASE_URL}/` || !categoryLocs.has(p.loc));
+
+  // 3. Categories: Sadece gerçek kategori rotaları
+  const categories = Array.from(categoryLocs).map(loc => ({ loc, lastmod: '2026-09-01' }));
+
+  // 4. Products: Lastmod güvencesiyle
   const productItems = products.map(p => ({
     loc: productUrl(p),
-    lastmod: lastmod(p),
+    lastmod: lastmod(p) || '2026-09-01',
     image: imageUrl(p) ? { loc: imageUrl(p), title: `${p.brand || ''} ${p.name || ''}`.trim() } : null
   }));
+
+  // 5. Magazine
   let magArticles = [];
   try {
     const magModule = require('../js/magazine_data.js');
@@ -97,11 +111,13 @@ function buildSitemaps() {
     lastmod: a.raw_date || '2026-08-01',
     image: a.image ? { loc: (a.image.startsWith('http') ? a.image : `${BASE_URL}/${a.image.replace(/^\/+/, '')}`), title: a.title } : null
   }));
+
   write('sitemap-pages.xml', urlset(pages));
   write('sitemap-categories.xml', urlset(categories));
   write('sitemap-products.xml', urlset(productItems, true));
   write('sitemap-magazine.xml', urlset(magazineItems, true));
-  write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <sitemap><loc>${BASE_URL}/sitemap-pages.xml</loc></sitemap>\n  <sitemap><loc>${BASE_URL}/sitemap-categories.xml</loc></sitemap>\n  <sitemap><loc>${BASE_URL}/sitemap-products.xml</loc></sitemap>\n  <sitemap><loc>${BASE_URL}/sitemap-magazine.xml</loc></sitemap>\n</sitemapindex>\n`);
+  const today = new Date().toISOString().slice(0, 10);
+  write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <sitemap>\n    <loc>${BASE_URL}/sitemap-pages.xml</loc>\n    <lastmod>${today}</lastmod>\n  </sitemap>\n  <sitemap>\n    <loc>${BASE_URL}/sitemap-categories.xml</loc>\n    <lastmod>${today}</lastmod>\n  </sitemap>\n  <sitemap>\n    <loc>${BASE_URL}/sitemap-products.xml</loc>\n    <lastmod>${today}</lastmod>\n  </sitemap>\n  <sitemap>\n    <loc>${BASE_URL}/sitemap-magazine.xml</loc>\n    <lastmod>${today}</lastmod>\n  </sitemap>\n</sitemapindex>\n`);
 }
 
 function getLlmsFiles() {
@@ -230,7 +246,9 @@ function buildLlms() {
 
   body += `## Machine Discovery\n\n`;
   body += `- [Site Haritası İndeksi](${BASE_URL}/sitemap.xml): Arama motorları ve botlar için XML site haritası fihristi.\n`;
-  body += `- [Robots Erişim Protokolü](${BASE_URL}/robots.txt): Arama ve yapay zekâ tarayıcı erişim direktifleri.\n\n`;
+  body += `- [Robots Erişim Protokolü](${BASE_URL}/robots.txt): Arama ve yapay zekâ tarayıcı erişim direktifleri.\n`;
+  body += `- [IndexNow Doğrulama Anahtarı](${BASE_URL}/9d980417475ac56c8ad72ef2c743e1e5.txt): Bing, Perplexity ve Yandex anlık keşif API anahtarı.\n`;
+  body += `- [Kurumsal IndexNow Anahtarı](${BASE_URL}/belgin916428c306504a5bbcae9bb5dd7bcfe9.txt): Çoklu motor anlık keşif anahtarı.\n\n`;
 
   body += `## Data Integrity & Borsa Sözleşmesi\n\n`;
   body += `- [Değişmez Canlı Borsa Fiyatlama Sözleşmesi](${BASE_URL}/hukuki-delil-ve-kayit-politikasi.html#methodologies): Müşteri satış fiyatı birincil olarak İZKO normal Satış (fallback Harem Satış) üzerinden marjsız 1.00x; müşteri alış fiyatı doğrudan Harem Altın borsa akışı (wss://hrmsocketonly.haremaltin.com) üzerinden marjsız 1.00x olarak yansıtılır.\n`;
@@ -238,6 +256,25 @@ function buildLlms() {
   body += `- [MASAK ve HMK m. 193 Delil Güvencesi](${BASE_URL}/musteri-tanima-ve-islem-guvenligi.html): 12.000 TL ve üzeri işlemlerde kimlik tespiti ve OpenTimestamps Bitcoin blokzinciri zaman damgası zorunludur.\n`;
 
   write('llms.txt', body);
+
+  // Kompakt llm.txt brief üretimi (Anthropic / OpenAI hızlı çıkarım standardı)
+  const compactBrief = [
+    '# Belgin Kuyumculuk & Saat — Compact AI Brief',
+    '',
+    '> 1999 yılından bu yana İzmir Buca Menderes Caddesinde faaliyet gösteren Belgin Kuyumculuk & Saat; ekspertizli İsviçre lüks saatleri, Darphane damgalı 24K külçe altın, sarrafiye ve GIA/HRD sertifikalı pırlanta mücevherat için resmî makine keşif ve yapay zekâ manifestosudur.',
+    '',
+    `Full AI authority map: ${BASE_URL}/llms.txt`,
+    `Extended catalog: ${BASE_URL}/llms-full.txt`,
+    `Core platform graph: ${BASE_URL}/llms/core.md`,
+    `Showroom & Vault: ${BASE_URL}/llms/entities/showroom.md`,
+    `Master Watchmakers: ${BASE_URL}/llms/entities/experts.md`,
+    `Sitemap Index: ${BASE_URL}/sitemap.xml`,
+    `IndexNow Key: ${BASE_URL}/9d980417475ac56c8ad72ef2c743e1e5.txt`,
+    `Address: Menderes Cad. No:85/A Buca / İzmir`,
+    `Phone: +90 232 420 12 34`,
+    ''
+  ].join('\n');
+  write('llm.txt', compactBrief);
 }
 
 function publicBot(agent, extra = '') {
