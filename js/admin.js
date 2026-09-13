@@ -10151,6 +10151,10 @@ const AdminApp = {
     if (isNaN(val) || val <= 0) return;
     this.feasibilityMargin = val;
 
+    // Tüm kâr/komisyon inputlarını senkronize et
+    document.querySelectorAll('.feas-sync-margin-input').forEach(inp => {
+      inp.value = val;
+    });
     const marginInput = document.getElementById('feasibilityMarginInput');
     if (marginInput) marginInput.value = val;
 
@@ -10158,6 +10162,18 @@ const AdminApp = {
     try {
       localStorage.setItem('belgin_feasibility_margin', String(val));
     } catch (_) {}
+
+    // Hedef Kâr ve Ciro senkronizasyonu
+    const marginRatio = val / 100;
+    if (this.goalTargetProfit && this.goalTargetProfit > 0) {
+      this.goalTargetAmount = this.goalTargetProfit / marginRatio;
+      const amountInput = document.getElementById('goalTargetAmountInput');
+      if (amountInput) amountInput.value = Math.round(this.goalTargetAmount);
+    } else if (this.goalTargetAmount && this.goalTargetAmount > 0) {
+      this.goalTargetProfit = this.goalTargetAmount * marginRatio;
+      const profitInput = document.getElementById('goalTargetProfitInput');
+      if (profitInput) profitInput.value = Math.round(this.goalTargetProfit);
+    }
 
     this.renderFeasibility();
   },
@@ -10167,10 +10183,31 @@ const AdminApp = {
     const parsed = parseFloat(val);
     if (!isNaN(parsed) && parsed > 0 && parsed <= 100) {
       this.feasibilityMargin = parsed;
+
+      // Tüm kâr/komisyon inputlarını senkronize et
+      document.querySelectorAll('.feas-sync-margin-input').forEach(inp => {
+        if (inp && inp.value != String(parsed)) inp.value = parsed;
+      });
+      const marginInput = document.getElementById('feasibilityMarginInput');
+      if (marginInput && marginInput.value != String(parsed)) marginInput.value = parsed;
+
       this.updateFeasibilityMarginPresetButtons();
       try {
         localStorage.setItem('belgin_feasibility_margin', String(parsed));
       } catch (_) {}
+
+      // Hedef Kâr ve Ciro senkronizasyonu
+      const marginRatio = parsed / 100;
+      if (this.goalTargetProfit && this.goalTargetProfit > 0) {
+        this.goalTargetAmount = this.goalTargetProfit / marginRatio;
+        const amountInput = document.getElementById('goalTargetAmountInput');
+        if (amountInput) amountInput.value = Math.round(this.goalTargetAmount);
+      } else if (this.goalTargetAmount && this.goalTargetAmount > 0) {
+        this.goalTargetProfit = this.goalTargetAmount * marginRatio;
+        const profitInput = document.getElementById('goalTargetProfitInput');
+        if (profitInput) profitInput.value = Math.round(this.goalTargetProfit);
+      }
+
       this.renderFeasibility();
     }
   },
@@ -10321,32 +10358,55 @@ const AdminApp = {
         mBtn.classList.add('active');
         yBtn.classList.remove('active');
         if (input && (input.value == '100000000' || this.goalTargetAmount == 100000000)) {
-          this.goalTargetAmount = 10000000;
-          input.value = 10000000;
+          this.setGoalAmount(10000000);
         }
       } else {
         yBtn.classList.add('active');
         mBtn.classList.remove('active');
         if (input && (input.value == '10000000' || this.goalTargetAmount == 10000000)) {
-          this.goalTargetAmount = 100000000;
-          input.value = 100000000;
+          this.setGoalAmount(100000000);
         }
       }
     }
     this.renderGoalOutputs();
   },
 
-  onGoalTargetChange(val) {
+  // Hedef Net Kâr Değiştiğinde (Kullanıcının yazdığı net kâr tutarı)
+  onGoalTargetProfitChange(val) {
     const parsed = parseFloat(val) || 0;
-    this.goalTargetAmount = Math.max(0, parsed);
+    const marginRatio = (this.feasibilityMargin || 5.0) / 100;
+    this.goalTargetProfit = Math.max(0, parsed);
+    this.goalTargetAmount = marginRatio > 0 ? (this.goalTargetProfit / marginRatio) : 0;
+    const amountInput = document.getElementById('goalTargetAmountInput');
+    if (amountInput) amountInput.value = Math.round(this.goalTargetAmount);
     this.renderGoalOutputs();
   },
 
+  // Hedef POS Cirosu Değiştiğinde
+  onGoalTargetChange(val) {
+    const parsed = parseFloat(val) || 0;
+    const marginRatio = (this.feasibilityMargin || 5.0) / 100;
+    this.goalTargetAmount = Math.max(0, parsed);
+    this.goalTargetProfit = this.goalTargetAmount * marginRatio;
+    const profitInput = document.getElementById('goalTargetProfitInput');
+    if (profitInput) profitInput.value = Math.round(this.goalTargetProfit);
+    this.renderGoalOutputs();
+  },
+
+  // Hızlı Kâr Butonları
+  setGoalProfit(profit) {
+    this.goalTargetProfit = profit;
+    const pInput = document.getElementById('goalTargetProfitInput');
+    if (pInput) pInput.value = profit;
+    this.onGoalTargetProfitChange(profit);
+  },
+
+  // Hızlı Ciro Butonları
   setGoalAmount(amount) {
     this.goalTargetAmount = amount;
-    const input = document.getElementById('goalTargetAmountInput');
-    if (input) input.value = amount;
-    this.renderGoalOutputs();
+    const aInput = document.getElementById('goalTargetAmountInput');
+    if (aInput) aInput.value = amount;
+    this.onGoalTargetChange(amount);
   },
 
   // 10. Varsayılan Ayarlara Dön
@@ -10359,7 +10419,7 @@ const AdminApp = {
       this.setSimDaily(250000);
     }
     this.setGoalMode('month');
-    this.setGoalAmount(10000000);
+    this.setGoalProfit(500000);
     this.renderFeasibility();
   },
 
@@ -10369,7 +10429,7 @@ const AdminApp = {
     this.renderFeasibility();
   },
 
-  // 12. Ana Fizibilite Hesaplama ve Render Motoru (Tamamı 20 İş Günü Modeli)
+  // 12. Ana Fizibilite Hesaplama ve Render Motoru (Tarih Filtreli ve Modüler)
   renderFeasibility() {
     try {
       const orders = Array.isArray(this.orders) ? this.orders : [];
@@ -10382,83 +10442,58 @@ const AdminApp = {
         return isPaidFlag && Number(o.totalAmount || 0) > 0;
       });
 
-      let cardVol = 0;
-      let cardCnt = 0;
-      let eftVol = 0;
-      let eftCnt = 0;
-
-      let todayVol = 0;
-      let last5BizDaysVol = 0;
+      // Küresel kümülatif referanslar (Hedef Planlayıcı ve Canlı Simülatör için)
+      let allTotalVol = 0;
       let thisMonthVol = 0;
       let thisYearVol = 0;
-
-      const fiveBizDaysAgo = this.getPastBusinessDaysStartDate(5, now);
       let minDate = now;
 
       paidOrders.forEach(o => {
         const amt = Number(o.totalAmount || 0);
-        const isEft = Boolean(
-          o.isManualEft ||
-          o.paymentMethod === 'HAVALE_EFT' ||
-          o.paymentMethod === 'HAVALE' ||
-          o.paymentMethod === 'EFT' ||
-          o.paymentChannel === 'HAVALE_EFT' ||
-          String(o.orderId || '').startsWith('BLG-EFT-') ||
-          o.bankEft
-        );
-
-        if (isEft) {
-          eftVol += amt;
-          eftCnt++;
-        } else {
-          cardVol += amt;
-          cardCnt++;
-        }
-
+        allTotalVol += amt;
         const oDate = o.paidAt ? new Date(o.paidAt) : (o.createdAt ? new Date(o.createdAt) : now);
         if (oDate < minDate) {
           minDate = oDate;
         }
-
-        // Bugün
-        if (oDate.toDateString() === now.toDateString()) {
-          todayVol += amt;
-        }
-        // Son 5 iş günü
-        if (oDate >= fiveBizDaysAgo && oDate <= now) {
-          last5BizDaysVol += amt;
-        }
-        // Bu ay
         if (oDate.getMonth() === now.getMonth() && oDate.getFullYear() === now.getFullYear()) {
           thisMonthVol += amt;
         }
-        // Bu yıl
         if (oDate.getFullYear() === now.getFullYear()) {
           thisYearVol += amt;
         }
       });
 
-      const totalVol = cardVol + eftVol;
-      const totalCnt = cardCnt + eftCnt;
-      const aov = totalCnt > 0 ? (totalVol / totalCnt) : 0;
-      const cardAov = cardCnt > 0 ? (cardVol / cardCnt) : 0;
-      const eftAov = eftCnt > 0 ? (eftVol / eftCnt) : 0;
+      this.totalRealVolume = allTotalVol;
+      this.thisMonthRealVolume = thisMonthVol;
+      this.thisYearRealVolume = thisYearVol;
 
-      const cardShare = totalVol > 0 ? ((cardVol / totalVol) * 100).toFixed(1) : '0';
-      const eftShare = totalVol > 0 ? ((eftVol / totalVol) * 100).toFixed(1) : '0';
-
-      // 2. Zaman Bazlı Reel Ortalamalar (Kullanıcının Seçtiği Tarih Aralığı veya Kısayol)
+      // 1. Kullanıcının Seçtiği Tarih Filtresi Sınırları
       let filterStartDate = minDate;
       let filterEndDate = now;
 
-      if (this.feasFilterStart) {
-        filterStartDate = this.feasFilterStart;
-      }
-      if (this.feasFilterEnd) {
-        filterEndDate = this.feasFilterEnd;
+      if (this.feasDatePreset === 'today') {
+        filterStartDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
+        filterEndDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
+      } else if (this.feasDatePreset === 'week') {
+        const day = now.getDay();
+        const diffToMonday = (day === 0 ? -6 : 1) - day;
+        filterStartDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + diffToMonday, 0, 0, 0, 0);
+        filterEndDate = now;
+      } else if (this.feasDatePreset === 'month') {
+        filterStartDate = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0);
+        filterEndDate = now;
+      } else if (this.feasDatePreset === 'year') {
+        filterStartDate = new Date(now.getFullYear(), 0, 1, 0, 0, 0, 0);
+        filterEndDate = now;
+      } else if (this.feasDatePreset === 'custom') {
+        if (this.feasFilterStart) filterStartDate = this.feasFilterStart;
+        if (this.feasFilterEnd) filterEndDate = this.feasFilterEnd;
+      } else { // 'all'
+        filterStartDate = minDate;
+        filterEndDate = now;
       }
 
-      // Tarih input kutularını kullanıcı görmesi için senkronize tut
+      // Tarih input kutularını senkronize tut
       const startInput = document.getElementById('feasFilterStartDate');
       const endInput = document.getElementById('feasFilterEndDate');
       if (startInput && !startInput.value && this.feasDatePreset === 'all') {
@@ -10468,30 +10503,53 @@ const AdminApp = {
         endInput.value = this.formatLocalDate(now);
       }
 
-      // Seçilen dönemdeki siparişlerin toplam hacmi
-      let periodVol = 0;
+      // 2. Seçilen Tarih Aralığına Göre Filtrelenmiş Siparişler (1 NOLU MEVCUT DURUM EKRANI)
+      let cardVol = 0;
+      let cardCnt = 0;
+      let eftVol = 0;
+      let eftCnt = 0;
+
       paidOrders.forEach(o => {
         const oDate = o.paidAt ? new Date(o.paidAt) : (o.createdAt ? new Date(o.createdAt) : now);
         if (oDate >= filterStartDate && oDate <= filterEndDate) {
-          periodVol += Number(o.totalAmount || 0);
+          const amt = Number(o.totalAmount || 0);
+          const isEft = Boolean(
+            o.isManualEft ||
+            o.paymentMethod === 'HAVALE_EFT' ||
+            o.paymentMethod === 'HAVALE' ||
+            o.paymentMethod === 'EFT' ||
+            o.paymentChannel === 'HAVALE_EFT' ||
+            String(o.orderId || '').startsWith('BLG-EFT-') ||
+            o.bankEft
+          );
+
+          if (isEft) {
+            eftVol += amt;
+            eftCnt++;
+          } else {
+            cardVol += amt;
+            cardCnt++;
+          }
         }
       });
+
+      const totalVol = cardVol + eftVol;
+      const totalCnt = cardCnt + eftCnt;
+      const aov = totalCnt > 0 ? (totalVol / totalCnt) : 0;
+      const cardShare = totalVol > 0 ? ((cardVol / totalVol) * 100).toFixed(1) : '0';
+      const eftShare = totalVol > 0 ? ((eftVol / totalVol) * 100).toFixed(1) : '0';
 
       // Seçilen dönemdeki net iş günü sayısı (Pazartesi-Cuma)
       const elapsedBusinessDays = this.countElapsedBusinessDays(filterStartDate, filterEndDate);
 
-      const dailyAvg = elapsedBusinessDays > 0 ? (periodVol / elapsedBusinessDays) : 0;
+      const dailyAvg = elapsedBusinessDays > 0 ? (totalVol / elapsedBusinessDays) : 0;
       const weeklyAvg = dailyAvg * 5;   // 1 iş haftası = 5 gün
       const monthlyAvg = dailyAvg * 20; // 1 ticari ay = 20 iş günü
       const yearlyAvg = dailyAvg * 240; // 1 ticari yıl = 240 iş günü
 
-      // Sınıf özelliklerine ata
-      this.totalRealVolume = totalVol;
-      this.thisMonthRealVolume = thisMonthVol;
-      this.thisYearRealVolume = thisYearVol;
       this.realDailyAverage = dailyAvg;
 
-      // Eğer simülasyon henüz kullanıcı tarafından özelleştirilmediyse ve reel ortalama varsa güncelle
+      // Simülasyon ilk açılışta reel ortalamaya senkron olsun
       const dailyInput = document.getElementById('simDailyRateInput');
       if (dailyInput && (!this._userCustomizedDaily)) {
         if (dailyAvg > 0 && this.simDailyRate === 250000) {
@@ -10502,7 +10560,7 @@ const AdminApp = {
         }
       }
 
-      // 1. Kâr Metinlerini ve Rozetlerini Güncelle
+      // Kâr Rozetleri
       const marginStr = `%${this.feasibilityMargin.toFixed(1).replace('.0', '')}`;
       document.querySelectorAll('.feasCurrentMarginText').forEach(el => {
         el.textContent = marginStr;
@@ -10511,7 +10569,7 @@ const AdminApp = {
         el.textContent = `${marginStr} MARJ`;
       });
 
-      // 2. 4'lü Reel KPI Kartları
+      // 1. Blok 4'lü Reel KPI Kartları (Seçilen Döneme Göre)
       const elCardVol = document.getElementById('feasCardVolume');
       const elCardCnt = document.getElementById('feasCardCount');
       const elCardPrf = document.getElementById('feasCardProfit');
@@ -10542,7 +10600,7 @@ const AdminApp = {
       if (elAov) elAov.textContent = `₺${Math.round(aov).toLocaleString('tr-TR')}`;
       if (elTotPrf) elTotPrf.textContent = `₺${Math.round(totalVol * marginRatio).toLocaleString('tr-TR')}`;
 
-      // 3. Zaman Bazlı Reel Ortalamalar (Günlük Reel ve Buna Göre Haftalık, Aylık, Yıllık Simülasyon)
+      // Dönemsel Projeksiyon Kartları
       const elDailyAvg = document.getElementById('feasDailyAvgVolume');
       const elDailyPrf = document.getElementById('feasDailyAvgProfit');
       const elDailyBadge = document.getElementById('feasDailyCardBadge');
@@ -10553,10 +10611,10 @@ const AdminApp = {
 
       if (elDailyBadge) {
         if (this.feasDatePreset === 'today') elDailyBadge.textContent = 'BUGÜN REEL';
-        else if (this.feasDatePreset === 'week') elDailyBadge.textContent = 'BU HAFTA ORT.';
-        else if (this.feasDatePreset === 'month') elDailyBadge.textContent = 'BU AY ORT.';
-        else if (this.feasDatePreset === 'year') elDailyBadge.textContent = 'BU YIL ORT.';
-        else if (this.feasDatePreset === 'custom') elDailyBadge.textContent = 'ÖZEL ARALIK';
+        else if (this.feasDatePreset === 'week') elDailyBadge.textContent = 'BU HAFTA GÜNLÜK';
+        else if (this.feasDatePreset === 'month') elDailyBadge.textContent = 'BU AY GÜNLÜK';
+        else if (this.feasDatePreset === 'year') elDailyBadge.textContent = 'BU YIL GÜNLÜK';
+        else if (this.feasDatePreset === 'custom') elDailyBadge.textContent = 'DÖNEM GÜNLÜK';
         else elDailyBadge.textContent = 'REEL KASA';
       }
 
@@ -10584,39 +10642,26 @@ const AdminApp = {
       if (elYrPrf) elYrPrf.textContent = `₺${Math.round(yearlyAvg * marginRatio).toLocaleString('tr-TR')}`;
 
       const elActiveDays = document.getElementById('feasActiveDaysText');
-      if (elActiveDays) elActiveDays.innerHTML = `<span>📅</span> Hesaplanan Dönem: ${elapsedBusinessDays} İş Günü`;
+      if (elActiveDays) elActiveDays.innerHTML = `<span>📅</span> ${elapsedBusinessDays} İş Günü`;
 
       const elDateRange = document.getElementById('feasDateRangeText');
       if (elDateRange) {
-        elDateRange.textContent = `${minDate.toLocaleDateString('tr-TR')} - ${now.toLocaleDateString('tr-TR')} (${totalCnt} Başarılı Sipariş)`;
+        if (this.feasDatePreset === 'today') {
+          elDateRange.textContent = `Bugün (${totalCnt} İşlem)`;
+        } else if (this.feasDatePreset === 'week') {
+          elDateRange.textContent = `Bu Hafta (${totalCnt} İşlem)`;
+        } else if (this.feasDatePreset === 'month') {
+          elDateRange.textContent = `Bu Ay (${totalCnt} İşlem)`;
+        } else if (this.feasDatePreset === 'year') {
+          elDateRange.textContent = `Bu Yıl (${totalCnt} İşlem)`;
+        } else if (this.feasDatePreset === 'custom') {
+          elDateRange.textContent = `${filterStartDate.toLocaleDateString('tr-TR')} - ${filterEndDate.toLocaleDateString('tr-TR')} (${totalCnt} İşlem)`;
+        } else {
+          elDateRange.textContent = `${minDate.toLocaleDateString('tr-TR')} - ${now.toLocaleDateString('tr-TR')} (${totalCnt} İşlem)`;
+        }
       }
 
-      // 4. Detay Kartları (Kart vs Havale)
-      const elCDVol = document.getElementById('feasCardDetailVolume');
-      const elCDCnt = document.getElementById('feasCardDetailCount');
-      const elCDAov = document.getElementById('feasCardDetailAov');
-      const elCDPrf = document.getElementById('feasCardDetailProfit');
-      const elCDShare = document.getElementById('feasCardDetailShare');
-
-      if (elCDVol) elCDVol.textContent = `₺${Math.round(cardVol).toLocaleString('tr-TR')}`;
-      if (elCDCnt) elCDCnt.textContent = `${cardCnt.toLocaleString('tr-TR')} adet`;
-      if (elCDAov) elCDAov.textContent = `₺${Math.round(cardAov).toLocaleString('tr-TR')}`;
-      if (elCDPrf) elCDPrf.textContent = `₺${Math.round(cardVol * marginRatio).toLocaleString('tr-TR')}`;
-      if (elCDShare) elCDShare.textContent = `%${cardShare} Pay`;
-
-      const elEDVol = document.getElementById('feasEftDetailVolume');
-      const elEDCnt = document.getElementById('feasEftDetailCount');
-      const elEDAov = document.getElementById('feasEftDetailAov');
-      const elEDPrf = document.getElementById('feasEftDetailProfit');
-      const elEDShare = document.getElementById('feasEftDetailShare');
-
-      if (elEDVol) elEDVol.textContent = `₺${Math.round(eftVol).toLocaleString('tr-TR')}`;
-      if (elEDCnt) elEDCnt.textContent = `${eftCnt.toLocaleString('tr-TR')} adet`;
-      if (elEDAov) elEDAov.textContent = `₺${Math.round(eftAov).toLocaleString('tr-TR')}`;
-      if (elEDPrf) elEDPrf.textContent = `₺${Math.round(eftVol * marginRatio).toLocaleString('tr-TR')}`;
-      if (elEDShare) elEDShare.textContent = `%${eftShare} Pay`;
-
-      // 5. Alt Bölümleri Hesapla
+      // Alt Bölümleri Hesapla
       this.renderFeasibilityOutputs();
       this.renderGoalOutputs();
       this.renderScenariosTable();
@@ -10689,7 +10734,7 @@ const AdminApp = {
     }
   },
 
-  // 14. Hedef Ciro Çıktıları (Goal Seek - İş Günü Esaslı)
+  // 14. Hedef Ciro Çıktıları (Goal Seek - Günlük, Haftalık, Aylık, Yıllık POS Cirosu ve Kârı)
   renderGoalOutputs() {
     try {
       const marginRatio = (this.feasibilityMargin || 5.0) / 100;
@@ -10699,34 +10744,73 @@ const AdminApp = {
 
       let currentReal = 0;
       let daysLeft = 1;
-      let modeLabel = 'Aylık (20 İş Günü)';
+      let modeLabel = 'Aylık Hedef (20 İş Günü)';
 
       if (mode === 'month') {
         currentReal = this.thisMonthRealVolume || 0;
         daysLeft = Math.max(1, this.countRemainingBusinessDaysInMonth(now));
-        modeLabel = 'Aylık (20 İş Günü)';
+        modeLabel = 'Aylık Hedef (20 İş Günü)';
       } else {
         currentReal = this.thisYearRealVolume || 0;
         daysLeft = Math.max(1, this.countRemainingBusinessDaysInYear(now));
-        modeLabel = 'Yıllık (240 İş Günü)';
+        modeLabel = 'Yıllık Hedef (240 İş Günü)';
       }
 
+      // Kalan gereken POS cirosu ve hedef kâr
       const remaining = Math.max(0, target - currentReal);
-      const reqDaily = remaining / daysLeft;
-      const reqWeekly = reqDaily * 5; // 1 iş haftası = 5 gün
       const targetProfit = target * marginRatio;
 
+      // 4 Periyotlu Gereken POS Cirosu (Kalan iş günü temposu esaslı)
+      const reqDaily = remaining / daysLeft;
+      const reqWeekly = reqDaily * 5;     // 1 iş haftası = 5 gün
+      const reqMonthly = reqDaily * 20;   // 1 ticari ay = 20 iş günü
+      const reqYearly = reqDaily * 240;   // 1 ticari yıl = 240 iş günü
+
+      const dailyProfit = reqDaily * marginRatio;
+      const weeklyProfit = reqWeekly * marginRatio;
+      const monthlyProfit = reqMonthly * marginRatio;
+      const yearlyProfit = reqYearly * marginRatio;
+
+      // DOM Güncellemeleri
       const elTitle = document.getElementById('goalResultTitle');
+      const elDaysBadge = document.getElementById('goalDaysLeftBadge');
+      if (elTitle) elTitle.textContent = `🎯 ${modeLabel.toUpperCase()} GEREKEN POS CİROSU`;
+      if (elDaysBadge) elDaysBadge.textContent = `Kalan: ${daysLeft} iş günü`;
+
       const elReqDaily = document.getElementById('goalRequiredDaily');
+      const elDailyPrf = document.getElementById('goalDailyProfit');
+      if (elReqDaily) elReqDaily.textContent = `₺${Math.round(reqDaily).toLocaleString('tr-TR')}`;
+      if (elDailyPrf) elDailyPrf.textContent = `₺${Math.round(dailyProfit).toLocaleString('tr-TR')}`;
+
       const elReqWeekly = document.getElementById('goalRequiredWeekly');
+      const elWeeklyPrf = document.getElementById('goalWeeklyProfit');
+      if (elReqWeekly) elReqWeekly.textContent = `₺${Math.round(reqWeekly).toLocaleString('tr-TR')}`;
+      if (elWeeklyPrf) elWeeklyPrf.textContent = `₺${Math.round(weeklyProfit).toLocaleString('tr-TR')}`;
+
+      const elReqMonthly = document.getElementById('goalRequiredMonthly');
+      const elMonthlyPrf = document.getElementById('goalMonthlyProfit');
+      if (elReqMonthly) elReqMonthly.textContent = `₺${Math.round(reqMonthly).toLocaleString('tr-TR')}`;
+      if (elMonthlyPrf) elMonthlyPrf.textContent = `₺${Math.round(monthlyProfit).toLocaleString('tr-TR')}`;
+
+      const elReqYearly = document.getElementById('goalRequiredYearly');
+      const elYearlyPrf = document.getElementById('goalYearlyProfit');
+      if (elReqYearly) elReqYearly.textContent = `₺${Math.round(reqYearly).toLocaleString('tr-TR')}`;
+      if (elYearlyPrf) elYearlyPrf.textContent = `₺${Math.round(yearlyProfit).toLocaleString('tr-TR')}`;
+
       const elRemVol = document.getElementById('goalRemainingVolume');
       const elTgtProfit = document.getElementById('goalTargetProfit');
-
-      if (elTitle) elTitle.textContent = `🎯 ${modeLabel.toUpperCase()} HEDEFE ULAŞMAK İÇİN GEREKEN AKIŞ (Kalan ${daysLeft} İş Günü)`;
-      if (elReqDaily) elReqDaily.textContent = `₺${Math.round(reqDaily).toLocaleString('tr-TR')} / iş günü`;
-      if (elReqWeekly) elReqWeekly.textContent = `₺${Math.round(reqWeekly).toLocaleString('tr-TR')} / hafta (5 iş günü)`;
       if (elRemVol) elRemVol.textContent = `₺${Math.round(remaining).toLocaleString('tr-TR')}`;
       if (elTgtProfit) elTgtProfit.textContent = `₺${Math.round(targetProfit).toLocaleString('tr-TR')}`;
+
+      // Hedef inputlarını da senkronize tut
+      const amountInput = document.getElementById('goalTargetAmountInput');
+      const profitInput = document.getElementById('goalTargetProfitInput');
+      if (amountInput && document.activeElement !== amountInput && (!amountInput.value || Number(amountInput.value) !== Math.round(target))) {
+        amountInput.value = Math.round(target);
+      }
+      if (profitInput && document.activeElement !== profitInput && (!profitInput.value || Number(profitInput.value) !== Math.round(targetProfit))) {
+        profitInput.value = Math.round(targetProfit);
+      }
     } catch (err) {
       console.error('[AdminApp] renderGoalOutputs error:', err);
     }
