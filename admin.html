@@ -4443,7 +4443,7 @@
               </div>
               <div class="feas-input-field" style="display:flex; align-items:center; padding:6px 12px; border-color:#10B981; background:#FFFFFF;">
                 <span style="font-size:20px; font-weight:800; color:#10B981; margin-right:6px;">₺</span>
-                <input type="number" id="goalTargetProfitInput" min="1000" step="50000" value="500000" style="width:100%; border:none; outline:none; font-size:20px; font-weight:800; color:#064E3B; font-family:monospace;" oninput="AdminApp.onGoalTargetProfitChange(this.value)">
+                <input type="text" inputmode="decimal" id="goalTargetProfitInput" value="500.000" style="width:100%; border:none; outline:none; font-size:20px; font-weight:800; color:#064E3B; font-family:monospace;" oninput="AdminApp.onGoalTargetProfitChange(this)">
               </div>
               <!-- Hızlı Kâr Butonları -->
               <div style="display:flex; align-items:center; gap:4px; margin-top:8px; flex-wrap:wrap;">
@@ -4467,7 +4467,7 @@
               </div>
               <div class="feas-input-field" style="display:flex; align-items:center; padding:6px 12px; border-color:#38BDF8; background:#FFFFFF;">
                 <span style="font-size:20px; font-weight:800; color:#0284C7; margin-right:6px;">₺</span>
-                <input type="number" id="goalTargetAmountInput" min="1000000" step="500000" value="10000000" style="width:100%; border:none; outline:none; font-size:20px; font-weight:800; color:#0F172A; font-family:monospace;" oninput="AdminApp.onGoalTargetChange(this.value)">
+                <input type="text" inputmode="decimal" id="goalTargetAmountInput" value="10.000.000" style="width:100%; border:none; outline:none; font-size:20px; font-weight:800; color:#0F172A; font-family:monospace;" oninput="AdminApp.onGoalTargetChange(this)">
               </div>
               <!-- Hızlı Ciro Butonları -->
               <div style="display:flex; align-items:center; gap:4px; margin-top:8px; flex-wrap:wrap;">
@@ -4580,7 +4580,7 @@
             </div>
             <div class="feas-input-field" style="display:flex; align-items:center; padding:6px 12px; border-color:#86EFAC; background:#FFFFFF;">
               <span style="font-size:18px; font-weight:800; color:#059669; margin-right:6px;">₺</span>
-              <input type="number" id="simDailyRateInput" min="0" step="10000" value="250000" style="width:100%; border:none; outline:none; font-size:18px; font-weight:800; color:#0F172A; font-family:monospace;" oninput="AdminApp.onSimDailyChange(this.value)">
+              <input type="text" inputmode="decimal" id="simDailyRateInput" value="250.000" style="width:100%; border:none; outline:none; font-size:18px; font-weight:800; color:#0F172A; font-family:monospace;" oninput="AdminApp.onSimDailyChange(this)">
             </div>
             <!-- Hızlı Butonlar -->
             <div style="display:flex; align-items:center; gap:4px; margin-top:8px; flex-wrap:wrap;">
@@ -4603,7 +4603,7 @@
             </div>
             <div class="feas-input-field" style="display:flex; align-items:center; padding:6px 12px; border-color:#FDE68A; background:#FFFFFF;">
               <span style="font-size:18px; font-weight:800; color:#D97706; margin-right:6px;">₺</span>
-              <input type="number" id="simWeeklyRateInput" min="0" step="50000" value="1250000" style="width:100%; border:none; outline:none; font-size:18px; font-weight:800; color:#0F172A; font-family:monospace;" oninput="AdminApp.onSimWeeklyChange(this.value)">
+              <input type="text" inputmode="decimal" id="simWeeklyRateInput" value="1.250.000" style="width:100%; border:none; outline:none; font-size:18px; font-weight:800; color:#0F172A; font-family:monospace;" oninput="AdminApp.onSimWeeklyChange(this)">
             </div>
             <div style="font-size:11px; color:#64748B; margin-top:8px;">
               Haftalık tutar değiştirildiğinde günlük tutar otomatik hesaplanır.

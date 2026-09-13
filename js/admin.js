@@ -10168,14 +10168,77 @@ const AdminApp = {
     if (this.goalTargetProfit && this.goalTargetProfit > 0) {
       this.goalTargetAmount = this.goalTargetProfit / marginRatio;
       const amountInput = document.getElementById('goalTargetAmountInput');
-      if (amountInput) amountInput.value = Math.round(this.goalTargetAmount);
+      if (amountInput) amountInput.value = this.formatTrCurrency(this.goalTargetAmount);
     } else if (this.goalTargetAmount && this.goalTargetAmount > 0) {
       this.goalTargetProfit = this.goalTargetAmount * marginRatio;
       const profitInput = document.getElementById('goalTargetProfitInput');
-      if (profitInput) profitInput.value = Math.round(this.goalTargetProfit);
+      if (profitInput) profitInput.value = this.formatTrCurrency(this.goalTargetProfit);
     }
 
     this.renderFeasibility();
+  },
+
+  // Türkçe Para / Sayı Biçimlendirme & Maskeleme Yardımcıları
+  parseTrCurrency(val) {
+    if (typeof val === 'number') return isNaN(val) ? 0 : val;
+    if (!val) return 0;
+    let s = String(val).trim();
+    if (s.includes('.') && s.includes(',')) {
+      s = s.replace(/\./g, '').replace(',', '.');
+    } else if (s.includes(',')) {
+      s = s.replace(',', '.');
+    } else if (s.includes('.')) {
+      const parts = s.split('.');
+      if (parts.length > 2 || (parts.length === 2 && parts[1].length === 3)) {
+        s = s.replace(/\./g, '');
+      }
+    }
+    const n = parseFloat(s);
+    return isNaN(n) ? 0 : n;
+  },
+
+  formatTrCurrency(val, includeDecimalsIfAny = true) {
+    const n = Number(val) || 0;
+    if (Math.floor(n) === n || !includeDecimalsIfAny) {
+      return Math.round(n).toLocaleString('tr-TR', { maximumFractionDigits: 0 });
+    }
+    return n.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  },
+
+  maskCurrencyInput(inputEl) {
+    if (!inputEl) return 0;
+    let raw = inputEl.value || '';
+    // Tek nokta varsa ve ondalık amaçlıysa virgüle çevir, aksi halde noktaları temizle
+    if (raw.indexOf('.') !== -1 && raw.indexOf(',') === -1) {
+      const parts = raw.split('.');
+      if (parts.length === 2 && parts[1].length !== 3) {
+        raw = parts[0] + ',' + parts[1];
+      } else {
+        raw = raw.replace(/\./g, '');
+      }
+    } else {
+      raw = raw.replace(/\./g, '');
+    }
+
+    let clean = raw.replace(/[^\d,]/g, '');
+    const parts = clean.split(',');
+    let intPart = parts[0] ? parts[0].replace(/\D/g, '') : '';
+    let decPart = parts.length > 1 ? parts[1].replace(/\D/g, '').slice(0, 2) : null;
+
+    if (intPart === '') {
+      if (decPart !== null) intPart = '0';
+      else {
+        inputEl.value = '';
+        return 0;
+      }
+    }
+
+    const formattedInt = Number(intPart).toLocaleString('tr-TR');
+    const formattedVal = decPart !== null ? `${formattedInt},${decPart}` : (clean.endsWith(',') ? `${formattedInt},` : formattedInt);
+    
+    inputEl.value = formattedVal;
+    const numVal = Number(intPart + (decPart !== null && decPart.length > 0 ? '.' + decPart : ''));
+    return isNaN(numVal) ? 0 : numVal;
   },
 
   // 3. Kâr Marjı Manuel Girişi (Input onChange / onInput)
@@ -10201,11 +10264,11 @@ const AdminApp = {
       if (this.goalTargetProfit && this.goalTargetProfit > 0) {
         this.goalTargetAmount = this.goalTargetProfit / marginRatio;
         const amountInput = document.getElementById('goalTargetAmountInput');
-        if (amountInput) amountInput.value = Math.round(this.goalTargetAmount);
+        if (amountInput) amountInput.value = this.formatTrCurrency(this.goalTargetAmount);
       } else if (this.goalTargetAmount && this.goalTargetAmount > 0) {
         this.goalTargetProfit = this.goalTargetAmount * marginRatio;
         const profitInput = document.getElementById('goalTargetProfitInput');
-        if (profitInput) profitInput.value = Math.round(this.goalTargetProfit);
+        if (profitInput) profitInput.value = this.formatTrCurrency(this.goalTargetProfit);
       }
 
       this.renderFeasibility();
@@ -10302,26 +10365,36 @@ const AdminApp = {
   },
 
   // 5. Günlük Simülasyon Akışı Değişimi
-  onSimDailyChange(val) {
-    const parsed = parseFloat(val) || 0;
+  onSimDailyChange(valOrInput) {
+    let parsed = 0;
+    if (valOrInput && typeof valOrInput === 'object' && valOrInput.tagName) {
+      parsed = this.maskCurrencyInput(valOrInput);
+    } else {
+      parsed = this.parseTrCurrency(valOrInput);
+    }
     this.simDailyRate = Math.max(0, parsed);
     this._userCustomizedDaily = true;
     const weeklyInput = document.getElementById('simWeeklyRateInput');
     if (weeklyInput) {
-      weeklyInput.value = Math.round(this.simDailyRate * 5);
+      weeklyInput.value = this.formatTrCurrency(this.simDailyRate * 5);
     }
     this.renderFeasibilityOutputs();
     this.renderScenariosTable();
   },
 
   // 6. Haftalık Simülasyon Akışı Değişimi (Günlük ile Çift Yönlü Bağlı - 5 İş Günü)
-  onSimWeeklyChange(val) {
-    const parsed = parseFloat(val) || 0;
+  onSimWeeklyChange(valOrInput) {
+    let parsed = 0;
+    if (valOrInput && typeof valOrInput === 'object' && valOrInput.tagName) {
+      parsed = this.maskCurrencyInput(valOrInput);
+    } else {
+      parsed = this.parseTrCurrency(valOrInput);
+    }
     this.simDailyRate = Math.max(0, parsed / 5);
     this._userCustomizedDaily = true;
     const dailyInput = document.getElementById('simDailyRateInput');
     if (dailyInput) {
-      dailyInput.value = Math.round(this.simDailyRate);
+      dailyInput.value = this.formatTrCurrency(this.simDailyRate);
     }
     this.renderFeasibilityOutputs();
     this.renderScenariosTable();
@@ -10333,8 +10406,8 @@ const AdminApp = {
     this._userCustomizedDaily = true;
     const dailyInput = document.getElementById('simDailyRateInput');
     const weeklyInput = document.getElementById('simWeeklyRateInput');
-    if (dailyInput) dailyInput.value = amount;
-    if (weeklyInput) weeklyInput.value = Math.round(amount * 5);
+    if (dailyInput) dailyInput.value = this.formatTrCurrency(amount);
+    if (weeklyInput) weeklyInput.value = this.formatTrCurrency(amount * 5);
     this.renderFeasibilityOutputs();
     this.renderScenariosTable();
   },
@@ -10357,13 +10430,13 @@ const AdminApp = {
       if (mode === 'month') {
         mBtn.classList.add('active');
         yBtn.classList.remove('active');
-        if (input && (input.value == '100000000' || this.goalTargetAmount == 100000000)) {
+        if (input && (this.parseTrCurrency(input.value) >= 100000000 || this.goalTargetAmount >= 100000000)) {
           this.setGoalAmount(10000000);
         }
       } else {
         yBtn.classList.add('active');
         mBtn.classList.remove('active');
-        if (input && (input.value == '10000000' || this.goalTargetAmount == 10000000)) {
+        if (input && (this.parseTrCurrency(input.value) <= 10000000 || this.goalTargetAmount <= 10000000)) {
           this.setGoalAmount(100000000);
         }
       }
@@ -10372,24 +10445,34 @@ const AdminApp = {
   },
 
   // Hedef Net Kâr Değiştiğinde (Kullanıcının yazdığı net kâr tutarı)
-  onGoalTargetProfitChange(val) {
-    const parsed = parseFloat(val) || 0;
+  onGoalTargetProfitChange(valOrInput) {
+    let parsed = 0;
+    if (valOrInput && typeof valOrInput === 'object' && valOrInput.tagName) {
+      parsed = this.maskCurrencyInput(valOrInput);
+    } else {
+      parsed = this.parseTrCurrency(valOrInput);
+    }
     const marginRatio = (this.feasibilityMargin || 5.0) / 100;
     this.goalTargetProfit = Math.max(0, parsed);
     this.goalTargetAmount = marginRatio > 0 ? (this.goalTargetProfit / marginRatio) : 0;
     const amountInput = document.getElementById('goalTargetAmountInput');
-    if (amountInput) amountInput.value = Math.round(this.goalTargetAmount);
+    if (amountInput) amountInput.value = this.formatTrCurrency(this.goalTargetAmount);
     this.renderGoalOutputs();
   },
 
   // Hedef POS Cirosu Değiştiğinde
-  onGoalTargetChange(val) {
-    const parsed = parseFloat(val) || 0;
+  onGoalTargetChange(valOrInput) {
+    let parsed = 0;
+    if (valOrInput && typeof valOrInput === 'object' && valOrInput.tagName) {
+      parsed = this.maskCurrencyInput(valOrInput);
+    } else {
+      parsed = this.parseTrCurrency(valOrInput);
+    }
     const marginRatio = (this.feasibilityMargin || 5.0) / 100;
     this.goalTargetAmount = Math.max(0, parsed);
     this.goalTargetProfit = this.goalTargetAmount * marginRatio;
     const profitInput = document.getElementById('goalTargetProfitInput');
-    if (profitInput) profitInput.value = Math.round(this.goalTargetProfit);
+    if (profitInput) profitInput.value = this.formatTrCurrency(this.goalTargetProfit);
     this.renderGoalOutputs();
   },
 
@@ -10397,7 +10480,7 @@ const AdminApp = {
   setGoalProfit(profit) {
     this.goalTargetProfit = profit;
     const pInput = document.getElementById('goalTargetProfitInput');
-    if (pInput) pInput.value = profit;
+    if (pInput) pInput.value = this.formatTrCurrency(profit);
     this.onGoalTargetProfitChange(profit);
   },
 
@@ -10405,7 +10488,7 @@ const AdminApp = {
   setGoalAmount(amount) {
     this.goalTargetAmount = amount;
     const aInput = document.getElementById('goalTargetAmountInput');
-    if (aInput) aInput.value = amount;
+    if (aInput) aInput.value = this.formatTrCurrency(amount);
     this.onGoalTargetChange(amount);
   },
 
@@ -10785,14 +10868,14 @@ const AdminApp = {
       if (elRemVol) elRemVol.textContent = `₺${Math.round(remaining).toLocaleString('tr-TR')}`;
       if (elTgtProfit) elTgtProfit.textContent = `₺${Math.round(targetProfit).toLocaleString('tr-TR')}`;
 
-      // Hedef inputlarını da senkronize tut
+      // Hedef inputlarını da senkronize tut (Türkçe binlik nokta, ondalık virgül formatlı)
       const amountInput = document.getElementById('goalTargetAmountInput');
       const profitInput = document.getElementById('goalTargetProfitInput');
-      if (amountInput && document.activeElement !== amountInput && (!amountInput.value || Number(amountInput.value) !== Math.round(target))) {
-        amountInput.value = Math.round(target);
+      if (amountInput && document.activeElement !== amountInput && (!amountInput.value || Math.round(this.parseTrCurrency(amountInput.value)) !== Math.round(target))) {
+        amountInput.value = this.formatTrCurrency(target);
       }
-      if (profitInput && document.activeElement !== profitInput && (!profitInput.value || Number(profitInput.value) !== Math.round(targetProfit))) {
-        profitInput.value = Math.round(targetProfit);
+      if (profitInput && document.activeElement !== profitInput && (!profitInput.value || Math.round(this.parseTrCurrency(profitInput.value)) !== Math.round(targetProfit))) {
+        profitInput.value = this.formatTrCurrency(targetProfit);
       }
     } catch (err) {
       console.error('[AdminApp] renderGoalOutputs error:', err);
