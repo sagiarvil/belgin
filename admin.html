@@ -1751,6 +1751,39 @@
     .feas-card-amber::before { background: linear-gradient(90deg, #D97706, #FBBF24); }
     .feas-card-dark::before { background: linear-gradient(90deg, #D4AF37, #F59E0B); }
 
+    /* GÖREV BLOKLARI ARASI YARIŞAN RENKLER */
+    .feas-block-section {
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 26px;
+      position: relative;
+      transition: all 0.25s ease;
+    }
+    /* 1. BLOK: ZÜMRÜT / TEAL (REEL DURUM) */
+    .feas-block-teal {
+      background: linear-gradient(180deg, #F0FDF9 0%, #FFFFFF 100%);
+      border: 2px solid #14B8A6;
+      box-shadow: 0 10px 30px rgba(20, 184, 166, 0.10);
+    }
+    /* 2. BLOK: DERİN MAVİ / SAPPHIRE (HEDEF CİRO & KÂR) */
+    .feas-block-blue {
+      background: linear-gradient(180deg, #F0F7FF 0%, #FFFFFF 100%);
+      border: 2px solid #0284C7;
+      box-shadow: 0 10px 30px rgba(2, 132, 199, 0.12);
+    }
+    /* 3. BLOK: ALTIN / KEHRİBAR (CANLI SİMÜLATÖR) */
+    .feas-block-amber {
+      background: linear-gradient(180deg, #FFFBEB 0%, #FFFFFF 100%);
+      border: 2px solid #F59E0B;
+      box-shadow: 0 10px 30px rgba(245, 158, 11, 0.12);
+    }
+    /* 4. BLOK: MOR / AMETHYST (SENARYO MATRİSİ) */
+    .feas-block-purple {
+      background: linear-gradient(180deg, #FAF5FF 0%, #FFFFFF 100%);
+      border: 2px solid #A855F7;
+      box-shadow: 0 10px 30px rgba(168, 85, 247, 0.12);
+    }
+
     .feas-pill-badge {
       display: inline-flex;
       align-items: center;
@@ -4168,21 +4201,21 @@
       </div>
     </div>
 
-    <!-- 1. BLOK: ŞU ANKİ REEL DURUM (MODÜLER, RENKLİ KARTLAR & TARİH FİLTRESİ) -->
-    <div style="margin-bottom:24px;">
+    <!-- 1. BLOK: ŞU ANKİ REEL DURUM (ZÜMRÜT / TEAL YARIŞAN BLOK) -->
+    <div class="feas-block-section feas-block-teal">
       
       <!-- FİLTRE VE DÖNEM SEÇİM ÇUBUĞU (YENİ NESİL CAM GÖRÜNÜM) -->
-      <div class="feas-card" style="padding:14px 18px; margin-bottom:14px; background:#FFFFFF; border-color:#E2E8F0;">
+      <div class="feas-card" style="padding:14px 18px; margin-bottom:14px; background:#FFFFFF; border-color:#99F6E4;">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
           
           <div style="display:flex; align-items:center; gap:10px;">
-            <div class="feas-icon-bubble" style="background:#E0F2FE; color:#0284C7;">🎯</div>
+            <div class="feas-icon-bubble" style="background:#CCFBF1; color:#0D9488;">🎯</div>
             <div>
               <div style="display:flex; align-items:center; gap:8px;">
-                <h3 style="margin:0; font-size:15px; font-weight:800; color:#0F172A;">1. ŞU ANKİ REEL KASA & SATIŞ DURUMU</h3>
-                <span class="feas-pill-badge" style="background:#F1F5F9; color:#475569;" id="feasibilityDateRangeText">Yükleniyor...</span>
+                <h3 style="margin:0; font-size:15px; font-weight:800; color:#115E59;">1. ŞU ANKİ REEL KASA & SATIŞ DURUMU</h3>
+                <span class="feas-pill-badge" style="background:#E6FFFA; color:#0F766E; border:1px solid #99F6E4;" id="feasibilityDateRangeText">Yükleniyor...</span>
               </div>
-              <div style="font-size:11px; color:#64748B;">Seçilen tarih aralığına göre gerçekleşen başarılı satışlar</div>
+              <div style="font-size:11px; color:#0D9488;">Seçilen tarih aralığına göre gerçekleşen başarılı satışlar</div>
             </div>
           </div>
 
@@ -4198,22 +4231,22 @@
             </div>
 
             <!-- Manuel Tarih Seçiciler -->
-            <div class="feas-input-field" style="display:inline-flex; align-items:center; gap:4px; padding:3px 8px;">
-              <span style="font-size:11px; color:#64748B; font-weight:700;">📅</span>
+            <div class="feas-input-field" style="display:inline-flex; align-items:center; gap:4px; padding:3px 8px; border-color:#14B8A6;">
+              <span style="font-size:11px; color:#0D9488; font-weight:700;">📅</span>
               <input type="date" id="feasFilterStartDate" style="border:none; background:transparent; font-size:11.5px; font-weight:700; color:#0F172A; outline:none;" onchange="AdminApp.onFeasCustomDateChange()">
               <span style="color:#94A3B8; font-weight:700;">—</span>
               <input type="date" id="feasFilterEndDate" style="border:none; background:transparent; font-size:11.5px; font-weight:700; color:#0F172A; outline:none;" onchange="AdminApp.onFeasCustomDateChange()">
             </div>
 
             <!-- Blok 1 Manuel Kâr Oranı Kutusu -->
-            <div class="feas-input-field" style="display:inline-flex; align-items:center; gap:4px; padding:3px 8px; border-color:#F59E0B; background:#FFFDF7;" title="Mevcut Durum Kâr / Komisyon Oranı">
-              <span style="font-size:11px; font-weight:800; color:#92400E;">Kâr:</span>
-              <span style="font-size:11px; font-weight:800; color:#D97706;">%</span>
+            <div class="feas-input-field" style="display:inline-flex; align-items:center; gap:4px; padding:3px 8px; border-color:#14B8A6; background:#F0FDF4;" title="Mevcut Durum Kâr / Komisyon Oranı">
+              <span style="font-size:11px; font-weight:800; color:#0F766E;">Kâr:</span>
+              <span style="font-size:11px; font-weight:800; color:#0D9488;">%</span>
               <input type="number" id="feasMarginInputBlock1" class="feas-sync-margin-input" min="0.1" max="100" step="0.1" value="5.0" style="width:42px; border:none; outline:none; background:transparent; font-size:12.5px; font-weight:800; color:#0F172A; text-align:center; font-family:monospace;" oninput="AdminApp.onFeasibilityMarginChange(this.value)">
             </div>
 
             <!-- Dönem İş Günü Rozeti -->
-            <span class="feas-pill-badge" style="background:#DCFCE7; color:#15803D; border:1px solid #86EFAC;" id="feasActiveDaysText">
+            <span class="feas-pill-badge" style="background:#CCFBF1; color:#0F766E; border:1.5px solid #14B8A6;" id="feasActiveDaysText">
               <span>💼</span> -- İş Günü
             </span>
           </div>
@@ -4365,31 +4398,29 @@
 
     </div>
 
-    <!-- 2. BLOK: HEDEF CİRO & KÂR PLANLAYICI (YENİ NESİL MODÜLER ETKİLEŞİM PANELİ) -->
-    <div style="margin-bottom:24px;">
-      
-      <div class="feas-card" style="border:2px solid #38BDF8; box-shadow:0 8px 30px rgba(2,132,199,0.08); padding:20px; background:#FFFFFF;">
+    <!-- 2. BLOK: HEDEF CİRO & KÂR PLANLAYICI (DERİN MAVİ / SAPPHIRE YARIŞAN BLOK) -->
+    <div class="feas-block-section feas-block-blue">
         
         <!-- BAŞLIK & DÖNEM GEÇİŞİ -->
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px; padding-bottom:12px; border-bottom:1.5px solid #F1F5F9;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px; padding-bottom:12px; border-bottom:1.5px solid #BAE6FD;">
           <div style="display:flex; align-items:center; gap:10px;">
             <div class="feas-icon-bubble" style="background:#E0F2FE; color:#0284C7;">🎯</div>
             <div>
               <h3 style="margin:0; font-size:16px; font-weight:800; color:#0C4A6E; display:flex; align-items:center; gap:6px;">
                 2. HEDEF CİRO & KÂR PLANLAYICI
               </h3>
-              <div style="font-size:11.5px; color:#64748B;">Hedef kârınızı yazın; günde, haftada, ayda ve yılda ne kadar POS cirosu gerektiği hesaplansın</div>
+              <div style="font-size:11.5px; color:#0284C7; font-weight:600;">Hedef kârınızı yazın; günde, haftada, ayda ve yılda ne kadar POS cirosu gerektiği hesaplansın</div>
             </div>
           </div>
 
           <div style="display:flex; align-items:center; gap:8px;">
-            <div style="display:flex; gap:4px; background:#F8FAFC; padding:3px; border-radius:10px; border:1px solid #E2E8F0;">
+            <div style="display:flex; gap:4px; background:#FFFFFF; padding:3px; border-radius:10px; border:1px solid #BAE6FD;">
               <button type="button" class="feas-chip-btn active" id="goalTargetModeMonthBtn" onclick="AdminApp.setGoalMode('month')">Aylık Hedef</button>
               <button type="button" class="feas-chip-btn" id="goalTargetModeYearBtn" onclick="AdminApp.setGoalMode('year')">Yıllık Hedef</button>
             </div>
 
             <!-- Blok 2 Komisyon/Kâr Oranı Kutusu -->
-            <div class="feas-input-field" style="display:inline-flex; align-items:center; gap:4px; padding:4px 8px; border-color:#0284C7; background:#F0F9FF;">
+            <div class="feas-input-field" style="display:inline-flex; align-items:center; gap:4px; padding:4px 8px; border-color:#0284C7; background:#FFFFFF;">
               <span style="font-size:11px; font-weight:800; color:#0369A1;">Kâr Marjı:</span>
               <span style="font-size:12px; font-weight:800; color:#0284C7;">%</span>
               <input type="number" id="goalMarginInput" class="feas-sync-margin-input" min="0.1" max="100" step="0.1" value="5.0" style="width:44px; border:none; outline:none; background:transparent; font-size:13px; font-weight:800; color:#0F172A; text-align:center; font-family:monospace;" oninput="AdminApp.onFeasibilityMarginChange(this.value)">
@@ -4452,7 +4483,7 @@
           </div>
 
           <!-- SAĞ SÜTUN: 4 PERİYOTLU GEREKEN POS CİROSU KARTLARI -->
-          <div style="background:linear-gradient(135deg, #F8FAFC 0%, #FFFFFF 100%); border:1.5px solid #E2E8F0; border-radius:12px; padding:16px; display:flex; flex-direction:column; justify-content:space-between;">
+          <div style="background:#FFFFFF; border:1.5px solid #BAE6FD; border-radius:12px; padding:16px; display:flex; flex-direction:column; justify-content:space-between; box-shadow:0 4px 14px rgba(2,132,199,0.06);">
             <div>
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
                 <span style="font-size:12px; font-weight:800; color:#0369A1; text-transform:uppercase; letter-spacing:0.5px;" id="goalResultTitle">
@@ -4504,35 +4535,32 @@
             </div>
 
             <!-- ALT ÖZET ŞERİDİ -->
-            <div style="background:#FFFFFF; border:1px dashed #CBD5E1; border-radius:8px; padding:8px 12px; display:flex; justify-content:space-between; align-items:center; font-size:11.5px; flex-wrap:wrap; gap:8px;">
-              <span style="color:#64748B;">Hedefe Kalan Ciro: <strong id="goalRemainingVolume" style="color:#0F172A;">₺0</strong></span>
+            <div style="background:#F0F9FF; border:1px dashed #BAE6FD; border-radius:8px; padding:8px 12px; display:flex; justify-content:space-between; align-items:center; font-size:11.5px; flex-wrap:wrap; gap:8px;">
+              <span style="color:#0369A1;">Hedefe Kalan Ciro: <strong id="goalRemainingVolume" style="color:#0F172A;">₺0</strong></span>
               <span style="color:#059669; font-weight:800;">Hedef Net Kâr (<span class="feasCurrentMarginText">%5</span>): <strong id="goalTargetProfit">₺0</strong></span>
             </div>
           </div>
 
         </div>
-      </div>
     </div>
 
-    <!-- 3. BLOK: CANLI ÖNGÖRÜ & FİZİBİLİTE SİMÜLATÖRÜ ("GÜNDE X / HAFTADA X GEÇERSE NE OLUR?") -->
-    <div style="margin-bottom:24px;">
-      
-      <div class="feas-card" style="border:2px solid #FCD34D; box-shadow:0 8px 30px rgba(245,158,11,0.08); padding:20px; background:#FFFFFF;">
+    <!-- 3. BLOK: CANLI ÖNGÖRÜ & FİZİBİLİTE SİMÜLATÖRÜ (ALTIN / KEHRİBAR YARIŞAN BLOK) -->
+    <div class="feas-block-section feas-block-amber">
         
         <!-- BAŞLIK & MARJ GİRİŞİ -->
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px; padding-bottom:12px; border-bottom:1.5px solid #F1F5F9;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px; padding-bottom:12px; border-bottom:1.5px solid #FDE68A;">
           <div style="display:flex; align-items:center; gap:10px;">
             <div class="feas-icon-bubble" style="background:#FEF3C7; color:#D97706;">⚡</div>
             <div>
               <h3 style="margin:0; font-size:16px; font-weight:800; color:#78350F; display:flex; align-items:center; gap:6px;">
                 3. CANLI ÖNGÖRÜ & FİZİBİLİTE SİMÜLATÖRÜ
               </h3>
-              <div style="font-size:11.5px; color:#64748B;">İş günü esaslı tempo simülatörü: Ay = 20 Gün, Yıl = 240 Gün</div>
+              <div style="font-size:11.5px; color:#B45309; font-weight:600;">İş günü esaslı tempo simülatörü: Ay = 20 Gün, Yıl = 240 Gün</div>
             </div>
           </div>
           
           <!-- Simülatör Manuel Kâr Oranı Kutusu -->
-          <div class="feas-input-field" style="display:inline-flex; align-items:center; gap:4px; padding:4px 8px; border-color:#D97706; background:#FFFDF7;" title="Simülasyon Kâr / Komisyon Oranı">
+          <div class="feas-input-field" style="display:inline-flex; align-items:center; gap:4px; padding:4px 8px; border-color:#D97706; background:#FFFFFF;" title="Simülasyon Kâr / Komisyon Oranı">
             <span style="font-size:11px; font-weight:800; color:#92400E;">Simülatör Kâr:</span>
             <span style="font-size:11px; font-weight:800; color:#B45309;">%</span>
             <input type="number" id="simMarginInput" class="feas-sync-margin-input" min="0.1" max="100" step="0.1" value="5.0" style="width:44px; border:none; outline:none; background:transparent; font-size:12.5px; font-weight:800; color:#0F172A; text-align:center; font-family:monospace;" oninput="AdminApp.onFeasibilityMarginChange(this.value)">
@@ -4585,7 +4613,7 @@
         </div>
 
         <!-- SİMÜLASYON SONUÇ KARTLARI (4'LÜ RENKLİ ÇIKTI) -->
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:12px; margin-bottom:14px;">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:12px;">
           
           <!-- 1 HAFTA ÇIKTISI -->
           <div class="feas-card" style="padding:12px 14px; background:#F0FDF4; border-color:#86EFAC;">
@@ -4631,35 +4659,33 @@
 
         </div>
 
-      </div>
     </div>
 
-    <!-- 4. BLOK: ÇOKLU SENARYO ANALİZİ & KARŞILAŞTIRMA MATRİSİ -->
-    <div style="margin-bottom:20px;">
-      <div class="feas-card" style="padding:16px; border-color:#E2E8F0;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+    <!-- 4. BLOK: ÇOKLU SENARYO ANALİZİ & KARŞILAŞTIRMA MATRİSİ (MOR / AMETHYST YARIŞAN BLOK) -->
+    <div class="feas-block-section feas-block-purple">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
           <div style="display:flex; align-items:center; gap:8px;">
-            <div class="feas-icon-bubble" style="background:#F1F5F9; color:#475569;">📑</div>
+            <div class="feas-icon-bubble" style="background:#F3E8FF; color:#7E22CE;">📑</div>
             <div>
-              <h3 style="margin:0; font-size:15px; font-weight:800; color:#064E3B;">
+              <h3 style="margin:0; font-size:16px; font-weight:800; color:#581C87;">
                 4. ÇOKLU SENARYO ANALİZİ VE KARŞILAŞTIRMA MATRİSİ (₺250.000 — ₺3.000.000)
               </h3>
-              <div style="font-size:11px; color:#64748B;">Farklı günlük satış tempolarına göre 20 ve 240 iş günü projeksiyonları</div>
+              <div style="font-size:11.5px; color:#7E22CE; font-weight:600;">Farklı günlük satış tempolarına göre 20 ve 240 iş günü projeksiyonları</div>
             </div>
           </div>
         </div>
 
-        <div style="overflow-x:auto; border-radius:8px; border:1px solid #E2E8F0;">
+        <div style="overflow-x:auto; border-radius:10px; border:1.5px solid #E9D5FF; background:#FFFFFF; box-shadow:0 4px 14px rgba(168,85,247,0.06);">
           <table class="admin-orders-table" style="width:100%; border-collapse:collapse; font-size:12px;">
             <thead>
-              <tr style="background:#F8FAFC; border-bottom:1.5px solid #CBD5E1;">
-                <th style="text-align:left; padding:10px 14px;">Senaryo Adı</th>
-                <th style="text-align:right; padding:10px 12px;">Günlük Hacim</th>
-                <th style="text-align:right; padding:10px 12px;">Haftalık Hacim (5 Gün)</th>
-                <th style="text-align:right; padding:10px 12px;">Aylık Ciro (20 Gün)</th>
-                <th style="text-align:right; padding:10px 12px;">Yıllık Ciro (240 Gün)</th>
-                <th style="text-align:right; padding:10px 12px; background:rgba(212,175,55,0.12); color:#92400E;">Yıllık Net Kâr (<span class="feasCurrentMarginText">%5</span>)</th>
-                <th style="text-align:center; padding:10px 12px;">Durum / Büyüme</th>
+              <tr style="background:#FAF5FF; border-bottom:1.5px solid #E9D5FF;">
+                <th style="text-align:left; padding:10px 14px; color:#581C87;">Senaryo Adı</th>
+                <th style="text-align:right; padding:10px 12px; color:#581C87;">Günlük Hacim</th>
+                <th style="text-align:right; padding:10px 12px; color:#581C87;">Haftalık Hacim (5 Gün)</th>
+                <th style="text-align:right; padding:10px 12px; color:#581C87;">Aylık Ciro (20 Gün)</th>
+                <th style="text-align:right; padding:10px 12px; color:#581C87;">Yıllık Ciro (240 Gün)</th>
+                <th style="text-align:right; padding:10px 12px; background:rgba(212,175,55,0.15); color:#92400E;">Yıllık Net Kâr (<span class="feasCurrentMarginText">%5</span>)</th>
+                <th style="text-align:center; padding:10px 12px; color:#581C87;">Durum / Büyüme</th>
               </tr>
             </thead>
             <tbody id="feasibilityScenariosTableBody">
@@ -4667,7 +4693,6 @@
             </tbody>
           </table>
         </div>
-      </div>
     </div>
 
   </div><!-- /feasibilityTabContent -->
