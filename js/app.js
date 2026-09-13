@@ -1128,23 +1128,38 @@ const App = {
 
     const productHref = (window.SEO_ROUTE_MAP || {})[String(p.id)] || `/?urun=${encodeURIComponent(p.id)}`;
 
+    const isFav = (typeof Wishlist !== 'undefined' && Wishlist.has) ? Wishlist.has(p.id) : false;
+
     return `
       <a class="product-art-card ${isPreOwned ? 'product-art-card-preowned' : ''}"
          href="${productHref}"
          data-product-id="${p.id}"
          style="text-decoration:none; color:inherit; display:flex;">
         <div class="product-art-thumb">
+          <button type="button" class="btn-card-wishlist ${isFav ? 'active' : ''}" 
+                  onclick="event.preventDefault(); event.stopPropagation(); if(typeof Wishlist!=='undefined'&&Wishlist.toggle){Wishlist.toggle('${p.id}'); this.classList.toggle('active', Wishlist.has('${p.id}'));}" 
+                  aria-label="Favorilere Ekle" title="Favori">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
           ${isPreOwned ? '<span class="badge-cond-gold">İkinci El</span>' : ''}
           ${p.brand === 'Carren' ? '<span class="badge-shipping-pill" style="position:absolute; top:10px; left:10px; background:rgba(0,48,87,0.92); color:#FFFFFF; padding:4px 8px; border-radius:4px; font-size:10px; font-weight:700; letter-spacing:0.5px; z-index:2; backdrop-filter:blur(4px); border:1px solid rgba(255,255,255,0.2);">📦 Kargo ile Teslimat</span>' : ''}
-          ${this.isJewelleryProduct(p) ? '<span class="badge-shipping-pill" style="position:absolute; top:10px; left:10px; background:#B91C1C; color:#FFFFFF; padding:5px 9px; border-radius:4px; font-size:10.5px; font-weight:800; letter-spacing:0.5px; z-index:2; box-shadow:0 2px 8px rgba(185,28,28,0.4); border:1px solid rgba(255,255,255,0.4);">🔒 KREDİ KARTINA KAPALIDIR</span>' : ''}
+          ${this.isJewelleryProduct(p) ? '<span class="badge-shipping-pill" style="position:absolute; top:10px; left:10px; background:#B91C1C; color:#FFFFFF; padding:5px 9px; border-radius:4px; font-size:10px; font-weight:800; letter-spacing:0.4px; z-index:2; box-shadow:0 2px 8px rgba(185,28,28,0.4); border:1px solid rgba(255,255,255,0.4);">🔒 HAVALE / SHOWROOM</span>' : ''}
           <img class="img-primary" src="${p.image}" alt="${p.brand} ${p.name}" loading="lazy">
         </div>
         <div class="product-art-info">
-          <h3 class="prod-brand-name">${p.brand}</h3>
+          <div class="prod-brand-row">
+            <h3 class="prod-brand-name">${p.brand}</h3>
+            <span class="prod-badge-tag">${p.subCategory || 'Koleksiyon'}</span>
+          </div>
           <p class="prod-model-name">${p.name}</p>
           <p class="prod-ref-size">${p.reference}</p>
-          ${priceHtml}
-          ${this.isJewelleryProduct(p) ? '<div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>' : ''}
+          <div class="prod-card-bottom-row">
+            ${priceHtml}
+            <div class="prod-card-cta-btn" title="İncele">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </div>
+          </div>
+          ${this.isJewelleryProduct(p) ? '<div style="font-size:11px; font-weight:700; color:#B91C1C; margin-top:4px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>' : ''}
         </div>
       </a>
     `;
@@ -1962,6 +1977,38 @@ const App = {
             </div>
           </div>
 
+        </div>
+
+        <!-- MOBİL SABİT SATIN ALMA ÇUBUĞU (HAUTE HORLOGERIE MOBILE STICKY BUY BAR) -->
+        <div class="pdp-mobile-sticky-bar" id="pdpMobileStickyBar">
+          <div class="pdp-sticky-bar-info">
+            <div class="pdp-sticky-bar-thumb">
+              <img src="${p.image}" alt="${p.brand} ${p.name}" loading="lazy">
+            </div>
+            <div class="pdp-sticky-bar-text">
+              <span class="pdp-sticky-brand">${p.brand}</span>
+              <span class="pdp-sticky-title">${p.name}</span>
+              <div class="pdp-sticky-price">${formatPrice(p.price)}</div>
+            </div>
+          </div>
+          <div class="pdp-sticky-bar-actions">
+            ${isGoldProduct ? `
+              <button type="button" class="pdp-sticky-btn pdp-sticky-btn-gold" onclick="App.openWireOrderModal('${p.id}');">
+                <span>Havale / Sipariş</span>
+              </button>
+              <a href="https://wa.me/905419305372?text=Merhaba,%20${encodeURIComponent(p.brand + ' ' + p.name)}%20(${p.ref || p.reference})%20siparis%20bilgisi%20almak%20istiyorum." target="_blank" rel="noopener" class="pdp-sticky-btn-wa" aria-label="WhatsApp Satış">
+                <span>💬</span>
+              </a>
+            ` : `
+              <button type="button" class="pdp-sticky-btn pdp-sticky-btn-cart" onclick="Cart.add('${p.id}'); App.updateHeaderCartCount(); Router.navigate('sepet');">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                <span>Sepete Ekle</span>
+              </button>
+              <button type="button" class="pdp-sticky-btn pdp-sticky-btn-buy" onclick="Cart.add('${p.id}'); App.updateHeaderCartCount(); Router.navigate('odeme');">
+                <span>Hemen Al</span>
+              </button>
+            `}
+          </div>
         </div>
 
       </div>

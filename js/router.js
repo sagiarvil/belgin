@@ -339,6 +339,7 @@ const Router = {
     this.currentPage = page;
     document.body.classList.toggle('page-canli-fiyatlar', page === 'canli-fiyatlar');
     document.body.classList.toggle('page-is-canli-fiyatlar', page === 'canli-fiyatlar');
+    document.body.classList.toggle('page-urun-mode', page === 'urun');
 
     // 1. Sayfa Görünürlüğü
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -366,9 +367,17 @@ const Router = {
       }
     }
 
-    // 2. Navigasyon Aktif Linkleri
+    // 2. Navigasyon Aktif Linkleri (Mobil Dock ve Desktop Menü Senkronizasyonu)
     document.querySelectorAll('.nav-links a, .nav-desktop a, .mobile-drawer-nav a, .mobile-bottom-dock a').forEach(a => a.classList.remove('active'));
-    const navLinks = document.querySelectorAll(`[data-page="${page}"]`);
+    let activeDataPage = page;
+    if (page === 'urun' && window.currentOpenProductId && typeof findProduct === 'function') {
+      const currentProd = findProduct(window.currentOpenProductId);
+      if (currentProd) {
+        const isGold = (typeof App !== 'undefined' && App.isJewelleryProduct) ? App.isJewelleryProduct(currentProd) : (currentProd.category === 'mucevherat' || currentProd.isGold);
+        activeDataPage = isGold ? 'mucevherat' : 'saatler';
+      }
+    }
+    const navLinks = document.querySelectorAll(`[data-page="${activeDataPage}"]`);
     navLinks.forEach(a => a.classList.add('active'));
 
     // 3. Menü & Dropdown Kapatma
