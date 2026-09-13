@@ -4415,6 +4415,7 @@
 
           <div style="display:flex; align-items:center; gap:8px;">
             <div style="display:flex; gap:4px; background:#FFFFFF; padding:3px; border-radius:10px; border:1px solid #BAE6FD;">
+              <button type="button" class="feas-chip-btn" id="goalTargetModeDayBtn" onclick="AdminApp.setGoalMode('day')">Günlük Hedef</button>
               <button type="button" class="feas-chip-btn active" id="goalTargetModeMonthBtn" onclick="AdminApp.setGoalMode('month')">Aylık Hedef</button>
               <button type="button" class="feas-chip-btn" id="goalTargetModeYearBtn" onclick="AdminApp.setGoalMode('year')">Yıllık Hedef</button>
             </div>
@@ -4448,6 +4449,8 @@
               <!-- Hızlı Kâr Butonları -->
               <div style="display:flex; align-items:center; gap:4px; margin-top:8px; flex-wrap:wrap;">
                 <span style="font-size:10.5px; color:#047857; font-weight:700;">Hızlı Seçim:</span>
+                <button type="button" class="feas-chip-btn" onclick="AdminApp.setGoalProfit(25000)">₺25B</button>
+                <button type="button" class="feas-chip-btn" onclick="AdminApp.setGoalProfit(50000)">₺50B</button>
                 <button type="button" class="feas-chip-btn" onclick="AdminApp.setGoalProfit(100000)">₺100B</button>
                 <button type="button" class="feas-chip-btn" onclick="AdminApp.setGoalProfit(250000)">₺250B</button>
                 <button type="button" class="feas-chip-btn" onclick="AdminApp.setGoalProfit(500000)">₺500B</button>
@@ -4473,6 +4476,9 @@
               <!-- Hızlı Ciro Butonları -->
               <div style="display:flex; align-items:center; gap:4px; margin-top:8px; flex-wrap:wrap;">
                 <span style="font-size:10.5px; color:#64748B; font-weight:700;">Hızlı Seçim:</span>
+                <button type="button" class="feas-chip-btn" onclick="AdminApp.setGoalAmount(500000)">₺500B</button>
+                <button type="button" class="feas-chip-btn" onclick="AdminApp.setGoalAmount(1000000)">₺1M</button>
+                <button type="button" class="feas-chip-btn" onclick="AdminApp.setGoalAmount(2500000)">₺2.5M</button>
                 <button type="button" class="feas-chip-btn" onclick="AdminApp.setGoalAmount(5000000)">₺5M</button>
                 <button type="button" class="feas-chip-btn" onclick="AdminApp.setGoalAmount(10000000)">₺10M</button>
                 <button type="button" class="feas-chip-btn" onclick="AdminApp.setGoalAmount(25000000)">₺25M</button>
@@ -6200,6 +6206,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 <script src="js/data.js"></script>
 <script src="js/vip-payment.js?v=2.8.8"></script>
-<script src="js/admin.js?v=20260913-feasibility-v5"></script>
+<script src="js/admin.js?v=20260913-feasibility-v7"></script>
 </body>
 </html>

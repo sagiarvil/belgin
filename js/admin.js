@@ -10428,26 +10428,30 @@ const AdminApp = {
     }
   },
 
-  // 9. Hedef Ciro Modu Seçimi (Aylık / Yıllık)
+  // 9. Hedef Ciro Modu Seçimi (Günlük / Aylık / Yıllık)
   setGoalMode(mode) {
     this.goalTargetMode = mode;
+    this._userExplicitGoalMode = true;
+    const dBtn = document.getElementById('goalTargetModeDayBtn');
     const mBtn = document.getElementById('goalTargetModeMonthBtn');
     const yBtn = document.getElementById('goalTargetModeYearBtn');
     const input = document.getElementById('goalTargetAmountInput');
 
-    if (mBtn && yBtn) {
-      if (mode === 'month') {
-        mBtn.classList.add('active');
-        yBtn.classList.remove('active');
-        if (input && (this.parseTrCurrency(input.value) >= 50000000 || this.goalTargetAmount >= 50000000)) {
-          this.setGoalAmount(10000000); // Aylık 10M Ciro (500B Kâr)
-        }
-      } else {
-        yBtn.classList.add('active');
-        mBtn.classList.remove('active');
-        if (input && (this.parseTrCurrency(input.value) <= 15000000 || this.goalTargetAmount <= 15000000)) {
-          this.setGoalAmount(120000000); // Yıllık 120M Ciro (6M Kâr)
-        }
+    if (dBtn) dBtn.classList.toggle('active', mode === 'day');
+    if (mBtn) mBtn.classList.toggle('active', mode === 'month');
+    if (yBtn) yBtn.classList.toggle('active', mode === 'year');
+
+    if (mode === 'day') {
+      if (!input || this.parseTrCurrency(input.value) > 5000000 || this.parseTrCurrency(input.value) <= 0) {
+        this.setGoalAmount(500000); // Günlük 500B Ciro (25B Kâr)
+      }
+    } else if (mode === 'month') {
+      if (!input || this.parseTrCurrency(input.value) >= 50000000 || this.parseTrCurrency(input.value) < 1000000) {
+        this.setGoalAmount(10000000); // Aylık 10M Ciro (500B Kâr)
+      }
+    } else if (mode === 'year') {
+      if (!input || this.parseTrCurrency(input.value) <= 15000000) {
+        this.setGoalAmount(120000000); // Yıllık 120M Ciro (6M Kâr)
       }
     }
     this.renderGoalOutputs();
@@ -10467,15 +10471,22 @@ const AdminApp = {
     const amountInput = document.getElementById('goalTargetAmountInput');
     if (amountInput) amountInput.value = this.formatTrCurrency(this.goalTargetAmount);
 
-    // Akıllı mod senkronizasyonu (Kâr >= 1.5M ise otomatik Yıllık Hedef)
+    // Akıllı mod senkronizasyonu
+    const dBtn = document.getElementById('goalTargetModeDayBtn');
     const mBtn = document.getElementById('goalTargetModeMonthBtn');
     const yBtn = document.getElementById('goalTargetModeYearBtn');
-    if (this.goalTargetProfit >= 1500000 && this.goalTargetMode === 'month') {
-      this.goalTargetMode = 'year';
-      if (mBtn && yBtn) { mBtn.classList.remove('active'); yBtn.classList.add('active'); }
-    } else if (this.goalTargetProfit > 0 && this.goalTargetProfit <= 600000 && this.goalTargetMode === 'year' && !this._userExplicitYearMode) {
-      this.goalTargetMode = 'month';
-      if (mBtn && yBtn) { mBtn.classList.add('active'); yBtn.classList.remove('active'); }
+    if (this.goalTargetMode !== 'day') {
+      if (this.goalTargetProfit >= 1500000 && this.goalTargetMode === 'month') {
+        this.goalTargetMode = 'year';
+        if (dBtn) dBtn.classList.remove('active');
+        if (mBtn) mBtn.classList.remove('active');
+        if (yBtn) yBtn.classList.add('active');
+      } else if (this.goalTargetProfit > 0 && this.goalTargetProfit <= 600000 && this.goalTargetMode === 'year' && !this._userExplicitGoalMode) {
+        this.goalTargetMode = 'month';
+        if (dBtn) dBtn.classList.remove('active');
+        if (mBtn) mBtn.classList.add('active');
+        if (yBtn) yBtn.classList.remove('active');
+      }
     }
 
     this.renderGoalOutputs();
@@ -10495,15 +10506,22 @@ const AdminApp = {
     const profitInput = document.getElementById('goalTargetProfitInput');
     if (profitInput) profitInput.value = this.formatTrCurrency(this.goalTargetProfit);
 
-    // Akıllı mod senkronizasyonu (Ciro >= 30M ise otomatik Yıllık Hedef)
+    // Akıllı mod senkronizasyonu
+    const dBtn = document.getElementById('goalTargetModeDayBtn');
     const mBtn = document.getElementById('goalTargetModeMonthBtn');
     const yBtn = document.getElementById('goalTargetModeYearBtn');
-    if (this.goalTargetAmount >= 30000000 && this.goalTargetMode === 'month') {
-      this.goalTargetMode = 'year';
-      if (mBtn && yBtn) { mBtn.classList.remove('active'); yBtn.classList.add('active'); }
-    } else if (this.goalTargetAmount > 0 && this.goalTargetAmount <= 12000000 && this.goalTargetMode === 'year' && !this._userExplicitYearMode) {
-      this.goalTargetMode = 'month';
-      if (mBtn && yBtn) { mBtn.classList.add('active'); yBtn.classList.remove('active'); }
+    if (this.goalTargetMode !== 'day') {
+      if (this.goalTargetAmount >= 30000000 && this.goalTargetMode === 'month') {
+        this.goalTargetMode = 'year';
+        if (dBtn) dBtn.classList.remove('active');
+        if (mBtn) mBtn.classList.remove('active');
+        if (yBtn) yBtn.classList.add('active');
+      } else if (this.goalTargetAmount > 0 && this.goalTargetAmount <= 12000000 && this.goalTargetMode === 'year' && !this._userExplicitGoalMode) {
+        this.goalTargetMode = 'month';
+        if (dBtn) dBtn.classList.remove('active');
+        if (mBtn) mBtn.classList.add('active');
+        if (yBtn) yBtn.classList.remove('active');
+      }
     }
 
     this.renderGoalOutputs();
@@ -10851,7 +10869,13 @@ const AdminApp = {
       let reqYearly = 0;
       let modeLabel = '';
 
-      if (mode === 'year') {
+      if (mode === 'day') {
+        modeLabel = 'Günlük Hedef (1 İş Günü)';
+        reqDaily = target;
+        reqWeekly = reqDaily * 5;     // 1 hafta = 5 gün
+        reqMonthly = reqDaily * 20;   // 1 ay = 20 gün
+        reqYearly = reqDaily * 240;   // 1 yıl = 240 gün
+      } else if (mode === 'year') {
         modeLabel = 'Yıllık Hedef (240 İş Günü)';
         reqYearly = target;
         reqDaily = reqYearly > 0 ? (reqYearly / 240) : 0;
@@ -10871,7 +10895,9 @@ const AdminApp = {
       const yearlyProfit = reqYearly * marginRatio;
 
       let currentReal = 0;
-      if (mode === 'month') {
+      if (mode === 'day') {
+        currentReal = this.todayRealVolume || 0;
+      } else if (mode === 'month') {
         currentReal = this.thisMonthRealVolume || 0;
       } else {
         currentReal = this.thisYearRealVolume || 0;
@@ -10883,7 +10909,7 @@ const AdminApp = {
       const elTitle = document.getElementById('goalResultTitle');
       const elDaysBadge = document.getElementById('goalDaysLeftBadge');
       if (elTitle) elTitle.textContent = `🎯 ${modeLabel.toUpperCase()} GEREKEN POS CİROSU`;
-      if (elDaysBadge) elDaysBadge.textContent = mode === 'year' ? `Standart: 240 İş Günü` : `Standart: 20 İş Günü`;
+      if (elDaysBadge) elDaysBadge.textContent = mode === 'day' ? `Standart: 1 Gün` : (mode === 'year' ? `Standart: 240 İş Günü` : `Standart: 20 İş Günü`);
 
       // 1. Günlük Gereken POS
       const elReqDaily = document.getElementById('goalRequiredDaily');
