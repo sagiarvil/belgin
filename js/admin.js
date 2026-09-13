@@ -10809,6 +10809,13 @@ const AdminApp = {
 
       const scenarios = [
         {
+          name: '✨ Sizin Simülasyonunuz (Özel Ayarınız)',
+          desc: 'Yukarıdaki simülatör panelinde belirlediğiniz özel iş günü satış hızınız',
+          daily: this.simDailyRate || 250000,
+          badge: '<span style="background:#FEF3C7; color:#B45309; border:1.5px solid #F59E0B; padding:4px 10px; border-radius:8px; font-weight:800; font-size:11.5px; box-shadow:0 2px 6px rgba(245,158,11,0.2);">✨ Sizin Ayarınız</span>',
+          highlight: true
+        },
+        {
           name: '🌱 ₺250.000 / Gün (Başlangıç Temposu)',
           desc: 'Ayda 20 iş gününde ₺5.000.000 hacim üreten temel seviye',
           daily: 250000,
@@ -10855,13 +10862,6 @@ const AdminApp = {
           desc: 'Ayda 20 iş gününde ₺60.000.000 ciro üreten tavan simülasyon kapasitesi',
           daily: 3000000,
           badge: '<span style="background:#FEE2E2; color:#991B1B; padding:3px 8px; border-radius:6px; font-weight:800; font-size:11px;">₺3.0M / Gün (Zirve)</span>'
-        },
-        {
-          name: '✨ Sizin Simülasyonunuz (Özel Ayarınız)',
-          desc: 'Yukarıdaki simülatör panelinde belirlediğiniz özel iş günü satış hızınız',
-          daily: this.simDailyRate || 250000,
-          badge: '<span style="background:#F3E8FF; color:#6B21A8; border:1px solid #D8B4FE; padding:3px 8px; border-radius:6px; font-weight:800; font-size:11px;">Özel Simülasyon</span>',
-          highlight: true
         }
       ];
 
