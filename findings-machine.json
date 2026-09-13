@@ -1,6 +1,6 @@
 {
-  "scanId": "scan-1789215474950",
-  "timestamp": "2026-09-12T12:17:54.950Z",
+  "scanId": "scan-1789289698804",
+  "timestamp": "2026-09-13T08:54:58.804Z",
   "domain": "https://www.belginkuyumculuk.com",
   "engines": {
     "ENG-01": {
@@ -57,7 +57,7 @@
       "score": 100,
       "badge": "PASS",
       "details": {
-        "byteLength": 241308,
+        "byteLength": 245174,
         "payloadOk": true,
         "noHttp": true,
         "hasPreferredSources": true,
