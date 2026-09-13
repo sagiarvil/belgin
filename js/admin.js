@@ -10183,18 +10183,34 @@ const AdminApp = {
     if (typeof val === 'number') return isNaN(val) ? 0 : val;
     if (!val) return 0;
     let s = String(val).trim();
-    if (s.includes('.') && s.includes(',')) {
-      s = s.replace(/\./g, '').replace(',', '.');
-    } else if (s.includes(',')) {
-      s = s.replace(',', '.');
-    } else if (s.includes('.')) {
-      const parts = s.split('.');
-      if (parts.length > 2 || (parts.length === 2 && parts[1].length === 3)) {
-        s = s.replace(/\./g, '');
-      }
-    }
+    s = s.replace(/\./g, '');
+    s = s.replace(',', '.');
     const n = parseFloat(s);
     return isNaN(n) ? 0 : n;
+  },
+
+  formatNumberWithDots(val) {
+    let s = String(val || '').replace(/[^\d,]/g, '');
+    let parts = s.split(',');
+    let intPart = parts[0].replace(/\D/g, '');
+    let decPart = parts.length > 1 ? parts[1].replace(/\D/g, '').slice(0, 2) : null;
+    
+    if (!intPart && decPart === null) return '';
+    if (!intPart && decPart !== null) intPart = '0';
+    
+    if (intPart.length > 1 && intPart.startsWith('0')) {
+      intPart = intPart.replace(/^0+/, '') || '0';
+    }
+    
+    let formattedInt = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    
+    if (decPart !== null) {
+      return formattedInt + ',' + decPart;
+    }
+    if (s.endsWith(',')) {
+      return formattedInt + ',';
+    }
+    return formattedInt;
   },
 
   formatTrCurrency(val, includeDecimalsIfAny = true) {
@@ -10207,38 +10223,31 @@ const AdminApp = {
 
   maskCurrencyInput(inputEl) {
     if (!inputEl) return 0;
-    let raw = inputEl.value || '';
-    // Tek nokta varsa ve ondalık amaçlıysa virgüle çevir, aksi halde noktaları temizle
-    if (raw.indexOf('.') !== -1 && raw.indexOf(',') === -1) {
-      const parts = raw.split('.');
-      if (parts.length === 2 && parts[1].length !== 3) {
-        raw = parts[0] + ',' + parts[1];
-      } else {
-        raw = raw.replace(/\./g, '');
+    const oldVal = inputEl.value || '';
+    const oldCursor = inputEl.selectionStart !== null ? inputEl.selectionStart : oldVal.length;
+    const leftRaw = oldVal.slice(0, oldCursor).replace(/[^\d,]/g, '');
+
+    const formatted = this.formatNumberWithDots(oldVal);
+    inputEl.value = formatted;
+
+    let newCursor = 0;
+    let counted = 0;
+    for (let i = 0; i < formatted.length; i++) {
+      if (counted === leftRaw.length) {
+        newCursor = i;
+        break;
       }
-    } else {
-      raw = raw.replace(/\./g, '');
+      if (/[\d,]/.test(formatted[i])) {
+        counted++;
+      }
+      newCursor = i + 1;
     }
 
-    let clean = raw.replace(/[^\d,]/g, '');
-    const parts = clean.split(',');
-    let intPart = parts[0] ? parts[0].replace(/\D/g, '') : '';
-    let decPart = parts.length > 1 ? parts[1].replace(/\D/g, '').slice(0, 2) : null;
+    try {
+      inputEl.setSelectionRange(newCursor, newCursor);
+    } catch (_) {}
 
-    if (intPart === '') {
-      if (decPart !== null) intPart = '0';
-      else {
-        inputEl.value = '';
-        return 0;
-      }
-    }
-
-    const formattedInt = Number(intPart).toLocaleString('tr-TR');
-    const formattedVal = decPart !== null ? `${formattedInt},${decPart}` : (clean.endsWith(',') ? `${formattedInt},` : formattedInt);
-    
-    inputEl.value = formattedVal;
-    const numVal = Number(intPart + (decPart !== null && decPart.length > 0 ? '.' + decPart : ''));
-    return isNaN(numVal) ? 0 : numVal;
+    return this.parseTrCurrency(formatted);
   },
 
   // 3. Kâr Marjı Manuel Girişi (Input onChange / onInput)
