@@ -10439,14 +10439,14 @@ const AdminApp = {
       if (mode === 'month') {
         mBtn.classList.add('active');
         yBtn.classList.remove('active');
-        if (input && (this.parseTrCurrency(input.value) >= 100000000 || this.goalTargetAmount >= 100000000)) {
-          this.setGoalAmount(10000000);
+        if (input && (this.parseTrCurrency(input.value) >= 50000000 || this.goalTargetAmount >= 50000000)) {
+          this.setGoalAmount(10000000); // Aylık 10M Ciro (500B Kâr)
         }
       } else {
         yBtn.classList.add('active');
         mBtn.classList.remove('active');
-        if (input && (this.parseTrCurrency(input.value) <= 10000000 || this.goalTargetAmount <= 10000000)) {
-          this.setGoalAmount(100000000);
+        if (input && (this.parseTrCurrency(input.value) <= 15000000 || this.goalTargetAmount <= 15000000)) {
+          this.setGoalAmount(120000000); // Yıllık 120M Ciro (6M Kâr)
         }
       }
     }
@@ -10466,6 +10466,18 @@ const AdminApp = {
     this.goalTargetAmount = marginRatio > 0 ? (this.goalTargetProfit / marginRatio) : 0;
     const amountInput = document.getElementById('goalTargetAmountInput');
     if (amountInput) amountInput.value = this.formatTrCurrency(this.goalTargetAmount);
+
+    // Akıllı mod senkronizasyonu (Kâr >= 1.5M ise otomatik Yıllık Hedef)
+    const mBtn = document.getElementById('goalTargetModeMonthBtn');
+    const yBtn = document.getElementById('goalTargetModeYearBtn');
+    if (this.goalTargetProfit >= 1500000 && this.goalTargetMode === 'month') {
+      this.goalTargetMode = 'year';
+      if (mBtn && yBtn) { mBtn.classList.remove('active'); yBtn.classList.add('active'); }
+    } else if (this.goalTargetProfit > 0 && this.goalTargetProfit <= 600000 && this.goalTargetMode === 'year' && !this._userExplicitYearMode) {
+      this.goalTargetMode = 'month';
+      if (mBtn && yBtn) { mBtn.classList.add('active'); yBtn.classList.remove('active'); }
+    }
+
     this.renderGoalOutputs();
   },
 
@@ -10482,6 +10494,18 @@ const AdminApp = {
     this.goalTargetProfit = this.goalTargetAmount * marginRatio;
     const profitInput = document.getElementById('goalTargetProfitInput');
     if (profitInput) profitInput.value = this.formatTrCurrency(this.goalTargetProfit);
+
+    // Akıllı mod senkronizasyonu (Ciro >= 30M ise otomatik Yıllık Hedef)
+    const mBtn = document.getElementById('goalTargetModeMonthBtn');
+    const yBtn = document.getElementById('goalTargetModeYearBtn');
+    if (this.goalTargetAmount >= 30000000 && this.goalTargetMode === 'month') {
+      this.goalTargetMode = 'year';
+      if (mBtn && yBtn) { mBtn.classList.remove('active'); yBtn.classList.add('active'); }
+    } else if (this.goalTargetAmount > 0 && this.goalTargetAmount <= 12000000 && this.goalTargetMode === 'year' && !this._userExplicitYearMode) {
+      this.goalTargetMode = 'month';
+      if (mBtn && yBtn) { mBtn.classList.add('active'); yBtn.classList.remove('active'); }
+    }
+
     this.renderGoalOutputs();
   },
 
@@ -10762,35 +10786,38 @@ const AdminApp = {
     }
   },
 
-  // 13. Simülasyon Çıktıları ve Öngörü Metni (İş Günü Esaslı)
+  // 13. Simülasyon Çıktıları ve Öngörü Metni (İş Günü Esaslı: 5 Gün/Hafta, 20 Gün/Ay, 240 Gün/Yıl)
   renderFeasibilityOutputs() {
     try {
       const simDaily = this.simDailyRate || 0;
       const marginRatio = (this.feasibilityMargin || 5.0) / 100;
       const now = new Date();
 
-      // Kalan İş Günleri (Hafta sonları hariç; Ay max 20, Yıl max 240)
+      // Kalan İş Günleri (Hafta sonları hariç)
       const daysLeftMonth = this.countRemainingBusinessDaysInMonth(now);
-      const daysLeftYear = this.countRemainingBusinessDaysInYear(now);
 
-      // Hacimler (5 iş günü / hafta, 20 iş günü / ay)
+      // Standart Hacimler (5 iş günü / hafta, 20 iş günü / ay, 240 iş günü / yıl)
       const simWeekVol = simDaily * 5;
       const simMonthVol = simDaily * 20;
+      const simYearVol = simDaily * 240; // Tam 1 Yıllık Ticari Simülasyon (240 Gün)
 
+      // Kümülatif Ay Sonu Beklentisi (Geçmiş Reel + Kalan Günler)
       const monthEndTotalVol = (this.thisMonthRealVolume || 0) + (daysLeftMonth * simDaily);
-      const yearEndTotalVol = (this.thisYearRealVolume || 0) + (daysLeftYear * simDaily);
 
       // DOM'a Yansıt
+      // 1. 1 Haftalık Ciro (5 Gün)
       const elWkVol = document.getElementById('simOutWeekVolume');
       const elWkPrf = document.getElementById('simOutWeekProfit');
       if (elWkVol) elWkVol.textContent = `₺${Math.round(simWeekVol).toLocaleString('tr-TR')}`;
       if (elWkPrf) elWkPrf.textContent = `₺${Math.round(simWeekVol * marginRatio).toLocaleString('tr-TR')}`;
 
+      // 2. 1 Aylık Ciro (20 Gün)
       const elMthVol = document.getElementById('simOutMonthVolume');
       const elMthPrf = document.getElementById('simOutMonthProfit');
       if (elMthVol) elMthVol.textContent = `₺${Math.round(simMonthVol).toLocaleString('tr-TR')}`;
       if (elMthPrf) elMthPrf.textContent = `₺${Math.round(simMonthVol * marginRatio).toLocaleString('tr-TR')}`;
 
+      // 3. Ay Sonu Beklenti (Kümülatif)
       const elMonthEndBadge = document.getElementById('simDaysLeftMonthBadge');
       const elMonthEndVol = document.getElementById('simOutMonthEndTotalVolume');
       const elMonthEndPrf = document.getElementById('simOutMonthEndTotalProfit');
@@ -10798,12 +10825,13 @@ const AdminApp = {
       if (elMonthEndVol) elMonthEndVol.textContent = `₺${Math.round(monthEndTotalVol).toLocaleString('tr-TR')}`;
       if (elMonthEndPrf) elMonthEndPrf.textContent = `₺${Math.round(monthEndTotalVol * marginRatio).toLocaleString('tr-TR')}`;
 
+      // 4. 1 Yıllık Ciro (240 İş Günü) - Birebir 240 x Günlük Ciro ve Net Kâr
       const elYearEndBadge = document.getElementById('simDaysLeftYearBadge');
       const elYearEndVol = document.getElementById('simOutYearEndTotalVolume');
       const elYearEndPrf = document.getElementById('simOutYearEndTotalProfit');
-      if (elYearEndBadge) elYearEndBadge.textContent = `Kalan: ${daysLeftYear} iş günü`;
-      if (elYearEndVol) elYearEndVol.textContent = `₺${Math.round(yearEndTotalVol).toLocaleString('tr-TR')}`;
-      if (elYearEndPrf) elYearEndPrf.textContent = `₺${Math.round(yearEndTotalVol * marginRatio).toLocaleString('tr-TR')}`;
+      if (elYearEndBadge) elYearEndBadge.textContent = `12 Ay (240 İş Günü)`;
+      if (elYearEndVol) elYearEndVol.textContent = `₺${Math.round(simYearVol).toLocaleString('tr-TR')}`;
+      if (elYearEndPrf) elYearEndPrf.textContent = `₺${Math.round(simYearVol * marginRatio).toLocaleString('tr-TR')}`;
     } catch (err) {
       console.error('[AdminApp] renderFeasibilityOutputs error:', err);
     }
@@ -10817,61 +10845,71 @@ const AdminApp = {
       const mode = this.goalTargetMode || 'month';
       const now = new Date();
 
-      let currentReal = 0;
-      let daysLeft = 1;
-      let modeLabel = 'Aylık Hedef (20 İş Günü)';
+      let reqDaily = 0;
+      let reqWeekly = 0;
+      let reqMonthly = 0;
+      let reqYearly = 0;
+      let modeLabel = '';
 
-      if (mode === 'month') {
-        currentReal = this.thisMonthRealVolume || 0;
-        daysLeft = Math.max(1, this.countRemainingBusinessDaysInMonth(now));
-        modeLabel = 'Aylık Hedef (20 İş Günü)';
-      } else {
-        currentReal = this.thisYearRealVolume || 0;
-        daysLeft = Math.max(1, this.countRemainingBusinessDaysInYear(now));
+      if (mode === 'year') {
         modeLabel = 'Yıllık Hedef (240 İş Günü)';
+        reqYearly = target;
+        reqDaily = reqYearly > 0 ? (reqYearly / 240) : 0;
+        reqWeekly = reqDaily * 5;
+        reqMonthly = reqDaily * 20; // 1 yıl = 12 ay = 240 gün
+      } else {
+        modeLabel = 'Aylık Hedef (20 İş Günü)';
+        reqMonthly = target;
+        reqDaily = reqMonthly > 0 ? (reqMonthly / 20) : 0;
+        reqWeekly = reqDaily * 5;
+        reqYearly = reqMonthly * 12; // 12 ay = 240 gün
       }
-
-      // Kalan gereken POS cirosu ve hedef kâr
-      const remaining = Math.max(0, target - currentReal);
-      const targetProfit = target * marginRatio;
-
-      // 4 Periyotlu Gereken POS Cirosu (Kalan iş günü temposu esaslı)
-      const reqDaily = remaining / daysLeft;
-      const reqWeekly = reqDaily * 5;     // 1 iş haftası = 5 gün
-      const reqMonthly = reqDaily * 20;   // 1 ticari ay = 20 iş günü
-      const reqYearly = reqDaily * 240;   // 1 ticari yıl = 240 iş günü
 
       const dailyProfit = reqDaily * marginRatio;
       const weeklyProfit = reqWeekly * marginRatio;
       const monthlyProfit = reqMonthly * marginRatio;
       const yearlyProfit = reqYearly * marginRatio;
 
+      let currentReal = 0;
+      if (mode === 'month') {
+        currentReal = this.thisMonthRealVolume || 0;
+      } else {
+        currentReal = this.thisYearRealVolume || 0;
+      }
+      const remaining = Math.max(0, target - currentReal);
+      const targetProfit = target * marginRatio;
+
       // DOM Güncellemeleri
       const elTitle = document.getElementById('goalResultTitle');
       const elDaysBadge = document.getElementById('goalDaysLeftBadge');
       if (elTitle) elTitle.textContent = `🎯 ${modeLabel.toUpperCase()} GEREKEN POS CİROSU`;
-      if (elDaysBadge) elDaysBadge.textContent = `Kalan: ${daysLeft} iş günü`;
+      if (elDaysBadge) elDaysBadge.textContent = mode === 'year' ? `Standart: 240 İş Günü` : `Standart: 20 İş Günü`;
 
+      // 1. Günlük Gereken POS
       const elReqDaily = document.getElementById('goalRequiredDaily');
       const elDailyPrf = document.getElementById('goalDailyProfit');
       if (elReqDaily) elReqDaily.textContent = `₺${Math.round(reqDaily).toLocaleString('tr-TR')}`;
       if (elDailyPrf) elDailyPrf.textContent = `₺${Math.round(dailyProfit).toLocaleString('tr-TR')}`;
 
+      // 2. Haftalık Gereken POS (5 Gün)
       const elReqWeekly = document.getElementById('goalRequiredWeekly');
       const elWeeklyPrf = document.getElementById('goalWeeklyProfit');
       if (elReqWeekly) elReqWeekly.textContent = `₺${Math.round(reqWeekly).toLocaleString('tr-TR')}`;
       if (elWeeklyPrf) elWeeklyPrf.textContent = `₺${Math.round(weeklyProfit).toLocaleString('tr-TR')}`;
 
+      // 3. Aylık Gereken POS (20 Gün)
       const elReqMonthly = document.getElementById('goalRequiredMonthly');
       const elMonthlyPrf = document.getElementById('goalMonthlyProfit');
       if (elReqMonthly) elReqMonthly.textContent = `₺${Math.round(reqMonthly).toLocaleString('tr-TR')}`;
       if (elMonthlyPrf) elMonthlyPrf.textContent = `₺${Math.round(monthlyProfit).toLocaleString('tr-TR')}`;
 
+      // 4. Yıllık Gereken POS (240 Gün)
       const elReqYearly = document.getElementById('goalRequiredYearly');
       const elYearlyPrf = document.getElementById('goalYearlyProfit');
       if (elReqYearly) elReqYearly.textContent = `₺${Math.round(reqYearly).toLocaleString('tr-TR')}`;
       if (elYearlyPrf) elYearlyPrf.textContent = `₺${Math.round(yearlyProfit).toLocaleString('tr-TR')}`;
 
+      // Alt özet
       const elRemVol = document.getElementById('goalRemainingVolume');
       const elTgtProfit = document.getElementById('goalTargetProfit');
       if (elRemVol) elRemVol.textContent = `₺${Math.round(remaining).toLocaleString('tr-TR')}`;
