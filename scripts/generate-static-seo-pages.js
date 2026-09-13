@@ -370,8 +370,8 @@ function renderMagazineArticlePage(art, indexHtml) {
     'article JSON-LD'
   );
 
-  pageHtml = pageHtml
-    .replace('id="page-ana-sayfa" class="page active"', 'id="page-ana-sayfa" class="page"');
+  const homeSectionRegex = /<section id="page-ana-sayfa" class="page active">[\s\S]*?<\/section>(\s*<!-- 0\. ELİT KATEGORİ)/i;
+  pageHtml = pageHtml.replace(homeSectionRegex, '<section id="page-ana-sayfa" class="page"></section>$1');
 
   const articleContentHtml = `
     <article class="mag-standalone-article" style="max-width: 900px; margin: 0 auto; padding: 40px 20px 80px;">
@@ -610,8 +610,9 @@ function renderProductPage(p, indexHtml) {
     'twitter:description'
   );
 
+  const homeSectionRegex = /<section id="page-ana-sayfa" class="page active">[\s\S]*?<\/section>(\s*<!-- 0\. ELİT KATEGORİ)/i;
   pageHtml = pageHtml
-    .replace('id="page-ana-sayfa" class="page active"', 'id="page-ana-sayfa" class="page"')
+    .replace(homeSectionRegex, '<section id="page-ana-sayfa" class="page"></section>$1')
     .replace('id="page-urun" class="page"', 'id="page-urun" class="page active"');
 
   pageHtml = replaceFirst(
@@ -740,9 +741,25 @@ function renderCategoryPage(key, list, indexHtml) {
     'twitter:description'
   );
 
+  const homeSectionRegex = /<section id="page-ana-sayfa" class="page active">[\s\S]*?<\/section>(\s*<!-- 0\. ELİT KATEGORİ)/i;
   pageHtml = pageHtml
-    .replace('id="page-ana-sayfa" class="page active"', 'id="page-ana-sayfa" class="page"')
+    .replace(homeSectionRegex, '<section id="page-ana-sayfa" class="page"></section>$1')
     .replace(`id="page-${key}" class="page"`, `id="page-${key}" class="page active"`);
+
+  // Kategori sayfasının birincil başlığını H1'e dönüştür (Tekil H1 standardı)
+  if (key === 'elit-kategori') {
+    pageHtml = pageHtml.replace(/<h2([^>]*?)>Elit Kategori Lüks Saat Evleri<\/h2>/i, '<h1$1>Elit Kategori Lüks Saat Evleri</h1>');
+  } else if (key === 'saatler') {
+    pageHtml = pageHtml.replace(/<h2>Lüks Saat Koleksiyonu<\/h2>/i, '<h1>Lüks Saat Koleksiyonu</h1>');
+  } else if (key === 'markalar') {
+    pageHtml = pageHtml.replace(/<h2([^>]*?)>\s*Saat Markaları\s*<\/h2>/i, '<h1$1>Saat Markaları Dizini</h1>');
+  } else if (key === 'magazin') {
+    pageHtml = pageHtml.replace(/<h2([^>]*?class="mag-journal-title"[^>]*?)>[\s\S]*?<\/h2>/i, '<h1$1>Belgin Saat Magazin — Editoryal Saat Dünyası &amp; Küresel Piyasa</h1>');
+  } else if (key === 'biz-kimiz') {
+    pageHtml = pageHtml.replace(/<h2([^>]*?class="biz-kimiz-title"[^>]*?)>[\s\S]*?<\/h2>/i, '<h1$1>Biz Kimiz — Kurumsal Profil &amp; Ticaret Hafızası</h1>');
+  } else if (key === 'mucevherat') {
+    pageHtml = pageHtml.replace(/<h2([^>]*?)>Mücevherat([^<]*?)<\/h2>/i, '<h1$1>Mücevherat$2</h1>');
+  }
 
   const categoryHeroBlock = renderHeroAnswerEngine(CATEGORY_ROUTES[key]);
   if (categoryHeroBlock && key !== 'mucevherat') {
