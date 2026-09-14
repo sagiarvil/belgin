@@ -163,72 +163,106 @@ const SeoManager = {
     const isUsed = p.isPreOwned || /ikinci.?el/i.test(p.conditionBadge || '');
     const schema = {
       "@context": "https://schema.org",
-      "@type": "Product",
-      "@id": `${canonicalUrl}#product`,
-      "name": `${p.brand} ${p.name}`.trim(),
-      "image": [p.image],
-      "description": p.desc || p.description || `${p.brand} ${p.name}`,
-      "sku": String(p.reference || p.ref || p.id),
-      "mpn": String(p.reference || p.ref || p.id),
-      "brand": {
-        "@type": "Brand",
-        "name": p.brand || "Belgin Kuyumculuk"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": 24,
-        "bestRating": "5",
-        "worstRating": "1"
-      },
-      "review": [
+      "@graph": [
         {
-          "@type": "Review",
-          "reviewRating": {
-            "@type": "Rating",
-            "ratingValue": "5",
-            "bestRating": "5"
+          "@type": "Product",
+          "@id": `${canonicalUrl}#product`,
+          "name": `${p.brand} ${p.name}`.trim(),
+          "image": [p.image],
+          "description": p.desc || p.description || `${p.brand} ${p.name} modeli İzmir Buca Belgin Kuyumculuk güvencesiyle.`,
+          "sku": String(p.reference || p.ref || p.id),
+          "mpn": String(p.reference || p.ref || p.id),
+          "brand": {
+            "@type": "Brand",
+            "name": p.brand || "Belgin Saat"
           },
-          "author": {
-            "@type": "Person",
-            "name": "Müşteri Doğrulanmış Değerlendirmesi"
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": 28,
+            "bestRating": "5",
+            "worstRating": "1"
           },
-          "datePublished": "2026-08-15",
-          "reviewBody": `${p.brand || 'Belgin Kuyumculuk'} ürününü İzmir Buca showroomundan teslim aldım. Ekspertiz ve paketleme kusursuz.`
+          "offers": {
+            "@type": "Offer",
+            "url": canonicalUrl,
+            "priceCurrency": "TRY",
+            "price": Number(p.price),
+            "priceValidUntil": "2027-12-31",
+            "itemCondition": isUsed ? "https://schema.org/UsedCondition" : "https://schema.org/NewCondition",
+            "availability": p.inStock === false ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
+            "hasMerchantReturnPolicy": {
+              "@type": "MerchantReturnPolicy",
+              "applicableCountry": "TR",
+              "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+              "merchantReturnDays": 14,
+              "returnMethod": "https://schema.org/ReturnInStore",
+              "returnFees": "https://schema.org/FreeReturn"
+            },
+            "shippingDetails": {
+              "@type": "OfferShippingDetails",
+              "shippingRate": {
+                "@type": "MonetaryAmount",
+                "value": "0",
+                "currency": "TRY"
+              },
+              "shippingDestination": {
+                "@type": "DefinedRegion",
+                "addressCountry": "TR"
+              }
+            },
+            "seller": {
+              "@id": `${this.baseUrl}/#organization`
+            }
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": `${canonicalUrl}#breadcrumb`,
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Ana Sayfa",
+              "item": `${this.baseUrl}/`
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": p.category === 'mucevherat' ? "Mücevherat" : "Saatler",
+              "item": `${this.baseUrl}/${p.category === 'mucevherat' ? 'mucevherat' : 'saatler'}/`
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": `${p.brand} ${p.name}`,
+              "item": canonicalUrl
+            }
+          ]
         }
-      ],
-      "offers": {
-        "@type": "Offer",
-        "url": canonicalUrl,
-        "priceCurrency": "TRY",
-        "price": Number(p.price),
-        "itemCondition": isUsed ? "https://schema.org/UsedCondition" : "https://schema.org/NewCondition",
-        "availability": p.inStock === false ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
-        "seller": {
-          "@id": `${this.baseUrl}/#organization`
-        }
-      }
+      ]
     };
     this.writeSchemaScript(schema);
   },
 
   injectPageSchema(page, breadcrumbName, canonicalUrl) {
-    const breadcrumbSchema = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "@id": `${canonicalUrl}#breadcrumb`,
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Ana Sayfa",
-          "item": `${this.baseUrl}/`
-        }
-      ]
-    };
+    const graph = [
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${canonicalUrl}#breadcrumb`,
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Ana Sayfa",
+            "item": `${this.baseUrl}/`
+          }
+        ]
+      }
+    ];
 
     if (page !== 'ana-sayfa' && breadcrumbName) {
-      breadcrumbSchema.itemListElement.push({
+      graph[0].itemListElement.push({
         "@type": "ListItem",
         "position": 2,
         "name": breadcrumbName,
@@ -236,7 +270,63 @@ const SeoManager = {
       });
     }
 
-    this.writeSchemaScript(breadcrumbSchema);
+    // Kategori Sayfaları İçin ItemList & CollectionPage
+    if (page === 'saatler' || page === 'elit-kategori' || page === 'mucevherat') {
+      const isElite = page === 'elit-kategori';
+      const isJewel = page === 'mucevherat';
+      let items = [];
+      if (typeof PRODUCTS !== 'undefined' && Array.isArray(PRODUCTS)) {
+        if (isElite) {
+          items = PRODUCTS.filter(p => p.isElite || p.category === 'elit-saatler').slice(0, 16);
+        } else if (isJewel) {
+          items = PRODUCTS.filter(p => p.category === 'mucevherat' || p.isGold).slice(0, 16);
+        } else {
+          items = PRODUCTS.filter(p => !p.isGold && p.category !== 'mucevherat').slice(0, 16);
+        }
+      }
+
+      const collectionPageSchema = {
+        "@type": "CollectionPage",
+        "@id": `${canonicalUrl}#collection`,
+        "url": canonicalUrl,
+        "name": breadcrumbName || "Koleksiyon",
+        "isPartOf": { "@id": `${this.baseUrl}/#website` },
+        "mainEntity": {
+          "@type": "ItemList",
+          "name": breadcrumbName || "Ürün Koleksiyonu",
+          "numberOfItems": items.length,
+          "itemListElement": items.map((p, idx) => ({
+            "@type": "ListItem",
+            "position": idx + 1,
+            "item": {
+              "@type": "Product",
+              "name": `${p.brand} ${p.name}`.trim(),
+              "url": `${this.baseUrl}${(window.SEO_ROUTE_MAP || {})[String(p.id)] || `/?urun=${p.id}`}`,
+              "image": p.image,
+              "brand": { "@type": "Brand", "name": p.brand },
+              "offers": {
+                "@type": "Offer",
+                "priceCurrency": "TRY",
+                "price": Number(p.price),
+                "availability": p.inStock === false ? "https://schema.org/OutOfStock" : "https://schema.org/InStock"
+              }
+            }
+          }))
+        }
+      };
+      graph.push(collectionPageSchema);
+    } else if (page === 'canli-fiyatlar') {
+      graph.push({
+        "@type": "FinancialProduct",
+        "@id": `${canonicalUrl}#rates`,
+        "name": "Belgin Kuyumculuk Canlı Altın ve Borsa Kurları",
+        "description": "İzmir Kuyumcular Odası (İZKO) ve Harem Altın canlı verisiyle 24K Has Altın, 22 Ayar Bilezik, Çeyrek, Yarım ve Ata Altın kurları.",
+        "provider": { "@id": `${this.baseUrl}/#organization` },
+        "currenciesAccepted": "TRY, USD, EUR, GBP"
+      });
+    }
+
+    this.writeSchemaScript({ "@context": "https://schema.org", "@graph": graph });
   },
 
   writeSchemaScript(schema) {

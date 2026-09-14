@@ -9141,6 +9141,9 @@ body.page-canli-fiyatlar-mode .gold-ticker-strip,
     border: 1px solid rgba(218, 212, 200, 0.7) !important;
     background: #FFFFFF !important;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
   .product-art-thumb {
     padding-top: 100% !important;
@@ -9149,6 +9152,9 @@ body.page-canli-fiyatlar-mode .gold-ticker-strip,
   }
   .product-art-info {
     padding: 12px 10px 14px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
   }
   .prod-brand-name {
     font-size: 10.5px !important;
@@ -9163,6 +9169,11 @@ body.page-canli-fiyatlar-mode .gold-ticker-strip,
     line-height: 1.35 !important;
     color: #111827 !important;
     margin-bottom: 6px !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    min-height: 2.7em !important;
   }
   .prod-ref-size {
     font-size: 10.5px !important;
@@ -9733,6 +9744,113 @@ body.page-canli-fiyatlar-mode .gold-ticker-strip,
   .pdp-mobile-sticky-bar,
   .haute-stories-strip {
     display: none !important;
+  }
+}
+
+/* ==========================================================
+   🏛️ HAUTE HORLOGERIE & JOAILLERIE — MÜKEMMEL SEVİYE MOBİL OPTİMİZASYON SİSTEMİ
+   ========================================================== */
+
+/* 1. Mobil Menü Açıkken Scroll Lock */
+body.drawer-open {
+  overflow: hidden !important;
+  touch-action: none !important;
+}
+
+.pdp-art-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  /* 2. Prerender Edilen Statik Ürün Detay Sayfaları (PDP) Mobil Düzeni */
+  .pdp-art-main {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+  .seo-prerender-pdp {
+    padding: 16px 12px !important;
+    margin: 12px auto 70px !important;
+    border-radius: 14px !important;
+  }
+  .pdp-art-gallery {
+    padding: 14px !important;
+    border-radius: 12px !important;
+  }
+  .pdp-art-gallery img {
+    max-height: 340px !important;
+  }
+  .pdp-art-price {
+    font-size: 26px !important;
+    line-height: 1.15 !important;
+  }
+
+  /* 3. Canlı Borsa ve Fiyat Tablosu Mobil Rafine Görünüm */
+  .board-exact-table th.th-alis,
+  .board-exact-table th.th-satis {
+    font-size: 11px !important;
+    padding: 8px 3px !important;
+    text-align: right !important;
+  }
+  .board-exact-table .td-price {
+    font-size: 12.5px !important;
+    font-variant-numeric: tabular-nums !important;
+    letter-spacing: -0.3px !important;
+    white-space: nowrap !important;
+  }
+  .board-exact-table .td-label {
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.2px !important;
+    line-height: 1.25 !important;
+  }
+  .table-responsive-luxury {
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: thin !important;
+  }
+
+  /* 4. Hero Butonları ve Dokunma Alanları (WCAG 2.2 AA) */
+  .hero-actions {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  .btn-hero-primary,
+  .btn-hero-secondary {
+    flex: 1 1 calc(50% - 6px) !important;
+    min-width: 135px !important;
+    text-align: center !important;
+    justify-content: center !important;
+    min-height: 44px !important;
+  }
+  .hero-dot {
+    position: relative !important;
+    width: 8px !important;
+    height: 8px !important;
+  }
+  .hero-dot::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -14px !important;
+    bottom: -14px !important;
+    left: -14px !important;
+    right: -14px !important;
+  }
+
+  /* 5. Sepet ve Checkout Form Girişleri (iOS Safari Zoom Engelleme) */
+  input[type="text"],
+  input[type="tel"],
+  input[type="email"],
+  input[type="number"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  /* 6. Alt Sabit Dock ve Footer Boşluğu Güvencesi */
+  body:not(.page-urun-mode) {
+    padding-bottom: calc(68px + env(safe-area-inset-bottom, 12px)) !important;
   }
 }
 

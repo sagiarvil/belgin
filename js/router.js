@@ -385,6 +385,14 @@ const Router = {
     document.getElementById('cartDropdown')?.classList.remove('show');
     document.getElementById('searchOverlay')?.classList.remove('open');
     document.getElementById('quickDrawerBackdrop')?.classList.remove('open');
+    document.body?.classList.remove('drawer-open');
+
+    // 3.1 Body Sayfa Modu Yönetimi (Mobil Dock ve Sayfa İzolasyonu)
+    if (document.body) {
+      const modeClasses = Array.from(document.body.classList).filter(c => c.startsWith('page-') && c.endsWith('-mode'));
+      modeClasses.forEach(c => document.body.classList.remove(c));
+      document.body.classList.add(`page-${page}-mode`);
+    }
 
     // 4. Sayfa Başlığı & Gelişmiş Meta ve Şema Güncelleme
     if (typeof SeoManager !== 'undefined') {

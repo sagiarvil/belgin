@@ -455,7 +455,18 @@ exports.getAdminOrders = functions
           declarationNote: data.declarationNote || ((orderIdVal === 'BLG-1787933146963-8ab15dc828f9325b') ? '28.08.2026 saat: 12:00 sıralarında 120.000 TL alışveriş beyanı (Halkbank Paraf VISA)' : ((orderIdVal === 'BLG-1787933807000-9cd26eb919a8417c' || orderIdVal === 'BLG-1787906878142-03da073a5aec9f6e' || String(orderIdVal).includes('03da073a') || String(orderIdVal).includes('1787906878142')) ? '28.08.2026 saat: 12:11 sıralarında 120.000 TL alışveriş beyanı (YapıKredi TLcard Troy)' : null)),
           isManualEft: Boolean(data.isManualEft || data.paymentMethod === 'HAVALE_EFT' || data.paymentMethod === 'HAVALE' || data.paymentMethod === 'EFT' || data.paymentChannel === 'HAVALE_EFT' || String(orderIdVal).startsWith('BLG-EFT-') || data.bankEft),
           paymentMethod: (data.isManualEft || data.paymentMethod === 'HAVALE_EFT' || data.paymentMethod === 'HAVALE' || data.paymentMethod === 'EFT' || String(orderIdVal).startsWith('BLG-EFT-')) ? 'HAVALE_EFT' : (data.paymentMethod || 'KREDI_KARTI'),
-          bankName: data.bankName || (data.payment && data.payment.bankName) || (data.bankEft && (data.bankEft.bank || data.bankEft)) || ((data.isManualEft || data.paymentMethod === 'HAVALE_EFT') ? (data.provider || 'KUVEYTTURK') : null)
+          bankName: data.bankName || (data.payment && data.payment.bankName) || (data.bankEft && (data.bankEft.bank || data.bankEft)) || ((data.isManualEft || data.paymentMethod === 'HAVALE_EFT') ? (data.provider || 'KUVEYTTURK') : null),
+          failReason: data.failReason || (data.payment && data.payment.failReason) || null,
+          failMessage: data.failMessage || (data.payment && data.payment.failReasonMsg) || null,
+          failReasonCode: data.failReasonCode || (data.payment && data.payment.failReasonCode) || data.failReason || null,
+          failReasonMsg: data.failReasonMsg || (data.payment && data.payment.failReasonMsg) || data.failMessage || null,
+          failStage: data.failStage || (data.payment && data.payment.failStage) || null,
+          rawPaymentDetails: data.rawPaymentDetails || (data.payment && data.payment.rawDetails) || null,
+          isVipPayment: Boolean(data.isVipPayment || data.isVip22 || data.tag === '/22' || String(orderIdVal).startsWith('VIP-')),
+          isVip22: Boolean(data.isVip22 || data.tag === '/22'),
+          vipTitle: data.vipTitle || null,
+          vipToken: data.vipToken || null,
+          tag: data.tag || (data.isVip22 ? '/22' : null)
         };
 
         orders.push(orderItem);

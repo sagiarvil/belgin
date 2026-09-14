@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 
 /**
  * BELGIN KUYUMCULUK — ZIRAAT KATILIM PAYFOR 3DHOST ADAPTER
@@ -587,16 +587,21 @@ class ZiraatKatilimProvider {
     const hashTelemetry = callbackHashTelemetry(config, body, orderId);
 
     let inquiry;
+    const stage = (threeDStatus && threeDStatus !== '1') ? '3D_SECURE' : 'PROVISION';
+    const finalFailCode = procReturnCode || 'BANK_INQUIRY_FAILED';
     try {
       inquiry = await queryBankOrder(config, order, httpClient);
     } catch (error) {
+      const respCode = error.responseCode || procReturnCode || error.code || 'BANK_INQUIRY_FAILED';
+      const respMsg = error.responseMessage || errorMessage || 'Ziraat Katılım ödeme sorgusu onaylanmadı.';
       return {
         isValid: false,
         isSuccess: false,
         orderId,
+        stage,
         reason: error.code || 'BANK_INQUIRY_FAILED',
-        failReasonCode: error.responseCode || procReturnCode || error.code || 'BANK_INQUIRY_FAILED',
-        failReasonMsg: error.responseMessage || errorMessage || 'Banka ödeme sorgusu onaylanmadı.',
+        failReasonCode: respCode,
+        failReasonMsg: respMsg,
         bankInquiry: {
           confirmed: false,
           reason: error.code || 'BANK_INQUIRY_FAILED',
@@ -606,9 +611,14 @@ class ZiraatKatilimProvider {
         },
         rawPaymentDetails: {
           orderId,
+          provider: PROVIDERS.ZIRAATKATILIM,
+          stage,
+          bankResponseCode: respCode,
+          bankResponseMessage: respMsg,
           callbackProcReturnCode: procReturnCode || null,
           callbackThreeDStatus: threeDStatus || null,
           callbackTxnResult: txnResult || null,
+          callbackErrorMessage: errorMessage || null,
           callbackAmountInKurus: callbackAmount,
           callbackAmountMatchesOrder: callbackAmount === null ? null : callbackAmount === expectedAmountInKurus,
           responseHashVerified: hashTelemetry.verified,

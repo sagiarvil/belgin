@@ -453,7 +453,7 @@ function prerenderPdpContent(p) {
         </div>
       </div>
 
-      <div class="pdp-art-main" style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;">
+      <div class="pdp-art-main">
         <div class="pdp-art-gallery" style="background:#070d0b;padding:20px;border-radius:14px;display:flex;justify-content:center;">
           <img
             src="${esc(image)}"

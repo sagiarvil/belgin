@@ -22,6 +22,49 @@ const ALLOWED_ADMIN_EMAILS = [
   'belginkuyumculuk@gmail.com'
 ];
 
+// ISO 8583 & TÜRKİYE BANKACILIK RESMİ SANAL POS HATA KODLARI SÖZLÜĞÜ (KUVEYT TÜRK / ZİRAAT / BKM)
+const BANK_POS_ERROR_MAP = Object.freeze({
+  '00': 'İşlem Başarılı / Onaylandı (Approved)',
+  '01': 'Kartı Veren Bankayı Arayınız (Referral - Banka Onayı Gerekli)',
+  '02': 'Kartı Veren Bankayı Arayınız (Özel Durum / Kısıtlı Kart)',
+  '03': 'Geçersiz Üye İşyeri Numarası (Invalid Merchant)',
+  '04': 'Karta El Koyunuz (Pick Up Card)',
+  '05': 'İşlem Onaylanmadı (Do Not Honor - Kart Bankası Reddi / Limit veya Güvenlik)',
+  '12': 'Geçersiz İşlem Türü (Invalid Transaction)',
+  '13': 'Geçersiz Tutar (Invalid Amount)',
+  '14': 'Geçersiz Kart Numarası / Hatalı Kart Bilgisi (No Such Card)',
+  '15': 'Geçersiz Kart Veren Banka (No Such Issuer)',
+  '30': 'Mesaj Formatı Hatası (Format Error)',
+  '34': 'Sahtekarlık Şüphesi / Güvenlik Blokajı (Suspected Fraud)',
+  '41': 'Kayıp Kart Nedeniyle Reddedildi (Lost Card)',
+  '43': 'Çalıntı Kart Nedeniyle Reddedildi (Stolen Card)',
+  '51': 'Yetersiz Bakiye / Kart Limiti Yetersiz (Insufficient Funds)',
+  '54': 'Son Kullanma Tarihi Geçmiş Kart (Expired Card)',
+  '57': 'Kart Sahibine Bu İşlem İzni Verilmemiş (Not Permitted to Cardholder / e-Ticarete Kapalı)',
+  '58': 'Terminale Bu İşlem İzni Verilmemiş (Not Permitted to Terminal)',
+  '61': 'Para Çekme / Harcama Tutarı Sınırı Aşıldı (Withdrawal Limit Exceeded)',
+  '62': 'Kısıtlı Kart / Güvenlik Sebebiyle Kısıtlanmış (Restricted Card)',
+  '65': 'Günlük İşlem Sayısı Limiti Aşıldı (Activity Count Limit Exceeded)',
+  '75': 'İzin Verilen PIN / SMS Deneme Sayısı Aşıldı (PIN Tries Exceeded)',
+  '82': 'Hatalı CVV / Güvenlik Kodu Hatalı Girildi (Incorrect CVV)',
+  '91': 'Kartı Veren Banka Hizmet Dışı / Yanıt Vermiyor (Issuer Unavailable)',
+  '96': 'Sistem Arızası / Geçici Banka İletişim Hatası (System Malfunction)',
+  '99': 'Genel Red / İşlem Banka Tarafından Tamamlanamadı',
+  '3DS_VERIFICATION_FAILED': '3D Secure SMS Doğrulaması Başarısız / SMS Kodu Hatalı veya Süresi Doldu',
+  'PROVISION_FAILED': 'Banka Provizyon İşlemini Onaylamadı',
+  'PROVISION_NETWORK_ERROR': 'Banka Provizyon Ağ Bağlantısı Zaman Aşımına Uğradı',
+  'CALLBACK_VERIFICATION_FAILED': 'Güvenlik Kontrolü / Hash İmzası Doğrulanamadı',
+  'ORDER_ID_MISSING': 'Sipariş Numarası Eşleşmedi',
+  'MR15': 'Ziraat Katılım Üye İşyeri Kuralı Reddi / Limit veya Güvenlik',
+  'V013': 'Ziraat Katılım: İşlem Banka Kayıtlarında Bulunamadı / Provizyon Yok',
+  'V001': 'Ziraat Katılım: Geçersiz veya Bulunamayan İşlem Kaydı',
+  'BANK_INQUIRY_FAILED': 'Ziraat Katılım Banka Ödeme Sorgusu Onaylanmadı',
+  'BANK_INQUIRY_TIMEOUT': 'Ziraat Katılım Sorgu Zaman Aşımına Uğradı',
+  'PAYMENT_SESSION_FAILED': 'POS Ödeme Oturumu Başlatılamadı (Banka Ağ Hatası)',
+  'VIP_TOKEN_INVALID': 'VIP Ödeme Linki Güvenlik İmzası Geçersiz',
+  'VIP_TOKEN_EXPIRED': 'VIP Ödeme Linkinin Süresi Doldu'
+});
+
 const AdminApp = {
   adminPin: null,
   adminToken: null,
@@ -63,6 +106,62 @@ const AdminApp = {
   storePageSize: 10,
   storeItems: [],
   batchPendingStoreInvoices: [],
+
+  // GERÇEK BANKA POS RED VE HATA TEŞHİS MOTORU
+  getPosFailureDiagnosis(order) {
+    if (!order) return null;
+    const isPaid = Boolean(order.isPaid) && (order.paymentStatus === 'PAID' || order.status === 'PAID' || order.status === 'AWAITING_STORE_PICKUP');
+    if (isPaid) return null;
+
+    const rawCode = String(order.failReasonCode || order.failReason || '').trim();
+    const rawMsg = String(order.failReasonMsg || order.failMessage || '').trim();
+    const isFailed = order.status === 'FAILED' || order.paymentStatus === 'FAILED' || order.status === 'PAYMENT_FAILED' || Boolean(rawCode || rawMsg);
+    if (!isFailed) return null;
+
+    let stage = order.failStage || '';
+    if (!stage) {
+      if (rawCode === '3DS_VERIFICATION_FAILED' || rawMsg.toLowerCase().includes('3d') || rawMsg.toLowerCase().includes('sms') || rawMsg.toLowerCase().includes('şifre')) {
+        stage = '3D_SECURE';
+      } else {
+        stage = 'PROVISION';
+      }
+    }
+
+    let officialMeaning = BANK_POS_ERROR_MAP[rawCode] || null;
+    if (!officialMeaning && rawCode) {
+      const match = rawCode.match(/\b(0[1-5]|1[2-5]|3[04]|4[13]|5[1478]|6[125]|75|82|9[169])\b/);
+      if (match && BANK_POS_ERROR_MAP[match[1]]) {
+        officialMeaning = BANK_POS_ERROR_MAP[match[1]];
+      }
+    }
+
+    const stageLabel = stage === '3D_SECURE'
+      ? '📱 3D Secure SMS Doğrulama Aşaması'
+      : (stage === 'PROVISION' ? '🏦 Banka Provizyon Aşaması' : (stage === 'PROVISION_NETWORK' ? '🌐 Banka Sunucu Bağlantı Aşaması' : '⚙️ POS İşlem Aşaması'));
+
+    const displayCode = rawCode || (rawMsg.includes('3D') ? '3DS_FAIL' : 'BANK_REJECT');
+    const displayMsg = rawMsg || officialMeaning || 'Banka işlemi onaylamadı.';
+
+    return {
+      rawCode: displayCode,
+      rawMsg: displayMsg,
+      officialMeaning: officialMeaning || 'Banka güvenlik veya hesap kuralları gereğince onay vermedi.',
+      stage,
+      stageLabel,
+      provider: order.provider || (order.payment && order.payment.provider) || 'KUVEYTTURK',
+      rawPaymentDetails: order.rawPaymentDetails || (order.payment && order.payment.rawDetails) || null,
+    };
+  },
+
+  toggleRawPaymentDetails(orderId) {
+    const el = document.getElementById(`rawDetailsBlock_${orderId}`);
+    if (!el) return;
+    if (el.style.display === 'none' || !el.style.display) {
+      el.style.display = 'block';
+    } else {
+      el.style.display = 'none';
+    }
+  },
 
   getAuthHeaders(extraHeaders = {}) {
     const headers = {
@@ -929,6 +1028,7 @@ const AdminApp = {
       tbody.innerHTML = pagedOrders.map(o => {
         const isPaid = Boolean(o.isPaid) && (o.paymentStatus === 'PAID' || o.status === 'PAID' || o.status === 'AWAITING_STORE_PICKUP');
         const isFailed = o.status === 'FAILED' || o.paymentStatus === 'FAILED' || o.status === 'PAYMENT_FAILED';
+        const diagnosis = this.getPosFailureDiagnosis(o);
         const isSigned = (o.invoiceStatus === 'SIGNED');
         const isSelected = this.selectedInvoiceIds.has(o.orderId);
         const invNo = this.getGibInvoiceNumber ? this.getGibInvoiceNumber(o) : (o.invoiceNumber || (isSigned ? 'GIB2026000000021' : ''));
@@ -983,6 +1083,17 @@ const AdminApp = {
                 <option value="FAILED" ${isFailed ? 'selected' : ''}>❌ Başarısız / İptal</option>
                 <option value="DELETE" style="color:#C62828; font-weight:800;">🗑️ Kaydı Sil</option>
               </select>
+              ${diagnosis ? `
+                <div style="margin-top:5px; padding:4px 7px; background:#FEF2F2; border:1px solid #FCA5A5; border-radius:6px; font-size:11px; color:#991B1B; font-weight:700; line-height:1.25; text-align:left; max-width:180px; box-shadow:0 1px 3px rgba(220,38,38,0.06);" title="Banka Yanıtı: [${diagnosis.rawCode}] ${this.escapeHtml(diagnosis.rawMsg)} - ${this.escapeHtml(diagnosis.officialMeaning)}">
+                  <div style="display:flex; align-items:center; gap:4px;">
+                    <span style="font-size:11px;">🚫</span>
+                    <strong style="font-family:monospace; background:#FEE2E2; padding:1px 5px; border-radius:3px; font-size:10.5px; color:#B91C1C;">${diagnosis.rawCode}</strong>
+                  </div>
+                  <div style="margin-top:2px; font-size:10px; color:#7F1D1D; font-weight:600; white-space:normal; word-break:break-word;">
+                    ${this.escapeHtml(diagnosis.rawMsg.length > 36 ? diagnosis.rawMsg.slice(0, 33) + '...' : diagnosis.rawMsg)}
+                  </div>
+                </div>
+              ` : ''}
               ${invoiceBadge}
               ${this.hasWatchItem(o) ? `<div style="text-align:center; margin-top:3px;">${this.getWatchBadge(o)}</div>` : ''}
             </td>
@@ -1041,6 +1152,7 @@ const AdminApp = {
       mobileList.innerHTML = pagedOrders.map(o => {
         const isPaid = Boolean(o.isPaid) && (o.paymentStatus === 'PAID' || o.status === 'PAID' || o.status === 'AWAITING_STORE_PICKUP');
         const isFailed = o.status === 'FAILED' || o.paymentStatus === 'FAILED' || o.status === 'PAYMENT_FAILED';
+        const diagnosis = this.getPosFailureDiagnosis(o);
         const isCancelled = (o.invoiceStatus === 'CANCELLED' || o.isCancelled);
         const isSigned = (o.invoiceStatus === 'SIGNED' && !isCancelled);
         const isSelected = this.selectedInvoiceIds.has(o.orderId);
@@ -1060,8 +1172,8 @@ const AdminApp = {
                ${invNo ? `<span style="font-size:11px; font-weight:800; font-family:monospace; color:#065F46; margin-top:2px; background:#F0FDF4; padding:2px 6px; border-radius:4px; border:1px solid #BBF7D0;">📄 ${invNo}</span>` : ''}
              </div>`
           : (o.invoiceStatus === 'DRAFT'
-          ? '<span style="display:inline-flex; align-items:center; gap:4px; font-size:11px; background:#FEF3C7; color:#92400E; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #FCD34D;">🧾 Taslak</span>'
-          : '<span style="display:inline-flex; align-items:center; gap:4px; font-size:11px; background:#FEE2E2; color:#991B1B; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #FCA5A5;">⚠️ Kesilmedi</span>'));
+          ? '<span style="display:inline-flex; align-items:center; gap:4px; font-size:11px; background:#FFF8E1; color:#F57F17; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #FFE082;">🧾 Taslak</span>'
+          : '<span style="display:inline-flex; align-items:center; gap:4px; font-size:11px; background:#FEF2F2; color:#B91C1C; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #FECACA;">⚠️ Faturasız</span>'));
 
         const dateFormatted = new Date(o.createdAt).toLocaleString('tr-TR', {
           day: '2-digit', month: '2-digit', year: 'numeric',
@@ -1110,6 +1222,19 @@ const AdminApp = {
                   </div>
                 </div>
               </div>
+
+              ${diagnosis ? `
+                <div style="margin-top:8px; background:#FEF2F2; border:1.5px solid #FCA5A5; border-radius:8px; padding:10px 12px; font-size:12px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                    <span style="font-weight:800; color:#991B1B; display:flex; align-items:center; gap:4px;">
+                      <span>🚫</span> <span>Red Kodu: <code style="background:#FEE2E2; padding:1px 5px; border-radius:4px;">${diagnosis.rawCode}</code></span>
+                    </span>
+                    <span style="font-size:10px; background:#FEE2E2; color:#991B1B; padding:1px 6px; border-radius:10px; font-weight:700;">${diagnosis.stageLabel}</span>
+                  </div>
+                  <div style="font-weight:700; color:#7F1D1D; line-height:1.35; margin-top:3px;">"${this.escapeHtml(diagnosis.rawMsg)}"</div>
+                  <div style="font-size:11px; color:#475569; margin-top:3px;">${this.escapeHtml(diagnosis.officialMeaning)}</div>
+                </div>
+              ` : ''}
 
               <div class="mobile-declaration-row" style="margin-top:8px; background:#FFFDF7; border:1px solid #FDE68A; border-radius:8px; padding:8px 12px; display:flex; justify-content:space-between; align-items:center;">
                 <span style="font-size:11.5px; font-weight:700; color:#854D0E;">🪪 Kimlik / İmzalı Beyan:</span>
@@ -1733,6 +1858,7 @@ const AdminApp = {
 
     const isEftOrder = !!(order.isManualEft || order.source === 'MANUAL_EFT' || order.paymentMethod === 'HAVALE_EFT' || String(order.orderId || '').startsWith('BLG-EFT-') || order.bankEft);
     const eftBankName = order.bankName || (order.bankEft ? (order.bankEft.bank || order.bankEft) : '') || 'Banka';
+    const diagnosis = this.getPosFailureDiagnosis(order);
 
     const prodName = order.productName || (Array.isArray(order.items) && order.items[0]?.name) || '';
     const bd = this.calculateJewelryBreakdown(order.totalAmount, order);
@@ -1805,6 +1931,65 @@ const AdminApp = {
         </div>
         `}
       </div>
+
+      ${diagnosis ? `
+      <!-- GERÇEK BANKA POS RED & HATA TEŞHİS RAPORU -->
+      <div style="background:#FEF2F2; border:1.5px solid #F87171; border-radius:10px; padding:14px 16px; margin:14px 0 18px; box-shadow:0 3px 12px rgba(220,38,38,0.08);">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; border-bottom:1px solid #FECACA; padding-bottom:8px;">
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span style="font-size:17px;">🚫</span>
+            <strong style="font-size:13px; color:#991B1B; text-transform:uppercase; letter-spacing:0.4px;">Banka POS Red Gerekçesi (Resmi Kayıt)</strong>
+          </div>
+          <span style="background:#FEE2E2; color:#991B1B; border:1px solid #FCA5A5; font-size:11px; font-weight:800; padding:3px 9px; border-radius:12px;">
+            ${this.escapeHtml(diagnosis.stageLabel)}
+          </span>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr; gap:8px; font-size:12.5px; line-height:1.55;">
+          <div>
+            <strong style="color:#7F1D1D;">Banka / POS Sağlayıcı:</strong>
+            <span style="font-weight:700; color:#1E293B; margin-left:4px;">${this.getBankTag(diagnosis.provider)} (${diagnosis.provider})</span>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+            <strong style="color:#7F1D1D;">Resmi Banka Hata Kodu:</strong>
+            <span style="font-family:monospace; font-weight:800; font-size:13px; color:#B91C1C; background:#FFF; border:1.5px solid #FCA5A5; padding:2px 8px; border-radius:5px;">
+              ${this.escapeHtml(diagnosis.rawCode)}
+            </span>
+          </div>
+
+          <div>
+            <strong style="color:#7F1D1D;">Bankanın Döndürdüğü Ham Yanıt:</strong>
+            <span style="font-weight:800; color:#991B1B; margin-left:4px; background:#FFF5F5; padding:3px 7px; border-radius:4px; border:1px dashed #FCA5A5; display:inline-block;">
+              "${this.escapeHtml(diagnosis.rawMsg)}"
+            </span>
+          </div>
+
+          <div>
+            <strong style="color:#7F1D1D;">Resmi Bankacılık Anlamı (ISO 8583 / BKM):</strong>
+            <span style="font-weight:600; color:#334155; margin-left:4px;">
+              ${this.escapeHtml(diagnosis.officialMeaning)}
+            </span>
+          </div>
+
+          <div style="margin-top:6px; padding-top:8px; border-top:1px dashed #FECACA; font-size:11.5px; color:#991B1B; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+            <span>💡 <em>Bu gerekçe doğrudan bankanın provizyon sunucusundan dönmüş olup tahmin içermez.</em></span>
+            ${diagnosis.rawPaymentDetails ? `
+              <button type="button" class="btn-admin-secondary" style="padding:3px 9px; font-size:11px; background:#FFF; border-color:#F87171; color:#991B1B; font-weight:700; cursor:pointer; border-radius:5px;" onclick="AdminApp.toggleRawPaymentDetails('${order.orderId}')">
+                🔍 Ham Banka Logunu İncele
+              </button>
+            ` : ''}
+          </div>
+
+          ${diagnosis.rawPaymentDetails ? `
+            <div id="rawDetailsBlock_${order.orderId}" style="display:none; margin-top:8px; background:#0F172A; color:#E2E8F0; padding:12px; border-radius:6px; font-family:monospace; font-size:11px; white-space:pre-wrap; word-break:break-all; max-height:220px; overflow-y:auto; border:1px solid #334155;">
+<div style="color:#94A3B8; margin-bottom:4px; font-weight:700;">// BANKA SUNUCUSU HAM YANIT LOGU (JSON / XML)</div>
+${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
+            </div>
+          ` : ''}
+        </div>
+      </div>
+      ` : ''}
 
       <h4 style="margin:16px 0 8px; font-size:14px; color:var(--admin-teal-dark); display:flex; justify-content:space-between; align-items:center;">
         <span style="display:flex; align-items:center; gap:6px;">

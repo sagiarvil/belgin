@@ -303,9 +303,19 @@ class KuveytTurkProvider {
       return {
         isValid: true,
         isSuccess: false,
+        stage: '3D_SECURE',
         failReasonCode: responseCode || '3DS_VERIFICATION_FAILED',
         failReasonMsg: responseMessage || 'Kuveyt Türk 3D Secure kart doğrulama başarısız oldu veya SMS şifresi hatalı.',
         orderId: currentOrderId,
+        rawDetails: {
+          responseCode: responseCode || '3DS_VERIFICATION_FAILED',
+          responseMessage: responseMessage || '3D Secure doğrulama başarısız',
+          md: md || null,
+          merchantOrderId: currentOrderId,
+          orderId,
+          stage: '3D_SECURE',
+          callbackTimestamp: new Date().toISOString(),
+        }
       };
     }
 
@@ -375,9 +385,20 @@ class KuveytTurkProvider {
         return {
           isValid: true,
           isSuccess: false,
+          stage: 'PROVISION',
           failReasonCode: finalResponseCode || 'PROVISION_FAILED',
           failReasonMsg: finalResponseMessage || 'Kuveyt Türk provizyon işlemi banka tarafından onaylanmadı.',
           orderId: currentOrderId,
+          rawDetails: {
+            responseCode: finalResponseCode,
+            responseMessage: finalResponseMessage,
+            merchantOrderId: currentOrderId,
+            orderId,
+            rrn: finalRrn,
+            stan: finalStan,
+            stage: 'PROVISION',
+            callbackTimestamp: new Date().toISOString(),
+          }
         };
       }
     } catch (provErr) {
@@ -385,9 +406,15 @@ class KuveytTurkProvider {
       return {
         isValid: true,
         isSuccess: false,
+        stage: 'PROVISION_NETWORK',
         failReasonCode: 'PROVISION_NETWORK_ERROR',
         failReasonMsg: `Kuveyt Türk provizyon servisine bağlanılamadı: ${provErr.message}`,
         orderId: currentOrderId,
+        rawDetails: {
+          error: provErr.message,
+          stage: 'PROVISION_NETWORK',
+          callbackTimestamp: new Date().toISOString(),
+        }
       };
     }
   }

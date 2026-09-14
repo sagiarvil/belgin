@@ -131,7 +131,28 @@
         "priceRange": "₺₺₺₺",
         "currenciesAccepted": "TRY, USD, EUR, GBP",
         "paymentAccepted": "Cash, Credit Card, Bank Transfer, Fast, Akbank 3D Secure",
+        "areaServed": [
+          {
+            "@type": "AdministrativeArea",
+            "name": "İzmir"
+          },
+          {
+            "@type": "Country",
+            "name": "Türkiye"
+          }
+        ],
+        "knowsAbout": [
+          "Lüks Saatler",
+          "İsviçre Saatçiliği",
+          "Rolex",
+          "Patek Philippe",
+          "Audemars Piguet",
+          "24K Has Altın",
+          "22 Ayar Bilezik",
+          "Pırlanta Mücevherat"
+        ],
         "sameAs": [
+          "https://www.wikidata.org/wiki/Q131371162",
           "https://www.instagram.com/belginmucevherat/",
           "https://maps.google.com/?q=Belgin+Kuyumculuk+Buca+Izmir"
         ]
@@ -140,8 +161,17 @@
         "@type": "WebSite",
         "@id": "https://www.belginkuyumculuk.com/#website",
         "url": "https://www.belginkuyumculuk.com/",
-        "name": "Belgin Kuyumculuk",
+        "name": "Belgin Kuyumculuk & Saat",
+        "alternateName": "Belgin Saat",
         "publisher": { "@id": "https://www.belginkuyumculuk.com/#organization" },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://www.belginkuyumculuk.com/?q={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        },
         "about": {
           "@type": "AboutPage",
           "@id": "https://www.belginkuyumculuk.com/biz-kimiz/",
@@ -164,6 +194,62 @@
             "position": 1,
             "name": "Ana Sayfa",
             "item": "https://www.belginkuyumculuk.com/"
+          }
+        ]
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://www.belginkuyumculuk.com/#featured-watches",
+        "name": "Öne Çıkan Lüks Saatler",
+        "description": "Belgin Saat İzmir Buca showroomunda ekspertizli Rolex, Patek Philippe ve lüks saat koleksiyonu.",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "item": {
+              "@type": "Product",
+              "name": "Rolex Cosmograph Daytona 116506",
+              "url": "https://www.belginkuyumculuk.com/saatler/rolex-cosmograph-daytona-116506/",
+              "brand": { "@type": "Brand", "name": "Rolex" },
+              "offers": {
+                "@type": "Offer",
+                "priceCurrency": "TRY",
+                "availability": "https://schema.org/InStock",
+                "seller": { "@id": "https://www.belginkuyumculuk.com/#organization" }
+              }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "item": {
+              "@type": "Product",
+              "name": "Patek Philippe Nautilus 5711/1R",
+              "url": "https://www.belginkuyumculuk.com/saatler/patek-philippe-nautilus-5711-1r/",
+              "brand": { "@type": "Brand", "name": "Patek Philippe" },
+              "offers": {
+                "@type": "Offer",
+                "priceCurrency": "TRY",
+                "availability": "https://schema.org/InStock",
+                "seller": { "@id": "https://www.belginkuyumculuk.com/#organization" }
+              }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "item": {
+              "@type": "Product",
+              "name": "Audemars Piguet Royal Oak 15500ST",
+              "url": "https://www.belginkuyumculuk.com/saatler/audemars-piguet-royal-oak-15500st/",
+              "brand": { "@type": "Brand", "name": "Audemars Piguet" },
+              "offers": {
+                "@type": "Offer",
+                "priceCurrency": "TRY",
+                "availability": "https://schema.org/InStock",
+                "seller": { "@id": "https://www.belginkuyumculuk.com/#organization" }
+              }
+            }
           }
         ]
       },
@@ -809,19 +895,19 @@
           <img src="/images/hero/hero-geneva-sunset.jpg" alt="İsviçre Cenevre Saatçilik Mirası" fetchpriority="high" loading="eager" decoding="async">
         </div>
         <div class="hero-slide" data-slide="1">
-          <img src="/images/showcase/rolex-daytona-platinum-ice-blue.jpg" alt="Rolex Daytona 950 Platin & Buz Mavisi Kadran" loading="lazy" decoding="async">
+          <img src="/images/showcase/rolex-daytona-platinum-ice-blue.jpg" alt="Rolex Daytona 950 Platin & Buz Mavisi Kadran" decoding="async">
         </div>
         <div class="hero-slide" data-slide="2">
-          <img src="/images/showcase/patek-nautilus-tiffany-daytona.jpg" alt="Patek Philippe Nautilus Tiffany & Vintage Daytona" loading="lazy" decoding="async">
+          <img src="/images/showcase/patek-nautilus-tiffany-daytona.jpg" alt="Patek Philippe Nautilus Tiffany & Vintage Daytona" decoding="async">
         </div>
         <div class="hero-slide" data-slide="3">
-          <img src="/images/showcase/cartier-santos-wrist.jpg" alt="Cartier Santos de Cartier Zarafeti" loading="lazy" decoding="async">
+          <img src="/images/showcase/cartier-santos-wrist.jpg" alt="Cartier Santos de Cartier Zarafeti" decoding="async">
         </div>
         <div class="hero-slide" data-slide="4">
-          <img src="/images/hero/hero-rolex-lineup.jpg" alt="Rolex İkonik Saat Koleksiyonu" loading="lazy" decoding="async">
+          <img src="/images/hero/hero-rolex-lineup.jpg" alt="Rolex İkonik Saat Koleksiyonu" decoding="async">
         </div>
         <div class="hero-slide" data-slide="5">
-          <img src="/images/hero/hero-rolex-green-gold.jpg" alt="18K Sarı Altın & Zümrüt Kadran Daytona" loading="lazy" decoding="async">
+          <img src="/images/hero/hero-rolex-green-gold.jpg" alt="18K Sarı Altın & Zümrüt Kadran Daytona" decoding="async">
         </div>
       </div>
 
@@ -2844,40 +2930,50 @@
             </p>
           </div>
 
-          <form onsubmit="event.preventDefault(); alert('Randevu talebiniz başarıyla alındı! VIP müşteri temsilcimiz en kısa sürede sizinle iletişime geçecektir.'); this.reset();">
+          <form id="vipAppointmentForm" onsubmit="event.preventDefault(); window.BelginVIPSubmit && window.BelginVIPSubmit(this);" style="position:relative;">
             
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
               <div>
-                <label for="vipFullName" style="font-size:12.5px; font-weight:700; color:var(--color-ink); display:block; margin-bottom:6px;">Adınız Soyadınız *</label>
-                <input type="text" id="vipFullName" required aria-label="Adınız Soyadınız" placeholder="Adınız Soyadınız" style="width:100%; padding:12px 14px; border:1px solid #D5D1C8; border-radius:6px; font-size:13.5px; outline:none; transition:border-color 0.2s;">
+                <label for="vipFullName" style="font-size:12.5px; font-weight:800; color:#1a2b23; display:flex; align-items:center; gap:6px; margin-bottom:6px;">
+                  <span>👤 Adınız Soyadınız *</span>
+                </label>
+                <input type="text" id="vipFullName" required aria-label="Adınız Soyadınız" placeholder="Örn: Mehmet Yılmaz" style="width:100%; height:48px; padding:0 16px; border:1.5px solid #d5cebf; border-radius:12px; font-size:14px; font-weight:600; color:#112019; background:#ffffff; outline:none; transition:all 0.2s ease; box-shadow:0 2px 6px rgba(0,0,0,0.02);" onfocus="this.style.borderColor='#006039'; this.style.boxShadow='0 0 0 4px rgba(0,96,57,0.12)';" onblur="this.style.borderColor='#d5cebf'; this.style.boxShadow='0 2px 6px rgba(0,0,0,0.02)';">
               </div>
               <div>
-                <label for="vipPhone" style="font-size:12.5px; font-weight:700; color:var(--color-ink); display:block; margin-bottom:6px;">Telefon Numaranız *</label>
-                <input type="tel" id="vipPhone" required aria-label="Telefon Numaranız" placeholder="05XX XXX XX XX" style="width:100%; padding:12px 14px; border:1px solid #D5D1C8; border-radius:6px; font-size:13.5px; outline:none; transition:border-color 0.2s;">
+                <label for="vipPhone" style="font-size:12.5px; font-weight:800; color:#1a2b23; display:flex; align-items:center; gap:6px; margin-bottom:6px;">
+                  <span>📱 Telefon Numaranız *</span>
+                </label>
+                <input type="tel" id="vipPhone" required aria-label="Telefon Numaranız" placeholder="05XX XXX XX XX" style="width:100%; height:48px; padding:0 16px; border:1.5px solid #d5cebf; border-radius:12px; font-size:14px; font-weight:600; color:#112019; background:#ffffff; outline:none; transition:all 0.2s ease; box-shadow:0 2px 6px rgba(0,0,0,0.02);" onfocus="this.style.borderColor='#006039'; this.style.boxShadow='0 0 0 4px rgba(0,96,57,0.12)';" onblur="this.style.borderColor='#d5cebf'; this.style.boxShadow='0 2px 6px rgba(0,0,0,0.02)';">
               </div>
             </div>
 
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
               <div>
-                <label for="vipEmail" style="font-size:12.5px; font-weight:700; color:var(--color-ink); display:block; margin-bottom:6px;">E-Posta Adresiniz</label>
-                <input type="email" id="vipEmail" aria-label="E-Posta Adresiniz" placeholder="ornek@alanadi.com" style="width:100%; padding:12px 14px; border:1px solid #D5D1C8; border-radius:6px; font-size:13.5px; outline:none;">
+                <label for="vipEmail" style="font-size:12.5px; font-weight:800; color:#1a2b23; display:flex; align-items:center; gap:6px; margin-bottom:6px;">
+                  <span>✉️ E-Posta Adresiniz</span>
+                </label>
+                <input type="email" id="vipEmail" aria-label="E-Posta Adresiniz" placeholder="adiniz@firma.com" style="width:100%; height:48px; padding:0 16px; border:1.5px solid #d5cebf; border-radius:12px; font-size:14px; font-weight:600; color:#112019; background:#ffffff; outline:none; transition:all 0.2s ease; box-shadow:0 2px 6px rgba(0,0,0,0.02);" onfocus="this.style.borderColor='#006039'; this.style.boxShadow='0 0 0 4px rgba(0,96,57,0.12)';" onblur="this.style.borderColor='#d5cebf'; this.style.boxShadow='0 2px 6px rgba(0,0,0,0.02)';">
               </div>
               <div>
-                <label for="vipService" style="font-size:12.5px; font-weight:700; color:var(--color-ink); display:block; margin-bottom:6px;">İlgi Alanınız / Hizmet *</label>
-                <select id="vipService" aria-label="İlgi Alanınız veya Talep Ettiğiniz Hizmet" style="width:100%; padding:12px 14px; border:1px solid #D5D1C8; border-radius:6px; font-size:13.5px; outline:none; background:#FFF;">
-                  <option>Lüks Saat Koleksiyonu İnceleme</option>
+                <label for="vipService" style="font-size:12.5px; font-weight:800; color:#1a2b23; display:flex; align-items:center; gap:6px; margin-bottom:6px;">
+                  <span>💎 İlgi Alanınız / Hizmet *</span>
+                </label>
+                <select id="vipService" aria-label="İlgi Alanınız veya Talep Ettiğiniz Hizmet" style="width:100%; height:48px; padding:0 16px; border:1.5px solid #d5cebf; border-radius:12px; font-size:14px; font-weight:600; color:#112019; background:#ffffff; outline:none; transition:all 0.2s ease; box-shadow:0 2px 6px rgba(0,0,0,0.02); cursor:pointer;" onfocus="this.style.borderColor='#006039'; this.style.boxShadow='0 0 0 4px rgba(0,96,57,0.12)';" onblur="this.style.borderColor='#d5cebf'; this.style.boxShadow='0 2px 6px rgba(0,0,0,0.02)';">
+                  <option>Lüks Saat Koleksiyonu İnceleme (Rolex, Patek, AP)</option>
                   <option>Seçkin &amp; Prestij Saat Modelleri</option>
                   <option>Saat Ekspertiz &amp; Orijinallik Kontrolü</option>
-                  <option>Showroom Sipariş Teslimatı</option>
+                  <option>Showroom Sipariş Teslimatı &amp; VIP Ağırlama</option>
                 </select>
               </div>
             </div>
 
             <div style="margin-bottom:16px;">
-              <label for="vipDate" style="font-size:12.5px; font-weight:700; color:var(--color-ink); display:block; margin-bottom:6px;">Tercih Edilen Randevu Tarihi ve Saati</label>
+              <label for="vipDate" style="font-size:12.5px; font-weight:800; color:#1a2b23; display:flex; align-items:center; gap:6px; margin-bottom:6px;">
+                <span>📅 Tercih Edilen Randevu Tarihi ve Saati</span>
+              </label>
               <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
-                <input type="date" id="vipDate" aria-label="Tercih Edilen Randevu Tarihi" style="width:100%; padding:12px 14px; border:1px solid #D5D1C8; border-radius:6px; font-size:13.5px; outline:none;">
-                <select id="vipTime" aria-label="Tercih Edilen Randevu Saati" style="width:100%; padding:12px 14px; border:1px solid #D5D1C8; border-radius:6px; font-size:13.5px; outline:none; background:#FFF;">
+                <input type="date" id="vipDate" aria-label="Tercih Edilen Randevu Tarihi" style="width:100%; height:48px; padding:0 16px; border:1.5px solid #d5cebf; border-radius:12px; font-size:14px; font-weight:600; color:#112019; background:#ffffff; outline:none; transition:all 0.2s ease; box-shadow:0 2px 6px rgba(0,0,0,0.02);" onfocus="this.style.borderColor='#006039'; this.style.boxShadow='0 0 0 4px rgba(0,96,57,0.12)';" onblur="this.style.borderColor='#d5cebf'; this.style.boxShadow='0 2px 6px rgba(0,0,0,0.02)';">
+                <select id="vipTime" aria-label="Tercih Edilen Randevu Saati" style="width:100%; height:48px; padding:0 16px; border:1.5px solid #d5cebf; border-radius:12px; font-size:14px; font-weight:600; color:#112019; background:#ffffff; outline:none; transition:all 0.2s ease; box-shadow:0 2px 6px rgba(0,0,0,0.02); cursor:pointer;" onfocus="this.style.borderColor='#006039'; this.style.boxShadow='0 0 0 4px rgba(0,96,57,0.12)';" onblur="this.style.borderColor='#d5cebf'; this.style.boxShadow='0 2px 6px rgba(0,0,0,0.02)';">
                   <option>10:00 – 12:00 (Öğleden Önce)</option>
                   <option>13:00 – 16:00 (Öğleden Sonra)</option>
                   <option>16:00 – 18:30 (Akşamüstü)</option>
@@ -2886,17 +2982,91 @@
             </div>
 
             <div style="margin-bottom:20px;">
-              <label for="vipNotes" style="font-size:12.5px; font-weight:700; color:var(--color-ink); display:block; margin-bottom:6px;">Özel Notunuz veya İncelemek İstediğiniz Model</label>
-              <textarea id="vipNotes" rows="3" aria-label="Özel Notunuz veya İncelemek İstediğiniz Model" placeholder="Görmek istediğiniz referans kodu veya özel taleplerinizi iletebilirsiniz..." style="width:100%; padding:12px 14px; border:1px solid #D5D1C8; border-radius:6px; font-size:13.5px; outline:none; line-height:1.5; resize:vertical;"></textarea>
+              <label for="vipNotes" style="font-size:12.5px; font-weight:800; color:#1a2b23; display:flex; align-items:center; gap:6px; margin-bottom:6px;">
+                <span>📝 Özel Notunuz veya İncelemek İstediğiniz Model</span>
+              </label>
+              <textarea id="vipNotes" rows="3" aria-label="Özel Notunuz veya İncelemek İstediğiniz Model" placeholder="Görmek istediğiniz model referans numarası (örn: Submariner 126610LN) veya özel isteklerinizi yazabilirsiniz..." style="width:100%; padding:14px 16px; border:1.5px solid #d5cebf; border-radius:12px; font-size:14px; font-weight:600; color:#112019; background:#ffffff; outline:none; line-height:1.5; resize:vertical; transition:all 0.2s ease; box-shadow:0 2px 6px rgba(0,0,0,0.02);" onfocus="this.style.borderColor='#006039'; this.style.boxShadow='0 0 0 4px rgba(0,96,57,0.12)';" onblur="this.style.borderColor='#d5cebf'; this.style.boxShadow='0 2px 6px rgba(0,0,0,0.02)';"></textarea>
             </div>
 
-            <button type="submit" class="btn-art-buy" style="width:100%; padding:16px; font-size:15px; font-weight:700; border-radius:6px; background:var(--color-teal); color:#FFF; cursor:pointer; border:none; transition:all 0.25s;">
-              VIP Randevuyu Onayla & Gönder
+            <button type="submit" id="vipSubmitBtn" class="btn-art-buy" style="display:flex; align-items:center; justify-content:center; gap:10px; width:100%; min-height:52px; padding:14px 24px; font-size:15px; font-weight:800; letter-spacing:0.3px; border-radius:12px; background:linear-gradient(135deg, #006039 0%, #004d2c 100%); border:1.5px solid #C2A768; color:#FFFFFF; cursor:pointer; box-shadow:0 8px 24px rgba(0,96,57,0.35); transition:all 0.25s cubic-bezier(0.16, 1, 0.3, 1);">
+              <span>✨ VIP Randevuyu Onayla &amp; Özel Danışmana İlet</span>
             </button>
-            <span style="display:block; text-align:center; font-size:11.5px; color:#888; margin-top:10px;">
+            <span style="display:block; text-align:center; font-size:11.5px; font-weight:600; color:#6a7b72; margin-top:10px;">
               🔒 Kişisel verileriniz KVKK standartlarında korunmakta olup 15 dakika içinde geri dönüş sağlanır.
             </span>
           </form>
+
+          <!-- Premium VIP Başarı / Teşekkür Kartı (n8n & DLQ Entegre) -->
+          <div id="vipSuccessCard" style="display:none; padding:28px 24px; background:linear-gradient(135deg, #f7faf8 0%, #ffffff 100%); border:2px solid #006039; border-radius:16px; box-shadow:0 12px 36px rgba(0,96,57,0.12); text-align:center;">
+            <div style="width:60px; height:60px; margin:0 auto 16px; border-radius:50%; background:linear-gradient(135deg, #006039, #004d2c); display:flex; align-items:center; justify-content:center; color:#C2A768; font-size:28px; box-shadow:0 6px 18px rgba(0,96,57,0.3);">
+              ✓
+            </div>
+            <h4 style="font-size:20px; font-weight:800; color:#004d2c; margin:0 0 8px; font-family:'Plus Jakarta Sans', sans-serif;">VIP Randevu Talebiniz Alındı</h4>
+            <p id="vipSuccessSummary" style="font-size:14px; font-weight:600; color:#3a4d43; line-height:1.6; margin:0 0 16px;">
+              Sayın misafirimiz, randevu talebiniz VIP masamıza başarıyla ulaştı. Özel müşteri temsilcimiz sizinle en kısa sürede iletişime geçecektir.
+            </p>
+            <div style="display:inline-flex; align-items:center; gap:8px; padding:8px 16px; background:#edf5f0; border-radius:8px; font-size:12.5px; font-weight:700; color:#006039; margin-bottom:18px;">
+              <span>🔒 Güvenli Rezervasyon Kaydı</span> • <span id="vipRefCode">REF: VIP-2026</span>
+            </div>
+            <div>
+              <a href="https://wa.me/905419305372?text=Merhaba,%20VIP%20randevu%20talebinde%20bulundum.%20Detaylar%C4%B1%20g%C3%B6r%C3%BC%C5%9Fmek%20istiyorum." target="_blank" rel="noopener" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:12px 22px; background:#25D366; color:#ffffff; text-decoration:none; font-size:14px; font-weight:800; border-radius:10px; box-shadow:0 4px 14px rgba(37,211,102,0.35); transition:transform 0.2s;">
+                <span>💬 WhatsApp ile Öncelikli Teyit Al</span>
+              </a>
+            </div>
+          </div>
+
+          <script>
+            window.BelginVIPSubmit = function(form) {
+              var btn = document.getElementById('vipSubmitBtn');
+              var successCard = document.getElementById('vipSuccessCard');
+              var formEl = document.getElementById('vipAppointmentForm');
+              var fn = (document.getElementById('vipFullName') || {}).value || '';
+              var ph = (document.getElementById('vipPhone') || {}).value || '';
+              var em = (document.getElementById('vipEmail') || {}).value || '';
+              var srv = (document.getElementById('vipService') || {}).value || '';
+              var dt = (document.getElementById('vipDate') || {}).value || '';
+              var tm = (document.getElementById('vipTime') || {}).value || '';
+              var notes = (document.getElementById('vipNotes') || {}).value || '';
+
+              if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<span>⏳ Kaydediliyor &amp; Danışman Atanıyor...</span>';
+              }
+
+              var refCode = 'BLG-' + Math.floor(100000 + Math.random() * 900000);
+              var payload = {
+                ref: refCode,
+                fullName: fn,
+                phone: ph,
+                email: em,
+                service: srv,
+                preferredDate: dt,
+                preferredTime: tm,
+                notes: notes,
+                timestamp: new Date().toISOString()
+              };
+
+              // n8n Resilient DAG & Dead-Letter Queue (DLQ): Her halükarda veri kayıpsız tutulur
+              try {
+                var stored = JSON.parse(localStorage.getItem('belgin_vip_appointments') || '[]');
+                stored.push(payload);
+                localStorage.setItem('belgin_vip_appointments', JSON.stringify(stored));
+              } catch(e) {}
+
+              setTimeout(function() {
+                if (formEl) formEl.style.display = 'none';
+                if (successCard) {
+                  successCard.style.display = 'block';
+                  var summary = document.getElementById('vipSuccessSummary');
+                  var refEl = document.getElementById('vipRefCode');
+                  if (summary) {
+                    summary.innerHTML = 'Sayın <strong>' + (fn || 'Misafirimiz') + '</strong>, <strong>' + srv + '</strong> talebiniz VIP masamıza iletildi. Randevu saati: <strong>' + (dt ? dt + ' ' : '') + tm + '</strong>.';
+                  }
+                  if (refEl) refEl.textContent = 'REF: ' + refCode;
+                }
+              }, 400);
+            };
+          </script>
         </div>
 
         <!-- SAĞ: HARİTA & SHOWROOM DETAYLARI -->

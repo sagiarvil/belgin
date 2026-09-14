@@ -611,17 +611,70 @@ class PaymentService {
 
     if (!verification.isValid) {
       console.error(`[Payment Security] ${provider.name} Callback doğrulama başarısız:`, orderId, verification.reason);
+      const failCode = verification.failReasonCode || verification.reason || 'CALLBACK_VERIFICATION_FAILED';
+      const failMsg = verification.failReasonMsg || 'Ödeme doğrulanamadı veya güvenlik kontrolü başarısız.';
+      const failStage = verification.stage || 'CALLBACK_VALIDATION';
+      const rawDetails = verification.rawPaymentDetails || verification.rawDetails || null;
+
+      try {
+        await orderRef.update({
+          status: ORDER_STATUS.PAYMENT_FAILED,
+          failReason: String(failCode).slice(0, 100),
+          failMessage: String(failMsg).slice(0, 500),
+          failReasonCode: String(failCode).slice(0, 50),
+          failReasonMsg: String(failMsg).slice(0, 500),
+          failStage: failStage,
+          rawPaymentDetails: rawDetails,
+          updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+          paymentStatus: 'FAILED',
+          'payment.status': PAYMENT_STATUS.FAILED,
+          'payment.failReasonCode': String(failCode).slice(0, 50),
+          'payment.failReasonMsg': String(failMsg).slice(0, 500),
+          'payment.failStage': failStage,
+          'payment.rawDetails': rawDetails,
+          'payment.failedAt': admin.firestore.FieldValue.serverTimestamp(),
+        });
+      } catch (e) {
+        console.warn('[Payment] Callback failed state update warning:', e.message);
+      }
+
       await appendAuditEvent(orderRef, 'CALLBACK_VERIFICATION_FAILED', {
         provider: provider.name,
         reason: verification.reason,
+        failReasonCode: failCode,
+        failReasonMsg: failMsg,
+        failStage,
+        rawDetails,
       }, admin);
+
+      // BAŞARISIZ İŞLEM ANLIK TELEGRAM & MOBİL PUSH BİLDİRİMİ (@Belgin_kasa_pos_bot)
+      const failedOrderData = {
+        ...order,
+        status: ORDER_STATUS.PAYMENT_FAILED,
+        paymentStatus: 'FAILED',
+        failReasonCode: failCode,
+        failReasonMsg: failMsg,
+        failStage: failStage,
+        rawPaymentDetails: rawDetails,
+        failedAt: new Date(),
+      };
+      try {
+        await Promise.race([
+          notifier.sendPaymentFailureNotification(failedOrderData),
+          new Promise((resolve) => setTimeout(resolve, 2500)),
+        ]);
+      } catch (pushErr) {
+        console.error('[Notifier] Başarısız ödeme push bildirim hatası:', pushErr.message);
+      }
+
       return { 
         status: 400, 
         message: `Callback verification failed: ${verification.reason}`, 
         isValid: false, 
         isSuccess: false,
-        failReasonCode: verification.failReasonCode || verification.reason || 'VERIFICATION_FAILED',
-        failReasonMsg: verification.failReasonMsg || 'Ödeme doğrulanamadı.',
+        failReasonCode: failCode,
+        failReasonMsg: failMsg,
+        failStage,
         orderId,
         vipToken: order?.vipToken || (order?.items?.[0]?.vipToken) || null,
       };
@@ -698,29 +751,66 @@ class PaymentService {
     } else {
       assertValidTransition(order.status, ORDER_STATUS.PAYMENT_FAILED, orderId);
 
+      const failCode = verification.failReasonCode || 'BANK_REJECT';
+      const failMsg = verification.failReasonMsg || 'Ödeme banka tarafından onaylanmadı.';
+      const failStage = verification.stage || (verification.bankInquiry ? 'INQUIRY' : 'PROVISION');
+      const rawDetails = verification.rawPaymentDetails || verification.rawDetails || null;
+
       await orderRef.update({
         status: ORDER_STATUS.PAYMENT_FAILED,
-        failReason: String(verification.failReasonCode || 'Bilinmeyen hata').slice(0, 100),
-        failMessage: String(verification.failReasonMsg || '').slice(0, 500),
+        failReason: String(failCode).slice(0, 100),
+        failMessage: String(failMsg).slice(0, 500),
+        failReasonCode: String(failCode).slice(0, 50),
+        failReasonMsg: String(failMsg).slice(0, 500),
+        failStage: failStage,
+        rawPaymentDetails: rawDetails,
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         paymentStatus: 'FAILED',
         'payment.status': PAYMENT_STATUS.FAILED,
+        'payment.failReasonCode': String(failCode).slice(0, 50),
+        'payment.failReasonMsg': String(failMsg).slice(0, 500),
+        'payment.failStage': failStage,
+        'payment.rawDetails': rawDetails,
         'payment.failedAt': admin.firestore.FieldValue.serverTimestamp(),
       });
 
       await appendAuditEvent(orderRef, 'PAYMENT_FAILED', {
         provider: provider.name,
         paymentStatus: 'FAILED',
-        failReason: String(verification.failReasonCode || '').slice(0, 100),
+        failReason: String(failCode).slice(0, 100),
+        failReasonMsg: String(failMsg).slice(0, 500),
+        failStage: failStage,
+        rawDetails: rawDetails,
       }, admin);
+
+      // BAŞARISIZ İŞLEM ANLIK TELEGRAM & MOBİL PUSH BİLDİRİMİ (@Belgin_kasa_pos_bot)
+      const failedOrderData = {
+        ...order,
+        status: ORDER_STATUS.PAYMENT_FAILED,
+        paymentStatus: 'FAILED',
+        failReasonCode: failCode,
+        failReasonMsg: failMsg,
+        failStage: failStage,
+        rawPaymentDetails: rawDetails,
+        failedAt: new Date(),
+      };
+      try {
+        await Promise.race([
+          notifier.sendPaymentFailureNotification(failedOrderData),
+          new Promise((resolve) => setTimeout(resolve, 2500)),
+        ]);
+      } catch (pushErr) {
+        console.error('[Notifier] Başarısız ödeme push bildirim hatası:', pushErr.message);
+      }
 
       return {
         status: 200,
         message: 'FAIL',
         isSuccess: false,
         orderId,
-        failReasonCode: verification.failReasonCode || 'BANK_REJECT',
-        failReasonMsg: verification.failReasonMsg || 'Ödeme banka tarafından onaylanmadı.',
+        failReasonCode: failCode,
+        failReasonMsg: failMsg,
+        failStage: failStage,
         vipToken: order?.vipToken || (order?.items?.[0]?.vipToken) || null,
       };
     }

@@ -3472,10 +3472,15 @@ const App = {
   toggleMobileDrawer(force) {
     const overlay = document.getElementById('mobileDrawerOverlay');
     if (!overlay) return;
+    let isOpen;
     if (typeof force === 'boolean') {
+      isOpen = force;
       overlay.classList.toggle('open', force);
     } else {
-      overlay.classList.toggle('open');
+      isOpen = overlay.classList.toggle('open');
+    }
+    if (document.body) {
+      document.body.classList.toggle('drawer-open', isOpen);
     }
   },
 

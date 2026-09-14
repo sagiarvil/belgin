@@ -245,6 +245,222 @@ async function sendPaymentPushNotification(order, options = {}) {
   return { success: true, results };
 }
 
+// BKM / ISO 8583 RESMİ HATA SÖZLÜĞÜ (TELEGRAM PUSH FARKINDALIK MOTORU)
+const NOTIFIER_ERROR_MAP = Object.freeze({
+  '01': 'Kartı Veren Bankayı Arayınız (Referral - Banka Onayı Gerekli)',
+  '02': 'Kartı Veren Bankayı Arayınız (Özel Durum / Kısıtlı Kart)',
+  '03': 'Geçersiz Üye İşyeri Numarası (Invalid Merchant)',
+  '04': 'Karta El Koyunuz (Pick Up Card)',
+  '05': 'İşlem Onaylanmadı (Do Not Honor - Kart Bankası Reddi / Limit veya Güvenlik)',
+  '12': 'Geçersiz İşlem Türü (Invalid Transaction)',
+  '13': 'Geçersiz Tutar (Invalid Amount)',
+  '14': 'Geçersiz Kart Numarası / Hatalı Kart Bilgisi (No Such Card)',
+  '15': 'Geçersiz Kart Veren Banka (No Such Issuer)',
+  '30': 'Mesaj Formatı Hatası (Format Error)',
+  '34': 'Sahtekarlık Şüphesi / Güvenlik Blokajı (Suspected Fraud)',
+  '41': 'Kayıp Kart Nedeniyle Reddedildi (Lost Card)',
+  '43': 'Çalıntı Kart Nedeniyle Reddedildi (Stolen Card)',
+  '51': 'Yetersiz Bakiye / Kart Limiti Yetersiz (Insufficient Funds)',
+  '54': 'Son Kullanma Tarihi Geçmiş Kart (Expired Card)',
+  '57': 'Kart Sahibine Bu İşlem İzni Verilmemiş (Not Permitted to Cardholder / e-Ticarete Kapalı)',
+  '58': 'Terminale Bu İşlem İzni Verilmemiş (Not Permitted to Terminal)',
+  '61': 'Para Çekme / Harcama Tutarı Sınırı Aşıldı (Withdrawal Limit Exceeded)',
+  '62': 'Kısıtlı Kart / Güvenlik Sebebiyle Kısıtlanmış (Restricted Card)',
+  '65': 'Günlük İşlem Sayısı Limiti Aşıldı (Activity Count Limit Exceeded)',
+  '75': 'İzin Verilen PIN / SMS Deneme Sayısı Aşıldı (PIN Tries Exceeded)',
+  '82': 'Hatalı CVV / Güvenlik Kodu Hatalı Girildi (Incorrect CVV)',
+  '91': 'Kartı Veren Banka Hizmet Dışı / Yanıt Vermiyor (Issuer Unavailable)',
+  '96': 'Sistem Arızası / Geçici Banka İletişim Hatası (System Malfunction)',
+  '99': 'Genel Red / İşlem Banka Tarafından Tamamlanamadı',
+  '3DS_VERIFICATION_FAILED': '3D Secure SMS Doğrulaması Başarısız / SMS Kodu Hatalı veya Süresi Doldu',
+  'PROVISION_FAILED': 'Banka Provizyon İşlemini Onaylamadı',
+  'PROVISION_NETWORK_ERROR': 'Banka Provizyon Ağ Bağlantısı Zaman Aşımına Uğradı',
+  'CALLBACK_VERIFICATION_FAILED': 'Güvenlik Kontrolü / Hash İmzası Doğrulanamadı',
+  'ORDER_ID_MISSING': 'Sipariş Numarası Eşleşmedi',
+  'MR15': 'Ziraat Katılım Üye İşyeri Kuralı Reddi / Limit veya Güvenlik',
+  'V013': 'Ziraat Katılım: İşlem Banka Kayıtlarında Bulunamadı / Provizyon Yok',
+  'V001': 'Ziraat Katılım: Geçersiz veya Bulunamayan İşlem Kaydı',
+  'BANK_INQUIRY_FAILED': 'Ziraat Katılım Banka Ödeme Sorgusu Onaylanmadı',
+  'BANK_INQUIRY_TIMEOUT': 'Ziraat Katılım Sorgu Zaman Aşımına Uğradı',
+  'PAYMENT_SESSION_FAILED': 'POS Ödeme Oturumu Başlatılamadı (Banka Ağ Hatası)',
+  'VIP_TOKEN_INVALID': 'VIP Ödeme Linki Güvenlik İmzası Geçersiz',
+  'VIP_TOKEN_EXPIRED': 'VIP Ödeme Linkinin Süresi Doldu'
+});
+
+/**
+ * Başarısız / Reddedilen POS İşlemleri İçin Telegram ve NTFY Farkındalık Bildirimi
+ * Bot: @Belgin_kasa_pos_bot
+ */
+async function sendPaymentFailureNotification(order, options = {}) {
+  if (!order || typeof order !== 'object') {
+    return { success: false, skipped: true, reason: 'INVALID_ORDER_DATA' };
+  }
+
+  const isExplicitTest = options.isExplicitTest === true;
+  if (!isExplicitTest && (process.env.NODE_ENV === 'test' || options.isTest === true || order.isTest === true || order.testMode === true)) {
+    return { success: true, skipped: true, reason: 'TEST_ENV_SUPPRESSED' };
+  }
+
+  const orderId = String(order.orderId || '').trim();
+  const upperOrderId = orderId.toUpperCase();
+  if (!isExplicitTest && (
+    upperOrderId.includes('TEST') ||
+    upperOrderId.includes('MOCK') ||
+    upperOrderId.includes('SAMPLE') ||
+    upperOrderId.includes('PARALLEL') ||
+    upperOrderId.includes('MAIL-FAIL') ||
+    upperOrderId.includes('MISMATCH') ||
+    upperOrderId.includes('REPLAY') ||
+    upperOrderId.includes('N8N') ||
+    upperOrderId.includes('DEMO') ||
+    upperOrderId.includes('DEV') ||
+    upperOrderId.includes('FAKE')
+  )) {
+    console.log(`[Notifier] Test sipariş tespit edildi (${orderId}), red bildirimi engellendi.`);
+    return { success: true, skipped: true, reason: 'TEST_ORDER_SUPPRESSED' };
+  }
+
+  // Mükerrer bildirim engelleme (Son 5 dakika içinde aynı sipariş reddi tekrar bildirilmez)
+  const dedupeKey = `FAIL_${orderId}`;
+  const now = Date.now();
+  if (orderId && recentNotifiedOrders.has(dedupeKey)) {
+    const lastNotified = recentNotifiedOrders.get(dedupeKey);
+    if (now - lastNotified < 5 * 60 * 1000) {
+      return { success: true, skipped: true, reason: 'ALREADY_NOTIFIED_RECENTLY' };
+    }
+  }
+  if (orderId) recentNotifiedOrders.set(dedupeKey, now);
+
+  const amount = Number(order.totalAmount || order.total || (order.payment && order.payment.amount) || 0);
+  const formattedAmount = formatCurrency(amount);
+  const customerName = (order.customer && order.customer.name) || order.customerName || 'Müşteri';
+  const customerPhone = (order.customer && order.customer.phone) || order.customerPhone || '—';
+  const customerIdentity = (order.customer && (order.customer.identityNumber || order.customer.identity)) || order.customerIdentity || '—';
+  const rawPhone = String(customerPhone).replace(/\D/g, '');
+  const provider = (order.payment && order.payment.provider) || order.provider || 'KUVEYTTURK';
+  const isVip = Boolean(order.isVipPayment || order.isVip22 || order.tag === '/22' || String(orderId).startsWith('VIP-'));
+  const timeStr = formatDate(order.failedAt || order.updatedAt || new Date());
+
+  const rawCode = String(order.failReasonCode || order.failReason || 'BANK_REJECT').trim();
+  const rawMsg = String(order.failReasonMsg || order.failMessage || 'Banka işlemi onaylamadı.').trim();
+  const stage = order.failStage || ((rawCode === '3DS_VERIFICATION_FAILED' || rawMsg.toLowerCase().includes('3d') || rawMsg.toLowerCase().includes('sms')) ? '3D_SECURE' : 'PROVISION');
+
+  let officialMeaning = NOTIFIER_ERROR_MAP[rawCode] || null;
+  if (!officialMeaning && rawCode) {
+    const match = rawCode.match(/\b(0[1-5]|1[2-5]|3[04]|4[13]|5[1478]|6[125]|75|82|9[169])\b/);
+    if (match && NOTIFIER_ERROR_MAP[match[1]]) officialMeaning = NOTIFIER_ERROR_MAP[match[1]];
+  }
+  if (!officialMeaning) officialMeaning = 'Banka güvenlik veya hesap kuralı gereğince onay vermedi.';
+
+  const stageLabel = stage === '3D_SECURE'
+    ? '📱 3D Secure SMS Aşaması'
+    : (stage === 'PROVISION' ? '🏦 Banka Provizyon Aşaması' : '🌐 Banka İletişim Aşaması');
+
+  let advice = 'Müşteriyle iletişime geçilerek kart limiti, e-ticaret izni veya alternatif ödeme yöntemi önerilebilir.';
+  if (rawCode === '51') {
+    advice = 'Müşterinin kart limiti veya hesap bakiyesi yetersizdir. Kart limitini yükseltmesi veya başka kart kullanması önerilmelidir.';
+  } else if (rawCode === '3DS_VERIFICATION_FAILED') {
+    advice = 'Müşteri bankadan gelen SMS şifresini yanlış girdi veya süresi doldu. Tekrar denemesi sağlanabilir.';
+  } else if (rawCode === '57') {
+    advice = 'Kart internet alışverişine (e-ticaret) veya kuyum sektörüne kapalıdır. Bankasını arayıp yetki açtırması gerekir.';
+  } else if (rawCode === '54') {
+    advice = 'Kartın son kullanma tarihi geçmiş veya hatalı girilmiştir.';
+  }
+
+  const upperRawCode = String(rawCode).toLocaleUpperCase('tr-TR');
+  const upperRawMsg = String(rawMsg).toLocaleUpperCase('tr-TR');
+  const upperOfficialMeaning = String(officialMeaning).toLocaleUpperCase('tr-TR');
+  const upperProvider = String(provider).toLocaleUpperCase('tr-TR');
+  const upperStageLabel = String(stageLabel).toLocaleUpperCase('tr-TR');
+  const upperCustomerName = String(customerName).toLocaleUpperCase('tr-TR');
+  const upperAdvice = String(advice).toLocaleUpperCase('tr-TR');
+  const displayOrderId = String(orderId).toLocaleUpperCase('tr-TR');
+
+  const htmlMessage = [
+    `🚨 <b>DİKKAT: BAŞARISIZ POS İŞLEMİ / İŞLEM REDDİ!</b>`,
+    `━━━━━━━━━━━━━━━━━━━━━`,
+    `⛔ <b>RED KODU:</b> <code>${upperRawCode}</code>`,
+    `⚠️ <b>BANKA GEREKÇESİ:</b> <code>${upperRawMsg}</code>`,
+    `📖 <b>RESMİ ANLAMI:</b> <i>${upperOfficialMeaning}</i>`,
+    `🏦 <b>POS / BANKA:</b> ${upperProvider} (${upperStageLabel})`,
+    `💰 <b>DENENEN TUTAR:</b> <code>${formattedAmount}</code>`,
+    `👤 <b>MÜŞTERİ:</b> ${upperCustomerName}`,
+    ...(customerPhone !== '—' ? [`📞 <b>TELEFON:</b> <code>${customerPhone}</code>`] : []),
+    ...(customerIdentity !== '—' ? [`🆔 <b>T.C. KİMLİK:</b> <code>${customerIdentity}</code>`] : []),
+    `📦 <b>SİPARİŞ REF:</b> <code>${displayOrderId}</code> ${isVip ? '🏷️ <b>/22 VIP LİNK</b>' : ''}`,
+    `⏰ <b>ZAMAN:</b> ${timeStr}`,
+    `━━━━━━━━━━━━━━━━━━━━━`,
+    `💡 <b>SATIŞ KURTARMA TAVSİYESİ:</b>`,
+    `👉 <i>${upperAdvice}</i>`
+  ].join('\n');
+
+  const inlineKeyboard = [
+    [
+      { text: '📊 YÖNETİM PANELİNDE İNCELE', url: 'https://www.belginkuyumculuk.com/admin.html' }
+    ]
+  ];
+
+  if (rawPhone && rawPhone.length >= 10) {
+    const waPhone = rawPhone.startsWith('90') ? rawPhone : (rawPhone.startsWith('0') ? '9' + rawPhone : '90' + rawPhone);
+    const waText = encodeURIComponent(`Merhaba ${customerName}, Belgin Kuyumculuk siparişiniz esnasında bankanız kart işlemini onaylamadı (${rawMsg}). Siparişinizi tamamlamak için diğer kartınızla veya banka transferiyle yardımcı olabilir miyiz?`);
+    inlineKeyboard[0].push({ text: '💬 WHATSAPP İLE ULAŞ', url: `https://wa.me/${waPhone}?text=${waText}` });
+  }
+
+  const results = { telegram: null, ntfy: null };
+  const botToken = options.telegramBotToken || TELEGRAM_BOT_TOKEN;
+  const chatId = options.telegramChatId || TELEGRAM_CHAT_ID;
+
+  // 1. Telegram Gönderimi (@Belgin_kasa_pos_bot)
+  if (botToken && chatId) {
+    try {
+      const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+      const response = await axios.post(url, {
+        chat_id: chatId,
+        text: htmlMessage,
+        parse_mode: 'HTML',
+        reply_markup: {
+          inline_keyboard: inlineKeyboard,
+        },
+      }, { timeout: 6000 });
+      console.log(`[Notifier] Telegram POS Red Bildirimi iletildi -> OrderId: ${orderId}, Code: ${rawCode}`);
+      results.telegram = { success: true, status: response.status };
+    } catch (error) {
+      console.error('[Notifier] Telegram Red Bildirim hatası:', error.response?.data || error.message);
+      results.telegram = { success: false, error: error.message };
+    }
+  }
+
+  // 2. NTFY Gönderimi
+  const topic = String(options.topic || process.env.NTFY_TOPIC || DEFAULT_NTFY_TOPIC).trim();
+  try {
+    const ntfyPayload = {
+      topic: topic,
+      title: `🚨 POS İŞLEMİ REDDEDİLDİ: ${formattedAmount} [${upperRawCode}]`,
+      message: `👤 MÜŞTERİ: ${upperCustomerName}\n⛔ NEDEN: ${upperRawMsg}\n🏦 BANKA: ${upperProvider} (${upperStageLabel})\n📦 REF: ${displayOrderId}`,
+      priority: 4,
+      tags: ['warning', 'x', 'credit_card'],
+      click: 'https://www.belginkuyumculuk.com/admin.html',
+      actions: [
+        {
+          action: 'view',
+          label: '📊 Yönetim Panelini Aç',
+          url: 'https://www.belginkuyumculuk.com/admin.html',
+          clear: true,
+        },
+      ],
+    };
+    const ntfyRes = await axios.post('https://ntfy.sh', ntfyPayload, {
+      headers: { 'Content-Type': 'application/json; charset=utf-8' },
+      timeout: 6000,
+    });
+    results.ntfy = { success: true, status: ntfyRes.status };
+  } catch (error) {
+    results.ntfy = { success: false, error: error.message };
+  }
+
+  return { success: true, results };
+}
+
 /**
  * Test Bildirimi Gönderme (Kurulum ve ses testi için - Yalnızca Yönetici Paneli Üzerinden)
  */
@@ -281,6 +497,7 @@ module.exports = {
   DEFAULT_NTFY_TOPIC,
   sendTelegramNotification,
   sendPaymentPushNotification,
+  sendPaymentFailureNotification,
   sendTestNotification,
 };
 
