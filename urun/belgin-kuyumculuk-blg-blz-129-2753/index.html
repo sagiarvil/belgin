@@ -1971,29 +1971,39 @@
           <p class="pdp-art-ref" style="font-size:13px;color:#8fa099;margin:0;">Ref: BLG-BLZ-129 • Durum: Sıfır Distribütör Garantili</p>
           <div class="pdp-art-price" style="font-size:32px;font-weight:800;color:#34D399;margin:8px 0;">₺159.750</div>
           
-          <!-- KURUMSAL BİLGİLENDİRME (HAVALE / EFT PROTOKOLÜ) -->
-          <div class="pdp-no-cc-notice" style="background:#FAF8F5;border:1px solid #D8C7A5;border-radius:10px;padding:16px 18px;margin:10px 0 16px;box-shadow:0 4px 14px rgba(5,51,47,0.05);color:#1F2937;">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-              <span style="color:#05332F;font-size:12px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;">🏛️ Havale / EFT &amp; Showroom Teslimatı</span>
-              <span style="background:#F2ECE0;color:#5A4315;font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;">Kredi Kartına Kapalıdır</span>
-            </div>
-            <p style="font-size:12.5px;color:#4B5563;line-height:1.5;margin:0 0 10px;">
-              Mevzuat gereği altın ve ziynet ürünlerinde online kredi kartı işlemi yapılmamaktadır. Siparişleriniz canlı borsa kuru güvencesiyle <strong>Kuveyt Türk Havale / EFT</strong> veya <strong>İzmir Buca Showroom</strong> teslimi ile tamamlanır.
-            </p>
-            <div style="background:#FFFDF9;border:1px solid #C2A768;border-radius:6px;padding:8px 12px;margin-bottom:10px;font-size:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-              <div>
-                <strong style="color:#854D0E;">📞 1. ADIM:</strong> Ödeme yapmadan önce lütfen arayarak anlık fiyatı sabitleyiniz.
+          <!-- KURUMSAL BİLGİLENDİRME (HAVALE / EFT VE SHOWROOM PROTOKOLÜ) -->
+          <div class="pdp-gold-wire-protocol">
+            <div class="pdp-gold-wire-header">
+              <div class="pdp-gold-wire-title">
+                <span>🏛️</span>
+                <span>Havale / EFT &amp; Showroom Teslimatı</span>
               </div>
-              <a href="tel:+905419305372" style="background:#05332F;color:#FFFFFF;text-decoration:none;font-size:12px;font-weight:700;padding:5px 12px;border-radius:5px;display:inline-flex;align-items:center;gap:4px;">
+              <span class="pdp-gold-wire-badge">Kredi Kartına Kapalıdır</span>
+            </div>
+            <p class="pdp-gold-wire-desc">
+              Mevzuat ve şirket politikalarımız gereğince altın, ziynet ve mücevherat ürünlerinde online kredi kartı (POS) ile satış yapılmamaktadır. Siparişleriniz canlı borsa kuru güvencesiyle <strong>Kuveyt Türk Havale / EFT / FAST</strong> veya <strong>İzmir Buca Showroom</strong> mağazamızda teslim alınarak güvenle tamamlanır.
+            </p>
+            <div class="pdp-gold-wire-step pdp-gold-wire-step-phone">
+              <div class="pdp-gold-step-info">
+                <span class="pdp-gold-step-tag">1. ADIM · ANLIK FİYAT SABİTLEME</span>
+                <span class="pdp-gold-step-text">Canlı borsa dalgalanmaları nedeniyle ödeme yapmadan önce lütfen arayarak anlık fiyatınızı sabitleyiniz.</span>
+              </div>
+              <a href="tel:+905419305372" class="pdp-gold-wire-call-btn" title="Hemen Arayın: 0541 930 53 72">
                 <span>📞</span> 0541 930 53 72
               </a>
             </div>
-            <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:6px;padding:10px 12px;font-size:12px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;">
-              <div>
-                <strong>Kuveyt Türk</strong> · SEMİH SONBAHAR BELGİN KUYUMCULUK
+            <div class="pdp-gold-wire-step pdp-gold-wire-step-bank">
+              <div class="pdp-gold-bank-row">
+                <div class="pdp-gold-bank-name">
+                  <span class="pdp-gold-step-tag">2. ADIM · KURUMSAL HESAP BİLGİSİ</span>
+                  <strong>Kuveyt Türk</strong> <span class="pdp-gold-bank-holder">· SEMİH SONBAHAR BELGİN KUYUMCULUK</span>
+                </div>
               </div>
-              <div style="display:flex;align-items:center;gap:6px;">
-                <code style="font-family:monospace;font-weight:800;color:#004D2C;font-size:12.5px;background:#F4F9F6;padding:4px 8px;border-radius:4px;border:1px solid #CEEAD6;">TR050020500009275715800001</code>
+              <div class="pdp-gold-iban-row">
+                <code class="pdp-gold-iban-code">TR05 0020 5000 0927 5715 8000 01</code>
+                <button type="button" class="pdp-gold-iban-copy-btn" onclick="if(navigator.clipboard){navigator.clipboard.writeText('TR050020500009275715800001');if(typeof showToast==='function'){showToast('Kuveyt Türk IBAN kopyalandı.','success');}else{alert('Kuveyt Türk IBAN kopyalandı.');}}else{prompt('Kuveyt Türk IBAN:','TR050020500009275715800001');}" aria-label="IBAN Kopyala">
+                  <span>📋</span> Kopyala
+                </button>
               </div>
             </div>
           </div>

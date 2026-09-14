@@ -1223,26 +1223,34 @@ const App = {
       </table>
 
       ${this.isJewelleryProduct(p) ? `
-        <div style="font-size:12px; color:#2B261D; background:#FAF8F5; border:1px solid #D8C7A5; padding:12px 14px; border-radius:8px; margin-bottom:14px; line-height:1.5;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-            <strong style="color:#05332F; font-size:11px; text-transform:uppercase; letter-spacing:0.5px;">🏛️ Havale / EFT Siparişi</strong>
-            <span style="background:#F2ECE0; color:#5A4315; font-size:10.5px; font-weight:700; padding:2px 6px; border-radius:4px;">Kredi Kartına Kapalıdır</span>
+        <div class="pdp-gold-wire-protocol" style="padding:14px 15px; margin-bottom:14px; gap:10px;">
+          <div class="pdp-gold-wire-header" style="padding-bottom:8px;">
+            <div class="pdp-gold-wire-title" style="font-size:11.5px;">
+              <span>🏛️</span>
+              <span>Havale / EFT Siparişi</span>
+            </div>
+            <span class="pdp-gold-wire-badge">Kredi Kartına Kapalıdır</span>
           </div>
-          <p style="font-size:11.5px; color:#6B7280; margin:0 0 8px;">
+          <p class="pdp-gold-wire-desc" style="font-size:11.5px;">
             Mevzuat gereği altın/ziynet ürünlerinde online kredi kartı işlemi yapılmamaktadır. Siparişler Kuveyt Türk kurumsal hesabımıza Havale/EFT ile tamamlanır.
           </p>
-          <div style="background:#FFFDF9; border:1px solid #C2A768; border-radius:6px; padding:8px 10px; margin-bottom:8px; font-size:11px; line-height:1.45;">
-            <div style="color:#854D0E; font-weight:800; margin-bottom:2px;">📞 1. ADIM: FİYAT SABİTLEME</div>
-            <div style="color:#4B5563;">Ödeme öncesinde lütfen arayarak anlık fiyatı sabitleyiniz: <a href="tel:+905419305372" style="color:#05332F; font-weight:800; text-decoration:underline;">0541 930 53 72</a></div>
+          <div class="pdp-gold-wire-step pdp-gold-wire-step-phone" style="padding:8px 10px;">
+            <div class="pdp-gold-step-info">
+              <span class="pdp-gold-step-tag">1. ADIM · FİYAT SABİTLEME</span>
+              <span class="pdp-gold-step-text">Ödeme öncesinde lütfen arayarak anlık fiyatı sabitleyiniz.</span>
+            </div>
+            <a href="tel:+905419305372" class="pdp-gold-wire-call-btn" style="padding:6px 12px; font-size:11.5px;">
+              <span>📞</span> 0541 930 53 72
+            </a>
           </div>
-          <div style="background:#FFFFFF; border:1px solid #E5E7EB; border-radius:6px; padding:8px 10px; font-size:11px;">
-            <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
+          <div class="pdp-gold-wire-step pdp-gold-wire-step-bank" style="padding:8px 10px;">
+            <div class="pdp-gold-bank-row" style="font-size:11px;">
               <span style="color:#6B7280;">Banka / Alıcı:</span>
               <strong style="color:#111827;">Kuveyt Türk · Semih Sonbahar Belgin Kuyumculuk</strong>
             </div>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
-              <code style="font-family:monospace; font-weight:800; color:#004D2C; font-size:11.5px;">TR050020500009275715800001</code>
-              <button type="button" onclick="navigator.clipboard.writeText('TR050020500009275715800001'); if(typeof showToast==='function'){showToast('Kuveyt Türk IBAN kopyalandı.','success');}else{alert('Kuveyt Türk IBAN kopyalandı: TR050020500009275715800001');}" style="background:#05332F; color:#fff; border:none; padding:3px 8px; border-radius:4px; font-size:10.5px; font-weight:700; cursor:pointer;">Kopyala</button>
+            <div class="pdp-gold-iban-row" style="margin-top:2px;">
+              <code class="pdp-gold-iban-code" style="font-size:11px; padding:4px 8px;">TR05 0020 5000 0927 5715 8000 01</code>
+              <button type="button" class="pdp-gold-iban-copy-btn" onclick="App.copyIban('TR050020500009275715800001', this)" style="padding:4px 10px; font-size:11px;">Kopyala</button>
             </div>
           </div>
         </div>
@@ -1284,6 +1292,31 @@ const App = {
     const backdrop = document.getElementById('quickDrawerBackdrop');
     if (backdrop) backdrop.classList.remove('open');
     document.body.style.overflow = '';
+  },
+
+  copyIban(iban, btn) {
+    if (!iban) iban = 'TR050020500009275715800001';
+    const cleanIban = iban.replace(/\s+/g, '');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(cleanIban).then(() => {
+        if (btn) {
+          const orig = btn.innerHTML;
+          btn.innerHTML = '<span>✓</span> Kopyalandı';
+          btn.style.background = '#004D2C';
+          setTimeout(() => {
+            btn.innerHTML = orig;
+            btn.style.background = '';
+          }, 2000);
+        }
+        if (typeof showToast === 'function') {
+          showToast('Kuveyt Türk IBAN kopyalandı.', 'success');
+        }
+      }).catch(() => {
+        prompt('Kuveyt Türk IBAN Kodu:', cleanIban);
+      });
+    } else {
+      prompt('Kuveyt Türk IBAN Kodu:', cleanIban);
+    }
   },
 
   // ALTIN & MÜCEVHERAT KURUMSAL HAVALE / EFT SİPARİŞ MODALI
@@ -1426,31 +1459,40 @@ const App = {
     const discountPercent = hasDiscount ? Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100) : 0;
     const monthlyInstallment = Math.round(p.price / 3);
 
-    // Güvenli Ödeme Bannerı (Havale/EFT vs Tek Çekim 3D Secure)
+    // Güvenli Ödeme Bannerı (Altın için Özel Havale/EFT Protokolü vs Saatler için 3D Secure)
     const secureBannerHtml = isGoldProduct ? `
-      <div class="pdp-installment-banner" style="background:#FAF8F5; border:1px solid #D8C7A5; color:#1F2937; padding:14px 16px; border-radius:10px; font-size:12.5px; margin-top:14px; line-height:1.55;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-          <span style="color:#05332F; font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:0.5px;">🏛️ Havale / EFT &amp; Showroom Teslimatı</span>
-          <span style="background:#F2ECE0; color:#5A4315; font-size:10.5px; font-weight:700; padding:2px 6px; border-radius:4px;">Kredi Kartına Kapalıdır</span>
-        </div>
-        <p style="font-size:12px; color:#4B5563; margin:0 0 10px; line-height:1.5;">
-          Mevzuat gereği altın ve ziynet ürünlerinde online kredi kartı işlemi yapılmamaktadır. Siparişleriniz canlı borsa kuru güvencesiyle <strong>Kuveyt Türk Havale / EFT</strong> veya <strong>İzmir Buca Showroom</strong> teslimi ile tamamlanır.
-        </p>
-        <div style="background:#FFFDF9; border:1px solid #C2A768; border-radius:6px; padding:8px 12px; margin-bottom:10px; font-size:11.5px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
-          <div>
-            <strong style="color:#854D0E;">📞 1. ADIM:</strong> Ödeme yapmadan önce lütfen arayarak anlık fiyatı sabitleyiniz.
+      <div class="pdp-gold-wire-protocol">
+        <div class="pdp-gold-wire-header">
+          <div class="pdp-gold-wire-title">
+            <span>🏛️</span>
+            <span>Havale / EFT &amp; Showroom Teslimatı</span>
           </div>
-          <a href="tel:+905419305372" style="background:#05332F; color:#FFFFFF; text-decoration:none; font-size:11.5px; font-weight:700; padding:5px 10px; border-radius:5px; display:inline-flex; align-items:center; gap:4px;">
+          <span class="pdp-gold-wire-badge">Kredi Kartına Kapalıdır</span>
+        </div>
+        <p class="pdp-gold-wire-desc">
+          Mevzuat ve şirket politikalarımız gereğince altın, ziynet ve mücevherat ürünlerinde online kredi kartı (POS) ile satış yapılmamaktadır. Siparişleriniz canlı borsa kuru güvencesiyle <strong>Kuveyt Türk Havale / EFT / FAST</strong> veya <strong>İzmir Buca Showroom</strong> mağazamızda teslim alınarak güvenle tamamlanır.
+        </p>
+        <div class="pdp-gold-wire-step pdp-gold-wire-step-phone">
+          <div class="pdp-gold-step-info">
+            <span class="pdp-gold-step-tag">1. ADIM · ANLIK FİYAT SABİTLEME</span>
+            <span class="pdp-gold-step-text">Canlı borsa dalgalanmaları nedeniyle ödeme yapmadan önce lütfen arayarak anlık fiyatınızı sabitleyiniz.</span>
+          </div>
+          <a href="tel:+905419305372" class="pdp-gold-wire-call-btn" title="Hemen Arayın: 0541 930 53 72">
             <span>📞</span> 0541 930 53 72
           </a>
         </div>
-        <div style="background:#FFFFFF; border:1px solid #E5E7EB; border-radius:6px; padding:10px 12px; font-size:12px; color:#1F2937; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px;">
-          <div>
-            <strong>Kuveyt Türk</strong> · SEMİH SONBAHAR BELGİN KUYUMCULUK
+        <div class="pdp-gold-wire-step pdp-gold-wire-step-bank">
+          <div class="pdp-gold-bank-row">
+            <div class="pdp-gold-bank-name">
+              <span class="pdp-gold-step-tag">2. ADIM · KURUMSAL HESAP BİLGİSİ</span>
+              <strong>Kuveyt Türk</strong> <span class="pdp-gold-bank-holder">· SEMİH SONBAHAR BELGİN KUYUMCULUK</span>
+            </div>
           </div>
-          <div style="display:flex; align-items:center; gap:6px;">
-            <code style="font-family:monospace; font-weight:800; color:#004D2C; background:#F4F9F6; padding:4px 8px; border-radius:4px; border:1px solid #CEEAD6; font-size:12px;">TR050020500009275715800001</code>
-            <button type="button" onclick="navigator.clipboard.writeText('TR050020500009275715800001'); if(typeof showToast==='function'){showToast('Kuveyt Türk IBAN kopyalandı.','success');}else{alert('Kuveyt Türk IBAN kopyalandı: TR050020500009275715800001');}" style="background:#05332F; color:#fff; border:none; padding:4px 10px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;">Kopyala</button>
+          <div class="pdp-gold-iban-row">
+            <code class="pdp-gold-iban-code">TR05 0020 5000 0927 5715 8000 01</code>
+            <button type="button" class="pdp-gold-iban-copy-btn" onclick="App.copyIban('TR050020500009275715800001', this)" aria-label="IBAN Kopyala">
+              <span>📋</span> Kopyala
+            </button>
           </div>
         </div>
       </div>
@@ -1851,23 +1893,7 @@ const App = {
               </div>
             </div>
 
-            ${isGoldProduct ? `
-            <!-- KURUMSAL BİLGİLENDİRME (KREDİ KARTI KAPALI) -->
-            <div class="pdp-no-cc-notice" style="display:flex; align-items:flex-start; gap:14px; background:#FFFDF7; border:2px solid #C2A768; border-left:6px solid #B91C1C; border-radius:10px; padding:16px 20px; margin:0 0 16px; box-shadow:0 4px 14px rgba(194,167,104,0.15);">
-              <span style="font-size:24px; line-height:1.2; flex-shrink:0;">🛡️</span>
-              <div>
-                <strong style="color:#B91C1C; display:block; margin-bottom:4px; font-size:13.5px; font-weight:800; letter-spacing:0.4px; text-transform:uppercase;">
-                  Kurumsal Satış ve Ödeme Bildirimi
-                </strong>
-                <p style="font-size:13.5px; font-weight:700; color:#1F2937; line-height:1.55; margin:0 0 4px;">
-                  Mevzuat ve şirket politikalarımız gereğince <span style="color:#B91C1C;">Altın ve Mücevherat ürünlerinde KREDİ KARTI ile satış yapılmamaktadır</span>.
-                </p>
-                <p style="font-size:12.5px; color:#4B5563; line-height:1.5; margin:0;">
-                  Tüm altın, ziynet ve bilezik siparişlerinizi kurumsal <strong>Banka Havalesi / EFT / FAST</strong> yöntemiyle güvenle gerçekleştirebilir veya <strong>İzmir Buca showroom</strong> mağazamızda bizzat teslim alabilirsiniz.
-                </p>
-              </div>
-            </div>
-            ` : ''}
+
 
             <!-- Fiyat Kutusu -->
             <div class="pdp-price-wrap ${p.isPreOwned ? 'pdp-dual-price-wrap' : ''}">

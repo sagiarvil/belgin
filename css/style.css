@@ -4914,6 +4914,217 @@ p, span, li, td, th, label, input, button, select, textarea {
   gap: 6px;
 }
 
+/* Belgin Kuyumculuk - Altın & Mücevherat Özel Havale/EFT & Showroom Protokol Kartı (Quiet Luxury) */
+.pdp-gold-wire-protocol {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 13px;
+  width: 100%;
+  box-sizing: border-box;
+  background: #FAF8F5;
+  border: 1px solid #D8C7A5;
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin: 14px 0 18px;
+  box-shadow: 0 4px 14px rgba(5, 51, 47, 0.04);
+  color: #1F2937;
+}
+
+.pdp-gold-wire-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(194, 167, 104, 0.25);
+}
+
+.pdp-gold-wire-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #05332F;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pdp-gold-wire-badge {
+  background: #F2ECE0;
+  color: #5A4315;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(194, 167, 104, 0.3);
+  white-space: nowrap;
+}
+
+.pdp-gold-wire-desc {
+  font-size: 12.5px;
+  color: #4B5563;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.pdp-gold-wire-desc strong {
+  color: #05332F;
+}
+
+.pdp-gold-wire-step {
+  border-radius: 8px;
+  padding: 11px 14px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.pdp-gold-wire-step-phone {
+  background: #FFFDF9;
+  border: 1px solid #C2A768;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pdp-gold-step-info {
+  flex: 1;
+  min-width: 200px;
+}
+
+.pdp-gold-step-tag {
+  color: #854D0E;
+  font-size: 10.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.pdp-gold-step-text {
+  font-size: 11.5px;
+  color: #4B5563;
+  line-height: 1.4;
+  display: block;
+}
+
+.pdp-gold-wire-call-btn {
+  background: #05332F;
+  color: #FFFFFF !important;
+  text-decoration: none;
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(5, 51, 47, 0.15);
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.pdp-gold-wire-call-btn:hover {
+  background: #004D2C;
+  transform: translateY(-1px);
+}
+
+.pdp-gold-wire-step-bank {
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pdp-gold-bank-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 12px;
+  color: #1F2937;
+}
+
+.pdp-gold-bank-name strong {
+  color: #111827;
+}
+
+.pdp-gold-bank-holder {
+  color: #4B5563;
+}
+
+.pdp-gold-iban-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pdp-gold-iban-code {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 800;
+  color: #004D2C;
+  background: #F4F9F6;
+  padding: 6px 10px;
+  border-radius: 5px;
+  border: 1px solid #CEEAD6;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  user-select: all;
+  flex: 1;
+  min-width: 220px;
+}
+
+.pdp-gold-iban-copy-btn {
+  background: #05332F;
+  color: #FFFFFF;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.pdp-gold-iban-copy-btn:hover {
+  background: #004D2C;
+}
+
+@media (max-width: 640px) {
+  .pdp-gold-wire-step-phone {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .pdp-gold-wire-call-btn {
+    justify-content: center;
+  }
+  .pdp-gold-iban-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .pdp-gold-iban-code {
+    text-align: center;
+    min-width: 0;
+  }
+  .pdp-gold-iban-copy-btn {
+    justify-content: center;
+  }
+}
+
 /* Quick Features 4-Grid (Perfect 2x2 symmetry, no overflow) */
 .pdp-quick-specs {
   display: grid;
