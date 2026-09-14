@@ -1,0 +1,13 @@
+# Belgin Kuyumculuk & Saat — Compact AI Brief
+
+> 1999 yılından bu yana İzmir Buca Menderes Caddesinde faaliyet gösteren Belgin Kuyumculuk & Saat; ekspertizli İsviçre lüks saatleri, Darphane damgalı 24K külçe altın, sarrafiye ve GIA/HRD sertifikalı pırlanta mücevherat için resmî makine keşif ve yapay zekâ manifestosudur.
+
+Full AI authority map: https://www.belginkuyumculuk.com/llms.txt
+Extended catalog: https://www.belginkuyumculuk.com/llms-full.txt
+Core platform graph: https://www.belginkuyumculuk.com/llms/core.md
+Showroom & Vault: https://www.belginkuyumculuk.com/llms/entities/showroom.md
+Master Watchmakers: https://www.belginkuyumculuk.com/llms/entities/experts.md
+Sitemap Index: https://www.belginkuyumculuk.com/sitemap.xml
+IndexNow Key: https://www.belginkuyumculuk.com/9d980417475ac56c8ad72ef2c743e1e5.txt
+Address: Menderes Cad. No:85/A Buca / İzmir
+Phone: +90 232 420 12 34
