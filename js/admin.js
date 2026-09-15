@@ -9765,6 +9765,13 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
         const isSelected = this.selectedStoreInvoiceIds.has(inv.orderId);
         const invNo = this.getGibInvoiceNumber ? this.getGibInvoiceNumber(inv) : (inv.invoiceNumber || (isSigned ? 'GIB2026000000021' : ''));
 
+        const payMethod = inv.paymentMethod || inv.paymentChannel || 'HAVALE_EFT';
+        const payBadge = payMethod === 'HAVALE_EFT'
+          ? '<span style="font-size:10px; font-weight:800; background:#EFF6FF; color:#1E40AF; padding:2px 6px; border-radius:4px; border:1px solid #93C5FD;">🏦 Havale/EFT</span>'
+          : (payMethod === 'NAKIT'
+          ? '<span style="font-size:10px; font-weight:800; background:#F0FDF4; color:#166534; padding:2px 6px; border-radius:4px; border:1px solid #86EFAC;">💵 Nakit</span>'
+          : '<span style="font-size:10px; font-weight:800; background:#FAF5FF; color:#6B21A8; padding:2px 6px; border-radius:4px; border:1px solid #D8B4FE;">💳 POS/Kart</span>');
+
         const createdTime = this.formatTimeTr(inv.createdAt);
         const updatedTime = this.formatTimeTr(inv.updatedAt);
 
