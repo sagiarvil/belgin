@@ -1673,7 +1673,11 @@ const AdminApp = {
 
   openDeclarationModal(orderId) {
     try {
-      this.activeDeclarationOrderId = orderId;
+      if (!orderId && !this.activeDeclarationOrderId) {
+        orderId = 'STORE_DRAFT_' + Date.now();
+      }
+      this.activeDeclarationOrderId = orderId || this.activeDeclarationOrderId;
+      orderId = this.activeDeclarationOrderId;
 
       // 1. Önce hafızadaki veya yerel depolamadaki gerçek siparişi/mağaza faturasını bul
       let order = (this.orders && this.orders.find(o => o && (o.orderId === orderId || o.id === orderId))) ||

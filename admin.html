@@ -5942,13 +5942,13 @@
       </div>
 
       <!-- Dosya Yükleme Alanı -->
-      <div id="declarationDropZone" style="background:#FFFDF7; border:2px dashed #CA8A04; border-radius:10px; padding:20px; text-align:center; cursor:pointer; transition:background 0.2s;" onclick="document.getElementById('declarationFileInput').click()" ondragover="event.preventDefault(); this.style.background='#FEF3C7';" ondragleave="this.style.background='#FFFDF7';" ondrop="event.preventDefault(); this.style.background='#FFFDF7'; AdminApp.handleDeclarationDrop(event);">
-        <input type="file" id="declarationFileInput" accept="image/png, image/jpeg, image/jpg, application/pdf" style="display:none;" onchange="AdminApp.handleDeclarationUpload(event)">
+      <div id="declarationDropZone" style="background:#FFFDF7; border:2px dashed #CA8A04; border-radius:10px; padding:20px; text-align:center; cursor:pointer; transition:background 0.2s;" onclick="const inp=document.getElementById('declarationFileInput'); if(inp) inp.click();" ondragover="event.preventDefault(); this.style.background='#FEF3C7';" ondragleave="this.style.background='#FFFDF7';" ondrop="event.preventDefault(); this.style.background='#FFFDF7'; AdminApp.handleDeclarationDrop(event);">
+        <input type="file" id="declarationFileInput" accept="image/png, image/jpeg, image/jpg, image/webp, application/pdf" style="position:fixed; top:-9999px; left:-9999px; opacity:0; pointer-events:none;" onchange="AdminApp.handleDeclarationUpload(event)">
         <div style="font-size:28px; margin-bottom:4px;">📥</div>
         <div style="font-weight:800; font-size:13.5px; color:#854D0E; margin-bottom:4px;">
-          📁 Yeni / Güncel Beyan Belgesi Yükle (PNG, JPG, PDF)
+          📁 Yeni / Güncel Beyan Belgesi Yükle (PNG, JPG, WEBP, PDF)
         </div>
-        <button type="button" class="btn-admin-primary" style="background:#C2A768; color:#042926; border-color:#DFBA67; font-weight:800; padding:8px 20px; font-size:12.5px; cursor:pointer; margin-top:6px;" onclick="event.stopPropagation(); document.getElementById('declarationFileInput').click();">
+        <button type="button" class="btn-admin-primary" style="background:#C2A768; color:#042926; border-color:#DFBA67; font-weight:800; padding:8px 20px; font-size:12.5px; cursor:pointer; margin-top:6px;" onclick="event.stopPropagation(); const inp=document.getElementById('declarationFileInput'); if(inp) inp.click();">
           📂 Bilgisayardan Dosya Seç veya Sürükle Bırak
         </button>
         <div style="font-size:11px; color:#78350F; margin-top:8px;">
@@ -5973,6 +5973,8 @@
       </div>
     </div>
   </div>
+</div>
+
 <!-- KLAVYE KISAYOLLARI REHBER MODALI -->
 <div class="admin-modal-overlay" id="shortcutHelpModal" onclick="if(event.target===this) AdminApp.toggleShortcutHelp();" style="display:none; z-index:999999;">
   <div class="admin-modal-box" style="max-width:560px; padding:0; overflow:hidden; border-radius:16px; box-shadow:0 25px 50px -12px rgba(0, 0, 0, 0.25);">
