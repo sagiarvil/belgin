@@ -281,6 +281,197 @@
     }
 
     /* ========================================================
+       2.1 PRO HIZLI KOMUTA ÇUBUĞU (EXECUTIVE ACTION DECK)
+       ======================================================== */
+    .quick-command-deck {
+      background: #FFFFFF;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 16px;
+      padding: 12px 18px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 20px -2px rgba(8, 76, 71, 0.06), 0 1px 3px rgba(0,0,0,0.03);
+    }
+
+    .quick-actions-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-pro-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1.5px solid transparent;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .btn-pro-action:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-pro-action:active {
+      transform: translateY(0);
+    }
+
+    .btn-pro-action.action-eft {
+      background: #F0F9FF;
+      color: #0369A1;
+      border-color: #BAE6FD;
+    }
+    .btn-pro-action.action-eft:hover {
+      background: #E0F2FE;
+      border-color: #7DD3FC;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15);
+    }
+
+    .btn-pro-action.action-pos {
+      background: #ECFDF5;
+      color: #047857;
+      border-color: #A7F3D0;
+    }
+    .btn-pro-action.action-pos:hover {
+      background: #D1FAE5;
+      border-color: #6EE7B7;
+      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.15);
+    }
+
+    .btn-pro-action.action-store {
+      background: #FDF4FF;
+      color: #7E22CE;
+      border-color: #F0ABFC;
+    }
+    .btn-pro-action.action-store:hover {
+      background: #FAE8FF;
+      border-color: #E879F9;
+      box-shadow: 0 4px 12px rgba(168, 85, 247, 0.15);
+    }
+
+    .btn-pro-action.action-sms {
+      background: #FFFBEB;
+      color: #B45309;
+      border-color: #FDE68A;
+    }
+    .btn-pro-action.action-sms:hover {
+      background: #FEF3C7;
+      border-color: #FCD34D;
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.15);
+    }
+
+    .btn-pro-action.action-vip {
+      background: #FFFDF5;
+      color: #854D0E;
+      border-color: #FEF08A;
+    }
+    .btn-pro-action.action-vip:hover {
+      background: #FEF9C3;
+      border-color: #FDE047;
+      box-shadow: 0 4px 12px rgba(202, 138, 4, 0.15);
+    }
+
+    .btn-pro-action.action-wa {
+      background: #F0FDF4;
+      color: #15803D;
+      border-color: #BBF7D0;
+    }
+    .btn-pro-action.action-wa:hover {
+      background: #DCFCE7;
+      border-color: #86EFAC;
+      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.15);
+    }
+
+    .btn-pro-action.action-refresh {
+      background: #F8FAFC;
+      color: #334155;
+      border-color: #CBD5E1;
+    }
+    .btn-pro-action.action-refresh:hover {
+      background: #F1F5F9;
+      color: #0F172A;
+      border-color: #94A3B8;
+    }
+
+    .btn-pro-action.action-help {
+      background: transparent;
+      color: #64748B;
+      border-color: #E2E8F0;
+      padding: 8px 10px;
+    }
+    .btn-pro-action.action-help:hover {
+      background: #F8FAFC;
+      color: #0F172A;
+    }
+
+    .kbd-tag {
+      display: inline-block;
+      padding: 2px 6px;
+      font-size: 10px;
+      font-weight: 800;
+      font-family: -apple-system, BlinkMacSystemFont, monospace;
+      color: inherit;
+      background: rgba(0, 0, 0, 0.06);
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 5px;
+      line-height: 1;
+      opacity: 0.85;
+      letter-spacing: 0.5px;
+    }
+
+    /* Akıllı Durum Filtre Hapları */
+    .status-pills-container {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed #E2E8F0;
+    }
+
+    .btn-status-pill {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      color: #475569;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+
+    .btn-status-pill:hover {
+      background: #F1F5F9;
+      border-color: #CBD5E1;
+      color: #0F172A;
+    }
+
+    .btn-status-pill.active {
+      background: #084C47;
+      color: #FFFFFF;
+      border-color: #084C47;
+      box-shadow: 0 2px 8px rgba(8, 76, 71, 0.2);
+    }
+
+    /* ========================================================
        3. FİLTRE & OMNISEARCH ÇUBUĞU (STRIPE DASHBOARD STYLE)
        ======================================================== */
     .admin-filter-panel {
@@ -2692,6 +2883,48 @@
 
 <main class="admin-container" style="display:none;">
 
+  <!-- PRO YÖNETİCİ HIZLI KOMUTA ÇUBUĞU & KLAVYE KISAYOLLARI (EXECUTIVE QUICK COMMAND DECK) -->
+  <div class="quick-command-deck">
+    <div class="quick-actions-group">
+      <button type="button" class="btn-pro-action action-eft" onclick="AdminApp.openManualEftModal()" title="Manuel EFT/Havale Girişi (Kısayol: E)">
+        <span>🏦 ➕ EFT / Havale</span>
+        <span class="kbd-tag">E</span>
+      </button>
+      <button type="button" class="btn-pro-action action-pos" onclick="AdminApp.openManualOrderModal()" title="Manuel POS Girişi (Kısayol: P)">
+        <span>💳 ➕ POS Tahsilat</span>
+        <span class="kbd-tag">P</span>
+      </button>
+      <button type="button" class="btn-pro-action action-store" onclick="AdminApp.switchTab('storeInvoices')" title="Mağaza Fatura Kesimi (Kısayol: F)">
+        <span>🏪 ➕ Mağaza Faturası</span>
+        <span class="kbd-tag">F</span>
+      </button>
+      <button type="button" class="btn-pro-action action-sms" onclick="AdminApp.startBatchInvoiceSigning()" title="Toplu Fatura Kes / SMS (Kısayol: S)">
+        <span>🧾 Toplu Fatura (SMS)</span>
+        <span class="kbd-tag">S</span>
+      </button>
+      <a href="/odeme-linki.html" target="_blank" class="btn-pro-action action-vip" title="VIP Ödeme Linki Oluşturucu (Kısayol: V)">
+        <span>🔗 VIP Link</span>
+        <span class="kbd-tag">V</span>
+      </a>
+      <button type="button" class="btn-pro-action action-wa btn-accounting-wa" onclick="AdminApp.openAccountingModal()" title="Muhasebeye WhatsApp ile Gönder (Kısayol: W)">
+        <span>📲 Muhasebe WA</span>
+        <span class="badge-accounting-count" id="accountingSelectedBadge" style="display:none;">0</span>
+        <span class="kbd-tag">W</span>
+      </button>
+    </div>
+
+    <div class="quick-actions-group">
+      <button type="button" class="btn-pro-action action-refresh" onclick="AdminApp.loadOrders()" title="Verileri Canlı Yenile (Kısayol: R)">
+        <span>🔄 Yenile</span>
+        <span class="kbd-tag">R</span>
+      </button>
+      <button type="button" class="btn-pro-action action-help" onclick="AdminApp.toggleShortcutHelp()" title="Klavye Kısayolları Rehberi (Kısayol: ?)">
+        <span>⌨️ Kısayollar</span>
+        <span class="kbd-tag">?</span>
+      </button>
+    </div>
+  </div>
+
   <!-- ANA NAVİGASYON SEKMELERİ (1. SİPARİŞ & TAHSİLAT | 2. MAĞAZA FATURALARI | 3. ÖNGÖRÜ & FİZİBİLİTE | 4. SİSTEM GÜNCELLEMELERİ) -->
   <nav class="admin-tab-nav">
     <button type="button" class="admin-tab-btn active" id="tabBtnOrders" onclick="AdminApp.switchTab('orders')">
@@ -2709,11 +2942,6 @@
       <span>Öngörü & Fizibilite</span>
       <span class="tab-btn-badge" id="tabBadgeFeasibility" style="background:linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); color:#92400E; border:1px solid #F59E0B; font-weight:800;">Simülatör</span>
     </button>
-    <button type="button" class="admin-tab-btn" id="tabBtnUpdates" onclick="AdminApp.switchTab('updates')">
-      <span style="font-size:16px;">🔄</span>
-      <span>Sistem Güncellemeleri & Senkronizasyon</span>
-      <span class="tab-btn-badge" id="tabBadgeUpdates" style="background:#FEF3C7; color:#92400E; border:1px solid #FDE68A;">Kontrol Sizde</span>
-    </button>
   </nav>
 
   <!-- ======================================================== -->
@@ -2721,43 +2949,25 @@
   <!-- ======================================================== -->
   <div id="ordersTabContent">
 
-    <!-- 1. ÜST HERO & HIZLI İŞLEM PANELİ (STRIPE EXECUTIVE ORDER BANNER) -->
-    <div class="statement-header-banner" style="background:linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 40%, #FFFDF5 100%); border:2px solid #86EFAC; box-shadow:0 8px 30px rgba(16, 185, 129, 0.08);">
-      
-      <!-- Üst Başlık & Hızlı Rozet -->
-      <div class="statement-title-block">
-        <div style="display:inline-flex; align-items:center; gap:6px; background:#DCFCE7; color:#15803D; border:1px solid #86EFAC; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:0.8px; width:fit-content; margin-bottom:8px;">
-          <span>⚡</span> CANLI TAHSİLAT PORTALI
+    <!-- 1. SAKİN & ZARİF BAŞLIK BLOĞU (LOW-COGNITIVE LOAD HERO) -->
+    <div class="statement-header-banner" style="background:#FFFFFF; border:1.5px solid #E2E8F0; padding:14px 20px; border-radius:14px; margin-bottom:16px; box-shadow:0 1px 3px rgba(0,0,0,0.03);">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+        <div class="statement-title-block" style="margin:0;">
+          <h2 class="statement-main-title" style="font-size:18px; color:#0F172A; font-weight:800; margin:0 0 2px; display:flex; align-items:center; gap:8px;">
+            <span>📋</span>
+            <span>Sipariş ve Tahsilat Portalı</span>
+          </h2>
+          <div class="statement-subtitle" style="font-size:12px; color:#64748B; font-weight:500;">
+            Online & Showroom Satışları, e-Arşiv Fatura Takibi ve Muhasebe Entegrasyonu
+          </div>
         </div>
-        <h2 class="statement-main-title" style="font-size:22px; color:#064E3B; font-family:'Playfair Display',serif; font-weight:800; margin:0 0 4px;">
-          <span>📋</span>
-          <span>Sipariş & Tahsilat Yönetimi</span>
-        </h2>
-        <div class="statement-subtitle" style="font-size:12.5px; color:#166534; font-weight:600; line-height:1.4;">
-          Online & Showroom Altın/Saat Satışları, e-Arşiv Fatura Takibi ve Muhasebe Entegrasyonu
+
+        <div style="display:flex; align-items:center; gap:8px;">
+          <button type="button" class="btn-admin-secondary" onclick="AdminApp.exportToExcel()" style="font-size:12px; padding:6px 12px; border-radius:8px;" title="Muhasebe için Formatlı Excel (.xls) Raporu İndir">
+            <span>📊 Excel İndir</span>
+          </button>
         </div>
       </div>
-
-      <!-- SAĞ HIZLI İŞLEM PANELİ -->
-      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-        <button type="button" class="btn-admin-primary" style="background:linear-gradient(135deg, #0284C7 0%, #0369A1 100%); border-color:#0284C7; color:#FFF; font-weight:800; font-size:13px; min-height:44px; border-radius:10px; display:inline-flex; align-items:center; gap:6px; box-shadow:0 4px 14px rgba(2,132,199,0.25);" onclick="AdminApp.openManualEftModal()" title="Kuveyt Türk, Ziraat Katılım veya VakıfBank'a gelen EFT/Havale müşteri ödemelerini sisteme işle (%5 kâr / %95 net hakediş ile Ekstreye otomatik kaydedilir)">
-          <span>🏦 ➕ Manuel EFT / Havale Girişi</span>
-        </button>
-        <button type="button" class="btn-admin-primary" style="background:linear-gradient(135deg, #0284C7 0%, #0B6B3A 100%); border-color:#0B6B3A; color:#FFF; font-weight:800; font-size:13px; min-height:44px; border-radius:10px; display:inline-flex; align-items:center; gap:6px; box-shadow:0 4px 14px rgba(11,107,58,0.25);" onclick="AdminApp.openManualOrderModal()" title="Kuveyt Türk, Ziraat Katılım veya fiziki POS kanallarından geçen tahsilatı sisteme işle">
-          <span>➕ Manuel POS Tahsilatı</span>
-        </button>
-        <a href="/odeme-linki.html" target="_blank" class="btn-admin-primary" style="background:linear-gradient(135deg, #B45309 0%, #D97706 100%); border-color:#B45309; color:#FFF; font-weight:800; font-size:13px; min-height:44px; border-radius:10px; text-decoration:none; display:inline-flex; align-items:center; gap:6px; box-shadow:0 4px 14px rgba(217,119,6,0.25);" title="Müşteriye özel WhatsApp VIP ödeme linki oluştur">
-          <span>🔗 VIP Ödeme Linki</span>
-        </a>
-        <button type="button" class="btn-admin-primary" style="background:linear-gradient(135deg, #059669 0%, #10B981 100%); border-color:#059669; color:#FFF; font-weight:800; font-size:13px; min-height:44px; border-radius:10px; box-shadow:0 4px 14px rgba(16,185,129,0.25);" onclick="AdminApp.startBatchInvoiceSigning()" title="Ödemesi alınmış faturası eksik tüm siparişleri tek bir SMS ile topluca mühürle">
-          <span>🧾 Toplu Fatura Kes (SMS)</span>
-        </button>
-        <button type="button" class="btn-admin-primary btn-accounting-wa" style="background:linear-gradient(135deg, #047857 0%, #065F46 100%); min-height:44px; border-radius:10px; font-size:13px; font-weight:800;" onclick="AdminApp.openAccountingModal()" title="İmzalı faturaları WhatsApp üzerinden Muhasebeye (+90 541 930 53 72) gönder">
-          <span>📲 Muhasebeye Gönder</span>
-          <span class="badge-accounting-count" id="accountingSelectedBadge" style="display:none;">0</span>
-        </button>
-      </div>
-
     </div>
 
     <!-- 2. FİLTRE VE TARİH SEÇİM ÇUBUĞU -->
@@ -2765,29 +2975,31 @@
       
       <!-- Hızlı Tarih Seçim Butonları -->
       <div class="admin-presets">
+        <span style="font-size:11px; font-weight:800; color:#64748B; text-transform:uppercase; margin-right:4px;">Tarih:</span>
         <button class="btn-preset active" data-preset="all" onclick="AdminApp.selectPreset('all', this)">Tüm Zamanlar</button>
-        <button class="btn-preset" data-preset="thisMonth" onclick="AdminApp.selectPreset('thisMonth', this)" title="İçinde bulunulan tam ayı (01 - 30/31) seçer">Bu Ay</button>
-        <button class="btn-preset" data-preset="lastMonth" onclick="AdminApp.selectPreset('lastMonth', this)" title="Önceki tam ayı (01 - 30/31) seçer">Geçen Ay</button>
         <button class="btn-preset" data-preset="today" onclick="AdminApp.selectPreset('today', this)">Bugün</button>
         <button class="btn-preset" data-preset="yesterday" onclick="AdminApp.selectPreset('yesterday', this)">Dün</button>
         <button class="btn-preset" data-preset="last7" onclick="AdminApp.selectPreset('last7', this)">Son 7 Gün</button>
+        <button class="btn-preset" data-preset="thisMonth" onclick="AdminApp.selectPreset('thisMonth', this)" title="İçinde bulunulan tam ayı (01 - 30/31) seçer">Bu Ay</button>
+        <button class="btn-preset" data-preset="lastMonth" onclick="AdminApp.selectPreset('lastMonth', this)" title="Önceki tam ayı (01 - 30/31) seçer">Geçen Ay</button>
         <button class="btn-preset" data-preset="last30" onclick="AdminApp.selectPreset('last30', this)">Son 30 Gün</button>
       </div>
 
       <div class="admin-filter-row">
         <div class="date-inputs-group">
           <div class="date-input-box">
-            <label for="startDate">📅 Başlangıç Tarihi</label>
+            <label for="startDate">📅 Başlangıç</label>
             <input type="date" id="startDate" onchange="AdminApp.onCustomDateChange()">
           </div>
           <div class="date-input-box">
-            <label for="endDate">📅 Bitiş Tarihi</label>
+            <label for="endDate">📅 Bitiş</label>
             <input type="date" id="endDate" onchange="AdminApp.onCustomDateChange()">
           </div>
         </div>
 
-        <div>
-          <input type="text" id="searchInput" class="admin-search-input" placeholder="🔍 Sipariş no, müşteri adı veya telefon ara..." oninput="AdminApp.filterTable()">
+        <div style="position:relative; flex:1;">
+          <input type="text" id="searchInput" class="admin-search-input" placeholder="🔍 Sipariş no, müşteri adı veya telefon ara... [/]" oninput="AdminApp.filterTable()">
+          <span style="position:absolute; right:12px; top:50%; transform:translateY(-50%); pointer-events:none;" class="kbd-tag">/</span>
         </div>
 
         <div>
@@ -2801,18 +3013,32 @@
             <option value="ALL">📋 Tüm Kayıtlar (Hepsi)</option>
           </select>
         </div>
+      </div>
 
-        <div class="admin-action-btn-group">
-          <button class="btn-admin-secondary" onclick="AdminApp.sendTestPush(event)" title="Telefona ntfy test bildirimi gönder">
-            <span>📱 Test Bildirimi</span>
-          </button>
-          <button class="btn-admin-secondary" onclick="AdminApp.exportToExcel()" title="Muhasebe için Formatlı Excel (.xls) Raporu İndir">
-            <span>📊 Excel İndir</span>
-          </button>
-          <button class="btn-admin-primary" onclick="AdminApp.loadOrders()" title="Kayıtları Canlı Yenile">
-            <span>🔄 Yenile</span>
-          </button>
-        </div>
+      <!-- Akıllı Durum Hapları (Smart Status Pills) -->
+      <div class="status-pills-container">
+        <span style="font-size:11px; font-weight:800; color:#64748B; text-transform:uppercase; margin-right:4px;">Hızlı Filtre:</span>
+        <button type="button" class="btn-status-pill active" data-status="PAID" onclick="AdminApp.setStatusPill('PAID')">
+          <span>✅ Onaylılar</span>
+        </button>
+        <button type="button" class="btn-status-pill" data-status="INVOICE_PENDING" onclick="AdminApp.setStatusPill('INVOICE_PENDING')">
+          <span>⚠️ Faturası Eksik</span>
+        </button>
+        <button type="button" class="btn-status-pill" data-status="INVOICE_SIGNED" onclick="AdminApp.setStatusPill('INVOICE_SIGNED')">
+          <span>🧾 Faturası Kesilen</span>
+        </button>
+        <button type="button" class="btn-status-pill" data-status="NO_IDENTITY" onclick="AdminApp.setStatusPill('NO_IDENTITY')">
+          <span>⚠️ Kimliksiz</span>
+        </button>
+        <button type="button" class="btn-status-pill" data-status="PENDING" onclick="AdminApp.setStatusPill('PENDING')">
+          <span>⏳ Bekleyen</span>
+        </button>
+        <button type="button" class="btn-status-pill" data-status="FAILED" onclick="AdminApp.setStatusPill('FAILED')">
+          <span>❌ İptal / Başarısız</span>
+        </button>
+        <button type="button" class="btn-status-pill" data-status="ALL" onclick="AdminApp.setStatusPill('ALL')">
+          <span>📋 Hepsi</span>
+        </button>
       </div>
 
     </section>
@@ -2959,238 +3185,153 @@
           <!-- SOL KOLON: ADIM 1 (MÜŞTERİ) + ADIM 2 (ÜRÜN KALEMLERİ) -->
           <div style="display:flex; flex-direction:column; gap:16px;">
             
-            <!-- ADIM 1: MÜŞTERİ BİLGİLERİ -->
-            <div style="background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:12px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,0.03);">
-              <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid #EDF2F7;">
-                <span style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; background:#084C47; color:#FFF; border-radius:50%; font-size:13px; font-weight:800;">1</span>
+            <!-- ADIM 1: MÜŞTERİ BİLGİLERİ (SAF, HIZLI VE FERAH) -->
+            <div style="background:#FFFFFF; border:1.5px solid #E2E8F0; border-radius:12px; padding:18px; box-shadow:0 1px 3px rgba(0,0,0,0.03);">
+              <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid #F1F5F9;">
+                <span style="display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; background:#084C47; color:#FFF; border-radius:50%; font-size:12px; font-weight:800;">1</span>
                 <h3 style="margin:0; font-size:15px; font-weight:800; color:#0F172A;">Alıcı / Müşteri Bilgileri</h3>
-                <span style="font-size:11.5px; font-weight:700; color:#64748B; margin-left:auto;">* Zorunlu Alanlar</span>
               </div>
 
-              <div class="form-grid-3" style="margin-bottom:10px;">
+              <!-- 3 Temel Alan: İsim, TCKN/VKN, Fatura Tarihi -->
+              <div class="form-grid-3" style="margin-bottom:12px;">
                 <div class="form-field-group">
-                  <label class="form-field-label" for="storeCustName" style="color:#1E293B; font-weight:800;">Alıcı Ad Soyad / Yetkili: *</label>
+                  <label class="form-field-label" for="storeCustName" style="color:#0F172A; font-weight:700;">Alıcı Ad Soyad / Yetkili: *</label>
                   <input type="text" id="storeCustName" class="form-field-input" placeholder="Örn: Mehmet Demir veya Firma Yetkilisi" style="font-weight:700; color:#0F172A;" required oninput="AdminApp.handleStoreCustIdentityInput()">
                 </div>
 
                 <div class="form-field-group">
                   <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <label class="form-field-label" for="storeCustIdentity" style="color:#1E293B; font-weight:800; margin:0;">TCKN / VKN: *</label>
+                    <label class="form-field-label" for="storeCustIdentity" style="color:#0F172A; font-weight:700; margin:0;">TCKN / VKN: *</label>
                     <span id="storeCustIdentityTypeBadge" style="font-size:10px; font-weight:800; padding:1px 6px; border-radius:4px; background:#F1F5F9; color:#475569;">Bireysel / Kurumsal</span>
                   </div>
-                  <input type="text" id="storeCustIdentity" class="form-field-input" placeholder="11 haneli TCKN veya 10 haneli VKN" maxlength="11" style="font-weight:700; color:#0F172A; font-family:monospace; margin-top:3px;" required oninput="AdminApp.handleStoreCustIdentityInput()">
-                  <span style="font-size:10.5px; color:#475569; font-weight:600; margin-top:2px;">ℹ️ Bireysel TCKN (11 hane), Kurumsal Vergi No (10 hane) veya Nihai Tüketici için <b>11111111111</b>.</span>
+                  <input type="text" id="storeCustIdentity" class="form-field-input" placeholder="11 haneli TCKN veya 10 haneli VKN" maxlength="11" style="font-weight:700; color:#0F172A; font-family:monospace;" required oninput="AdminApp.handleStoreCustIdentityInput()">
                 </div>
 
                 <div class="form-field-group">
-                  <label class="form-field-label" for="storeInvoiceDate" style="color:#1E293B; font-weight:800;">Fatura Tarihi: *</label>
+                  <label class="form-field-label" for="storeInvoiceDate" style="color:#0F172A; font-weight:700;">Fatura Tarihi: *</label>
                   <input type="date" id="storeInvoiceDate" class="form-field-input" style="font-weight:700; color:#0F172A;" required>
-                  <span style="font-size:10.5px; color:#475569; font-weight:600; margin-top:2px;">ℹ️ Resmi GİB e-Arşiv faturasına seçilen bu tarih basılır.</span>
                 </div>
               </div>
 
-              <!-- 🏢 KURUMSAL FATURA BİLGİLERİ (FİRMA ÜNVANI & VERGİ DAİRESİ) -->
-              <div style="display:grid; grid-template-columns:1.4fr 1fr; gap:12px; margin-top:10px; margin-bottom:10px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:10px 12px;">
-                <div class="form-field-group">
-                  <label class="form-field-label" for="storeCustCompanyName" style="color:#0F172A; font-weight:800;">
-                    🏢 Firma / Şirket Ticari Unvanı (VKN Faturalarında Resmi Başlık):
+              <!-- 🏢 KURUMSAL FATURA (VKN) EK BİLGİLERİ -->
+              <div style="display:grid; grid-template-columns:1.5fr 1fr; gap:12px; margin-bottom:12px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:10px 12px;">
+                <div class="form-field-group" style="margin-bottom:0;">
+                  <label class="form-field-label" for="storeCustCompanyName" style="color:#334155; font-weight:700;">
+                    🏢 Firma Ticari Unvanı (Kurumsal VKN):
                   </label>
-                  <input type="text" id="storeCustCompanyName" class="form-field-input" placeholder="Örn: ABC Kuyumculuk Mücevherat San. ve Tic. Ltd. Şti." style="font-weight:700; color:#0F172A; background:#FFF;">
-                  <span style="font-size:10.5px; color:#64748B; font-weight:600;">10 haneli VKN girildiğinde GİB e-Arşiv faturasının "SAYIN" başlığı altına bu resmi unvan basılır.</span>
+                  <input type="text" id="storeCustCompanyName" class="form-field-input" placeholder="Örn: ABC Kuyumculuk Mücevherat Ltd. Şti." style="font-weight:600; color:#0F172A; background:#FFF;">
                 </div>
 
-                <div class="form-field-group">
-                  <label class="form-field-label" for="storeCustTaxOffice" style="color:#0F172A; font-weight:800;">
-                    🏛️ Vergi Dairesi (VKN / Kurumsal):
+                <div class="form-field-group" style="margin-bottom:0;">
+                  <label class="form-field-label" for="storeCustTaxOffice" style="color:#334155; font-weight:700;">
+                    🏛️ Vergi Dairesi:
                   </label>
-                  <input type="text" id="storeCustTaxOffice" class="form-field-input" placeholder="Örn: Mevlana Vergi Dairesi" style="font-weight:700; color:#0F172A; background:#FFF;">
-                  <span style="font-size:10.5px; color:#64748B; font-weight:600;">Fatura çıktısında "Vergi Dairesi" satırına eklenir.</span>
+                  <input type="text" id="storeCustTaxOffice" class="form-field-input" placeholder="Örn: Konak Vergi Dairesi" style="font-weight:600; color:#0F172A; background:#FFF;">
                 </div>
               </div>
 
-              <!-- 🌟 Alıcı Adres Satırı & İletişim Bilgileri -->
-              <div style="display:grid; grid-template-columns:1.8fr 1fr 1fr; gap:12px; margin-top:10px;">
-                <div class="form-field-group">
-                  <label class="form-field-label" for="storeCustAddress" style="color:#1E293B; font-weight:800;">Alıcı Açık Adresi (Fatura Adresi): *</label>
-                  <input type="text" id="storeCustAddress" class="form-field-input" placeholder="Örn: Fevziçakmak Mah. 10432. Sk. No:2 Karatay / Konya" value="Menderes Cad. No:231/B Buca İzmir" style="font-weight:600; color:#0F172A;">
+              <!-- Adres ve İletişim -->
+              <div style="display:grid; grid-template-columns:1.8fr 1fr 1fr; gap:12px; margin-bottom:12px;">
+                <div class="form-field-group" style="margin-bottom:0;">
+                  <label class="form-field-label" for="storeCustAddress" style="color:#334155; font-weight:700;">Fatura Adresi: *</label>
+                  <input type="text" id="storeCustAddress" class="form-field-input" placeholder="Açık adres..." value="Menderes Cad. No:231/B Buca İzmir" style="font-weight:600; color:#0F172A;">
                 </div>
 
-                <div class="form-field-group">
-                  <label class="form-field-label" for="storeCustPhone" style="color:#1E293B; font-weight:800;">Telefon (Opsiyonel):</label>
+                <div class="form-field-group" style="margin-bottom:0;">
+                  <label class="form-field-label" for="storeCustPhone" style="color:#334155; font-weight:700;">Telefon (Opsiyonel):</label>
                   <input type="tel" id="storeCustPhone" class="form-field-input" placeholder="05XX XXX XX XX" style="font-weight:600; color:#0F172A;">
                 </div>
 
-                <div class="form-field-group">
-                  <label class="form-field-label" for="storeCustEmail" style="color:#1E293B; font-weight:800;">E-Posta (Opsiyonel):</label>
+                <div class="form-field-group" style="margin-bottom:0;">
+                  <label class="form-field-label" for="storeCustEmail" style="color:#334155; font-weight:700;">E-Posta (Opsiyonel):</label>
                   <input type="email" id="storeCustEmail" class="form-field-input" placeholder="ornek@musteri.com" style="font-weight:600; color:#0F172A;">
                 </div>
               </div>
 
-              <!-- 💰 ÖDEME KANALI & TAHSİLAT YÖNTEMİ SEÇİMİ -->
-              <div id="storePaymentMethodContainer" style="background:#F0F9FF; border:1.5px solid #BAE6FD; border-radius:10px; padding:14px 16px; margin-top:14px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:6px;">
+              <!-- 💰 ÖDEME YÖNTEMİ SEÇİMİ -->
+              <div id="storePaymentMethodContainer" style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px; padding:12px 14px; margin-top:12px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                   <div style="display:flex; align-items:center; gap:8px;">
-                    <span style="font-size:18px;">💰</span>
-                    <strong style="font-size:13px; color:#0369A1;">Ödeme Yöntemi: *</strong>
-                    <span id="storePaymentMethodBadge" style="font-size:10.5px; font-weight:800; background:#DBEAFE; color:#1E40AF; padding:2px 8px; border-radius:10px;">Banka Havalesi / EFT</span>
-                  </div>
-                  <div style="font-size:11px; color:#0284C7; font-weight:600;">
-                    Yasal evrak seti seçilen ödeme yöntemine göre otomatik hazırlanır
+                    <span style="font-size:16px;">💰</span>
+                    <strong style="font-size:12.5px; color:#0F172A;">Ödeme Kanalı:</strong>
+                    <span id="storePaymentMethodBadge" style="font-size:10.5px; font-weight:800; background:#E0F2FE; color:#0369A1; padding:2px 8px; border-radius:10px;">Banka Havalesi / EFT</span>
                   </div>
                 </div>
 
-                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:10px;">
-                  <!-- Havale / EFT -->
-                  <label id="storeOptHavale" class="store-payment-option" style="background:#FFF; border:2px solid #3B82F6; border-radius:8px; padding:12px 10px; cursor:pointer; display:flex; align-items:center; gap:8px; transition:all 0.2s;">
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:8px;">
+                  <label id="storeOptHavale" class="store-payment-option" style="background:#FFF; border:2px solid #0284C7; border-radius:8px; padding:8px 10px; cursor:pointer; display:flex; align-items:center; gap:8px;">
                     <input type="radio" name="storePaymentChannel" value="HAVALE_EFT" checked onchange="AdminApp.handleStorePaymentMethodChange(this.value)">
-                    <div>
-                      <div style="font-size:13px; font-weight:800; color:#1E3A8A;">🏦 Banka Havalesi / EFT</div>
-                      <div style="font-size:10.5px; color:#64748B; margin-top:1px;">Banka transferi ile tahsilat</div>
-                    </div>
+                    <span style="font-size:12.5px; font-weight:700; color:#0369A1;">🏦 Havale / EFT</span>
                   </label>
 
-                  <!-- Nakit Ödeme -->
-                  <label id="storeOptNakit" class="store-payment-option" style="background:#FFF; border:1.5px solid #CBD5E1; border-radius:8px; padding:12px 10px; cursor:pointer; display:flex; align-items:center; gap:8px; transition:all 0.2s;">
+                  <label id="storeOptNakit" class="store-payment-option" style="background:#FFF; border:1px solid #CBD5E1; border-radius:8px; padding:8px 10px; cursor:pointer; display:flex; align-items:center; gap:8px;">
                     <input type="radio" name="storePaymentChannel" value="NAKIT" onchange="AdminApp.handleStorePaymentMethodChange(this.value)">
-                    <div>
-                      <div style="font-size:13px; font-weight:800; color:#065F46;">💵 Nakit Ödeme</div>
-                      <div style="font-size:10.5px; color:#64748B; margin-top:1px;">Elden nakit kasa tahsilatı</div>
-                    </div>
+                    <span style="font-size:12.5px; font-weight:700; color:#065F46;">💵 Nakit Kasa</span>
                   </label>
 
-                  <!-- Kredi Kartı / POS -->
-                  <label id="storeOptKart" class="store-payment-option" style="background:#FFF; border:1.5px solid #CBD5E1; border-radius:8px; padding:12px 10px; cursor:pointer; display:flex; align-items:center; gap:8px; transition:all 0.2s;">
+                  <label id="storeOptKart" class="store-payment-option" style="background:#FFF; border:1px solid #CBD5E1; border-radius:8px; padding:8px 10px; cursor:pointer; display:flex; align-items:center; gap:8px;">
                     <input type="radio" name="storePaymentChannel" value="KREDI_KARTI" onchange="AdminApp.handleStorePaymentMethodChange(this.value)">
-                    <div>
-                      <div style="font-size:13px; font-weight:800; color:#6B21A8;">💳 Kredi Kartı / POS</div>
-                      <div style="font-size:10.5px; color:#64748B; margin-top:1px;">POS cihazı ile kart çekimi</div>
-                    </div>
+                    <span style="font-size:12.5px; font-weight:700; color:#7E22CE;">💳 Kredi Kartı / POS</span>
                   </label>
                 </div>
 
-                <!-- Havale / EFT Dekont No Alanı (Opsiyonel) -->
-                <div id="storeBankDetailsRow" style="margin-top:10px; padding-top:10px; border-top:1px dashed #BAE6FD;">
-                  <div class="form-field-group" style="margin-bottom:0;">
-                    <label class="form-field-label" for="storeReceiptNo" style="color:#1E3A8A; font-weight:800;">Banka Dekont / Referans No (Opsiyonel):</label>
-                    <input type="text" id="storeReceiptNo" class="form-field-input" placeholder="Varsa dekont / referans no yazınız" style="font-weight:600; color:#0F172A;">
-                  </div>
+                <div id="storeBankDetailsRow" style="margin-top:8px; padding-top:8px; border-top:1px dashed #CBD5E1;">
+                  <input type="text" id="storeReceiptNo" class="form-field-input" placeholder="Banka Dekont / Referans No (Opsiyonel)" style="font-size:12px; font-weight:600; color:#0F172A;">
                 </div>
               </div>
 
-              <!-- 🪪 MASAK & MEVZUAT: MÜŞTERİ T.C. KİMLİK KARTI YÜKLEME ALANI (180.000 TL+ ZORUNLU) -->
-              <div id="storeIdentityContainerBox" style="background:#FFFDF7; border:2px dashed #CA8A04; border-radius:10px; padding:14px 16px; margin-top:14px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
-                  <div style="display:flex; align-items:center; gap:8px;">
-                    <span style="font-size:18px;">🪪</span>
-                    <strong style="font-size:13px; color:#854D0E;">Müşteri T.C. Kimlik Kartı / Pasaport Fotoğrafı:</strong>
-                    <span id="storeIdentityMasakBadge" style="font-size:10.5px; font-weight:800; background:#FEF08A; color:#854D0E; padding:2px 8px; border-radius:10px; border:1px solid #FACC15;">180.000 TL+ MASAK Zorunluluğu</span>
-                  </div>
-                  <div id="storeIdentityStatusBadge" style="font-size:11px; font-weight:700; color:#B45309;">
-                    (180.000 TL ve üzeri faturalarda kimlik yüklemek zorunludur)
-                  </div>
-                </div>
+              <!-- 🪪 KATLANABİLİR YASAL EVRAK & KİMLİK PANELİ (DÜŞÜK BİLİŞSEL YÜK) -->
+              <details style="margin-top:12px; background:#FAFAFA; border:1px solid #E2E8F0; border-radius:8px; padding:10px 14px;">
+                <summary style="font-size:12px; font-weight:700; color:#64748B; cursor:pointer; user-select:none; display:flex; align-items:center; justify-content:space-between;">
+                  <span>🪪 MASAK Kimlik Fotoğrafı & Yasal Evrak İndirme (Opsiyonel / 180.000 TL+)</span>
+                  <span style="font-size:10px; font-weight:800; color:#084C47; background:#E5ECE9; padding:2px 8px; border-radius:10px;">Genişlet / Daralt</span>
+                </summary>
 
-                <!-- Yasal Bilgilendirme Satırı -->
-                <div id="storeIdentityNotice" style="font-size:11px; color:#92400E; margin-bottom:8px; line-height:1.4;">
-                  ℹ️ MASAK ve Kuyumculuk Mevzuatı uyarınca <strong>180.000 TL ve üzerindeki</strong> tüm satışlarda müşterinin kimlik tespiti ve kimlik belgesi kopyasının alınması yasal zorunluluktur. 180.000 TL altındaki işlemlerde isteğe bağlıdır.
-                </div>
-
-                <!-- Önizleme Kartı (Yüklüyse) -->
-                <div id="storeIdentityPreviewBox" style="display:none; background:#FFF; border:1.5px solid #86EFAC; border-radius:8px; padding:10px 14px; margin-bottom:10px; align-items:center; justify-content:space-between; gap:12px;">
-                  <div style="display:flex; align-items:center; gap:12px; min-width:0;">
-                    <div style="width:48px; height:48px; border-radius:6px; overflow:hidden; border:1px solid #CBD5E1; background:#F8FAFC; flex-shrink:0; display:flex; align-items:center; justify-content:center;">
-                      <img id="storeIdentityPreviewImg" src="" alt="Kimlik Önizleme" style="width:100%; height:100%; object-fit:cover;">
-                      <span id="storeIdentityPreviewPdfIcon" style="display:none; font-size:24px;">📄</span>
+                <div style="margin-top:12px; padding-top:10px; border-top:1px solid #E2E8F0;">
+                  <!-- MASAK Kimlik Alanı -->
+                  <div id="storeIdentityContainerBox" style="background:#FFF; border:1.5px dashed #CBD5E1; border-radius:8px; padding:10px 12px; margin-bottom:10px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                      <strong style="font-size:12px; color:#334155;">Kimlik Kartı / Pasaport Fotoğrafı:</strong>
+                      <span id="storeIdentityMasakBadge" style="font-size:10px; font-weight:700; background:#FEF3C7; color:#92400E; padding:1px 6px; border-radius:6px;">180.000 TL+ MASAK</span>
                     </div>
-                    <div style="min-width:0;">
-                      <div style="font-size:12.5px; font-weight:800; color:#064E3B; display:flex; align-items:center; gap:6px;">
-                        <span>✅ Kimlik Belgesi Eklendi</span>
-                        <span id="storeIdentityFileName" style="font-size:11px; color:#64748B; font-weight:600; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:180px;"></span>
+
+                    <div id="storeIdentityPreviewBox" style="display:none; background:#F0FDF4; border:1px solid #86EFAC; border-radius:6px; padding:8px 12px; margin-bottom:8px; align-items:center; justify-content:space-between;">
+                      <div style="display:flex; align-items:center; gap:8px;">
+                        <img id="storeIdentityPreviewImg" src="" alt="Kimlik" style="width:36px; height:36px; object-fit:cover; border-radius:4px;">
+                        <span id="storeIdentityPreviewPdfIcon" style="display:none; font-size:20px;">📄</span>
+                        <span id="storeIdentityFileName" style="font-size:11.5px; font-weight:700; color:#065F46;"></span>
                       </div>
-                      <div style="font-size:11px; color:#059669; font-weight:600;">Bu belge doğrudan fatura arşivine ve yasal delil kaydına bağlanacaktır.</div>
+                      <div style="display:flex; gap:6px;">
+                        <button type="button" class="btn-admin-secondary" style="padding:2px 6px; font-size:11px;" onclick="AdminApp.viewCurrentStoreIdentityDoc()">İncele</button>
+                        <button type="button" class="btn-admin-secondary" style="padding:2px 6px; font-size:11px; color:#DC2626;" onclick="AdminApp.removeStoreIdentityDoc()">Kaldır</button>
+                      </div>
                     </div>
-                  </div>
-                  <div style="display:flex; gap:6px; flex-shrink:0;">
-                    <button type="button" class="btn-admin-secondary" style="padding:4px 8px; font-size:11.5px; color:#065F46; border-color:#86EFAC; background:#F0FDF4; font-weight:700;" onclick="AdminApp.viewCurrentStoreIdentityDoc()">
-                      🔍 İncele
-                    </button>
-                    <button type="button" class="btn-admin-secondary" style="padding:4px 8px; font-size:11.5px; color:#DC2626; border-color:#FCA5A5; background:#FEF2F2; font-weight:700;" onclick="AdminApp.removeStoreIdentityDoc()">
-                      🗑️ Kaldır
-                    </button>
-                  </div>
-                </div>
 
-                <!-- Yükleme Butonu & Sürükle Bırak -->
-                <div id="storeIdentityDropZone" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; background:#FEFCE8; border:1.5px dashed #EAB308; border-radius:8px; padding:10px 14px; cursor:pointer;" onclick="document.getElementById('storeIdentityFileInput').click()" ondragover="event.preventDefault(); this.style.background='#FEF08A';" ondragleave="this.style.background='#FEFCE8';" ondrop="event.preventDefault(); this.style.background='#FEFCE8'; AdminApp.handleStoreIdentityDrop(event);">
-                  <input type="file" id="storeIdentityFileInput" accept="image/png, image/jpeg, image/jpg, image/webp, application/pdf" style="display:none;" onchange="AdminApp.handleStoreIdentityUpload(event)">
-                  <div style="display:flex; align-items:center; gap:10px;">
-                    <span style="font-size:24px;">📥</span>
-                    <div>
-                      <div style="font-size:12px; font-weight:800; color:#713F12;">Kimlik Kartı / Pasaport Görseli Seç veya Sürükle Bırak</div>
-                      <div style="font-size:10.5px; color:#A16207;">Kamera çekimi, JPG, PNG veya PDF (Maks. 10MB)</div>
-                    </div>
-                  </div>
-                  <button type="button" class="btn-admin-primary" style="background:#CA8A04; border-color:#A16207; color:#FFF; font-weight:800; font-size:11.5px; padding:6px 14px;" onclick="event.stopPropagation(); document.getElementById('storeIdentityFileInput').click();">
-                    📂 Dosya Seç / Fotoğraf Yükle
-                  </button>
-                </div>
-
-                <!-- YASAL DOKÜMANTASYON & HUKUKİ EVRAKLAR İNDİRME PANELİ -->
-                <div style="background:#F8FAFC; border:1.5px solid #CBD5E1; border-radius:10px; padding:12px 14px; margin-top:12px;">
-                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
-                    <div style="display:flex; align-items:center; gap:8px;">
-                      <span style="font-size:18px;">📜</span>
-                      <strong style="font-size:12.5px; color:#1E293B;">Yasal Dokümantasyon & Hukuki Evrak İndirme:</strong>
-                      <span style="font-size:10.5px; font-weight:800; background:#E2E8F0; color:#334155; padding:2px 8px; border-radius:10px;">Resmi Mevzuat Formatı</span>
-                    </div>
-                    <div style="font-size:11px; color:#64748B; font-weight:600;">
-                      (İstediğiniz an tek tıkla resmi A4 PDF formatında indirip yazdırabilirsiniz)
+                    <div id="storeIdentityDropZone" style="display:flex; align-items:center; justify-content:space-between; gap:10px; background:#F8FAFC; border:1px dashed #CBD5E1; border-radius:6px; padding:8px 12px; cursor:pointer;" onclick="document.getElementById('storeIdentityFileInput').click()">
+                      <input type="file" id="storeIdentityFileInput" accept="image/png, image/jpeg, image/jpg, image/webp, application/pdf" style="display:none;" onchange="AdminApp.handleStoreIdentityUpload(event)">
+                      <span style="font-size:11.5px; color:#64748B;">Kimlik fotoğrafı veya PDF seçin (Maks. 10MB)</span>
+                      <button type="button" class="btn-admin-secondary" style="font-size:11px; padding:4px 10px;" onclick="event.stopPropagation(); document.getElementById('storeIdentityFileInput').click();">Dosya Seç</button>
                     </div>
                   </div>
 
-                  <div style="font-size:11px; color:#475569; margin-bottom:10px; line-height:1.4;">
-                    Mağazada teslim edilen altın, pırlanta ve mücevherler için müşteriye imzalatılacak ve arşivlenecek yasal evrakları doğrudan indirin:
-                  </div>
-
-                  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:8px;">
-                    <!-- 1. Mağaza Teslim-Tesellüm Tutanağı (13) -->
-                    <button type="button" class="btn-admin-secondary" style="display:flex; align-items:center; justify-content:flex-start; gap:8px; padding:8px 10px; font-size:11.5px; font-weight:800; background:#FFFFFF; border-color:#0D9488; color:#0F766E; border-radius:8px; cursor:pointer;" onclick="AdminApp.printStoreFormDoc('delivery-tutanak')">
-                      <span style="font-size:18px;">📄</span>
-                      <div style="text-align:left; line-height:1.2;">
-                        <div>Teslim-Tesellüm Tutanağı (13)</div>
-                        <small style="font-size:10px; font-weight:500; color:#64748B;">Müşteri İmzalı Fiziki Altın Teslimi</small>
-                      </div>
+                  <!-- Yasal Evrak Butonları -->
+                  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:6px;">
+                    <button type="button" class="btn-admin-secondary" style="font-size:11px; padding:6px 8px;" onclick="AdminApp.printStoreFormDoc('delivery-tutanak')">
+                      <span>📄 Teslim Tutanağı</span>
                     </button>
-
-                    <!-- 2. Müşteri Tanıma & MASAK Kimlik Beyanı (12) -->
-                    <button type="button" class="btn-admin-secondary" style="display:flex; align-items:center; justify-content:flex-start; gap:8px; padding:8px 10px; font-size:11.5px; font-weight:800; background:#FFFFFF; border-color:#D97706; color:#B45309; border-radius:8px; cursor:pointer;" onclick="AdminApp.printStoreFormDoc('masak-kyc')">
-                      <span style="font-size:18px;">🪪</span>
-                      <div style="text-align:left; line-height:1.2;">
-                        <div>MASAK Kimlik Beyanı (12)</div>
-                        <small style="font-size:10px; font-weight:500; color:#64748B;">180.000 TL+ Kimlik Doğrulama</small>
-                      </div>
+                    <button type="button" class="btn-admin-secondary" style="font-size:11px; padding:6px 8px;" onclick="AdminApp.printStoreFormDoc('masak-kyc')">
+                      <span>🪪 MASAK Beyanı</span>
                     </button>
-
-                    <!-- 3. Yüksek Değerli Kıymetli Maden Teslim Belgesi (03) -->
-                    <button type="button" class="btn-admin-secondary" style="display:flex; align-items:center; justify-content:flex-start; gap:8px; padding:8px 10px; font-size:11.5px; font-weight:800; background:#FFFFFF; border-color:#6366F1; color:#4338CA; border-radius:8px; cursor:pointer;" onclick="AdminApp.printStoreFormDoc('high-value-delivery')">
-                      <span style="font-size:18px;">💎</span>
-                      <div style="text-align:left; line-height:1.2;">
-                        <div>Kıymetli Maden Teslimi (03)</div>
-                        <small style="font-size:10px; font-weight:500; color:#64748B;">12.000 TL+ Güvenli Showroom</small>
-                      </div>
+                    <button type="button" class="btn-admin-secondary" style="font-size:11px; padding:6px 8px;" onclick="AdminApp.printStoreFormDoc('high-value-delivery')">
+                      <span>💎 Kıymetli Maden Teslimi</span>
                     </button>
-
-                    <!-- 4. 14'lü Tam Hukuki Delil ve Sözleşme Kitapçığı -->
-                    <button type="button" class="btn-admin-secondary" style="display:flex; align-items:center; justify-content:flex-start; gap:8px; padding:8px 10px; font-size:11.5px; font-weight:800; background:#042926; border-color:#042926; color:#C2A768; border-radius:8px; cursor:pointer;" onclick="AdminApp.printStoreFormDoc('full-packet')">
-                      <span style="font-size:18px;">🏛️</span>
-                      <div style="text-align:left; line-height:1.2;">
-                        <div style="color:#FFF;">14'lü Tam Hukuki Dosya</div>
-                        <small style="font-size:10px; font-weight:500; color:#CBD5E1;">Banka & Hukuk Onaylı Kitapçık</small>
-                      </div>
+                    <button type="button" class="btn-admin-secondary" style="font-size:11px; padding:6px 8px;" onclick="AdminApp.printStoreFormDoc('full-packet')">
+                      <span>🏛️ 14'lü Tam Evrak Dosyası</span>
                     </button>
                   </div>
                 </div>
-              </div>
+              </details>
+
             </div>
 
             <!-- ADIM 2: ÜRÜN KALEMLERİ VE ŞABLONLAR -->
@@ -3206,205 +3347,129 @@
               </div>
 
               <!-- 🌟 1. SERBEST FATURA & KONTROLLÜ SATIR OLUŞTURMA ALANI (MANUEL KONTROL) -->
-              <div id="freeInvoiceCreatorCard" style="background:linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%); border:2px solid #0284C7; border-radius:12px; padding:16px; margin-bottom:16px; box-shadow:0 4px 15px rgba(2, 132, 199, 0.08);">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; padding-bottom:8px; border-bottom:1.5px solid #BAE6FD; flex-wrap:wrap; gap:8px;">
-                  <div style="display:flex; align-items:center; gap:8px;">
-                    <span style="font-size:18px;">✍️</span>
-                    <h4 style="margin:0; font-size:14px; font-weight:800; color:#0369A1; letter-spacing:0.3px;">
-                      Serbest Fatura & Özel Kalem Oluşturucu (Manuel Kontrol)
-                    </h4>
-                    <span style="font-size:10.5px; font-weight:800; background:#0284C7; color:#FFF; padding:2px 8px; border-radius:12px;">Özel Matrah / KDV Dahil</span>
-                  </div>
-                  <div style="font-size:11px; color:#0369A1; font-weight:700;">
-                    💡 Fatura tutarını yazın, KDV oranını belirleyin; KDV fiyata dahil hesaplanır, fatura genel toplamı kuruşu kuruşuna sabit kalır!
-                  </div>
-                </div>
-
-                <!-- 1. Satır: Ürün Açıklaması ve Adet -->
-                <div style="display:grid; grid-template-columns:1fr 100px; gap:12px; margin-bottom:12px; align-items:end;">
-                  <div>
-                    <label style="display:block; font-size:11.5px; font-weight:800; color:#0F172A; margin-bottom:4px;" for="freeItemName">
-                      1. Ürün / Kalem Açıklaması: *
-                    </label>
-                    <input type="text" id="freeItemName" class="form-field-input" placeholder="Örn: 22 Ayar Altın Bilezik" value="22 Ayar Altın / Mücevherat" style="font-size:13px; font-weight:700; color:#0F172A; width:100%;" oninput="AdminApp.handleFreeItemChange()">
-                  </div>
-
-                  <div>
-                    <label style="display:block; font-size:11.5px; font-weight:800; color:#0F172A; margin-bottom:4px; text-align:center;" for="freeItemQty">
-                      2. Adet: *
-                    </label>
-                    <input type="number" id="freeItemQty" min="1" step="1" value="1" class="form-field-input" style="font-size:13.5px; font-weight:800; text-align:center; color:#78350F; background:#FEF9C3; border:1.5px solid #F59E0B; border-radius:6px; width:100%;" oninput="AdminApp.handleFreeItemChange()">
-                  </div>
-                </div>
-
-                <!-- 2. Satır: Fatura Tutarı, KDV Oranı ve İşçilik -->
-                <div style="display:grid; grid-template-columns:1.3fr 1.1fr 1fr; gap:12px; margin-bottom:12px; align-items:end;">
-                  <!-- Fatura Tutarı -->
-                  <div>
-                    <label style="display:block; font-size:11.5px; font-weight:800; color:#0F172A; margin-bottom:4px;" for="freeItemPrice">
-                      3. Fatura Tutarı (₺): *
-                    </label>
-                    <div style="position:relative;">
-                      <input type="text" id="freeItemPrice" class="form-field-input" placeholder="Örn: 96.000 veya 96000" style="font-size:14px; font-weight:800; color:#78350F; padding-left:26px; border:2px solid #F59E0B; background:#FEF9C3; width:100%;" oninput="AdminApp.handleFreeItemChange()">
-                      <span style="position:absolute; left:8px; top:50%; transform:translateY(-50%); font-weight:800; color:#B45309; font-size:14px;">₺</span>
-                    </div>
-                  </div>
-
-                  <!-- KDV Oranı -->
-                  <div>
-                    <label style="display:block; font-size:11.5px; font-weight:800; color:#0F172A; margin-bottom:4px;" for="freeItemKdvRate">
-                      4. KDV Oranı: *
-                    </label>
-                    <select id="freeItemKdvRate" class="form-field-input" style="font-size:12.5px; font-weight:800; color:#0F172A; border:1.5px solid #0284C7; background:#FFF; width:100%;" onchange="AdminApp.handleFreeItemChange()">
-                      <option value="0" selected>%0 (Özel Matrah)</option>
-                      <option value="1">%1 (KDV Dahil)</option>
-                      <option value="1.5">%1,5 (KDV Dahil)</option>
-                      <option value="2">%2 (KDV Dahil)</option>
-                      <option value="10">%10 (KDV Dahil)</option>
-                      <option value="20">%20 (KDV Dahil Saat)</option>
-                    </select>
-                  </div>
-
-                  <!-- İşçilik Oranı (%) -->
-                  <div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                      <label style="font-size:11.5px; font-weight:800; color:#0F172A;" for="freeItemLaborRate">
-                        5. İşçilik (%):
-                      </label>
-                      <span style="font-size:10px; font-weight:700; color:#0284C7;">%20 KDV Dahil</span>
-                    </div>
-                    <div style="position:relative;">
-                      <input type="text" id="freeItemLaborRate" class="form-field-input" placeholder="Örn: 1.5 veya 1,5" value="0" style="font-size:13.5px; font-weight:800; color:#0284C7; text-align:center; padding-right:22px; border:2px solid #0284C7; width:100%;" oninput="AdminApp.handleFreeItemChange()">
-                      <span style="position:absolute; right:8px; top:50%; transform:translateY(-50%); font-weight:800; color:#0284C7; font-size:12px;">%</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Hızlı Tutar, KDV & İşçilik Çipleri -->
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:6px;">
-                  <div style="display:flex; gap:4px; align-items:center; flex-wrap:wrap;">
-                    <span style="font-size:10.5px; font-weight:700; color:#64748B;">Hızlı Tutar:</span>
-                    <button type="button" class="btn-template-chip" style="padding:2px 6px; font-size:10.5px; background:#FFF;" onclick="AdminApp.setFreeItemAmount(50000)">₺50B</button>
-                    <button type="button" class="btn-template-chip" style="padding:2px 6px; font-size:10.5px; background:#FFF;" onclick="AdminApp.setFreeItemAmount(96000)">₺96B</button>
-                    <button type="button" class="btn-template-chip" style="padding:2px 6px; font-size:10.5px; background:#FFF;" onclick="AdminApp.setFreeItemAmount(100000)">₺100B</button>
-                    <button type="button" class="btn-template-chip" style="padding:2px 6px; font-size:10.5px; background:#FFF;" onclick="AdminApp.setFreeItemAmount(120000)">₺120B</button>
-                    <button type="button" class="btn-template-chip" style="padding:2px 6px; font-size:10.5px; background:#FFF;" onclick="AdminApp.setFreeItemAmount(150000)">₺150B</button>
-                    <button type="button" class="btn-template-chip" style="padding:2px 6px; font-size:10.5px; background:#FFF;" onclick="AdminApp.setFreeItemAmount(200000)">₺200B</button>
-                  </div>
-                  <div style="display:flex; gap:4px; align-items:center; flex-wrap:wrap;">
-                    <span style="font-size:10.5px; font-weight:700; color:#64748B;">Hızlı İşçilik:</span>
-                    <button type="button" class="btn-template-chip" style="padding:2px 6px; font-size:10.5px; background:#FFF; font-weight:700; color:#0284C7;" onclick="AdminApp.setFreeItemLaborRate(0)">%0</button>
-                    <button type="button" class="btn-template-chip" style="padding:2px 6px; font-size:10.5px; background:#FFF; font-weight:700; color:#0284C7;" onclick="AdminApp.setFreeItemLaborRate(1)">%1</button>
-                    <button type="button" class="btn-template-chip" style="padding:2px 6px; font-size:10.5px; background:#FFF; font-weight:700; color:#0284C7;" onclick="AdminApp.setFreeItemLaborRate(1.5)">%1,5</button>
-                    <button type="button" class="btn-template-chip" style="padding:2px 6px; font-size:10.5px; background:#FFF; font-weight:700; color:#0284C7;" onclick="AdminApp.setFreeItemLaborRate(2)">%2</button>
-                  </div>
-                </div>
-
-                <!-- Anlık Canlı Dağılım Çizelgesi & Butonlar -->
-                <div style="display:flex; justify-content:space-between; align-items:center; background:#FFFFFF; border:1.5px solid #0284C7; border-radius:10px; padding:10px 14px; flex-wrap:wrap; gap:10px;">
-                  <div style="display:flex; gap:16px; align-items:center; flex-wrap:wrap;">
-                    <div>
-                      <div style="font-size:10px; color:#64748B; font-weight:700; text-transform:uppercase;">Kıymetli Maden (%0 KDV)</div>
-                      <div style="font-size:13.5px; font-weight:800; color:#0F172A;" id="freeItemLiveNetText">₺0,00</div>
-                    </div>
-                    <div style="border-left:1px solid #E2E8F0; padding-left:16px;">
-                      <div style="font-size:10px; color:#64748B; font-weight:700; text-transform:uppercase;">İşçilik (%20 KDV Dahil)</div>
-                      <div style="font-size:13.5px; font-weight:800; color:#0284C7;" id="freeItemLiveKdvText">₺0,00</div>
-                    </div>
-                    <div style="border-left:1px solid #E2E8F0; padding-left:16px;">
-                      <div style="font-size:10px; color:#64748B; font-weight:700; text-transform:uppercase;">Fatura Toplamı</div>
-                      <div style="font-size:15px; font-weight:800; color:#047857;" id="freeItemLiveTotalText">₺0,00</div>
-                    </div>
-                  </div>
-
-                  <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-                    <!-- Tek Satır Olarak Uygula -->
-                    <button type="button" class="btn-admin-primary" style="background:linear-gradient(135deg, #0284C7 0%, #0369A1 100%); border-color:#0284C7; color:#FFF; font-weight:800; font-size:12px; padding:8px 14px; border-radius:8px; display:inline-flex; align-items:center; gap:5px; cursor:pointer;" onclick="AdminApp.applyFreeItemToInvoice(false)" title="Fatura kalemlerini bu tutarla (İşçilik dahil) faturaya aktarır">
-                      <span>⚡ Bu Kalemle Fatura Oluştur</span>
-                    </button>
-                    <!-- Satır Olarak Ekle -->
-                    <button type="button" class="btn-admin-secondary" style="background:#FFF; border:1.5px solid #0284C7; color:#0284C7; font-weight:800; font-size:12px; padding:8px 12px; border-radius:8px; display:inline-flex; align-items:center; gap:5px; cursor:pointer;" onclick="AdminApp.applyFreeItemToInvoice(true)" title="Mevcut satırların yanına yeni kalem olarak ilave eder">
-                      <span>➕ Satır Ekle</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- 🌟 2 AYRI VURGULU VE BASİTLEŞTİRİLMİŞ ŞABLON / FİYATLA ARAMA ALANI (ALTIN vs SAAT) -->
-              <div style="margin-bottom:16px; display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+              <!-- 🌟 SAFKAN VE ERGONOMİK HIZLI KALEM EKLEYİCİ (MODÜLER KONTROL) -->
+              <div style="background:#FFFFFF; border:1.5px solid #E2E8F0; border-radius:12px; padding:14px; margin-bottom:16px; box-shadow:0 2px 10px rgba(0,0,0,0.02);">
                 
-                <!-- 🟡 BÖLÜM 1: ALTIN & MÜCEVHERAT (%0 KDV ÖZEL MATRAH) -->
-                <div style="background:#FFFDF7; border:2px solid #F59E0B; border-radius:12px; padding:14px; box-shadow:0 2px 8px rgba(245,158,11,0.08); display:flex; flex-direction:column; justify-content:space-between;">
-                  <div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                      <div style="display:flex; align-items:center; gap:6px;">
-                        <span style="font-size:16px;">🪙</span>
-                        <h4 style="margin:0; font-size:13px; font-weight:800; color:#92400E;">Altın & Mücevherat</h4>
-                      </div>
-                      <span style="font-size:10px; font-weight:800; background:#FEF3C7; color:#92400E; padding:2px 6px; border-radius:6px; border:1px solid #FCD34D;">%0 KDV (Özel Matrah 23/f)</span>
-                    </div>
-                    <div style="font-size:11px; color:#78350F; margin-bottom:10px;">
-                      Yazılan rakama <strong>±%20 fiyat aralığındaki en yakın 5 altın ürününü</strong> anında bulur.
-                    </div>
-
-                    <!-- Fiyat Arama Girişi -->
-                    <div style="position:relative; margin-bottom:6px;">
-                      <input type="text" id="goldTargetPriceInput" class="form-field-input" placeholder="Hedef Altın Tutarını Girin (Örn: 96.000)" style="font-size:13px; font-weight:800; color:#92400E; padding-left:26px; border:1.5px solid #F59E0B; background:#FFF; width:100%;" oninput="AdminApp.searchProductsByTargetPrice('gold', this.value)">
-                      <span style="position:absolute; left:8px; top:50%; transform:translateY(-50%); font-weight:800; color:#F59E0B;">₺</span>
-                    </div>
-                  </div>
-
-                  <!-- Sonuç Listesi -->
-                  <div id="goldSearchResultsContainer" style="margin-top:6px; min-height:40px;">
-                    <div style="font-size:11px; color:#94A3B8; font-style:italic; padding:6px 0;">Hedef tutarı yazarak en yakın 5 altın modelini listeleyebilirsiniz.</div>
+                <!-- Sekmeli Başlık Hapları -->
+                <div style="display:flex; gap:6px; margin-bottom:12px; border-bottom:1px solid #F1F5F9; padding-bottom:8px; flex-wrap:wrap;">
+                  <button type="button" id="tabStoreModeFree" class="btn-preset active" style="padding:6px 14px; font-size:12px;" onclick="AdminApp.switchStoreItemMode('free')">
+                    <span>✍️ Hızlı Tutar Yaz (%0 / KDV)</span>
+                  </button>
+                  <button type="button" id="tabStoreModeGold" class="btn-preset" style="padding:6px 14px; font-size:12px;" onclick="AdminApp.switchStoreItemMode('gold')">
+                    <span>🪙 Altın Ürünü Ara</span>
+                  </button>
+                  <button type="button" id="tabStoreModeWatch" class="btn-preset" style="padding:6px 14px; font-size:12px;" onclick="AdminApp.switchStoreItemMode('watch')">
+                    <span>⌚ Lüks Saat Ara (%20)</span>
+                  </button>
+                  <div style="margin-left:auto; display:flex; gap:4px; align-items:center;">
+                    <span style="font-size:11px; font-weight:700; color:#64748B;">🛠️ Hızlı İşçilik:</span>
+                    <button type="button" class="btn-template-chip" style="background:#F0FDF4; border-color:#86EFAC; color:#15803D; font-weight:800; padding:3px 8px; font-size:11px;" onclick="AdminApp.addStoreLaborRow(1)">+%1</button>
+                    <button type="button" class="btn-template-chip" style="background:#F0FDF4; border-color:#86EFAC; color:#15803D; font-weight:800; padding:3px 8px; font-size:11px;" onclick="AdminApp.addStoreLaborRow(1.5)">+%1,5</button>
+                    <button type="button" class="btn-template-chip" style="background:#F0FDF4; border-color:#86EFAC; color:#15803D; font-weight:800; padding:3px 8px; font-size:11px;" onclick="AdminApp.addStoreLaborRow(2)">+%2</button>
+                    <button type="button" class="btn-template-chip" style="background:#EFF6FF; border-color:#93C5FD; color:#1D4ED8; font-weight:800; padding:3px 8px; font-size:11px;" onclick="AdminApp.addStoreLaborRow(20)">+%20</button>
                   </div>
                 </div>
 
-                <!-- ⌚ BÖLÜM 2: LÜKS SAAT (%20 KDV DAHİL) -->
-                <div style="background:#F0FDF4; border:2px solid #059669; border-radius:12px; padding:14px; box-shadow:0 2px 8px rgba(5,150,105,0.08); display:flex; flex-direction:column; justify-content:space-between;">
-                  <div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                      <div style="display:flex; align-items:center; gap:6px;">
-                        <span style="font-size:16px;">⌚</span>
-                        <h4 style="margin:0; font-size:13px; font-weight:800; color:#064E3B;">Lüks Saat Koleksiyonu</h4>
-                      </div>
-                      <span style="font-size:10px; font-weight:800; background:#DCFCE7; color:#166534; padding:2px 6px; border-radius:6px; border:1px solid #86EFAC;">%20 KDV Dahil (Zorunlu)</span>
-                    </div>
-                    <div style="font-size:11px; color:#065F46; margin-bottom:10px;">
-                      Yazılan rakama <strong>en yakın 5 lüks saat modelini (Rolex, Cartier vb.)</strong> anında bulur.
+                <!-- 1. MOD: SERBEST HIZLI TUTAR OLUŞTURUCU -->
+                <div id="storeModeFreeBox" style="display:block;">
+                  <!-- Satır 1: Açıklama, Adet, Tutar, KDV, İşçilik -->
+                  <div style="display:grid; grid-template-columns:1.8fr 70px 1.2fr 1.1fr 1fr; gap:10px; margin-bottom:10px; align-items:end;">
+                    <div>
+                      <label style="display:block; font-size:11.5px; font-weight:700; color:#0F172A; margin-bottom:3px;" for="freeItemName">
+                        Ürün Açıklaması: *
+                      </label>
+                      <input type="text" id="freeItemName" class="form-field-input" placeholder="Örn: 22 Ayar Altın / Mücevherat" value="22 Ayar Altın / Mücevherat" style="font-size:12.5px; font-weight:700; color:#0F172A; width:100%;" oninput="AdminApp.handleFreeItemChange()">
                     </div>
 
-                    <!-- Fiyat Arama Girişi -->
-                    <div style="position:relative; margin-bottom:6px;">
-                      <input type="text" id="watchTargetPriceInput" class="form-field-input" placeholder="Hedef Saat Tutarını Girin (Örn: 650.000)" style="font-size:13px; font-weight:800; color:#064E3B; padding-left:26px; border:1.5px solid #059669; background:#FFF; width:100%;" oninput="AdminApp.searchProductsByTargetPrice('watch', this.value)">
+                    <div>
+                      <label style="display:block; font-size:11.5px; font-weight:700; color:#0F172A; margin-bottom:3px; text-align:center;" for="freeItemQty">
+                        Adet:
+                      </label>
+                      <input type="number" id="freeItemQty" min="1" step="1" value="1" class="form-field-input" style="font-size:13px; font-weight:800; text-align:center; color:#0F172A; width:100%; padding:8px 4px;" oninput="AdminApp.handleFreeItemChange()">
+                    </div>
+
+                    <div>
+                      <label style="display:block; font-size:11.5px; font-weight:700; color:#0F172A; margin-bottom:3px;" for="freeItemPrice">
+                        Fatura Tutarı (₺): *
+                      </label>
+                      <div style="position:relative;">
+                        <input type="text" id="freeItemPrice" class="form-field-input" placeholder="Örn: 96000" style="font-size:13.5px; font-weight:800; color:#0F172A; padding-left:22px; width:100%;" oninput="AdminApp.handleFreeItemChange()">
+                        <span style="position:absolute; left:6px; top:50%; transform:translateY(-50%); font-weight:800; color:#084C47; font-size:13px;">₺</span>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label style="display:block; font-size:11.5px; font-weight:700; color:#0F172A; margin-bottom:3px;" for="freeItemKdvRate">
+                        KDV Oranı:
+                      </label>
+                      <select id="freeItemKdvRate" class="form-field-input" style="font-size:12px; font-weight:700; color:#0F172A; width:100%;" onchange="AdminApp.handleFreeItemChange()">
+                        <option value="0" selected>%0 (Özel Matrah)</option>
+                        <option value="1">%1 (KDV Dahil)</option>
+                        <option value="1.5">%1,5 (KDV Dahil)</option>
+                        <option value="2">%2 (KDV Dahil)</option>
+                        <option value="10">%10 (KDV Dahil)</option>
+                        <option value="20">%20 (KDV Dahil Saat)</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label style="display:block; font-size:11.5px; font-weight:700; color:#0F172A; margin-bottom:3px;" for="freeItemLaborRate">
+                        İşçilik (%):
+                      </label>
+                      <div style="position:relative;">
+                        <input type="text" id="freeItemLaborRate" class="form-field-input" placeholder="0" value="0" style="font-size:13px; font-weight:800; color:#0369A1; text-align:center; padding-right:18px; width:100%;" oninput="AdminApp.handleFreeItemChange()">
+                        <span style="position:absolute; right:6px; top:50%; transform:translateY(-50%); font-weight:800; color:#0369A1; font-size:11px;">%</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Hızlı Butonlar & Canlı Özet Satırı -->
+                  <div style="display:flex; justify-content:space-between; align-items:center; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:8px 12px; flex-wrap:wrap; gap:8px;">
+                    <div style="display:flex; gap:12px; align-items:center; font-size:12px;">
+                      <span>Maden: <strong id="freeItemLiveNetText" style="color:#0F172A;">₺0,00</strong></span>
+                      <span style="color:#CBD5E1;">|</span>
+                      <span>İşçilik: <strong id="freeItemLiveKdvText" style="color:#0369A1;">₺0,00</strong></span>
+                      <span style="color:#CBD5E1;">|</span>
+                      <span>Toplam: <strong id="freeItemLiveTotalText" style="color:#059669; font-size:13.5px;">₺0,00</strong></span>
+                    </div>
+
+                    <div style="display:flex; gap:6px;">
+                      <button type="button" class="btn-admin-primary" style="background:#084C47; border-color:#084C47; color:#FFF; font-weight:800; font-size:12px; padding:6px 14px; border-radius:6px;" onclick="AdminApp.applyFreeItemToInvoice(false)">
+                        <span>⚡ Faturayı Oluştur</span>
+                      </button>
+                      <button type="button" class="btn-admin-secondary" style="font-size:12px; padding:6px 10px; border-radius:6px;" onclick="AdminApp.applyFreeItemToInvoice(true)">
+                        <span>➕ Satır Ekle</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 2. MOD: ALTIN ÜRÜNÜ ARAMA -->
+                <div id="storeModeGoldBox" style="display:none;">
+                  <div style="display:flex; gap:10px; margin-bottom:8px;">
+                    <div style="position:relative; flex:1;">
+                      <input type="text" id="goldTargetPriceInput" class="form-field-input" placeholder="Hedef Altın Tutarını Girin (Örn: 96.000)" style="font-size:13px; font-weight:700; color:#92400E; padding-left:24px;" oninput="AdminApp.searchProductsByTargetPrice('gold', this.value)">
+                      <span style="position:absolute; left:8px; top:50%; transform:translateY(-50%); font-weight:800; color:#D97706;">₺</span>
+                    </div>
+                  </div>
+                  <div id="goldSearchResultsContainer" style="min-height:30px; font-size:11.5px; color:#64748B;">
+                    Hedef tutarı yazarak vitrindeki altın modellerini listeleyebilirsiniz.
+                  </div>
+                </div>
+
+                <!-- 3. MOD: LÜKS SAAT ARAMA -->
+                <div id="storeModeWatchBox" style="display:none;">
+                  <div style="display:flex; gap:10px; margin-bottom:8px;">
+                    <div style="position:relative; flex:1;">
+                      <input type="text" id="watchTargetPriceInput" class="form-field-input" placeholder="Hedef Saat Tutarını Girin (Örn: 650.000)" style="font-size:13px; font-weight:700; color:#065F46; padding-left:24px;" oninput="AdminApp.searchProductsByTargetPrice('watch', this.value)">
                       <span style="position:absolute; left:8px; top:50%; transform:translateY(-50%); font-weight:800; color:#059669;">₺</span>
                     </div>
                   </div>
-
-                  <!-- Sonuç Listesi -->
-                  <div id="watchSearchResultsContainer" style="margin-top:6px; min-height:40px;">
-                    <div style="font-size:11px; color:#94A3B8; font-style:italic; padding:6px 0;">Hedef tutarı yazarak en yakın 5 saat modelini listeleyebilirsiniz.</div>
+                  <div id="watchSearchResultsContainer" style="min-height:30px; font-size:11.5px; color:#64748B;">
+                    Hedef tutarı yazarak saat modellerini listeleyebilirsiniz.
                   </div>
                 </div>
 
-              </div>
-
-              <!-- 🛠️ İŞÇİLİK SATIRI HIZLI EKLE BUTONLARI -->
-              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; padding:8px 12px; background:#F8FAFC; border:1.5px solid #CBD5E1; border-radius:8px; margin-bottom:14px;">
-                <span style="font-size:11px; font-weight:800; color:#334155; background:#E2E8F0; padding:4px 8px; border-radius:6px;">🛠️ İşçilik Satırı Ekle:</span>
-                
-                <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#059669; color:#064E3B; font-weight:800; padding:5px 10px;" onclick="AdminApp.addStoreLaborRow(1)" title="Açıklaması 'İşçilik', KDV'si %1 olan yeni satır ekler">
-                  <span>➕ İşçilik (%1 KDV)</span>
-                </button>
-                <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#059669; color:#064E3B; font-weight:800; padding:5px 10px;" onclick="AdminApp.addStoreLaborRow(1.5)" title="Açıklaması 'İşçilik', KDV'si %1.5 olan yeni satır ekler">
-                  <span>➕ İşçilik (%1,5 KDV)</span>
-                </button>
-                <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#059669; color:#064E3B; font-weight:800; padding:5px 10px;" onclick="AdminApp.addStoreLaborRow(2)" title="Açıklaması 'İşçilik', KDV'si %2 olan yeni satır ekler">
-                  <span>➕ İşçilik (%2 KDV)</span>
-                </button>
-                <button type="button" class="btn-template-chip" style="background:#FFF; border-color:#0284C7; color:#0369A1; font-weight:800; padding:5px 10px;" onclick="AdminApp.addStoreLaborRow(20)" title="Açıklaması 'İşçilik', KDV'si %20 olan yeni satır ekler">
-                  <span>➕ İşçilik (%20 KDV)</span>
-                </button>
               </div>
 
               <!-- Kalemler Tablosu -->
@@ -3663,495 +3728,7 @@
 
   </div><!-- /storeInvoicesTabContent -->
 
-  <!-- ======================================================== -->
-  <!-- 4. SEKME: SİSTEM GÜNCELLEMELERİ & SENKRONİZASYON MERKEZİ  -->
-  <!-- ======================================================== -->
-  <div id="updatesTabContent" style="display:none;">
-
-    <div class="updates-container">
-      
-      <!-- Üst Başlık & Kontrol Merkezi Banner'ı -->
-      <div class="updates-header-banner">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; position:relative; z-index:2;">
-          <div>
-            <div style="display:inline-flex; align-items:center; gap:6px; background:rgba(212,175,55,0.2); color:#FDE68A; border:1px solid rgba(212,175,55,0.45); padding:4px 12px; border-radius:20px; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:10px;">
-              <span>⚡</span> SİSTEM SENKRONİZASYON & KONTROL MERKEZİ
-            </div>
-            <h2 style="font-size:24px; color:#FFFFFF; font-family:'Playfair Display',serif; font-weight:800; margin:0 0 6px;">
-              <span>🔄</span> Sistem Güncellemeleri & Canlı Senkronizasyon
-            </h2>
-            <div style="font-size:13px; color:#E2E8F0; max-width:850px; line-height:1.5;">
-              Tüm ürün katalogları, canlı Harem Altın borsa kurları (+%0.5 kâr marjı), lüks saat magazin içerikleri, SEO derlemeleri ve güvenlik kalkanlarını dilediğiniz an tek tıkla manuel tetikleyip yönetebilirsiniz.
-            </div>
-          </div>
-
-          <div style="display:flex; gap:10px; flex-wrap:wrap;">
-            <button type="button" class="btn-update-action" style="background:linear-gradient(135deg, #D4AF37 0%, #B8860B 100%); color:#042A27; font-weight:800; border:1px solid #FFE082; box-shadow:0 4px 14px rgba(212,175,55,0.4);" onclick="AdminApp.runSystemUpdate('all')">
-              <span>⚡</span> TÜM SİSTEMİ TEK TIKLA EŞİTLE
-            </button>
-            <button type="button" class="btn-terminal-action" style="padding:10px 16px; font-size:12px; min-height:44px;" onclick="AdminApp.clearTerminalLog()">
-              <span>🧹</span> Konsolu Temizle
-            </button>
-          </div>
-        </div>
-
-        <!-- Yönetici Kontrol Güvencesi Notu -->
-        <div style="margin-top:18px; background:rgba(0,0,0,0.25); border:1px solid rgba(212,175,55,0.3); border-radius:12px; padding:14px 18px; font-size:12.5px; color:#F8FAFC; line-height:1.5; display:flex; align-items:center; gap:12px;">
-          <span style="font-size:24px; flex-shrink:0;">🛡️</span>
-          <div>
-            <strong style="color:#FDE68A;">YÖNETİCİ GÜVENCESİ & KONTROLÜ:</strong> 
-            Dış kaynaklı kontrolsüz otomatik akışlar yerine; tüm güncelleme, filtreleme ve yayınlama yetkisi tamamen sizin elinizdedir. İlgili butonlara basarak her bir güncellemeyi doğrudan çalıştırabilir, çıktısını aşağıdaki Canlı Konsoldan anlık takip edebilirsiniz.
-          </div>
-        </div>
-      </div>
-
-      <!-- Güncelleme Kartları Grid Düzeni (11 Kategori) -->
-      <div class="updates-grid">
-
-        <!-- 1. Magazin ve İçerik Güncellemesi -->
-        <div class="update-card" id="card-update-magazine">
-          <div>
-            <div class="update-card-header">
-              <div class="update-card-title-group">
-                <div class="update-card-icon" style="background:#FEF3C7; color:#B45309; border-color:#FDE68A;">📰</div>
-                <div>
-                  <div class="update-card-category">HOROLOJİ & BLOG KÜTÜPHANESİ</div>
-                  <h4 class="update-card-title">Lüks Saat Magazin & İçerik Güncellemesi</h4>
-                </div>
-              </div>
-              <span class="update-pill update-pill-manual" id="pill-sync-magazine">Manuel Kontrol</span>
-            </div>
-
-            <p class="update-card-desc" style="margin:12px 0;">
-              Saat dünyasındaki en güncel makaleleri, horoloji trendlerini ve koleksiyon analizlerini işler; başlıkları ve paragrafları Belgin Saat editoryal standartlarında Türkçeleştirip <code>/magazin/</code> kütüphanesine aktarır.
-            </p>
-
-            <div class="update-card-rules">
-              <strong>🛡️ Editoryal & Güvenlik Kalkanı:</strong> Üçüncü taraf marka/pazar yeri isimleri, personel röportajları veya logoları içermez. %100 yerel Türkçe saatçilik içeriğine dönüştürülür.
-            </div>
-          </div>
-
-          <div>
-            <div class="update-card-meta">
-              <span>🕒 Son Güncelleme: <strong id="time-sync-magazine">Henüz çalıştırılmadı</strong></span>
-              <span style="color:#059669; font-weight:700;">146+ Makale Yayında</span>
-            </div>
-            <div class="update-card-actions" style="margin-top:10px;">
-              <button type="button" class="btn-update-action" onclick="AdminApp.runSystemUpdate('magazine')">
-                <span>📰</span> Magazin Makaleleri & Yeni İçerik Senkronizasyonunu Başlat
-              </button>
-              <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-                <button type="button" class="btn-update-secondary" onclick="AdminApp.runSystemUpdate('magazine_safety')">
-                  <span>🛡️</span> Güvenlik Filtresini Çalıştır
-                </button>
-                <button type="button" class="btn-update-secondary" onclick="AdminApp.runSystemUpdate('magazine_enhance')">
-                  <span>✨</span> Editoryal Alıntıları Biçimlendir
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 2. Altın ve Borsa Canlı Fiyat Güncellemesi -->
-        <div class="update-card" id="card-update-gold">
-          <div>
-            <div class="update-card-header">
-              <div class="update-card-title-group">
-                <div class="update-card-icon" style="background:#FEF3C7; color:#B45309; border-color:#FDE68A;">🪙</div>
-                <div>
-                  <div class="update-card-category">CANLI BORSA & ALTIN</div>
-                  <h4 class="update-card-title">Harem Altın Borsa & +%0.5 Marj Güncellemesi</h4>
-                </div>
-              </div>
-              <span class="update-pill update-pill-ready" id="pill-sync-gold">Değişmez Sözleşme</span>
-            </div>
-
-            <p class="update-card-desc" style="margin:12px 0;">
-              Harem Altın canlı borsa soket akışını (<code>wss://hrmsocketonly.haremaltin.com</code>) sorgular. Satış fiyatlarına kesin sözleşmeyle <strong>+%0.5 kâr marjı (x 1.005)</strong> uygular, alış fiyatlarını marjsız (1.00x) yansıtır. Ağa Külçe stoklarını eşitler.
-            </p>
-
-            <div class="update-card-rules">
-              <strong>🔒 Değişmez Fiyat Kuralı:</strong> Satış Fiyatı = Canlı Borsa x 1.005 (+%0.5 Marj). Alış = Birebir x 1.00. İZKO referansı kesinlikle yasaktır ve devre dışıdır.
-            </div>
-          </div>
-
-          <div>
-            <div class="update-card-meta">
-              <span>🕒 Son Güncelleme: <strong id="time-sync-gold">Canlı Soket Aktif</strong></span>
-              <span style="color:#059669; font-weight:700;">+%0.5 Marj Korumalı</span>
-            </div>
-            <div class="update-card-actions" style="margin-top:10px;">
-              <button type="button" class="btn-update-action" onclick="AdminApp.runSystemUpdate('gold_prices')">
-                <span>🪙</span> Canlı Altın ve Borsa Fiyatlarını Güncelle (+%0.5 Satış Marjı)
-              </button>
-              <button type="button" class="btn-update-secondary" onclick="AdminApp.runSystemUpdate('gold_stock')">
-                <span>📦</span> Altın, Külçe ve Sarrafiye Stok Durumlarını Doğrula ve Eşitle
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 3. Saat ve Saat Katalog Güncellemesi -->
-        <div class="update-card" id="card-update-saatvesaat">
-          <div>
-            <div class="update-card-header">
-              <div class="update-card-title-group">
-                <div class="update-card-icon" style="background:#EFF6FF; color:#1D4ED8; border-color:#BFDBFE;">⌚</div>
-                <div>
-                  <div class="update-card-category">DİSTRİBÜTÖR ENTEGRASYONU</div>
-                  <h4 class="update-card-title">Saat ve Saat Distribütör Kataloğu Senkronizasyonu</h4>
-                </div>
-              </div>
-              <span class="update-pill update-pill-ready" id="pill-sync-saatvesaat">1.000+ Ürün</span>
-            </div>
-
-            <p class="update-card-desc" style="margin:12px 0;">
-              Saat ve Saat resmi distribütör kataloğundaki 1.000+ modelin canlı perakende satış fiyatlarını, stok durumlarını, taksit parametrelerini ve varyantlarını sistemle 1:1 eşitler.
-            </p>
-
-            <div class="update-card-rules">
-              <strong>📦 Stok ve Fiyat Emniyeti:</strong> Kaynakta tükenen modeller anında "Tükendi"ye çekilir, fiyat güncellemeleri anında ürün ve ödeme sistemlerine yansır.
-            </div>
-          </div>
-
-          <div>
-            <div class="update-card-meta">
-              <span>🕒 Son Güncelleme: <strong id="time-sync-saatvesaat">Katalog Senkron</strong></span>
-              <span style="color:#2563EB; font-weight:700;">Distribütör Doğrulamalı</span>
-            </div>
-            <div class="update-card-actions" style="margin-top:10px;">
-              <button type="button" class="btn-update-action" onclick="AdminApp.runSystemUpdate('saatvesaat')">
-                <span>⌚</span> Saat ve Saat Kataloğunu, Stoklarını ve Fiyatlarını Eşitle
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 4. Carren Saat Kataloğu Güncellemesi -->
-        <div class="update-card" id="card-update-carren">
-          <div>
-            <div class="update-card-header">
-              <div class="update-card-title-group">
-                <div class="update-card-icon" style="background:#FDF4FF; color:#A21CAF; border-color:#F5D0FE;">💎</div>
-                <div>
-                  <div class="update-card-category">CARREN LUXURY WATCHES</div>
-                  <h4 class="update-card-title">Carren Saat Koleksiyonu ve Fiyat Güncellemesi</h4>
-                </div>
-              </div>
-              <span class="update-pill update-pill-ready" id="pill-sync-carren">Aktif</span>
-            </div>
-
-            <p class="update-card-desc" style="margin:12px 0;">
-              Carren marka lüks saatlerin güncel koleksiyon modellerini, kasa/kordon varyantlarını, stok durumlarını ve taksitli fiyatlandırmasını günceller.
-            </p>
-
-            <div class="update-card-rules">
-              <strong>💎 Koleksiyon Bütünlüğü:</strong> Otomatik mekanizmalı ve safir camlı Carren modellerinin tüm varyantları tek adımda taranır ve kaydedilir.
-            </div>
-          </div>
-
-          <div>
-            <div class="update-card-meta">
-              <span>🕒 Son Güncelleme: <strong id="time-sync-carren">Güncel</strong></span>
-              <span style="color:#A21CAF; font-weight:700;">Orijinal Garanti</span>
-            </div>
-            <div class="update-card-actions" style="margin-top:10px;">
-              <button type="button" class="btn-update-action" onclick="AdminApp.runSystemUpdate('carren')">
-                <span>💎</span> Carren Saat Kataloğunu ve Model Varyantlarını Güncelle
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 5. Elite Lüks Saatler Portföyü -->
-        <div class="update-card" id="card-update-elite">
-          <div>
-            <div class="update-card-header">
-              <div class="update-card-title-group">
-                <div class="update-card-icon" style="background:#FFFBEB; color:#B45309; border-color:#FDE68A;">👑</div>
-                <div>
-                  <div class="update-card-category">HAUTE HORLOGERIE & PORTFÖY</div>
-                  <h4 class="update-card-title">Elite Koleksiyon Lüks Saatler (Rolex, Patek, AP)</h4>
-                </div>
-              </div>
-              <span class="update-pill update-pill-ready" id="pill-sync-elite">200 Elit Model</span>
-            </div>
-
-            <p class="update-card-desc" style="margin:12px 0;">
-              200 adet seçkin Elit Saat modelinin küresel piyasa referans değerlerini, USD kur korumasını (+%80 marj / kur sabitleme) ve koleksiyon mevcudiyetini günceller.
-            </p>
-
-            <div class="update-card-rules">
-              <strong>👑 Yatırım Emniyeti:</strong> 10 büyük saat evinin (Rolex, Patek, Audemars Piguet, Vacheron Constantin vb.) her birinde tam 20'şer aktif ürün kuralı korunur.
-            </div>
-          </div>
-
-          <div>
-            <div class="update-card-meta">
-              <span>🕒 Son Güncelleme: <strong id="time-sync-elite">Korumalı</strong></span>
-              <span style="color:#D97706; font-weight:700;">+%80 Marj / USD Korumalı</span>
-            </div>
-            <div class="update-card-actions" style="margin-top:10px;">
-              <button type="button" class="btn-update-action" onclick="AdminApp.runSystemUpdate('elite_watches')">
-                <span>👑</span> Elite Lüks Saat Portföyünü ve Fiyatlarını Güncelle
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 6. Smart-Diff Master Senkronizasyon -->
-        <div class="update-card" id="card-update-smartdiff">
-          <div>
-            <div class="update-card-header">
-              <div class="update-card-title-group">
-                <div class="update-card-icon" style="background:#ECFDF5; color:#047857; border-color:#A7F3D0;">⚡</div>
-                <div>
-                  <div class="update-card-category">BİRLEŞİK AKILLI MOTOR</div>
-                  <h4 class="update-card-title">Smart-Diff Master Sync (Altın + Tüm Saatler)</h4>
-                </div>
-              </div>
-              <span class="update-pill update-pill-ready" id="pill-sync-smartdiff">Master Sync</span>
-            </div>
-
-            <p class="update-card-desc" style="margin:12px 0;">
-              Tüm altın, ziynet, külçe ve saat kataloglarını tek seferde akıllı fark kontrolüyle (yalnızca değişen ürünler) günceller; gereksiz veritabanı yükü yaratmadan tüm mağazayı canlı tutar.
-            </p>
-
-            <div class="update-card-rules">
-              <strong>⚡ Akıllı Delta Mekanizması:</strong> Yalnızca fiyat veya stokta değişiklik tespit edilen ürünler güncellenir, sıfır delta durumunda gereksiz yazma yapılmaz.
-            </div>
-          </div>
-
-          <div>
-            <div class="update-card-meta">
-              <span>🕒 Son Güncelleme: <strong id="time-sync-smartdiff">Tam Uyumlu</strong></span>
-              <span style="color:#059669; font-weight:700;">2.125 Ürün Yönetiliyor</span>
-            </div>
-            <div class="update-card-actions" style="margin-top:10px;">
-              <button type="button" class="btn-update-action" style="background:linear-gradient(135deg, #059669 0%, #047857 100%);" onclick="AdminApp.runSystemUpdate('smart_diff')">
-                <span>⚡</span> TÜM SİSTEMİ TEK TIKLA EŞİTLE (Smart-Diff Master Sync)
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 7. Statik SEO ve Şema Derlemesi -->
-        <div class="update-card" id="card-update-seo">
-          <div>
-            <div class="update-card-header">
-              <div class="update-card-title-group">
-                <div class="update-card-icon" style="background:#F0FDF4; color:#15803D; border-color:#BBF7D0;">🔍</div>
-                <div>
-                  <div class="update-card-category">ARAMA MOTORU (SEO & RICH SNIPPETS)</div>
-                  <h4 class="update-card-title">Statik SEO Sayfaları & Schema Derlemesi</h4>
-                </div>
-              </div>
-              <span class="update-pill update-pill-ready" id="pill-sync-seo">SEO Hazır</span>
-            </div>
-
-            <p class="update-card-desc" style="margin:12px 0;">
-              Google, Bing ve Yandex için statik SEO HTML sayfalarını, Product, Breadcrumb, JewelryStore ve Article JSON-LD şemalarını yeniden derleyerek sayfa yüklenme hızını ve sıralamayı maksimize eder.
-            </p>
-
-            <div class="update-card-rules">
-              <strong>🎯 Zengin Sonuçlar:</strong> Her ürün için fiyat, stok, orijinal görsel ve satıcı bilgileri Google zengin snippet standartlarına uygun biçimlendirilir.
-            </div>
-          </div>
-
-          <div>
-            <div class="update-card-meta">
-              <span>🕒 Son Güncelleme: <strong id="time-sync-seo">Derlenmiş</strong></span>
-              <span style="color:#15803D; font-weight:700;">JSON-LD %100 Uyum</span>
-            </div>
-            <div class="update-card-actions" style="margin-top:10px;">
-              <button type="button" class="btn-update-action" onclick="AdminApp.runSystemUpdate('seo_build')">
-                <span>🔍</span> Statik SEO Sayfalarını ve Arama Şemalarını Derle
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 8. XML Site Haritaları ve Robots.txt -->
-        <div class="update-card" id="card-update-sitemap">
-          <div>
-            <div class="update-card-header">
-              <div class="update-card-title-group">
-                <div class="update-card-icon" style="background:#F8FAFC; color:#334155; border-color:#CBD5E1;">🗺️</div>
-                <div>
-                  <div class="update-card-category">TARAMA VE İNDEKS PROTOKOLÜ</div>
-                  <h4 class="update-card-title">XML Site Haritaları & Robots.txt Güncellemesi</h4>
-                </div>
-              </div>
-              <span class="update-pill update-pill-ready" id="pill-sync-sitemap">İndeks Hazır</span>
-            </div>
-
-            <p class="update-card-desc" style="margin:12px 0;">
-              Google Search Console için <code>sitemap.xml</code>, <code>sitemap-products.xml</code>, <code>sitemap-magazine.xml</code> dosyalarını ve <code>robots.txt</code> arama motoru direktiflerini güncel katalogla 1:1 senkronize eder.
-            </p>
-
-            <div class="update-card-rules">
-              <strong>🧭 Tam İndeksleme:</strong> Tüm aktif ürünler, magazin sayfaları ve yasal bağlantılar güncel son değiştirilme (lastmod) tarihleriyle haritalandırılır.
-            </div>
-          </div>
-
-          <div>
-            <div class="update-card-meta">
-              <span>🕒 Son Güncelleme: <strong id="time-sync-sitemap">Haritalar Güncel</strong></span>
-              <span style="color:#334155; font-weight:700;">Google News & Search</span>
-            </div>
-            <div class="update-card-actions" style="margin-top:10px;">
-              <button type="button" class="btn-update-action" onclick="AdminApp.runSystemUpdate('sitemap')">
-                <span>🗺️</span> XML Site Haritalarını ve Robots.txt Dosyasını Güncelle
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 9. AI & LLMS Knowledge Graph (AEO/GEO) -->
-        <div class="update-card" id="card-update-llms">
-          <div>
-            <div class="update-card-header">
-              <div class="update-card-title-group">
-                <div class="update-card-icon" style="background:#EEF2FF; color:#4338CA; border-color:#C7D2FE;">🤖</div>
-                <div>
-                  <div class="update-card-category">YENİ NESİL AI ARAMA MOTORLARI</div>
-                  <h4 class="update-card-title">AI & LLMS Knowledge Graph (llms.txt)</h4>
-                </div>
-              </div>
-              <span class="update-pill update-pill-ready" id="pill-sync-llms">42 Niyet / %100</span>
-            </div>
-
-            <p class="update-card-desc" style="margin:12px 0;">
-              Perplexity, Gemini, ChatGPT ve Claude gibi yeni nesil yapay zeka arama motorları için <code>llms.txt</code>, <code>llms-full.txt</code> ve semantik ürün/hizmet bilgi grafiğini 42 niyet ve 44 dosya üzerinde doğrular ve günceller.
-            </p>
-
-            <div class="update-card-rules">
-              <strong>🤖 AEO / GEO Mimarisi:</strong> Yapay zeka sistemlerinin Belgin Kuyumculuk marka yetkisini, ürünlerini ve mağaza güvenliğini kusursuz tanıması sağlanır.
-            </div>
-          </div>
-
-          <div>
-            <div class="update-card-meta">
-              <span>🕒 Son Güncelleme: <strong id="time-sync-llms">Graf Doğrulandı</strong></span>
-              <span style="color:#4338CA; font-weight:700;">AEO/GEO Tam Uyum</span>
-            </div>
-            <div class="update-card-actions" style="margin-top:10px;">
-              <button type="button" class="btn-update-action" onclick="AdminApp.runSystemUpdate('llms')">
-                <span>🤖</span> AI & LLMS Knowledge Graph'ı (llms.txt) Güncelle
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 10. Hukuki Sözleşmeler ve SHA-256 Delil Manifestosu -->
-        <div class="update-card" id="card-update-legal">
-          <div>
-            <div class="update-card-header">
-              <div class="update-card-title-group">
-                <div class="update-card-icon" style="background:#FEF2F2; color:#B91C1C; border-color:#FECACA;">⚖️</div>
-                <div>
-                  <div class="update-card-category">YASAL DELİL & MASAK UYUMU</div>
-                  <h4 class="update-card-title">Hukuki Manifestosu & SHA-256 Delil Zinciri</h4>
-                </div>
-              </div>
-              <span class="update-pill update-pill-ready" id="pill-sync-legal">19 Resmi Belge</span>
-            </div>
-
-            <p class="update-card-desc" style="margin:12px 0;">
-              19 resmi hukuki belgeyi (Mesafeli Satış, Ön Bilgilendirme, MASAK, KVKK) bayt seviyesinde tarar; SHA-256 kriptografik özetlerini çıkarıp OpenTimestamps Bitcoin zaman kanıtı zincirini günceller.
-            </p>
-
-            <div class="update-card-rules">
-              <strong>⚖️ Mahkeme ve Banka Geçerliliği:</strong> Hiçbir sözleşmede tahrifat yapılamaz; her değişiklik SHA-256 ve Bitcoin zaman damgasıyla mühürlenir.
-            </div>
-          </div>
-
-          <div>
-            <div class="update-card-meta">
-              <span>🕒 Son Güncelleme: <strong id="time-sync-legal">Delil Zinciri Tam</strong></span>
-              <span style="color:#B91C1C; font-weight:700;">SHA-256 Korumalı</span>
-            </div>
-            <div class="update-card-actions" style="margin-top:10px;">
-              <button type="button" class="btn-update-action" onclick="AdminApp.runSystemUpdate('legal')">
-                <span>⚖️</span> Hukuki Manifest ve Delil Zincirini Doğrula/Güncelle
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 11. Güvenlik, Fiyat ve POS Korumaları (Guard Gates) -->
-        <div class="update-card" id="card-update-guard">
-          <div>
-            <div class="update-card-header">
-              <div class="update-card-title-group">
-                <div class="update-card-icon" style="background:#F0FDF4; color:#166534; border-color:#86EFAC;">🛡️</div>
-                <div>
-                  <div class="update-card-category">GÜVENLİK & FİYAT KİLİDİ</div>
-                  <h4 class="update-card-title">Sistem Güvenlik & Fiyat Korumaları (Guard Gates)</h4>
-                </div>
-              </div>
-              <span class="update-pill update-pill-ready" id="pill-sync-guard">37/37 Yeşil</span>
-            </div>
-
-            <p class="update-card-desc" style="margin:12px 0;">
-              Tüm fiyat devre kesicilerini, fatura Özel Matrah kurallarını, 3 günlük POS zamanlayıcısını, BKM/Visa kurallarını ve üretim güvenlik kapılarını tam denetimden geçirir.
-            </p>
-
-            <div class="update-card-rules">
-              <strong>🛡️ Fail-Closed Emniyeti:</strong> Fiyat emniyet kilidini veya güvenlik kurallarını ihlal eden tek bir satır dahi sisteme giremez.
-            </div>
-          </div>
-
-          <div>
-            <div class="update-card-meta">
-              <span>🕒 Son Güncelleme: <strong id="time-sync-guard">Tüm Testler Geçti</strong></span>
-              <span style="color:#166534; font-weight:700;">100% Onaylı</span>
-            </div>
-            <div class="update-card-actions" style="margin-top:10px;">
-              <button type="button" class="btn-update-action" style="background:linear-gradient(135deg, #15803D 0%, #166534 100%);" onclick="AdminApp.runSystemUpdate('guard')">
-                <span>🛡️</span> Tüm Güvenlik ve Fiyat Marjı Korumalarını (Guard Gates) Çalıştır
-              </button>
-            </div>
-          </div>
-        </div>
-
-      </div><!-- /updates-grid -->
-
-      <!-- CANLI TERMİNAL / İŞLEM KONSOLU (CANVAS / TERMINAL LOG) -->
-      <div class="update-terminal-card" style="margin-top:10px;">
-        <div class="update-terminal-topbar">
-          <div style="display:flex; align-items:center; gap:14px;">
-            <div class="terminal-dots">
-              <div class="terminal-dot terminal-dot-red"></div>
-              <div class="terminal-dot terminal-dot-yellow"></div>
-              <div class="terminal-dot terminal-dot-green"></div>
-            </div>
-            <span class="terminal-title">
-              <span>💻</span> CANLI GÜNCELLEME & SENKRONİZASYON TERMİNALİ (LIVE STREAM)
-            </span>
-          </div>
-          <div class="terminal-actions">
-            <button type="button" class="btn-terminal-action" onclick="AdminApp.copyTerminalLog()">
-              <span>📋</span> Logları Kopyala
-            </button>
-            <button type="button" class="btn-terminal-action" onclick="AdminApp.clearTerminalLog()">
-              <span>🧹</span> Temizle
-            </button>
-          </div>
-        </div>
-
-        <div class="update-terminal-body" id="updateTerminalOutput">
-          <div class="log-line">
-            <span class="log-ts">[SİSTEM]</span>
-            <span class="log-badge log-badge-info">HAZIR</span>
-            <span class="log-text">Belgin Kuyumculuk Senkronizasyon Konsolu başlatıldı. Yönetici yetkisi aktif. İstediğiniz güncellemeyi başlatabilirsiniz.</span>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /updates-container -->
-
-  </div><!-- /updatesTabContent -->
+  
 
   <!-- ======================================================== -->
   <!-- 4. SEKME: ÖNGÖRÜ & FİZİBİLİTE SİMÜLATÖRÜ MODÜLÜ          -->
@@ -6379,6 +5956,79 @@
           Kapat
         </button>
       </div>
+    </div>
+  </div>
+<!-- KLAVYE KISAYOLLARI REHBER MODALI -->
+<div class="admin-modal-overlay" id="shortcutHelpModal" onclick="if(event.target===this) AdminApp.toggleShortcutHelp();" style="display:none; z-index:999999;">
+  <div class="admin-modal-box" style="max-width:560px; padding:0; overflow:hidden; border-radius:16px; box-shadow:0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+    <div style="background:linear-gradient(135deg, #02221F 0%, #084C47 100%); color:#FFF; padding:16px 20px; display:flex; justify-content:space-between; align-items:center;">
+      <h3 style="margin:0; font-size:16px; font-weight:800; display:flex; align-items:center; gap:8px;">
+        <span>⌨️</span>
+        <span>Hızlı Yönetici Klavye Kısayolları</span>
+      </h3>
+      <button type="button" style="background:none; border:none; color:#FFF; font-size:22px; cursor:pointer; line-height:1;" onclick="AdminApp.toggleShortcutHelp()">✕</button>
+    </div>
+
+    <div style="padding:20px; max-height:70vh; overflow-y:auto;">
+      <p style="font-size:12.5px; color:#64748B; margin:0 0 16px;">Herhangi bir yazı alanında değilseniz, aşağıdaki tuşlara doğrudan basarak ilgili işlemi anında tetikleyebilirsiniz:</p>
+      
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px;">
+          <span style="font-size:12.5px; font-weight:700; color:#0F172A;">🏦 Manuel EFT Girişi</span>
+          <span class="kbd-tag" style="font-size:12px; padding:3px 8px;">E</span>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px;">
+          <span style="font-size:12.5px; font-weight:700; color:#0F172A;">💳 Manuel POS Girişi</span>
+          <span class="kbd-tag" style="font-size:12px; padding:3px 8px;">P</span>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px;">
+          <span style="font-size:12.5px; font-weight:700; color:#0F172A;">🏪 Mağaza Faturası</span>
+          <span class="kbd-tag" style="font-size:12px; padding:3px 8px;">F</span>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px;">
+          <span style="font-size:12.5px; font-weight:700; color:#0F172A;">🧾 Toplu Fatura (SMS)</span>
+          <span class="kbd-tag" style="font-size:12px; padding:3px 8px;">S</span>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px;">
+          <span style="font-size:12.5px; font-weight:700; color:#0F172A;">🔗 VIP Ödeme Linki</span>
+          <span class="kbd-tag" style="font-size:12px; padding:3px 8px;">V</span>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px;">
+          <span style="font-size:12.5px; font-weight:700; color:#0F172A;">📲 Muhasebe WhatsApp</span>
+          <span class="kbd-tag" style="font-size:12px; padding:3px 8px;">W</span>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px;">
+          <span style="font-size:12.5px; font-weight:700; color:#0F172A;">🔄 Verileri Yenile</span>
+          <span class="kbd-tag" style="font-size:12px; padding:3px 8px;">R</span>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px;">
+          <span style="font-size:12.5px; font-weight:700; color:#0F172A;">🔍 Arama Kutusuna Git</span>
+          <span class="kbd-tag" style="font-size:12px; padding:3px 8px;">/</span>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px;">
+          <span style="font-size:12.5px; font-weight:700; color:#0F172A;">❌ Pencere Kapat</span>
+          <span class="kbd-tag" style="font-size:12px; padding:3px 8px;">ESC</span>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px;">
+          <span style="font-size:12.5px; font-weight:700; color:#0F172A;">❓ Bu Rehberi Göster</span>
+          <span class="kbd-tag" style="font-size:12px; padding:3px 8px;">?</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#F8FAFC; border-top:1px solid #E2E8F0; padding:12px 20px; text-align:right;">
+      <button type="button" class="btn-admin-primary" style="padding:7px 18px; font-size:12.5px;" onclick="AdminApp.toggleShortcutHelp()">
+        Anladım, Kapat
+      </button>
     </div>
   </div>
 </div>

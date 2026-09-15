@@ -24,5 +24,5 @@ relatedNodes:
 - **İletişim Hattı**: +90 541 930 53 72 | E-Posta: destek@belginkuyumculuk.com
 - **Sosyal Otorite (sameAs)**:
   - Instagram: https://www.instagram.com/belginmucevherat/
-  - Google Business Profile: https://share.google/e2vmC425agvKPAAHR
+  - Google Business Profile: https://maps.google.com/?cid=3574131035126264051
 - **Temel Faaliyet**: İsviçre lüks saatleri (Rolex, Patek Philippe, AP, Omega), ikinci el ekspertizli saat satışı, Darphane damgalı 24K külçe altın, sarrafiye ve pırlantalı mücevherat.

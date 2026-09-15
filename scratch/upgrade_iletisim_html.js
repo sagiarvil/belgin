@@ -34,7 +34,7 @@ const premiumMain = `<!-- 3. MAIN İLETİŞİM İÇERİĞİ -->
       <h3 class="contact-feature-title">Merkez Mağazamız</h3>
       <p class="contact-feature-desc">Menderes Caddesi No:231/B Buca / İzmir</p>
       <span class="contact-feature-sub">Şirinyer / Çarşı Meydanı Mevkii</span>
-      <a class="contact-feature-link" href="https://maps.google.com/?q=Menderes+Caddesi+No+231/B+Buca+Izmir" target="_blank" rel="noopener">
+      <a class="contact-feature-link" href="https://maps.google.com/?cid=3574131035126264051" target="_blank" rel="noopener">
         Google Haritalar'da Aç →
       </a>
     </div>
@@ -158,7 +158,7 @@ const premiumMain = `<!-- 3. MAIN İLETİŞİM İÇERİĞİ -->
       <!-- Google Maps Embed -->
       <div style="background:#FFFFFF; border:1px solid var(--color-border); border-radius:12px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.04);">
         <iframe 
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3126.8926941617467!2d27.1685324!3d38.3842187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14bbd8b74c5d57b5%3A0x6b5c3e03d4a4d6f0!2sMenderes%20Cd.%20No%3A231%2C%20Buca%2F%C4%B0zmir!5e0!3m2!1str!2str!4v1700000000000!5m2!1str!2str" 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3126.8926941617467!2d27.1685324!3d38.3842187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14bbd8b74c5d57b5%3A0x3199dd3d696670f3!2sMenderes%20Cd.%20No%3A231%2C%20Buca%2F%C4%B0zmir!5e0!3m2!1str!2str!4v1700000000000!5m2!1str!2str" 
           width="100%" 
           height="280" 
           style="border:0; display:block;" 
@@ -174,7 +174,7 @@ const premiumMain = `<!-- 3. MAIN İLETİŞİM İÇERİĞİ -->
               <strong style="font-size:14px; color:var(--color-ink); display:block;">Showroom Konum Bilgisi</strong>
               <span style="font-size:12.5px; color:#666;">Buca Çarşı / Şirinyer Ana Girişi</span>
             </div>
-            <a href="https://maps.google.com/?q=Menderes+Caddesi+No+231/B+Buca+Izmir" target="_blank" rel="noopener" style="font-size:13px; font-weight:700; color:var(--color-teal); text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
+            <a href="https://maps.google.com/?cid=3574131035126264051" target="_blank" rel="noopener" style="font-size:13px; font-weight:700; color:var(--color-teal); text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
               Google Maps'te Yol Tarifi Al →
             </a>
           </div>

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * BELGIN KUYUMCULUK — CI/CD QUALITY GATES (G0-G15)
  * Formal Verification Runtime (CommonJS)
  */

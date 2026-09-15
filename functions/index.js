@@ -1,3 +1,4 @@
+const { syncMagazineFeedCore } = require('./magazine-sync');
 /**
  * BELGIN KUYUMCULUK — FIREBASE CLOUD FUNCTIONS
  * Enterprise Multi-POS Payment Architecture (PayTR, QNB, Akbank, Yapı Kredi)
@@ -2921,6 +2922,16 @@ exports.adminSyncApi = functions
       const triggeredBy = auth.user?.email || 'master-pin';
       const timestamp = new Date().toISOString();
 
+      let syncResult = null;
+      if (action === 'magazine' || action === 'magazine_feed') {
+        try {
+          syncResult = await syncMagazineFeedCore(db, admin);
+        } catch (mErr) {
+          console.warn('[Magazine Sync Core Error]:', mErr.message);
+          syncResult = { success: false, message: mErr.message };
+        }
+      }
+
       // Log to Firestore system_sync_logs
       let logId = 'local';
       try {
@@ -2940,7 +2951,8 @@ exports.adminSyncApi = functions
       return res.status(200).json({
         success: true,
         action,
-        message: `Güncelleme işlemi '${action}' başarıyla tetiklendi ve onaylandı.`,
+        message: syncResult ? syncResult.message : `Güncelleme işlemi '${action}' başarıyla tetiklendi ve onaylandı.`,
+        syncResult,
         triggeredBy,
         timestamp,
         logId
@@ -3001,3 +3013,46 @@ exports.mcpApi = functions.https.onRequest((req, res) => {
 
 
 
+
+/**
+ * GET /api/magazine/articles
+ * İstemci tarafı dinamik canlı magazin makaleleri API'si
+ */
+exports.getMagazineArticlesApi = functions
+  .region('us-central1')
+  .runWith({ timeoutSeconds: 30, memory: '256MB' })
+  .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
+    if (req.method === 'OPTIONS') return res.status(204).send('');
+    try {
+      const limit = Math.min(parseInt(req.query.limit || '10', 10), 50);
+      const snapshot = await db.collection('magazine_articles')
+        .where('isPublished', '==', true)
+        .orderBy('createdAt', 'desc')
+        .limit(limit)
+        .get();
+      
+      const articles = [];
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        articles.push({
+          id: data.id || doc.id,
+          articleId: data.articleId,
+          slug: data.slug,
+          title: data.title,
+          category: data.category,
+          publish_date: data.publish_date,
+          author: data.author,
+          read_time: data.read_time,
+          image: data.image,
+          summary: data.summary,
+          content_html: data.content_html
+        });
+      });
+
+      res.set('Cache-Control', 'public, max-age=120, s-maxage=300');
+      return res.status(200).json({ success: true, count: articles.length, articles });
+    } catch (err) {
+      console.error('[Magazine Articles API Error]:', err);
+      return res.status(500).json({ success: false, message: err.message, articles: [] });
+    }
+  }));

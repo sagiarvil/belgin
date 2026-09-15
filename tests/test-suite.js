@@ -1,4 +1,4 @@
-﻿// BELGIN KUYUMCULUK — production legal/compliance regression suite
+// BELGIN KUYUMCULUK — production legal/compliance regression suite
 process.env.NODE_ENV = 'test';
 const fs = require('fs');
 const path = require('path');

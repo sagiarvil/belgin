@@ -1,4 +1,4 @@
-﻿# KURAL: Türkçe Karakter (UTF-8) ve Dosya Düzenleme Standartları
+# KURAL: Türkçe Karakter (UTF-8) ve Dosya Düzenleme Standartları
 
 Bu kural; dosyaları PowerShell, PHP, Python veya Node.js üzerinden düzenlerken Türkçe karakterlerin bozulmasını (Ã¼, ÅŸ, Ä± gibi çift kodlanmış UTF-8 hataları) kesin olarak engellemek için konulmuştur.
 

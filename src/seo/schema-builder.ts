@@ -33,9 +33,17 @@ export function buildCompleteJsonLdGraph(page: SeoPageRecord, domain: string): s
         latitude: 38.3842,
         longitude: 27.1685
       },
+      hasMap: 'https://maps.google.com/?cid=3574131035126264051',
       sameAs: [
+        'https://www.wikidata.org/wiki/Q131371162',
         'https://www.instagram.com/belginmucevherat/',
-        'https://share.google/e2vmC425agvKPAAHR'
+        'https://maps.google.com/?cid=3574131035126264051',
+        'https://www.google.com/maps/place/?q=place_id:3574131035126264051'
+      ],
+      areaServed: [
+        { '@type': 'AdministrativeArea', name: 'Buca' },
+        { '@type': 'AdministrativeArea', name: 'İzmir' },
+        { '@type': 'Country', name: 'Türkiye' }
       ]
     },
     // 2. WebSite Düğümü

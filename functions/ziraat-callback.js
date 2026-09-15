@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 
 /**
  * Dedicated Ziraat Katılım callback boundary.

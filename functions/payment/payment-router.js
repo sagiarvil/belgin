@@ -1,4 +1,4 @@
-﻿/**
+/**
  * BELGIN KUYUMCULUK — PAYMENT PROVIDER ROUTER
  * Çoklu POS Yönlendiricisi & Güvenlik Kapısı
  */

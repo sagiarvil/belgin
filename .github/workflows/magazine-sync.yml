@@ -1,0 +1,52 @@
+name: Otonom Magazin & Saat Dunyasi Senkronizasyonu
+
+on:
+  schedule:
+    - cron: '0 6,18 * * *' # Günde 2 kez (06:00 ve 18:00 UTC)
+  workflow_dispatch: # GitHub arayüzünden manuel tek tıkla tetikleme
+
+permissions:
+  contents: write
+
+jobs:
+  sync-magazine:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kodu Klonla
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Python Ortamını Kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Node.js Ortamını Kur
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Python Bağımlılıklarını Kur
+        run: |
+          python -m pip install --upgrade pip
+          pip install curl_cffi beautifulsoup4
+
+      - name: Magazin Senkronizasyon Motorunu Çalıştır
+        run: |
+          python3 scripts/sync-magazine-articles.py
+
+      - name: Değişiklik Varsa Commit & Push Yap
+        run: |
+          git config --global user.name "Belgin Autonomous Sync Bot"
+          git config --global user.email "bot@belginkuyumculuk.com"
+          
+          if [[ -n $(git status --porcelain js/magazine_data.js magazin/) ]]; then
+            echo "Yeni magazin makaleleri tespit edildi, commit ediliyor..."
+            git add js/magazine_data.js magazin/ images/magazine/ sitemap-magazine.xml
+            git commit -m "chore(magazine): otonom saat magazini ve piyasa analizleri senkronizasyonu [skip ci]"
+            git push
+          else
+            echo "Yeni makale bulunmadi, yayindaki veriler guncel."
+          fi

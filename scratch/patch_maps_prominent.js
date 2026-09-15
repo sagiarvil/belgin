@@ -18,7 +18,7 @@ const prominentMapBox = `
 
             <!-- Google Maps Iframe -->
             <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3126.8926941617467!2d27.1685324!3d38.3842187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14bbd8b74c5d57b5%3A0x6b5c3e03d4a4d6f0!2sMenderes%20Cd.%20No%3A231%2C%20Buca%2F%C4%B0zmir!5e0!3m2!1str!2str!4v1700000000000!5m2!1str!2str" 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3126.8926941617467!2d27.1685324!3d38.3842187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14bbd8b74c5d57b5%3A0x3199dd3d696670f3!2sMenderes%20Cd.%20No%3A231%2C%20Buca%2F%C4%B0zmir!5e0!3m2!1str!2str!4v1700000000000!5m2!1str!2str" 
               width="100%" 
               height="320" 
               style="border:0; display:block;" 
@@ -38,7 +38,7 @@ const prominentMapBox = `
                 <span style="font-size:12.5px; color:#555; display:block; margin-top:3px;">Şirinyer Meydanı & Buca Çarşı Girişi (25 Yıllık Mağaza)</span>
               </div>
               
-              <a href="https://share.google/e2vmC425agvKPAAHR" target="_blank" rel="noopener" style="background:#8C6D23; background:linear-gradient(135deg, #084C47 0%, #0D6B64 100%); color:#FFFFFF; padding:13px 24px; border-radius:8px; font-size:13.5px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:8px; box-shadow:0 4px 14px rgba(8,76,71,0.25); transition:transform 0.2s;">
+              <a href="https://maps.google.com/?cid=3574131035126264051" target="_blank" rel="noopener" style="background:#8C6D23; background:linear-gradient(135deg, #084C47 0%, #0D6B64 100%); color:#FFFFFF; padding:13px 24px; border-radius:8px; font-size:13.5px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:8px; box-shadow:0 4px 14px rgba(8,76,71,0.25); transition:transform 0.2s;">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
                 <span>Google Haritalar'da Yol Tarifi Al →</span>
               </a>

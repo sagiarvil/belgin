@@ -1,8 +1,8 @@
 const fs = require('fs');
 
-const oldMapLink1 = 'https://maps.google.com/?q=Menderes+Caddesi+No+231/B+Buca+Izmir';
-const oldMapLink2 = 'https://maps.google.com/?cid=belginkuyumculuk';
-const newMapLink = 'https://share.google/e2vmC425agvKPAAHR';
+const oldMapLink1 = 'https://maps.google.com/?cid=3574131035126264051';
+const oldMapLink2 = 'https://maps.google.com/?cid=3574131035126264051';
+const newMapLink = 'https://maps.google.com/?cid=3574131035126264051';
 
 const filesToUpdate = [
   'index.html',

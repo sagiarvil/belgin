@@ -1,4 +1,4 @@
-﻿// pre_tool_guard.js
+// pre_tool_guard.js
 // Antigravity PreToolUse Güvenlik Kapısı
 // Bu betik her dosya yazma ve düzenleme aracından önce otomatik çalışır.
 

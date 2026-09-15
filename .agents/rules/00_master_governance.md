@@ -1,4 +1,4 @@
-﻿# NİHAİ AJAN YÖNETİŞİM VE KODLAMA ANAYASASI (ENTERPRISE V3.0)
+# NİHAİ AJAN YÖNETİŞİM VE KODLAMA ANAYASASI (ENTERPRISE V3.0)
 # Silicon Valley & London ($5,000,000+ Tier) AI Intelligence & 30-Year Unix Principal Engineering Protocol
 
 Bu anayasa; kullanıcının kesin talimatı olup Antigravity için mutlak bağlayıcıdır.

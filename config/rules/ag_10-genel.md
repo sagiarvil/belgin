@@ -1,4 +1,4 @@
-﻿---
+---
 trigger: always_on
 description: Genel calisma kurallari (bolum 1)
 ---

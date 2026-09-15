@@ -216,6 +216,7 @@ const AdminApp = {
 
   init() {
     this.startClock();
+    this.initKeyboardShortcuts();
     // Kuveyt Türk POS oranı (Varsayılan: 2.99)
     const savedKuveyt = localStorage.getItem('belgin_pos_rate_kuveyt') || localStorage.getItem('belgin_pos_bank_rate');
     if (savedKuveyt !== null && !isNaN(parseFloat(savedKuveyt))) {
@@ -882,6 +883,10 @@ const AdminApp = {
   },
 
   // DURUM FİLTRESİ DEĞİŞTİR (PİLLER VEYA SELECT)
+  setStatusPill(status) {
+    this.setStatusFilter(status);
+  },
+
   setStatusFilter(status, btn) {
     this.currentPage = 1;
     const select = document.getElementById('statusFilter');
@@ -902,6 +907,104 @@ const AdminApp = {
     const targetBtn = document.querySelector(`.btn-status-pill[data-status="${statusVal}"]`);
     if (targetBtn) targetBtn.classList.add('active');
     this.loadOrders();
+  },
+
+  // KLAVYE KISAYOLLARI REHBERİ AÇ/KAPAT
+  toggleShortcutHelp() {
+    const modal = document.getElementById('shortcutHelpModal');
+    if (!modal) return;
+    if (modal.style.display === 'none' || !modal.style.display) {
+      modal.style.display = 'flex';
+    } else {
+      modal.style.display = 'none';
+    }
+  },
+
+  // GLOBAL KLAVYE KISAYOLLARI DİNLEYİCİSİ (PRO EXECUTIVE SHORTCUTS)
+  initKeyboardShortcuts() {
+    if (this._keyboardShortcutsInitialized) return;
+    this._keyboardShortcutsInitialized = true;
+
+    window.addEventListener('keydown', (e) => {
+      // Eğer bir input, textarea veya select alanında yazılıyorsa kısayolları tetikleme
+      const targetTag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+      const isEditable = targetTag === 'input' || targetTag === 'textarea' || targetTag === 'select' || e.target.isContentEditable;
+
+      // ESC tuşu her zaman açık modalları kapatabilir
+      if (e.key === 'Escape') {
+        const helpModal = document.getElementById('shortcutHelpModal');
+        if (helpModal && helpModal.style.display !== 'none') {
+          this.toggleShortcutHelp();
+          return;
+        }
+        if (this.closeModal) this.closeModal();
+        if (this.closeSmsModal) this.closeSmsModal();
+        if (this.closeAccountingModal) this.closeAccountingModal();
+        if (this.closeManualOrderModal) this.closeManualOrderModal();
+        if (this.closeManualEftModal) this.closeManualEftModal();
+        if (this.closeExcelExportModal) this.closeExcelExportModal();
+        if (this.closeEditCustomerModal) this.closeEditCustomerModal();
+        if (this.closeOrderInvoiceModal) this.closeOrderInvoiceModal();
+        if (this.closeLivePreviewModal) this.closeLivePreviewModal();
+        if (this.closeManualPosModal) this.closeManualPosModal();
+        if (this.closeDeclarationModal) this.closeDeclarationModal();
+        return;
+      }
+
+      if (isEditable) return;
+
+      const key = e.key.toLowerCase();
+
+      // [E] -> Manuel EFT/Havale Girişi
+      if (key === 'e') {
+        e.preventDefault();
+        this.openManualEftModal();
+      }
+      // [P] -> Manuel POS Girişi
+      else if (key === 'p') {
+        e.preventDefault();
+        this.openManualOrderModal();
+      }
+      // [F] -> Mağaza Fatura Kesimi Sekmesi
+      else if (key === 'f') {
+        e.preventDefault();
+        this.switchTab('storeInvoices');
+      }
+      // [S] -> Toplu Fatura Kes (SMS)
+      else if (key === 's') {
+        e.preventDefault();
+        this.startBatchInvoiceSigning();
+      }
+      // [V] -> VIP Ödeme Linki Aç
+      else if (key === 'v') {
+        e.preventDefault();
+        window.open('/odeme-linki.html', '_blank');
+      }
+      // [W] -> Muhasebe WhatsApp
+      else if (key === 'w') {
+        e.preventDefault();
+        this.openAccountingModal();
+      }
+      // [R] -> Verileri Yenile
+      else if (key === 'r') {
+        e.preventDefault();
+        this.loadOrders();
+      }
+      // [/] -> Arama Kutusuna Git
+      else if (e.key === '/') {
+        e.preventDefault();
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+          searchInput.focus();
+          searchInput.select();
+        }
+      }
+      // [?] -> Kısayol Rehberi
+      else if (e.key === '?') {
+        e.preventDefault();
+        this.toggleShortcutHelp();
+      }
+    });
   },
 
   goToPage(page) {
@@ -7767,6 +7870,35 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       el.value = String(rate).replace('.', ',');
     }
     this.handleFreeItemChange();
+  },
+
+  // MAĞAZA FATURA KALEMİ MOD DEĞİŞTİRİCİ (FREE / GOLD / WATCH)
+  switchStoreItemMode(mode) {
+    const freeBox = document.getElementById('storeModeFreeBox');
+    const goldBox = document.getElementById('storeModeGoldBox');
+    const watchBox = document.getElementById('storeModeWatchBox');
+    const btnFree = document.getElementById('tabStoreModeFree');
+    const btnGold = document.getElementById('tabStoreModeGold');
+    const btnWatch = document.getElementById('tabStoreModeWatch');
+
+    if (freeBox) freeBox.style.display = (mode === 'free') ? 'block' : 'none';
+    if (goldBox) goldBox.style.display = (mode === 'gold') ? 'block' : 'none';
+    if (watchBox) watchBox.style.display = (mode === 'watch') ? 'block' : 'none';
+
+    if (btnFree) btnFree.classList.toggle('active', mode === 'free');
+    if (btnGold) btnGold.classList.toggle('active', mode === 'gold');
+    if (btnWatch) btnWatch.classList.toggle('active', mode === 'watch');
+
+    if (mode === 'gold') {
+      const input = document.getElementById('goldTargetPriceInput');
+      if (input) input.focus();
+    } else if (mode === 'watch') {
+      const input = document.getElementById('watchTargetPriceInput');
+      if (input) input.focus();
+    } else if (mode === 'free') {
+      const input = document.getElementById('freeItemPrice');
+      if (input) input.focus();
+    }
   },
 
   handleFreeItemChange(autoUpdateInvoice = true) {

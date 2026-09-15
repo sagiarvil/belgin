@@ -661,7 +661,7 @@ class PaymentService {
       try {
         await Promise.race([
           notifier.sendPaymentFailureNotification(failedOrderData),
-          new Promise((resolve) => setTimeout(resolve, 2500)),
+          new Promise((resolve) => setTimeout(resolve, 4500)),
         ]);
       } catch (pushErr) {
         console.error('[Notifier] Başarısız ödeme push bildirim hatası:', pushErr.message);
@@ -797,7 +797,7 @@ class PaymentService {
       try {
         await Promise.race([
           notifier.sendPaymentFailureNotification(failedOrderData),
-          new Promise((resolve) => setTimeout(resolve, 2500)),
+          new Promise((resolve) => setTimeout(resolve, 4500)),
         ]);
       } catch (pushErr) {
         console.error('[Notifier] Başarısız ödeme push bildirim hatası:', pushErr.message);

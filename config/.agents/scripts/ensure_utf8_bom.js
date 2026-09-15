@@ -1,4 +1,4 @@
-﻿// ensure_utf8_bom.js
+// ensure_utf8_bom.js
 // Dosya yazıldıktan sonra başında UTF-8 BOM (EF BB BF) yoksa otomatik olarak ekler.
 const fs = require('fs');
 

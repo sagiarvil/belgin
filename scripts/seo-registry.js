@@ -1,4 +1,4 @@
-﻿// ====================================================================
+// ====================================================================
 // BELGİN KUYUMCULUK — SEO REGISTRY SINGLE SOURCE OF TRUTH (SSOT)
 // Universal Omni-Enterprise SEO, GEO, Sitemap & Multi-Tier LLMS v6.0
 // Mandate Standard: MANDATE-SEO-GEO-2026-V6 & SAGIARVIL-SRO-2026-V1
@@ -26,11 +26,29 @@ const PRIMARY_ORGANIZATION = {
     latitude: 38.3842,
     longitude: 27.1685
   },
+  hasMap: 'https://maps.google.com/?cid=3574131035126264051',
   sameAs: [
     'https://www.wikidata.org/wiki/Q131371162',
     'https://www.instagram.com/belginmucevherat/',
-    'https://share.google/e2vmC425agvKPAAHR'
-  ]
+    'https://maps.google.com/?cid=3574131035126264051',
+    'https://www.google.com/maps/place/?q=place_id:3574131035126264051'
+  ],
+  areaServed: [
+    { '@type': 'AdministrativeArea', name: 'Buca' },
+    { '@type': 'AdministrativeArea', name: 'İzmir' },
+    { '@type': 'Country', name: 'Türkiye' }
+  ],
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      opens: '09:00',
+      closes: '19:00'
+    }
+  ],
+  priceRange: '₺₺₺₺',
+  currenciesAccepted: 'TRY, USD, EUR, GBP',
+  paymentAccepted: 'Cash, Credit Card, Bank Transfer, Fast, Akbank 3D Secure'
 };
 
 const SEO_REGISTRY = [

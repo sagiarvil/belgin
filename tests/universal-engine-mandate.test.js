@@ -1,4 +1,4 @@
-﻿/**
+/**
  * BELGIN KUYUMCULUK — UNIVERSAL ENGINE V3.0 FORMAL VERIFICATION SUITE
  * Mandate Code: MANDATE-SUPER-UNIVERSAL-2026-V3
  * Sürüm: 3.6.0 Universal Enterprise Exclusive Master Mandate
