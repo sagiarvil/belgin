@@ -10,6 +10,15 @@ const DEFAULT_NTFY_TOPIC = process.env.NTFY_TOPIC || 'belgin_kasa_2026';
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8759848876:AAHH1s5PPMkSqKOCg4oBTTzWgx8B1_Kp5qA';
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '912259513';
 
+function escapeHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
 function formatCurrency(amount) {
   return new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY' }).format(Number(amount || 0));
 }
@@ -26,14 +35,14 @@ async function sendTelegramNotification(order, botToken = TELEGRAM_BOT_TOKEN, ch
     return { success: false, skipped: true, reason: 'TELEGRAM_CONFIG_MISSING' };
   }
 
-  // Test ve Mock Koruması
-  if (!options.isExplicitTest && (process.env.NODE_ENV === 'test' || options.isTest === true)) {
+  // Test ve Mock Koruması (Yalnızca açık test ortamları veya TEST- prefixli kukla siparişler)
+  if (!options.isExplicitTest && (process.env.NODE_ENV === 'test' || options.isTest === true || order.isTest === true)) {
     return { success: true, skipped: true, reason: 'TEST_ENV_SUPPRESSED' };
   }
 
   const orderId = order.orderId || 'BLG-' + Date.now();
   const upperId = String(orderId).toUpperCase();
-  if (!options.isExplicitTest && (upperId.includes('TEST') || upperId.includes('MOCK') || upperId.includes('SAMPLE') || upperId.includes('PARALLEL') || upperId.includes('MAIL-FAIL') || upperId.includes('MISMATCH') || upperId.includes('N8N'))) {
+  if (!options.isExplicitTest && (upperId.startsWith('TEST-') || upperId.startsWith('MOCK-') || upperId.includes('DUMMY') || upperId.includes('SAMPLE') || upperId.includes('MAIL-FAIL'))) {
     return { success: true, skipped: true, reason: 'TEST_ORDER_SUPPRESSED' };
   }
 
@@ -42,25 +51,21 @@ async function sendTelegramNotification(order, botToken = TELEGRAM_BOT_TOKEN, ch
   const customerName = (order.customer && order.customer.name) || order.customerName || 'Müşteri';
   const customerPhone = (order.customer && order.customer.phone) || order.customerPhone || '—';
   const customerIdentity = (order.customer && (order.customer.identityNumber || order.customer.identity)) || order.customerIdentity || '—';
-  const customerAddress = (order.customer && order.customer.address) || order.customerAddress || order.address || '';
   const rawPhone = String(customerPhone).replace(/\D/g, '');
   const provider = (order.payment && order.payment.provider) || order.provider || 'KUVEYTTURK';
   const isShowroom = order.deliveryMethod === 'showroom' || order.highValueSecureDelivery === true;
   const deliveryText = isShowroom ? '🏛️ Showroom (Mağaza Teslim)' : '📦 Adrese Sigortalı Kargo';
   const timeStr = formatDate(order.paidAt || order.createdAt);
 
-  let itemsSummary = '';
-  if (Array.isArray(order.items) && order.items.length > 0) {
-    itemsSummary = order.items.map(i => `  • <b>${i.qty || 1}x</b> ${i.name || i.title || 'Lüks Koleksiyon Ürünü'}`).join('\n');
-  }
-
   const htmlMessage = [
-    `⏰ <b>Tarih:</b> ${timeStr}`,
+    `⏰ <b>Tarih:</b> ${escapeHtml(timeStr)}`,
     `🔔 <b>YENİ TAHSİLAT!</b>`,
-    `💰 <b>Tutar:</b> <code>${formattedAmount}</code>`,
-    `👤 <b>Müşteri:</b> ${customerName}`,
-    `🆔 <b>T.C. Kimlik / Pasaport:</b> <code>${customerIdentity}</code>`,
-    `💳 <b>POS / Banka:</b> ${provider} (3D Secure)`,
+    `💰 <b>Tutar:</b> <code>${escapeHtml(formattedAmount)}</code>`,
+    `👤 <b>Müşteri:</b> ${escapeHtml(customerName)}`,
+    `🆔 <b>T.C. Kimlik / Pasaport:</b> <code>${escapeHtml(customerIdentity)}</code>`,
+    `💳 <b>POS / Banka:</b> ${escapeHtml(provider)} (3D Secure)`,
+    `📍 <b>Teslimat:</b> ${escapeHtml(deliveryText)}`,
+    `📦 <b>Sipariş Ref:</b> <code>${escapeHtml(orderId)}</code>`,
   ].join('\n');
 
   const inlineKeyboard = [
@@ -83,13 +88,23 @@ async function sendTelegramNotification(order, botToken = TELEGRAM_BOT_TOKEN, ch
       reply_markup: {
         inline_keyboard: inlineKeyboard,
       },
-    }, { timeout: 6000 });
+    }, { timeout: 8000 });
 
     console.log(`[Notifier] Telegram Bildirimi iletildi -> ChatId: ${chatId}, OrderId: ${orderId}`);
     return { success: true, status: response.status };
   } catch (error) {
-    console.error('[Notifier] Telegram Bildirim hatası:', error.response?.data || error.message);
-    return { success: false, error: error.message };
+    console.error('[Notifier] Telegram Bildirim hatası (HTML), düz metin deneniyor:', error.response?.data || error.message);
+    try {
+      const plainText = htmlMessage.replace(/<[^>]*>?/gm, '');
+      const fbRes = await axios.post(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        chat_id: chatId,
+        text: plainText,
+        reply_markup: { inline_keyboard: inlineKeyboard },
+      }, { timeout: 6000 });
+      return { success: true, status: fbRes.status, fallbackPlain: true };
+    } catch (fbErr) {
+      return { success: false, error: fbErr.message };
+    }
   }
 }
 
@@ -297,35 +312,30 @@ async function sendPaymentFailureNotification(order, options = {}) {
   }
 
   const isExplicitTest = options.isExplicitTest === true;
-  if (!isExplicitTest && (process.env.NODE_ENV === 'test' || options.isTest === true || order.isTest === true || order.testMode === true)) {
+  if (!isExplicitTest && (process.env.NODE_ENV === 'test' || options.isTest === true || order.isTest === true)) {
     return { success: true, skipped: true, reason: 'TEST_ENV_SUPPRESSED' };
   }
 
   const orderId = String(order.orderId || '').trim();
   const upperOrderId = orderId.toUpperCase();
   if (!isExplicitTest && (
-    upperOrderId.includes('TEST') ||
-    upperOrderId.includes('MOCK') ||
+    upperOrderId.startsWith('TEST-') ||
+    upperOrderId.startsWith('MOCK-') ||
+    upperOrderId.includes('DUMMY') ||
     upperOrderId.includes('SAMPLE') ||
     upperOrderId.includes('PARALLEL') ||
-    upperOrderId.includes('MAIL-FAIL') ||
-    upperOrderId.includes('MISMATCH') ||
-    upperOrderId.includes('REPLAY') ||
-    upperOrderId.includes('N8N') ||
-    upperOrderId.includes('DEMO') ||
-    upperOrderId.includes('DEV') ||
-    upperOrderId.includes('FAKE')
+    upperOrderId.includes('MAIL-FAIL')
   )) {
     console.log(`[Notifier] Test sipariş tespit edildi (${orderId}), red bildirimi engellendi.`);
     return { success: true, skipped: true, reason: 'TEST_ORDER_SUPPRESSED' };
   }
 
-  // Mükerrer bildirim engelleme (Son 5 dakika içinde aynı sipariş reddi tekrar bildirilmez)
+  // Mükerrer bildirim engelleme (Son 3 dakika içinde aynı sipariş reddi tekrar bildirilmez)
   const dedupeKey = `FAIL_${orderId}`;
   const now = Date.now();
   if (orderId && recentNotifiedOrders.has(dedupeKey)) {
     const lastNotified = recentNotifiedOrders.get(dedupeKey);
-    if (now - lastNotified < 5 * 60 * 1000) {
+    if (now - lastNotified < 3 * 60 * 1000) {
       return { success: true, skipped: true, reason: 'ALREADY_NOTIFIED_RECENTLY' };
     }
   }
@@ -379,19 +389,19 @@ async function sendPaymentFailureNotification(order, options = {}) {
   const htmlMessage = [
     `🚨 <b>DİKKAT: BAŞARISIZ POS İŞLEMİ / İŞLEM REDDİ!</b>`,
     `━━━━━━━━━━━━━━━━━━━━━`,
-    `⛔ <b>RED KODU:</b> <code>${upperRawCode}</code>`,
-    `⚠️ <b>BANKA GEREKÇESİ:</b> <code>${upperRawMsg}</code>`,
-    `📖 <b>RESMİ ANLAMI:</b> <i>${upperOfficialMeaning}</i>`,
-    `🏦 <b>POS / BANKA:</b> ${upperProvider} (${upperStageLabel})`,
-    `💰 <b>DENENEN TUTAR:</b> <code>${formattedAmount}</code>`,
-    `👤 <b>MÜŞTERİ:</b> ${upperCustomerName}`,
-    ...(customerPhone !== '—' ? [`📞 <b>TELEFON:</b> <code>${customerPhone}</code>`] : []),
-    ...(customerIdentity !== '—' ? [`🆔 <b>T.C. KİMLİK:</b> <code>${customerIdentity}</code>`] : []),
-    `📦 <b>SİPARİŞ REF:</b> <code>${displayOrderId}</code> ${isVip ? '🏷️ <b>/22 VIP LİNK</b>' : ''}`,
-    `⏰ <b>ZAMAN:</b> ${timeStr}`,
+    `⛔ <b>RED KODU:</b> <code>${escapeHtml(upperRawCode)}</code>`,
+    `⚠️ <b>BANKA GEREKÇESİ:</b> <code>${escapeHtml(upperRawMsg)}</code>`,
+    `📖 <b>RESMİ ANLAMI:</b> <i>${escapeHtml(upperOfficialMeaning)}</i>`,
+    `🏦 <b>POS / BANKA:</b> ${escapeHtml(upperProvider)} (${escapeHtml(upperStageLabel)})`,
+    `💰 <b>DENENEN TUTAR:</b> <code>${escapeHtml(formattedAmount)}</code>`,
+    `👤 <b>MÜŞTERİ:</b> ${escapeHtml(upperCustomerName)}`,
+    ...(customerPhone !== '—' ? [`📞 <b>TELEFON:</b> <code>${escapeHtml(customerPhone)}</code>`] : []),
+    ...(customerIdentity !== '—' ? [`🆔 <b>T.C. KİMLİK:</b> <code>${escapeHtml(customerIdentity)}</code>`] : []),
+    `📦 <b>SİPARİŞ REF:</b> <code>${escapeHtml(displayOrderId)}</code> ${isVip ? '🏷️ <b>/22 VIP LİNK</b>' : ''}`,
+    `⏰ <b>ZAMAN:</b> ${escapeHtml(timeStr)}`,
     `━━━━━━━━━━━━━━━━━━━━━`,
     `💡 <b>SATIŞ KURTARMA TAVSİYESİ:</b>`,
-    `👉 <i>${upperAdvice}</i>`
+    `👉 <i>${escapeHtml(upperAdvice)}</i>`
   ].join('\n');
 
   const inlineKeyboard = [
@@ -409,30 +419,44 @@ async function sendPaymentFailureNotification(order, options = {}) {
   const results = { telegram: null, ntfy: null };
   const botToken = options.telegramBotToken || TELEGRAM_BOT_TOKEN;
   const chatId = options.telegramChatId || TELEGRAM_CHAT_ID;
+  const topic = String(options.topic || process.env.NTFY_TOPIC || DEFAULT_NTFY_TOPIC).trim();
+
+  const promises = [];
 
   // 1. Telegram Gönderimi (@Belgin_kasa_pos_bot)
   if (botToken && chatId) {
-    try {
-      const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
-      const response = await axios.post(url, {
+    promises.push(
+      axios.post(`https://api.telegram.org/bot${botToken}/sendMessage`, {
         chat_id: chatId,
         text: htmlMessage,
         parse_mode: 'HTML',
         reply_markup: {
           inline_keyboard: inlineKeyboard,
         },
-      }, { timeout: 6000 });
-      console.log(`[Notifier] Telegram POS Red Bildirimi iletildi -> OrderId: ${orderId}, Code: ${rawCode}`);
-      results.telegram = { success: true, status: response.status };
-    } catch (error) {
-      console.error('[Notifier] Telegram Red Bildirim hatası:', error.response?.data || error.message);
-      results.telegram = { success: false, error: error.message };
-    }
+      }, { timeout: 8000 })
+      .then(response => {
+        console.log(`[Notifier] Telegram POS Red Bildirimi iletildi -> OrderId: ${orderId}, Code: ${rawCode}`);
+        results.telegram = { success: true, status: response.status };
+      })
+      .catch(async error => {
+        console.error('[Notifier] Telegram Red Bildirim hatası (HTML), düz metin deneniyor:', error.response?.data || error.message);
+        try {
+          const plainText = htmlMessage.replace(/<[^>]*>?/gm, '');
+          const fbRes = await axios.post(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+            chat_id: chatId,
+            text: plainText,
+            reply_markup: { inline_keyboard: inlineKeyboard },
+          }, { timeout: 6000 });
+          results.telegram = { success: true, status: fbRes.status, fallbackPlain: true };
+        } catch (fbErr) {
+          results.telegram = { success: false, error: fbErr.message };
+        }
+      })
+    );
   }
 
   // 2. NTFY Gönderimi
-  const topic = String(options.topic || process.env.NTFY_TOPIC || DEFAULT_NTFY_TOPIC).trim();
-  try {
+  if (topic) {
     const ntfyPayload = {
       topic: topic,
       title: `🚨 POS İŞLEMİ REDDEDİLDİ: ${formattedAmount} [${upperRawCode}]`,
@@ -449,15 +473,22 @@ async function sendPaymentFailureNotification(order, options = {}) {
         },
       ],
     };
-    const ntfyRes = await axios.post('https://ntfy.sh', ntfyPayload, {
-      headers: { 'Content-Type': 'application/json; charset=utf-8' },
-      timeout: 6000,
-    });
-    results.ntfy = { success: true, status: ntfyRes.status };
-  } catch (error) {
-    results.ntfy = { success: false, error: error.message };
+
+    promises.push(
+      axios.post('https://ntfy.sh', ntfyPayload, {
+        headers: { 'Content-Type': 'application/json; charset=utf-8' },
+        timeout: 6000,
+      })
+      .then(ntfyRes => {
+        results.ntfy = { success: true, status: ntfyRes.status };
+      })
+      .catch(error => {
+        results.ntfy = { success: false, error: error.message };
+      })
+    );
   }
 
+  await Promise.allSettled(promises);
   return { success: true, results };
 }
 

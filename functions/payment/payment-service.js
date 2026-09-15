@@ -650,6 +650,11 @@ class PaymentService {
       // BAŞARISIZ İŞLEM ANLIK TELEGRAM & MOBİL PUSH BİLDİRİMİ (@Belgin_kasa_pos_bot)
       const failedOrderData = {
         ...order,
+        orderId,
+        customerName: (order.customer && order.customer.name) || order.customerName || 'Müşteri',
+        customerPhone: (order.customer && order.customer.phone) || order.customerPhone || '—',
+        customerIdentity: (order.customer && (order.customer.identityNumber || order.customer.identity)) || order.customerIdentity || '—',
+        totalAmount: Number(order.totalAmount || order.total || (order.payment && order.payment.amount) || 0),
         status: ORDER_STATUS.PAYMENT_FAILED,
         paymentStatus: 'FAILED',
         failReasonCode: failCode,
@@ -661,7 +666,7 @@ class PaymentService {
       try {
         await Promise.race([
           notifier.sendPaymentFailureNotification(failedOrderData),
-          new Promise((resolve) => setTimeout(resolve, 4500)),
+          new Promise((resolve) => setTimeout(resolve, 8000)),
         ]);
       } catch (pushErr) {
         console.error('[Notifier] Başarısız ödeme push bildirim hatası:', pushErr.message);
@@ -786,6 +791,11 @@ class PaymentService {
       // BAŞARISIZ İŞLEM ANLIK TELEGRAM & MOBİL PUSH BİLDİRİMİ (@Belgin_kasa_pos_bot)
       const failedOrderData = {
         ...order,
+        orderId,
+        customerName: (order.customer && order.customer.name) || order.customerName || 'Müşteri',
+        customerPhone: (order.customer && order.customer.phone) || order.customerPhone || '—',
+        customerIdentity: (order.customer && (order.customer.identityNumber || order.customer.identity)) || order.customerIdentity || '—',
+        totalAmount: Number(order.totalAmount || order.total || (order.payment && order.payment.amount) || 0),
         status: ORDER_STATUS.PAYMENT_FAILED,
         paymentStatus: 'FAILED',
         failReasonCode: failCode,
@@ -797,7 +807,7 @@ class PaymentService {
       try {
         await Promise.race([
           notifier.sendPaymentFailureNotification(failedOrderData),
-          new Promise((resolve) => setTimeout(resolve, 4500)),
+          new Promise((resolve) => setTimeout(resolve, 8000)),
         ]);
       } catch (pushErr) {
         console.error('[Notifier] Başarısız ödeme push bildirim hatası:', pushErr.message);

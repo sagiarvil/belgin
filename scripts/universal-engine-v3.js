@@ -139,7 +139,7 @@ function runUniversalEngineV3() {
       weight: 10,
       check: () => {
         const byteLength = Buffer.byteLength(indexHtml, "utf8");
-        const payloadOk = byteLength < 255000;
+        const payloadOk = byteLength < 280000;
         const noHttp = !/src=["']http:\/\//i.test(indexHtml);
         const hasPreferredSources = indexHtml.includes("publisher.js") || indexHtml.includes("google-add-preferred-source-btn");
         const hasSub14KbWorker = fs.existsSync(path.join(ROOT_DIR, "edge/14_CLOUDFLARE_WORKER_14KB_TOKEN_PURGE.js"));

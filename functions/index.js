@@ -206,8 +206,22 @@ exports.paymentCallback = functions
       return res.status(outcome?.status || 200).send(outcome?.message || 'OK');
     } catch (error) {
       console.error(`[Payment API] paymentCallback Error (${providerParam}):`, error.message);
-      if (providerParam === 'KUVEYTTURK' || providerParam === 'AKBANK') {
-        const orderId = encodeURIComponent(req.body?.orderId || req.body?.MerchantOrderId || req.body?.oid || '');
+      const rawOrderId = req.body?.orderId || req.body?.MerchantOrderId || req.body?.oid || '';
+      if (rawOrderId) {
+        try {
+          notifier.sendPaymentFailureNotification({
+            orderId: rawOrderId,
+            totalAmount: Number(req.body?.amount || req.body?.totalAmount || 0) / (req.body?.amount ? 100 : 1),
+            failReasonCode: 'SERVER_CALLBACK_ERROR',
+            failReasonMsg: `Sunucu işlem hatası veya provizyon reddi: ${error.message}`,
+            failStage: 'CALLBACK_EXCEPTION',
+            provider: providerParam,
+            customerName: req.body?.customerName || 'Müşteri',
+          }).catch(() => {});
+        } catch (_) {}
+      }
+      if (providerParam === 'KUVEYTTURK' || providerParam === 'AKBANK' || providerParam === 'ZIRAAT') {
+        const orderId = encodeURIComponent(rawOrderId);
         return res.redirect(303, `https://www.belginkuyumculuk.com/odeme-basarisiz.html?orderId=${orderId}&code=500&reason=${encodeURIComponent('Sunucu işlem hatası veya provizyon reddi')}&provider=${encodeURIComponent(providerParam)}`);
       }
       return res.status(500).send('Internal Server Error');
