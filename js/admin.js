@@ -4098,6 +4098,15 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     if (updatesContent) updatesContent.style.display = 'none';
     if (feasibilityContent) feasibilityContent.style.display = 'none';
 
+    const quickDeck = document.getElementById('quickCommandDeck') || document.querySelector('.quick-command-deck');
+    if (quickDeck) {
+      if (tab === 'feasibility') {
+        quickDeck.style.display = 'none';
+      } else {
+        quickDeck.style.display = 'flex';
+      }
+    }
+
     if (tab === 'storeInvoices') {
       if (this._posCountdownTimerInterval) {
         clearInterval(this._posCountdownTimerInterval);
