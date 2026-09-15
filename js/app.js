@@ -1130,8 +1130,9 @@ const App = {
 
     const isFav = (typeof Wishlist !== 'undefined' && Wishlist.has) ? Wishlist.has(p.id) : false;
 
+    const isJewel = this.isJewelleryProduct(p);
     return `
-      <a class="product-art-card ${isPreOwned ? 'product-art-card-preowned' : ''}"
+      <a class="product-art-card ${isPreOwned ? 'product-art-card-preowned' : ''} ${isJewel ? 'is-jewel' : 'is-watch'}"
          href="${productHref}"
          data-product-id="${p.id}"
          style="text-decoration:none; color:inherit; display:flex;">

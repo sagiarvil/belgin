@@ -3990,6 +3990,13 @@ p, span, li, td, th, label, input, button, select, textarea {
   opacity: 1 !important;
   transition: transform 0.5s var(--ease-silk);
 }
+.product-art-card.is-watch .img-primary,
+#allEliteWatchesGrid .img-primary,
+#allWatchesGrid .img-primary,
+#homeWatchesGrid .img-primary {
+  object-fit: cover !important;
+  padding: 0 !important;
+}
 .img-hover {
   display: none !important;
 }
