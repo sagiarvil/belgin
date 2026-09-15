@@ -427,9 +427,15 @@ const AdminApp = {
         this.switchTab('feasibility');
       } else if (target === 'storeInvoices') {
         this.switchTab('storeInvoices');
-      } else if (target === 'updates') {
-        this.switchTab('updates');
       }
+
+      document.addEventListener('click', (e) => {
+        const box = document.getElementById('storeCustSuggestionsBox');
+        const input = document.getElementById('storeCustName');
+        if (box && input && !box.contains(e.target) && e.target !== input) {
+          box.style.display = 'none';
+        }
+      });
     } catch (_) {}
   },
 
@@ -7741,6 +7747,122 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     }
 
     this.showToast(`✏️ ${inv.orderId} faturası düzenleme moduna alındı. Tüm alanları düzenleyebilirsiniz.`);
+  },
+
+  handleStoreCustNameInput(val) {
+    const box = document.getElementById('storeCustSuggestionsBox');
+    if (!box) return;
+    const query = (val || '').trim().toLowerCase();
+    if (query.length < 2) {
+      box.style.display = 'none';
+      box.innerHTML = '';
+      return;
+    }
+
+    // Hem mağaza faturalarını hem de e-ticaret siparişlerini tara
+    const customerMap = new Map();
+    const addCust = (name, identity, compName, taxOffice, address, phone, email) => {
+      if (!name || typeof name !== 'string') return;
+      const cleanName = name.trim();
+      if (cleanName.length < 2) return;
+      const key = cleanName.toLowerCase();
+      if (!customerMap.has(key) || (!customerMap.get(key).identity && identity)) {
+        customerMap.set(key, {
+          name: cleanName,
+          identity: (identity || '').trim(),
+          companyName: (compName || '').trim(),
+          taxOffice: (taxOffice || '').trim(),
+          address: (address || '').trim(),
+          phone: (phone || '').trim(),
+          email: (email || '').trim()
+        });
+      }
+    };
+
+    (this.storeInvoices || []).forEach(inv => {
+      addCust(
+        inv.customerName || inv.custName,
+        inv.customerIdentity || inv.identity || inv.tckn || inv.vkn,
+        inv.companyName || inv.custCompanyName,
+        inv.taxOffice || inv.custTaxOffice,
+        inv.customerAddress || inv.address || inv.custAddress,
+        inv.customerPhone || inv.phone || inv.custPhone,
+        inv.customerEmail || inv.email || inv.custEmail
+      );
+    });
+
+    (this.orders || []).forEach(ord => {
+      const c = ord.customer || {};
+      addCust(
+        c.fullName || c.name || ord.customerName,
+        c.tckn || c.identity || ord.customerIdentity,
+        c.companyName,
+        c.taxOffice,
+        c.address || ord.deliveryAddress,
+        c.phone || ord.customerPhone,
+        c.email || ord.customerEmail
+      );
+    });
+
+    const matches = Array.from(customerMap.values())
+      .filter(c => c.name.toLowerCase().includes(query) || (c.identity && c.identity.includes(query)))
+      .slice(0, 6);
+
+    if (matches.length === 0) {
+      box.style.display = 'none';
+      box.innerHTML = '';
+      return;
+    }
+
+    box.innerHTML = matches.map((c, idx) => `
+      <div class="store-cust-suggestion-item" style="padding:9px 12px; cursor:pointer; border-bottom:1px solid #F1F5F9; background:#FFF; transition:background 0.15s;" 
+           onmouseover="this.style.background='#F0FDF4'" 
+           onmouseout="this.style.background='#FFF'" 
+           onmousedown="AdminApp.selectStoreCustomerSuggestion(${idx})">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong style="font-size:12.5px; color:#0F172A;">👤 ${c.name}</strong>
+          ${c.identity ? `<span style="font-size:11px; font-weight:700; color:#084C47; background:#E5ECE9; padding:1px 6px; border-radius:4px; font-family:monospace;">${c.identity}</span>` : ''}
+        </div>
+        <div style="font-size:11px; color:#64748B; margin-top:3px; display:flex; gap:10px; flex-wrap:wrap;">
+          ${c.phone ? `<span>📞 ${c.phone}</span>` : ''}
+          ${c.companyName ? `<span>🏢 ${c.companyName}</span>` : ''}
+          ${c.address ? `<span style="max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">📍 ${c.address}</span>` : ''}
+        </div>
+      </div>
+    `).join('');
+
+    this._activeCustSuggestions = matches;
+    box.style.display = 'block';
+  },
+
+  selectStoreCustomerSuggestion(index) {
+    if (!this._activeCustSuggestions || !this._activeCustSuggestions[index]) return;
+    const c = this._activeCustSuggestions[index];
+
+    const nameEl = document.getElementById('storeCustName');
+    const idEl = document.getElementById('storeCustIdentity');
+    const compEl = document.getElementById('storeCustCompanyName');
+    const taxEl = document.getElementById('storeCustTaxOffice');
+    const addrEl = document.getElementById('storeCustAddress');
+    const phoneEl = document.getElementById('storeCustPhone');
+    const emailEl = document.getElementById('storeCustEmail');
+
+    if (nameEl) nameEl.value = c.name || '';
+    if (idEl && c.identity) idEl.value = c.identity;
+    if (compEl && c.companyName) compEl.value = c.companyName;
+    if (taxEl && c.taxOffice) taxEl.value = c.taxOffice;
+    if (addrEl && c.address) addrEl.value = c.address;
+    if (phoneEl && c.phone) phoneEl.value = c.phone;
+    if (emailEl && c.email) emailEl.value = c.email;
+
+    const box = document.getElementById('storeCustSuggestionsBox');
+    if (box) {
+      box.style.display = 'none';
+      box.innerHTML = '';
+    }
+
+    this.handleStoreCustIdentityInput();
+    this.showToast(`✅ Müşteri bilgileri dolduruldu: ${c.name}`);
   },
 
   handleStoreCustIdentityInput() {
