@@ -9637,6 +9637,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     }
 
     const tbody = document.getElementById('storeInvoicesTableBody');
+    const mobileList = document.getElementById('storeInvoicesMobileList');
     if (tbody) {
       tbody.innerHTML = pagedInvoices.map(inv => {
         const isCancelled = (inv.invoiceStatus === 'CANCELLED' || inv.isCancelled);
