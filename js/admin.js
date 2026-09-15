@@ -1938,6 +1938,12 @@ const AdminApp = {
         storeInv.declarationName = file.name;
         try {
           localStorage.setItem('belgin_store_invoices', JSON.stringify(this.storeInvoices));
+          // Sunucuya da kaydet
+          fetch('/api/admin/store-invoices/create', {
+            method: 'POST',
+            headers: this.getAuthHeaders(),
+            body: JSON.stringify({ ...storeInv, adminKey: this.adminPin })
+          }).catch(() => {});
         } catch (_) {}
       }
 
@@ -1947,7 +1953,7 @@ const AdminApp = {
     if (typeof this.filterTable === 'function') this.filterTable();
     if (typeof this.filterStoreTable === 'function') this.filterStoreTable();
     this.openDeclarationModal(this.activeDeclarationOrderId);
-    alert('✅ Müşteri kimlik / beyan belgesi başarıyla kaydedildi! Yasal evraklar dosyasından anında görüntülenebilir ve yazdırılabilir.');
+    this.showToast('✅ Müşteri kimlik / beyan belgesi başarıyla kaydedildi!');
   },
 
   removeDeclaration() {

@@ -3304,8 +3304,8 @@
                 </div>
               </div>
 
-              <!-- 🪪 KATLANABİLİR YASAL EVRAK & KİMLİK PANELİ (DÜŞÜK BİLİŞSEL YÜK) -->
-              <details style="background:#FAFAFA; border:1px solid #E2E8F0; border-radius:8px; padding:10px 14px;">
+              <!-- 🪪 KATLANABİLİR YASAL EVRAK & KİMLİK PANELİ -->
+              <details open style="background:#FAFAFA; border:1px solid #E2E8F0; border-radius:8px; padding:10px 14px;">
                 <summary style="font-size:12px; font-weight:700; color:#64748B; cursor:pointer; user-select:none; display:flex; align-items:center; justify-content:space-between;">
                   <span>🪪 MASAK Kimlik Fotoğrafı & Yasal Evrak İndirme (Opsiyonel / 180.000 TL+)</span>
                   <span style="font-size:10px; font-weight:800; color:#084C47; background:#E5ECE9; padding:2px 8px; border-radius:10px;">Genişlet / Daralt</span>
@@ -3331,11 +3331,11 @@
                       </div>
                     </div>
 
-                    <div id="storeIdentityDropZone" style="display:flex; align-items:center; justify-content:space-between; gap:10px; background:#F8FAFC; border:1px dashed #CBD5E1; border-radius:6px; padding:8px 12px; cursor:pointer;" onclick="document.getElementById('storeIdentityFileInput').click()">
-                      <input type="file" id="storeIdentityFileInput" accept="image/png, image/jpeg, image/jpg, image/webp, application/pdf" style="display:none;" onchange="AdminApp.handleStoreIdentityUpload(event)">
-                      <span style="font-size:11.5px; color:#64748B;">Kimlik fotoğrafı veya PDF seçin (Maks. 10MB)</span>
-                      <button type="button" class="btn-admin-secondary" style="font-size:11px; padding:4px 10px;" onclick="event.stopPropagation(); document.getElementById('storeIdentityFileInput').click();">Dosya Seç</button>
-                    </div>
+                    <label id="storeIdentityDropZone" for="storeIdentityFileInput" style="display:flex; align-items:center; justify-content:space-between; gap:10px; background:#F8FAFC; border:1.5px dashed #CBD5E1; border-radius:6px; padding:8px 12px; cursor:pointer;">
+                      <input type="file" id="storeIdentityFileInput" accept="image/*, application/pdf, .heic, .heif" style="display:none;" onchange="AdminApp.handleStoreIdentityUpload(event)">
+                      <span style="font-size:11.5px; color:#64748B;">Kimlik fotoğrafı veya PDF seçin (Maks. 15MB)</span>
+                      <span class="btn-admin-secondary" style="font-size:11px; padding:4px 10px; pointer-events:none;">📂 Dosya Seç</span>
+                    </label>
                   </div>
 
                   <!-- Yasal Evrak Butonları -->
@@ -5942,19 +5942,19 @@
       </div>
 
       <!-- Dosya Yükleme Alanı -->
-      <div id="declarationDropZone" style="background:#FFFDF7; border:2px dashed #CA8A04; border-radius:10px; padding:20px; text-align:center; cursor:pointer; transition:background 0.2s;" onclick="const inp=document.getElementById('declarationFileInput'); if(inp) inp.click();" ondragover="event.preventDefault(); this.style.background='#FEF3C7';" ondragleave="this.style.background='#FFFDF7';" ondrop="event.preventDefault(); this.style.background='#FFFDF7'; AdminApp.handleDeclarationDrop(event);">
-        <input type="file" id="declarationFileInput" accept="image/png, image/jpeg, image/jpg, image/webp, application/pdf" style="position:fixed; top:-9999px; left:-9999px; opacity:0; pointer-events:none;" onchange="AdminApp.handleDeclarationUpload(event)">
+      <label id="declarationDropZone" for="declarationFileInput" style="display:block; background:#FFFDF7; border:2px dashed #CA8A04; border-radius:10px; padding:20px; text-align:center; cursor:pointer; transition:background 0.2s;" ondragover="event.preventDefault(); this.style.background='#FEF3C7';" ondragleave="this.style.background='#FFFDF7';" ondrop="event.preventDefault(); this.style.background='#FFFDF7'; AdminApp.handleDeclarationDrop(event);">
+        <input type="file" id="declarationFileInput" accept="image/*, application/pdf, .heic, .heif" style="display:none;" onchange="AdminApp.handleDeclarationUpload(event)">
         <div style="font-size:28px; margin-bottom:4px;">📥</div>
         <div style="font-weight:800; font-size:13.5px; color:#854D0E; margin-bottom:4px;">
           📁 Yeni / Güncel Beyan Belgesi Yükle (PNG, JPG, WEBP, PDF)
         </div>
-        <button type="button" class="btn-admin-primary" style="background:#C2A768; color:#042926; border-color:#DFBA67; font-weight:800; padding:8px 20px; font-size:12.5px; cursor:pointer; margin-top:6px;" onclick="event.stopPropagation(); const inp=document.getElementById('declarationFileInput'); if(inp) inp.click();">
-          📂 Bilgisayardan Dosya Seç veya Sürükle Bırak
-        </button>
+        <span class="btn-admin-primary" style="display:inline-block; background:#C2A768; color:#042926; border-color:#DFBA67; font-weight:800; padding:8px 20px; font-size:12.5px; cursor:pointer; margin-top:6px; pointer-events:none;">
+          📂 Bilgisayardan / Telefondan Dosya Seç
+        </span>
         <div style="font-size:11px; color:#78350F; margin-top:8px;">
-          Maksimum 10MB · Yüklenen belge doğrudan yasal delil kitapçığına (8. TÜM BELGELER) eklenir ve yazdırılabilir.
+          Maksimum 15MB · Yüklenen belge doğrudan yasal delil kitapçığına (8. TÜM BELGELER) eklenir ve yazdırılabilir.
         </div>
-      </div>
+      </label>
     </div>
 
     <div style="background:#F8FAFC; border-top:1px solid #E2E8F0; padding:14px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
