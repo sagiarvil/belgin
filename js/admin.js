@@ -7749,26 +7749,46 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     this.showToast(`✏️ ${inv.orderId} faturası düzenleme moduna alındı. Tüm alanları düzenleyebilirsiniz.`);
   },
 
+  normalizeTr(text) {
+    if (!text) return '';
+    return String(text)
+      .replace(/İ/g, 'i')
+      .replace(/I/g, 'i')
+      .replace(/ı/g, 'i')
+      .replace(/Ğ/g, 'g')
+      .replace(/ğ/g, 'g')
+      .replace(/Ü/g, 'u')
+      .replace(/ü/g, 'u')
+      .replace(/Ş/g, 's')
+      .replace(/ş/g, 's')
+      .replace(/Ö/g, 'o')
+      .replace(/ö/g, 'o')
+      .replace(/Ç/g, 'c')
+      .replace(/ç/g, 'c')
+      .toLowerCase()
+      .trim();
+  },
+
   handleStoreCustNameInput(val) {
     const box = document.getElementById('storeCustSuggestionsBox');
     if (!box) return;
-    const query = (val || '').trim().toLowerCase();
-    if (query.length < 2) {
-      box.style.display = 'none';
-      box.innerHTML = '';
-      return;
-    }
+    const rawQuery = (val || '').trim();
+    const normQuery = this.normalizeTr(rawQuery);
 
-    // Hem mağaza faturalarını hem de e-ticaret siparişlerini tara
+    // Kapsamlı ve Zırhlı Müşteri Hafıza Havuzu
     const customerMap = new Map();
     const addCust = (name, identity, compName, taxOffice, address, phone, email) => {
       if (!name || typeof name !== 'string') return;
       const cleanName = name.trim();
       if (cleanName.length < 2) return;
-      const key = cleanName.toLowerCase();
-      if (!customerMap.has(key) || (!customerMap.get(key).identity && identity)) {
-        customerMap.set(key, {
+      // Nihai Tüketici veya generic isimleri ele
+      if (cleanName.toLowerCase().includes('nihai tüketici') || cleanName.toLowerCase().includes('bireysel mağaza')) return;
+
+      const normKey = this.normalizeTr(cleanName);
+      if (!customerMap.has(normKey)) {
+        customerMap.set(normKey, {
           name: cleanName,
+          normName: normKey,
           identity: (identity || '').trim(),
           companyName: (compName || '').trim(),
           taxOffice: (taxOffice || '').trim(),
@@ -7776,12 +7796,21 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
           phone: (phone || '').trim(),
           email: (email || '').trim()
         });
+      } else {
+        // Eksik alanları daha zengin kayıtla güncelle
+        const existing = customerMap.get(normKey);
+        if (!existing.identity && identity) existing.identity = identity.trim();
+        if (!existing.companyName && compName) existing.companyName = compName.trim();
+        if (!existing.taxOffice && taxOffice) existing.taxOffice = taxOffice.trim();
+        if (!existing.phone && phone) existing.phone = phone.trim();
+        if ((!existing.address || existing.address.length < 15) && address) existing.address = address.trim();
       }
     };
 
+    // 1. Bellekteki Mağaza Faturaları
     (this.storeInvoices || []).forEach(inv => {
       addCust(
-        inv.customerName || inv.custName,
+        inv.customerName || inv.custName || inv.buyerName,
         inv.customerIdentity || inv.identity || inv.tckn || inv.vkn,
         inv.companyName || inv.custCompanyName,
         inv.taxOffice || inv.custTaxOffice,
@@ -7791,22 +7820,78 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       );
     });
 
+    // 2. LocalStorage'daki Mağaza Faturaları
+    try {
+      const stored = localStorage.getItem('belgin_store_invoices');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) {
+          parsed.forEach(inv => {
+            addCust(
+              inv.customerName || inv.custName || inv.buyerName,
+              inv.customerIdentity || inv.identity || inv.tckn || inv.vkn,
+              inv.companyName || inv.custCompanyName,
+              inv.taxOffice || inv.custTaxOffice,
+              inv.customerAddress || inv.address || inv.custAddress,
+              inv.customerPhone || inv.phone || inv.custPhone,
+              inv.customerEmail || inv.email || inv.custEmail
+            );
+          });
+        }
+      }
+    } catch (_) {}
+
+    // 3. E-Ticaret Siparişleri
     (this.orders || []).forEach(ord => {
       const c = ord.customer || {};
       addCust(
-        c.fullName || c.name || ord.customerName,
-        c.tckn || c.identity || ord.customerIdentity,
-        c.companyName,
-        c.taxOffice,
-        c.address || ord.deliveryAddress,
-        c.phone || ord.customerPhone,
-        c.email || ord.customerEmail
+        c.fullName || c.name || ord.customerName || ord.customerFullName,
+        c.tckn || c.identity || ord.customerIdentity || ord.tckn,
+        c.companyName || ord.companyName,
+        c.taxOffice || ord.taxOffice,
+        c.address || ord.deliveryAddress || ord.billingAddress,
+        c.phone || ord.customerPhone || ord.phone,
+        c.email || ord.customerEmail || ord.email
       );
     });
 
-    const matches = Array.from(customerMap.values())
-      .filter(c => c.name.toLowerCase().includes(query) || (c.identity && c.identity.includes(query)))
-      .slice(0, 6);
+    // 4. Cached Sipariş Verisi
+    try {
+      const cached = localStorage.getItem('belgin_admin_cached_data');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (parsed && Array.isArray(parsed.orders)) {
+          parsed.orders.forEach(ord => {
+            const c = ord.customer || {};
+            addCust(
+              c.fullName || c.name || ord.customerName,
+              c.tckn || c.identity || ord.customerIdentity,
+              c.companyName,
+              c.taxOffice,
+              c.address || ord.deliveryAddress,
+              c.phone || ord.customerPhone,
+              c.email || ord.customerEmail
+            );
+          });
+        }
+      }
+    } catch (_) {}
+
+    const allCustomers = Array.from(customerMap.values());
+    let matches = [];
+
+    if (normQuery.length === 0) {
+      // Input boşken odaklanıldıysa en son 5 müşteriyi göster
+      matches = allCustomers.slice(0, 5);
+    } else {
+      // Harf veya TCKN veya Telefon ile akıllı filtreleme
+      matches = allCustomers.filter(c => {
+        return c.normName.includes(normQuery) || 
+               (c.identity && c.identity.includes(rawQuery)) || 
+               (c.phone && c.phone.replace(/\D/g, '').includes(rawQuery.replace(/\D/g, ''))) ||
+               (c.companyName && this.normalizeTr(c.companyName).includes(normQuery));
+      }).slice(0, 8);
+    }
 
     if (matches.length === 0) {
       box.style.display = 'none';
@@ -7814,19 +7899,24 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       return;
     }
 
-    box.innerHTML = matches.map((c, idx) => `
-      <div class="store-cust-suggestion-item" style="padding:9px 12px; cursor:pointer; border-bottom:1px solid #F1F5F9; background:#FFF; transition:background 0.15s;" 
+    const titleHtml = normQuery.length === 0 
+      ? `<div style="padding:6px 12px; background:#F8FAFC; border-bottom:1px solid #E2E8F0; font-size:10.5px; font-weight:800; color:#64748B;">🕒 SON KAYITLI MÜŞTERİLER (${matches.length})</div>`
+      : `<div style="padding:6px 12px; background:#F0FDF4; border-bottom:1px solid #DCFCE7; font-size:10.5px; font-weight:800; color:#15803D;">🎯 EŞLEŞEN MÜŞTERİLER (${matches.length})</div>`;
+
+    box.innerHTML = titleHtml + matches.map((c, idx) => `
+      <div class="store-cust-suggestion-item" style="padding:10px 12px; cursor:pointer; border-bottom:1px solid #F1F5F9; background:#FFF; transition:background 0.15s;" 
            onmouseover="this.style.background='#F0FDF4'" 
            onmouseout="this.style.background='#FFF'" 
            onmousedown="AdminApp.selectStoreCustomerSuggestion(${idx})">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-          <strong style="font-size:12.5px; color:#0F172A;">👤 ${c.name}</strong>
-          ${c.identity ? `<span style="font-size:11px; font-weight:700; color:#084C47; background:#E5ECE9; padding:1px 6px; border-radius:4px; font-family:monospace;">${c.identity}</span>` : ''}
+          <strong style="font-size:13px; color:#0F172A;">👤 ${c.name}</strong>
+          ${c.identity ? `<span style="font-size:11px; font-weight:800; color:#084C47; background:#E5ECE9; padding:2px 7px; border-radius:4px; font-family:monospace;">${c.identity}</span>` : ''}
         </div>
-        <div style="font-size:11px; color:#64748B; margin-top:3px; display:flex; gap:10px; flex-wrap:wrap;">
-          ${c.phone ? `<span>📞 ${c.phone}</span>` : ''}
-          ${c.companyName ? `<span>🏢 ${c.companyName}</span>` : ''}
-          ${c.address ? `<span style="max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">📍 ${c.address}</span>` : ''}
+        <div style="font-size:11px; color:#64748B; margin-top:4px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+          ${c.phone ? `<span>📞 <strong>${c.phone}</strong></span>` : ''}
+          ${c.companyName ? `<span style="color:#0369A1;">🏢 ${c.companyName}</span>` : ''}
+          ${c.taxOffice ? `<span>🏛️ ${c.taxOffice}</span>` : ''}
+          ${c.address ? `<span style="max-width:240px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${c.address}">📍 ${c.address}</span>` : ''}
         </div>
       </div>
     `).join('');
@@ -7849,11 +7939,11 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
 
     if (nameEl) nameEl.value = c.name || '';
     if (idEl && c.identity) idEl.value = c.identity;
-    if (compEl && c.companyName) compEl.value = c.companyName;
-    if (taxEl && c.taxOffice) taxEl.value = c.taxOffice;
+    if (compEl) compEl.value = c.companyName || '';
+    if (taxEl) taxEl.value = c.taxOffice || '';
     if (addrEl && c.address) addrEl.value = c.address;
-    if (phoneEl && c.phone) phoneEl.value = c.phone;
-    if (emailEl && c.email) emailEl.value = c.email;
+    if (phoneEl) phoneEl.value = c.phone || '';
+    if (emailEl) emailEl.value = c.email || '';
 
     const box = document.getElementById('storeCustSuggestionsBox');
     if (box) {
@@ -7862,7 +7952,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     }
 
     this.handleStoreCustIdentityInput();
-    this.showToast(`✅ Müşteri bilgileri dolduruldu: ${c.name}`);
+    this.showToast(`✅ Müşteri hafızadan yüklendi: ${c.name}`);
   },
 
   handleStoreCustIdentityInput() {
