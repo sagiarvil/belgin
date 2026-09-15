@@ -3182,14 +3182,17 @@
         <!-- 2 Kolonlu Ergonomik Masaüstü Izgarası -->
         <div class="store-wizard-grid" style="display:grid; grid-template-columns:1.5fr 1fr; gap:20px; align-items:start;">
           
-          <!-- SOL KOLON: ADIM 1 (MÜŞTERİ) + ADIM 2 (ÜRÜN KALEMLERİ) -->
-          <div style="display:flex; flex-direction:column; gap:16px;">
+          <!-- SOL KOLON: TEK BİRLEŞİK FORM KARTI (ALICI + FATURA KALEMLERİ) -->
+          <div style="background:#FFFFFF; border:1.5px solid #E2E8F0; border-radius:14px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.03); display:flex; flex-direction:column; gap:16px;">
             
-            <!-- ADIM 1: MÜŞTERİ BİLGİLERİ (SAF, HIZLI VE FERAH) -->
-            <div style="background:#FFFFFF; border:1.5px solid #E2E8F0; border-radius:12px; padding:18px; box-shadow:0 1px 3px rgba(0,0,0,0.03);">
-              <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid #F1F5F9;">
-                <span style="display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; background:#084C47; color:#FFF; border-radius:50%; font-size:12px; font-weight:800;">1</span>
-                <h3 style="margin:0; font-size:15px; font-weight:800; color:#0F172A;">Alıcı / Müşteri Bilgileri</h3>
+            <!-- BÖLÜM 1: ALICI / MÜŞTERİ BİLGİLERİ -->
+            <div>
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; padding-bottom:10px; border-bottom:1.5px solid #F1F5F9;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <span style="display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; background:#084C47; color:#FFF; border-radius:50%; font-size:12px; font-weight:800;">1</span>
+                  <h3 style="margin:0; font-size:15px; font-weight:800; color:#0F172A;">Alıcı / Müşteri Bilgileri</h3>
+                </div>
+                <span style="font-size:11px; font-weight:700; color:#64748B;">Temel Fatura ve Müşteri Tanımı</span>
               </div>
 
               <!-- 3 Temel Alan: İsim, TCKN/VKN, Fatura Tarihi -->
@@ -3331,17 +3334,16 @@
                   </div>
                 </div>
               </details>
-
             </div>
 
-            <!-- ADIM 2: ÜRÜN KALEMLERİ VE ŞABLONLAR -->
-            <div style="background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:12px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,0.03);">
+            <!-- BÖLÜM 2: FATURA KALEMLERİ VE ŞABLONLAR -->
+            <div style="border-top:1.5px solid #F1F5F9; padding-top:16px;">
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid #EDF2F7; flex-wrap:wrap; gap:8px;">
                 <div style="display:flex; align-items:center; gap:10px;">
-                  <span style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; background:#084C47; color:#FFF; border-radius:50%; font-size:13px; font-weight:800;">2</span>
+                  <span style="display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; background:#084C47; color:#FFF; border-radius:50%; font-size:12px; font-weight:800;">2</span>
                   <h3 style="margin:0; font-size:15px; font-weight:800; color:#0F172A;">Fatura Kalemleri & Ürünler</h3>
                 </div>
-                <button type="button" class="btn-admin-primary" style="font-size:12.5px; padding:7px 16px; background:#084C47; border-color:#084C47;" onclick="AdminApp.addStoreInvoiceItemRow()">
+                <button type="button" class="btn-admin-primary" style="font-size:12px; padding:6px 14px; background:#084C47; border-color:#084C47;" onclick="AdminApp.addStoreInvoiceItemRow()">
                   <span>➕ Yeni Satır Ekle</span>
                 </button>
               </div>
