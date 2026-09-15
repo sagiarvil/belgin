@@ -1156,100 +1156,88 @@ const AdminApp = {
           hour: '2-digit', minute: '2-digit'
         });
 
+        const hasDecl = (o.declarationDoc || o.identityDoc || AdminApp.getStoredDeclaration(o.orderId));
+        const declBadge = hasDecl 
+          ? `<span style="cursor:pointer; font-size:11px; background:#DCFCE7; color:#15803D; padding:2px 6px; border-radius:4px; font-weight:800; border:1px solid #86EFAC; display:inline-flex; align-items:center; gap:2px;" onclick="AdminApp.openDeclarationModal('${o.orderId}')" title="Kimlik Yüklü (Gör / Değiştir)">🪪 Kimlik: Var</span>`
+          : `<span style="cursor:pointer; font-size:11px; background:#FFFBEB; color:#B45309; padding:2px 6px; border-radius:4px; font-weight:700; border:1px solid #FCD34D; display:inline-flex; align-items:center; gap:2px;" onclick="AdminApp.openDeclarationModal('${o.orderId}')" title="Kimlik Belgesi Yükle">⚠️ Kimlik: Yok</span>`;
+
         return `
           <tr style="${isSelected ? 'background:#F0FDF4;' : ''}">
-            <td style="text-align:center;">
+            <td style="text-align:center; vertical-align:middle;">
               <input type="checkbox" class="invoice-row-checkbox" value="${o.orderId}" 
                      ${isSelected ? 'checked' : ''} 
                      ${!isSigned ? 'disabled title="Yalnızca imzalanmış faturalar seçilebilir"' : 'title="Muhasebeye iletmek için seçin"'} 
                      onchange="AdminApp.toggleInvoiceSelection('${o.orderId}', this.checked)">
             </td>
-            <td>
-              <div style="font-family:monospace; font-weight:800; font-size:12px; color:#064E3B; display:flex; align-items:center; gap:5px; flex-wrap:wrap;">
+            <td style="vertical-align:middle;">
+              <div style="font-family:monospace; font-weight:800; font-size:12px; color:#064E3B; display:flex; align-items:center; gap:5px;">
                 <span>${o.orderId}</span>
                 ${this.getWatchBadge(o)}
               </div>
-              ${this.getProviderBadge(o.provider || (o.payment && o.payment.provider))}
-            </td>
-            <td style="font-size:12px; color:#334155; font-weight:600; white-space:nowrap;">${dateFormatted}</td>
-            <td>
-              <div style="font-weight:800; font-size:13px; color:#0F172A; display:flex; align-items:center; gap:4px;">
-                <span>${o.customerName || 'Müşteri'}</span>
-                <button type="button" onclick="AdminApp.openEditCustomerModal('${o.orderId}')" title="Fatura & Müşteri Bilgilerini Düzenle" style="background:none; border:none; cursor:pointer; font-size:12px; padding:0; color:#D97706;">✏️</button>
+              <div style="margin-top:3px;">
+                ${this.getProviderBadge(o.provider || (o.payment && o.payment.provider))}
               </div>
-              <div style="font-size:11.5px; color:#475569; font-weight:600;">${o.customerPhone && o.customerPhone !== '—' && !o.customerPhone.includes('Yok') ? o.customerPhone : '—'}</div>
-              <div style="font-size:11px; color:#92400E; font-weight:800;">🆔 <span style="font-family:monospace;">${o.customerIdentity && o.customerIdentity !== '—' && !o.customerIdentity.includes('Yok') && o.customerIdentity !== '11111111111' ? o.customerIdentity : '—'}</span></div>
             </td>
-            <td style="font-weight:800; font-size:13.5px; color:#047857; white-space:nowrap;">
+            <td style="font-size:12px; color:#334155; font-weight:600; white-space:nowrap; vertical-align:middle;">
+              ${dateFormatted}
+            </td>
+            <td style="vertical-align:middle;">
+              <div style="font-weight:800; font-size:13px; color:#0F172A; display:flex; align-items:center; gap:6px;">
+                <span>${o.customerName || 'Müşteri'}</span>
+                <button type="button" onclick="AdminApp.openEditCustomerModal('${o.orderId}')" title="Fatura & Müşteri Bilgilerini Düzenle" style="background:none; border:none; cursor:pointer; font-size:11px; padding:0; color:#D97706;">✏️</button>
+              </div>
+              <div style="font-size:11.5px; color:#475569; margin-top:2px; display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                <span>${o.customerPhone && o.customerPhone !== '—' && !o.customerPhone.includes('Yok') ? o.customerPhone : '—'}</span>
+                ${o.customerIdentity && o.customerIdentity !== '—' && !o.customerIdentity.includes('Yok') && o.customerIdentity !== '11111111111' ? `<span style="color:#92400E; font-weight:700; font-family:monospace;">🆔 ${o.customerIdentity}</span>` : ''}
+              </div>
+            </td>
+            <td style="font-weight:800; font-size:14px; color:#047857; white-space:nowrap; vertical-align:middle;">
               ₺${Number(o.totalAmount || 0).toLocaleString('tr-TR')}
             </td>
-            <td>
-              <select class="admin-status-dropdown ${isPaid ? 'status-paid' : (isFailed ? 'status-failed' : 'status-pending')}" 
-                      onchange="AdminApp.quickChangeStatus('${o.orderId}', this.value, this)" 
-                      title="Durumu doğrudan değiştirmek veya silmek için seçiniz">
-                <option value="PAID" ${isPaid ? 'selected' : ''}>✅ Tahsil Edildi</option>
-                <option value="PENDING" ${!isPaid && !isFailed ? 'selected' : ''}>⏳ Beklemede</option>
-                <option value="FAILED" ${isFailed ? 'selected' : ''}>❌ Başarısız / İptal</option>
-                <option value="DELETE" style="color:#C62828; font-weight:800;">🗑️ Kaydı Sil</option>
-              </select>
-              ${diagnosis ? `
-                <div style="margin-top:5px; padding:4px 7px; background:#FEF2F2; border:1px solid #FCA5A5; border-radius:6px; font-size:11px; color:#991B1B; font-weight:700; line-height:1.25; text-align:left; max-width:180px; box-shadow:0 1px 3px rgba(220,38,38,0.06);" title="Banka Yanıtı: [${diagnosis.rawCode}] ${this.escapeHtml(diagnosis.rawMsg)} - ${this.escapeHtml(diagnosis.officialMeaning)}">
-                  <div style="display:flex; align-items:center; gap:4px;">
-                    <span style="font-size:11px;">🚫</span>
-                    <strong style="font-family:monospace; background:#FEE2E2; padding:1px 5px; border-radius:3px; font-size:10.5px; color:#B91C1C;">${diagnosis.rawCode}</strong>
-                  </div>
-                  <div style="margin-top:2px; font-size:10px; color:#7F1D1D; font-weight:600; white-space:normal; word-break:break-word;">
-                    ${this.escapeHtml(diagnosis.rawMsg.length > 36 ? diagnosis.rawMsg.slice(0, 33) + '...' : diagnosis.rawMsg)}
-                  </div>
-                </div>
-              ` : ''}
-              ${invoiceBadge}
-              ${this.hasWatchItem(o) ? `<div style="text-align:center; margin-top:3px;">${this.getWatchBadge(o)}</div>` : ''}
+            <td style="vertical-align:middle;">
+              <div style="display:flex; flex-direction:column; gap:3px;">
+                <select class="admin-status-dropdown ${isPaid ? 'status-paid' : (isFailed ? 'status-failed' : 'status-pending')}" 
+                        style="padding:3px 6px; font-size:11px; font-weight:800; border-radius:6px; cursor:pointer;"
+                        onchange="AdminApp.quickChangeStatus('${o.orderId}', this.value, this)" 
+                        title="Durumu doğrudan değiştir">
+                  <option value="PAID" ${isPaid ? 'selected' : ''}>✅ Tahsil Edildi</option>
+                  <option value="PENDING" ${!isPaid && !isFailed ? 'selected' : ''}>⏳ Beklemede</option>
+                  <option value="FAILED" ${isFailed ? 'selected' : ''}>❌ Başarısız</option>
+                  <option value="DELETE" style="color:#C62828; font-weight:800;">🗑️ Kaydı Sil</option>
+                </select>
+                ${invoiceBadge}
+              </div>
             </td>
-            <td style="text-align:center;">
-              ${(o.declarationDoc || o.identityDoc || AdminApp.getStoredDeclaration(o.orderId)) ? `
-                <button type="button" class="btn-admin-secondary" style="padding:4px 9px; font-size:11px; background:#DCFCE7; border:1.5px solid #16A34A; color:#15803D; font-weight:800; border-radius:6px; display:inline-flex; align-items:center; gap:4px; white-space:nowrap; cursor:pointer; box-shadow:0 1px 3px rgba(22, 163, 74, 0.2);" onclick="AdminApp.openDeclarationModal('${o.orderId}')" title="Müşteri Kimlik Belgesi / İmzalı Beyanı Gör veya Değiştir">
-                  <span>🪪</span> <span>Kimlik: ✅ YÜKLÜ</span>
-                </button>
-              ` : `
-                <button type="button" class="btn-admin-secondary" style="padding:4px 9px; font-size:11px; background:#FFFBEB; border:1.5px solid #F59E0B; color:#B45309; font-weight:700; border-radius:6px; display:inline-flex; align-items:center; gap:4px; white-space:nowrap; cursor:pointer;" onclick="AdminApp.openDeclarationModal('${o.orderId}')" title="Müşteri T.C. Kimlik Kartı Fotoğrafı veya Beyan Belgesi Yükle">
-                  <span>⚠️</span> <span>Kimlik Yok (Yükle)</span>
-                </button>
-              `}
+            <td style="text-align:center; vertical-align:middle;">
+              ${declBadge}
             </td>
-            <td style="display:flex; gap:4px; flex-wrap:wrap; align-items:center;">
-              ${!isPaid ? `<button class="btn-admin-primary" style="padding:3px 7px; font-size:11px; background:#15803D; border-color:#15803D;" onclick="AdminApp.confirmOrder('${o.orderId}')" title="Tahsilatı Onayla">✅ Onayla</button>` : ''}
-              <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#FFFBEB; border-color:#F59E0B; color:#92400E; font-weight:800;" onclick="AdminApp.openEditCustomerModal('${o.orderId}')" title="Müşteri ve Fatura Alıcı Bilgilerini Güncelle">
-                ✏️ Düzenle
-              </button>
-              <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#F0F9FF; border-color:#0284C7; color:#0369A1; font-weight:700;" onclick="AdminApp.showDetail('${o.orderId}')">
-                Detay
-              </button>
-              ${(o.invoiceStatus === 'CANCELLED' || o.isCancelled) && o.invoiceNumber ? `
-                <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#FFF; border-color:#CBD5E1; color:#64748B; font-weight:700;" onclick="AdminApp.viewInvoice('${o.invoiceUuid}', '${o.orderId}')" title="İptal Edilen Faturayı Aç">
-                  📄 Fatura (İptal)
+            <td style="vertical-align:middle;">
+              <div style="display:flex; gap:4px; align-items:center; flex-wrap:wrap;">
+                ${(o.invoiceStatus !== 'SIGNED' && !isSigned) ? `
+                  <button class="btn-admin-primary" style="padding:4px 8px; font-size:11px; font-weight:800; background:#059669; border-color:#059669; color:#FFF; border-radius:6px;" onclick="AdminApp.openOrderInvoiceModal('${o.orderId}')" title="GİB e-Arşiv Faturası Kes">
+                    🧾 Fatura Kes
+                  </button>
+                ` : `
+                  <button class="btn-admin-secondary" style="padding:4px 8px; font-size:11px; font-weight:800; background:#F0FDF4; border-color:#86EFAC; color:#065F46; border-radius:6px;" onclick="AdminApp.viewInvoice('${o.invoiceUuid}', '${o.orderId}')" title="Faturayı Görüntüle / Yazdır">
+                    📄 Fatura
+                  </button>
+                  <button class="btn-admin-secondary" style="padding:4px 7px; font-size:11px; font-weight:800; background:#DCFCE7; border-color:#86EFAC; color:#166534; border-radius:6px;" onclick="AdminApp.sendSingleInvoiceToAccounting('${o.orderId}')" title="Muhasebeye İlet">
+                    📲 Muhasebe
+                  </button>
+                  <button class="btn-admin-secondary" style="padding:4px 6px; font-size:11px; font-weight:800; border-color:#FCA5A5; color:#DC2626; background:#FEF2F2; border-radius:6px;" onclick="AdminApp.openCancelInvoiceModal('${o.orderId}', '${o.invoiceUuid}', '${invNo}', '${this.escapeHtml(o.customerName || '')}', ${Number(o.totalAmount || 0)})" title="GİB Fatura İptali">
+                    🚫 İptal
+                  </button>
+                `}
+                <button class="btn-admin-secondary" style="padding:4px 7px; font-size:11px; font-weight:700; background:#F0F9FF; border-color:#BAE6FD; color:#0369A1; border-radius:6px;" onclick="AdminApp.showDetail('${o.orderId}')" title="Detaylı Bilgi">
+                  Detay
                 </button>
-              ` : (o.invoiceStatus !== 'SIGNED' ? `
-                <button class="btn-admin-primary" style="padding:3px 7px; font-size:11px; background:#059669; border-color:#059669; color:#FFF; font-weight:700;" onclick="AdminApp.openOrderInvoiceModal('${o.orderId}')" title="GİB e-Arşiv Faturası Kes (Altın / Saat / Serbest Seçimli)">
-                  🧾 Fatura Kes
+                <button class="btn-admin-secondary" style="padding:4px 7px; font-size:11px; font-weight:700; background:#FFFBEB; border-color:#FCD34D; color:#92400E; border-radius:6px;" onclick="AdminApp.printLegalDocument('${o.orderId}')" title="Yasal Evraklar & Teslim Tutanağı">
+                  📜 Yasal
                 </button>
-              ` : `
-                <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#F0FDF4; border-color:#059669; color:#065F46; font-weight:700;" onclick="AdminApp.viewInvoice('${o.invoiceUuid}', '${o.orderId}')" title="Faturayı Aç / Yazdır">
-                  📄 Fatura
+                <button class="btn-admin-secondary" style="padding:4px 6px; font-size:11px; border-color:#FCA5A5; color:#DC2626; background:#FEF2F2; border-radius:6px;" onclick="AdminApp.deleteOrder('${o.orderId}')" title="Kaydı Sil">
+                  🗑️
                 </button>
-                <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#DCFCE7; border-color:#86EFAC; color:#166534; font-weight:800;" onclick="AdminApp.sendSingleInvoiceToAccounting('${o.orderId}')" title="Bu Faturayı Doğrudan Muhasebeye (+90 541 930 53 72) İlet">
-                  📲 Muhasebe
-                </button>
-                <button class="btn-admin-secondary" style="padding:3px 6px; font-size:11px; border-color:#FCA5A5; color:#DC2626; background:#FEF2F2; font-weight:800;" onclick="AdminApp.openCancelInvoiceModal('${o.orderId}', '${o.invoiceUuid}', '${invNo}', '${this.escapeHtml(o.customerName || '')}', ${Number(o.totalAmount || 0)})" title="GİB e-Arşiv Faturasını Gerekçeli İptal Et">
-                  🚫 GİB İptal
-                </button>
-              `)}
-              <button class="btn-admin-secondary" style="padding:3px 7px; font-size:11px; background:#FFFBEB; border-color:#D97706; color:#92400E; font-weight:700;" onclick="AdminApp.printLegalDocument('${o.orderId}')" title="Zaman Damgalı Sözleşme & Delil Çıktısı">
-                📜 Yasal
-              </button>
-              <button class="btn-admin-secondary" style="padding:3px 6px; font-size:11px; border-color:#FCA5A5; color:#DC2626; background:#FEF2F2;" onclick="AdminApp.deleteOrder('${o.orderId}')" title="Test/mükerrer kaydı veritabanından kalıcı olarak sil">
-                🗑️
-              </button>
+              </div>
             </td>
           </tr>
         `;
@@ -9596,80 +9584,80 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
 
         return `
           <tr style="${isCancelled ? 'background:#FEF2F2; opacity:0.85;' : (isSelected ? 'background:#F0FDF4;' : '')}">
-            <td style="text-align:center;">
+            <td style="text-align:center; padding:10px 6px;">
               <input type="checkbox" class="invoice-row-checkbox" value="${inv.orderId}" 
                      ${isSelected ? 'checked' : ''} 
                      ${(!isSigned || isCancelled) ? 'disabled title="Yalnızca geçerli imzalanmış faturalar seçilebilir"' : 'title="Muhasebeye iletmek için seçin"'} 
                      onchange="AdminApp.toggleStoreInvoiceSelection('${inv.orderId}', this.checked)">
             </td>
-            <td style="font-family:monospace; font-weight:800; font-size:12px; color:#064E3B;">
+            <td style="font-family:monospace; font-weight:800; font-size:12px; color:#064E3B; padding:10px 8px;">
               <div style="display:flex; align-items:center; gap:5px; flex-wrap:wrap;">
                 <span>${inv.orderId}</span>
                 ${this.getWatchBadge(inv)}
               </div>
             </td>
-            <td style="font-size:11.5px; color:#334155; white-space:nowrap;">
-              <div style="font-weight:800; color:#0F172A; font-size:12px;">${this.formatDateTr(inv.invoiceDate)}</div>
-              ${createdTime ? `<div style="font-size:10.5px; color:#64748B; margin-top:2px;">🕒 Kayıt: <strong style="color:#334155;">${createdTime}</strong></div>` : ''}
-              ${(updatedTime && updatedTime !== createdTime) ? `<div style="font-size:10px; color:#92400E; margin-top:1px;">✏️ Günc: <strong>${updatedTime}</strong></div>` : ''}
-              ${invoicedTime ? `<div style="font-size:10px; color:#15803D; margin-top:1px;">🧾 İmza: <strong>${invoicedTime}</strong></div>` : ''}
+            <td style="font-size:11.5px; color:#334155; white-space:nowrap; padding:10px 8px;">
+              <div style="font-weight:700; color:#0F172A; font-size:12px;">${this.formatDateTr(inv.invoiceDate || inv.createdAt)}</div>
+              ${createdTime ? `<div style="font-size:11px; color:#64748B; margin-top:2px;">🕒 ${createdTime}</div>` : ''}
             </td>
-            <td>
-              <div style="font-weight:800; font-size:13px; color:#0F172A; display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+            <td style="padding:10px 8px;">
+              <div style="font-weight:700; font-size:13px; color:#0F172A; display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                 <span>${this.escapeHtml(inv.customerName || 'Müşteri')}</span>
                 ${paySelectorHtml}
               </div>
-              <div style="font-size:11.5px; color:#475569; font-weight:600;">${inv.customerPhone && inv.customerPhone !== '—' && !inv.customerPhone.includes('Yok') ? inv.customerPhone : '—'}</div>
-              <div style="font-size:11px; color:#92400E; font-weight:800; display:flex; align-items:center; gap:6px; margin-top:3px; flex-wrap:wrap;">
+              <div style="font-size:11px; color:#64748B; display:flex; align-items:center; gap:8px; margin-top:3px; flex-wrap:wrap;">
+                <span>📞 ${inv.customerPhone && inv.customerPhone !== '—' && !inv.customerPhone.includes('Yok') ? inv.customerPhone : '—'}</span>
                 <span>🆔 <span style="font-family:monospace;">${inv.customerIdentity && inv.customerIdentity !== '—' && !inv.customerIdentity.includes('Yok') && inv.customerIdentity !== '11111111111' ? inv.customerIdentity : '—'}</span></span>
                 ${(inv.declarationDoc || inv.identityDoc || AdminApp.getStoredDeclaration(inv.orderId)) ? `
-                  <button type="button" class="btn-admin-secondary" style="padding:3px 8px; font-size:11px; background:#DCFCE7; border:1.5px solid #16A34A; color:#15803D; font-weight:800; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center; gap:4px; box-shadow:0 1px 3px rgba(22, 163, 74, 0.2);" onclick="AdminApp.openDeclarationModal('${inv.orderId}')" title="Müşteri Kimlik Belgesini İncele / Değiştir">
-                    <span>🪪</span> <span>Kimlik: ✅ YÜKLÜ</span>
+                  <button type="button" class="btn-admin-secondary" style="padding:2px 6px; font-size:10.5px; background:#DCFCE7; border:1px solid #16A34A; color:#15803D; font-weight:700; border-radius:4px; cursor:pointer;" onclick="AdminApp.openDeclarationModal('${inv.orderId}')" title="Müşteri Kimlik Belgesini İncele / Değiştir">
+                    🪪 Kimlik Var
                   </button>
                 ` : `
-                  <button type="button" class="btn-admin-secondary" style="padding:3px 8px; font-size:11px; background:#FFFBEB; border:1.5px solid #F59E0B; color:#B45309; font-weight:700; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center; gap:4px;" onclick="AdminApp.openDeclarationModal('${inv.orderId}')" title="Müşteri Kimlik Belgesi Yükle">
-                    <span>⚠️</span> <span>Kimlik Yok (Yükle)</span>
+                  <button type="button" class="btn-admin-secondary" style="padding:2px 6px; font-size:10.5px; background:#FFFBEB; border:1px solid #F59E0B; color:#B45309; font-weight:700; border-radius:4px; cursor:pointer;" onclick="AdminApp.openDeclarationModal('${inv.orderId}')" title="Müşteri Kimlik Belgesi Yükle">
+                    ⚠️ Kimlik Yok
                   </button>
                 `}
               </div>
             </td>
-            <td style="font-size:12px; color:#1E293B; line-height:1.4;">${itemsDisplay}</td>
-            <td style="font-weight:800; font-size:14px; color:${isCancelled ? '#991B1B' : '#047857'}; text-align:right; white-space:nowrap;">
+            <td style="font-size:12px; color:#1E293B; line-height:1.4; padding:10px 8px;">${itemsDisplay}</td>
+            <td style="font-weight:800; font-size:13.5px; color:${isCancelled ? '#991B1B' : '#047857'}; text-align:right; white-space:nowrap; padding:10px 10px;">
               ₺${Number(inv.totalAmount || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </td>
-            <td style="text-align:center;">
+            <td style="text-align:center; padding:10px 8px;">
               ${invoiceBadge}
               ${this.hasWatchItem(inv) ? `<div style="margin-top:3px; display:flex; justify-content:center;">${this.getWatchBadge(inv)}</div>` : ''}
             </td>
-            <td style="display:flex; gap:4px; flex-wrap:wrap; align-items:center;">
-              <button class="btn-admin-secondary" style="padding:5px 8px; font-size:11.5px; background:#F8FAFC; border-color:#94A3B8; color:#334155; font-weight:800;" onclick="AdminApp.printStoreFormDoc('full-packet', '${inv.orderId}')" title="Yasal Evraklar, MASAK ve Teslim-Tesellüm Dosyasını İndir / Yazdır">
-                📜 Yasal Evraklar
-              </button>
-              ${isCancelled ? `
-                <button class="btn-admin-secondary" style="padding:5px 8px; font-size:11.5px; background:#FFF; border-color:#CBD5E1; color:#64748B; font-weight:700;" onclick="AdminApp.viewStoreInvoice('${inv.invoiceUuid}', '${inv.orderId}')" title="İptal Edilen Faturayı Aç">
-                  📄 Fatura
+            <td style="padding:10px 8px;">
+              <div style="display:flex; gap:4px; flex-wrap:wrap; align-items:center; justify-content:flex-end;">
+                <button class="btn-admin-secondary" style="padding:4px 8px; font-size:11px; background:#F8FAFC; border-color:#CBD5E1; color:#334155; font-weight:700; border-radius:5px;" onclick="AdminApp.printStoreFormDoc('full-packet', '${inv.orderId}')" title="Yasal Evraklar, MASAK ve Teslim-Tesellüm Dosyasını İndir / Yazdır">
+                  📜 Evrak
                 </button>
-              ` : (!isSigned ? `
-                <button class="btn-admin-primary" style="padding:5px 10px; font-size:11.5px; background:linear-gradient(135deg, #059669 0%, #10B981 100%); border-color:#059669; color:#FFF; font-weight:800;" onclick="AdminApp.startStoreInvoiceSigning('${inv.orderId}')" title="GİB e-Arşiv Fatura Kes (SMS)">
-                  🧾 Fatura Kes
+                ${isCancelled ? `
+                  <button class="btn-admin-secondary" style="padding:4px 8px; font-size:11px; background:#FFF; border-color:#CBD5E1; color:#64748B; font-weight:700; border-radius:5px;" onclick="AdminApp.viewStoreInvoice('${inv.invoiceUuid}', '${inv.orderId}')" title="İptal Edilen Faturayı Aç">
+                    📄 Fatura
+                  </button>
+                ` : (!isSigned ? `
+                  <button class="btn-admin-primary" style="padding:4px 8px; font-size:11px; background:linear-gradient(135deg, #059669 0%, #10B981 100%); border-color:#059669; color:#FFF; font-weight:700; border-radius:5px;" onclick="AdminApp.startStoreInvoiceSigning('${inv.orderId}')" title="GİB e-Arşiv Fatura Kes (SMS)">
+                    🧾 Fatura Kes
+                  </button>
+                  <button class="btn-admin-secondary" style="padding:4px 8px; font-size:11px; background:#FFFBEB; border-color:#FCD34D; color:#92400E; font-weight:700; border-radius:5px;" onclick="AdminApp.editStoreInvoice('${inv.orderId}')" title="Taslak Faturayı Düzenle">
+                    ✏️ Düzenle
+                  </button>
+                ` : `
+                  <button class="btn-admin-secondary" style="padding:4px 8px; font-size:11px; background:#F0FDF4; border-color:#86EFAC; color:#15803D; font-weight:700; border-radius:5px;" onclick="AdminApp.viewStoreInvoice('${inv.invoiceUuid}', '${inv.orderId}')" title="Faturayı Aç / Yazdır">
+                    📄 Fatura
+                  </button>
+                  <button class="btn-admin-secondary" style="padding:4px 8px; font-size:11px; background:#DCFCE7; border-color:#86EFAC; color:#166534; font-weight:700; border-radius:5px;" onclick="AdminApp.sendStoreInvoiceToAccounting('${inv.orderId}')" title="Bu Faturayı Doğrudan Muhasebeye İlet">
+                    📲 Muhasebe
+                  </button>
+                  <button class="btn-admin-secondary" style="padding:4px 8px; font-size:11px; border-color:#FCA5A5; color:#DC2626; background:#FEF2F2; font-weight:700; border-radius:5px;" onclick="AdminApp.openCancelInvoiceModal('${inv.orderId}', '${inv.invoiceUuid}', '${invNo}', '${this.escapeHtml(inv.customerName || '')}', ${Number(inv.totalAmount || 0)})" title="GİB e-Arşiv Faturasını Gerekçeli İptal Et">
+                    🚫 İptal
+                  </button>
+                `)}
+                <button class="btn-admin-secondary" style="padding:4px 6px; font-size:11px; border-color:#FCA5A5; color:#DC2626; background:#FEF2F2; border-radius:5px;" onclick="AdminApp.deleteStoreInvoice('${inv.orderId}')" title="Mağaza Faturasını Kalıcı Sil">
+                  🗑️
                 </button>
-                <button class="btn-admin-secondary" style="padding:5px 10px; font-size:11.5px; background:#FFFBEB; border-color:#FCD34D; color:#92400E; font-weight:800;" onclick="AdminApp.editStoreInvoice('${inv.orderId}')" title="Taslak Faturayı Düzenle">
-                  ✏️ Düzenle
-                </button>
-              ` : `
-                <button class="btn-admin-secondary" style="padding:5px 10px; font-size:11.5px; background:#F0FDF4; border-color:#86EFAC; color:#15803D; font-weight:800;" onclick="AdminApp.viewStoreInvoice('${inv.invoiceUuid}', '${inv.orderId}')" title="Faturayı Aç / Yazdır">
-                  📄 Fatura
-                </button>
-                <button class="btn-admin-secondary" style="padding:5px 10px; font-size:11.5px; background:#DCFCE7; border-color:#86EFAC; color:#166534; font-weight:800;" onclick="AdminApp.sendStoreInvoiceToAccounting('${inv.orderId}')" title="Bu Faturayı Doğrudan Muhasebeye İlet">
-                  📲 Muhasebe
-                </button>
-                <button class="btn-admin-secondary" style="padding:5px 8px; font-size:11.5px; border-color:#FCA5A5; color:#DC2626; background:#FEF2F2; font-weight:800;" onclick="AdminApp.openCancelInvoiceModal('${inv.orderId}', '${inv.invoiceUuid}', '${invNo}', '${this.escapeHtml(inv.customerName || '')}', ${Number(inv.totalAmount || 0)})" title="GİB e-Arşiv Faturasını Gerekçeli İptal Et">
-                  🚫 GİB İptal
-                </button>
-              `)}
-              <button class="btn-admin-secondary" style="padding:5px 8px; font-size:11.5px; border-color:#FCA5A5; color:#DC2626; background:#FEF2F2;" onclick="AdminApp.deleteStoreInvoice('${inv.orderId}')" title="Mağaza Faturasını Kalıcı Sil">
-                🗑️
-              </button>
+              </div>
             </td>
           </tr>
         `;
