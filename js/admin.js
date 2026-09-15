@@ -850,10 +850,15 @@ const AdminApp = {
       }
       const provEntries = Object.entries(provMap).sort((a, b) => (b[1].sum || 0) - (a[1].sum || 0));
       if (provEntries.length > 0) {
-        const provLines = provEntries.map(([k, v]) => `${k}: ₺${Number(v.sum || 0).toLocaleString('tr-TR')}`);
-        kpiProv.innerHTML = provLines.join('<br>');
+        const provLines = provEntries.map(([k, v]) => `
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; font-weight:700; color:#1E1B4B; padding:1px 0;">
+            <span style="color:#64748B; font-weight:600;">${k}:</span>
+            <span style="font-family:monospace; color:#1E1B4B;">₺${Number(v.sum || 0).toLocaleString('tr-TR')}</span>
+          </div>
+        `);
+        kpiProv.innerHTML = provLines.join('');
       } else {
-        kpiProv.innerHTML = 'KUVEYTTURK: ₺0';
+        kpiProv.innerHTML = '<span style="color:#64748B; font-size:11px;">KUVEYTTURK: ₺0</span>';
       }
     }
 
@@ -875,10 +880,15 @@ const AdminApp = {
       }
       const bankEntries = Object.entries(bankMap).sort((a, b) => (b[1].sum || 0) - (a[1].sum || 0));
       if (bankEntries.length > 0) {
-        const bankLines = bankEntries.map(([k, v]) => `${k}: ₺${Number(v.sum || 0).toLocaleString('tr-TR')}`);
-        kpiBank.innerHTML = bankLines.join('<br>');
+        const bankLines = bankEntries.map(([k, v]) => `
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; font-weight:700; color:#0C4A6E; padding:1px 0;">
+            <span style="color:#64748B; font-weight:600;">${k}:</span>
+            <span style="font-family:monospace; color:#0C4A6E;">₺${Number(v.sum || 0).toLocaleString('tr-TR')}</span>
+          </div>
+        `);
+        kpiBank.innerHTML = bankLines.join('');
       } else {
-        kpiBank.innerHTML = 'KUVEYTTURK: ₺0';
+        kpiBank.innerHTML = '<span style="color:#64748B; font-size:11px;">KUVEYTTURK: ₺0</span>';
       }
     }
 
