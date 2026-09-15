@@ -718,6 +718,69 @@ const AdminApp = {
     this.loadOrders();
   },
 
+  selectStorePreset(preset, btn) {
+    this.currentStorePreset = preset;
+    document.querySelectorAll('[data-store-preset]').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+
+    const startInput = document.getElementById('storeStartDate');
+    const endInput = document.getElementById('storeEndDate');
+    if (!startInput || !endInput) return;
+
+    const today = new Date();
+    switch (preset) {
+      case 'today':
+        startInput.value = this.formatLocalDate(today);
+        endInput.value = this.formatLocalDate(today);
+        break;
+      case 'yesterday': {
+        const yest = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
+        const yStr = this.formatLocalDate(yest);
+        startInput.value = yStr;
+        endInput.value = yStr;
+        break;
+      }
+      case 'last7': {
+        const d7 = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 6);
+        startInput.value = this.formatLocalDate(d7);
+        endInput.value = this.formatLocalDate(today);
+        break;
+      }
+      case 'thisMonth': {
+        const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+        const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        startInput.value = this.formatLocalDate(firstDay);
+        endInput.value = this.formatLocalDate(lastDay);
+        break;
+      }
+      case 'lastMonth': {
+        const prevFirst = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+        const prevLast = new Date(today.getFullYear(), today.getMonth(), 0);
+        startInput.value = this.formatLocalDate(prevFirst);
+        endInput.value = this.formatLocalDate(prevLast);
+        break;
+      }
+      case 'last30': {
+        const d30 = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 29);
+        startInput.value = this.formatLocalDate(d30);
+        endInput.value = this.formatLocalDate(today);
+        break;
+      }
+      case 'all':
+      default:
+        startInput.value = '';
+        endInput.value = '';
+        break;
+    }
+
+    this.filterStoreTable();
+  },
+
+  onStoreCustomDateChange() {
+    document.querySelectorAll('[data-store-preset]').forEach(b => b.classList.remove('active'));
+    this.filterStoreTable();
+  },
+
   // SİPARİŞLERİ YÜKLE
   async loadOrders() {
     // Yalnızca ekranda henüz hiç sipariş yoksa yükleme göstergesi göster
