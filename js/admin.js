@@ -3672,7 +3672,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
           const q = parseInt(it.qty || it.miktar || 1, 10) || 1;
           const pr = Number(it.price || it.fiyat || it.lineTotal || (it.unitPrice ? it.unitPrice * q : 0)) || 0;
           return {
-            name: it.name || it.malHizmet || it.title || '22 Ayar Altın / Mücevherat',
+            name: it.name || it.malHizmet || it.title || '22 Ayar Altın Bilezik',
             qty: q,
             price: pr,
             unitPrice: Number(it.unitPrice || it.birimFiyat || (pr > 0 ? pr / q : 0))
@@ -3708,14 +3708,14 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
         const bd = this.calculateJewelryBreakdown(orderAmount, o);
         if (bd && Array.isArray(bd.items) && bd.items.length > 0) {
           itemsList = bd.items.map(it => ({
-            name: it.name || it.malHizmet || '22 Ayar Altın / Mücevherat',
+            name: it.name || it.malHizmet || '22 Ayar Altın Bilezik',
             qty: parseInt(it.qty || it.miktar || 1, 10) || 1,
             price: Number(it.lineTotal || it.fiyat || it.price) || (orderAmount / bd.items.length),
             unitPrice: Number(it.unitPrice || it.birimFiyat) || 0
           }));
         } else {
           itemsList = [{
-            name: o.productName || o.title || (o.invoiceType === 'WATCH' ? 'Lüks İsviçre Kol Saati' : '22 Ayar İşçilikli Altın Bilezik'),
+            name: o.productName || o.title || (o.invoiceType === 'WATCH' ? 'Lüks İsviçre Kol Saati' : '22 Ayar Altın Bilezik'),
             qty: parseInt(o.qty, 10) || 1,
             unitPrice: orderAmount / (parseInt(o.qty, 10) || 1),
             price: orderAmount
@@ -3757,7 +3757,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       // 2. KALEM SATIRLARI (Her kalem kendi fiyatıyla, kuruşu kuruşuna fatura toplamına eşitlenir)
       itemsList.forEach((it, itIdx) => {
         rowCount++;
-        const itName = String(it.name || it.malHizmet || it.title || '22 Ayar Altın / Mücevherat').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        const itName = String(it.name || it.malHizmet || it.title || '22 Ayar Altın Bilezik').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         const itQty = parseInt(it.qty, 10) || 1;
         const itPrice = Number(it.price || (it.unitPrice ? it.unitPrice * itQty : orderAmount / itemsList.length) || 0);
         const itUnitPrice = Number(it.unitPrice || (itQty > 0 ? itPrice / itQty : itPrice) || 0);
@@ -7308,7 +7308,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     }
     if (!this.storeItems || this.storeItems.length === 0) {
       this.storeItems = [
-        { name: '22 Ayar Altın / Mücevherat', qty: 1, unitPrice: 0, kdvRate: 0, lineTotal: 0, kdvAmount: 0 }
+        { name: '22 Ayar Altın Bilezik', qty: 1, unitPrice: 0, kdvRate: 0, lineTotal: 0, kdvAmount: 0 }
       ];
     }
     this.renderStoreInvoiceItems();
@@ -7710,7 +7710,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     const laborItem = this.storeItems.find(it => String(it.name || '').toLowerCase().includes('işçilik'));
     const mainItem = this.storeItems.find(it => !String(it.name || '').toLowerCase().includes('işçilik')) || this.storeItems[0];
 
-    if (mainItem && freeNameEl) freeNameEl.value = mainItem.name || '22 Ayar Altın / Mücevherat';
+    if (mainItem && freeNameEl) freeNameEl.value = mainItem.name || '22 Ayar Altın Bilezik';
     if (mainItem && freeQtyEl) freeQtyEl.value = mainItem.qty || 1;
     if (mainItem && freeKdvEl) freeKdvEl.value = String(mainItem.kdvRate !== undefined ? mainItem.kdvRate : 0);
 
@@ -7903,6 +7903,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
 
   resetStoreInvoiceForm(showFeedback = true) {
     this.editingStoreInvoiceId = null;
+    this.resetStoreInvoiceFormState();
 
     const banner = document.getElementById('storeEditModeBanner');
     if (banner) banner.style.display = 'none';
@@ -7949,15 +7950,15 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     const freeQtyEl = document.getElementById('freeItemQty');
     const freePriceEl = document.getElementById('freeItemPrice');
     const freeKdvEl = document.getElementById('freeItemKdvRate');
-    if (freeNameEl) freeNameEl.value = '22 Ayar Altın / Mücevherat';
+    if (freeNameEl) freeNameEl.value = '22 Ayar Altın Bilezik';
     if (freeQtyEl) freeQtyEl.value = '1';
     if (freePriceEl) freePriceEl.value = '';
     if (freeKdvEl) freeKdvEl.value = '0';
     this.handleFreeItemChange();
 
-    // Formu tamamen sıfırla - boş başlangıç kalemi
+    // Formu tamamen sıfırla - varsayılan 22 Ayar Altın Bilezik kalemi
     this.storeItems = [
-      { name: '', qty: 1, unitPrice: 0, kdvRate: 0, lineTotal: 0, kdvAmount: 0 }
+      { name: '22 Ayar Altın Bilezik', qty: 1, unitPrice: 0, kdvRate: 0, lineTotal: 0, kdvAmount: 0 }
     ];
     this.renderStoreInvoiceItems();
     this.calculateStoreInvoiceLiveSummary();
@@ -7965,6 +7966,10 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     if (showFeedback) {
       this.showToast('🧹 Fatura formu temizlendi.');
     }
+  },
+
+  resetStoreInvoiceFormState() {
+    // Yardımcı durum sıfırlayıcı
   },
 
   // ==========================================
@@ -8030,7 +8035,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     const kdvEl = document.getElementById('freeItemKdvRate');
     const laborEl = document.getElementById('freeItemLaborRate');
 
-    const name = (nameEl?.value || '22 Ayar Altın / Mücevherat').trim();
+    const name = (nameEl?.value || '22 Ayar Altın Bilezik').trim();
     const qty = Math.max(1, parseInt(qtyEl?.value, 10) || 1);
     const totalAmount = this.parseSmartCalcAmount(priceEl?.value || 0);
     let rate = parseFloat(kdvEl?.value) || 0;
@@ -8102,7 +8107,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       if (laborRate > 0) {
         const unitGold = Math.round((goldGross / qty) * 100) / 100;
         items.push({
-          name: name || '22 Ayar Altın / Mücevherat',
+          name: name || '22 Ayar Altın Bilezik',
           qty: qty,
           unitPrice: unitGold,
           kdvRate: 0,
@@ -8163,7 +8168,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       // 1. Altın Kalemi (%0 KDV Özel Matrah)
       const unitGold = Math.round((data.goldGross / data.qty) * 100) / 100;
       itemsToAdd.push({
-        name: data.name || '22 Ayar Altın / Mücevherat',
+        name: data.name || '22 Ayar Altın Bilezik',
         qty: data.qty,
         unitPrice: unitGold,
         kdvRate: 0,
@@ -8257,7 +8262,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     const amountInput = document.getElementById('smartCalcWorkmanshipAmount');
 
     const totalAmount = this.parseSmartCalcAmount(totalInput?.value || 0);
-    const prodName = String(nameInput?.value || '22 Ayar Altın / Ziynet').trim();
+    const prodName = String(nameInput?.value || '22 Ayar Altın Bilezik').trim();
     let unitPrice = Math.max(0, parseFloat(priceInput?.value) || 0);
     const workmanshipRate = Math.max(0, parseFloat(rateInput?.value) || 0);
 
