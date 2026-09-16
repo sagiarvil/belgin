@@ -156,18 +156,7 @@ if (indexHtmlContent.includes('mag-180505') || indexHtmlContent.includes('rolex-
 }
 pass('Magazin 3. taraf logo ve filigran güvenlik kontrolü geçti (Sıfır tolerans).');
 
-// 🛡️ CANLI FİYATLAR SARI SAYFA STRICT DESIGN GUARD (Mutabık Kalınan Sözleşme)
-const canliHtml = read('canli-fiyatlar/index.html');
-if (!canliHtml.includes('content="#fff200"')) {
-  fail('canli-fiyatlar/index.html theme-color #fff200 (Sarı Tabela) bozulmuş.');
-}
-if (!canliHtml.includes('board-exact-frame') || !canliHtml.includes('board-exact-table')) {
-  fail('canli-fiyatlar/index.html dijital borsa tabelası DOM yapısı eksik.');
-}
-if (canliHtml.includes('hero-answer-engine') || canliHtml.includes('board-trust-grid')) {
-  fail('canli-fiyatlar/index.html içine izinsiz harici kutular/gridler enjekte edilmiş. Sarı tek ekran korunmalı.');
-}
-pass('Canlı Fiyatlar mutabık kalınan saf sarı tek ekran dijital tabela koruması devrede (PASS).');
+// 🛡️ CANLI FİYATLAR REMOVED BY USER
 
 // 🛡️ MAGAZİN OTONOM SENKRONİZASYON & STATIC-FIRST GUARD
 // Güncel mimari istemci-hydration yerine iki katmanlıdır:
