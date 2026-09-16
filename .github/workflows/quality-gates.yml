@@ -150,7 +150,7 @@ jobs:
           exit "$rc"
 
       - name: Classify dependency audit result
-        if: always()
+        if: always() && steps.npm_audit.outcome != 'skipped'
         shell: bash
         env:
           AUDIT_OUTCOME: ${{ steps.npm_audit.outcome }}
@@ -181,7 +181,7 @@ jobs:
           exit 1
 
       - name: Upload dependency audit proof
-        if: always()
+        if: always() && steps.npm_audit.outcome != 'skipped'
         uses: actions/upload-artifact@v4
         with:
           name: dependency-audit-proof
