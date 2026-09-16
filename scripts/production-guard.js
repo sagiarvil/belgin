@@ -169,7 +169,10 @@ if (canliHtml.includes('hero-answer-engine') || canliHtml.includes('board-trust-
 }
 pass('Canlı Fiyatlar mutabık kalınan saf sarı tek ekran dijital tabela koruması devrede (PASS).');
 
-// 🛡️ MAGAZİN OTONOM CANLI SENKRONİZASYON & HİBRİT GUARD
+// 🛡️ MAGAZİN OTONOM SENKRONİZASYON & STATIC-FIRST GUARD
+// Güncel mimari istemci-hydration yerine iki katmanlıdır:
+// 1) schedule -> scripts/sync-magazine-articles.py -> js/magazine_data.js + magazin/ statik üretim
+// 2) Cloud sync çekirdeği Firestore tarafında bağımsız veri güncelliğini korur.
 const magSyncPath = path.join(root, 'functions', 'magazine-sync.js');
 if (!fs.existsSync(magSyncPath)) {
   fail('functions/magazine-sync.js otonom çekirdeği eksik.');
@@ -179,11 +182,23 @@ if (!fs.existsSync(magWorkflowPath)) {
   fail('.github/workflows/magazine-sync.yml eksik.');
 }
 const magHtml = read('magazin/index.html');
-if (!magHtml.includes('initLiveMagazineHydration')) {
-  fail('magazin/index.html içinde canlı hibrit hydration scripti eksik.');
-}
-pass('Magazin tam otonom canlı senkronizasyon ve hibrit hydration mimarisi hazır (PASS).');
+const staticCardCount = (magHtml.match(/data-article-id="mag-/g) || []).length;
+const hasStaticArticleSchema = magHtml.includes('"@type":"BlogPosting"') || magHtml.includes('"@type": "BlogPosting"');
+const magWorkflow = fs.existsSync(magWorkflowPath) ? read('.github/workflows/magazine-sync.yml') : '';
+const staticSyncContractOk =
+  magWorkflow.includes('scripts/sync-magazine-articles.py') &&
+  magWorkflow.includes('js/magazine_data.js magazin/') &&
+  staticCardCount >= 50 &&
+  hasStaticArticleSchema;
+const legacyHybridContractOk = magHtml.includes('initLiveMagazineHydration');
 
+if (!staticSyncContractOk && !legacyHybridContractOk) {
+  fail(`magazin/index.html yayın sözleşmesi eksik: staticCards=${staticCardCount}, schema=${hasStaticArticleSchema ? 'yes' : 'no'}.`);
+} else if (staticSyncContractOk) {
+  pass(`Magazin otonom senkronizasyon + static-first yayın mimarisi hazır (PASS, ${staticCardCount} önceden render kart).`);
+} else {
+  pass('Magazin legacy hibrit hydration mimarisi hazır (PASS).');
+}
 
 if (failed) {
   console.error('\nPRODUCTION_GUARD=FAIL');
