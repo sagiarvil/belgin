@@ -392,7 +392,7 @@ const Router = {
 
     // 7. History State
     if (pushState && page !== 'urun') {
-      const categoryRoute = (window.SEO_CATEGORY_ROUTES || {})[page] || (page === 'mucevherat' ? '/mucevherat/' : (page === 'magazin' ? '/magazin/' : null)));
+      const categoryRoute = (window.SEO_CATEGORY_ROUTES || {})[page] || (page === 'mucevherat' ? '/mucevherat/' : (page === 'magazin' ? '/magazin/' : null));
       if (categoryRoute) {
         const filter = options.filter && options.filter !== 'all' ? String(options.filter) : null;
         const route = page === 'elit-kategori' && filter
