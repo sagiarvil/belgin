@@ -92,6 +92,8 @@ function verifiedLastmod(p) {
 }
 
 function renderHeroAnswerEngine(routeOrItem) {
+  return "";
+
   const item = typeof routeOrItem === 'string'
     ? SEO_REGISTRY.find(r => r.route === routeOrItem)
     : routeOrItem;
@@ -382,15 +384,7 @@ function renderMagazineArticlePage(art, indexHtml) {
       </nav>
 
       <!-- ARTICLE HERO ANSWER ENGINE (AEO / SSOT EDİTORYAL) -->
-      <div class="hero-answer-engine" data-registry-route="/magazin/${esc(art.slug)}/" style="margin:16px 0 24px;">
-        <div class="hero-answer-engine-badge"><span class="dot"></span> EDİTORYAL SAATÇİLİK ANALİZİ</div>
-        <p class="hero-answer-engine-text">${esc(art.summary || art.title)} Bu makale Belgin Saat Editoryal Kurulu tarafından lüks saat piyasası, model koleksiyon dinamikleri ve yatırım değerlemeleri kapsamında hazırlanmıştır.</p>
-        <div class="hero-answer-engine-meta">
-          <span><strong>Kategori:</strong> ${esc(art.category || 'Lüks Saat')}</span>
-          <span><strong>Yayın Tarihi:</strong> ${esc(art.publish_date || '2026')}</span>
-          <a href="/llms/pages/magazin.md" class="hero-answer-engine-llm-link">Makine Özeti (LLMS) &rarr;</a>
-        </div>
-      </div>
+      
 
       <div class="mag-article-header" style="margin-bottom: 32px;">
         <span class="mag-tag-pill" style="margin-bottom: 14px; display: inline-block;">${esc(art.category)}</span>
@@ -441,17 +435,7 @@ function prerenderPdpContent(p) {
         <a href="/" style="color:#C2A768;text-decoration:none;">Ana Sayfa</a> / <a href="${CATEGORY_ROUTES[catKey]}" style="color:#C2A768;text-decoration:none;">${esc(catLabel)}</a> / <span style="color:#fff;">${esc(p.name || '')}</span>
       </nav>
 
-      <!-- PDP HERO ANSWER ENGINE (AEO / SSOT KÜNYE) -->
-      <div class="hero-answer-engine" data-registry-route="${esc(productRoute(p))}" style="margin:0 0 24px;">
-        <div class="hero-answer-engine-badge"><span class="dot"></span> ONAYLI ÜRÜN KÜNYESİ &amp; EKSPERTİZ BİLGİSİ</div>
-        <p class="hero-answer-engine-text">${catKey === 'mucevherat' ? `Bu ${esc(p.brand || 'Belgin Kuyumculuk')} ${esc(p.name || '')} (Ref: ${esc(ref)}) modeli, Belgin Kuyumculuk İzmir Buca showroom stok ve temin ağı güvencesiyle sunulmaktadır. Sıfır tescilli ve resmi ayar garantili olarak sağlanır. Mevzuat ve şirket politikalarımız gereğince Altın ve Mücevherat ürünlerinde KREDİ KARTI ile satış yapılmamaktadır; siparişler kurumsal Banka Havalesi / EFT / FAST veya İzmir Buca showroomumuzda bizzat teslim alınarak tamamlanmaktadır.` : `Bu ${esc(p.brand || 'lüks saat')} ${esc(p.name || '')} (Ref: ${esc(ref)}) modeli, Belgin Kuyumculuk İzmir Buca showroom stok ve temin ağı güvencesiyle sunulmaktadır. ${isUsed(p) ? 'Fiziksel ekspertiz ve mekanizma tolerans testi tamamlanmış olup orijinallik sertifikası ile teslim edilir.' : 'Sıfır distribütör garantili ve tescilli kutu-belge tam set olarak sağlanır.'} 12.000 TL üzeri alımlarda kimlik teyitli VIP teslimat ve Akbank 3D Pay 256-bit SSL ödeme altyapısı geçerlidir.`}</p>
-        <div class="hero-answer-engine-meta">
-          <span><strong>Fiziki Konum:</strong> İzmir Buca Showroom</span>
-          <span><strong>Fiyat Durumu:</strong> ${esc(money(p.price))} (Canlı Kur)</span>
-          <span><strong>Kondisyon:</strong> ${isUsed(p) ? 'Ekspertizli İkinci El' : 'Sıfır Distribütör Garantili'}</span>
-          <a href="/llms/pages/elit-kategori.md" class="hero-answer-engine-llm-link">Makine Özeti (LLMS) &rarr;</a>
-        </div>
-      </div>
+      
 
       <div class="pdp-art-main">
         <div class="pdp-art-gallery" style="background:#070d0b;padding:20px;border-radius:14px;display:flex;justify-content:center;">

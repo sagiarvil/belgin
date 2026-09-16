@@ -635,15 +635,7 @@
       </nav>
 
       <!-- ARTICLE HERO ANSWER ENGINE (AEO / SSOT EDİTORYAL) -->
-      <div class="hero-answer-engine" data-registry-route="/magazin/2026-yaz-trendleri-yilin-en-i-yi-5-gorunumu/" style="margin:16px 0 24px;">
-        <div class="hero-answer-engine-badge"><span class="dot"></span> EDİTORYAL SAATÇİLİK ANALİZİ</div>
-        <p class="hero-answer-engine-text">2026 Yaz Trendleri: Yılın En İyi 5 Görünümü Bu makale Belgin Saat Editoryal Kurulu tarafından lüks saat piyasası, model koleksiyon dinamikleri ve yatırım değerlemeleri kapsamında hazırlanmıştır.</p>
-        <div class="hero-answer-engine-meta">
-          <span><strong>Kategori:</strong> Saat Dünyası &amp; Analiz</span>
-          <span><strong>Yayın Tarihi:</strong> 15 Temmuz 2026</span>
-          <a href="/llms/pages/magazin.md" class="hero-answer-engine-llm-link">Makine Özeti (LLMS) &rarr;</a>
-        </div>
-      </div>
+      
 
       <div class="mag-article-header" style="margin-bottom: 32px;">
         <span class="mag-tag-pill" style="margin-bottom: 14px; display: inline-block;">Saat Dünyası &amp; Analiz</span>
@@ -2603,17 +2595,28 @@ function closeCorporatePolicyModal() {
     setTimeout(function() {
       modal.style.display = 'none';
       document.body.style.overflow = '';
+      localStorage.setItem('policyModalLastSeen', new Date().getTime().toString());
     }, 320);
   }
 }
 
-// Her girişte garantili açılma
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', function() {
+// 24 saatte bir göster (rahatsız etmemek için)
+function shouldShowPolicyModal() {
+  var lastSeen = localStorage.getItem('policyModalLastSeen');
+  if (!lastSeen) return true;
+  var now = new Date().getTime();
+  // 24 saat = 24 * 60 * 60 * 1000 = 86400000 ms
+  return (now - parseInt(lastSeen, 10)) > 86400000;
+}
+
+if (shouldShowPolicyModal()) {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(showCorporatePolicyModal, 400);
+    });
+  } else {
     setTimeout(showCorporatePolicyModal, 400);
-  });
-} else {
-  setTimeout(showCorporatePolicyModal, 400);
+  }
 }
 
 document.addEventListener('keydown', function(e) {
@@ -2653,11 +2656,7 @@ document.addEventListener('keydown', function(e) {
 <!-- 8. TÜRKİYE YASAL & ETBİS VE FOOTER ALTYAPISI (HAUTE MAISON) -->
   <!-- SEO / GEO ticari doğrulama alanı: ana vitrin tasarımını bozmayacak şekilde footer önüne taşındı. -->
   <section class="seo-business-facts" aria-label="Belgin ticari bilgi özeti" style="margin:28px auto 0; max-width:1760px; padding:0 24px;">
-    <div class="hero-answer-engine" data-registry-route="/" style="border-top:1px solid rgba(5,51,47,.12); padding:18px 0 20px; color:#5f6664; font-size:12px; line-height:1.7; background:transparent; box-shadow:none;">
-      <div style="display:flex; flex-wrap:wrap; gap:10px 22px; align-items:center; margin-bottom:8px; color:#05332f; font-weight:700; letter-spacing:.04em; text-transform:uppercase; font-size:10px;">
-        <span>Belgin Saat • Ticari Bilgi Özeti</span>
-        <span>İzmir Buca • Est. 1999</span>
-      </div>
+    
       <p class="hero-answer">Belgin Kuyumculuk &amp; Saat, 1999 yılından bu yana İzmir Buca showroomunda ekspertizli lüks saatler, Darphane damgalı 24K altın ve sertifikalı mücevherat sunan kurumsal kuruluştur. Borsa satış fiyatları İZKO normal Satış (fallback Harem Satış) üzerinden marjsız (1.00x), geri alım fiyatları doğrudan Harem Altın canlı kuruyla (1.00x) yansıtılır. 12.000 TL üzeri alımlarda kimlik teyitli mağaza teslimi uygulanır.</p>
       <div style="display:flex; flex-wrap:wrap; gap:8px 18px; margin-top:8px; font-size:11px; color:#7a807e;">
         <span><strong style="color:#4f5754;">Son doğrulama:</strong> 2026-09-04</span>
