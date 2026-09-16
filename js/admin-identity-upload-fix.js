@@ -60,13 +60,29 @@
       return;
     }
 
-    // Keep the invocation inside the original user gesture. This is critical
-    // for Safari/iOS and popup/security constrained WebViews.
+    // Keep invocation inside the original user gesture. Safari/iOS and
+    // security-constrained WebViews can reject delayed/synthetic activation.
     try {
       input.click();
     } catch (error) {
       showError('Dosya seçici açılamadı.', error);
     }
+  }
+
+  function normalizePickerZone(zone) {
+    if (!zone || zone.tagName !== 'LABEL') return zone;
+
+    // A hidden file input inside a <label> depends on browser-specific label
+    // activation rules. Replace the label with a neutral container so there is
+    // exactly one activation path: the explicit synchronous input.click().
+    const replacement = document.createElement('div');
+    for (const attr of Array.from(zone.attributes)) {
+      if (attr.name.toLowerCase() === 'for') continue;
+      replacement.setAttribute(attr.name, attr.value);
+    }
+    while (zone.firstChild) replacement.appendChild(zone.firstChild);
+    zone.replaceWith(replacement);
+    return replacement;
   }
 
   function makeRealPickerButton(zone, inputId, text) {
@@ -99,17 +115,23 @@
   }
 
   function bindPickerZone({ zoneId, inputId, buttonText, dropHandler }) {
-    const zone = document.getElementById(zoneId);
+    let zone = document.getElementById(zoneId);
     const input = document.getElementById(inputId);
     if (!zone || !input || zone.dataset.identityPickerBound === 'true') return;
 
+    zone = normalizePickerZone(zone);
+    if (!zone || zone.dataset.identityPickerBound === 'true') return;
+
     zone.dataset.identityPickerBound = 'true';
     zone.removeAttribute('for');
+    zone.removeAttribute('onclick');
+    zone.removeAttribute('ondrop');
+    zone.removeAttribute('ondragover');
+    zone.removeAttribute('ondragleave');
     zone.setAttribute('role', 'button');
     zone.setAttribute('aria-controls', inputId);
     if (!zone.hasAttribute('tabindex')) zone.tabIndex = 0;
 
-    // Prevent native <label> activation from racing with programmatic click.
     zone.addEventListener('click', (event) => {
       if (event.target.closest('[data-identity-picker-button="true"]')) return;
       if (event.target === input) return;
@@ -212,7 +234,7 @@
     apply();
   }
 
-  // The store form can be re-rendered. Rebind only when needed.
+  // Store/admin sections can be re-rendered; this rebinding is idempotent.
   const observer = new MutationObserver(() => apply());
   observer.observe(document.documentElement, { childList: true, subtree: true });
 })();
