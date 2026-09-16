@@ -102,7 +102,7 @@
 
   function renderBox(record, manifest, externalStatus) {
     const file = currentFileName();
-    if (file === 'canli-fiyatlar' || file === 'canli-fiyatlar.html' || file === 'index.html' || file === '' || document.body.classList.contains('page-canli-fiyatlar') || window.location.pathname.includes('canli-fiyatlar')) {
+    if (file === 'canli-fiyatlar' || file === 'canli-fiyatlar.html' || file === 'index.html' || file === '' || document.body.classList.contains('page-canli-fiyatlar')) {
       return;
     }
 

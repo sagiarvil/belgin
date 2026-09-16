@@ -348,10 +348,7 @@ const App = {
         this.currentEliteBrand = eliteFilter;
         this.renderEliteWatches(eliteFilter, 1);
         break;
-      case 'canli-fiyatlar':
-        this.renderLivePricesPage();
-        break;
-      case 'saatler':
+            case 'saatler':
         const watchFilter = (options.filter !== undefined && options.filter !== null) ? options.filter : (this.currentWatchBrand || 'all');
         this.currentWatchBrand = watchFilter;
         this.renderWatches(watchFilter, 1);
@@ -387,8 +384,7 @@ const App = {
     this.renderEliteWatches();
     this.renderWatches();
     this.renderJewellery();
-    if (Router.currentPage === 'canli-fiyatlar') this.renderLivePricesPage();
-    if (Router.currentPage === 'sepet') this.renderCart();
+        if (Router.currentPage === 'sepet') this.renderCart();
   },
 
   updateHeaderCartCount() {
@@ -3149,116 +3145,7 @@ const App = {
     this.updateLivePricesTableDOM();
   },
 
-  renderLivePricesPage() {
-    const container = document.getElementById('page-canli-fiyatlar');
-    if (!container) return;
-
-    const now = new Date();
-    const timeStr = now.toLocaleTimeString('tr-TR', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
-    const dateDotStr = now.toLocaleDateString('tr-TR');
-
-    container.innerHTML = `
-      <div class="page-canli-fiyatlar-wrapper">
-        <div class="container-art" style="max-width: 100%; width: 100%; height: 100%; padding: 0; margin: 0;">
-          
-          <!-- BİREBİR DİJİTAL KUYUMCU TABELASI (#fff200) -->
-          <div class="board-exact-frame">
-            
-            <!-- Üst Kırmızı Başlık Metni -->
-            <div class="board-exact-top-bar">
-              <span>Belgin Kuyumculuk Canlı Satış ve Alış Fiyatlarıdır.</span>
-              <div class="board-status-live-chip" id="board_status_live_chip" aria-live="polite">
-                <span class="board-chip-dot"></span>
-                <span class="board-chip-text" id="board_chip_source_name">İZKO Nakit Satış (1.00x)</span>
-              </div>
-            </div>
-
-            <!-- Birebir 3 Sütunlu Tablo: Ürün | ALIŞ | SATIŞ -->
-            <table class="board-exact-table">
-              <thead>
-                <tr>
-                  <th class="th-product">Ürün</th>
-                  <th class="th-alis">ALIŞ</th>
-                  <th class="th-satis">SATIŞ</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="td-label">22 Ayar Bilezik / gr</td>
-                  <td class="td-price td-price-alis"><span class="price-num" id="live_22k_alis">6.377</span></td>
-                  <td class="td-price td-price-satis"><span class="price-num" id="live_22k">6.409</span><span class="price-change-tag" id="change_22k">+0.00%</span></td>
-                </tr>
-                <tr>
-                  <td class="td-label">18 Ayar / gr</td>
-                  <td class="td-price td-price-alis"><span class="price-num" id="live_18k_alis">5.101</span></td>
-                  <td class="td-price td-price-satis"><span class="price-num" id="live_18k">5.127</span><span class="price-change-tag" id="change_18k">+0.00%</span></td>
-                </tr>
-                <tr>
-                  <td class="td-label">14 Ayar / gr</td>
-                  <td class="td-price td-price-alis"><span class="price-num" id="live_14k_alis">4.923</span></td>
-                  <td class="td-price td-price-satis"><span class="price-num" id="live_14k">4.948</span><span class="price-change-tag" id="change_14k">+0.00%</span></td>
-                </tr>
-                <tr>
-                  <td class="td-label">Gram Altın 24 Ayar / gr</td>
-                  <td class="td-price td-price-alis"><span class="price-num" id="live_gram_alis">6.805</span></td>
-                  <td class="td-price td-price-satis"><span class="price-num" id="live_gram">6.839</span><span class="price-change-tag" id="change_gram">+0.00%</span></td>
-                </tr>
-                <tr>
-                  <td class="td-label">Yeni Çeyrek</td>
-                  <td class="td-price td-price-alis"><span class="price-num" id="live_ceyrek_yeni_alis">11.132</span></td>
-                  <td class="td-price td-price-satis"><span class="price-num" id="live_ceyrek_yeni">11.188</span><span class="price-change-tag" id="change_ceyrek_yeni">+0.00%</span></td>
-                </tr>
-                <tr>
-                  <td class="td-label">Eski Çeyrek</td>
-                  <td class="td-price td-price-alis"><span class="price-num" id="live_ceyrek_eski_alis">10.926</span></td>
-                  <td class="td-price td-price-satis"><span class="price-num" id="live_ceyrek_eski">10.981</span><span class="price-change-tag" id="change_ceyrek_eski">+0.00%</span></td>
-                </tr>
-                <tr>
-                  <td class="td-label">Yeni Yarım</td>
-                  <td class="td-price td-price-alis"><span class="price-num" id="live_yarim_yeni_alis">22.240</span></td>
-                  <td class="td-price td-price-satis"><span class="price-num" id="live_yarim_yeni">22.351</span><span class="price-change-tag" id="change_yarim_yeni">+0.00%</span></td>
-                </tr>
-                <tr>
-                  <td class="td-label">Eski Yarım</td>
-                  <td class="td-price td-price-alis"><span class="price-num" id="live_yarim_eski_alis">21.819</span></td>
-                  <td class="td-price td-price-satis"><span class="price-num" id="live_yarim_eski">21.928</span><span class="price-change-tag" id="change_yarim_eski">+0.00%</span></td>
-                </tr>
-                <tr>
-                  <td class="td-label">Yeni Tam (Ziynet)</td>
-                  <td class="td-price td-price-alis"><span class="price-num" id="live_ziynet_yeni_alis">44.318</span></td>
-                  <td class="td-price td-price-satis"><span class="price-num" id="live_ziynet_yeni">44.540</span><span class="price-change-tag" id="change_ziynet_yeni">+0.00%</span></td>
-                </tr>
-                <tr>
-                  <td class="td-label">Eski Tam (Ziynet)</td>
-                  <td class="td-price td-price-alis"><span class="price-num" id="live_ziynet_eski_alis">43.705</span></td>
-                  <td class="td-price td-price-satis"><span class="price-num" id="live_ziynet_eski">43.924</span><span class="price-change-tag" id="change_ziynet_eski">+0.00%</span></td>
-                </tr>
-                <tr>
-                  <td class="td-label">Yeni Ata (Cumhuriyet)</td>
-                  <td class="td-price td-price-alis"><span class="price-num" id="live_cumhuriyet_alis">45.100</span></td>
-                  <td class="td-price td-price-satis"><span class="price-num" id="live_cumhuriyet">45.326</span><span class="price-change-tag" id="change_cumhuriyet">+0.00%</span></td>
-                </tr>
-                <tr>
-                  <td class="td-label">Eski Ata (Cumhuriyet)</td>
-                  <td class="td-price td-price-alis"><span class="price-num" id="live_ata_eski_alis">44.998</span></td>
-                  <td class="td-price td-price-satis"><span class="price-num" id="live_ata_eski_satis">45.223</span><span class="price-change-tag" id="change_ata_eski">+0.00%</span></td>
-                </tr>
-                <tr>
-                  <td class="td-label">Has Altın 24 Ayar / gr</td>
-                  <td class="td-price td-price-alis"><span class="price-num" id="live_has_altin_alis">6.805,26</span></td>
-                  <td class="td-price td-price-satis"><span class="price-num" id="live_has_altin">6.839,29</span><span class="price-change-tag" id="change_has_altin">+0.00%</span></td>
-                </tr>
-              </tbody>
-            </table>
-
-          </div>
-
-        </div>
-      </div>
-    `;
-
-    this.updateLivePricesTableDOM();
-  },
+  
 
   _prevBoardValues: {},
   _activeAnimationTimers: {},
