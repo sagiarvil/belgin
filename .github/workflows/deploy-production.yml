@@ -25,23 +25,30 @@ jobs:
       FIREBASE_PROJECT_ID: carbon-web-1265b
       FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CARBON_WEB_1265B }}
       FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      AUDITED_REF: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || 'main' }}
 
     steps:
-      - name: Checkout audited main
+      - name: Checkout audited release ref
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ env.AUDITED_REF }}
           fetch-depth: 1
 
-      - name: Resolve audited release SHA
+      - name: Resolve and verify audited release SHA
         shell: bash
         run: |
           set -euo pipefail
           sha="$(git rev-parse HEAD)"
           test -n "$sha"
+
+          if [ "$AUDITED_REF" != "main" ] && [ "$sha" != "$AUDITED_REF" ]; then
+            echo "AUDITED_RELEASE_SHA_MISMATCH expected=$AUDITED_REF actual=$sha"
+            exit 1
+          fi
+
           echo "RELEASE_SHA=$sha" >> "$GITHUB_ENV"
-          printf '{"commit":"%s","source":"github-main"}\n' "$sha" > release.json
-          echo "RELEASE_PROVENANCE_PREPARED=$sha"
+          printf '{"commit":"%s","source":"github-audited-ref"}\n' "$sha" > release.json
+          echo "AUDITED_RELEASE_SHA=PASS $sha"
 
       - name: Node 22
         uses: actions/setup-node@v4
