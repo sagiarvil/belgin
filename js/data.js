@@ -1,4 +1,242 @@
-const ELITE_WATCH_BRANDS = ['Rolex', 'TAG Heuer', 'Cartier', 'Rado', 'Tissot'];
+// ==========================================================
+// BELGİN SAAT — MASTER ÜRÜN VE KOLEKSİYON VERİTABANI
+// Sürüm: 2026-09-04.elite-usd-80margin-sync
+// Toplam Yayın Ürünü: 2125 (200 Elit Saat + 1925 Saat Kataloğu)
+// ==========================================================
+
+const ELITE_WATCH_BRANDS = [
+  {
+    "id": "rolex",
+    "name": "Rolex",
+    "count": 20,
+    "origin": "İsviçre (Cenevre)",
+    "image": "images/markalar/rolex.png"
+  },
+  {
+    "id": "cartier",
+    "name": "Cartier",
+    "count": 20,
+    "origin": "Fransa / İsviçre",
+    "image": "images/markalar/cartier.png"
+  },
+  {
+    "id": "tag-heuer",
+    "name": "TAG Heuer",
+    "count": 20,
+    "origin": "İsviçre (La Chaux-de-Fonds)",
+    "image": "images/markalar/tag-heuer.png"
+  }
+];
+
+const WATCH_BRANDS = [
+  {
+    "id": "rolex",
+    "name": "Rolex",
+    "count": 20,
+    "origin": "İsviçre (Cenevre)",
+    "image": "images/markalar/rolex.png"
+  },
+  {
+    "id": "patek-philippe",
+    "name": "Patek Philippe",
+    "count": 20,
+    "origin": "İsviçre (Cenevre)",
+    "image": "images/markalar/patek-philippe.png"
+  },
+  {
+    "id": "audemars-piguet",
+    "name": "Audemars Piguet",
+    "count": 20,
+    "origin": "İsviçre (Le Brassus)",
+    "image": "images/markalar/audemars-piguet.png"
+  },
+  {
+    "id": "vacheron-constantin",
+    "name": "Vacheron Constantin",
+    "count": 20,
+    "origin": "İsviçre (Cenevre)",
+    "image": "images/markalar/vacheron-constantin.png"
+  },
+  {
+    "id": "omega",
+    "name": "Omega",
+    "count": 20,
+    "origin": "İsviçre (Biel/Bienne)",
+    "image": "images/markalar/omega.png"
+  },
+  {
+    "id": "cartier",
+    "name": "Cartier",
+    "count": 20,
+    "origin": "Fransa / İsviçre",
+    "image": "images/markalar/cartier.png"
+  },
+  {
+    "id": "breitling",
+    "name": "Breitling",
+    "count": 48,
+    "origin": "İsviçre (Grenchen)",
+    "image": "images/markalar/breitling.png"
+  },
+  {
+    "id": "tudor",
+    "name": "Tudor",
+    "count": 20,
+    "origin": "İsviçre (Cenevre)",
+    "image": "images/markalar/tudor.png"
+  },
+  {
+    "id": "tag-heuer",
+    "name": "TAG Heuer",
+    "count": 34,
+    "origin": "İsviçre (La Chaux-de-Fonds)",
+    "image": "images/markalar/tag-heuer.png"
+  },
+  {
+    "id": "iwc",
+    "name": "IWC Schaffhausen",
+    "count": 20,
+    "origin": "İsviçre (Schaffhausen)",
+    "image": "images/markalar/iwc.png"
+  },
+  {
+    "id": "panerai",
+    "name": "Panerai",
+    "count": 20,
+    "origin": "İtalya / İsviçre",
+    "image": "images/markalar/panerai.png"
+  },
+  {
+    "id": "longines",
+    "name": "Longines",
+    "count": 105,
+    "origin": "İsviçre (Saint-Imier)",
+    "image": "images/markalar/longines.png"
+  },
+  {
+    "id": "rado",
+    "name": "Rado",
+    "count": 58,
+    "origin": "İsviçre (Lengnau)",
+    "image": "images/markalar/rado.png"
+  },
+  {
+    "id": "tissot",
+    "name": "Tissot",
+    "count": 53,
+    "origin": "İsviçre (Le Locle / 1853)",
+    "image": "images/markalar/tissot.png"
+  },
+  {
+    "id": "frederique-constant",
+    "name": "Frederique Constant",
+    "count": 94,
+    "origin": "İsviçre (Cenevre)",
+    "image": "images/markalar/frederique-constant.png"
+  },
+  {
+    "id": "bell-ross",
+    "name": "Bell & Ross",
+    "count": 21,
+    "origin": "Fransa / İsviçre",
+    "image": "images/markalar/bell-ross.png"
+  },
+  {
+    "id": "alpina",
+    "name": "Alpina",
+    "count": 20,
+    "origin": "İsviçre (Cenevre / 1883)",
+    "image": "images/markalar/alpina.png"
+  },
+  {
+    "id": "seiko",
+    "name": "Seiko",
+    "count": 18,
+    "origin": "Japonya",
+    "image": "images/markalar/seiko.png"
+  },
+  {
+    "id": "swatch",
+    "name": "Swatch",
+    "count": 57,
+    "origin": "İsviçre (Biel)",
+    "image": "images/markalar/swatch.png"
+  },
+  {
+    "id": "casio",
+    "name": "Casio",
+    "count": 11,
+    "origin": "Japonya (G-Shock / MT-G)",
+    "image": "images/markalar/casio.png"
+  },
+  {
+    "id": "versace",
+    "name": "Versace",
+    "count": 241,
+    "origin": "İsviçre / İtalya",
+    "image": "images/markalar/versace.png"
+  },
+  {
+    "id": "gc",
+    "name": "Gc",
+    "count": 173,
+    "origin": "İsviçre (Swiss Made)",
+    "image": "images/markalar/gc.png"
+  },
+  {
+    "id": "michael-kors",
+    "name": "Michael Kors",
+    "count": 186,
+    "origin": "ABD / İsviçre",
+    "image": "images/markalar/michael-kors.png"
+  },
+  {
+    "id": "guess",
+    "name": "Guess",
+    "count": 292,
+    "origin": "ABD",
+    "image": "images/markalar/guess.png"
+  },
+  {
+    "id": "calvin-klein",
+    "name": "Calvin Klein",
+    "count": 133,
+    "origin": "ABD / İsviçre",
+    "image": "images/markalar/calvin-klein.png"
+  },
+  {
+    "id": "diesel",
+    "name": "Diesel",
+    "count": 140,
+    "origin": "İtalya",
+    "image": "images/markalar/diesel.png"
+  },
+  {
+    "id": "fossil",
+    "name": "Fossil",
+    "count": 120,
+    "origin": "ABD",
+    "image": "images/markalar/fossil.png"
+  },
+  {
+    "id": "welder",
+    "name": "Welder",
+    "count": 200,
+    "origin": "İtalya",
+    "image": "images/markalar/welder.png"
+  },
+  {
+    "id": "carren",
+    "name": "Carren",
+    "count": 178,
+    "origin": "Türkiye / İsviçre Tasarım",
+    "image": "images/markalar/carren.png"
+  }
+];
+
+const JEWELRY_BRANDS = [];
+
+const PRE_OWNED_ITEMS = [];
 
 const PRODUCTS = [
   {
@@ -970,7 +1208,7 @@ const PRODUCTS = [
     "price": 683130,
     "usdRefPrice": 7800,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Paslanmaz Çelik",
     "origin": "İsviçre (Biel/Bienne)",
@@ -983,6 +1221,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -1017,7 +1256,7 @@ const PRODUCTS = [
     "price": 490452,
     "usdRefPrice": 5600,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Paslanmaz Çelik & Seramik Dalga Desenli Kadran",
     "origin": "İsviçre (Biel/Bienne)",
@@ -1030,6 +1269,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -1064,7 +1304,7 @@ const PRODUCTS = [
     "price": 823260,
     "usdRefPrice": 9400,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "2. Sınıf Titanyum",
     "origin": "İsviçre (Biel/Bienne)",
@@ -1077,6 +1317,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -1111,7 +1352,7 @@ const PRODUCTS = [
     "price": 604308,
     "usdRefPrice": 6900,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Paslanmaz Çelik & Siyah Seramik Bezel",
     "origin": "İsviçre (Biel/Bienne)",
@@ -1124,6 +1365,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -1157,7 +1399,7 @@ const PRODUCTS = [
     "price": 543001,
     "usdRefPrice": 6200,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Biel/Bienne)",
@@ -1170,6 +1412,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -1204,7 +1447,7 @@ const PRODUCTS = [
     "price": 1094760,
     "usdRefPrice": 12500,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Tek Blok Masif Zirkonyum Oksit Siyah Seramik",
     "origin": "İsviçre (Biel/Bienne)",
@@ -1217,6 +1460,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -1249,7 +1493,7 @@ const PRODUCTS = [
     "price": 945873,
     "usdRefPrice": 10800,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Biel/Bienne)",
@@ -1262,6 +1506,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -1296,7 +1541,7 @@ const PRODUCTS = [
     "price": 1532664,
     "usdRefPrice": 17500,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Biel/Bienne)",
@@ -1309,6 +1554,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -1342,7 +1588,7 @@ const PRODUCTS = [
     "price": 805743,
     "usdRefPrice": 9200,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Biel/Bienne)",
@@ -1355,6 +1601,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -1387,7 +1634,7 @@ const PRODUCTS = [
     "price": 595549,
     "usdRefPrice": 6800,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Biel/Bienne)",
@@ -1400,6 +1647,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -1432,7 +1680,7 @@ const PRODUCTS = [
     "price": 770711,
     "usdRefPrice": 8800,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Biel/Bienne)",
@@ -1445,6 +1693,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -1477,7 +1726,7 @@ const PRODUCTS = [
     "price": 1129792,
     "usdRefPrice": 12900,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Biel/Bienne)",
@@ -1490,6 +1739,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -1521,7 +1771,7 @@ const PRODUCTS = [
     "price": 1243647,
     "usdRefPrice": 14200,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "18K Masif Sarı Altın",
     "origin": "İsviçre (Biel/Bienne)",
@@ -1534,6 +1784,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": true,
     "stock": 3,
     "inStock": true,
@@ -1567,7 +1818,7 @@ const PRODUCTS = [
     "price": 779469,
     "usdRefPrice": 8900,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Biel/Bienne)",
@@ -1580,6 +1831,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -1612,7 +1864,7 @@ const PRODUCTS = [
     "price": 560517,
     "usdRefPrice": 6400,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Biel/Bienne)",
@@ -1625,6 +1877,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -1657,7 +1910,7 @@ const PRODUCTS = [
     "price": 980905,
     "usdRefPrice": 11200,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Biel/Bienne)",
@@ -1670,6 +1923,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -1702,7 +1956,7 @@ const PRODUCTS = [
     "price": 1042212,
     "usdRefPrice": 11900,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Çelik & 18K Sedna Altın Butonlar/Bezel",
     "origin": "İsviçre (Biel/Bienne)",
@@ -1715,6 +1969,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": true,
     "stock": 3,
     "inStock": true,
@@ -1746,7 +2001,7 @@ const PRODUCTS = [
     "price": 1734100,
     "usdRefPrice": 19800,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Masif 18K Sarı Altın",
     "origin": "İsviçre (Biel/Bienne)",
@@ -1759,6 +2014,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": true,
     "stock": 3,
     "inStock": true,
@@ -1790,7 +2046,7 @@ const PRODUCTS = [
     "price": 569275,
     "usdRefPrice": 6500,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Biel/Bienne)",
@@ -1803,6 +2059,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -1835,7 +2092,7 @@ const PRODUCTS = [
     "price": 735679,
     "usdRefPrice": 8400,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Omega Koleksiyonu",
     "metal": "5. Sınıf Titanyum",
     "origin": "İsviçre (Biel/Bienne)",
@@ -1848,6 +2105,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -1879,7 +2137,7 @@ const PRODUCTS = [
     "price": 10334534,
     "usdRefPrice": 118000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
@@ -1892,6 +2150,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -1924,7 +2183,7 @@ const PRODUCTS = [
     "price": 9195984,
     "usdRefPrice": 105000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
@@ -1937,6 +2196,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -1969,7 +2229,7 @@ const PRODUCTS = [
     "price": 8582918,
     "usdRefPrice": 98000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
@@ -1982,6 +2242,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -2013,7 +2274,7 @@ const PRODUCTS = [
     "price": 15326640,
     "usdRefPrice": 175000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Masif 18K Gül Altın (Rose Gold)",
     "origin": "İsviçre (Cenevre / 1839)",
@@ -2026,6 +2287,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": true,
     "stock": 3,
     "inStock": true,
@@ -2057,7 +2319,7 @@ const PRODUCTS = [
     "price": 5079686,
     "usdRefPrice": 58000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
@@ -2070,6 +2332,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -2102,7 +2365,7 @@ const PRODUCTS = [
     "price": 6305818,
     "usdRefPrice": 72000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Masif 18K Beyaz Altın",
     "origin": "İsviçre (Cenevre / 1839)",
@@ -2115,6 +2378,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": true,
     "stock": 3,
     "inStock": true,
@@ -2146,7 +2410,7 @@ const PRODUCTS = [
     "price": 11210342,
     "usdRefPrice": 128000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
@@ -2159,6 +2423,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -2191,7 +2456,7 @@ const PRODUCTS = [
     "price": 2715005,
     "usdRefPrice": 31000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
@@ -2204,6 +2469,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -2237,7 +2503,7 @@ const PRODUCTS = [
     "price": 3152909,
     "usdRefPrice": 36000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
@@ -2250,6 +2516,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -2282,7 +2549,7 @@ const PRODUCTS = [
     "price": 8232595,
     "usdRefPrice": 94000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
@@ -2295,6 +2562,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -2327,7 +2595,7 @@ const PRODUCTS = [
     "price": 17078256,
     "usdRefPrice": 195000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "950 Masif Platin",
     "origin": "İsviçre (Cenevre / 1839)",
@@ -2340,6 +2608,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -2371,7 +2640,7 @@ const PRODUCTS = [
     "price": 5430010,
     "usdRefPrice": 62000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
@@ -2384,6 +2653,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -2416,7 +2686,7 @@ const PRODUCTS = [
     "price": 9633888,
     "usdRefPrice": 110000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
@@ -2429,6 +2699,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -2461,7 +2732,7 @@ const PRODUCTS = [
     "price": 4729363,
     "usdRefPrice": 54000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
@@ -2474,6 +2745,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -2505,7 +2777,7 @@ const PRODUCTS = [
     "price": 6831302,
     "usdRefPrice": 78000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
@@ -2518,6 +2790,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -2549,7 +2822,7 @@ const PRODUCTS = [
     "price": 4554202,
     "usdRefPrice": 52000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
@@ -2562,6 +2835,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -2593,7 +2867,7 @@ const PRODUCTS = [
     "price": 3065328,
     "usdRefPrice": 35000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
@@ -2606,6 +2880,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -2638,7 +2913,7 @@ const PRODUCTS = [
     "price": 34156512,
     "usdRefPrice": 390000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
@@ -2651,6 +2926,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -2682,7 +2958,7 @@ const PRODUCTS = [
     "price": 6568560,
     "usdRefPrice": 75000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
@@ -2695,6 +2971,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -2727,7 +3004,7 @@ const PRODUCTS = [
     "price": 2496053,
     "usdRefPrice": 28500,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Patek Philippe Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1839)",
@@ -2740,6 +3017,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -2772,7 +3050,7 @@ const PRODUCTS = [
     "price": 6831302,
     "usdRefPrice": 78000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
@@ -2785,6 +3063,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -2817,7 +3096,7 @@ const PRODUCTS = [
     "price": 4028717,
     "usdRefPrice": 46000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
@@ -2830,6 +3109,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -2862,7 +3142,7 @@ const PRODUCTS = [
     "price": 5430010,
     "usdRefPrice": 62000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
@@ -2875,6 +3155,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -2906,7 +3187,7 @@ const PRODUCTS = [
     "price": 10947600,
     "usdRefPrice": 125000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
@@ -2919,6 +3200,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -2950,7 +3232,7 @@ const PRODUCTS = [
     "price": 3678394,
     "usdRefPrice": 42000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
@@ -2963,6 +3245,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -2994,7 +3277,7 @@ const PRODUCTS = [
     "price": 2802586,
     "usdRefPrice": 32000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
@@ -3007,6 +3290,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -3038,7 +3322,7 @@ const PRODUCTS = [
     "price": 7707110,
     "usdRefPrice": 88000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Masif 18K Pembe Altın",
     "origin": "İsviçre (Le Brassus / 1875)",
@@ -3051,6 +3335,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": true,
     "stock": 3,
     "inStock": true,
@@ -3082,7 +3367,7 @@ const PRODUCTS = [
     "price": 4203878,
     "usdRefPrice": 48000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
@@ -3095,6 +3380,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -3126,7 +3412,7 @@ const PRODUCTS = [
     "price": 10071792,
     "usdRefPrice": 115000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
@@ -3139,6 +3425,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -3170,7 +3457,7 @@ const PRODUCTS = [
     "price": 4291459,
     "usdRefPrice": 49000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Monoblok Yüksek Teknoloji Siyah Seramik",
     "origin": "İsviçre (Le Brassus / 1875)",
@@ -3183,6 +3470,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -3214,7 +3502,7 @@ const PRODUCTS = [
     "price": 3415651,
     "usdRefPrice": 39000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "18K Beyaz Altın & Siyah Seramik",
     "origin": "İsviçre (Le Brassus / 1875)",
@@ -3227,6 +3515,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": true,
     "stock": 3,
     "inStock": true,
@@ -3258,7 +3547,7 @@ const PRODUCTS = [
     "price": 5955494,
     "usdRefPrice": 68000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Floransa El Dövmesi Frosted 18K Beyaz Altın",
     "origin": "İsviçre (Le Brassus / 1875)",
@@ -3271,6 +3560,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": true,
     "stock": 3,
     "inStock": true,
@@ -3302,7 +3592,7 @@ const PRODUCTS = [
     "price": 17078256,
     "usdRefPrice": 195000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
@@ -3315,6 +3605,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -3347,7 +3638,7 @@ const PRODUCTS = [
     "price": 3328070,
     "usdRefPrice": 38000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
@@ -3360,6 +3651,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -3392,7 +3684,7 @@ const PRODUCTS = [
     "price": 4729363,
     "usdRefPrice": 54000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Siyah Seramik & 18K Pembe Altın Vidalar",
     "origin": "İsviçre (Le Brassus / 1875)",
@@ -3405,6 +3697,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": true,
     "stock": 3,
     "inStock": true,
@@ -3436,7 +3729,7 @@ const PRODUCTS = [
     "price": 2452262,
     "usdRefPrice": 28000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
@@ -3449,6 +3742,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -3480,7 +3774,7 @@ const PRODUCTS = [
     "price": 4904525,
     "usdRefPrice": 56000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
@@ -3493,6 +3787,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -3525,7 +3820,7 @@ const PRODUCTS = [
     "price": 2890166,
     "usdRefPrice": 33000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "18K Beyaz Altın ve 18K Pembe Altın Çift Renk Kasa",
     "origin": "İsviçre (Le Brassus / 1875)",
@@ -3538,6 +3833,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": true,
     "stock": 3,
     "inStock": true,
@@ -3569,7 +3865,7 @@ const PRODUCTS = [
     "price": 21457296,
     "usdRefPrice": 245000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
@@ -3582,6 +3878,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -3615,7 +3912,7 @@ const PRODUCTS = [
     "price": 3941136,
     "usdRefPrice": 45000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Audemars Piguet Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Le Brassus / 1875)",
@@ -3628,6 +3925,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -3660,7 +3958,7 @@ const PRODUCTS = [
     "price": 832018,
     "usdRefPrice": 9500,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
@@ -3673,6 +3971,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -3706,7 +4005,7 @@ const PRODUCTS = [
     "price": 805743,
     "usdRefPrice": 9200,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
@@ -3719,6 +4018,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -3751,7 +4051,7 @@ const PRODUCTS = [
     "price": 779469,
     "usdRefPrice": 8900,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
@@ -3764,6 +4064,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -3796,7 +4097,7 @@ const PRODUCTS = [
     "price": 472936,
     "usdRefPrice": 5400,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
@@ -3809,6 +4110,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -3841,7 +4143,7 @@ const PRODUCTS = [
     "price": 429146,
     "usdRefPrice": 4900,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
@@ -3854,6 +4156,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -3886,7 +4189,7 @@ const PRODUCTS = [
     "price": 796985,
     "usdRefPrice": 9100,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
@@ -3899,6 +4202,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -3931,7 +4235,7 @@ const PRODUCTS = [
     "price": 543001,
     "usdRefPrice": 6200,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Siyah DLC Kaplama Titanyum",
     "origin": "İsviçre (Grenchen / 1884)",
@@ -3944,6 +4248,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -3976,7 +4281,7 @@ const PRODUCTS = [
     "price": 718163,
     "usdRefPrice": 8200,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
@@ -3989,6 +4294,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -4021,7 +4327,7 @@ const PRODUCTS = [
     "price": 718163,
     "usdRefPrice": 8200,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
@@ -4034,6 +4340,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -4066,7 +4373,7 @@ const PRODUCTS = [
     "price": 718163,
     "usdRefPrice": 8200,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
@@ -4079,6 +4386,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -4111,7 +4419,7 @@ const PRODUCTS = [
     "price": 1707826,
     "usdRefPrice": 19500,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "18K Kırmızı Altın",
     "origin": "İsviçre (Grenchen / 1884)",
@@ -4124,6 +4432,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": true,
     "stock": 3,
     "inStock": true,
@@ -4157,7 +4466,7 @@ const PRODUCTS = [
     "price": 516727,
     "usdRefPrice": 5900,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
@@ -4170,6 +4479,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -4201,7 +4511,7 @@ const PRODUCTS = [
     "price": 420388,
     "usdRefPrice": 4800,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
@@ -4214,6 +4524,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -4246,7 +4557,7 @@ const PRODUCTS = [
     "price": 402872,
     "usdRefPrice": 4600,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
@@ -4259,6 +4570,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -4290,7 +4602,7 @@ const PRODUCTS = [
     "price": 297775,
     "usdRefPrice": 3400,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Breitlight® Karbon Alaşım",
     "origin": "İsviçre (Grenchen / 1884)",
@@ -4303,6 +4615,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -4335,7 +4648,7 @@ const PRODUCTS = [
     "price": 753195,
     "usdRefPrice": 8600,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
@@ -4348,6 +4661,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -4380,7 +4694,7 @@ const PRODUCTS = [
     "price": 945873,
     "usdRefPrice": 10800,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
@@ -4393,6 +4707,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -4425,7 +4740,7 @@ const PRODUCTS = [
     "price": 429146,
     "usdRefPrice": 4900,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
@@ -4438,6 +4753,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -4470,7 +4786,7 @@ const PRODUCTS = [
     "price": 411630,
     "usdRefPrice": 4700,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
@@ -4483,6 +4799,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -4514,7 +4831,7 @@ const PRODUCTS = [
     "price": 429146,
     "usdRefPrice": 4900,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Breitling Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Grenchen / 1884)",
@@ -4527,6 +4844,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -5477,7 +5795,7 @@ const PRODUCTS = [
     "price": 359081,
     "usdRefPrice": 4100,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
@@ -5490,6 +5808,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -5522,7 +5841,7 @@ const PRODUCTS = [
     "price": 345944,
     "usdRefPrice": 3950,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
@@ -5535,6 +5854,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -5566,7 +5886,7 @@ const PRODUCTS = [
     "price": 376597,
     "usdRefPrice": 4300,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
@@ -5579,6 +5899,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -5610,7 +5931,7 @@ const PRODUCTS = [
     "price": 411630,
     "usdRefPrice": 4700,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "2. Sınıf Saten Titanyum",
     "origin": "İsviçre (Cenevre / 1926)",
@@ -5623,6 +5944,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -5655,7 +5977,7 @@ const PRODUCTS = [
     "price": 367839,
     "usdRefPrice": 4200,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Sabit Askılı Monoblok Titanyum",
     "origin": "İsviçre (Cenevre / 1926)",
@@ -5668,6 +5990,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -5700,7 +6023,7 @@ const PRODUCTS = [
     "price": 481694,
     "usdRefPrice": 5500,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
@@ -5713,6 +6036,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -5744,7 +6068,7 @@ const PRODUCTS = [
     "price": 385356,
     "usdRefPrice": 4400,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
@@ -5757,6 +6081,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -5789,7 +6114,7 @@ const PRODUCTS = [
     "price": 429146,
     "usdRefPrice": 4900,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
@@ -5802,6 +6127,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -5833,7 +6159,7 @@ const PRODUCTS = [
     "price": 332807,
     "usdRefPrice": 3800,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
@@ -5846,6 +6172,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -5878,7 +6205,7 @@ const PRODUCTS = [
     "price": 446662,
     "usdRefPrice": 5100,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
@@ -5891,6 +6218,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -5923,7 +6251,7 @@ const PRODUCTS = [
     "price": 402872,
     "usdRefPrice": 4600,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Masif 925 Ayar Gümüş",
     "origin": "İsviçre (Cenevre / 1926)",
@@ -5936,6 +6264,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -5968,7 +6297,7 @@ const PRODUCTS = [
     "price": 1558938,
     "usdRefPrice": 17800,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Masif 18K Sarı Altın",
     "origin": "İsviçre (Cenevre / 1926)",
@@ -5981,6 +6310,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": true,
     "stock": 3,
     "inStock": true,
@@ -6013,7 +6343,7 @@ const PRODUCTS = [
     "price": 280259,
     "usdRefPrice": 3200,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
@@ -6026,6 +6356,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -6058,7 +6389,7 @@ const PRODUCTS = [
     "price": 398493,
     "usdRefPrice": 4550,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
@@ -6071,6 +6402,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -6103,7 +6435,7 @@ const PRODUCTS = [
     "price": 289017,
     "usdRefPrice": 3300,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
@@ -6116,6 +6448,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -6148,7 +6481,7 @@ const PRODUCTS = [
     "price": 464178,
     "usdRefPrice": 5300,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Mat Siyah Karbon Kompozit & Titanyum Bezel",
     "origin": "İsviçre (Cenevre / 1926)",
@@ -6161,6 +6494,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -6193,7 +6527,7 @@ const PRODUCTS = [
     "price": 691888,
     "usdRefPrice": 7900,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
@@ -6206,6 +6540,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -6238,7 +6573,7 @@ const PRODUCTS = [
     "price": 297775,
     "usdRefPrice": 3400,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
@@ -6251,6 +6586,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -6283,7 +6619,7 @@ const PRODUCTS = [
     "price": 394114,
     "usdRefPrice": 4500,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Alüminyum Bronz Alaşım",
     "origin": "İsviçre (Cenevre / 1926)",
@@ -6296,6 +6632,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -6328,7 +6665,7 @@ const PRODUCTS = [
     "price": 253984,
     "usdRefPrice": 2900,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Tudor Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Cenevre / 1926)",
@@ -6341,6 +6678,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -7285,7 +7623,7 @@ const PRODUCTS = [
     "price": 779469,
     "usdRefPrice": 8900,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
@@ -7298,6 +7636,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -7329,7 +7668,7 @@ const PRODUCTS = [
     "price": 735679,
     "usdRefPrice": 8400,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
@@ -7342,6 +7681,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -7373,7 +7713,7 @@ const PRODUCTS = [
     "price": 718163,
     "usdRefPrice": 8200,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
@@ -7386,6 +7726,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -7418,7 +7759,7 @@ const PRODUCTS = [
     "price": 1156067,
     "usdRefPrice": 13200,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
@@ -7431,6 +7772,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -7463,7 +7805,7 @@ const PRODUCTS = [
     "price": 490452,
     "usdRefPrice": 5600,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
@@ -7476,6 +7818,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -7508,7 +7851,7 @@ const PRODUCTS = [
     "price": 2890166,
     "usdRefPrice": 33000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
@@ -7521,6 +7864,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -7553,7 +7897,7 @@ const PRODUCTS = [
     "price": 867050,
     "usdRefPrice": 9900,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Mat Siyah Zirkonyum Oksit Seramik",
     "origin": "İsviçre (Schaffhausen / 1868)",
@@ -7566,6 +7910,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -7598,7 +7943,7 @@ const PRODUCTS = [
     "price": 1086002,
     "usdRefPrice": 12400,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Pantone® 'Oceana' Mavi Seramik",
     "origin": "İsviçre (Schaffhausen / 1868)",
@@ -7611,6 +7956,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -7643,7 +7989,7 @@ const PRODUCTS = [
     "price": 3678394,
     "usdRefPrice": 42000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "18K Armor Gold®",
     "origin": "İsviçre (Schaffhausen / 1868)",
@@ -7656,6 +8002,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -7688,7 +8035,7 @@ const PRODUCTS = [
     "price": 472936,
     "usdRefPrice": 5400,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
@@ -7701,6 +8048,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -7733,7 +8081,7 @@ const PRODUCTS = [
     "price": 586791,
     "usdRefPrice": 6700,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
@@ -7746,6 +8094,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -7778,7 +8127,7 @@ const PRODUCTS = [
     "price": 1620245,
     "usdRefPrice": 18500,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
@@ -7791,6 +8140,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -7823,7 +8173,7 @@ const PRODUCTS = [
     "price": 1121034,
     "usdRefPrice": 12800,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
@@ -7836,6 +8186,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -7868,7 +8219,7 @@ const PRODUCTS = [
     "price": 534243,
     "usdRefPrice": 6100,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
@@ -7881,6 +8232,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -7912,7 +8264,7 @@ const PRODUCTS = [
     "price": 604308,
     "usdRefPrice": 6900,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
@@ -7925,6 +8277,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -7957,7 +8310,7 @@ const PRODUCTS = [
     "price": 1208615,
     "usdRefPrice": 13800,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
@@ -7970,6 +8323,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -8001,7 +8355,7 @@ const PRODUCTS = [
     "price": 1445083,
     "usdRefPrice": 16500,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lake Tahoe Kar Beyazı Seramik",
     "origin": "İsviçre (Schaffhausen / 1868)",
@@ -8014,6 +8368,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -8046,7 +8401,7 @@ const PRODUCTS = [
     "price": 2977747,
     "usdRefPrice": 34000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Masif 18K 5N Pembe Altın",
     "origin": "İsviçre (Schaffhausen / 1868)",
@@ -8059,6 +8414,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": true,
     "stock": 3,
     "inStock": true,
@@ -8091,7 +8447,7 @@ const PRODUCTS = [
     "price": 411630,
     "usdRefPrice": 4700,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
@@ -8104,6 +8460,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -8136,7 +8493,7 @@ const PRODUCTS = [
     "price": 1269922,
     "usdRefPrice": 14500,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "IWC Schaffhausen Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İsviçre (Schaffhausen / 1868)",
@@ -8149,6 +8506,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -8181,7 +8539,7 @@ const PRODUCTS = [
     "price": 770711,
     "usdRefPrice": 8800,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
@@ -8194,6 +8552,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -8226,7 +8585,7 @@ const PRODUCTS = [
     "price": 770711,
     "usdRefPrice": 8800,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
@@ -8239,6 +8598,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -8271,7 +8631,7 @@ const PRODUCTS = [
     "price": 867050,
     "usdRefPrice": 9900,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Paslanmaz Çelik & Sol Taraf Butonlar",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
@@ -8284,6 +8644,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -8316,7 +8677,7 @@ const PRODUCTS = [
     "price": 1418809,
     "usdRefPrice": 16200,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "BMG-TECH™ Dökme Metalik Cam Alaşım",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
@@ -8329,6 +8690,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -8361,7 +8723,7 @@ const PRODUCTS = [
     "price": 954631,
     "usdRefPrice": 10900,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
@@ -8374,6 +8736,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -8406,7 +8769,7 @@ const PRODUCTS = [
     "price": 648098,
     "usdRefPrice": 7400,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Brunito eSteel™ Eskitilmiş Vintage Çelik",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
@@ -8419,6 +8782,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -8451,7 +8815,7 @@ const PRODUCTS = [
     "price": 1471357,
     "usdRefPrice": 16800,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Masif 18K Goldtech™ Kırmızı Altın",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
@@ -8464,6 +8828,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": true,
     "stock": 3,
     "inStock": true,
@@ -8496,7 +8861,7 @@ const PRODUCTS = [
     "price": 630582,
     "usdRefPrice": 7200,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
@@ -8509,6 +8874,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -8541,7 +8907,7 @@ const PRODUCTS = [
     "price": 1734100,
     "usdRefPrice": 19800,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Karbon Fiber Kompozit Carbotech™",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
@@ -8554,6 +8920,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -8586,7 +8953,7 @@ const PRODUCTS = [
     "price": 910840,
     "usdRefPrice": 10400,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
@@ -8599,6 +8966,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -8630,7 +8998,7 @@ const PRODUCTS = [
     "price": 867050,
     "usdRefPrice": 9900,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
@@ -8643,6 +9011,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -8675,7 +9044,7 @@ const PRODUCTS = [
     "price": 805743,
     "usdRefPrice": 9200,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "eSteel™ (%95 Geri Dönüştürülmüş Çelik)",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
@@ -8688,6 +9057,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -8720,7 +9090,7 @@ const PRODUCTS = [
     "price": 840776,
     "usdRefPrice": 9600,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
@@ -8733,6 +9103,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -8764,7 +9135,7 @@ const PRODUCTS = [
     "price": 1882987,
     "usdRefPrice": 21500,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Masif 18K Goldtech™ & 24K Masif Altın Ay Diski",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
@@ -8777,6 +9148,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": true,
     "stock": 3,
     "inStock": true,
@@ -8809,7 +9181,7 @@ const PRODUCTS = [
     "price": 735679,
     "usdRefPrice": 8400,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
@@ -8822,6 +9194,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -8854,7 +9227,7 @@ const PRODUCTS = [
     "price": 1742858,
     "usdRefPrice": 19900,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
@@ -8867,6 +9240,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -8898,7 +9272,7 @@ const PRODUCTS = [
     "price": 12961958,
     "usdRefPrice": 148000,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
@@ -8911,6 +9285,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -8943,7 +9318,7 @@ const PRODUCTS = [
     "price": 691888,
     "usdRefPrice": 7900,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "1940 Masif Kulaklı Paslanmaz Çelik",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
@@ -8956,6 +9331,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -8988,7 +9364,7 @@ const PRODUCTS = [
     "price": 779469,
     "usdRefPrice": 8900,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Lüks Çelik / Değerli Metal",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
@@ -9001,6 +9377,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -9033,7 +9410,7 @@ const PRODUCTS = [
     "price": 1795406,
     "usdRefPrice": 20500,
     "marketMarkup": "+80%",
-    "category": "saat",
+    "category": "elit-saatler",
     "subCategory": "Panerai Koleksiyonu",
     "metal": "Carbotech™ & Donanma Komando Gravürü",
     "origin": "İtalya / İsviçre (Floransa / Neuchâtel / 1860)",
@@ -9046,6 +9423,7 @@ const PRODUCTS = [
     "statusBadge": "Seçkin Model",
     "conditionBadge": "Ürün Bazında Kontrol",
     "isPreOwned": false,
+    "isElite": true,
     "isGold": false,
     "stock": 3,
     "inStock": true,
@@ -83735,7 +84113,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r32505203-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r32505203-kol-saati",
     "description": "1962’deki orijinal tasarımı, geliştirilmiş formuyla 21. yüzyıl için hayata geçirildi. Vintage detayları, orijinaline sadık stili ve modern kullanıcılara uyum…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -83749,9 +84127,7 @@ const PRODUCTS = [
       "Referans Kodu": "R32505203",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r48905205",
@@ -83766,7 +84142,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r48905205-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r48905205-kol-saati",
     "description": "İkonik Rado Florence ile İsviçre hassasiyetinin ve zarafetinin zamansız birlikteliğini keşfedin. 39 mm kasa, mavi kadranla uyumlu metalize kenara sahip, uçtan…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -83780,9 +84156,7 @@ const PRODUCTS = [
       "Referans Kodu": "R48905205",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r30012152",
@@ -83797,7 +84171,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r30012152-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r30012152-kol-saati",
     "description": "Rado Centrix Automatic Open Heart, yenilik ve estetiğin mükemmel uyumunu sunar. Bu başyapıtın kalbinde, hassasiyet ve güvenilirlik sağlayan Rado'nun otomatik…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -83811,9 +84185,7 @@ const PRODUCTS = [
       "Referans Kodu": "R30012152",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r30023732",
@@ -83828,7 +84200,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r30023732-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r30023732-kol-saati",
     "description": "Klasik Centrix Quartz Diamonds, yalnızca teknik olarak değil, aynı zamanda estetik olarak da yenilendi. Bu modifiye model, kenara kadar uzanan yuvarlak safir…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -83842,9 +84214,7 @@ const PRODUCTS = [
       "Referans Kodu": "R30023732",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-longines-l37824966",
@@ -83888,7 +84258,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-true-round-automatic-open-heart-r27107172-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-true-round-automatic-open-heart-r27107172-kol-saati",
     "description": "Rado True Round Open Heart, seçkin tasarım ve malzeme ustalığının mükemmel uyumunu sunar. Mekanizmanın kalbini gözler önüne seren büyüleyici \"open heart\"…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -83902,9 +84272,7 @@ const PRODUCTS = [
       "Referans Kodu": "R27107172",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r30008302",
@@ -83919,7 +84287,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r30008302-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r30008302-kol-saati",
     "description": "Rado Centrix Automatic Open Heart, yenilik ve estetiğin mükemmel uyumunu sunar. Modelin kalbinde, hassasiyet ve güvenilirlik sağlayan Rado calibre R734 otomatik…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -83933,9 +84301,7 @@ const PRODUCTS = [
       "Referans Kodu": "R30008302",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r22879215",
@@ -83950,7 +84316,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-coupole-classic-r22879215-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-coupole-classic-r22879215-kol-saati",
     "description": "Coupole Classic Automatic, geleneksel kol saati tasarımına mükemmel parlaklık, kolay okunabilirlik ve güzel kadranlar için üst düzey koruma sağlayan Rado'nun…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -83964,9 +84330,7 @@ const PRODUCTS = [
       "Referans Kodu": "R22879215",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r32223408",
@@ -83981,7 +84345,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-captain-cook-r32223408--kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-captain-cook-r32223408--kol-saati",
     "description": "Orijinal 1962 modelinden ilham alan bu büyüleyici Captain Cook, dik kesim safir kristalin altında parıldayan siyah-bordo geçişli kadranıyla dikkat çekiyor.…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -83995,9 +84359,7 @@ const PRODUCTS = [
       "Referans Kodu": "R32223408",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r32223313",
@@ -84012,7 +84374,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-captain-cook-r32223313-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-captain-cook-r32223313-kol-saati",
     "description": "Captain Cook, açık hava maceralarından kentin karmaşasına geçişlerde ideal bir yol arkadaşıdır. Yemyeşil, ileri teknoloji seramik bezel ve siyah-yeşil renk…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84026,9 +84388,7 @@ const PRODUCTS = [
       "Referans Kodu": "R32223313",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r12161263",
@@ -84043,7 +84403,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-diastar-original-r12161263-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-diastar-original-r12161263-kol-saati",
     "description": "Rado DiaStar Original, markanın en ikonik saatlerinden biridir. 38 mm'lik bu versiyon, sarı altın PVD kaplamalı Ceramos™ bezel ve yansıma önleyici kaplamaya…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84057,9 +84417,7 @@ const PRODUCTS = [
       "Referans Kodu": "R12161263",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r48903253",
@@ -84074,7 +84432,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r48903253-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r48903253-kol-saati",
     "description": "İkonik Rado Florence, İsviçre hassasiyeti ve zarafetinin zamansız bir birleşimini sunar. 39 mm kasa, kadranın sarı altın tonuyla uyumlu metalize kenarlı, uçtan…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84088,9 +84446,7 @@ const PRODUCTS = [
       "Referans Kodu": "R48903253",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r27054152",
@@ -84105,7 +84461,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r27054152-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r27054152-kol-saati",
     "description": "Rado True Square Thinline ile sanatsal ifade ve İsviçre hassasiyetinin uyumlu birleşimini deneyimleyin. Güvenilir Quartz Rado kalibre R420 mekanizma ile…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84119,9 +84475,7 @@ const PRODUCTS = [
       "Referans Kodu": "R27054152",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r12170333",
@@ -84136,7 +84490,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r12170333-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r12170333-kol-saati",
     "description": "İsviçre işçiliğinin ve öncü inovasyonun ikonik bir sembolü olan Rado Diastar, sıra dışı olanı benimsemeye cesaret edenler için tasarlandı. 30 mm kasa, parlak…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84150,9 +84504,7 @@ const PRODUCTS = [
       "Referans Kodu": "R12170333",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r48913023",
@@ -84167,7 +84519,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r48913023-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r48913023-kol-saati",
     "description": "Rado Florence Classic'in ahenkli tasarımı, koleksiyonun adını aldığı şehrin şık kubbelerini ve kulelerini anımsatıyor. Kaliteli kuvars mekanizmaları ve…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84181,9 +84533,7 @@ const PRODUCTS = [
       "Referans Kodu": "R48913023",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r12170323",
@@ -84198,7 +84548,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r12170323-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r12170323-kol-saati",
     "description": "Rado Diastar, İsviçre işçiliğinin ve öncü inovasyonun ikonik bir sembolü olarak, sıra dışı olanı benimsemeye cesaret edenler için tasarlandı. 30 mm çapındaki…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84212,9 +84562,7 @@ const PRODUCTS = [
       "Referans Kodu": "R12170323",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r48913703",
@@ -84229,7 +84577,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-florence-r48913703-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-florence-r48913703-kol-saati",
     "description": "Rado Florence Classic’in ahenkli tasarımı, koleksiyonun adını aldığı şehrin şık kubbelerini ve kulelerini anımsatır. Kaliteli kuvars mekanizmaları ve yenilikçi…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84243,9 +84591,7 @@ const PRODUCTS = [
       "Referans Kodu": "R48913703",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r48912773",
@@ -84260,7 +84606,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r48912773-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r48912773-kol-saati",
     "description": "Rado Florence’ın ahenkli tasarımı, koleksiyonun adını aldığı şehrin şık kubbelerini ve kulelerini anımsatır. Güvenilir üç ibreli Quartz Rado calibre R073…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84274,9 +84620,7 @@ const PRODUCTS = [
       "Referans Kodu": "R48912773",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r48912713",
@@ -84291,7 +84635,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-florence-r48912713-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-florence-r48912713-kol-saati",
     "description": "Rado Florence Classic’in ahenkli tasarımı, koleksiyonun adını aldığı şehrin şık kubbelerini ve kulelerini anımsatır. Kaliteli kuvars mekanizmaları ve yenilikçi…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84305,9 +84649,7 @@ const PRODUCTS = [
       "Referans Kodu": "R48912713",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r30233942",
@@ -84322,7 +84664,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r30233942-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r30233942-kol-saati",
     "description": "Zamanın ve ayın geçişini ölçen Rado Centrix Moonphase, Rado serisine zamansız bir model olarak katılıyor. Yeryüzü, siyah sedef gökyüzü, sarı altın rengi ufuk ve…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84336,9 +84678,7 @@ const PRODUCTS = [
       "Referans Kodu": "R30233942",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r30013302",
@@ -84353,7 +84693,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r30013302-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r30013302-kol-saati",
     "description": "Rado Centrix Automatic Open Heart ile yenilik ve estetiğin mükemmel uyumunu keşfedin. Bu başyapıtın kalbinde, hassasiyet ve güvenilirlik sunan Automatic Rado…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84367,9 +84707,7 @@ const PRODUCTS = [
       "Referans Kodu": "R30013302",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r30017732",
@@ -84384,7 +84722,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r30017732-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r30017732-kol-saati",
     "description": "Klasik Centrix Automatic Diamonds saat, hem teknik hem de estetik açıdan yenilendi. Bu model, kenara kadar uzanan yuvarlak safir camı ve eğimli kristal…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84398,9 +84736,7 @@ const PRODUCTS = [
       "Referans Kodu": "R30017732",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r48913723",
@@ -84415,7 +84751,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r48913723-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r48913723-kol-saati",
     "description": "Rado Florence Classic’in ahenkli tasarımı, koleksiyonun adını aldığı şehrin şık kubbelerini ve kulelerini anımsatır. Kaliteli kuvars mekanizmaları ve yenilikçi…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84429,9 +84765,7 @@ const PRODUCTS = [
       "Referans Kodu": "R48913723",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r12170113",
@@ -84446,7 +84780,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-diastar-original-r12170113-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-diastar-original-r12170113-kol-saati",
     "description": "Rado DiaStar Original, markanın en ikonik saatlerinden biridir. 30 mm’lik bu versiyon, cilalı Ceramos™ bezel ve yansıma önleyici kaplamaya sahip kesme safir…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84460,9 +84794,7 @@ const PRODUCTS = [
       "Referans Kodu": "R12170113",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r48904013",
@@ -84477,7 +84809,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r48904013-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r48904013-kol-saati",
     "description": "Rado Florence, İsviçre hassasiyeti ve zarafetinin zamansız birleşimini sunar. 39 mm kasa, sarı altın rengiyle uyumlu metalize kenara sahip uçtan uca safir camla…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84491,9 +84823,7 @@ const PRODUCTS = [
       "Referans Kodu": "R48904013",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r32154208",
@@ -84508,7 +84838,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r32154208-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r32154208-kol-saati",
     "description": "42 mm parlak paslanmaz çelik kasaya ve kurma koluna sahip Captain Cook Automatic, mat beyaz Super-LumiNova® ile işlenmiş rakamlar ve işaretler içeren parlak…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84522,9 +84852,7 @@ const PRODUCTS = [
       "Referans Kodu": "R32154208",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r12162153",
@@ -84539,7 +84867,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r12162153-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r12162153-kol-saati",
     "description": "DiaStar Original Skeleton, antrasit gri kaplaması ve işlemelerindeki çeşitli unsurlarla görsel zıtlıkların dansını sergileyen yüksek kaliteli R808 otomatik…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84553,9 +84881,7 @@ const PRODUCTS = [
       "Referans Kodu": "R12162153",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r48912703",
@@ -84570,7 +84896,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-florence-r48912703-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-florence-r48912703-kol-saati",
     "description": "Rado Florence Classic’in ahenkli tasarımı, koleksiyonun adını aldığı şehrin şık kubbelerini ve kulelerini anımsatır. Kaliteli kuvars mekanizmaları ve yenilikçi…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84584,9 +84910,7 @@ const PRODUCTS = [
       "Referans Kodu": "R48912703",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r48912743",
@@ -84601,7 +84925,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r48912743-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r48912743-kol-saati",
     "description": "Rado Florence Classic’in ahenkli tasarımı, koleksiyonun adını aldığı şehrin şık kubbelerini ve kulelerini anımsatıyor. 38 mm’lik saat uçtan uca konik, kavisli…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84615,9 +84939,7 @@ const PRODUCTS = [
       "Referans Kodu": "R48912743",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r12170253",
@@ -84632,7 +84954,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r12170253-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r12170253-kol-saati",
     "description": "Rado Diastar, İsviçre işçiliğinin ve öncü inovasyonun ikonik bir sembolüdür. Sıra dışı olanı benimsemeye cesaret edenler için tasarlandı. Parlak platin renkli…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84646,9 +84968,7 @@ const PRODUCTS = [
       "Referans Kodu": "R12170253",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r32138153",
@@ -84663,7 +84983,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-captain-cook-r32138153-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-captain-cook-r32138153-kol-saati",
     "description": "RADO Rado Captain Cook R32138153 Kol Saati lüks kol saati. Safir cam, hassas mekanizma ve Belgin Kuyumculuk & Saat güvencesiyle.",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84677,9 +84997,7 @@ const PRODUCTS = [
       "Referans Kodu": "R32138153",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r32137153",
@@ -84694,7 +85012,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-captain-cook-r32137153-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-captain-cook-r32137153-kol-saati",
     "description": "RADO Rado Captain Cook R32137153 Kol Saati lüks kol saati. Safir cam, hassas mekanizma ve Belgin Kuyumculuk & Saat güvencesiyle.",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84708,9 +85026,7 @@ const PRODUCTS = [
       "Referans Kodu": "R32137153",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r27242732",
@@ -84725,7 +85041,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r27242732-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r27242732-kol-saati",
     "description": "Modern kullanıcılar için yeniden tasarlanan Rado True, markanın güvenilir ve özgün çizgisini korur. Bu model, otomatik İsviçre mekanizması, entegre elmas…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84739,9 +85055,7 @@ const PRODUCTS = [
       "Referans Kodu": "R27242732",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r32130312",
@@ -84756,7 +85070,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r32130312-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r32130312-kol-saati",
     "description": "Captain Cook High-Tech Ceramic Diver, 300 metreye kadar su geçirmezdir. ISO 6425 sertifikalı bu modelin ibreleri ve göstergeleri, mat zeytin yeşili kadran…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84770,9 +85084,7 @@ const PRODUCTS = [
       "Referans Kodu": "R32130312",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r12170343",
@@ -84787,7 +85099,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r12170343-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r12170343-kol-saati",
     "description": "Rado Diastar, İsviçre işçiliğinin ve öncü inovasyonun ikonik bir sembolü olarak, sıra dışı olanı benimsemeye cesaret edenler için tasarlandı. Parlak platin…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84801,9 +85113,7 @@ const PRODUCTS = [
       "Referans Kodu": "R12170343",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r48903103",
@@ -84818,7 +85128,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r48903103-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r48903103-kol-saati",
     "description": "İkonik Rado Florence ile İsviçre hassasiyetinin ve zarafetinin zamansız birlikteliğini keşfedin. 39 mm paslanmaz çelik kasa, metalize kenarlı, uçtan uca uzanan…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84832,9 +85142,7 @@ const PRODUCTS = [
       "Referans Kodu": "R48903103",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r32105313",
@@ -84849,7 +85157,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-captain-cook-r32105313-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-captain-cook-r32105313-kol-saati",
     "description": "1962'deki orijinal tasarımı, geliştirilmiş formuyla 21. yüzyıl için yeniden yorumlandı. Vintage detayları, orijinaline sadık stili ve güncel özellikleriyle…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84863,9 +85171,7 @@ const PRODUCTS = [
       "Referans Kodu": "R32105313",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r48905015",
@@ -84880,7 +85186,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r48905015-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r48905015-kol-saati",
     "description": "İkonik Rado Florence ile İsviçre hassasiyetinin ve zarafetinin zamansız birlikteliğini keşfedin. 39 mm kasa, pembe altın rengiyle uyumlu metalize kenara sahip,…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84894,9 +85200,7 @@ const PRODUCTS = [
       "Referans Kodu": "R48905015",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r30025712",
@@ -84911,7 +85215,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r30025712-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r30025712-kol-saati",
     "description": "Klasik Centrix Quartz Diamonds, hem teknik hem de estetik açıdan yenilenmiştir. Bu modifiye model, kenara kadar uzanan yuvarlak safir cama ve eğimli cam…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84925,9 +85229,7 @@ const PRODUCTS = [
       "Referans Kodu": "R30025712",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r48913713",
@@ -84942,7 +85244,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-florence-r48913713-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-florence-r48913713-kol-saati",
     "description": "Rado Florence Classic’in ahenkli tasarımı, koleksiyonun adını aldığı şehrin şık kubbelerini ve kulelerini anımsatır. Kaliteli kuvars mekanizmaları ve yenilikçi…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84956,9 +85258,7 @@ const PRODUCTS = [
       "Referans Kodu": "R48913713",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r30012202",
@@ -84973,7 +85273,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r30012202-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r30012202-kol-saati",
     "description": "Rado Centrix Automatic Open Heart modelinde yenilik ve estetik mükemmel bir uyumla buluşuyor. Bu başyapıtın merkezinde, hassasiyet ve güvenilirlik sunan Rado…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -84987,9 +85287,7 @@ const PRODUCTS = [
       "Referans Kodu": "R30012202",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r30018742",
@@ -85004,7 +85302,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r30018742-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r30018742-kol-saati",
     "description": "Klasik Centrix Automatic Diamonds, hem teknik hem de estetik açıdan yenilenerek sunuluyor. Bu model, kenara kadar uzanan yuvarlak safir camı ve eğimli kristal…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -85018,9 +85316,7 @@ const PRODUCTS = [
       "Referans Kodu": "R30018742",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r27054162",
@@ -85035,7 +85331,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r27054162-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r27054162-kol-saati",
     "description": "Rado True Square Thinline ile sanatsal ifade ve İsviçre hassasiyetinin uyumlu birleşimini deneyimleyin. Güvenilir Quartz Rado kalibre R420 mekanizmasıyla…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -85049,9 +85345,7 @@ const PRODUCTS = [
       "Referans Kodu": "R27054162",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r12171713",
@@ -85066,7 +85360,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r12171713-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r12171713-kol-saati",
     "description": "İsviçre işçiliğinin ve öncü inovasyonun ikonik bir sembolü olan Rado Diastar, sıra dışı olanı benimsemeye cesaret edenler için tasarlandı. 30 mm kasa, parlak…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -85080,9 +85374,7 @@ const PRODUCTS = [
       "Referans Kodu": "R12171713",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r12171253",
@@ -85097,7 +85389,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r12171253-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r12171253-kol-saati",
     "description": "İsviçre işçiliğinin ve öncü inovasyonun ikonik bir sembolü olan Rado Diastar, sıra dışı olanı benimsemeye cesaret edenler için tasarlandı. Parlak sarı altın…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -85111,9 +85403,7 @@ const PRODUCTS = [
       "Referans Kodu": "R12171253",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r30025742",
@@ -85128,7 +85418,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r30025742-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r30025742-kol-saati",
     "description": "Klasik Centrix Quartz Diamonds, hem teknik hem de estetik açıdan yenilendi. Bu modifiye model, kenara kadar uzanan yuvarlak safir camı ve eğimli kristal…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -85142,9 +85432,7 @@ const PRODUCTS = [
       "Referans Kodu": "R30025742",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r48912763",
@@ -85159,7 +85447,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r48912763-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r48912763-kol-saati",
     "description": "Rado Florence Classic'in ahenkli tasarımı, koleksiyonun adını aldığı şehrin şık kubbelerini ve kulelerini anımsatır. 38 mm'lik saat, uçtan uca konik ve kavisli…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -85173,9 +85461,7 @@ const PRODUCTS = [
       "Referans Kodu": "R48912763",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r20254712",
@@ -85190,7 +85476,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-integral-r20254712-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-integral-r20254712-kol-saati",
     "description": "Çağdaş bir tasarım ikonunun en yeni versiyonu olan Integral, özgün stilini orta boy formatta sunarken minimalist estetiğini birbirini tamamlayan üç siyah…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -85204,9 +85490,7 @@ const PRODUCTS = [
       "Referans Kodu": "R20254712",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r48903153",
@@ -85221,7 +85505,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r48903153-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r48903153-kol-saati",
     "description": "İkonik Rado Florence ile İsviçre hassasiyetinin ve zarafetinin zamansız birlikteliğini keşfedin. 39 mm kasası, kadranla uyumlu siyah metalize kenara sahip uçtan…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -85235,9 +85519,7 @@ const PRODUCTS = [
       "Referans Kodu": "R48903153",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r32500323",
@@ -85252,7 +85534,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r32500323-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r32500323-kol-saati",
     "description": "RADO Rado Captain Cook R32500323 Kol Saati lüks kol saati. Safir cam, hassas mekanizma ve Belgin Kuyumculuk & Saat güvencesiyle.",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -85266,9 +85548,7 @@ const PRODUCTS = [
       "Referans Kodu": "R32500323",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r12171263",
@@ -85283,7 +85563,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-diastar-original-r12171263-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-diastar-original-r12171263-kol-saati",
     "description": "Rado DiaStar Original, markanın en ikonik saatlerinden biridir. 30 mm’lik bu versiyon, sarı altın PVD kaplamalı Ceramos™ bezel ve yansıma önleyici kaplamaya…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -85297,9 +85577,7 @@ const PRODUCTS = [
       "Referans Kodu": "R12171263",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r30023712",
@@ -85314,7 +85592,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r30023712-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r30023712-kol-saati",
     "description": "Klasik Centrix Quartz Diamonds, teknik ve estetik açıdan yenilendi. Model, kenara kadar uzanan yuvarlak safir camı ve eğimli kristal kenarla bütünleşen eğimli…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -85328,9 +85606,7 @@ const PRODUCTS = [
       "Referans Kodu": "R30023712",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r20250712",
@@ -85345,7 +85621,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r20250712-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r20250712-kol-saati",
     "description": "Rado Integral, doğuştan gelen stil anlayışına, mükemmel zevke ve abartısız zarafete olan düşkünlüğü yansıtan bir seçimdir. Model, imzası niteliğindeki siyah…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -85359,9 +85635,7 @@ const PRODUCTS = [
       "Referans Kodu": "R20250712",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r32283313",
@@ -85376,7 +85650,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-hyperchrome-r32283313-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-hyperchrome-r32283313-kol-saati",
     "description": "Kortlarda, direksiyon başında ya da at sırtında kullanılmak üzere tasarlanan bu saat, sportif gücünü dinamik tasarımı ve yüksek performanslı malzemeleriyle…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -85390,9 +85664,7 @@ const PRODUCTS = [
       "Referans Kodu": "R32283313",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r30008712",
@@ -85407,7 +85679,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r30008712-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r30008712-kol-saati",
     "description": "Klasik Centrix Automatic Diamonds, hem teknik hem de estetik açıdan yenilendi. Bu model, kenara kadar uzanan yuvarlak safir cama ve eğimli kristal kenarla…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -85421,9 +85693,7 @@ const PRODUCTS = [
       "Referans Kodu": "R30008712",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r27059712",
@@ -85438,7 +85708,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r27059712-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r27059712-kol-saati",
     "description": "Modern kullanıcılar için yeniden yorumlanıp tasarlanan, ancak Rado'nun güvenilir ve ayırt edici çizgisini koruyan True, elmasların ilave cazibesiyle göz…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -85452,9 +85722,7 @@ const PRODUCTS = [
       "Referans Kodu": "R27059712",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-rado-r48912723",
@@ -85469,7 +85737,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r48912723-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r48912723-kol-saati",
     "description": "Rado Florence Classic’in ahenkli tasarımı, koleksiyonun adını aldığı şehrin şık kubbelerini ve kulelerini anımsatır. Kaliteli kuvars mekanizmaları ve yenilikçi…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -85483,9 +85751,7 @@ const PRODUCTS = [
       "Referans Kodu": "R48912723",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-swatch-so29k703",
@@ -85529,7 +85795,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r27108112-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r27108112-kol-saati",
     "description": "Rado True Round Open Heart, seçkin tasarım ve malzeme ustalığının mükemmel uyumunu sunar. Bu olağanüstü saat, mekanizmanın kalbini gözler önüne seren büyüleyici…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -85543,9 +85809,7 @@ const PRODUCTS = [
       "Referans Kodu": "R27108112",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-swatch-gb743-s26",
@@ -85676,7 +85940,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/rado-r27047902-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/rado-r27047902-kol-saati",
     "description": "Rado True Square Thinline, sanatsal ifade ile İsviçre hassasiyetini uyumlu bir şekilde bir araya getirir. Güvenilir Quartz kalibre R420 mekanizma ile…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -85690,9 +85954,7 @@ const PRODUCTS = [
       "Referans Kodu": "R27047902",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Rado Koleksiyonu"
+    }
   },
   {
     "id": "saat-swatch-so29k702",
@@ -87012,7 +87274,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tag-heuer-caz1014ba0842-formula-1-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tag-heuer-caz1014ba0842-formula-1-kol-saati",
     "description": "Dünyanın en prestijli motor sporları pistinden ilham alan bu çok yönlü kuvars kronograf, mavi kadranı ve takimetre skalasıyla dikkat çeker. Model, çizilmez…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -87026,9 +87288,7 @@ const PRODUCTS = [
       "Referans Kodu": "CAZ1014.BA0842",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "TAG Heuer Koleksiyonu"
+    }
   },
   {
     "id": "saat-tag-heuer-waz1110-ba0875",
@@ -87043,7 +87303,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tag-heuer-waz1110ba0875-formula-1-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tag-heuer-waz1110ba0875-formula-1-kol-saati",
     "description": "Benzersiz kadran tasarımı ve gerçek motor sporları ruhunu yansıtan bu TAG Heuer Formula 1 Date modeli, 41 mm'lik fırçalanmış çelik kasaya sahiptir. Tek yönlü…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -87057,9 +87317,7 @@ const PRODUCTS = [
       "Referans Kodu": "WAZ1110.BA0875",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "TAG Heuer Koleksiyonu"
+    }
   },
   {
     "id": "saat-tag-heuer-caz101av-ba0842",
@@ -87074,7 +87332,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tag-heuer-caz201gba0876-kol-saati-tr-37205",
     "source_url": "https://www.konyalisaat.com.tr/tag-heuer-caz201gba0876-kol-saati-tr-37205",
     "description": "TAG Heuer Formula 1 kronograf, stil ve performansın mükemmel birleşimini sunarak her türlü zorluğa meydan okuyor. 43 mm'lik bu saat, cesur mavi güneş ışını…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -87088,9 +87346,7 @@ const PRODUCTS = [
       "Referans Kodu": "CAZ101AV.BA0842",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "TAG Heuer Koleksiyonu"
+    }
   },
   {
     "id": "saat-swatch-ss08k119",
@@ -87163,7 +87419,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tag-heuer-caz1010ba0842-formula-1-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tag-heuer-caz1010ba0842-formula-1-kol-saati",
     "description": "Öne çıkmaktan ve risk almaktan çekinmeyenler için tasarlanan bu spor saati, motor sporlarının en üst seviyelerinden ilham alan son teknoloji bir tasarıma…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -87177,9 +87433,7 @@ const PRODUCTS = [
       "Referans Kodu": "CAZ1010.BA0842",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "TAG Heuer Koleksiyonu"
+    }
   },
   {
     "id": "saat-swatch-yvs423gc",
@@ -87223,7 +87477,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tag-heuer-waz1010ba0842-formula-1-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tag-heuer-waz1010ba0842-formula-1-kol-saati",
     "description": "TAG Heuer'in eşsiz yarış mirasını ve baskı altında mükemmelliğe olan bağlılığını Formula 1'den ilham alarak yansıtan bu model, klasik üç ibreli bir erkek kuvars…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -87237,9 +87491,7 @@ const PRODUCTS = [
       "Referans Kodu": "WAZ1010.BA0842",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "TAG Heuer Koleksiyonu"
+    }
   },
   {
     "id": "saat-swatch-ss08k122",
@@ -87312,7 +87564,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tag-heuer-waz1110ft8023-formula-1-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tag-heuer-waz1110ft8023-formula-1-kol-saati",
     "description": "Sportif, şehirli ve cesur bir görünüme sahip bu erkek spor saati, siyah kadranı ve 41 mm fırçalanmış paslanmaz çelik kasasıyla dikkat çeker. Tek yönlü çelik…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -87326,9 +87578,7 @@ const PRODUCTS = [
       "Referans Kodu": "WAZ1110.FT8023",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "TAG Heuer Koleksiyonu"
+    }
   },
   {
     "id": "saat-swatch-yvs413",
@@ -87401,7 +87651,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tag-heuer-wbp1315ba0005-carrera-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tag-heuer-wbp1315ba0005-carrera-kol-saati",
     "description": "Kuzey ışıklarının göksel cazibesinden ilham alan TAG Heuer Aquaracer, zarafet ile dayanıklılığı bir araya getirir. Sağlam macera ruhunu şehirli sofistikasyonla…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -87415,9 +87665,7 @@ const PRODUCTS = [
       "Referans Kodu": "WBP1315.BA0005",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "TAG Heuer Koleksiyonu"
+    }
   },
   {
     "id": "saat-tag-heuer-war1311-ba0778",
@@ -87432,7 +87680,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tag-heuer-war1311ba0778-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tag-heuer-war1311ba0778-kol-saati",
     "description": "TAG HEUER TAG Heuer Carrera WAR1311.BA0778 Kol Saati lüks kol saati. Safir cam, hassas mekanizma ve Belgin Kuyumculuk & Saat güvencesiyle.",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -87446,9 +87694,7 @@ const PRODUCTS = [
       "Referans Kodu": "WAR1311.BA0778",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "TAG Heuer Koleksiyonu"
+    }
   },
   {
     "id": "saat-tag-heuer-caz101an-ba0842",
@@ -87463,7 +87709,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tag-heuer-caz101anba0842-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tag-heuer-caz101anba0842-kol-saati",
     "description": "Kırmızı ve çeliğin bir senfonisi olan bu TAG Heuer Formula 1 saati, yarışın cüretkar ruhunu yansıtıyor. Canlı güneş ışını fırçalanmış kırmızı kadranıyla dikkat…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -87477,9 +87723,7 @@ const PRODUCTS = [
       "Referans Kodu": "CAZ101AN.BA0842",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "TAG Heuer Koleksiyonu"
+    }
   },
   {
     "id": "saat-tag-heuer-wby1111-ba0042",
@@ -87494,7 +87738,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tag-heuer-wby1111ba0042-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tag-heuer-wby1111ba0042-kol-saati",
     "description": "TAG Heuer Formula 1 Solargraph, enerjik çekiciliğiyle dikkat çeken, dinamik bir saat sunuyor. Orijinal Series 1 modelini modern malzemeler ve canlı renklerle…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -87508,9 +87752,7 @@ const PRODUCTS = [
       "Referans Kodu": "WBY1111.BA0042",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "TAG Heuer Koleksiyonu"
+    }
   },
   {
     "id": "saat-tag-heuer-caz1010-ft8024",
@@ -87525,7 +87767,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tag-heuer-caz1010ft8024-formula-1-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tag-heuer-caz1010ft8024-formula-1-kol-saati",
     "description": "Motor sporlarından ilham alan bu sağlam model, hız, dayanıklılık ve cesaret arayanlar için özel olarak üretilmiştir. Yüksek hassasiyetli kuvars yarış…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -87539,9 +87781,7 @@ const PRODUCTS = [
       "Referans Kodu": "CAZ1010.FT8024",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "TAG Heuer Koleksiyonu"
+    }
   },
   {
     "id": "saat-tag-heuer-caz101y-ba0842",
@@ -87556,7 +87796,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tag-heuer-caz101yba0842-formula-1-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tag-heuer-caz101yba0842-formula-1-kol-saati",
     "description": "TAG HEUER TAG Heuer Formula 1 CAZ101Y.BA0842 Kol Saati lüks kol saati. Safir cam, hassas mekanizma ve Belgin Kuyumculuk & Saat güvencesiyle.",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -87570,9 +87810,7 @@ const PRODUCTS = [
       "Referans Kodu": "CAZ101Y.BA0842",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "TAG Heuer Koleksiyonu"
+    }
   },
   {
     "id": "saat-tag-heuer-wby1161-ft8086",
@@ -87587,7 +87825,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tag-heuer-wby1161ft8086-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tag-heuer-wby1161ft8086-kol-saati",
     "description": "TAG Heuer Formula 1 Solargraph, 38 mm'lik kırmızı TH-Polylight kasasıyla cesur ve göz alıcı bir görünüm sunar. Şehir maceraları için tasarlanan bu özel saat,…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -87601,9 +87839,7 @@ const PRODUCTS = [
       "Referans Kodu": "WBY1161.FT8086",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "TAG Heuer Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1504101103100",
@@ -87618,7 +87854,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1504101103100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1504101103100-kol-saati",
     "description": "Uzun süredir ortak olan Tissot ve Jungfrau, Alpler'den ve İsviçre işçiliğinden ilham alan özel saatlerle İsviçre mirasını kutluyor. Havanın inceldiği, ufkun…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -87632,9 +87868,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1504101103100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1256171705103",
@@ -87649,7 +87883,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-supersport-chrono-t1256171705103-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-supersport-chrono-t1256171705103-kol-saati",
     "description": "Tissot Supersport Chrono, erkeksi, dinamik ve fütüristik bir koleksiyon olup, herkese bileklerine en uygun modeli seçme imkanı sunan geniş bir referans…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -87663,9 +87897,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1256171705103",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1414173705102",
@@ -87680,7 +87912,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1414173705102-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1414173705102-kol-saati",
     "description": "Yarış bisikletlerinden ilham alan ikonik T-Race koleksiyonu, bu yıl yeni referanslarla genişliyor; bunlara özel T-Race Quartz Chronograph modeli de dahil.…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -87694,9 +87926,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1414173705102",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1494171104101",
@@ -87711,7 +87941,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t-race-38mm-t1494171104101-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t-race-38mm-t1494171104101-kol-saati",
     "description": "Tissot PR516 Chronograph Quartz, 1970'lerin sevilen bir tasarımının çağdaş bir yorumudur. Şık 40 mm paslanmaz çelik kasası ve dinamik kadranıyla hız ve…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -87725,9 +87955,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1494171104101",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1504101105100",
@@ -87742,7 +87970,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1504101105100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1504101105100-kol-saati",
     "description": "Çok satan koleksiyonlardan biri olan Tissot PR 100, adına sadık kalarak hassasiyet (\"P\" - precise), sağlamlık (\"R\" - robust) ve 10 bar (100 m) basınca kadar…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -87756,9 +87984,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1504101105100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1414173705100",
@@ -87773,7 +87999,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1414173705100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1414173705100-kol-saati",
     "description": "Bu yıl, sportif köklerine sadık kalarak daha saf ve zarif bir kadranla yeniden tasarlanan model sunuluyor. Bisiklet sporunda olduğu gibi, Tissot'ta tutku,…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -87787,9 +88013,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1414173705100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1256173705101",
@@ -87804,7 +88028,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-supersport-chrono-t1256173705101-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-supersport-chrono-t1256173705101-kol-saati",
     "description": "Tissot Supersport Chrono, geniş kadranı ve kronograf göstergesiyle modern sportifliğin mükemmel bir örneğidir. Supersport koleksiyonu, çeşitli renk ve yüzey…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -87818,9 +88042,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1256173705101",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1504101104100",
@@ -87835,7 +88057,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1504101104100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1504101104100-kol-saati",
     "description": "En çok satan Tissot PR 100, adına sadık kalarak hassas (P), sağlam (R) ve 10 bar (100 m) basınca kadar suya dayanıklılık sunar. 316L paslanmaz çelikten üretilen…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -87849,9 +88071,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1504101104100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1504101109100",
@@ -87866,7 +88086,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1504101109100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1504101109100-kol-saati",
     "description": "1980'lerin başında ortaya çıkışından bu yana, çok satan Tissot PR 100, adına sadık kalmıştır: hassas (P), sağlam (R) ve 10 bar (100 m) basınca kadar suya…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -87880,9 +88100,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1504101109100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1414172704100",
@@ -87897,7 +88115,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t-race-45mm-t1414172704100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t-race-45mm-t1414172704100-kol-saati",
     "description": "Yeni, daha zarif bir tasarıma ve aynı sportif köklere sahip olan Tissot, tıpkı bisiklet gibi, tutkunun yenilik ve stille buluştuğu bir markadır. Özgürlük, açık…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -87911,9 +88129,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1414172704100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1256173706700",
@@ -87928,7 +88144,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1256173706700-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1256173706700-kol-saati",
     "description": "NBA Supersport Special Edition, düşünceli detaylar ve sportif bir stil ile basketbolu onurlandırıyor. Çarpıcı 45 mm siyah PVD kaplamalı paslanmaz çelik kasa,…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -87942,9 +88158,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1256173706700",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1494171105100",
@@ -87959,7 +88173,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-pr516-chronograph-t1494171105100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-pr516-chronograph-t1494171105100-kol-saati",
     "description": "1970'lerin sevilen tasarımına çağdaş bir yorum getiren Tissot PR516 Chronograph Quartz, markanın zengin mirasıyla harmanlanan modern bir klasiktir. Şık 40 mm…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -87973,9 +88187,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1494171105100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1494173305100",
@@ -87990,7 +88202,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1494173305100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1494173305100-kol-saati",
     "description": "İlk olarak 1960'larda tanıtılan PR516, yüksek hızlı araba yarışları dünyasından ilham aldı. Tissot, PR516 serisini genişletirken, tutkuları kadar amansız bir…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88004,9 +88216,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1494173305100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1256173305100",
@@ -88021,7 +88231,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-supersport-chrono-t1256173305100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-supersport-chrono-t1256173305100-kol-saati",
     "description": "TISSOT Tissot Supersport Chrono T1256173305100 lüks kol saati. Safir cam, hassas mekanizma ve Belgin Kuyumculuk & Saat güvencesiyle.",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88035,9 +88245,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1256173305100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1256171105100",
@@ -88052,7 +88260,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-supersport-chrono-t1256171105100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-supersport-chrono-t1256171105100-kol-saati",
     "description": "TISSOT Tissot Supersport Chrono T1256171105100 lüks kol saati. Safir cam, hassas mekanizma ve Belgin Kuyumculuk & Saat güvencesiyle.",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88066,9 +88274,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1256171105100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tag-heuer-wby1163-ft8113",
@@ -88083,7 +88289,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tag-heuer-wby1163ft8113-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tag-heuer-wby1163ft8113-kol-saati",
     "description": "TAG Heuer Formula 1 Solargraph saat, cesur rengi hafif performansla birleştirerek dikkat çekiyor. Günlük kullanımda rahatlık sunarken dayanıklılığını koruyan bu…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88097,9 +88303,7 @@ const PRODUCTS = [
       "Referans Kodu": "WBY1163.FT8113",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "TAG Heuer Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1256173608100",
@@ -88114,7 +88318,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1256173608100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1256173608100-kol-saati",
     "description": "Supersport Chrono Basketball Edition, kaliteli İsviçre saatçiliğini ve tasarımını Tissot'nun basketbolla olan uzun ilişkisinden ilham alan yüksek enerjili…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88128,9 +88332,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1256173608100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1256173305101",
@@ -88145,7 +88347,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1256173305101-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1256173305101-kol-saati",
     "description": "Güçlü çizgileri ve keskin hatlarıyla 45.5 mm'lik kasası, Tissot Supersport Chrono'ya dinamik bir karakter kazandırır. Büyük SuperLuminova® kaplı indeksler,…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88159,9 +88361,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1256173305101",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1494172205100",
@@ -88176,7 +88376,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-pr516-chronograph-t1494172205100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-pr516-chronograph-t1494172205100-kol-saati",
     "description": "1970'lerin sevilen tasarımına çağdaş bir yorum getiren Tissot PR516 Chronograph Quartz, markanın zengin mirasıyla harmanlanan modern bir klasiktir. Şık 40 mm…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88190,9 +88390,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1494172205100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1564103305100",
@@ -88207,7 +88405,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1564103305100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1564103305100-kol-saati",
     "description": "Bu saat, özel anlar için stilinizi yükseltmek üzere üretilmiştir. Gün ışığı yansımalarına sahip geleneksel guilloché kadran, ışığı güzel bir şekilde yansıtarak…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88221,9 +88419,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1564103305100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1494172205101",
@@ -88238,7 +88434,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1494172205101-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1494172205101-kol-saati",
     "description": "İlk olarak 1960'larda tanıtılan PR516, yüksek hızlı araba yarışı dünyasından ilham aldı. Tissot, PR516 serisini genişletirken, tıpkı onu takan kahramanlar gibi…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88252,9 +88448,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1494172205101",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1414171104100",
@@ -88269,7 +88463,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1414171104100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1414171104100-kol-saati",
     "description": "Bu yıl, daha saf bir görünüm kazandıran ancak sportif köklerine saygı duyan, daha zarif bir kadrana sahip yeni bir tasarımla sunuluyor. Bisiklet sporunda olduğu…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88283,9 +88477,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1414171104100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1564102204100",
@@ -88300,7 +88492,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1564102204100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1564102204100-kol-saati",
     "description": "Bu saat, özel anlar için stilinizi yükseltmek üzere üretilmiştir. Gün ışığı yansımalarına sahip geleneksel guilloché kadran, ışığı güzel bir şekilde yansıtarak…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88314,9 +88506,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1564102204100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t9324084103300",
@@ -88331,7 +88521,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t9324084103300-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t9324084103300-kol-saati",
     "description": "Markanın İsviçre Jura Dağları'ndaki memleketinden adını alan Tissot Le Locle Powermatic 80, Tissot'nun zanaatkarlık geleneğini yansıtır. Bu özel model,…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88345,9 +88535,7 @@ const PRODUCTS = [
       "Referans Kodu": "T9324084103300",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1414171105101",
@@ -88362,7 +88550,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1414171105101-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1414171105101-kol-saati",
     "description": "Yeni tasarımı sayesinde Tissot T-Race Chronograph, sportif köklerini korurken daha zarif bir kadrana sahiptir. Tissot, motosiklet yarışlarıyla olan…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88376,9 +88564,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1414171105101",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1014172306100",
@@ -88393,7 +88579,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1014172306100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1014172306100-kol-saati",
     "description": "Tissot PR 100, her durum için sıkça takılmak üzere tasarlanmış klasik bir saattir. Koleksiyonun sevilen sade ve zarif kadranına sahiptir; sadeleştirilmiş…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88407,9 +88593,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1014172306100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1494171104100",
@@ -88424,7 +88608,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-pr516-chronograph-t1494171104100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-pr516-chronograph-t1494171104100-kol-saati",
     "description": "Tissot PR516 Chronograph Quartz, 1970'lerin sevilen tasarımına çağdaş bir yorum getiriyor. Şık 40 mm paslanmaz çelik kasası ve dinamik kadranıyla hız ve…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88438,9 +88622,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1494171104100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1504102204100",
@@ -88455,7 +88637,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1504102204100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1504102204100-kol-saati",
     "description": "En çok satan Tissot PR 100, adına sadık kalarak hassas (P), sağlam (R) ve 10 bar (100 m) basınca kadar suya dayanıklılık sunar. 316L paslanmaz çelikten üretilen…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88469,9 +88651,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1504102204100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1494171101100",
@@ -88486,7 +88666,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t-race-38mm-t1494171101100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t-race-38mm-t1494171101100-kol-saati",
     "description": "Tissot PR516 Chronograph Quartz, 1970'lerin sevilen bir tasarımının çağdaş bir yorumudur. Şık 40 mm paslanmaz çelik kasası ve dinamik kadranıyla hız ve…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88500,9 +88680,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1494171101100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1564102203100",
@@ -88517,7 +88695,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1564102203100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1564102203100-kol-saati",
     "description": "Bu saat, özel anlar için stilinizi yükseltmek üzere üretilmiştir. Gün ışığı yansımalarına sahip geleneksel guilloché kadran, ışığı güzel bir şekilde yansıtarak…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88531,9 +88709,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1564102203100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1256171104100",
@@ -88548,7 +88724,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1256171104100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1256171104100-kol-saati",
     "description": "Tissot Supersport Chrono, geniş kadranı ve kronograf göstergesiyle modern sportifliğin mükemmel bir örneğidir. Supersport koleksiyonu, çeşitli renk ve yüzey…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88562,9 +88738,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1256171104100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1504101601100",
@@ -88579,7 +88753,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-pr-100-40mm-t1504101601100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-pr-100-40mm-t1504101601100-kol-saati",
     "description": "1980'lerin başındaki lansmanından bu yana, en çok satan Tissot PR 100, adına sadık kalmıştır: Precise (\"P\"), Robust (\"R\") ve 10 bar (100 m) basınca kadar suya…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88593,9 +88767,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1504101601100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1256171605100",
@@ -88610,7 +88782,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-supersport-chrono-t1256171605100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-supersport-chrono-t1256171605100-kol-saati",
     "description": "Yepyeni bir koleksiyon olan Tissot Supersport Chrono, herkesin bileğine en uygun saati seçme imkanı sunan geniş bir referans yelpazesiyle erkeksi, dinamik ve…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88624,9 +88796,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1256171605100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1414173706100",
@@ -88641,7 +88811,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1414173706100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1414173706100-kol-saati",
     "description": "Yeni tasarımı sayesinde Tissot T-Race Chronograph, sportif köklerini inkar etmeden daha şık bir kadrana sahiptir. Tissot, motosikletlerin dinamizmini ve sporun…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88655,9 +88825,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1414173706100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1564101109100",
@@ -88672,7 +88840,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1564101109100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1564101109100-kol-saati",
     "description": "Bu saat, özel anlar için stilinizi yükseltmek üzere üretilmiştir. Gün ışığı yansımalarına sahip geleneksel guilloché kadran, ışığı güzel bir şekilde yansıtarak…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88686,9 +88854,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1564101109100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1504101108100",
@@ -88703,7 +88869,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-pr-100-quartz-t1504101108100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-pr-100-quartz-t1504101108100-kol-saati",
     "description": "1980'lerin başındaki lansmanından bu yana, en çok satan Tissot PR 100, adına sadık kalmıştır: Precise (\"P\"), Robust (\"R\") ve 10 bar (100 m) basınca kadar suya…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88717,9 +88883,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1504101108100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1504101135100",
@@ -88734,7 +88898,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-prx-t1504101135100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-prx-t1504101135100-kol-saati",
     "description": "1980'lerin başında doğuşundan bu yana, en çok satan Tissot PR 100, ismine sadık kalmıştır: hassas (P), sağlam (R) ve 10 bar (100 m) basınca kadar suya…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88748,9 +88912,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1504101135100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1414173706102",
@@ -88765,7 +88927,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1414173706102-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1414173706102-kol-saati",
     "description": "Yeni tasarımı sayesinde Tissot T-Race Chronograph, sportif köklerini korurken daha zarif bir kadrana sahiptir. Tissot, motosiklet yarışlarıyla olan…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88779,9 +88941,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1414173706102",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1504103305100",
@@ -88796,7 +88956,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-pr-100-quartz-t1504103305100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-pr-100-quartz-t1504103305100-kol-saati",
     "description": "1980'lerin başındaki lansmanından bu yana, en çok satan Tissot PR 100, adına sadık kalmıştır: Precise (\"P\"), Robust (\"R\") ve 10 bar (100 m) basınca kadar suya…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88810,9 +88970,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1504103305100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1256171604100",
@@ -88827,7 +88985,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-supersport-chrono-t1256171604100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-supersport-chrono-t1256171604100-kol-saati",
     "description": "Ragbinin, her kıtada, her kökenden ve milletten erkek ve kadınlar tarafından oynanan evrensel değerlerine bir övgü niteliğindeki SuperSport Chrono koleksiyonu,…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88841,9 +88999,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1256171604100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1414171701100",
@@ -88858,7 +89014,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1414171701100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1414171701100-kol-saati",
     "description": "Bu yıl, sportif köklerine saygı duyarken daha saf bir görünüm sunan zarif bir kadrana sahip yeni bir tasarımla karşımızda. Tıpkı bisiklet sporunda olduğu gibi,…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88872,9 +89028,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1414171701100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1564101104100",
@@ -88889,7 +89043,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1564101104100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1564101104100-kol-saati",
     "description": "Bu saat, özel anlar için stilinizi yükseltmek üzere üretilmiştir. Gün ışığı yansımalarına sahip geleneksel guilloché kadran, ışığı güzel bir şekilde yansıtarak…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88903,9 +89057,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1564101104100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1256172105100",
@@ -88920,7 +89072,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-supersport-chrono-t1256172105100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-supersport-chrono-t1256172105100-kol-saati",
     "description": "TISSOT Tissot Supersport Chrono T1256172105100 lüks kol saati. Safir cam, hassas mekanizma ve Belgin Kuyumculuk & Saat güvencesiyle.",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88934,9 +89086,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1256172105100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1504101104102",
@@ -88951,7 +89101,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1504101104102-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1504101104102-kol-saati",
     "description": "Uzun süredir ortaklıklarını sürdüren Tissot ve Jungfrau, Alpler'den ve İsviçre işçiliğinden ilham alan özel saatlerle İsviçre mirasını kutluyor. Havanın…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88965,9 +89115,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1504101104102",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1424621603200",
@@ -88982,7 +89130,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1424621603200-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1424621603200-kol-saati",
     "description": "Sofistike ama kolay giyilebilir Tissot Telemeter 1938, uzun bir spor zaman tutma geleneğinin sembolüdür. Vintage esintili kadranı, saatin zamansız estetiğini…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -88996,9 +89144,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1424621603200",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1256173605101",
@@ -89013,7 +89159,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-supersport-chrono-t1256173605101-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-supersport-chrono-t1256173605101-kol-saati",
     "description": "Yepyeni Tissot Supersport Chrono koleksiyonu, erkeksi, dinamik ve fütüristik özelliklere sahip olup, herkese bileklerine en uygun saati seçme imkanı sunan geniş…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -89027,9 +89173,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1256173605101",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1414173706101",
@@ -89044,7 +89188,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1414173706101-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1414173706101-kol-saati",
     "description": "Yeni tasarımı sayesinde Tissot T-Race Chronograph, sportif köklerini korurken daha zarif bir kadrana sahiptir. Tissot, motosiklet yarışlarıyla olan…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -89058,9 +89202,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1414173706101",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1504102201100",
@@ -89075,7 +89217,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-pr-100-quartz-t1504102201100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-pr-100-quartz-t1504102201100-kol-saati",
     "description": "1980'lerin başındaki lansmanından bu yana, en çok satan Tissot PR 100, adına sadık kalmıştır: Precise (\"P\"), Robust (\"R\") ve 10 bar (100 m) basınca kadar suya…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -89089,9 +89231,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1504102201100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1424621605200",
@@ -89106,7 +89246,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1424621605200-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1424621605200-kol-saati",
     "description": "Tissot Telemeter 1938'e ilk baktığınız andan itibaren, anlatacak zengin bir hikayesi olduğunu anlarsınız. Kronograf, telemetre ve takimetre ölçekleriyle…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -89120,9 +89260,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1424621605200",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1504101603100",
@@ -89137,7 +89275,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1504101603100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1504101603100-kol-saati",
     "description": "1980'lerin başında ortaya çıkışından bu yana, çok satan Tissot PR 100, adına sadık kalmıştır: hassas (P), sağlam (R) ve 10 bar (100 m) basınca kadar suya…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -89151,9 +89289,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1504101603100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1014173305100",
@@ -89168,7 +89304,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1014173305100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1014173305100-kol-saati",
     "description": "Tissot PR 100, her durum için sıkça takılmak üzere tasarlanmış klasik bir saattir. Koleksiyonun sevilen sade ve zarif kadranına sahiptir; sadeleştirilmiş…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -89182,9 +89318,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1014173305100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t0062072211600",
@@ -89199,7 +89333,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/le-locle-automatic-lady-t0062072211600-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/le-locle-automatic-lady-t0062072211600-kol-saati",
     "description": "Le Locle, başarının güvenilir bir sembolü gibi duruyor. Tissot'nun İsviçre Jura Dağları'ndaki evi ve mirasının yanı sıra, son derece popüler bir otomatik saat…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -89213,9 +89347,7 @@ const PRODUCTS = [
       "Referans Kodu": "T0062072211600",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-tissot-t1504101605100",
@@ -89230,7 +89362,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1504101605100-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1504101605100-kol-saati",
     "description": "1980'lerin başında doğuşundan bu yana, en çok satan Tissot PR 100, ismine sadık kalmıştır: hassas (P), sağlam (R) ve 10 bar (100 m) basınca kadar suya…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -89244,9 +89376,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1504101605100",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-casio-mtg-b2000yr-1adr",
@@ -89319,7 +89449,7 @@ const PRODUCTS = [
     "sourceUrl": "https://www.konyalisaat.com.tr/tissot-t1414173705101-kol-saati",
     "source_url": "https://www.konyalisaat.com.tr/tissot-t1414173705101-kol-saati",
     "description": "Yarış bisikletlerinden ilham alan ikonik T-Race koleksiyonu, bu yıl yeni referanslarla genişliyor; bunlara özel T-Race Quartz Chronograph modeli de dahil.…",
-    "category": "elit-saatler",
+    "category": "saat",
     "isWatch": true,
     "inStock": true,
     "margin_rate": 1.4,
@@ -89333,9 +89463,7 @@ const PRODUCTS = [
       "Referans Kodu": "T1414173705101",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi",
       "Teslimat": "İzmir Buca VIP Showroom veya Özel Zırhlı Kurye"
-    },
-    "isElite": true,
-    "subCategory": "Tissot Koleksiyonu"
+    }
   },
   {
     "id": "saat-casio-gmc-b2100ads-1adr",
@@ -89600,9 +89728,31 @@ const PRODUCTS = [
   }
 ];
 
+const WATCHES = PRODUCTS.filter(p => (p.category === 'saat' || p.category === 'watch') && !p.isPreOwned);
+const JEWELLERY = PRODUCTS.filter(p => (p.category === 'jewelry' || p.category === 'jewellery') && !p.isPreOwned);
+const PRE_OWNED_GOLD = PRODUCTS.filter(p => p.isPreOwned && p.isGold);
+
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { PRODUCTS, ELITE_WATCH_BRANDS };
-} else {
+  module.exports = {
+    PRODUCTS,
+    ELITE_WATCH_BRANDS,
+    WATCH_BRANDS,
+    JEWELRY_BRANDS,
+    WATCHES,
+    JEWELLERY,
+    PRE_OWNED_ITEMS,
+    PRE_OWNED_GOLD,
+    ALL_PRODUCTS: PRODUCTS
+  };
+}
+
+if (typeof window !== 'undefined') {
   window.PRODUCTS = PRODUCTS;
   window.ELITE_WATCH_BRANDS = ELITE_WATCH_BRANDS;
+  window.WATCH_BRANDS = WATCH_BRANDS;
+  window.JEWELRY_BRANDS = JEWELRY_BRANDS;
+  window.WATCHES = WATCHES;
+  window.JEWELLERY = JEWELLERY;
+  window.PRE_OWNED_ITEMS = PRE_OWNED_ITEMS;
+  window.PRE_OWNED_GOLD = PRE_OWNED_GOLD;
 }
