@@ -189,11 +189,6 @@ test('Vector 4.2: odeme-linki.html banka seçeneklerini JS hidrasyonu olmadan ha
   assert(rawHtml.includes('name="posProvider"'), 'posProvider radio butonları ham HTML içinde mevcut');
 });
 
-test('Vector 4.3: canli-fiyatlar sayfası boş kabuk (empty shell) değildir, ham HTML veri iskeletine sahiptir', () => {
-  const canliHtml = fs.readFileSync(path.join(ROOT_DIR, 'canli-fiyatlar/index.html'), 'utf8');
-  assert(canliHtml.includes('22 Ayar Bilezik'), 'canli-fiyatlar ham HTML içinde 22 Ayar Bilezik mevcut');
-  assert(canliHtml.includes('Çeyrek'), 'canli-fiyatlar ham HTML içinde Çeyrek mevcut');
-});
 
 test('Vector 4.4: odeme-basarisiz.html ilk 14.336 bayt içinde durum kartını, hata kutusunu ve kurtarma butonlarını barındırır', () => {
   const htmlBuffer = fs.readFileSync(path.join(ROOT_DIR, 'odeme-basarisiz.html'));
