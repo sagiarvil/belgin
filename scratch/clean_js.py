@@ -1,7 +1,5 @@
 import re
-
-# 1. js/router.js
-with open('js/router.js', 'r', encoding='utf-8') as f:
+with open('js/app.js', 'r', encoding='utf-8') as f:
     r_content = f.read()
 
 r_content = re.sub(r'\'canli-fiyatlar\': "Piyasa Bilgileri \| Belgin Saat",\n?', '', r_content)
@@ -21,29 +19,18 @@ r_content = re.sub(r'document\.body\.classList\.toggle\(\'page-is-canli-fiyatlar
 r_content = r_content.replace(' || page === \'canli-fiyatlar\'', '')
 r_content = r_content.replace('page === \'canli-fiyatlar\' ? \'/canli-fiyatlar/\' : (page === \'mucevherat\' ?', 'page === \'mucevherat\' ?')
 r_content = r_content.replace('(Örn: canli-fiyatlar sayfasındayken logoya tıklandı)', '')
-
-with open('js/router.js', 'w', encoding='utf-8') as f:
-    f.write(r_content)
-
-
-# 2. js/app.js
-with open('js/app.js', 'r', encoding='utf-8') as f:
-    a_content = f.read()
-
-a_content = re.sub(r'case \'canli-fiyatlar\':\n\s*this\.renderLivePricesPage\(\);\n\s*break;\n?', '', a_content)
-a_content = re.sub(r'if \(Router\.currentPage === \'canli-fiyatlar\'\) this\.renderLivePricesPage\(\);\n?', '', a_content)
-a_content = re.sub(r'renderLivePricesPage\(\) \{[\s\S]*?\},', '', a_content) # This might be risky, but let's try a safer one:
-# We know renderLivePricesPage is a method. We'll just leave it or remove it. It's safer to remove the whole method.
-a_content = re.sub(r'renderLivePricesPage\(\) \{[\s\S]*?const container = document\.getElementById\(\'page-canli-fiyatlar\'\);[\s\S]*?\}\s*\}\s*\},', '', a_content)
+r_content = re.sub(r'case \'canli-fiyatlar\':\n\s*this\.renderLivePricesPage\(\);\n\s*break;\n?', '', r_content)
+r_content = re.sub(r'if \(Router\.currentPage === \'canli-fiyatlar\'\) this\.renderLivePricesPage\(\);\n?', '', r_content)
+r_content = re.sub(r'renderLivePricesPage\(\) \{[\s\S]*?const container = document\.getElementById\(\'page-canli-fiyatlar\'\);[\s\S]*?\}\s*\}\s*\},', '', r_content)
 
 with open('js/app.js', 'w', encoding='utf-8') as f:
-    f.write(a_content)
-
-# 3. js/seo.js
-with open('js/seo.js', 'r', encoding='utf-8') as f:
+    f.write(r_content)
+    
+with open('js/router.js', 'r', encoding='utf-8') as f:
     s_content = f.read()
 
 s_content = re.sub(r'\} else if \(page === \'canli-fiyatlar\'\) \{[\s\S]*?\} else if', '} else if', s_content)
-with open('js/seo.js', 'w', encoding='utf-8') as f:
+
+with open('js/router.js', 'w', encoding='utf-8') as f:
     f.write(s_content)
 

@@ -1,10 +1,4 @@
-const ELITE_WATCH_BRANDS = [
-  "Rolex",
-  "TAG Heuer",
-  "Cartier",
-  "Rado",
-  "Tissot"
-];
+const ELITE_WATCH_BRANDS = ['Rolex', 'TAG Heuer', 'Cartier', 'Rado', 'Tissot'];
 
 const PRODUCTS = [
   {
