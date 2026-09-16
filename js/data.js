@@ -245,7 +245,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126610LN",
     "reference": "126610LN",
-    "price": 1269922,
+    "price": 1270295,
     "usdRefPrice": 14500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -285,7 +285,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5002,
@@ -293,7 +293,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126500LN",
     "reference": "126500LN",
-    "price": 2758795,
+    "price": 2759606,
     "usdRefPrice": 31500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -333,7 +333,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5003,
@@ -341,7 +341,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126710BLRO",
     "reference": "126710BLRO",
-    "price": 1882987,
+    "price": 1883541,
     "usdRefPrice": 21500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -381,7 +381,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5004,
@@ -389,7 +389,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126710BLNR",
     "reference": "126710BLNR",
-    "price": 1506390,
+    "price": 1506832,
     "usdRefPrice": 17200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -429,7 +429,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5005,
@@ -437,7 +437,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126720VTNR",
     "reference": "126720VTNR",
-    "price": 1620245,
+    "price": 1620721,
     "usdRefPrice": 18500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -477,7 +477,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5006,
@@ -485,7 +485,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126334-0002",
     "reference": "126334-0002",
-    "price": 1208615,
+    "price": 1208970,
     "usdRefPrice": 13800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -525,7 +525,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5007,
@@ -533,7 +533,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126334-0014",
     "reference": "126334-0014",
-    "price": 1243647,
+    "price": 1244013,
     "usdRefPrice": 14200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -573,7 +573,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5008,
@@ -581,7 +581,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126234-0050",
     "reference": "126234-0050",
-    "price": 1182341,
+    "price": 1182688,
     "usdRefPrice": 13500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -621,7 +621,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5009,
@@ -629,7 +629,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "228238-0006",
     "reference": "228238-0006",
-    "price": 3853555,
+    "price": 3854688,
     "usdRefPrice": 44000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -669,7 +669,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5010,
@@ -677,7 +677,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "228236-0010",
     "reference": "228236-0010",
-    "price": 6305818,
+    "price": 6307671,
     "usdRefPrice": 72000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -717,7 +717,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5011,
@@ -725,7 +725,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "124060",
     "reference": "124060",
-    "price": 1121034,
+    "price": 1121364,
     "usdRefPrice": 12800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -765,7 +765,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5012,
@@ -773,7 +773,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126610LV",
     "reference": "126610LV",
-    "price": 1418809,
+    "price": 1419226,
     "usdRefPrice": 16200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -813,7 +813,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5013,
@@ -821,7 +821,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126515LN",
     "reference": "126515LN",
-    "price": 3678394,
+    "price": 3679475,
     "usdRefPrice": 42000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -861,7 +861,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5014,
@@ -869,7 +869,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "124270",
     "reference": "124270",
-    "price": 779469,
+    "price": 779698,
     "usdRefPrice": 8900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -909,7 +909,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5015,
@@ -917,7 +917,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "226570-0001",
     "reference": "226570-0001",
-    "price": 1042212,
+    "price": 1042518,
     "usdRefPrice": 11900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -957,7 +957,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5016,
@@ -965,7 +965,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126655",
     "reference": "126655",
-    "price": 2583634,
+    "price": 2584393,
     "usdRefPrice": 29500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1005,7 +1005,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5017,
@@ -1013,7 +1013,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "226627",
     "reference": "226627",
-    "price": 2715005,
+    "price": 2715803,
     "usdRefPrice": 31000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1053,7 +1053,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5018,
@@ -1061,7 +1061,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "124300-0006",
     "reference": "124300-0006",
-    "price": 1357502,
+    "price": 1357901,
     "usdRefPrice": 15500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1101,7 +1101,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5019,
@@ -1109,7 +1109,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126000-0014",
     "reference": "126000-0014",
-    "price": 1471357,
+    "price": 1471790,
     "usdRefPrice": 16800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1149,7 +1149,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5020,
@@ -1157,7 +1157,7 @@ const PRODUCTS = [
     "brand": "Rolex",
     "ref": "126600",
     "reference": "126600",
-    "price": 1296196,
+    "price": 1296577,
     "usdRefPrice": 14800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1197,7 +1197,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5021,
@@ -1205,7 +1205,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "310.30.42.50.01.002",
     "reference": "310.30.42.50.01.002",
-    "price": 683130,
+    "price": 683331,
     "usdRefPrice": 7800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1245,7 +1245,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5022,
@@ -1253,7 +1253,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "210.30.42.20.01.001",
     "reference": "210.30.42.20.01.001",
-    "price": 490452,
+    "price": 490597,
     "usdRefPrice": 5600,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1293,7 +1293,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5023,
@@ -1301,7 +1301,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "210.90.42.20.01.001",
     "reference": "210.90.42.20.01.001",
-    "price": 823260,
+    "price": 823501,
     "usdRefPrice": 9400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1341,7 +1341,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5024,
@@ -1349,7 +1349,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "215.30.44.21.01.001",
     "reference": "215.30.44.21.01.001",
-    "price": 604308,
+    "price": 604485,
     "usdRefPrice": 6900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1388,7 +1388,7 @@ const PRODUCTS = [
       "Teslimat": "İzmir Buca VIP Showroom (Kimlik & Islak İmza İle) veya Zırhlı Sigortalı Kurye",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5025,
@@ -1396,7 +1396,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "220.10.41.21.10.001",
     "reference": "220.10.41.21.10.001",
-    "price": 543001,
+    "price": 543161,
     "usdRefPrice": 6200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1436,7 +1436,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5026,
@@ -1444,7 +1444,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "311.92.44.51.01.003",
     "reference": "311.92.44.51.01.003",
-    "price": 1094760,
+    "price": 1095082,
     "usdRefPrice": 12500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1482,7 +1482,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5027,
@@ -1490,7 +1490,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "131.20.41.21.02.001",
     "reference": "131.20.41.21.02.001",
-    "price": 945873,
+    "price": 946151,
     "usdRefPrice": 10800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1530,7 +1530,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5028,
@@ -1538,7 +1538,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "310.32.42.50.02.001",
     "reference": "310.32.42.50.02.001",
-    "price": 1532664,
+    "price": 1533114,
     "usdRefPrice": 17500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1577,7 +1577,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5029,
@@ -1585,7 +1585,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "220.10.43.22.03.001",
     "reference": "220.10.43.22.03.001",
-    "price": 805743,
+    "price": 805980,
     "usdRefPrice": 9200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1623,7 +1623,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5030,
@@ -1631,7 +1631,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "234.30.41.21.01.001",
     "reference": "234.30.41.21.01.001",
-    "price": 595549,
+    "price": 595724,
     "usdRefPrice": 6800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1669,7 +1669,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5031,
@@ -1677,7 +1677,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "329.30.43.51.02.001",
     "reference": "329.30.43.51.02.001",
-    "price": 770711,
+    "price": 770938,
     "usdRefPrice": 8800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1715,7 +1715,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5032,
@@ -1723,7 +1723,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "215.92.46.21.01.001",
     "reference": "215.92.46.21.01.001",
-    "price": 1129792,
+    "price": 1130124,
     "usdRefPrice": 12900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1760,7 +1760,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5033,
@@ -1768,7 +1768,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "435.53.40.21.02.001",
     "reference": "435.53.40.21.02.001",
-    "price": 1243647,
+    "price": 1244013,
     "usdRefPrice": 14200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1807,7 +1807,7 @@ const PRODUCTS = [
       "Kasa Materyali": "18K Masif Sarı Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5034,
@@ -1815,7 +1815,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "329.30.44.51.01.001",
     "reference": "329.30.44.51.01.001",
-    "price": 779469,
+    "price": 779698,
     "usdRefPrice": 8900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1853,7 +1853,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5035,
@@ -1861,7 +1861,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "220.10.38.20.03.003",
     "reference": "220.10.38.20.03.003",
-    "price": 560517,
+    "price": 560682,
     "usdRefPrice": 6400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1899,7 +1899,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5036,
@@ -1907,7 +1907,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "304.30.44.52.03.001",
     "reference": "304.30.44.52.03.001",
-    "price": 980905,
+    "price": 981193,
     "usdRefPrice": 11200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1945,7 +1945,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5037,
@@ -1953,7 +1953,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "210.20.44.51.01.001",
     "reference": "210.20.44.51.01.001",
-    "price": 1042212,
+    "price": 1042518,
     "usdRefPrice": 11900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -1990,7 +1990,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5038,
@@ -1998,7 +1998,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "131.53.39.20.02.001",
     "reference": "131.53.39.20.02.001",
-    "price": 1734100,
+    "price": 1734609,
     "usdRefPrice": 19800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2035,7 +2035,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5039,
@@ -2043,7 +2043,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "311.32.40.30.01.001",
     "reference": "311.32.40.30.01.001",
-    "price": 569275,
+    "price": 569443,
     "usdRefPrice": 6500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2081,7 +2081,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5040,
@@ -2089,7 +2089,7 @@ const PRODUCTS = [
     "brand": "Omega",
     "ref": "232.92.44.22.03.001",
     "reference": "232.92.44.22.03.001",
-    "price": 735679,
+    "price": 735895,
     "usdRefPrice": 8400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2126,7 +2126,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5041,
@@ -2134,7 +2134,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5711/1A-010",
     "reference": "5711/1A-010",
-    "price": 10334534,
+    "price": 10337572,
     "usdRefPrice": 118000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2172,7 +2172,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5042,
@@ -2180,7 +2180,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5712/1A-001",
     "reference": "5712/1A-001",
-    "price": 9195984,
+    "price": 9198687,
     "usdRefPrice": 105000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2218,7 +2218,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5043,
@@ -2226,7 +2226,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5726/1A-014",
     "reference": "5726/1A-014",
-    "price": 8582918,
+    "price": 8585441,
     "usdRefPrice": 98000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2263,7 +2263,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5044,
@@ -2271,7 +2271,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5980/1R-001",
     "reference": "5980/1R-001",
-    "price": 15326640,
+    "price": 15331145,
     "usdRefPrice": 175000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2308,7 +2308,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5045,
@@ -2316,7 +2316,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5167A-001",
     "reference": "5167A-001",
-    "price": 5079686,
+    "price": 5081179,
     "usdRefPrice": 58000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2354,7 +2354,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5046,
@@ -2362,7 +2362,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5168G-001",
     "reference": "5168G-001",
-    "price": 6305818,
+    "price": 6307671,
     "usdRefPrice": 72000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2399,7 +2399,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5047,
@@ -2407,7 +2407,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5968A-001",
     "reference": "5968A-001",
-    "price": 11210342,
+    "price": 11213637,
     "usdRefPrice": 128000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2445,7 +2445,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5048,
@@ -2453,7 +2453,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "6119G-001",
     "reference": "6119G-001",
-    "price": 2715005,
+    "price": 2715803,
     "usdRefPrice": 31000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2492,7 +2492,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5049,
@@ -2500,7 +2500,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5227J-001",
     "reference": "5227J-001",
-    "price": 3152909,
+    "price": 3153835,
     "usdRefPrice": 36000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2538,7 +2538,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5050,
@@ -2546,7 +2546,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5327G-001",
     "reference": "5327G-001",
-    "price": 8232595,
+    "price": 8235015,
     "usdRefPrice": 94000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2584,7 +2584,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5051,
@@ -2592,7 +2592,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5270P-001",
     "reference": "5270P-001",
-    "price": 17078256,
+    "price": 17083275,
     "usdRefPrice": 195000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2629,7 +2629,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5052,
@@ -2637,7 +2637,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5267/200R-001",
     "reference": "5267/200R-001",
-    "price": 5430010,
+    "price": 5431605,
     "usdRefPrice": 62000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2675,7 +2675,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5053,
@@ -2683,7 +2683,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5231G-001",
     "reference": "5231G-001",
-    "price": 9633888,
+    "price": 9636719,
     "usdRefPrice": 110000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2721,7 +2721,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5054,
@@ -2729,7 +2729,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5396G-011",
     "reference": "5396G-011",
-    "price": 4729363,
+    "price": 4730753,
     "usdRefPrice": 54000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2766,7 +2766,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5055,
@@ -2774,7 +2774,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5172G-001",
     "reference": "5172G-001",
-    "price": 6831302,
+    "price": 6833310,
     "usdRefPrice": 78000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2811,7 +2811,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5056,
@@ -2819,7 +2819,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5524G-001",
     "reference": "5524G-001",
-    "price": 4554202,
+    "price": 4555540,
     "usdRefPrice": 52000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2856,7 +2856,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5057,
@@ -2864,7 +2864,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5738R-001",
     "reference": "5738R-001",
-    "price": 3065328,
+    "price": 3066229,
     "usdRefPrice": 35000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2902,7 +2902,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5058,
@@ -2910,7 +2910,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "5078R-001",
     "reference": "5078R-001",
-    "price": 34156512,
+    "price": 34166551,
     "usdRefPrice": 390000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2947,7 +2947,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5059,
@@ -2955,7 +2955,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "7118/1200R-001",
     "reference": "7118/1200R-001",
-    "price": 6568560,
+    "price": 6570491,
     "usdRefPrice": 75000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -2993,7 +2993,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5060,
@@ -3001,7 +3001,7 @@ const PRODUCTS = [
     "brand": "Patek Philippe",
     "ref": "7300/1200A-001",
     "reference": "7300/1200A-001",
-    "price": 2496053,
+    "price": 2496786,
     "usdRefPrice": 28500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3039,7 +3039,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5061,
@@ -3047,7 +3047,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "16202ST.OO.1240ST.01",
     "reference": "16202ST.OO.1240ST.01",
-    "price": 6831302,
+    "price": 6833310,
     "usdRefPrice": 78000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3085,7 +3085,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5062,
@@ -3093,7 +3093,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "15510ST.OO.1320ST.07",
     "reference": "15510ST.OO.1320ST.07",
-    "price": 4028717,
+    "price": 4029901,
     "usdRefPrice": 46000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3131,7 +3131,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5063,
@@ -3139,7 +3139,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26240ST.OO.1320ST.05",
     "reference": "26240ST.OO.1320ST.05",
-    "price": 5430010,
+    "price": 5431605,
     "usdRefPrice": 62000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3176,7 +3176,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5064,
@@ -3184,7 +3184,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "15407ST.OO.1220ST.01",
     "reference": "15407ST.OO.1220ST.01",
-    "price": 10947600,
+    "price": 10950818,
     "usdRefPrice": 125000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3221,7 +3221,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5065,
@@ -3229,7 +3229,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26420TI.OO.A027CA.01",
     "reference": "26420TI.OO.A027CA.01",
-    "price": 3678394,
+    "price": 3679475,
     "usdRefPrice": 42000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3266,7 +3266,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5066,
@@ -3274,7 +3274,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "15720ST.OO.A052CA.01",
     "reference": "15720ST.OO.A052CA.01",
-    "price": 2802586,
+    "price": 2803409,
     "usdRefPrice": 32000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3311,7 +3311,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5067,
@@ -3319,7 +3319,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "15510OR.OO.1320OR.04",
     "reference": "15510OR.OO.1320OR.04",
-    "price": 7707110,
+    "price": 7709376,
     "usdRefPrice": 88000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3356,7 +3356,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5068,
@@ -3364,7 +3364,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26715ST.OO.1356ST.02",
     "reference": "26715ST.OO.1356ST.02",
-    "price": 4203878,
+    "price": 4205114,
     "usdRefPrice": 48000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3401,7 +3401,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5069,
@@ -3409,7 +3409,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26574ST.OO.1220ST.03",
     "reference": "26574ST.OO.1220ST.03",
-    "price": 10071792,
+    "price": 10074752,
     "usdRefPrice": 115000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3446,7 +3446,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5070,
@@ -3454,7 +3454,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26405CE.OO.A002CA.02",
     "reference": "26405CE.OO.A002CA.02",
-    "price": 4291459,
+    "price": 4292720,
     "usdRefPrice": 49000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3491,7 +3491,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5071,
@@ -3499,7 +3499,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26393NB.OO.A002KB.01",
     "reference": "26393NB.OO.A002KB.01",
-    "price": 3415651,
+    "price": 3416655,
     "usdRefPrice": 39000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3536,7 +3536,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5072,
@@ -3544,7 +3544,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "15454BC.GG.1259BC.01",
     "reference": "15454BC.GG.1259BC.01",
-    "price": 5955494,
+    "price": 5957245,
     "usdRefPrice": 68000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3581,7 +3581,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5073,
@@ -3589,7 +3589,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26730ST.OO.1320ST.01",
     "reference": "26730ST.OO.1320ST.01",
-    "price": 17078256,
+    "price": 17083275,
     "usdRefPrice": 195000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3627,7 +3627,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5074,
@@ -3635,7 +3635,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "77600TI.OO.A343CA.01",
     "reference": "77600TI.OO.A343CA.01",
-    "price": 3328070,
+    "price": 3329049,
     "usdRefPrice": 38000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3673,7 +3673,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5075,
@@ -3681,7 +3681,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "77350CE.OO.1266CE.01",
     "reference": "77350CE.OO.1266CE.01",
-    "price": 4729363,
+    "price": 4730753,
     "usdRefPrice": 54000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3718,7 +3718,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5076,
@@ -3726,7 +3726,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "15710ST.OO.A010CA.01",
     "reference": "15710ST.OO.A010CA.01",
-    "price": 2452262,
+    "price": 2452983,
     "usdRefPrice": 28000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3763,7 +3763,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5077,
@@ -3771,7 +3771,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26331ST.OO.1220ST.03",
     "reference": "26331ST.OO.1220ST.03",
-    "price": 4904525,
+    "price": 4905966,
     "usdRefPrice": 56000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3809,7 +3809,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5078,
@@ -3817,7 +3817,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "15210CR.OO.A009KB.01",
     "reference": "15210CR.OO.A009KB.01",
-    "price": 2890166,
+    "price": 2891016,
     "usdRefPrice": 33000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3854,7 +3854,7 @@ const PRODUCTS = [
       "Su Geçirmezlik": "100 Metre / 10 ATM",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5079,
@@ -3862,7 +3862,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "26589IO.OO.D002CA.01",
     "reference": "26589IO.OO.D002CA.01",
-    "price": 21457296,
+    "price": 21463602,
     "usdRefPrice": 245000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3901,7 +3901,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5080,
@@ -3909,7 +3909,7 @@ const PRODUCTS = [
     "brand": "Audemars Piguet",
     "ref": "67651OR.ZZ.1261OR.01",
     "reference": "67651OR.ZZ.1261OR.01",
-    "price": 3941136,
+    "price": 3942294,
     "usdRefPrice": 45000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3947,7 +3947,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5081,
@@ -3955,7 +3955,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB0138211B1A1",
     "reference": "AB0138211B1A1",
-    "price": 832018,
+    "price": 832262,
     "usdRefPrice": 9500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -3994,7 +3994,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5082,
@@ -4002,7 +4002,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB0137211C1P1",
     "reference": "AB0137211C1P1",
-    "price": 805743,
+    "price": 805980,
     "usdRefPrice": 9200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4040,7 +4040,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5083,
@@ -4048,7 +4048,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB0134101G1A1",
     "reference": "AB0134101G1A1",
-    "price": 779469,
+    "price": 779698,
     "usdRefPrice": 8900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4086,7 +4086,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5084,
@@ -4094,7 +4094,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB2010121L1A1",
     "reference": "AB2010121L1A1",
-    "price": 472936,
+    "price": 473075,
     "usdRefPrice": 5400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4132,7 +4132,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5085,
@@ -4140,7 +4140,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "A17376211B1S1",
     "reference": "A17376211B1S1",
-    "price": 429146,
+    "price": 429272,
     "usdRefPrice": 4900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4178,7 +4178,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5086,
@@ -4186,7 +4186,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB0145371L1P1",
     "reference": "AB0145371L1P1",
-    "price": 796985,
+    "price": 797220,
     "usdRefPrice": 9100,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4224,7 +4224,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5087,
@@ -4232,7 +4232,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "V13317101L1X1",
     "reference": "V13317101L1X1",
-    "price": 543001,
+    "price": 543161,
     "usdRefPrice": 6200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4270,7 +4270,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Siyah DLC Kaplama Titanyum",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5088,
@@ -4278,7 +4278,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB01763A1C1X1",
     "reference": "AB01763A1C1X1",
-    "price": 718163,
+    "price": 718374,
     "usdRefPrice": 8200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4316,7 +4316,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5089,
@@ -4324,7 +4324,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB01762A1L1X1",
     "reference": "AB01762A1L1X1",
-    "price": 718163,
+    "price": 718374,
     "usdRefPrice": 8200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4362,7 +4362,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5090,
@@ -4370,7 +4370,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB01761A1K1X1",
     "reference": "AB01761A1K1X1",
-    "price": 718163,
+    "price": 718374,
     "usdRefPrice": 8200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4408,7 +4408,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5091,
@@ -4416,7 +4416,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "RB0139211G1P1",
     "reference": "RB0139211G1P1",
-    "price": 1707826,
+    "price": 1708328,
     "usdRefPrice": 19500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4455,7 +4455,7 @@ const PRODUCTS = [
       "Kasa Materyali": "18K Kırmızı Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5092,
@@ -4463,7 +4463,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "A32398101B1A1",
     "reference": "A32398101B1A1",
-    "price": 516727,
+    "price": 516879,
     "usdRefPrice": 5900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4500,7 +4500,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5093,
@@ -4508,7 +4508,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "A10340161C1X1",
     "reference": "A10340161C1X1",
-    "price": 420388,
+    "price": 420511,
     "usdRefPrice": 4800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4546,7 +4546,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5094,
@@ -4554,7 +4554,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "A17328101B1A1",
     "reference": "A17328101B1A1",
-    "price": 402872,
+    "price": 402990,
     "usdRefPrice": 4600,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4591,7 +4591,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5095,
@@ -4599,7 +4599,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "X82310A41B1S1",
     "reference": "X82310A41B1S1",
-    "price": 297775,
+    "price": 297862,
     "usdRefPrice": 3400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4637,7 +4637,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Breitlight® Karbon Alaşım",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5096,
@@ -4645,7 +4645,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB0930D41L1P1",
     "reference": "AB0930D41L1P1",
-    "price": 753195,
+    "price": 753416,
     "usdRefPrice": 8600,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4683,7 +4683,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5097,
@@ -4691,7 +4691,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "AB0136251B1A2",
     "reference": "AB0136251B1A2",
-    "price": 945873,
+    "price": 946151,
     "usdRefPrice": 10800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4729,7 +4729,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5098,
@@ -4737,7 +4737,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "A17395161C1A1",
     "reference": "A17395161C1A1",
-    "price": 429146,
+    "price": 429272,
     "usdRefPrice": 4900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4775,7 +4775,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5099,
@@ -4783,7 +4783,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "A17377211A1S1",
     "reference": "A17377211A1S1",
-    "price": 411630,
+    "price": 411751,
     "usdRefPrice": 4700,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4820,7 +4820,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5100,
@@ -4828,7 +4828,7 @@ const PRODUCTS = [
     "brand": "Breitling",
     "ref": "EB70101A1O1E1",
     "reference": "EB70101A1O1E1",
-    "price": 429146,
+    "price": 429272,
     "usdRefPrice": 4900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4866,7 +4866,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5101,
@@ -4874,7 +4874,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSSA0018",
     "reference": "WSSA0018",
-    "price": 691888,
+    "price": 692092,
     "usdRefPrice": 7900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4912,7 +4912,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5102,
@@ -4920,7 +4920,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSSA0029",
     "reference": "WSSA0029",
-    "price": 630582,
+    "price": 630767,
     "usdRefPrice": 7200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -4957,7 +4957,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5103,
@@ -4965,7 +4965,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WHSA0008",
     "reference": "WHSA0008",
-    "price": 2977747,
+    "price": 2978622,
     "usdRefPrice": 34000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5004,7 +5004,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Masif 18K Pembe Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5104,
@@ -5012,7 +5012,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSTA0041",
     "reference": "WSTA0041",
-    "price": 306533,
+    "price": 306623,
     "usdRefPrice": 3500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5050,7 +5050,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5105,
@@ -5058,7 +5058,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSTA0040",
     "reference": "WSTA0040",
-    "price": 429146,
+    "price": 429272,
     "usdRefPrice": 4900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5095,7 +5095,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5106,
@@ -5103,7 +5103,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WGTA0010",
     "reference": "WGTA0010",
-    "price": 980905,
+    "price": 981193,
     "usdRefPrice": 11200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5141,7 +5141,7 @@ const PRODUCTS = [
       "Kasa Materyali": "18K Masif Sarı Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5107,
@@ -5149,7 +5149,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSTA0065",
     "reference": "WSTA0065",
-    "price": 420388,
+    "price": 420511,
     "usdRefPrice": 4800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5187,7 +5187,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5108,
@@ -5195,7 +5195,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSBB0025",
     "reference": "WSBB0025",
-    "price": 648098,
+    "price": 648288,
     "usdRefPrice": 7400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5233,7 +5233,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5109,
@@ -5241,7 +5241,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "W3BB0024",
     "reference": "W3BB0024",
-    "price": 1121034,
+    "price": 1121364,
     "usdRefPrice": 12800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5279,7 +5279,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5110,
@@ -5287,7 +5287,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "W2PN0007",
     "reference": "W2PN0007",
-    "price": 840776,
+    "price": 841023,
     "usdRefPrice": 9600,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5325,7 +5325,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5111,
@@ -5333,7 +5333,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSPA0009",
     "reference": "WSPA0009",
-    "price": 639340,
+    "price": 639528,
     "usdRefPrice": 7300,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5371,7 +5371,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5112,
@@ -5379,7 +5379,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WGSA0032",
     "reference": "WGSA0032",
-    "price": 1182341,
+    "price": 1182688,
     "usdRefPrice": 13500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5417,7 +5417,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Masif 18K Gül Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5113,
@@ -5425,7 +5425,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSTA0083",
     "reference": "WSTA0083",
-    "price": 586791,
+    "price": 586964,
     "usdRefPrice": 6700,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5462,7 +5462,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5114,
@@ -5470,7 +5470,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSRN0032",
     "reference": "WSRN0032",
-    "price": 385356,
+    "price": 385469,
     "usdRefPrice": 4400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5508,7 +5508,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5115,
@@ -5516,7 +5516,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSSA0017",
     "reference": "WSSA0017",
-    "price": 858292,
+    "price": 858544,
     "usdRefPrice": 9800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5554,7 +5554,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5116,
@@ -5562,7 +5562,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WGBB0030",
     "reference": "WGBB0030",
-    "price": 1296196,
+    "price": 1296577,
     "usdRefPrice": 14800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5600,7 +5600,7 @@ const PRODUCTS = [
       "Kasa Materyali": "18K Pembe Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5117,
@@ -5608,7 +5608,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WGBA0007",
     "reference": "WGBA0007",
-    "price": 1042212,
+    "price": 1042518,
     "usdRefPrice": 11900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5646,7 +5646,7 @@ const PRODUCTS = [
       "Kasa Materyali": "18K Sarı Altın (Kusursuz Oval Form)",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5118,
@@ -5654,7 +5654,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "W2SA0016",
     "reference": "W2SA0016",
-    "price": 998421,
+    "price": 998715,
     "usdRefPrice": 11400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5692,7 +5692,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5119,
@@ -5700,7 +5700,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WGTA0057",
     "reference": "WGTA0057",
-    "price": 2452262,
+    "price": 2452983,
     "usdRefPrice": 28000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5738,7 +5738,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5120,
@@ -5746,7 +5746,7 @@ const PRODUCTS = [
     "brand": "Cartier",
     "ref": "WSPA0027",
     "reference": "WSPA0027",
-    "price": 779469,
+    "price": 779698,
     "usdRefPrice": 8900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5784,7 +5784,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5121,
@@ -5792,7 +5792,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79030N-0001",
     "reference": "M79030N-0001",
-    "price": 359081,
+    "price": 359187,
     "usdRefPrice": 4100,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5830,7 +5830,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5122,
@@ -5838,7 +5838,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79000N-0001",
     "reference": "M79000N-0001",
-    "price": 345944,
+    "price": 346046,
     "usdRefPrice": 3950,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5875,7 +5875,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5123,
@@ -5883,7 +5883,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79470-0001",
     "reference": "M79470-0001",
-    "price": 376597,
+    "price": 376708,
     "usdRefPrice": 4300,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5920,7 +5920,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5124,
@@ -5928,7 +5928,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M25407N-0001",
     "reference": "M25407N-0001",
-    "price": 411630,
+    "price": 411751,
     "usdRefPrice": 4700,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -5966,7 +5966,7 @@ const PRODUCTS = [
       "Kasa Materyali": "2. Sınıf Saten Titanyum",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5125,
@@ -5974,7 +5974,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M25707B/24-0001",
     "reference": "M25707B/24-0001",
-    "price": 367839,
+    "price": 367947,
     "usdRefPrice": 4200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6012,7 +6012,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Sabit Askılı Monoblok Titanyum",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5126,
@@ -6020,7 +6020,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79360N-0002",
     "reference": "M79360N-0002",
-    "price": 481694,
+    "price": 481836,
     "usdRefPrice": 5500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6057,7 +6057,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5127,
@@ -6065,7 +6065,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79830RB-0001",
     "reference": "M79830RB-0001",
-    "price": 385356,
+    "price": 385469,
     "usdRefPrice": 4400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6103,7 +6103,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5128,
@@ -6111,7 +6111,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M25600TN-0001",
     "reference": "M25600TN-0001",
-    "price": 429146,
+    "price": 429272,
     "usdRefPrice": 4900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6148,7 +6148,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5129,
@@ -6156,7 +6156,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M28603-0003",
     "reference": "M28603-0003",
-    "price": 332807,
+    "price": 332905,
     "usdRefPrice": 3800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6194,7 +6194,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5130,
@@ -6202,7 +6202,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79210CNU-0001",
     "reference": "M79210CNU-0001",
-    "price": 446662,
+    "price": 446793,
     "usdRefPrice": 5100,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6240,7 +6240,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5131,
@@ -6248,7 +6248,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79010SG-0001",
     "reference": "M79010SG-0001",
-    "price": 402872,
+    "price": 402990,
     "usdRefPrice": 4600,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6286,7 +6286,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Masif 925 Ayar Gümüş",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5132,
@@ -6294,7 +6294,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79018V-0001",
     "reference": "M79018V-0001",
-    "price": 1558938,
+    "price": 1559396,
     "usdRefPrice": 17800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6332,7 +6332,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Masif 18K Sarı Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5133,
@@ -6340,7 +6340,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M28300-0007",
     "reference": "M28300-0007",
-    "price": 280259,
+    "price": 280341,
     "usdRefPrice": 3200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6378,7 +6378,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5134,
@@ -6386,7 +6386,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M7941A1A0RU-0003",
     "reference": "M7941A1A0RU-0003",
-    "price": 398493,
+    "price": 398610,
     "usdRefPrice": 4550,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6424,7 +6424,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5135,
@@ -6432,7 +6432,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79950-0001",
     "reference": "M79950-0001",
-    "price": 289017,
+    "price": 289102,
     "usdRefPrice": 3300,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6470,7 +6470,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5136,
@@ -6478,7 +6478,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M25807KN-0001",
     "reference": "M25807KN-0001",
-    "price": 464178,
+    "price": 464315,
     "usdRefPrice": 5300,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6516,7 +6516,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Mat Siyah Karbon Kompozit & Titanyum Bezel",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5137,
@@ -6524,7 +6524,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79360N-0019",
     "reference": "M79360N-0019",
-    "price": 691888,
+    "price": 692092,
     "usdRefPrice": 7900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6562,7 +6562,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5138,
@@ -6570,7 +6570,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M91551-0001",
     "reference": "M91551-0001",
-    "price": 297775,
+    "price": 297862,
     "usdRefPrice": 3400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6608,7 +6608,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5139,
@@ -6616,7 +6616,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M79250BA-0001",
     "reference": "M79250BA-0001",
-    "price": 394114,
+    "price": 394229,
     "usdRefPrice": 4500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6654,7 +6654,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Alüminyum Bronz Alaşım",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5140,
@@ -6662,7 +6662,7 @@ const PRODUCTS = [
     "brand": "Tudor",
     "ref": "M35500-0004",
     "reference": "M35500-0004",
-    "price": 253984,
+    "price": 254059,
     "usdRefPrice": 2900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6700,7 +6700,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5141,
@@ -6708,7 +6708,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CBS2210.FC6534",
     "reference": "CBS2210.FC6534",
-    "price": 586791,
+    "price": 586964,
     "usdRefPrice": 6700,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6745,7 +6745,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5142,
@@ -6753,7 +6753,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CAW211P.FC6356",
     "reference": "CAW211P.FC6356",
-    "price": 709404,
+    "price": 709613,
     "usdRefPrice": 8100,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6790,7 +6790,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5143,
@@ -6798,7 +6798,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CBS2011.FC6529",
     "reference": "CBS2011.FC6529",
-    "price": 823260,
+    "price": 823501,
     "usdRefPrice": 9400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6835,7 +6835,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5144,
@@ -6843,7 +6843,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "WBP5110.BA0013",
     "reference": "WBP5110.BA0013",
-    "price": 332807,
+    "price": 332905,
     "usdRefPrice": 3800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6880,7 +6880,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5145,
@@ -6888,7 +6888,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "WBN2313.BA0001",
     "reference": "WBN2313.BA0001",
-    "price": 297775,
+    "price": 297862,
     "usdRefPrice": 3400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6926,7 +6926,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5146,
@@ -6934,7 +6934,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CBL2181.FC6515",
     "reference": "CBL2181.FC6515",
-    "price": 867050,
+    "price": 867305,
     "usdRefPrice": 9900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -6972,7 +6972,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5147,
@@ -6980,7 +6980,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "WBP1180.BF0000",
     "reference": "WBP1180.BF0000",
-    "price": 280259,
+    "price": 280341,
     "usdRefPrice": 3200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7018,7 +7018,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Kumlanmış 2. Sınıf Titanyum",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5148,
@@ -7026,7 +7026,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CBS5010.FC6543",
     "reference": "CBS5010.FC6543",
-    "price": 2145730,
+    "price": 2146360,
     "usdRefPrice": 24500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7064,7 +7064,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5149,
@@ -7072,7 +7072,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CBE511A.FC8279",
     "reference": "CBE511A.FC8279",
-    "price": 621824,
+    "price": 622006,
     "usdRefPrice": 7100,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7109,7 +7109,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5150,
@@ -7117,7 +7117,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CAZ201D.BA0876",
     "reference": "CAZ201D.BA0876",
-    "price": 359081,
+    "price": 359187,
     "usdRefPrice": 4100,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7155,7 +7155,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5151,
@@ -7163,7 +7163,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "WBN201A.BA0640",
     "reference": "WBN201A.BA0640",
-    "price": 324049,
+    "price": 324144,
     "usdRefPrice": 3700,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7200,7 +7200,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5152,
@@ -7208,7 +7208,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CBL2182.FT6235",
     "reference": "CBL2182.FT6235",
-    "price": 980905,
+    "price": 981193,
     "usdRefPrice": 11200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7246,7 +7246,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Kumlanmış Titanyum & Mavi İskelet Kadran",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5153,
@@ -7254,7 +7254,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "WBP2010.BA0632",
     "reference": "WBP2010.BA0632",
-    "price": 367839,
+    "price": 367947,
     "usdRefPrice": 4200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7292,7 +7292,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5154,
@@ -7300,7 +7300,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CBN2A10.BA0643",
     "reference": "CBN2A10.BA0643",
-    "price": 560517,
+    "price": 560682,
     "usdRefPrice": 6400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7338,7 +7338,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5155,
@@ -7346,7 +7346,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CAZ101N.FC8243",
     "reference": "CAZ101N.FC8243",
-    "price": 245226,
+    "price": 245298,
     "usdRefPrice": 2800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7384,7 +7384,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5156,
@@ -7392,7 +7392,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "WBN2111.BA0639",
     "reference": "WBN2111.BA0639",
-    "price": 280259,
+    "price": 280341,
     "usdRefPrice": 3200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7429,7 +7429,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5157,
@@ -7437,7 +7437,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "WBP2111.BA0627",
     "reference": "WBP2111.BA0627",
-    "price": 258363,
+    "price": 258439,
     "usdRefPrice": 2950,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7475,7 +7475,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5158,
@@ -7483,7 +7483,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CAW218C.FC6548",
     "reference": "CAW218C.FC6548",
-    "price": 840776,
+    "price": 841023,
     "usdRefPrice": 9600,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7521,7 +7521,7 @@ const PRODUCTS = [
       "Kasa Materyali": "2. Sınıf Titanyum",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5159,
@@ -7529,7 +7529,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "CBS2213.FN6535",
     "reference": "CBS2213.FN6535",
-    "price": 608687,
+    "price": 608865,
     "usdRefPrice": 6950,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7566,7 +7566,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5160,
@@ -7574,7 +7574,7 @@ const PRODUCTS = [
     "brand": "TAG Heuer",
     "ref": "SBR8A80.BT6261",
     "reference": "SBR8A80.BT6261",
-    "price": 227710,
+    "price": 227777,
     "usdRefPrice": 2600,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7612,7 +7612,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Siyah DLC Titanyum & Seramik Bezel",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5161,
@@ -7620,7 +7620,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW329301",
     "reference": "IW329301",
-    "price": 779469,
+    "price": 779698,
     "usdRefPrice": 8900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7657,7 +7657,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5162,
@@ -7665,7 +7665,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW371606",
     "reference": "IW371606",
-    "price": 735679,
+    "price": 735895,
     "usdRefPrice": 8400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7702,7 +7702,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5163,
@@ -7710,7 +7710,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW388104",
     "reference": "IW388104",
-    "price": 718163,
+    "price": 718374,
     "usdRefPrice": 8200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7748,7 +7748,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5164,
@@ -7756,7 +7756,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW500704",
     "reference": "IW500704",
-    "price": 1156067,
+    "price": 1156406,
     "usdRefPrice": 13200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7794,7 +7794,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5165,
@@ -7802,7 +7802,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW328203",
     "reference": "IW328203",
-    "price": 490452,
+    "price": 490597,
     "usdRefPrice": 5600,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7840,7 +7840,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5166,
@@ -7848,7 +7848,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW503605",
     "reference": "IW503605",
-    "price": 2890166,
+    "price": 2891016,
     "usdRefPrice": 33000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7886,7 +7886,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5167,
@@ -7894,7 +7894,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW389101",
     "reference": "IW389101",
-    "price": 867050,
+    "price": 867305,
     "usdRefPrice": 9900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7932,7 +7932,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Mat Siyah Zirkonyum Oksit Seramik",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5168,
@@ -7940,7 +7940,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW389404",
     "reference": "IW389404",
-    "price": 1086002,
+    "price": 1086321,
     "usdRefPrice": 12400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -7978,7 +7978,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Pantone® 'Oceana' Mavi Seramik",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5169,
@@ -7986,7 +7986,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW503302",
     "reference": "IW503302",
-    "price": 3678394,
+    "price": 3679475,
     "usdRefPrice": 42000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8024,7 +8024,7 @@ const PRODUCTS = [
       "Kasa Materyali": "18K Armor Gold®",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5170,
@@ -8032,7 +8032,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW356501",
     "reference": "IW356501",
-    "price": 472936,
+    "price": 473075,
     "usdRefPrice": 5400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8070,7 +8070,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5171,
@@ -8078,7 +8078,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW391405",
     "reference": "IW391405",
-    "price": 586791,
+    "price": 586964,
     "usdRefPrice": 6700,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8116,7 +8116,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5172,
@@ -8124,7 +8124,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW395601",
     "reference": "IW395601",
-    "price": 1620245,
+    "price": 1620721,
     "usdRefPrice": 18500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8162,7 +8162,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5173,
@@ -8170,7 +8170,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW328903",
     "reference": "IW328903",
-    "price": 1121034,
+    "price": 1121364,
     "usdRefPrice": 12800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8208,7 +8208,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5174,
@@ -8216,7 +8216,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW329001",
     "reference": "IW329001",
-    "price": 534243,
+    "price": 534400,
     "usdRefPrice": 6100,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8253,7 +8253,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5175,
@@ -8261,7 +8261,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW377714",
     "reference": "IW377714",
-    "price": 604308,
+    "price": 604485,
     "usdRefPrice": 6900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8299,7 +8299,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5176,
@@ -8307,7 +8307,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW390701",
     "reference": "IW390701",
-    "price": 1208615,
+    "price": 1208970,
     "usdRefPrice": 13800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8344,7 +8344,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5177,
@@ -8352,7 +8352,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW501015",
     "reference": "IW501015",
-    "price": 1445083,
+    "price": 1445508,
     "usdRefPrice": 16500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8390,7 +8390,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lake Tahoe Kar Beyazı Seramik",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5178,
@@ -8398,7 +8398,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW344602",
     "reference": "IW344602",
-    "price": 2977747,
+    "price": 2978622,
     "usdRefPrice": 34000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8436,7 +8436,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Masif 18K 5N Pembe Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5179,
@@ -8444,7 +8444,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW324007",
     "reference": "IW324007",
-    "price": 411630,
+    "price": 411751,
     "usdRefPrice": 4700,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8482,7 +8482,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5180,
@@ -8490,7 +8490,7 @@ const PRODUCTS = [
     "brand": "IWC Schaffhausen",
     "ref": "IW510301",
     "reference": "IW510301",
-    "price": 1269922,
+    "price": 1270295,
     "usdRefPrice": 14500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8528,7 +8528,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5181,
@@ -8536,7 +8536,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01312",
     "reference": "PAM01312",
-    "price": 770711,
+    "price": 770938,
     "usdRefPrice": 8800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8574,7 +8574,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5182,
@@ -8582,7 +8582,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01314",
     "reference": "PAM01314",
-    "price": 770711,
+    "price": 770938,
     "usdRefPrice": 8800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8620,7 +8620,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5183,
@@ -8628,7 +8628,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01218",
     "reference": "PAM01218",
-    "price": 867050,
+    "price": 867305,
     "usdRefPrice": 9900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8666,7 +8666,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Paslanmaz Çelik & Sol Taraf Butonlar",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5184,
@@ -8674,7 +8674,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM00799",
     "reference": "PAM00799",
-    "price": 1418809,
+    "price": 1419226,
     "usdRefPrice": 16200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8712,7 +8712,7 @@ const PRODUCTS = [
       "Kasa Materyali": "BMG-TECH™ Dökme Metalik Cam Alaşım",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5185,
@@ -8720,7 +8720,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM02683",
     "reference": "PAM02683",
-    "price": 954631,
+    "price": 954911,
     "usdRefPrice": 10900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8758,7 +8758,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5186,
@@ -8766,7 +8766,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01348",
     "reference": "PAM01348",
-    "price": 648098,
+    "price": 648288,
     "usdRefPrice": 7400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8804,7 +8804,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Brunito eSteel™ Eskitilmiş Vintage Çelik",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5187,
@@ -8812,7 +8812,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01026",
     "reference": "PAM01026",
-    "price": 1471357,
+    "price": 1471790,
     "usdRefPrice": 16800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8850,7 +8850,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Masif 18K Goldtech™ Kırmızı Altın",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5188,
@@ -8858,7 +8858,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01249",
     "reference": "PAM01249",
-    "price": 630582,
+    "price": 630767,
     "usdRefPrice": 7200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8896,7 +8896,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5189,
@@ -8904,7 +8904,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01616",
     "reference": "PAM01616",
-    "price": 1734100,
+    "price": 1734609,
     "usdRefPrice": 19800,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8942,7 +8942,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Karbon Fiber Kompozit Carbotech™",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5190,
@@ -8950,7 +8950,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01361",
     "reference": "PAM01361",
-    "price": 910840,
+    "price": 911108,
     "usdRefPrice": 10400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -8987,7 +8987,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5191,
@@ -8995,7 +8995,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01347",
     "reference": "PAM01347",
-    "price": 867050,
+    "price": 867305,
     "usdRefPrice": 9900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -9033,7 +9033,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5192,
@@ -9041,7 +9041,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01157",
     "reference": "PAM01157",
-    "price": 805743,
+    "price": 805980,
     "usdRefPrice": 9200,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -9079,7 +9079,7 @@ const PRODUCTS = [
       "Kasa Materyali": "eSteel™ (%95 Geri Dönüştürülmüş Çelik)",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5193,
@@ -9087,7 +9087,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01229",
     "reference": "PAM01229",
-    "price": 840776,
+    "price": 841023,
     "usdRefPrice": 9600,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -9124,7 +9124,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5194,
@@ -9132,7 +9132,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01181",
     "reference": "PAM01181",
-    "price": 1882987,
+    "price": 1883541,
     "usdRefPrice": 21500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -9170,7 +9170,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Masif 18K Goldtech™ & 24K Masif Altın Ay Diski",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5195,
@@ -9178,7 +9178,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM00424",
     "reference": "PAM00424",
-    "price": 735679,
+    "price": 735895,
     "usdRefPrice": 8400,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -9216,7 +9216,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5196,
@@ -9224,7 +9224,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM00982",
     "reference": "PAM00982",
-    "price": 1742858,
+    "price": 1743370,
     "usdRefPrice": 19900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -9261,7 +9261,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5197,
@@ -9269,7 +9269,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM00767",
     "reference": "PAM00767",
-    "price": 12961958,
+    "price": 12965768,
     "usdRefPrice": 148000,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -9307,7 +9307,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5198,
@@ -9315,7 +9315,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM00514",
     "reference": "PAM00514",
-    "price": 691888,
+    "price": 692092,
     "usdRefPrice": 7900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -9353,7 +9353,7 @@ const PRODUCTS = [
       "Kasa Materyali": "1940 Masif Kulaklı Paslanmaz Çelik",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5199,
@@ -9361,7 +9361,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM01372",
     "reference": "PAM01372",
-    "price": 779469,
+    "price": 779698,
     "usdRefPrice": 8900,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -9399,7 +9399,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Lüks Çelik / Değerli Metal",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 5200,
@@ -9407,7 +9407,7 @@ const PRODUCTS = [
     "brand": "Panerai",
     "ref": "PAM00979",
     "reference": "PAM00979",
-    "price": 1795406,
+    "price": 1795934,
     "usdRefPrice": 20500,
     "marketMarkup": "+80%",
     "category": "elit-saatler",
@@ -9445,7 +9445,7 @@ const PRODUCTS = [
       "Kasa Materyali": "Carbotech™ & Donanma Komando Gravürü",
       "Garanti": "2 Yıl Resmi Distribütör & Belgin Saat Güvencesi"
     },
-    "usdSellingRate": 48.656
+    "usdSellingRate": 48.6703
   },
   {
     "id": 1000,
@@ -66461,7 +66461,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 11100,
+    "price": 10850,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66498,7 +66498,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 11300,
+    "price": 11050,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66535,7 +66535,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 11338,
+    "price": 11113,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66572,7 +66572,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 22200,
+    "price": 21700,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66609,7 +66609,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 22600,
+    "price": 22100,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66646,7 +66646,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 22600,
+    "price": 22100,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66683,7 +66683,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 22600,
+    "price": 22100,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66720,7 +66720,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 22600,
+    "price": 22100,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66757,7 +66757,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 22600,
+    "price": 22100,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66794,7 +66794,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 22675,
+    "price": 22225,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66831,7 +66831,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 44400,
+    "price": 43400,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66868,7 +66868,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 45200,
+    "price": 44200,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66904,7 +66904,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 45200,
+    "price": 44200,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66941,7 +66941,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 45200,
+    "price": 44200,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -66978,7 +66978,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 45350,
+    "price": 44450,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67015,7 +67015,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 45350,
+    "price": 44450,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67052,7 +67052,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 45200,
+    "price": 44200,
     "metal": "24 Ayar Saf Altın (995/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67089,7 +67089,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 45200,
+    "price": 44200,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67126,7 +67126,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 111000,
+    "price": 108500,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67163,7 +67163,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 113000,
+    "price": 110500,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67200,7 +67200,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 113375,
+    "price": 111125,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67237,7 +67237,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 135600,
+    "price": 132600,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67274,7 +67274,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 222000,
+    "price": 217000,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67310,7 +67310,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 226000,
+    "price": 221000,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67347,7 +67347,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 226000,
+    "price": 221000,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67384,7 +67384,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 226750,
+    "price": 222250,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67421,7 +67421,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 226750,
+    "price": 222250,
     "metal": "22 Ayar T.C. Darphane Altını",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67458,7 +67458,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 28500,
+    "price": 28000,
     "metal": "14 Ayar Altın (585/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67495,7 +67495,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 28500,
+    "price": 28000,
     "metal": "14 Ayar Altın (585/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67532,7 +67532,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 28500,
+    "price": 28000,
     "metal": "14 Ayar Altın (585/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67569,7 +67569,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 32050,
+    "price": 31400,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67606,7 +67606,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 39900,
+    "price": 39200,
     "metal": "14 Ayar Altın (585/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67643,7 +67643,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 44870,
+    "price": 43960,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67680,7 +67680,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 57000,
+    "price": 56000,
     "metal": "14 Ayar Altın (585/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67717,7 +67717,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 57000,
+    "price": 56000,
     "metal": "14 Ayar Altın (585/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67754,7 +67754,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 57000,
+    "price": 56000,
     "metal": "14 Ayar Altın (585/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67791,7 +67791,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 57000,
+    "price": 56000,
     "metal": "14 Ayar Altın (585/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67828,7 +67828,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 64100,
+    "price": 62800,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67865,7 +67865,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 64100,
+    "price": 62800,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67902,7 +67902,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 64100,
+    "price": 62800,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67939,7 +67939,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 64100,
+    "price": 62800,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -67976,7 +67976,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 64100,
+    "price": 62800,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -68013,7 +68013,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 128200,
+    "price": 125600,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -68049,7 +68049,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 128200,
+    "price": 125600,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -68086,7 +68086,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 128200,
+    "price": 125600,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -68123,7 +68123,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 128200,
+    "price": 125600,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -68160,7 +68160,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 128200,
+    "price": 125600,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -68197,7 +68197,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 128200,
+    "price": 125600,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -68234,7 +68234,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 128200,
+    "price": 125600,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -68271,7 +68271,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 160250,
+    "price": 157000,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -68308,7 +68308,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 192300,
+    "price": 188400,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -68345,7 +68345,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 192300,
+    "price": 188400,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -68382,7 +68382,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 192300,
+    "price": 188400,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -68419,7 +68419,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 192300,
+    "price": 188400,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -68456,7 +68456,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 192300,
+    "price": 188400,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -68493,7 +68493,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 192300,
+    "price": 188400,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -68530,7 +68530,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 192300,
+    "price": 188400,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -68567,7 +68567,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 192300,
+    "price": 188400,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -68604,7 +68604,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 320500,
+    "price": 314000,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -68640,7 +68640,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 320500,
+    "price": 314000,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
@@ -68677,7 +68677,7 @@ const PRODUCTS = [
     "conditionBadge": "Sıfır",
     "isPreOwned": false,
     "isGold": true,
-    "price": 320500,
+    "price": 314000,
     "metal": "22 Ayar Altın (916/1000)",
     "year": "2026",
     "boxPapers": "Orijinal Sertifika & Belgin Kuyumculuk Faturası",
