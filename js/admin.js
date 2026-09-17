@@ -1804,8 +1804,9 @@ const AdminApp = {
       const pdfName = document.getElementById('declarationPdfName');
       const btnDel = document.getElementById('btnDeleteDeclaration');
 
-      const decl = (order && (order.declarationDoc || order.identityDoc)) ? {
-        docUrl: order.declarationDoc || order.identityDoc,
+      const actualDocUrl = (order && (order.declarationDoc || order.identityDoc)) === '#STORED#' ? (storedDecl ? storedDecl.docUrl : null) : (order ? (order.declarationDoc || order.identityDoc) : null);
+      const decl = actualDocUrl ? {
+        docUrl: actualDocUrl,
         docType: order.declarationType || 'image/jpeg',
         docName: order.declarationName || 'Müşteri Kimlik / Beyan Belgesi',
         time: order.declarationTime || new Date(createdAt).toLocaleString('tr-TR'),
@@ -1924,16 +1925,16 @@ const AdminApp = {
 
       // 1. Online Sipariş objesini güncelle
       if (order) {
-        order.declarationDoc = dataUrl;
-        order.identityDoc = dataUrl;
+        order.declarationDoc = dataUrl.length > 200000 ? '#STORED#' : dataUrl;
+        order.identityDoc = dataUrl.length > 200000 ? '#STORED#' : dataUrl;
         order.declarationType = file.type || 'image/jpeg';
         order.declarationName = file.name;
       }
 
       // 2. Mağaza Faturasını güncelle
       if (storeInv) {
-        storeInv.declarationDoc = dataUrl;
-        storeInv.identityDoc = dataUrl;
+        storeInv.declarationDoc = dataUrl.length > 200000 ? '#STORED#' : dataUrl;
+        storeInv.identityDoc = dataUrl.length > 200000 ? '#STORED#' : dataUrl;
         storeInv.declarationType = file.type || 'image/jpeg';
         storeInv.declarationName = file.name;
         try {
@@ -7456,32 +7457,8 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
 
   // Eski 1MB+ Base64 kalıntılarını otomatik tespit edip küçülten koruma
   autoSanitizeBloatedLocalInvoices() {
-    try {
-      const stored = localStorage.getItem('belgin_store_invoices');
-      if (!stored) return;
-      let list = JSON.parse(stored);
-      let changed = false;
-      if (Array.isArray(list)) {
-        list = list.map(inv => {
-          if (!inv) return inv;
-          // Eğer 300KB üzeri eski ham Base64 görsel varsa küçültülmüş işaret koy veya temizle
-          if (typeof inv.identityDoc === 'string' && inv.identityDoc.length > 400000) {
-            delete inv.identityDoc;
-            changed = true;
-          }
-          if (typeof inv.declarationDoc === 'string' && inv.declarationDoc.length > 400000) {
-            delete inv.declarationDoc;
-            changed = true;
-          }
-          return inv;
-        });
-        if (changed) {
-          localStorage.setItem('belgin_store_invoices', JSON.stringify(list));
-          this.storeInvoices = list;
-          if (typeof this.filterStoreTable === 'function') this.filterStoreTable();
-        }
-      }
-    } catch (_) {}
+    // KİMLİK SİLME KORUMASI: Artık büyük dosyalar silinmeyecek.
+    // Kullanıcıların yüklediği kimlik belgeleri (PDF veya yüksek çözünürlüklü) KORUNACAK.
   },
 
   currentStoreIdentityDoc: null,
@@ -7747,7 +7724,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
         status: 'SUCCESS',
         createdAt: new Date().toISOString(),
         invoiceDate: new Date().toISOString().slice(0, 10),
-        identityDoc: this.currentStoreIdentityDoc || null,
+        identityDoc: (this.currentStoreIdentityDoc && this.currentStoreIdentityDoc.length > 200000) ? '#STORED#' : (this.currentStoreIdentityDoc || null),
         declarationDoc: this.currentStoreIdentityDoc || null
       };
 
@@ -7800,8 +7777,11 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
 
     this.handleStoreCustIdentityInput();
 
-    if (inv.declarationDoc || inv.identityDoc) {
-      this.setStoreIdentityDoc(inv.declarationDoc || inv.identityDoc, 'Mevcut Kimlik Belgesi');
+    const storedDecl = AdminApp.getStoredDeclaration(inv.orderId || inv.id);
+    const actualDoc = inv.declarationDoc || inv.identityDoc || (storedDecl ? storedDecl.docUrl : null);
+    
+    if (actualDoc && actualDoc !== '#STORED#') {
+      this.setStoreIdentityDoc(actualDoc, 'Mevcut Kimlik Belgesi');
     } else {
       this.removeStoreIdentityDoc(false);
     }
@@ -9474,7 +9454,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       posProvider: payMethod === 'KREDI_KARTI' ? posProvider : null,
       provider: payMethod === 'KREDI_KARTI' ? posProvider : (payMethod === 'HAVALE_EFT' ? bankName : 'NAKIT'),
       declarationDoc: this.currentStoreIdentityDoc || existingDoc?.declarationDoc || null,
-      identityDoc: this.currentStoreIdentityDoc || existingDoc?.identityDoc || null,
+      identityDoc: (this.currentStoreIdentityDoc && this.currentStoreIdentityDoc.length > 200000) ? '#STORED#' : (this.currentStoreIdentityDoc || existingDoc?.identityDoc || null),
       items: validItems,
       totalAmount: totalAmount,
       total: totalAmount,
