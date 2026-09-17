@@ -6,6 +6,8 @@
 
 const axios = require('axios');
 const qs = require('qs');
+const admin = require('firebase-admin');
+const getDb = () => admin.apps.length ? admin.firestore() : null;
 const crypto = require('crypto');
 
 const GIB_PROD_URL = 'https://earsivportal.efatura.gov.tr/earsiv-services';
@@ -552,6 +554,18 @@ class EarsivPortalService {
    * Aktif / Önbellekteki GİB Tokenını Getir (Mükerrer Login Engelleme)
    */
   async getActiveToken() {
+    try {
+      const doc = await getDb().collection('settings').doc('gib_session').get();
+      if (doc.exists) {
+        const data = doc.data();
+        if (data.token && data.expiresAt > Date.now()) {
+          cachedSessionToken = data.token;
+          cachedCookie = data.cookie;
+          cachedTokenExpiresAt = data.expiresAt;
+        }
+      }
+    } catch(e) { console.error('Token read err', e); }
+    
     const now = Date.now();
     if (cachedSessionToken && cachedTokenExpiresAt > now) {
       return { token: cachedSessionToken, cookie: cachedCookie };
@@ -613,6 +627,13 @@ class EarsivPortalService {
         cachedSessionToken = res.data.token;
         cachedCookie = cookieStr;
         cachedTokenExpiresAt = Date.now() + 20 * 60 * 1000;
+        try {
+          await getDb().collection('settings').doc('gib_session').set({
+            token: cachedSessionToken,
+            cookie: cachedCookie,
+            expiresAt: cachedTokenExpiresAt
+          });
+        } catch(e) { console.error('Token save err', e); }
         return {
           success: true,
           token: res.data.token,
@@ -634,6 +655,7 @@ class EarsivPortalService {
       cachedSessionToken = null;
       cachedCookie = '';
       cachedTokenExpiresAt = 0;
+      try { await getDb().collection('settings').doc('gib_session').delete(); } catch(e){}
       console.error('[EarsivService] Login Hatası:', err.message);
       throw err;
     }
@@ -643,10 +665,21 @@ class EarsivPortalService {
    * GİB e-Arşiv Portalından Güvenli Çıkış Yap (Oturumu Kapat)
    */
   async logout(token = cachedSessionToken, cookie = cachedCookie) {
+    if (!token) {
+      try {
+        const doc = await getDb().collection('settings').doc('gib_session').get();
+        if (doc.exists && doc.data().token) {
+          token = doc.data().token;
+          cookie = doc.data().cookie;
+        }
+      } catch(e) {}
+    }
+    
     if (!token || token.startsWith('MOCK_GIB_TOKEN')) {
       cachedSessionToken = null;
       cachedCookie = '';
       cachedTokenExpiresAt = 0;
+      try { await getDb().collection('settings').doc('gib_session').delete(); } catch(e){}
       return { success: true };
     }
 
@@ -688,11 +721,13 @@ class EarsivPortalService {
       cachedSessionToken = null;
       cachedCookie = '';
       cachedTokenExpiresAt = 0;
+      try { await getDb().collection('settings').doc('gib_session').delete(); } catch(e){}
       return { success: true };
     } catch (err) {
       cachedSessionToken = null;
       cachedCookie = '';
       cachedTokenExpiresAt = 0;
+      try { await getDb().collection('settings').doc('gib_session').delete(); } catch(e){}
       return { success: false, error: err.message };
     }
   }

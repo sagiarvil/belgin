@@ -13,7 +13,6 @@ const PRODUCT_CATALOG = require('./product-catalog.json');
 const paymentService = require('./payment/payment-service');
 const mailer = require('./mailer');
 const notifier = require('./notifier');
-const { EarsivPortalService, calculateJewelryInvoiceBreakdown, cleanInvoiceProductName, getCleanInvoiceItemsSummary } = require('./earsiv-service');
 const gibLogoSvg = require('./gib_logo_svg');
 
 let LEGAL_MANIFEST = { schema: 'missing', documents: {} };
@@ -24,6 +23,7 @@ try {
 }
 
 if (!admin.apps.length) admin.initializeApp();
+const { EarsivPortalService, calculateJewelryInvoiceBreakdown, cleanInvoiceProductName, getCleanInvoiceItemsSummary } = require('./earsiv-service');
 const db = admin.firestore();
 
 const HIGH_VALUE_SECURE_DELIVERY_THRESHOLD = 12000;
@@ -65,7 +65,7 @@ const corsMiddleware = cors({
     return callback(null, allowedOrigins().has(origin));
   },
   methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type'],
+  allowedHeaders: ['Content-Type', 'x-admin-key'],
   maxAge: 3600,
 });
 
@@ -1509,7 +1509,7 @@ async function handleInvoiceRequest(req, res) {
         order.unvan = order.companyName;
       }
 
-      const authData = await earsiv.login();
+      const authData = await earsiv.getActiveToken();
       activeToken = authData.token;
       activeCookie = authData.cookie || '';
 
@@ -1615,7 +1615,7 @@ async function handleInvoiceRequest(req, res) {
     let activeCookie = '';
     try {
       const { orderId } = req.body || {};
-      const authData = await earsiv.login();
+      const authData = await earsiv.getActiveToken();
       activeToken = authData.token;
       activeCookie = authData.cookie || '';
 
@@ -1663,7 +1663,7 @@ async function handleInvoiceRequest(req, res) {
       const { ref: orderRef, data: orderData } = target;
       const oid = orderData.gibSessionOid || req.body.oid || '';
 
-      const authData = await earsiv.login();
+      const authData = await earsiv.getActiveToken();
       activeToken = authData.token;
       activeCookie = authData.cookie || '';
 
@@ -1786,7 +1786,7 @@ async function handleInvoiceRequest(req, res) {
       const targetUuid = reqUuid || orderData.invoiceUuid || '';
       const invoiceNumber = orderData.invoiceNumber || '';
 
-      const authData = await earsiv.login();
+      const authData = await earsiv.getActiveToken();
       activeToken = authData.token;
       activeCookie = authData.cookie || '';
 
@@ -1848,7 +1848,7 @@ async function handleInvoiceRequest(req, res) {
         return res.status(400).json({ success: false, message: 'orderIds dizisi zorunludur.' });
       }
 
-      const authData = await earsiv.login();
+      const authData = await earsiv.getActiveToken();
       activeToken = authData.token;
       activeCookie = authData.cookie || '';
 
@@ -1903,7 +1903,7 @@ async function handleInvoiceRequest(req, res) {
         return res.status(400).json({ success: false, message: 'items ve smsCode zorunludur.' });
       }
 
-      const authData = await earsiv.login();
+      const authData = await earsiv.getActiveToken();
       activeToken = authData.token;
       activeCookie = authData.cookie || '';
 
@@ -2100,7 +2100,7 @@ async function handleInvoiceRequest(req, res) {
       // 2. GİB portalından gerçek resmi HTML ve Belge No canlı senkronize et
       if (targetUuid) {
         try {
-          const authData = await earsiv.login();
+          const authData = await earsiv.getActiveToken();
           activeToken = authData.token;
           activeCookie = authData.cookie || '';
 
@@ -3107,3 +3107,44 @@ exports.cancelVipLink = functions
       return res.status(500).json({ success: false, message: err.message });
     }
   }));
+
+
+// -------------------------------------------------------------
+// ASYNC GİB INVOICE JOB PROCESSOR (Bypasses 60s HTTP limit)
+// -------------------------------------------------------------
+exports.processInvoiceJob = functions.region('us-central1')
+  .runWith({ timeoutSeconds: 300, memory: '512MB' })
+  .firestore.document('invoice_jobs/{jobId}')
+  .onCreate(async (snap, context) => {
+    const data = snap.data();
+    if (data.action !== 'CREATE_DRAFT') return;
+    
+    try {
+      const earsiv = new EarsivPortalService();
+      // login cache is handled inside earsiv-service if we use getActiveToken, but here we just call createDraftInvoice
+      const draftResult = await earsiv.createDraftInvoice(data.orderDocData, data.invoiceDate, data.orderData);
+      const smsResult = await earsiv.sendSmsOtp(draftResult.invoiceUuid, draftResult.oid, data.orderData?.customerPhone || '');
+      
+      await snap.ref.update({
+        status: 'SUCCESS',
+        invoiceUuid: draftResult.invoiceUuid,
+        oid: draftResult.oid,
+        smsResult: smsResult,
+        updatedAt: admin.firestore.FieldValue.serverTimestamp()
+      });
+      
+      // Update order doc as well
+      const orderRef = db.collection('orders').doc(data.orderId);
+      await orderRef.update({
+        invoiceUuid: draftResult.invoiceUuid,
+        invoiceStatus: 'DRAFT',
+        invoiceDate: admin.firestore.FieldValue.serverTimestamp()
+      });
+    } catch (e) {
+      await snap.ref.update({
+        status: 'ERROR',
+        message: e.message || 'Bilinmeyen Hata',
+        updatedAt: admin.firestore.FieldValue.serverTimestamp()
+      });
+    }
+  });

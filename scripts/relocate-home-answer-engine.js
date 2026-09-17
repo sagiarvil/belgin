@@ -17,18 +17,44 @@ function esc(value) {
 }
 
 function removeLegacyHeroAnswer(html) {
-  // Ana sayfada build sırasında hero üstüne enjekte edilen eski SEO bloğunu kaldır.
-  html = html.replace(
-    /\s*<div class="container-art"[^>]*>\s*<div class="hero-answer-engine" data-registry-route="\/">[\s\S]*?<\/div>\s*<\/div>\s*/i,
-    '\n'
-  );
+  let startIndex = html.indexOf('<div class="hero-answer-engine" data-registry-route="/">');
+  if (startIndex === -1) return html;
+  
+  let preMatch = html.lastIndexOf('<div class="container-art"', startIndex);
+  if (preMatch !== -1) {
+    let between = html.substring(preMatch, startIndex).trim();
+    if (between.match(/^<div class="container-art"[^>]*>$/i)) {
+      startIndex = preMatch;
+    }
+  }
 
-  html = html.replace(
-    /\s*<div class="hero-answer-engine" data-registry-route="\/">[\s\S]*?<\/div>\s*/i,
-    '\n'
-  );
+  let depth = 0;
+  let i = startIndex;
+  while (i < html.length) {
+    if (html.substring(i, i+4).toLowerCase() === '<div') {
+      depth++;
+      i += 4;
+    } else if (html.substring(i, i+6).toLowerCase() === '</div') {
+      depth--;
+      i += 6;
+      if (depth === 0) {
+        let closeBracket = html.indexOf('>', i);
+        if (closeBracket !== -1) {
+           i = closeBracket + 1;
+        }
+        break;
+      }
+    } else {
+      i++;
+    }
+  }
 
-  return html;
+  // Handle multiple instances just in case
+  let newHtml = html.substring(0, startIndex) + '\n' + html.substring(i);
+  if (newHtml.indexOf('<div class="hero-answer-engine" data-registry-route="/">') !== -1) {
+    return removeLegacyHeroAnswer(newHtml);
+  }
+  return newHtml;
 }
 
 function buildCompactSeoSection() {

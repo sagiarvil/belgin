@@ -2478,7 +2478,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     if (smsModal) smsModal.classList.add('open');
 
     try {
-      const res = await fetch('/api/admin/invoice/batch-draft', {
+      const res = await fetch('/api/admin/invoice/batch-draft?cb=1', {
         method: 'POST',
         headers: this.getAuthHeaders(),
         body: JSON.stringify({
@@ -3099,7 +3099,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       if (customItems) payload.items = customItems;
       if (customBreakdown) payload.customBreakdown = customBreakdown;
 
-      let draftRes = await fetch('/api/admin/invoice/draft', {
+      let draftRes = await fetch('/api/admin/invoice/draft?cb=1', {
         method: 'POST',
         headers: this.getAuthHeaders(),
         body: JSON.stringify(payload)
@@ -3149,10 +3149,14 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
           errDiv.textContent = 'ℹ️ Test / Simülasyon Modu: Kod olarak 123456 girebilirsiniz.';
         }
       }
+
+
     } catch (e) {
-      alert('❌ GİB Bağlantı Hatası: ' + e.message);
+      alert('❌ GİB İşlem Hatası: ' + e.message);
       if (submitBtn) submitBtn.innerHTML = '<span>✅ Doğrula & Faturayı İmzala</span>';
     }
+
+
   },
 
   // TEKRAR SMS GÖNDER
@@ -3166,7 +3170,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     if (errDiv) { errDiv.style.display = 'none'; }
 
     try {
-      const res = await fetch('/api/admin/invoice/send-sms', {
+      const res = await fetch('/api/admin/invoice/send-sms?cb=1', {
         method: 'POST',
         headers: this.getAuthHeaders(),
         body: JSON.stringify({
@@ -3228,7 +3232,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     try {
       if (this.isBatchInvoice) {
         // TOPLU İMZALAMA İSTEĞİ
-        const res = await fetch('/api/admin/invoice/batch-sign', {
+        const res = await fetch('/api/admin/invoice/batch-sign?cb=1', {
           method: 'POST',
           headers: this.getAuthHeaders(),
           body: JSON.stringify({
@@ -3271,7 +3275,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
         const targetStoreInv = this.storeInvoices.find(i => i.orderId === this.activeInvoiceOrderId || i.id === this.activeInvoiceOrderId);
         const invoiceDateForSign = targetStoreInv?.invoiceDate || (document.getElementById('storeInvoiceDate')?.value || '').trim() || null;
 
-        const res = await fetch('/api/admin/invoice/sign', {
+        const res = await fetch('/api/admin/invoice/sign?cb=1', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -3389,7 +3393,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       const btn = document.querySelector('button[onclick="AdminApp.forceGibLogout()"]');
       if (btn) btn.innerHTML = '<span>⏳ Sıfırlanıyor...</span>';
       
-      const res = await fetch('/api/admin/invoice/force-logout', {
+      const res = await fetch('/api/admin/invoice/force-logout?cb=1', {
         method: 'POST',
         headers: this.getAuthHeaders(),
         body: JSON.stringify({ adminKey: this.adminPin })
@@ -3414,7 +3418,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     if (modal) modal.classList.remove('open');
     // Eğer imzalanmadan kapatıldıysa oturumu arka planda serbest bırak
     if (this.activeInvoiceOrderId) {
-      fetch('/api/admin/invoice/force-logout', {
+      fetch('/api/admin/invoice/force-logout?cb=1', {
         method: 'POST',
         headers: this.getAuthHeaders(),
         body: JSON.stringify({ adminKey: this.adminPin })
@@ -3494,7 +3498,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     if (errEl) errEl.style.display = 'none';
 
     try {
-      const res = await fetch('/api/admin/invoice/cancel', {
+      const res = await fetch('/api/admin/invoice/cancel?cb=1', {
         method: 'POST',
         headers: this.getAuthHeaders(),
         body: JSON.stringify({
@@ -10205,6 +10209,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
 
       const invoiceDateVal = inv.invoiceDate || (document.getElementById('storeInvoiceDate')?.value || '').trim() || '';
 
+
       const draftPayload = {
         orderId: inv.orderId,
         totalAmount: Number(inv.totalAmount || 0),
@@ -10227,15 +10232,70 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
         adminKey: this.adminPin
       };
 
-      const draftRes = await fetch('/api/admin/invoice/draft', {
-        method: 'POST',
-        headers: this.getAuthHeaders(),
-        body: JSON.stringify(draftPayload)
-      });
-
-      const rawText = await draftRes.text();
       let draftData = null;
-      try { draftData = JSON.parse(rawText); } catch (_) {}
+      
+
+      if (inv.invoiceStatus === 'DRAFT' && inv.invoiceUuid) {
+          if (submitBtn) submitBtn.innerHTML = '<span>⏳ SMS Tekrar Gönderiliyor...</span>';
+          const smsRes = await fetch('/api/admin/invoice/send-sms?cb=1', {
+            method: 'POST',
+            headers: this.getAuthHeaders(),
+            body: JSON.stringify({ orderId: inv.orderId, adminKey: this.adminPin })
+          });
+          const rawText = await smsRes.text();
+          try { draftData = JSON.parse(rawText); } catch (_) {}
+          
+          if (draftData && draftData.success) {
+              draftData.invoiceUuid = inv.invoiceUuid;
+          }
+      } else {
+          // ASENKRON GİB MİMARİSİ (FIRESTORE QUEUE POLLING)
+          if (submitBtn) submitBtn.innerHTML = '<span>⏳ GİB Bağlantısı Kuruluyor...</span>';
+          const asyncRes = await fetch('/api/admin/invoice/draft-async?cb=1', {
+            method: 'POST',
+            headers: this.getAuthHeaders(),
+            body: JSON.stringify(draftPayload)
+          });
+          const asyncData = await asyncRes.json();
+          if (!asyncData || !asyncData.success) {
+             throw new Error(asyncData?.message || 'Asenkron görev başlatılamadı.');
+          }
+          
+          const jobId = asyncData.jobId;
+          if (submitBtn) submitBtn.innerHTML = '<span>⏳ GİB Yanıtı Bekleniyor (1-2 Dk Sürebilir)...</span>';
+          
+          // Poll every 3 seconds
+          let jobSuccess = false;
+          let jobError = null;
+          for (let i = 0; i < 40; i++) { // max 120 seconds
+             await new Promise(r => setTimeout(r, 3000));
+             const statusRes = await fetch(`/api/admin/invoice/job-status?jobId=${jobId}&cb=${Date.now()}`, {
+               headers: this.getAuthHeaders()
+             });
+             const statusData = await statusRes.json();
+             if (statusData && statusData.success && statusData.data) {
+                 const st = statusData.data.status;
+                 if (st === 'SUCCESS') {
+                     jobSuccess = true;
+                     draftData = {
+                         success: true,
+                         invoiceUuid: statusData.data.invoiceUuid,
+                         oid: statusData.data.oid
+                     };
+                     break;
+                 } else if (st === 'ERROR') {
+                     jobError = statusData.data.message;
+                     break;
+                 }
+             }
+          }
+          
+          if (!jobSuccess) {
+              throw new Error(jobError || 'GİB Zaman Aşımı (120 sn). Fatura Taslaklara düşmüş olabilir, lütfen sayfayı yenileyin.');
+          }
+      }
+
+
 
       if (!draftData || !draftData.success) {
         alert('❌ Taslak Fatura Uyarısı:\n\n' + (draftData?.message || 'GİB Devlet Portalı yanıt vermiyor (Sunucu yoğun veya çökmüş olabilir).'));
@@ -10269,10 +10329,14 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
         errDiv.style.color = '#084C47';
         errDiv.textContent = 'ℹ️ Test / Simülasyon Modu: Kod olarak 123456 girebilirsiniz.';
       }
+
+
     } catch (e) {
-      alert('❌ GİB Bağlantı Hatası: ' + e.message);
+      alert('❌ GİB İşlem Hatası: ' + e.message);
       if (submitBtn) submitBtn.innerHTML = '<span>✅ Doğrula & Faturayı İmzala</span>';
     }
+
+
   },
 
   async startBatchStoreInvoiceSigning() {
@@ -10304,7 +10368,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     }
 
     try {
-      const draftRes = await fetch('/api/admin/invoice/batch-draft', {
+      const draftRes = await fetch('/api/admin/invoice/batch-draft?cb=1', {
         method: 'POST',
         headers: this.getAuthHeaders(),
         body: JSON.stringify({ orderIds, adminKey: this.adminPin })
