@@ -546,6 +546,20 @@
     <div class="card">
       <div class="card-title"><span class="dot">✦</span> Ürün ve Fiyat Belirleme</div>
 
+      
+    <!-- MOBİL UYUMLU SEKMELER (TABS) -->
+    <div style="display:flex; background:rgba(255,255,255,0.05); border-radius:12px; padding:4px; margin-bottom:20px; border:1px solid rgba(255,255,255,0.1);">
+      <button type="button" id="tabGenerate" style="flex:1; padding:12px 8px; border-radius:8px; border:none; background:#C2A768; color:#111; font-weight:800; font-size:14px; cursor:pointer; transition:all 0.2s; box-shadow:0 2px 8px rgba(0,0,0,0.2);">
+        ✨ Yeni VIP Link
+      </button>
+      <button type="button" id="tabCancel" style="flex:1; padding:12px 8px; border-radius:8px; border:none; background:transparent; color:#94A3B8; font-weight:700; font-size:14px; cursor:pointer; transition:all 0.2s;">
+        ✕ Link İptal Et
+      </button>
+    </div>
+    
+    <!-- YENİ LİNK BÖLÜMÜ -->
+    <div id="sectionGenerate">
+
       <form id="linkForm" novalidate>
         <div class="field">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:7px;">
@@ -673,7 +687,13 @@
 
     </div>
 
-    <!-- VIP LINK CANCEL CARD -->
+    
+    </div> <!-- /sectionGenerate -->
+    
+    <!-- LİNK İPTAL BÖLÜMÜ -->
+    <div id="sectionCancel" style="display:none;">
+      <!-- VIP LINK CANCEL CARD -->
+
     <div class="card" style="margin-top:24px; border-top:3px solid #ef4444; border-radius: 16px;">
       <div class="card-title" style="color:#ef4444; font-size: 16px; margin-bottom: 12px; display:flex; align-items:center; gap:8px;">
         <span style="background:#ef4444; color:#fff; border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; font-size:12px; box-shadow:0 0 10px rgba(239,68,68,0.4);">✕</span> 
@@ -688,7 +708,7 @@
       </div>
       
       <div class="field" style="margin-bottom:0;">
-        <button type="button" class="btn" id="btnCancelLink" style="width: 100%; padding: 18px; border-radius: 30px; font-weight: 800; background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; border: none; font-size: 16px; box-shadow: 0 6px 20px rgba(239,68,68,0.35); text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s ease;">
+        <button type="button" class="btn" id="btnCancelLink" style="width: 100%; padding: 22px; border-radius: 50px; font-size: 18px; font-weight: 800; background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; border: none; box-shadow: 0 6px 20px rgba(239,68,68,0.35); text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s ease;">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
           Linki İptal Et
         </button>
@@ -782,7 +802,45 @@
   <script src="/js/data.js?v=2026.09.02"></script>
   <script src="/js/vip-payment.js?v=20260902-kuveytturk-v1"></script>
   <script>
+    
+    // --- Sekme (Tab) Mantığı ---
+    const tabGen = document.getElementById('tabGenerate');
+    const tabCan = document.getElementById('tabCancel');
+    const secGen = document.getElementById('sectionGenerate');
+    const secCan = document.getElementById('sectionCancel');
+    
+    tabGen.addEventListener('click', () => {
+      tabGen.style.background = '#C2A768';
+      tabGen.style.color = '#111';
+      tabGen.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
+      tabGen.style.fontWeight = '800';
+      
+      tabCan.style.background = 'transparent';
+      tabCan.style.color = '#94A3B8';
+      tabCan.style.boxShadow = 'none';
+      tabCan.style.fontWeight = '700';
+      
+      secGen.style.display = 'block';
+      secCan.style.display = 'none';
+    });
+    
+    tabCan.addEventListener('click', () => {
+      tabCan.style.background = '#ef4444';
+      tabCan.style.color = '#fff';
+      tabCan.style.boxShadow = '0 4px 12px rgba(239,68,68,0.3)';
+      tabCan.style.fontWeight = '800';
+      
+      tabGen.style.background = 'transparent';
+      tabGen.style.color = '#94A3B8';
+      tabGen.style.boxShadow = 'none';
+      tabGen.style.fontWeight = '700';
+      
+      secGen.style.display = 'none';
+      secCan.style.display = 'block';
+    });
+    
     const form = document.getElementById('linkForm');
+
     const titleInput = document.getElementById('productTitle');
     const amountInput = document.getElementById('productAmount');
     const titleShell = document.getElementById('titleShell');
