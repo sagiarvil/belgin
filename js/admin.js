@@ -5981,6 +5981,63 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
   },
 
   // 10.75 MANUEL MÜŞTERİ EFT / HAVALE GİRİŞİ MODALI (BANKA SEÇİMLİ & OTOMATİK EKSTRE ENTEGRASYONLU)
+  
+  // --- GIDER PUSULASI METHODS ---
+  openExpenseNoteModal() {
+    const m = document.getElementById('expenseNoteModal');
+    if (m) {
+      document.getElementById('expenseNoteForm').reset();
+      m.style.display = 'flex';
+      document.getElementById('expenseCustName').focus();
+    }
+  },
+  closeExpenseNoteModal() {
+    const m = document.getElementById('expenseNoteModal');
+    if (m) m.style.display = 'none';
+  },
+  calcExpenseTotal() {
+    const w = parseFloat(document.getElementById('expenseItemWeight').value || 0);
+    const p = parseFloat(document.getElementById('expenseItemPrice').value || 0);
+    document.getElementById('expenseTotalAmount').value = (w * p).toFixed(2);
+  },
+  saveExpenseNote() {
+    const name = document.getElementById('expenseCustName').value.trim();
+    const tckn = document.getElementById('expenseCustIdentity').value.trim();
+    const item = document.getElementById('expenseItemName').value.trim();
+    const weight = document.getElementById('expenseItemWeight').value.trim();
+    const amount = document.getElementById('expenseTotalAmount').value.trim();
+    const payMethod = document.querySelector('input[name="expensePaymentMethod"]:checked').value;
+
+    if (!name || !tckn || !item || !amount) {
+      alert("Lütfen zorunlu alanları doldurun.");
+      return;
+    }
+    
+    // Yasal Gider Pusulası PDF/Yazdırma ekranı (hukuki-evrak-yazdir'da render edilecek veya ayrı modal).
+    // Şimdilik kaydet & kapat işlemi yapıp toast gösterelim. İlerde yazdır eklenebilir.
+    this.closeExpenseNoteModal();
+    
+    // Create a mock order to show in the list
+    const eid = 'EXP-' + Date.now().toString().slice(-6);
+    if (!this.storeInvoices) this.storeInvoices = [];
+    this.storeInvoices.unshift({
+      id: eid,
+      orderId: eid,
+      customerName: name,
+      customerIdentity: tckn,
+      paymentMethod: payMethod,
+      totalAmount: amount,
+      status: 'GIDER_PUSULASI',
+      invoiceDate: new Date().toISOString().slice(0,10),
+      items: [{ title: item, price: amount, quantity: 1, weight: weight }]
+    });
+    
+    this.showToast('✅ Gider Pusulası (' + eid + ') başarıyla oluşturuldu.');
+    if (this.currentTab === 'storeInvoices') {
+      this.renderStoreInvoicesList();
+    }
+  },
+
   openManualEftModal() {
     const modal = document.getElementById('manualEftModal');
     if (!modal) return;

@@ -355,6 +355,17 @@
       color: #7E22CE;
       border-color: #F0ABFC;
     }
+    
+    .btn-pro-action.action-expense {
+      background: #FFF7ED;
+      color: #C2410C;
+      border: 1.5px solid #FFEDD5;
+    }
+    .btn-pro-action.action-expense:hover {
+      background: #FFEDD5;
+      border-color: #FDBA74;
+    }
+
     .btn-pro-action.action-store:hover {
       background: #FAE8FF;
       border-color: #E879F9;
@@ -2911,6 +2922,11 @@
       <button type="button" class="btn-pro-action action-store" onclick="AdminApp.switchTab('storeInvoices')" title="Mağaza Fatura Kesimi (Kısayol: F)">
         <span>🏪 ➕ Mağaza Faturası</span>
         <span class="kbd-tag">F</span>
+      </button>
+      
+      <button type="button" class="btn-pro-action action-expense" onclick="AdminApp.openExpenseNoteModal()" title="Gider Pusulası / Hurda Alım (Kısayol: G)">
+        <span>📄 ➕ Gider Pusulası</span>
+        <span class="kbd-tag">G</span>
       </button>
       <button type="button" class="btn-pro-action action-sms" onclick="AdminApp.startBatchInvoiceSigning()" title="Toplu Fatura Kes / SMS (Kısayol: S)">
         <span>🧾 Toplu Fatura (SMS)</span>
@@ -5741,6 +5757,114 @@
 </div>
 
 <!-- ======================================================== -->
+
+<!-- ======================================================== -->
+<!-- GİDER PUSULASI (HURDA ALTIN ALIM) MODALI -->
+<!-- ======================================================== -->
+<div class="admin-modal-overlay" id="expenseNoteModal" onclick="if(event.target===this) AdminApp.closeExpenseNoteModal();" style="display:none; z-index:9999;">
+  <div class="admin-modal-box" style="max-width:700px; width:95vw; max-height:90vh; overflow-y:auto; padding:0; border-radius:14px; display:flex; flex-direction:column; background:#F8FAFC; border:1px solid #E2E8F0; box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);">
+    
+    <!-- Modal Header -->
+    <div style="background:linear-gradient(135deg, #9A3412 0%, #EA580C 100%); color:#FFF; padding:18px 24px; display:flex; justify-content:space-between; align-items:center; flex-shrink:0;">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span style="font-size:24px; background:#FFF; width:40px; height:40px; display:flex; align-items:center; justify-content:center; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">📄</span>
+        <div>
+          <h3 style="margin:0; font-family:'Playfair Display',serif; font-size:18.5px; font-weight:800; color:#FFF; letter-spacing:0.3px;">
+            Gider Pusulası (Hurda / İkinci El Alım)
+          </h3>
+          <span style="font-size:11.5px; color:#FFEDD5; font-weight:600;">
+            Vergi Mükellefi Olmayan Nihai Tüketiciden Altın Alımı
+          </span>
+        </div>
+      </div>
+      <button type="button" onclick="AdminApp.closeExpenseNoteModal()" style="background:rgba(255,255,255,0.2); border:none; width:32px; height:32px; border-radius:8px; color:#FFF; font-size:16px; font-weight:bold; cursor:pointer; display:flex; align-items:center; justify-content:center;">✕</button>
+    </div>
+
+    <!-- Modal Body -->
+    <form id="expenseNoteForm" onsubmit="event.preventDefault(); AdminApp.saveExpenseNote();" style="padding:24px; display:flex; flex-direction:column; gap:20px;">
+      
+      <!-- Müşteri Bilgileri -->
+      <div>
+        <div style="font-size:12px; font-weight:800; color:#475569; margin-bottom:10px; text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:6px;">
+          <span>👤</span> Müşteri (Satıcı) Bilgileri
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div>
+            <label for="expenseCustName" style="display:block; font-size:11.5px; font-weight:700; color:#334155; margin-bottom:4px;">Ad Soyad: *</label>
+            <input type="text" id="expenseCustName" class="form-field-input" required placeholder="Müşteri Adı Soyadı">
+          </div>
+          <div>
+            <label for="expenseCustIdentity" style="display:block; font-size:11.5px; font-weight:700; color:#334155; margin-bottom:4px;">T.C. Kimlik No: *</label>
+            <input type="text" id="expenseCustIdentity" class="form-field-input" required maxlength="11" placeholder="11 Haneli TCKN">
+          </div>
+          <div>
+            <label for="expenseCustPhone" style="display:block; font-size:11.5px; font-weight:700; color:#334155; margin-bottom:4px;">Telefon:</label>
+            <input type="text" id="expenseCustPhone" class="form-field-input" placeholder="05XX XXX XX XX">
+          </div>
+          <div>
+            <label for="expenseCustAddress" style="display:block; font-size:11.5px; font-weight:700; color:#334155; margin-bottom:4px;">Adres:</label>
+            <input type="text" id="expenseCustAddress" class="form-field-input" placeholder="İkametgah Adresi">
+          </div>
+        </div>
+      </div>
+
+      <!-- Alınan Ürün Bilgileri -->
+      <div style="background:#FFF; border:1px solid #E2E8F0; padding:16px; border-radius:12px; box-shadow:0 2px 4px rgba(0,0,0,0.02);">
+        <div style="font-size:12px; font-weight:800; color:#475569; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:6px;">
+          <span>💍</span> Alınan Ürün / Hurda Bilgisi
+        </div>
+        
+        <div style="display:grid; grid-template-columns:2fr 1fr; gap:12px; margin-bottom:12px;">
+          <div>
+            <label style="display:block; font-size:11px; font-weight:700; color:#64748B; margin-bottom:4px;">Ürün Cinsi / Ayarı *</label>
+            <input type="text" id="expenseItemName" class="form-field-input" required placeholder="Örn: 22 Ayar Hurda Bilezik">
+          </div>
+          <div>
+            <label style="display:block; font-size:11px; font-weight:700; color:#64748B; margin-bottom:4px;">Gramaj (gr) *</label>
+            <input type="number" step="0.01" id="expenseItemWeight" class="form-field-input" required placeholder="0.00">
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <div>
+            <label style="display:block; font-size:11px; font-weight:700; color:#64748B; margin-bottom:4px;">Birim Milyem / Fiyat (₺) *</label>
+            <input type="number" step="0.01" id="expenseItemPrice" class="form-field-input" required placeholder="0.00" oninput="AdminApp.calcExpenseTotal()">
+          </div>
+          <div>
+            <label style="display:block; font-size:11px; font-weight:800; color:#0F172A; margin-bottom:4px;">Toplam Tutar (₺) *</label>
+            <input type="number" step="0.01" id="expenseTotalAmount" class="form-field-input" required style="font-weight:800; background:#F8FAFC;" readonly>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ödeme Türü -->
+      <div>
+        <div style="font-size:12px; font-weight:800; color:#475569; margin-bottom:10px; text-transform:uppercase; letter-spacing:0.5px;">Ödeme Şekli</div>
+        <div style="display:flex; gap:16px;">
+          <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:13px; font-weight:600;">
+            <input type="radio" name="expensePaymentMethod" value="NAKIT" checked>
+            💵 Kasa Nakit Ödeme
+          </label>
+          <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:13px; font-weight:600;">
+            <input type="radio" name="expensePaymentMethod" value="HAVALE">
+            🏦 Banka Transferi
+          </label>
+        </div>
+        <div style="margin-top:8px; font-size:10px; color:#94A3B8;">* Altın alımlarında Gelir Vergisi (Stopaj) oranı mevzuat gereği %0 olarak hesaplanmıştır. KDV hesaplanmaz (Özel Matrah).</div>
+      </div>
+
+      <!-- İşlemler -->
+      <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:10px; border-top:1px solid #E2E8F0; padding-top:20px;">
+        <button type="button" class="btn-admin-secondary" onclick="AdminApp.closeExpenseNoteModal()">İptal</button>
+        <button type="submit" class="btn-admin-primary" style="background:#EA580C; border-color:#C2410C; box-shadow:0 4px 12px rgba(234,88,12,0.3);">
+          Gider Pusulasını Oluştur & Kaydet
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
 <!-- GİB E-ARŞİV FATURA MÜHÜRLEME ÖNCESİ RESMİ CANLI ÖNİZLEME MODALI -->
 <!-- ======================================================== -->
 <div class="admin-modal-overlay" id="invoiceLivePreviewModal" onclick="if(event.target===this) AdminApp.closeLivePreviewModal();" style="display:none; z-index:999999;">
