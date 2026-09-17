@@ -7,20 +7,6 @@
     "inStock": true
   },
   {
-    "id": 5002,
-    "name": "Cosmograph Daytona 40mm Beyaz 'Panda' Kadran",
-    "brand": "Rolex",
-    "price": 2759861,
-    "inStock": true
-  },
-  {
-    "id": 5003,
-    "name": "GMT-Master II 40mm 'Pepsi' Jubilee Bilezik",
-    "brand": "Rolex",
-    "price": 1883715,
-    "inStock": true
-  },
-  {
     "id": 5004,
     "name": "GMT-Master II 40mm 'Batman' Oyster Bilezik",
     "brand": "Rolex",
@@ -56,20 +42,6 @@
     "inStock": true
   },
   {
-    "id": 5009,
-    "name": "Day-Date 40mm 18K Sarı Altın Şampanya Kadran President",
-    "brand": "Rolex",
-    "price": 3855044,
-    "inStock": true
-  },
-  {
-    "id": 5010,
-    "name": "Day-Date 40mm Platin Buz Mavisi Kadran Yivli Bezel",
-    "brand": "Rolex",
-    "price": 6308254,
-    "inStock": true
-  },
-  {
     "id": 5011,
     "name": "Submariner No-Date 41mm Oystersteel",
     "brand": "Rolex",
@@ -84,13 +56,6 @@
     "inStock": true
   },
   {
-    "id": 5013,
-    "name": "Cosmograph Daytona 18K Everose Altın & Oysterflex",
-    "brand": "Rolex",
-    "price": 3679815,
-    "inStock": true
-  },
-  {
     "id": 5014,
     "name": "Explorer 36mm Oystersteel Siyah Kadran",
     "brand": "Rolex",
@@ -102,20 +67,6 @@
     "name": "Explorer II 42mm Beyaz 'Polar' Kadran",
     "brand": "Rolex",
     "price": 1042614,
-    "inStock": true
-  },
-  {
-    "id": 5016,
-    "name": "Yacht-Master 40mm 18K Everose Altın & Siyah Cerachrom",
-    "brand": "Rolex",
-    "price": 2584632,
-    "inStock": true
-  },
-  {
-    "id": 5017,
-    "name": "Yacht-Master 42mm Titanyum RLX",
-    "brand": "Rolex",
-    "price": 2716054,
     "inStock": true
   },
   {
@@ -280,286 +231,6 @@
     "inStock": true
   },
   {
-    "id": 5041,
-    "name": "Nautilus Paslanmaz Çelik Mavi Kadran",
-    "brand": "Patek Philippe",
-    "price": 10338528,
-    "inStock": true
-  },
-  {
-    "id": 5042,
-    "name": "Nautilus Moonphase & Güç Rezervi Paslanmaz Çelik",
-    "brand": "Patek Philippe",
-    "price": 9199537,
-    "inStock": true
-  },
-  {
-    "id": 5043,
-    "name": "Nautilus Yıllık Takvim & Ay Fazı Çelik Mavi Kadran",
-    "brand": "Patek Philippe",
-    "price": 8586235,
-    "inStock": true
-  },
-  {
-    "id": 5044,
-    "name": "Nautilus Kronograf 18K Gül Altın Siyah Kadran",
-    "brand": "Patek Philippe",
-    "price": 15332562,
-    "inStock": true
-  },
-  {
-    "id": 5045,
-    "name": "Aquanaut Paslanmaz Çelik Siyah Kadran & Kompozit Kayış",
-    "brand": "Patek Philippe",
-    "price": 5081649,
-    "inStock": true
-  },
-  {
-    "id": 5046,
-    "name": "Aquanaut 18K Beyaz Altın Gece Mavisi 'Jumbo' Kadran",
-    "brand": "Patek Philippe",
-    "price": 6308254,
-    "inStock": true
-  },
-  {
-    "id": 5047,
-    "name": "Aquanaut Kronograf Paslanmaz Çelik Turuncu Vurgulu",
-    "brand": "Patek Philippe",
-    "price": 11214674,
-    "inStock": true
-  },
-  {
-    "id": 5048,
-    "name": "Calatrava 18K Beyaz Altın Clous de Paris Guilloché Bezel",
-    "brand": "Patek Philippe",
-    "price": 2716054,
-    "inStock": true
-  },
-  {
-    "id": 5049,
-    "name": "Calatrava Sub-Second 18K Sarı Altın Fildişi Kadran",
-    "brand": "Patek Philippe",
-    "price": 3154127,
-    "inStock": true
-  },
-  {
-    "id": 5050,
-    "name": "Grand Complications Perpetual Calendar 18K Beyaz Altın",
-    "brand": "Patek Philippe",
-    "price": 8235776,
-    "inStock": true
-  },
-  {
-    "id": 5051,
-    "name": "Grand Complications Chronograph Perpetual Calendar Platin",
-    "brand": "Patek Philippe",
-    "price": 17084855,
-    "inStock": true
-  },
-  {
-    "id": 5052,
-    "name": "Aquanaut Luce Kadın Otomatik 18K Gül Altın Pırlantalı Bezel",
-    "brand": "Patek Philippe",
-    "price": 5432108,
-    "inStock": true
-  },
-  {
-    "id": 5053,
-    "name": "Complications World Time 18K Beyaz Altın Cloisonné Emaye",
-    "brand": "Patek Philippe",
-    "price": 9637610,
-    "inStock": true
-  },
-  {
-    "id": 5054,
-    "name": "Complications Annual Calendar 18K Beyaz Altın Mavi Kadran",
-    "brand": "Patek Philippe",
-    "price": 4731191,
-    "inStock": true
-  },
-  {
-    "id": 5055,
-    "name": "Complications Chronograph 18K Sarı Altın Vintage Kadran",
-    "brand": "Patek Philippe",
-    "price": 6833942,
-    "inStock": true
-  },
-  {
-    "id": 5056,
-    "name": "Calatrava Pilot Travel Time 18K Beyaz Altın 42mm",
-    "brand": "Patek Philippe",
-    "price": 4555961,
-    "inStock": true
-  },
-  {
-    "id": 5057,
-    "name": "Golden Ellipse 18K Gül Altın Siyah Abanoz Kadran",
-    "brand": "Patek Philippe",
-    "price": 3066512,
-    "inStock": true
-  },
-  {
-    "id": 5058,
-    "name": "Complications Minute Repeater 18K Gül Altın Grand Feu Kadran",
-    "brand": "Patek Philippe",
-    "price": 34169710,
-    "inStock": true
-  },
-  {
-    "id": 5059,
-    "name": "Nautilus Kadın Otomatik 18K Gül Altın Pırlantalı Bezel",
-    "brand": "Patek Philippe",
-    "price": 6571098,
-    "inStock": true
-  },
-  {
-    "id": 5060,
-    "name": "Twenty~4 Otomatik 36mm Paslanmaz Çelik Mavi Sunburst",
-    "brand": "Patek Philippe",
-    "price": 2497017,
-    "inStock": true
-  },
-  {
-    "id": 5061,
-    "name": "Royal Oak 'Jumbo' Extra-Thin 39mm Bleu Nuit Kadran",
-    "brand": "Audemars Piguet",
-    "price": 6833942,
-    "inStock": true
-  },
-  {
-    "id": 5062,
-    "name": "Royal Oak Selfwinding 41mm Siyah Grande Tapisserie Kadran",
-    "brand": "Audemars Piguet",
-    "price": 4030273,
-    "inStock": true
-  },
-  {
-    "id": 5063,
-    "name": "Royal Oak Selfwinding Chronograph 41mm Mavi Kadran",
-    "brand": "Audemars Piguet",
-    "price": 5432108,
-    "inStock": true
-  },
-  {
-    "id": 5064,
-    "name": "Royal Oak Double Balance Wheel Openworked 41mm Çelik",
-    "brand": "Audemars Piguet",
-    "price": 10951830,
-    "inStock": true
-  },
-  {
-    "id": 5065,
-    "name": "Royal Oak Offshore Chronograph 43mm Titanyum & Seramik",
-    "brand": "Audemars Piguet",
-    "price": 3679815,
-    "inStock": true
-  },
-  {
-    "id": 5066,
-    "name": "Royal Oak Offshore Diver 42mm Haki Yeşil Kadran",
-    "brand": "Audemars Piguet",
-    "price": 2803668,
-    "inStock": true
-  },
-  {
-    "id": 5067,
-    "name": "Royal Oak Selfwinding 18K Pembe Altın & Mavi Tapisserie",
-    "brand": "Audemars Piguet",
-    "price": 7710088,
-    "inStock": true
-  },
-  {
-    "id": 5068,
-    "name": "Royal Oak Chronograph 38mm Gümüş Kadran Çelik",
-    "brand": "Audemars Piguet",
-    "price": 4205503,
-    "inStock": true
-  },
-  {
-    "id": 5069,
-    "name": "Royal Oak Perpetual Calendar 41mm Paslanmaz Çelik",
-    "brand": "Audemars Piguet",
-    "price": 10075684,
-    "inStock": true
-  },
-  {
-    "id": 5070,
-    "name": "Royal Oak Offshore Selfwinding Chronograph 42mm Siyah Seramik",
-    "brand": "Audemars Piguet",
-    "price": 4293117,
-    "inStock": true
-  },
-  {
-    "id": 5071,
-    "name": "Code 11.59 by Audemars Piguet Chronograph 41mm 18K Beyaz Altın & Seramik",
-    "brand": "Audemars Piguet",
-    "price": 3416971,
-    "inStock": true
-  },
-  {
-    "id": 5072,
-    "name": "Royal Oak Frosted Gold 37mm 18K Beyaz Altın Carolina Bucci",
-    "brand": "Audemars Piguet",
-    "price": 5957796,
-    "inStock": true
-  },
-  {
-    "id": 5073,
-    "name": "Royal Oak Flying Tourbillon 41mm Paslanmaz Çelik Yeşil Kadran",
-    "brand": "Audemars Piguet",
-    "price": 17084855,
-    "inStock": true
-  },
-  {
-    "id": 5074,
-    "name": "Royal Oak Offshore 'Music Edition' 43mm Titanyum Ekolayzır Kadran",
-    "brand": "Audemars Piguet",
-    "price": 3329356,
-    "inStock": true
-  },
-  {
-    "id": 5075,
-    "name": "Royal Oak Selfwinding 34mm Siyah Seramik & Pembe Altın Vidalar",
-    "brand": "Audemars Piguet",
-    "price": 4731191,
-    "inStock": true
-  },
-  {
-    "id": 5076,
-    "name": "Royal Oak Offshore Diver 42mm Beyaz Kadran Mavi Bezel Çelik",
-    "brand": "Audemars Piguet",
-    "price": 2453210,
-    "inStock": true
-  },
-  {
-    "id": 5077,
-    "name": "Royal Oak Chronograph 41mm 'Panda' Kadran Çelik",
-    "brand": "Audemars Piguet",
-    "price": 4906420,
-    "inStock": true
-  },
-  {
-    "id": 5078,
-    "name": "Code 11.59 by Audemars Piguet Selfwinding 41mm Dumanlı Mor Kadran",
-    "brand": "Audemars Piguet",
-    "price": 2891283,
-    "inStock": true
-  },
-  {
-    "id": 5079,
-    "name": "Royal Oak Concept Flying Tourbillon GMT 44mm Titanyum",
-    "brand": "Audemars Piguet",
-    "price": 21465587,
-    "inStock": true
-  },
-  {
-    "id": 5080,
-    "name": "Royal Oak Quartz 33mm 18K Pembe Altın Pırlantalı Bezel",
-    "brand": "Audemars Piguet",
-    "price": 3942659,
-    "inStock": true
-  },
-  {
     "id": 5081,
     "name": "Navitimer B01 Chronograph 43mm Siyah Kadran Çelik",
     "brand": "Breitling",
@@ -714,13 +385,6 @@
     "inStock": true
   },
   {
-    "id": 5103,
-    "name": "Santos de Cartier Skeleton 18K Pembe Altın İskelet",
-    "brand": "Cartier",
-    "price": 2978898,
-    "inStock": true
-  },
-  {
     "id": 5104,
     "name": "Tank Must Large Model Paslanmaz Çelik Kuvars",
     "brand": "Cartier",
@@ -823,13 +487,6 @@
     "name": "Santos de Cartier 18K Sarı Altın & Çelik İki Tonlu Medium",
     "brand": "Cartier",
     "price": 998807,
-    "inStock": true
-  },
-  {
-    "id": 5119,
-    "name": "Tank Cintrée 100th Anniversary 18K Sarı Altın Sınırlı Üretim",
-    "brand": "Cartier",
-    "price": 2453210,
     "inStock": true
   },
   {
@@ -1029,13 +686,6 @@
     "inStock": true
   },
   {
-    "id": 5148,
-    "name": "Carrera Tourbillon 'Glassbox' 42mm Mavi Kadran",
-    "brand": "TAG Heuer",
-    "price": 2146559,
-    "inStock": true
-  },
-  {
     "id": 5149,
     "name": "Autavia Chronometer Flyback Chronograph 42mm Seramik",
     "brand": "TAG Heuer",
@@ -1155,13 +805,6 @@
     "inStock": true
   },
   {
-    "id": 5166,
-    "name": "Big Pilot's Watch Perpetual Calendar 46.2mm Mavi Kadran Çelik",
-    "brand": "IWC Schaffhausen",
-    "price": 2891283,
-    "inStock": true
-  },
-  {
     "id": 5167,
     "name": "Pilot's Watch Chronograph 'TOP GUN' 44.5mm Siyah Zirkonyum Seramik",
     "brand": "IWC Schaffhausen",
@@ -1173,13 +816,6 @@
     "name": "Pilot's Watch Chronograph 41 TOP GUN 'Oceana' Mavi Seramik",
     "brand": "IWC Schaffhausen",
     "price": 1086422,
-    "inStock": true
-  },
-  {
-    "id": 5169,
-    "name": "Portugieser Perpetual Calendar 44.2mm 18K Armor Gold® Gümüş Kadran",
-    "brand": "IWC Schaffhausen",
-    "price": 3679815,
     "inStock": true
   },
   {
@@ -1236,13 +872,6 @@
     "name": "Big Pilot's Watch 'TOP GUN Lake Tahoe' Beyaz Seramik 46.5mm",
     "brand": "IWC Schaffhausen",
     "price": 1445642,
-    "inStock": true
-  },
-  {
-    "id": 5178,
-    "name": "Portofino Perpetual Calendar 40mm 18K Pembe Altın Gümüş Kadran",
-    "brand": "IWC Schaffhausen",
-    "price": 2978898,
     "inStock": true
   },
   {
@@ -1351,13 +980,6 @@
     "inStock": true
   },
   {
-    "id": 5194,
-    "name": "Luminor Due Luna 38mm 18K Goldtech™ Ay Fazı Kadın",
-    "brand": "Panerai",
-    "price": 1883715,
-    "inStock": true
-  },
-  {
     "id": 5195,
     "name": "Radiomir California 47mm Roma & Arap Karma Kadran",
     "brand": "Panerai",
@@ -1369,13 +991,6 @@
     "name": "Submersible Chrono Guillaume Néry Edition 47mm Titanyum 300M",
     "brand": "Panerai",
     "price": 1743531,
-    "inStock": true
-  },
-  {
-    "id": 5197,
-    "name": "Luminor Tourbillon GMT 47mm Titanyum İskelet Dikine Dönen Tourbillon",
-    "brand": "Panerai",
-    "price": 12966967,
     "inStock": true
   },
   {

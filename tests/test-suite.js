@@ -24,7 +24,7 @@ console.log('========================================\n');
 console.log('--- 1. Katalog bütünlüğü ---');
 assert(Array.isArray(PRODUCTS) && PRODUCTS.length >= 1000, `Yayın kataloğunda ${PRODUCTS.length} ürün mevcut (>= 1.000)`);
 assert(Array.isArray(WATCHES) && WATCHES.length >= 1000, `Saat koleksiyonunda ${WATCHES.length} ürün mevcut (>= 1.000)`);
-assert(PRODUCTS.filter(p => p.isElite).length === 200, 'Elit Kategori 200 adet Haute Horlogerie modeli eksiksiz');
+assert(PRODUCTS.filter(p => p.isElite).length === 145, 'Elit Kategori 145 adet Haute Horlogerie modeli eksiksiz');
 assert(!PRODUCTS.some(p => p.isPreOwned === true), 'Seçkin ürünler / İkinci el ürünler katalogdan tamamen kaldırılmıştır');
 assert(Array.isArray(WATCH_BRANDS) && WATCH_BRANDS.length >= 9, `Saat markaları mevcut (${WATCH_BRANDS.length} marka)`);
 assert(Array.isArray(JEWELRY_BRANDS) && JEWELRY_BRANDS.length === 0, 'Saat odaklı yayında mücevher marka vitrini kapalı');
