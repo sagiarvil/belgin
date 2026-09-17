@@ -59,17 +59,19 @@ async function sendTelegramNotification(order, botToken = TELEGRAM_BOT_TOKEN, ch
 
   const htmlMessage = [
     `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
-    `✅ TAHSİL - ÖDEME OK🟢🟢🟢 `,
+    `<b>✅ TAHSİL - ÖDEME OK</b>🟢🟢🟢🟢 🟢🟢`,
     `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
     `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
     `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
     `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
     `🟢 Tutar: <b>${escapeHtml(formattedAmount)}</b>`,
-    `🟢 Müşteri: ${escapeHtml(customerName)}`,
+    `🟢 Müşteri: <b>${escapeHtml(customerName)}</b>`,
     `🟢 T.C. Kimlik / Pasaport: ${escapeHtml(customerIdentity)}`,
     `🟢 POS / Banka: ${escapeHtml(provider)} (3D Secure)`,
     `🟢 Tarih: ${escapeHtml(timeStr)}`
   ].join('\n');
+
+
 
   const inlineKeyboard = [
     [
@@ -210,23 +212,26 @@ async function sendPaymentPushNotification(order, options = {}) {
 
   // 1. NTFY Gönderimi
   const customerIdentity = (order.customer && (order.customer.identityNumber || order.customer.identity)) || order.customerIdentity || '—';
-  const messageLines = [
-    `👤 Müşteri: ${customerName}`,
-    `🆔 T.C. Kimlik / Pasaport: ${customerIdentity}`,
-    `📞 Tel: ${customerPhone}`,
-    `💳 POS / Banka: ${provider} (3D Secure Onaylı)`,
-    `📦 Sipariş No: ${orderId}`,
-    `📍 Teslimat: ${deliveryText}`,
-    `⏰ İşlem Zamanı: ${timeStr}`,
-  ];
-  if (itemsSummary) {
-    messageLines.push(`\n🛒 Satın Alınan Ürünler:\n${itemsSummary}`);
-  }
+  
+  const ntfyMessage = [
+    `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
+    `**✅ TAHSİL - ÖDEME OK**🟢🟢🟢🟢 🟢🟢`,
+    `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
+    `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
+    `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
+    `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
+    `🟢 Tutar: **${formattedAmount}**`,
+    `🟢 Müşteri: **${customerName}**`,
+    `🟢 T.C. Kimlik / Pasaport: ${customerIdentity}`,
+    `🟢 POS / Banka: ${provider} (3D Secure)`,
+    `🟢 Tarih: ${timeStr}`
+  ].join('\n');
 
   const payload = {
     topic: topic,
-    title: `💰 YENİ ÖDEME ALINDI: ${formattedAmount}`,
-    message: messageLines.join('\n'),
+    title: `✅ TAHSİL - ÖDEME OK`,
+    message: ntfyMessage,
+    markdown: true,
     priority: 5,
     tags: ['moneybag', 'credit_card', 'bell', 'gem'],
     click: 'https://www.belginkuyumculuk.com/admin.html',
@@ -401,12 +406,32 @@ async function sendPaymentFailureNotification(order, options = {}) {
     `🔴 RED KODU: ${escapeHtml(upperRawCode)}`,
     `🔴 BANKA GEREKÇESİ: ${escapeHtml(upperRawMsg)}`,
     `🔴 RESMİ ANLAMI: ${escapeHtml(upperOfficialMeaning)}`,
-    `+  (${escapeHtml(upperAdvice)})`,
-    `🔴 POS / BANKA: ${escapeHtml(upperProvider)} (${escapeHtml(upperStageLabel)})`,
-    `🔴MÜŞTERİ: ${escapeHtml(upperCustomerName)}`,
+    `🔴 POS / BANKA: ${escapeHtml(upperProvider)}`,
+    `🔴MÜŞTERİ: <b>${escapeHtml(upperCustomerName)}</b>`,
     ...(customerPhone !== '—' ? [`🔴 TELEFON: ${escapeHtml(customerPhone)}`] : []),
     ...(customerIdentity !== '—' ? [`🔴 T.C. KİMLİK: ${escapeHtml(customerIdentity)}`] : []),
-    `🔴 ZAMAN: ${escapeHtml(timeStr)}`
+    `🔴 ZAMAN: ${escapeHtml(timeStr)}`,
+    `━━━━━━━━━━━━━━━━━━━━━`
+  ].join('\n');
+
+  const ntfyMessage = [
+    `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 `,
+    `❌ DİKKAT RED - BAŞARISIZ POS ❌`,
+    `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 `,
+    `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴`,
+    `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴`,
+    `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴`,
+    `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴`,
+    `🔴 DENENEN TUTAR: **${formattedAmount}**`,
+    `🔴 RED KODU: ${upperRawCode}`,
+    `🔴 BANKA GEREKÇESİ: ${upperRawMsg}`,
+    `🔴 RESMİ ANLAMI: ${upperOfficialMeaning}`,
+    `🔴 POS / BANKA: ${upperProvider}`,
+    `🔴MÜŞTERİ: **${upperCustomerName}**`,
+    ...(customerPhone !== '—' ? [`🔴 TELEFON: ${customerPhone}`] : []),
+    ...(customerIdentity !== '—' ? [`🔴 T.C. KİMLİK: ${customerIdentity}`] : []),
+    `🔴 ZAMAN: ${timeStr}`,
+    `━━━━━━━━━━━━━━━━━━━━━`
   ].join('\n');
 
   const inlineKeyboard = [
@@ -464,8 +489,9 @@ async function sendPaymentFailureNotification(order, options = {}) {
   if (topic) {
     const ntfyPayload = {
       topic: topic,
-      title: `🚨 POS İŞLEMİ REDDEDİLDİ: ${formattedAmount} [${upperRawCode}]`,
-      message: `👤 MÜŞTERİ: ${upperCustomerName}\n⛔ NEDEN: ${upperRawMsg}\n🏦 BANKA: ${upperProvider} (${upperStageLabel})\n📦 REF: ${displayOrderId}`,
+      title: `❌ DİKKAT RED - BAŞARISIZ POS ❌`,
+      message: ntfyMessage,
+      markdown: true,
       priority: 4,
       tags: ['warning', 'x', 'credit_card'],
       click: 'https://www.belginkuyumculuk.com/admin.html',
