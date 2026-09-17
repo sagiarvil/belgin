@@ -47,8 +47,29 @@
     // Kept as a safe no-op for backward compatibility.
   }
 
-  window.BelginGrowth = { track, ensureCommerceNavigationVisible };
+  function ensureAdminExpenseVoucherEntry() {
+    if (!/^\/admin(?:\.html)?\/?$/.test(location.pathname)) return;
+    const nav = document.querySelector('.admin-tab-nav');
+    if (!nav || document.getElementById('tabBtnExpenseVoucher')) return;
+
+    const link = document.createElement('a');
+    link.id = 'tabBtnExpenseVoucher';
+    link.className = 'admin-tab-btn';
+    link.href = '/gider-pusulasi.html';
+    link.title = 'SAATCHI - Semih Sonbahar gider pusulası formunu aç';
+    link.style.textDecoration = 'none';
+    link.innerHTML = '<span style="font-size:16px;">🧾</span><span>Gider Pusulası</span><span class="tab-btn-badge" style="background:#EEF2FF;color:#3730A3;border:1px solid #C7D2FE;">SAATCHI</span>';
+    nav.appendChild(link);
+  }
+
+  window.BelginGrowth = { track, ensureCommerceNavigationVisible, ensureAdminExpenseVoucherEntry };
   track('page_view');
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', ensureAdminExpenseVoucherEntry, { once: true });
+  } else {
+    ensureAdminExpenseVoucherEntry();
+  }
 
   document.addEventListener('click', (event) => {
     const target = event.target instanceof Element ? event.target.closest('a,button') : null;

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Gider Pusulası | SAATCHI - Semih Sonbahar</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <style>
+    :root {
+      --ink: #183f83;
+      --red: #b4483c;
+      --paper: #fbfaf3;
+      --screen: #eef2f5;
+      --ui: #084c47;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--screen);
+      color: #111827;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 16px;
+      background: #042a27;
+      border-bottom: 1px solid rgba(212,175,55,.45);
+      color: #fff;
+      box-shadow: 0 4px 18px rgba(4,42,39,.18);
+    }
+    .toolbar strong { font-size: 13px; letter-spacing: .2px; }
+    .toolbar-actions { display: flex; gap: 8px; }
+    .toolbar a,
+    .toolbar button {
+      border: 1px solid rgba(255,255,255,.28);
+      background: rgba(255,255,255,.1);
+      color: #fff;
+      min-height: 36px;
+      padding: 7px 12px;
+      border-radius: 8px;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .toolbar button.primary { background: #fff; color: #042a27; }
+    .stage { padding: 24px 12px 48px; }
+    .voucher {
+      width: 148mm;
+      min-height: 210mm;
+      margin: 0 auto;
+      padding: 11mm 10mm 9mm;
+      background:
+        linear-gradient(rgba(251,250,243,.94),rgba(251,250,243,.94)),
+        repeating-linear-gradient(0deg, rgba(24,63,131,.025) 0 1px, transparent 1px 3px);
+      box-shadow: 0 12px 40px rgba(15,23,42,.18);
+      color: var(--ink);
+    }
+    .header-grid {
+      display: grid;
+      grid-template-columns: 1.35fr .7fr 1.15fr;
+      gap: 8mm;
+      align-items: start;
+    }
+    .brand {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: .4px;
+      white-space: nowrap;
+      margin-bottom: 4px;
+    }
+    .owner { font-size: 16px; margin-bottom: 12px; }
+    .business-meta { font-size: 10px; line-height: 1.35; }
+    .seal-wrap { text-align: center; }
+    .seal {
+      width: 30mm;
+      height: 30mm;
+      margin: 0 auto 3px;
+      border: 1.5px solid var(--ink);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 7px;
+      font-weight: 700;
+      line-height: 1.15;
+      text-align: center;
+    }
+    .seal .tc { font-size: 18px; font-weight: 500; margin: 1px 0; }
+    .city-code { font-size: 9px; font-weight: 700; }
+    .doc-title { font-size: 16px; font-weight: 900; letter-spacing: .2px; white-space: nowrap; margin: 2px 0 12px; }
+    .serial-line { font-size: 11px; display: flex; align-items: end; gap: 8px; white-space: nowrap; }
+    .serial-line .no { font-size: 20px; color: var(--red); font-family: Georgia, serif; }
+    .serial-input {
+      width: 28mm;
+      border: 0;
+      border-bottom: 1px dotted var(--red);
+      background: transparent;
+      color: var(--red);
+      font: 700 17px Georgia, serif;
+      text-align: center;
+      outline: none;
+    }
+    .date-row {
+      margin: 18mm 0 4mm;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+    }
+    .date-row input {
+      width: 34mm;
+      color: var(--ink);
+      border: 0;
+      border-bottom: 1px dotted var(--ink);
+      background: transparent;
+      font: inherit;
+      outline: none;
+    }
+    table { border-collapse: collapse; width: 100%; color: var(--ink); }
+    .items th, .items td,
+    .summary th, .summary td {
+      border: 1.2px solid var(--ink);
+      height: 9mm;
+      padding: 1.5mm 2mm;
+      font-size: 9.5px;
+    }
+    .items th { height: 7mm; font-weight: 700; text-align: center; }
+    .items input,
+    .summary input {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+      outline: none;
+    }
+    .items input.num, .summary input.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .summary { width: 64%; margin-left: auto; }
+    .summary th { text-align: left; font-weight: 500; }
+    .summary td { width: 29%; }
+    .summary .total-row th,
+    .summary .total-row td { font-weight: 700; }
+    .vertical-cell {
+      width: 11mm;
+      text-align: center;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-size: 9px !important;
+      font-weight: 700;
+      letter-spacing: .5px;
+    }
+    .words {
+      margin-top: 11mm;
+      font-size: 10px;
+      line-height: 1.6;
+    }
+    .line-input {
+      display: inline-block;
+      min-width: 72%;
+      border: 0;
+      border-bottom: 1px dotted var(--ink);
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+      outline: none;
+      padding: 0 2mm 1mm;
+    }
+    .receipt-text { margin-top: 8mm; display: flex; align-items: baseline; gap: 4px; }
+    .receipt-text .from { flex: 1; }
+    .person-sign {
+      margin-top: 8mm;
+      display: grid;
+      grid-template-columns: 1.7fr .8fr;
+      gap: 10mm;
+      align-items: end;
+    }
+    .person-lines { font-size: 10px; line-height: 2; }
+    .person-lines label { display: grid; grid-template-columns: 27mm 1fr; gap: 2mm; }
+    .person-lines input {
+      border: 0;
+      border-bottom: 1px dotted var(--ink);
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+      outline: none;
+    }
+    .signature { text-align: center; font-size: 12px; font-weight: 700; min-height: 30mm; }
+    .footer-note {
+      margin-top: 9mm;
+      border-top: 1.2px solid var(--ink);
+      padding-top: 2mm;
+      font-size: 7.5px;
+      line-height: 1.35;
+    }
+    .screen-hint {
+      max-width: 148mm;
+      margin: 10px auto 0;
+      color: #475569;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    @media (max-width: 700px) {
+      .toolbar { align-items: flex-start; flex-direction: column; }
+      .voucher { width: 100%; min-height: auto; padding: 20px 14px; }
+      .stage { padding: 12px 0 32px; }
+      .header-grid { grid-template-columns: 1.15fr .65fr 1fr; gap: 8px; }
+      .brand { font-size: 14px; }
+      .owner, .doc-title { font-size: 12px; }
+      .seal { width: 72px; height: 72px; }
+      .date-row { margin-top: 28px; }
+      .summary { width: 78%; }
+      .screen-hint { padding: 0 12px; }
+    }
+    @page { size: A5 portrait; margin: 0; }
+    @media print {
+      body { background: #fff; }
+      .toolbar, .screen-hint { display: none !important; }
+      .stage { padding: 0; }
+      .voucher {
+        width: 148mm;
+        min-height: 210mm;
+        margin: 0;
+        box-shadow: none;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+      input { color: var(--ink) !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <strong>Gider Pusulası — SAATCHI / Semih Sonbahar</strong>
+    <div class="toolbar-actions">
+      <a href="/admin">← Yönetici Paneli</a>
+      <button type="button" onclick="resetVoucher()">Temizle</button>
+      <button type="button" class="primary" onclick="window.print()">Yazdır / PDF</button>
+    </div>
+  </div>
+
+  <div class="stage">
+    <form class="voucher" id="expenseVoucher" autocomplete="off">
+      <div class="header-grid">
+        <section>
+          <div class="brand">SAATCHI</div>
+          <div class="owner">Semih SONBAHAR</div>
+          <div class="business-meta">
+            Efeler Mah. Menderese Cad.<br>
+            No:231/B-B Buca-İZMİR<br>
+            Şirinyer V.D. 62764066838
+          </div>
+        </section>
+
+        <section class="seal-wrap" aria-label="T.C. Hazine ve Maliye Bakanlığı ibaresi">
+          <div class="seal">
+            <span>T.C.</span>
+            <span>HAZİNE VE MALİYE</span>
+            <span class="tc">T.C.</span>
+            <span>BAKANLIĞI</span>
+          </div>
+          <div class="city-code">İL KODU 35</div>
+        </section>
+
+        <section>
+          <div class="doc-title">GİDER PUSULASI</div>
+          <div class="serial-line">
+            <span>SERİ A</span>
+            <span>Sıra</span>
+          </div>
+          <div class="serial-line" style="margin-top:7px;">
+            <span class="no">№</span>
+            <input class="serial-input" id="serialNo" inputmode="numeric" aria-label="Sıra numarası" placeholder="">
+          </div>
+        </section>
+      </div>
+
+      <div class="date-row">
+        <label for="voucherDate">Tarih</label>
+        <input id="voucherDate" type="date">
+      </div>
+
+      <table class="items" aria-label="Gider kalemleri">
+        <colgroup>
+          <col style="width:46%"><col style="width:15%"><col style="width:18%"><col style="width:21%">
+        </colgroup>
+        <thead>
+          <tr><th>İŞİN MAHİYETİ</th><th>ADEDİ</th><th>FİYAT</th><th>TUTAR</th></tr>
+        </thead>
+        <tbody id="itemRows">
+          <tr><td><input class="desc"></td><td><input class="qty num" type="number" min="0" step="1"></td><td><input class="price num" type="number" min="0" step="0.01"></td><td><input class="amount num" type="number" min="0" step="0.01"></td></tr>
+          <tr><td><input class="desc"></td><td><input class="qty num" type="number" min="0" step="1"></td><td><input class="price num" type="number" min="0" step="0.01"></td><td><input class="amount num" type="number" min="0" step="0.01"></td></tr>
+          <tr><td><input class="desc"></td><td><input class="qty num" type="number" min="0" step="1"></td><td><input class="price num" type="number" min="0" step="0.01"></td><td><input class="amount num" type="number" min="0" step="0.01"></td></tr>
+        </tbody>
+      </table>
+
+      <table class="summary" aria-label="Kesinti ve net tutar özeti">
+        <tbody>
+          <tr class="total-row"><th colspan="2">TOPLAM</th><td><input id="grossTotal" class="num" readonly></td></tr>
+          <tr><td class="vertical-cell" rowspan="4">TEVKİF EDİLEN</td><th>GELİR VERGİSİ ORANI %</th><td><input id="incomeTaxRate" class="num" type="number" min="0" max="100" step="0.01"></td></tr>
+          <tr><th>TUTAR</th><td><input id="incomeTaxAmount" class="num" readonly></td></tr>
+          <tr><th>FON PAYI</th><td><input id="fundShare" class="num" type="number" min="0" step="0.01"></td></tr>
+          <tr><th>KESİNTİ TOPLAMI</th><td><input id="withholdingTotal" class="num" readonly></td></tr>
+          <tr class="total-row"><th colspan="2">ÖDENECEK NET TUTAR</th><td><input id="netTotal" class="num" readonly></td></tr>
+        </tbody>
+      </table>
+
+      <div class="words">
+        <label>Yalnız : <input id="amountInWords" class="line-input" type="text"></label>
+        <div class="receipt-text">
+          <input id="paidBy" class="line-input from" type="text" aria-label="Ödemeyi yapan kişi veya işletme">
+          <span>’dan yukarıda belirtilen</span>
+          <strong>Mal / İş</strong>
+          <span>bedelini aldım.</span>
+        </div>
+      </div>
+
+      <div class="person-sign">
+        <div class="person-lines">
+          <label><span>Adı Soyadı :</span><input id="recipientName" type="text"></label>
+          <label><span>Adresi :</span><input id="recipientAddress" type="text"></label>
+          <label><span>T.C. No :</span><input id="recipientTc" type="text" inputmode="numeric" maxlength="11"></label>
+        </div>
+        <div class="signature">İMZA</div>
+      </div>
+
+      <div class="footer-note">
+        SAATCHI — Semih Sonbahar · Efeler Mah. Menderese Cad. No:231/B-B Buca-İZMİR · Şirinyer V.D. 62764066838
+      </div>
+    </form>
+
+    <div class="screen-hint">
+      Form, yüklediğiniz gider pusulasının yerleşimine göre yeniden oluşturuldu. İşletme unvanı yalnızca <strong>SAATCHI</strong> olarak değiştirildi; Semih Sonbahar, adres ve vergi bilgileri korunmuştur. Sıra numarası boş bırakılmıştır.
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      'use strict';
+      const money = (value) => Number.isFinite(value) && value !== 0
+        ? value.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+        : '';
+      const numberValue = (el) => Number.parseFloat(el.value) || 0;
+
+      function calculate() {
+        let gross = 0;
+        document.querySelectorAll('#itemRows tr').forEach((row) => {
+          const qty = numberValue(row.querySelector('.qty'));
+          const price = numberValue(row.querySelector('.price'));
+          const amountInput = row.querySelector('.amount');
+          const manualAmount = numberValue(amountInput);
+          const computed = qty && price ? qty * price : manualAmount;
+          if (qty && price) amountInput.value = computed.toFixed(2);
+          gross += computed;
+        });
+        const taxRate = numberValue(document.getElementById('incomeTaxRate'));
+        const taxAmount = gross * taxRate / 100;
+        const fund = numberValue(document.getElementById('fundShare'));
+        const cut = taxAmount + fund;
+        const net = Math.max(0, gross - cut);
+        document.getElementById('grossTotal').value = money(gross);
+        document.getElementById('incomeTaxAmount').value = money(taxAmount);
+        document.getElementById('withholdingTotal').value = money(cut);
+        document.getElementById('netTotal').value = money(net);
+      }
+
+      document.querySelectorAll('.qty,.price,.amount,#incomeTaxRate,#fundShare').forEach((el) => {
+        el.addEventListener('input', calculate);
+      });
+
+      const today = new Date();
+      document.getElementById('voucherDate').value = [today.getFullYear(), String(today.getMonth() + 1).padStart(2, '0'), String(today.getDate()).padStart(2, '0')].join('-');
+      calculate();
+
+      window.resetVoucher = () => {
+        if (!window.confirm('Formdaki girilmiş bilgileri temizlemek istiyor musunuz?')) return;
+        document.getElementById('expenseVoucher').reset();
+        document.getElementById('voucherDate').value = [today.getFullYear(), String(today.getMonth() + 1).padStart(2, '0'), String(today.getDate()).padStart(2, '0')].join('-');
+        calculate();
+      };
+    })();
+  </script>
+</body>
+</html>
