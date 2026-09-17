@@ -327,6 +327,26 @@ class PaymentService {
       }
 
     const items = normalizeCart(body.items, isVipPayment, body.vipToken, productCatalog);
+
+    // --- VIP LINK CANCELLATION CHECK ---
+    const isVipCheck = isVipPayment || items.some(i => String(i.id).startsWith('VIP-'));
+    if (isVipCheck) {
+      const vipOrderId = items.find(i => String(i.id).startsWith('VIP-'))?.id;
+      if (vipOrderId) {
+        try {
+          const cancelDoc = await db.collection('cancelled_vip_links').doc(vipOrderId).get();
+          if (cancelDoc.exists) {
+            const error = new Error('Bu VIP ödeme linki/siparişi iptal edilmiştir.');
+            error.code = 'VIP_LINK_CANCELLED';
+            throw error;
+          }
+        } catch (err) {
+          if (err.code === 'VIP_LINK_CANCELLED') throw err;
+          console.error('Cancel check error:', err);
+        }
+      }
+    }
+    // ------------------------------------
     const compliance = validateLegalAndDelivery(body, items);
     const legalEvidence = getLegalEvidenceSnapshot(compliance.hasHighValue);
     const serverTotal = calculateTotal(items);
