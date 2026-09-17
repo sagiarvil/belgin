@@ -598,7 +598,7 @@ class EarsivPortalService {
           'Origin': this.baseUrl.replace(/\/earsiv-services.*$/, ''),
           'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
         },
-        timeout: 60000
+        timeout: 15000
       });
 
       const setCookie = res.headers['set-cookie'];
@@ -676,12 +676,12 @@ class EarsivPortalService {
         axios.post(`${this.baseUrl}/assos-login`, payloadAssos, {
           httpsAgent: this.agent,
           headers: reqHeaders,
-          timeout: 30000
+          timeout: 8000
         }),
         axios.post(`${this.baseUrl}/dispatch`, payloadDispatch, {
           httpsAgent: this.agent,
           headers: reqHeaders,
-          timeout: 30000
+          timeout: 8000
         })
       ]);
 
@@ -940,7 +940,7 @@ class EarsivPortalService {
       const res = await axios.post(`${this.baseUrl}/dispatch`, dispatchBody, {
         httpsAgent: this.agent,
         headers: reqHeaders,
-        timeout: 60000
+        timeout: 20000
       });
 
       const responseText = String(res.data?.data || '');
@@ -965,7 +965,7 @@ class EarsivPortalService {
         }), {
           httpsAgent: this.agent,
           headers: reqHeaders,
-          timeout: 60000
+          timeout: 15000
         });
 
         const list = listCall.data?.data;
@@ -1037,7 +1037,7 @@ class EarsivPortalService {
         const phoneRes = await axios.post(`${this.baseUrl}/dispatch`, phoneDispatch, {
           httpsAgent: this.agent,
           headers: reqHeaders,
-          timeout: 30000
+          timeout: 10000
         });
         if (phoneRes.data?.data?.telefon || phoneRes.data?.data?.ceptel || phoneRes.data?.data?.telNo) {
           rawPhone = phoneRes.data.data.telefon || phoneRes.data.data.ceptel || phoneRes.data.data.telNo;
@@ -1072,7 +1072,7 @@ class EarsivPortalService {
       const res = await axios.post(`${this.baseUrl}/dispatch`, dispatchBody, {
         httpsAgent: this.agent,
         headers: reqHeaders,
-        timeout: 60000
+        timeout: 15000
       });
 
       const oid = res.data?.data?.oid || res.data?.data?.OID || '';
@@ -1186,7 +1186,7 @@ class EarsivPortalService {
         const res = await axios.post(`${this.baseUrl}/dispatch`, dispatchBody, {
           httpsAgent: this.agent,
           headers: reqHeaders,
-          timeout: 60000
+          timeout: 25000
         });
 
         const dataObj = res.data?.data;
@@ -1302,7 +1302,7 @@ class EarsivPortalService {
             }), {
               httpsAgent: this.agent,
               headers: reqHeaders,
-              timeout: 60000
+              timeout: 15000
             });
 
             const list = listCall.data?.data;
@@ -1357,7 +1357,7 @@ class EarsivPortalService {
       const res = await axios.post(`${this.baseUrl}/dispatch`, dispatchBody, {
         httpsAgent: this.agent,
         headers: reqHeaders,
-        timeout: 60000
+        timeout: 15000
       });
 
       const htmlContent = res.data?.data;
@@ -1414,7 +1414,7 @@ class EarsivPortalService {
       }), {
         httpsAgent: this.agent,
         headers: reqHeaders,
-        timeout: 60000
+        timeout: 15000
       });
       gibResponse = cancelCall.data;
     } catch (e1) {
@@ -1435,7 +1435,7 @@ class EarsivPortalService {
       }), {
         httpsAgent: this.agent,
         headers: reqHeaders,
-        timeout: 60000
+        timeout: 15000
       });
       if (!gibResponse) gibResponse = deleteCall.data;
     } catch (e2) {
