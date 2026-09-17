@@ -58,14 +58,17 @@ async function sendTelegramNotification(order, botToken = TELEGRAM_BOT_TOKEN, ch
   const timeStr = formatDate(order.paidAt || order.createdAt);
 
   const htmlMessage = [
-    `⏰ <b>Tarih:</b> ${escapeHtml(timeStr)}`,
-    `🔔 <b>YENİ TAHSİLAT!</b>`,
-    `💰 <b>Tutar:</b> <code>${escapeHtml(formattedAmount)}</code>`,
-    `👤 <b>Müşteri:</b> ${escapeHtml(customerName)}`,
-    `🆔 <b>T.C. Kimlik / Pasaport:</b> <code>${escapeHtml(customerIdentity)}</code>`,
-    `💳 <b>POS / Banka:</b> ${escapeHtml(provider)} (3D Secure)`,
-    `📍 <b>Teslimat:</b> ${escapeHtml(deliveryText)}`,
-    `📦 <b>Sipariş Ref:</b> <code>${escapeHtml(orderId)}</code>`,
+    `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
+    `✅ TAHSİL - ÖDEME OK🟢🟢🟢 `,
+    `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
+    `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
+    `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
+    `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
+    `🟢 Tutar: <b>${escapeHtml(formattedAmount)}</b>`,
+    `🟢 Müşteri: ${escapeHtml(customerName)}`,
+    `🟢 T.C. Kimlik / Pasaport: ${escapeHtml(customerIdentity)}`,
+    `🟢 POS / Banka: ${escapeHtml(provider)} (3D Secure)`,
+    `🟢 Tarih: ${escapeHtml(timeStr)}`
   ].join('\n');
 
   const inlineKeyboard = [
@@ -387,21 +390,23 @@ async function sendPaymentFailureNotification(order, options = {}) {
   const displayOrderId = String(orderId).toLocaleUpperCase('tr-TR');
 
   const htmlMessage = [
-    `🚨 <b>DİKKAT: BAŞARISIZ POS İŞLEMİ / İŞLEM REDDİ!</b>`,
-    `━━━━━━━━━━━━━━━━━━━━━`,
-    `⛔ <b>RED KODU:</b> <code>${escapeHtml(upperRawCode)}</code>`,
-    `⚠️ <b>BANKA GEREKÇESİ:</b> <code>${escapeHtml(upperRawMsg)}</code>`,
-    `📖 <b>RESMİ ANLAMI:</b> <i>${escapeHtml(upperOfficialMeaning)}</i>`,
-    `🏦 <b>POS / BANKA:</b> ${escapeHtml(upperProvider)} (${escapeHtml(upperStageLabel)})`,
-    `💰 <b>DENENEN TUTAR:</b> <code>${escapeHtml(formattedAmount)}</code>`,
-    `👤 <b>MÜŞTERİ:</b> ${escapeHtml(upperCustomerName)}`,
-    ...(customerPhone !== '—' ? [`📞 <b>TELEFON:</b> <code>${escapeHtml(customerPhone)}</code>`] : []),
-    ...(customerIdentity !== '—' ? [`🆔 <b>T.C. KİMLİK:</b> <code>${escapeHtml(customerIdentity)}</code>`] : []),
-    `📦 <b>SİPARİŞ REF:</b> <code>${escapeHtml(displayOrderId)}</code> ${isVip ? '🏷️ <b>/22 VIP LİNK</b>' : ''}`,
-    `⏰ <b>ZAMAN:</b> ${escapeHtml(timeStr)}`,
-    `━━━━━━━━━━━━━━━━━━━━━`,
-    `💡 <b>SATIŞ KURTARMA TAVSİYESİ:</b>`,
-    `👉 <i>${escapeHtml(upperAdvice)}</i>`
+    `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 `,
+    `❌ DİKKAT RED - BAŞARISIZ POS ❌`,
+    `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 `,
+    `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴`,
+    `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴`,
+    `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴`,
+    `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴`,
+    `🔴 DENENEN TUTAR: <b>${escapeHtml(formattedAmount)}</b>`,
+    `🔴 RED KODU: ${escapeHtml(upperRawCode)}`,
+    `🔴 BANKA GEREKÇESİ: ${escapeHtml(upperRawMsg)}`,
+    `🔴 RESMİ ANLAMI: ${escapeHtml(upperOfficialMeaning)}`,
+    `+  (${escapeHtml(upperAdvice)})`,
+    `🔴 POS / BANKA: ${escapeHtml(upperProvider)} (${escapeHtml(upperStageLabel)})`,
+    `🔴MÜŞTERİ: ${escapeHtml(upperCustomerName)}`,
+    ...(customerPhone !== '—' ? [`🔴 TELEFON: ${escapeHtml(customerPhone)}`] : []),
+    ...(customerIdentity !== '—' ? [`🔴 T.C. KİMLİK: ${escapeHtml(customerIdentity)}`] : []),
+    `🔴 ZAMAN: ${escapeHtml(timeStr)}`
   ].join('\n');
 
   const inlineKeyboard = [
