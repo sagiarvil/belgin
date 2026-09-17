@@ -3384,6 +3384,31 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     window.open(waUrl, '_blank');
   },
 
+  async forceGibLogout() {
+    try {
+      const btn = document.querySelector('button[onclick="AdminApp.forceGibLogout()"]');
+      if (btn) btn.innerHTML = '<span>⏳ Sıfırlanıyor...</span>';
+      
+      const res = await fetch('/api/admin/invoice/force-logout', {
+        method: 'POST',
+        headers: this.getAuthHeaders(),
+        body: JSON.stringify({ adminKey: this.adminPin })
+      });
+      
+      if (btn) btn.innerHTML = '<span>🔌 GİB Sıfırla</span>';
+      
+      if (res.ok) {
+        alert('✅ GİB Oturumu Başarıyla Sıfırlandı.\n\nAskıda kalan (timeout) tüm oturumlar temizlendi. Fatura kesme işlemini tekrar deneyebilirsiniz.');
+      } else {
+        alert('⚠️ GİB Oturumu sıfırlanırken bir hata oluştu veya zaten oturum yoktu.');
+      }
+    } catch (e) {
+      alert('Hata: ' + e.message);
+      const btn = document.querySelector('button[onclick="AdminApp.forceGibLogout()"]');
+      if (btn) btn.innerHTML = '<span>🔌 GİB Sıfırla</span>';
+    }
+  },
+
   closeSmsModal() {
     const modal = document.getElementById('invoiceSmsModal');
     if (modal) modal.classList.remove('open');
@@ -7772,6 +7797,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
         kdvRate: 0
       }];
 
+      if (this.currentStoreIdentityDoc && this.currentStoreIdentityDoc.length > 200000) { try { localStorage.setItem('belgin_decl_' + orderId, JSON.stringify({ docUrl: this.currentStoreIdentityDoc, docType: 'image/jpeg', docName: 'kimlik.jpg', time: new Date().toISOString() })); } catch(e) {} }
       invoiceData = {
         orderId: orderId,
         id: orderId,
@@ -7798,7 +7824,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
         createdAt: new Date().toISOString(),
         invoiceDate: new Date().toISOString().slice(0, 10),
         identityDoc: (this.currentStoreIdentityDoc && this.currentStoreIdentityDoc.length > 200000) ? '#STORED#' : (this.currentStoreIdentityDoc || null),
-        declarationDoc: this.currentStoreIdentityDoc || null
+        declarationDoc: (this.currentStoreIdentityDoc && this.currentStoreIdentityDoc.length > 200000) ? '#STORED#' : (this.currentStoreIdentityDoc || null)
       };
 
       try {
@@ -9503,6 +9529,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     const isTckn = identity.length === 11;
     const officialUnvan = isVkn ? (companyName || name) : companyName;
 
+    if (this.currentStoreIdentityDoc && this.currentStoreIdentityDoc.length > 200000) { try { localStorage.setItem('belgin_decl_' + invoiceId, JSON.stringify({ docUrl: this.currentStoreIdentityDoc, docType: 'image/jpeg', docName: 'kimlik.jpg', time: new Date().toISOString() })); } catch(e) {} }
     const invoiceDoc = {
       orderId: invoiceId,
       id: invoiceId,
@@ -9526,7 +9553,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       receiptNo: payMethod === 'HAVALE_EFT' ? receiptNo : null,
       posProvider: payMethod === 'KREDI_KARTI' ? posProvider : null,
       provider: payMethod === 'KREDI_KARTI' ? posProvider : (payMethod === 'HAVALE_EFT' ? bankName : 'NAKIT'),
-      declarationDoc: this.currentStoreIdentityDoc || existingDoc?.declarationDoc || null,
+      declarationDoc: (this.currentStoreIdentityDoc && this.currentStoreIdentityDoc.length > 200000) ? '#STORED#' : (this.currentStoreIdentityDoc || existingDoc?.declarationDoc || null),
       identityDoc: (this.currentStoreIdentityDoc && this.currentStoreIdentityDoc.length > 200000) ? '#STORED#' : (this.currentStoreIdentityDoc || existingDoc?.identityDoc || null),
       items: validItems,
       totalAmount: totalAmount,

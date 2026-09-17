@@ -1,2 +1,8 @@
 
 | 2026-09-17 | 1.799.000 TL üzeri olan saat modelleri (55 adet) paytr_products.json listesinden kaldırıldı ve site yeniden derlendi. | paytr_products.json |
+
+| 2026-09-17 | Commit atıldı ve site (carbon-web-1265b) canlıya alındı. | git & firebase |
+
+| 2026-09-17 | VIP Ödeme Linki İptal Mekanizması (Firestore Blacklist) eklendi ve canlıya (functions & hosting) alındı. | admin.html, payment-service.js, index.js |
+
+| 2026-09-17 | Elit kategoriden (js/data.js) fiyatı 1.799.000 TL üzeri olan saatler (55 adet) tamamen kaldırıldı ve statik sayfalar/SEO yeniden build edildi. | js/data.js, tests/test-suite.js |

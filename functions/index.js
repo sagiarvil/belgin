@@ -107,7 +107,7 @@ function getLegalEvidenceSnapshot(hasHighValue) {
  * POST /api/payment/create
  */
 exports.createPayment = functions
-  .runWith({ timeoutSeconds: 30, memory: '256MB' })
+  .runWith({ timeoutSeconds: 120, memory: '256MB' })
   .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
     if (req.method === 'OPTIONS') return res.status(204).send('');
     if (req.method !== 'POST') return res.status(405).json({ success: false, message: 'Yalnızca POST kabul edilir.' });
@@ -138,7 +138,7 @@ exports.createPayment = functions
  * POST /api/payment/callback/:provider
  */
 exports.paymentCallback = functions
-  .runWith({ timeoutSeconds: 30, memory: '256MB' })
+  .runWith({ timeoutSeconds: 120, memory: '256MB' })
   .https.onRequest(async (req, res) => {
     if (req.method !== 'POST') return res.status(405).send('Method Not Allowed');
 
@@ -232,7 +232,7 @@ exports.paymentCallback = functions
  * GET/POST /api/payment/status
  */
 exports.getPaymentStatus = functions
-  .runWith({ timeoutSeconds: 30, memory: '256MB' })
+  .runWith({ timeoutSeconds: 120, memory: '256MB' })
   .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
     if (!['GET', 'POST', 'OPTIONS'].includes(req.method)) return res.status(405).json({ success: false });
     if (req.method === 'OPTIONS') return res.status(204).send('');
@@ -274,7 +274,7 @@ exports.getPaymentStatus = functions
  * POST /api/createPayTRToken (Legacy proxy -> calls paymentService)
  */
 exports.createPayTRToken = functions
-  .runWith({ timeoutSeconds: 30, memory: '256MB' })
+  .runWith({ timeoutSeconds: 120, memory: '256MB' })
   .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
     if (req.method === 'OPTIONS') return res.status(204).send('');
     if (req.method !== 'POST') return res.status(405).json({ success: false, message: 'Yalnızca POST kabul edilir.' });
@@ -306,7 +306,7 @@ exports.createPayTRToken = functions
  * POST /api/paytrCallback (Legacy proxy -> calls paymentService handleCallback)
  */
 exports.paytrCallback = functions
-  .runWith({ timeoutSeconds: 30, memory: '256MB' })
+  .runWith({ timeoutSeconds: 120, memory: '256MB' })
   .https.onRequest(async (req, res) => {
     if (req.method !== 'POST') return res.status(405).send('Method Not Allowed');
 
@@ -380,7 +380,7 @@ async function verifyAdminRequest(req) {
  * Tarih aralığı, toplam ciro ve sipariş listeleme API servisi
  */
 exports.getAdminOrders = functions
-  .runWith({ timeoutSeconds: 30, memory: '256MB' })
+  .runWith({ timeoutSeconds: 120, memory: '256MB' })
   .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
     if (req.method === 'OPTIONS') return res.status(204).send('');
 
@@ -676,7 +676,7 @@ exports.getAdminOrders = functions
  * Manuel Sipariş / Tahsilat Ekleme (Tosla İşim, Fiziki POS, Havale vb.)
  */
 exports.createAdminOrder = functions
-  .runWith({ timeoutSeconds: 30, memory: '256MB' })
+  .runWith({ timeoutSeconds: 120, memory: '256MB' })
   .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
     if (req.method === 'OPTIONS') return res.status(204).send('');
     if (req.method !== 'POST') return res.status(405).json({ success: false, message: 'Method Not Allowed' });
@@ -877,7 +877,7 @@ exports.createAdminOrder = functions
  * Yönetici tarafından siparişi manuel tahsil edildi/onaylandı olarak işaretleme
  */
 exports.confirmAdminOrder = functions
-  .runWith({ timeoutSeconds: 30, memory: '256MB' })
+  .runWith({ timeoutSeconds: 120, memory: '256MB' })
   .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
     if (req.method === 'OPTIONS') return res.status(204).send('');
     
@@ -937,7 +937,7 @@ exports.confirmAdminOrder = functions
  * Yönetici tarafından sipariş durumunu değiştirme (Başarısız/İptal/Beklemede yapma)
  */
 exports.updateAdminOrderStatus = functions
-  .runWith({ timeoutSeconds: 30, memory: '256MB' })
+  .runWith({ timeoutSeconds: 120, memory: '256MB' })
   .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
     if (req.method === 'OPTIONS') return res.status(204).send('');
     if (req.method !== 'POST') return res.status(405).json({ success: false, message: 'Method Not Allowed' });
@@ -998,7 +998,7 @@ exports.updateAdminOrderStatus = functions
  * Yönetici tarafından siparişin fatura/müşteri/alıcı bilgilerini güncelleme
  */
 exports.updateAdminOrderCustomer = functions
-  .runWith({ timeoutSeconds: 30, memory: '256MB' })
+  .runWith({ timeoutSeconds: 120, memory: '256MB' })
   .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
     if (req.method === 'OPTIONS') return res.status(204).send('');
     if (req.method !== 'POST') return res.status(405).json({ success: false, message: 'Method Not Allowed' });
@@ -1138,7 +1138,7 @@ exports.updateAdminOrderCustomer = functions
  * Yönetici tarafından test/mükerrer siparişi veritabanından kalıcı olarak silme
  */
 exports.deleteAdminOrder = functions
-  .runWith({ timeoutSeconds: 30, memory: '256MB' })
+  .runWith({ timeoutSeconds: 120, memory: '256MB' })
   .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
     if (req.method === 'OPTIONS') return res.status(204).send('');
     if (req.method !== 'POST') return res.status(405).json({ success: false, message: 'Method Not Allowed' });
@@ -1185,7 +1185,7 @@ exports.deleteAdminOrder = functions
  * Telefona anlık test bildirimi gönderme servisi
  */
 exports.sendTestPushNotification = functions
-  .runWith({ timeoutSeconds: 15, memory: '128MB' })
+  .runWith({ timeoutSeconds: 120, memory: '128MB' })
   .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
     if (req.method === 'OPTIONS') return res.status(204).send('');
 
@@ -2183,7 +2183,7 @@ async function handleInvoiceRequest(req, res) {
 
 exports.adminInvoiceApi = functions
   .region('us-central1')
-  .runWith({ timeoutSeconds: 60, memory: '256MB', maxInstances: 1 })
+  .runWith({ timeoutSeconds: 120, memory: '256MB', maxInstances: 1 })
   .https.onRequest((req, res) => corsMiddleware(req, res, () => handleInvoiceRequest(req, res)));
 
 // Geriye dönük uyumluluk takma adları
@@ -2457,7 +2457,7 @@ async function handleStoreInvoicesRequest(req, res) {
 
 exports.adminStoreInvoicesApi = functions
   .region('us-central1')
-  .runWith({ timeoutSeconds: 60, memory: '256MB' })
+  .runWith({ timeoutSeconds: 120, memory: '256MB' })
   .https.onRequest((req, res) => corsMiddleware(req, res, () => handleStoreInvoicesRequest(req, res)));
 
 // -------------------------------------------------------------
@@ -2903,7 +2903,7 @@ async function handleStatementRequest(req, res) {
 
 exports.adminStatementApi = functions
   .region('us-central1')
-  .runWith({ timeoutSeconds: 60, memory: '256MB' })
+  .runWith({ timeoutSeconds: 120, memory: '256MB' })
   .https.onRequest((req, res) => corsMiddleware(req, res, () => handleStatementRequest(req, res)));
 
 // Process Signal Management: Konteyner kapanırken zombi oturum kalmasını önle
@@ -2922,7 +2922,7 @@ const globalEarsiv = new EarsivPortalService();
  */
 exports.adminSyncApi = functions
   .region('us-central1')
-  .runWith({ timeoutSeconds: 60, memory: '256MB' })
+  .runWith({ timeoutSeconds: 120, memory: '256MB' })
   .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
     if (req.method === 'OPTIONS') return res.status(204).send('');
 
@@ -3034,7 +3034,7 @@ exports.mcpApi = functions.https.onRequest((req, res) => {
  */
 exports.getMagazineArticlesApi = functions
   .region('us-central1')
-  .runWith({ timeoutSeconds: 30, memory: '256MB' })
+  .runWith({ timeoutSeconds: 120, memory: '256MB' })
   .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
     if (req.method === 'OPTIONS') return res.status(204).send('');
     try {
@@ -3076,7 +3076,7 @@ exports.getMagazineArticlesApi = functions
  * VIP Link Iptal Islemi (Admin)
  */
 exports.cancelVipLink = functions
-  .runWith({ timeoutSeconds: 15, memory: '128MB' })
+  .runWith({ timeoutSeconds: 120, memory: '128MB' })
   .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
     if (req.method === 'OPTIONS') return res.status(204).send('');
     if (req.method !== 'POST') return res.status(405).json({ success: false, message: 'Yalnızca POST kabul edilir.' });
