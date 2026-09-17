@@ -1,0 +1,2 @@
+
+| 2026-09-17 | 1.799.000 TL üzeri olan saat modelleri (55 adet) paytr_products.json listesinden kaldırıldı ve site yeniden derlendi. | paytr_products.json |

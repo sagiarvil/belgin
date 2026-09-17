@@ -956,11 +956,65 @@
         </div>
 
         <div class="biz-kimiz-header-actions">
+          <button type="button" class="btn-biz-zoom" id="flipbookZoomBtnTop" onclick="App.toggleFlipbookZoom()" title="Görünümü Genişlet / Standart Boyuta Dön">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            <span id="flipbookZoomBtnTopText">Genişlet (%130)</span>
+          </button>
+                    <button type="button" class="btn-biz-fullscreen" onclick="App.toggleFlipbookFullscreen()" title="Tam Ekran Okuma Modu">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+            <span>Tam Ekran</span>
+          </button>
+          <button type="button" class="btn-biz-vip" onclick="App.openVipModal();" title="İzmir Buca VIP Showroom Randevusu">
             <span>📍 VIP Randevu</span>
           </button>
         </div>
       </header>
 
+      <!-- 2. PROMINENT FIRST-SCREEN 16:9 PDF / FLIPBOOK VIEWER -->
+      <div class="biz-kimiz-folio-card" id="bizKimizFolioCard">
+        <!-- Toolbar -->
+        <div class="folio-toolbar">
+          <div class="folio-toolbar-left">
+            <div class="folio-mode-pills">
+              <button class="folio-pill-btn active" data-mode="single" onclick="App.setFlipbookMode(false)">Tek Sayfa</button>
+              <button class="folio-pill-btn" data-mode="spread" onclick="App.setFlipbookMode(true)">Çift Sayfa (Dergi Yayılımı)</button>
+            </div>
+            <span id="flipbookCounter" class="folio-counter-pill">Sayfa 1 / 9</span>
+          </div>
+
+          <div class="folio-toolbar-right">
+            <button class="folio-page-btn" id="flipbookZoomBtn" onclick="App.toggleFlipbookZoom()" title="Görünümü Büyüt / İlk Görünüme Dön">🔍 Genişlet (%130)</button>
+            <button class="folio-page-btn" onclick="App.prevFlipbookPage()">‹ Önceki Sayfa</button>
+            <button class="folio-page-btn" onclick="App.nextFlipbookPage()">Sonraki Sayfa ›</button>
+          </div>
+        </div>
+
+        <!-- Stage (Sahne) -->
+        <div class="folio-stage" id="flipbookStage">
+          <button class="folio-nav-arrow prev" onclick="App.prevFlipbookPage()" aria-label="Önceki Sayfa">‹</button>
+          
+          <div class="folio-book-wrapper" id="flipbookPageWrap" onclick="App.nextFlipbookPage()" title="Sonraki sayfaya geçmek için tıklayın">
+            <img src="/images/biz-kimiz/page-1.jpg" class="flipbook-page-img" alt="Belgin Saat Kurumsal Profil Sayfa 1">
+          </div>
+
+          <button class="folio-nav-arrow next" onclick="App.nextFlipbookPage()" aria-label="Sonraki Sayfa">›</button>
+        </div>
+
+        <!-- Thumbnail Carousel Rail (9 Sayfa) -->
+        <div class="folio-thumb-strip">
+          <div class="flipbook-thumb-item active" onclick="App.setFlipbookPage(1)" title="Sayfa 1: Kurumsal Kapak & Profil"><img src="/images/biz-kimiz/page-1.jpg" alt="Sayfa 1"><span class="thumb-lbl">01</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(2)" title="Sayfa 2: Marka Felsefesi & Vizyon"><img src="/images/biz-kimiz/page-2.jpg" alt="Sayfa 2"><span class="thumb-lbl">02</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(3)" title="Sayfa 3: Marka Hafızası (You Watch)"><img src="/images/biz-kimiz/page-3.jpg" alt="Sayfa 3"><span class="thumb-lbl">03</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(4)" title="Sayfa 4: Koleksiyon & Saatçilik Mirası"><img src="/images/biz-kimiz/page-4.jpg" alt="Sayfa 4"><span class="thumb-lbl">04</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(5)" title="Sayfa 5: Güven Protokolü & Teslim Disiplini"><img src="/images/biz-kimiz/page-5.jpg" alt="Sayfa 5"><span class="thumb-lbl">05</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(6)" title="Sayfa 6: Portföy İlişkisi (Takas & Geri Alım)"><img src="/images/biz-kimiz/page-6.jpg" alt="Sayfa 6"><span class="thumb-lbl">06</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(7)" title="Sayfa 7: Müşteri Akışı (Dijital & Showroom)"><img src="/images/biz-kimiz/page-7.jpg" alt="Sayfa 7"><span class="thumb-lbl">07</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(8)" title="Sayfa 8: Marka Görünürlüğü & Sponsorluk"><img src="/images/biz-kimiz/page-8.jpg" alt="Sayfa 8"><span class="thumb-lbl">08</span></div>
+          <div class="flipbook-thumb-item" onclick="App.setFlipbookPage(9)" title="Sayfa 9: Buca Showroom & İletişim"><img src="/images/biz-kimiz/page-9.jpg" alt="Sayfa 9"><span class="thumb-lbl">09</span></div>
+        </div>
+      </div>
+
+      <!-- 3. 4 CORE METRICS (TİCARİ DEĞERLER) -->
       <div class="biz-kimiz-metrics-strip">
         <div class="metric-card-lux">
           <span class="metric-icon">🏛️</span>
