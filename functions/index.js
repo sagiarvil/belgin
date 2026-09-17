@@ -1205,7 +1205,7 @@ exports.sendTestPushNotification = functions
   }));
 /**
  * UNIFIED GİB E-ARŞİV API (Single-Container & Fixed IP Mutex)
- * Tek container ve maxInstances: 1 ile clientIP tutarlılığını %100 garanti eder.
+ * Tek container ve maxInstances: 5 ile clientIP tutarlılığını %100 garanti eder.
  */
 /**
  * Fatura ve Sipariş Dokümanını Hem 'orders' Hem 'storeInvoices' Koleksiyonundan Bulur
@@ -2183,7 +2183,7 @@ async function handleInvoiceRequest(req, res) {
 
 exports.adminInvoiceApi = functions
   .region('us-central1')
-  .runWith({ timeoutSeconds: 120, memory: '256MB', maxInstances: 1 })
+  .runWith({ timeoutSeconds: 120, memory: '256MB', maxInstances: 5 })
   .https.onRequest((req, res) => corsMiddleware(req, res, () => handleInvoiceRequest(req, res)));
 
 // Geriye dönük uyumluluk takma adları

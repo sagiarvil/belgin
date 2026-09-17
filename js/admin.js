@@ -3108,7 +3108,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       let draftData = await draftRes.json();
 
       if (!draftData || !draftData.success) {
-        alert('❌ Taslak Fatura Uyarısı:\n\n' + (draftData?.message || 'GİB bağlantısı kurulamadı.') + '\n\n💡 İpucu: Başka bir sekmede earsivportal.efatura.gov.tr açık ise lütfen o sekmeden Güvenli Çıkış yapıp tekrar deneyiniz.');
+        alert('❌ Taslak Fatura Uyarısı:\n\n' + (draftData?.message || 'GİB Devlet Portalı yanıt vermiyor (Sunucu yoğun veya çökmüş olabilir).') + '\n\n💡 İpucu: Sol üstteki 🔌 GİB Sıfırla butonuna basıp 1-2 dakika sonra tekrar deneyiniz.');
         if (submitBtn) submitBtn.innerHTML = '<span>✅ Doğrula & Faturayı İmzala</span>';
         return;
       }
@@ -10238,7 +10238,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       try { draftData = JSON.parse(rawText); } catch (_) {}
 
       if (!draftData || !draftData.success) {
-        alert('❌ Taslak Fatura Uyarısı:\n\n' + (draftData?.message || 'GİB bağlantısı kurulamadı.'));
+        alert('❌ Taslak Fatura Uyarısı:\n\n' + (draftData?.message || 'GİB Devlet Portalı yanıt vermiyor (Sunucu yoğun veya çökmüş olabilir).'));
         if (submitBtn) submitBtn.innerHTML = '<span>✅ Doğrula & Faturayı İmzala</span>';
         return;
       }
