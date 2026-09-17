@@ -1,1 +1,3 @@
-Production deploy trigger for the 2026-09-05 Mücevherat and Canlı Fiyatlar visibility fix.
+Production deploy trigger for the 2026-09-17 SAATCHI - Semih Sonbahar gider pusulasi release.
+Feature commits: c5ee2c274cb54b4cf08b079698fb6179493a4c21, 957d9b129bc1a93c59c7dd3faa3c76aa2102753a.
+Triggered from ChatGPT /suite for production publish.
