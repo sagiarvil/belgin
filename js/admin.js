@@ -6018,8 +6018,77 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     // Şimdilik kaydet & kapat işlemi yapıp toast gösterelim. İlerde yazdır eklenebilir.
     this.closeExpenseNoteModal();
     
-    // Create a mock order to show in the list
     const eid = 'EXP-' + Date.now().toString().slice(-6);
+    
+    // Gider Pusulası Çıktısı Oluştur
+    const printWin = window.open('', '_blank', 'width=800,height=900');
+    if (printWin) {
+      const dateStr = new Date().toLocaleString('tr-TR');
+      printWin.document.write(`
+        <html>
+        <head>
+          <title>Gider Pusulası - ${eid}</title>
+          <style>
+            body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; padding: 40px; color: #1e293b; line-height: 1.6; }
+            .header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #0f172a; padding-bottom: 20px; }
+            .title { font-size: 24px; font-weight: bold; letter-spacing: 2px; }
+            .subtitle { font-size: 14px; color: #475569; margin-top: 5px; }
+            .row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; }
+            .row strong { min-width: 150px; display: inline-block; }
+            .footer { margin-top: 50px; display: flex; justify-content: space-between; }
+            .sign-box { text-align: center; width: 45%; }
+            .sign-line { border-bottom: 1px solid #000; margin-top: 60px; margin-bottom: 5px; }
+            @media print { body { padding: 0; } }
+          </style>
+        </head>
+        <body onload="window.print()">
+          <div class="header">
+            <div class="title">GİDER PUSULASI</div>
+            <div class="subtitle">Belgin Kuyumculuk - İzmir</div>
+            <div style="font-size:12px; margin-top:5px; color:#64748b;">Belge No: ${eid} | Tarih: ${dateStr}</div>
+          </div>
+          
+          <h3 style="margin-top:0;">Müşteri (Satıcı) Bilgileri</h3>
+          <div class="row"><strong>Adı Soyadı:</strong> <span>${name}</span></div>
+          <div class="row"><strong>T.C. Kimlik No:</strong> <span>${tckn}</span></div>
+          
+          <h3 style="margin-top:30px;">Alınan Emtia (Ürün) Bilgileri</h3>
+          <div class="row"><strong>Malın Cinsi:</strong> <span>${item}</span></div>
+          <div class="row"><strong>Ağırlık/Miktar:</strong> <span>${weight} Gram</span></div>
+          <div class="row"><strong>Toplam Tutar:</strong> <span>₺${Number(amount).toLocaleString('tr-TR', {minimumFractionDigits:2})}</span></div>
+          <div class="row"><strong>Gelir Vergisi (Stopaj):</strong> <span>%0 (Kıymetli Maden Özel Matrah)</span></div>
+          <div class="row"><strong>Ödeme Şekli:</strong> <span>${payMethod === 'NAKIT' ? 'Kasa Nakit Ödeme' : 'Banka Transferi'}</span></div>
+          
+          <div class="row" style="background:#f1f5f9; padding:15px 10px; margin-top:20px; font-weight:bold; font-size:16px;">
+            <strong>Net Ödenen Tutar:</strong> <span>₺${Number(amount).toLocaleString('tr-TR', {minimumFractionDigits:2})}</span>
+          </div>
+
+          <div class="footer">
+            <div class="sign-box">
+              <strong>Satıcı (Müşteri)</strong><br>
+              ${name}<br>
+              <div class="sign-line"></div>
+              <span style="font-size:12px;">İmza</span>
+            </div>
+            <div class="sign-box">
+              <strong>Alıcı Firma</strong><br>
+              Belgin Kuyumculuk<br>
+              <div class="sign-line"></div>
+              <span style="font-size:12px;">İmza / Kaşe</span>
+            </div>
+          </div>
+          
+          <div style="margin-top: 50px; font-size: 11px; text-align: center; color: #94a3b8; border-top: 1px dashed #cbd5e1; padding-top: 20px;">
+            İşbu belge, 213 sayılı Vergi Usul Kanunu uyarınca vergi mükellefi olmayan nihai tüketiciden yapılan kıymetli maden alımlarını tevsik etmek amacıyla düzenlenmiştir.
+          </div>
+        </body>
+        </html>
+      `);
+      printWin.document.close();
+    } else {
+      alert('Lütfen tarayıcınızın pop-up engelleyicisini kapatın.');
+    }
+
     if (!this.storeInvoices) this.storeInvoices = [];
     this.storeInvoices.unshift({
       id: eid,
@@ -6032,6 +6101,10 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       invoiceDate: new Date().toISOString().slice(0,10),
       items: [{ title: item, price: amount, quantity: 1, weight: weight }]
     });
+    
+    try {
+      localStorage.setItem('belgin_store_invoices', JSON.stringify(this.storeInvoices));
+    } catch (_) {}
     
     this.showToast('✅ Gider Pusulası (' + eid + ') başarıyla oluşturuldu.');
     if (this.currentTab === 'storeInvoices') {
