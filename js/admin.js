@@ -904,7 +904,10 @@ const AdminApp = {
         orders.forEach(o => {
           const isEft = Boolean(o.isManualEft || o.paymentMethod === 'HAVALE_EFT' || o.paymentMethod === 'HAVALE' || o.paymentMethod === 'EFT' || String(o.orderId || '').startsWith('BLG-EFT-') || o.bankEft);
           if (!isEft && o.isPaid && o.paymentStatus === 'PAID') {
-            const p = (o.provider || 'KUVEYTTURK').toUpperCase();
+            let p = (o.provider || 'KUVEYTTURK').toUpperCase();
+            if (p.includes('TOSLA') || p.includes('DIGER_POS') || p.includes('DİĞER_POS')) {
+              p = 'TOSLA';
+            }
             if (!provMap[p]) provMap[p] = { count: 0, sum: 0 };
             provMap[p].count++;
             provMap[p].sum += Number(o.totalAmount || 0);
@@ -1248,7 +1251,7 @@ const AdminApp = {
                 ${this.getWatchBadge(o)}
               </div>
               <div style="margin-top:3px;">
-                ${this.getProviderBadge(o.provider || (o.payment && o.payment.provider))}
+                ${this.getProviderBadge(o.provider || (o.payment && o.payment.provider), o.orderId)}
               </div>
             </td>
             <td style="font-size:12px; color:#334155; font-weight:600; white-space:nowrap; vertical-align:middle;">
@@ -1365,7 +1368,7 @@ const AdminApp = {
                 <span class="mobile-order-id">${o.orderId}</span>
                 ${this.getWatchBadge(o)}
                 ${statusBadge}
-                ${this.getProviderBadge(o.provider || (o.payment && o.payment.provider))}
+                ${this.getProviderBadge(o.provider || (o.payment && o.payment.provider), o.orderId)}
               </div>
               <time class="mobile-order-time" style="font-size:11.5px; font-weight:700; color:#334155;">${dateFormatted}</time>
             </div>
@@ -1503,36 +1506,42 @@ const AdminApp = {
     return '';
   },
 
-  getProviderBadge(provider) {
+  getProviderBadge(provider, orderId = '') {
     const p = String(provider || '').toUpperCase();
+    const oid = String(orderId || '').toUpperCase();
+    
+    const isSaatchi = oid.includes('SAATCHI') || oid.startsWith('STC');
+    const originBadge = isSaatchi 
+      ? `<span style="background:#EFF6FF; color:#1E40AF; border:1px solid #BFDBFE; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">SAATCHİ</span>`
+      : `<span style="background:#FFF7ED; color:#C2410C; border:1px solid #FFEDD5; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">BELGİN</span>`;
+
+    let providerBadge = '';
     if (p.includes('TOSLA')) {
-      return `<div style="margin-top:3px;"><span style="background:#FEE2E2; color:#DC2626; border:1px solid #FECACA; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🔴 TOSLA</span></div>`;
+      providerBadge = `<span style="background:#FEE2E2; color:#DC2626; border:1px solid #FECACA; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🔴 TOSLA</span>`;
+    } else if (p.includes('KUVEYT')) {
+      providerBadge = `<span style="background:#E0F2FE; color:#0284C7; border:1px solid #BAE6FD; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🔵 KUVEYT TÜRK</span>`;
+    } else if (p.includes('AKBANK')) {
+      providerBadge = `<span style="background:#FFEDD5; color:#EA580C; border:1px solid #FED7AA; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🟠 AKBANK</span>`;
+    } else if (p.includes('VAKIF')) {
+      providerBadge = `<span style="background:#FEF9C3; color:#854D0E; border:1px solid #FDE047; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🟡 VAKIFBANK</span>`;
+    } else if (p.includes('ZIRAAT') || p.includes('ZİRAAT')) {
+      providerBadge = `<span style="background:#DCFCE7; color:#166534; border:1px solid #86EFAC; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🟢 ZİRAAT KATILIM</span>`;
+    } else if (p.includes('PAYTR')) {
+      providerBadge = `<span style="background:#EDE9FE; color:#6D28D9; border:1px solid #DDD6FE; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🟣 PAYTR</span>`;
+    } else if (p.includes('HAVALE') || p.includes('EFT') || p.includes('FAST')) {
+      providerBadge = `<span style="background:#FEF3C7; color:#92400E; border:1px solid #FCD34D; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🏛️ HAVALE / EFT</span>`;
+    } else if (p.includes('YAPIKREDI') || p.includes('YAPI KREDİ')) {
+      providerBadge = `<span style="background:#EFF6FF; color:#1E40AF; border:1px solid #BFDBFE; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🏦 YAPI KREDİ</span>`;
+    } else if (p.includes('HALKBANK')) {
+      providerBadge = `<span style="background:#F0FDF4; color:#15803D; border:1px solid #BBF7D0; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🏛️ HALKBANK</span>`;
+    } else if (p) {
+      providerBadge = `<span style="background:#F1F5F9; color:#475569; border:1px solid #CBD5E1; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:700;">💳 ${p}</span>`;
     }
-    if (p.includes('KUVEYT')) {
-      return `<div style="margin-top:3px;"><span style="background:#E0F2FE; color:#0284C7; border:1px solid #BAE6FD; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🔵 KUVEYT TÜRK</span></div>`;
+
+    if (providerBadge || originBadge) {
+      return `<div style="margin-top:3px; display:inline-flex; gap:6px; align-items:center;">${providerBadge}${originBadge}</div>`;
     }
-    if (p.includes('AKBANK')) {
-      return `<div style="margin-top:3px;"><span style="background:#FFEDD5; color:#EA580C; border:1px solid #FED7AA; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🟠 AKBANK</span></div>`;
-    }
-    if (p.includes('VAKIF')) {
-      return `<div style="margin-top:3px;"><span style="background:#FEF9C3; color:#854D0E; border:1px solid #FDE047; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🟡 VAKIFBANK</span></div>`;
-    }
-    if (p.includes('ZIRAAT') || p.includes('ZİRAAT')) {
-      return `<div style="margin-top:3px;"><span style="background:#DCFCE7; color:#166534; border:1px solid #86EFAC; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🟢 ZİRAAT KATILIM</span></div>`;
-    }
-    if (p.includes('PAYTR')) {
-      return `<div style="margin-top:3px;"><span style="background:#EDE9FE; color:#6D28D9; border:1px solid #DDD6FE; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🟣 PAYTR</span></div>`;
-    }
-    if (p.includes('HAVALE') || p.includes('EFT') || p.includes('FAST')) {
-      return `<div style="margin-top:3px;"><span style="background:#FEF3C7; color:#92400E; border:1px solid #FCD34D; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🏛️ HAVALE / EFT</span></div>`;
-    }
-    if (p.includes('YAPIKREDI') || p.includes('YAPI KREDİ')) {
-      return `<div style="margin-top:3px;"><span style="background:#EFF6FF; color:#1E40AF; border:1px solid #BFDBFE; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🏦 YAPI KREDİ</span></div>`;
-    }
-    if (p.includes('HALKBANK')) {
-      return `<div style="margin-top:3px;"><span style="background:#F0FDF4; color:#15803D; border:1px solid #BBF7D0; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px;">🏛️ HALKBANK</span></div>`;
-    }
-    return p ? `<div style="margin-top:3px;"><span style="background:#F1F5F9; color:#475569; border:1px solid #CBD5E1; padding:2px 7px; border-radius:6px; font-size:10px; font-weight:700;">💳 ${p}</span></div>` : '';
+    return '';
   },
 
   // SADECE BANKA ADINI ETİKET ŞEKLİNDE GÖSTEREN FORMATLAYICI
@@ -2482,7 +2491,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
         method: 'POST',
         headers: this.getAuthHeaders(),
         body: JSON.stringify({
-          orderIds: pendingOrders.map(o => o.orderId),
+          orderIds: (Array.isArray(pendingOrders) ? pendingOrders : []).map(o => o.orderId),
           adminKey: this.adminPin
         })
       });
@@ -2494,7 +2503,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
         return;
       }
 
-      this.activeInvoiceOid = data.oid || '';
+      this.activeInvoiceChallengeId = data.challengeId || '';
       this.batchDraftItems = data.draftInvoices || [];
 
       if (submitBtn) {
@@ -3114,7 +3123,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       }
 
       this.activeInvoiceUuid = draftData.invoiceUuid;
-      this.activeInvoiceOid = draftData.oid || '';
+      this.activeInvoiceChallengeId = draftData.challengeId || '';
       if (submitBtn) submitBtn.innerHTML = '<span>✅ Doğrula & Faturayı İmzala</span>';
 
       if (summaryBox) {
@@ -3237,7 +3246,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
           headers: this.getAuthHeaders(),
           body: JSON.stringify({
             items: this.batchDraftItems || [],
-            oid: this.activeInvoiceOid || '',
+            challengeId: this.activeInvoiceChallengeId || '',
             smsCode: smsCode,
             adminKey: this.adminPin
           })
