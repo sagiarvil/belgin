@@ -2668,6 +2668,71 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     if (modal) modal.style.display = 'none';
   },
 
+  async promptManualInvoiceNumber() {
+    const order = this.activeOrderInvoiceTarget;
+    if (!order) {
+      alert('❌ Aktif sipariş seçili değil.');
+      return;
+    }
+
+    const orderId = order.orderId;
+    const custName = order.customerName || 'Müşteri';
+    const totalAmt = Number(order.totalAmount || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2 });
+
+    const promptText = "✍️ GİB RESMİ FATURA NUMARASINI GİRİN\n\n" +
+      "Sipariş: " + orderId + "\n" +
+      "Müşteri: " + custName + "\n" +
+      "Tutar: ₺" + totalAmt + "\n\n" +
+      "GİB Portalından veya Dijital Vergi Dairesinden bu sipariş için oluşturduğunuz resmi fatura numarasını (Örn: GIB2026000000088) yazınız:";
+    const invNo = prompt(promptText, order.invoiceNumber || order.faturaNo || "GIB2026");
+
+    if (!invNo || !invNo.trim()) return;
+
+    const cleanInvNo = invNo.trim().toUpperCase();
+    if (!cleanInvNo.startsWith('GIB') && cleanInvNo.length < 8) {
+      alert('⚠️ Geçerli bir GİB fatura numarası giriniz (Örnek: GIB2026000000088).');
+      return;
+    }
+
+    try {
+      const btn = document.getElementById('btnManualSetInvoice');
+      if (btn) { btn.disabled = true; btn.textContent = '⏳ Eşleştiriliyor...'; }
+
+      const invDate = document.getElementById('cfgModalInvoiceDate')?.value || new Date().toISOString().slice(0, 10);
+
+      const res = await fetch('/api/admin/invoice/manual-set?cb=1', {
+        method: 'POST',
+        headers: this.getAuthHeaders(),
+        body: JSON.stringify({
+          orderId: orderId,
+          invoiceNumber: cleanInvNo,
+          invoiceDate: invDate,
+          orderData: order
+        })
+      });
+
+      const data = await res.json();
+      if (!data || !data.success) {
+        throw new Error(data?.message || 'Eşleştirme başarısız oldu.');
+      }
+
+      alert("✅ Başarılı!\n\n" + cleanInvNo + " numaralı fatura bu siparişle başarıyla eşleştirildi ve Fatura: İmzalandı olarak onaylandı.");
+      this.closeOrderInvoiceModal();
+      
+      if (order) {
+        order.invoiceStatus = 'SIGNED';
+        order.invoiceNumber = cleanInvNo;
+        order.faturaNo = cleanInvNo;
+      }
+      this.renderOrders();
+    } catch (err) {
+      alert('❌ Hata: ' + err.message);
+    } finally {
+      const btn = document.getElementById('btnManualSetInvoice');
+      if (btn) { btn.disabled = false; btn.textContent = "✍️ GİB'den Kestim (Fatura No Eşle)"; }
+    }
+  },
+
   setOrderInvoiceConfigType(type) {
     this.orderInvoiceConfigType = type;
 
@@ -3117,7 +3182,13 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       let draftData = await draftRes.json();
 
       if (!draftData || !draftData.success) {
-        alert('❌ Taslak Fatura Uyarısı:\n\n' + (draftData?.message || 'GİB Devlet Portalı yanıt vermiyor (Sunucu yoğun veya çökmüş olabilir).') + '\n\n💡 İpucu: Sol üstteki 🔌 GİB Sıfırla butonuna basıp 1-2 dakika sonra tekrar deneyiniz.');
+        const msg = draftData?.message || 'GİB Devlet Portalı yanıt vermiyor.';
+        const isGibMaint = msg.includes('503') || msg.includes('502') || msg.includes('504') || msg.includes('bakımda') || msg.includes('hizmet dışı');
+        if (isGibMaint) {
+          alert('🏛️ GİB Bağlantı / Güvenlik Duvarı Engeli:\n\n' + msg);
+        } else {
+          alert('❌ Taslak Fatura Uyarısı:\n\n' + msg + '\n\n💡 İpucu: GİB Portalı üzerinde oturum çakışması varsa sol üstteki 🔌 GİB Sıfırla butonuna basıp 1-2 dakika sonra tekrar deneyiniz.');
+        }
         if (submitBtn) submitBtn.innerHTML = '<span>✅ Doğrula & Faturayı İmzala</span>';
         return;
       }
@@ -10307,7 +10378,13 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
 
 
       if (!draftData || !draftData.success) {
-        alert('❌ Taslak Fatura Uyarısı:\n\n' + (draftData?.message || 'GİB Devlet Portalı yanıt vermiyor (Sunucu yoğun veya çökmüş olabilir).'));
+        const msg = draftData?.message || 'GİB Devlet Portalı yanıt vermiyor.';
+        const isGibMaint = msg.includes('503') || msg.includes('502') || msg.includes('504') || msg.includes('bakımda') || msg.includes('hizmet dışı');
+        if (isGibMaint) {
+          alert('🏛️ GİB Bağlantı / Güvenlik Duvarı Engeli:\n\n' + msg);
+        } else {
+          alert('❌ Taslak Fatura Uyarısı:\n\n' + msg);
+        }
         if (submitBtn) submitBtn.innerHTML = '<span>✅ Doğrula & Faturayı İmzala</span>';
         return;
       }

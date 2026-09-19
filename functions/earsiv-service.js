@@ -541,6 +541,20 @@ let cachedSessionToken = null;
 let cachedCookie = '';
 let cachedTokenExpiresAt = 0;
 
+
+async function getEgressIp() {
+  try {
+    const res = await axios.get('https://api.ipify.org?format=json', { timeout: 3000 });
+    return res.data.ip;
+  } catch(e) {
+    return 'UNKNOWN_IP';
+  }
+}
+function hashForTelemetry(value) {
+  if (!value) return 'null';
+  return crypto.createHash('sha256').update(String(value)).digest('hex').slice(0, 16);
+}
+
 class EarsivPortalService {
   constructor(options = {}) {
     this.isTest = Boolean(options.isTest || process.env.GIB_IS_TEST === 'true');
@@ -604,11 +618,14 @@ class EarsivPortalService {
         parola: '1'
       });
 
+      
+      const egressIp = await getEgressIp();
+      const correlationId = crypto.randomUUID();
       const res = await axios.post(`${this.baseUrl}/assos-login`, payload, {
         httpsAgent: this.agent,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-          'Referer': `${this.baseUrl}/intragiris.html`,
+          'Referer': `${this.baseUrl.replace(/\/earsiv-services.*$/, '')}/intragiris.html`,
           'Origin': this.baseUrl.replace(/\/earsiv-services.*$/, ''),
           'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
         },
@@ -657,6 +674,9 @@ class EarsivPortalService {
       cachedTokenExpiresAt = 0;
       try { await getDb().collection('settings').doc('gib_session').delete(); } catch(e){}
       console.error('[EarsivService] Login Hatası:', err.message);
+      if (err.response && (err.response.status === 503 || err.response.status === 502 || err.response.status === 504)) {
+        throw new Error('GİB sistemi güvenlik duvarı (Cloudflare) nedeniyle sunucumuzun bağlantısını anlık reddetti (HTTP ' + err.response.status + '). GİB açık olsa dahi sistemsel IP güvenlik engeli devreye girmiş olabilir. Lütfen sol üstteki GİB Sıfırla butonuna basıp 1-2 dakika sonra tekrar deneyin.');
+      }
       throw err;
     }
   }
@@ -700,7 +720,7 @@ class EarsivPortalService {
 
       const reqHeaders = {
         'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-        'Referer': `${this.baseUrl}/index.jsp`
+        'Referer': `${this.baseUrl.replace(/\/earsiv-services.*$/, '')}/index.jsp`
       };
       if (cookie) reqHeaders['Cookie'] = cookie;
 
@@ -749,7 +769,12 @@ class EarsivPortalService {
       : cleanInvoiceProductName(orderData.productName || '22 Ayar Bilezik');
 
     const resolvedTotal = Number(orderData.totalAmount || orderData.total || (orderData.payment && orderData.payment.amount) || (orderData.amountInKurus ? orderData.amountInKurus / 100 : 0) || 0);
-    const breakdown = customBreakdown || calculateJewelryInvoiceBreakdown(resolvedTotal, itemsSummary);
+    let breakdown = customBreakdown || calculateJewelryInvoiceBreakdown(resolvedTotal, itemsSummary);
+    
+    // Eski kayıtlardan gelen customBreakdown'da items dizisi yoksa (Eski yapı), baştan hesapla
+    if (!breakdown || !Array.isArray(breakdown.items)) {
+      breakdown = calculateJewelryInvoiceBreakdown(resolvedTotal, itemsSummary, { items: orderData.items || [] });
+    }
 
     // Müşteri T.C. Kimlik No veya Vergi No kontrolü (Öncelik: customerIdentity, customer.identityNumber, customer.tckn, tc, vkn, taxNumber)
     const customerObj = (orderData && typeof orderData.customer === 'object' && orderData.customer !== null) ? orderData.customer : {};
@@ -865,10 +890,10 @@ class EarsivPortalService {
       eposta: customerEmail,
       websitesi: customerWebsite,
       iadeTable: [],
-      ozelMatrahTutari: Number(breakdown.hasGoldAmount) || 0,
+      ozelMatrahTutari: Number(breakdown?.hasGoldAmount) || 0,
       vergiCesidi: 'SIFIR',
-      malHizmetTable: breakdown.items.map(item => {
-        const itemQty = Math.max(1, Number(item.miktar || item.qty || 1));
+      malHizmetTable: (breakdown && Array.isArray(breakdown.items) ? breakdown.items : []).map(item => {
+        const itemQty = Math.max(1, Number(item?.miktar || item?.qty || 1));
         const explicitUnitPrice = Number(item.birimFiyat !== undefined ? item.birimFiyat : item.unitPrice);
         const explicitLineTotal = Number(item.malHizmetTutari !== undefined ? item.malHizmetTutari : (item.fiyat !== undefined ? item.fiyat : item.lineTotal));
 
@@ -957,6 +982,9 @@ class EarsivPortalService {
 
     try {
       const callid = crypto.randomUUID();
+      
+      const egressIp = await getEgressIp();
+      const correlationId = crypto.randomUUID();
       const dispatchBody = qs.stringify({
         cmd: 'EARSIV_PORTAL_FATURA_OLUSTUR',
         callid: callid,
@@ -1091,6 +1119,8 @@ class EarsivPortalService {
 
       // 2. RG_SMSONAY ile gerçek SMS gönderimini tetikle
       const callid = crypto.randomUUID();
+      const egressIp = await getEgressIp();
+      const correlationId = crypto.randomUUID();
       const dispatchBody = qs.stringify({
         cmd: 'EARSIV_PORTAL_SMSSIFRE_GONDER',
         callid: callid,
@@ -1110,7 +1140,31 @@ class EarsivPortalService {
         timeout: 60000
       });
 
+      
       const oid = res.data?.data?.oid || res.data?.data?.OID || '';
+      console.info(JSON.stringify({
+        phase: 'SMS_START',
+        correlationId,
+        tokenHash: hashForTelemetry(token),
+        oidHash: hashForTelemetry(oid),
+        egressIp,
+        instanceId: process.env.FUNCTION_INSTANCE_ID || 'local',
+        revisionId: process.env.K_REVISION || 'local',
+        timestamp: new Date().toISOString(),
+        status: res.status,
+        contentType: res.headers['content-type'],
+        GIB_CIP_SMS_START: res.headers['cip'] || null,
+        hasSetCookie: !!res.headers['set-cookie']
+      }));
+
+
+      if (res.data?.error || (res.data?.messages && res.data.messages.length > 0)) {
+        const gibErrMsg = res.data.messages?.[0]?.text || 'GİB SMS gönderirken bilinmeyen bir hata döndürdü.';
+        if (res.data.error || gibErrMsg.toLowerCase().includes('hata')) {
+          console.error('[EarsivService] GIB SMS Hatasi:', gibErrMsg, res.data);
+          throw new Error('GİB SMS Hatası: ' + gibErrMsg);
+        }
+      }
 
       return {
         success: true,
@@ -1163,7 +1217,7 @@ class EarsivPortalService {
     const defaultFormattedDate = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
     
     const uuidList = Array.isArray(invoiceUuid) ? invoiceUuid : [invoiceUuid];
-    const dataArray = uuidList.map(item => {
+    const dataArray = (Array.isArray(uuidList) ? uuidList : []).map(item => {
       const ettn = typeof item === 'object' ? (item.ettn || item.invoiceUuid) : item;
       const rawItemDate = typeof item === 'object' ? (item.belgeTarihi || item.invoiceDate || item.faturaTarihi) : (options.belgeTarihi || options.invoiceDate || options.faturaTarihi);
       const resolvedDate = rawItemDate ? formatToGibDate(rawItemDate) : defaultFormattedDate;
@@ -1187,22 +1241,12 @@ class EarsivPortalService {
       {
         cmd: '0lhozfib5410mp',
         pageName: 'RG_SMSONAY',
-        jp: signPayload
-      },
-      {
-        cmd: '0lhozfib5410mp',
-        pageName: 'RG_SMSONAY',
         jp: {
           DATA: dataArray.map(d => ({ belgeTuru: 'FATURA', ettn: d.ettn })),
           SIFRE: cleanSms,
           OID: oid || '',
           OPR: 1
         }
-      },
-      {
-        cmd: 'EARSIV_PORTAL_SMSSIFRE_DOGRULA',
-        pageName: 'RG_SMSONAY',
-        jp: signPayload
       }
     ];
 
@@ -1210,6 +1254,9 @@ class EarsivPortalService {
     for (const item of signCommands) {
       try {
         const callid = crypto.randomUUID();
+        
+        const egressIp = await getEgressIp();
+        const correlationId = crypto.randomUUID();
         const dispatchBody = qs.stringify({
           cmd: item.cmd,
           callid: callid,
@@ -1224,7 +1271,24 @@ class EarsivPortalService {
           timeout: 60000
         });
 
+        
         const dataObj = res.data?.data;
+        console.info(JSON.stringify({
+          phase: 'SMS_SIGN',
+          correlationId,
+          tokenHash: hashForTelemetry(token),
+          oidHash: hashForTelemetry(oid),
+          egressIp,
+          instanceId: process.env.FUNCTION_INSTANCE_ID || 'local',
+          revisionId: process.env.K_REVISION || 'local',
+          timestamp: new Date().toISOString(),
+          status: res.status,
+          contentType: res.headers['content-type'],
+          GIB_CIP_SMS_SIGN: res.headers['cip'] || null,
+          hasSetCookie: !!res.headers['set-cookie'],
+          responseBody: JSON.stringify(res.data).slice(0, 200)
+        }));
+
         const rawResponseStr = JSON.stringify(res.data || '');
         const msgText = String(dataObj || res.data?.messages?.[0]?.text || '');
         const isAlreadySigned = rawResponseStr.includes('Onaylı faturalar tekrar onaylanamaz') || msgText.includes('Onaylı faturalar');
