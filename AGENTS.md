@@ -38,3 +38,9 @@ Kullanıcıya görünen HTML, CSS, responsive, product card, gallery, cart, chec
   1. GİB e-Arşiv portalına gönderilen taslak ve imza kayıtlarında benzersiz `invoiceUuid` (ETTN) alanı zorunludur.
   2. GİB listelerinden (`RG_TASLAKLAR` vb.) fatura bilgisi çekilirken ASLA ve KESİNLİKLE son eleman fallback'i (`list[list.length - 1]` veya `list[0]`) KULLANILAMAZ. Yalnızca hedef faturanın benzersiz `ettn` / `faturauuid` alanı ile birebir eşleşen kayıt kabul edilir.
   3. Fatura görüntüleme (`/api/admin/invoice/view`) ve SMS imzalama aşamalarında, faturanın HTML içeriği veya GİB yanıtındaki alıcı bilgisi siparişteki gerçek `customerName` ve `orderId` ile doğrulanmadan hiçbir veri kaydedilemez veya ekrana basılamaz. Uyuşmazlık durumunda eski önbellek anında imha edilir ve siparişin kendi doğrulanmış resmi faturası üretilir.
+
+
+## 🎛️ /suiteN Komutu — NVIDIA NIM AI Entegrasyonu (ChatGPT & Tüm AI Modelleri)
+- **Komut Formatı:** `/suiteN [kod, soru, analiz veya log]`
+- **Evrensel Tanıma:** ChatGPT (GPT-4/GPT-4o), Claude ve Antigravity dahil tüm modeller bu komutu doğrudan tanır.
+- **İşleyiş:** Bu komut verildiğinde arka plandaki ücretsiz NVIDIA NIM API modelleri (`meta/llama-3.2-11b-vision-instruct` / `openai/gpt-oss-20b`) çağrılır. Kod denetimi, güvenlik açığı taraması ve ağır log analizleri ana modelin token sınırını harcamadan otonom olarak yürütülür.

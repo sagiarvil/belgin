@@ -133,3 +133,9 @@ Herhangi bir kullanıcı istemiyle veya varsayılan ajan davranışıyla çeliş
 6. **VIP Link /22 Kısayolu Kuralı (DEĞİŞMEZ KURAL — ASLA DEĞİŞTİRİLEMEZ SÖZLEŞME):** VIP link oluşturma tarafında `/22` yazıldığında veya `/22` kısayolu kullanıldığında karşıya çıkacak ürün İSTİSNASIZ ve YALNIZCA **"22 Ayar Bilezik"**tir. Bu `/22` kısayolunda başka hiçbir ürün yer alamaz.
 7. **GİB e-Arşiv Fatura & Müşteri İzolasyonu Sözleşmesi (DEĞİŞMEZ KURAL):** GİB taslak/imza/görüntüleme süreçlerinde asla `list[list.length - 1]` gibi rastgele veya son fatura fallback'i yapılamaz. Her fatura yalnızca kendi benzersiz `invoiceUuid` (ETTN) değeriyle eşleşir. Görüntülenen HTML ve belge numarası, siparişteki gerçek `customerName` ve `orderId` ile %100 uyuşmadıkça asla sunulamaz veya Firestore'a yazılamaz.
 
+
+
+## 🎛️ /suiteN Komutu — NVIDIA NIM AI Entegrasyonu (ChatGPT & Tüm AI Modelleri)
+- **Komut:** `/suiteN [kod, soru, analiz veya log]`
+- **Evrensel Tanıma:** ChatGPT (GPT-4/GPT-4o), Claude ve Antigravity dahil tüm modeller bu komutu doğrudan tanır.
+- **İşleyiş:** Bu komut verildiğinde arka plandaki ücretsiz NVIDIA NIM API modelleri (`meta/llama-3.2-11b-vision-instruct` / `openai/gpt-oss-20b`) çağrılır. Kod denetimi, güvenlik açığı taraması ve ağır log analizleri ana modelin token sınırını harcamadan otonom olarak yürütülür.

@@ -47,7 +47,7 @@ async function sendTelegramNotification(order, botToken = TELEGRAM_BOT_TOKEN, ch
   }
 
   const amount = Number(order.totalAmount || order.total || (order.payment && order.payment.amount) || 0);
-  const formattedAmount = formatCurrency(amount);
+        const formattedAmount = formatCurrency(amount);
   const customerName = (order.customer && order.customer.name) || order.customerName || 'Müşteri';
   const customerPhone = (order.customer && order.customer.phone) || order.customerPhone || '—';
   const customerIdentity = (order.customer && (order.customer.identityNumber || order.customer.identity)) || order.customerIdentity || '—';
@@ -59,14 +59,9 @@ async function sendTelegramNotification(order, botToken = TELEGRAM_BOT_TOKEN, ch
 
   const htmlMessage = [
     `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
-    `<b>✅ TAHSİL - ÖDEME OK</b>🟢🟢🟢🟢 🟢🟢`,
+    `<b>ÖDEME OK</b>`,
     `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
-    `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
-    `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
-    `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
-    `🟢 Tutar: <b>${escapeHtml(formattedAmount)}</b>`,
-    `🟢 Müşteri: <b>${escapeHtml(customerName)}</b>`,
-    `🟢 T.C. Kimlik / Pasaport: ${escapeHtml(customerIdentity)}`,
+    `🟢 <b>TUTAR: ${escapeHtml(formattedAmount)} TL</b>`,
     `🟢 POS / Banka: ${escapeHtml(provider)} (3D Secure)`,
     `🟢 Tarih: ${escapeHtml(timeStr)}`
   ].join('\n');
@@ -75,7 +70,7 @@ async function sendTelegramNotification(order, botToken = TELEGRAM_BOT_TOKEN, ch
 
   const inlineKeyboard = [
     [
-      { text: '📊 Yönetim Panelini Aç', url: 'https://www.belginkuyumculuk.com/admin.html' }
+      { text: '📊 Yönetim Panelini Aç', url: adminUrl }
     ]
   ];
 
@@ -121,6 +116,7 @@ const NOTIFY_DEDUPE_MS = 15 * 60 * 1000; // 15 dakika içinde aynı sipariş iç
  * Başarılı Kredi Kartı Ödemesi İçin Hem NTFY Hem Telegram Bildirimi Gönderir
  */
 async function sendPaymentPushNotification(order, options = {}) {
+  const adminUrl = order.source === "SAATCHI" ? "https://saatchi.watch/admin" : "https://www.belginkuyumculuk.com/admin.html";
   if (!order || typeof order !== 'object') {
     return { success: false, skipped: true, reason: 'INVALID_ORDER_DATA' };
   }
@@ -215,14 +211,9 @@ async function sendPaymentPushNotification(order, options = {}) {
   
   const ntfyMessage = [
     `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
-    `**✅ TAHSİL - ÖDEME OK**🟢🟢🟢🟢 🟢🟢`,
+    `𝗢̈𝗗𝗘𝗠𝗘 𝗢𝗞`,
     `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
-    `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
-    `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
-    `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
-    `🟢 Tutar: **${formattedAmount}**`,
-    `🟢 Müşteri: **${customerName}**`,
-    `🟢 T.C. Kimlik / Pasaport: ${customerIdentity}`,
+    `🟢 𝗧𝗨𝗧𝗔𝗥: ${formattedAmount} TL`,
     `🟢 POS / Banka: ${provider} (3D Secure)`,
     `🟢 Tarih: ${timeStr}`
   ].join('\n');
@@ -234,12 +225,12 @@ async function sendPaymentPushNotification(order, options = {}) {
     markdown: true,
     priority: 5,
     tags: ['moneybag', 'credit_card', 'bell', 'gem'],
-    click: 'https://www.belginkuyumculuk.com/admin.html',
+    click: adminUrl,
     actions: [
       {
         action: 'view',
         label: '📊 Yönetim Panelini Aç',
-        url: 'https://www.belginkuyumculuk.com/admin.html',
+        url: adminUrl,
         clear: true,
       },
     ],
@@ -315,6 +306,7 @@ const NOTIFIER_ERROR_MAP = Object.freeze({
  * Bot: @Belgin_kasa_pos_bot
  */
 async function sendPaymentFailureNotification(order, options = {}) {
+  const adminUrl = order.source === "SAATCHI" ? "https://saatchi.watch/admin" : "https://www.belginkuyumculuk.com/admin.html";
   if (!order || typeof order !== 'object') {
     return { success: false, skipped: true, reason: 'INVALID_ORDER_DATA' };
   }
@@ -396,47 +388,29 @@ async function sendPaymentFailureNotification(order, options = {}) {
 
   const htmlMessage = [
     `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 `,
-    `❌ DİKKAT RED - BAŞARISIZ POS ❌`,
+    `<b>DİKKAT RED</b>`,
     `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 `,
-    `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴`,
-    `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴`,
-    `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴`,
-    `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴`,
-    `🔴 DENENEN TUTAR: <b>${escapeHtml(formattedAmount)}</b>`,
+    `🔴 <b>TUTAR: ${escapeHtml(formattedAmount)} TL</b>`,
     `🔴 RED KODU: ${escapeHtml(upperRawCode)}`,
     `🔴 BANKA GEREKÇESİ: ${escapeHtml(upperRawMsg)}`,
-    `🔴 RESMİ ANLAMI: ${escapeHtml(upperOfficialMeaning)}`,
     `🔴 POS / BANKA: ${escapeHtml(upperProvider)}`,
-    `🔴MÜŞTERİ: <b>${escapeHtml(upperCustomerName)}</b>`,
-    ...(customerPhone !== '—' ? [`🔴 TELEFON: ${escapeHtml(customerPhone)}`] : []),
-    ...(customerIdentity !== '—' ? [`🔴 T.C. KİMLİK: ${escapeHtml(customerIdentity)}`] : []),
-    `🔴 ZAMAN: ${escapeHtml(timeStr)}`,
-    `━━━━━━━━━━━━━━━━━━━━━`
+    `🔴 ZAMAN: ${escapeHtml(timeStr)}`
   ].join('\n');
 
   const ntfyMessage = [
     `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 `,
-    `❌ DİKKAT RED - BAŞARISIZ POS ❌`,
+    `❌ 𝗗𝗜̇𝗞𝗞𝗔𝗧 𝗥𝗘𝗗`,
     `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 `,
-    `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴`,
-    `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴`,
-    `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴`,
-    `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴`,
-    `🔴 DENENEN TUTAR: **${formattedAmount}**`,
+    `🔴 𝗧𝗨𝗧𝗔𝗥: ${formattedAmount} TL`,
     `🔴 RED KODU: ${upperRawCode}`,
     `🔴 BANKA GEREKÇESİ: ${upperRawMsg}`,
-    `🔴 RESMİ ANLAMI: ${upperOfficialMeaning}`,
     `🔴 POS / BANKA: ${upperProvider}`,
-    `🔴MÜŞTERİ: **${upperCustomerName}**`,
-    ...(customerPhone !== '—' ? [`🔴 TELEFON: ${customerPhone}`] : []),
-    ...(customerIdentity !== '—' ? [`🔴 T.C. KİMLİK: ${customerIdentity}`] : []),
-    `🔴 ZAMAN: ${timeStr}`,
-    `━━━━━━━━━━━━━━━━━━━━━`
+    `🔴 ZAMAN: ${timeStr}`
   ].join('\n');
 
   const inlineKeyboard = [
     [
-      { text: '📊 YÖNETİM PANELİNDE İNCELE', url: 'https://www.belginkuyumculuk.com/admin.html' }
+      { text: '📊 YÖNETİM PANELİNDE İNCELE', url: adminUrl }
     ]
   ];
 
@@ -494,12 +468,12 @@ async function sendPaymentFailureNotification(order, options = {}) {
       markdown: true,
       priority: 4,
       tags: ['warning', 'x', 'credit_card'],
-      click: 'https://www.belginkuyumculuk.com/admin.html',
+      click: adminUrl,
       actions: [
         {
           action: 'view',
           label: '📊 Yönetim Panelini Aç',
-          url: 'https://www.belginkuyumculuk.com/admin.html',
+          url: adminUrl,
           clear: true,
         },
       ],

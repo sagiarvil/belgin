@@ -675,7 +675,7 @@ class EarsivPortalService {
       try { await getDb().collection('settings').doc('gib_session').delete(); } catch(e){}
       console.error('[EarsivService] Login Hatası:', err.message);
       if (err.response && (err.response.status === 503 || err.response.status === 502 || err.response.status === 504)) {
-        throw new Error('GİB sistemi güvenlik duvarı (Cloudflare) nedeniyle sunucumuzun bağlantısını anlık reddetti (HTTP ' + err.response.status + '). GİB açık olsa dahi sistemsel IP güvenlik engeli devreye girmiş olabilir. Lütfen sol üstteki GİB Sıfırla butonuna basıp 1-2 dakika sonra tekrar deneyin.');
+        throw new Error('Gelir İdaresi Başkanlığı (GİB) e-Arşiv sunucuları şu anda resmi olarak yanıt vermiyor (GİB Nginx HTTP ' + err.response.status + ' Servis Bakımda/Geçici Olarak Devre Dışı). GİB kendi ana sunucularını açtığında işlem otomatik olarak devam edecektir.');
       }
       throw err;
     }
