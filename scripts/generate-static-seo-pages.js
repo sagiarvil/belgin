@@ -139,20 +139,6 @@ function writeRoute(route, html) {
   fs.writeFileSync(path.join(dir, 'index.html'), html, 'utf8');
 }
 
-function deterministicReviewCount(id) {
-  let hash = 0;
-  const str = String(id || 'BLG');
-  for (let i = 0; i < str.length; i++) hash = (hash << 5) - hash + str.charCodeAt(i);
-  return 12 + (Math.abs(hash) % 36);
-}
-
-function deterministicRating(id) {
-  let hash = 0;
-  const str = String(id || 'BLG');
-  for (let i = 0; i < str.length; i++) hash = (hash << 3) - hash + str.charCodeAt(i);
-  const ratings = ['4.8', '4.9', '5.0', '4.9', '4.8', '5.0'];
-  return ratings[Math.abs(hash) % ratings.length];
-}
 
 function productSchema(p) {
   const url = productUrl(p);
@@ -166,29 +152,6 @@ function productSchema(p) {
     sku: String(p.reference || p.ref || p.id),
     mpn: String(p.reference || p.ref || p.id),
     brand: { '@type': 'Brand', name: String(p.brand || 'Belgin Kuyumculuk') },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: deterministicRating(p.id),
-      reviewCount: deterministicReviewCount(p.id),
-      bestRating: '5',
-      worstRating: '1'
-    },
-    review: [
-      {
-        '@type': 'Review',
-        reviewRating: {
-          '@type': 'Rating',
-          ratingValue: '5',
-          bestRating: '5'
-        },
-        author: {
-          '@type': 'Person',
-          name: 'Müşteri Doğrulanmış Değerlendirmesi'
-        },
-        datePublished: '2026-08-15',
-        reviewBody: `${String(p.brand || 'Belgin Kuyumculuk')} ürününü İzmir Buca showroomundan güvenle teslim aldım. Orijinallik sertifikası, ekspertiz ve paketleme kusursuz.`
-      }
-    ],
     offers: {
       '@type': 'Offer',
       url,
