@@ -1,6 +1,6 @@
 // ==========================================================
 // BELGİN SAAT MAGAZİN — 100% EDİTORYAL SAAT İÇERİKLERİ
-// Sürüm: 2026-09-19 (Güvenlik, Logo & Entity Filtreli)
+// Sürüm: 2026-09-20 (Güvenlik, Logo & Entity Filtreli)
 // ==========================================================
 
 const MAGAZINE_ARTICLES = [
