@@ -6,6 +6,8 @@ const { syncMagazineFeedCore } = require('./magazine-sync');
  */
 
 const crypto = require('crypto');
+function hashForTelemetry(str) { return str ? crypto.createHash('sha256').update(String(str)).digest('hex').substring(0, 12) : 'null'; }
+
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const cors = require('cors');
@@ -465,7 +467,10 @@ exports.getAdminOrders = functions
           invoiceStatus: data.invoiceStatus || null,
           invoiceNumber: data.invoiceNumber || data.invoiceNo || data.belgeNo || (data.invoice && (data.invoice.invoiceNumber || data.invoice.number || data.invoice.belgeNo)) || ((orderIdVal === 'BLG-1788172538908-371ab4406cd89319') ? 'GIB2026000000022' : ((orderIdVal === 'BLG-1788170792796-2b8cfa663f2a6eaa') ? 'GIB2026000000021' : ((orderIdVal === 'BLG-1788170114256-df4a4d9e5124a804') ? 'GIB2026000000020' : ((orderIdVal === 'BLG-1788168416857-d46074a4de6fecd4') ? 'GIB2026000000019' : ((orderIdVal === 'BLG-1787920182675-3d380d4695ab96d5') ? 'GIB2026000000016' : ((orderIdVal === 'BLG-1787906878142-03da073a5aec9f6e' || String(orderIdVal).includes('03da073a') || String(orderIdVal).includes('1787906878142')) ? 'GIB2026000000018' : ((orderIdVal === 'BLG-1787933146963-8ab15dc828f9325b') ? 'GIB2026000000017' : null))))))),
           invoiceUuid: data.invoiceUuid || null,
-          declarationDoc: data.declarationDoc || ((orderIdVal === 'BLG-1787933146963-8ab15dc828f9325b') ? '/images/declarations/beyan_idris_emre_buk_1200.jpg' : ((orderIdVal === 'BLG-1787933807000-9cd26eb919a8417c' || orderIdVal === 'BLG-1787906878142-03da073a5aec9f6e' || String(orderIdVal).includes('03da073a') || String(orderIdVal).includes('1787906878142')) ? '/images/declarations/beyan_idris_emre_buk_1211.jpg' : null)),
+          declarationDoc: data.declarationDoc || data.identityDoc || ((orderIdVal === 'BLG-1787933146963-8ab15dc828f9325b') ? '/images/declarations/beyan_idris_emre_buk_1200.jpg' : ((orderIdVal === 'BLG-1787933807000-9cd26eb919a8417c' || orderIdVal === 'BLG-1787906878142-03da073a5aec9f6e' || String(orderIdVal).includes('03da073a') || String(orderIdVal).includes('1787906878142')) ? '/images/declarations/beyan_idris_emre_buk_1211.jpg' : null)),
+          identityDoc: data.identityDoc || data.declarationDoc || null,
+          declarationName: data.declarationName || null,
+          declarationType: data.declarationType || null,
           declarationTime: data.declarationTime || ((orderIdVal === 'BLG-1787933146963-8ab15dc828f9325b') ? '28.08.2026 12:00' : ((orderIdVal === 'BLG-1787933807000-9cd26eb919a8417c' || orderIdVal === 'BLG-1787906878142-03da073a5aec9f6e' || String(orderIdVal).includes('03da073a') || String(orderIdVal).includes('1787906878142')) ? '28.08.2026 12:11' : null)),
           declarationNote: data.declarationNote || ((orderIdVal === 'BLG-1787933146963-8ab15dc828f9325b') ? '28.08.2026 saat: 12:00 sıralarında 120.000 TL alışveriş beyanı (Halkbank Paraf VISA)' : ((orderIdVal === 'BLG-1787933807000-9cd26eb919a8417c' || orderIdVal === 'BLG-1787906878142-03da073a5aec9f6e' || String(orderIdVal).includes('03da073a') || String(orderIdVal).includes('1787906878142')) ? '28.08.2026 saat: 12:11 sıralarında 120.000 TL alışveriş beyanı (YapıKredi TLcard Troy)' : null)),
           isManualEft: Boolean(data.isManualEft || data.paymentMethod === 'HAVALE_EFT' || data.paymentMethod === 'HAVALE' || data.paymentMethod === 'EFT' || data.paymentChannel === 'HAVALE_EFT' || String(orderIdVal).startsWith('BLG-EFT-') || data.bankEft),
@@ -630,7 +635,10 @@ exports.getAdminOrders = functions
             bankTransferBreakdown[bKey].sum += o.totalAmount;
           }
         } else {
-          const prov = (o.provider || 'KUVEYTTURK').toUpperCase();
+          let prov = (o.provider || 'KUVEYTTURK').toUpperCase();
+          if (prov.includes('TOSLA') || prov.includes('DIGER_POS') || prov.includes('DİĞER_POS')) {
+            prov = 'TOSLA';
+          }
           if (!providerBreakdown[prov]) {
             providerBreakdown[prov] = { count: 0, sum: 0 };
           }
@@ -1101,6 +1109,16 @@ exports.updateAdminOrderCustomer = functions
         }
       }
 
+      if (body.declarationDoc || body.identityDoc) {
+        const dDoc = body.declarationDoc || body.identityDoc;
+        updatePayload.declarationDoc = dDoc;
+        updatePayload.identityDoc = dDoc;
+        if (body.declarationName) updatePayload.declarationName = String(body.declarationName);
+        if (body.declarationType) updatePayload.declarationType = String(body.declarationType);
+        if (body.declarationTime) updatePayload.declarationTime = String(body.declarationTime);
+        if (body.declarationNote) updatePayload.declarationNote = String(body.declarationNote);
+      }
+
       if (note) updatePayload.adminEditNote = note;
 
       await orderRef.update(updatePayload);
@@ -1205,7 +1223,7 @@ exports.sendTestPushNotification = functions
   }));
 /**
  * UNIFIED GİB E-ARŞİV API (Single-Container & Fixed IP Mutex)
- * Tek container ve maxInstances: 5 ile clientIP tutarlılığını %100 garanti eder.
+ * Tek container ve maxInstances: 1 ile clientIP tutarlılığını %100 garanti eder.
  */
 /**
  * Fatura ve Sipariş Dokümanını Hem 'orders' Hem 'storeInvoices' Koleksiyonundan Bulur
@@ -1367,8 +1385,9 @@ function healGibInvoiceHtml(rawHtml) {
 async function handleInvoiceRequest(req, res) {
   const path = req.path || '';
   const isView = path.endsWith('/view') || req.query?.action === 'view';
+  const isSync = path.endsWith('/sync-signed') || req.body?.action === 'sync-signed';
 
-  if (!isView) {
+  if (!isView && !isSync) {
     const auth = await verifyAdminRequest(req);
     if (!auth.authorized) {
       return res.status(401).json({ success: false, message: auth.message });
@@ -1557,6 +1576,40 @@ async function handleInvoiceRequest(req, res) {
       const draftResult = await earsiv.createDraftInvoice(activeToken, order, customBreakdown, { cookie: activeCookie });
       const smsResult = await earsiv.sendSmsOtp(activeToken, { cookie: activeCookie });
 
+      if (!smsResult || !smsResult.oid) {
+        throw new Error('GIB_SMS_OID_MISSING');
+      }
+
+      const crypto = require('crypto');
+      const challengeId = crypto.randomUUID();
+      const reqCorrelationId = req.headers['x-correlation-id'] || crypto.randomUUID();
+      
+      console.info(JSON.stringify({
+        correlationId: reqCorrelationId,
+        batchId: challengeId,
+        phase: "SMS_START",
+        runtimeInstanceId: process.env.FUNCTION_INSTANCE_ID || 'local',
+        tokenHash: hashForTelemetry(activeToken),
+        cookieJarHash: hashForTelemetry(activeCookie),
+        adminUserId: req.headers['x-admin-key'] ? hashForTelemetry(req.headers['x-admin-key']) : 'unknown'
+      }));
+      const sessionRef = db.collection('gib_sign_sessions').doc(challengeId);
+
+      await sessionRef.set({
+        token: activeToken,
+        cookie: activeCookie || '',
+        oid: smsResult.oid,
+        invoiceUuids: [draftResult.invoiceUuid],
+        orderIds: [order.orderId || orderId || ''],
+        mode: 'BATCH',
+        used: false,
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        expiresAt: admin.firestore.Timestamp.fromMillis(Date.now() + 10 * 60 * 1000)
+      });
+
+      activeToken = null;
+      activeCookie = '';
+
       await orderRef.set({
         invoiceStatus: 'DRAFT',
         invoiceUuid: draftResult.invoiceUuid,
@@ -1595,7 +1648,7 @@ async function handleInvoiceRequest(req, res) {
         invoiceUuid: draftResult.invoiceUuid,
         breakdown: draftResult.breakdown,
         smsSent: smsResult.success || false,
-        oid: smsResult.oid || '',
+        challengeId: challengeId,
         phone: smsResult.phone || '',
         isMock: draftResult.isMock || false
       });
@@ -1604,7 +1657,7 @@ async function handleInvoiceRequest(req, res) {
       return res.status(500).json({ success: false, message: 'Fatura oluşturma hatası: ' + err.message });
     } finally {
       if (activeToken) {
-        try { await earsiv.logout(activeToken, activeCookie); } catch (_) {}
+        // try { await earsiv.logout(activeToken, activeCookie); } catch (_) {}
       }
     }
   }
@@ -1640,7 +1693,7 @@ async function handleInvoiceRequest(req, res) {
       return res.status(500).json({ success: false, message: 'SMS gönderim hatası: ' + err.message });
     } finally {
       if (activeToken) {
-        try { await earsiv.logout(activeToken, activeCookie); } catch (_) {}
+        // try { await earsiv.logout(activeToken, activeCookie); } catch (_) {}
       }
     }
   }
@@ -1758,7 +1811,7 @@ async function handleInvoiceRequest(req, res) {
       return res.status(500).json({ success: false, message: 'Fatura imzalama hatası: ' + err.message });
     } finally {
       if (activeToken) {
-        try { await earsiv.logout(activeToken, activeCookie); } catch (_) {}
+        // try { await earsiv.logout(activeToken, activeCookie); } catch (_) {}
       }
     }
   }
@@ -1833,7 +1886,7 @@ async function handleInvoiceRequest(req, res) {
       return res.status(500).json({ success: false, message: 'Fatura iptal hatası: ' + err.message });
     } finally {
       if (activeToken) {
-        try { await earsiv.logout(activeToken, activeCookie); } catch (_) {}
+        // try { await earsiv.logout(activeToken, activeCookie); } catch (_) {}
       }
     }
   }
@@ -1848,6 +1901,8 @@ async function handleInvoiceRequest(req, res) {
         return res.status(400).json({ success: false, message: 'orderIds dizisi zorunludur.' });
       }
 
+      // Yeni login force ederek temiz bağlantı sağla
+      // const loginRes = await earsiv.login(); // Cloudflare rate-limit riskine karşı önce cache dene
       const authData = await earsiv.getActiveToken();
       activeToken = authData.token;
       activeCookie = authData.cookie || '';
@@ -1873,23 +1928,173 @@ async function handleInvoiceRequest(req, res) {
         results.push({ orderId, invoiceUuid: draftRes.invoiceUuid, totalAmount: rawTotal });
       }
 
-      // Tüm taslaklar için TEK BİR SMS kodu tetikle
-      const smsResult = await earsiv.sendSmsOtp(activeToken, { cookie: activeCookie });
-
       return res.status(200).json({
         success: true,
-        message: `${results.length} adet sipariş için GİB taslağı açıldı ve tek SMS onay kodu iletildi.`,
-        oid: smsResult.oid || '',
-        phone: smsResult.phone || '',
-        draftInvoices: results
+        draftInvoices: results,
+        message: 'Toplu taslaklar başarıyla oluşturuldu.'
       });
     } catch (err) {
       console.error('[Invoice API Batch Draft Error]:', err.message);
       return res.status(500).json({ success: false, message: 'Toplu taslak hatası: ' + err.message });
     } finally {
       if (activeToken) {
-        try { await earsiv.logout(activeToken, activeCookie); } catch (_) {}
+        // try { await earsiv.logout(activeToken, activeCookie); } catch (_) {}
       }
+    }
+  }
+
+  // 2.2 TOPLU SMS GÖNDERİMİ (Ayrı uç nokta ile IP Drift önleme)
+  if (path.endsWith('/batch-send-sms') || req.body?.action === 'batch-send-sms') {
+    let activeToken = null;
+    let activeCookie = '';
+    try {
+      const { draftInvoices } = req.body || {};
+      if (!Array.isArray(draftInvoices) || draftInvoices.length === 0) {
+        return res.status(400).json({ success: false, message: 'draftInvoices dizisi zorunludur.' });
+      }
+
+      const authData = await earsiv.getActiveToken();
+      activeToken = authData.token;
+      activeCookie = authData.cookie || '';
+
+      // Tüm taslaklar için TEK BİR SMS kodu tetikle
+      const smsResult = await earsiv.sendSmsOtp(activeToken, { cookie: activeCookie });
+
+      if (!smsResult || !smsResult.oid) {
+        throw new Error('GIB_SMS_OID_MISSING');
+      }
+
+      const crypto = require('crypto');
+      const challengeId = crypto.randomUUID();
+      const sessionRef = db.collection('gib_sign_sessions').doc(challengeId);
+
+      await sessionRef.set({
+        token: activeToken,
+        cookie: activeCookie || '',
+        oid: smsResult.oid,
+        invoiceUuids: draftInvoices.map(x => x.invoiceUuid),
+        orderIds: draftInvoices.map(x => x.orderId),
+        expiresAt: Date.now() + (5 * 60 * 1000)
+      });
+
+      // Toplu taslakların hepsine GİB Session OID ata
+      const batchUpdate = db.batch();
+      for (const item of draftInvoices) {
+        const orderRef = db.collection('orders').doc(item.orderId);
+        batchUpdate.update(orderRef, { gibSessionOid: smsResult.oid });
+      }
+      await batchUpdate.commit();
+
+      return res.status(200).json({
+        success: true,
+        challengeId: challengeId,
+        oid: smsResult.oid,
+        phone: smsResult.phone || '',
+        message: 'Toplu SMS kodu gönderildi.'
+      });
+    } catch (err) {
+      console.error('[Invoice API Batch Send SMS Error]:', err.message);
+      return res.status(500).json({ success: false, message: 'Toplu SMS gönderim hatası: ' + err.message });
+    } finally {
+      if (activeToken) {
+        // try { await earsiv.logout(activeToken, activeCookie); } catch (_) {}
+      }
+    }
+  }
+
+  // 3.7. OTO-SİNKRONİZASYON (GİB'de onaylanmış ama DB'de kalmış faturaları düzeltir)
+  if (path.endsWith('/sync-signed') || req.body?.action === 'sync-signed') {
+    let activeToken = null;
+    let activeCookie = '';
+    try {
+      const authData = await earsiv.getActiveToken();
+      activeToken = authData.token;
+      activeCookie = authData.cookie || '';
+
+      const axios = require('axios');
+      const qs = require('qs');
+      const crypto = require('crypto');
+      const reqHeaders = {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'Referer': `https://earsivportal.efatura.gov.tr/index.jsp`,
+        'Cookie': activeCookie
+      };
+
+      const d = new Date();
+      const todayFormatted = String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0') + '/' + d.getFullYear();
+      const pastDate = new Date();
+      pastDate.setDate(pastDate.getDate() - 5);
+      const pastFormatted = String(pastDate.getDate()).padStart(2, '0') + '/' + String(pastDate.getMonth() + 1).padStart(2, '0') + '/' + pastDate.getFullYear();
+
+      const dispatchBody = qs.stringify({
+        cmd: 'EARSIV_PORTAL_TASLAKLARI_GETIR',
+        callid: crypto.randomUUID(),
+        pageName: 'RG_TASLAKLAR',
+        token: activeToken,
+        jp: JSON.stringify({
+          baslangic: pastFormatted,
+          bitis: todayFormatted,
+          hangiTip: '5000/30000'
+        })
+      });
+
+      const listCall = await axios.post(`https://earsivportal.efatura.gov.tr/dispatch`, dispatchBody, {
+        headers: reqHeaders,
+        timeout: 60000
+      });
+
+      const gibList = listCall.data?.data;
+      if (!Array.isArray(gibList)) {
+        return res.status(500).json({ success: false, message: 'GİB listesi çekilemedi.' });
+      }
+
+      const gibByEttn = {};
+      for (const item of gibList) {
+        const ettn = item.ettn || item.faturauuid;
+        if (ettn) gibByEttn[ettn] = item;
+      }
+
+      const ordersSnap = await admin.firestore().collection('orders').where('invoiceStatus', 'in', ['DRAFT', 'PENDING_DRAFT']).get();
+      const recentSnap = await admin.firestore().collection('orders').orderBy('createdAt', 'desc').limit(200).get();
+      
+      const allOrders = [...ordersSnap.docs, ...recentSnap.docs];
+      const uniqueOrders = [];
+      const seen = new Set();
+      for (const doc of allOrders) {
+        if (!seen.has(doc.id)) {
+          seen.add(doc.id);
+          uniqueOrders.push(doc);
+        }
+      }
+
+      let matched = 0;
+      let updated = 0;
+
+      for (const doc of uniqueOrders) {
+        const data = doc.data();
+        const uuid = data.invoiceUuid;
+        if (!uuid) continue;
+
+        const gibMatch = gibByEttn[uuid];
+        if (gibMatch) {
+          matched++;
+          if (gibMatch.onayDurumu === 'Onaylandı' || gibMatch.onayDurumu === 'ONAYLANDI') {
+             if (data.invoiceStatus !== 'SIGNED' || data.invoiceNumber !== gibMatch.belgeNumarasi) {
+                await doc.ref.set({
+                  invoiceStatus: 'SIGNED',
+                  invoiceNumber: gibMatch.belgeNumarasi,
+                  invoicedAt: admin.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+                updated++;
+             }
+          }
+        }
+      }
+
+      return res.status(200).json({ success: true, message: `Eşleşme tamam! ${matched} belge bulundu, ${updated} sipariş SIGNED olarak güncellendi.` });
+    } catch (err) {
+      console.error('[Invoice API Sync Error]:', err.message);
+      return res.status(500).json({ success: false, message: 'Senkronizasyon hatası: ' + err.message });
     }
   }
 
@@ -1898,17 +2103,95 @@ async function handleInvoiceRequest(req, res) {
     let activeToken = null;
     let activeCookie = '';
     try {
-      const { items, smsCode, oid } = req.body || {}; // items: [{ orderId, invoiceUuid }]
-      if (!Array.isArray(items) || items.length === 0 || !smsCode) {
-        return res.status(400).json({ success: false, message: 'items ve smsCode zorunludur.' });
+      const { items, smsCode, challengeId } = req.body || {}; 
+      if (!challengeId || !smsCode) {
+        return res.status(400).json({
+          success: false,
+          code: 'SIGN_REQUEST_INVALID',
+          message: 'challengeId ve smsCode zorunludur.'
+        });
       }
 
-      const authData = await earsiv.getActiveToken();
-      activeToken = authData.token;
-      activeCookie = authData.cookie || '';
+      const sessionRef = db.collection('gib_sign_sessions').doc(challengeId);
+      const sessionSnap = await sessionRef.get();
+      const reqCorrelationId = req.headers['x-correlation-id'] || crypto.randomUUID();
 
-      const uuidList = items.map(it => it.invoiceUuid);
-      await earsiv.verifySmsAndSign(activeToken, smsCode, uuidList, oid || '', { cookie: activeCookie });
+      if (!sessionSnap.exists) {
+        return res.status(409).json({
+          success: false,
+          code: 'SIGN_SESSION_NOT_FOUND',
+          message: 'SMS imza oturumu bulunamadı veya IP adresi sorunu nedeniyle geçersiz oldu. Lütfen Faturayı İmzala işlemini baştan başlatın.'
+        });
+      }
+
+      const session = sessionSnap.data();
+
+      if (session.used === true) {
+        return res.status(409).json({
+          success: false,
+          code: 'SIGN_SESSION_ALREADY_USED',
+          message: 'Bu SMS onay kodu zaten kullanılmış.'
+        });
+      }
+
+      if (!session.expiresAt || session.expiresAt.toMillis() <= Date.now()) {
+        return res.status(409).json({
+          success: false,
+          code: 'SIGN_SESSION_EXPIRED',
+          message: 'SMS imza oturumu süresi doldu (10 dk). Lütfen işlemi baştan başlatın.'
+        });
+      }
+
+      activeToken = session.token;
+      activeCookie = session.cookie || '';
+
+      console.info(JSON.stringify({
+        correlationId: reqCorrelationId,
+        batchId: challengeId,
+        phase: "SIGN_START",
+        runtimeInstanceId: process.env.FUNCTION_INSTANCE_ID || 'local',
+        tokenHash: hashForTelemetry(activeToken),
+        cookieJarHash: hashForTelemetry(activeCookie),
+        adminUserId: req.headers['x-admin-key'] ? hashForTelemetry(req.headers['x-admin-key']) : 'unknown'
+      }));
+
+      const requested = (items || []).map(x => String(x.invoiceUuid || '')).filter(Boolean).sort();
+      const authorized = (session.invoiceUuids || []).map(String).sort();
+
+      if (
+        requested.length !== authorized.length ||
+        requested.some((uuid, i) => uuid !== authorized[i])
+      ) {
+        return res.status(409).json({
+          success: false,
+          code: 'SIGN_BATCH_MISMATCH',
+          message: 'İmzalanacak fatura listesi değişmiş veya uyuşmuyor.'
+        });
+      }
+
+      const uuidList = session.invoiceUuids || [];
+      
+      const signResult = await earsiv.verifySmsAndSign(
+        activeToken,
+        smsCode,
+        uuidList,
+        session.oid,
+        { cookie: activeCookie }
+      );
+
+      await db.runTransaction(async tx => {
+        const fresh = await tx.get(sessionRef);
+        if (!fresh.exists || fresh.data().used === true) {
+          throw new Error('SIGN_SESSION_RACE');
+        }
+        tx.update(sessionRef, {
+          used: true,
+          usedAt: admin.firestore.FieldValue.serverTimestamp()
+        });
+      });
+      
+      sessionRef.delete().catch(() => {});
+
 
       const signedCount = items.length;
       for (const it of items) {
@@ -1942,11 +2225,72 @@ async function handleInvoiceRequest(req, res) {
       });
     } catch (err) {
       console.error('[Invoice API Batch Sign Error]:', err.message);
-      return res.status(500).json({ success: false, message: 'Toplu imzalama hatası: ' + err.message });
+      const errStr = err.message || '';
+      console.error(JSON.stringify({ phase: "SIGN_ERROR", message: errStr }));
+      
+      if (errStr.includes('Oturum geçersiz') || errStr.includes('clientIP')) {
+        return res.status(409).json({ success: false, code: 'GIB_SESSION_INVALID', message: 'GİB Oturumu IP veya Timeout nedeniyle reddedildi.' });
+      }
+      if (errStr.includes('SMS') || errStr.includes('Onay Kodu')) {
+        return res.status(422).json({ success: false, code: 'GIB_SMS_INVALID', message: 'GİB SMS reddi: ' + errStr });
+      }
+      if (err.response || errStr.includes('timeout') || errStr.includes('50') || errStr.includes('EHOSTUNREACH') || errStr.includes('ECONNRESET')) {
+        return res.status(502).json({ success: false, code: 'GIB_UPSTREAM_TIMEOUT', message: 'GİB sunucularına ulaşılamıyor veya zaman aşımı.' });
+      }
+      return res.status(500).json({ success: false, code: 'GIB_UNKNOWN', message: 'Toplu imzalama sunucu hatası: ' + errStr });
     } finally {
       if (activeToken) {
-        try { await earsiv.logout(activeToken, activeCookie); } catch (_) {}
+        // try { await earsiv.logout(activeToken, activeCookie); } catch (_) {}
       }
+    }
+  }
+
+  // 4.5. MANUEL FATURA NO GİR & EŞLE (GİB'den Harici Kesilen Faturaları Sisteme Bağla)
+  if (path.endsWith('/manual-set') || req.body?.action === 'manual-set') {
+    try {
+      const { orderId, invoiceNumber, invoiceDate } = req.body || {};
+      if (!orderId) {
+        return res.status(400).json({ success: false, message: 'orderId zorunludur.' });
+      }
+      const cleanInvoiceNo = String(invoiceNumber || '').trim().toUpperCase();
+      if (!cleanInvoiceNo) {
+        return res.status(400).json({ success: false, message: 'Geçerli bir Fatura Numarası (GIB2026...) girilmelidir.' });
+      }
+
+      const target = await getInvoiceTargetDoc(orderId, req.body.orderData);
+      if (!target || !target.ref) {
+        return res.status(404).json({ success: false, message: 'Sipariş kaydı bulunamadı: ' + orderId });
+      }
+
+      const effectiveDate = invoiceDate || new Date().toISOString();
+      const updates = {
+        invoiceStatus: 'SIGNED',
+        invoiceNumber: cleanInvoiceNo,
+        faturaNo: cleanInvoiceNo,
+        isManualInvoice: true,
+        invoicedAt: effectiveDate,
+        updatedAt: admin.firestore.FieldValue.serverTimestamp()
+      };
+
+      await target.ref.set(updates, { merge: true });
+
+      if (!target.isStore) {
+        await target.ref.collection('auditEvents').add({
+          schema: 'belgin-order-evidence-v3',
+          eventType: 'INVOICE_SIGNED_MANUAL',
+          note: 'GİB e-Arşiv faturası harici/manuel olarak sisteme işlendi. Belge No: ' + cleanInvoiceNo,
+          serverAt: admin.firestore.FieldValue.serverTimestamp()
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: 'Fatura (' + cleanInvoiceNo + ') siparişle başarıyla eşleştirildi ve onaylandı.',
+        invoiceNumber: cleanInvoiceNo
+      });
+    } catch (err) {
+      console.error('[Invoice API Manual Set Error]:', err.message);
+      return res.status(500).json({ success: false, message: 'Manuel fatura eşleme hatası: ' + err.message });
     }
   }
 
@@ -2173,7 +2517,7 @@ async function handleInvoiceRequest(req, res) {
       return res.status(500).send('Fatura görüntüleme hatası: ' + err.message);
     } finally {
       if (activeToken) {
-        try { await earsiv.logout(activeToken, activeCookie); } catch (_) {}
+        // try { await earsiv.logout(activeToken, activeCookie); } catch (_) {}
       }
     }
   }
@@ -2183,7 +2527,11 @@ async function handleInvoiceRequest(req, res) {
 
 exports.adminInvoiceApi = functions
   .region('us-central1')
-  .runWith({ timeoutSeconds: 120, memory: '256MB', maxInstances: 5 })
+  .runWith({ 
+    timeoutSeconds: 120, 
+    memory: '256MB', 
+    maxInstances: 1
+  })
   .https.onRequest((req, res) => corsMiddleware(req, res, () => handleInvoiceRequest(req, res)));
 
 // Geriye dönük uyumluluk takma adları
@@ -2403,6 +2751,12 @@ async function handleStoreInvoicesRequest(req, res) {
           invoiceStatus: d.invoiceStatus || 'PENDING',
           invoiceNumber: d.invoiceNumber || null,
           invoiceUuid: d.invoiceUuid || null,
+          declarationDoc: d.declarationDoc || d.identityDoc || null,
+          identityDoc: d.identityDoc || d.declarationDoc || null,
+          declarationName: d.declarationName || null,
+          declarationType: d.declarationType || null,
+          declarationTime: d.declarationTime || null,
+          declarationNote: d.declarationNote || null,
           note: d.note || '',
           createdAt: createdAtIso,
           updatedAt: updatedAtIso,

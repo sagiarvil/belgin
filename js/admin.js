@@ -1934,16 +1934,31 @@ const AdminApp = {
 
       // 1. Online Sipariş objesini güncelle
       if (order) {
-        order.declarationDoc = dataUrl.length > 200000 ? '#STORED#' : dataUrl;
-        order.identityDoc = dataUrl.length > 200000 ? '#STORED#' : dataUrl;
+        order.declarationDoc = dataUrl.length > 750000 ? '#STORED#' : dataUrl;
+        order.identityDoc = dataUrl.length > 750000 ? '#STORED#' : dataUrl;
         order.declarationType = file.type || 'image/jpeg';
         order.declarationName = file.name;
+        try {
+          fetch('/api/admin/orders/update-customer', {
+            method: 'POST',
+            headers: this.getAuthHeaders(),
+            body: JSON.stringify({
+              orderId: order.orderId,
+              adminKey: this.adminPin,
+              declarationDoc: dataUrl.length > 750000 ? '#STORED#' : dataUrl,
+              identityDoc: dataUrl.length > 750000 ? '#STORED#' : dataUrl,
+              declarationName: file.name,
+              declarationType: file.type || 'image/jpeg',
+              declarationTime: new Date().toLocaleString('tr-TR')
+            })
+          }).catch(() => {});
+        } catch (_) {}
       }
 
       // 2. Mağaza Faturasını güncelle
       if (storeInv) {
-        storeInv.declarationDoc = dataUrl.length > 200000 ? '#STORED#' : dataUrl;
-        storeInv.identityDoc = dataUrl.length > 200000 ? '#STORED#' : dataUrl;
+        storeInv.declarationDoc = dataUrl.length > 750000 ? '#STORED#' : dataUrl;
+        storeInv.identityDoc = dataUrl.length > 750000 ? '#STORED#' : dataUrl;
         storeInv.declarationType = file.type || 'image/jpeg';
         storeInv.declarationName = file.name;
         try {
@@ -2503,8 +2518,25 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
         return;
       }
 
-      this.activeInvoiceChallengeId = data.challengeId || '';
       this.batchDraftItems = data.draftInvoices || [];
+      
+      // Hemen ardından SMS gönder
+      const smsRes = await fetch('/api/admin/invoice/batch-send-sms?cb=1', {
+        method: 'POST',
+        headers: this.getAuthHeaders(),
+        body: JSON.stringify({
+          draftInvoices: this.batchDraftItems,
+          adminKey: this.adminPin
+        })
+      });
+      const smsData = await smsRes.json();
+      if (!smsData || !smsData.success) {
+        alert('❌ Toplu SMS Uyarısı:\n\n' + (smsData?.message || 'GİB SMS gönderilemedi.'));
+        this.closeSmsModal();
+        return;
+      }
+
+      this.activeInvoiceChallengeId = smsData.challengeId || '';
 
       if (submitBtn) {
         submitBtn.disabled = false;
@@ -2512,9 +2544,9 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       }
       if (input) setTimeout(() => input.focus(), 150);
 
-      if (data.phone) {
+      if (smsData.phone) {
         const phoneBox = document.getElementById('smsModalPhoneInfo');
-        if (phoneBox) phoneBox.textContent = `Yetkili Telefon: ${data.phone}`;
+        if (phoneBox) phoneBox.textContent = `Yetkili Telefon: ${smsData.phone}`;
       }
     } catch (e) {
       alert('❌ GİB Bağlantı Hatası: ' + e.message);
@@ -10463,12 +10495,24 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       const draftData = await draftRes.json();
       if (draftData && draftData.success) {
         this.batchDraftItems = draftData.draftInvoices || [];
-        this.activeInvoiceOid = draftData.oid || '';
-
-        const smsModal = document.getElementById('invoiceSmsModal');
-        if (smsModal) smsModal.classList.add('open');
-        const input = document.getElementById('gibSmsInput');
-        if (input) setTimeout(() => input.focus(), 150);
+        
+        // SMS gönder
+        const smsRes = await fetch('/api/admin/invoice/batch-send-sms?cb=1', {
+          method: 'POST',
+          headers: this.getAuthHeaders(),
+          body: JSON.stringify({ draftInvoices: this.batchDraftItems, adminKey: this.adminPin })
+        });
+        const smsData = await smsRes.json();
+        
+        if (smsData && smsData.success) {
+          this.activeInvoiceChallengeId = smsData.challengeId || '';
+          const smsModal = document.getElementById('invoiceSmsModal');
+          if (smsModal) smsModal.classList.add('open');
+          const input = document.getElementById('gibSmsInput');
+          if (input) setTimeout(() => input.focus(), 150);
+        } else {
+          alert('❌ Toplu SMS hatası: ' + (smsData?.message || 'Bağlantı kurulamadı.'));
+        }
       } else {
         alert('❌ Toplu taslak hatası: ' + (draftData?.message || 'Bağlantı kurulamadı.'));
       }

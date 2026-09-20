@@ -119,7 +119,7 @@
       </tr>
       <tr>
         <th>Müşteri Bilgisi:</th>
-        <td><span class="dyn-customer-info">İdris emre bük (T.C. No: 32395613664) · 05315779069 · musteri_05315779069@belginkuyumculuk.com</span></td>
+        <td><span class="dyn-customer-info">Müşteri (T.C. Kimlik / Pasaport / VKN İbrazı ile)</span></td>
       </tr>
       <tr>
         <th>Sipariş & İşlem Tarih/Saati:</th>
@@ -160,7 +160,7 @@
 
   <h2>11. ÖZEL İBRA VE KABUL BEYANI</h2>
   <div class="ibra-box">
-    <strong>(<span class="dyn-user-name dyn-highlight">İdris Emre Bük</span>), Ben kendi özgür iradem ile,</strong><br><br>
+    <strong>(<span class="dyn-user-name dyn-highlight">Müşteri Adı Soyadı</span>), Ben kendi özgür iradem ile,</strong><br><br>
     Bu işlem bana aittir, bu işlem bilgim veya onayım ile gerçekleştirilmiştir, Bu alışverişi ben yaptım, Bu Ürün bana teslim edildi, Bu Sipariş tarafıma ulaştı, talep ettiğim Mal veya hizmet eksiksiz sağlandı ve ödemesi bu koşullarda tarafımca özgür iradem ile gerçekleştirilmiştir. <mark class="legal-highlight">ÖZGÜR İRADEM ile İBRA EDİYORUM.</mark>
   </div>
 
@@ -204,11 +204,11 @@
       if (raw) stored = JSON.parse(raw);
     } catch(e) {}
 
-    const orderId = params.get('orderId') || params.get('siparis') || stored?.orderId || 'BLG-1787933146963-8ab15dc828f9325b';
-    const fullName = params.get('name') || params.get('musteri') || stored?.fullName || stored?.name || 'İdris Emre Bük';
-    const tcNo = params.get('tc') || stored?.tcNo || '32395613664';
-    const phone = params.get('phone') || params.get('tel') || stored?.phone || '05315779069';
-    const email = params.get('email') || stored?.email || `musteri_${phone}@belginkuyumculuk.com`;
+    const orderId = params.get('orderId') || params.get('siparis') || stored?.orderId || 'BLG-TESLIM-TUTANAGI';
+    const fullName = params.get('name') || params.get('musteri') || stored?.fullName || stored?.name || 'Müşteri';
+    const tcNo = params.get('tc') || stored?.tcNo || '';
+    const phone = params.get('phone') || params.get('tel') || stored?.phone || '—';
+    const email = params.get('email') || stored?.email || (phone !== '—' ? `musteri_${phone}@belginkuyumculuk.com` : '—');
     const item = params.get('item') || params.get('urun') || stored?.productName || 'Altın satışı (1 Adet - ₺120.000)';
     const orderDate = params.get('date') || stored?.date || '28.08.2026 19:05:48 (TSİ)';
     const delivery = params.get('delivery') || stored?.deliveryType || 'İzmir Buca Showroom Mağazadan Teslim (Randevulu & Kimlik Tutanaklı)';

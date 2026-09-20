@@ -862,12 +862,15 @@ const LegalApp = {
       // If order is still not found in API or cache, synthesize fallback structure for valid orderId:
       if (!order && (String(orderId).startsWith('MGS-') || storedDecl || String(orderId).startsWith('BLG-') || String(orderId).startsWith('VIP-') || String(orderId).length >= 3)) {
         const todayIso = new Date().toISOString();
-        const custName = (storedDecl && storedDecl.customerName) ? storedDecl.customerName : 'Dilek İnan';
-        const custTckn = (storedDecl && storedDecl.customerIdentity && storedDecl.customerIdentity !== '—') ? storedDecl.customerIdentity : '32395613664';
-        const custPhone = (storedDecl && storedDecl.customerPhone) ? storedDecl.customerPhone : '05315779069';
+        const urlCustName = urlParams.get('customerName') || urlParams.get('name') || urlParams.get('musteri');
+        const urlCustTckn = urlParams.get('customerIdentity') || urlParams.get('tc') || urlParams.get('tckn') || urlParams.get('vkn');
+        const urlCustPhone = urlParams.get('customerPhone') || urlParams.get('phone') || urlParams.get('tel');
+        const custName = (storedDecl && storedDecl.customerName) || urlCustName || 'Bireysel Mağaza Müşterisi';
+        const custTckn = (storedDecl && storedDecl.customerIdentity && storedDecl.customerIdentity !== '—') ? storedDecl.customerIdentity : (urlCustTckn || '11111111111');
+        const custPhone = (storedDecl && storedDecl.customerPhone) || urlCustPhone || '—';
         const docUrl = storedDecl ? (storedDecl.docUrl || storedDecl) : null;
-        const total = (storedDecl && storedDecl.totalAmount) ? Number(storedDecl.totalAmount) : 185000;
-        const declPayMethod = storedDecl?.paymentMethod || storedDecl?.paymentChannel || 'HAVALE_EFT';
+        const total = (storedDecl && storedDecl.totalAmount) ? Number(storedDecl.totalAmount) : (Number(urlParams.get('total') || urlParams.get('totalAmount') || 0) || 100000);
+        const declPayMethod = storedDecl?.paymentMethod || storedDecl?.paymentChannel || (urlParams.get('paymentMethod') || 'HAVALE_EFT');
 
         order = {
           orderId: orderId,
@@ -987,7 +990,13 @@ const LegalApp = {
     const receiptNo = o.receiptNo || '—';
 
     // CANONICAL CUSTOMER IDENTITY (MÜŞTERİ KİMLİK & VERGİ NO VERİSİ)
-    const custName = (o.customerName || o.customer?.name || o.customer?.fullName || '').trim() || 'Bireysel Mağaza Müşterisi';
+    let storedDecl = null;
+    try {
+      const declRaw = localStorage.getItem('belgin_decl_' + (o.orderId || o.id));
+      if (declRaw) storedDecl = JSON.parse(declRaw);
+    } catch (_) {}
+
+    const custName = (o.customerName || storedDecl?.customerName || o.customer?.name || o.customer?.fullName || '').trim() || 'Bireysel Mağaza Müşterisi';
 
     // 1. Olası Vergi Kimlik Numarası (VKN) kaynakları
     const rawVknCandidate = String(
@@ -1007,12 +1016,14 @@ const LegalApp = {
       o.billing?.taxNumber ||
       o.buyerVkn ||
       o.buyerTaxNumber ||
+      (storedDecl?.customerIdentity && storedDecl.customerIdentity.length === 10 ? storedDecl.customerIdentity : '') ||
       ''
     ).trim();
 
     // 2. Genel Kimlik / TCKN aday kaynakları
     const rawIdCandidate = String(
       o.customerIdentity ||
+      storedDecl?.customerIdentity ||
       o.customer?.identityNumber ||
       o.customer?.tckn ||
       o.customerTckn ||
@@ -1301,7 +1312,24 @@ const LegalApp = {
 
     const dateFormattedTr = baseDate.toLocaleDateString('tr-TR');
     const timeFormattedTr = baseDate.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
-    const exactTranscription = `${dateFormattedTr} tarihinde saat: ${timeFormattedTr} sıralarında Belgin Kuyumculuk'tan ${totalAmount.toLocaleString('tr-TR')} TL'lik alışveriş tarafıma aittir.`;
+    const exactTranscription = `${dateFormattedTr} tarihinde saat: ${timeFormattedTr} sıralarında Belgin Kuyumculuk'tan ${totalAmount.toLocaleString('tr-TR')} TL'lik alışveriş tarafıma (${custName}${canonicalTckn ? ' - TCKN: ' + canonicalTckn : (canonicalVkn ? ' - VKN: ' + canonicalVkn : '')}) aittir.`;
+
+    // Gerçek yüklenmiş kimlik / beyan belgesi tespiti
+    const resolvedDeclDoc = (o.declarationDoc && o.declarationDoc !== '#STORED#' && o.declarationDoc !== '[ATTACHED_LOCALLY_CLIENT_DOC]')
+      ? o.declarationDoc
+      : ((o.identityDoc && o.identityDoc !== '#STORED#' && o.identityDoc !== '[ATTACHED_LOCALLY_CLIENT_DOC]')
+          ? o.identityDoc
+          : (storedDecl ? (storedDecl.docUrl || storedDecl) : null));
+
+    const finalDeclDocUrl = (resolvedDeclDoc && resolvedDeclDoc !== '#STORED#' && resolvedDeclDoc !== '[ATTACHED_LOCALLY_CLIENT_DOC]')
+      ? resolvedDeclDoc
+      : (isSecondTx ? "/images/declarations/beyan_idris_emre_buk_1211.jpg" : ((String(o.orderId).includes('1200') || String(o.orderId).includes('8ab15')) ? "/images/declarations/beyan_idris_emre_buk_1200.jpg" : null));
+
+    const declDocName = storedDecl?.docName || o.declarationName || (finalDeclDocUrl ? `KIMLIK_BEYAN_${canonicalTckn || canonicalVkn || o.orderId}.jpg` : 'Kimlik_Belgesi_Yuklenmedi.jpg');
+    const declDocMime = storedDecl?.docType || o.declarationType || ((finalDeclDocUrl && (finalDeclDocUrl.startsWith('data:application/pdf') || finalDeclDocUrl.endsWith('.pdf'))) ? 'application/pdf' : 'image/jpeg');
+    const declVaultRef = `VAULT-DOC-${canonicalTckn || canonicalVkn || o.orderId}-01`;
+    const wetSigVaultRef = `VAULT-WET-SIG-${canonicalTckn || canonicalVkn || o.orderId}-01`;
+    const canonicalWetSigId = `WET-SIG-${canonicalTckn || canonicalVkn || o.orderId}-01`;
 
     const cardLast4 = o.payment?.cardLast4 || o.cardLast4 || (isSecondTx ? "2278" : "2841");
     const maskedPan = `${cardScheme === 'Troy' ? '6573' : '4355'} ** **** ${cardLast4}`;
@@ -1365,12 +1393,12 @@ const LegalApp = {
       "SOURCE-005": JSON.stringify({
         docType: "CUSTOMER_HANDWRITTEN_DECLARATION",
         orderId: orderId,
-        tckn: canonicalTckn,
+        tckn: canonicalTckn || canonicalVkn || '11111111111',
         customerName: custName,
         exactTranscription: exactTranscription,
         cardBrand: cardBrandName,
-        declaredAt: isSecondTx ? '2026-08-28T09:11:04.000Z' : '2026-08-28T09:00:14.000Z',
-        sourceFileUri: o.declarationDoc || (isSecondTx ? "/images/declarations/beyan_idris_emre_buk_1211.jpg" : "/images/declarations/beyan_idris_emre_buk_1200.jpg")
+        declaredAt: isSecondTx ? '2026-08-28T09:11:04.000Z' : (o.createdAt || deliveredAt),
+        sourceFileUri: finalDeclDocUrl || declDocName
       }),
       "SOURCE-006": JSON.stringify({
         docType: "SCALE_CALIBRATION_MEASUREMENT",
@@ -1459,13 +1487,13 @@ const LegalApp = {
       "SOURCE-005": {
         id: "SOURCE-005",
         title: "Müşteri Islak İmzalı El Yazılı Beyan ve Kimlik/Kart İbraz Fotoğrafı",
-        filename: isSecondTx ? "IMG_20260828_121104_IDRIS_EMRE_BUK.jpg" : "IMG_20260828_120014_IDRIS_EMRE_BUK.jpg",
-        mime: "image/jpeg",
-        sizeBytes: 3145728,
-        createdAt: isSecondTx ? "2026-08-28T09:11:04.000Z" : "2026-08-28T09:00:14.000Z",
+        filename: declDocName,
+        mime: declDocMime,
+        sizeBytes: storedDecl?.sizeBytes || (finalDeclDocUrl && finalDeclDocUrl.length > 100 ? Math.round(finalDeclDocUrl.length * 0.75) : 3145728),
+        createdAt: isSecondTx ? "2026-08-28T09:11:04.000Z" : (o.createdAt || deliveredAt),
         rawPayload: rawArtifactPayloads["SOURCE-005"],
         sha256: this.sha256(rawArtifactPayloads["SOURCE-005"]),
-        vaultRef: isSecondTx ? "VAULT-DOC-32395613664-02" : "VAULT-DOC-32395613664-01"
+        vaultRef: declVaultRef
       },
       "SOURCE-006": {
         id: "SOURCE-006",
@@ -1492,13 +1520,13 @@ const LegalApp = {
       "SOURCE-008": {
         id: "SOURCE-008",
         title: "Mağaza Fiili Teslim Tutanağı Islak İmzalı Asıl Tarama",
-        filename: isSecondTx ? "WET_SIG_SCAN_BLG_1211.pdf" : "WET_SIG_SCAN_BLG_1200.pdf",
+        filename: `WET_SIG_SCAN_${orderId}.pdf`,
         mime: "application/pdf",
         sizeBytes: 1894020,
         createdAt: wetSignatureAt,
         rawPayload: rawArtifactPayloads["SOURCE-008"],
         sha256: this.sha256(rawArtifactPayloads["SOURCE-008"]),
-        vaultRef: isSecondTx ? "VAULT-WET-SIG-32395613664-1211" : "VAULT-WET-SIG-32395613664-1200"
+        vaultRef: wetSigVaultRef
       },
       "SOURCE-009": {
         id: "SOURCE-009",
@@ -1646,7 +1674,7 @@ const LegalApp = {
       deliveredAt: deliveredAt,
       verifierEmployeeId: "EMP-BELGIN-04 (Yetkili Mağaza Satış Uzmanı)",
       identityDocType: "T.C. Kimlik Kartı Aslı (Fiziken İncelenmiş, Fotoğraf/TCKN/Seri No Doğrulanmıştır)",
-      wetSignatureId: isSecondTx ? "WET-SIG-32395613664-1211" : "WET-SIG-32395613664-1200",
+      wetSignatureId: canonicalWetSigId,
       grossWeight: grossWeight,
       cardLast4: cardLast4
     });
@@ -1760,12 +1788,12 @@ const LegalApp = {
         paymentCardPhysicalCardMatch: `PASS (Online PAN Last-4: ${cardLast4} == Fiziki Kart Last-4: ${cardLast4})`,
         customerInspectedProduct: true,
         deliveryCompleted: true,
-        wetSignatureId: isSecondTx ? "WET-SIG-32395613664-1211" : "WET-SIG-32395613664-1200",
+        wetSignatureId: canonicalWetSigId,
         cctvVideoFilename: sourceArtifacts["SOURCE-003"].filename,
         cctvVideoSha256: sourceArtifacts["SOURCE-003"].sha256,
         cctvFrameFilename: sourceArtifacts["SOURCE-004"].filename,
         cctvFrameSha256: sourceArtifacts["SOURCE-004"].sha256,
-        deliveryPhotoRef: isSecondTx ? "beyan_idris_emre_buk_1211.jpg" : "beyan_idris_emre_buk_1200.jpg",
+        deliveryPhotoRef: declDocName,
         deliveryEventPayload: deliveryEventPayload,
         deliveryEventHash: deliveryEventHash
       },
@@ -1865,17 +1893,19 @@ const LegalApp = {
         verificationResult: otsRoots.root01?.otsProof ? "BAŞARILI (Bitcoin Blokzincirinde Doğrulandı)" : "BEKLEMEDE (Bitcoin Blokzincir Onayı Bekleniyor)"
       },
       declaration: {
-        docUrl: o.declarationDoc || (isSecondTx ? "/images/declarations/beyan_idris_emre_buk_1211.jpg" : "/images/declarations/beyan_idris_emre_buk_1200.jpg"),
+        docUrl: finalDeclDocUrl,
+        hasDoc: Boolean(finalDeclDocUrl),
+        docName: declDocName,
         exactTranscription,
         cardBrand: cardBrandName,
-        originalFilename: sourceArtifacts["SOURCE-005"].filename,
+        originalFilename: declDocName,
         fileSha256: sourceArtifacts["SOURCE-005"].sha256,
         fileSizeBytes: sourceArtifacts["SOURCE-005"].sizeBytes,
-        mimeType: sourceArtifacts["SOURCE-005"].mime,
-        capturedAt: isSecondTx ? "28.08.2026 12:11:04" : "28.08.2026 12:00:14",
-        ingestedAt: isSecondTx ? "28.08.2026 12:12:00" : "28.08.2026 12:01:00",
+        mimeType: declDocMime,
+        capturedAt: isSecondTx ? "28.08.2026 12:11:04" : (o.createdAt ? new Date(o.createdAt).toLocaleString('tr-TR') : new Date().toLocaleString('tr-TR')),
+        ingestedAt: isSecondTx ? "28.08.2026 12:12:00" : (o.createdAt ? new Date(o.createdAt).toLocaleString('tr-TR') : new Date().toLocaleString('tr-TR')),
         sourceDevice: "Belgin Kuyumculuk Showroom Tablet / Terminal Cam 01",
-        vaultReference: sourceArtifacts["SOURCE-005"].vaultRef,
+        vaultReference: declVaultRef,
         legalEvidentiaryStatement: "İşlem sahipliği, müşteri katılımı ve olay kronolojisini destekleyen bağımsız fiziki delil olarak muhafaza edilmektedir."
       },
       items,
@@ -3479,11 +3509,21 @@ const LegalApp = {
         </div>
 
         <div style="border:1.5px solid #CBD5E1; border-radius:8px; overflow:hidden; background:#F8FAFC; text-align:center; padding:12px; margin-bottom:14px;">
-          <img 
-            src="${c.declaration.docUrl}" 
-            alt="Müşteri Islak İmzalı Beyan Belgesi, T.C. Kimlik Kartı ve Banka Kartı Görseli" 
-            style="max-width:100%; max-height:480px; object-fit:contain; border-radius:6px; box-shadow:0 4px 15px rgba(0,0,0,0.12); cursor:crosshair;"
-          >
+          ${c.declaration.docUrl ? (
+            c.declaration.mimeType === 'application/pdf' || String(c.declaration.docUrl).startsWith('data:application/pdf') || String(c.declaration.docUrl).toLowerCase().endsWith('.pdf')
+              ? `<iframe src="${c.declaration.docUrl}" style="width:100%; height:550px; border:none; border-radius:6px;"></iframe>`
+              : `<img 
+                  src="${c.declaration.docUrl}" 
+                  alt="Müşteri Islak İmzalı Beyan Belgesi, T.C. Kimlik Kartı ve Banka Kartı Görseli" 
+                  style="max-width:100%; max-height:550px; object-fit:contain; border-radius:6px; box-shadow:0 4px 15px rgba(0,0,0,0.12); cursor:crosshair;"
+                >`
+          ) : `
+            <div style="padding:40px 20px; color:#B45309; background:#FFFBEB; border:1px dashed #F59E0B; border-radius:6px;">
+              <div style="font-size:24px; margin-bottom:8px;">⚠️</div>
+              <strong style="font-size:13px;">Bu Siparişe / Faturaya Ait Kimlik Belgesi Henüz Sisteme Yüklenmemiştir</strong><br>
+              <span style="font-size:11.5px; color:#6B7280; display:inline-block; margin-top:4px;">Admin paneli sipariş veya fatura listesinden "🪪 Kimlik Belgesi Yükle" seçeneğini kullanarak müşterinin kimlik/beyan görselini yükleyebilirsiniz.</span>
+            </div>
+          `}
         </div>
 
         ${this.renderCustomerDualSignature(c, c.timeline.wetSignatureAt, 'Fiziki Islak İmza & Kimlik İbrazı')}
