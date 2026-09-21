@@ -1573,7 +1573,21 @@ async function handleInvoiceRequest(req, res) {
 
       customBreakdown = ensureValidInvoiceBreakdown(customBreakdown, rawTotal);
 
-      const draftResult = await earsiv.createDraftInvoice(activeToken, order, customBreakdown, { cookie: activeCookie });
+      let draftResult = null;
+      const existingDraftUuid = order.invoiceUuid || order.faturaUuid;
+      const shouldReuseExisting = Boolean(existingDraftUuid && order.invoiceStatus === 'DRAFT' && !req.body.forceNewDraft);
+
+      if (shouldReuseExisting) {
+        console.info(`[Invoice API] Sipariş için mevcut taslak bulundu (${existingDraftUuid}), mükerrer oluşturulmadan doğrudan SMS tetikleniyor...`);
+        draftResult = {
+          invoiceUuid: existingDraftUuid,
+          breakdown: customBreakdown,
+          isMock: false
+        };
+      } else {
+        draftResult = await earsiv.createDraftInvoice(activeToken, order, customBreakdown, { cookie: activeCookie });
+      }
+
       const smsResult = await earsiv.sendSmsOtp(activeToken, { cookie: activeCookie });
 
       if (!smsResult || !smsResult.oid) {

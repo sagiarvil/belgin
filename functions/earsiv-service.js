@@ -640,28 +640,66 @@ class EarsivPortalService {
     throw new Error('GİB dispatch işlemi 3 deneme sonucunda tamamlanamadı.');
   }
 
+  /**
+   * GİB Oturum Tokenının Canlılığını Test Et (Hafif Ping)
+   */
+  async isTokenValid(token, cookie = '') {
+    if (!token || token.startsWith('MOCK_GIB_TOKEN')) return false;
+    try {
+      const res = await axios.post(`${this.baseUrl}/dispatch`, qs.stringify({
+        cmd: 'EARSIV_PORTAL_KULLANICI_BILGILERI_GETIR',
+        callid: crypto.randomUUID(),
+        pageName: 'RG_KULLANICI_ISLEMLERI',
+        token: token,
+        jp: '{}'
+      }), {
+        httpsAgent: this.agent,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+          'Referer': `${this.baseUrl}/index.jsp`,
+          ...(cookie ? { 'Cookie': cookie } : {})
+        },
+        timeout: 10000
+      });
+      return Boolean(res.data && res.data.data && res.data.data.vknTckn);
+    } catch (_) {
+      return false;
+    }
+  }
+
   async getActiveToken() {
+    let lastToken = cachedSessionToken;
+    let lastCookie = cachedCookie;
+
     try {
       const doc = await getDb().collection('settings').doc('gib_session').get();
       if (doc.exists) {
         const data = doc.data();
-        if (data.token && data.expiresAt > Date.now()) {
+        if (data.token) {
+          lastToken = data.token;
+          lastCookie = data.cookie || '';
           cachedSessionToken = data.token;
-          cachedCookie = data.cookie;
-          cachedTokenExpiresAt = data.expiresAt;
+          cachedCookie = lastCookie;
+          cachedTokenExpiresAt = data.expiresAt || 0;
         }
       }
     } catch(e) { console.error('Token read err', e); }
     
-    const now = Date.now();
-    if (cachedSessionToken && cachedTokenExpiresAt > now) {
-      return { token: cachedSessionToken, cookie: cachedCookie };
+    // 1. Önce mevcut token GİB tarafında hala canlı mı kontrol et (Sıfır login, sıfır çakışma garantisi)
+    if (lastToken && cachedTokenExpiresAt > Date.now()) {
+      const isValid = await this.isTokenValid(lastToken, lastCookie);
+      if (isValid) {
+        return { token: lastToken, cookie: lastCookie };
+      }
+      console.info('[EarsivService] Mevcut token süresi dolmuş veya geçersiz, yeni oturum açılıyor...');
     }
-    const loginRes = await this.login();
+
+    // 2. Token geçersizse kontrollü giriş yap
+    const loginRes = await this.login(this.userCode, this.password, { lastToken, lastCookie });
     if (loginRes.token) {
       cachedSessionToken = loginRes.token;
       cachedCookie = loginRes.cookie || '';
-      cachedTokenExpiresAt = now + 20 * 60 * 1000;
+      cachedTokenExpiresAt = Date.now() + 20 * 60 * 1000;
       return { token: cachedSessionToken, cookie: cachedCookie };
     }
     throw new Error('GİB token alınamadı.');
@@ -691,9 +729,6 @@ class EarsivPortalService {
         parola: '1'
       });
 
-      
-      const egressIp = await getEgressIp();
-      const correlationId = crypto.randomUUID();
       const res = await axios.post(`${this.baseUrl}/assos-login`, payload, {
         httpsAgent: this.agent,
         headers: {
@@ -718,11 +753,13 @@ class EarsivPortalService {
         cachedCookie = cookieStr;
         cachedTokenExpiresAt = Date.now() + 20 * 60 * 1000;
         try {
-          await getDb().collection('settings').doc('gib_session').set({
-            token: cachedSessionToken,
-            cookie: cachedCookie,
-            expiresAt: cachedTokenExpiresAt
-          });
+          if (getDb()) {
+            await getDb().collection('settings').doc('gib_session').set({
+              token: cachedSessionToken,
+              cookie: cachedCookie,
+              expiresAt: cachedTokenExpiresAt
+            });
+          }
         } catch(e) { console.error('Token save err', e); }
         return {
           success: true,
@@ -737,10 +774,16 @@ class EarsivPortalService {
         cachedSessionToken = null;
         cachedCookie = '';
         cachedTokenExpiresAt = 0;
-        try { await getDb().collection('settings').doc('gib_session').delete(); } catch(e){}
+        try { if (getDb()) await getDb().collection('settings').doc('gib_session').delete(); } catch(e){}
 
-        if ((errorMsg.includes('birden fazla giriş') || errorMsg.includes('Güvenli Çıkış')) && !options._isRetry) {
-          console.warn('[EarsivService] Çoklu oturum algılandı. GİB oturumu otomatik sıfırlanıp 1.5 sn sonra tekrar giriş deneniyor...');
+        const retryCount = Number(options._retryCount || 0);
+        if ((errorMsg.includes('birden fazla giriş') || errorMsg.includes('Güvenli Çıkış')) && retryCount < 3) {
+          console.warn(`[EarsivService] Çoklu oturum algılandı (Deneme ${retryCount + 1}/3). GİB oturumu zorla tahliye ediliyor...`);
+          try {
+            if (options.lastToken) {
+              await this.logout(options.lastToken, options.lastCookie);
+            }
+          } catch (_) {}
           try {
             await axios.post(`${this.baseUrl}/assos-login`, qs.stringify({
               assoscmd: 'logout',
@@ -752,8 +795,12 @@ class EarsivPortalService {
               timeout: 15000
             });
           } catch (_) {}
-          await new Promise(r => setTimeout(r, 1500));
-          return await this.login(userCode, password, { _isRetry: true });
+          await new Promise(r => setTimeout(r, 2000));
+          return await this.login(userCode, password, { ...options, _retryCount: retryCount + 1 });
+        }
+
+        if (errorMsg.includes('birden fazla giriş') || errorMsg.includes('Güvenli Çıkış')) {
+          throw new Error('GİB e-Arşiv Portalında başka bir sekmede oturumunuz açık kalmış. Lütfen tarayıcınızdaki e-Arşiv sekmesinden "Güvenli Çıkış" yapınız veya 1-2 dakika sonra tekrar deneyiniz.');
         }
 
         throw new Error(errorMsg);
@@ -764,7 +811,7 @@ class EarsivPortalService {
       cachedSessionToken = null;
       cachedCookie = '';
       cachedTokenExpiresAt = 0;
-      try { await getDb().collection('settings').doc('gib_session').delete(); } catch(e){}
+      try { if (getDb()) await getDb().collection('settings').doc('gib_session').delete(); } catch(e){}
       console.error('[EarsivService] Login Hatası:', err.message);
       if (err.response && (err.response.status === 503 || err.response.status === 502 || err.response.status === 504)) {
         throw new Error('Gelir İdaresi Başkanlığı (GİB) e-Arşiv sunucuları şu anda resmi olarak yanıt vermiyor (GİB Nginx HTTP ' + err.response.status + ' Servis Bakımda/Geçici Olarak Devre Dışı). GİB kendi ana sunucularını açtığında işlem otomatik olarak devam edecektir.');
@@ -1133,15 +1180,9 @@ class EarsivPortalService {
         }
 
         if (Array.isArray(list) && list.length > 0) {
-          const normTargetName = rawCustName.toLocaleLowerCase('tr-TR').replace(/\s+/g, ' ').trim();
           const match = list.find(d => {
-            if (d.ettn && (d.ettn === invoiceUuid || d.faturauuid === invoiceUuid)) return true;
-            if (vknTckn !== '11111111111' && d.aliciVknTckn === vknTckn && d.onayDurumu !== 'Silinmiş') return true;
-            const normListName = String(d.aliciUnvanAdSoyad || '').toLocaleLowerCase('tr-TR').replace(/\s+/g, ' ').trim();
-            if (normListName && (normListName === normTargetName || normListName.includes(normTargetName) || normTargetName.includes(normListName))) {
-              if (d.onayDurumu === 'Onaylanmadı') return true;
-            }
-            return false;
+            const listEttn = d.ettn || d.faturauuid;
+            return listEttn && String(listEttn).toLowerCase() === String(invoiceUuid).toLowerCase();
           });
           if (match) {
             realEttn = match.ettn || match.faturauuid || realEttn;
