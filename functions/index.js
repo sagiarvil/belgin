@@ -1703,7 +1703,7 @@ async function handleInvoiceRequest(req, res) {
     let activeToken = null;
     let activeCookie = '';
     try {
-      const { orderId, smsCode, invoiceUuid } = req.body || {};
+      const { orderId, smsCode, invoiceUuid, challengeId } = req.body || {};
       if (!orderId || !smsCode || !invoiceUuid) {
         return res.status(400).json({ success: false, message: 'orderId, smsCode ve invoiceUuid zorunludur.' });
       }
@@ -1714,17 +1714,62 @@ async function handleInvoiceRequest(req, res) {
       }
 
       const { ref: orderRef, data: orderData } = target;
-      const oid = orderData.gibSessionOid || req.body.oid || '';
+      let oid = orderData.gibSessionOid || req.body.oid || '';
+      let resolvedUuid = invoiceUuid;
 
-      const authData = await earsiv.getActiveToken();
-      activeToken = authData.token;
-      activeCookie = authData.cookie || '';
+      // 1. ÖNCELİK: SMS anındaki gerçek oturum token ve OID bilgisini (gib_sign_sessions) kullan
+      if (challengeId) {
+        try {
+          const sessSnap = await db.collection('gib_sign_sessions').doc(challengeId).get();
+          if (sessSnap.exists) {
+            const sess = sessSnap.data();
+            activeToken = sess.token;
+            activeCookie = sess.cookie || '';
+            oid = sess.oid || oid;
+            if (sess.invoiceUuids && sess.invoiceUuids[0]) {
+              resolvedUuid = sess.invoiceUuids[0];
+            }
+          }
+        } catch (_) {}
+      }
+
+      if (!activeToken) {
+        try {
+          const sessQuery = await db.collection('gib_sign_sessions')
+            .where('orderIds', 'array_contains', orderId)
+            .where('used', '==', false)
+            .limit(1)
+            .get();
+          if (!sessQuery.empty) {
+            const sess = sessQuery.docs[0].data();
+            activeToken = sess.token;
+            activeCookie = sess.cookie || '';
+            oid = sess.oid || oid;
+            if (sess.invoiceUuids && sess.invoiceUuids[0]) {
+              resolvedUuid = sess.invoiceUuids[0];
+            }
+          }
+        } catch (_) {}
+      }
+
+      if (!activeToken) {
+        const authData = await earsiv.getActiveToken();
+        activeToken = authData.token;
+        activeCookie = authData.cookie || '';
+      }
 
       const invoiceDocDate = orderData?.invoiceDate || orderData?.faturaTarihi || req.body?.orderData?.invoiceDate || req.body?.invoiceDate || null;
-      const signRes = await earsiv.verifySmsAndSign(activeToken, smsCode, invoiceUuid, oid, {
+      const signRes = await earsiv.verifySmsAndSign(activeToken, smsCode, resolvedUuid, oid, {
         cookie: activeCookie,
-        invoiceDate: invoiceDocDate
+        invoiceDate: invoiceDocDate,
+        customerName: orderData.customerName || orderData.alici || '',
+        orderData: orderData
       });
+
+      // Eğer Auto-Heal sonucunda gerçek GİB ETTN yakalandıysa güncelle
+      if (signRes.invoiceUuid) {
+        resolvedUuid = signRes.invoiceUuid;
+      }
 
       let invoiceNumber = signRes.invoiceNumber;
       if (!invoiceNumber) {
@@ -1765,7 +1810,7 @@ async function handleInvoiceRequest(req, res) {
 
       const updatePayload = {
         invoiceStatus: 'SIGNED',
-        invoiceUuid: invoiceUuid,
+        invoiceUuid: resolvedUuid || signRes.invoiceUuid || invoiceUuid,
         invoiceNumber: invoiceNumber,
         invoiceDate: invoiceDocDate || orderData.invoiceDate || null,
         gibSessionToken: admin.firestore.FieldValue.delete(),
@@ -1803,7 +1848,7 @@ async function handleInvoiceRequest(req, res) {
         success: true,
         message: 'Fatura GİB e-Arşiv portalında başarıyla imzalandı ve resmileşti.',
         invoiceNumber,
-        invoiceUuid,
+        invoiceUuid: resolvedUuid || signRes.invoiceUuid || invoiceUuid,
         invoicedAt: new Date().toISOString()
       });
     } catch (err) {

@@ -597,7 +597,7 @@ class EarsivPortalService {
   /**
    * GİB e-Arşiv Portalı Login Oturumu Aç
    */
-  async login(userCode = this.userCode, password = this.password) {
+  async login(userCode = this.userCode, password = this.password, options = {}) {
     if (!userCode || !password) {
       return {
         success: true,
@@ -664,6 +664,25 @@ class EarsivPortalService {
         cachedSessionToken = null;
         cachedCookie = '';
         cachedTokenExpiresAt = 0;
+        try { await getDb().collection('settings').doc('gib_session').delete(); } catch(e){}
+
+        if ((errorMsg.includes('birden fazla giriş') || errorMsg.includes('Güvenli Çıkış')) && !options._isRetry) {
+          console.warn('[EarsivService] Çoklu oturum algılandı. GİB oturumu otomatik sıfırlanıp 1.5 sn sonra tekrar giriş deneniyor...');
+          try {
+            await axios.post(`${this.baseUrl}/assos-login`, qs.stringify({
+              assoscmd: 'logout',
+              rtype: 'json',
+              userid: userCode
+            }), {
+              httpsAgent: this.agent,
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8' },
+              timeout: 15000
+            });
+          } catch (_) {}
+          await new Promise(r => setTimeout(r, 1500));
+          return await this.login(userCode, password, { _isRetry: true });
+        }
+
         throw new Error(errorMsg);
       }
 
@@ -1031,19 +1050,47 @@ class EarsivPortalService {
           timeout: 60000
         });
 
-        const list = listCall.data?.data;
+        let list = listCall.data?.data;
+        // Eğer hedef tarihte doğrudan bulunamazsa, bugünün tarihini de sorgula
+        const todayStr = formatToGibDate(new Date());
+        if ((!Array.isArray(list) || list.length === 0) && formattedDate !== todayStr) {
+          try {
+            const listCallToday = await axios.post(`${this.baseUrl}/assos-login`, qs.stringify({
+              cmd: 'EARSIV_PORTAL_TASLAKLARI_GETIR',
+              callid: crypto.randomUUID(),
+              pageName: 'RG_TASLAKLAR',
+              token: token,
+              jp: JSON.stringify({
+                baslangic: todayStr,
+                bitis: todayStr,
+                hangiTip: '5000/30000'
+              })
+            }), {
+              httpsAgent: this.agent,
+              headers: reqHeaders,
+              timeout: 30000
+            });
+            if (Array.isArray(listCallToday.data?.data) && listCallToday.data.data.length > 0) {
+              list = listCallToday.data.data;
+            }
+          } catch (_) {}
+        }
+
         if (Array.isArray(list) && list.length > 0) {
-          // KESİN VE ZORUNLU GÜVENLİK KURALI:
-          // SADECE ve SADECE bu faturanın ETTN'si veya alıcı kimlik bilgisi + alıcı adı birebir eşleşen kayıt alınabilir!
-          // Asla ve asla list[list.length - 1] (alakasız başka sipariş) alınamaz!
-          const match = list.find(d => 
-            (d.ettn && d.ettn === invoiceUuid) || 
-            (d.faturauuid && d.faturauuid === invoiceUuid) ||
-            (vknTckn !== '11111111111' && d.aliciVknTckn === vknTckn)
-          );
+          const normTargetName = rawCustName.toLocaleLowerCase('tr-TR').replace(/\s+/g, ' ').trim();
+          const match = list.find(d => {
+            if (d.ettn && (d.ettn === invoiceUuid || d.faturauuid === invoiceUuid)) return true;
+            if (vknTckn !== '11111111111' && d.aliciVknTckn === vknTckn && d.onayDurumu !== 'Silinmiş') return true;
+            const normListName = String(d.aliciUnvanAdSoyad || '').toLocaleLowerCase('tr-TR').replace(/\s+/g, ' ').trim();
+            if (normListName && (normListName === normTargetName || normListName.includes(normTargetName) || normTargetName.includes(normListName))) {
+              if (d.onayDurumu === 'Onaylanmadı') return true;
+            }
+            return false;
+          });
           if (match) {
-            realEttn = match.ettn || realEttn;
+            realEttn = match.ettn || match.faturauuid || realEttn;
             realBelgeNo = match.belgeNumarasi || '';
+            console.info(`[EarsivService Auto-Heal] GİB imza UUID eşleşmedi, gerçek taslak bulundu: ${matchedDraft.ettn}. Yeniden imzalanıyor...`);
           }
         }
       } catch (listErr) {
@@ -1187,7 +1234,7 @@ class EarsivPortalService {
       throw new Error('Eksik parametre: token, smsCode ve invoiceUuid zorunludur.');
     }
 
-    const cleanSms = String(smsCode).trim();
+    const cleanSms = String(smsCode).replace(/\s+/g, "").trim().toUpperCase();
     if (cleanSms.length < 4) {
       throw new Error('Geçersiz SMS onay kodu.');
     }
@@ -1332,6 +1379,44 @@ class EarsivPortalService {
             ? (res.data.data.msg || res.data.data.mesaj || res.data.data.text || JSON.stringify(res.data.data))
             : String(res.data.data);
           lastError = new Error(errMsg);
+
+          // AUTO-HEAL: Eğer GİB "İmzalama yapılırken bir hata meydana geldi !" verdiyse (UUID uyuşmazlığı)
+          const targetCust = (options.customerName || options.alici || options.orderData?.customerName || '').trim().toLocaleLowerCase('tr-TR');
+          if (errMsg.includes('hata meydana geldi') && targetCust && !options._isAutoHealAttempt) {
+            try {
+              const dNow = new Date();
+              const todayStr = formatToGibDate(dNow);
+              const dPast = new Date();
+              dPast.setDate(dPast.getDate() - 5);
+              const pastStr = formatToGibDate(dPast);
+
+              const healListCall = await axios.post(`${this.baseUrl}/dispatch`, qs.stringify({
+                cmd: 'EARSIV_PORTAL_TASLAKLARI_GETIR',
+                callid: crypto.randomUUID(),
+                pageName: 'RG_TASLAKLAR',
+                token: token,
+                jp: JSON.stringify({ baslangic: pastStr, bitis: todayStr, hangiTip: '5000/30000' })
+              }), { httpsAgent: this.agent, headers: reqHeaders, timeout: 30000 });
+
+              const gList = healListCall.data?.data;
+              if (Array.isArray(gList)) {
+                const matchedDraft = gList.find(x => 
+                  x.onayDurumu === 'Onaylanmadı' && 
+                  String(x.aliciUnvanAdSoyad || '').trim().toLocaleLowerCase('tr-TR').includes(targetCust)
+                );
+                if (matchedDraft && matchedDraft.ettn) {
+                  console.info(`[EarsivService Auto-Heal] GİB imza UUID eşleşmedi, gerçek taslak bulundu: ${matchedDraft.ettn}. Yeniden imzalanıyor...`);
+                  return await this.verifySmsAndSign(token, cleanSms, matchedDraft.ettn, oid, {
+                    ...options,
+                    invoiceNumber: matchedDraft.belgeNumarasi || '',
+                    _isAutoHealAttempt: true
+                  });
+                }
+              }
+            } catch (autoHealErr) {
+              console.warn('[EarsivService Auto-Heal Error]:', autoHealErr.message);
+            }
+          }
           continue;
         }
       } catch (err) {
@@ -1367,17 +1452,17 @@ class EarsivPortalService {
       const d = new Date();
       const todayFormatted = String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0') + '/' + d.getFullYear();
       
-      // 7 gün öncesini hesapla (tarih geçmişe dönük girildiyse kaçırmasın)
+      // GİB kesin kuralı: Seçilen tarih aralığı 7 günden fazla olamaz!
       const pastDate = new Date();
-      pastDate.setDate(pastDate.getDate() - 14);
+      pastDate.setDate(pastDate.getDate() - 5);
       const pastFormatted = String(pastDate.getDate()).padStart(2, '0') + '/' + String(pastDate.getMonth() + 1).padStart(2, '0') + '/' + pastDate.getFullYear();
 
       const customDate = options.invoiceDate || options.faturaTarihi || options.belgeTarihi;
       const targetGibDate = customDate ? formatToGibDate(customDate) : todayFormatted;
 
-      // Sorgulama aralıkları: önce hedef gün, sonra son 14 gün
+      // GİB 7 gün aşımını önlemek için: hedef gün tekil sorgusu ve son 5 gün sorgusu
       const queryRanges = [
-        { baslangic: targetGibDate, bitis: todayFormatted },
+        { baslangic: targetGibDate, bitis: targetGibDate },
         { baslangic: pastFormatted, bitis: todayFormatted }
       ];
 

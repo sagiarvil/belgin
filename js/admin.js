@@ -3412,6 +3412,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
           body: JSON.stringify({
             orderId: this.activeInvoiceOrderId,
             invoiceUuid: this.activeInvoiceUuid,
+            challengeId: this.activeInvoiceChallengeId || '',
             oid: this.activeInvoiceOid || '',
             smsCode: smsCode,
             invoiceDate: invoiceDateForSign,
