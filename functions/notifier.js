@@ -35,6 +35,8 @@ async function sendTelegramNotification(order, botToken = TELEGRAM_BOT_TOKEN, ch
     return { success: false, skipped: true, reason: 'TELEGRAM_CONFIG_MISSING' };
   }
 
+  const adminUrl = order.source === "SAATCHI" ? "https://saatchi.watch/admin" : "https://www.belginkuyumculuk.com/admin.html";
+
   // Test ve Mock Koruması (Yalnızca açık test ortamları veya TEST- prefixli kukla siparişler)
   if (!options.isExplicitTest && (process.env.NODE_ENV === 'test' || options.isTest === true || order.isTest === true)) {
     return { success: true, skipped: true, reason: 'TEST_ENV_SUPPRESSED' };
@@ -47,8 +49,17 @@ async function sendTelegramNotification(order, botToken = TELEGRAM_BOT_TOKEN, ch
   }
 
   const amount = Number(order.totalAmount || order.total || (order.payment && order.payment.amount) || 0);
-        const formattedAmount = formatCurrency(amount);
-  const customerName = (order.customer && order.customer.name) || order.customerName || 'Müşteri';
+  const formattedAmount = formatCurrency(amount);
+  const customerName = (order.customer && order.customer.name) ||
+    order.customerName ||
+    (order.customer && `${order.customer.firstName || ''} ${order.customer.lastName || ''}`.trim()) ||
+    order.name ||
+    order.cardHolderName ||
+    order.cardHolder ||
+    (order.billingAddress && order.billingAddress.name) ||
+    (order.shippingAddress && order.shippingAddress.name) ||
+    'Müşteri';
+  const upperCustomerName = String(customerName).toLocaleUpperCase('tr-TR');
   const customerPhone = (order.customer && order.customer.phone) || order.customerPhone || '—';
   const customerIdentity = (order.customer && (order.customer.identityNumber || order.customer.identity)) || order.customerIdentity || '—';
   const rawPhone = String(customerPhone).replace(/\D/g, '');
@@ -61,6 +72,7 @@ async function sendTelegramNotification(order, botToken = TELEGRAM_BOT_TOKEN, ch
     `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
     `<b>ÖDEME OK</b>`,
     `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
+    `🟢 <b>MÜŞTERİ: ${escapeHtml(upperCustomerName)}</b>`,
     `🟢 <b>TUTAR: ${escapeHtml(formattedAmount)} TL</b>`,
     `🟢 POS / Banka: ${escapeHtml(provider)} (3D Secure)`,
     `🟢 Tarih: ${escapeHtml(timeStr)}`
@@ -194,7 +206,16 @@ async function sendPaymentPushNotification(order, options = {}) {
 
   const topic = String(options.topic || process.env.NTFY_TOPIC || DEFAULT_NTFY_TOPIC).trim();
   const formattedAmount = formatCurrency(amount);
-  const customerName = (order.customer && order.customer.name) || order.customerName || 'Müşteri';
+  const customerName = (order.customer && order.customer.name) ||
+    order.customerName ||
+    (order.customer && `${order.customer.firstName || ''} ${order.customer.lastName || ''}`.trim()) ||
+    order.name ||
+    order.cardHolderName ||
+    order.cardHolder ||
+    (order.billingAddress && order.billingAddress.name) ||
+    (order.shippingAddress && order.shippingAddress.name) ||
+    'Müşteri';
+  const upperCustomerName = String(customerName).toLocaleUpperCase('tr-TR');
   const customerPhone = (order.customer && order.customer.phone) || order.customerPhone || '—';
   const provider = (order.payment && order.payment.provider) || order.provider || 'KUVEYTTURK';
   const isShowroom = order.deliveryMethod === 'showroom' || order.highValueSecureDelivery === true;
@@ -213,6 +234,7 @@ async function sendPaymentPushNotification(order, options = {}) {
     `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
     `𝗢̈𝗗𝗘𝗠𝗘 𝗢𝗞`,
     `🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢`,
+    `🟢 𝗠𝗨̈𝗦̧𝗧𝗘𝗥𝗜̇: ${upperCustomerName}`,
     `🟢 𝗧𝗨𝗧𝗔𝗥: ${formattedAmount} TL`,
     `🟢 POS / Banka: ${provider} (3D Secure)`,
     `🟢 Tarih: ${timeStr}`
@@ -343,7 +365,15 @@ async function sendPaymentFailureNotification(order, options = {}) {
 
   const amount = Number(order.totalAmount || order.total || (order.payment && order.payment.amount) || 0);
   const formattedAmount = formatCurrency(amount);
-  const customerName = (order.customer && order.customer.name) || order.customerName || 'Müşteri';
+  const customerName = (order.customer && order.customer.name) ||
+    order.customerName ||
+    (order.customer && `${order.customer.firstName || ''} ${order.customer.lastName || ''}`.trim()) ||
+    order.name ||
+    order.cardHolderName ||
+    order.cardHolder ||
+    (order.billingAddress && order.billingAddress.name) ||
+    (order.shippingAddress && order.shippingAddress.name) ||
+    'Müşteri';
   const customerPhone = (order.customer && order.customer.phone) || order.customerPhone || '—';
   const customerIdentity = (order.customer && (order.customer.identityNumber || order.customer.identity)) || order.customerIdentity || '—';
   const rawPhone = String(customerPhone).replace(/\D/g, '');
@@ -390,6 +420,7 @@ async function sendPaymentFailureNotification(order, options = {}) {
     `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 `,
     `<b>DİKKAT RED</b>`,
     `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 `,
+    `🔴 <b>MÜŞTERİ: ${escapeHtml(upperCustomerName)}</b>`,
     `🔴 <b>TUTAR: ${escapeHtml(formattedAmount)} TL</b>`,
     `🔴 RED KODU: ${escapeHtml(upperRawCode)}`,
     `🔴 BANKA GEREKÇESİ: ${escapeHtml(upperRawMsg)}`,
@@ -401,6 +432,7 @@ async function sendPaymentFailureNotification(order, options = {}) {
     `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 `,
     `❌ 𝗗𝗜̇𝗞𝗞𝗔𝗧 𝗥𝗘𝗗`,
     `🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴 `,
+    `🔴 𝗠𝗨̈𝗦̧𝗧𝗘𝗥𝗜̇: ${upperCustomerName}`,
     `🔴 𝗧𝗨𝗧𝗔𝗥: ${formattedAmount} TL`,
     `🔴 RED KODU: ${upperRawCode}`,
     `🔴 BANKA GEREKÇESİ: ${upperRawMsg}`,
