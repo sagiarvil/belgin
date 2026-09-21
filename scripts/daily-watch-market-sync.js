@@ -17,7 +17,7 @@ const ROOT = path.join(__dirname, '..');
 const dataJsPath = path.join(ROOT, 'js', 'data.js');
 
 const USD_TRY_RATE = 48.279; // Serbest piyasa USD/TRY referans kuru (doviz.com)
-const MARKET_MARKUP = 1.80; // Zorunlu +%80 kâr marjı
+const MARKET_MARKUP = 2.50; // Zorunlu 2.50x katsayısı (+%150 kâr marjı)
 
 const REQUIRED_BRANDS = [
   "Rolex",

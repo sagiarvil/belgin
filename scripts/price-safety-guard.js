@@ -121,8 +121,8 @@ if (fs.existsSync(paymentCatalogPath)) {
   console.warn('  ⚠️ functions/product-catalog.json bulunamadı.');
 }
 
-// 6. Elit Kategori (+%80 Marj & USD Kur Sağlama Güvenlik Kilidi)
-console.log('\n--- 6. ELİT KATEGORİ (+%80 MARJ & USD KUR SAĞLAMA VE GÜVENLİK KİLİDİ) ---');
+// 6. Elit Kategori (2.50x Katsayı & USD Kur Sağlama Güvenlik Kilidi)
+console.log('\n--- 6. ELİT KATEGORİ (2.50x KATSAYI & USD KUR SAĞLAMA VE GÜVENLİK KİLİDİ) ---');
 const eliteWatches = PRODUCTS.filter(p => p.isElite || p.category === 'elit-saatler');
 assert(eliteWatches.length >= 100, `Elit Kategori'de en az 100 adet lüks saat bulunmalıdır (Mevcut: ${eliteWatches.length})`);
 
@@ -146,15 +146,15 @@ for (const ew of eliteWatches) {
     continue;
   }
 
-  // Güvenlik Kilidi: Fiyat USD_REF * 40 TL * 1.80 tabanının altında olamaz (Emniyet devre kesici)
-  const minFloorTry = Math.round(usdRef * 40.0 * 1.80);
+  // Güvenlik Kilidi: Fiyat USD_REF * 40 TL * 2.50 tabanının altında olamaz (Emniyet devre kesici)
+  const minFloorTry = Math.round(usdRef * 40.0 * 2.50);
   if (ew.price < minFloorTry) {
     console.error(`    ⚠️ [ELITE-PRICE-UNDER-MARGIN]: [${ew.reference}] ${ew.brand} ${ew.name} taban fiyatın altında! Mevcut: ${ew.price} TL < Minimum Taban: ${minFloorTry} TL (USD: $${usdRef})`);
     elitePriceBreaches++;
   }
 }
 
-assert(elitePriceBreaches === 0, `Tüm Elit Saatler +%80 kâr marjı ve USD kuru emniyet kilidine uymalıdır (İhlal: ${elitePriceBreaches})`);
+assert(elitePriceBreaches === 0, `Tüm Elit Saatler 2.50x katsayısı ve USD kuru emniyet kilidine uymalıdır (İhlal: ${elitePriceBreaches})`);
 
 let brandDistributionValid = true;
 ELITE_BRANDS.forEach(b => {

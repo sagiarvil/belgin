@@ -7,7 +7,7 @@ const ROOT = path.join(__dirname, '..');
 const dataJsPath = path.join(ROOT, 'js', 'data.js');
 
 const DEFAULT_USD_RATE = 48.279;
-const MARKET_MARKUP = 1.80; // Zorunlu +%80 Kâr Marjı
+const MARKET_MARKUP = 2.50; // Zorunlu 2.50x Katsayısı (+%150 Kâr Marjı)
 
 function fetchLiveUsdRate() {
   return new Promise((resolve) => {

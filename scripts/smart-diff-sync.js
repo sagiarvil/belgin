@@ -277,12 +277,12 @@ async function runSmartDiffSync() {
   console.log(`  ✓ ${scrapedWatchesCount} canlı saat ürünü 9 markada tarandı.`);
 
   // ==========================================================
-  // 3. ELİT KATEGORİ LÜKS SAAT SENKRONİZASYONU (+%80 MARJ — 10 MARKA / 200 SAAT)
+  // 3. ELİT KATEGORİ LÜKS SAAT SENKRONİZASYONU (2.50x KATSAYI — 10 MARKA / 245 SAAT)
   // ==========================================================
-  console.log('\n[SMART-DIFF] 👑 3. Elit Kategori Lüks Saat Canlı Kuru ve Fiyatları Taranıyor (+%80 Marj)...');
+  console.log('\n[SMART-DIFF] 👑 3. Elit Kategori Lüks Saat Canlı Kuru ve Fiyatları Taranıyor (2.50x Katsayı)...');
   try {
     const usdRate = await fetchLiveUsdRate();
-    const ELITE_MARKUP = 1.80; // +%80 Kâr Marjı
+    const ELITE_MARKUP = 2.50; // 2.50x Katsayı (+%150 Kâr Marjı)
     let eliteChecked = 0;
     for (const p of PRODUCTS) {
       if (p.isElite || p.category === 'elit-saatler') {
@@ -291,8 +291,9 @@ async function runSmartDiffSync() {
         const targetPrice = Math.round(baseUsd * usdRate * ELITE_MARKUP);
         const snap = initialSnapshot.get(p.id);
         if (snap && snap.price !== targetPrice) {
-          deltas.push(`👑 [ELİT SAAT FİYAT DEĞİŞİMİ] ${p.brand} ${p.name}: ${snap.price.toLocaleString('tr-TR')} TL ➔ ${targetPrice.toLocaleString('tr-TR')} TL (USD ${usdRate} TL, +%80 marj)`);
+          deltas.push(`👑 [ELİT SAAT FİYAT DEĞİŞİMİ] ${p.brand} ${p.name}: ${snap.price.toLocaleString('tr-TR')} TL ➔ ${targetPrice.toLocaleString('tr-TR')} TL (USD ${usdRate} TL, 2.50x katsayı)`);
           p.price = targetPrice;
+          p.marketMarkup = '2.50x';
           p.usdSellingRate = usdRate;
         }
       }
