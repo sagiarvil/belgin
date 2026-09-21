@@ -2056,42 +2056,13 @@ async function handleInvoiceRequest(req, res) {
       activeToken = authData.token;
       activeCookie = authData.cookie || '';
 
-      const axios = require('axios');
-      const qs = require('qs');
-      const crypto = require('crypto');
-      const reqHeaders = {
-        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        'Referer': `https://earsivportal.efatura.gov.tr/index.jsp`,
-        'Cookie': activeCookie
-      };
+      // Tarih gözetmeksizin: son 30 günün veya seçilen aralığın tüm faturalarını dilimleyerek (chunked) çek
+      const reqStart = req.body?.startDate || req.query?.startDate;
+      const reqEnd = req.body?.endDate || req.query?.endDate;
+      const endD = reqEnd ? new Date(reqEnd) : new Date();
+      const startD = reqStart ? new Date(reqStart) : new Date(endD.getTime() - 30 * 24 * 60 * 60 * 1000);
 
-      const d = new Date();
-      const todayFormatted = String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0') + '/' + d.getFullYear();
-      const pastDate = new Date();
-      pastDate.setDate(pastDate.getDate() - 5);
-      const pastFormatted = String(pastDate.getDate()).padStart(2, '0') + '/' + String(pastDate.getMonth() + 1).padStart(2, '0') + '/' + pastDate.getFullYear();
-
-      const dispatchBody = qs.stringify({
-        cmd: 'EARSIV_PORTAL_TASLAKLARI_GETIR',
-        callid: crypto.randomUUID(),
-        pageName: 'RG_TASLAKLAR',
-        token: activeToken,
-        jp: JSON.stringify({
-          baslangic: pastFormatted,
-          bitis: todayFormatted,
-          hangiTip: '5000/30000'
-        })
-      });
-
-      const listCall = await axios.post(`https://earsivportal.efatura.gov.tr/dispatch`, dispatchBody, {
-        headers: reqHeaders,
-        timeout: 60000
-      });
-
-      const gibList = listCall.data?.data;
-      if (!Array.isArray(gibList)) {
-        return res.status(500).json({ success: false, message: 'GİB listesi çekilemedi.' });
-      }
+      const gibList = await earsiv.getInvoicesChunked(activeToken, startD, endD, { cookie: activeCookie });
 
       const gibByEttn = {};
       for (const item of gibList) {

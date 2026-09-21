@@ -66,6 +66,22 @@ function isPureLaborItem(name) {
  * Kullanıcının mağaza fatura ekranında seçtiği tarihi (YYYY-MM-DD, DD.MM.YYYY, DD/MM/YYYY)
  * resmi GİB portalı formatına (DD/MM/YYYY) güvenle dönüştürür.
  */
+function parseGibDate(rawDate) {
+  if (!rawDate) return new Date();
+  if (rawDate instanceof Date) return rawDate;
+  const str = String(rawDate).trim();
+  const dmyMatch = str.match(/^(\d{1,2})[./\-](\d{1,2})[./\-](\d{4})/);
+  if (dmyMatch) {
+    return new Date(parseInt(dmyMatch[3], 10), parseInt(dmyMatch[2], 10) - 1, parseInt(dmyMatch[1], 10));
+  }
+  const ymdMatch = str.match(/^(\d{4})[./\-](\d{1,2})[./\-](\d{1,2})/);
+  if (ymdMatch) {
+    return new Date(parseInt(ymdMatch[1], 10), parseInt(ymdMatch[2], 10) - 1, parseInt(ymdMatch[3], 10));
+  }
+  const parsed = new Date(str);
+  return isNaN(parsed.getTime()) ? new Date() : parsed;
+}
+
 function formatToGibDate(rawDate) {
   if (!rawDate) {
     const now = new Date();
@@ -1051,28 +1067,11 @@ class EarsivPortalService {
         });
 
         let list = listCall.data?.data;
-        // Eğer hedef tarihte doğrudan bulunamazsa, bugünün tarihini de sorgula
+        // Tarih gözetmeksizin faturanın oluşturulduğu tarihten bugüne kadar chunked sorgula
         const todayStr = formatToGibDate(new Date());
-        if ((!Array.isArray(list) || list.length === 0) && formattedDate !== todayStr) {
+        if (!Array.isArray(list) || list.length === 0) {
           try {
-            const listCallToday = await axios.post(`${this.baseUrl}/assos-login`, qs.stringify({
-              cmd: 'EARSIV_PORTAL_TASLAKLARI_GETIR',
-              callid: crypto.randomUUID(),
-              pageName: 'RG_TASLAKLAR',
-              token: token,
-              jp: JSON.stringify({
-                baslangic: todayStr,
-                bitis: todayStr,
-                hangiTip: '5000/30000'
-              })
-            }), {
-              httpsAgent: this.agent,
-              headers: reqHeaders,
-              timeout: 30000
-            });
-            if (Array.isArray(listCallToday.data?.data) && listCallToday.data.data.length > 0) {
-              list = listCallToday.data.data;
-            }
+            list = await this.getInvoicesChunked(token, formattedDate, new Date(), { cookie });
           } catch (_) {}
         }
 
@@ -1090,7 +1089,7 @@ class EarsivPortalService {
           if (match) {
             realEttn = match.ettn || match.faturauuid || realEttn;
             realBelgeNo = match.belgeNumarasi || '';
-            console.info(`[EarsivService Auto-Heal] GİB imza UUID eşleşmedi, gerçek taslak bulundu: ${matchedDraft.ettn}. Yeniden imzalanıyor...`);
+            console.info(`[EarsivService] GİB resmi ETTN doğrulandı: ${realEttn} (Belge No: ${realBelgeNo})`);
           }
         }
       } catch (listErr) {
@@ -1429,6 +1428,79 @@ class EarsivPortalService {
   }
 
   /**
+   * GİB 7 Gün Kuralını Aşan Evrensel Dilimleme ile Fatura Listesi Çekici
+   * Tarih gözetmeksizin aralığı 5'er günlük pencerelere bölerek tüm faturaları çeker.
+   */
+  async getInvoicesChunked(token, startDate, endDate, options = {}) {
+    if (!token || token.startsWith('MOCK_GIB_TOKEN')) return [];
+    const cookie = options.cookie || cachedCookie;
+    const reqHeaders = {
+      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+      'Referer': `${this.baseUrl}/index.jsp`
+    };
+    if (cookie) reqHeaders['Cookie'] = cookie;
+
+    const start = parseGibDate(startDate);
+    const end = parseGibDate(endDate || new Date());
+    const minDate = start <= end ? start : end;
+    const maxDate = start <= end ? end : start;
+
+    const chunks = [];
+    let curr = new Date(minDate);
+    while (curr <= maxDate) {
+      let next = new Date(curr);
+      next.setDate(next.getDate() + 5);
+      if (next > maxDate) next = new Date(maxDate);
+      chunks.push({
+        baslangic: formatToGibDate(curr),
+        bitis: formatToGibDate(next)
+      });
+      curr = new Date(next);
+      curr.setDate(curr.getDate() + 1);
+    }
+
+    const allInvoices = [];
+    const seenEttns = new Set();
+
+    for (const chunk of chunks) {
+      try {
+        const dispatchBody = qs.stringify({
+          cmd: 'EARSIV_PORTAL_TASLAKLARI_GETIR',
+          callid: crypto.randomUUID(),
+          pageName: 'RG_TASLAKLAR',
+          token: token,
+          jp: JSON.stringify({
+            baslangic: chunk.baslangic,
+            bitis: chunk.bitis,
+            hangiTip: '5000/30000'
+          })
+        });
+
+        const res = await axios.post(`${this.baseUrl}/dispatch`, dispatchBody, {
+          httpsAgent: this.agent,
+          headers: reqHeaders,
+          timeout: 30000
+        });
+
+        const list = res.data?.data;
+        if (Array.isArray(list)) {
+          for (const item of list) {
+            const ettn = item.ettn || item.faturauuid;
+            if (ettn && !seenEttns.has(ettn)) {
+              seenEttns.add(ettn);
+              allInvoices.push(item);
+            }
+          }
+        }
+      } catch (err) {
+        console.warn(`[EarsivService] getInvoicesChunked error on range ${chunk.baslangic}-${chunk.bitis}:`, err.message);
+      }
+    }
+
+    return allInvoices;
+  }
+
+  /**
    * İmzalanan Faturanın GİB Sistemindeki Resmi Belge Numarasını (Örn: GIB2026000000014) Sorgula
    */
   async getSignedInvoiceDetails(token, invoiceUuid, options = {}) {
@@ -1452,59 +1524,32 @@ class EarsivPortalService {
       const d = new Date();
       const todayFormatted = String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0') + '/' + d.getFullYear();
       
-      // GİB kesin kuralı: Seçilen tarih aralığı 7 günden fazla olamaz!
-      const pastDate = new Date();
-      pastDate.setDate(pastDate.getDate() - 5);
-      const pastFormatted = String(pastDate.getDate()).padStart(2, '0') + '/' + String(pastDate.getMonth() + 1).padStart(2, '0') + '/' + pastDate.getFullYear();
-
       const customDate = options.invoiceDate || options.faturaTarihi || options.belgeTarihi;
-      const targetGibDate = customDate ? formatToGibDate(customDate) : todayFormatted;
-
-      // GİB 7 gün aşımını önlemek için: hedef gün tekil sorgusu ve son 5 gün sorgusu
-      const queryRanges = [
-        { baslangic: targetGibDate, bitis: targetGibDate },
-        { baslangic: pastFormatted, bitis: todayFormatted }
-      ];
+      const today = new Date();
+      // Tarih gözetmeksizin: faturanın kendi tarihi ne kadar eski olursa olsun chunked tara
+      const startDate = customDate ? parseGibDate(customDate) : new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
       for (let attempt = 0; attempt < 3; attempt++) {
         if (attempt > 0) {
           await new Promise(r => setTimeout(r, 1200));
         }
 
-        for (const range of queryRanges) {
-          try {
-            const listCall = await axios.post(`${this.baseUrl}/dispatch`, qs.stringify({
-              cmd: 'EARSIV_PORTAL_TASLAKLARI_GETIR',
-              callid: crypto.randomUUID(),
-              pageName: 'RG_TASLAKLAR',
-              token: token,
-              jp: JSON.stringify({
-                baslangic: range.baslangic,
-                bitis: range.bitis,
-                hangiTip: '5000/30000'
-              })
-            }), {
-              httpsAgent: this.agent,
-              headers: reqHeaders,
-              timeout: 60000
-            });
-
-            const list = listCall.data?.data;
-            if (Array.isArray(list) && list.length > 0) {
-              const found = list.find(item => item.ettn === invoiceUuid || item.faturauuid === invoiceUuid);
-              if (found) {
-                return {
-                  belgeNumarasi: found.belgeNumarasi || found.faturaNo || '',
-                  ettn: found.ettn || invoiceUuid,
-                  alici: found.aliciUnvanAdSoyad || '',
-                  tarih: found.belgeTarihi || '',
-                  onayDurumu: found.onayDurumu || 'Onaylandı'
-                };
-              }
+        try {
+          const list = await this.getInvoicesChunked(token, startDate, today, { cookie });
+          if (Array.isArray(list) && list.length > 0) {
+            const found = list.find(item => item.ettn === invoiceUuid || item.faturauuid === invoiceUuid);
+            if (found) {
+              return {
+                belgeNumarasi: found.belgeNumarasi || found.faturaNo || '',
+                ettn: found.ettn || invoiceUuid,
+                alici: found.aliciUnvanAdSoyad || '',
+                tarih: found.belgeTarihi || '',
+                onayDurumu: found.onayDurumu || 'Onaylandı'
+              };
             }
-          } catch (qErr) {
-            console.warn('[EarsivService] query range error:', qErr.message);
           }
+        } catch (qErr) {
+          console.warn('[EarsivService] getSignedInvoiceDetails chunked error:', qErr.message);
         }
       }
       return null;

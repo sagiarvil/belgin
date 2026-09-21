@@ -3202,7 +3202,8 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
           ? (document.getElementById('cfgWatchItemName')?.value?.trim() || order.productName)
           : (document.getElementById('cfgCustomItemName')?.value?.trim() || order.productName))) || '22 AYAR ALTIN BİLEZİK');
 
-      const effectiveInvoiceDate = customerOverrides?.invoiceDate || order.invoiceDate || order.faturaTarihi || null;
+      const modalDateVal = (document.getElementById("cfgModalInvoiceDate")?.value || document.getElementById("editCustomerInvoiceDate")?.value || document.getElementById("storeInvoiceDate")?.value || "").trim();
+      const effectiveInvoiceDate = customerOverrides?.invoiceDate || modalDateVal || order.invoiceDate || order.faturaTarihi || null;
 
       const payload = {
         orderId: order.orderId,
@@ -3401,7 +3402,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       } else {
         // TEKİL İMZALAMA İSTEĞİ
         const targetStoreInv = this.storeInvoices.find(i => i.orderId === this.activeInvoiceOrderId || i.id === this.activeInvoiceOrderId);
-        const invoiceDateForSign = targetStoreInv?.invoiceDate || (document.getElementById('storeInvoiceDate')?.value || '').trim() || null;
+        const invoiceDateForSign = targetStoreInv?.invoiceDate || (document.getElementById('cfgModalInvoiceDate')?.value || document.getElementById('editCustomerInvoiceDate')?.value || document.getElementById('storeInvoiceDate')?.value || '').trim() || null;
 
         const res = await fetch('/api/admin/invoice/sign?cb=1', {
           method: 'POST',
