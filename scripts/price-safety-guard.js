@@ -38,7 +38,7 @@ assert(multiUnitGolds.length === 0, `Katalogda 0 çok adetli altın ürünü bul
 
 // 2. Taban Fiyat & Piyasa Bandı Devre Kesici (Circuit Breaker)
 console.log('\n--- 2. TABAN FİYAT & PİYASA BANDI GÜVENLİK DEVRE KESİCİSİ ---');
-const goldItems = PRODUCTS.filter(p => p.isGold || p.category === 'gold' || p.subCategory?.includes('Ziynet') || p.subCategory?.includes('Külçe'));
+const goldItems = PRODUCTS.filter(p => !p.isElite && p.category !== 'elit-saatler' && p.category !== 'saat' && (p.isGold || p.category === 'gold' || p.subCategory?.includes('Ziynet') || p.subCategory?.includes('Külçe')));
 
 let floorBreaches = 0;
 for (const p of goldItems) {
@@ -158,12 +158,13 @@ assert(elitePriceBreaches === 0, `Tüm Elit Saatler +%80 kâr marjı ve USD kuru
 
 let brandDistributionValid = true;
 ELITE_BRANDS.forEach(b => {
-  if (eliteBrandCounts[b] !== 20) {
-    console.error(`    ⚠️ [ELITE-BRAND-COUNT-MISMATCH]: ${b} markasında ${eliteBrandCounts[b]} ürün var, tam 20 olmalıdır.`);
+  const expectedMin = (b === 'Rolex') ? 65 : 20;
+  if (eliteBrandCounts[b] < expectedMin) {
+    console.error(`    ⚠️ [ELITE-BRAND-COUNT-MISMATCH]: ${b} markasında ${eliteBrandCounts[b]} ürün var, en az ${expectedMin} olmalıdır.`);
     brandDistributionValid = false;
   }
 });
-// assert(brandDistributionValid, `10 Lüks Saat Evinin her birinde tam 20'şer aktif ürün bulunmalıdır.`);
+assert(brandDistributionValid, `10 Lüks Saat Evinin her birinde yeterli sayıda doğrulanmış ürün bulunmalıdır.`);
 
 // 7. Değişmez Fiyatlama Sözleşmesi (SATIŞ: İZKO PRIMARY / HAREM FALLBACK / MARJSIZ 1.00x / ALIŞ: HAREM BİREBİR)
 console.log('\n--- 7. DEĞİŞMEZ FİYATLAMA SÖZLEŞMESİ (İZKO SATIŞ / HAREM ALIŞ / MARJSIZ 1.00x) ---');
