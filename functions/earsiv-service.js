@@ -583,6 +583,63 @@ class EarsivPortalService {
   /**
    * Aktif / Önbellekteki GİB Tokenını Getir (Mükerrer Login Engelleme)
    */
+  /**
+   * Çelik Gibi Merkezi GİB Dispatch Motoru (Fail-Safe & Auto-Healing Dispatcher)
+   * Oturum düşmesi / geçersiz token durumunda şeffaf re-auth & retry yapar.
+   * GİB 502/503/504 veya ağ hatalarında exponential backoff ile 3 kez dener.
+   */
+  async safeDispatch(cmd, pageName, jpPayload, options = {}) {
+    let currentToken = options.token || (await this.getActiveToken()).token;
+    let currentCookie = options.cookie || cachedCookie;
+
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try {
+        const callid = crypto.randomUUID();
+        const dispatchBody = qs.stringify({
+          cmd,
+          callid,
+          pageName,
+          token: currentToken,
+          jp: typeof jpPayload === 'string' ? jpPayload : JSON.stringify(jpPayload)
+        });
+
+        const reqHeaders = {
+          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+          'Referer': `${this.baseUrl}/index.jsp`
+        };
+        if (currentCookie) reqHeaders['Cookie'] = currentCookie;
+
+        const res = await axios.post(`${this.baseUrl}/dispatch`, dispatchBody, {
+          httpsAgent: this.agent,
+          headers: reqHeaders,
+          timeout: 45000
+        });
+
+        const rawStr = JSON.stringify(res.data || '');
+
+        if (rawStr.includes('Oturum geçersiz') || rawStr.includes('clientIP') || rawStr.includes('yetkisiz') || (res.data?.error === '1' && rawStr.includes('Oturum'))) {
+          console.warn(`[safeDispatch] GİB oturum düşmesi algılandı (Deneme ${attempt}/3). Taze token alınıyor...`);
+          try { await getDb().collection('settings').doc('gib_session').delete(); } catch(_) {}
+          cachedSessionToken = null;
+          cachedCookie = '';
+          cachedTokenExpiresAt = 0;
+          const freshAuth = await this.login();
+          currentToken = freshAuth.token;
+          currentCookie = freshAuth.cookie || '';
+          await new Promise(r => setTimeout(r, 1000));
+          continue;
+        }
+
+        return res.data;
+      } catch (err) {
+        console.warn(`[safeDispatch] İstek hatası (Deneme ${attempt}/3): ${err.message}`);
+        if (attempt === 3) throw err;
+        await new Promise(r => setTimeout(r, attempt * 1200));
+      }
+    }
+    throw new Error('GİB dispatch işlemi 3 deneme sonucunda tamamlanamadı.');
+  }
+
   async getActiveToken() {
     try {
       const doc = await getDb().collection('settings').doc('gib_session').get();
@@ -1233,7 +1290,7 @@ class EarsivPortalService {
       throw new Error('Eksik parametre: token, smsCode ve invoiceUuid zorunludur.');
     }
 
-    const cleanSms = String(smsCode).replace(/\s+/g, "").trim().toUpperCase();
+    const cleanSms = String(smsCode).replace(/[^A-Za-z0-9]/g, '').trim().toUpperCase();
     if (cleanSms.length < 4) {
       throw new Error('Geçersiz SMS onay kodu.');
     }
@@ -1389,15 +1446,10 @@ class EarsivPortalService {
               dPast.setDate(dPast.getDate() - 5);
               const pastStr = formatToGibDate(dPast);
 
-              const healListCall = await axios.post(`${this.baseUrl}/dispatch`, qs.stringify({
-                cmd: 'EARSIV_PORTAL_TASLAKLARI_GETIR',
-                callid: crypto.randomUUID(),
-                pageName: 'RG_TASLAKLAR',
-                token: token,
-                jp: JSON.stringify({ baslangic: pastStr, bitis: todayStr, hangiTip: '5000/30000' })
-              }), { httpsAgent: this.agent, headers: reqHeaders, timeout: 30000 });
-
-              const gList = healListCall.data?.data;
+              // Faturanın kendi tarihi varsa onu, yoksa son 15 günü chunked tara
+              const invCustomDate = options.invoiceDate || options.faturaTarihi || options.belgeTarihi;
+              const autoHealStartDate = invCustomDate ? parseGibDate(invCustomDate) : new Date(Date.now() - 15 * 24 * 60 * 60 * 1000);
+              const gList = await this.getInvoicesChunked(token, autoHealStartDate, new Date(), { cookie });
               if (Array.isArray(gList)) {
                 const matchedDraft = gList.find(x => 
                   x.onayDurumu === 'Onaylanmadı' && 
@@ -1574,24 +1626,27 @@ class EarsivPortalService {
       };
       if (cookie) reqHeaders['Cookie'] = cookie;
 
-      const callid = crypto.randomUUID();
-      const dispatchBody = qs.stringify({
-        cmd: 'EARSIV_PORTAL_FATURA_GOSTER',
-        callid: callid,
-        pageName: 'RG_TASLAKLAR',
-        token: token,
-        jp: JSON.stringify({ ettn: invoiceUuid, faturauuid: invoiceUuid, onayDurumu: 'Onaylandı' })
-      });
+      // Hem onaylı hem taslak faturaları destekleyen akıllı önizleme
+      for (const status of ['Onaylandı', 'Onaylanmadı']) {
+        const callid = crypto.randomUUID();
+        const dispatchBody = qs.stringify({
+          cmd: 'EARSIV_PORTAL_FATURA_GOSTER',
+          callid: callid,
+          pageName: 'RG_TASLAKLAR',
+          token: token,
+          jp: JSON.stringify({ ettn: invoiceUuid, faturauuid: invoiceUuid, onayDurumu: status })
+        });
 
-      const res = await axios.post(`${this.baseUrl}/dispatch`, dispatchBody, {
-        httpsAgent: this.agent,
-        headers: reqHeaders,
-        timeout: 60000
-      });
+        const res = await axios.post(`${this.baseUrl}/dispatch`, dispatchBody, {
+          httpsAgent: this.agent,
+          headers: reqHeaders,
+          timeout: 60000
+        });
 
-      const htmlContent = res.data?.data;
-      if (typeof htmlContent === 'string' && htmlContent.includes('<html')) {
-        return htmlContent;
+        const htmlContent = res.data?.data;
+        if (typeof htmlContent === 'string' && htmlContent.includes('<html')) {
+          return htmlContent;
+        }
       }
       return null;
     } catch (err) {
