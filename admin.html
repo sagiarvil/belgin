@@ -3409,10 +3409,16 @@
                   <!-- Satır 1: Açıklama, Adet, Tutar, KDV, İşçilik -->
                   <div style="display:grid; grid-template-columns:1.8fr 70px 1.2fr 1.1fr 1fr; gap:10px; margin-bottom:10px; align-items:end;">
                     <div>
-                      <label style="display:block; font-size:11.5px; font-weight:700; color:#0F172A; margin-bottom:3px;" for="freeItemName">
-                        Ürün Açıklaması: *
-                      </label>
-                      <input type="text" id="freeItemName" class="form-field-input" placeholder="Örn: 22 Ayar Altın Bilezik" value="22 Ayar Altın Bilezik" style="font-size:12.5px; font-weight:700; color:#0F172A; width:100%;" oninput="AdminApp.handleFreeItemChange()">
+                      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3px;">
+                        <label style="font-size:11.5px; font-weight:700; color:#0F172A;" for="freeItemName">
+                          Ürün Açıklaması: *
+                        </label>
+                        <div style="display:flex; gap:4px;">
+                          <button type="button" class="btn-template-chip" style="font-size:10px; padding:2px 6px; font-weight:700; background:#FEF3C7; color:#92400E; border-color:#F59E0B;" onclick="AdminApp.setFreeItemPreset('GOLD')">🪙 Altın</button>
+                          <button type="button" class="btn-template-chip" style="font-size:10px; padding:2px 6px; font-weight:700; background:#E0F2FE; color:#0369A1; border-color:#0284C7;" onclick="AdminApp.setFreeItemPreset('WATCH')">⌚ Saat</button>
+                        </div>
+                      </div>
+                      <input type="text" id="freeItemName" class="form-field-input" placeholder="Örn: 22 AYAR ALTIN BİLEZİK" value="22 AYAR ALTIN BİLEZİK" style="font-size:12.5px; font-weight:700; color:#0F172A; width:100%;" oninput="AdminApp.handleFreeItemChange()">
                     </div>
 
                     <div>
@@ -5192,7 +5198,7 @@
           <label style="display:block; font-size:11px; font-weight:700; color:#166534; margin-bottom:2px;">
             Ürün / Kalem Açıklaması:
           </label>
-          <input type="text" id="manualEftProductName" value="22 Ayar İşçilikli Altın Bilezik" placeholder="Örn: 22 Ayar İşçilikli Altın Bilezik" style="width:100%; border:1px solid #86EFAC; padding:8px 10px; border-radius:6px; font-size:12.5px; font-weight:700; color:#064E3B;">
+          <input type="text" id="manualEftProductName" value="22 AYAR ALTIN BİLEZİK" placeholder="Örn: 22 AYAR ALTIN BİLEZİK" style="width:100%; border:1px solid #86EFAC; padding:8px 10px; border-radius:6px; font-size:12.5px; font-weight:700; color:#064E3B;">
           <span style="font-size:10.5px; color:#15803D; margin-top:3px; display:block;">ℹ️ Faturada 'Kıymetli Maden Bedeli (Özel Matrah %0 KDV)' ve 'İşçilik' olarak ayrıştırılacaktır.</span>
         </div>
       </div>
@@ -5654,7 +5660,7 @@
             <label for="cfgGoldItemName" style="display:block; font-size:11.5px; font-weight:800; color:#92400E; margin-bottom:3px;">
               🏷️ Altın / Ziynet / VIP Ürün Açıklaması: * <small style="font-weight:600; color:#B45309;">(VIP Linkte Girdiğiniz Ürün Adı)</small>
             </label>
-            <input type="text" id="cfgGoldItemName" value="22 Ayar Bilezik" placeholder="Örn: 22 Ayar Burma Bilezik / 24 Ayar Külçe Altın" style="width:100%; border:1.5px solid #D97706; border-radius:6px; padding:8px 10px; font-size:13px; font-weight:700; color:#78350F; background:#FFF;" oninput="AdminApp.updateOrderInvoiceLiveSummary()">
+            <input type="text" id="cfgGoldItemName" value="22 AYAR ALTIN BİLEZİK" placeholder="Örn: 22 AYAR ALTIN BİLEZİK" style="width:100%; border:1.5px solid #D97706; border-radius:6px; padding:8px 10px; font-size:13px; font-weight:700; color:#78350F; background:#FFF;" oninput="AdminApp.updateOrderInvoiceLiveSummary()">
           </div>
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
             <div>
@@ -5679,7 +5685,7 @@
             <label style="display:block; font-size:11.5px; font-weight:800; color:#0369A1; margin-bottom:3px;">
               Saat Marka / Model / Kalem Adı: *
             </label>
-            <input type="text" id="cfgWatchItemName" value="Lüks İsviçre Kol Saati" placeholder="Örn: Rolex Submariner Date / Omega Speedmaster" style="width:100%; border:1.5px solid #0284C7; border-radius:6px; padding:8px 10px; font-size:13px; font-weight:700; color:#0C4A6E;" oninput="AdminApp.updateOrderInvoiceLiveSummary()">
+            <input type="text" id="cfgWatchItemName" value="Kol Saati" placeholder="Örn: Kol Saati" style="width:100%; border:1.5px solid #0284C7; border-radius:6px; padding:8px 10px; font-size:13px; font-weight:700; color:#0C4A6E;" oninput="AdminApp.updateOrderInvoiceLiveSummary()">
           </div>
           <div style="font-size:11px; color:#0369A1; font-weight:600;">
             ℹ️ 3065 sayılı KDV Kanunu uyarınca saat satışlarında faturanın tamamı %20 KDV içerir (Matrah + %20 KDV). Fatura genel toplamı sipariş tutarına birebir eşit kalır.

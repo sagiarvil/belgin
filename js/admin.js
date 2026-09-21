@@ -177,7 +177,7 @@ const AdminApp = {
     return headers;
   },
 
-  cleanInvoiceProductName(name, fallback = '22 Ayar Bilezik') {
+  cleanInvoiceProductName(name, fallback = '22 AYAR ALTIN BİLEZİK') {
     if (!name || typeof name !== 'string') return fallback;
     let clean = name.trim();
     if (!clean || clean === '/22' || clean === '22' || clean === '#22') return fallback;
@@ -203,7 +203,7 @@ const AdminApp = {
     return /^[,\+\s]*[iİıI][şs][çc][iİıI]l[iİıI]k(?:\s*\([xX]?\d+[^)]*\))?[,\+\s]*$/i.test(name.trim());
   },
 
-  getCleanInvoiceItemsSummary(items, fallback = '22 Ayar Bilezik') {
+  getCleanInvoiceItemsSummary(items, fallback = '22 AYAR ALTIN BİLEZİK') {
     if (!Array.isArray(items) || items.length === 0) return fallback;
     const realItems = items.filter(i => !this.isPureLaborItem(i.name) && !this.isPureLaborItem(i.malHizmet) && !this.isPureLaborItem(i.title));
     const targetItems = realItems.length > 0 ? realItems : items;
@@ -1622,8 +1622,8 @@ const AdminApp = {
         grandTotal: total,
         items: [
           {
-            name: prodName || 'Lüks İsviçre Kol Saati',
-            malHizmet: prodName || 'Lüks İsviçre Kol Saati',
+            name: prodName || 'Kol Saati',
+            malHizmet: prodName || 'Kol Saati',
             qty: 1,
             lineTotal: netMatrah,
             kdvRate: 20,
@@ -2218,7 +2218,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
           </div>
         `).join('') : `
           <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-            <span><strong>1. Kalem:</strong> ${this.escapeHtml((order.vipTitle || order.title || order.productName || (order.items && order.items[0]?.name) || '22 Ayar Bilezik').replace(/\s*\(Kıymetli Maden Bedeli\s*-\s*Özel Matrah\)/gi, '').replace(/\s*\(Özel Matrah 351\)/gi, '').trim())}</span>
+            <span><strong>1. Kalem:</strong> ${this.escapeHtml((order.vipTitle || order.title || order.productName || (order.items && order.items[0]?.name) || '22 AYAR ALTIN BİLEZİK').replace(/\s*\(Kıymetli Maden Bedeli\s*-\s*Özel Matrah\)/gi, '').replace(/\s*\(Özel Matrah 351\)/gi, '').trim())}</span>
             <strong>₺${bd.hasGoldAmount.toLocaleString('tr-TR', {minimumFractionDigits:2})} (%0 KDV Özel Matrah)</strong>
           </div>
           <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
@@ -2603,15 +2603,18 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
 
     const goldInput = document.getElementById('cfgGoldItemName');
     if (goldInput) {
-      goldInput.value = prodName;
+      goldInput.value = (prodName && !isWatch) ? prodName : '22 AYAR ALTIN BİLEZİK';
+    }
+
+    const watchInput = document.getElementById('cfgWatchItemName');
+    if (watchInput) {
+      watchInput.value = (prodName && isWatch) ? prodName : 'Kol Saati';
     }
 
     if (isWatch) {
-      const watchInput = document.getElementById('cfgWatchItemName');
-      if (watchInput) watchInput.value = prodName || 'Lüks İsviçre Kol Saati';
-      this.setOrderInvoiceConfigType('WATCH');
+      this.setOrderInvoiceConfigType('WATCH', false);
     } else {
-      this.setOrderInvoiceConfigType('GOLD');
+      this.setOrderInvoiceConfigType('GOLD', false);
     }
 
     // Kimlik & Beyan Belgesi Durumu
@@ -2765,7 +2768,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     }
   },
 
-  setOrderInvoiceConfigType(type) {
+  setOrderInvoiceConfigType(type, forceDefault = true) {
     this.orderInvoiceConfigType = type;
 
     const btnGold = document.getElementById('btnCfgTypeGold');
@@ -2795,6 +2798,19 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     if (blockGold) blockGold.style.display = (type === 'GOLD') ? 'block' : 'none';
     if (blockWatch) blockWatch.style.display = (type === 'WATCH') ? 'block' : 'none';
     if (blockCustom) blockCustom.style.display = (type === 'CUSTOM') ? 'block' : 'none';
+
+    // 🌟 KULLANICI MANDATE: Altın alanı seçildiğinde otomatik "22 AYAR ALTIN BİLEZİK", saat alanı seçildiğinde "Kol Saati" açıklaması standart otomatik gelir
+    const goldInput = document.getElementById('cfgGoldItemName');
+    const watchInput = document.getElementById('cfgWatchItemName');
+    if (type === 'GOLD' && goldInput) {
+      if (forceDefault || !goldInput.value || goldInput.value === 'Kol Saati' || goldInput.value === 'Lüks İsviçre Kol Saati') {
+        goldInput.value = '22 AYAR ALTIN BİLEZİK';
+      }
+    } else if (type === 'WATCH' && watchInput) {
+      if (forceDefault || !watchInput.value || watchInput.value === '22 AYAR ALTIN BİLEZİK' || watchInput.value === '22 Ayar Bilezik') {
+        watchInput.value = 'Kol Saati';
+      }
+    }
 
     this.updateOrderInvoiceLiveSummary();
   },
@@ -2836,7 +2852,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       const rawProdName = goldItemInputVal || order.vipTitle || order.title || order.productName || (Array.isArray(order.items) && order.items[0]?.name) || '';
       const prodName = (rawProdName && !rawProdName.includes('Saat / Mücevherat')) 
         ? this.cleanInvoiceProductName(rawProdName)
-        : '22 Ayar Bilezik';
+        : '22 AYAR ALTIN BİLEZİK';
 
       const goldDisplayName = prodName;
       
@@ -2890,7 +2906,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       };
 
     } else if (type === 'WATCH') {
-      const watchName = document.getElementById('cfgWatchItemName')?.value?.trim() || 'Lüks İsviçre Kol Saati';
+      const watchName = document.getElementById('cfgWatchItemName')?.value?.trim() || 'Kol Saati';
       const netMatrah = Math.round((total / 1.20) * 100) / 100;
       const kdvAmount = Math.round((total - netMatrah) * 100) / 100;
 
@@ -3005,7 +3021,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
         ? (document.getElementById('cfgGoldItemName')?.value?.trim() || order.vipTitle || order.title || order.productName)
         : (this.orderInvoiceConfigType === 'WATCH'
           ? (document.getElementById('cfgWatchItemName')?.value?.trim() || order.productName)
-          : (document.getElementById('cfgCustomItemName')?.value?.trim() || order.productName))) || '22 Ayar Bilezik');
+          : (document.getElementById('cfgCustomItemName')?.value?.trim() || order.productName))) || '22 AYAR ALTIN BİLEZİK');
 
       const payload = {
         orderId: order.orderId,
@@ -3184,7 +3200,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
         ? (document.getElementById('cfgGoldItemName')?.value?.trim() || order.vipTitle || order.title || order.productName)
         : (this.orderInvoiceConfigType === 'WATCH'
           ? (document.getElementById('cfgWatchItemName')?.value?.trim() || order.productName)
-          : (document.getElementById('cfgCustomItemName')?.value?.trim() || order.productName))) || '22 Ayar Bilezik');
+          : (document.getElementById('cfgCustomItemName')?.value?.trim() || order.productName))) || '22 AYAR ALTIN BİLEZİK');
 
       const effectiveInvoiceDate = customerOverrides?.invoiceDate || order.invoiceDate || order.faturaTarihi || null;
 
@@ -3885,7 +3901,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
           const q = parseInt(it.qty || it.miktar || 1, 10) || 1;
           const pr = Number(it.price || it.fiyat || it.lineTotal || (it.unitPrice ? it.unitPrice * q : 0)) || 0;
           return {
-            name: it.name || it.malHizmet || it.title || '22 Ayar Altın Bilezik',
+            name: it.name || it.malHizmet || it.title || '22 AYAR ALTIN BİLEZİK',
             qty: q,
             price: pr,
             unitPrice: Number(it.unitPrice || it.birimFiyat || (pr > 0 ? pr / q : 0))
@@ -3921,14 +3937,14 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
         const bd = this.calculateJewelryBreakdown(orderAmount, o);
         if (bd && Array.isArray(bd.items) && bd.items.length > 0) {
           itemsList = bd.items.map(it => ({
-            name: it.name || it.malHizmet || '22 Ayar Altın Bilezik',
+            name: it.name || it.malHizmet || '22 AYAR ALTIN BİLEZİK',
             qty: parseInt(it.qty || it.miktar || 1, 10) || 1,
             price: Number(it.lineTotal || it.fiyat || it.price) || (orderAmount / bd.items.length),
             unitPrice: Number(it.unitPrice || it.birimFiyat) || 0
           }));
         } else {
           itemsList = [{
-            name: o.productName || o.title || (o.invoiceType === 'WATCH' ? 'Lüks İsviçre Kol Saati' : '22 Ayar Altın Bilezik'),
+            name: o.productName || o.title || (o.invoiceType === 'WATCH' ? 'Kol Saati' : '22 AYAR ALTIN BİLEZİK'),
             qty: parseInt(o.qty, 10) || 1,
             unitPrice: orderAmount / (parseInt(o.qty, 10) || 1),
             price: orderAmount
@@ -3970,7 +3986,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       // 2. KALEM SATIRLARI (Her kalem kendi fiyatıyla, kuruşu kuruşuna fatura toplamına eşitlenir)
       itemsList.forEach((it, itIdx) => {
         rowCount++;
-        const itName = String(it.name || it.malHizmet || it.title || '22 Ayar Altın Bilezik').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        const itName = String(it.name || it.malHizmet || it.title || '22 AYAR ALTIN BİLEZİK').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         const itQty = parseInt(it.qty, 10) || 1;
         const itPrice = Number(it.price || (it.unitPrice ? it.unitPrice * itQty : orderAmount / itemsList.length) || 0);
         const itUnitPrice = Number(it.unitPrice || (itQty > 0 ? itPrice / itQty : itPrice) || 0);
@@ -5618,7 +5634,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     const listEl = document.getElementById('manualOrderItemsList');
     if (listEl) {
       listEl.innerHTML = '';
-      this.addManualOrderItemRow('22 Ayar İşçilikli Altın Bilezik', 1, '');
+      this.addManualOrderItemRow('22 AYAR ALTIN BİLEZİK', 1, '');
     }
 
     const amountInput = document.getElementById('manualTotalAmount');
@@ -5676,8 +5692,8 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     if (listEl && listEl.children.length === 1) {
       const firstRowName = listEl.querySelector('.manual-item-name');
       if (firstRowName) {
-        if (type === 'GOLD') firstRowName.value = '22 Ayar İşçilikli Altın Bilezik';
-        else if (type === 'WATCH') firstRowName.value = 'Lüks İsviçre Kol Saati';
+        if (type === 'GOLD') firstRowName.value = '22 AYAR ALTIN BİLEZİK';
+        else if (type === 'WATCH') firstRowName.value = 'Kol Saati';
       }
     }
 
@@ -5694,7 +5710,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     if (!listEl) return;
 
     const type = document.getElementById('manualInvoiceType')?.value || 'GOLD';
-    const defaultName = name || (type === 'WATCH' ? 'Lüks İsviçre Kol Saati' : '22 Ayar İşçilikli Altın Bilezik');
+    const defaultName = name || (type === 'WATCH' ? 'Kol Saati' : '22 AYAR ALTIN BİLEZİK');
     const priceVal = (price !== '' && price !== undefined) ? price : '';
 
     const rowDiv = document.createElement('div');
@@ -5976,7 +5992,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     const items = [];
 
     rows.forEach(r => {
-      const iName = r.querySelector('.manual-item-name')?.value?.trim() || (invoiceType === 'WATCH' ? 'Lüks Kol Saati' : '22 Ayar İşçilikli Altın Bilezik');
+      const iName = r.querySelector('.manual-item-name')?.value?.trim() || (invoiceType === 'WATCH' ? 'Kol Saati' : '22 AYAR ALTIN BİLEZİK');
       const iQty = parseInt(r.querySelector('.manual-item-qty')?.value || '1', 10) || 1;
       const iPrice = parseFloat(r.querySelector('.manual-item-price')?.value || 0) || 0;
       if (iName) {
@@ -6009,7 +6025,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
 
     if (items.length === 0) {
       items.push({
-        name: invoiceType === 'WATCH' ? 'Lüks İsviçre Kol Saati' : '22 Ayar İşçilikli Altın Bilezik',
+        name: invoiceType === 'WATCH' ? 'Kol Saati' : '22 AYAR ALTIN BİLEZİK',
         qty: 1,
         unitPrice: totalAmount,
         price: totalAmount
@@ -6284,7 +6300,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     if (refInput) refInput.value = '';
 
     const prodInput = document.getElementById('manualEftProductName');
-    if (prodInput) prodInput.value = '22 Ayar İşçilikli Altın Bilezik';
+    if (prodInput) prodInput.value = '22 AYAR ALTIN BİLEZİK';
 
     const errDiv = document.getElementById('manualEftErrorMsg');
     if (errDiv) {
@@ -6370,7 +6386,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     const customerPhone = document.getElementById('manualEftCustomerPhone')?.value?.trim();
     const customerIdentity = document.getElementById('manualEftCustomerIdentity')?.value?.trim();
     const refNo = document.getElementById('manualEftRefNo')?.value?.trim();
-    const productName = document.getElementById('manualEftProductName')?.value?.trim() || '22 Ayar İşçilikli Altın Bilezik';
+    const productName = document.getElementById('manualEftProductName')?.value?.trim() || '22 AYAR ALTIN BİLEZİK';
 
     if (isNaN(amountVal) || amountVal <= 0) {
       if (errDiv) {
@@ -6575,7 +6591,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
         const isWatch = (this.isWatchProduct && this.isWatchProduct(order.productName || order.title)) || order.invoiceType === 'WATCH';
         const ordQty = parseFloat(order.qty) || 1;
         itemsToLoad = [{
-          name: order.productName || order.title || (isWatch ? 'Lüks İsviçre Kol Saati' : '22 Ayar İşçilikli Altın Bilezik'),
+          name: order.productName || order.title || (isWatch ? 'Kol Saati' : '22 AYAR ALTIN BİLEZİK'),
           qty: ordQty,
           price: Number(order.totalAmount || 0),
           unitPrice: Number(order.totalAmount || 0) / ordQty,
@@ -6667,7 +6683,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     if (quickTotalInput) quickTotalInput.value = currentTotal.toFixed(2);
 
     // İlk ürün adını ve ADEDİNİ koru (Adet tam sayı olmalı, asla küsuratlı olamaz!)
-    let firstProdName = '22 Ayar İşçilikli Altın Bilezik';
+    let firstProdName = '22 AYAR ALTIN BİLEZİK';
     let savedQty = 1;
 
     if (rows.length > 0) {
@@ -7660,7 +7676,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     }
     if (!this.storeItems || this.storeItems.length === 0) {
       this.storeItems = [
-        { name: '22 Ayar Altın Bilezik', qty: 1, unitPrice: 0, kdvRate: 0, lineTotal: 0, kdvAmount: 0 }
+        { name: '22 AYAR ALTIN BİLEZİK', qty: 1, unitPrice: 0, kdvRate: 0, lineTotal: 0, kdvAmount: 0 }
       ];
     }
     this.renderStoreInvoiceItems();
@@ -8042,7 +8058,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     const laborItem = this.storeItems.find(it => String(it.name || '').toLowerCase().includes('işçilik'));
     const mainItem = this.storeItems.find(it => !String(it.name || '').toLowerCase().includes('işçilik')) || this.storeItems[0];
 
-    if (mainItem && freeNameEl) freeNameEl.value = mainItem.name || '22 Ayar Altın Bilezik';
+    if (mainItem && freeNameEl) freeNameEl.value = mainItem.name || '22 AYAR ALTIN BİLEZİK';
     if (mainItem && freeQtyEl) freeQtyEl.value = mainItem.qty || 1;
     if (mainItem && freeKdvEl) freeKdvEl.value = String(mainItem.kdvRate !== undefined ? mainItem.kdvRate : 0);
 
@@ -8372,15 +8388,15 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     const freeQtyEl = document.getElementById('freeItemQty');
     const freePriceEl = document.getElementById('freeItemPrice');
     const freeKdvEl = document.getElementById('freeItemKdvRate');
-    if (freeNameEl) freeNameEl.value = '22 Ayar Altın Bilezik';
+    if (freeNameEl) freeNameEl.value = '22 AYAR ALTIN BİLEZİK';
     if (freeQtyEl) freeQtyEl.value = '1';
     if (freePriceEl) freePriceEl.value = '';
     if (freeKdvEl) freeKdvEl.value = '0';
     this.handleFreeItemChange();
 
-    // Formu tamamen sıfırla - varsayılan 22 Ayar Altın Bilezik kalemi
+    // Formu tamamen sıfırla - varsayılan 22 AYAR ALTIN BİLEZİK kalemi
     this.storeItems = [
-      { name: '22 Ayar Altın Bilezik', qty: 1, unitPrice: 0, kdvRate: 0, lineTotal: 0, kdvAmount: 0 }
+      { name: '22 AYAR ALTIN BİLEZİK', qty: 1, unitPrice: 0, kdvRate: 0, lineTotal: 0, kdvAmount: 0 }
     ];
     this.renderStoreInvoiceItems();
     this.calculateStoreInvoiceLiveSummary();
@@ -8421,6 +8437,20 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     this.handleFreeItemChange();
   },
 
+  // HIZLI ALTIN & SAAT KALEMİ ÖN AYARI
+  setFreeItemPreset(type) {
+    const freeNameEl = document.getElementById('freeItemName');
+    const freeKdvEl = document.getElementById('freeItemKdvRate');
+    if (type === 'GOLD') {
+      if (freeNameEl) freeNameEl.value = '22 AYAR ALTIN BİLEZİK';
+      if (freeKdvEl) freeKdvEl.value = '0';
+    } else if (type === 'WATCH') {
+      if (freeNameEl) freeNameEl.value = 'Kol Saati';
+      if (freeKdvEl) freeKdvEl.value = '20';
+    }
+    this.handleFreeItemChange();
+  },
+
   // MAĞAZA FATURA KALEMİ MOD DEĞİŞTİRİCİ (FREE / GOLD / WATCH)
   switchStoreItemMode(mode) {
     const freeBox = document.getElementById('storeModeFreeBox');
@@ -8439,9 +8469,11 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     if (btnWatch) btnWatch.classList.toggle('active', mode === 'watch');
 
     if (mode === 'gold') {
+      this.setFreeItemPreset('GOLD');
       const input = document.getElementById('goldTargetPriceInput');
       if (input) input.focus();
     } else if (mode === 'watch') {
+      this.setFreeItemPreset('WATCH');
       const input = document.getElementById('watchTargetPriceInput');
       if (input) input.focus();
     } else if (mode === 'free') {
@@ -8457,7 +8489,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     const kdvEl = document.getElementById('freeItemKdvRate');
     const laborEl = document.getElementById('freeItemLaborRate');
 
-    const name = (nameEl?.value || '22 Ayar Altın Bilezik').trim();
+    const name = (nameEl?.value || '22 AYAR ALTIN BİLEZİK').trim();
     const qty = Math.max(1, parseInt(qtyEl?.value, 10) || 1);
     const totalAmount = this.parseSmartCalcAmount(priceEl?.value || 0);
     let rate = parseFloat(kdvEl?.value) || 0;
@@ -8529,7 +8561,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       if (laborRate > 0) {
         const unitGold = Math.round((goldGross / qty) * 100) / 100;
         items.push({
-          name: name || '22 Ayar Altın Bilezik',
+          name: name || '22 AYAR ALTIN BİLEZİK',
           qty: qty,
           unitPrice: unitGold,
           kdvRate: 0,
@@ -8590,7 +8622,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       // 1. Altın Kalemi (%0 KDV Özel Matrah)
       const unitGold = Math.round((data.goldGross / data.qty) * 100) / 100;
       itemsToAdd.push({
-        name: data.name || '22 Ayar Altın Bilezik',
+        name: data.name || '22 AYAR ALTIN BİLEZİK',
         qty: data.qty,
         unitPrice: unitGold,
         kdvRate: 0,
@@ -8684,7 +8716,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     const amountInput = document.getElementById('smartCalcWorkmanshipAmount');
 
     const totalAmount = this.parseSmartCalcAmount(totalInput?.value || 0);
-    const prodName = String(nameInput?.value || '22 Ayar Altın Bilezik').trim();
+    const prodName = String(nameInput?.value || '22 AYAR ALTIN BİLEZİK').trim();
     let unitPrice = Math.max(0, parseFloat(priceInput?.value) || 0);
     const workmanshipRate = Math.max(0, parseFloat(rateInput?.value) || 0);
 
@@ -10326,7 +10358,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
         orderId: inv.orderId,
         totalAmount: Number(inv.totalAmount || 0),
         invoiceDate: invoiceDateVal,
-        productName: inv.productName || (inv.items && inv.items[0]?.name) || '22 Ayar Bilezik',
+        productName: inv.productName || (inv.items && inv.items[0]?.name) || '22 AYAR ALTIN BİLEZİK',
         customerName: inv.customerName,
         customerIdentity: inv.customerIdentity,
         companyName: inv.companyName || inv.unvan,
