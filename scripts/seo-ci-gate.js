@@ -325,6 +325,81 @@ function runQualityGates() {
     }
   }
 
+  // G18: Registry ↔ HTML indexability/canonical/meta/entity parity.
+  for (const record of SEO_REGISTRY) {
+    if (record.route === '/') continue;
+    const rel = String(record.route).replace(/^\/+|\/+$/g, '');
+    let htmlPath = path.join(ROOT_DIR, rel);
+    if (fs.existsSync(htmlPath) && fs.statSync(htmlPath).isDirectory()) htmlPath = path.join(htmlPath, 'index.html');
+    if (!fs.existsSync(htmlPath) || !fs.statSync(htmlPath).isFile()) continue;
+
+    const html = fs.readFileSync(htmlPath, 'utf8');
+    const expectedCanonical = `${BASE_URL}${record.canonicalRoute || record.route}`;
+    const canonicalMatch = html.match(/<link\b[^>]*rel=["']canonical["'][^>]*href=["']([^"']+)["'][^>]*>/i)
+      || html.match(/<link\b[^>]*href=["']([^"']+)["'][^>]*rel=["']canonical["'][^>]*>/i);
+    if (!canonicalMatch || canonicalMatch[1] !== expectedCanonical) {
+      errors.push(`[G18 CANONICAL PARITY] ${record.route} canonical beklenen değerle eşleşmiyor: ${canonicalMatch?.[1] || 'MISSING'}`);
+    }
+    if (record.indexDirective === 'index' && /<meta\b[^>]*name=["']robots["'][^>]*content=["'][^"']*noindex/i.test(html)) {
+      errors.push(`[G18 INDEXABILITY] Registry index olan rota noindex taşıyor: ${record.route}`);
+    }
+    if (record.indexDirective === 'index' && !/<meta\b[^>]*name=["']description["'][^>]*content=["'][^"']{40,}["']/i.test(html)) {
+      errors.push(`[G18 META DESCRIPTION] Indexable rotada anlamlı meta description eksik: ${record.route}`);
+    }
+    if (/https:\/\/belginkuyumculuk\.com\//i.test(html)) {
+      errors.push(`[G18 ENTITY HOST] Canonical www iken apex entity URL bulundu: ${record.route}`);
+    }
+    if (!/<h1\b[^>]*>[\s\S]*?<\/h1>/i.test(html)) {
+      errors.push(`[G18 H1] Indexable rotada H1 eksik: ${record.route}`);
+    }
+  }
+
+  // G19: Report regression fixtures — previously observed P0/P1/P2 issues.
+  const reportIndexableGuides = [
+    'rehber/altin-yatirimi-ve-ozel-matrah-rehberi/index.html',
+    'rehber/izmir-kuyumculuk-ve-guvenli-teslimat/index.html',
+    'rehber/pirlanta-ve-gemoloji-degerleme-rehberi/index.html'
+  ];
+  for (const rel of reportIndexableGuides) {
+    const html = fs.readFileSync(path.join(ROOT_DIR, rel), 'utf8');
+    if (/noindex/i.test(html)) errors.push(`[G19 REPORT REGRESSION] Rehber tekrar noindex oldu: ${rel}`);
+  }
+
+  const contactPath = path.join(ROOT_DIR, 'iletisim.html');
+  if (fs.existsSync(contactPath)) {
+    const contact = fs.readFileSync(contactPath, 'utf8');
+    const controls = [...contact.matchAll(/<(input|select|textarea)\b[^>]*>/gi)].map(m => m[0]);
+    for (const control of controls) {
+      if (/type=["']hidden["']/i.test(control)) continue;
+      const id = (control.match(/\bid=["']([^"']+)["']/i) || [])[1];
+      const named = /\baria-label=["'][^"']+["']/i.test(control) || /\baria-labelledby=["'][^"']+["']/i.test(control);
+      const hasLabel = id && new RegExp(`<label\\b[^>]*for=["']${id.replace(/[.*+?^$\\{}()|[\]\\]/g, '\\  // Final Rapor Bütünlüğü (Report Integrity)')}["']`, 'i').test(contact);
+      if (!named && !hasLabel) errors.push(`[G19 FORM NAME] İletişim formunda erişilebilir adı olmayan kontrol: ${control.slice(0, 120)}`);
+    }
+  }
+
+  if (indexHtml.includes('GSC_VERIFICATION_TOKEN')) {
+    errors.push('[G19 PLACEHOLDER] Geçersiz GSC_VERIFICATION_TOKEN placeholder üretimde bulunamaz.');
+  }
+  if (/"aggregateRating"\s*:/i.test(indexHtml)) {
+    errors.push('[G19 REVIEW SCHEMA] Görünür ve doğrulanabilir kaynak sözleşmesi olmadan self-rating schema kullanılamaz.');
+  }
+
+  // G20: Trust/discovery routes required by report.
+  const trustFiles = ['biz-kimiz/index.html', 'gizlilik-politikasi.html', 'llms.txt', 'llms-full.txt', 'agent-card.json', '.well-known/agent-card.json'];
+  for (const rel of trustFiles) {
+    if (!fs.existsSync(path.join(ROOT_DIR, rel))) errors.push(`[G20 TRUST ROUTE] Eksik güven/keşif varlığı: ${rel}`);
+  }
+  const firebaseConfig = JSON.parse(fs.readFileSync(path.join(ROOT_DIR, 'firebase.json'), 'utf8'));
+  const redirects = firebaseConfig.hosting?.redirects || [];
+  const rewrites = firebaseConfig.hosting?.rewrites || [];
+  if (!redirects.some(r => r.source === '/hakkimizda' && r.destination === '/biz-kimiz/' && Number(r.type) === 301)) {
+    errors.push('[G20 ABOUT REDIRECT] /hakkimizda -> /biz-kimiz/ 301 eksik.');
+  }
+  if (!rewrites.some(r => r.source === '/mcp' && r.function === 'mcpApi')) {
+    errors.push('[G20 MCP ROUTE] /mcp -> mcpApi rewrite eksik.');
+  }
+
   // Final Rapor Bütünlüğü (Report Integrity)
   console.log('\n----------------------------------------------------');
   if (errors.length > 0) {
