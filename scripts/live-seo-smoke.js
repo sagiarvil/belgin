@@ -50,6 +50,15 @@ async function testProduct(url) {
 
   assert(/application\/ld\+json/i.test(html), `JSON-LD missing: ${url}`);
   assert(/"@type"\s*:\s*"Product"/i.test(html), `Product schema missing: ${url}`);
+  const jsonLd = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/i);
+  assert(jsonLd, `Product JSON-LD missing: ${url}`);
+  const parsed = JSON.parse(jsonLd[1]);
+  const product = parsed['@graph']?.find(node => node['@type'] === 'Product');
+  assert(product, `Product node missing: ${url}`);
+  if (html.includes('Özel Sipariş ile Temin Edilir')) {
+    assert(!product.offers?.availability,
+      `Special-order item has unverified availability: ${url}`);
+  }
 }
 
 async function main() {

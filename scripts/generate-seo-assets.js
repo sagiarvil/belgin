@@ -87,16 +87,18 @@ function buildSitemaps() {
   // 2. Pages: Sadece kanonik kurumsal/bilgi sayfaları (kategoriler ve anasayfa hariç mükerrerlik engellendi)
   const pages = SEO_REGISTRY
     .filter(p => p.indexDirective === 'index' && !String(p.route).includes('#'))
-    .map(p => ({ loc: `${BASE_URL}${p.route}`, lastmod: '2026-09-01' }))
+    .map(p => ({ loc: `${BASE_URL}${p.route}` }))
     .filter(p => p.loc === `${BASE_URL}/` || !categoryLocs.has(p.loc));
 
   // 3. Categories: Sadece gerçek kategori rotaları
-  const categories = Array.from(categoryLocs).map(loc => ({ loc, lastmod: '2026-09-01' }));
+  // Registry dates are not maintained with content revisions; omit lastmod.
+  const categories = Array.from(categoryLocs).map(loc => ({ loc }));
 
   // 4. Products: Lastmod güvencesiyle
   const productItems = products.map(p => ({
     loc: productUrl(p),
-    lastmod: lastmod(p) || '2026-09-01',
+    // An unverified catalog import date is not a significant page update.
+    lastmod: lastmod(p),
     image: imageUrl(p) ? { loc: imageUrl(p), title: `${p.brand || ''} ${p.name || ''}`.trim() } : null
   }));
 
@@ -108,7 +110,7 @@ function buildSitemaps() {
   } catch {}
   const magazineItems = magArticles.map(a => ({
     loc: `${BASE_URL}/magazin/${a.slug}/`,
-    lastmod: a.raw_date || '2026-08-01',
+    lastmod: lastmod({ updatedAt: a.updatedAt || a.raw_date }),
     image: a.image ? { loc: (a.image.startsWith('http') ? a.image : `${BASE_URL}/${a.image.replace(/^\/+/, '')}`), title: a.title } : null
   }));
 
@@ -116,8 +118,7 @@ function buildSitemaps() {
   write('sitemap-categories.xml', urlset(categories));
   write('sitemap-products.xml', urlset(productItems, true));
   write('sitemap-magazine.xml', urlset(magazineItems, true));
-  const today = new Date().toISOString().slice(0, 10);
-  write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <sitemap>\n    <loc>${BASE_URL}/sitemap-pages.xml</loc>\n    <lastmod>${today}</lastmod>\n  </sitemap>\n  <sitemap>\n    <loc>${BASE_URL}/sitemap-categories.xml</loc>\n    <lastmod>${today}</lastmod>\n  </sitemap>\n  <sitemap>\n    <loc>${BASE_URL}/sitemap-products.xml</loc>\n    <lastmod>${today}</lastmod>\n  </sitemap>\n  <sitemap>\n    <loc>${BASE_URL}/sitemap-magazine.xml</loc>\n    <lastmod>${today}</lastmod>\n  </sitemap>\n</sitemapindex>\n`);
+  write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <sitemap>\n    <loc>${BASE_URL}/sitemap-pages.xml</loc>\n  </sitemap>\n  <sitemap>\n    <loc>${BASE_URL}/sitemap-categories.xml</loc>\n  </sitemap>\n  <sitemap>\n    <loc>${BASE_URL}/sitemap-products.xml</loc>\n  </sitemap>\n  <sitemap>\n    <loc>${BASE_URL}/sitemap-magazine.xml</loc>\n  </sitemap>\n</sitemapindex>\n`);
 }
 
 function getLlmsFiles() {
@@ -236,9 +237,9 @@ function buildLlms() {
 
   body += `## Canonical Human Surfaces\n\n`;
   body += `- [Ana Vitrin](${BASE_URL}/): Belgin Kuyumculuk ve Saat ana vitrini ve canlı borsa göstergesi.\n`;
-  body += `- [Elit Kategori](${BASE_URL}/elit-kategori/): 10 İsviçre saat evinden 200 seçkin lüks model.\n`;
+  body += `- [Elit Kategori](${BASE_URL}/elit-kategori/): Seçilmiş lüks saat modelleri.\n`;
   body += `- [Saat Markaları](${BASE_URL}/markalar/): İsviçre saat evleri ve kurumsal marka fihristi.\n`;
-  body += `- [Lüks Saat Kataloğu](${BASE_URL}/saatler/): 1.800+ doğrulanmış lüks ve ikinci el saat koleksiyonu.\n`;
+  body += `- [Lüks Saat Kataloğu](${BASE_URL}/saatler/): Lüks ve ikinci el saat koleksiyonu.\n`;
   body += `- [Kıymetli Maden & Mücevherat](${BASE_URL}/mucevherat/): 24K külçe altın, sarrafiye ve pırlanta mücevherat.\n`;
   body += `- [Biz Kimiz & Kurumsal Sicil](${BASE_URL}/biz-kimiz/): 1999'dan beri kurumsal tarihçe ve uzman heyet.\n`;
   body += `- [Saat & Mücevherat Magazini](${BASE_URL}/magazin/): ${magazineArticles.length} editoryal makale ve piyasa analizleri.\n`;

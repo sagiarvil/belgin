@@ -154,6 +154,46 @@ function runQualityGates() {
       errors.push(`[G6 FAKE SCARCITY] index.html içinde sahte stok baskısı ibaresi bulundu: ${pattern}`);
     }
   }
+  if (/1\.925\s*(?:saat|model)|200\s*(?:elit|doğrulanmış)\s*model|145\s*ikonik/i.test(indexHtml)) {
+    errors.push('[G6 STALE CATALOG COUNT] Ana sayfada katalogla eşleşmeyen sabit ürün sayısı var.');
+  }
+  const homeSchemaMatch = indexHtml.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
+  if (homeSchemaMatch) {
+    try {
+      const homeSchema = JSON.parse(homeSchemaMatch[1]);
+      for (const entry of homeSchema['@graph'] || []) {
+        if (entry['@type'] === 'JewelryStore' && entry.aggregateRating) {
+          errors.push('[G6 SELF REVIEW] Kendi işletmesinin puanı LocalBusiness şemasında işaretlenemez.');
+        }
+        if (entry['@type'] === 'ItemList') {
+          for (const listItem of entry.itemListElement || []) {
+            const item = listItem.item || {};
+            if (item.offers?.availability && !item.offers?.price) {
+              errors.push(`[G6 UNSUPPORTED FEATURED STOCK] Ana sayfada fiyatı ve stok kanıtı bulunmayan ürün: ${item.url}`);
+            }
+          }
+        }
+      }
+    } catch (e) {
+      errors.push(`[G6 HOME SCHEMA PARSE] Ana sayfa JSON-LD bozuk: ${e.message}`);
+    }
+  }
+  if (fs.existsSync(sitemapProducts)) {
+    const xml = fs.readFileSync(sitemapProducts, 'utf8');
+    const sitemapDates = new Map([...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)].map(([, entry]) => [
+      entry.match(/<loc>([^<]+)<\/loc>/)?.[1],
+      entry.match(/<lastmod>([^<]+)<\/lastmod>/)?.[1] || null
+    ]));
+    const { verifiedLastmod } = require('./generate-static-seo-pages.js');
+    for (const p of products) {
+      const url = productUrl(p);
+      if (!sitemapDates.has(url)) {
+        errors.push(`[G6 SITEMAP MISSING] Ürün sitemap içinde yok: ${url}`);
+      } else if (sitemapDates.get(url) !== verifiedLastmod(p)) {
+        errors.push(`[G6 FAKE LASTMOD] ${url} için lastmod gerçek ürün güncellemesiyle uyuşmuyor.`);
+      }
+    }
+  }
 
   // G7: Chrono24 Kısıtlama Denetimi (Mandate Sözleşmesi)
   if (/Chrono24/i.test(indexHtml)) {
@@ -259,6 +299,16 @@ function runQualityGates() {
           if (productObj.offers?.url !== expectedUrl) {
             errors.push(`[G11 SCHEMA OFFER URL] Offer.url mismatch (${productObj.offers?.url} != ${expectedUrl}): ${route}`);
           }
+          if (html.includes('Özel Sipariş ile Temin Edilir') && productObj.offers?.availability) {
+            errors.push(`[G11 AVAILABILITY CONFLICT] Sevk tarihi/stok kanıtı olmadan özel sipariş için availability yayınlanamaz: ${route}`);
+          }
+          const knownUsed = p.isPreOwned || /ikinci.?el|pre.?owned|used/i.test([p.conditionBadge, p.condition, p.status].join(' '));
+          if (!/^Sıfır/i.test(String(p.conditionBadge || '')) && !knownUsed && productObj.offers?.itemCondition) {
+            errors.push(`[G11 CONDITION CONFLICT] Ürün bazında teyit edilen kondisyon yeni olarak işaretlenemez: ${route}`);
+          }
+          if (productObj.offers?.hasMerchantReturnPolicy || productObj.offers?.shippingDetails) {
+            errors.push(`[G11 UNSUPPORTED OFFER POLICY] Ürüne özel doğrulanmamış iade/kargo taahhüdü: ${route}`);
+          }
         }
       } catch (e) {
         errors.push(`[G11 SCHEMA PARSE ERROR] JSON-LD parse edilemedi: ${route} (${e.message})`);
@@ -334,7 +384,7 @@ function runQualityGates() {
     process.exit(1);
   }
 
-  console.log(`✅ SEO & GEO G0-G17 PASS — products=${products.length}, registryPages=${SEO_REGISTRY.length}, heroAnswerEngine=100%, subgraphs=40+, duplicateCanonical=0, categoryRawLinkCoverage=100%, n8nDAG=PASS, edgeAstPruner=PASS, liveSmokeContract=PASS, indexingApiGovernance=PASS`);
+  console.log(`SEO_GATE=PASS products=${products.length} registryPages=${SEO_REGISTRY.length} sampledProductSchemas=${sampleProducts.length} sitemapDatesChecked=${products.length}`);
   console.log('----------------------------------------------------\n');
   process.exit(0);
 }
@@ -344,4 +394,3 @@ if (require.main === module) {
 }
 
 module.exports = { runQualityGates };
-
