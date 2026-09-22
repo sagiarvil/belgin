@@ -8364,19 +8364,37 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
 
   ensureManualEditableInvoice() {
     const ref = this.getManualEditableInvoiceRef();
+    const storageKey = 'belgin_manual_demo_invoice_v1';
     if (!Array.isArray(this.storeInvoices)) this.storeInvoices = [];
 
-    const existing = this.storeInvoices.find(inv =>
-      inv && (inv.orderId === ref || inv.id === ref || inv.manualReferenceNo === ref)
+    let storedManual = null;
+    try {
+      const raw = localStorage.getItem(storageKey);
+      if (raw) storedManual = JSON.parse(raw);
+    } catch (_) {}
+
+    let existing = this.storeInvoices.find(inv =>
+      inv && (inv.orderId === ref || inv.id === ref)
     );
+
+    if (!existing && storedManual && storedManual.orderId === ref) {
+      existing = storedManual;
+      this.storeInvoices.unshift(existing);
+    }
 
     if (existing) {
       existing.manualEditable = true;
-      existing.manualReferenceNo = ref;
+      existing.manualReferenceNo = existing.manualReferenceNo || ref;
       existing.source = 'STORE_MANUAL_PDF';
       existing.invoiceStatus = 'MANUAL_DRAFT';
       existing.invoiceNumber = null;
       existing.invoiceUuid = null;
+      existing.status = 'MANUAL_DRAFT';
+      existing.paymentStatus = 'MANUAL_DRAFT';
+      existing.isPaid = false;
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(existing));
+      } catch (_) {}
       return existing;
     }
 
@@ -8422,6 +8440,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
 
     this.storeInvoices.unshift(manualInvoice);
     try {
+      localStorage.setItem('belgin_manual_demo_invoice_v1', JSON.stringify(manualInvoice));
       localStorage.setItem('belgin_store_invoices', JSON.stringify(this.storeInvoices));
     } catch (_) {}
     return manualInvoice;
@@ -9950,6 +9969,9 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       }
       localList = [invoiceDoc, ...localList.filter(x => x.orderId !== invoiceId)];
       localStorage.setItem('belgin_store_invoices', JSON.stringify(localList));
+      if (isManualEditable) {
+        localStorage.setItem('belgin_manual_demo_invoice_v1', JSON.stringify(invoiceDoc));
+      }
       this.storeInvoices = localList;
       this.filterStoreTable();
       this.showToast(isEdit ? `✅ Fatura (${invoiceId}) başarıyla güncellendi.` : `✅ Mağaza Fatura Taslağı (${invoiceId}) listeye eklendi.`);
