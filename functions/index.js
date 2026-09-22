@@ -1664,6 +1664,7 @@ async function handleInvoiceRequest(req, res) {
         smsSent: smsResult.success || false,
         challengeId: challengeId,
         phone: smsResult.phone || '',
+        oid: smsResult.oid || '',
         isMock: draftResult.isMock || false
       });
     } catch (err) {

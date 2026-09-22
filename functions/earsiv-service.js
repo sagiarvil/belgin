@@ -87,6 +87,13 @@ function formatToGibDate(rawDate) {
     const now = new Date();
     return `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
   }
+  if (rawDate instanceof Date) {
+    if (isNaN(rawDate.getTime())) {
+      const now = new Date();
+      return `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
+    }
+    return `${String(rawDate.getDate()).padStart(2, '0')}/${String(rawDate.getMonth() + 1).padStart(2, '0')}/${rawDate.getFullYear()}`;
+  }
   const str = String(rawDate).trim().replace(/\s+/g, '');
 
   // 1. Gün-Ay-Yıl biçimleri: 11.9.2026, 11.09.2026, 1.9.2026, 11/9/2026, 11-9-2026
@@ -1180,10 +1187,22 @@ class EarsivPortalService {
         }
 
         if (Array.isArray(list) && list.length > 0) {
-          const match = list.find(d => {
+          let match = list.find(d => {
             const listEttn = d.ettn || d.faturauuid;
             return listEttn && String(listEttn).toLowerCase() === String(invoiceUuid).toLowerCase();
           });
+          if (!match) {
+            const targetCustClean = String(orderData.customerName || '').trim().toLocaleLowerCase('tr-TR');
+            const targetVknClean = String(orderData.customerIdentity || '').replace(/\D/g, '');
+            match = list.find(d => {
+              if (d.onayDurumu && d.onayDurumu.includes('Onaylandı')) return false;
+              const dCust = String(d.aliciUnvanAdSoyad || '').trim().toLocaleLowerCase('tr-TR');
+              const dVkn = String(d.aliciVknTckn || '').replace(/\D/g, '');
+              const matchesCust = Boolean(targetCustClean && dCust && (dCust.includes(targetCustClean) || targetCustClean.includes(dCust)));
+              const matchesVkn = Boolean(targetVknClean && targetVknClean !== '11111111111' && dVkn === targetVknClean);
+              return matchesCust || matchesVkn;
+            });
+          }
           if (match) {
             realEttn = match.ettn || match.faturauuid || realEttn;
             realBelgeNo = match.belgeNumarasi || '';
@@ -1479,28 +1498,49 @@ class EarsivPortalService {
 
           // AUTO-HEAL: Eğer GİB "İmzalama yapılırken bir hata meydana geldi !" verdiyse (UUID uyuşmazlığı)
           const targetCust = (options.customerName || options.alici || options.orderData?.customerName || '').trim().toLocaleLowerCase('tr-TR');
-          if (errMsg.includes('hata meydana geldi') && targetCust && !options._isAutoHealAttempt) {
+          const targetOrderId = (options.orderId || options.orderData?.orderId || '').trim();
+          if (errMsg.includes('hata meydana geldi') && (targetCust || targetOrderId) && !options._isAutoHealAttempt) {
             try {
-              const dNow = new Date();
-              const todayStr = formatToGibDate(dNow);
-              const dPast = new Date();
-              dPast.setDate(dPast.getDate() - 5);
-              const pastStr = formatToGibDate(dPast);
-
-              // Faturanın kendi tarihi varsa onu, yoksa son 15 günü chunked tara
               const invCustomDate = options.invoiceDate || options.faturaTarihi || options.belgeTarihi;
-              const autoHealStartDate = invCustomDate ? parseGibDate(invCustomDate) : new Date(Date.now() - 15 * 24 * 60 * 60 * 1000);
+              const parsedDate = invCustomDate ? parseGibDate(invCustomDate) : null;
+              const autoHealStartDate = (parsedDate && !isNaN(parsedDate.getTime())) ? parsedDate : new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
               const gList = await this.getInvoicesChunked(token, autoHealStartDate, new Date(), { cookie });
-              if (Array.isArray(gList)) {
-                const matchedDraft = gList.find(x => 
-                  x.onayDurumu === 'Onaylanmadı' && 
-                  String(x.aliciUnvanAdSoyad || '').trim().toLocaleLowerCase('tr-TR').includes(targetCust)
-                );
+              if (Array.isArray(gList) && gList.length > 0) {
+                const unapprovedDrafts = gList.filter(x => x.onayDurumu === 'Onaylanmadı');
+                let matchedDraft = null;
+
+                if (targetCust) {
+                  const custParts = targetCust.split(/\s+/).filter(Boolean);
+                  matchedDraft = unapprovedDrafts.find(x => {
+                    const rowName = String(x.aliciUnvanAdSoyad || '').trim().toLocaleLowerCase('tr-TR');
+                    if (rowName.includes(targetCust) || targetCust.includes(rowName)) return true;
+                    if (custParts.length > 1 && custParts.every(part => rowName.includes(part))) return true;
+                    return false;
+                  });
+                }
+
+                if (!matchedDraft && targetOrderId) {
+                  for (const draft of unapprovedDrafts) {
+                    try {
+                      const dHtml = await this.getInvoiceHtml(token, draft.ettn, { cookie });
+                      if (dHtml && dHtml.includes(targetOrderId)) {
+                        matchedDraft = draft;
+                        break;
+                      }
+                    } catch (_) {}
+                  }
+                }
+
+                if (!matchedDraft && unapprovedDrafts.length === 1) {
+                  matchedDraft = unapprovedDrafts[0];
+                }
+
                 if (matchedDraft && matchedDraft.ettn) {
-                  console.info(`[EarsivService Auto-Heal] GİB imza UUID eşleşmedi, gerçek taslak bulundu: ${matchedDraft.ettn}. Yeniden imzalanıyor...`);
+                  console.info(`[EarsivService Auto-Heal] GİB imza UUID eşleşmedi, gerçek taslak bulundu: ${matchedDraft.ettn} (${matchedDraft.aliciUnvanAdSoyad}). Yeniden imzalanıyor...`);
                   return await this.verifySmsAndSign(token, cleanSms, matchedDraft.ettn, oid, {
                     ...options,
                     invoiceNumber: matchedDraft.belgeNumarasi || '',
+                    invoiceUuid: matchedDraft.ettn,
                     _isAutoHealAttempt: true
                   });
                 }

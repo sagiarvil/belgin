@@ -3244,6 +3244,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
 
       this.activeInvoiceUuid = draftData.invoiceUuid;
       this.activeInvoiceChallengeId = draftData.challengeId || '';
+      this.activeInvoiceOid = draftData.oid || '';
       if (submitBtn) submitBtn.innerHTML = '<span>✅ Doğrula & Faturayı İmzala</span>';
 
       if (summaryBox) {
