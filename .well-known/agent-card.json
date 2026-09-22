@@ -1,16 +1,14 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "@context": "https://agent-protocol.org/v1",
   "@type": "AgentCard",
-  "name": "Belgin Kuyumculuk & Saat AI Agent Card",
-  "description": "Autonomous AI Agent & LLM Discovery Profile for Belgin Kuyumculuk & Saat (Est. 1999, İzmir Buca). Certified luxury watches, bullion gold, and fine jewelry.",
+  "name": "Belgin Kuyumculuk & Saat — Public Discovery Card",
+  "description": "Public discovery profile for Belgin Kuyumculuk & Saat, İzmir Buca.",
   "url": "https://www.belginkuyumculuk.com/",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "entity": {
     "name": "BELGİN KUYUMCULUK - SEMİH SONBAHAR",
-    "legalName": "BELGİN KUYUMCULUK - SEMİH SONBAHAR",
     "tradeName": "Belgin Kuyumculuk & Saat",
-    "nace": "47.77.03",
+    "foundedYear": 1999,
     "address": {
       "street": "Menderes Caddesi No:231/B",
       "district": "Buca",
@@ -18,70 +16,38 @@
       "country": "TR",
       "postalCode": "35380"
     },
-    "geo": {
-      "latitude": 38.3842,
-      "longitude": 27.1685
-    },
     "telephone": "+90-541-930-53-72",
     "email": "destek@belginkuyumculuk.com",
-    "foundedYear": 1999,
     "sameAs": [
       "https://www.wikidata.org/wiki/Q131371162",
-      "https://www.instagram.com/belginkuyumculuk"
+      "https://www.instagram.com/belginmucevherat/"
     ]
   },
   "capabilities": {
-    "query": {
-      "endpoint": "https://www.belginkuyumculuk.com/api/products",
-      "method": "GET",
-      "description": "Programmatic catalog search for luxury watches and jewelry"
-    },
     "mcp": {
       "endpoint": "https://www.belginkuyumculuk.com/mcp",
       "protocol": "JSON-RPC-2.0",
       "tools": [
         "query_belgin_catalog",
-        "get_gold_board_rates",
-        "verify_ots_proof"
+        "get_belgin_public_profile",
+        "get_belgin_public_resources"
       ]
     },
-    "openapi": {
-      "specification": "https://www.belginkuyumculuk.com/openapi.json"
-    },
     "livePriceEngine": {
-      "provider": "İZKO (Primary Satış 1.00x) / Harem Altın (Primary Alış 1.00x & Fallback Satış 1.00x)",
-      "socketUri": "wss://hrmsocketonly.haremaltin.com",
-      "salesMargin": "0% (1.00x net - İZKO normal Satış)",
-      "buyingMargin": "0% (1.00x net - Harem Alış)",
-      "fallback": "Harem Altın ham Satış (1.00x net)"
-    },
-    "taxation": {
-      "vatRule": "3065 SK m.23/f Özel Matrah",
-      "preciousMetalVat": "%0",
-      "workmanshipVat": "%20",
-      "invoiceDescription": "Kıymetli Maden Bedeli (Özel Matrah)"
-    },
-    "compliance": {
-      "masakLimitTry": 12000,
-      "kycRequired": true,
-      "pciDssLevel": 1,
-      "bankPos": "Kuveyt Türk Sanal POS 3D Secure / Ziraat Katılım"
-    },
-    "catalogs": {
-      "eliteWatchCount": 200,
-      "totalWatchCount": 2064,
-      "magazineArticleCount": 186
+      "description": "Public pricing policy metadata. Current numeric prices must be read from live site/catalog surfaces; this block is not a live-price response.",
+      "salesReference": "İZKO normal Satış",
+      "buyingReference": "Harem Altın Alış",
+      "salesMargin": "1.00x",
+      "buyingMargin": "1.00x",
+      "livePrices": "https://www.belginkuyumculuk.com/canli-fiyatlar/"
     }
   },
   "endpoints": {
     "manifest": "https://www.belginkuyumculuk.com/llms.txt",
     "fullKnowledgeGraph": "https://www.belginkuyumculuk.com/llms-full.txt",
     "sitemap": "https://www.belginkuyumculuk.com/sitemap.xml",
-    "magazineSitemap": "https://www.belginkuyumculuk.com/sitemap-magazine.xml",
-    "liveRates": "https://www.belginkuyumculuk.com/canli-fiyatlar/",
-    "legalManifest": "https://www.belginkuyumculuk.com/legal-manifest.json",
-    "otsStatus": "https://www.belginkuyumculuk.com/legal-proofs/status.json",
-    "mcp": "https://www.belginkuyumculuk.com/mcp",
-    "openapi": "https://www.belginkuyumculuk.com/openapi.json"
+    "privacy": "https://www.belginkuyumculuk.com/gizlilik-politikasi.html",
+    "kvkk": "https://www.belginkuyumculuk.com/kvkk.html",
+    "mcp": "https://www.belginkuyumculuk.com/mcp"
   }
 }

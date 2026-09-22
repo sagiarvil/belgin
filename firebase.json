@@ -200,6 +200,16 @@
     "cleanUrls": false,
     "rewrites": [
       {
+        "source": "/.well-known/mcp",
+        "function": "mcpApi",
+        "region": "us-central1"
+      },
+      {
+        "source": "/mcp",
+        "function": "mcpApi",
+        "region": "us-central1"
+      },
+      {
         "source": "/api/magazine/articles",
         "function": "getMagazineArticlesApi",
         "region": "us-central1"
@@ -448,6 +458,16 @@
       }
     ],
     "redirects": [
+      {
+        "source": "/hakkimizda/",
+        "destination": "/biz-kimiz/",
+        "type": 301
+      },
+      {
+        "source": "/hakkimizda",
+        "destination": "/biz-kimiz/",
+        "type": 301
+      },
       {
         "source": "/index.html",
         "destination": "/",

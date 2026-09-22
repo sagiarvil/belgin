@@ -83,7 +83,35 @@ function processHtmlFiles() {
     if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) continue;
 
     let content = fs.readFileSync(filePath, 'utf8');
-    const pageUrl = `${BASE_URL}${page.route}`;
+    const pageUrl = `${BASE_URL}${page.canonicalRoute || page.route}`;
+
+    // Registry is the source of truth for crawl/index metadata. Normalize on every build.
+    const canonicalTag = `<link rel="canonical" href="${pageUrl}">`;
+    if (/<link\b[^>]*rel=["']canonical["'][^>]*>/i.test(content)) {
+      content = content.replace(/<link\b[^>]*rel=["']canonical["'][^>]*>/i, canonicalTag);
+    } else {
+      content = content.replace('</head>', `  ${canonicalTag}\n</head>`);
+    }
+
+    const descriptionTag = `<meta name="description" content="${String(page.metaDescription || '').replace(/"/g, '&quot;')}">`;
+    if (/<meta\b[^>]*name=["']description["'][^>]*>/i.test(content)) {
+      content = content.replace(/<meta\b[^>]*name=["']description["'][^>]*>/i, descriptionTag);
+    } else if (page.metaDescription) {
+      content = content.replace('</head>', `  ${descriptionTag}\n</head>`);
+    }
+
+    const robotsValue = page.indexDirective === 'noindex'
+      ? 'noindex,follow'
+      : 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1';
+    const robotsTag = `<meta name="robots" content="${robotsValue}">`;
+    if (/<meta\b[^>]*name=["']robots["'][^>]*>/i.test(content)) {
+      content = content.replace(/<meta\b[^>]*name=["']robots["'][^>]*>/i, robotsTag);
+    } else {
+      content = content.replace('</head>', `  ${robotsTag}\n</head>`);
+    }
+
+    // Prevent entity splitting between apex and canonical www host in JSON-LD and visible metadata.
+    content = content.replace(/https:\/\/belginkuyumculuk\.com(?=[\/"'])/g, BASE_URL);
 
     // 1. Canonical Link
     if (!content.includes('rel="canonical"')) {
