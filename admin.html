@@ -3205,9 +3205,17 @@
       <div id="storeEditModeBanner" style="display:none; background:#FEF3C7; border:2px solid #F59E0B; border-radius:10px; padding:12px 16px; margin-bottom:16px; align-items:center; justify-content:space-between;">
         <div style="display:flex; align-items:center; gap:10px;">
           <span style="font-size:20px;">✏️</span>
-          <span style="font-size:13.5px; font-weight:800; color:#92400E;">
-            Düzenleme Modu: <strong id="storeEditInvoiceIdText" style="font-family:monospace; background:#FFF; padding:2px 8px; border-radius:6px; border:1px solid #D97706;">MGS-...</strong> numaralı faturayı düzenliyorsunuz.
-          </span>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <span style="font-size:13.5px; font-weight:800; color:#92400E;">
+              Düzenleme Modu: <strong id="storeEditInvoiceIdText" style="font-family:monospace; background:#FFF; padding:2px 8px; border-radius:6px; border:1px solid #D97706;">MGS-...</strong>
+            </span>
+            <div id="manualGibNoEditor" style="display:none; align-items:center; gap:8px; flex-wrap:wrap;">
+              <label for="manualGibNoInput" style="font-size:11.5px; font-weight:800; color:#075985;">Demo GİB No:</label>
+              <input id="manualGibNoInput" type="text" maxlength="64" value="GIB20260000000xx" autocomplete="off"
+                     style="min-width:250px; padding:7px 10px; border:1.5px solid #7DD3FC; border-radius:7px; font-family:monospace; font-weight:800; color:#0F172A; background:#FFF;">
+              <span style="font-size:10.5px; font-weight:700; color:#64748B;">Yalnız bu demo/PDF kaydında kullanılır; GİB'e gönderilmez.</span>
+            </div>
+          </div>
         </div>
         <button type="button" class="btn-admin-secondary" style="padding:6px 12px; font-size:12px; border-color:#D97706; color:#92400E; background:#FFF; font-weight:800;" onclick="AdminApp.cancelStoreInvoiceEdit()">
           ✕ Düzenlemeyi İptal Et
@@ -6196,7 +6204,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 <script src="js/data.js"></script>
 <script src="js/vip-payment.js?v=2.8.8"></script>
-<script src="js/admin.js?v=20260922-manual-gib-edit2"></script>
+<script src="js/admin.js?v=20260922-manual-gib-edit3"></script>
   <script src="js/admin-identity-upload-fix.js?v=20260916-identity-upload-v1"></script>
 </body>
 </html>
