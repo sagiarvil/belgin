@@ -32,6 +32,14 @@
         "get_belgin_public_profile",
         "get_belgin_public_resources"
       ]
+    },
+    "livePriceEngine": {
+      "description": "Public pricing policy metadata. Current numeric prices must be read from live site/catalog surfaces; this block is not a live-price response.",
+      "salesReference": "İZKO normal Satış",
+      "buyingReference": "Harem Altın Alış",
+      "salesMargin": "1.00x",
+      "buyingMargin": "1.00x",
+      "livePrices": "https://www.belginkuyumculuk.com/canli-fiyatlar/"
     }
   },
   "endpoints": {
