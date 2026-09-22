@@ -373,7 +373,7 @@ function runQualityGates() {
       if (/type=["']hidden["']/i.test(control)) continue;
       const id = (control.match(/\bid=["']([^"']+)["']/i) || [])[1];
       const named = /\baria-label=["'][^"']+["']/i.test(control) || /\baria-labelledby=["'][^"']+["']/i.test(control);
-      const hasLabel = id && new RegExp(`<label\\b[^>]*for=["']${id.replace(/[.*+?^$\\{}()|[\]\\]/g, '\\  // Final Rapor Bütünlüğü (Report Integrity)')}["']`, 'i').test(contact);
+      const hasLabel = Boolean(id) && (contact.includes(`for="${id}"`) || contact.includes(`for='${id}'`));
       if (!named && !hasLabel) errors.push(`[G19 FORM NAME] İletişim formunda erişilebilir adı olmayan kontrol: ${control.slice(0, 120)}`);
     }
   }
