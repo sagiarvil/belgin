@@ -8447,12 +8447,12 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     const itemRows = items.map((item, idx) => {
       const qty = Number(item.qty || 1);
       const total = Number(item.lineTotal || item.unitPrice || 0);
-      return \`<tr>
-        <td>\${idx + 1}</td>
-        <td>\${esc(item.name || 'URUN')}</td>
-        <td class="num">\${qty}</td>
-        <td class="num">₺\${fmt(total)}</td>
-      </tr>\`;
+      return `<tr>
+        <td>${idx + 1}</td>
+        <td>${esc(item.name || 'URUN')}</td>
+        <td class="num">${qty}</td>
+        <td class="num">₺${fmt(total)}</td>
+      </tr>`;
     }).join('');
 
     const printWin = window.open('', '_blank');
@@ -8463,11 +8463,11 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     try { printWin.opener = null; } catch (_) {}
 
     printWin.document.open();
-    printWin.document.write(\`<!doctype html>
+    printWin.document.write(`<!doctype html>
 <html lang="tr">
 <head>
 <meta charset="utf-8">
-<title>\${ref} - Manuel Taslak</title>
+<title>${ref} - Manuel Taslak</title>
 <style>
   @page { size:A4; margin:14mm; }
   * { box-sizing:border-box; }
@@ -8498,41 +8498,41 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
   <div class="top">
     <div>
       <h1>BELGIN KUYUMCULUK — Manuel Fatura Taslagi</h1>
-      <div class="ref">\${ref}</div>
+      <div class="ref">${ref}</div>
     </div>
     <div class="meta">
-      <div><strong>Duzenleme Tarihi:</strong> \${esc(inv.invoiceDate || '')}</div>
-      <div><strong>Belge Referansi:</strong> \${ref}</div>
+      <div><strong>Duzenleme Tarihi:</strong> ${esc(inv.invoiceDate || '')}</div>
+      <div><strong>Belge Referansi:</strong> ${ref}</div>
     </div>
   </div>
   <div class="box">
     <h2>Alici Bilgileri</h2>
     <div class="grid">
-      <div><span class="label">Ad Soyad / Yetkili</span><div class="value">\${esc(inv.customerName || '')}</div></div>
-      <div><span class="label">Firma Unvani</span><div class="value">\${esc(inv.companyName || inv.unvan || '-')}</div></div>
-      <div><span class="label">TCKN / VKN</span><div class="value">\${esc(inv.customerIdentity || '-')}</div></div>
-      <div><span class="label">Vergi Dairesi</span><div class="value">\${esc(inv.taxOffice || '-')}</div></div>
-      <div><span class="label">Telefon</span><div class="value">\${esc(inv.customerPhone || '-')}</div></div>
-      <div><span class="label">E-posta</span><div class="value">\${esc(inv.customerEmail || '-')}</div></div>
-      <div style="grid-column:1 / -1"><span class="label">Adres</span><div class="value">\${esc(inv.customerAddress || '-')}</div></div>
+      <div><span class="label">Ad Soyad / Yetkili</span><div class="value">${esc(inv.customerName || '')}</div></div>
+      <div><span class="label">Firma Unvani</span><div class="value">${esc(inv.companyName || inv.unvan || '-')}</div></div>
+      <div><span class="label">TCKN / VKN</span><div class="value">${esc(inv.customerIdentity || '-')}</div></div>
+      <div><span class="label">Vergi Dairesi</span><div class="value">${esc(inv.taxOffice || '-')}</div></div>
+      <div><span class="label">Telefon</span><div class="value">${esc(inv.customerPhone || '-')}</div></div>
+      <div><span class="label">E-posta</span><div class="value">${esc(inv.customerEmail || '-')}</div></div>
+      <div style="grid-column:1 / -1"><span class="label">Adres</span><div class="value">${esc(inv.customerAddress || '-')}</div></div>
     </div>
   </div>
   <div class="box">
     <h2>Urun / Hizmet Kalemleri</h2>
     <table>
       <thead><tr><th>#</th><th>Urun Adi</th><th class="num">Adet</th><th class="num">Tutar</th></tr></thead>
-      <tbody>\${itemRows}</tbody>
+      <tbody>${itemRows}</tbody>
     </table>
-    <div class="total"><strong>Toplam: ₺\${fmt(inv.totalAmount || inv.total || 0)}</strong></div>
+    <div class="total"><strong>Toplam: ₺${fmt(inv.totalAmount || inv.total || 0)}</strong></div>
   </div>
   <div class="foot">
-    Bu belge yalnizca Belgin Admin icindeki \${ref} referansli manuel taslak kaydinin PDF/yazdirma ciktisidir.
+    Bu belge yalnizca Belgin Admin icindeki ${ref} referansli manuel taslak kaydinin PDF/yazdirma ciktisidir.
     GIB onayi, ETTN/UUID veya elektronik imza icermez; resmi GIB e-Arsiv faturasi yerine kullanilamaz.
   </div>
 </div>
 <script>window.addEventListener('load',function(){setTimeout(function(){window.print();},150);});<\/script>
 </body>
-</html>\`);
+</html>`);
     printWin.document.close();
   },
 
