@@ -3389,8 +3389,8 @@ exports.mcpApi = functions.https.onRequest((req, res) => {
       return res.status(200).json({
         mcpVersion: "2024-11-05",
         name: "www.belginkuyumculuk.com-tool-server",
-        protocol: "Model Context Protocol (MCP) Standard V1.0",
-        capabilities: { tools: true, resources: true, prompts: true },
+        protocol: "JSON-RPC 2.0 MCP-compatible tools endpoint",
+        capabilities: { tools: true },
         tools: MCP_TOOLS
       });
     }
