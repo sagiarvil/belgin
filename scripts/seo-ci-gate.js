@@ -316,6 +316,42 @@ function runQualityGates() {
     }
   }
 
+  // The browser adds a second schema after SPA navigation. Check the actual
+  // generated objects, since a static-only gate misses contradictory markup.
+  const { SeoManager } = require('../js/seo.js');
+  const originalWrite = SeoManager.writeSchemaScript;
+  const originalProducts = global.PRODUCTS;
+  const originalWindow = global.window;
+  let clientSchema;
+  try {
+    SeoManager.writeSchemaScript = schema => { clientSchema = schema; };
+    global.PRODUCTS = products;
+    global.window = { SEO_ROUTE_MAP: {} };
+    for (const p of sampleProducts) {
+      SeoManager.injectProductSchema(p, productUrl(p));
+      const productNode = clientSchema?.['@graph']?.find(node => node['@type'] === 'Product');
+      const offer = productNode?.offers;
+      if (!offer || offer.url !== productUrl(p) || offer.availability ||
+          offer.hasMerchantReturnPolicy || offer.shippingDetails || offer.priceValidUntil ||
+          productNode.aggregateRating) {
+        errors.push(`[G11 CLIENT SCHEMA CONFLICT] Tarayıcı ürün şeması doğrulanmamış stok/değerlendirme/koşul içeriyor: ${productUrl(p)}`);
+      }
+    }
+    for (const page of ['saatler', 'elit-kategori', 'mucevherat']) {
+      SeoManager.injectPageSchema(page, page, `${BASE_URL}${CATEGORY_ROUTES[page]}`);
+      const collection = clientSchema?.['@graph']?.find(node => node['@type'] === 'CollectionPage');
+      if (collection?.mainEntity?.itemListElement?.some(entry => entry.item?.offers?.availability)) {
+        errors.push(`[G11 CLIENT COLLECTION CONFLICT] ${page} koleksiyonunda doğrulanmamış stok işaretlemesi var.`);
+      }
+    }
+  } finally {
+    SeoManager.writeSchemaScript = originalWrite;
+    if (originalProducts === undefined) delete global.PRODUCTS;
+    else global.PRODUCTS = originalProducts;
+    if (originalWindow === undefined) delete global.window;
+    else global.window = originalWindow;
+  }
+
   // G13: Güvenlik Sertleştirmesi Kapısı (Security Hardening: HSTS, CSP, nosniff, Zero Mixed Content)
   const firebaseJsonPath = path.join(ROOT_DIR, 'firebase.json');
   if (fs.existsSync(firebaseJsonPath)) {
