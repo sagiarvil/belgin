@@ -34,6 +34,7 @@ async function fetchText(url) {
   return {
     url: res.url,
     status: res.status,
+    headers: Object.fromEntries(res.headers.entries()),
     text: await res.text()
   };
 }
@@ -52,6 +53,18 @@ async function testProduct(url) {
   assert(/"@type"\s*:\s*"Product"/i.test(html), `Product schema missing: ${url}`);
 }
 
+
+async function testIndexablePage(path) {
+  const url = `${BASE}${path}`;
+  const result = await fetchText(url);
+  const html = result.text;
+  assert(/<h1[\s>]/i.test(html), `H1 missing: ${url}`);
+  assert(!/<meta\b[^>]*name=["']robots["'][^>]*content=["'][^"']*noindex/i.test(html), `noindex: ${url}`);
+  const canonical = canonicalOf(html);
+  assert(canonical === url, `Canonical mismatch: ${url} -> ${canonical}`);
+  assert(/<meta\b[^>]*name=["']description["'][^>]*content=["'][^"']{40,}["']/i.test(html), `Meta description missing: ${url}`);
+}
+
 async function main() {
   console.log(`[LIVE-SEO-SMOKE] Canlı SEO Sağlama Testi Başlatıldı: ${BASE}`);
 
@@ -60,14 +73,41 @@ async function main() {
     '/saatler/',
     '/mucevherat/',
     '/ikinci-el/',
+    '/biz-kimiz/',
+    '/gizlilik-politikasi.html',
     '/robots.txt',
     '/llms.txt',
+    '/llms-full.txt',
+    '/.well-known/agent-card.json',
     '/sitemap.xml',
     '/sitemap-products.xml'
   ]) {
     await fetchText(`${BASE}${path}`);
     console.log(`  ✓ ${path} erişilebilir ve HTTP 200.`);
   }
+
+  const root = await fetchText(`${BASE}/`);
+  assert(/max-age=31536000/i.test(root.headers['strict-transport-security'] || ''), 'HSTS missing on live root.');
+
+  for (const path of [
+    '/rehber/altin-yatirimi-ve-ozel-matrah-rehberi/',
+    '/rehber/izmir-kuyumculuk-ve-guvenli-teslimat/',
+    '/rehber/pirlanta-ve-gemoloji-degerleme-rehberi/',
+    '/iletisim.html',
+    '/mesafeli-satis-sozlesmesi.html',
+    '/on-bilgilendirme-formu.html',
+    '/kvkk.html'
+  ]) {
+    await testIndexablePage(path);
+    console.log(`  ✓ ${path} canonical/index/meta sözleşmesi PASS.`);
+  }
+
+  const aboutAlias = await fetchText(`${BASE}/hakkimizda`);
+  assert(new URL(aboutAlias.url).pathname === '/biz-kimiz/', `/hakkimizda redirect mismatch: ${aboutAlias.url}`);
+
+  const mcp = await fetchText(`${BASE}/mcp`);
+  const mcpJson = JSON.parse(mcp.text);
+  assert(Array.isArray(mcpJson.tools) && mcpJson.tools.length >= 3, 'MCP discovery tools missing.');
 
   const productSitemap = await fetchText(`${BASE}/sitemap-products.xml`);
   const productUrls = extractLocs(productSitemap.text);
