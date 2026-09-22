@@ -160,7 +160,9 @@ const SeoManager = {
   },
 
   injectProductSchema(p, canonicalUrl) {
-    const isUsed = p.isPreOwned || /ikinci.?el/i.test(p.conditionBadge || '');
+    const isUsed = p.isPreOwned || /ikinci.?el|pre.?owned|used/i.test(
+      [p.conditionBadge, p.condition, p.status].join(' ')
+    );
     const schema = {
       "@context": "https://schema.org",
       "@graph": [
@@ -168,7 +170,9 @@ const SeoManager = {
           "@type": "Product",
           "@id": `${canonicalUrl}#product`,
           "name": `${p.brand} ${p.name}`.trim(),
-          "image": [p.image],
+          "image": [String(p.image || '').startsWith('http')
+            ? p.image
+            : `${this.baseUrl}/${String(p.image || 'images/belgin-logo.png').replace(/^\/+/, '')}`],
           "description": p.desc || p.description || `${p.brand} ${p.name} modeli İzmir Buca Belgin Kuyumculuk güvencesiyle.`,
           "sku": String(p.reference || p.ref || p.id),
           "mpn": String(p.reference || p.ref || p.id),
@@ -176,41 +180,18 @@ const SeoManager = {
             "@type": "Brand",
             "name": p.brand || "Belgin Saat"
           },
-          "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "reviewCount": 28,
-            "bestRating": "5",
-            "worstRating": "1"
-          },
           "offers": {
             "@type": "Offer",
             "url": canonicalUrl,
             "priceCurrency": "TRY",
             "price": Number(p.price),
-            "priceValidUntil": "2027-12-31",
-            "itemCondition": isUsed ? "https://schema.org/UsedCondition" : "https://schema.org/NewCondition",
-            "availability": p.inStock === false ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
-            "hasMerchantReturnPolicy": {
-              "@type": "MerchantReturnPolicy",
-              "applicableCountry": "TR",
-              "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
-              "merchantReturnDays": 14,
-              "returnMethod": "https://schema.org/ReturnInStore",
-              "returnFees": "https://schema.org/FreeReturn"
-            },
-            "shippingDetails": {
-              "@type": "OfferShippingDetails",
-              "shippingRate": {
-                "@type": "MonetaryAmount",
-                "value": "0",
-                "currency": "TRY"
-              },
-              "shippingDestination": {
-                "@type": "DefinedRegion",
-                "addressCountry": "TR"
-              }
-            },
+            ...(isUsed
+              ? { "itemCondition": "https://schema.org/UsedCondition" }
+              : /^Sıfır/i.test(String(p.conditionBadge || ''))
+                ? { "itemCondition": "https://schema.org/NewCondition" }
+                : {}),
+            // The landing page says special order. Catalog inStock flags are not
+            // verified showroom inventory or a known shipping date.
             "seller": {
               "@id": `${this.baseUrl}/#organization`
             }
@@ -302,13 +283,15 @@ const SeoManager = {
               "@type": "Product",
               "name": `${p.brand} ${p.name}`.trim(),
               "url": `${this.baseUrl}${(window.SEO_ROUTE_MAP || {})[String(p.id)] || `/?urun=${p.id}`}`,
-              "image": p.image,
+              "image": String(p.image || '').startsWith('http')
+                ? p.image
+                : `${this.baseUrl}/${String(p.image || 'images/belgin-logo.png').replace(/^\/+/, '')}`,
               "brand": { "@type": "Brand", "name": p.brand },
               "offers": {
                 "@type": "Offer",
                 "priceCurrency": "TRY",
                 "price": Number(p.price),
-                "availability": p.inStock === false ? "https://schema.org/OutOfStock" : "https://schema.org/InStock"
+                "url": `${this.baseUrl}${(window.SEO_ROUTE_MAP || {})[String(p.id)] || `/?urun=${p.id}`}`
               }
             }
           }))

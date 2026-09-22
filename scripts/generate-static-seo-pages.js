@@ -157,32 +157,17 @@ function productSchema(p) {
       url,
       priceCurrency: 'TRY',
       price: Number(p.price),
-      itemCondition: isUsed(p)
-        ? 'https://schema.org/UsedCondition'
-        : 'https://schema.org/NewCondition',
-      availability: p.inStock === false
-        ? 'https://schema.org/OutOfStock'
-        : 'https://schema.org/InStock',
-      hasMerchantReturnPolicy: {
-        '@type': 'MerchantReturnPolicy',
-        applicableCountry: 'TR',
-        returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
-        merchantReturnDays: 14,
-        returnMethod: 'https://schema.org/ReturnInStore',
-        returnFees: 'https://schema.org/FreeReturn'
-      },
-      shippingDetails: {
-        '@type': 'OfferShippingDetails',
-        shippingRate: {
-          '@type': 'MonetaryAmount',
-          value: '0',
-          currency: 'TRY'
-        },
-        shippingDestination: {
-          '@type': 'DefinedRegion',
-          addressCountry: 'TR'
-        }
-      },
+      ...(isUsed(p)
+        ? { itemCondition: 'https://schema.org/UsedCondition' }
+        : /^Sıfır/i.test(String(p.conditionBadge || ''))
+          ? { itemCondition: 'https://schema.org/NewCondition' }
+          : {}),
+      // The PDP says special order but provides no verified inventory or ship date.
+      // InStock is unsupported; PreOrder is for unreleased items, and BackOrder
+      // requires a visible expected shipping date for Merchant Center listings.
+      // Add availability only after the catalog and landing page share that truth.
+      // Return and shipping terms differ by product; do not promise a blanket
+      // free 14-day return or nationwide shipping in machine-readable data.
       seller: { '@id': `${BASE_URL}/#organization` }
     }
   };
@@ -199,33 +184,19 @@ function renderSeoProductCard(p) {
   const href = productRoute(p);
   const image = productImage(p);
   const ref = p.reference || p.ref || p.id;
-  const isCarren = p.brand === 'Carren';
   const isJewellery = categoryKey(p) === 'mucevherat';
 
   return `
-    <a
-      class="product-art-card seo-prerender-card"
-      href="${href}"
-      data-product-id="${esc(p.id)}"
-      style="text-decoration:none;color:inherit"
-    >
+    <a class="product-art-card seo-prerender-card" href="${href}" data-product-id="${esc(p.id)}" style="text-decoration:none;color:inherit">
       <div class="product-art-thumb">
-        ${isCarren ? '<span class="badge-shipping-pill" style="position:absolute; top:10px; left:10px; background:rgba(0,48,87,0.92); color:#FFFFFF; padding:4px 8px; border-radius:4px; font-size:10px; font-weight:700; letter-spacing:0.5px; z-index:2; backdrop-filter:blur(4px); border:1px solid rgba(255,255,255,0.2);">📦 Kargo ile Teslimat</span>' : ''}
-        ${isJewellery ? '<span class="badge-shipping-pill" style="position:absolute; top:10px; left:10px; background:#B91C1C; color:#FFFFFF; padding:5px 9px; border-radius:4px; font-size:10.5px; font-weight:800; letter-spacing:0.5px; z-index:2; box-shadow:0 2px 8px rgba(185,28,28,0.4); border:1px solid rgba(255,255,255,0.4);">🔒 KREDİ KARTINA KAPALIDIR</span>' : ''}
-        <img
-          class="img-primary"
-          src="${esc(image)}"
-          alt="${esc(`${p.brand || ''} ${p.name || ''}`.trim())}"
-          loading="lazy"
-        >
+        <img class="img-primary" src="${esc(image)}" alt="${esc(`${p.brand || ''} ${p.name || ''}`.trim())}" loading="lazy" decoding="async">
       </div>
-
       <div class="product-art-info">
         <h3 class="prod-brand-name">${esc(p.brand || '')}</h3>
         <p class="prod-model-name">${esc(p.name || '')}</p>
         <p class="prod-ref-size">${esc(ref)}</p>
         <div class="prod-price-tag">${esc(money(p.price))}</div>
-        ${isJewellery ? '<div style="font-size:11.5px; font-weight:700; color:#B91C1C; margin-top:5px; display:flex; align-items:center; gap:4px;"><span>🏛️ Yalnızca Havale / EFT &amp; Showroom</span></div>' : ''}
+        ${isJewellery ? '<small class="seo-card-payment-note">Havale / EFT &amp; showroom</small>' : ''}
       </div>
     </a>
   `;
@@ -373,7 +344,7 @@ function renderMagazineArticlePage(art, indexHtml) {
           <p style="margin: 0; font-size: 13px; color: var(--color-muted);">İncelediğiniz nadir modeller İzmir Buca showroomumuzda ve VIP güvencesiyle sizleri bekliyor.</p>
         </div>
         <div style="display: flex; gap: 12px;">
-          <a href="/elit-kategori/" class="btn btn-secondary" style="padding: 10px 18px; font-size: 13px;">👑 200 Elit Model</a>
+          <a href="/elit-kategori/" class="btn btn-secondary" style="padding: 10px 18px; font-size: 13px;">👑 Elit Koleksiyon</a>
           <a href="/saatler/" class="btn btn-primary" style="padding: 10px 18px; font-size: 13px;">⌚ Tüm Koleksiyon</a>
         </div>
       </div>
@@ -413,7 +384,7 @@ function prerenderPdpContent(p) {
         <div class="pdp-art-info" style="display:flex;flex-direction:column;gap:14px;">
           <span class="pdp-art-brand" style="font-size:14px;color:#C2A768;letter-spacing:2px;text-transform:uppercase;font-weight:700;">${esc(p.brand || '')}</span>
           <h1 style="font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0;color:#fff;">${esc(`${p.brand || ''} ${p.name || ''}`.trim())}</h1>
-          <p class="pdp-art-ref" style="font-size:13px;color:#8fa099;margin:0;">Ref: ${esc(ref)} • Durum: ${isUsed(p) ? 'Ekspertiz Onaylı İkinci El' : 'Sıfır Distribütör Garantili'}</p>
+          <p class="pdp-art-ref" style="font-size:13px;color:#8fa099;margin:0;">Ref: ${esc(ref)} • Durum: ${esc(p.conditionBadge || 'Ürün bazında teyit edilir')}</p>
           <div class="pdp-art-price" style="font-size:32px;font-weight:800;color:#34D399;margin:8px 0;">${esc(money(p.price))}</div>
           ${catKey === 'mucevherat' ? `
           <!-- KURUMSAL BİLGİLENDİRME (HAVALE / EFT VE SHOWROOM PROTOKOLÜ) -->
@@ -595,7 +566,7 @@ function renderCategoryPage(key, list, indexHtml) {
   const meta = {
     'elit-kategori': {
       title: 'Elit Kategori — Lüks Saat Evleri (Haute Horlogerie) | Belgin Saat',
-      description: 'Rolex, Omega, Patek Philippe, Audemars Piguet, Breitling, Cartier, Tudor, TAG Heuer, IWC, Panerai seçilmiş 145 ikonik lüks saat modeli.',
+      description: 'Rolex, Omega, Patek Philippe, Audemars Piguet, Breitling, Cartier, Tudor, TAG Heuer, IWC ve Panerai seçilmiş lüks saat modelleri.',
       h1: 'Elit Kategori Lüks Saatler',
       gridId: 'allEliteWatchesGrid'
     },

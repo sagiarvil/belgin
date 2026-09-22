@@ -108,7 +108,7 @@ const SEO_REGISTRY = [
       { subject: 'Belgin Saat', predicate: 'minimumFiyatEmniyeti', object: '12.000 TL MASAK ve Mağaza İçi Güvenlik Tabanı' },
       { subject: 'Lüks Saatler', predicate: 'ekspertiz', object: 'Zaman Tutma, Kalibre Orijinalliği ve Kasa Kondisyon Kontrolü' }
     ],
-    heroAnswerEngine: 'Belgin Saat lüks saat koleksiyonu, İsviçre yüksek saatçiliği ve küresel prestij markalarının 1.800 adedi aşkın doğrulanmış modelini kapsar. Tüm saatler optik büyüteçli kalibre kontrolü, timegrapher zaman tutma hassasiyeti (+/- 4 sn/gün tolerans) ve kasa polisaj geçmişi denetiminden geçirilir. Envanterimizdeki tüm parçalar MASAK iç güvenlik gereği 12.000 TL perakende taban sınırına tabidir. Satın alınan parçalar İzmir Buca showroomumuzda elden veya Türkiye genelinde sigortalı kargo ile teslim edilir.',
+    heroAnswerEngine: 'Belgin Saat lüks saat koleksiyonunda farklı markalardan saat modellerini inceleyebilir, ürün bazında kondisyon, fiyat ve teslimat koşullarını teyit edebilirsiniz. Randevu için İzmir Buca showroomumuzla iletişime geçin.',
     publishedAt: '2026-01-01T09:00:00+03:00',
     modifiedAt: '2026-09-04T12:00:00+03:00',
     llmSubGraphRoute: '/llms/pages/saatler.md',
@@ -127,7 +127,7 @@ const SEO_REGISTRY = [
     role: 'category',
     indexDirective: 'index',
     title: 'Elit Kategori Lüks Saatler — Rolex, Patek Philippe, AP | Belgin Saat',
-    metaDescription: 'Dünyanın en prestijli 10 lüks saat evinden tam 200 seçkin model: Rolex, Patek Philippe, Audemars Piguet, Vacheron Constantin, Cartier, Omega. Şeffaf kur ve güvenli teslimat.',
+    metaDescription: 'Rolex, Patek Philippe, Audemars Piguet, Vacheron Constantin, Cartier ve Omega lüks saat modellerini inceleyin. Kondisyon, fiyat ve teslimat bilgisini ürün bazında teyit edin.',
     h1: 'Elit Kategori Lüks Saatler',
     primaryIntent: 'İkinci el Rolex Patek Philippe Audemars Piguet saat fiyatları İzmir',
     primaryEntity: {
@@ -138,10 +138,10 @@ const SEO_REGISTRY = [
     },
     semanticTriples: [
       { subject: 'Elit Kategori', predicate: 'markaSayisi', object: '10 Prestij Saat Evi (Rolex, Patek, AP, Vacheron, Cartier, vb.)' },
-      { subject: 'Elit Kategori', predicate: 'toplamUrun', object: '200 Adet Seçkin Referans (Her Markadan Tam 20 Ürün)' },
+      { subject: 'Elit Kategori', predicate: 'toplamUrun', object: 'Katalogdaki seçilmiş saat referansları' },
       { subject: 'FiyatlandirmaKurali', predicate: 'karMarji', object: '+%80 Emniyetli Marj ve Anlık USD Kuru' }
     ],
-    heroAnswerEngine: 'Belgin Saat Elit Kategori, dünyanın zirvesindeki 10 lüks saat üreticisinin (Rolex, Patek Philippe, Audemars Piguet, Vacheron Constantin, Cartier, Omega, IWC, Jaeger-LeCoultre, Breitling, Panerai) her birinden tam 20 adet olmak üzere toplam 200 ultra lüks referansı bir araya getirir. Bu koleksiyondaki tüm parçalar uluslararası piyasa endeksleri ve anlık USD döviz kuru baz alınarak şeffaf +%80 emniyet katsayısıyla fiyatlandırılır. Tüm modeller kasa seri numarası, mekanizma parçaları ve su geçirmezlik testlerinden geçirilerek ekspertiz sertifikasıyla teslim edilir.',
+    heroAnswerEngine: 'Belgin Saat Elit Kategori; Rolex, Patek Philippe, Audemars Piguet, Vacheron Constantin, Cartier ve diğer lüks saat markalarından seçilmiş referanslar sunar. Her ürünün kondisyon, fiyat, belge ve teslimat bilgileri satın almadan önce ayrı ayrı teyit edilmelidir.',
     publishedAt: '2026-01-01T09:00:00+03:00',
     modifiedAt: '2026-09-04T12:00:00+03:00',
     llmSubGraphRoute: '/llms/pages/elit-kategori.md',

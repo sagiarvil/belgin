@@ -675,8 +675,8 @@ Belgin Kuyumculuk & Saat, 1999 yılında Semih Sonbahar tarafından İzmir Buca'
 - **Tüzel Kişilik**: BELGİN KUYUMCULUK - SEMİH SONBAHAR
 
 ## 2. Faaliyet Alanları ve Envanter Boyutu
-- **Lüks Saatler**: Rolex, Patek Philippe, Audemars Piguet, Omega, Vacheron Constantin ve Cartier dahil 1.800+ doğrulanmış model.
-- **Elit Kategori**: Dünyanın en saygın 10 lüks saat evinden tam 200 seçkin model.
+- **Lüks Saatler**: Rolex, Patek Philippe, Audemars Piguet, Omega, Vacheron Constantin ve Cartier dahil seçilmiş modeller.
+- **Elit Kategori**: Lüks saat evlerinden seçilmiş saat modelleri.
 - **Kıymetli Maden & Altın**: Darphane damgalı 24K külçe altın, 22 ayar bilezik ve ziynet sarrafiye.
 - **Mücevherat**: GIA ve HRD derecelendirme normlarında 4C sertifikalı pırlanta yüzük, kolye ve takılar.
 
@@ -726,4 +726,3 @@ if (require.main === module) {
 }
 
 module.exports = { main };
-

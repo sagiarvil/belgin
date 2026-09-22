@@ -31,5 +31,5 @@ for (const product of PRODUCTS) {
 }
 
 if (!process.exitCode) {
-  console.log(`CATALOG GUARD PASS: All ${PRODUCTS.length} published products are verified, mapped and traceable (Price >= 12,000 TL).`);
+  console.log(`CATALOG_FIELDS_PASS count=${PRODUCTS.length}; stock, fulfillment and price freshness are not verified by this check.`);
 }
