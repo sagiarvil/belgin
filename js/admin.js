@@ -7985,6 +7985,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       return;
     }
 
+    const isManualEditable = this.isManualEditableInvoice(inv);
     this.editingStoreInvoiceId = inv.orderId;
 
     const nameEl = document.getElementById('storeCustName');
@@ -8080,12 +8081,17 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     if (banner) {
       banner.style.display = 'flex';
     }
-    if (idDisplay) idDisplay.textContent = inv.orderId;
+    if (idDisplay) idDisplay.textContent = isManualEditable ? this.getManualEditableInvoiceRef() : inv.orderId;
 
     const saveDraftBtn = document.getElementById('btnSaveStoreDraft');
     const saveGibBtn = document.getElementById('btnSaveAndGibStore');
-    if (saveDraftBtn) saveDraftBtn.innerHTML = '<span>💾 Faturayı Güncelle (Taslak)</span>';
-    if (saveGibBtn) saveGibBtn.innerHTML = '<span>🧾 Güncelle & GİB e-Arşiv Kes (SMS)</span>';
+    if (saveDraftBtn) saveDraftBtn.innerHTML = isManualEditable
+      ? '<span>💾 GIB20260000000xx Manuel Taslağını Güncelle</span>'
+      : '<span>💾 Faturayı Güncelle (Taslak)</span>';
+    if (saveGibBtn) {
+      saveGibBtn.style.display = isManualEditable ? 'none' : '';
+      saveGibBtn.innerHTML = '<span>🧾 Güncelle & GİB e-Arşiv Kes (SMS)</span>';
+    }
 
     const formSec = document.getElementById('storeInvoiceFormSection') || document.querySelector('.store-invoice-card');
     if (formSec) {
@@ -8336,6 +8342,200 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     }
   },
 
+
+  // TEKIL MANUEL PDF FATURA: GIB20260000000xx
+  getManualEditableInvoiceRef() {
+    return 'GIB20260000000xx';
+  },
+
+  isManualEditableInvoice(inv) {
+    if (!inv) return false;
+    const ref = this.getManualEditableInvoiceRef();
+    return Boolean(
+      inv.manualEditable === true &&
+      (inv.orderId === ref || inv.id === ref || inv.manualReferenceNo === ref)
+    );
+  },
+
+  ensureManualEditableInvoice() {
+    const ref = this.getManualEditableInvoiceRef();
+    if (!Array.isArray(this.storeInvoices)) this.storeInvoices = [];
+
+    const existing = this.storeInvoices.find(inv =>
+      inv && (inv.orderId === ref || inv.id === ref || inv.manualReferenceNo === ref)
+    );
+
+    if (existing) {
+      existing.manualEditable = true;
+      existing.manualReferenceNo = ref;
+      existing.source = 'STORE_MANUAL_PDF';
+      existing.invoiceStatus = 'MANUAL_DRAFT';
+      existing.invoiceNumber = null;
+      existing.invoiceUuid = null;
+      return existing;
+    }
+
+    const nowIso = new Date().toISOString();
+    const manualInvoice = {
+      orderId: ref,
+      id: ref,
+      manualEditable: true,
+      manualReferenceNo: ref,
+      isStoreManual: true,
+      source: 'STORE_MANUAL_PDF',
+      customerName: 'ALICI BILGILERINI GIRIN',
+      companyName: null,
+      unvan: null,
+      taxOffice: null,
+      customerIdentity: '11111111111',
+      tckn: '11111111111',
+      vkn: null,
+      invoiceDate: new Date().toISOString().slice(0, 10),
+      customerAddress: '',
+      customerPhone: '',
+      customerEmail: '',
+      paymentMethod: 'HAVALE_EFT',
+      paymentChannel: 'HAVALE_EFT',
+      provider: 'KUVEYT_TURK',
+      items: [
+        { name: 'URUN ADINI GIRIN', qty: 1, unitPrice: 0, kdvRate: 0, lineTotal: 0, kdvAmount: 0 }
+      ],
+      totalAmount: 0,
+      total: 0,
+      productName: 'URUN ADINI GIRIN',
+      breakdown: { total: 0, grandTotal: 0, hasGoldAmount: 0, workmanshipNet: 0, workmanshipKdv: 0 },
+      invoiceStatus: 'MANUAL_DRAFT',
+      invoiceNumber: null,
+      invoiceUuid: null,
+      status: 'MANUAL_DRAFT',
+      paymentStatus: 'MANUAL_DRAFT',
+      isPaid: false,
+      note: 'Manuel taslak belge. GIB sistemine iletilmemistir.',
+      createdAt: nowIso,
+      updatedAt: nowIso
+    };
+
+    this.storeInvoices.unshift(manualInvoice);
+    try {
+      localStorage.setItem('belgin_store_invoices', JSON.stringify(this.storeInvoices));
+    } catch (_) {}
+    return manualInvoice;
+  },
+
+  openManualEditableInvoice() {
+    const inv = this.ensureManualEditableInvoice();
+    this.filterStoreTable();
+    this.editStoreInvoice(inv.orderId);
+  },
+
+  printManualStoreInvoice(orderId) {
+    const inv = (this.storeInvoices || []).find(i => i.orderId === orderId || i.id === orderId);
+    if (!this.isManualEditableInvoice(inv)) {
+      alert('Bu PDF yetkisi yalnizca GIB20260000000xx manuel taslagi icindir.');
+      return;
+    }
+
+    const esc = (v) => this.escapeHtml(String(v ?? ''));
+    const fmt = (v) => Number(v || 0).toLocaleString('tr-TR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+    const ref = this.getManualEditableInvoiceRef();
+    const items = Array.isArray(inv.items) && inv.items.length ? inv.items : [
+      { name: inv.productName || 'URUN', qty: 1, lineTotal: Number(inv.totalAmount || 0) }
+    ];
+    const itemRows = items.map((item, idx) => {
+      const qty = Number(item.qty || 1);
+      const total = Number(item.lineTotal || item.unitPrice || 0);
+      return \`<tr>
+        <td>\${idx + 1}</td>
+        <td>\${esc(item.name || 'URUN')}</td>
+        <td class="num">\${qty}</td>
+        <td class="num">₺\${fmt(total)}</td>
+      </tr>\`;
+    }).join('');
+
+    const printWin = window.open('', '_blank');
+    if (!printWin) {
+      alert('PDF penceresi acilamadi. Tarayici pop-up iznini kontrol edin.');
+      return;
+    }
+    try { printWin.opener = null; } catch (_) {}
+
+    printWin.document.open();
+    printWin.document.write(\`<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>\${ref} - Manuel Taslak</title>
+<style>
+  @page { size:A4; margin:14mm; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Arial,Helvetica,sans-serif; color:#111827; background:#fff; font-size:12px; }
+  .sheet { width:100%; }
+  .warning { border:2px solid #B91C1C; background:#FEF2F2; color:#991B1B; padding:10px 12px; font-weight:800; text-align:center; margin-bottom:14px; letter-spacing:.2px; }
+  .top { display:flex; justify-content:space-between; gap:20px; border-bottom:2px solid #0F172A; padding-bottom:12px; margin-bottom:14px; }
+  h1 { font-size:20px; margin:0 0 5px; }
+  .ref { font-family:monospace; font-size:15px; font-weight:800; }
+  .meta { text-align:right; line-height:1.6; }
+  .box { border:1px solid #CBD5E1; border-radius:8px; padding:12px; margin-bottom:12px; }
+  .box h2 { margin:0 0 8px; font-size:13px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:7px 16px; }
+  .label { color:#64748B; font-size:10px; text-transform:uppercase; font-weight:700; display:block; }
+  .value { font-weight:700; margin-top:2px; overflow-wrap:anywhere; }
+  table { width:100%; border-collapse:collapse; margin-top:8px; }
+  th,td { border:1px solid #CBD5E1; padding:8px; text-align:left; }
+  th { background:#F8FAFC; font-size:10px; text-transform:uppercase; }
+  .num { text-align:right; }
+  .total { display:flex; justify-content:flex-end; margin-top:12px; }
+  .total strong { min-width:230px; font-size:16px; border-top:2px solid #0F172A; padding-top:8px; text-align:right; }
+  .foot { margin-top:18px; padding-top:10px; border-top:1px solid #CBD5E1; color:#64748B; font-size:10px; line-height:1.5; }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="warning">MANUEL TASLAK — GIB'E ILETILMEMISTIR / RESMI E-FATURA DEGILDIR</div>
+  <div class="top">
+    <div>
+      <h1>BELGIN KUYUMCULUK — Manuel Fatura Taslagi</h1>
+      <div class="ref">\${ref}</div>
+    </div>
+    <div class="meta">
+      <div><strong>Duzenleme Tarihi:</strong> \${esc(inv.invoiceDate || '')}</div>
+      <div><strong>Belge Referansi:</strong> \${ref}</div>
+    </div>
+  </div>
+  <div class="box">
+    <h2>Alici Bilgileri</h2>
+    <div class="grid">
+      <div><span class="label">Ad Soyad / Yetkili</span><div class="value">\${esc(inv.customerName || '')}</div></div>
+      <div><span class="label">Firma Unvani</span><div class="value">\${esc(inv.companyName || inv.unvan || '-')}</div></div>
+      <div><span class="label">TCKN / VKN</span><div class="value">\${esc(inv.customerIdentity || '-')}</div></div>
+      <div><span class="label">Vergi Dairesi</span><div class="value">\${esc(inv.taxOffice || '-')}</div></div>
+      <div><span class="label">Telefon</span><div class="value">\${esc(inv.customerPhone || '-')}</div></div>
+      <div><span class="label">E-posta</span><div class="value">\${esc(inv.customerEmail || '-')}</div></div>
+      <div style="grid-column:1 / -1"><span class="label">Adres</span><div class="value">\${esc(inv.customerAddress || '-')}</div></div>
+    </div>
+  </div>
+  <div class="box">
+    <h2>Urun / Hizmet Kalemleri</h2>
+    <table>
+      <thead><tr><th>#</th><th>Urun Adi</th><th class="num">Adet</th><th class="num">Tutar</th></tr></thead>
+      <tbody>\${itemRows}</tbody>
+    </table>
+    <div class="total"><strong>Toplam: ₺\${fmt(inv.totalAmount || inv.total || 0)}</strong></div>
+  </div>
+  <div class="foot">
+    Bu belge yalnizca Belgin Admin icindeki \${ref} referansli manuel taslak kaydinin PDF/yazdirma ciktisidir.
+    GIB onayi, ETTN/UUID veya elektronik imza icermez; resmi GIB e-Arsiv faturasi yerine kullanilamaz.
+  </div>
+</div>
+<script>window.addEventListener('load',function(){setTimeout(function(){window.print();},150);});<\/script>
+</body>
+</html>\`);
+    printWin.document.close();
+  },
+
   cancelStoreInvoiceEdit() {
     this.editingStoreInvoiceId = null;
     this.resetStoreInvoiceForm();
@@ -8352,7 +8552,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     const saveDraftBtn = document.getElementById('btnSaveStoreDraft');
     const saveGibBtn = document.getElementById('btnSaveAndGibStore');
     if (saveDraftBtn) saveDraftBtn.innerHTML = '<span>💾 Faturayı Kaydet (Taslak)</span>';
-    if (saveGibBtn) saveGibBtn.innerHTML = '<span>🧾 Resmi GİB e-Arşiv Faturası Kes (SMS Onayı)</span>';
+    if (saveGibBtn) { saveGibBtn.style.display = ''; saveGibBtn.innerHTML = '<span>🧾 Resmi GİB e-Arşiv Faturası Kes (SMS Onayı)</span>'; }
 
     const nameEl = document.getElementById('storeCustName');
     const compEl = document.getElementById('storeCustCompanyName');
@@ -9660,6 +9860,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
 
     const isEdit = Boolean(this.editingStoreInvoiceId);
     let existingDoc = this.editingStoreInvoiceId ? (this.storeInvoices || []).find(i => i.orderId === this.editingStoreInvoiceId || i.id === this.editingStoreInvoiceId) : null;
+    const isManualEditable = this.isManualEditableInvoice(existingDoc);
 
     let invoiceId = this.editingStoreInvoiceId;
     if (!invoiceId) {
@@ -9685,7 +9886,9 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       orderId: invoiceId,
       id: invoiceId,
       isStoreManual: true,
-      source: 'STORE_MANUAL',
+      source: isManualEditable ? 'STORE_MANUAL_PDF' : 'STORE_MANUAL',
+      manualEditable: isManualEditable,
+      manualReferenceNo: isManualEditable ? this.getManualEditableInvoiceRef() : (existingDoc?.manualReferenceNo || null),
       customerName: name || officialUnvan,
       companyName: officialUnvan || null,
       unvan: officialUnvan || null,
@@ -9711,9 +9914,9 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       total: totalAmount,
       productName: this.getCleanInvoiceItemsSummary(validItems),
       breakdown: summaryData,
-      invoiceStatus: existingDoc?.invoiceStatus || 'PENDING',
-      invoiceNumber: existingDoc?.invoiceNumber || null,
-      invoiceUuid: existingDoc?.invoiceUuid || null,
+      invoiceStatus: isManualEditable ? 'MANUAL_DRAFT' : (existingDoc?.invoiceStatus || 'PENDING'),
+      invoiceNumber: isManualEditable ? null : (existingDoc?.invoiceNumber || null),
+      invoiceUuid: isManualEditable ? null : (existingDoc?.invoiceUuid || null),
       status: 'PAID',
       paymentStatus: 'PAID',
       isPaid: true,
@@ -9765,6 +9968,10 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
 
     // 3. Kullanıcı "Hemen GİB SMS Başlat" dediyse SMS sürecini başlat
     if (autoStartGibSms) {
+      if (this.isManualEditableInvoice(invoiceDoc)) {
+        this.showToast('ℹ️ GIB20260000000xx manuel taslaktır; GİB imzalama bu kayıt için kapalıdır.');
+        return;
+      }
       await this.startStoreInvoiceSigning(invoiceId, invoiceDoc);
     }
   },
@@ -9821,6 +10028,9 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       console.warn('[Store Invoices] Yükleme uyarısı (yerel önbellek devrede):', err.message);
       this.filterStoreTable();
     }
+
+    this.ensureManualEditableInvoice();
+    this.filterStoreTable();
 
     const syncEl = document.getElementById('storeLastSyncTime');
     if (syncEl) syncEl.textContent = 'Son Güncelleme: ' + new Date().toLocaleTimeString('tr-TR');
@@ -9932,8 +10142,9 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
         const isSigned = (inv.invoiceStatus === 'SIGNED' && !isCancelled);
         const isSelected = this.selectedStoreInvoiceIds.has(inv.orderId);
         const invNo = this.getGibInvoiceNumber ? this.getGibInvoiceNumber(inv) : (inv.invoiceNumber || (isSigned ? 'GIB2026000000021' : ''));
+        const isManualEditable = this.isManualEditableInvoice(inv);
 
-        const invoiceBadge = isCancelled
+        let invoiceBadge = isCancelled
           ? `<div style="display:flex; flex-direction:column; align-items:center; gap:2px;" title="İptal Gerekçesi: ${this.escapeHtml(inv.cancelReason || 'İptal Edildi')}">
                <span style="background:#FEE2E2; color:#991B1B; padding:4px 9px; border-radius:6px; font-weight:800; border:1px solid #FCA5A5;">🚫 İptal Edildi</span>
              </div>`
@@ -9945,6 +10156,9 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
           : (inv.invoiceStatus === 'DRAFT'
           ? '<span style="background:#FEF3C7; color:#92400E; padding:4px 9px; border-radius:6px; font-weight:800; border:1px solid #FCD34D;">🧾 Taslak</span>'
           : '<span style="background:#FEE2E2; color:#991B1B; padding:4px 9px; border-radius:6px; font-weight:800; border:1px solid #FCA5A5;">⚠️ Kesilmedi</span>'));
+        if (isManualEditable) {
+          invoiceBadge = '<div style="display:flex; flex-direction:column; align-items:center; gap:2px;"><span style="background:#E0F2FE; color:#075985; padding:4px 9px; border-radius:6px; font-weight:800; border:1px solid #7DD3FC;">✍️ Manuel Taslak</span><span style="font-size:11px; font-weight:800; font-family:monospace; color:#075985; margin-top:2px;">GIB20260000000xx</span></div>';
+        }
 
         const createdTime = this.formatTimeTr(inv.createdAt);
         const updatedTime = this.formatTimeTr(inv.updatedAt);
@@ -10013,7 +10227,14 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
                 <button class="btn-admin-secondary" style="padding:4px 8px; font-size:11px; background:#F8FAFC; border-color:#CBD5E1; color:#334155; font-weight:700; border-radius:5px;" onclick="AdminApp.printStoreFormDoc('full-packet', '${inv.orderId}')" title="Yasal Evraklar, MASAK ve Teslim-Tesellüm Dosyasını İndir / Yazdır">
                   📜 Evrak
                 </button>
-                ${isCancelled ? `
+                ${isManualEditable ? `
+                  <button class="btn-admin-secondary" style="padding:4px 8px; font-size:11px; background:#E0F2FE; border-color:#7DD3FC; color:#075985; font-weight:800; border-radius:5px;" onclick="AdminApp.printManualStoreInvoice('${inv.orderId}')" title="Manuel taslağı PDF olarak kaydet / yazdır">
+                    📄 PDF / Yazdır
+                  </button>
+                  <button class="btn-admin-secondary" style="padding:4px 8px; font-size:11px; background:#FFFBEB; border-color:#FCD34D; color:#92400E; font-weight:800; border-radius:5px;" onclick="AdminApp.editStoreInvoice('${inv.orderId}')" title="GIB20260000000xx manuel taslağını düzenle">
+                    ✏️ Düzenle
+                  </button>
+                ` : (isCancelled ? `
                   <button class="btn-admin-secondary" style="padding:4px 8px; font-size:11px; background:#FFF; border-color:#CBD5E1; color:#64748B; font-weight:700; border-radius:5px;" onclick="AdminApp.viewStoreInvoice('${inv.invoiceUuid}', '${inv.orderId}')" title="İptal Edilen Faturayı Aç">
                     📄 Fatura
                   </button>
@@ -10034,7 +10255,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
                   <button class="btn-admin-secondary" style="padding:4px 8px; font-size:11px; border-color:#FCA5A5; color:#DC2626; background:#FEF2F2; font-weight:700; border-radius:5px;" onclick="AdminApp.openCancelInvoiceModal('${inv.orderId}', '${inv.invoiceUuid}', '${invNo}', '${this.escapeHtml(inv.customerName || '')}', ${Number(inv.totalAmount || 0)})" title="GİB e-Arşiv Faturasını Gerekçeli İptal Et">
                     🚫 İptal
                   </button>
-                `)}
+                `))}
                 <button class="btn-admin-secondary" style="padding:4px 6px; font-size:11px; border-color:#FCA5A5; color:#DC2626; background:#FEF2F2; border-radius:5px;" onclick="AdminApp.deleteStoreInvoice('${inv.orderId}')" title="Mağaza Faturasını Kalıcı Sil">
                   🗑️
                 </button>
@@ -10052,6 +10273,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
         const isSigned = (inv.invoiceStatus === 'SIGNED' && !isCancelled);
         const isSelected = this.selectedStoreInvoiceIds.has(inv.orderId);
         const invNo = this.getGibInvoiceNumber ? this.getGibInvoiceNumber(inv) : (inv.invoiceNumber || (isSigned ? 'GIB2026000000021' : ''));
+        const isManualEditable = this.isManualEditableInvoice(inv);
 
         const payMethod = inv.paymentMethod || inv.paymentChannel || 'HAVALE_EFT';
         const payBadge = payMethod === 'HAVALE_EFT'
@@ -10063,7 +10285,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
         const createdTime = this.formatTimeTr(inv.createdAt);
         const updatedTime = this.formatTimeTr(inv.updatedAt);
 
-        const invoiceBadge = isCancelled
+        let invoiceBadge = isCancelled
           ? `<span style="background:#FEE2E2; color:#991B1B; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #FCA5A5; font-size:11px;">🚫 İptal Edildi</span>`
           : (isSigned
           ? `<div style="display:inline-flex; flex-direction:column; align-items:center; gap:2px;">
@@ -10073,6 +10295,9 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
           : (inv.invoiceStatus === 'DRAFT'
           ? '<span style="background:#FEF3C7; color:#92400E; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #FCD34D; font-size:11px;">🧾 Taslak</span>'
           : '<span style="background:#FEE2E2; color:#991B1B; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #FCA5A5; font-size:11px;">⚠️ Kesilmedi</span>'));
+        if (isManualEditable) {
+          invoiceBadge = '<span style="background:#E0F2FE; color:#075985; padding:4px 10px; border-radius:12px; font-weight:800; border:1px solid #7DD3FC; font-size:11px;">✍️ GIB20260000000xx Manuel</span>';
+        }
 
         const itemsDisplay = Array.isArray(inv.items) && inv.items.length > 0
           ? inv.items.map(i => `${this.escapeHtml(i.name || 'Ürün')} (x${i.qty || 1})`).join(', ')
@@ -10138,7 +10363,16 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
             </div>
 
             <div class="mobile-card-actions">
-              ${isCancelled ? `
+              ${isManualEditable ? `
+                <div class="mobile-actions-split">
+                  <button type="button" class="btn-mobile-action btn-mobile-invoice-view" onclick="AdminApp.printManualStoreInvoice('${inv.orderId}')">
+                    <span>📄 PDF / Yazdır</span>
+                  </button>
+                  <button type="button" class="btn-mobile-action" style="background:#FFFBEB; color:#92400E; border:1px solid #FCD34D;" onclick="AdminApp.editStoreInvoice('${inv.orderId}')">
+                    <span>✏️ Düzenle</span>
+                  </button>
+                </div>
+              ` : (isCancelled ? `
                 <div class="mobile-actions-split">
                   <button type="button" class="btn-mobile-action btn-mobile-invoice-view" onclick="AdminApp.viewStoreInvoice('${inv.invoiceUuid}', '${inv.orderId}')">
                     <span>📄 Faturayı Aç</span>
@@ -10154,7 +10388,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
                     <span>📄 Faturayı Aç / Yazdır</span>
                   </button>
                 </div>
-              `)}
+              `))}
 
               <div class="mobile-actions-grid-bottom" style="grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));">
                 <button type="button" class="btn-mobile-subaction" style="background:#F8FAFC; color:#334155; border-color:#94A3B8; font-weight:800;" onclick="AdminApp.printStoreFormDoc('full-packet', '${inv.orderId}')">
@@ -10299,6 +10533,10 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     }
     if (!inv) {
       alert(`❌ Fatura kaydı (${invoiceId}) bulunamadı. Lütfen sayfayı yenileyip tekrar deneyiniz.`);
+      return;
+    }
+    if (this.isManualEditableInvoice(inv)) {
+      alert('GIB20260000000xx yalnızca manuel taslak/PDF kaydıdır. Bu kayıt GİB imzalama akışına gönderilemez.');
       return;
     }
 
