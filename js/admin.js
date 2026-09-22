@@ -10130,15 +10130,16 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
         const tckn = (inv.customerIdentity || '').toLowerCase();
         const phone = (inv.customerPhone || '').toLowerCase();
         const invNo = (inv.invoiceNumber || '').toLowerCase();
+        const manualRef = (inv.manualReferenceNo || '').toLowerCase();
         const prod = (inv.productName || '').toLowerCase();
-        return id.includes(q) || name.includes(q) || tckn.includes(q) || phone.includes(q) || invNo.includes(q) || prod.includes(q);
+        return id.includes(q) || name.includes(q) || tckn.includes(q) || phone.includes(q) || invNo.includes(q) || manualRef.includes(q) || prod.includes(q);
       });
     }
 
     if (status && status !== 'ALL') {
       list = list.filter(inv => {
         if (status === 'SIGNED') return inv.invoiceStatus === 'SIGNED' && !inv.isCancelled;
-        if (status === 'DRAFT') return inv.invoiceStatus === 'DRAFT';
+        if (status === 'DRAFT') return inv.invoiceStatus === 'DRAFT' || inv.invoiceStatus === 'MANUAL_DRAFT';
         if (status === 'CANCELLED') return inv.invoiceStatus === 'CANCELLED' || inv.isCancelled;
         if (status === 'PENDING') return !inv.invoiceStatus || inv.invoiceStatus === 'PENDING';
         return true;
@@ -10203,7 +10204,8 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
           ? '<span style="background:#FEF3C7; color:#92400E; padding:4px 9px; border-radius:6px; font-weight:800; border:1px solid #FCD34D;">🧾 Taslak</span>'
           : '<span style="background:#FEE2E2; color:#991B1B; padding:4px 9px; border-radius:6px; font-weight:800; border:1px solid #FCA5A5;">⚠️ Kesilmedi</span>'));
         if (isManualEditable) {
-          invoiceBadge = '<div style="display:flex; flex-direction:column; align-items:center; gap:2px;"><span style="background:#E0F2FE; color:#075985; padding:4px 9px; border-radius:6px; font-weight:800; border:1px solid #7DD3FC;">✍️ Manuel Taslak</span><span style="font-size:11px; font-weight:800; font-family:monospace; color:#075985; margin-top:2px;">GIB20260000000xx</span></div>';
+          const manualRefLabel = this.escapeHtml(inv.manualReferenceNo || this.getManualEditableInvoiceRef());
+          invoiceBadge = `<div style="display:flex; flex-direction:column; align-items:center; gap:2px;"><span style="background:#E0F2FE; color:#075985; padding:4px 9px; border-radius:6px; font-weight:800; border:1px solid #7DD3FC;">✍️ Manuel Taslak</span><span style="font-size:11px; font-weight:800; font-family:monospace; color:#075985; margin-top:2px;">${manualRefLabel}</span></div>`;
         }
 
         const createdTime = this.formatTimeTr(inv.createdAt);
