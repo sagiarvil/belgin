@@ -8081,7 +8081,12 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     if (banner) {
       banner.style.display = 'flex';
     }
-    if (idDisplay) idDisplay.textContent = isManualEditable ? this.getManualEditableInvoiceRef() : inv.orderId;
+    const manualDisplayNo = isManualEditable ? (inv.manualReferenceNo || this.getManualEditableInvoiceRef()) : inv.orderId;
+    if (idDisplay) idDisplay.textContent = manualDisplayNo;
+    const manualGibEditor = document.getElementById('manualGibNoEditor');
+    const manualGibInput = document.getElementById('manualGibNoInput');
+    if (manualGibEditor) manualGibEditor.style.display = isManualEditable ? 'flex' : 'none';
+    if (manualGibInput && isManualEditable) manualGibInput.value = manualDisplayNo;
 
     const saveDraftBtn = document.getElementById('btnSaveStoreDraft');
     const saveGibBtn = document.getElementById('btnSaveAndGibStore');
@@ -8440,7 +8445,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
     });
-    const ref = this.getManualEditableInvoiceRef();
+    const ref = inv.manualReferenceNo || this.getManualEditableInvoiceRef();
     const items = Array.isArray(inv.items) && inv.items.length ? inv.items : [
       { name: inv.productName || 'URUN', qty: 1, lineTotal: Number(inv.totalAmount || 0) }
     ];
@@ -8548,6 +8553,10 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
 
     const banner = document.getElementById('storeEditModeBanner');
     if (banner) banner.style.display = 'none';
+    const manualGibEditor = document.getElementById('manualGibNoEditor');
+    const manualGibInput = document.getElementById('manualGibNoInput');
+    if (manualGibEditor) manualGibEditor.style.display = 'none';
+    if (manualGibInput) manualGibInput.value = this.getManualEditableInvoiceRef();
 
     const saveDraftBtn = document.getElementById('btnSaveStoreDraft');
     const saveGibBtn = document.getElementById('btnSaveAndGibStore');
@@ -9798,6 +9807,10 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     const email = (document.getElementById('storeCustEmail')?.value || '').trim();
     const note = (document.getElementById('storeInvoiceNote')?.value || '').trim();
     const errEl = document.getElementById('storeInvoiceFormError');
+    const editingDoc = this.editingStoreInvoiceId
+      ? (this.storeInvoices || []).find(i => i.orderId === this.editingStoreInvoiceId || i.id === this.editingStoreInvoiceId)
+      : null;
+    const isManualDemo = this.isManualEditableInvoice(editingDoc);
 
     if (!name && !companyName) {
       if (errEl) { errEl.style.display = 'block'; errEl.textContent = 'Lütfen alıcı müşteri adı / unvanını giriniz.'; }
@@ -9828,7 +9841,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     }
 
     // 🪪 MASAK 180.000 TL+ Kimlik Belgesi Alma Zorunluluğu Denetimi
-    if (totalAmount >= 180000 && !this.currentStoreIdentityDoc) {
+    if (!isManualDemo && totalAmount >= 180000 && !this.currentStoreIdentityDoc) {
       if (errEl) {
         errEl.style.display = 'block';
         errEl.innerHTML = `<strong>🚨 MASAK MEVZUAT ZORUNLULUĞU:</strong> Fatura tutarı <strong>₺${Number(totalAmount).toLocaleString('tr-TR', {minimumFractionDigits:2})}</strong> olup 180.000 TL yasal kimlik tespit eşiğini aşmaktadır.<br>Mali Suçları Araştırma Kurulu (MASAK) mevzuatı gereğince 180.000 TL ve üzeri altın / mücevherat satışlarında müşteriden T.C. Kimlik Kartı / Pasaport fotokopisi alınması ve sisteme yüklenmesi yasal zorunluluktur. Lütfen kimlik belgesi görselini yükleyiniz.`;
@@ -9840,7 +9853,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
 
     // 3065 Sayılı KDV Kanunu Koruma Kalkanı: Saat ürünlerinde %20 KDV kontrolü
     for (const it of validItems) {
-      if (this.isWatchProduct(it.name) && Number(it.kdvRate || 0) < 20) {
+      if (!isManualDemo && this.isWatchProduct(it.name) && Number(it.kdvRate || 0) < 20) {
         if (errEl) {
           errEl.style.display = 'block';
           errEl.innerHTML = `<strong>❌ MEVZUAT ENGELİ:</strong> "${it.name}" bir saat ürünüdür. 3065 Sayılı KDV Kanunu gereğince saat satışlarında %20 KDV oranı yasal zorunluluktur. %0 KDV (Özel Matrah) uygulanamaz! Lütfen KDV oranını %20 olarak güncelleyiniz.`;
@@ -9859,8 +9872,8 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     if (saveGibBtn) saveGibBtn.disabled = true;
 
     const isEdit = Boolean(this.editingStoreInvoiceId);
-    let existingDoc = this.editingStoreInvoiceId ? (this.storeInvoices || []).find(i => i.orderId === this.editingStoreInvoiceId || i.id === this.editingStoreInvoiceId) : null;
-    const isManualEditable = this.isManualEditableInvoice(existingDoc);
+    let existingDoc = editingDoc;
+    const isManualEditable = isManualDemo;
 
     let invoiceId = this.editingStoreInvoiceId;
     if (!invoiceId) {
@@ -9880,6 +9893,9 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     const isVkn = identity.length === 10;
     const isTckn = identity.length === 11;
     const officialUnvan = isVkn ? (companyName || name) : companyName;
+    const manualReferenceNo = isManualEditable
+      ? ((document.getElementById('manualGibNoInput')?.value || existingDoc?.manualReferenceNo || this.getManualEditableInvoiceRef()).trim().slice(0, 64) || this.getManualEditableInvoiceRef())
+      : null;
 
     if (this.currentStoreIdentityDoc && this.currentStoreIdentityDoc.length > 200000) { try { localStorage.setItem('belgin_decl_' + invoiceId, JSON.stringify({ docUrl: this.currentStoreIdentityDoc, docType: 'image/jpeg', docName: 'kimlik.jpg', time: new Date().toISOString() })); } catch(e) {} }
     const invoiceDoc = {
@@ -9888,7 +9904,7 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       isStoreManual: true,
       source: isManualEditable ? 'STORE_MANUAL_PDF' : 'STORE_MANUAL',
       manualEditable: isManualEditable,
-      manualReferenceNo: isManualEditable ? this.getManualEditableInvoiceRef() : (existingDoc?.manualReferenceNo || null),
+      manualReferenceNo: isManualEditable ? manualReferenceNo : (existingDoc?.manualReferenceNo || null),
       customerName: name || officialUnvan,
       companyName: officialUnvan || null,
       unvan: officialUnvan || null,
@@ -9917,9 +9933,9 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       invoiceStatus: isManualEditable ? 'MANUAL_DRAFT' : (existingDoc?.invoiceStatus || 'PENDING'),
       invoiceNumber: isManualEditable ? null : (existingDoc?.invoiceNumber || null),
       invoiceUuid: isManualEditable ? null : (existingDoc?.invoiceUuid || null),
-      status: 'PAID',
-      paymentStatus: 'PAID',
-      isPaid: true,
+      status: isManualEditable ? 'MANUAL_DRAFT' : 'PAID',
+      paymentStatus: isManualEditable ? 'MANUAL_DRAFT' : 'PAID',
+      isPaid: isManualEditable ? false : true,
       note: note,
       createdAt: existingDoc?.createdAt || nowIso,
       updatedAt: isEdit ? nowIso : (existingDoc?.createdAt || nowIso)
@@ -9940,6 +9956,14 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
     } catch (_) {}
 
     this.resetStoreInvoiceForm();
+
+    // Demo/manüel belge yalnız tarayıcıda tutulur; GİB veya sunucu fatura akışına girmez.
+    if (isManualEditable) {
+      if (saveDraftBtn) saveDraftBtn.disabled = false;
+      if (saveGibBtn) saveGibBtn.disabled = false;
+      this.showToast(`✅ Demo belge kaydedildi: ${manualReferenceNo}. GİB'e gönderilmedi.`);
+      return;
+    }
 
     // 2. Sunucuya arka planda kaydet
     try {
