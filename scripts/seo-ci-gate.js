@@ -34,6 +34,7 @@ function runQualityGates() {
     'sitemap-magazine.xml',
     'js/seo-route-map.js',
     'scripts/seo-registry.js',
+    'scripts/seo-authority.js',
     'scripts/generate-llms-knowledge-graph.js',
     'scripts/notify-indexnow.js',
     'scripts/live-seo-smoke.js',
