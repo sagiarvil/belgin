@@ -61,6 +61,7 @@ jobs:
           node --check functions/bootstrap.js
           node --check scripts/seo-routes.js
           node --check scripts/generate-static-seo-pages.js
+          node --check scripts/seo-authority.js
           node --check scripts/generate-seo-assets.js
           node --check scripts/seo-ci-gate.js
           node --check scripts/live-seo-smoke.js
