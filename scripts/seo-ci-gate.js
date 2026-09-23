@@ -34,6 +34,7 @@ function runQualityGates() {
     'sitemap-magazine.xml',
     'js/seo-route-map.js',
     'scripts/seo-registry.js',
+    'scripts/seo-authority.js',
     'scripts/generate-llms-knowledge-graph.js',
     'scripts/notify-indexnow.js',
     'scripts/live-seo-smoke.js',
@@ -400,6 +401,30 @@ function runQualityGates() {
     errors.push('[G20 MCP ROUTE] /mcp -> mcpApi rewrite eksik.');
   }
 
+  // G21: Commercial landing / editorial authority network.
+  const authorityPages = ['saatler', 'elit-kategori', 'mucevherat', 'magazin', 'markalar'];
+  for (const key of authorityPages) {
+    const route = CATEGORY_ROUTES[key];
+    if (!route) { errors.push(`[G21 AUTHORITY ROUTE] CATEGORY_ROUTES eksik: ${key}`); continue; }
+    const htmlPath = path.join(ROOT_DIR, route.replace(/^\/+|\/+$/g, ''), 'index.html');
+    if (!fs.existsSync(htmlPath)) { errors.push(`[G21 AUTHORITY FILE] Generated kategori eksik: ${route}`); continue; }
+    const html = fs.readFileSync(htmlPath, 'utf8');
+    if (!html.includes(`data-seo-authority="${key}"`)) errors.push(`[G21 AUTHORITY BLOCK] ${route} authority cluster eksik.`);
+    if ((html.match(/href="\/rehber\//g) || []).length < 1) errors.push(`[G21 AUTHORITY INTERNAL LINK] ${route} rehber bağlantısı eksik.`);
+  }
+
+  let magazineArticles = [];
+  try { magazineArticles = require('../js/magazine_data.js').MAGAZINE_ARTICLES || []; } catch (_) {}
+  const articleSample = magazineArticles.find(a => a && a.slug);
+  if (articleSample) {
+    const articlePath = path.join(ROOT_DIR, 'magazin', articleSample.slug, 'index.html');
+    if (!fs.existsSync(articlePath)) errors.push(`[G21 EDITORIAL FILE] Örnek makale HTML eksik: ${articleSample.slug}`);
+    else {
+      const articleHtml = fs.readFileSync(articlePath, 'utf8');
+      if (!articleHtml.includes('data-editorial-bridge=')) errors.push(`[G21 EDITORIAL BRIDGE] Makaleden ticari/rehber hub bağlantısı eksik: ${articleSample.slug}`);
+      if (!/href="\/(saatler|elit-kategori|mucevherat|rehber)\//.test(articleHtml)) errors.push(`[G21 EDITORIAL INTERNAL LINK] Makale authority ağına bağlanmıyor: ${articleSample.slug}`);
+    }
+  }
   // Final Rapor Bütünlüğü (Report Integrity)
   console.log('\n----------------------------------------------------');
   if (errors.length > 0) {

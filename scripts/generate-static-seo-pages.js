@@ -10,6 +10,7 @@ const {
   productUrl
 } = require('./seo-routes.js');
 const { SEO_REGISTRY } = require('./seo-registry.js');
+const { renderAuthorityCluster, editorialBridgeForArticle } = require('./seo-authority.js');
 
 const ROOT = path.join(__dirname, '..');
 
@@ -366,6 +367,8 @@ function renderMagazineArticlePage(art, indexHtml) {
       <div class="mag-article-body" style="font-size: 16px; line-height: 1.85; color: #334155;">
         ${art.content_html}
       </div>
+
+      ${editorialBridgeForArticle(art, require('../js/magazine_data.js').MAGAZINE_ARTICLES || [])}
 
       <div class="mag-article-footer-cta" style="margin-top: 48px; padding: 32px; background: #FAF7F0; border-radius: 12px; border: 1px solid rgba(194, 167, 104, 0.4); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
         <div>
@@ -865,6 +868,22 @@ function renderCategoryPage(key, list, indexHtml) {
   }
 
 
+  let authorityArticles = [];
+  try {
+    authorityArticles = require('../js/magazine_data.js').MAGAZINE_ARTICLES || [];
+  } catch (_) {}
+  const authorityCluster = renderAuthorityCluster(key, list, products, authorityArticles);
+  if (authorityCluster) {
+    const sectionStart = pageHtml.indexOf(`<section id="page-${key}" class="page active"`);
+    if (sectionStart >= 0) {
+      const nextSection = pageHtml.indexOf('<section id="page-', sectionStart + 20);
+      const scopeEnd = nextSection >= 0 ? nextSection : pageHtml.indexOf('</main>', sectionStart);
+      const insertAt = pageHtml.lastIndexOf('</section>', scopeEnd);
+      if (insertAt >= sectionStart) {
+        pageHtml = pageHtml.slice(0, insertAt) + authorityCluster + '\n' + pageHtml.slice(insertAt);
+      }
+    }
+  }
 
   return pageHtml;
 }

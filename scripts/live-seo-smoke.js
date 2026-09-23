@@ -109,6 +109,20 @@ async function main() {
   const mcpJson = JSON.parse(mcp.text);
   assert(Array.isArray(mcpJson.tools) && mcpJson.tools.length >= 3, 'MCP discovery tools missing.');
 
+  for (const path of ['/saatler/','/elit-kategori/','/mucevherat/','/magazin/','/markalar/']) {
+    const page = await fetchText(`${BASE}${path}`);
+    const key = path.replace(/^\/+|\/+$/g, '');
+    assert(page.text.includes(`data-seo-authority="${key}"`), `Authority cluster missing: ${path}`);
+    console.log(`  ✓ ${path} commercial/editorial authority cluster PASS.`);
+  }
+
+  const magazineSitemap = await fetchText(`${BASE}/sitemap-magazine.xml`);
+  const magazineUrls = extractLocs(magazineSitemap.text);
+  if (magazineUrls.length > 0) {
+    const article = await fetchText(magazineUrls[0]);
+    assert(article.text.includes('data-editorial-bridge='), `Editorial bridge missing: ${magazineUrls[0]}`);
+    console.log('  ✓ Magazin article editorial bridge PASS.');
+  }
   const productSitemap = await fetchText(`${BASE}/sitemap-products.xml`);
   const productUrls = extractLocs(productSitemap.text);
 
