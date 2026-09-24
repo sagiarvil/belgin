@@ -218,6 +218,39 @@ const SEO_REGISTRY = [
 
   // 6. BİZ KİMİZ (E-E-A-T CORPORATE PROFILE & HERITAGE)
   {
+    route: '/mucevherat/ikinci-el-altin-takilar/',
+    canonicalRoute: '/mucevherat/ikinci-el-altin-takilar/',
+    locale: 'tr-TR',
+    role: 'category',
+    indexDirective: 'index',
+    title: '2. El Altın Takılar | Buca İzmir | Belgin Kuyumculuk',
+    metaDescription: 'İzmir Buca seçkisinde 2. el altın takılar: bilezik, kolye, yüzük, küpe ve zincir. Atölye bakımı, ürün bazında ayar-gram-kondisyon bilgisi ve güncel fiyat için Belgin Kuyumculuk ile görüşün.',
+    h1: '2. El Altın Takılar',
+    primaryIntent: 'Buca İzmir ikinci el altın takı satın alma ve güncel seçki öğrenme',
+    primaryEntity: {
+      id: `${BASE_URL}/#organization`,
+      type: 'JewelryStore',
+      name: 'Belgin Kuyumculuk',
+      sameAs: ['https://www.instagram.com/belginmucevherat/']
+    },
+    semanticTriples: [
+      { subject: '2. El Altın Takılar', predicate: 'konum', object: 'Menderes Cad. No:231/B, Buca/İzmir' },
+      { subject: '2. El Altın Takılar', predicate: 'satisOncesiBilgi', object: 'Ürün bazında ayar, gram, kondisyon ve fiyat teyidi' }
+    ],
+    heroAnswerEngine: "Belgin Kuyumculuk, İzmir Buca'daki mağazasında atölye bakımından geçen seçili ikinci el altın bilezik, kolye, yüzük, küpe ve zincirleri sunar. Her parçanın ayarı, gramı, kondisyonu, bulunurluğu ve güncel fiyatı satın alma öncesinde ayrıca teyit edilir. Altın takılarda kredi kartı ile ödeme kabul edilmez; havale/EFT ve mağazadan teslim süreci için iletişime geçin.",
+    publishedAt: '2026-09-24T09:00:00+03:00',
+    modifiedAt: '2026-09-24T09:00:00+03:00',
+    sitemapLastmod: '2026-09-24',
+    llmSubGraphRoute: '/llms/pages/mucevherat/ikinci-el-altin-takilar.md',
+    informationGainElements: ['firstPartyData', 'productConditionExplainer', 'localStore'],
+    richResultTypes: ['CollectionPage', 'BreadcrumbList', 'JewelryStore'],
+    conversionGoal: 'secondhand_gold_whatsapp_click',
+    priority: '0.8',
+    changefreq: 'weekly'
+  },
+
+  // 6. BİZ KİMİZ (E-E-A-T CORPORATE PROFILE & HERITAGE)
+  {
     route: '/biz-kimiz/',
     canonicalRoute: '/biz-kimiz/',
     locale: 'tr-TR',

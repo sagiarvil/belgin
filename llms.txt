@@ -5,7 +5,7 @@
 ## Core Machine Graph Nodes
 
 - [Kurumsal Çekirdek Dokümanı](https://www.belginkuyumculuk.com/llms/core.md): Kurumsal kimlik, mağaza altyapısı, canlı borsa sözleşmesi ve güvenlik mimarisi.
-- [Tam Metin Bilgi Bankası](https://www.belginkuyumculuk.com/llms-full.txt): 198 editoryal makale, teknik rehberler ve tüm alt-grafların konsolide metni.
+- [Tam Metin Bilgi Bankası](https://www.belginkuyumculuk.com/llms-full.txt): 199 editoryal makale, teknik rehberler ve tüm alt-grafların konsolide metni.
 
 ## Legal & Operational Entities
 
@@ -54,7 +54,7 @@
 - [Saat Markaları Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/markalar.md): İsviçre lüks saat markaları listesi ve yetkili satış
 - [Mesafeli Satış Sözleşmesi Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/mesafeli-satis-sozlesmesi.md): Belgin Kuyumculuk mesafeli satış sözleşmesi ve yasal şartlar
 - [Mücevherat ve Altın Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/mucevherat.md): İzmir Buca altın fiyatları pırlanta mücevherat alımı
-- [mucevherat/ikinci-el-altin-takilar Sayfa Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/mucevherat/ikinci-el-altin-takilar.md): Sayfa içerik ve teknik karşılaştırma matrisi.
+- [2. El Altın Takılar Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/mucevherat/ikinci-el-altin-takilar.md): Buca İzmir ikinci el altın takı satın alma ve güncel seçki öğrenme
 - [Müşteri Tanıma ve İşlem Güvenliği Politikası (KYC) Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/musteri-tanima-ve-islem-guvenligi.md): Kuyumculuk müşteri tanıma MASAK uyumu ve işlem güvenliği politikası
 - [Ön Bilgilendirme Formu Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/on-bilgilendirme-formu.md): Belgin Kuyumculuk ön bilgilendirme şartları
 - [Altın Yatırımı & 3065 Sayılı KDV Kanunu 23/f Özel Matrah Uygulaması Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/rehber/altin-yatirimi-ve-ozel-matrah-rehberi.md): Kuyumculukta 3065 KDV Kanunu 23/f özel matrah altın faturalama rehberi
@@ -72,7 +72,7 @@
 - [Lüks Saat Kataloğu](https://www.belginkuyumculuk.com/saatler/): 1.800+ doğrulanmış lüks ve ikinci el saat koleksiyonu.
 - [Kıymetli Maden & Mücevherat](https://www.belginkuyumculuk.com/mucevherat/): 24K külçe altın, sarrafiye ve pırlanta mücevherat.
 - [Biz Kimiz & Kurumsal Sicil](https://www.belginkuyumculuk.com/biz-kimiz/): 1999'dan beri kurumsal tarihçe ve uzman heyet.
-- [Saat & Mücevherat Magazini](https://www.belginkuyumculuk.com/magazin/): 198 editoryal makale ve piyasa analizleri.
+- [Saat & Mücevherat Magazini](https://www.belginkuyumculuk.com/magazin/): 199 editoryal makale ve piyasa analizleri.
 - [İletişim & Showroom Ziyareti](https://www.belginkuyumculuk.com/iletisim.html): İzmir Buca mağaza adresi, telefon ve randevu masası.
 
 ## Machine Discovery

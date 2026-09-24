@@ -5,6 +5,20 @@
 
 const MAGAZINE_ARTICLES = [
   {
+    "id": "mag-183057",
+    "slug": "en-cok-tercih-edilen-5-iwc-ingenieur-watches-on-belgin-saat",
+    "title": "En Çok Tercih Edilen 5 IWC Ingenieur Watches on Belgin Saat",
+    "category": "Saat Dünyası & Analiz",
+    "publish_date": "24 Eylül 2026",
+    "raw_date": "2026-09-24",
+    "author": "Belgin Saat & Mücevherat Editoryal Kurulu",
+    "read_time": "5 dk okuma",
+    "image": "images/magazine/en-cok-tercih-edilen-5-iwc-ingenieur-watches-.jpg",
+    "summary": "Bir saati değerlendirirken tasarım dili ile teknik mimariyi ayrı ayrı incelemek gerekir. Kasa oranı, kadran okunabilirliği ve bilezik veya kayış ergonomisi günlük deneyimi belirlerken; kalibre yapısı, güç rezervi, dayanıklılık ve servis erişimi uzun vadeli sahiplik kalitesini belirler.",
+    "content_html": "<p class=\"mag-lead-para\">Bir saati değerlendirirken tasarım dili ile teknik mimariyi ayrı ayrı incelemek gerekir. Kasa oranı, kadran okunabilirliği ve bilezik veya kayış ergonomisi günlük deneyimi belirlerken; kalibre yapısı, güç rezervi, dayanıklılık ve servis erişimi uzun vadeli sahiplik kalitesini belirler.</p> <h2 class=\"mag-subheading\">Tarihsel Kökenler ve Mekanik Mükemmellik</h2> <p>Marka hikâyesi ve modelin geçmişi önemlidir ancak tek başına satın alma gerekçesi değildir. Referansın kendi dönemindeki teknik konumu, benzer modeller karşısındaki farkı ve üreticinin satış sonrası desteği birlikte değerlendirildiğinde daha sağlıklı bir koleksiyon kararı ortaya çıkar.</p> <p>İkinci el veya vintage pazarda kondisyon ve doğrulanabilir geçmiş öne çıkar. Kasa geometrisinin korunması, doğru parçalar, servis kayıtları ve tutarlı seri-referans bilgisi özellikle yüksek değerli saatlerde satın alma öncesi kontrolün temel parçalarıdır.</p> <div class=\"mag-quote-box\"><blockquote>“Lüks bir mekanik saat yalnızca zamanı ölçen bir enstrüman değil; nesilden nesile aktarılan yaşayan bir sanat eseridir.”</blockquote></div> <h2 class=\"mag-subheading\">İkincil Piyasa Dinamikleri ve Değerleme Analizi</h2> <p>Belgin Saat Magazin bu tür güncel başlıkları kısa süreli popülerlikten ayırarak teknik kalite, kullanılabilirlik ve koleksiyon mantığı üzerinden yorumlar. Amaç tek bir modeli öne çıkarmak değil, okuyucunun kendi kullanım senaryosuna göre daha bilinçli karar verebilmesini sağlamaktır.</p> <h3 class=\"mag-subheading-h3\">Koleksiyon Değeri ve Alıcı Rehberi</h3> <p>Lüks saat piyasasında doğru modele ve orijinal kondisyondaki referanslara ulaşmak, koleksiyonunuzun uzun vadeli değerini koruması açısından kritik önem taşır.</p> <p class=\"mag-seo-internal-box\" style=\"margin-top: 2rem; padding: 1.25rem; background: rgba(5,51,47,0.05); border-left: 4px solid var(--color-teal); border-radius: 4px;\"><strong>Belgin Saat Koleksiyonu:</strong> Aradığınız ikonik referansları ve nadir modelleri incelemek için <a href=\"/elit-kategori/\" style=\"color: var(--color-teal); font-weight: 600; text-decoration: underline;\">Elit Saat Koleksiyonumuzu</a> veya tüm seçkin <a href=\"/saatler/\" style=\"color: var(--color-teal); font-weight: 600; text-decoration: underline;\">Lüks Saat Modellerimizi</a> ziyaret edebilir, İzmir Buca showroomumuzda uzman ekibimizden özel ekspertiz randevusu alabilirsiniz.</p>",
+    "source_url": ""
+  },
+  {
     "id": "mag-182985",
     "slug": "the-new-rolex-perpetual-padellone-and-5-alternatives-for-every-budget",
     "title": "The New Rolex Perpetual Padellone and 5 Alternatives for Every Budget",
