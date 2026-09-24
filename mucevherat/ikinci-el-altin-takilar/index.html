@@ -529,6 +529,7 @@
   </footer>
 
   <!-- SİMÜLATÖR ETKİLEŞİM BETİĞİ -->
+  <!-- SİMÜLATÖR ETKİLEŞİM BETİĞİ (CANLI BORSA ENTEGRASYONU) -->
   <script>
   (function initJewelryCalculator() {
     var chips = document.querySelectorAll('#sg-karat-chips .sg-chip');
@@ -538,10 +539,19 @@
     var resUsed = document.getElementById('sg-res-used');
     var resSaved = document.getElementById('sg-res-saved');
     var waBtn = document.getElementById('sg-calc-whatsapp-btn');
+    var liveBadge = document.querySelector('.sg-calc-box-live');
 
     var currentKarat = '22';
-    var gramPrice = 7150;
-    var craftRate = 0.18;
+    var liveRates = {
+      '22': 7150,
+      '18': 5850,
+      '14': 4550
+    };
+    var craftRates = {
+      '22': 0.18,
+      '18': 0.25,
+      '14': 0.32
+    };
 
     function formatTRY(val) {
       return Math.round(val).toLocaleString('tr-TR') + ' ₺';
@@ -551,6 +561,9 @@
       var grams = parseFloat(slider.value) || 15;
       gramDisplay.textContent = grams.toFixed(2) + ' Gram';
 
+      var gramPrice = liveRates[currentKarat] || 7150;
+      var craftRate = craftRates[currentKarat] || 0.18;
+
       var usedPrice = grams * gramPrice;
       var newPrice = usedPrice * (1 + craftRate);
       var savings = newPrice - usedPrice;
@@ -559,8 +572,68 @@
       resUsed.textContent = formatTRY(usedPrice);
       resSaved.textContent = '+' + formatTRY(savings);
 
-      var msg = encodeURIComponent('Merhaba, ' + currentKarat + ' ayar yaklaşık ' + grams.toFixed(1) + ' gram 2. el altın takı seçeneğiniz var mı? Fiyat ve model bilgisi alabilir miyim?');
+      var msg = encodeURIComponent('Merhaba, ' + currentKarat + ' ayar yaklaşık ' + grams.toFixed(1) + ' gram 2. el altın takı seçeneğiniz var mı? Canlı kura göre fiyat ve model bilgisi alabilir miyim?');
       waBtn.href = 'https://wa.me/905419305372?text=' + msg;
+    }
+
+    // Canlı Borsa Kurlarını Çek ve Senkronize Et
+    function fetchLiveRates() {
+      // 1. Global LIVE_MARKET_DATA kontrolü
+      if (typeof window.LIVE_MARKET_DATA !== 'undefined' && window.LIVE_MARKET_DATA.items) {
+        var items = window.LIVE_MARKET_DATA.items;
+        var p22 = parseFloat(items.AYAR22 && items.AYAR22.satis);
+        var p18 = parseFloat(items.AYAR18 && items.AYAR18.satis);
+        var p14 = parseFloat(items.AYAR14 && items.AYAR14.satis);
+        var pHas = parseFloat(items.ALTIN && items.ALTIN.satis) || 7750;
+
+        if (p22) liveRates['22'] = Math.round(p22);
+        else if (pHas) liveRates['22'] = Math.round(pHas * 0.937);
+
+        if (p18) liveRates['18'] = Math.round(p18);
+        else if (pHas) liveRates['18'] = Math.round(pHas * 0.750);
+
+        if (p14) liveRates['14'] = Math.round(p14);
+        else if (pHas) liveRates['14'] = Math.round(pHas * 0.722);
+
+        updateBadgeAndRecalc();
+        return;
+      }
+
+      // 2. Canlı API sorgusu (Harem / İZKO proxy)
+      fetch('https://canlipiyasalar.haremaltin.com/tmp/altin.json', { cache: 'no-store' })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+          if (data && data.data) {
+            var d = data.data;
+            var pHas = parseFloat(d.ALTIN && d.ALTIN.satis) || 7750;
+            var p22 = parseFloat(d.AYAR22 && d.AYAR22.satis) || Math.round(pHas * 0.937);
+            var p18 = parseFloat(d.AYAR18 && d.AYAR18.satis) || Math.round(pHas * 0.750);
+            var p14 = parseFloat(d.AYAR14 && d.AYAR14.satis) || Math.round(pHas * 0.722);
+
+            if (p22 > 0) liveRates['22'] = Math.round(p22);
+            if (p18 > 0) liveRates['18'] = Math.round(p18);
+            if (p14 > 0) liveRates['14'] = Math.round(p14);
+
+            updateBadgeAndRecalc();
+          }
+        })
+        .catch(function(err) {
+          // Fallback kurlar aktif kalır
+          if (liveBadge) liveBadge.textContent = '● Güncel Borsa Kuru';
+        });
+    }
+
+    function updateBadgeAndRecalc() {
+      if (liveBadge) {
+        liveBadge.textContent = '● Canlı Borsa: 22K ' + formatTRY(liveRates['22']) + ' / gr';
+      }
+      chips.forEach(function(chip) {
+        var k = chip.getAttribute('data-karat');
+        if (liveRates[k]) {
+          chip.setAttribute('data-gram-price', liveRates[k]);
+        }
+      });
+      calculate();
     }
 
     chips.forEach(function(chip) {
@@ -568,14 +641,14 @@
         chips.forEach(function(c) { c.classList.remove('active'); });
         chip.classList.add('active');
         currentKarat = chip.getAttribute('data-karat');
-        gramPrice = parseFloat(chip.getAttribute('data-gram-price')) || 7150;
-        craftRate = parseFloat(chip.getAttribute('data-craft-rate')) || 0.18;
         calculate();
       });
     });
 
     slider.addEventListener('input', calculate);
     calculate();
+    fetchLiveRates();
+    setInterval(fetchLiveRates, 60000); // Her 60 saniyede bir kuru yenile
   })();
   </script>
 </body>
