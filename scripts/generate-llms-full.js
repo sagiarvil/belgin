@@ -67,6 +67,7 @@ let fullText = `# Belgin Saat & Kuyumculuk — Kapsamlı Editoryal & Ürün Bilg
 - https://www.belginkuyumculuk.com/llms/pages/markalar.md
 - https://www.belginkuyumculuk.com/llms/pages/mesafeli-satis-sozlesmesi.md
 - https://www.belginkuyumculuk.com/llms/pages/mucevherat.md
+- https://www.belginkuyumculuk.com/llms/pages/mucevherat/ikinci-el-altin-takilar.md
 - https://www.belginkuyumculuk.com/llms/pages/musteri-tanima-ve-islem-guvenligi.md
 - https://www.belginkuyumculuk.com/llms/pages/on-bilgilendirme-formu.md
 - https://www.belginkuyumculuk.com/llms/pages/rehber/altin-yatirimi-ve-ozel-matrah-rehberi.md

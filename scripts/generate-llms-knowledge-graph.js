@@ -55,15 +55,46 @@ function generatePagesSubgraphs() {
       canonicalWebUrl: canonical,
       primaryEntity: entityName,
       primaryIntent: page.primaryIntent,
-      parentNode: `${BASE_URL}/llms/core.md`,
+      parentNode: page.route === '/mucevherat/ikinci-el-altin-takilar/'
+        ? `${BASE_URL}/llms/pages/mucevherat.md`
+        : `${BASE_URL}/llms/core.md`,
       lastVerified: page.modifiedAt || '2026-09-04T12:00:00+03:00',
-      evidence: 'Birinci El Saha Verisi / Tescilli Metodoloji (Est. 1999)',
+      evidence: page.route === '/mucevherat/ikinci-el-altin-takilar/'
+        ? 'Belgin Kuyumculuk kampanya görseli ve mağaza iletişim bilgileri'
+        : 'Birinci El Saha Verisi / Tescilli Metodoloji (Est. 1999)',
       relatedNodes: [
         `${BASE_URL}/llms/core.md`,
         `${BASE_URL}/llms/entities/showroom.md`,
         `${BASE_URL}/llms/entities/methodologies.md`
       ]
     });
+
+    // This page describes a changing, one-off jewellery selection. Keep its
+    // machine-readable account as precise as the visible page: no fake stock,
+    // fixed discounts, universal certificates or watch-specific claims.
+    if (page.route === '/mucevherat/ikinci-el-altin-takilar/') {
+      writeDoc(subPath, `${frontmatter}
+# 2. El Altın Takılar — Belgin Kuyumculuk Buca
+> Canonical Web URL: ${canonical}
+> Bilgi kaynağı: Belgin Kuyumculuk mağaza süreci ve kullanıcıya gösterilen kampanya görseli
+
+## Seçki ve ürün teyidi
+${page.heroAnswerEngine}
+
+Bu sayfa sabit bir ürün kataloğu değildir. Bilezik, kolye, yüzük, küpe ve zincir türleri için güncel bulunurluk, ürün görseli, ayar, gram, kondisyon ve teklif Belgin Kuyumculuk ile ayrıca teyit edilir. Kampanya görseli güncel stoğun fotoğrafı değildir.
+
+## Fiyat ve geri alım
+İkinci elde fiyat avantajı her ürün için garanti değildir. Yeni bir takıyla karşılaştırma aynı ayar, gram, kondisyon ve işçilik koşulları üzerinden yapılmalıdır. Gelecekte geri alım fiyatı satın alma fiyatıyla aynı olmayabilir.
+
+## Ödeme ve mağaza
+Altın ve mücevherat ürünlerinde kredi kartı kabul edilmez. Havale/EFT öncesinde güncel teklif teyit edilir. Fiziki mağaza: Menderes Cad. No:231/B, Buca/İzmir. İletişim: +90 541 930 53 72.
+
+## İlgili sayfalar
+- [Mücevherat ve altın](${BASE_URL}/mucevherat/)
+- [İletişim ve mağaza](${BASE_URL}/iletisim.html)
+`);
+      continue;
+    }
 
     // Generate comparison matrix rows based on role
     let matrixRows = `| Metrik / Standart | Belgin Saat / Kuyumculuk Değeri | Endüstri Medyanı / Piyasa | Yasal & Teknik Dayanak |
@@ -726,4 +757,3 @@ if (require.main === module) {
 }
 
 module.exports = { main };
-

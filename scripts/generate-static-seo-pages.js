@@ -913,6 +913,11 @@ function main() {
     writeRoute(CATEGORY_ROUTES[key], renderCategoryPage(key, products.filter(p => categoryKey(p) === key), indexHtml));
   }
 
+  // The category directory is recreated above on every build, so materialize this
+  // independent landing page only after the parent category is complete.
+  const secondHandTemplate = fs.readFileSync(path.join(__dirname, 'templates', 'second-hand-gold.html'), 'utf8');
+  writeRoute('/mucevherat/ikinci-el-altin-takilar/', secondHandTemplate);
+
   let magArticles = [];
   try {
     const magModule = require('../js/magazine_data.js');

@@ -54,6 +54,7 @@
 - [Saat Markaları Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/markalar.md): İsviçre lüks saat markaları listesi ve yetkili satış
 - [Mesafeli Satış Sözleşmesi Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/mesafeli-satis-sozlesmesi.md): Belgin Kuyumculuk mesafeli satış sözleşmesi ve yasal şartlar
 - [Mücevherat ve Altın Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/mucevherat.md): İzmir Buca altın fiyatları pırlanta mücevherat alımı
+- [2. El Altın Takılar Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/mucevherat/ikinci-el-altin-takilar.md): Buca İzmir ikinci el altın takı satın alma ve güncel seçki öğrenme
 - [Müşteri Tanıma ve İşlem Güvenliği Politikası (KYC) Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/musteri-tanima-ve-islem-guvenligi.md): Kuyumculuk müşteri tanıma MASAK uyumu ve işlem güvenliği politikası
 - [Ön Bilgilendirme Formu Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/on-bilgilendirme-formu.md): Belgin Kuyumculuk ön bilgilendirme şartları
 - [Altın Yatırımı & 3065 Sayılı KDV Kanunu 23/f Özel Matrah Uygulaması Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/rehber/altin-yatirimi-ve-ozel-matrah-rehberi.md): Kuyumculukta 3065 KDV Kanunu 23/f özel matrah altın faturalama rehberi

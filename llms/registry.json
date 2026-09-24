@@ -1,7 +1,7 @@
 {
   "version": 1,
   "owner_domain": "belginkuyumculuk.com",
-  "total_nodes": 42,
+  "total_nodes": 43,
   "generated_at": "2026-09-04T12:00:00+03:00",
   "nodes": [
     {
@@ -219,6 +219,14 @@
       "primary_entity": "Belgin Mücevherat & Altın Koleksiyonu",
       "primary_intent": "İzmir Buca altın fiyatları pırlanta mücevherat alımı",
       "canonical_url": "https://www.belginkuyumculuk.com/mucevherat/"
+    },
+    {
+      "slug": "mucevherat-ikinci-el-altin-takilar",
+      "path": "llms/pages/mucevherat/ikinci-el-altin-takilar.md",
+      "type": "page",
+      "primary_entity": "Belgin Kuyumculuk",
+      "primary_intent": "Buca İzmir ikinci el altın takı satın alma ve güncel seçki öğrenme",
+      "canonical_url": "https://www.belginkuyumculuk.com/mucevherat/ikinci-el-altin-takilar/"
     },
     {
       "slug": "biz-kimiz",
