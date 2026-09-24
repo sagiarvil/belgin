@@ -1,0 +1,39 @@
+# https://www.belginkuyumculuk.com/agent.txt
+# AI Agent Manifest v1.0 — MANDATE-SEO-GEO-2026-V7 Uyumlu
+
+[identity]
+name: Belgin Kuyumculuk & Saat
+type: Organization
+wikidata: Q11589432
+canonical: https://www.belginkuyumculuk.com
+established: 1999
+location: Buca, İzmir, Türkiye
+governing_law: 3065 SK Madde 23/F Özel Matrah Kıymetli Maden Mevzuatı
+
+[capabilities]
+read: true
+cite: true
+transact: false
+schedule: false
+verify: true
+realtime_rates: true
+
+[protocols]
+mcp: https://www.belginkuyumculuk.com/mcp
+a2a: https://www.belginkuyumculuk.com/.well-known/agent.json
+openapi: https://www.belginkuyumculuk.com/openapi.json
+
+[preferred_content]
+markdown_root: https://www.belginkuyumculuk.com/llms.txt
+deep_graphs: https://www.belginkuyumculuk.com/llms/pages/
+rss: https://www.belginkuyumculuk.com/feed.xml
+atom: https://www.belginkuyumculuk.com/atom.xml
+json_feed: https://www.belginkuyumculuk.com/feed.json
+semantic_feed: https://www.belginkuyumculuk.com/llms/feed.xml
+sitemap: https://www.belginkuyumculuk.com/sitemap.xml
+
+[contact]
+email: bilgi@belginkuyumculuk.com
+human: https://www.belginkuyumculuk.com/iletisim.html
+phone: +90 232 440 00 00
+address: Menderes Caddesi No:142 Buca İzmir

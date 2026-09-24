@@ -63,6 +63,21 @@
 - [Lüks Saatler Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/saatler.md): İzmir lüks saat modelleri fiyatları ve satın alma
 - [Yüksek Değerli Ürün Teslim Protokolü Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/yuksek-degerli-urun-teslimi.md): Yüksek değerli altın saat teslim protokolü ve kimlik doğrulama
 
+## Feed & Syndication Katmanı
+
+- [Ana RSS Feed](https://www.belginkuyumculuk.com/feed.xml): RSS 2.0, sürekli güncellenen canlı borsa ve ürün bildirimleri.
+- [Atom Feed](https://www.belginkuyumculuk.com/atom.xml): Atom 1.0 RFC 4287 uyumlu XML sindikasyon akışı.
+- [JSON Feed](https://www.belginkuyumculuk.com/feed.json): JSON Feed 1.1, AI RAG pipeline'ları için optimize edilmiş yapılandırılmış akış.
+- [LLM Semantik Feed](https://www.belginkuyumculuk.com/llms/feed.xml): Büyük Dil Modelleri ve crawler'lar için tam metin semantik besleme.
+
+## AI Agent & Real-Time Discovery Protocols
+
+- [AI Ajan Manifestosu](https://www.belginkuyumculuk.com/agent.txt): Model Context Protocol (MCP) ve A2A ajan yönergeleri.
+- [A2A Ajan Kartı](https://www.belginkuyumculuk.com/.well-known/agent.json): Agent-to-Agent keşif kartı ve kurumsal yetki çerçevesi.
+- [MCP Endpoint](https://www.belginkuyumculuk.com/mcp): Anthropic Model Context Protocol JSON-RPC 2.0 arayüzü.
+- [WebSub Hub](https://pubsubhubbub.appspot.com/): Gerçek zamanlı PubSubHubbub içerik dağıtım merkezi.
+- [OpenAPI Spesifikasyonu](https://www.belginkuyumculuk.com/openapi.json): Canlı borsa ve ürün sorgu API sözleşmesi.
+
 ## Canonical Human Surfaces
 
 - [Ana Vitrin](https://www.belginkuyumculuk.com/): Belgin Kuyumculuk ve Saat ana vitrini ve canlı borsa göstergesi.

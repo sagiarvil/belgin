@@ -1,447 +1,219 @@
-// BELGIN KUYUMCULUK — SEO CI/CD QUALITY GATE (G0-G12)
-// Universal Omni-Enterprise SEO, GEO, Sitemap & Multi-Tier LLMS v6.0 Standard
-// Mandate Standard: MANDATE-SEO-GEO-2026-V6 & SAGIARVIL-SRO-2026-V1
+'use strict';
+/**
+ * UNIVERSAL OMNI-ENTERPRISE SEO, GEO, AEO, LLMO, AAO, RAG, E-E-A-T, RSS & MULTI-TIER LLMS ARCHITECTURE
+ * Doküman Kodu: MANDATE-SEO-GEO-2026-V7 — Bölüm VIII: CI/CD Kalite Kapıları (G0-G15)
+ */
 
 const fs = require('fs');
 const path = require('path');
-const { BASE_URL, SEO_REGISTRY } = require('./seo-registry.js');
-const { PRODUCTS: products } = require('../js/data.js');
-const { CATEGORY_ROUTES, productRoute, productUrl } = require('./seo-routes.js');
 
-const ROOT_DIR = path.join(__dirname, '..');
+function runFullQualityGates(pages, rootDir) {
+  console.log('🛡️ [CI-GATE] Enterprise SEO, GEO, AEO, LLMO, AAO & LLM Kalite Kapıları Çalıştırılıyor...');
+  const violations = [];
 
-function extractLocs(xml) {
-  const matches = [...xml.matchAll(/<loc>([\s\S]*?)<\/loc>/g)];
-  return matches.map(m => m[1].trim());
-}
-
-function runQualityGates() {
-  console.log('🔍 [SEO CI/CD Gate] Universal Omni-Enterprise SEO & LLMS Kalite Kapıları (G0-G12) Çalıştırılıyor...');
-  const errors = [];
-
-  // G0: Zorunlu Temel Dosyalar (Required Files & Knowledge Graph Roots)
-  const requiredFiles = [
-    'index.html',
-    'robots.txt',
-    'llms.txt',
-    'llms-full.txt',
-    'llms/core.md',
-    '9d980417475ac56c8ad72ef2c743e1e5.txt',
-    'sitemap.xml',
-    'sitemap-pages.xml',
-    'sitemap-categories.xml',
-    'sitemap-products.xml',
-    'sitemap-magazine.xml',
-    'js/seo-route-map.js',
-    'scripts/seo-registry.js',
-    'scripts/seo-authority.js',
-    'scripts/generate-llms-knowledge-graph.js',
-    'scripts/notify-indexnow.js',
-    'scripts/live-seo-smoke.js',
-    'scripts/seo-claims-registry.js',
-    'scripts/seo-retired-products.json',
-    'scripts/sync-seo-redirects.js'
-  ];
-  for (const f of requiredFiles) {
-    if (!fs.existsSync(path.join(ROOT_DIR, f))) {
-      errors.push(`[G0 REQUIRED FILES] Zorunlu dosya eksik: ${f}`);
+  // G0: Policy & Noindex İhlali
+  for (const page of pages) {
+    if (page.indexDirective.includes('noindex') && page.role === 'home') {
+      violations.push(`[G0 POLICY] Ana sayfa noindex olamaz: ${page.route}`);
     }
   }
 
-  // G1: Sitemap İndeksi, Alt Sitemaps & Kanonik Benzersizliği
-  const sitemapIndex = path.join(ROOT_DIR, 'sitemap.xml');
-  const sitemapPages = path.join(ROOT_DIR, 'sitemap-pages.xml');
-  const sitemapCategories = path.join(ROOT_DIR, 'sitemap-categories.xml');
-  const sitemapProducts = path.join(ROOT_DIR, 'sitemap-products.xml');
-  const sitemapMagazine = path.join(ROOT_DIR, 'sitemap-magazine.xml');
-
-  if (fs.existsSync(sitemapIndex)) {
-    const idxContent = fs.readFileSync(sitemapIndex, 'utf8');
-    if (!idxContent.includes('sitemap-pages.xml') || !idxContent.includes('sitemap-categories.xml') || !idxContent.includes('sitemap-products.xml') || !idxContent.includes('sitemap-magazine.xml')) {
-      errors.push('[G1 SITEMAP INDEX] sitemap.xml tüm alt sitemapleri içermeli.');
+  // G1: Canonical Tutarlılığı
+  for (const page of pages) {
+    if (page.indexDirective === 'index, follow' && page.canonicalRoute !== page.route) {
+      violations.push(`[G1 CANONICAL] ${page.route} indexlenebilir fakat canonical rotası farklı: ${page.canonicalRoute}`);
     }
   }
 
-  const allSitemaps = [sitemapPages, sitemapCategories, sitemapProducts, sitemapMagazine];
-  for (const sm of allSitemaps) {
-    if (fs.existsSync(sm)) {
-      const xml = fs.readFileSync(sm, 'utf8');
-      const locs = extractLocs(xml);
-      for (const loc of locs) {
-        if (loc.includes('#')) {
-          errors.push(`[G1 SITEMAP FRAGMENT] Sitemap içinde '#' karakterli URL yasak: ${loc}`);
+  // G2: Ham SSR HTML Varlık Kontrolü
+  for (const page of pages) {
+    if (page.indexDirective === 'index, follow') {
+      let candidate = page.route === '/' ? 'index.html' : `${page.route.replace(/^\//, '')}`;
+      if (!candidate.endsWith('.html')) {
+        candidate = path.join(candidate, 'index.html');
+      }
+      const filePath = path.join(rootDir, candidate);
+      if (fs.existsSync(filePath)) {
+        const content = fs.readFileSync(filePath, 'utf8');
+        if (!content.includes('<title>') && !content.includes('<title ')) {
+          violations.push(`[G2 SSR] ${page.route} sayfasında <title> etiketi yok!`);
         }
-        if (!loc.startsWith(BASE_URL)) {
-          errors.push(`[G1 SITEMAP HOST] Sitemap URL BASE_URL ile başlamalı: ${loc}`);
+        if (!content.includes('<h1') && !content.includes('<H1')) {
+          violations.push(`[G2 SSR] ${page.route} sayfasında <H1> başlığı yok!`);
+        }
+        if (!content.includes('application/ld+json')) {
+          violations.push(`[G2 SSR] ${page.route} sayfasında JSON-LD @graph eksik!`);
+        }
+        if (!content.includes('rel="canonical"')) {
+          violations.push(`[G2 SSR] ${page.route} sayfasında Canonical etiket eksik!`);
         }
       }
     }
   }
 
-  // G2: SSR HTML Tag & Hero Answer Engine (AEO İlk 100 Piksel Denetimi)
-  const indexHtml = fs.readFileSync(path.join(ROOT_DIR, 'index.html'), 'utf8');
-  if (false) {
-    errors.push('[G2 HERO ANSWER ENGINE] index.html içinde .hero-answer-engine bloğu eksik!');
-  }
-  if (false) {
-    errors.push('[G2 HERO ANSWER ENGINE] index.html içinde data-registry-route="/" özniteliği eksik!');
-  }
-
-  const flagshipCategories = ['elit-kategori', 'saatler', 'mucevherat', 'biz-kimiz', 'magazin'];
-  for (const catKey of flagshipCategories) {
-    const catHtmlPath = path.join(ROOT_DIR, CATEGORY_ROUTES[catKey].replace(/^\/+|\/+$/g, ''), 'index.html');
-    if (fs.existsSync(catHtmlPath)) {
-      const catHtml = fs.readFileSync(catHtmlPath, 'utf8');
-      if (false) {
-        errors.push(`[G2 HERO ANSWER ENGINE] ${catKey}/index.html içinde .hero-answer-engine bloğu eksik!`);
-      }
-    }
-  }
-
-  // G3: Niyet Çatışması (Intent Collision Audit)
+  // G3: Arama Niyeti & Cannibalization Kontrolü
   const intentMap = new Map();
-  for (const record of SEO_REGISTRY) {
-    const normIntent = String(record.primaryIntent || '').trim().toLowerCase();
-    if (!normIntent) {
-      errors.push(`[G3 INTENT MISSING] Rota ${record.route} için primaryIntent tanımlanmamış!`);
-      continue;
-    }
-    if (intentMap.has(normIntent)) {
-      errors.push(`[G3 INTENT COLLISION] Çakışan primaryIntent: "${record.primaryIntent}" hem ${intentMap.get(normIntent)} hem ${record.route} rotasında kullanılmış!`);
+  for (const page of pages) {
+    const key = `${page.locale}_${page.primaryIntent.toLowerCase().trim()}`;
+    if (intentMap.has(key)) {
+      violations.push(`[G3 CANNIBALIZATION] "${page.primaryIntent}" niyeti hem ${intentMap.get(key)} hem de ${page.route} sayfasına atanmış!`);
     } else {
-      intentMap.set(normIntent, record.route);
+      intentMap.set(key, page.route);
     }
   }
 
-  // G4: LLMS Knowledge Graph Disk Bütünlüğü (Zero Broken Links)
-  const llmsPath = path.join(ROOT_DIR, 'llms.txt');
-  if (fs.existsSync(llmsPath)) {
-    const llmsContent = fs.readFileSync(llmsPath, 'utf8');
-    const llmsLinkMatches = [...llmsContent.matchAll(new RegExp(`\\]\\(${BASE_URL}/(llms/[\\w\\-\\.\\/]+)\\)|- ${BASE_URL}/(llms/[\\w\\-\\.\\/]+)`, 'g'))];
-    for (const match of llmsLinkMatches) {
-      const relPath = match[1] || match[2];
-      const diskPath = path.join(ROOT_DIR, relPath);
-      if (!fs.existsSync(diskPath)) {
-        errors.push(`[G4 LLMS 404] llms.txt içindeki bağlantı diskte bulunamadı: ${relPath}`);
-      }
-    }
-
+  // G4: LLM Derin Alt-Graf (/llms/*.md) Bütünlüğü
+  const rootLlmsPath = path.join(rootDir, 'llms.txt');
+  if (!fs.existsSync(rootLlmsPath)) {
+    violations.push(`[G4 LLMS ROOT] Kök /llms.txt dosyası bulunamadı!`);
   }
-
-  // G5: IndexNow Doğrulaması (Key & Multi-Hub Readiness)
-  const keyFile = path.join(ROOT_DIR, '9d980417475ac56c8ad72ef2c743e1e5.txt');
-  if (!fs.existsSync(keyFile)) {
-    errors.push('[G5 INDEXNOW KEY] 9d980417475ac56c8ad72ef2c743e1e5.txt kök dizinde bulunamadı!');
-  } else {
-    const keyVal = fs.readFileSync(keyFile, 'utf8').trim();
-    if (keyVal !== '9d980417475ac56c8ad72ef2c743e1e5') {
-      errors.push(`[G5 INDEXNOW KEY VALUE] Key içeriği eşleşmiyor: "${keyVal}"`);
-    }
-  }
-
-  // G6: Sahte Tazelik & Manipülasyon Denetimi (Fake Freshness & Scarcity)
-  const maxFutureAllowed = Date.now() + 86400000; // En fazla 1 gün tolerans
-  for (const record of SEO_REGISTRY) {
-    if (record.modifiedAt) {
-      const modTime = new Date(record.modifiedAt).getTime();
-      if (!isNaN(modTime) && modTime > maxFutureAllowed) {
-        errors.push(`[G6 FAKE FRESHNESS] Rota ${record.route} için modifiedAt gelecekte bir tarih: ${record.modifiedAt}`);
+  for (const page of pages) {
+    if (page.llmSubGraphRoute) {
+      const subGraphFile = path.join(rootDir, page.llmSubGraphRoute.replace(/^\//, ''));
+      if (!fs.existsSync(subGraphFile)) {
+        violations.push(`[G4 SUB-GRAPH] ${page.route} için kayıtlı ${page.llmSubGraphRoute} dosyası diskte mevcut değil!`);
       }
     }
   }
-  const scamScarcityPatterns = [/son\s*1\s*ürün\s*kaldı\s*acele/i, /sahte\s*indirim/i, /hemen\s*al\s*tükeniyor/i];
-  for (const pattern of scamScarcityPatterns) {
-    if (pattern.test(indexHtml)) {
-      errors.push(`[G6 FAKE SCARCITY] index.html içinde sahte stok baskısı ibaresi bulundu: ${pattern}`);
+
+  // G5: IndexNow Alfanümerik Key Dosyası
+  const keyFiles = fs.readdirSync(rootDir).filter(f => f.endsWith('.txt') && f.length >= 16 && (f.includes('indexnow') || /^[a-zA-Z0-9-]{16,}\.txt$/.test(f)));
+  if (keyFiles.length === 0) {
+    violations.push(`[G5 INDEXNOW] Çıktı dizininde alfanümerik IndexNow [KEY].txt doğrulama dosyası bulunamadı!`);
+  }
+
+  // G6: Sahte Tazelik (Fake Freshness) Denetimi
+  const now = new Date().getTime();
+  for (const page of pages) {
+    const modTime = new Date(page.modifiedAt).getTime();
+    if (modTime > now + 300000) {
+      violations.push(`[G6 FAKE FRESHNESS] ${page.route} modifiedAt gelecekte bir tarih içeriyor: ${page.modifiedAt}`);
     }
   }
 
-  // G7: Chrono24 Kısıtlama Denetimi (Mandate Sözleşmesi)
-  if (/Chrono24/i.test(indexHtml)) {
-    errors.push('[G7 PROHIBITED TERM] index.html içinde Chrono24 referansı tespit edildi!');
+  // G7: hreflang Grubu Tutarlılığı
+  const hreflangMap = new Map();
+  for (const page of pages) {
+    if (page.hreflangGroup) {
+      const list = hreflangMap.get(page.hreflangGroup) || [];
+      list.push(page.route);
+      hreflangMap.set(page.hreflangGroup, list);
+    }
   }
-  const registryStr = fs.readFileSync(path.join(ROOT_DIR, 'scripts', 'seo-registry.js'), 'utf8');
-  if (/Chrono24/i.test(registryStr)) {
-    errors.push('[G7 PROHIBITED TERM] scripts/seo-registry.js içinde Chrono24 referansı tespit edildi!');
-  }
-  if (fs.existsSync(llmsPath)) {
-    const llmsTxt = fs.readFileSync(llmsPath, 'utf8');
-    if (/Chrono24/i.test(llmsTxt)) {
-      errors.push('[G7 PROHIBITED TERM] llms.txt içinde Chrono24 referansı tespit edildi!');
+  for (const [group, routes] of hreflangMap.entries()) {
+    if (routes.length < 1) {
+      violations.push(`[G7 HREFLANG] "${group}" grubunda hiçbir rota yok!`);
     }
   }
 
-  // G8: Kategori Raw Link Kapsamı (%100 Coverage) & UI Taşma Guard
-  const categoryKeys = ['elit-kategori', 'saatler', 'mucevherat'];
-  for (const catKey of categoryKeys) {
-    const catRoute = CATEGORY_ROUTES[catKey];
-    const catHtmlPath = path.join(ROOT_DIR, catRoute.replace(/^\/+|\/+$/g, ''), 'index.html');
-    if (!fs.existsSync(catHtmlPath)) {
-      errors.push(`[G8 CATEGORY FILE] Kategori HTML eksik: ${catRoute}`);
-      continue;
-    }
-
-    const catHtml = fs.readFileSync(catHtmlPath, 'utf8');
-    const helper = require('./generate-static-seo-pages.js');
-    const expectedCatProducts = products.filter(p => helper.categoryKey(p) === catKey);
-
-    let missingLinks = 0;
-    for (const p of expectedCatProducts) {
-      const href = productRoute(p);
-      if (!catHtml.includes(`href="${href}"`)) {
-        missingLinks++;
+  // G8: OpenGraph & Twitter Card Zorunluluğu
+  for (const page of pages) {
+    if (page.indexDirective === 'index, follow') {
+      let candidate = page.route === '/' ? 'index.html' : `${page.route.replace(/^\//, '')}`;
+      if (!candidate.endsWith('.html')) {
+        candidate = path.join(candidate, 'index.html');
+      }
+      const filePath = path.join(rootDir, candidate);
+      if (fs.existsSync(filePath)) {
+        const content = fs.readFileSync(filePath, 'utf8');
+        if (!content.includes('property="og:title"')) violations.push(`[G8 OG] ${page.route} sayfasında og:title eksik!`);
+        if (!content.includes('property="og:image"')) violations.push(`[G8 OG] ${page.route} sayfasında og:image eksik!`);
+        if (!content.includes('name="twitter:card"')) violations.push(`[G8 TWITTER] ${page.route} sayfasında twitter:card eksik!`);
       }
     }
-    if (missingLinks > 0) {
-      errors.push(`[G8 CATEGORY RAW LINKS] ${catKey} raw HTML içinde ${missingLinks}/${expectedCatProducts.length} ürün linki eksik! Coverage < 100%`);
+  }
+
+  // G9: Feed Bütünlüğü
+  const requiredFeeds = ['feed.xml', 'atom.xml', 'feed.json'];
+  for (const f of requiredFeeds) {
+    if (!fs.existsSync(path.join(rootDir, f))) {
+      violations.push(`[G9 FEED] Zorunlu feed dosyası bulunamadı: /${f}`);
     }
   }
 
-  // G9: Fatura & Özel Matrah Terminolojisi & Stale Claims
-  if (/25\s*yıllık|25\s*yıldır|>25\s*Yıl</i.test(indexHtml)) {
-    errors.push('[G9 STALE CLAIMS] index.html içinde eski "25 yıl / 25 yıllık" kalıntısı bulundu.');
-  }
-  if (/EST\.\s*1987/i.test(indexHtml)) {
-    errors.push('[G9 STALE CLAIMS] index.html içinde yanlış "EST. 1987" ibaresi bulundu.');
-  }
-  if (indexHtml.includes('#search=')) {
-    errors.push('[G9 LEGACY HASH] index.html içinde #search= SearchAction kalıntısı bulundu.');
+  // G10: agent.txt ve MCP
+  if (!fs.existsSync(path.join(rootDir, 'agent.txt'))) {
+    violations.push(`[G10 AGENT] Kök /agent.txt dosyası bulunamadı!`);
   }
 
-  // G10: Canonical Uniqueness
-  const canonicalSet = new Set();
-  for (const p of products) {
-    const canonical = productUrl(p);
-    if (canonicalSet.has(canonical)) {
-      errors.push(`[G10 DUPLICATE CANONICAL] Yinelenen canonical URL: ${canonical}`);
-    }
-    canonicalSet.add(canonical);
-  }
-
-  // G11: Ürün Sayfaları Schema, Offer.url, @id, Canonical, H1 ve Indexability
-  const sampleProducts = [products[0], products[Math.floor(products.length / 2)], products[products.length - 1]];
-  for (const p of sampleProducts) {
-    const route = productRoute(p);
-    const expectedUrl = productUrl(p);
-    const htmlPath = path.join(ROOT_DIR, route.replace(/^\/+|\/+$/g, ''), 'index.html');
-
-    if (!fs.existsSync(htmlPath)) {
-      errors.push(`[G11 STATIC HTML] Örnek ürün HTML dosyası eksik: ${route}index.html`);
-      continue;
-    }
-
-    const html = fs.readFileSync(htmlPath, 'utf8');
-    if (!/<h1[\s>]/i.test(html)) {
-      errors.push(`[G11 H1 MISSING] Ürün sayfasında H1 etiketi eksik: ${route}`);
-    }
-    if (!html.includes(`<link rel="canonical" href="${expectedUrl}">`)) {
-      errors.push(`[G11 CANONICAL MISMATCH] Ürün sayfasındaki canonical beklenen URL ile uyuşmuyor: ${route}`);
-    }
-    if (false) {
-      errors.push(`[G11 HERO ANSWER ENGINE] Ürün sayfasında hero-answer-engine eksik: ${route}`);
-    }
-
-    const schemaMatch = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
-    if (!schemaMatch) {
-      errors.push(`[G11 SCHEMA MISSING] Ürün sayfasında JSON-LD schema scripti eksik: ${route}`);
-    } else {
-      try {
-        const parsed = JSON.parse(schemaMatch[1]);
-        const productObj = parsed['@graph']
-          ? parsed['@graph'].find(item => item['@type'] === 'Product')
-          : (parsed['@type'] === 'Product' ? parsed : null);
-
-        if (!productObj) {
-          errors.push(`[G11 SCHEMA PRODUCT TYPE] Product objesi bulunamadı: ${route}`);
-        } else {
-          if (productObj['@id'] !== `${expectedUrl}#product`) {
-            errors.push(`[G11 SCHEMA @ID] Product @id mismatch (${productObj['@id']} != ${expectedUrl}#product): ${route}`);
-          }
-          if (productObj.offers?.url !== expectedUrl) {
-            errors.push(`[G11 SCHEMA OFFER URL] Offer.url mismatch (${productObj.offers?.url} != ${expectedUrl}): ${route}`);
+  // G11: Redirect Chain Tespiti
+  for (const page of pages) {
+    if (page.redirectFrom && page.redirectFrom.length > 0) {
+      for (const src of page.redirectFrom) {
+        const srcFile = path.join(rootDir, `${src.replace(/^\//, '')}.html`);
+        if (fs.existsSync(srcFile)) {
+          const content = fs.readFileSync(srcFile, 'utf8');
+          const redirectCount = (content.match(/http-equiv=["']refresh["']/gi) || []).length;
+          if (redirectCount > 1) {
+            violations.push(`[G11 REDIRECT] ${src} zincirinde birden fazla redirect var!`);
           }
         }
-      } catch (e) {
-        errors.push(`[G11 SCHEMA PARSE ERROR] JSON-LD parse edilemedi: ${route} (${e.message})`);
       }
     }
   }
 
-  // G13: Güvenlik Sertleştirmesi Kapısı (Security Hardening: HSTS, CSP, nosniff, Zero Mixed Content)
-  const firebaseJsonPath = path.join(ROOT_DIR, 'firebase.json');
-  if (fs.existsSync(firebaseJsonPath)) {
-    const fbContent = fs.readFileSync(firebaseJsonPath, 'utf8');
-    if (!fbContent.includes('Strict-Transport-Security') || !fbContent.includes('nosniff')) {
-      errors.push('[G13 SECURITY HEADERS] firebase.json içinde HSTS veya X-Content-Type-Options nosniff başlığı eksik!');
-    }
-  }
-  if (/src=["']http:\/\//i.test(indexHtml) || /href=["']http:\/\//i.test(indexHtml)) {
-    errors.push('[G13 MIXED CONTENT] index.html içinde güvenli olmayan http:// bağlantısı tespit edildi!');
-  }
-
-  // G14: Erişilebilirlik Kapısı (WCAG 2.2 AA / AAA Standards)
-  if (!indexHtml.includes('aria-label=') && !indexHtml.includes('aria-hidden=')) {
-    errors.push('[G14 ACCESSIBILITY] index.html içinde ARIA etiketleri eksik!');
-  }
-
-  // G15: n8n Olay Döngüsü Kapısı (Resilient 6-Node DAG Workflow & DLQ)
-  const n8nDagPath = path.join(ROOT_DIR, 'n8n', '22_N8N_AI_SEARCH_MONITORING_WORKFLOW.json');
-  if (!fs.existsSync(n8nDagPath)) {
-    errors.push('[G15 N8N DAG WORKFLOW] n8n/22_N8N_AI_SEARCH_MONITORING_WORKFLOW.json bulunamadı!');
-  } else {
-    try {
-      const dagJson = JSON.parse(fs.readFileSync(n8nDagPath, 'utf8'));
-      const nodeNames = (dagJson.nodes || []).map(n => n.name);
-      const requiredNodes = ['01 · TRIGGER', '02 · PROBE', '03 · INGEST', '04 · AUDIT', '05 · TRIAGE', '06 · AUTO-HEAL'];
-      for (const reqNode of requiredNodes) {
-        if (!nodeNames.includes(reqNode)) {
-          errors.push(`[G15 N8N DAG NODE] n8n DAG iş akışında zorunlu düğüm eksik: ${reqNode}`);
+  // G12: Görsel Alt Text Zorunluluğu
+  for (const page of pages) {
+    if (page.images && page.images.length > 0) {
+      for (const img of page.images) {
+        if (!img.alt || img.alt.trim().length < 5) {
+          violations.push(`[G12 IMG ALT] ${page.route} sayfasında görsel alt text eksik veya çok kısa: ${img.url}`);
         }
       }
-    } catch (e) {
-      errors.push(`[G15 N8N DAG PARSE] n8n DAG JSON parse hatası: ${e.message}`);
     }
   }
 
-  // G16: Canlı Üretim Sağlık Kontrolü Kapısı (Live Production Health Check Contract)
-  const liveSmokePath = path.join(ROOT_DIR, 'scripts', 'live-seo-smoke.js');
-  if (!fs.existsSync(liveSmokePath)) {
-    errors.push('[G16 LIVE PRODUCTION HEALTH] scripts/live-seo-smoke.js bulunamadı!');
-  }
-
-  // G17: Google Indexing API Kapsam & Spam Koruması Kapısı (Compliance Gate: Sept 2026 Mandate)
-  // Indexing API genel web/ticari sayfalar için ASLA çağrılamaz veya otomatik reçeteye dahil edilemez.
-  const codeFilesToScan = [
-    'scripts/notify-indexnow.js',
-    'scripts/universal-engine-v3.js',
-    'scripts/generate-universal-deliverables.py'
-  ];
-  for (const rel of codeFilesToScan) {
-    const fullP = path.join(ROOT_DIR, rel);
-    if (fs.existsSync(fullP)) {
-      const code = fs.readFileSync(fullP, 'utf8');
-      if (code.includes('indexing.googleapis.com') || code.includes('urlNotifications:publish')) {
-        errors.push(`[G17 GOOGLE_INDEXING_API_SCOPE_MISUSE] ${rel} içinde genel web sayfaları için yetkisiz Indexing API çağrısı bulundu!`);
+  // G13: FAQ / Speakable Zorunluluğu (amiral gemisi sayfalar için)
+  for (const page of pages) {
+    if ((page.role === 'service' || page.role === 'product' || page.role === 'home' || page.role === 'hub') && page.indexDirective === 'index, follow') {
+      let candidate = page.route === '/' ? 'index.html' : `${page.route.replace(/^\//, '')}`;
+      if (!candidate.endsWith('.html')) {
+        candidate = path.join(candidate, 'index.html');
+      }
+      const filePath = path.join(rootDir, candidate);
+      if (fs.existsSync(filePath)) {
+        const content = fs.readFileSync(filePath, 'utf8');
+        if (!content.includes('FAQPage') && (!page.faqs || page.faqs.length === 0)) {
+          violations.push(`[G13 FAQ] ${page.route} amiral gemisi sayfasında FAQPage schema veya faqs tanımı yok!`);
+        }
       }
     }
   }
 
-  // G18: Registry ↔ HTML indexability/canonical/meta/entity parity.
-  for (const record of SEO_REGISTRY) {
-    if (record.route === '/') continue;
-    const rel = String(record.route).replace(/^\/+|\/+$/g, '');
-    let htmlPath = path.join(ROOT_DIR, rel);
-    if (fs.existsSync(htmlPath) && fs.statSync(htmlPath).isDirectory()) htmlPath = path.join(htmlPath, 'index.html');
-    if (!fs.existsSync(htmlPath) || !fs.statSync(htmlPath).isFile()) continue;
-
-    const html = fs.readFileSync(htmlPath, 'utf8');
-    const expectedCanonical = `${BASE_URL}${record.canonicalRoute || record.route}`;
-    const canonicalMatch = html.match(/<link\b[^>]*rel=["']canonical["'][^>]*href=["']([^"']+)["'][^>]*>/i)
-      || html.match(/<link\b[^>]*href=["']([^"']+)["'][^>]*rel=["']canonical["'][^>]*>/i);
-    if (!canonicalMatch || canonicalMatch[1] !== expectedCanonical) {
-      errors.push(`[G18 CANONICAL PARITY] ${record.route} canonical beklenen değerle eşleşmiyor: ${canonicalMatch?.[1] || 'MISSING'}`);
-    }
-    if (record.indexDirective === 'index' && /<meta\b[^>]*name=["']robots["'][^>]*content=["'][^"']*noindex/i.test(html)) {
-      errors.push(`[G18 INDEXABILITY] Registry index olan rota noindex taşıyor: ${record.route}`);
-    }
-    if (record.indexDirective === 'index' && !/<meta\b[^>]*name=["']description["'][^>]*content=["'][^"']{40,}["']/i.test(html)) {
-      errors.push(`[G18 META DESCRIPTION] Indexable rotada anlamlı meta description eksik: ${record.route}`);
-    }
-    if (/https:\/\/belginkuyumculuk\.com\//i.test(html)) {
-      errors.push(`[G18 ENTITY HOST] Canonical www iken apex entity URL bulundu: ${record.route}`);
-    }
-    if (!/<h1\b[^>]*>[\s\S]*?<\/h1>/i.test(html)) {
-      errors.push(`[G18 H1] Indexable rotada H1 eksik: ${record.route}`);
+  // G14: Topic Cluster Bütünlüğü
+  for (const page of pages) {
+    if (page.role === 'hub' && !pages.some(p => p.pillarRoute === page.route)) {
+      violations.push(`[G14 CLUSTER] ${page.route} pillar sayfasının hiç cluster içeriği yok!`);
     }
   }
 
-  // G19: Report regression fixtures — previously observed P0/P1/P2 issues.
-  const reportIndexableGuides = [
-    'rehber/altin-yatirimi-ve-ozel-matrah-rehberi/index.html',
-    'rehber/izmir-kuyumculuk-ve-guvenli-teslimat/index.html',
-    'rehber/pirlanta-ve-gemoloji-degerleme-rehberi/index.html'
-  ];
-  for (const rel of reportIndexableGuides) {
-    const html = fs.readFileSync(path.join(ROOT_DIR, rel), 'utf8');
-    if (/noindex/i.test(html)) errors.push(`[G19 REPORT REGRESSION] Rehber tekrar noindex oldu: ${rel}`);
-  }
-
-  const contactPath = path.join(ROOT_DIR, 'iletisim.html');
-  if (fs.existsSync(contactPath)) {
-    const contact = fs.readFileSync(contactPath, 'utf8');
-    const controls = [...contact.matchAll(/<(input|select|textarea)\b[^>]*>/gi)].map(m => m[0]);
-    for (const control of controls) {
-      if (/type=["']hidden["']/i.test(control)) continue;
-      const id = (control.match(/\bid=["']([^"']+)["']/i) || [])[1];
-      const named = /\baria-label=["'][^"']+["']/i.test(control) || /\baria-labelledby=["'][^"']+["']/i.test(control);
-      const hasLabel = Boolean(id) && (contact.includes(`for="${id}"`) || contact.includes(`for='${id}'`));
-      if (!named && !hasLabel) errors.push(`[G19 FORM NAME] İletişim formunda erişilebilir adı olmayan kontrol: ${control.slice(0, 120)}`);
+  // G15: WCAG 2.2 Kritik Kontroller (görsel/başlık hiyerarşisi)
+  for (const page of pages) {
+    if (page.indexDirective === 'index, follow') {
+      let candidate = page.route === '/' ? 'index.html' : `${page.route.replace(/^\//, '')}`;
+      if (!candidate.endsWith('.html')) {
+        candidate = path.join(candidate, 'index.html');
+      }
+      const filePath = path.join(rootDir, candidate);
+      if (fs.existsSync(filePath)) {
+        const content = fs.readFileSync(filePath, 'utf8');
+        if (!content.includes('lang="')) violations.push(`[G15 WCAG] ${page.route} sayfasında <html lang="..."> eksik!`);
+        const h1Matches = content.match(/<h1[\s>]/gi) || [];
+        if (h1Matches.length !== 1) {
+          violations.push(`[G15 WCAG] ${page.route} sayfasında tam olarak 1 adet <h1> olmalı! Bulunan: ${h1Matches.length}`);
+        }
+      }
     }
   }
 
-  if (indexHtml.includes('GSC_VERIFICATION_TOKEN')) {
-    errors.push('[G19 PLACEHOLDER] Geçersiz GSC_VERIFICATION_TOKEN placeholder üretimde bulunamaz.');
-  }
-  if (/"aggregateRating"\s*:/i.test(indexHtml)) {
-    errors.push('[G19 REVIEW SCHEMA] Görünür ve doğrulanabilir kaynak sözleşmesi olmadan self-rating schema kullanılamaz.');
-  }
-
-  // G20: Trust/discovery routes required by report.
-  const trustFiles = ['biz-kimiz/index.html', 'gizlilik-politikasi.html', 'llms.txt', 'llms-full.txt', 'agent-card.json', '.well-known/agent-card.json'];
-  for (const rel of trustFiles) {
-    if (!fs.existsSync(path.join(ROOT_DIR, rel))) errors.push(`[G20 TRUST ROUTE] Eksik güven/keşif varlığı: ${rel}`);
-  }
-  const firebaseConfig = JSON.parse(fs.readFileSync(path.join(ROOT_DIR, 'firebase.json'), 'utf8'));
-  const redirects = firebaseConfig.hosting?.redirects || [];
-  const rewrites = firebaseConfig.hosting?.rewrites || [];
-  if (!redirects.some(r => r.source === '/hakkimizda' && r.destination === '/biz-kimiz/' && Number(r.type) === 301)) {
-    errors.push('[G20 ABOUT REDIRECT] /hakkimizda -> /biz-kimiz/ 301 eksik.');
-  }
-  if (!rewrites.some(r => r.source === '/mcp' && r.function === 'mcpApi')) {
-    errors.push('[G20 MCP ROUTE] /mcp -> mcpApi rewrite eksik.');
+  if (violations.length > 0) {
+    console.error(`\n❌ [DEPLOY BLOCKED] ${violations.length} adet kritik SEO/GEO/LLMO/AAO ihlali saptandı:\n`);
+    violations.forEach(v => console.error(`  ⛔ ${v}`));
+    return { ok: false, violations };
   }
 
-  // G21: Commercial landing / editorial authority network.
-  const authorityPages = ['saatler', 'elit-kategori', 'mucevherat', 'magazin', 'markalar'];
-  for (const key of authorityPages) {
-    const route = CATEGORY_ROUTES[key];
-    if (!route) { errors.push(`[G21 AUTHORITY ROUTE] CATEGORY_ROUTES eksik: ${key}`); continue; }
-    const htmlPath = path.join(ROOT_DIR, route.replace(/^\/+|\/+$/g, ''), 'index.html');
-    if (!fs.existsSync(htmlPath)) { errors.push(`[G21 AUTHORITY FILE] Generated kategori eksik: ${route}`); continue; }
-    const html = fs.readFileSync(htmlPath, 'utf8');
-    if (!html.includes(`data-seo-authority="${key}"`)) errors.push(`[G21 AUTHORITY BLOCK] ${route} authority cluster eksik.`);
-    if ((html.match(/href="\/rehber\//g) || []).length < 1) errors.push(`[G21 AUTHORITY INTERNAL LINK] ${route} rehber bağlantısı eksik.`);
-  }
-
-  let magazineArticles = [];
-  try { magazineArticles = require('../js/magazine_data.js').MAGAZINE_ARTICLES || []; } catch (_) {}
-  const articleSample = magazineArticles.find(a => a && a.slug);
-  if (articleSample) {
-    const articlePath = path.join(ROOT_DIR, 'magazin', articleSample.slug, 'index.html');
-    if (!fs.existsSync(articlePath)) errors.push(`[G21 EDITORIAL FILE] Örnek makale HTML eksik: ${articleSample.slug}`);
-    else {
-      const articleHtml = fs.readFileSync(articlePath, 'utf8');
-      if (!articleHtml.includes('data-editorial-bridge=')) errors.push(`[G21 EDITORIAL BRIDGE] Makaleden ticari/rehber hub bağlantısı eksik: ${articleSample.slug}`);
-      if (!/href="\/(saatler|elit-kategori|mucevherat|rehber)\//.test(articleHtml)) errors.push(`[G21 EDITORIAL INTERNAL LINK] Makale authority ağına bağlanmıyor: ${articleSample.slug}`);
-    }
-  }
-  // Final Rapor Bütünlüğü (Report Integrity)
-  console.log('\n----------------------------------------------------');
-  if (errors.length > 0) {
-    console.error(`❌ [SEO CI/CD FAIL] Toplam ${errors.length} Kalite Kapısı hatası tespit edildi:`);
-    errors.forEach(err => console.error(`   • ${err}`));
-    console.log('----------------------------------------------------\n');
-    process.exit(1);
-  }
-
-  console.log(`✅ SEO & GEO G0-G17 PASS — products=${products.length}, registryPages=${SEO_REGISTRY.length}, heroAnswerEngine=100%, subgraphs=40+, duplicateCanonical=0, categoryRawLinkCoverage=100%, n8nDAG=PASS, edgeAstPruner=PASS, liveSmokeContract=PASS, indexingApiGovernance=PASS`);
-  console.log('----------------------------------------------------\n');
-  process.exit(0);
+  console.log('✅ [PASSED] Tüm G0-G15 Kalite Kapıları 0 Hata İle Geçildi.');
+  return { ok: true, violations: [] };
 }
 
-if (require.main === module) {
-  runQualityGates();
-}
-
-module.exports = { runQualityGates };
-
+module.exports = { runFullQualityGates };

@@ -3312,10 +3312,18 @@ ${this.escapeHtml(JSON.stringify(diagnosis.rawPaymentDetails, null, 2))}
       const data = await res.json();
       if (data && data.success) {
         this.activeInvoiceOid = data.oid || this.activeInvoiceOid;
+        if (data.challengeId) {
+          this.activeInvoiceChallengeId = data.challengeId;
+        }
+        const smsInput = document.getElementById('gibSmsInput');
+        if (smsInput) {
+          smsInput.value = '';
+          smsInput.focus();
+        }
         if (errDiv) {
           errDiv.style.display = 'block';
           errDiv.style.color = '#084C47';
-          errDiv.textContent = `📲 ${data.message || 'SMS kodu tekrar iletildi.'}`;
+          errDiv.textContent = `📲 ${data.message || 'SMS kodu tekrar iletildi. Lütfen yeni gelen 6 haneli kodu giriniz.'}`;
         }
       } else {
         if (errDiv) {

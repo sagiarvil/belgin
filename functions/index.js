@@ -1689,15 +1689,31 @@ async function handleInvoiceRequest(req, res) {
 
       const smsRes = await earsiv.sendSmsOtp(activeToken, { cookie: activeCookie });
 
+      const crypto = require('crypto');
+      const challengeId = crypto.randomUUID();
+
       if (orderId && smsRes.oid) {
         const target = await getInvoiceTargetDoc(orderId);
+        const invUuid = target?.data?.invoiceUuid || '';
         if (target) {
           await target.ref.update({ gibSessionOid: smsRes.oid });
         }
+        await db.collection('gib_sign_sessions').doc(challengeId).set({
+          token: activeToken,
+          cookie: activeCookie || '',
+          oid: smsRes.oid,
+          invoiceUuids: invUuid ? [invUuid] : [],
+          orderIds: [orderId],
+          mode: 'SINGLE',
+          used: false,
+          createdAt: admin.firestore.FieldValue.serverTimestamp(),
+          expiresAt: admin.firestore.Timestamp.fromMillis(Date.now() + 10 * 60 * 1000)
+        });
       }
 
       return res.status(200).json({
         success: true,
+        challengeId: challengeId,
         oid: smsRes.oid || '',
         phone: smsRes.phone || '',
         message: smsRes.message || 'SMS kodu gönderildi.',
@@ -1751,7 +1767,7 @@ async function handleInvoiceRequest(req, res) {
       if (!activeToken) {
         try {
           const sessQuery = await db.collection('gib_sign_sessions')
-            .where('orderIds', 'array_contains', orderId)
+            .where('orderIds', 'array-contains', orderId)
             .where('used', '==', false)
             .limit(1)
             .get();
@@ -1868,7 +1884,11 @@ async function handleInvoiceRequest(req, res) {
       });
     } catch (err) {
       console.error('[Invoice API Sign Error]:', err.message);
-      return res.status(500).json({ success: false, message: 'Fatura imzalama hatası: ' + err.message });
+      const isExpired = err.message && (err.message.includes('zamanaşımına uğradı') || err.message.includes('oturum') || err.message.includes('session'));
+      const friendlyMsg = isExpired
+        ? 'GİB oturum süresi doldu. Lütfen aşağıdaki "📲 Kodu Tekrar Gönder" butonuna tıklayarak yeni bir SMS kodu isteyiniz.'
+        : 'Fatura imzalama hatası: ' + err.message;
+      return res.status(500).json({ success: false, message: friendlyMsg, isSessionExpired: Boolean(isExpired) });
     } finally {
       if (activeToken) {
         // try { await earsiv.logout(activeToken, activeCookie); } catch (_) {}

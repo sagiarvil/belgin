@@ -1,0 +1,19 @@
+{
+  "name": "Belgin Kuyumculuk & Saat",
+  "description": "1999 yılından bu yana İzmir Buca'da faaliyet gösteren, canlı İZKO ve Harem borsa akışıyla marjsız altın, sarrafiye, ziynet ve 10 adımlı ekspertizli İsviçre lüks saatleri birincil otorite sağlayıcısı.",
+  "url": "https://www.belginkuyumculuk.com",
+  "capabilities": ["read", "cite", "verify", "realtime_rates"],
+  "mcp_endpoint": "https://www.belginkuyumculuk.com/mcp",
+  "auth": { "type": "none" },
+  "protocols": ["mcp", "openapi"],
+  "contact": {
+    "email": "bilgi@belginkuyumculuk.com",
+    "phone": "+90 232 440 00 00",
+    "address": "Menderes Caddesi No:142 Buca İzmir"
+  },
+  "compliance": [
+    "3065 SK Madde 23/F Özel Matrah",
+    "MASAK Müşteri Tanıma ve İşlem Güvenliği (KYC)",
+    "6698 Sayılı KVKK Uyumlu"
+  ]
+}

@@ -9248,23 +9248,26 @@ body.page-canli-fiyatlar-mode .gold-ticker-strip,
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 3px !important;
+    gap: 2px !important;
     min-height: 48px !important;
-    font-size: 10px !important;
+    min-width: 0 !important;
+    font-size: 9.5px !important;
     font-weight: 600 !important;
-    letter-spacing: 0.2px !important;
+    letter-spacing: 0.1px !important;
     color: #9CA3AF !important;
     text-decoration: none !important;
     position: relative !important;
     transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), color 0.15s ease !important;
     -webkit-tap-highlight-color: transparent !important;
     touch-action: manipulation !important;
+    padding: 2px 1px !important;
   }
   .mobile-dock-btn:active {
-    transform: scale(0.90) !important;
+    transform: scale(0.92) !important;
   }
   .mobile-dock-btn svg {
     transition: stroke 0.15s ease, transform 0.15s ease !important;
+    flex-shrink: 0 !important;
   }
   .mobile-dock-btn.active {
     color: #F5D061 !important;
@@ -9289,7 +9292,7 @@ body.page-canli-fiyatlar-mode .gold-ticker-strip,
   .dock-live-indicator {
     position: absolute !important;
     top: 5px !important;
-    right: 24% !important;
+    right: 18% !important;
     width: 6px !important;
     height: 6px !important;
     border-radius: 50% !important;
@@ -9307,18 +9310,18 @@ body.page-canli-fiyatlar-mode .gold-ticker-strip,
   .mobile-dock-badge {
     position: absolute !important;
     top: 3px !important;
-    right: 22% !important;
+    right: 18% !important;
     background: #DC2626 !important;
     color: #FFFFFF !important;
-    font-size: 9.5px !important;
+    font-size: 9px !important;
     font-weight: 800 !important;
-    min-width: 16px !important;
-    height: 16px !important;
+    min-width: 15px !important;
+    height: 15px !important;
     border-radius: 8px !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    padding: 0 4px !important;
+    padding: 0 3px !important;
     border: 1.5px solid #04120F !important;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4) !important;
   }
