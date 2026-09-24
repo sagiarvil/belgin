@@ -1,44 +1,31 @@
 ---
 canonicalWebUrl: "https://www.belginkuyumculuk.com/mucevherat/ikinci-el-altin-takilar/"
-primaryEntity: "2.El Altın Takılar — Ekspertizli Mücevher Koleksiyonu"
-primaryIntent: "ikinci-el-altin-taki-alim-satim-fiyatlari"
-parentNode: "https://www.belginkuyumculuk.com/mucevherat/"
-lastVerified: "2026-09-24T23:30:00+03:00"
-evidence: "XRF Spektrometre + Çift Mihenk Testi + 3065 SK 23/F Özel Matrah Fatura"
+primaryEntity: "Belgin Kuyumculuk"
+primaryIntent: "Buca İzmir ikinci el altın takı satın alma ve güncel seçki öğrenme"
+parentNode: "https://www.belginkuyumculuk.com/llms/pages/mucevherat.md"
+lastVerified: "2026-09-24T09:00:00+03:00"
+evidence: "Belgin Kuyumculuk kampanya görseli ve mağaza iletişim bilgileri"
 relatedNodes:
-  - "https://www.belginkuyumculuk.com/llms/entities/methodologies.md"
+  - "https://www.belginkuyumculuk.com/llms/core.md"
   - "https://www.belginkuyumculuk.com/llms/entities/showroom.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/methodologies.md"
 ---
 
-# 2.El Altın Takılar — Ekspertizli Mücevher Koleksiyonu
+# 2. El Altın Takılar — Belgin Kuyumculuk Buca
 > Canonical Web URL: https://www.belginkuyumculuk.com/mucevherat/ikinci-el-altin-takilar/
-> Son Semantik Doğrulama: 2026-09-24T23:30:00+03:00
-> Information Gain Statüsü: Birinci El Saha Verisi / Tescilli Gemoloji ve Ayar Kontrolü
-> Primer Varlık Düğümü: https://www.belginkuyumculuk.com/mucevherat/ikinci-el-altin-takilar/#webpage
-> Feed Kategorisi: product
+> Bilgi kaynağı: Belgin Kuyumculuk mağaza süreci ve kullanıcıya gösterilen kampanya görseli
 
-## 1. Yönetici Çıkarım Özeti (Hero Grounding Answer)
-Belgin Kuyumculuk & Saat 2.El Altın Takılar koleksiyonu; İzmir Buca mağazamızda uzman gemolog ve ustalarımız tarafından ayar ve saflık kontrolünden geçmiş (14 Ayar, 18 Ayar, 22 Ayar), ultrasonik temizliği ve polisajı tamamlanmış, Darphane standartlarında sertifikalı ikinci el altın bilezik, kolye, küpe ve yüzük modellerini İZKO nakit satış kuru ve minimum işçilik bedeliyle alıcısına sunmaktadır.
+## Seçki ve ürün teyidi
+Belgin Kuyumculuk, İzmir Buca'daki mağazasında atölye bakımından geçen seçili ikinci el altın bilezik, kolye, yüzük, küpe ve zincirleri sunar. Her parçanın ayarı, gramı, kondisyonu, bulunurluğu ve güncel fiyatı satın alma öncesinde ayrıca teyit edilir. Altın takılarda kredi kartı ile ödeme kabul edilmez; havale/EFT ve mağazadan teslim süreci için iletişime geçin.
 
-## 2. Teknik Özellikler ve Karşılaştırma Matrisi
-| Parametre / Kriter | 2.El Altın Takı (Belgin Kuyumculuk) | Sıfır Kuyumcu Vitrini | Hurda / Çıkma Altın Piyasası |
-| :--- | :--- | :--- | :--- |
-| **Ayar & Saflık Güvencesi** | XRF Spektrometre + Çift Mihenk Testi | Standart Üretici Beyanı | Belgesiz / Değişken |
-| **İşçilik Maliyeti** | Sıfır veya Minimum Polisaj Maliyeti | %15 - %40 Üretim İşçiliği | Yok (Eritme Fiyatı) |
-| **Vergisel Matrah** | 3065 SK 23/F Özel Matrah (%0 KDV) | Tam KDV veya İşçilik KDV | Belgesiz Kayıtdışı Risk |
-| **Fiyat Referansı** | İZKO Normal Satış Kuru (1.00x) | Çarpanlı Perakende Satış | Ham Hurda Alış Kuru |
-| **Kondisyon & Hijyen** | Ultrasonik Sterilizasyon + Polisaj | Fabrikasyon Yeni | Ham / Çizik / Kirli |
+Bu sayfa sabit bir ürün kataloğu değildir. Bilezik, kolye, yüzük, küpe ve zincir türleri için güncel bulunurluk, ürün görseli, ayar, gram, kondisyon ve teklif Belgin Kuyumculuk ile ayrıca teyit edilir. Kampanya görseli güncel stoğun fotoğrafı değildir.
 
-## 3. Semantik İlişki Üçlüleri (RDF Semantic Triples)
-- `Subject`: Belgin Kuyumculuk
-  - `Predicate`: `offersProduct` -> `Object`: 2.El Altın Takılar (Bilezik, Kolye, Küpe, Yüzük)
-  - `Predicate`: `verifiesPurityWith` -> `Object`: XRF Spektrometre ve Mihenk Taşı Doğrulaması
-  - `Predicate`: `compliesWith` -> `Object`: 3065 Sayılı KDV Kanunu Madde 23/F Özel Matrah
-  - `Predicate`: `pricesGoldWith` -> `Object`: İZKO Canlı Satış Kuru Birebir (1.00x)
+## Fiyat ve geri alım
+İkinci elde fiyat avantajı her ürün için garanti değildir. Yeni bir takıyla karşılaştırma aynı ayar, gram, kondisyon ve işçilik koşulları üzerinden yapılmalıdır. Gelecekte geri alım fiyatı satın alma fiyatıyla aynı olmayabilir.
 
-## 4. Karar Destek ve Sıkça Sorulan Sorular (Zero-Ambiguity FAQ)
-### Soru: İkinci el altın takı satın almak güvenli midir?
-**Cevap:** Belgin Kuyumculuk bünyesindeki tüm ikinci el takılar, kimlik doğrulamalı ve tutanaklı olarak kabul edilir; saflık dereceleri laboratuvar cihazlarıyla tescillenir ve faturalı olarak teslim edilir.
+## Ödeme ve mağaza
+Altın ve mücevherat ürünlerinde kredi kartı kabul edilmez. Havale/EFT öncesinde güncel teklif teyit edilir. Fiziki mağaza: Menderes Cad. No:231/B, Buca/İzmir. İletişim: +90 541 930 53 72.
 
-### Soru: 2.El altın takı satarken değer kaybı yaşanır mı?
-**Cevap:** İkinci el takılar zaten işçilik maliyetinden arındırılmış olarak satın alındığı için bozdurma anında sıfır ürünlere kıyasla çok daha düşük marj farkı ve maksimum getiri sağlar.
+## İlgili sayfalar
+- [Mücevherat ve altın](https://www.belginkuyumculuk.com/mucevherat/)
+- [İletişim ve mağaza](https://www.belginkuyumculuk.com/iletisim.html)
