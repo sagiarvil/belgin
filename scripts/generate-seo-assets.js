@@ -87,7 +87,7 @@ function buildSitemaps() {
   // 2. Pages: Sadece kanonik kurumsal/bilgi sayfaları (kategoriler ve anasayfa hariç mükerrerlik engellendi)
   const pages = SEO_REGISTRY
     .filter(p => p.indexDirective === 'index' && !String(p.route).includes('#'))
-    .map(p => ({ loc: `${BASE_URL}${p.route}`, lastmod: '2026-09-01' }))
+    .map(p => ({ loc: `${BASE_URL}${p.route}`, lastmod: p.sitemapLastmod || '2026-09-01' }))
     .filter(p => p.loc === `${BASE_URL}/` || !categoryLocs.has(p.loc));
 
   // 3. Categories: Sadece gerçek kategori rotaları
@@ -158,6 +158,7 @@ function buildLlms() {
     'local/ege-guvenli-teslimat.md': { title: 'Ege Bölgesi Güvenli Teslimat', desc: '12.000 TL üzeri siparişlerde kimlik doğrulamalı ve ıslak imzalı tutanaklı teslimat protokolü.' },
     'topics/ikinci-el-luks-saat.md': { title: 'İkinci El Lüks Saat Piyasası', desc: 'Mekanizma orijinalliği, kasa polisajı, bezel kondisyonu ve ikincil piyasa değer analizi.' },
     'topics/altin-yatirim-ve-ozel-matrah.md': { title: '3065 SK m.23/f Özel Matrah Hukuku', desc: 'Altın bedelinde %0 KDV istisnası ve yalnızca işçiliğe %20 KDV yansıtılan yasal fatura düzeni.' },
+    'pages/mucevherat/ikinci-el-altin-takilar.md': { title: 'Buca 2. El Altın Takı Seçkisi', desc: 'Atölye bakımı, ayar/gram/kondisyon teyidi, güncel ürün sorusu ve mağaza bilgisi.' },
     'topics/pirlanta-ve-gemoloji.md': { title: 'Pırlanta 4C ve Gemoloji Raporları', desc: 'GIA ve HRD normlarında Karat, Kesim, Renk ve Berraklık mikroskobik derecelendirme ilkeleri.' },
     'topics/saat-ekspertiz-protokolu.md': { title: '10 Adımlı Saat Ekspertiz Protokolü', desc: 'Witschi timegrapher sapma testi, su geçirmezlik ve optik mikroskopi kontrol adımları.' }
   };

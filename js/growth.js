@@ -58,6 +58,9 @@
     if (/\/urun\//.test(href)) track('product_click', { cta_id: 'product-link' });
     if (/odeme|checkout|sepet|satın|satin/i.test(`${href} ${text}`)) track('checkout_start', { cta_id: 'checkout' });
     if (/tel:/.test(href)) track('phone_click', { cta_id: 'phone' });
+    if (/^(?:https?:\/\/)?(?:wa\.me|api\.whatsapp\.com)\//i.test(href)) {
+      track('whatsapp_click', { cta_id: target.dataset.ctaId || 'whatsapp' });
+    }
     if (/maps|google\.com\/maps|harita/i.test(href)) track('store_visit_intent', { cta_id: 'map' });
     if (/showroom|mağaza|magaza/i.test(`${href} ${text}`)) track('store_visit_intent', { cta_id: 'showroom' });
     if (target.matches('[data-brand], [data-brand-filter]')) track('brand_filter', { cta_id: 'brand-filter' });
