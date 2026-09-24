@@ -84,13 +84,6 @@ Disallow: /admin/
 Disallow: /odeme-linki.html
 Disallow: /vip-odeme.html
 
-User-agent: Bytespider
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-Disallow: /odeme-linki.html
-Disallow: /vip-odeme.html
-
 User-agent: *
 Allow: /
 Disallow: /api/
@@ -100,17 +93,8 @@ Disallow: /vip-odeme.html
 Disallow: /node_modules/
 
 Sitemap: https://www.belginkuyumculuk.com/sitemap.xml
-Sitemap: https://www.belginkuyumculuk.com/sitemap-pages.xml
-Sitemap: https://www.belginkuyumculuk.com/sitemap-products.xml
-Sitemap: https://www.belginkuyumculuk.com/sitemap-categories.xml
-Sitemap: https://www.belginkuyumculuk.com/sitemap-magazine.xml
 
-# Machine & AI Agent Discovery Manifests
-# agent.txt: https://www.belginkuyumculuk.com/agent.txt
+# LLMS Machine Discovery Manifests
 # llms.txt: https://www.belginkuyumculuk.com/llms.txt
 # llms-full.txt: https://www.belginkuyumculuk.com/llms-full.txt
-# agent-card.json: https://www.belginkuyumculuk.com/.well-known/agent.json
-# feed.xml: https://www.belginkuyumculuk.com/feed.xml
-# atom.xml: https://www.belginkuyumculuk.com/atom.xml
-# feed.json: https://www.belginkuyumculuk.com/feed.json
-# llms-feed: https://www.belginkuyumculuk.com/llms/feed.xml
+# agent-card.json: https://www.belginkuyumculuk.com/agent-card.json

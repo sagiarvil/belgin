@@ -1,3 +1,15 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/mucevherat/ikinci-el-altin-takilar/"
+primaryEntity: "2.El Altın Takılar — Ekspertizli Mücevher Koleksiyonu"
+primaryIntent: "ikinci-el-altin-taki-alim-satim-fiyatlari"
+parentNode: "https://www.belginkuyumculuk.com/mucevherat/"
+lastVerified: "2026-09-24T23:30:00+03:00"
+evidence: "XRF Spektrometre + Çift Mihenk Testi + 3065 SK 23/F Özel Matrah Fatura"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/entities/methodologies.md"
+  - "https://www.belginkuyumculuk.com/llms/entities/showroom.md"
+---
+
 # 2.El Altın Takılar — Ekspertizli Mücevher Koleksiyonu
 > Canonical Web URL: https://www.belginkuyumculuk.com/mucevherat/ikinci-el-altin-takilar/
 > Son Semantik Doğrulama: 2026-09-24T23:30:00+03:00

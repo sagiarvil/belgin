@@ -39,6 +39,9 @@
     "sync:gold": "node scripts/sync-prices-and-stock.js",
     "sync:magazine": "python3 scripts/sync-magazine-articles.py",
     "sync:all": "node scripts/smart-diff-sync.js",
+    "traffic:blast": "node scripts/traffic-monster/traffic_blast.js",
+    "traffic:daemon": "node scripts/traffic-monster/daemon_runner.js",
+    "traffic:verify": "node scripts/traffic-monster/verify_traffic_engine.js && node scripts/traffic-monster/verify_daemon.js",
     "serve": "npx serve . -l 3000"
   },
   "keywords": ["jewelry","luxury","e-commerce","paytr","firebase","izmir","buca","watches"],

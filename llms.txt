@@ -54,6 +54,7 @@
 - [Saat Markaları Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/markalar.md): İsviçre lüks saat markaları listesi ve yetkili satış
 - [Mesafeli Satış Sözleşmesi Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/mesafeli-satis-sozlesmesi.md): Belgin Kuyumculuk mesafeli satış sözleşmesi ve yasal şartlar
 - [Mücevherat ve Altın Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/mucevherat.md): İzmir Buca altın fiyatları pırlanta mücevherat alımı
+- [mucevherat/ikinci-el-altin-takilar Sayfa Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/mucevherat/ikinci-el-altin-takilar.md): Sayfa içerik ve teknik karşılaştırma matrisi.
 - [Müşteri Tanıma ve İşlem Güvenliği Politikası (KYC) Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/musteri-tanima-ve-islem-guvenligi.md): Kuyumculuk müşteri tanıma MASAK uyumu ve işlem güvenliği politikası
 - [Ön Bilgilendirme Formu Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/on-bilgilendirme-formu.md): Belgin Kuyumculuk ön bilgilendirme şartları
 - [Altın Yatırımı & 3065 Sayılı KDV Kanunu 23/f Özel Matrah Uygulaması Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/rehber/altin-yatirimi-ve-ozel-matrah-rehberi.md): Kuyumculukta 3065 KDV Kanunu 23/f özel matrah altın faturalama rehberi
@@ -62,21 +63,6 @@
 - [Pırlanta Alımında 4C Standartları: Karat, Kesim, Berraklık ve Renk Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/rehber/pirlanta-ve-gemoloji-degerleme-rehberi.md): Pırlanta 4C kriterleri karat renk berraklık kesim rehberi
 - [Lüks Saatler Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/saatler.md): İzmir lüks saat modelleri fiyatları ve satın alma
 - [Yüksek Değerli Ürün Teslim Protokolü Alt-Grafı](https://www.belginkuyumculuk.com/llms/pages/yuksek-degerli-urun-teslimi.md): Yüksek değerli altın saat teslim protokolü ve kimlik doğrulama
-
-## Feed & Syndication Katmanı
-
-- [Ana RSS Feed](https://www.belginkuyumculuk.com/feed.xml): RSS 2.0, sürekli güncellenen canlı borsa ve ürün bildirimleri.
-- [Atom Feed](https://www.belginkuyumculuk.com/atom.xml): Atom 1.0 RFC 4287 uyumlu XML sindikasyon akışı.
-- [JSON Feed](https://www.belginkuyumculuk.com/feed.json): JSON Feed 1.1, AI RAG pipeline'ları için optimize edilmiş yapılandırılmış akış.
-- [LLM Semantik Feed](https://www.belginkuyumculuk.com/llms/feed.xml): Büyük Dil Modelleri ve crawler'lar için tam metin semantik besleme.
-
-## AI Agent & Real-Time Discovery Protocols
-
-- [AI Ajan Manifestosu](https://www.belginkuyumculuk.com/agent.txt): Model Context Protocol (MCP) ve A2A ajan yönergeleri.
-- [A2A Ajan Kartı](https://www.belginkuyumculuk.com/.well-known/agent.json): Agent-to-Agent keşif kartı ve kurumsal yetki çerçevesi.
-- [MCP Endpoint](https://www.belginkuyumculuk.com/mcp): Anthropic Model Context Protocol JSON-RPC 2.0 arayüzü.
-- [WebSub Hub](https://pubsubhubbub.appspot.com/): Gerçek zamanlı PubSubHubbub içerik dağıtım merkezi.
-- [OpenAPI Spesifikasyonu](https://www.belginkuyumculuk.com/openapi.json): Canlı borsa ve ürün sorgu API sözleşmesi.
 
 ## Canonical Human Surfaces
 
