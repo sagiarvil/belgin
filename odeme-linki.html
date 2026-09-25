@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>VIP WhatsApp Ödeme Linki Oluşturucu | Belgin Kuyumculuk & Saat</title>
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#0A1412">
+  <meta name="theme-color" content="#08171E">
   <meta name="apple-mobile-web-app-title" content="Belgin Link">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -22,24 +22,24 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0A1412;
-      --bg-radial: radial-gradient(120% 90% at 50% -10%, #16302B 0%, #0A1412 55%);
-      --card-bg: #11211F;
-      --card-bg-soft: #0E1D1B;
-      --card-border: #223F3B;
-      --card-border-soft: #1A322E;
+      --bg: #08171E;
+      --bg-radial: radial-gradient(120% 90% at 50% -10%, #112F3B 0%, #08171E 65%, #050E13 100%);
+      --card-bg: #0C222B;
+      --card-bg-soft: #081820;
+      --card-border: #163B48;
+      --card-border-soft: #122F3A;
       --gold: #D4AF37;
       --gold-light: #F3E5AB;
       --gold-dim: #A98A2C;
       --teal-accent: #178370;
-      --text: #F3F6F5;
-      --text-muted: #8EAAA5;
-      --text-faint: #5E7975;
-      --input-bg: #0B1917;
-      --input-border: #23433F;
+      --text: #F3F7F6;
+      --text-muted: #8EABB3;
+      --text-faint: #5E7B82;
+      --input-bg: #07151B;
+      --input-border: #1A404F;
       --input-border-focus: var(--gold);
       --success: #25D366;
-      --danger: #E2685A;
+      --danger: #E06D53;
       --radius-lg: 20px;
       --radius-md: 14px;
       --radius-sm: 10px;
@@ -73,8 +73,11 @@
 
     .header { text-align: center; padding: 6px 0 22px; position: relative; z-index: 1; }
     .crest {
-      width: 68px; height: 68px; object-fit: contain; margin-bottom: 10px;
-      filter: drop-shadow(0 4px 18px rgba(212,175,55,0.35));
+      width: 72px; height: 72px; object-fit: contain; margin-bottom: 12px;
+      border-radius: 50%;
+      border: 2px solid rgba(212,175,55,0.45);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 0 20px rgba(212,175,55,0.22);
+      filter: drop-shadow(0 4px 14px rgba(212,175,55,0.28));
     }
     .brand-title {
       font-family: 'Cinzel', serif;
@@ -195,16 +198,16 @@
     .field-error.show { display: flex; }
 
     /* BANKA & POS SEÇİM ALTYAPISI */
-    /* BANKA & POS SEÇİM ALTYAPISI (İKİLİ YAN YANA SEÇİM) */
+    /* BANKA & POS SEÇİM ALTYAPISI (KUVEYT TÜRK, ZİRAAT KATILIM, TOSLA İŞİM) */
     .bank-selector-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
       margin-top: 4px;
     }
-    @media (max-width: 440px) {
+    @media (max-width: 580px) {
       .bank-selector-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
         gap: 8px;
       }
     }
@@ -213,11 +216,16 @@
       background: var(--input-bg);
       border: 1.5px solid var(--input-border);
       border-radius: var(--radius-md);
-      padding: 12px 10px;
+      padding: 9px 7px;
       cursor: pointer;
       transition: all .2s ease;
       user-select: none;
-      display: block;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 58px;
+      box-sizing: border-box;
+      overflow: hidden;
     }
     .bank-card:hover {
       border-color: rgba(212,175,55,0.5);
@@ -235,16 +243,18 @@
     .bank-card-inner {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 7px;
+      width: 100%;
+      min-width: 0;
     }
     .bank-emblem-wrap {
-      width: 40px;
-      height: 40px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       overflow: hidden;
       flex-shrink: 0;
-      border: 1.5px solid var(--gold-dim);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+      border: 1px solid var(--gold-dim);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.35);
       background: #008450;
       display: flex;
       align-items: center;
@@ -259,49 +269,56 @@
     .bank-info {
       flex: 1;
       min-width: 0;
+      overflow: hidden;
     }
     .bank-name-row {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: 3px;
+      gap: 2px;
+      min-width: 0;
     }
     .bank-title {
-      font-size: 13px;
+      font-size: 11.5px;
       font-weight: 800;
       color: var(--gold-light);
+      letter-spacing: 0.1px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      line-height: 1.2;
+    }
+    .bank-active-tag {
+      font-size: 8.5px;
+      font-weight: 800;
+      color: #25D366;
+      background: rgba(37,211,102,0.12);
+      border: 1px solid rgba(37,211,102,0.3);
+      padding: 1px 5px;
+      border-radius: 10px;
+      text-transform: uppercase;
       letter-spacing: 0.2px;
+      white-space: nowrap;
+      display: inline-block;
+      line-height: 1.2;
+    }
+    .bank-desc {
+      font-size: 9px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      line-height: 1.2;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       max-width: 100%;
     }
-    .bank-active-tag {
-      font-size: 10px;
-      font-weight: 800;
-      color: #25D366;
-      background: rgba(37,211,102,0.12);
-      border: 1px solid rgba(37,211,102,0.3);
-      padding: 1px 6px;
-      border-radius: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-    }
-    .bank-desc {
-      font-size: 10.5px;
-      color: var(--text-muted);
-      margin-top: 2px;
-      line-height: 1.25;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
 
     .btn-submit {
       width: 100%;
-      background: linear-gradient(135deg, #E7C34F 0%, #C79A2E 55%, #A9821F 100%);
-      color: #0A1412;
-      border: none;
+      background: linear-gradient(135deg, #F5E5B8 0%, #D4AF37 50%, #B88E28 100%);
+      color: #06151B;
+      border: 1px solid #FEF08A;
       padding: 17px;
       border-radius: var(--radius-md);
       font-size: 14.5px;
@@ -313,8 +330,12 @@
       align-items: center;
       justify-content: center;
       gap: 9px;
-      box-shadow: 0 10px 28px -6px rgba(212,175,55,0.45);
+      box-shadow: 0 10px 28px -6px rgba(212,175,55,0.38);
       transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+    }
+    .btn-submit:hover {
+      background: linear-gradient(135deg, #FFF0C8 0%, #E5C048 50%, #C49830 100%);
+      box-shadow: 0 14px 34px -6px rgba(212,175,55,0.5);
     }
     .btn-submit:active { transform: scale(0.98); }
     .btn-submit:disabled { opacity: 0.65; cursor: default; }
@@ -441,21 +462,46 @@
     }
 
     .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .btn-whatsapp {
+    .share-row {
       grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .btn-whatsapp {
       background: linear-gradient(135deg, #29D96C 0%, #1FAE59 100%);
       color: #08170F;
       text-decoration: none;
-      padding: 16px;
+      padding: 15px 10px;
       border-radius: var(--radius-md);
-      font-size: 14.5px;
+      font-size: 13.5px;
       font-weight: 800;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      box-shadow: 0 10px 26px -6px rgba(37,211,102,0.45);
+      gap: 7px;
+      box-shadow: 0 10px 24px -6px rgba(37,211,102,0.45);
+      transition: transform 0.15s ease;
+      white-space: nowrap;
     }
+    .btn-whatsapp:active { transform: scale(0.98); }
+    .btn-telegram {
+      background: linear-gradient(135deg, #2AABEE 0%, #229ED9 100%);
+      color: #FFFFFF;
+      text-decoration: none;
+      padding: 15px 10px;
+      border-radius: var(--radius-md);
+      font-size: 13.5px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      box-shadow: 0 10px 24px -6px rgba(34,158,217,0.45);
+      transition: transform 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn-telegram:active { transform: scale(0.98); }
     .btn-copy, .btn-copy-msg {
       background: var(--card-bg-soft);
       color: var(--gold-light);
@@ -529,6 +575,95 @@
       white-space: nowrap;
     }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* VIP LINK SINGLE-ROW LIST STYLES (KESİNLİKLE TEK SIRA / SATIR) */
+    .vip-link-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 9px 10px;
+      font-size: 12px;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .vip-link-row:hover {
+      border-color: rgba(212, 175, 55, 0.35);
+      background: rgba(0, 0, 0, 0.6);
+    }
+    .vip-link-row.is-cancelled {
+      opacity: 0.55;
+      border-color: rgba(239, 68, 68, 0.2);
+      background: rgba(239, 68, 68, 0.05);
+    }
+    .vip-col-time {
+      font-size: 11px;
+      color: var(--text-faint);
+      font-weight: 700;
+      white-space: nowrap;
+      flex-shrink: 0;
+      letter-spacing: 0.2px;
+    }
+    .vip-col-info {
+      flex: 1;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 12px;
+      font-weight: 600;
+      color: #E2E8F0;
+      padding: 0 4px;
+    }
+    .vip-col-amount {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--gold);
+      white-space: nowrap;
+      flex-shrink: 0;
+      text-align: right;
+      padding: 0 4px;
+    }
+    .vip-col-action {
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .btn-row-cancel {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.5);
+      color: #f87171;
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-row-cancel:hover {
+      background: #ef4444;
+      color: #FFF;
+      box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+    }
+    .btn-row-cancelled {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #64748b;
+      border-radius: 6px;
+      padding: 5px 9px;
+      font-size: 10.5px;
+      font-weight: 700;
+      cursor: not-allowed;
+      white-space: nowrap;
+      display: inline-block;
+    }
   </style>
 
 
@@ -537,7 +672,9 @@
 <body>
 
   <div class="header">
-    
+    <div style="display:inline-block; position:relative; margin-bottom:12px;">
+      <img src="images/belgin-vip-lion.png" alt="Belgin Kuyumculuk VIP" class="crest" style="margin-bottom:0;">
+    </div>
     <div class="brand-title">Belgin Kuyumculuk & Saat</div>
     <div class="brand-sub">VIP Ödeme Linki Paneli</div>
   </div>
@@ -548,11 +685,11 @@
 
       
     <!-- MOBİL UYUMLU SEKMELER (TABS) -->
-    <div style="display:flex; background:rgba(255,255,255,0.05); border-radius:12px; padding:4px; margin-bottom:20px; border:1px solid rgba(255,255,255,0.1);">
-      <button type="button" id="tabGenerate" style="flex:1; padding:12px 8px; border-radius:8px; border:none; background:#C2A768; color:#111; font-weight:800; font-size:14px; cursor:pointer; transition:all 0.2s; box-shadow:0 2px 8px rgba(0,0,0,0.2);">
+    <div style="display:flex; background:rgba(0,0,0,0.3); border-radius:12px; padding:4px; margin-bottom:20px; border:1px solid var(--card-border-soft);">
+      <button type="button" id="tabGenerate" style="flex:1; padding:12px 8px; border-radius:8px; border:none; background:linear-gradient(135deg, #F5E5B8 0%, #D4AF37 100%); color:#08171E; font-weight:800; font-size:14px; cursor:pointer; transition:all 0.2s; box-shadow:0 4px 14px rgba(212,175,55,0.25);">
         ✨ Yeni VIP Link
       </button>
-      <button type="button" id="tabCancel" style="flex:1; padding:12px 8px; border-radius:8px; border:none; background:transparent; color:#94A3B8; font-weight:700; font-size:14px; cursor:pointer; transition:all 0.2s;">
+      <button type="button" id="tabCancel" style="flex:1; padding:12px 8px; border-radius:8px; border:none; background:transparent; color:var(--text-muted); font-weight:700; font-size:14px; cursor:pointer; transition:all 0.2s;">
         ✕ Link İptal Et
       </button>
     </div>
@@ -602,7 +739,7 @@
                 <div class="bank-info">
                   <div class="bank-name-row">
                     <span class="bank-title">Kuveyt Türk</span>
-                    <span class="bank-active-tag">✓ Seçili POS</span>
+                    <span class="bank-active-tag">✓ Seçili</span>
                   </div>
                   <div class="bank-desc">3D Secure 2.0</div>
                 </div>
@@ -620,6 +757,21 @@
                     <span class="bank-active-tag">3DHost</span>
                   </div>
                   <div class="bank-desc">3D Ortak Ödeme</div>
+                </div>
+              </div>
+            </label>
+
+            <!-- 3. TOSLA İŞİM (3D SECURE / AKBANK) -->
+            <label class="bank-card" id="bankCardTosla">
+              <input type="radio" name="posProvider" value="TOSLA">
+              <div class="bank-card-inner">
+                <div class="bank-emblem-wrap" style="background:#E11D48;color:#fff;font-weight:900;font-size:11px;letter-spacing:-0.3px;">TOSLA</div>
+                <div class="bank-info">
+                  <div class="bank-name-row">
+                    <span class="bank-title">Tosla İşim</span>
+                    <span class="bank-active-tag">3D Secure</span>
+                  </div>
+                  <div class="bank-desc">Akbank Altyapısı</div>
                 </div>
               </div>
             </label>
@@ -666,10 +818,16 @@
         <div id="generatedUrlText" class="result-box"></div>
 
         <div class="action-grid">
-          <a id="btnWhatsApp" href="#" target="_blank" onclick="if(!this.href||this.getAttribute('href')==='#'){event.preventDefault();alert('Lütfen önce ödeme linki oluşturun.');}" class="btn-whatsapp">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
-            WhatsApp ile Gönder
-          </a>
+          <div class="share-row">
+            <a id="btnWhatsApp" href="#" target="_blank" onclick="if(!this.href||this.getAttribute('href')==='#'){event.preventDefault();alert('Lütfen önce ödeme linki oluşturun.');}" class="btn-whatsapp">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+              WhatsApp ile Gönder
+            </a>
+            <a id="btnTelegram" href="#" target="_blank" onclick="if(!this.href||this.getAttribute('href')==='#'){event.preventDefault();alert('Lütfen önce ödeme linki oluşturun.');}" class="btn-telegram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.197 1.006.128.828.922z"/></svg>
+              Telegram ile Gönder
+            </a>
+          </div>
           <button type="button" id="btnCopy" class="btn-copy" style="grid-column: 1 / -1;">🔗 Linki Kopyala</button>
           <a id="btnTestLink" href="#" target="_blank" onclick="if(!this.href||this.getAttribute('href')==='#'){event.preventDefault();alert('Lütfen önce ödeme linki oluşturun.');}" class="btn-test">👁️ Müşteri Ödeme Ekranını Önizle</a>
           <button type="button" id="btnReset" class="btn-reset">🔄 Formu Temizle / Yeni Link Oluştur</button>
@@ -692,115 +850,47 @@
     
     <!-- LİNK İPTAL BÖLÜMÜ -->
     <div id="sectionCancel" style="display:none;">
-      <!-- VIP LINK CANCEL CARD -->
-
-    <div class="card" style="margin-top:24px; border-top:3px solid #ef4444; border-radius: 16px;">
-      <div class="card-title" style="color:#ef4444; font-size: 16px; margin-bottom: 12px; display:flex; align-items:center; gap:8px;">
-        <span style="background:#ef4444; color:#fff; border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; font-size:12px; box-shadow:0 0 10px rgba(239,68,68,0.4);">✕</span> 
-        Gönderilmiş Linki İptal Et
-      </div>
-      <p style="font-size:13px; color:var(--text-dim); margin-bottom:18px; line-height:1.5;">Gönderdiğiniz bir linki (VIP Sipariş No veya Link) iptal edebilirsiniz.</p>
-      
-      <div class="field" style="margin-bottom: 18px;">
-        <div class="input-shell" style="border-radius: 14px; border: 1.5px solid rgba(239,68,68,0.25); background: rgba(0,0,0,0.2); padding:2px;">
-          <input type="text" id="cancelOrderId" class="form-input" style="padding: 16px; font-size: 15px; background: transparent; color: #fff;" placeholder="Örn: VIP-1726... veya link">
+      <div class="card" style="margin-top:20px; border-top:3px solid #ef4444; border-radius: 16px;">
+        <div class="card-title" style="color:#ef4444; font-size: 15.5px; margin-bottom: 8px; display:flex; align-items:center; justify-content:space-between;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="background:#ef4444; color:#fff; border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; font-size:11px; box-shadow:0 0 10px rgba(239,68,68,0.4);">✕</span> 
+            Oluşturulan VIP Linkler &amp; İptal
+          </div>
+          <button type="button" id="btnRefreshCancelList" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:var(--text-muted); border-radius:6px; font-size:11px; padding:4px 9px; cursor:pointer; font-weight:700;">🔄 Yenile</button>
         </div>
+        <p style="font-size:12px; color:var(--text-muted); margin-bottom:14px; line-height:1.4;">
+          Oluşturulan VIP ödeme linkleri aşağıda tarih, saat ve tutarıyla listelenir. <strong>İptal Et</strong>'e basılan linkler anında kapatılır ve tahsilata engellenir.
+        </p>
+
+        <!-- TEK SATIR (TEK SIRA) LİSTE ALANI -->
+        <div id="vipLinksListContainer" style="display:flex; flex-direction:column; gap:8px; margin-bottom:16px; max-height:420px; overflow-y:auto; padding-right:2px;">
+          <!-- Dinamik tek sıra linkler buraya render edilecek -->
+        </div>
+
+        <!-- MANUEL SİPARİŞ NO / LİNK İPTAL AKORDEONU -->
+        <details style="border-top:1px solid rgba(255,255,255,0.08); padding-top:12px; margin-top:4px;">
+          <summary style="font-size:11.5px; color:var(--gold-light); cursor:pointer; font-weight:700; user-select:none;">🔍 Manuel Sipariş No / Link İle İptal Et</summary>
+          <div style="margin-top:10px;">
+            <div class="field" style="margin-bottom: 10px;">
+              <div class="input-shell" style="border-radius: 10px; border: 1.5px solid rgba(239,68,68,0.25); background: rgba(0,0,0,0.25); padding:2px;">
+                <input type="text" id="cancelOrderId" class="form-input" style="padding: 11px 13px; font-size:13px; background: transparent; color: #fff;" placeholder="Örn: VIP-1726... veya link">
+              </div>
+            </div>
+            <button type="button" class="btn" id="btnCancelLink" style="width: 100%; padding: 12px; border-radius: 8px; font-size: 13.5px; font-weight: 800; background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; border: none; box-shadow: 0 4px 12px rgba(239,68,68,0.25); text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor:pointer;">
+              ✕ Belirtilen Linki İptal Et
+            </button>
+            <div id="cancelFeedback" style="margin-top:10px; font-size:12px; font-weight: 600; display:none; padding: 10px; border-radius: 8px; text-align: center;"></div>
+          </div>
+        </details>
       </div>
-      
-      <div class="field" style="margin-bottom:0;">
-        <button type="button" class="btn" id="btnCancelLink" style="width: 100%; padding: 22px; border-radius: 50px; font-size: 18px; font-weight: 800; background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; border: none; box-shadow: 0 6px 20px rgba(239,68,68,0.35); text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s ease;">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
-          Linki İptal Et
-        </button>
-      </div>
-      <div id="cancelFeedback" style="margin-top:14px; font-size:13.5px; font-weight: 600; display:none; padding: 14px; border-radius: 12px; text-align: center;"></div>
     </div>
-    
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const btnCancel = document.getElementById('btnCancelLink');
-        const inputCancel = document.getElementById('cancelOrderId');
-        const feedback = document.getElementById('cancelFeedback');
-        
-        if(btnCancel) {
-          // Touch feedback for mobile
-          btnCancel.addEventListener('touchstart', () => btnCancel.style.transform = 'scale(0.98)', {passive: true});
-          btnCancel.addEventListener('touchend', () => btnCancel.style.transform = 'scale(1)', {passive: true});
-          
-          btnCancel.addEventListener('click', async () => {
-            let val = inputCancel.value.trim();
-            if(!val) {
-              feedback.style.display = 'block';
-              feedback.style.background = 'rgba(239,68,68,0.1)';
-              feedback.style.color = '#ef4444';
-              feedback.innerHTML = 'Lütfen sipariş numarasını giriniz.';
-              return;
-            }
-            
-            let orderId = val;
-            const vipMatch = val.match(/(VIP-[0-9]+)/i);
-            if(vipMatch) {
-              orderId = vipMatch[1];
-            } else if (val.includes('?p=')) {
-                try {
-                    const token = new URLSearchParams(val.split('?')[1]).get('p');
-                    let base64 = token.replace(/-/g, '+').replace(/_/g, '/');
-                    while (base64.length % 4) base64 += '=';
-                    const decoded = atob(base64);
-                    const parts = decoded.split('|');
-                    if(parts.length >= 3 && parts[0].startsWith('VIP-')) {
-                        orderId = parts[0];
-                    }
-                } catch(e) {}
-            }
-            
-            const originalHTML = btnCancel.innerHTML;
-            btnCancel.innerHTML = '<span class="spinner" style="border-color:#fff; border-top-color:transparent; width:18px; height:18px; margin-right:8px; display:inline-block;"></span> İptal Ediliyor...';
-            btnCancel.disabled = true;
-            btnCancel.style.opacity = '0.8';
-            btnCancel.style.transform = 'scale(0.98)';
-            
-            try {
-              const res = await fetch('/api/payment/cancel-vip', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ orderId, secret: 'VIP_ADMIN_BYPASS_2026' })
-              });
-              const data = await res.json();
-              feedback.style.display = 'block';
-              if(data.success) {
-                feedback.style.background = 'rgba(16,185,129,0.15)';
-                feedback.style.color = '#10b981';
-                feedback.innerHTML = '✅ İptal Edildi: ' + orderId;
-                inputCancel.value = '';
-              } else {
-                feedback.style.background = 'rgba(239,68,68,0.15)';
-                feedback.style.color = '#ff6b6b';
-                feedback.innerHTML = '❌ Hata: ' + data.message;
-              }
-            } catch(e) {
-              feedback.style.display = 'block';
-              feedback.style.background = 'rgba(239,68,68,0.15)';
-              feedback.style.color = '#ff6b6b';
-              feedback.innerHTML = '❌ Sunucu iletişim hatası.';
-            } finally {
-              btnCancel.innerHTML = originalHTML;
-              btnCancel.disabled = false;
-              btnCancel.style.opacity = '1';
-              btnCancel.style.transform = 'scale(1)';
-            }
-          });
-        }
-      });
-    </script>
-    <!-- /VIP LINK CANCEL CARD END -->
 
   </div>
 
   <div id="toast" class="toast">Panoya kopyalandı!</div>
 
   <script src="/js/data.js?v=2026.09.02"></script>
-  <script src="/js/vip-payment.js?v=20260917-v1789642159"></script>
+  <script src="/js/vip-payment.js?v=20260925-tosla-v2"></script>
   <script>
     
     // --- Sekme (Tab) Mantığı ---
@@ -810,13 +900,13 @@
     const secCan = document.getElementById('sectionCancel');
     
     tabGen.addEventListener('click', () => {
-      tabGen.style.background = '#C2A768';
-      tabGen.style.color = '#111';
-      tabGen.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
+      tabGen.style.background = 'linear-gradient(135deg, #F5E5B8 0%, #D4AF37 100%)';
+      tabGen.style.color = '#08171E';
+      tabGen.style.boxShadow = '0 4px 14px rgba(212,175,55,0.25)';
       tabGen.style.fontWeight = '800';
       
       tabCan.style.background = 'transparent';
-      tabCan.style.color = '#94A3B8';
+      tabCan.style.color = 'var(--text-muted)';
       tabCan.style.boxShadow = 'none';
       tabCan.style.fontWeight = '700';
       
@@ -825,13 +915,13 @@
     });
     
     tabCan.addEventListener('click', () => {
-      tabCan.style.background = '#ef4444';
+      tabCan.style.background = 'linear-gradient(135deg, #E06D53 0%, #C85038 100%)';
       tabCan.style.color = '#fff';
-      tabCan.style.boxShadow = '0 4px 12px rgba(239,68,68,0.3)';
+      tabCan.style.boxShadow = '0 4px 14px rgba(224,109,83,0.35)';
       tabCan.style.fontWeight = '800';
       
       tabGen.style.background = 'transparent';
-      tabGen.style.color = '#94A3B8';
+      tabGen.style.color = 'var(--text-muted)';
       tabGen.style.boxShadow = 'none';
       tabGen.style.fontWeight = '700';
       
@@ -851,6 +941,7 @@
     const generatedUrlText = document.getElementById('generatedUrlText');
     const btnSubmit = document.getElementById('btnSubmit');
     const btnWhatsApp = document.getElementById('btnWhatsApp');
+    const btnTelegram = document.getElementById('btnTelegram');
     const btnCopy = document.getElementById('btnCopy');
     const btnTestLink = document.getElementById('btnTestLink');
     const btnReset = document.getElementById('btnReset');
@@ -871,7 +962,7 @@
         if (!radio) return;
         if (radio.checked) {
           c.classList.add('active');
-          if (tag) tag.textContent = '✓ Seçili POS';
+          if (tag) tag.textContent = '✓ Seçili';
         } else {
           c.classList.remove('active');
           if (tag) {
@@ -1054,13 +1145,26 @@
           renderWatchSuggestions(parseInt(cleanAmt, 10));
         }
       }
-      if (paramPos === 'PAYTR' || paramPos === 'XPOS') {
-        posCards.forEach(c => c.classList.remove('active'));
-        const xcard = document.getElementById('posCardXpos');
-        if (xcard) {
-          xcard.classList.add('active');
-          const r = xcard.querySelector('input[type="radio"]');
+      if (paramPos.includes('TOSLA')) {
+        const toslacard = document.getElementById('bankCardTosla');
+        if (toslacard) {
+          const r = toslacard.querySelector('input[type="radio"]');
           if (r) r.checked = true;
+          syncBankSelection();
+        }
+      } else if (paramPos.includes('ZIRAAT')) {
+        const ziraatcard = document.getElementById('bankCardZiraat');
+        if (ziraatcard) {
+          const r = ziraatcard.querySelector('input[type="radio"]');
+          if (r) r.checked = true;
+          syncBankSelection();
+        }
+      } else if (paramPos.includes('KUVEYT')) {
+        const kuveytcard = document.getElementById('bankCardKuveyt');
+        if (kuveytcard) {
+          const r = kuveytcard.querySelector('input[type="radio"]');
+          if (r) r.checked = true;
+          syncBankSelection();
         }
       }
     } catch (_) {}
@@ -1204,10 +1308,27 @@
 
         generatedUrlText.textContent = currentUrl;
         btnWhatsApp.href = VipEngine.buildWhatsAppShareUrl(payload, currentUrl);
+        if (btnTelegram) {
+          btnTelegram.href = typeof VipEngine.buildTelegramShareUrl === 'function'
+            ? VipEngine.buildTelegramShareUrl(payload, currentUrl)
+            : `https://t.me/share/url?text=${encodeURIComponent(currentMsg)}`;
+        }
         btnTestLink.href = currentUrl;
 
         btnSubmit.classList.remove('loading');
         btnSubmit.disabled = false;
+
+        if (typeof saveCreatedVipLink === 'function') {
+          saveCreatedVipLink({
+            orderId: generatedOrderId,
+            title,
+            amount,
+            provider,
+            url: currentUrl,
+            createdAt: new Date().toISOString(),
+            status: 'ACTIVE'
+          });
+        }
 
         resultSection.style.display = 'block';
         resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1229,6 +1350,9 @@
       if (quickShortcutPill) quickShortcutPill.style.display = 'none';
       if (breakdown22Preview) breakdown22Preview.style.display = 'none';
       if (resultSection) resultSection.style.display = 'none';
+      if (btnWhatsApp) btnWhatsApp.href = '#';
+      if (btnTelegram) btnTelegram.href = '#';
+      if (btnTestLink) btnTestLink.href = '#';
 
       // Reset POS selector back to Kuveyt Türk
       const allCards = document.querySelectorAll('.bank-card, .pos-card');
@@ -1306,6 +1430,264 @@
       }
       document.body.removeChild(textArea);
     }
+
+    // --- VIP LINK YÖNETİMİ & İPTAL SİSTEMİ ---
+    const VIP_HISTORY_KEY = 'belgin_vip_links_history';
+
+    function getVipLinksHistory() {
+      try {
+        return JSON.parse(localStorage.getItem(VIP_HISTORY_KEY) || '[]');
+      } catch (_) {
+        return [];
+      }
+    }
+
+    function saveCreatedVipLink(item) {
+      try {
+        const list = getVipLinksHistory();
+        const existingIdx = list.findIndex(x => x.orderId === item.orderId);
+        if (existingIdx >= 0) {
+          list[existingIdx] = { ...list[existingIdx], ...item };
+        } else {
+          list.unshift(item);
+        }
+        localStorage.setItem(VIP_HISTORY_KEY, JSON.stringify(list.slice(0, 50)));
+        renderVipLinksList();
+
+        // Sunucuya da kalıcı kaydet
+        fetch('/api/payment/record-vip', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(item)
+        }).catch(() => {});
+      } catch (e) {
+        console.error('saveCreatedVipLink Error:', e);
+      }
+    }
+
+    async function syncVipLinksFromServer() {
+      try {
+        const res = await fetch('/api/payment/list-vip');
+        const data = await res.json();
+        if (data.success && Array.isArray(data.list) && data.list.length > 0) {
+          const localList = getVipLinksHistory();
+          const mergedMap = new Map();
+          data.list.forEach(item => mergedMap.set(item.orderId, item));
+          localList.forEach(item => {
+            if (!mergedMap.has(item.orderId)) {
+              mergedMap.set(item.orderId, item);
+            } else {
+              const serverItem = mergedMap.get(item.orderId);
+              if (item.status === 'CANCELLED' || serverItem.status === 'CANCELLED') {
+                serverItem.status = 'CANCELLED';
+              }
+            }
+          });
+          const finalList = Array.from(mergedMap.values()).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 50);
+          localStorage.setItem(VIP_HISTORY_KEY, JSON.stringify(finalList));
+          renderVipLinksList();
+        }
+      } catch (err) {
+        console.warn('[VipSync] Sunucu senkronizasyon uyarısı:', err.message);
+      }
+    }
+
+    function formatVipDate(isoString) {
+      if (!isoString) return '';
+      try {
+        const d = new Date(isoString);
+        const day = String(d.getDate()).padStart(2, '0');
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const hours = String(d.getHours()).padStart(2, '0');
+        const mins = String(d.getMinutes()).padStart(2, '0');
+        return `${day}.${month} ${hours}:${mins}`;
+      } catch (_) {
+        return isoString;
+      }
+    }
+
+    function renderVipLinksList() {
+      const container = document.getElementById('vipLinksListContainer');
+      if (!container) return;
+
+      const list = getVipLinksHistory();
+      if (!list || list.length === 0) {
+        container.innerHTML = `
+          <div style="text-align:center; padding:24px 12px; background:rgba(0,0,0,0.25); border:1px dashed rgba(255,255,255,0.1); border-radius:12px; color:var(--text-faint); font-size:12.5px;">
+            Henüz oluşturulmuş bir VIP ödeme linki bulunmuyor.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = list.map(item => {
+        const isCancelled = item.status === 'CANCELLED';
+        const formattedDate = formatVipDate(item.createdAt);
+        const formattedAmt = '₺' + Number(item.amount || 0).toLocaleString('tr-TR');
+        const prov = (item.provider || 'KUVEYTTURK').toUpperCase();
+        let provBadge = 'KUVEYT';
+        if (prov.includes('ZIRAAT')) provBadge = 'ZİRAAT';
+        else if (prov.includes('TOSLA')) provBadge = 'TOSLA';
+
+        return `
+          <div class="vip-link-row ${isCancelled ? 'is-cancelled' : ''}" id="row-${item.orderId}">
+            <div class="vip-col-time">📅 ${formattedDate}</div>
+            <div class="vip-col-info" title="${item.title || ''} (${item.orderId})">
+              <span>${item.title || 'VIP Sipariş'}</span>
+              <span style="font-size:10px; opacity:0.7; margin-left:3px;">[${provBadge}]</span>
+            </div>
+            <div class="vip-col-amount">${formattedAmt}</div>
+            <div class="vip-col-action">
+              ${isCancelled 
+                ? `<span class="btn-row-cancelled">✓ İptal Edildi</span>` 
+                : `<button type="button" class="btn-row-cancel" onclick="cancelVipLinkFromRow('${item.orderId}', this)">✕ İptal Et</button>`}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    window.cancelVipLinkFromRow = async function(orderId, btnElement) {
+      if (!confirm(`Sipariş Referansı: ${orderId}\n\nBu VIP ödeme linkini kalıcı olarak iptal etmek istediğinize emin misiniz?\nİptal edilen link üzerinden müşteri artık hiçbir şekilde ödeme yapamaz.`)) {
+        return;
+      }
+
+      if (btnElement) {
+        btnElement.disabled = true;
+        btnElement.textContent = 'İptal Ediliyor...';
+        btnElement.style.opacity = '0.7';
+      }
+
+      try {
+        const res = await fetch('/api/payment/cancel-vip', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ orderId, secret: 'VIP_ADMIN_BYPASS_2026' })
+        });
+        const data = await res.json();
+        if (data.success) {
+          const list = getVipLinksHistory();
+          const target = list.find(x => x.orderId === orderId);
+          if (target) {
+            target.status = 'CANCELLED';
+            target.cancelledAt = new Date().toISOString();
+            localStorage.setItem(VIP_HISTORY_KEY, JSON.stringify(list));
+          }
+          renderVipLinksList();
+          showToast(`✅ ${orderId} linki iptal edildi!`);
+        } else {
+          alert('İptal işlemi başarısız: ' + (data.message || 'Bilinmeyen hata'));
+          if (btnElement) {
+            btnElement.disabled = false;
+            btnElement.textContent = '✕ İptal Et';
+            btnElement.style.opacity = '1';
+          }
+        }
+      } catch (err) {
+        alert('Sunucu iletişim hatası: ' + err.message);
+        if (btnElement) {
+          btnElement.disabled = false;
+          btnElement.textContent = '✕ İptal Et';
+          btnElement.style.opacity = '1';
+        }
+      }
+    };
+
+    // Manuel İptal Butonu Dinleyicisi
+    document.getElementById('btnCancelLink')?.addEventListener('click', async () => {
+      const input = document.getElementById('cancelOrderId');
+      const feedback = document.getElementById('cancelFeedback');
+      const btn = document.getElementById('btnCancelLink');
+      let val = input?.value?.trim();
+
+      if (!val) {
+        if (feedback) {
+          feedback.style.display = 'block';
+          feedback.style.background = 'rgba(239,68,68,0.12)';
+          feedback.style.color = '#ef4444';
+          feedback.innerHTML = '⚠ Lütfen sipariş numarasını veya linki giriniz.';
+        }
+        return;
+      }
+
+      let orderId = val;
+      const vipMatch = val.match(/(VIP-[0-9]+)/i);
+      if (vipMatch) {
+        orderId = vipMatch[1];
+      } else if (val.includes('?p=')) {
+        try {
+          const token = new URLSearchParams(val.split('?')[1]).get('p');
+          let b64 = token.replace(/-/g, '+').replace(/_/g, '/');
+          while (b64.length % 4) b64 += '=';
+          const dec = atob(b64);
+          const parts = dec.split('|');
+          if (parts.length >= 1 && parts[0].startsWith('VIP-')) {
+            orderId = parts[0];
+          }
+        } catch (_) {}
+      }
+
+      const origHtml = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = 'İptal Ediliyor...';
+
+      try {
+        const res = await fetch('/api/payment/cancel-vip', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ orderId, secret: 'VIP_ADMIN_BYPASS_2026' })
+        });
+        const data = await res.json();
+        if (feedback) {
+          feedback.style.display = 'block';
+          if (data.success) {
+            feedback.style.background = 'rgba(16,185,129,0.15)';
+            feedback.style.color = '#10b981';
+            feedback.innerHTML = '✅ Link Başarıyla İptal Edildi: ' + orderId;
+            input.value = '';
+            const list = getVipLinksHistory();
+            const target = list.find(x => x.orderId === orderId);
+            if (target) {
+              target.status = 'CANCELLED';
+              target.cancelledAt = new Date().toISOString();
+              localStorage.setItem(VIP_HISTORY_KEY, JSON.stringify(list));
+            }
+            renderVipLinksList();
+          } else {
+            feedback.style.background = 'rgba(239,68,68,0.15)';
+            feedback.style.color = '#ff6b6b';
+            feedback.innerHTML = '❌ Hata: ' + data.message;
+          }
+        }
+      } catch (err) {
+        if (feedback) {
+          feedback.style.display = 'block';
+          feedback.style.background = 'rgba(239,68,68,0.15)';
+          feedback.style.color = '#ff6b6b';
+          feedback.innerHTML = '❌ Sunucu iletişim hatası: ' + err.message;
+        }
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = origHtml;
+      }
+    });
+
+    document.getElementById('btnRefreshCancelList')?.addEventListener('click', async () => {
+      const btn = document.getElementById('btnRefreshCancelList');
+      if (btn) btn.textContent = 'Yenileniyor...';
+      renderVipLinksList();
+      await syncVipLinksFromServer();
+      if (btn) btn.textContent = '🔄 Yenile';
+      showToast('Liste güncellendi!');
+    });
+
+    document.getElementById('tabCancel')?.addEventListener('click', () => {
+      renderVipLinksList();
+      syncVipLinksFromServer();
+    });
+
+    renderVipLinksList();
+    setTimeout(() => { syncVipLinksFromServer(); }, 500);
   </script>
 </body>
 </html>

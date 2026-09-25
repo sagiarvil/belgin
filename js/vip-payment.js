@@ -346,6 +346,12 @@ ${shortUrl}
     buildWhatsAppShareUrl(payload, shortUrl) {
       const message = this.buildWhatsAppMessageText(payload, shortUrl);
       return `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+    },
+
+    // 9. Telegram Paylaşım URL'i (Tek Dokunuşla Doğrudan Telegram Paylaşımı)
+    buildTelegramShareUrl(payload, shortUrl) {
+      const message = this.buildWhatsAppMessageText(payload, shortUrl);
+      return `https://t.me/share/url?text=${encodeURIComponent(message)}`;
     }
   };
 
@@ -370,15 +376,17 @@ ${shortUrl}
     cards.forEach((card) => {
       const radio = card.querySelector('input[name="posProvider"]');
       const tag = card.querySelector('.bank-active-tag');
-      if (!radio || !tag) return;
       if (radio.checked) {
-        tag.textContent = '✓ Seçili POS';
+        tag.textContent = '✓ Seçili';
         card.classList.add('active');
       } else if (radio.value === 'KUVEYTTURK') {
         tag.textContent = '3D Secure';
         card.classList.remove('active');
       } else if (radio.value === ZIRAAT_PROVIDER) {
         tag.textContent = '3DHost';
+        card.classList.remove('active');
+      } else if (radio.value === 'TOSLA' || radio.value === 'TOSLA_ISIM') {
+        tag.textContent = '3D Secure';
         card.classList.remove('active');
       }
     });
@@ -406,6 +414,25 @@ ${shortUrl}
           </div>
         </div>`;
       grid.appendChild(card);
+    }
+
+    if (!document.getElementById('bankCardTosla')) {
+      const toslacard = document.createElement('label');
+      toslacard.className = 'bank-card';
+      toslacard.id = 'bankCardTosla';
+      toslacard.innerHTML = `
+        <input type="radio" name="posProvider" value="TOSLA">
+        <div class="bank-card-inner">
+          <div class="bank-emblem-wrap" style="background:#E11D48;color:#fff;font-weight:900;font-size:11px;letter-spacing:-0.3px;">TOSLA</div>
+          <div class="bank-info">
+            <div class="bank-name-row">
+              <span class="bank-title">Tosla İşim</span>
+              <span class="bank-active-tag">3D Secure</span>
+            </div>
+            <div class="bank-desc">Akbank Altyapısı</div>
+          </div>
+        </div>`;
+      grid.appendChild(toslacard);
     }
 
     const cards = Array.from(document.querySelectorAll('.bank-card, .pos-card'));

@@ -6,3 +6,9 @@
 | 2026-09-17 | VIP Ödeme Linki İptal Mekanizması (Firestore Blacklist) eklendi ve canlıya (functions & hosting) alındı. | admin.html, payment-service.js, index.js |
 
 | 2026-09-17 | Elit kategoriden (js/data.js) fiyatı 1.799.000 TL üzeri olan saatler (55 adet) tamamen kaldırıldı ve statik sayfalar/SEO yeniden build edildi. | js/data.js, tests/test-suite.js |
+| 2026-09-25 | 2. El Altın Takılar sayfasındaki hesaplayıcı ve hero bilgi kutusu kaldırıldı; yerine lüks atölye görsel vitrini (#ozel-vitrin) entegre edildi ve Firebase Hosting (belgin) ile canlıya alındı. | mucevherat/ikinci-el-altin-takilar/index.html, css/second-hand-gold.css |
+| 2026-09-25 | Tosla İşim Sanal POS (Akbank altyapısı) entegrasyonu tamamlandı. VIP ödeme linki paneline (odeme-linki.html) Kuveyt Türk ve Ziraat Katılım'ın yanına 3. seçenek olarak Tosla İşim eklendi; vip-odeme.html ve backend adapter (tosla.js) 3D Secure akışıyla bağlandı. | functions/payment/providers/tosla.js, functions/payment/payment-router.js, functions/payment/payment-service.js, functions/index.js, odeme-linki.html, vip-odeme.html |
+| 2026-09-25 | VIP Link İptal Yönetimi (tek satır UI + Firestore senkronizasyonu), tek tıkla Telegram ile Gönder butonu ve Tosla POS maksimum dayanıklılık & orderId standardizasyonu canlıya (Hosting & Functions) alındı. | odeme-linki.html, vip-odeme.html, js/vip-payment.js, functions/payment/providers/tosla.js, functions/index.js, firebase.json |
+| 2026-09-25 | VIP Ödeme (/vip), Link Oluşturucu (odeme-linki.html) ve Başarılı/Başarısız Tahsilat Final sayfaları bilimsel kanıtlı güven & rahatlatıcı lüks renk kartelasına (Deep Oceanic Teal & Satin Champagne Gold) ve yeni aslan VIP armasına dönüştürüldü. | vip-odeme.html, odeme-linki.html, odeme-basarili.html, odeme-basarisiz.html, images/belgin-vip-lion.png |
+
+

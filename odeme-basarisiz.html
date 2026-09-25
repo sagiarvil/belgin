@@ -18,18 +18,21 @@
   <link rel="canonical" href="https://www.belginkuyumculuk.com/odeme-basarisiz.html">
   <style>
     :root {
-      --bg-dark: #042421;
-      --card-bg: #073531;
+      --bg-dark: #08171E;
+      --bg-radial: radial-gradient(120% 90% at 50% -10%, #112F3B 0%, #08171E 65%, #050E13 100%);
+      --card-bg: #0C222B;
       --gold-primary: #D4AF37;
       --gold-light: #F3E5AB;
-      --text-main: #FFFFFF;
-      --text-muted: #9BB3AF;
-      --border-color: rgba(212, 175, 55, 0.25);
-      --error-red: #E74C3C;
+      --text-main: #F3F7F6;
+      --text-muted: #8EABB3;
+      --border-color: #163B48;
+      --error-soft: #E06D53;
+      --error-soft-glow: rgba(224, 109, 83, 0.25);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-radial);
       background-color: var(--bg-dark);
       color: var(--text-main);
       min-height: 100vh;
@@ -40,35 +43,40 @@
       padding: 24px 16px;
     }
     .status-card {
-      background: var(--card-bg);
+      background: linear-gradient(180deg, var(--card-bg) 0%, #081920 100%);
       border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 36px 28px;
+      border-radius: 20px;
+      padding: 38px 28px;
       width: 100%;
       max-width: 520px;
       text-align: center;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 20px 55px -10px rgba(0, 0, 0, 0.65), 0 0 35px rgba(212,175,55,0.06);
       position: relative;
     }
     .status-icon {
       width: 72px;
       height: 72px;
       margin: 0 auto 20px;
-      background: rgba(231, 76, 60, 0.15);
-      border: 2px solid var(--error-red);
+      background: rgba(224, 109, 83, 0.12);
+      border: 2px solid var(--error-soft);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--error-red);
-      font-size: 32px;
+      color: var(--error-soft);
+      font-size: 30px;
+      box-shadow: 0 0 20px var(--error-soft-glow);
     }
     .brand-crest {
-      width: 54px;
-      height: 54px;
+      width: 72px;
+      height: 72px;
       object-fit: contain;
-      margin-bottom: 12px;
-      filter: drop-shadow(0 2px 8px rgba(212,175,55,0.4));
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      border: 2px solid rgba(212,175,55,0.45);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 0 20px rgba(212,175,55,0.22);
+      filter: drop-shadow(0 4px 14px rgba(212,175,55,0.28));
+      display: block;
     }
     h1 {
       font-family: 'Cinzel', serif;
@@ -84,9 +92,9 @@
       line-height: 1.6;
     }
     .info-box {
-      background: rgba(0, 0, 0, 0.25);
-      border: 1px dashed rgba(231, 76, 60, 0.4);
-      border-radius: 10px;
+      background: rgba(7, 21, 27, 0.65);
+      border: 1px dashed rgba(224, 109, 83, 0.35);
+      border-radius: 12px;
       padding: 16px;
       margin-bottom: 24px;
       text-align: left;
@@ -108,52 +116,60 @@
       gap: 12px;
     }
     .btn-primary {
-      background: linear-gradient(135deg, #D4AF37 0%, #AA8010 100%);
-      color: #042421;
-      font-weight: 700;
-      font-size: 14px;
-      padding: 14px 20px;
-      border-radius: 8px;
+      background: linear-gradient(135deg, #F5E5B8 0%, #D4AF37 50%, #B88E28 100%);
+      color: #06151B;
+      font-weight: 800;
+      font-size: 14.5px;
+      padding: 15px 22px;
+      border-radius: 12px;
       text-decoration: none;
       display: block;
-      border: none;
+      border: 1px solid #FEF08A;
       cursor: pointer;
       letter-spacing: 0.5px;
-      transition: opacity 0.2s;
+      box-shadow: 0 10px 28px -6px rgba(212,175,55,0.38);
+      transition: all 0.2s;
     }
-    .btn-primary:hover { opacity: 0.92; }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #FFF0C8 0%, #E5C048 50%, #C49830 100%);
+      box-shadow: 0 14px 34px -6px rgba(212,175,55,0.5);
+      transform: translateY(-1px);
+    }
     .btn-secondary {
-      background: transparent;
+      background: rgba(7, 21, 27, 0.5);
       color: var(--gold-light);
       border: 1px solid var(--border-color);
       font-size: 13.5px;
-      padding: 12px 18px;
-      border-radius: 8px;
+      padding: 13px 18px;
+      border-radius: 12px;
       text-decoration: none;
       display: block;
-      transition: background 0.2s;
+      transition: background 0.2s, border-color 0.2s;
     }
-    .btn-secondary:hover { background: rgba(212,175,55,0.1); }
+    .btn-secondary:hover {
+      background: rgba(212,175,55,0.1);
+      border-color: rgba(212,175,55,0.35);
+    }
   </style>
   <script src="/js/growth.js" defer></script>
 </head>
 <body>
 
   <div class="status-card">
-    <img src="images/belgin-crest-b.png" alt="Belgin Kuyumculuk" class="brand-crest">
+    <img src="images/belgin-vip-lion.png" alt="Belgin Kuyumculuk VIP" class="brand-crest">
     <div class="status-icon">✕</div>
     <h1>Ödeme Tamamlanamadı</h1>
     <p class="status-subtitle" id="failSubtitle">Kartınızdan herhangi bir tahsilat yapılmamıştır. İşlem bankanız veya 3D Secure güvenlik protokolü tarafından onaylanmadı.</p>
 
     <!-- Banka Hata Dekontu -->
-    <div id="bankErrorBox" class="info-box" style="background: rgba(231, 76, 60, 0.08); border: 1px solid rgba(231, 76, 60, 0.3); border-radius: 8px; padding: 14px 18px; margin-bottom: 20px; font-size: 13px; text-align: left; line-height: 1.6;">
-      <div style="display:flex; justify-content:space-between; margin-bottom:6px; border-bottom:1px solid rgba(231,76,60,0.2); padding-bottom:4px;">
+    <div id="bankErrorBox" class="info-box" style="background: rgba(224, 109, 83, 0.08); border: 1px solid rgba(224, 109, 83, 0.3); border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; font-size: 13px; text-align: left; line-height: 1.6;">
+      <div style="display:flex; justify-content:space-between; margin-bottom:6px; border-bottom:1px solid rgba(224, 109, 83, 0.2); padding-bottom:4px;">
         <span style="color:var(--text-muted);">Sipariş Referansı:</span>
         <strong style="color:var(--gold-light);" id="failOrderId">BLG-******</strong>
       </div>
-      <div style="display:flex; justify-content:space-between; margin-bottom:6px; border-bottom:1px solid rgba(231,76,60,0.2); padding-bottom:4px;">
+      <div style="display:flex; justify-content:space-between; margin-bottom:6px; border-bottom:1px solid rgba(224, 109, 83, 0.2); padding-bottom:4px;">
         <span style="color:var(--text-muted);">Banka Hata Kodu:</span>
-        <strong style="color:#FF6B6B;" id="failErrorCode">Hata 51 (REJECTED)</strong>
+        <strong style="color:#E06D53;" id="failErrorCode">Hata 51 (REJECTED)</strong>
       </div>
       <div style="margin-top:6px;">
         <span style="color:var(--text-muted); display:block; font-size:12px;">Banka Açıklaması:</span>

@@ -64,10 +64,6 @@ function verifyAltinTakilar() {
     console.error('❌ [MG0] viewport meta etiketi eksik veya viewport-fit=cover içermiyor!');
     process.exit(1);
   }
-  if (!htmlContent.includes('hero-answer-engine mobile-thumb-safe')) {
-    console.error('❌ [MG4] hero-answer-engine mobile-thumb-safe bloğu bulunamadı!');
-    process.exit(1);
-  }
   if (!htmlContent.includes('SpeakableSpecification')) {
     console.error('❌ [MG4] JSON-LD SpeakableSpecification şeması eksik!');
     process.exit(1);

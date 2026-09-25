@@ -8,6 +8,7 @@ const paytrProvider = require('./providers/paytr');
 const qnbProvider = require('./providers/qnb');
 const kuveytTurkProvider = require('./providers/kuveytturk');
 const ziraatKatilimProvider = require('./providers/ziraatkatilim');
+const toslaProvider = require('./providers/tosla');
 const yapiKrediProvider = require('./providers/yapikredi');
 
 const PROVIDER_REGISTRY = Object.freeze({
@@ -15,6 +16,10 @@ const PROVIDER_REGISTRY = Object.freeze({
   [PROVIDERS.ZIRAATKATILIM]: ziraatKatilimProvider,
   'ZIRAAT': ziraatKatilimProvider,
   'ZIRAAT_KATILIM': ziraatKatilimProvider,
+  [PROVIDERS.TOSLA]: toslaProvider,
+  [PROVIDERS.TOSLA_ISIM]: toslaProvider,
+  'TOSLA': toslaProvider,
+  'TOSLA_ISIM': toslaProvider,
   [PROVIDERS.PAYTR]: paytrProvider,
   [PROVIDERS.QNB]: qnbProvider,
   [PROVIDERS.YAPIKREDI]: yapiKrediProvider,

@@ -14,7 +14,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Belgin Kuyumculuk & Saat</title>
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#0A1412">
+  <meta name="theme-color" content="#08171E">
   <meta name="apple-mobile-web-app-title" content="Belgin Ödeme">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,21 +25,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0A1412;
-      --card-bg: #122220;
-      --card-border: #1E3835;
+      --bg: #08171E;
+      --bg-radial: radial-gradient(120% 90% at 50% -10%, #112F3B 0%, #08171E 65%, #050E13 100%);
+      --card-bg: #0C222B;
+      --card-border: #163B48;
+      --card-border-soft: rgba(212, 175, 55, 0.22);
       --gold: #D4AF37;
       --gold-light: #F3E5AB;
+      --gold-dim: #A98A2C;
       --teal-accent: #178370;
-      --text: #F0F4F3;
-      --text-muted: #8EAAA5;
-      --input-bg: #0B1917;
-      --input-border: #23433F;
+      --text: #F3F7F6;
+      --text-muted: #8EABB3;
+      --input-bg: #07151B;
+      --input-border: #1A404F;
       --success: #25D366;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
     body {
-      background: var(--bg);
+      background: var(--bg-radial);
+      background-color: var(--bg);
       color: var(--text);
       min-height: 100vh;
       display: flex;
@@ -70,11 +74,11 @@
       flex: 1;
     }
     .order-card {
-      background: var(--card-bg);
+      background: linear-gradient(180deg, var(--card-bg) 0%, #081920 100%);
       border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+      border-radius: 20px;
+      padding: 26px 24px;
+      box-shadow: 0 20px 55px -10px rgba(0,0,0,0.65), 0 0 35px rgba(212,175,55,0.06);
       margin-bottom: 20px;
     }
     
@@ -146,8 +150,8 @@
       width: 100%;
       padding: 13px 15px;
       background: var(--input-bg);
-      border: 1px solid var(--input-border);
-      border-radius: 8px;
+      border: 1.5px solid var(--input-border);
+      border-radius: 10px;
       font-size: 14.5px;
       color: #FFFFFF;
       outline: none;
@@ -155,20 +159,20 @@
     }
     .form-input:focus {
       border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(212,175,55,0.15);
+      box-shadow: 0 0 0 3px rgba(212,175,55,0.18);
     }
     .form-input::placeholder {
-      color: #4A6B65;
+      color: #557882;
     }
     
-    /* ULTRA BELİRGİN LÜKS 3D ALTIN ÖDEME BUTONU */
+    /* ULTRA BELİRGİN LÜKS ŞAMPANYA ALTIN ÖDEME BUTONU */
     .btn-pay-giant {
       width: 100%;
-      background: linear-gradient(180deg, #FDE68A 0%, #EAB308 45%, #CA8A04 100%);
-      color: #042421 !important;
-      border: 2px solid #FEF08A;
+      background: linear-gradient(135deg, #F5E5B8 0%, #D4AF37 50%, #B88E28 100%);
+      color: #06151B !important;
+      border: 1px solid #FEF08A;
       padding: 19px 24px;
-      border-radius: 12px;
+      border-radius: 14px;
       font-size: 17px;
       font-weight: 900;
       cursor: pointer;
@@ -178,19 +182,19 @@
       gap: 10px;
       letter-spacing: 0.6px;
       text-transform: uppercase;
-      box-shadow: 0 10px 30px rgba(234,179,8,0.45), 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.8);
+      box-shadow: 0 10px 30px rgba(212,175,55,0.38), 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.85);
       transition: all 0.15s ease-in-out;
       margin-top: 18px;
       text-shadow: 0 1px 0 rgba(255,255,255,0.4);
     }
     .btn-pay-giant:hover {
-      background: linear-gradient(180deg, #FEF08A 0%, #FACC15 45%, #EAB308 100%);
+      background: linear-gradient(135deg, #FFF0C8 0%, #E5C048 50%, #C49830 100%);
       transform: translateY(-2px);
-      box-shadow: 0 14px 38px rgba(234,179,8,0.6), inset 0 1px 0 #FFF;
+      box-shadow: 0 14px 38px rgba(212,175,55,0.5), inset 0 1px 0 #FFF;
     }
     .btn-pay-giant:active {
       transform: translateY(1px);
-      box-shadow: 0 4px 12px rgba(234,179,8,0.4);
+      box-shadow: 0 4px 12px rgba(212,175,55,0.35);
     }
     
     .security-badge-footer {
@@ -218,8 +222,12 @@
 </head>
 <body>
 
-  <div class="header" style="margin-bottom: 20px;">
-    <img src="images/belgin-crest-b.png" alt="Belgin Emblemi" style="width:84px; height:84px; object-fit:contain; filter: drop-shadow(0 4px 16px rgba(212,175,55,0.4));">
+  <div class="header" style="margin-bottom: 20px; text-align: center;">
+    <div style="display:inline-block; position:relative;">
+      <img src="images/belgin-vip-lion.png" alt="Belgin Kuyumculuk VIP" style="width:88px; height:88px; object-fit:contain; border-radius:50%; border:2px solid rgba(212,175,55,0.45); box-shadow:0 10px 28px rgba(0,0,0,0.5), 0 0 22px rgba(212,175,55,0.25); filter: drop-shadow(0 4px 14px rgba(212,175,55,0.3));">
+    </div>
+    <div class="brand-title" style="margin-top:12px;">Belgin Kuyumculuk & Saat</div>
+    <div style="font-size:11px; letter-spacing:1.6px; color:var(--gold-light); text-transform:uppercase; font-weight:700; opacity:0.85; margin-top:3px;">VIP Güvenli Tahsilat Portalı</div>
   </div>
 
   <main class="container">
@@ -261,8 +269,8 @@
       </div>
 
       <!-- 3. KUVEYT TÜRK KART BİLGİLERİ ALANI -->
-      <div id="cardFieldsWrap" style="background:#091A17; border:1.5px solid #1E3B36; border-radius:12px; padding:16px; margin-bottom:18px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid #162E2A; padding-bottom:8px;">
+      <div id="cardFieldsWrap" style="background:#07181F; border:1.5px solid #163B48; border-radius:12px; padding:16px; margin-bottom:18px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid #13303C; padding-bottom:8px;">
           <span style="font-size:12px; font-weight:800; color:var(--gold-light); text-transform:uppercase; letter-spacing:0.5px;">💳 Kart Bilgileri</span>
           <div style="display:flex; gap:4px;">
             <span style="background:#008450; color:#FFF; font-size:9px; font-weight:900; padding:2px 5px; border-radius:3px;">KUVEYT TÜRK</span>
@@ -360,10 +368,11 @@
 
         const provider = (currentPayload?.provider || 'KUVEYTTURK').toUpperCase();
         const isZiraat = provider.includes('ZIRAAT');
+        const isTosla = provider.includes('TOSLA');
         const cardWrap = document.getElementById('cardFieldsWrap');
         if (isZiraat && cardWrap) {
           cardWrap.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px solid #162E2A; padding-bottom:8px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px solid #13303C; padding-bottom:8px;">
               <span style="font-size:12px; font-weight:800; color:var(--gold-light); text-transform:uppercase; letter-spacing:0.5px;">🏦 Banka Ortak Ödeme Kapısı</span>
               <span style="background:#C4122F; color:#FFF; font-size:10px; font-weight:900; padding:2px 7px; border-radius:4px;">ZİRAAT KATILIM</span>
             </div>
@@ -371,6 +380,16 @@
               Kart bilgileriniz doğrudan <strong>Ziraat Katılım Bankası 3DHost Ortak Ödeme Sayfası</strong> üzerinden 256-Bit SSL şifrelemeyle güvenle alınacaktır.
             </div>
           `;
+        } else if (isTosla && cardWrap) {
+          const emblemWrap = cardWrap.querySelector('div[style*="display:flex; gap:4px;"]');
+          if (emblemWrap) {
+            emblemWrap.innerHTML = `
+              <span style="background:#E11D48; color:#FFF; font-size:9px; font-weight:900; padding:2px 5px; border-radius:3px;">TOSLA İŞİM</span>
+              <span style="background:#1A1F71; color:#FFF; font-size:9px; font-weight:900; padding:2px 5px; border-radius:3px;">VISA</span>
+              <span style="background:#EB001B; color:#FFF; font-size:9px; font-weight:900; padding:2px 5px; border-radius:3px;">Mastercard</span>
+              <span style="background:#005BAC; color:#FFF; font-size:9px; font-weight:900; padding:2px 5px; border-radius:3px;">TROY</span>
+            `;
+          }
         }
 
         const amtFormatted = '₺' + Number(currentPayload.amount || 0).toLocaleString('tr-TR');
@@ -379,12 +398,49 @@
           btn.disabled = false;
         }
         if (btnTextEl) {
-          btnTextEl.textContent = isZiraat ? `${amtFormatted} ZİRAAT KATILIM İLE ÖDE ➔` : `${amtFormatted} GÜVENLİ ÖDE ➔`;
+          btnTextEl.textContent = isZiraat 
+            ? `${amtFormatted} ZİRAAT KATILIM İLE ÖDE ➔` 
+            : (isTosla ? `${amtFormatted} TOSLA İŞİM İLE ÖDE ➔` : `${amtFormatted} GÜVENLİ ÖDE ➔`);
         }
         
         syncDraft();
+
+        // --- İPTAL EDİLMİŞ VIP LİNK KONTROLÜ ---
+        if (currentPayload && currentPayload.orderId) {
+          fetch('/api/payment/check-vip?orderId=' + encodeURIComponent(currentPayload.orderId))
+            .then(res => res.json())
+            .then(data => {
+              if (data && data.cancelled === true) {
+                renderCancelledState();
+              }
+            })
+            .catch(() => {});
+        }
       } catch (err) {
         console.error('initPage Error:', err);
+      }
+    }
+
+    function renderCancelledState() {
+      const cardWrap = document.querySelector('.order-card');
+      if (cardWrap) {
+        cardWrap.innerHTML = `
+          <div style="background:rgba(239,68,68,0.12); border:1.5px solid #ef4444; border-radius:16px; padding:32px 20px; text-align:center; margin:10px 0;">
+            <div style="font-size:46px; margin-bottom:12px; line-height:1;">🚫</div>
+            <div style="font-size:17.5px; font-weight:800; color:#ef4444; margin-bottom:10px; text-transform:uppercase; letter-spacing:0.5px;">BU VIP ÖDEME LİNKİ İPTAL EDİLMİŞTİR</div>
+            <div style="font-size:13px; color:#F3F6F5; line-height:1.6; margin-bottom:18px; max-width:380px; margin-left:auto; margin-right:auto;">
+              Bu özel ödeme bağlantısı güvenlik ve operasyon gerekçesiyle yönetici tarafından iptal edilmiştir. Bu link üzerinden tahsilat kabul edilmemektedir.
+            </div>
+            <div style="font-size:11.5px; color:var(--text-muted); border-top:1px solid rgba(239,68,68,0.25); padding-top:14px; margin-bottom:18px;">
+              Yeni bir ödeme bağlantısı için lütfen <strong>Belgin Kuyumculuk VIP Satış Ekibi</strong> ile iletişime geçiniz.
+            </div>
+            <div>
+              <a href="https://wa.me/905322123456" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:#25D366; color:#FFF; font-weight:700; font-size:13px; padding:11px 20px; border-radius:30px; text-decoration:none; box-shadow:0 4px 14px rgba(37,211,102,0.3);">
+                <span>💬</span> Müşteri Temsilcisine Bağlan
+              </a>
+            </div>
+          </div>
+        `;
       }
     }
 
@@ -396,10 +452,13 @@
       const amt = Number(currentPayload?.amount || 0);
       const isPaytr = currentPayload?.provider === 'PAYTR';
       const isZiraat = (currentPayload?.provider || '').toUpperCase().includes('ZIRAAT');
+      const isTosla = (currentPayload?.provider || '').toUpperCase().includes('TOSLA');
 
       let paymentMethodName = 'Kuveyt Türk Sanal POS 256-Bit SSL 3D Secure / Kredi Kartı';
       if (isZiraat) {
         paymentMethodName = 'Ziraat Katılım Sanal POS 256-Bit SSL 3DHost / Kredi Kartı';
+      } else if (isTosla) {
+        paymentMethodName = 'Tosla İşim Sanal POS (Akbank) 256-Bit SSL 3D Secure';
       } else if (isPaytr) {
         paymentMethodName = 'PayTR 256-Bit SSL 3D Secure / Kredi Kartı';
       }
@@ -495,6 +554,18 @@
 
       syncDraft();
 
+      // İptal kontrolü (Ödeme öncesi son kapı)
+      if (currentPayload && currentPayload.orderId) {
+        try {
+          const chk = await fetch('/api/payment/check-vip?orderId=' + encodeURIComponent(currentPayload.orderId)).then(r => r.json());
+          if (chk && chk.cancelled === true) {
+            alert('Bu VIP ödeme bağlantısı iptal edilmiştir. Tahsilat gerçekleştirilemez.');
+            renderCancelledState();
+            return;
+          }
+        } catch (_) {}
+      }
+
       const provider = (currentPayload?.provider || 'KUVEYTTURK').toUpperCase();
       const isZiraat = provider.includes('ZIRAAT');
 
@@ -531,11 +602,12 @@
 
       const btn = document.getElementById('btnCompletePayment');
       const originalHtml = btn ? btn.innerHTML : '';
+      const isTosla = provider.includes('TOSLA');
       if (btn) {
         btn.disabled = true;
         btn.innerHTML = isZiraat
           ? '<span>🔒</span> Ziraat Katılım 3DHost Sayfasına Yönlendiriliyorsunuz...'
-          : '<span>🔒</span> Kuveyt Türk 3D Secure SMS Doğrulamasına Geçiliyor...';
+          : (isTosla ? '<span>🔒</span> Tosla İşim 3D Secure SMS Doğrulamasına Geçiliyor...' : '<span>🔒</span> Kuveyt Türk 3D Secure SMS Doğrulamasına Geçiliyor...');
       }
 
       try {
@@ -626,7 +698,9 @@
           const form = document.createElement('form');
           form.method = 'POST';
           form.action = data.gatewayUrl;
-          form.enctype = 'application/x-www-form-urlencoded';
+          const enc = data.enctype || 'multipart/form-data';
+          form.enctype = enc;
+          form.encoding = enc;
           form.acceptCharset = 'UTF-8';
           form.style.display = 'none';
           for (const [k, v] of Object.entries(data.formData)) {

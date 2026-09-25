@@ -30,7 +30,10 @@ function sha256(value) {
 }
 
 function generateOrderId() {
-  return `BLG-${Date.now()}-${crypto.randomBytes(8).toString('hex')}`;
+  // Tüm banka ve POS standartları için maksimum 20 karakter garantisi (Tosla VARCHAR(20) uyumlu)
+  const ts = Date.now().toString();
+  const rand = crypto.randomBytes(2).toString('hex').toUpperCase();
+  return `BLG${ts.slice(-12)}${rand}`;
 }
 
 function generateRequestId() {
@@ -412,6 +415,7 @@ class PaymentService {
       masakLegalOverlayRequired: true,
       isVipPayment: Boolean(isVipPayment),
       isVip22: Boolean(isVip22),
+      vipToken: String(body.vipToken || '').trim() || null,
       tag: isVip22 ? '/22' : null,
       vip22Breakdown: vip22Breakdown || null,
       vipTitle: rawVipTitle || null,
@@ -534,12 +538,22 @@ class PaymentService {
       postParams: providerResult.postParams || null,
       formHtml: providerResult.formHtml || null,
       formData: providerResult.formData || null,
+      enctype: providerResult.enctype || null,
       paymentType: providerResult.paymentType || 'REDIRECT',
       merchant_oid,
       evidenceId,
       deliveryMethod: compliance.deliveryMethod,
       highValueSecureDelivery: compliance.hasHighValue,
     };
+
+    if (providerResult.threeDSessionId || providerResult.formData?.ThreeDSessionId) {
+      const sessId = providerResult.threeDSessionId || providerResult.formData?.ThreeDSessionId;
+      try {
+        await orderRef.update({
+          'payment.threeDSessionId': sessId,
+        });
+      } catch (_) {}
+    }
 
     if (idempotencyKey) {
       idempotencyCache.set(idempotencyKey, {
@@ -584,30 +598,83 @@ class PaymentService {
       return { status: 400, message: 'Geçersiz sipariş numarası' };
     }
 
-    const orderRef = db.collection('orders').doc(orderId);
-    const orderDoc = await orderRef.get();
+    let orderRef = db.collection('orders').doc(orderId);
+    let orderDoc = await orderRef.get();
+    if (!orderDoc.exists) {
+      // 1. providerOrderId araması (Tosla/Banka kesilmiş ID ile dönmüşse)
+      const provSnap = await db.collection('orders')
+        .where('payment.providerOrderId', '==', orderId)
+        .limit(1)
+        .get();
+      if (!provSnap.empty) {
+        orderDoc = provSnap.docs[0];
+        orderRef = orderDoc.ref;
+        orderId = orderDoc.id;
+      } else {
+        // 2. orderId alanı araması
+        const orderIdSnap = await db.collection('orders')
+          .where('orderId', '==', orderId)
+          .limit(1)
+          .get();
+        if (!orderIdSnap.empty) {
+          orderDoc = orderIdSnap.docs[0];
+          orderRef = orderDoc.ref;
+          orderId = orderDoc.id;
+        } else {
+          // 3. ThreeDSessionId araması
+          const sessionParam = body?.ThreeDSessionId || body?.threeDSessionId;
+          let sessionSnap = { empty: true };
+          if (sessionParam) {
+            sessionSnap = await db.collection('orders')
+              .where('payment.threeDSessionId', '==', sessionParam)
+              .limit(1)
+              .get();
+          }
+          if (!sessionSnap.empty) {
+            orderDoc = sessionSnap.docs[0];
+            orderRef = orderDoc.ref;
+            orderId = orderDoc.id;
+          } else {
+            // 4. Doc ID prefix araması (20 karaktere kesilmiş eski siparişler için geriye dönük uyum)
+            const prefixSnap = await db.collection('orders')
+              .where(admin.firestore.FieldPath.documentId(), '>=', orderId)
+              .where(admin.firestore.FieldPath.documentId(), '<=', orderId + '\uf8ff')
+              .limit(1)
+              .get();
+            if (!prefixSnap.empty) {
+              orderDoc = prefixSnap.docs[0];
+              orderRef = orderDoc.ref;
+              orderId = orderDoc.id;
+            }
+          }
+        }
+      }
+    }
+
     if (!orderDoc.exists) {
       console.error(`[Payment Security] Callback reddedildi: Sipariş veritabanında bulunamadı (${orderId})`);
-      return { status: 404, message: 'Siparis bulunamadi', isValid: false, isSuccess: false };
+      return { status: 404, message: 'Siparis bulunamadi', isValid: false, isSuccess: false, orderId };
     }
 
     const order = orderDoc.data();
     const normalizeProv = (p) => {
       const up = String(p || '').toUpperCase();
-      return (up === 'ZIRAAT_KATILIM' || up === 'ZIRAATKATILIM') ? 'ZIRAAT' : up;
+      if (up === 'ZIRAAT_KATILIM' || up === 'ZIRAATKATILIM') return 'ZIRAAT';
+      if (up === 'TOSLA_ISIM' || up === 'TOSLAISIM') return 'TOSLA';
+      return up;
     };
     const orderProvider = normalizeProv(order.payment?.provider || order.provider || 'KUVEYTTURK');
     const incomingProvider = normalizeProv(providerName || '');
     if (incomingProvider && orderProvider && incomingProvider !== orderProvider) {
       console.error(`[Payment Security] Provider mismatch: order is ${orderProvider} but callback from ${incomingProvider}`);
-      return { status: 400, message: `PROVIDER_MISMATCH: Sipariş ${orderProvider} için açılmış, ${incomingProvider} callback reddedildi.`, isValid: false, isSuccess: false };
+      return { status: 400, message: `PROVIDER_MISMATCH: Sipariş ${orderProvider} için açılmış, ${incomingProvider} callback reddedildi.`, isValid: false, isSuccess: false, vipToken: order.vipToken || null };
     }
     const effectiveProviderName = orderProvider || normalizeProv(providerName || DEFAULT_PROVIDER);
     const provider = paymentRouter.getProvider(effectiveProviderName);
 
     // Atomic Idempotency Kontrolü: Zaten PAID ise hemen 200 OK dön
     if (['PAID', 'PAYMENT_PAID'].includes(order.paymentStatus) || [ORDER_STATUS.PAID, ORDER_STATUS.AWAITING_STORE_PICKUP, ORDER_STATUS.COMPLETED].includes(order.status)) {
-      return { status: 200, message: 'OK', isSuccess: true, orderId, authCode: order.payment?.authCode || 'KT-AUTH' };
+      return { status: 200, message: 'OK', isSuccess: true, orderId, authCode: order.payment?.authCode || 'KT-AUTH', vipToken: order.vipToken || null };
     }
 
     const verification = await provider.verifyCallback({ body, order });
@@ -772,7 +839,14 @@ class PaymentService {
         }).catch(() => {});
       }
 
-      return { status: 200, message: 'OK', isSuccess: true, orderId, authCode: verification.authCode || rawDetails.authCode || 'KT-AUTH' };
+      return { 
+        status: 200, 
+        message: 'OK', 
+        isSuccess: true, 
+        orderId, 
+        authCode: verification.authCode || rawDetails.authCode || 'KT-AUTH',
+        vipToken: order.vipToken || (order.items?.[0]?.vipToken) || null,
+      };
     } else {
       assertValidTransition(order.status, ORDER_STATUS.PAYMENT_FAILED, orderId);
 

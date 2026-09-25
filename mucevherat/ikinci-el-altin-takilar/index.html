@@ -21,7 +21,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/second-hand-gold.css?v=2.1.0">
+  <link rel="stylesheet" href="/css/second-hand-gold.css?v=2.2.0">
+  <style>
+    /* CRITICAL SVG SHIELD - Prevents layout overflow & unstyled giant icons */
+    .hero-answer-badge svg { width: 16px !important; height: 16px !important; min-width: 16px !important; max-width: 16px !important; flex-shrink: 0; display: inline-block; vertical-align: middle; }
+    .sg-pill svg { width: 14px !important; height: 14px !important; min-width: 14px !important; max-width: 14px !important; flex-shrink: 0; display: inline-block; vertical-align: middle; }
+    .sg-mobile-bar { display: none !important; }
+    .sg-mobile-bar-btn svg { width: 22px !important; height: 22px !important; min-width: 22px !important; max-width: 22px !important; flex-shrink: 0; }
+    @media (max-width: 768px) {
+      .sg-mobile-bar { display: flex !important; }
+    }
+  </style>
   <meta property="og:type" content="website">
   <meta property="og:locale" content="tr_TR">
   <meta property="og:site_name" content="Belgin Kuyumculuk">
@@ -205,7 +215,7 @@
       </a>
       <nav class="sg-nav" aria-label="Ana menü">
         <a href="/mucevherat/">Mücevherat</a>
-        <a href="#hesaplayici">Tasarruf Simülatörü</a>
+        <a href="#ozel-vitrin">Özel Vitrin</a>
         <a href="#koleksiyon">Vitrin & Kategoriler</a>
         <a href="#karsilastirma">Neden 2. El?</a>
         <a href="#sorular">S.S.S.</a>
@@ -234,20 +244,12 @@
         <p class="sg-hero-lead">Sıfır vitrindeki yüksek işçilik maliyetlerini ödemeyin; atölye bakımlı mücevherlere değerinde sahip olun.</p>
         <p class="sg-hero-desc">Buca mağazamızdaki uzman atölyemizde spektrometre ile ayarı teyit edilen, ultrasonik temizlik ve usta polisajından geçerek sıfır kondisyonuna kavuşan bilezik, kolye, yüzük ve zincirleri keşfedin. Beğendiğiniz parçanın ayarını, net gramını ve anlık avantajlı fiyatını öğrenin.</p>
 
-        <!-- MOBILE HERO GROUNDING ANSWER ENGINE (MANDATE v8.0 MG4) -->
-        <div class="hero-answer-engine mobile-thumb-safe" aria-label="Mobil Hızlı Yanıt ve Tanım">
-          <div class="hero-answer-badge">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-            <span>Mobil Hızlı Yanıt & Spektrometre Güvencesi</span>
-          </div>
-          <p>İkinci el altın takılar, sıfır vitrin ürünlerindeki %20 ile %50 arasındaki atölye işçilik maliyetini ortadan kaldırarak yalnızca saf maden değeri ve sembolik atölye cila bedeliyle sahip olunan sertifikalı mücevherlerdir. Belgin Kuyumculuk Buca atölyesinde XRF spektrometre ile 14 ayar (585), 18 ayar (750) ve 22 ayar (916) saflığı tescillenen tüm bilezik, kolye ve yüzükler ultrasonik temizlik ve profesyonel polisajdan geçirilir. Yatırımınızı koruyan şeffaf borsa kuru ve anında takas garantisiyle doğrudan değerinde teslim edilir.</p>
-        </div>
 
         <div class="sg-hero-pills" aria-label="Güven ve avantaj rozetleri">
-          <span class="sg-pill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> %0 Gereksiz İşçilik</span>
-          <span class="sg-pill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg> Spektrometre Ayar Garantisi</span>
-          <span class="sg-pill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Sıfır Ayarında Polisaj</span>
-          <span class="sg-pill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg> Değerinde Borsa Takası</span>
+          <span class="sg-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;min-width:14px;max-width:14px;flex-shrink:0;" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> %0 Gereksiz İşçilik</span>
+          <span class="sg-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;min-width:14px;max-width:14px;flex-shrink:0;" aria-hidden="true"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg> Spektrometre Ayar Garantisi</span>
+          <span class="sg-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;min-width:14px;max-width:14px;flex-shrink:0;" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Sıfır Ayarında Polisaj</span>
+          <span class="sg-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;min-width:14px;max-width:14px;flex-shrink:0;" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg> Değerinde Borsa Takası</span>
         </div>
 
         <div class="sg-hero-cta-group">
@@ -255,8 +257,8 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 14.99 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67Z"/></svg>
             Güncel Vitrini WhatsApp'tan Görün
           </a>
-          <a class="sg-btn-secondary" href="#hesaplayici">
-            İşçilik Tasarrufunu Hesapla ↓
+          <a class="sg-btn-secondary" href="#ozel-vitrin">
+            Özel Seçkiyi İncele ↓
           </a>
         </div>
         <p class="sg-hero-guarantee">✦ Seçkimiz tekil ve butik parçalardır; fotoğraflar ve gramajlar iletişim anında şeffafça teyit edilir.</p>
@@ -300,69 +302,41 @@
     </section>
 
     <!-- ==========================================================================
-         İNTERAKTİF İŞÇİLİK & TASARRUF SİMÜLATÖRÜ
+         ÖZEL ATÖLYE SEÇKİSİ & DİKKAT ÇEKİCİ VİTRİN GÖRSELİ
          ========================================================================== -->
-    <section class="sg-calc-section" id="hesaplayici" aria-labelledby="sg-calc-title">
-      <div class="sg-wrap sg-calc-grid">
-        <div class="sg-calc-intro">
-          <p class="sg-eyebrow" style="color: var(--sg-gold-bright);">AKILLI KUYUMCU HESAPLAYICISI</p>
-          <h2 id="sg-calc-title">2. El Altın Alırken Ne Kadar Tasarruf Edersiniz?</h2>
-          <p>Sıfır bir takı aldığınızda ödediğiniz bedelin önemli bir kısmı kalıp, vitrin kârı ve mağaza işçiliğidir. Belgin atölye bakımlı seçkisinde bu maliyetler ortadan kalkar.</p>
-          <ul class="sg-calc-points">
-            <li><span>✦</span> <strong>Aynı Saflıkta Altın:</strong> Darphane standardında gramaj ve ayar.</li>
-            <li><span>✦</span> <strong>Sıfır Vitrin Kondisyonu:</strong> Usta ellerde sıfırlanan polisaj parlaklığı.</li>
-            <li><span>✦</span> <strong>Değer Kaybı Riski Yok:</strong> Satmak istediğinizde maden değerini korur.</li>
-            <li><span>🎁</span> <strong>14K Takılarda Hediye:</strong> Seçili parçalarda kol saati hediyesi!</li>
-          </ul>
+    <section class="sg-showcase-section" id="ozel-vitrin" aria-labelledby="sg-showcase-title">
+      <div class="sg-wrap sg-showcase-grid">
+        <div class="sg-showcase-visual">
+          <div class="sg-showcase-frame">
+            <picture>
+              <source srcset="/images/campaign/ikinci-el-altin-taki-showcase.webp" type="image/webp">
+              <img src="/images/campaign/ikinci-el-altin-taki-showcase.jpg" alt="Belgin Kuyumculuk Atölye Bakımlı 22K ve 14K İkinci El Altın Takılar Vitrini" width="1376" height="768" loading="lazy" class="sg-showcase-img">
+            </picture>
+            <div class="sg-showcase-badge">
+              <span class="sg-badge-dot"></span>
+              <span>Canlı Atölye Vitrini • Buca / İzmir</span>
+            </div>
+          </div>
         </div>
 
-        <div class="sg-calc-box">
-          <div class="sg-calc-box-header">
-            <h3 class="sg-calc-box-title">İşçilik Tasarruf Simülatörü</h3>
-            <span class="sg-calc-box-live">● Canlı Hesaplama</span>
+        <div class="sg-showcase-content">
+          <p class="sg-eyebrow" style="color: var(--sg-gold-bright);">ATÖLYE SERİSİ & NADİR SEÇKİ</p>
+          <h2 id="sg-showcase-title">Kusursuz Polisaj, Sıfır Vitrin Kondisyonu</h2>
+          <p>Belgin Kuyumculuk atölyesinde tek tek incelenen 2. el altın takılar; hassas spektrometre ayar kontrolü, ultrasonik derin temizlik ve usta ellerde gerçekleştirilen el polisajı ile vitrine sıfır kondisyonunda çıkar.</p>
+          <ul class="sg-showcase-features">
+            <li><span>✦</span> <strong>%100 Darphane & Spektrometre Ayar Garantisi:</strong> 22K, 18K ve 14K saflık teyidi.</li>
+            <li><span>✦</span> <strong>Sıfır Mağaza İşçilik Farkı:</strong> Vitrin kalıp masrafları olmadan doğrudan maden değeri avantajı.</li>
+            <li><span>✦</span> <strong>Şeffaf Borsa Fiyatlaması:</strong> Anlık canlı altın kuruna dayalı adil ve net gram hesabı.</li>
+            <li><span>🎁</span> <strong>14K Alışverişlere Özel Hediye:</strong> Seçili kolye ve zincirlerde zarif kol saati hediyesi.</li>
+          </ul>
+          <div class="sg-showcase-cta-group">
+            <a class="sg-btn-primary" href="https://wa.me/905419305372?text=Merhaba%2C%20at%C3%B6lye%20bak%C4%B1ml%C4%B1%202.%20el%20alt%C4%B1n%20tak%C4%B1%20se%C3%A7kisi%20hakk%C4%B1nda%20canl%C4%B1%20vitrin%20modellerini%20g%C3%B6rmek%20istiyorum." target="_blank" rel="noopener noreferrer">
+              Canlı Vitrin Modellerini İsteyin ↗
+            </a>
+            <a class="sg-btn-secondary" href="tel:+905419305372">
+              Buca Mağazayı Arayın
+            </a>
           </div>
-
-          <div class="sg-form-group">
-            <label class="sg-form-label">1. Takı Ayarını Seçin:</label>
-            <div class="sg-chip-group" id="sg-karat-chips" role="radiogroup">
-              <button type="button" class="sg-chip active" data-karat="22" data-gram-price="7150" data-craft-rate="0.18">22 Ayar (Bilezik/Ajda)</button>
-              <button type="button" class="sg-chip" data-karat="14" data-gram-price="4550" data-craft-rate="0.32">14 Ayar (Kolye/Zincir) 🎁</button>
-              <button type="button" class="sg-chip" data-karat="18" data-gram-price="5850" data-craft-rate="0.25">18 Ayar (Yüzük/Tasarım)</button>
-            </div>
-            <div class="sg-gift-alert" id="sg-gift-alert-box">
-              <span>🎁</span>
-              <span><strong>KOL SAATİ HEDİYESİ:</strong> Seçili 14 ayar altın takı alışverişlerinizde şık kol saati hediyeniz hazırlanır!</span>
-            </div>
-          </div>
-
-          <div class="sg-form-group">
-            <div class="sg-slider-val">
-              <label class="sg-form-label" for="sg-gram-slider" style="margin:0;">2. Takı Gramajı:</label>
-              <span id="sg-gram-display">15.00 Gram</span>
-            </div>
-            <div class="sg-slider-wrap">
-              <input type="range" class="sg-slider" id="sg-gram-slider" min="2" max="60" step="0.5" value="15">
-            </div>
-          </div>
-
-          <div class="sg-calc-result">
-            <div class="sg-calc-result-row">
-              <span>Sıfır Mağazada Tahmini Vitrin Fiyatı:</span>
-              <strong id="sg-res-new">126.555 ₺</strong>
-            </div>
-            <div class="sg-calc-result-row">
-              <span>Belgin 2. El Atölye Bakımlı Fiyat:</span>
-              <strong id="sg-res-used" style="color: var(--sg-teal-base);">107.250 ₺</strong>
-            </div>
-            <div class="sg-calc-result-row savings">
-              <span>Cebinizde Kalan Net Tasarruf:</span>
-              <span id="sg-res-saved">+19.305 ₺</span>
-            </div>
-          </div>
-
-          <a class="sg-btn-primary sg-calc-cta" id="sg-calc-whatsapp-btn" href="https://wa.me/905419305372?text=Merhaba%2C%202.%20el%2015%20gram%2022%20ayar%20bilezik%20i%C3%A7in%20g%C3%BCncel%20se%C3%A7enekleri%20g%C3%B6rmek%20istiyorum." target="_blank" rel="noopener noreferrer">
-            Bu Parçayı WhatsApp'tan İsteyin ↗
-          </a>
         </div>
       </div>
     </section>
@@ -625,155 +599,22 @@
     </div>
   </footer>
 
-  <!-- SİMÜLATÖR ETKİLEŞİM BETİĞİ -->
-  <!-- SİMÜLATÖR ETKİLEŞİM BETİĞİ (CANLI BORSA ENTEGRASYONU) -->
-  <script>
-  (function initJewelryCalculator() {
-    var chips = document.querySelectorAll('#sg-karat-chips .sg-chip');
-    var slider = document.getElementById('sg-gram-slider');
-    var gramDisplay = document.getElementById('sg-gram-display');
-    var resNew = document.getElementById('sg-res-new');
-    var resUsed = document.getElementById('sg-res-used');
-    var resSaved = document.getElementById('sg-res-saved');
-    var waBtn = document.getElementById('sg-calc-whatsapp-btn');
-    var liveBadge = document.querySelector('.sg-calc-box-live');
-
-    var currentKarat = '22';
-    var liveRates = {
-      '22': 7150,
-      '18': 5850,
-      '14': 4550
-    };
-    var craftRates = {
-      '22': 0.18,
-      '18': 0.25,
-      '14': 0.32
-    };
-
-    function formatTRY(val) {
-      return Math.round(val).toLocaleString('tr-TR') + ' ₺';
-    }
-
-    function calculate() {
-      var grams = parseFloat(slider.value) || 15;
-      gramDisplay.textContent = grams.toFixed(2) + ' Gram';
-
-      var gramPrice = liveRates[currentKarat] || 7150;
-      var craftRate = craftRates[currentKarat] || 0.18;
-
-      var usedPrice = grams * gramPrice;
-      var newPrice = usedPrice * (1 + craftRate);
-      var savings = newPrice - usedPrice;
-
-      resNew.textContent = formatTRY(newPrice);
-      resUsed.textContent = formatTRY(usedPrice);
-      resSaved.textContent = '+' + formatTRY(savings);
-
-      var msg = encodeURIComponent('Merhaba, ' + currentKarat + ' ayar yaklaşık ' + grams.toFixed(1) + ' gram 2. el altın takı seçeneğiniz var mı? Canlı kura göre fiyat ve model bilgisi alabilir miyim?');
-      waBtn.href = 'https://wa.me/905419305372?text=' + msg;
-    }
-
-    // Canlı Borsa Kurlarını Çek ve Senkronize Et
-    function fetchLiveRates() {
-      // 1. Global LIVE_MARKET_DATA kontrolü
-      if (typeof window.LIVE_MARKET_DATA !== 'undefined' && window.LIVE_MARKET_DATA.items) {
-        var items = window.LIVE_MARKET_DATA.items;
-        var p22 = parseFloat(items.AYAR22 && items.AYAR22.satis);
-        var p18 = parseFloat(items.AYAR18 && items.AYAR18.satis);
-        var p14 = parseFloat(items.AYAR14 && items.AYAR14.satis);
-        var pHas = parseFloat(items.ALTIN && items.ALTIN.satis) || 7750;
-
-        if (p22) liveRates['22'] = Math.round(p22);
-        else if (pHas) liveRates['22'] = Math.round(pHas * 0.937);
-
-        if (p18) liveRates['18'] = Math.round(p18);
-        else if (pHas) liveRates['18'] = Math.round(pHas * 0.750);
-
-        if (p14) liveRates['14'] = Math.round(p14);
-        else if (pHas) liveRates['14'] = Math.round(pHas * 0.722);
-
-        updateBadgeAndRecalc();
-        return;
-      }
-
-      // 2. Canlı API sorgusu (Harem / İZKO proxy)
-      fetch('https://canlipiyasalar.haremaltin.com/tmp/altin.json', { cache: 'no-store' })
-        .then(function(res) { return res.json(); })
-        .then(function(data) {
-          if (data && data.data) {
-            var d = data.data;
-            var pHas = parseFloat(d.ALTIN && d.ALTIN.satis) || 7750;
-            var p22 = parseFloat(d.AYAR22 && d.AYAR22.satis) || Math.round(pHas * 0.937);
-            var p18 = parseFloat(d.AYAR18 && d.AYAR18.satis) || Math.round(pHas * 0.750);
-            var p14 = parseFloat(d.AYAR14 && d.AYAR14.satis) || Math.round(pHas * 0.722);
-
-            if (p22 > 0) liveRates['22'] = Math.round(p22);
-            if (p18 > 0) liveRates['18'] = Math.round(p18);
-            if (p14 > 0) liveRates['14'] = Math.round(p14);
-
-            updateBadgeAndRecalc();
-          }
-        })
-        .catch(function(err) {
-          // Fallback kurlar aktif kalır
-          if (liveBadge) liveBadge.textContent = '● Güncel Borsa Kuru';
-        });
-    }
-
-    function updateBadgeAndRecalc() {
-      if (liveBadge) {
-        liveBadge.textContent = '● Canlı Borsa: 22K ' + formatTRY(liveRates['22']) + ' / gr';
-      }
-      chips.forEach(function(chip) {
-        var k = chip.getAttribute('data-karat');
-        if (liveRates[k]) {
-          chip.setAttribute('data-gram-price', liveRates[k]);
-        }
-      });
-      calculate();
-    }
-
-    var giftAlert = document.getElementById('sg-gift-alert-box');
-
-    chips.forEach(function(chip) {
-      chip.addEventListener('click', function() {
-        chips.forEach(function(c) { c.classList.remove('active'); });
-        chip.classList.add('active');
-        currentKarat = chip.getAttribute('data-karat');
-        if (giftAlert) {
-          if (currentKarat === '14') {
-            giftAlert.classList.add('active');
-          } else {
-            giftAlert.classList.remove('active');
-          }
-        }
-        calculate();
-      });
-    });
-
-    slider.addEventListener('input', calculate);
-    calculate();
-    fetchLiveRates();
-    setInterval(fetchLiveRates, 60000); // Her 60 saniyede bir kuru yenile
-  })();
-  </script>
-
   <!-- MOBİL HIZLI İŞLEM ÇUBUĞU (MANDATE v8.0 - THUMB ZONE UX) -->
-  <nav class="sg-mobile-bar" aria-label="Mobil Hızlı İletişim">
+  <nav class="sg-mobile-bar" style="display:none;" aria-label="Mobil Hızlı İletişim">
     <a class="sg-mobile-bar-btn" href="tel:+905419305372" aria-label="Buca Mağazayı Ara">
-      <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" style="width:22px;height:22px;min-width:22px;max-width:22px;flex-shrink:0;" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
       <span>Hemen Ara</span>
     </a>
     <a class="sg-mobile-bar-btn whatsapp" href="https://wa.me/905419305372?text=Merhaba%2C%202.%20el%20alt%C4%B1n%20tak%C4%B1%20se%C3%A7kinizdeki%20g%C3%BCncel%20%C3%BCr%C3%BCnleri%20%C3%B6%C4%9Frenmek%20istiyorum." target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Canlı Vitrin">
-      <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 14.99 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67Z"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" style="width:22px;height:22px;min-width:22px;max-width:22px;flex-shrink:0;" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 14.99 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67Z"/></svg>
       <span>WhatsApp</span>
     </a>
-    <a class="sg-mobile-bar-btn gold" href="#hesaplayici" aria-label="İşçilik Tasarrufu Hesapla">
-      <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-6 2h2v2h-2V5zm0 4h2v2h-2V9zm-4-4h2v2H9V5zm0 4h2v2H9V9zm-4 4h2v2H5v-2zm0-4h2v2H5V9zm0-4h2v2H5V5zm10 12h-2v-2h2v2zm0-4h-2v-2h2v2zm-4 4h-2v-2h2v2zm0-4h-2v-2h2v2z"/></svg>
-      <span>Simülatör</span>
+    <a class="sg-mobile-bar-btn gold" href="#ozel-vitrin" aria-label="Özel Vitrin Seçkisi">
+      <svg width="22" height="22" viewBox="0 0 24 24" style="width:22px;height:22px;min-width:22px;max-width:22px;flex-shrink:0;" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <span>Özel Vitrin</span>
     </a>
     <a class="sg-mobile-bar-btn" href="https://maps.google.com/?q=Belgin+Kuyumculuk+Buca+Izmir" target="_blank" rel="noopener noreferrer" aria-label="Buca Mağaza Yol Tarifi">
-      <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" style="width:22px;height:22px;min-width:22px;max-width:22px;flex-shrink:0;" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
       <span>Yol Tarifi</span>
     </a>
   </nav>

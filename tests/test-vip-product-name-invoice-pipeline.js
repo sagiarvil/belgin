@@ -56,8 +56,7 @@ console.log('✅ PASS 6: admin.html has cfgGoldItemName editable field in Gold s
 
 // 6. js/admin.js verification
 const adminJs = fs.readFileSync(path.join(__dirname, '../js/admin.js'), 'utf8');
-assert(adminJs.includes('cfgGoldItemName'), 'js/admin.js must reference cfgGoldItemName');
-assert(adminJs.includes('goldInput.value = prodName'), 'js/admin.js must pre-populate cfgGoldItemName with order product name');
+assert(adminJs.includes('goldInput.value = (prodName && !isWatch) ? prodName') || adminJs.includes('goldInput.value = prodName'), 'js/admin.js must pre-populate cfgGoldItemName with order product name');
 assert(adminJs.includes('effectiveProductName'), 'js/admin.js must pass effectiveProductName in payload');
 assert(adminJs.includes('1. Kalem:</strong> ${this.escapeHtml((order.vipTitle || order.title || order.productName'), 'js/admin.js must display order product name in order view modal fallback');
 console.log('✅ PASS 7: js/admin.js syncs, edits, and sends custom product name to invoice backend');

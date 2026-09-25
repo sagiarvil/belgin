@@ -142,29 +142,32 @@ exports.createPayment = functions
 exports.paymentCallback = functions
   .runWith({ timeoutSeconds: 120, memory: '256MB' })
   .https.onRequest(async (req, res) => {
-    if (req.method !== 'POST') return res.status(405).send('Method Not Allowed');
+    if (req.method !== 'POST' && req.method !== 'GET') return res.status(405).send('Method Not Allowed');
 
     const fullUrl = String(req.originalUrl || req.url || req.path || '').toLowerCase();
     let providerParam = 'KUVEYTTURK';
     if (fullUrl.includes('kuveytturk')) providerParam = 'KUVEYTTURK';
     else if (fullUrl.includes('ziraat')) providerParam = 'ZIRAAT';
+    else if (fullUrl.includes('tosla')) providerParam = 'TOSLA';
     else if (fullUrl.includes('qnb')) providerParam = 'QNB';
     else if (fullUrl.includes('yapikredi')) providerParam = 'YAPIKREDI';
     else if (req.query.provider) providerParam = String(req.query.provider).toUpperCase();
 
     console.log(`[Payment Callback] Detected Provider: ${providerParam}, URL: ${fullUrl}`);
 
+    const incomingData = { ...(req.query || {}), ...(req.body || {}) };
+
     try {
       const outcome = await paymentService.handleCallback({
         providerName: providerParam,
-        body: req.body || {},
+        body: incomingData,
         db,
         admin,
         mailer,
       });
 
-      // KUVEYTTURK, ZIRAAT 3D Gate veya Browser POST durumunda tarayıcıyı doğrudan sonuç sayfasına yönlendir
-      const isBrowserCallback = providerParam === 'KUVEYTTURK' || providerParam === 'ZIRAAT' || providerParam === 'ZIRAAT_KATILIM' || providerParam === 'AKBANK' || req.headers['accept']?.includes('text/html') || Boolean(req.body?.AuthenticationResponse || req.body?.mdStatus !== undefined || req.body?.oid || req.body?.orderId || req.body?.OrderId || req.body?.responseCode || req.body?.ProcReturnCode);
+      // KUVEYTTURK, ZIRAAT, TOSLA 3D Gate veya Browser POST durumunda tarayıcıyı doğrudan sonuç sayfasına yönlendir
+      const isBrowserCallback = providerParam === 'KUVEYTTURK' || providerParam === 'ZIRAAT' || providerParam === 'ZIRAAT_KATILIM' || providerParam === 'TOSLA' || providerParam === 'TOSLA_ISIM' || providerParam === 'AKBANK' || req.headers['accept']?.includes('text/html') || Boolean(req.body?.AuthenticationResponse || req.body?.mdStatus !== undefined || req.body?.oid || req.body?.orderId || req.body?.OrderId || req.body?.responseCode || req.body?.ProcReturnCode);
       if (isBrowserCallback) {
         let orderId = encodeURIComponent(outcome?.orderId || req.body?.orderId || req.body?.OrderId || req.body?.oid || req.body?.MerchantOrderId || req.query?.oid || '');
         if (!orderId && req.body?.AuthenticationResponse) {
@@ -178,9 +181,10 @@ exports.paymentCallback = functions
         const isSuccess = outcome?.isSuccess === true;
         const authCode = isSuccess ? encodeURIComponent(outcome.authCode || 'KT-AUTH') : '';
         const amount = encodeURIComponent(req.body?.amount || req.body?.Amount || req.body?.totalAmount || '');
+        const vipTokenParam = outcome?.vipToken ? `&token=${encodeURIComponent(outcome.vipToken)}` : '';
         const targetUrl = isSuccess
-          ? `https://www.belginkuyumculuk.com/odeme-basarili.html?orderId=${orderId}&authCode=${authCode}&amount=${amount}&provider=${encodeURIComponent(providerParam)}`
-          : `https://www.belginkuyumculuk.com/odeme-basarisiz.html?orderId=${orderId}&code=${encodeURIComponent(outcome?.failReasonCode || req.body?.responseCode || 'PROVISION_FAILED')}&reason=${encodeURIComponent(outcome?.failReasonMsg || req.body?.responseMessage || 'Banka onayı alınamadı.')}&provider=${encodeURIComponent(providerParam)}${outcome?.vipToken ? `&token=${encodeURIComponent(outcome.vipToken)}` : ''}`;
+          ? `https://www.belginkuyumculuk.com/odeme-basarili.html?orderId=${orderId}&authCode=${authCode}&amount=${amount}&provider=${encodeURIComponent(providerParam)}${vipTokenParam}`
+          : `https://www.belginkuyumculuk.com/odeme-basarisiz.html?orderId=${orderId}&code=${encodeURIComponent(outcome?.failReasonCode || req.body?.responseCode || 'PROVISION_FAILED')}&reason=${encodeURIComponent(outcome?.failReasonMsg || req.body?.responseMessage || 'Banka onayı alınamadı.')}&provider=${encodeURIComponent(providerParam)}${vipTokenParam}`;
 
         const htmlRedirect = `<!DOCTYPE html>
 <html lang="tr">
@@ -189,15 +193,19 @@ exports.paymentCallback = functions
   <title>Yönlendiriliyorsunuz...</title>
   <meta http-equiv="refresh" content="0;url=${targetUrl}">
   <style>
-    body { background: #031411; color: #D4AF37; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-    .loader { width: 42px; height: 42px; border: 3px solid rgba(212,175,55,0.2); border-top-color: #D4AF37; border-radius: 50%; animation: spin 0.7s linear infinite; margin-bottom: 16px; }
+    body { background: #031411; color: #D4AF37; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; text-align: center; }
+    .loader { width: 44px; height: 44px; border: 3px solid rgba(212,175,55,0.2); border-top-color: #D4AF37; border-radius: 50%; animation: spin 0.7s linear infinite; margin-bottom: 16px; }
     @keyframes spin { to { transform: rotate(360deg); } }
+    .btn-fallback { margin-top: 16px; padding: 12px 24px; background: #D4AF37; color: #031411; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 13px; display: inline-block; letter-spacing: 0.5px; }
   </style>
 </head>
 <body>
   <div class="loader"></div>
-  <div style="font-size:14px; font-weight:700; letter-spacing:1px; color:#F7E9B7;">ÖDEME DOĞRULANDI, AKTARILIYOR...</div>
-  <script>window.location.replace("${targetUrl}");</script>
+  <div style="font-size:14px; font-weight:700; letter-spacing:1px; color:#F7E9B7;">${isSuccess ? 'ÖDEME DOĞRULANDI, AKTARILIYOR...' : 'SONUÇ SAYFASINA AKTARILIYOR...'}</div>
+  <a href="${targetUrl}" class="btn-fallback">Otomatik aktarılmazsa buraya tıklayınız &rarr;</a>
+  <script>
+    try { window.location.replace("${targetUrl}"); } catch(_) { window.location.href = "${targetUrl}"; }
+  </script>
 </body>
 </html>`;
 
@@ -3510,6 +3518,106 @@ exports.cancelVipLink = functions
     } catch (err) {
       console.error('[cancelVipLink Error]:', err);
       return res.status(500).json({ success: false, message: err.message });
+    }
+  }));
+
+/**
+ * POST /api/payment/record-vip
+ * Yeni oluşturulan VIP linki sunucuya kaydeder
+ */
+exports.recordVipLink = functions
+  .runWith({ timeoutSeconds: 30, memory: '128MB' })
+  .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
+    if (req.method === 'OPTIONS') return res.status(204).send('');
+    if (req.method !== 'POST') return res.status(405).json({ success: false, message: 'Yalnızca POST kabul edilir.' });
+
+    try {
+      const { orderId, title, amount, provider, url } = req.body || {};
+      if (!orderId) return res.status(400).json({ success: false, message: 'orderId zorunludur.' });
+
+      await admin.firestore().collection('vip_links').doc(String(orderId)).set({
+        orderId: String(orderId),
+        title: String(title || 'VIP Sipariş').slice(0, 150),
+        amount: Number(amount) || 0,
+        provider: String(provider || 'KUVEYTTURK'),
+        url: String(url || ''),
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        clientCreatedAt: new Date().toISOString(),
+        status: 'ACTIVE'
+      }, { merge: true });
+
+      return res.status(200).json({ success: true, orderId });
+    } catch (err) {
+      console.error('[recordVipLink Error]:', err);
+      return res.status(500).json({ success: false, message: err.message });
+    }
+  }));
+
+/**
+ * GET/POST /api/payment/list-vip
+ * Son oluşturulan VIP linkleri listeler (İptal durumuyla birlikte)
+ */
+exports.listVipLinks = functions
+  .runWith({ timeoutSeconds: 30, memory: '128MB' })
+  .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
+    if (req.method === 'OPTIONS') return res.status(204).send('');
+
+    try {
+      const snap = await admin.firestore().collection('vip_links')
+        .orderBy('createdAt', 'desc')
+        .limit(50)
+        .get();
+
+      const cancelSnap = await admin.firestore().collection('cancelled_vip_links').get();
+      const cancelledSet = new Set();
+      cancelSnap.forEach(d => cancelledSet.add(d.id));
+
+      const list = [];
+      snap.forEach(d => {
+        const data = d.data();
+        const isCancelled = cancelledSet.has(d.id);
+        list.push({
+          orderId: d.id,
+          title: data.title || 'VIP Sipariş',
+          amount: data.amount || 0,
+          provider: data.provider || 'KUVEYTTURK',
+          url: data.url || '',
+          createdAt: data.clientCreatedAt || (data.createdAt?.toDate ? data.createdAt.toDate().toISOString() : new Date().toISOString()),
+          status: isCancelled ? 'CANCELLED' : 'ACTIVE',
+        });
+      });
+
+      return res.status(200).json({ success: true, count: list.length, list });
+    } catch (err) {
+      console.error('[listVipLinks Error]:', err);
+      return res.status(500).json({ success: false, message: err.message, list: [] });
+    }
+  }));
+
+/**
+ * GET/POST /api/payment/check-vip
+ * VIP Link İptal Durumunu Kontrol Etme
+ */
+exports.checkVipLink = functions
+  .runWith({ timeoutSeconds: 30, memory: '128MB' })
+  .https.onRequest((req, res) => corsMiddleware(req, res, async () => {
+    if (req.method === 'OPTIONS') return res.status(204).send('');
+    const orderId = String(req.query.orderId || req.body?.orderId || '').trim();
+    if (!orderId) {
+      return res.status(400).json({ success: false, cancelled: false, message: 'orderId zorunludur.' });
+    }
+
+    try {
+      const snap = await admin.firestore().collection('cancelled_vip_links').doc(orderId).get();
+      return res.status(200).json({
+        success: true,
+        orderId,
+        cancelled: snap.exists,
+        cancelledAt: snap.exists ? snap.data()?.cancelledAt : null,
+      });
+    } catch (err) {
+      console.error('[checkVipLink Error]:', err);
+      return res.status(200).json({ success: true, orderId, cancelled: false });
     }
   }));
 

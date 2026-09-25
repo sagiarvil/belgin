@@ -52,7 +52,7 @@
           },
           {
             "key": "Content-Security-Policy",
-            "value": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self' https: https://*.bkm.com.tr https://*.kuveytturk.com.tr https://*.ziraatkatilim.com.tr https://accounts.google.com; script-src 'self' 'unsafe-inline' https://cdn.socket.io https://cdnjs.cloudflare.com https://www.gstatic.com https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: https://*.googleusercontent.com; connect-src 'self' https: wss: https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://*.firebaseio.com https://*.googleapis.com https://www.gstatic.com https://www.paytr.com https://finans.truncgil.com https://canlipiyasalar.haremaltin.com https://hrmsocketonly.haremaltin.com wss://hrmsocketonly.haremaltin.com wss://socket.haremaltin.com https://*.kuveytturk.com.tr https://*.ziraatkatilim.com.tr; frame-src 'self' https: https://*.firebaseapp.com https://accounts.google.com https://www.paytr.com https://www.google.com https://maps.google.com https://*.bkm.com.tr https://*.kuveytturk.com.tr https://*.ziraatkatilim.com.tr; media-src 'self'; manifest-src 'self'; upgrade-insecure-requests"
+            "value": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self' https: https://*.bkm.com.tr https://*.kuveytturk.com.tr https://*.ziraatkatilim.com.tr https://*.tosla.com https://entegrasyon.tosla.com https://accounts.google.com; script-src 'self' 'unsafe-inline' https://cdn.socket.io https://cdnjs.cloudflare.com https://www.gstatic.com https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: https://*.googleusercontent.com; connect-src 'self' https: wss: https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://*.firebaseio.com https://*.googleapis.com https://www.gstatic.com https://www.paytr.com https://finans.truncgil.com https://canlipiyasalar.haremaltin.com https://hrmsocketonly.haremaltin.com wss://hrmsocketonly.haremaltin.com wss://socket.haremaltin.com https://*.kuveytturk.com.tr https://*.ziraatkatilim.com.tr https://*.tosla.com https://entegrasyon.tosla.com; frame-src 'self' https: https://*.firebaseapp.com https://accounts.google.com https://www.paytr.com https://www.google.com https://maps.google.com https://*.bkm.com.tr https://*.kuveytturk.com.tr https://*.ziraatkatilim.com.tr https://*.tosla.com https://entegrasyon.tosla.com; media-src 'self'; manifest-src 'self'; upgrade-insecure-requests"
           },
           {
             "key": "X-Content-Type-Options",
@@ -375,6 +375,18 @@
         "function": "cancelVipLink"
       },
       {
+        "source": "/api/payment/check-vip",
+        "function": "checkVipLink"
+      },
+      {
+        "source": "/api/payment/record-vip",
+        "function": "recordVipLink"
+      },
+      {
+        "source": "/api/payment/list-vip",
+        "function": "listVipLinks"
+      },
+      {
         "source": "/api/payment/status",
         "function": "getPaymentStatus"
       },
@@ -401,6 +413,14 @@
       {
         "source": "/api/payment/callback/ziraatkatilim",
         "function": "ziraatPaymentCallback"
+      },
+      {
+        "source": "/api/payment/callback/tosla",
+        "function": "paymentCallback"
+      },
+      {
+        "source": "/api/payment/callback/tosla/**",
+        "function": "paymentCallback"
       },
       {
         "source": "/odeme-basarili",
