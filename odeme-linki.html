@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>VIP WhatsApp Ödeme Linki Oluşturucu | Belgin Kuyumculuk & Saat</title>
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#08171E">
+  <meta name="theme-color" content="#032019">
   <meta name="apple-mobile-web-app-title" content="Belgin Link">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -22,21 +22,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #08171E;
-      --bg-radial: radial-gradient(120% 90% at 50% -10%, #112F3B 0%, #08171E 65%, #050E13 100%);
-      --card-bg: #0C222B;
-      --card-bg-soft: #081820;
-      --card-border: #163B48;
-      --card-border-soft: #122F3A;
+      --bg: #032019;
+      --bg-radial: radial-gradient(120% 90% at 50% -10%, #0B4436 0%, #04241D 60%, #01140F 100%);
+      --card-bg: #073126;
+      --card-bg-soft: #031E17;
+      --card-border: #135242;
+      --card-border-soft: rgba(212, 175, 55, 0.25);
       --gold: #D4AF37;
-      --gold-light: #F3E5AB;
-      --gold-dim: #A98A2C;
-      --teal-accent: #178370;
-      --text: #F3F7F6;
-      --text-muted: #8EABB3;
-      --text-faint: #5E7B82;
-      --input-bg: #07151B;
-      --input-border: #1A404F;
+      --gold-light: #F6E7BC;
+      --gold-dim: #AA8222;
+      --rolex-green: #006039;
+      --text: #F4F7F5;
+      --text-muted: #96BEB4;
+      --text-faint: #5B887D;
+      --input-bg: #031D16;
+      --input-border: #144B3D;
       --input-border-focus: var(--gold);
       --success: #25D366;
       --danger: #E06D53;
@@ -66,18 +66,18 @@
       top: -20%; left: 50%;
       width: 480px; height: 480px;
       transform: translateX(-50%);
-      background: radial-gradient(circle, rgba(212,175,55,0.10) 0%, rgba(212,175,55,0) 65%);
+      background: radial-gradient(circle, rgba(212,175,55,0.12) 0%, rgba(212,175,55,0) 65%);
       pointer-events: none;
       z-index: 0;
     }
 
     .header { text-align: center; padding: 6px 0 22px; position: relative; z-index: 1; }
     .crest {
-      width: 72px; height: 72px; object-fit: contain; margin-bottom: 12px;
+      width: 76px; height: 76px; object-fit: contain; margin-bottom: 12px;
       border-radius: 50%;
-      border: 2px solid rgba(212,175,55,0.45);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 0 20px rgba(212,175,55,0.22);
-      filter: drop-shadow(0 4px 14px rgba(212,175,55,0.28));
+      border: 2px solid rgba(212,175,55,0.55);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.65), 0 0 25px rgba(212,175,55,0.3);
+      filter: drop-shadow(0 4px 14px rgba(212,175,55,0.3));
     }
     .brand-title {
       font-family: 'Cinzel', serif;
@@ -102,11 +102,11 @@
     .container { max-width: 480px; width: 100%; margin: 0 auto; flex: 1; position: relative; z-index: 1; }
 
     .card {
-      background: linear-gradient(180deg, var(--card-bg) 0%, var(--card-bg-soft) 100%);
+      background: linear-gradient(180deg, #083327 0%, #031E17 100%);
       border: 1px solid var(--card-border);
       border-radius: var(--radius-lg);
       padding: 22px 18px 24px;
-      box-shadow: 0 20px 50px -12px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.03);
+      box-shadow: 0 24px 60px -12px rgba(0,0,0,0.75), 0 0 35px rgba(212,175,55,0.08), inset 0 1px 0 rgba(255,255,255,0.06);
     }
     .card-title {
       font-size: 15px;
@@ -316,9 +316,9 @@
 
     .btn-submit {
       width: 100%;
-      background: linear-gradient(135deg, #F5E5B8 0%, #D4AF37 50%, #B88E28 100%);
-      color: #06151B;
-      border: 1px solid #FEF08A;
+      background: linear-gradient(135deg, #F8E7B9 0%, #D4AF37 45%, #AA8012 100%);
+      color: #021B14;
+      border: 1px solid #FFF0C8;
       padding: 17px;
       border-radius: var(--radius-md);
       font-size: 14.5px;
@@ -330,12 +330,12 @@
       align-items: center;
       justify-content: center;
       gap: 9px;
-      box-shadow: 0 10px 28px -6px rgba(212,175,55,0.38);
+      box-shadow: 0 12px 32px -6px rgba(212,175,55,0.42);
       transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
     }
     .btn-submit:hover {
-      background: linear-gradient(135deg, #FFF0C8 0%, #E5C048 50%, #C49830 100%);
-      box-shadow: 0 14px 34px -6px rgba(212,175,55,0.5);
+      background: linear-gradient(135deg, #FFF3D1 0%, #E6C252 45%, #C29624 100%);
+      box-shadow: 0 16px 38px -6px rgba(212,175,55,0.55);
     }
     .btn-submit:active { transform: scale(0.98); }
     .btn-submit:disabled { opacity: 0.65; cursor: default; }
