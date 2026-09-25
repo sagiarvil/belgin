@@ -59,6 +59,47 @@ function verifyAltinTakilar() {
   }
   console.log('  ✅ mucevherat/index.html içinde masaüstü ve mobil menü bağlantıları doğrulandı.');
 
+  // MANDATE v8.0 MOBILE-FIRST KONTROLLERI (MG0 - MG20)
+  if (!htmlContent.includes('viewport-fit=cover')) {
+    console.error('❌ [MG0] viewport meta etiketi eksik veya viewport-fit=cover içermiyor!');
+    process.exit(1);
+  }
+  if (!htmlContent.includes('hero-answer-engine mobile-thumb-safe')) {
+    console.error('❌ [MG4] hero-answer-engine mobile-thumb-safe bloğu bulunamadı!');
+    process.exit(1);
+  }
+  if (!htmlContent.includes('SpeakableSpecification')) {
+    console.error('❌ [MG4] JSON-LD SpeakableSpecification şeması eksik!');
+    process.exit(1);
+  }
+  if (!htmlContent.includes('sg-mobile-bar')) {
+    console.error('❌ [MG11] sg-mobile-bar mobil hızlı erişim çubuğu bulunamadı!');
+    process.exit(1);
+  }
+
+  // PWA ve Feed dosyaları
+  const requiredMobileFiles = [
+    'manifest.webmanifest',
+    'sw.js',
+    'sitemap-mobile.xml',
+    'mobile/feed.xml',
+    'llms/mobile/ikinci-el-altin-takilar-mobile.md',
+    'llms/mobile/voice-queries.md',
+    'llms/mobile/local-intent.md',
+    'app-link.json',
+    '.well-known/assetlinks.json',
+    '.well-known/apple-app-site-association'
+  ];
+
+  for (const rel of requiredMobileFiles) {
+    const fPath = path.join(rootDir, rel);
+    if (!fs.existsSync(fPath)) {
+      console.error(`❌ Zorunlu mobil dosya bulunamadı: ${rel}`);
+      process.exit(1);
+    }
+  }
+  console.log('  ✅ Tüm Mandate v8.0 mobil varlıkları ve PWA/Feed dosyaları eksiksiz doğrulandı.');
+
   console.log('🎉 [PASS] 2.El Altın Takılar başarıyla kuruldu ve doğrulandı!');
 }
 

@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.belginkuyumculuk.app",
+      "sha256_cert_fingerprints": [
+        "14:6D:E9:D5:19:D4:6D:77:EC:34:1B:32:4E:91:07:95:C0:B2:D6:71:2B:6F:09:A9:A0:77:E2:DF:D3:2A:AA:45"
+      ]
+    }
+  }
+]

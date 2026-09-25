@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "9ABCDEF123.com.belginkuyumculuk.app",
+        "paths": [
+          "/mucevherat/*",
+          "/mucevherat/ikinci-el-altin-takilar/*",
+          "/#canli-fiyatlar"
+        ]
+      }
+    ]
+  }
+}

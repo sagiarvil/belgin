@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "mappings": [
+    {
+      "web": "https://www.belginkuyumculuk.com/mucevherat/ikinci-el-altin-takilar/",
+      "app": "belgin://jewelry/second-hand-gold"
+    },
+    {
+      "web": "https://www.belginkuyumculuk.com/mucevherat/",
+      "app": "belgin://jewelry"
+    },
+    {
+      "web": "https://www.belginkuyumculuk.com/#canli-fiyatlar",
+      "app": "belgin://rates/live"
+    }
+  ]
+}

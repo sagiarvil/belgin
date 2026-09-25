@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Belgin Kuyumculuk Mobile Feed</title>
+    <link>https://www.belginkuyumculuk.com/</link>
+    <description>İzmir Buca Belgin Kuyumculuk mobil sesli arama ve anlık vitrin akışı.</description>
+    <language>tr-TR</language>
+    <atom:link href="https://www.belginkuyumculuk.com/mobile/feed.xml" rel="self" type="application/rss+xml"/>
+    <lastBuildDate>Fri, 25 Sep 2026 01:30:00 +0300</lastBuildDate>
+    <item>
+      <title><![CDATA[2.El Altın Takılar - Buca Atölye Seçkisi]]></title>
+      <link>https://www.belginkuyumculuk.com/mucevherat/ikinci-el-altin-takilar/</link>
+      <guid isPermaLink="true">https://www.belginkuyumculuk.com/mucevherat/ikinci-el-altin-takilar/</guid>
+      <description><![CDATA[Atölye bakımlı, spektrometre ayar garantili, sıfır işçilik avantajlı 2. el altın takılar ve tasarruf simülatörü.]]></description>
+      <content:encoded><![CDATA[İkinci el altın takılar, sıfır vitrin ürünlerindeki %20 ile %50 arasındaki atölye işçilik maliyetini ortadan kaldırarak yalnızca saf maden değeri ve sembolik atölye cila bedeliyle sahip olunan sertifikalı mücevherlerdir. Belgin Kuyumculuk Buca atölyesinde XRF spektrometre ile 14 ayar (585), 18 ayar (750) ve 22 ayar (916) saflığı tescillenen tüm bilezik, kolye ve yüzükler ultrasonik temizlik ve profesyonel polisajdan geçirilir. Yatırımınızı koruyan şeffaf borsa kuru ve anında takas garantisiyle doğrudan değerinde teslim edilir.]]></content:encoded>
+      <pubDate>Fri, 25 Sep 2026 01:30:00 +0300</pubDate>
+      <author>official@belginkuyumculuk.com (Belgin Kuyumculuk Uzman Atolyesi)</author>
+      <category>mucevherat</category>
+      <atom:link rel="alternate" type="text/markdown" href="https://www.belginkuyumculuk.com/llms/pages/mucevherat/ikinci-el-altin-takilar.md"/>
+      <atom:link rel="alternate" type="text/markdown" href="https://www.belginkuyumculuk.com/llms/mobile/ikinci-el-altin-takilar-mobile.md" title="Mobile LLM Graph"/>
+    </item>
+  </channel>
+</rss>
