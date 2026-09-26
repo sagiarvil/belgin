@@ -778,22 +778,6 @@
           </div>
         </div>
 
-        <!-- TUTARA EN YAKIN 10 SAAT ÖNERİSİ ALANI -->
-        <div id="watchSuggestionsSection" style="display:none; margin-bottom:18px; background:#0B1917; border:1.5px solid rgba(212,175,55,0.35); border-radius:12px; padding:14px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <div style="font-weight:800; color:var(--gold-light); font-size:12.5px; display:flex; align-items:center; gap:6px;">
-              <span>⌚ Tutara En Yakın 10 Saat Ürünü (Öneri)</span>
-            </div>
-            <span style="font-size:10.5px; color:var(--text-faint); font-weight:600;">Fatura Adı İçin Seçin</span>
-          </div>
-          <div style="font-size:11px; color:var(--text-muted); margin-bottom:10px; line-height:1.4;">
-            Aşağıdaki listeden bir saat seçebilir veya yukarıdaki ürün kutusuna kendiniz manuel olarak istediğinizi yazabilirsiniz:
-          </div>
-          <div id="watchSuggestionsList" style="display:flex; flex-direction:column; gap:6px; max-height:220px; overflow-y:auto; padding-right:4px;">
-            <!-- JS Dinamik Dolduracak -->
-          </div>
-        </div>
-
         <div id="breakdown22Preview" style="display:none; margin-bottom:16px; background:#0B1917; border:1px solid #1E3835; border-radius:10px; padding:12px; font-size:12px;">
           <div style="font-weight:700; color:var(--gold); margin-bottom:6px; font-size:12px;">📊 Önizleme: Fatura & Admin Panel Kalemleri</div>
           <div id="breakdown22Lines" style="color:var(--text); line-height:1.6;"></div>
@@ -988,145 +972,6 @@
       return checked ? checked.value : 'KUVEYTTURK';
     }
 
-    // --- EN YAKIN 10 SAAT ÖNERİSİ MOTORU ---
-    const watchSection = document.getElementById('watchSuggestionsSection');
-    const watchList = document.getElementById('watchSuggestionsList');
-    let selectedWatchId = null;
-
-    function getWatchCatalog() {
-      if (typeof PRODUCTS !== 'undefined' && Array.isArray(PRODUCTS)) {
-        return PRODUCTS.filter(p => {
-          const cat = String(p.category || '').toLowerCase();
-          const name = String(p.name || '').toLowerCase();
-          const brand = String(p.brand || '').toLowerCase();
-          return (
-            cat.includes('saat') || 
-            cat.includes('watch') || 
-            cat.includes('seckin') || 
-            cat.includes('ikinci-el') || 
-            cat.includes('luxury') ||
-            brand.includes('rolex') ||
-            brand.includes('omega') ||
-            brand.includes('patek') ||
-            brand.includes('audemars') ||
-            brand.includes('cartier') ||
-            brand.includes('breitling') ||
-            brand.includes('tudor') ||
-            brand.includes('tag') ||
-            brand.includes('iwc') ||
-            brand.includes('panerai') ||
-            brand.includes('seiko') ||
-            brand.includes('casio') ||
-            brand.includes('tissot') ||
-            name.includes('saat') ||
-            name.includes('watch') ||
-            name.includes('rolex') ||
-            name.includes('omega')
-          );
-        });
-      }
-      return [];
-    }
-
-    function renderWatchSuggestions(amount) {
-      if (!watchSection || !watchList) return;
-      if (!amount || amount < 100) {
-        watchSection.style.display = 'none';
-        return;
-      }
-
-      const allWatches = getWatchCatalog();
-      if (allWatches.length === 0) {
-        watchSection.style.display = 'none';
-        return;
-      }
-
-      // Tutara en yakın 10 saat (fark mutlak değerine göre sırala)
-      const sortedWatches = [...allWatches].sort((a, b) => {
-        const diffA = Math.abs((Number(a.price) || 0) - amount);
-        const diffB = Math.abs((Number(b.price) || 0) - amount);
-        return diffA - diffB;
-      }).slice(0, 10);
-
-      watchList.innerHTML = sortedWatches.map(w => {
-        const pPrice = Number(w.price) || 0;
-        const diff = pPrice - amount;
-        const diffText = diff === 0 
-          ? '🎯 Birebir Tutar' 
-          : (diff > 0 ? `+₺${diff.toLocaleString('tr-TR')} liste` : `-₺${Math.abs(diff).toLocaleString('tr-TR')} liste`);
-        const isSelected = selectedWatchId === String(w.id) || (titleInput.value.trim() === w.name.trim());
-
-        return `
-          <div class="watch-opt-card" data-name="${encodeURIComponent(w.name)}" data-id="${w.id}" style="
-            background: ${isSelected ? 'linear-gradient(135deg, rgba(23,131,112,0.3) 0%, rgba(212,175,55,0.2) 100%)' : '#11211F'};
-            border: 1px solid ${isSelected ? 'var(--gold)' : '#1F3D38'};
-            border-radius: 8px;
-            padding: 8px 10px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            cursor: pointer;
-            transition: all 0.15s ease;
-          ">
-            <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:0;">
-              <span style="font-size:14px;">⌚</span>
-              <div style="overflow:hidden;">
-                <div style="font-size:12px; font-weight:700; color:${isSelected ? 'var(--gold-light)' : 'var(--text)'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
-                  ${w.name}
-                </div>
-                <div style="font-size:10px; color:var(--text-faint);">
-                  ${w.brand || 'Lüks Saat'} • Liste: ₺${pPrice.toLocaleString('tr-TR')} <span style="color:${diff === 0 ? '#25D366' : 'var(--gold-dim)'}; font-weight:600;">(${diffText})</span>
-                </div>
-              </div>
-            </div>
-            <button type="button" style="
-              background: ${isSelected ? 'var(--gold)' : 'rgba(212,175,55,0.15)'};
-              color: ${isSelected ? '#0A1412' : 'var(--gold-light)'};
-              border: 1px solid ${isSelected ? 'var(--gold)' : 'rgba(212,175,55,0.35)'};
-              padding: 4px 9px;
-              border-radius: 6px;
-              font-size: 10.5px;
-              font-weight: 800;
-              cursor: pointer;
-              white-space: nowrap;
-            ">
-              ${isSelected ? '✓ Seçildi' : '+ Faturaya Ekle'}
-            </button>
-          </div>
-        `;
-      }).join('');
-
-      // Tıklama olaylarını bağla
-      watchList.querySelectorAll('.watch-opt-card').forEach(card => {
-        card.addEventListener('click', () => {
-          const rawName = decodeURIComponent(card.dataset.name);
-          const wId = card.dataset.id;
-          selectedWatchId = wId;
-          titleInput.value = rawName;
-          titleShell.classList.remove('error');
-          titleError.classList.remove('show');
-          checkTag22();
-          renderWatchSuggestions(amount);
-          
-          if (typeof showToast === 'function') {
-            showToast(`"${rawName}" fatura ürün adı olarak seçildi.`);
-          }
-        });
-      });
-
-      watchSection.style.display = 'block';
-    }
-
-    // Kullanıcı manuel yazdığında seçili saat id'sini sıfırla
-    titleInput.addEventListener('input', () => {
-      selectedWatchId = null;
-      const amount = parseInt(amountInput.dataset.raw || '0', 10);
-      if (amount >= 100) {
-        renderWatchSuggestions(amount);
-      }
-    });
-
     // --- URL Parametreleri ile Otomatik Doldurma ---
     try {
       const sp = new URLSearchParams(window.location.search);
@@ -1142,7 +987,6 @@
         if (cleanAmt) {
           amountInput.value = parseInt(cleanAmt, 10).toLocaleString('tr-TR');
           amountInput.dataset.raw = cleanAmt;
-          renderWatchSuggestions(parseInt(cleanAmt, 10));
         }
       }
       if (paramPos.includes('TOSLA')) {
@@ -1245,13 +1089,11 @@
       if (!digitsOnly) {
         amountInput.value = '';
         checkTag22();
-        if (watchSection) watchSection.style.display = 'none';
         return;
       }
       const num = parseInt(digitsOnly, 10);
       amountInput.value = num.toLocaleString('tr-TR');
       checkTag22();
-      renderWatchSuggestions(num);
     }
     amountInput.addEventListener('input', formatAmountInput);
 
