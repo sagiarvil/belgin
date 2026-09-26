@@ -11,6 +11,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>VIP WhatsApp Ödeme Linki Oluşturucu | Belgin Kuyumculuk & Saat</title>
   <meta name="robots" content="noindex, nofollow">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <meta name="theme-color" content="#032019">
   <meta name="apple-mobile-web-app-title" content="Belgin Link">
   <meta name="mobile-web-app-capable" content="yes">
@@ -500,6 +503,10 @@
       box-shadow: 0 10px 24px -6px rgba(34,158,217,0.45);
       transition: transform 0.15s ease;
       white-space: nowrap;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      width: 100%;
     }
     .btn-telegram:active { transform: scale(0.98); }
     .btn-copy, .btn-copy-msg {
@@ -807,10 +814,10 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
               WhatsApp ile Gönder
             </a>
-            <a id="btnTelegram" href="#" target="_blank" onclick="if(!this.href||this.getAttribute('href')==='#'){event.preventDefault();alert('Lütfen önce ödeme linki oluşturun.');}" class="btn-telegram">
+            <button type="button" id="btnTelegram" class="btn-telegram">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.197 1.006.128.828.922z"/></svg>
               Telegram ile Gönder
-            </a>
+            </button>
           </div>
           <button type="button" id="btnCopy" class="btn-copy" style="grid-column: 1 / -1;">🔗 Linki Kopyala</button>
           <a id="btnTestLink" href="#" target="_blank" onclick="if(!this.href||this.getAttribute('href')==='#'){event.preventDefault();alert('Lütfen önce ödeme linki oluşturun.');}" class="btn-test">👁️ Müşteri Ödeme Ekranını Önizle</a>
@@ -873,8 +880,8 @@
 
   <div id="toast" class="toast">Panoya kopyalandı!</div>
 
-  <script src="/js/data.js?v=2026.09.02"></script>
-  <script src="/js/vip-payment.js?v=20260925-tosla-v2"></script>
+  <script src="/js/data.js?v=20260926-tg-v5"></script>
+  <script src="/js/vip-payment.js?v=20260926-tg-v5"></script>
   <script>
     
     // --- Sekme (Tab) Mantığı ---
@@ -1151,12 +1158,10 @@
         generatedUrlText.textContent = currentUrl;
         btnWhatsApp.href = VipEngine.buildWhatsAppShareUrl(payload, currentUrl);
         if (btnTelegram) {
-          btnTelegram.href = typeof VipEngine.buildTelegramShareUrl === 'function'
-            ? VipEngine.buildTelegramShareUrl(payload, currentUrl)
-            : `https://t.me/share/url?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(`Tutar: ₺${Number(amount).toLocaleString('tr-TR')}\n3D Secure güvencesiyle ödemenizi tamamlayabilirsiniz.`)}`;
-          if (typeof VipEngine.buildTelegramProtoUrl === 'function') {
-            btnTelegram.dataset.tgProto = VipEngine.buildTelegramProtoUrl(payload, currentUrl);
-          }
+          const tgAmount = Number(amount || 0).toLocaleString('tr-TR');
+          const tgText = `Tutar: ₺${tgAmount}\n3D Secure güvencesiyle ödemenizi tamamlayabilirsiniz.`;
+          btnTelegram.dataset.tgProto = `tg://msg_url?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(tgText)}`;
+          btnTelegram.dataset.tgWeb = `https://t.me/share/url?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(tgText)}`;
         }
         btnTestLink.href = currentUrl;
 
@@ -1197,8 +1202,8 @@
       if (resultSection) resultSection.style.display = 'none';
       if (btnWhatsApp) btnWhatsApp.href = '#';
       if (btnTelegram) {
-        btnTelegram.href = '#';
         delete btnTelegram.dataset.tgProto;
+        delete btnTelegram.dataset.tgWeb;
       }
       if (btnTestLink) btnTestLink.href = '#';
 
@@ -1236,22 +1241,28 @@
 
     if (btnTelegram) {
       btnTelegram.addEventListener('click', (e) => {
-        if (!btnTelegram.href || btnTelegram.getAttribute('href') === '#') {
-          e.preventDefault();
+        e.preventDefault();
+        if (!currentUrl) {
           alert('Lütfen önce ödeme linki oluşturun.');
           return;
         }
+        const rawAmt = amountInput.dataset.raw || amountInput.value.replace(/\D/g, '') || '0';
+        const tgAmount = Number(rawAmt).toLocaleString('tr-TR');
+        const tgText = `Tutar: ₺${tgAmount}\n3D Secure güvencesiyle ödemenizi tamamlayabilirsiniz.`;
+        const protoUrl = btnTelegram.dataset.tgProto || `tg://msg_url?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(tgText)}`;
+        const webUrl = btnTelegram.dataset.tgWeb || `https://t.me/share/url?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(tgText)}`;
+
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        if (isMobile && btnTelegram.dataset.tgProto) {
-          e.preventDefault();
-          const protoUrl = btnTelegram.dataset.tgProto;
-          const webUrl = btnTelegram.href;
+        if (isMobile) {
+          // Doğrudan iOS / Android Telegram uygulamasını tetikle
           window.location.href = protoUrl;
           setTimeout(() => {
             if (document.hasFocus()) {
-              window.open(webUrl, '_blank');
+              window.location.href = webUrl;
             }
-          }, 1500);
+          }, 1400);
+        } else {
+          window.open(webUrl, '_blank');
         }
       });
     }
