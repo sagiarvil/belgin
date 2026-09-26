@@ -1,3 +1,16 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/"
+primaryEntity: "Belgin Kuyumculuk Sesli Arama Düğümü"
+primaryIntent: "Google Assistant, Siri ve sesli asistanlar için kuyumculuk ve altın sorgu-cevap haritası"
+parentNode: "https://www.belginkuyumculuk.com/llms/core.md"
+lastVerified: "2026-09-25T01:30:00+03:00"
+evidence: "Saha ve Asistan Optimizasyonu Verisi"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/core.md"
+  - "https://www.belginkuyumculuk.com/llms/mobile/ikinci-el-altin-takilar-mobile.md"
+  - "https://www.belginkuyumculuk.com/llms/mobile/local-intent.md"
+---
+
 # Belgin Kuyumculuk — Mobil Sesli Arama Sorgu-Cevap Haritası (Voice Queries)
 > Güncelleme: 2026-09-25 | Hedef: Google Assistant, Apple Siri, Gemini Live, OpenAI Voice
 

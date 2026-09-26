@@ -159,6 +159,22 @@ async function runTests() {
 
   const vipPaymentJs = fs.readFileSync(path.join(__dirname, '../js/vip-payment.js'), 'utf8');
   assert.ok(vipPaymentJs.includes('buildTelegramShareUrl'), 'js/vip-payment.js buildTelegramShareUrl metodunu barındırmalıdır');
+  assert.ok(vipPaymentJs.includes('buildTelegramProtoUrl'), 'js/vip-payment.js buildTelegramProtoUrl metodunu barındırmalıdır');
+
+  // Telegram URL formatı ve 'url' parametresinin varlığı testi (302 telegram.org yönlendirmesini engelleyen kural)
+  const { VipEngine } = require('../js/vip-payment.js');
+  const samplePayload = { title: '22 Ayar Bilezik', amount: 85000, orderId: 'VIP-TEST-01' };
+  const sampleVipUrl = 'https://www.belginkuyumculuk.com/vip/v-test123';
+  const tgShareUrl = VipEngine.buildTelegramShareUrl(samplePayload, sampleVipUrl);
+  assert.ok(tgShareUrl.startsWith('https://t.me/share/url?url='), 'Telegram share URL t.me/share/url?url= ile başlamalıdır');
+  assert.ok(tgShareUrl.includes(encodeURIComponent(sampleVipUrl)), 'Telegram share URL hedef kısa linki encode edilmiş olarak içermelidir');
+  assert.ok(tgShareUrl.includes('85.000'), 'Telegram mesaj metni tutarı içermelidir');
+
+  const tgProtoUrl = VipEngine.buildTelegramProtoUrl(samplePayload, sampleVipUrl);
+  assert.ok(tgProtoUrl.startsWith('tg://msg_url?url='), 'Telegram proto URL tg://msg_url?url= ile başlamalıdır');
+  assert.ok(tgProtoUrl.includes(encodeURIComponent(sampleVipUrl)), 'Telegram proto URL hedef linki içermelidir');
+
+  console.log('  ✅ PASS: Telegram share URL (t.me) ve proto URL (tg://) doğrulaması başarılı');
   console.log('  ✅ PASS: vip-odeme.html ve odeme-linki.html Telegram & Tosla entegrasyonu tamamlandı');
 
   console.log('\n======================================================');

@@ -348,10 +348,57 @@ ${shortUrl}
       return `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
     },
 
-    // 9. Telegram Paylaşım URL'i (Tek Dokunuşla Doğrudan Telegram Paylaşımı)
+    // 9. Telegram Paylaşım URL'i (Telegram Web & Evrensel Paylaşım URL'i)
+    // Telegram /share/url endpoint'i 'url' parametresini zorunlu tutar; 'url' verilmezse //telegram.org anasayfasına yönlendirir (302).
     buildTelegramShareUrl(payload, shortUrl) {
-      const message = this.buildWhatsAppMessageText(payload, shortUrl);
-      return `https://t.me/share/url?text=${encodeURIComponent(message)}`;
+      let targetUrl = shortUrl || '';
+      let amount = '';
+
+      if (payload && typeof payload === 'object') {
+        if (!targetUrl && payload.url) targetUrl = payload.url;
+        if (payload.amount) amount = Number(payload.amount).toLocaleString('tr-TR');
+      } else if (typeof payload === 'string') {
+        if (!targetUrl) {
+          const match = payload.match(/https?:\/\/[^\s]+/);
+          if (match) targetUrl = match[0];
+        }
+      }
+
+      if (!targetUrl) {
+        targetUrl = 'https://www.belginkuyumculuk.com';
+      }
+
+      const text = amount 
+        ? `Tutar: ₺${amount}\n3D Secure güvencesiyle ödemenizi tamamlayabilirsiniz.`
+        : '3D Secure güvencesiyle ödemenizi tamamlayabilirsiniz.';
+
+      return `https://t.me/share/url?url=${encodeURIComponent(targetUrl)}&text=${encodeURIComponent(text)}`;
+    },
+
+    // 10. Telegram Doğrudan Mobil Uygulama Protokolü (Deep Link: tg://msg_url)
+    buildTelegramProtoUrl(payload, shortUrl) {
+      let targetUrl = shortUrl || '';
+      let amount = '';
+
+      if (payload && typeof payload === 'object') {
+        if (!targetUrl && payload.url) targetUrl = payload.url;
+        if (payload.amount) amount = Number(payload.amount).toLocaleString('tr-TR');
+      } else if (typeof payload === 'string') {
+        if (!targetUrl) {
+          const match = payload.match(/https?:\/\/[^\s]+/);
+          if (match) targetUrl = match[0];
+        }
+      }
+
+      if (!targetUrl) {
+        targetUrl = 'https://www.belginkuyumculuk.com';
+      }
+
+      const text = amount 
+        ? `Tutar: ₺${amount}\n3D Secure güvencesiyle ödemenizi tamamlayabilirsiniz.`
+        : '3D Secure güvencesiyle ödemenizi tamamlayabilirsiniz.';
+
+      return `tg://msg_url?url=${encodeURIComponent(targetUrl)}&text=${encodeURIComponent(text)}`;
     }
   };
 

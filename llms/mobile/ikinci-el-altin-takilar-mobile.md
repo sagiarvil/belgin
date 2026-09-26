@@ -1,3 +1,16 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/mucevherat/ikinci-el-altin-takilar/"
+primaryEntity: "2. El Altın Takılar"
+primaryIntent: "İzmir Buca ikinci el altın takı, bilezik, kolye ve yüzük alım satımı"
+parentNode: "https://www.belginkuyumculuk.com/llms/pages/mucevherat.md"
+lastVerified: "2026-09-25T01:30:00+03:00"
+evidence: "Birinci El Atölye ve Saha Verisi / Spektrometre Doğrulaması"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/pages/mucevherat.md"
+  - "https://www.belginkuyumculuk.com/llms/mobile/local-intent.md"
+  - "https://www.belginkuyumculuk.com/llms/mobile/voice-queries.md"
+---
+
 # 2. El Altın Takılar — Mobil ve Sesli Arama Alt-Bilgi Grafı
 > Canonical Web URL: https://www.belginkuyumculuk.com/mucevherat/ikinci-el-altin-takilar/
 > Canonical Mobile URL: https://www.belginkuyumculuk.com/mucevherat/ikinci-el-altin-takilar/ (responsive RWD)

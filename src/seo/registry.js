@@ -151,7 +151,7 @@ const SEO_REGISTRY = [
       { name: 'Ana Sayfa', item: '/' },
       { name: 'Elit Kategori', item: '/elit-kategori/' }
     ],
-    heroAnswerEngine: 'Belgin Saat Elit Kategori; 245 seçkin lüks İsviçre saat modelini (Rolex, Patek Philippe, Audemars Piguet, Vacheron Constantin vb.) uluslararası Chrono24 piyasa endeksi referansı, doğrulanmış seri numarası ve 10 adımlı sertifikalı horoloji ekspertizi ile İzmir Buca merkez mağazasında güvenli teslimatla sunmaktadır.',
+    heroAnswerEngine: 'Belgin Saat Elit Kategori; 245 seçkin lüks İsviçre saat modelini (Rolex, Patek Philippe, Audemars Piguet, Vacheron Constantin vb.) uluslararası bağımsız piyasa endeksi referansı, doğrulanmış seri numarası ve 10 adımlı sertifikalı horoloji ekspertizi ile İzmir Buca merkez mağazasında güvenli teslimatla sunmaktadır.',
     semanticTriples: [
       { subject: 'Elit Kategori', predicate: 'providesSolution', object: 'Ekspertizli İsviçre Lüks Kol Saatleri' },
       { subject: 'Belgin Saat', predicate: 'verifiesAuthenticityWith', object: 'Witschi Timegrapher ve Mikroskobik Kalibre Kontrolü' }

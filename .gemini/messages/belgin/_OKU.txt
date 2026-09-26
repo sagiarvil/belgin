@@ -11,5 +11,6 @@
 | 2026-09-25 | VIP Link İptal Yönetimi (tek satır UI + Firestore senkronizasyonu), tek tıkla Telegram ile Gönder butonu ve Tosla POS maksimum dayanıklılık & orderId standardizasyonu canlıya (Hosting & Functions) alındı. | odeme-linki.html, vip-odeme.html, js/vip-payment.js, functions/payment/providers/tosla.js, functions/index.js, firebase.json |
 | 2026-09-25 | VIP Ödeme (/vip), Link Oluşturucu (odeme-linki.html) ve Başarılı/Başarısız Tahsilat Final sayfaları bilimsel kanıtlı güven & rahatlatıcı lüks renk kartelasına (Deep Oceanic Teal & Satin Champagne Gold) ve yeni aslan VIP armasına dönüştürüldü. | vip-odeme.html, odeme-linki.html, odeme-basarili.html, odeme-basarisiz.html, images/belgin-vip-lion.png |
 | 2026-09-25 | VIP Ödeme ve Tahsilat sayfaları ultra-lüks "Rolex Derin Zümrüt Yeşili (#032019 / #073126)" ve İsviçre Kraliyet Altını kartelasına yükseltildi; kod mantığına dokunulmadan tüm tasarım seviyesi zirveye çıkarıldı. | vip-odeme.html, odeme-linki.html, odeme-basarili.html, odeme-basarisiz.html |
+| 2026-09-26 | VIP Link oluşturucudaki Telegram ile Gönder butonu t.me/share/url url parametresi zorunluluğu ve iOS tg://msg_url mobil doğrudan uygulama açılışı ile onarıldı, tüm CI/CD kalite kapıları (G0-G16) geçilerek canlıya (Firebase Hosting) alındı. | odeme-linki.html, js/vip-payment.js, tests/test-tosla-pos-and-vip-link.js |
 
 

@@ -1,3 +1,16 @@
+---
+canonicalWebUrl: "https://www.belginkuyumculuk.com/iletisim.html"
+primaryEntity: "Belgin Kuyumculuk Yerel Niyetler"
+primaryIntent: "İzmir Buca kuyumcu, altın alım satım ve borsa kurları yerel mobil araması"
+parentNode: "https://www.belginkuyumculuk.com/llms/core.md"
+lastVerified: "2026-09-25T01:30:00+03:00"
+evidence: "Fiziki Mağaza ve Tescilli İşletme Verisi (Buca/İzmir)"
+relatedNodes:
+  - "https://www.belginkuyumculuk.com/llms/core.md"
+  - "https://www.belginkuyumculuk.com/llms/mobile/ikinci-el-altin-takilar-mobile.md"
+  - "https://www.belginkuyumculuk.com/llms/mobile/voice-queries.md"
+---
+
 # Belgin Kuyumculuk — Yerel Niyet Mobil Sorgu Haritası (Local Intent)
 > Güncelleme: 2026-09-25 | Lokasyon: Buca, İzmir | NAP: Belgin Kuyumculuk, Menderes Cad. No:231/B Buca İzmir, +90 541 930 53 72
 

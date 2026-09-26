@@ -1311,7 +1311,10 @@
         if (btnTelegram) {
           btnTelegram.href = typeof VipEngine.buildTelegramShareUrl === 'function'
             ? VipEngine.buildTelegramShareUrl(payload, currentUrl)
-            : `https://t.me/share/url?text=${encodeURIComponent(currentMsg)}`;
+            : `https://t.me/share/url?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(`Tutar: ₺${Number(amount).toLocaleString('tr-TR')}\n3D Secure güvencesiyle ödemenizi tamamlayabilirsiniz.`)}`;
+          if (typeof VipEngine.buildTelegramProtoUrl === 'function') {
+            btnTelegram.dataset.tgProto = VipEngine.buildTelegramProtoUrl(payload, currentUrl);
+          }
         }
         btnTestLink.href = currentUrl;
 
@@ -1351,7 +1354,10 @@
       if (breakdown22Preview) breakdown22Preview.style.display = 'none';
       if (resultSection) resultSection.style.display = 'none';
       if (btnWhatsApp) btnWhatsApp.href = '#';
-      if (btnTelegram) btnTelegram.href = '#';
+      if (btnTelegram) {
+        btnTelegram.href = '#';
+        delete btnTelegram.dataset.tgProto;
+      }
       if (btnTestLink) btnTestLink.href = '#';
 
       // Reset POS selector back to Kuveyt Türk
@@ -1385,6 +1391,28 @@
       resetAndClearAll();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
+    if (btnTelegram) {
+      btnTelegram.addEventListener('click', (e) => {
+        if (!btnTelegram.href || btnTelegram.getAttribute('href') === '#') {
+          e.preventDefault();
+          alert('Lütfen önce ödeme linki oluşturun.');
+          return;
+        }
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile && btnTelegram.dataset.tgProto) {
+          e.preventDefault();
+          const protoUrl = btnTelegram.dataset.tgProto;
+          const webUrl = btnTelegram.href;
+          window.location.href = protoUrl;
+          setTimeout(() => {
+            if (document.hasFocus()) {
+              window.open(webUrl, '_blank');
+            }
+          }, 1500);
+        }
+      });
+    }
 
     btnCopy.addEventListener('click', () => {
       if (!currentUrl) return;
